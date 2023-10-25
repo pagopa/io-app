@@ -2,6 +2,7 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
   Icon,
+  IconButton,
   HSpacer,
   VSpacer,
   IOSpacingScale
@@ -23,7 +24,6 @@ import { IOBadge } from "../../../../../../components/core/IOBadge";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
 import { showToast } from "../../../../../../utils/showToast";
-import IconButton from "../../../../../../components/ui/IconButton";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;

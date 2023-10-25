@@ -8,6 +8,8 @@ import { LightModalContext } from "../components/ui/LightModal";
 import { useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
+import NewRemindEmailValidationOverlay from "../components/NewRemindEmailValidationOverlay";
+import { isNewCduFlow } from "../config";
 
 export const useValidatedEmailModal = (isOnboarding?: boolean) => {
   const { showModal, hideModal } = useContext(LightModalContext);
@@ -30,11 +32,17 @@ export const useValidatedEmailModal = (isOnboarding?: boolean) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (!isEmailValidated) {
+      // AS-IS FLOW
+      if (!isNewCduFlow && !isEmailValidated) {
         showModal(<RemindEmailValidationOverlay isOnboarding={isOnboarding} />);
+        return () => hideModal();
+        // CDU FLOW
+      } else if (isNewCduFlow && !isEmailValidated) {
+        showModal(
+          <NewRemindEmailValidationOverlay isOnboarding={isOnboarding} />
+        );
       }
-
-      return () => hideModal();
-    }, [hideModal, isOnboarding, showModal, isEmailValidated])
+      return () => void 0;
+    }, [hideModal, isEmailValidated, isOnboarding, showModal])
   );
 };

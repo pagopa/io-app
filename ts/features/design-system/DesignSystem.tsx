@@ -1,17 +1,19 @@
 import { SectionList, StatusBar, View, useColorScheme } from "react-native";
 import * as React from "react";
-import { useIOTheme, Divider, VSpacer } from "@pagopa/io-app-design-system";
 import {
-  IOStyles,
+  useIOTheme,
+  Divider,
+  VSpacer,
+  ListItemNav,
   IOVisualCostants
-} from "../../components/core/variables/IOStyles";
+} from "@pagopa/io-app-design-system";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import {
   AppParamsList,
   IOStackNavigationRouteProps
 } from "../../navigation/params/AppParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
-import ListItemNav from "../../components/ui/ListItemNav";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
 import { DesignSystemParamsList } from "./navigation/params";
 

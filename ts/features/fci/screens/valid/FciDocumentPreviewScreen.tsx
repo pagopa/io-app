@@ -1,6 +1,7 @@
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet } from "react-native";
 import * as S from "fp-ts/lib/string";
+import { IconButton } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -11,7 +12,6 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPreviewClear, fciEndRequest } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
-import IconButton from "../../../../components/ui/IconButton";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;

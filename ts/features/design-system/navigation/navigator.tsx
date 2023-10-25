@@ -8,11 +8,14 @@ import * as React from "react";
 import { useMemo } from "react";
 import { Alert, Platform, View, useColorScheme } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOThemeContext, IOThemes } from "@pagopa/io-app-design-system";
+import {
+  IOThemeContext,
+  IOThemes,
+  IOVisualCostants,
+  IconButton
+} from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../../../components/core/fonts";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
-import IconButton from "../../../components/ui/IconButton";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
@@ -47,11 +50,12 @@ import { DSSelection } from "../core/DSSelection";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
+import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DSTypography } from "../core/DSTypography";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
-} from "../../../navigation/AppStackNavigator";
+} from "../../../theme/navigations";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -406,6 +410,12 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.SCREENS.OPERATION_RESULT.route}
         component={DSScreenOperationResult}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.WIZARD_SCREEN.route}
+        component={DSWizardScreen}
         options={{ headerShown: false }}
       />
 

@@ -12,7 +12,7 @@ import {
 import { createActionsImplementation } from "../actions";
 import { Context } from "../machine";
 import { InitiativeDataDTO } from "../../../../../../definitions/idpay/InitiativeDataDTO";
-import { refreshSessionToken } from "../../../../fastLogin/store/actions";
+import { refreshSessionToken } from "../../../../fastLogin/store/actions/tokenRefreshActions";
 
 const rootNavigation: Partial<IOStackNavigationProp<AppParamsList>> = {
   navigate: jest.fn(),

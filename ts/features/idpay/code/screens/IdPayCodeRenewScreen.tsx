@@ -2,20 +2,42 @@ import {
   Body,
   H2,
   IOStyles,
+  LabelLink,
   ListItemAction,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Alert, View } from "react-native";
-import { Link } from "../../../../components/core/typography/Link";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import I18n from "../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { identificationRequest } from "../../../../store/actions/identification";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
+import { IdPayCodeRoutes } from "../navigation/routes";
+import { idPayGenerateCode } from "../store/actions";
 
 export const IdPayCodeRenewScreen = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
+
+  const { bottomSheet, present: presentCieBottomSheet } =
+    useIdPayInfoCieBottomSheet();
+
+  const handleContinue = () => {
+    dispatch(idPayGenerateCode.request({}));
+    navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
+      screen: IdPayCodeRoutes.IDPAY_CODE_DISPLAY,
+      params: {
+        isOnboarding: false
+      }
+    });
+  };
 
   const handleConfirm = () => {
     dispatch(
@@ -28,34 +50,39 @@ export const IdPayCodeRenewScreen = () => {
           onCancel: () => undefined
         },
         {
-          onSuccess: () => null // TODO: handle success
+          onSuccess: handleContinue
         }
       )
     );
   };
 
   return (
-    <TopScreenComponent
-      customGoBack={false}
-      dark={false}
-      goBack={true}
-      contextualHelp={emptyContextualHelp}
-    >
-      <View style={IOStyles.horizontalContentPadding}>
-        <H2>{I18n.t("idpay.code.renew.screen.header")}</H2>
-        <VSpacer size={16} />
-        <Body>{I18n.t("idpay.code.renew.screen.body")}</Body>
-        <Link>{I18n.t("idpay.code.renew.screen.link")}</Link>
-        <VSpacer size={16} />
-        <ListItemAction
-          label={I18n.t("idpay.code.renew.screen.generateCTA")}
-          onPress={() => customAlert(handleConfirm)}
-          icon="reload" // FIXME:: update to "change" once new DS ver is released (SEE #IOBP-277)
-          accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
-          variant="danger"
-        />
-      </View>
-    </TopScreenComponent>
+    <>
+      <TopScreenComponent
+        customGoBack={false}
+        dark={false}
+        goBack={true}
+        contextualHelp={emptyContextualHelp}
+      >
+        <View style={IOStyles.horizontalContentPadding}>
+          <H2>{I18n.t("idpay.code.renew.screen.header")}</H2>
+          <VSpacer size={16} />
+          <Body>{I18n.t("idpay.code.renew.screen.body")}</Body>
+          <LabelLink onPress={presentCieBottomSheet}>
+            {I18n.t("idpay.code.renew.screen.link")}
+          </LabelLink>
+          <VSpacer size={16} />
+          <ListItemAction
+            label={I18n.t("idpay.code.renew.screen.generateCTA")}
+            onPress={() => customAlert(handleConfirm)}
+            icon="change"
+            accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
+            variant="danger"
+          />
+        </View>
+      </TopScreenComponent>
+      {bottomSheet}
+    </>
   );
 };
 

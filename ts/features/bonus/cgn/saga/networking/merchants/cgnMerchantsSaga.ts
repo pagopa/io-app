@@ -88,7 +88,7 @@ export function* cgnOfflineMerchantsSaga(
 
 export function* cgnMerchantDetail(
   getMerchant: ReturnType<typeof BackendCgnMerchants>["getMerchant"],
-  merchantSelected: ReturnType<typeof cgnSelectedMerchant["request"]>
+  merchantSelected: ReturnType<(typeof cgnSelectedMerchant)["request"]>
 ) {
   try {
     const merchantDetailResult: SagaCallReturnType<typeof getMerchant> =

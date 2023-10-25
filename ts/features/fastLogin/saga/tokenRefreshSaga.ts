@@ -45,7 +45,7 @@ import {
   refreshSessionToken,
   refreshTokenTransientError,
   refreshTokenNoPinError
-} from "../store/actions";
+} from "../store/actions/tokenRefreshActions";
 import { getPin } from "../../../utils/keychain";
 
 export function* watchTokenRefreshSaga(): SagaIterator {

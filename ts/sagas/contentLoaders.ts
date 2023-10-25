@@ -69,7 +69,7 @@ function* fetchMunicipalityMetadata(
  * A saga that watches for and executes requests to load municipality metadata.
  */
 function* watchContentMunicipalityLoadSaga(
-  action: ActionType<typeof contentMunicipalityLoad["request"]>
+  action: ActionType<(typeof contentMunicipalityLoad)["request"]>
 ): SagaIterator {
   const codiceCatastale = action.payload;
   try {

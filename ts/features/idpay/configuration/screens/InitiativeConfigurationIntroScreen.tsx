@@ -1,15 +1,18 @@
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { ListItem } from "native-base";
 import React from "react";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { useActor } from "@xstate/react";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
+import {
+  Body,
+  H1,
+  IOColors,
+  IOStyles,
+  Icon,
+  LabelSmall,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
-import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
@@ -17,11 +20,11 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import InstitutionIcon from "../../../../../img/features/idpay/institution.svg";
 import CreditCardIcon from "../../../../../img/features/idpay/creditcard.svg";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { useConfigurationMachineService } from "../xstate/provider";
 import { LOADING_TAG } from "../../../../xstate/utils";
 import I18n from "../../../../i18n";
 import { ConfigurationMode } from "../xstate/context";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -39,17 +42,17 @@ type RequiredDataItemProps = {
 };
 
 const RequiredDataItem = (props: RequiredDataItemProps) => (
-  <ListItem>
+  <View style={[IOStyles.row, styles.listItem]}>
     {!!props.icon && <View style={styles.icon}>{props.icon}</View>}
     <View>
       <H4 weight="SemiBold" color="bluegreyDark">
         {props.title}
       </H4>
       <LabelSmall weight="Regular" color="bluegrey">
-        {props.title}
+        {props.subTitle}
       </LabelSmall>
     </View>
-  </ListItem>
+  </View>
 );
 
 const InitiativeConfigurationIntroScreen = () => {
@@ -135,6 +138,11 @@ const InitiativeConfigurationIntroScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  listItem: {
+    paddingVertical: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: IOColors["grey-100"]
+  },
   icon: {
     marginRight: 16
   }

@@ -151,32 +151,33 @@ const IdBlock = (props: IdBlockProps) => (
  * @param props
  * @constructor
  */
-export const BpdTransactionDetailComponent: React.FunctionComponent<Props> =
-  props => {
-    const { paymentMethod, acquirerId, issuerId } = loadLocales();
+export const BpdTransactionDetailComponent: React.FunctionComponent<
+  Props
+> = props => {
+  const { paymentMethod, acquirerId, issuerId } = loadLocales();
 
-    return (
-      <View>
-        <VSpacer size={16} />
-        <Body>{paymentMethod}</Body>
-        <VSpacer size={16} />
-        <View style={IOStyles.row}>
-          <Image
-            source={props.transaction.image}
-            style={styles.image}
-            resizeMode={"contain"}
-          />
-          <HSpacer size={8} />
-          <H4>{props.transaction.title}</H4>
-        </View>
-        <VSpacer size={16} />
-        {/* using the keyvaluetable with custom style in order to be quick */}
-        <Table transaction={props.transaction} />
-        <BpdTransactionWarning transaction={props.transaction} />
-        <VSpacer size={16} />
-        <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />
-        <VSpacer size={16} />
-        <IdBlock title={issuerId} value={props.transaction.idTrxIssuer} />
+  return (
+    <View>
+      <VSpacer size={16} />
+      <Body>{paymentMethod}</Body>
+      <VSpacer size={16} />
+      <View style={IOStyles.row}>
+        <Image
+          source={props.transaction.image}
+          style={styles.image}
+          resizeMode={"contain"}
+        />
+        <HSpacer size={8} />
+        <H4>{props.transaction.title}</H4>
       </View>
-    );
-  };
+      <VSpacer size={16} />
+      {/* using the keyvaluetable with custom style in order to be quick */}
+      <Table transaction={props.transaction} />
+      <BpdTransactionWarning transaction={props.transaction} />
+      <VSpacer size={16} />
+      <IdBlock title={acquirerId} value={props.transaction.idTrxAcquirer} />
+      <VSpacer size={16} />
+      <IdBlock title={issuerId} value={props.transaction.idTrxIssuer} />
+    </View>
+  );
+};
