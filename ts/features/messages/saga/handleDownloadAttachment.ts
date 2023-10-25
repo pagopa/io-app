@@ -53,7 +53,7 @@ const savePath = (attachment: UIAttachment) =>
   "/" +
   attachment.displayName;
 
-const getDelay = (headers: Record<string, string>) =>
+const getDelayMilliseconds = (headers: Record<string, string>) =>
   pipe(
     getHeaderByKey(headers, "retry-after"),
     NumberFromString.decode,
@@ -114,7 +114,7 @@ export function* downloadAttachmentWorker(
         const path = result.path();
         yield* put(downloadAttachment.success({ attachment, path }));
       } else if (status === 503) {
-        const waitingMs = getDelay(rest.headers);
+        const waitingMs = getDelayMilliseconds(rest.headers);
         if (waitingMs > 0) {
           yield* delay(waitingMs);
           continue;
