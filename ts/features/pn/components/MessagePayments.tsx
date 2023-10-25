@@ -5,7 +5,6 @@ import React, { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
-  Body,
   LabelLink,
   ModulePaymentNotice,
   VSpacer
@@ -163,7 +162,6 @@ export const MessagePayments = ({
         iconName={"productPagoPA"}
         testID={"PnPaymentSectionTitle"}
       >
-        <Body>{I18n.t("features.pn.details.paymentSection.notice")}</Body>
         {payments &&
           payments
             .slice(0, maxVisiblePaymentCount)
