@@ -69,6 +69,10 @@ type Props = {
    * necessary to navigate to the manual input screen or show the manual input modal
    */
   onManualInputPressed: () => void;
+  /**
+   * If true, the screen goes into a loading state which disables all interaction and displays a loading indicator
+   */
+  isLoading?: boolean;
 } & HelpProps;
 
 const BarcodeScanBaseScreenComponent = ({
@@ -78,6 +82,7 @@ const BarcodeScanBaseScreenComponent = ({
   onBarcodeSuccess,
   onFileInputPressed,
   onManualInputPressed,
+  isLoading = false,
   faqCategories,
   contextualHelp,
   contextualHelpMarkdown,
@@ -140,7 +145,8 @@ const BarcodeScanBaseScreenComponent = ({
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,
-    disabled: !isFocused
+    disabled: !isFocused,
+    isLoading
   });
 
   const customGoBack = (

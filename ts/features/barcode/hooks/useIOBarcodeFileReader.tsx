@@ -40,6 +40,10 @@ type IOBarcodeFileReader = {
    * Bottom sheet with the options to select an image or a PDF document from the library
    */
   filePickerModal: IOBottomSheetModal;
+  /**
+   * Indicates that the decoder is currently reading/decoding barcodes
+   */
+  isLoading: boolean;
 };
 
 type IOBarcodeFileReaderConfiguration = {
@@ -80,6 +84,18 @@ const useIOBarcodeFileReader = ({
   barcodeFormats,
   barcodeTypes
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+    onBarcodeSuccess(barcodes);
+    setIsLoading(false);
+  };
+
+  const handleBarcodeError = (failure: BarcodeFailure) => {
+    onBarcodeError(failure);
+    setIsLoading(false);
+  };
+
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
@@ -138,6 +154,8 @@ const useIOBarcodeFileReader = ({
       );
     }
 
+    setIsLoading(true);
+
     void ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
   };
 
@@ -172,8 +190,8 @@ const useIOBarcodeFileReader = ({
           O.of,
           O.filter(A.isNonEmpty),
           O.map(getUniqueBarcodes),
-          O.map(onBarcodeSuccess),
-          O.getOrElse(() => onBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
+          O.map(handleBarcodeSuccess),
+          O.getOrElse(() => handleBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
         )
       )
     )();
@@ -183,6 +201,7 @@ const useIOBarcodeFileReader = ({
    * Shows the document picker that lets the user select a PDF document from the library
    */
   const showDocumentPicker = async () => {
+    setIsLoading(true);
     await pipe(
       TE.tryCatch(
         () => DocumentPicker.pickSingle(documentPickerOptions),
@@ -222,13 +241,15 @@ const useIOBarcodeFileReader = ({
 
   const filePickerModal = useIOBottomSheetAutoresizableModal({
     component: filePickerModalComponent,
-    title: ""
+    title: "",
+    onDismiss: () => setIsLoading(false)
   });
 
   return {
     showImagePicker,
     showDocumentPicker,
-    filePickerModal
+    filePickerModal,
+    isLoading
   };
 };
 

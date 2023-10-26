@@ -1,4 +1,8 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOStyles,
+  LoadingSpinner
+} from "@pagopa/io-app-design-system";
 import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
@@ -6,6 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking, StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
 import {
   Barcode,
@@ -58,6 +63,10 @@ export type IOBarcodeCameraScannerConfiguration = {
    * Disables the barcode scanned
    */
   disabled?: boolean;
+  /**
+   * If true, the component displays a loading indicator and disables all interactions
+   */
+  isLoading: boolean;
 };
 
 export type IOBarcodeCameraScanner = {
@@ -155,7 +164,8 @@ export const useIOBarcodeCameraScanner = ({
   onBarcodeError,
   disabled,
   barcodeFormats,
-  barcodeTypes
+  barcodeTypes,
+  isLoading = false
 }: IOBarcodeCameraScannerConfiguration): IOBarcodeCameraScanner => {
   const acceptedFormats = React.useMemo<Array<IOBarcodeFormat>>(
     () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
@@ -311,7 +321,11 @@ export const useIOBarcodeCameraScanner = ({
         />
       )}
       <View style={{ alignSelf: "center" }}>
-        <AnimatedCameraMarker state={isResting ? "IDLE" : "SCANNING"} />
+        {!isLoading ? (
+          <AnimatedCameraMarker state={isResting ? "IDLE" : "SCANNING"} />
+        ) : (
+          <LoadingMarkerComponent />
+        )}
       </View>
     </View>
   );
@@ -328,6 +342,15 @@ export const useIOBarcodeCameraScanner = ({
     toggleTorch
   };
 };
+
+const LoadingMarkerComponent = () => (
+  <Animated.View
+    entering={FadeIn}
+    style={[IOStyles.flex, IOStyles.centerJustified, { marginTop: "15%" }]}
+  >
+    <LoadingSpinner size={76} color="white" />
+  </Animated.View>
+);
 
 const styles = StyleSheet.create({
   cameraContainer: {
