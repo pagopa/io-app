@@ -21,6 +21,7 @@ import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3
 import { extractOnboardingResult } from "../utils";
 
 type WalletOnboardingWebViewProps = {
+  paymentMethodId: string;
   onSuccess: (outcome: OnboardingOutcome) => void;
   onFailure: (outcome: OnboardingOutcome) => void;
   onError: (
@@ -46,6 +47,7 @@ const extractOnboardingWebViewUri = (
  * @param onError callback called when the webview or http request encounters an error
  */
 const WalletOnboardingWebView = ({
+  paymentMethodId,
   onSuccess,
   onFailure,
   onError
@@ -58,11 +60,11 @@ const WalletOnboardingWebView = ({
   const isLoading = pot.isLoading(onboardingStartupResult) || !webviewReady;
 
   React.useEffect(() => {
-    dispatch(walletStartOnboarding.request());
+    dispatch(walletStartOnboarding.request({ paymentMethodId }));
     return () => {
       dispatch(walletStartOnboarding.cancel());
     };
-  }, [dispatch]);
+  }, [dispatch, paymentMethodId]);
 
   React.useEffect(() => {
     if (pot.isError(onboardingStartupResult)) {
