@@ -24,7 +24,12 @@ import {
   trackBarcodeImageUpload,
   trackBarcodeUploadPath
 } from "../analytics";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
+import {
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType
+} from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
@@ -63,11 +68,14 @@ type IOBarcodeFileReaderConfiguration = {
   /**
    * Callback called when there is at least one barcode being successfully decoded
    */
-  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
+  onBarcodeSuccess: (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: (failure: BarcodeFailure) => void;
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
   /**
    * Mixpanel analytics parameters
    */
@@ -129,8 +137,8 @@ const useIOBarcodeFileReader = ({
       TE.chain(base64 =>
         imageDecodingTask({ base64 }, barcodeFormats, barcodeTypes)
       ),
-      TE.mapLeft(onBarcodeError),
-      TE.map(onBarcodeSuccess)
+      TE.mapLeft(failure => onBarcodeError(failure, "file")),
+      TE.map(barcodes => onBarcodeSuccess(barcodes, "file"))
     )();
   };
 
@@ -159,7 +167,7 @@ const useIOBarcodeFileReader = ({
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
     if (type !== "application/pdf") {
       // If the file is not a PDF document, show an error
-      return onBarcodeError({ reason: "INVALID_FILE" });
+      return onBarcodeError({ reason: "INVALID_FILE" }, "file");
     }
 
     await pipe(
@@ -184,8 +192,10 @@ const useIOBarcodeFileReader = ({
           O.of,
           O.filter(A.isNonEmpty),
           O.map(getUniqueBarcodes),
-          O.map(onBarcodeSuccess),
-          O.getOrElse(() => onBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
+          O.map(barcodes => onBarcodeSuccess(barcodes, "file")),
+          O.getOrElse(() =>
+            onBarcodeError({ reason: "BARCODE_NOT_FOUND" }, "file")
+          )
         )
       )
     )();

@@ -76,7 +76,7 @@ const IDPayPaymentCodeScanScreen = () => {
   const { filePickerBottomSheet, showFilePicker } = useIOBarcodeFileReader({
     barcodeFormats,
     barcodeTypes,
-    onBarcodeSuccess: barcodes => handleBarcodeSuccess(barcodes, "file"),
+    onBarcodeSuccess: handleBarcodeSuccess,
     onBarcodeError: handleBarcodeError,
     barcodeAnalyticsFlow: "idpay"
   });

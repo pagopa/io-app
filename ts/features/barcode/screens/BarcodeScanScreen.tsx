@@ -217,7 +217,7 @@ const BarcodeScanScreen = () => {
   const { filePickerBottomSheet, showFilePicker } = useIOBarcodeFileReader({
     barcodeFormats,
     barcodeTypes,
-    onBarcodeSuccess: barcodes => handleBarcodeSuccess(barcodes, "file"),
+    onBarcodeSuccess: handleBarcodeSuccess,
     onBarcodeError: handleBarcodeError,
     barcodeAnalyticsFlow: "home"
   });
