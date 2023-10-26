@@ -1,14 +1,14 @@
 import { ActionType } from "typesafe-actions";
-import RNFS from "react-native-fs";
 import { call } from "typed-redux-saga/macro";
+import RNFS from "react-native-fs";
 import { removeCachedAttachment } from "../../../store/actions/messages";
-import { AttachmentsDirectoryPath } from "./networking/downloadAttachment";
+import { AttachmentsDirectoryPath } from "./handleDownloadAttachment";
 
 /**
  * Clears cached file for the attachment
  * @param action
  */
-export function* clearAttachment(
+export function* handleClearAttachment(
   action: ActionType<typeof removeCachedAttachment>
 ) {
   const path = action.payload.path;
@@ -24,7 +24,7 @@ export function* clearAttachment(
 /**
  * Clears cached files for all the attachments
  */
-export function* clearAllAttachments() {
+export function* handleClearAllAttachments() {
   const isPresent = yield* call(RNFS.exists, AttachmentsDirectoryPath);
 
   if (isPresent) {
