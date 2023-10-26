@@ -1,6 +1,6 @@
 import {
   WalletInstanceAttestation,
-  WalletProviderEntityConfiguration,
+  Trust,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import { getOrGenerateCyptoKey } from "./keychain";
@@ -16,7 +16,7 @@ export const ITW_WIA_KEY_TAG = "ITW_WIA_CRYTPO";
  * @returns the WIA attestation
  */
 export const getWia = async (
-  entityConfiguration: WalletProviderEntityConfiguration
+  entityConfiguration: Trust.WalletProviderEntityConfiguration
 ) => {
   await getOrGenerateCyptoKey(ITW_WIA_KEY_TAG);
   const wiaCryptoContext = createCryptoContextFor(ITW_WIA_KEY_TAG);
