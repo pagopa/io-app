@@ -1,9 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
-/**
- * The screen allows to identify a transaction by the QR code on the analogic notice
- */
 import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
@@ -27,11 +24,15 @@ import { barcodesScannerConfigSelector } from "../../../../store/reducers/backen
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
-  IOBarcode
+  IOBarcode,
+  useIOBarcodeFileReader
 } from "../../../barcode";
 import * as analytics from "../../../barcode/analytics";
 import {
+  IOBarcodeFormat,
   IOBarcodeOrigin,
+  IOBarcodeType,
+  IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
 import { WalletPaymentRoutes } from "../navigation/routes";
@@ -47,6 +48,12 @@ const WalletPaymentBarcodeScanScreen = () => {
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
+
+  const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
+    format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
+  );
+
+  const barcodeTypes: Array<IOBarcodeType> = ["PAGOPA"];
 
   const handleBarcodeSuccess = (
     barcodes: Array<IOBarcode>,
@@ -130,19 +137,29 @@ const WalletPaymentBarcodeScanScreen = () => {
     });
   };
 
+  const { filePickerBottomSheet, showFilePicker } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: barcodes => handleBarcodeSuccess(barcodes, "file"),
+    onBarcodeError: handleBarcodeError,
+    barcodeAnalyticsFlow: "avviso"
+  });
+
   return (
-    <BarcodeScanBaseScreenComponent
-      barcodeFormats={
-        dataMatrixPosteEnabled ? ["QR_CODE", "DATA_MATRIX"] : ["QR_CODE"]
-      }
-      barcodeTypes={["PAGOPA"]}
-      onBarcodeSuccess={handleBarcodeSuccess}
-      onBarcodeError={handleBarcodeError}
-      onManualInputPressed={handleManualInputPressed}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["wallet"]}
-      barcodeAnalyticsFlow="avviso"
-    />
+    <>
+      <BarcodeScanBaseScreenComponent
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
+        onBarcodeSuccess={handleBarcodeSuccess}
+        onBarcodeError={handleBarcodeError}
+        onFileInputPressed={showFilePicker}
+        onManualInputPressed={handleManualInputPressed}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet"]}
+        barcodeAnalyticsFlow="avviso"
+      />
+      {filePickerBottomSheet}
+    </>
   );
 };
 

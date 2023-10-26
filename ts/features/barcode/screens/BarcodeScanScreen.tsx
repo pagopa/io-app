@@ -30,9 +30,12 @@ import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
+import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import {
   IOBarcode,
+  IOBarcodeFormat,
   IOBarcodeOrigin,
+  IOBarcodeType,
   IO_BARCODE_ALL_FORMATS,
   IO_BARCODE_ALL_TYPES,
   PagoPaBarcode
@@ -48,6 +51,14 @@ const BarcodeScanScreen = () => {
 
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
+  );
+
+  const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
+    format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
+  );
+
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
+    type === "IDPAY" ? isIdPayEnabled : true
   );
 
   /**
@@ -203,35 +214,27 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(format => {
-    switch (format) {
-      case "DATA_MATRIX":
-        return dataMatrixPosteEnabled;
-      default:
-        return true;
-    }
-  });
-
-  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(type => {
-    switch (type) {
-      case "IDPAY":
-        return isIdPayEnabled;
-      default:
-        return true;
-    }
+  const { filePickerBottomSheet, showFilePicker } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: barcodes => handleBarcodeSuccess(barcodes, "file"),
+    onBarcodeError: handleBarcodeError,
+    barcodeAnalyticsFlow: "home"
   });
 
   return (
     <>
       <BarcodeScanBaseScreenComponent
-        barcodeFormats={enabledFormats}
-        barcodeTypes={enabledTypes}
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
+        onFileInputPressed={showFilePicker}
         onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
         barcodeAnalyticsFlow="home"
       />
+      {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>
   );

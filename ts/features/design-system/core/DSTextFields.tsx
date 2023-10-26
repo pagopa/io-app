@@ -42,7 +42,7 @@ export const DSTextFields = () => {
       <DSComponentViewerBox name="Base input with value formatted">
         <InputComponentWrapper
           placeholder={"Base input"}
-          inputTyoe={"credit-card"}
+          inputType={"credit-card"}
           bottomMessage="Handles credit card input type"
         />
       </DSComponentViewerBox>

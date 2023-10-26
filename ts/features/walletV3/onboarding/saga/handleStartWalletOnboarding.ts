@@ -1,11 +1,12 @@
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { walletStartOnboarding } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { ServiceEnum } from "../../../../../definitions/pagopa/walletv3/Service";
+import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -14,18 +15,22 @@ import { ServiceEnum } from "../../../../../definitions/pagopa/walletv3/Service"
  */
 export function* handleStartWalletOnboarding(
   startOnboarding: WalletClient["createWallet"],
-  token: string
+  token: string,
+  action: ActionType<(typeof walletStartOnboarding)["request"]>
 ) {
   try {
+    const { paymentMethodId } = action.payload;
     const startOnboardingResult: SagaCallReturnType<typeof startOnboarding> =
       yield* call(startOnboarding, {
         bearerAuth: token,
         body: {
-          services: [ServiceEnum.PAGOPA]
+          services: [ServiceNameEnum.PAGOPA],
+          useDiagnosticTracing: true,
+          paymentMethodId
         }
       });
     if (E.isRight(startOnboardingResult)) {
-      if (startOnboardingResult.right.status === 200) {
+      if (startOnboardingResult.right.status === 201) {
         // handled success
         yield* put(
           walletStartOnboarding.success(startOnboardingResult.right.value)

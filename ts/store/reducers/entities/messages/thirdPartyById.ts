@@ -84,8 +84,7 @@ export const thirdPartyMessageUIAttachment =
       O.map(thirdPartyMessageAttachment =>
         attachmentFromThirdPartyMessage(
           ioMessageId,
-          thirdPartyMessageAttachment,
-          "GENERIC"
+          thirdPartyMessageAttachment
         )
       )
     );
