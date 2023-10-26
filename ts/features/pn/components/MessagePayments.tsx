@@ -6,7 +6,7 @@ import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
   Body,
-  LabelLink,
+  ButtonLink,
   ModulePaymentNotice,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -21,9 +21,8 @@ import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 const styles = StyleSheet.create({
-  morePaymentsLink: {
-    flex: 1,
-    textAlign: "center"
+  morePaymentsLinkContainer: {
+    alignSelf: "center"
   }
 });
 
@@ -138,6 +137,11 @@ export const MessagePayments = ({
       </MessageDetailsSection>
     );
   } else {
+    const morePaymentsLabel = payments
+      ? `${I18n.t("features.pn.details.paymentSection.morePayments")} (${
+          payments.length
+        })`
+      : "";
     return (
       <MessageDetailsSection
         title={I18n.t("features.pn.details.paymentSection.title")}
@@ -145,10 +149,9 @@ export const MessagePayments = ({
         testID={"PnPaymentSectionTitle"}
       >
         <Body>{I18n.t("features.pn.details.paymentSection.notice")}</Body>
-        {payments &&
-          payments
-            .slice(0, maxVisiblePaymentCount)
-            .map((payment, index) => (
+        {payments && (
+          <>
+            {payments.slice(0, maxVisiblePaymentCount).map((payment, index) => (
               <MessagePaymentItem
                 index={index}
                 key={`PM_${index}`}
@@ -156,17 +159,18 @@ export const MessagePayments = ({
                 payment={payment}
               />
             ))}
-        {payments && payments.length > maxVisiblePaymentCount && (
-          <>
-            <VSpacer size={24} />
-            <LabelLink
-              style={styles.morePaymentsLink}
-              onPress={() => undefined}
-            >
-              {`${I18n.t("features.pn.details.paymentSection.morePayments")} (${
-                payments.length
-              })`}
-            </LabelLink>
+            {payments.length > maxVisiblePaymentCount && (
+              <>
+                <VSpacer size={16} />
+                <View style={styles.morePaymentsLinkContainer}>
+                  <ButtonLink
+                    accessibilityLabel={morePaymentsLabel}
+                    label={morePaymentsLabel}
+                    onPress={() => undefined}
+                  />
+                </View>
+              </>
+            )}
           </>
         )}
       </MessageDetailsSection>
