@@ -168,8 +168,8 @@ const BarcodeScanBaseScreenComponent = ({
     isTorchOn,
     toggleTorch
   } = useIOBarcodeCameraScanner({
-    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode], "camera"),
-    onBarcodeError: failure => onBarcodeError(failure, "camera"),
+    onBarcodeSuccess,
+    onBarcodeError,
     barcodeFormats,
     barcodeTypes,
     disabled: !isFocused
