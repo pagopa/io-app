@@ -115,7 +115,7 @@ export function* downloadAttachmentWorker(
         yield* put(downloadAttachment.success({ attachment, path }));
       } else if (status === 503) {
         const waitingMs = getDelayMilliseconds(rest.headers);
-        if (waitingMs > 0) {
+        if (waitingMs >= 0) {
           yield* delay(waitingMs);
           continue;
         }
