@@ -26,7 +26,6 @@ export const getBadgeTextByPaymentNoticeStatus = (
 export const getHeaderByKey = (headers: Record<string, string>, key: string) =>
   pipe(
     Object.entries(headers),
-    A.findFirst(([k, _]) => k.toLowerCase() === key),
-    O.map(([_, value]) => value),
+    A.findFirstMap(([k, v]) => (k.toLowerCase() === key ? O.some(v) : O.none)),
     O.toUndefined
   );
