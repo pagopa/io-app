@@ -1023,6 +1023,10 @@ wallet:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     cardHolder: Card holder
   onboarding:
+    paymentMethodsList:
+      header:
+        title: Add a method
+        subtitle: The method will be stored and can be used to make in-app payments or enroll in compatible initiatives.
     bancomat:
       headerTitle: "Add PagoBANCOMAT card"
       koTimeout:
@@ -3015,7 +3019,10 @@ features:
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
         payments: "Pagamenti"
       paymentSection:
-        title: Avviso di pagamento
+        legacyTitle: Avviso di pagamento
+        title: Avvisi pagoPA
+        notice: "Alcuni avvisi possono includere i costi di notifica."
+        morePayments: "Vedi tutti gli avvisi"
       attachmentsSection:
         title: Allegati
       f24Section:
