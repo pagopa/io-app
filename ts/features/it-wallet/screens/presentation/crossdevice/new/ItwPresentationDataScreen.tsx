@@ -32,15 +32,15 @@ import ROUTES from "../../../../../../navigation/routes";
 import I18n from "../../../../../../i18n";
 import ItwBulletList from "../../../../components/ItwBulletList";
 import ItwFooterInfoBox from "../../../../components/ItwFooterInfoBox";
-import ItwErrorView from "../../../../components/ItwErrorView";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
 import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
 import { rpMock } from "../../../../utils/mocks";
 import { showCancelAlert } from "../../../../utils/alert";
+import ItwKoView from "../../../../components/ItwKoView";
+import { getItwGenerciMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -203,16 +203,17 @@ const ItwPresentationDataScreen = () => {
     </SafeAreaView>
   );
 
+  const ErrorView = () => {
+    const onPress = () => navigation.goBack();
+    const mappedError = getItwGenerciMappedError(onPress);
+    return <ItwKoView {...mappedError} />;
+  };
+
   const DecodedPidOrErrorView = () =>
     pipe(
       decodedPid,
       O.fold(
-        () => (
-          <ItwErrorView
-            type="SingleButton"
-            leftButton={cancelButtonProps(navigation.goBack)}
-          />
-        ),
+        () => <ErrorView />,
         some => <ContentView decodedPid={some} />
       )
     );

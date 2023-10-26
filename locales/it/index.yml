@@ -3450,7 +3450,7 @@ features:
           alreadyExisting: 
             title: "Hai già questa tessera"
             subtitle: "La tessera si trova già nel tuo Portafoglio. Se non la vedi, scrivici."
-            cta: "Vai al Portafoglio"
+            actionLabel: "Vai al Portafoglio"
       credentialAddScreen:
         loading:
           title: "Stiamo aggiungendo la tua credenziale al portafoglio"

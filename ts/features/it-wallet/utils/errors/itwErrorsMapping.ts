@@ -1,4 +1,5 @@
 import I18n from "../../../../i18n";
+import ItwKoView from "../../components/ItwKoView";
 import {
   ItWalletError,
   ItWalletErrorTypes,
@@ -12,6 +13,19 @@ import {
 export const getItwGenericError = (): ItWalletMappedError => ({
   title: I18n.t("features.itWallet.generic.error.title"),
   body: I18n.t("features.itWallet.generic.error.body")
+});
+
+export const getItwGenerciMappedError = (
+  onPress: () => any
+): React.ComponentProps<typeof ItwKoView> => ({
+  title: I18n.t("features.itWallet.generic.error.title"),
+  subtitle: I18n.t("features.itWallet.generic.error.body"),
+  action: {
+    accessibilityLabel: I18n.t("global.buttons.back"),
+    label: I18n.t("global.buttons.back"),
+    onPress
+  },
+  pictogram: "fatalError"
 });
 
 /**

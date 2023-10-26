@@ -8,9 +8,6 @@ import { itwPresentationChecksSelector } from "../../../../store/reducers/new/it
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
-import ItwErrorView from "../../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
-import { ItWalletError } from "../../../../utils/errors/itwErrors";
 import I18n from "../../../../../../i18n";
 import ROUTES from "../../../../../../navigation/routes";
 import {
@@ -20,6 +17,7 @@ import {
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { rpMock } from "../../../../utils/mocks";
 import ItwKoView from "../../../../components/ItwKoView";
+import { getItwGenerciMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -48,13 +46,11 @@ const ItwPresentationResultScreen = () => {
     </ItwLoadingSpinnerOverlay>
   );
 
-  const ErrorView = ({ error }: { error: ItWalletError }) => (
-    <ItwErrorView
-      error={error}
-      type="SingleButton"
-      leftButton={cancelButtonProps(navigation.goBack)}
-    />
-  );
+  const ErrorView = () => {
+    const onPress = () => navigation.goBack();
+    const mappedError = getItwGenerciMappedError(onPress);
+    return <ItwKoView {...mappedError} />;
+  };
 
   const SuccessView = () => (
     <SafeAreaView style={IOStyles.flex}>
@@ -85,11 +81,11 @@ const ItwPresentationResultScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => <ErrorView error={err} />,
+      _ => <ErrorView />,
       _ => <SuccessView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, err) => <ErrorView error={err} />
+      _ => <ErrorView />
     );
 
   return <RenderMask />;

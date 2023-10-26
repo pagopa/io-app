@@ -3,6 +3,7 @@ import {
   ButtonSolid,
   H3,
   IOPictograms,
+  IOStyles,
   LabelSmall,
   Pictogram,
   VSpacer,
@@ -39,6 +40,7 @@ const ItwKoView = ({
     centerContent={true}
     contentContainerStyle={[
       styles.wrapper,
+      IOStyles.horizontalContentPadding,
       /* Android fallback because `centerContent` is only an iOS property */
       Platform.OS === "android" && styles.wrapper_android
     ]}

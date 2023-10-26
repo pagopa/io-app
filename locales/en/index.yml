@@ -3426,7 +3426,7 @@ features:
           alreadyExisting: 
             title: "You already have this credential."
             subtitle: "This credential is already in your wallet. If you don't see it, contact us."
-            cta: "Go to the Wallet"
+            actionLabel: "Go to the Wallet"
       credentialAddScreen:
         loading:
           title: "We're adding your credential to your walleto"

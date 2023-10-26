@@ -8,9 +8,11 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 import I18n from "../../../../i18n";
 import { itwCredentialsChecks } from "../../store/actions/itwCredentialsActions";
-import ItwErrorView from "../../components/ItwErrorView";
-import { cancelButtonProps } from "../../utils/itwButtonsUtils";
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import {
+  ItWalletError,
+  ItWalletErrorTypes,
+  ItwErrorMapping
+} from "../../utils/errors/itwErrors";
 import { CredentialCatalogItem } from "../../utils/mocks";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import {
@@ -24,6 +26,8 @@ import ItwContinueScreen from "../../components/ItwResultComponent";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { showCancelAlert } from "../../utils/alert";
+import ItwKoView from "../../components/ItwKoView";
+import { getItwGenerciMappedError } from "../../utils/errors/itwErrorsMapping";
 
 /**
  * ItwAddCredentialsCheckScreen screen navigation params.
@@ -67,6 +71,39 @@ const ItwAddCredentialsCheckScreen = () => {
     navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
   };
 
+  /**
+   * Error mapping function which takes an error and returns a mapped error object which can be used to render {@link ItwKoView}.
+   * @param error - an ItWalletError instance.
+   * @returns an object of type {@link ItwKoViewProps}.
+   */
+  const mapError: ItwErrorMapping = (error: ItWalletError) => {
+    const onPress = () =>
+      navigation.navigate(ROUTES.MAIN, { screen: ROUTES.ITWALLET_HOME });
+    switch (error.code) {
+      case ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR:
+        return {
+          title: I18n.t(
+            "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.title"
+          ),
+          subtitle: I18n.t(
+            "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.subtitle"
+          ),
+          action: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.actionLabel"
+            ),
+            label: I18n.t(
+              "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.actionLabel"
+            ),
+            onPress
+          },
+          pictogram: "identityCheck"
+        };
+      default:
+        return getItwGenerciMappedError(onPress);
+    }
+  };
+
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
       captionTitle={I18n.t(
@@ -103,13 +140,10 @@ const ItwAddCredentialsCheckScreen = () => {
     </BaseScreenComponent>
   );
 
-  const ErrorView = ({ error }: { error: ItWalletError }) => (
-    <ItwErrorView
-      error={error}
-      type="SingleButton"
-      leftButton={cancelButtonProps(navigation.goBack)}
-    />
-  );
+  const ErrorView = ({ error }: { error: ItWalletError }) => {
+    const mappedError = mapError(error);
+    return <ItwKoView {...mappedError} />;
+  };
 
   const RenderMask = () =>
     pot.fold(
