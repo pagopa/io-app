@@ -15,7 +15,7 @@ import { GlobalState } from "../../../store/reducers/types";
 import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import { navigationRef } from "../../../navigation/NavigationService";
+import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 
 export function getNotificationStatusInfo(status: NotificationStatus) {
@@ -150,7 +150,7 @@ export const initializeAndNavigateToWalleForPayment = (
 
   dispatch(paymentInitializeState());
 
-  navigationRef.current?.navigate(ROUTES.WALLET_NAVIGATOR, {
+  NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
     params: { rptId: eitherRptId.right }
   });
