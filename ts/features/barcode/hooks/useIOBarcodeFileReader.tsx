@@ -1,3 +1,4 @@
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -13,19 +14,15 @@ import DocumentPicker, {
 } from "react-native-document-picker";
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
-import {
-  IOBottomSheetModal,
-  useIOBottomSheetAutoresizableModal
-} from "../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
 import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
+import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
-import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 
 type IOBarcodeFileReader = {
   /**
@@ -37,9 +34,21 @@ type IOBarcodeFileReader = {
    */
   showDocumentPicker: () => void;
   /**
-   * Bottom sheet with the options to select an image or a PDF document from the library
+   * Function which toggle the visibility filePickerBottomSheet compoentn
    */
-  filePickerModal: IOBottomSheetModal;
+  showFilePicker: () => void;
+  /**
+   * Component which displays the bottom sheet to chosse which type of file tu upload (image or document)
+   */
+  filePickerBottomSheet: JSX.Element;
+  /**
+   * Indicates that the decoder is currently reading/decoding barcodes
+   */
+  isLoading: boolean;
+  /**
+   * Indicates whether file picker bottom sheet is currently being showed or not
+   */
+  isFilePickerVisible: boolean;
 };
 
 type IOBarcodeFileReaderConfiguration = {
@@ -80,11 +89,25 @@ const useIOBarcodeFileReader = ({
   barcodeFormats,
   barcodeTypes
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
+  const [isFilePickerVisible, setFilePickerVisible] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+    setIsLoading(false);
+    onBarcodeSuccess(barcodes);
+  };
+
+  const handleBarcodeError = (failure: BarcodeFailure) => {
+    setIsLoading(false);
+    onBarcodeError(failure);
+  };
+
   /**
    * Handles the selected image from the image picker and pass the asset to the {@link qrCodeFromImageTask} task
    */
   const onImageSelected = async (response: ImagePicker.ImagePickerResponse) => {
     if (response.didCancel) {
+      setIsLoading(false);
       return;
     }
 
@@ -107,6 +130,8 @@ const useIOBarcodeFileReader = ({
       return;
     }
 
+    setIsLoading(true);
+
     await pipe(
       response.assets,
       O.fromNullable,
@@ -117,8 +142,8 @@ const useIOBarcodeFileReader = ({
       TE.chain(base64 =>
         imageDecodingTask({ base64 }, barcodeFormats, barcodeTypes)
       ),
-      TE.mapLeft(onBarcodeError),
-      TE.map(onBarcodeSuccess)
+      TE.mapLeft(handleBarcodeError),
+      TE.map(handleBarcodeSuccess)
     )();
   };
 
@@ -138,6 +163,8 @@ const useIOBarcodeFileReader = ({
       );
     }
 
+    setIsLoading(true);
+
     void ImagePicker.launchImageLibrary(imageLibraryOptions, onImageSelected);
   };
 
@@ -149,6 +176,8 @@ const useIOBarcodeFileReader = ({
       // If the file is not a PDF document, show an error
       return onBarcodeError({ reason: "INVALID_FILE" });
     }
+
+    setIsLoading(true);
 
     await pipe(
       imageGenerationTask(uri),
@@ -172,8 +201,8 @@ const useIOBarcodeFileReader = ({
           O.of,
           O.filter(A.isNonEmpty),
           O.map(getUniqueBarcodes),
-          O.map(onBarcodeSuccess),
-          O.getOrElse(() => onBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
+          O.map(handleBarcodeSuccess),
+          O.getOrElse(() => handleBarcodeError({ reason: "BARCODE_NOT_FOUND" }))
         )
       )
     )();
@@ -183,12 +212,14 @@ const useIOBarcodeFileReader = ({
    * Shows the document picker that lets the user select a PDF document from the library
    */
   const showDocumentPicker = async () => {
+    setIsLoading(true);
     await pipe(
       TE.tryCatch(
         () => DocumentPicker.pickSingle(documentPickerOptions),
         E.toError
       ),
-      TE.map(onDocumentSelected)
+      TE.map(onDocumentSelected),
+      TE.mapLeft(() => setIsLoading(false))
     )();
   };
 
@@ -220,15 +251,24 @@ const useIOBarcodeFileReader = ({
     </View>
   );
 
+  const handleShowFilePickerPressed = () => {
+    setFilePickerVisible(true);
+    filePickerModal.present();
+  };
+
   const filePickerModal = useIOBottomSheetAutoresizableModal({
     component: filePickerModalComponent,
-    title: ""
+    title: "",
+    onDismiss: () => setFilePickerVisible(false)
   });
 
   return {
     showImagePicker,
     showDocumentPicker,
-    filePickerModal
+    filePickerBottomSheet: filePickerModal.bottomSheet,
+    showFilePicker: handleShowFilePickerPressed,
+    isLoading,
+    isFilePickerVisible
   };
 };
 

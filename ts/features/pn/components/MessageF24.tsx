@@ -1,9 +1,15 @@
 import React from "react";
 import { View } from "react-native";
-import { Body, ButtonLink, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonLink,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 
@@ -12,6 +18,8 @@ type Props = {
 };
 
 const MessageF24Content = ({ attachments }: Props) => {
+  const { present, bottomSheet } = useF24BottomSheet(attachments);
+
   if (attachments.length === 1) {
     return (
       <MessageAttachments
@@ -28,15 +36,16 @@ const MessageF24Content = ({ attachments }: Props) => {
   const showAllLabel = I18n.t("features.pn.details.f24Section.showAll");
 
   return (
-    <View style={{ alignSelf: "center" }}>
-      <ButtonLink
-        accessibilityLabel={showAllLabel}
-        label={showAllLabel}
-        // TODO: open bottom-sheet
-        // https://pagopa.atlassian.net/browse/IOCOM-455
-        onPress={constNull}
-      />
-    </View>
+    <>
+      <View style={IOStyles.selfCenter}>
+        <ButtonLink
+          accessibilityLabel={showAllLabel}
+          label={showAllLabel}
+          onPress={present}
+        />
+      </View>
+      {bottomSheet}
+    </>
   );
 };
 
