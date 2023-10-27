@@ -1,6 +1,11 @@
 import React from "react";
 import { View } from "react-native";
-import { Body, ButtonLink, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonLink,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
@@ -32,7 +37,7 @@ const MessageF24Content = ({ attachments }: Props) => {
 
   return (
     <>
-      <View style={{ alignSelf: "center" }}>
+      <View style={IOStyles.selfCenter}>
         <ButtonLink
           accessibilityLabel={showAllLabel}
           label={showAllLabel}
