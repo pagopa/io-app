@@ -5,11 +5,11 @@ import {
   rptIdFromPaymentNoticeQrCode
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import { Credential } from "@pagopa/io-react-native-wallet";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { RelyingPartySolution } from "@pagopa/io-react-native-wallet";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { IOBarcodeType } from "./IOBarcode";
 
@@ -102,7 +102,7 @@ const decodeItWalletBarcode: IOBarcodeDecoderFn = (data: string) =>
     O.fromNullable,
     O.map(m =>
       E.tryCatch(
-        () => RelyingPartySolution.decodeAuthRequestQR(m[0]),
+        () => Credential.Presentation.startFlowFromQR(m[0]),
         () => new Error("Failed to decode auth request QR")
       )
     ),

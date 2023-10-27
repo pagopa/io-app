@@ -1,11 +1,11 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwPid } from "../actions/itwCredentialsActions";
+import { PidResponse } from "../../utils/types";
 
 export type ItwPidType = {
   pid: O.Option<PidResponse>;
