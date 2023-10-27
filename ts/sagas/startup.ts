@@ -84,8 +84,8 @@ import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
-import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
-import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
+import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
+import { watchMessageAttachmentsSaga } from "../features/messages/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
@@ -209,7 +209,7 @@ export function* initializeApplicationSaga(
   }
 
   // clear cached downloads when the logged user changes
-  yield* takeEvery(differentProfileLoggedIn, clearAllAttachments);
+  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
