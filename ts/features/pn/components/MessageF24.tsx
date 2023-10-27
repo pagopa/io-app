@@ -11,8 +11,6 @@ type Props = {
   attachments: ReadonlyArray<UIAttachment>;
 };
 
-const showAllLabel = I18n.t("features.pn.details.f24Section.showAll");
-
 const MessageF24Content = ({ attachments }: Props) => {
   if (attachments.length === 1) {
     return (
@@ -26,6 +24,8 @@ const MessageF24Content = ({ attachments }: Props) => {
       />
     );
   }
+
+  const showAllLabel = I18n.t("features.pn.details.f24Section.showAll");
 
   return (
     <View style={{ alignSelf: "center" }}>
