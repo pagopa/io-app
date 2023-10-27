@@ -8,9 +8,6 @@ import { itwPresentationChecksSelector } from "../../../../store/reducers/new/it
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
-import ItwErrorView from "../../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
-import { ItWalletError } from "../../../../utils/errors/itwErrors";
 import ItwContinueScreen from "../../../../components/ItwResultComponent";
 import I18n from "../../../../../../i18n";
 import { showCancelAlert } from "../../../../utils/alert";
@@ -22,6 +19,8 @@ import {
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { rpMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import ItwKoView from "../../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -57,13 +56,11 @@ const ItwPresentationChecksScreen = () => {
     </ItwLoadingSpinnerOverlay>
   );
 
-  const ErrorView = ({ error }: { error: ItWalletError }) => (
-    <ItwErrorView
-      error={error}
-      type="SingleButton"
-      leftButton={cancelButtonProps(navigation.goBack)}
-    />
-  );
+  const ErrorView = () => {
+    const onPress = () => navigation.goBack();
+    const mappedError = getItwGenericMappedError(onPress);
+    return <ItwKoView {...mappedError} />;
+  };
 
   const SuccessView = () => (
     <SafeAreaView style={IOStyles.flex}>
@@ -93,11 +90,11 @@ const ItwPresentationChecksScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => <ErrorView error={err} />,
+      _ => <ErrorView />,
       _ => <SuccessView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, err) => <ErrorView error={err} />
+      _ => <ErrorView />
     );
 
   return <RenderMask />;
