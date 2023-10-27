@@ -1,10 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { put, select, call, takeLatest } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
-import {
-  Errors,
-  getWalletProviderEntityConfiguration
-} from "@pagopa/io-react-native-wallet";
+import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import DeviceInfo from "react-native-device-info";
 import { idpSelector } from "../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
@@ -36,7 +33,7 @@ export function* handleWiaRequest(): SagaIterator {
   if (hasLoggedInWithCie || isCieSupported || isEmulator) {
     try {
       const entityConfiguration = yield* call(
-        getWalletProviderEntityConfiguration,
+        Trust.getWalletProviderEntityConfiguration,
         walletProviderUrl
       );
       const wia = yield* call(getWia, entityConfiguration);

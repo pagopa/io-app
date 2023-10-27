@@ -2,9 +2,9 @@ import { SagaIterator } from "redux-saga";
 import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import {
-  RelyingPartySolution,
+  Credential,
   createCryptoContextFor,
-  getRelyingPartyEntityConfiguration
+  Trust
 } from "@pagopa/io-react-native-wallet";
 import { itwRpInitialization } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
@@ -29,17 +29,27 @@ export function* handleItwRpInitializationSaga(
     const wiaCryptoContext = createCryptoContextFor(ITW_WIA_KEY_TAG);
 
     // Get entity configuration for RP
-    const entity = yield* call(getRelyingPartyEntityConfiguration, clientId);
+    const {
+      payload: { metadata: rpEntityConfiguration }
+    } = yield* call(Trust.getRelyingPartyEntityConfiguration, clientId);
 
     // Get request object configuration
-    const requestObject = yield* call(
-      RelyingPartySolution.getRequestObject({ wiaCryptoContext }),
-      wia.payload,
+    const { requestObject } = yield* call(
+      Credential.Presentation.getRequestObject,
       authReqUrl,
-      entity
+      rpEntityConfiguration,
+      {
+        wiaCryptoContext,
+        walletInstanceAttestation: wia.payload
+      }
     );
 
-    yield* put(itwRpInitialization.success({ requestObject, entity }));
+    yield* put(
+      itwRpInitialization.success({
+        requestObject,
+        entity: rpEntityConfiguration
+      })
+    );
   } catch (e) {
     yield* put(
       itwRpInitialization.failure({
