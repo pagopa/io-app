@@ -9,14 +9,14 @@ import {
 /**
  * Getter for a generic error title and body.
  * @returns a generic ItWalletMappedError.
- * @deprecated use {@link getItwGenerciMappedError} instead.
+ * @deprecated use {@link getItwGenericMappedError} instead.
  */
 export const getItwGenericError = (): ItWalletMappedError => ({
   title: I18n.t("features.itWallet.generic.error.title"),
   body: I18n.t("features.itWallet.generic.error.body")
 });
 
-export const getItwGenerciMappedError = (
+export const getItwGenericMappedError = (
   onPress: () => any
 ): React.ComponentProps<typeof ItwKoView> => ({
   title: I18n.t("features.itWallet.generic.error.title"),

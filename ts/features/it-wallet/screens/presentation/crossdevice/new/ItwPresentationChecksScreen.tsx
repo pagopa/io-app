@@ -20,7 +20,7 @@ import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { rpMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenerciMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -58,7 +58,7 @@ const ItwPresentationChecksScreen = () => {
 
   const ErrorView = () => {
     const onPress = () => navigation.goBack();
-    const mappedError = getItwGenerciMappedError(onPress);
+    const mappedError = getItwGenericMappedError(onPress);
     return <ItwKoView {...mappedError} />;
   };
 

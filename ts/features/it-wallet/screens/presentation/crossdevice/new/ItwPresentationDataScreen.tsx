@@ -40,7 +40,7 @@ import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
 import { rpMock } from "../../../../utils/mocks";
 import { showCancelAlert } from "../../../../utils/alert";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenerciMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -205,7 +205,7 @@ const ItwPresentationDataScreen = () => {
 
   const ErrorView = () => {
     const onPress = () => navigation.goBack();
-    const mappedError = getItwGenerciMappedError(onPress);
+    const mappedError = getItwGenericMappedError(onPress);
     return <ItwKoView {...mappedError} />;
   };
 

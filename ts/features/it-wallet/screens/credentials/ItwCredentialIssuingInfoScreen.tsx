@@ -34,7 +34,7 @@ import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
-import { getItwGenerciMappedError } from "../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -162,7 +162,7 @@ const ItwCredentialIssuingInfoScreen = () => {
 
   const ErrorView = () => {
     const onPress = () => navigation.goBack();
-    const mappedError = getItwGenerciMappedError(onPress);
+    const mappedError = getItwGenericMappedError(onPress);
     return <ItwKoView {...mappedError} />;
   };
 

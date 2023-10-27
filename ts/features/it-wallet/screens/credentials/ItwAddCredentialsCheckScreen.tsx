@@ -27,7 +27,7 @@ import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { showCancelAlert } from "../../utils/alert";
 import ItwKoView from "../../components/ItwKoView";
-import { getItwGenerciMappedError } from "../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
 
 /**
  * ItwAddCredentialsCheckScreen screen navigation params.
@@ -100,7 +100,7 @@ const ItwAddCredentialsCheckScreen = () => {
           pictogram: "identityCheck"
         };
       default:
-        return getItwGenerciMappedError(onPress);
+        return getItwGenericMappedError(onPress);
     }
   };
 

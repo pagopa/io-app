@@ -30,7 +30,7 @@ import ROUTES from "../../../../navigation/routes";
 import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
 import { itwCredentialsSelector } from "../../store/reducers/itwCredentialsReducer";
 import ItwKoView from "../../components/ItwKoView";
-import { getItwGenerciMappedError } from "../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
 
 /**
  * Type for the content view component props.
@@ -192,7 +192,7 @@ const ItwCredentialPreviewScreen = () => {
 
   const ErrorView = () => {
     const onPress = () => navigation.goBack();
-    const mappedError = getItwGenerciMappedError(onPress);
+    const mappedError = getItwGenericMappedError(onPress);
     return <ItwKoView {...mappedError} />;
   };
 
