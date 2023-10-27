@@ -36,6 +36,13 @@ export const idps: ReadonlyArray<LocalIdpsFallback> = [
     profileUrl: "https://my.infocert.it/selfcare"
   },
   {
+    id: "intesiid",
+    name: "IntesiGroup",
+    logo: "",
+    localLogo: require("../../img/spid-idp-intesigroupspid.png"),
+    profileUrl: "https://spid.intesigroup.com"
+  },
+  {
     id: "lepidaid",
     name: "Lepida",
     logo: "",
