@@ -18,7 +18,7 @@ const WalletPlayground = () => {
 
   const navigateToWalletOnboarding = () => {
     navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
-      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_START
+      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
     });
   };
 
