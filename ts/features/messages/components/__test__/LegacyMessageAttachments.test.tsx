@@ -6,11 +6,11 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { MessageAttachments } from "../MessageAttachments";
+import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
 import { Downloads } from "../../../../store/reducers/entities/messages/downloads";
 import { mockPdfAttachment } from "../../../../__mocks__/attachment";
 import { downloadAttachment } from "../../../../store/actions/messages";
-import I18n from "../../../../i18n";
+import ROUTES from "../../../../navigation/routes";
 
 const mockOpenPreview = jest.fn();
 const mockShowToast = jest.fn();
@@ -19,7 +19,7 @@ jest.mock("../../../../utils/showToast", () => ({
   showToast: () => mockShowToast()
 }));
 
-describe("MessageAttachments", () => {
+describe("LegacyMessageAttachments", () => {
   beforeEach(() => {
     mockShowToast.mockReset();
     mockOpenPreview.mockReset();
@@ -44,9 +44,7 @@ describe("MessageAttachments", () => {
             }
           );
           expect(
-            component.queryByHintText(
-              I18n.t("global.accessibility.activityIndicator.hint")
-            )
+            component.queryByTestId("attachmentActivityIndicator")
           ).not.toBeNull();
         });
       });
@@ -75,9 +73,7 @@ describe("MessageAttachments", () => {
             }
           );
           expect(
-            component.queryByHintText(
-              I18n.t("global.accessibility.activityIndicator.hint")
-            )
+            component.queryByTestId("attachmentActivityIndicator")
           ).toBeNull();
         });
       });
@@ -138,7 +134,7 @@ describe("MessageAttachments", () => {
 });
 
 const renderComponent = (
-  props: React.ComponentProps<typeof MessageAttachments>,
+  props: React.ComponentProps<typeof LegacyMessageAttachments>,
   downloads: Downloads = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -155,8 +151,8 @@ const renderComponent = (
 
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
-      () => <MessageAttachments {...props} />,
-      "DUMMY",
+      () => <LegacyMessageAttachments {...props} />,
+      ROUTES.MESSAGE_DETAIL_ATTACHMENT,
       {},
       store
     ),

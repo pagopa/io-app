@@ -8,7 +8,7 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { getRptIdFromNoticeNumber } from "../../../utils/payment";
 
-const getRptIdFromPayment = (
+export const getRptIdFromPayment = (
   payment?: NotificationPaymentInfo
 ): RptId | undefined =>
   pipe(
@@ -29,4 +29,6 @@ const getRptIdFromPayment = (
     O.toUndefined
   );
 
-export { getRptIdFromPayment };
+export const getRptIdStringFromPayment = (
+  payment: NotificationPaymentInfo
+): string => `${payment.creditorTaxId}${payment.noticeCode}`;
