@@ -21,8 +21,6 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import ItwErrorView from "../../components/ItwErrorView";
-import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
 import { CredentialCatalogItem } from "../../utils/mocks";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
@@ -31,6 +29,8 @@ import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
 import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
 import { itwCredentialsSelector } from "../../store/reducers/itwCredentialsReducer";
+import ItwKoView from "../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
 
 /**
  * Type for the content view component props.
@@ -190,6 +190,12 @@ const ItwCredentialPreviewScreen = () => {
     );
   };
 
+  const ErrorView = () => {
+    const onPress = () => navigation.goBack();
+    const mappedError = getItwGenericMappedError(onPress);
+    return <ItwKoView {...mappedError} />;
+  };
+
   /**
    * Checks if credential is some or none and renders the content of the screen or an error view.
    * @returns the content of the screen if the credential is some, an error view otherwise.
@@ -198,12 +204,7 @@ const ItwCredentialPreviewScreen = () => {
     pipe(
       credential,
       O.fold(
-        () => (
-          <ItwErrorView
-            type="SingleButton"
-            leftButton={cancelButtonProps(navigation.goBack)}
-          />
-        ),
+        () => <ErrorView />,
         credential => <ContentView credential={credential} />
       )
     );

@@ -22,8 +22,6 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeReducer";
-import ItwErrorView from "../../components/ItwErrorView";
-import { cancelButtonProps } from "../../utils/itwButtonsUtils";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
@@ -35,6 +33,8 @@ import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwC
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
+import ItwKoView from "../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -160,16 +160,17 @@ const ItwCredentialIssuingInfoScreen = () => {
     </SafeAreaView>
   );
 
+  const ErrorView = () => {
+    const onPress = () => navigation.goBack();
+    const mappedError = getItwGenericMappedError(onPress);
+    return <ItwKoView {...mappedError} />;
+  };
+
   const DecodedPidOrErrorView = () =>
     pipe(
       sequenceS(O.Applicative)({ decodedPid, credential }),
       O.fold(
-        () => (
-          <ItwErrorView
-            type="SingleButton"
-            leftButton={cancelButtonProps(navigation.goBack)}
-          />
-        ),
+        () => <ErrorView />,
         some => <ContentView {...some} />
       )
     );

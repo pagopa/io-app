@@ -1,3 +1,5 @@
+import ItwKoView from "../../components/ItwKoView";
+
 /**
  * Type for errors which might occur during the it-wallet flow.
  * These errors are a superset of HTTP errors with custom error codes.
@@ -14,6 +16,14 @@ export type ItWalletMappedError = {
   title: string;
   body: string;
 };
+
+/**
+ * Type for error mapping functions which map an error to a component to be displayed to the user.
+ * The function must takes an {@link ItWalletError} and returns a {@link ItwKoViewProps}
+ */
+export type ItwErrorMapping = (
+  error: ItWalletError
+) => React.ComponentProps<typeof ItwKoView>;
 
 /**
  * Requirements error codes
