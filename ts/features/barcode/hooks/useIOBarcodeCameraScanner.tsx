@@ -1,4 +1,8 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IOStyles,
+  LoadingSpinner
+} from "@pagopa/io-app-design-system";
 import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
@@ -6,6 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking, StyleSheet, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
 import {
   Barcode,
@@ -55,9 +60,13 @@ export type IOBarcodeCameraScannerConfiguration = {
    */
   onBarcodeError: (failure: BarcodeFailure) => void;
   /**
-   * Disables the barcode scanned
+   * Disables the barcode scanner
    */
-  disabled?: boolean;
+  isDisabled?: boolean;
+  /**
+   * If true, the component displays a loading indicator and disables all interactions
+   */
+  isLoading?: boolean;
 };
 
 export type IOBarcodeCameraScanner = {
@@ -153,16 +162,17 @@ const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 export const useIOBarcodeCameraScanner = ({
   onBarcodeSuccess,
   onBarcodeError,
-  disabled,
+  isDisabled,
   barcodeFormats,
-  barcodeTypes
+  barcodeTypes,
+  isLoading = false
 }: IOBarcodeCameraScannerConfiguration): IOBarcodeCameraScanner => {
   const acceptedFormats = React.useMemo<Array<IOBarcodeFormat>>(
     () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
     [barcodeFormats]
   );
 
-  const prevDisabled = usePrevious(disabled);
+  const prevDisabled = usePrevious(isDisabled);
   const device = useWideAngleCameraDevice();
 
   // Checks that the device has a torch
@@ -282,17 +292,24 @@ export const useIOBarcodeCameraScanner = ({
     // in which the latest frame would be scanned
     // multiple times due to races conditions during
     // the camera disactivation.
-    if (prevDisabled || disabled) {
+    if (prevDisabled || isDisabled) {
       return;
     }
 
-    if (isResting) {
+    if (isResting || isLoading) {
       // Barcode scanner is momentarily disabled, skip
       return;
     }
 
     handleScannedBarcodes(barcodes);
-  }, [prevDisabled, disabled, isResting, barcodes, handleScannedBarcodes]);
+  }, [
+    prevDisabled,
+    isDisabled,
+    isResting,
+    isLoading,
+    barcodes,
+    handleScannedBarcodes
+  ]);
 
   /**
    * Component that renders camera and marker
@@ -306,13 +323,19 @@ export const useIOBarcodeCameraScanner = ({
           audio={false}
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
-          isActive={!disabled}
+          isActive={!isDisabled}
           torch={isTorchOn ? "on" : "off"}
         />
       )}
-      <View style={{ alignSelf: "center" }}>
-        <AnimatedCameraMarker state={isResting ? "IDLE" : "SCANNING"} />
-      </View>
+      {!isLoading ? (
+        <View style={styles.markerContainer}>
+          <AnimatedCameraMarker isAnimated={!isResting && !isDisabled} />
+        </View>
+      ) : (
+        <View style={styles.markerContainer}>
+          <LoadingMarkerComponent />
+        </View>
+      )}
     </View>
   );
 
@@ -329,6 +352,15 @@ export const useIOBarcodeCameraScanner = ({
   };
 };
 
+const LoadingMarkerComponent = () => (
+  <Animated.View
+    entering={FadeIn}
+    style={[IOStyles.flex, IOStyles.centerJustified, { marginTop: "15%" }]}
+  >
+    <LoadingSpinner size={76} color="white" />
+  </Animated.View>
+);
+
 const styles = StyleSheet.create({
   cameraContainer: {
     position: "relative",
@@ -340,5 +372,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%"
+  },
+  markerContainer: {
+    alignSelf: "center",
+    position: "absolute",
+    top: 0,
+    bottom: 0
   }
 });
