@@ -940,6 +940,11 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
+  v3:
+    pickPaymentMethod:
+      header: Come vuoi pagare?
+      savedMethods: I tuoi metodi
+      otherMethods: Altri metodi
   methodDetails:
     cobadgeTitle: 'Debit card'
     cardGeneric: 'Card'

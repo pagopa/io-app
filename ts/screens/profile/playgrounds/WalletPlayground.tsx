@@ -12,6 +12,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/navigation/navigator";
+import { WalletPaymentRoutes } from "../../../features/walletV3/payment/navigation/routes";
 
 const WalletPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -19,6 +20,11 @@ const WalletPlayground = () => {
   const navigateToWalletOnboarding = () => {
     navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
       screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
+    });
+  };
+  const navigateToCheckoutFlow = () => {
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_CHECKOUT_METHOD_SELECTION
     });
   };
 
@@ -34,6 +40,14 @@ const WalletPlayground = () => {
           accessibilityLabel={"Onboarding Playground"}
           description="Start the onboarding flow to add a new method of payment"
           onPress={navigateToWalletOnboarding}
+        />
+        <Divider />
+        {/* checkout methods selection playground */}
+        <ListItemNav
+          value="checkout playground"
+          accessibilityLabel={"checkout playground"}
+          description="start the payment flow with a mock payment"
+          onPress={navigateToCheckoutFlow}
         />
         <Divider />
         {/* Payment Playground */}

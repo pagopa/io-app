@@ -940,6 +940,11 @@ payment:
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
 wallet:
+  v3:
+    pickPaymentMethod:
+      header: Come vuoi pagare?
+      savedMethods: I tuoi metodi
+      otherMethods: Altri metodi
   methodDetails:
     cobadgeTitle: 'Carta di debito'
     cardGeneric: 'Carta'

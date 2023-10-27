@@ -8,6 +8,7 @@ import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { WalletPaymentBarcodeChoiceScreen } from "../screens/WalletPaymentBarcodeChoiceScreen";
 import { WalletPaymentBarcodeScanScreen } from "../screens/WalletPaymentBarcodeScanScreen";
+import { WalletCheckoutMethodSelectionScreen } from "../screens/WalletPaymentCheckoutMethodSelectionScreen";
 import { WalletPaymentParamsList } from "./params";
 import { WalletPaymentRoutes } from "./routes";
 
@@ -30,6 +31,13 @@ export const WalletPaymentNavigator = () => (
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE}
       component={WalletPaymentBarcodeChoiceScreen}
+      options={{
+        gestureEnabled: isGestureEnabled
+      }}
+    />
+    <Stack.Screen
+      name={WalletPaymentRoutes.WALLET_PAYMENT_CHECKOUT_METHOD_SELECTION}
+      component={WalletCheckoutMethodSelectionScreen}
       options={{
         gestureEnabled: isGestureEnabled
       }}

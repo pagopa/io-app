@@ -5,4 +5,5 @@ export type WalletPaymentParamsList = {
   [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: undefined;
   [WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN]: undefined;
   [WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE]: WalletPaymentBarcodeChoiceScreenParams;
+  [WalletPaymentRoutes.WALLET_PAYMENT_CHECKOUT_METHOD_SELECTION]: undefined;
 };
