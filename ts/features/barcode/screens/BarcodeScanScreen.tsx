@@ -198,13 +198,17 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const { filePickerModal, isLoading: isFileReaderLoading } =
-    useIOBarcodeFileReader({
-      barcodeFormats,
-      barcodeTypes,
-      onBarcodeSuccess: handleBarcodeSuccess,
-      onBarcodeError: handleBarcodeError
-    });
+  const {
+    filePickerBottomSheet,
+    showFilePicker,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError
+  });
 
   return (
     <>
@@ -213,12 +217,13 @@ const BarcodeScanScreen = () => {
         barcodeTypes={barcodeTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
-        onFileInputPressed={filePickerModal.present}
+        onFileInputPressed={showFilePicker}
         onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
         isLoading={isFileReaderLoading}
+        isDisabled={isFilePickerVisible}
       />
-      {filePickerModal.bottomSheet}
+      {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>
   );
