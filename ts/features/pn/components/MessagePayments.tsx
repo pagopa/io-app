@@ -5,7 +5,7 @@ import React, { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
-  LabelLink,
+  ButtonLink,
   ModulePaymentNotice,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -27,9 +27,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center"
   },
-  morePaymentsLink: {
-    flex: 1,
-    textAlign: "center"
+  morePaymentsLinkContainer: {
+    alignSelf: "center"
   }
 });
 
@@ -156,16 +155,20 @@ export const MessagePayments = ({
   } else {
     const showMorePaymentsLink =
       payments && payments.length > maxVisiblePaymentCount;
+    const morePaymentsLabel = payments
+      ? `${I18n.t("features.pn.details.paymentSection.morePayments")} (${
+          payments.length
+        })`
+      : "";
     return (
       <MessageDetailsSection
         title={I18n.t("features.pn.details.paymentSection.title")}
         iconName={"productPagoPA"}
         testID={"PnPaymentSectionTitle"}
       >
-        {payments &&
-          payments
-            .slice(0, maxVisiblePaymentCount)
-            .map((payment, index) => (
+        {payments && (
+          <>
+            {payments.slice(0, maxVisiblePaymentCount).map((payment, index) => (
               <MessagePaymentItem
                 index={index}
                 key={`PM_${index}`}
@@ -173,28 +176,29 @@ export const MessagePayments = ({
                 payment={payment}
               />
             ))}
-        {showMorePaymentsLink && (
-          <>
-            <VSpacer size={24} />
-            {morePaymentsLinkState === "visibleLoading" && (
-              <View style={styles.morePaymentsSkeletonContainer}>
-                <Placeholder.Box
-                  animate="fade"
-                  radius={8}
-                  width={172}
-                  height={16}
-                />
-              </View>
-            )}
-            {morePaymentsLinkState === "visibleEnabled" && (
-              <LabelLink
-                style={styles.morePaymentsLink}
-                onPress={() => presentPaymentsBottomSheetRef.current?.()}
-              >
-                {`${I18n.t(
-                  "features.pn.details.paymentSection.morePayments"
-                )} (${payments.length})`}
-              </LabelLink>
+            {showMorePaymentsLink && (
+              <>
+                <VSpacer size={16} />
+                {morePaymentsLinkState === "visibleLoading" && (
+                  <View style={styles.morePaymentsSkeletonContainer}>
+                    <Placeholder.Box
+                      animate="fade"
+                      radius={8}
+                      width={172}
+                      height={16}
+                    />
+                  </View>
+                )}
+                {morePaymentsLinkState === "visibleEnabled" && (
+                  <View style={styles.morePaymentsLinkContainer}>
+                    <ButtonLink
+                      accessibilityLabel={morePaymentsLabel}
+                      label={morePaymentsLabel}
+                      onPress={() => presentPaymentsBottomSheetRef.current?.()}
+                    />
+                  </View>
+                )}
+              </>
             )}
           </>
         )}

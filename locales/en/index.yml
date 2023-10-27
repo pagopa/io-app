@@ -1023,6 +1023,10 @@ wallet:
     cardsPreview: Payment methods' preview. Activate to navigate to the the list of payment methods.
     cardHolder: Card holder
   onboarding:
+    paymentMethodsList:
+      header:
+        title: Add a method
+        subtitle: The method will be stored and can be used to make in-app payments or enroll in compatible initiatives.
     bancomat:
       headerTitle: "Add PagoBANCOMAT card"
       koTimeout:
@@ -3021,6 +3025,10 @@ features:
         bottomSheetTitle: "Quale avviso vuoi pagare?"
       attachmentsSection:
         title: Allegati
+      f24Section:
+        title: Modelli F24
+        description: Se preferisci, puoi pagare questa notifica tramite F24.
+        showAll: Vedi modelli F24
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN

@@ -28,7 +28,7 @@ import customVariables from "../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { isDuplicatedPayment } from "../../../utils/payment";
-import { MessageAttachments } from "../../messages/components/MessageAttachments";
+import { LegacyMessageAttachments } from "../../messages/components/LegacyMessageAttachments";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -198,7 +198,7 @@ export const PnMessageDetails = ({
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
-            <MessageAttachments
+            <LegacyMessageAttachments
               disabled={isCancelled}
               attachments={message.attachments}
               downloadAttachmentBeforePreview={true}

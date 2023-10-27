@@ -137,7 +137,7 @@ const computeUpdatedPaymentCount =
       O.map(paymentStatuses =>
         pipe(
           payments ?? [],
-          RA.takeLeft(1 + maxVisiblePaymentCount),
+          RA.takeLeft(maxVisiblePaymentCount),
           RA.reduce(initialPaymentStatistics(), (accumulator, payment) =>
             pipe(
               payment,

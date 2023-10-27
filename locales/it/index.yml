@@ -1023,6 +1023,10 @@ wallet:
     cardsPreview: Anteprima dei metodi di pagamento. Attiva per accedere alla lista dei tuoi metodi
     cardHolder: Intestatario carta
   onboarding:
+    paymentMethodsList:
+      header:
+        title: Aggiungi un metodo
+        subtitle: Il metodo verrà memorizzato e potrà essere utilizzato per effettuare pagamenti in app o aderire a iniziative compatibili.
     bancomat:
       headerTitle: "Aggiungi carta PagoBANCOMAT"
       koTimeout:
@@ -3018,9 +3022,13 @@ features:
         legacyTitle: Avviso di pagamento
         title: "Avvisi pagoPA"
         morePayments: "Vedi tutti gli avvisi"
-        bottomSheetTitle: "Quale avviso vuoi pagare?"    
+        bottomSheetTitle: "Quale avviso vuoi pagare?" 
       attachmentsSection:
         title: Allegati
+      f24Section:
+        title: Modelli F24
+        description: Se preferisci, puoi pagare questa notifica tramite F24.
+        showAll: Vedi modelli F24
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN
