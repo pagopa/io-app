@@ -40,10 +40,10 @@ import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
+import { MessageF24 } from "./MessageF24";
 import { MessagePayments } from "./MessagePayments";
 import { MessageFooter } from "./MessageFooter";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
-import { MessageF24 } from "./MessageF24";
 
 type Props = Readonly<{
   messageId: UIMessageId;
@@ -148,7 +148,12 @@ export const MessageDetails = ({
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
 
-        {RA.isNonEmpty(f24List) && <MessageF24 attachments={f24List} />}
+        {RA.isNonEmpty(f24List) && (
+          <>
+            <MessageF24 attachments={f24List} />
+            <VSpacer size={24} />
+          </>
+        )}
 
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
