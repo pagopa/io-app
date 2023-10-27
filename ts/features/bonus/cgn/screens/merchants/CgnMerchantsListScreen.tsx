@@ -1,6 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { debounce } from "lodash";
-import { Item } from "native-base";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
 import { View, Keyboard, SafeAreaView } from "react-native";
@@ -115,7 +114,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
           <>
             <View style={IOStyles.horizontalContentPadding}>
               <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
-              <Item>
+              <View style={{ height: 50 }}>
                 <LabelledItem
                   icon="search"
                   iconPosition={"right"}
@@ -126,7 +125,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
                     placeholder: I18n.t("global.buttons.search")
                   }}
                 />
-              </Item>
+              </View>
             </View>
             <CgnMerchantsListView
               refreshing={
