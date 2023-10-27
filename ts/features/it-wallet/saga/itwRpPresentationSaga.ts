@@ -52,7 +52,7 @@ export function* handleItwRpPresentationSaga(
         itwRpInitializationEntityValueSelector
       );
 
-      // We suppose the WIA has aslready been loaded into the state from previous steps
+      // We suppose the WIA has already been loaded into the state from previous steps
       const maybeWalletInstanceAttestation = yield* select(itwWiaSelector);
 
       if (O.isNone(maybeWalletInstanceAttestation)) {
