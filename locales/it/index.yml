@@ -3025,6 +3025,12 @@ features:
         morePayments: "Vedi tutti gli avvisi"
       attachmentsSection:
         title: Allegati
+      f24Section:
+        title: Modelli F24
+        description: Se preferisci, puoi pagare questa notifica tramite F24.
+        showAll: Vedi modelli F24
+        bottomSheet:
+          title: Modelli F24 allegati
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN
