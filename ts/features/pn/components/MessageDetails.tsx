@@ -83,7 +83,8 @@ export const MessageDetails = ({
       trackPNAttachmentOpening();
       navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachmentId: attachment.id
+        attachmentId: attachment.id,
+        category: attachment.category
       });
     },
     [messageId, navigation]
@@ -146,7 +147,7 @@ export const MessageDetails = ({
 
         {RA.isNonEmpty(f24List) && (
           <>
-            <MessageF24 attachments={f24List} />
+            <MessageF24 attachments={f24List} openPreview={openAttachment} />
             <VSpacer size={24} />
           </>
         )}
