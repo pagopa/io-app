@@ -218,7 +218,8 @@ const useIOBarcodeFileReader = ({
         () => DocumentPicker.pickSingle(documentPickerOptions),
         E.toError
       ),
-      TE.map(onDocumentSelected)
+      TE.map(onDocumentSelected),
+      TE.mapLeft(() => setIsLoading(false))
     )();
   };
 
