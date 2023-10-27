@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { PidResponse } from "@pagopa/io-react-native-wallet/lib/typescript/pid/issuing";
+
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -10,6 +10,7 @@ import {
 } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { CredentialCatalogItem } from "../../utils/mocks";
+import { PidResponse } from "../../utils/types";
 
 /**
  * The type of credentials stored in the wallet.

@@ -7,7 +7,10 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { itwRpPresentation } from "../actions/itwRpActions";
 
 export type ItwRpPresentationType = {
-  result: O.Option<string>;
+  result: O.Option<{
+    status: string;
+    response_code?: string;
+  }>;
 };
 
 export type ItwRpPresentationState = pot.Pot<
