@@ -27,8 +27,10 @@ import {
   IOBarcode,
   useIOBarcodeFileReader
 } from "../../../barcode";
+import * as analytics from "../../../barcode/analytics";
 import {
   IOBarcodeFormat,
+  IOBarcodeOrigin,
   IOBarcodeType,
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
@@ -53,8 +55,13 @@ const WalletPaymentBarcodeScanScreen = () => {
 
   const barcodeTypes: Array<IOBarcodeType> = ["PAGOPA"];
 
-  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
+    analytics.trackBarcodeScanSuccess("avviso", barcodes[0], origin);
 
     const pagoPaBarcodes: Array<PagoPaBarcode> = pipe(
       barcodes,
@@ -112,20 +119,23 @@ const WalletPaymentBarcodeScanScreen = () => {
   };
 
   const handleBarcodeError = (failure: BarcodeFailure) => {
+    IOToast.error(I18n.t("barcodeScan.error"));
     if (
       failure.reason === "UNKNOWN_CONTENT" &&
       failure.format === "DATA_MATRIX"
     ) {
       void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
     }
-    IOToast.error(I18n.t("barcodeScan.error"));
+    analytics.trackBarcodeScanFailure("avviso", failure);
   };
 
-  const handleManualInputPressed = () =>
+  const handleManualInputPressed = () => {
+    analytics.trackBarcodeManualEntryPath("avviso");
     navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
       params: {}
     });
+  };
 
   const {
     showFilePicker,
@@ -136,7 +146,8 @@ const WalletPaymentBarcodeScanScreen = () => {
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess: handleBarcodeSuccess,
-    onBarcodeError: handleBarcodeError
+    onBarcodeError: handleBarcodeError,
+    barcodeAnalyticsFlow: "avviso"
   });
 
   return (
@@ -150,6 +161,7 @@ const WalletPaymentBarcodeScanScreen = () => {
         onManualInputPressed={handleManualInputPressed}
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet"]}
+        barcodeAnalyticsFlow="avviso"
         isDisabled={isFilePickerVisible}
         isLoading={isFileReaderLoading}
       />
