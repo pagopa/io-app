@@ -59,7 +59,9 @@ const spidErrorCodeTable = new Map<string, string>([
   ["26", "Processo di erogazione dell’identità digitale andata a buon fine"],
   ["27", "Utente già presente"],
   ["28", "Operazione annullata"],
-  ["29", "Identità non erogata"]
+  ["29", "Identità non erogata"],
+  ["1001", "Cittadino minore di 14 anni"],
+  ["1002", "Utente con identità bloccata da ioapp.it"]
 ]);
 
 export const getSpidErrorCodeDescription = (errorCode: string) =>
