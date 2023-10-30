@@ -30,6 +30,7 @@ import {
 } from "../utils";
 import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
+import { cancelQueuedPaymentUpdates } from "../store/actions";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -92,6 +93,7 @@ export const MessageDetailsScreen = (
 
   const customGoBack = React.useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
+    dispatch(cancelQueuedPaymentUpdates());
     navigation.goBack();
   }, [dispatch, navigation]);
 

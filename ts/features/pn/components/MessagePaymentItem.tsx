@@ -1,6 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import React, { useCallback, useEffect } from "react";
 import { View } from "react-native";
 import { useDispatch, useStore } from "react-redux";
@@ -10,8 +9,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { useNavigation } from "@react-navigation/native";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
@@ -30,19 +27,20 @@ import {
   getV2ErrorMainType
 } from "../../../utils/payment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import ROUTES from "../../../navigation/routes";
 import { format } from "../../../utils/dates";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { useIOToast } from "../../../components/Toast";
+import { initializeAndNavigateToWalleForPayment } from "../utils";
 
 type MessagePaymentItemProps = {
   index: number;
   messageId: UIMessageId;
   payment: NotificationPaymentInfo;
+  noSpaceOnTop?: boolean;
+  willNavigateToPayment?: () => void;
 };
 
 type ProcessedPaymentUIData = {
@@ -152,10 +150,11 @@ const modulePaymentNoticeFromPaymentStatus = (
 export const MessagePaymentItem = ({
   index,
   messageId,
-  payment
+  payment,
+  noSpaceOnTop = false,
+  willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const store = useStore();
   const toast = useIOToast();
 
@@ -172,32 +171,27 @@ export const MessagePaymentItem = ({
   );
 
   const startPaymentCallback = useCallback(() => {
-    const eitherRptId = RptIdFromString.decode(paymentId);
-    if (E.isLeft(eitherRptId)) {
-      toast.error(I18n.t("genericError"));
-      return;
-    }
-    dispatch(paymentInitializeState());
-
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-      params: { rptId: eitherRptId.right }
-    });
-  }, [dispatch, navigation, paymentId, toast]);
+    initializeAndNavigateToWalleForPayment(
+      paymentId,
+      dispatch,
+      () => toast.error(I18n.t("genericError")),
+      () => willNavigateToPayment?.()
+    );
+  }, [dispatch, paymentId, toast, willNavigateToPayment]);
   useEffect(() => {
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
         messageId,
         paymentId
       });
-      // console.log(`=== PaymentItem: dispatch (${messageId}) (${paymentId})`);
+      // console.log(`=== PaymentItem ${index}: dispatch`);
       dispatch(updateAction);
     }
   }, [dispatch, messageId, paymentId, shouldUpdatePayment]);
-  // console.log(`=== PaymentItem: re-rendering`);
+  // console.log(`=== PaymentItem ${index}: re-rendering`);
   return (
     <View>
-      <VSpacer size={index > 0 ? 8 : 24} />
+      {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
       {modulePaymentNoticeFromPaymentStatus(
         payment.noticeCode,
         paymentStatusForUI,
