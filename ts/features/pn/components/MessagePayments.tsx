@@ -91,6 +91,7 @@ export const MessagePayments = ({
   maxVisiblePaymentCount,
   presentPaymentsBottomSheetRef
 }: MessagePaymentsProps) => {
+  console.log(`=== Payments: rendering`);
   const navigation = useNavigation();
   const morePaymentsLinkState = useIOSelector(state =>
     paymentsButtonStateSelector(
@@ -109,7 +110,6 @@ export const MessagePayments = ({
   ) {
     return null;
   }
-  // console.log(`=== Payments: re-rendering`);
   if (isCancelled) {
     return (
       <MessageDetailsSection

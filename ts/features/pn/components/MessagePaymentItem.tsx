@@ -154,6 +154,7 @@ export const MessagePaymentItem = ({
   noSpaceOnTop = false,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
+  console.log(`=== PaymentItem ${index}: rendering`);
   const dispatch = useDispatch();
   const store = useStore();
   const toast = useIOToast();
@@ -188,7 +189,6 @@ export const MessagePaymentItem = ({
       dispatch(updateAction);
     }
   }, [dispatch, messageId, paymentId, shouldUpdatePayment]);
-  // console.log(`=== PaymentItem ${index}: re-rendering`);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
