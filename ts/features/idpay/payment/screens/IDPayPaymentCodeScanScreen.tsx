@@ -62,7 +62,12 @@ const IDPayPaymentCodeScanScreen = () => {
       screen: IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT
     });
 
-  const { filePickerModal } = useIOBarcodeFileReader({
+  const {
+    filePickerBottomSheet,
+    showFilePicker,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess: handleBarcodeSuccess,
@@ -76,11 +81,13 @@ const IDPayPaymentCodeScanScreen = () => {
         barcodeTypes={barcodeTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
-        onFileInputPressed={filePickerModal.present}
+        onFileInputPressed={showFilePicker}
         onManualInputPressed={navigateToCodeInputScreen}
         contextualHelp={emptyContextualHelp}
+        isDisabled={isFilePickerVisible}
+        isLoading={isFileReaderLoading}
       />
-      {filePickerModal.bottomSheet}
+      {filePickerBottomSheet}
     </>
   );
 };

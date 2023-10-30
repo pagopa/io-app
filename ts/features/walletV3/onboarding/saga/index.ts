@@ -2,8 +2,12 @@ import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
 
 import { WalletClient } from "../../common/api/client";
-import { walletStartOnboarding } from "../store/actions";
+import {
+  walletGetPaymentMethods,
+  walletStartOnboarding
+} from "../store/actions";
 import { handleStartWalletOnboarding } from "./handleStartWalletOnboarding";
+import { handleGetPaymentMethods } from "./handleGetPaymentMethods";
 
 /**
  * Handle Wallet onboarding requests
@@ -18,6 +22,14 @@ export function* watchWalletOnboardingSaga(
     walletStartOnboarding.request,
     handleStartWalletOnboarding,
     walletClient.createWallet,
+    token
+  );
+
+  // handle the request of get list of payment methods available into onboarding
+  yield* takeLatest(
+    walletGetPaymentMethods.request,
+    handleGetPaymentMethods,
+    walletClient.getAllPaymentMethods,
     token
   );
 }
