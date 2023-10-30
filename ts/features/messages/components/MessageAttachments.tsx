@@ -1,6 +1,7 @@
 import React from "react";
+import { View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { WithTestID } from "@pagopa/io-app-design-system";
+import { VSpacer, WithTestID } from "@pagopa/io-app-design-system";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { ContentTypeValues } from "../../../types/contentType";
 import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
@@ -59,11 +60,15 @@ const AttachmentItem = ({
 
 export const MessageAttachments = ({
   attachments = [],
+  testID,
   ...rest
 }: MessageAttachmentsProps) => (
-  <>
+  <View testID={testID}>
     {attachments.map((attachment, index) => (
-      <AttachmentItem key={index} {...rest} attachment={attachment} />
+      <React.Fragment key={index}>
+        <AttachmentItem {...rest} attachment={attachment} />
+        {index < attachments.length - 1 && <VSpacer size={8} />}
+      </React.Fragment>
     ))}
-  </>
+  </View>
 );

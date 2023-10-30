@@ -1,7 +1,14 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  Icon,
+  HSpacer,
+  VSpacer,
+  Badge,
+  Label
+} from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { navigateToCgnMerchantLandingWebview } from "../../navigation/actions";
@@ -9,9 +16,7 @@ import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { DiscountCodeType } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { useCgnDiscountDetailBottomSheet } from "../../hooks/useCgnDiscountDetailBottomSheet";
-import { Label } from "../../../../../components/core/typography/Label";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import I18n from "../../../../../i18n";
 
 type Props = {
@@ -57,21 +62,15 @@ const CgnMerchantDiscountItem: React.FunctionComponent<Props> = ({
               <>
                 <View style={{ alignSelf: "flex-start" }}>
                   <HSpacer size={4} />
-                  <IOBadge
-                    variant="solid"
-                    color="blue"
+                  <Badge
+                    variant="blue"
                     text={I18n.t("bonus.cgn.merchantsList.news")}
-                    small
                   />
                 </View>
                 <VSpacer size={4} />
               </>
             )}
-            <Label
-              weight={"SemiBold"}
-              color={"bluegreyDark"}
-              style={{ flexShrink: 1 }}
-            >
+            <Label weight={"SemiBold"} style={{ flexShrink: 1 }}>
               {discount.name}
             </Label>
           </View>

@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, createRef, useRef } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as SEP from "fp-ts/lib/Separated";
-import React, { createRef, useCallback } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -40,9 +40,10 @@ import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
+import { MessageF24 } from "./MessageF24";
 import { MessagePayments } from "./MessagePayments";
 import { MessageFooter } from "./MessageFooter";
-import { MessageF24 } from "./MessageF24";
+import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
 type Props = Readonly<{
   messageId: UIMessageId;
@@ -61,6 +62,8 @@ export const MessageDetails = ({
 }: Props) => {
   const navigation = useNavigation();
   const viewRef = createRef<View>();
+  const presentPaymentsBottomSheetRef = useRef<() => void>();
+  const dismissPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const partitionedAttachments = pipe(
@@ -142,9 +145,15 @@ export const MessageDetails = ({
           payments={payments}
           completedPaymentNoticeCodes={completedPaymentNoticeCodes}
           maxVisiblePaymentCount={maxVisiblePaymentCount}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
 
-        {RA.isNonEmpty(f24List) && <MessageF24 attachments={f24List} />}
+        {RA.isNonEmpty(f24List) && (
+          <>
+            <MessageF24 attachments={f24List} />
+            <VSpacer size={24} />
+          </>
+        )}
 
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
@@ -169,11 +178,21 @@ export const MessageDetails = ({
         </PnMessageDetailsSection>
       </ScrollView>
 
+      {payments && (
+        <MessagePaymentBottomSheet
+          messageId={messageId}
+          payments={payments}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+          dismissPaymentsBottomSheetRef={dismissPaymentsBottomSheetRef}
+        />
+      )}
+
       <MessageFooter
         messageId={messageId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}
+        presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
       />
     </>
   );
