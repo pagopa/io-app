@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import _ from "lodash";
 import * as React from "react";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useEffect, useState } from "react";
@@ -16,7 +15,7 @@ import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { MessageAttachments } from "../../../features/messages/components/MessageAttachments";
+import { LegacyMessageAttachments } from "../../../features/messages/components/LegacyMessageAttachments";
 import { loadThirdPartyMessage } from "../../../features/messages/store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
@@ -188,7 +187,7 @@ const MessageDetailsComponent = ({
         attachmentsFromThirdPartyMessage(thirdPartyMessage);
       return O.isSome(maybeThirdPartyMessageAttachments) ? (
         <View style={styles.padded}>
-          <MessageAttachments
+          <LegacyMessageAttachments
             attachments={maybeThirdPartyMessageAttachments.value}
             openPreview={openAttachment}
           />

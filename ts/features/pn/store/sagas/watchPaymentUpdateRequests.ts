@@ -43,6 +43,7 @@ export function* watchPaymentUpdateRequests(
     if (isActionOf(updatePaymentForMessage.request, dequeuedChannelAction)) {
       yield* put(paymentUpdateChannel, dequeuedChannelAction);
     } else {
+      // console.log(`=== Saga: cancelQueuedPaymentUpdates received`);
       const unproccessedQueuedUpdateRequests = yield* flush(
         paymentUpdateChannel
       );

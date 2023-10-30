@@ -137,7 +137,12 @@ const WalletPaymentBarcodeScanScreen = () => {
     });
   };
 
-  const { filePickerBottomSheet, showFilePicker } = useIOBarcodeFileReader({
+  const {
+    showFilePicker,
+    filePickerBottomSheet,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess: handleBarcodeSuccess,
@@ -157,6 +162,8 @@ const WalletPaymentBarcodeScanScreen = () => {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet"]}
         barcodeAnalyticsFlow="avviso"
+        isDisabled={isFilePickerVisible}
+        isLoading={isFileReaderLoading}
       />
       {filePickerBottomSheet}
     </>

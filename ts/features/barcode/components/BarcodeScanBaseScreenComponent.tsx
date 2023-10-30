@@ -96,6 +96,14 @@ type Props = {
    * Mixpanel analytics parameters
    */
   barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
+  /**
+   * If true, the screen goes into a loading state which disables all interaction and displays a loading indicator
+   */
+  isLoading?: boolean;
+  /**
+   * Disables barcode scan capabilities, putting the component in an idle state
+   */
+  isDisabled?: boolean;
 } & HelpProps;
 
 const BarcodeScanBaseScreenComponent = ({
@@ -105,6 +113,8 @@ const BarcodeScanBaseScreenComponent = ({
   onBarcodeSuccess,
   onFileInputPressed,
   onManualInputPressed,
+  isLoading = false,
+  isDisabled = false,
   faqCategories,
   contextualHelp,
   contextualHelpMarkdown,
@@ -172,7 +182,8 @@ const BarcodeScanBaseScreenComponent = ({
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,
-    disabled: !isFocused
+    isDisabled: !isFocused || isDisabled,
+    isLoading
   });
 
   const customGoBack = (

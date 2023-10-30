@@ -73,7 +73,12 @@ const IDPayPaymentCodeScanScreen = () => {
     });
   };
 
-  const { filePickerBottomSheet, showFilePicker } = useIOBarcodeFileReader({
+  const {
+    filePickerBottomSheet,
+    showFilePicker,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess: handleBarcodeSuccess,
@@ -92,6 +97,8 @@ const IDPayPaymentCodeScanScreen = () => {
         onManualInputPressed={navigateToCodeInputScreen}
         contextualHelp={emptyContextualHelp}
         barcodeAnalyticsFlow="idpay"
+        isDisabled={isFilePickerVisible}
+        isLoading={isFileReaderLoading}
       />
       {filePickerBottomSheet}
     </>

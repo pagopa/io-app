@@ -11,7 +11,6 @@ import { contramap } from "fp-ts/lib/Ord";
 import { pipe } from "fp-ts/lib/function";
 import * as N from "fp-ts/number";
 import React from "react";
-import { FlatList } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
@@ -84,12 +83,12 @@ const WalletPaymentBarcodeChoiceScreen = () => {
         <ContentWrapper>
           <H2>Sono stati rilevati più codici. Quale vuoi usare?</H2>
           <VSpacer size={32} />
-          <FlatList
-            scrollEnabled={false}
-            data={sortedBarcodes}
-            renderItem={({ item }) => renderBarcodeItem(item)}
-            ItemSeparatorComponent={() => <Divider />}
-          />
+          {sortedBarcodes.map((item, index) => (
+            <React.Fragment key={index}>
+              {renderBarcodeItem(item)}
+              {index <= sortedBarcodes.length - 2 && <Divider />}
+            </React.Fragment>
+          ))}
         </ContentWrapper>
       </ScrollView>
     </BaseScreenComponent>
