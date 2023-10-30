@@ -94,7 +94,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const lastUpdateString = pipe(
     beneficiaryDetails.updateDate,
     O.fromNullable,
-    O.map(formatDate("DD MMMM YYYY, hh:mm")),
+    O.map(formatDate("DD MMMM YYYY, HH:mm")),
     O.map(dateString =>
       I18n.t("idpay.initiative.beneficiaryDetails.lastUpdate", { dateString })
     ),
@@ -104,7 +104,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const onboardingDateString = pipe(
     onboardingStatus.onboardingOkDate,
     O.fromNullable,
-    O.map(formatDate("DD MMM YYYY, hh:mm")),
+    O.map(formatDate("DD MMM YYYY, HH:mm")),
     O.getOrElse(() => "-")
   );
 

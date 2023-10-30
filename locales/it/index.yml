@@ -722,6 +722,28 @@ authentication:
       error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
   expiredSessionBanner:
     title: Avviso di sicurezza
+    message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
+  unlock: 
+    title: Sblocca l’accesso
+    subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO. 
+    subtitlel3: Per poter accedere all’app con tutte le tue identità SPID o CIE, sblocca l’accesso.
+    learnmore: Scopri di più
+    loginIO: Chiudi
+  unlockmodal: 
+    title: Cosa significa?
+    description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo. 
+    description1_2: In alternativa, è possibile entrare in app utilizzando un accesso con il
+    description1_3: livello massimo di sicurezza. 
+    description1_4: Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.
+    title2: Come sbloccare l’accesso a IO
+    listitem1:  Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
+    listitem2_1: Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.
+    listitem2_2: Vai al sito
+    listitem3_1: Vai alla sezione 
+    listitem3_2: Sblocca accesso a IO 
+    listitem3_3: e segui i passaggi indicati. Quando richiesto inserisci il
+    listitem3_4: codice di ripristino 
+    listitem3_5: per confermare l’operazione.
 email:
   cduModal:
     validateMail:
@@ -3034,10 +3056,16 @@ features:
       paymentSection:
         legacyTitle: Avviso di pagamento
         title: "Avvisi pagoPA"
-        notice: "Alcuni avvisi possono includere i costi di notifica."
         morePayments: "Vedi tutti gli avvisi"
+        bottomSheetTitle: "Quale avviso vuoi pagare?" 
       attachmentsSection:
         title: Allegati
+      f24Section:
+        title: Modelli F24
+        description: Se preferisci, puoi pagare questa notifica tramite F24.
+        showAll: Vedi modelli F24
+        bottomSheet:
+          title: Modelli F24 allegati
       infoSection:
         title: Informazioni sulla notifica
         iun: Codice IUN

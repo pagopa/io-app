@@ -22,6 +22,7 @@ import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblem
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
+import { reloadAllMessages } from "../../../../store/actions/messages";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
@@ -75,6 +76,9 @@ export const paymentsReducer = (
         }),
         state
       );
+    case getType(reloadAllMessages.request):
+      // console.log(`=== RELOAD ALL MESSAGES REQUEST RECEIVED ===`);
+      return initialState;
   }
   return state;
 };

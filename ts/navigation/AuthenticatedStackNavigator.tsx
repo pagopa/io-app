@@ -230,8 +230,8 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       {/* 
-            This screen is outside the WalletPaymentNavigator to enable the slide from bottom animation.
-            FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the WalletPaymentNavigator
+        This screen is outside the WalletPaymentNavigator to enable the slide from bottom animation.
+        FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the WalletPaymentNavigator
       */}
       <Stack.Screen
         name={WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN}

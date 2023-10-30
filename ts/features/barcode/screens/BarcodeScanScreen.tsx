@@ -24,16 +24,19 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
+import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import {
   IOBarcode,
   IOBarcodeFormat,
+  IOBarcodeOrigin,
   IOBarcodeType,
   IO_BARCODE_ALL_FORMATS,
   IO_BARCODE_ALL_TYPES,
   PagoPaBarcode
 } from "../types/IOBarcode";
+import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 
 const BarcodeScanScreen = () => {
@@ -59,7 +62,10 @@ const BarcodeScanScreen = () => {
    * If barcode type does not support multiple barcode, it shows an alert.
    * @param barcodes Array of scanned barcodes
    */
-  const handleMultipleBarcodes = (barcodes: Array<IOBarcode>) => {
+  const handleMultipleBarcodes = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     const barcodesByType = getIOBarcodesByType(barcodes);
 
     if (barcodesByType.PAGOPA) {
@@ -68,6 +74,8 @@ const BarcodeScanScreen = () => {
       ReactNativeHapticFeedback.trigger(
         HapticFeedbackTypes.notificationSuccess
       );
+
+      analytics.trackBarcodeScanSuccess("home", pagoPABarcodes[0], origin);
 
       const hasDataMatrix = pagoPABarcodes.some(
         barcode => barcode.format === "DATA_MATRIX"
@@ -103,8 +111,10 @@ const BarcodeScanScreen = () => {
    * Handles a single barcode and navigates to the correct screen.
    * @param barcode Scanned barcode
    */
-  const handleSingleBarcode = (barcode: IOBarcode) => {
+  const handleSingleBarcode = (barcode: IOBarcode, origin: IOBarcodeOrigin) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
+    analytics.trackBarcodeScanSuccess("home", barcode, origin);
 
     switch (barcode.type) {
       case "PAGOPA":
@@ -130,16 +140,20 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     if (barcodes.length > 1) {
-      handleMultipleBarcodes(barcodes);
+      handleMultipleBarcodes(barcodes, origin);
     } else if (barcodes.length > 0) {
-      handleSingleBarcode(barcodes[0]);
+      handleSingleBarcode(barcodes[0], origin);
     }
   };
 
-  const handleBarcodeError = () => {
+  const handleBarcodeError = (failure: BarcodeFailure) => {
     IOToast.error(I18n.t("barcodeScan.error"));
+    analytics.trackBarcodeScanFailure("home", failure);
   };
 
   const handleIdPayPaymentCodeInput = () => {
@@ -181,6 +195,8 @@ const BarcodeScanScreen = () => {
   });
 
   const handleManualInputPressed = () => {
+    analytics.trackBarcodeManualEntryPath("home");
+
     if (isIdPayEnabled) {
       manualInputModal.present();
     } else {
@@ -188,11 +204,17 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const { filePickerModal } = useIOBarcodeFileReader({
+  const {
+    filePickerBottomSheet,
+    showFilePicker,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
     barcodeFormats,
     barcodeTypes,
     onBarcodeSuccess: handleBarcodeSuccess,
-    onBarcodeError: handleBarcodeError
+    onBarcodeError: handleBarcodeError,
+    barcodeAnalyticsFlow: "home"
   });
 
   return (
@@ -202,11 +224,14 @@ const BarcodeScanScreen = () => {
         barcodeTypes={barcodeTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
-        onFileInputPressed={filePickerModal.present}
+        onFileInputPressed={showFilePicker}
         onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
+        barcodeAnalyticsFlow="home"
+        isLoading={isFileReaderLoading}
+        isDisabled={isFilePickerVisible}
       />
-      {filePickerModal.bottomSheet}
+      {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>
   );
