@@ -4,7 +4,11 @@ import React, { useState } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
-import { IOColorGradients, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  IOColorGradients,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { StatusEnum } from "../../../../../definitions/cgn/CardActivated";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
@@ -13,7 +17,6 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
@@ -26,7 +29,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
@@ -87,6 +89,14 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   // to display EYCA info component the CGN initiative needs to be enabled by remote
   const canDisplayEycaDetails =
     canEycaCardBeShown(props.eycaDetails) && props.isCgnEnabled;
+
+  const onPressShowCgnDiscounts = () => {
+    if (props.isMerchantV2Enabled) {
+      props.navigateToMerchantsTabs();
+    } else {
+      navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
+    }
+  };
 
   return (
     <LoadingSpinnerOverlay
@@ -164,23 +174,27 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
                   <VSpacer size={24} />
                   <ItemSeparatorComponent noPadded />
                   <CgnUnsubscribe />
+                  <VSpacer size={40} />
                 </View>
               </ScrollView>
               <SectionStatusComponent sectionKey={"cgn"} />
               {props.isCgnEnabled &&
                 props.cgnDetails?.status === StatusEnum.ACTIVATED && (
-                  <FooterWithButtons
-                    type={"SingleButton"}
-                    leftButton={confirmButtonProps(
-                      props.isMerchantV2Enabled
-                        ? props.navigateToMerchantsTabs
-                        : () =>
-                            navigation.navigate(
-                              CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES
-                            ),
-                      I18n.t("bonus.cgn.detail.cta.buyers")
-                    )}
-                  />
+                  <View>
+                    <FooterWithButtons
+                      type="SingleButton"
+                      primary={{
+                        type: "Solid",
+                        buttonProps: {
+                          label: I18n.t("bonus.cgn.detail.cta.buyers"),
+                          accessibilityLabel: I18n.t(
+                            "bonus.cgn.detail.cta.buyers"
+                          ),
+                          onPress: onPressShowCgnDiscounts
+                        }
+                      }}
+                    />
+                  </View>
                 )}
             </>
           )}
