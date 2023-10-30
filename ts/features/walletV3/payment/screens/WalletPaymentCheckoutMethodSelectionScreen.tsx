@@ -93,10 +93,10 @@ export const WalletCheckoutMethodSelectionScreen = () => {
           )
         }
       >
-        <H2>{TypedI18n.t("wallet.v3.pickPaymentMethod.header")}</H2>
+        <H2>{TypedI18n.t("wallet.pickPaymentMethod.header")}</H2>
         <VSpacer size={16} />
         <ListItemHeading
-          text={TypedI18n.t("wallet.v3.pickPaymentMethod.savedMethods")}
+          text={TypedI18n.t("wallet.pickPaymentMethod.savedMethods")}
         />
         {/* FIXME:: needs to accept payment method icons with fallback, possibly with custom left component */}
         <RadioGroup
@@ -105,7 +105,7 @@ export const WalletCheckoutMethodSelectionScreen = () => {
           selectedItem={selectedIndex}
         />
         <ListItemHeading
-          text={TypedI18n.t("wallet.v3.pickPaymentMethod.otherMethods")}
+          text={TypedI18n.t("wallet.pickPaymentMethod.otherMethods")}
         />
         <RadioGroup
           items={mapToRadioGroupItems(notSavedMethods)}
