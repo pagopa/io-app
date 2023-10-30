@@ -3589,6 +3589,10 @@ features:
         single: "Fornito da {{authSource}}"
       credential: "Credenziale"
       attribute: "Attributo"
+    providerInfoScreen:
+      showDiff:
+        title: "La differenza tra i metodi di attivazione"
+        content: "Se attivi IT Wallet con “Entra con CIE”, potrai utilizzare tutte le sue funzionalità. Se lo attivi con SPID o CieID, potrai utilizzarne solo alcune. Questo perché la CIE (Carta d'Identità Elettronica) ha un livello di sicurezza più alto di SPID e CieID. Se ce l'hai, ti consigliamo quindi di usare la CIE."
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

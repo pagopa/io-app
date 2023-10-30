@@ -24,6 +24,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import I18n from "../../../../i18n";
 import ListItemItw from "../../components/ListItems/ListItemItw";
+import { useItwInfoBottomSheet } from "../../hooks/useItwInfoBottomSheet";
 
 /**
  * Renders the screen which display a list of features (or trusty providers)
@@ -31,6 +32,15 @@ import ListItemItw from "../../components/ListItems/ListItemItw";
  */
 const ItwDiscoveryProviderInfoScreen = () => {
   const navigation = useNavigation();
+
+  const { present, bottomSheet } = useItwInfoBottomSheet({
+    title: I18n.t("features.itWallet.providerInfoScreen.showDiff.title"),
+    content: [
+      {
+        body: I18n.t("features.itWallet.providerInfoScreen.showDiff.content")
+      }
+    ]
+  });
 
   // All this data should be fetched from remote
   // but for POC purposes we are using a static list
@@ -178,7 +188,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
           />
           <View style={IOStyles.horizontalContentPadding}>
             <ButtonLink
-              onPress={() => undefined}
+              onPress={() => present()}
               label={I18n.t(
                 "features.itWallet.featuresInfoScreen.compareFeatures"
               )}
@@ -189,6 +199,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
+      {bottomSheet}
     </BaseScreenComponent>
   );
 };

@@ -8,7 +8,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
  * The type of the content of the bottom sheet.
  */
 type ItwInfoFlowContentType = {
-  title: string;
+  title?: string;
   body: string;
 };
 
@@ -30,8 +30,12 @@ export const useItwInfoBottomSheet = ({ title, content }: ItwInfoFlowProps) => {
     <View style={IOStyles.flex}>
       {content.map((item, index) => (
         <View key={`${index}_${item.title}`}>
-          <H6>{item.title}</H6>
-          <VSpacer size={8} />
+          {item.title && (
+            <>
+              <H6>{item.title}</H6>
+              <VSpacer size={8} />
+            </>
+          )}
           <Body>{item.body}</Body>
           <VSpacer size={16} />
         </View>

@@ -3563,6 +3563,10 @@ features:
         single: "Provided by {{authSource}}"
       credential: "Credential"
       attribute: "Attribute"
+    providerInfoScreen:
+      showDiff:
+        title: "The difference between activation methods"
+        content: "If you activate IT Wallet with 'Log in with CIE', you will be able to use all its features. If you activate it with SPID or CieID, you will only be able to use some of them. This is because the CIE (Electronic Identity Card) has a higher level of security than SPID and CieID. If you have it, we therefore recommend using the CIE."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
