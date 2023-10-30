@@ -91,7 +91,7 @@ export const MessagePayments = ({
   maxVisiblePaymentCount,
   presentPaymentsBottomSheetRef
 }: MessagePaymentsProps) => {
-  console.log(`=== Payments: rendering`);
+  // console.log(`=== Payments: rendering`);
   const navigation = useNavigation();
   const morePaymentsLinkState = useIOSelector(state =>
     paymentsButtonStateSelector(

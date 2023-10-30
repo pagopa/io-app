@@ -60,7 +60,7 @@ export const MessageDetails = ({
   service,
   payments
 }: Props) => {
-  console.log(`=== MessageDetails: rendering`);
+  // console.log(`=== MessageDetails: rendering`);
   const navigation = useNavigation();
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();

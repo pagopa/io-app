@@ -78,7 +78,7 @@ const renderMessage = (
 export const MessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
-  console.log(`=== Screen: rendering`);
+  // console.log(`=== Screen: rendering`);
   const { messageId, serviceId, firstTimeOpening } = props.route.params;
 
   const dispatch = useIODispatch();
@@ -123,7 +123,7 @@ export const MessageDetailsScreen = (
       const globalState = store.getState() as GlobalState;
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
-        console.log(`=== Screen: requesting last payment`);
+        // console.log(`=== Screen: requesting last payment`);
         dispatch(clearSelectedPayment());
         dispatch(
           updatePaymentForMessage.request({
