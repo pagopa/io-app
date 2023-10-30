@@ -76,7 +76,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
           screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
           params: {
-            // FIXME: Set the initial amount to a fixed value (1) because it is not used, waiting to be removed from the API
+            // Set the initial amount to a fixed value (1) because it is not used
             initialAmount: "1" as AmountInEuroCents,
             rptId,
             paymentStartOrigin: "manual_insertion"
