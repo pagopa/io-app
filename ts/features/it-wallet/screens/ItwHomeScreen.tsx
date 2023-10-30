@@ -214,11 +214,9 @@ const ItwHomeScreen = () => {
         {isItWalletOperational ? (
           <View style={{ ...IOStyles.flex, justifyContent: "flex-start" }}>
             <ItwActionBanner
-              title={I18n.t("features.itWallet.innerActionBanner.title")}
-              content={I18n.t(
-                "features.itWallet.innerActionBanner.description"
-              )}
-              action={I18n.t("features.itWallet.innerActionBanner.action")}
+              title={I18n.t("features.itWallet.actionBanner.title")}
+              content={I18n.t("features.itWallet.actionBanner.description")}
+              action={I18n.t("features.itWallet.actionBanner.action")}
             />
           </View>
         ) : selectedBadgeIdx === 0 || selectedBadgeIdx === 1 ? (
