@@ -1,3 +1,4 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -5,13 +6,16 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import { OnboardingStatusDTO } from "../../../../../definitions/idpay/OnboardingStatusDTO";
+import {
+  RewardValueDTO,
+  RewardValueTypeEnum
+} from "../../../../../definitions/idpay/RewardValueDTO";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -23,7 +27,7 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
-import { Table } from "../../common/components/Table";
+import { Table, TableRow } from "../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IDPayUnsubscriptionRoutes } from "../../unsubscription/navigation/navigator";
 import { idPayInitiativeTypeSelector } from "../store";
@@ -84,11 +88,22 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     O.getOrElse(() => "-")
   );
 
-  const rewardPercentageString = pipe(
-    beneficiaryDetails.rewardRule?.rewardValue,
+  const rewardRuleRow = pipe(
+    beneficiaryDetails.rewardRule,
     O.fromNullable,
-    O.map(percentage => `${percentage}%`),
-    O.getOrElse(() => "-")
+    O.map<RewardValueDTO, TableRow>(({ rewardValue, rewardValueType }) => {
+      if (rewardValueType === RewardValueTypeEnum.ABSOLUTE) {
+        return {
+          label: I18n.t("idpay.initiative.beneficiaryDetails.spendValue"),
+          value: formatNumberCurrencyOrDefault(rewardValue)
+        };
+      }
+      return {
+        label: I18n.t("idpay.initiative.beneficiaryDetails.spendPercentage"),
+        value: `${rewardValue}%`
+      };
+    }),
+    O.getOrElse<TableRow>(() => ({ label: "-", value: "-" }))
   );
 
   const lastUpdateString = pipe(
@@ -193,12 +208,7 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
             label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
             value: rankingEndDateString
           },
-          {
-            label: I18n.t(
-              "idpay.initiative.beneficiaryDetails.spendPercentage"
-            ),
-            value: rewardPercentageString
-          }
+          rewardRuleRow
         ]}
       />
       <VSpacer size={8} />
