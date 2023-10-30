@@ -3,34 +3,27 @@ import {
   SectionList,
   ListRenderItemInfo,
   SafeAreaView,
-  View
+  View,
+  ScrollView
 } from "react-native";
 import {
   Badge,
   ButtonLink,
   Divider,
+  H2,
   H4,
-  IOColors,
   IOVisualCostants,
-  ListItemInfo,
-  ListItemNav
+  Icon,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import ScreenContent from "../../../../components/screens/ScreenContent";
 import I18n from "../../../../i18n";
-
-/**
- * A support function to check the type of the list item.
- * Used to render the correct component based on two type of ListItem.
- * It should be removed when the design system will provide the new component.
- */
-const isListItemInfo = (
-  item: ListItemInfo | ListItemNav
-): item is ListItemInfo => (item as ListItemInfo).action !== undefined;
+import ListItemItw from "../../components/ListItems/ListItemItw";
 
 /**
  * Renders the screen which display a list of features (or trusty providers)
@@ -43,30 +36,31 @@ const ItwDiscoveryProviderInfoScreen = () => {
   // but for POC purposes we are using a static list
   // NOTE: the design proposed could be different from
   // the one implemented here
-  const PROVIDERS_LIST_ALL: ReadonlyArray<ListItemNav> = [
+  const PROVIDERS_LIST_ALL: ReadonlyArray<ListItemItw> = [
     {
-      value: I18n.t("features.itWallet.featuresInfoScreen.list.cie"),
-      description: I18n.t(
-        "features.itWallet.featuresInfoScreen.list.cieSubTitle"
-      ),
+      title: I18n.t("features.itWallet.featuresInfoScreen.list.cie"),
+      subTitle: I18n.t("features.itWallet.featuresInfoScreen.list.cieSubTitle"),
       icon: "fiscalCodeIndividual",
       onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_AUTH_INFO),
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cie"
-      )
+      ),
+      rightNode: <Icon name="chevronRight" size={24} color={"blueIO-500"} />
     }
   ];
 
-  const FEATURES_LIST_MAIN: ReadonlyArray<ListItemNav> = [];
+  const FEATURES_LIST_MAIN: ReadonlyArray<ListItemItw> = [];
 
   // Here we have a different type of list item because not
   // all the components are available yet. See comment below.
-  const FEATURES_LIST_COMING: ReadonlyArray<ListItemInfo> = [
+  const FEATURES_LIST_COMING: ReadonlyArray<ListItemItw> = [
     {
-      label: I18n.t("features.itWallet.featuresInfoScreen.list.spid"),
-      value: I18n.t("features.itWallet.featuresInfoScreen.list.spidSubTitle"),
+      title: I18n.t("features.itWallet.featuresInfoScreen.list.spid"),
+      subTitle: I18n.t(
+        "features.itWallet.featuresInfoScreen.list.spidSubTitle"
+      ),
       icon: "spid",
-      action: (
+      rightNode: (
         <Badge
           text={I18n.t(
             "features.itWallet.featuresInfoScreen.list.incomingFeature"
@@ -76,13 +70,16 @@ const ItwDiscoveryProviderInfoScreen = () => {
       ),
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.spid"
-      )
+      ),
+      onPress: () => constNull
     },
     {
-      label: I18n.t("features.itWallet.featuresInfoScreen.list.cieId"),
-      value: I18n.t("features.itWallet.featuresInfoScreen.list.cieIdSubTitle"),
+      title: I18n.t("features.itWallet.featuresInfoScreen.list.cieId"),
+      subTitle: I18n.t(
+        "features.itWallet.featuresInfoScreen.list.cieIdSubTitle"
+      ),
       icon: "cie",
-      action: (
+      rightNode: (
         <Badge
           text={I18n.t(
             "features.itWallet.featuresInfoScreen.list.incomingFeature"
@@ -92,13 +89,14 @@ const ItwDiscoveryProviderInfoScreen = () => {
       ),
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cieId"
-      )
+      ),
+      onPress: () => constNull
     }
   ];
 
   type FeaturesSectionData = {
     title?: string;
-    data: ReadonlyArray<ListItemInfo | ListItemNav>;
+    data: ReadonlyArray<ListItemItw>;
   };
 
   const FEATURES_SECTION_DATA: ReadonlyArray<FeaturesSectionData> = [
@@ -149,36 +147,22 @@ const ItwDiscoveryProviderInfoScreen = () => {
   // provides two different components for the list items. Next
   // should be defined a new component or a variant of ListItem to
   // have the expected design.
-  const renderItem = ({
-    item,
-    index
-  }: ListRenderItemInfo<ListItemInfo | ListItemNav>) => (
-    <View
-      style={{
-        borderColor: IOColors.bluegreyLight,
-        borderRadius: 8,
-        borderWidth: 1,
-        paddingLeft: 16,
-        paddingRight: 16,
-        marginBottom: 8
-      }}
-    >
-      {isListItemInfo(item) ? (
-        <ListItemInfo {...item} key={index} />
-      ) : (
-        <ListItemNav {...item} key={index} onPress={item.onPress} />
-      )}
-    </View>
+  const renderItem = ({ item, index }: ListRenderItemInfo<ListItemItw>) => (
+    <>
+      <ListItemItw {...item} key={index} />
+      <VSpacer size={8} />
+    </>
   );
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
-        <ScreenContent
-          title={I18n.t("features.itWallet.featuresInfoScreen.title")}
-        >
+        <H2 style={IOStyles.horizontalContentPadding}>
+          {I18n.t("features.itWallet.featuresInfoScreen.title")}
+        </H2>
+        <ScrollView>
           <SectionList
-            keyExtractor={(item, index) => `${item.value}-${index}`}
+            keyExtractor={(item, index) => `${item.title}-${index}`}
             stickySectionHeadersEnabled={false}
             contentContainerStyle={[
               IOStyles.horizontalContentPadding,
@@ -203,7 +187,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
               )}
             />
           </View>
-        </ScreenContent>
+        </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
   );
