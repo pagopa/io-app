@@ -1,11 +1,12 @@
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { IOToast } from "../../../components/Toast";
+import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
@@ -28,14 +29,16 @@ import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomS
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
+import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import {
   IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeType,
   IO_BARCODE_ALL_FORMATS,
   IO_BARCODE_ALL_TYPES,
   PagoPaBarcode
 } from "../types/IOBarcode";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -45,6 +48,14 @@ const BarcodeScanScreen = () => {
 
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
+  );
+
+  const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
+    format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
+  );
+
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
+    type === "IDPAY" ? isIdPayEnabled : true
   );
 
   /**
@@ -187,34 +198,32 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(format => {
-    switch (format) {
-      case "DATA_MATRIX":
-        return dataMatrixPosteEnabled;
-      default:
-        return true;
-    }
-  });
-
-  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(type => {
-    switch (type) {
-      case "IDPAY":
-        return isIdPayEnabled;
-      default:
-        return true;
-    }
+  const {
+    filePickerBottomSheet,
+    showFilePicker,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError
   });
 
   return (
     <>
       <BarcodeScanBaseScreenComponent
-        barcodeFormats={enabledFormats}
-        barcodeTypes={enabledTypes}
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
+        onFileInputPressed={showFilePicker}
         onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
+        isLoading={isFileReaderLoading}
+        isDisabled={isFilePickerVisible}
       />
+      {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>
   );

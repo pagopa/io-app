@@ -76,7 +76,7 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
 
 /** for a given idp id get the relative login uri */
 export const getIdpLoginUri = (idpId: string, level: number) =>
-  `${config.apiUrlPrefix}/login?authLevel=SpidL${level}&entityID=${idpId}`;
+  `${config.apiUrlPrefix}/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${config.spidRelayState}`;
 
 /**
  * Extract the login result from the given url.

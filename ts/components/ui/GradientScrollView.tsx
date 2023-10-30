@@ -8,12 +8,13 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOSpacer, IOSpacingScale } from "@pagopa/io-app-design-system";
-import { WithTestID } from "../../types/WithTestID";
 import {
+  IOSpacer,
+  IOSpacingScale,
   IOVisualCostants,
   buttonSolidHeight
-} from "../core/variables/IOStyles";
+} from "@pagopa/io-app-design-system";
+import { WithTestID } from "../../types/WithTestID";
 import GradientBottomActions from "./GradientBottomActions";
 
 export type GradientScrollView = WithTestID<{

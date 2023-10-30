@@ -37,27 +37,25 @@ export const PnAttachmentPreview = (
   // This ref is needed otherwise the auto back on the useEffect will fire multiple
   // times, since its dependencies change during the back navigation
   const autoBackOnErrorHandled = useRef(false);
-  const pnMessageAttachmentOption = useIOSelector(state =>
+  const maybePnMessageAttachment = useIOSelector(state =>
     pnMessageAttachmentSelector(state)(messageId)(attachmentId)
   );
 
   useEffect(() => {
     // This condition happens only if this screen is shown without having
     // first retrieved the third party message (so it should never happen)
-    if (
-      !autoBackOnErrorHandled.current &&
-      O.isNone(pnMessageAttachmentOption)
-    ) {
+    if (!autoBackOnErrorHandled.current && O.isNone(maybePnMessageAttachment)) {
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
       navigation.goBack();
     }
-  }, [pnMessageAttachmentOption, navigation]);
+  }, [maybePnMessageAttachment, navigation]);
 
-  return O.isSome(pnMessageAttachmentOption) ? (
+  return O.isSome(maybePnMessageAttachment) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      attachment={pnMessageAttachmentOption.value}
+      skipDownloadAttachment={false}
+      attachment={maybePnMessageAttachment.value}
       onOpen={trackPNAttachmentOpen}
       onShare={() =>
         pipe(isIos, B.fold(trackPNAttachmentShare, trackPNAttachmentSaveShare))

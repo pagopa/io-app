@@ -125,7 +125,7 @@ export const PnMessagePayment = ({
   } else {
     return (
       <PnMessageDetailsSection
-        title={I18n.t("features.pn.details.paymentSection.title")}
+        title={I18n.t("features.pn.details.paymentSection.legacyTitle")}
         testID={"PnPaymentSectionTitle"}
       >
         {firstLoadingRequest && payment && (
