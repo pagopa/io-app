@@ -194,8 +194,8 @@ const AuthenticatedStackNavigator = () => {
             options={{ gestureEnabled: isGestureEnabled }}
           />
           {/* 
-            This screen is outside the main payment navigator to enable the slide from bottom animation.
-            FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator
+            This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
+            FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
           */}
           <Stack.Screen
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
@@ -230,8 +230,8 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       {/* 
-            This screen is outside the main payment navigator to enable the slide from bottom animation.
-            FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator
+            This screen is outside the WalletPaymentNavigator to enable the slide from bottom animation.
+            FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the WalletPaymentNavigator
       */}
       <Stack.Screen
         name={WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN}
