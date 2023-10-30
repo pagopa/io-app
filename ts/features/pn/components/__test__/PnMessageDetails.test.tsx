@@ -79,7 +79,7 @@ describe("PnMessageDetails component", () => {
 
     messageAttachmentComponents.forEach(messageAttachmentComponent => {
       const opacity = messageAttachmentComponent?.props.style.opacity;
-      expect(opacity).toBe(0.35);
+      expect(opacity).toBe(0.5);
     });
   });
   it("every attachment item should handle input when the PN message not is cancelled", async () => {
