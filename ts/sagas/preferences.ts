@@ -33,6 +33,7 @@ export function* setLanguageFromProfileIfExists(): Generator<
   if (pot.isSome(profile)) {
     const preferredLanguages = profile.value.preferred_languages;
     const currentStoredLocale = yield* select(preferredLanguageSelector);
+
     // If a remote value is not present, the persisted preferences are not updated
     // and the device language (or the last one previously saved) is used
     if (!preferredLanguages || !preferredLanguages[0]) {
