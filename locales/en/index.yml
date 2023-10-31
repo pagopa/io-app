@@ -3318,6 +3318,7 @@ features:
       signingInProgress: "Signature in progress"  
   itWallet:
     title: "IT Wallet"
+    tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
     actionBanner:
       title: "Novità IT Wallet"
       description: "Starting today, you can collect your digital credentials (such as Driver's License, Health Card, etc.) and access online services with IT Wallet."
@@ -3335,7 +3336,6 @@ features:
       whereDescription: "Carry the digital version of your documents with you all times. Use your digital identity to access online services, both public and private. Use the other cards to share the data they contain with others, both online and in person, whenever you need to."
       howActivate: "Easy to activate"
       howActivateDescription: "You will need your Electronic Identity Card (CIE) and its PIN. The data coming from your CIE will be part of your digital identity, the first credential in your IT Wallet."
-      tos: "By continuing, you accept the [Terms and conditions of use](https://io.italia.it/privacy-policy/) of the service and confirm that you have read the [Privacy Policy](https://io.italia.it/privacy-policy/)."
       cancel: "Not now"
       confirm: "Activate IT Wallet"
     homeScreen:
@@ -3477,7 +3477,6 @@ features:
           preservation: "Data will be retained for {{numberOfMonths}} months"
           deletion: "You can delete your data at any time"
           conditionsLink: "Terms of Service"
-        tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
         buttons: 
           confirmData: "Confirm data"
           deny: "Deny"
