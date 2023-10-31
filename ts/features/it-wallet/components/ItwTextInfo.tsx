@@ -1,6 +1,12 @@
 import React from "react";
-import { Text } from "react-native";
-import { Body, LabelLink, useIOToast } from "@pagopa/io-app-design-system";
+import { Text, View } from "react-native";
+import {
+  Body,
+  H2,
+  H6,
+  LabelLink,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as R from "fp-ts/lib/ReadonlyArray";
 import * as B from "fp-ts/lib/boolean";
@@ -8,7 +14,7 @@ import { openWebUrl } from "../../../utils/url";
 import I18n from "../../../i18n";
 
 interface MarkdownParserProps {
-  markdownText: string;
+  content: string;
 }
 
 const RenderRegularText = (text: string, index: number) => (
@@ -19,6 +25,18 @@ const RenderBoldText = (text: string, index: number) => (
   <Text key={`bold-${index}`} style={{ fontWeight: "bold" }}>
     {text}
   </Text>
+);
+
+const RenderHeaderLevel2 = (text: string, index: number) => (
+  <View key={`h2-${index}`} style={{ flexDirection: "row", paddingBottom: 16 }}>
+    <H2>{text}</H2>
+  </View>
+);
+
+const RenderHeaderLevel6 = (text: string, index: number) => (
+  <View key={`h6-${index}`} style={{ flexDirection: "row", paddingBottom: 8 }}>
+    <H6>{text}</H6>
+  </View>
 );
 
 const RenderLink = (text: string, url: string, index: number) => {
@@ -39,18 +57,19 @@ const RenderLink = (text: string, url: string, index: number) => {
 /**
  * This component renders a markdown text.
  * It parses the text and renders bold text, links and headers.
- * NOTE: the headers are not rendered yet.
+ * NOTE: only header level 2 and 6 is supported to extend to other
+ * headers create a new rgex group (eg. |^##\s(.+)).
  * @param markdownText - contains the text to be parsed.
  */
-const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
+const ItwTextInfo: React.FC<MarkdownParserProps> = ({ content }) => {
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   const renderElements = () => {
     // eslint-disable-next-line functional/no-let
     let elements: ReadonlyArray<React.ReactElement> = [];
 
     // A regex to match bold text, links and headers
     // Note: the order of the groups is important
-    const regex =
-      /\*\*(.*?)\*\*|\[(.*?)\]\((.*?)\)|^#\s(.+)|^##\s(.+)|^###\s(.+)/gm;
+    const regex = /\*\*(.*?)\*\*|\[(.*?)\]\((.*?)\)|^##\s(.+)|^######\s(.+)/gm;
 
     // eslint-disable-next-line functional/no-let
     let match: RegExpExecArray | null;
@@ -58,18 +77,16 @@ const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
     // eslint-disable-next-line functional/no-let
     let lastIndex = 0;
 
-    while ((match = regex.exec(markdownText)) !== null) {
+    while ((match = regex.exec(content)) !== null) {
       // Note: headers not already added to the elements array
-      const [boldText, linkText, url] = match.slice(1);
+      const [boldText, linkText, url, headerLevel2, headerLevel6] =
+        match.slice(1);
 
       elements = pipe(
         // Add any regular text before the match
         elements,
         R.append(
-          RenderRegularText(
-            markdownText.slice(lastIndex, match.index),
-            lastIndex
-          )
+          RenderRegularText(content.slice(lastIndex, match.index), lastIndex)
         ),
         // Add bold text if present
         elements =>
@@ -100,6 +117,42 @@ const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
                   )
                 )
             )
+          ),
+        // Add H6 if present
+        elements =>
+          pipe(
+            headerLevel2 !== undefined,
+            B.fold(
+              () => elements,
+              () =>
+                pipe(
+                  elements,
+                  R.append(
+                    RenderHeaderLevel2(
+                      headerLevel2,
+                      match !== null ? match.index : 0
+                    )
+                  )
+                )
+            )
+          ),
+        // Add H6 if present
+        elements =>
+          pipe(
+            headerLevel6 !== undefined,
+            B.fold(
+              () => elements,
+              () =>
+                pipe(
+                  elements,
+                  R.append(
+                    RenderHeaderLevel6(
+                      headerLevel6,
+                      match !== null ? match.index : 0
+                    )
+                  )
+                )
+            )
           )
       );
 
@@ -107,10 +160,10 @@ const ItwTextInfo: React.FC<MarkdownParserProps> = ({ markdownText }) => {
     }
 
     // Add any remaining regular text
-    if (lastIndex < markdownText.length) {
+    if (lastIndex < content.length) {
       elements = pipe(
         elements,
-        R.append(RenderRegularText(markdownText.slice(lastIndex), lastIndex))
+        R.append(RenderRegularText(content.slice(lastIndex), lastIndex))
       );
     }
 
