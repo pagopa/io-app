@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { FAQsCategoriesType } from "../utils/faq";
@@ -16,19 +16,31 @@ type CommonProps = {
   goBack?: () => void;
 };
 
+type NoAdditionalActions = {
+  secondAction?: never;
+  thirdAction?: never;
+};
+
+type WithAdditionalActions =
+  | NoAdditionalActions
+  | {
+      secondAction: ActionProp;
+      thirdAction?: ActionProp;
+    };
+
 type PropsWithSupport = CommonProps & {
   supportRequest: true;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
-};
+} & WithAdditionalActions;
 
 type PropsWithoutSupport = CommonProps & {
   supportRequest?: false;
   faqCategories?: never;
   contextualHelp?: never;
   contextualHelpMarkdown?: never;
-};
+} & NoAdditionalActions;
 
 export type HeaderSecondLevelHookProps = PropsWithSupport | PropsWithoutSupport;
 
@@ -47,7 +59,9 @@ export const useHeaderSecondLevel = ({
   contextualHelpMarkdown,
   faqCategories,
   goBack,
-  supportRequest
+  supportRequest,
+  secondAction,
+  thirdAction
 }: HeaderSecondLevelHookProps) => {
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
@@ -65,19 +79,41 @@ export const useHeaderSecondLevel = ({
     };
 
     if (supportRequest) {
+      const helpAction = {
+        icon: "help" as ActionProp["icon"],
+        onPress: startSupportRequest,
+        accessibilityLabel: I18n.t(
+          "global.accessibility.contextualHelp.open.label"
+        )
+      };
+      if (secondAction) {
+        if (thirdAction) {
+          // we have 3 actions changes the header props type
+          return {
+            ...baseProps,
+            type: "threeActions",
+            firstAction: helpAction,
+            secondAction,
+            thirdAction
+          };
+        }
+        // we have 2 actions changes the header props type
+        return {
+          ...baseProps,
+          type: "twoActions",
+          firstAction: helpAction,
+          secondAction
+        };
+      }
+      // we only have the support action
       return {
         ...baseProps,
         type: "singleAction",
-        firstAction: {
-          icon: "help",
-          onPress: startSupportRequest,
-          accessibilityLabel: I18n.t(
-            "global.accessibility.contextualHelp.open.label"
-          )
-        }
+        firstAction: helpAction
       };
     }
 
+    // no further actions only back button handling
     return {
       ...baseProps,
       type: "base"
@@ -88,7 +124,9 @@ export const useHeaderSecondLevel = ({
     goBack,
     navigation.goBack,
     supportRequest,
-    startSupportRequest
+    startSupportRequest,
+    secondAction,
+    thirdAction
   ]);
 
   useLayoutEffect(() => {
