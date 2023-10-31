@@ -456,9 +456,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private navigateToPaymentScanQrCode = () => {
     if (this.props.isDesignSystemEnabled) {
-      this.props.navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
-      });
+      this.props.navigation.navigate(
+        WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
+      );
     } else {
       this.props.navigateToPaymentScanQrCode();
     }

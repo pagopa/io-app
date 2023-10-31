@@ -8,6 +8,8 @@ import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
 import { WalletPaymentBarcodeChoiceScreen } from "../screens/WalletPaymentBarcodeChoiceScreen";
 import { WalletPaymentBarcodeScanScreen } from "../screens/WalletPaymentBarcodeScanScreen";
+import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInputFiscalCodeScreen";
+import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
 import { WalletPaymentParamsList } from "./params";
 import { WalletPaymentRoutes } from "./routes";
 
@@ -30,6 +32,20 @@ export const WalletPaymentNavigator = () => (
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE}
       component={WalletPaymentBarcodeChoiceScreen}
+      options={{
+        gestureEnabled: isGestureEnabled
+      }}
+    />
+    <Stack.Screen
+      name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER}
+      component={WalletPaymentInputNoticeNumberScreen}
+      options={{
+        gestureEnabled: isGestureEnabled
+      }}
+    />
+    <Stack.Screen
+      name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE}
+      component={WalletPaymentInputFiscalCodeScreen}
       options={{
         gestureEnabled: isGestureEnabled
       }}
