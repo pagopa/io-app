@@ -30,7 +30,7 @@ import {
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
 import { mixpanelTrack } from "../../../mixpanel";
-import NavigationService from "../../../navigation/NavigationService";
+import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -163,10 +163,10 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   ) : null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToWalletHome: (routeEntryPointName?: EntrypointRoute) =>
     routeEntryPointName?.name === "PN_ROUTES_MESSAGE_DETAILS"
-      ? NavigationService.navigate(routeEntryPointName.name)
+      ? dispatch(backToEntrypointPayment())
       : navigateToWalletHome()
 });
 
