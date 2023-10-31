@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
@@ -8,14 +6,11 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { zendeskTokenSelector } from "../../../store/reducers/authentication";
 import { isStrictSome } from "../../../utils/pot";
 import {
-  AnonymousIdentity,
   initSupportAssistance,
-  JwtIdentity,
   setUserIdentity,
   showSupportTickets,
-  ZendeskAppConfig,
-  zendeskDefaultAnonymousConfig,
-  zendeskDefaultJwtConfig
+  getZendeskIdentity,
+  getZendeskConfig
 } from "../../../utils/supportAssistance";
 import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import ZendeskEmptyTicketsComponent from "../components/ZendeskEmptyTicketsComponent";
@@ -51,18 +46,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     props.route.params;
 
   useEffect(() => {
-    const zendeskConfig = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map(
-        (zT: string): ZendeskAppConfig => ({
-          ...zendeskDefaultJwtConfig,
-          token: zT
-        })
-      ),
-      O.getOrElseW(() => zendeskDefaultAnonymousConfig)
-    );
-
+    const zendeskConfig = getZendeskConfig(zendeskToken);
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
@@ -71,15 +55,7 @@ const ZendeskSeeReportsRouters = (props: Props) => {
     // we sequentially check both:
     // - if the zendeskToken is present the user will be authenticated via jwt
     // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      })),
-      O.getOrElseW(() => ({}))
-    );
-
+    const zendeskIdentity = getZendeskIdentity(zendeskToken);
     setUserIdentity(zendeskIdentity);
     dispatch(zendeskRequestTicketNumber.request());
   }, [dispatch, zendeskToken]);

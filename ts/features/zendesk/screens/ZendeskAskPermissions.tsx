@@ -41,15 +41,12 @@ import {
   addTicketTag,
   anonymousAssistanceAddress,
   anonymousAssistanceAddressWithSubject,
-  AnonymousIdentity,
+  getZendeskConfig,
+  getZendeskIdentity,
   initSupportAssistance,
-  JwtIdentity,
   openSupportTicket,
   setUserIdentity,
-  ZendeskAppConfig,
   zendeskCurrentAppVersionId,
-  zendeskDefaultAnonymousConfig,
-  zendeskDefaultJwtConfig,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
@@ -219,18 +216,7 @@ const ZendeskAskPermissions = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
 
   useEffect(() => {
-    const zendeskConfig = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map(
-        (zT: string): ZendeskAppConfig => ({
-          ...zendeskDefaultJwtConfig,
-          token: zT
-        })
-      ),
-      O.getOrElseW(() => zendeskDefaultAnonymousConfig)
-    );
-
+    const zendeskConfig = getZendeskConfig(zendeskToken);
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
@@ -239,15 +225,7 @@ const ZendeskAskPermissions = () => {
     // we sequentially check both:
     // - if the zendeskToken is present the user will be authenticated via jwt
     // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      })),
-      O.getOrElseW(() => ({}))
-    );
-
+    const zendeskIdentity = getZendeskIdentity(zendeskToken);
     setUserIdentity(zendeskIdentity);
   }, [dispatch, zendeskToken]);
 

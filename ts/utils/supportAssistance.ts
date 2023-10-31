@@ -51,6 +51,31 @@ export const zendeskDefaultAnonymousConfig: ZendeskAppConfig = {
   logId
 };
 
+export const getZendeskConfig = (zendeskToken: string | undefined) =>
+  pipe(
+    zendeskToken,
+    O.fromNullable,
+    O.map(
+      (zT: string): ZendeskAppConfig => ({
+        ...zendeskDefaultJwtConfig,
+        token: zT // this is not used by the zendesk sdk at this point...
+        // https://github.com/pagopa/io-react-native-zendesk/blob/62559dc219583834f0bae2864d959f51f2d19572/ios/RNZendeskChat.m#L180
+        // https://github.com/pagopa/io-react-native-zendesk/blob/62559dc219583834f0bae2864d959f51f2d19572/index.d.ts#L75C3-L75C3
+      })
+    ),
+    O.getOrElseW(() => zendeskDefaultAnonymousConfig)
+  );
+
+export const getZendeskIdentity = (zendeskToken: string | undefined) =>
+  pipe(
+    zendeskToken,
+    O.fromNullable,
+    O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
+      token: zT
+    })),
+    O.getOrElseW(() => ({}))
+  );
+
 // If is not possible to get the assistance tool remotely assume it is none.
 export const assistanceToolRemoteConfig = (aTC: ToolEnum | undefined) =>
   pipe(
