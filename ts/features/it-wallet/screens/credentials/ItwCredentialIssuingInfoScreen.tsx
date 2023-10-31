@@ -15,7 +15,6 @@ import {
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import interno from "../../../../../img/features/it-wallet/interno.png";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -28,18 +27,12 @@ import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import I18n from "../../../../i18n";
 import ItwBulletList from "../../components/ItwBulletList";
 import { useItwDataProcessing } from "../../hooks/useItwDataProcessing";
-import { CREDENTIAL_ISSUER, CredentialCatalogItem } from "../../utils/mocks";
-import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
+import { CREDENTIAL_ISSUER, getRequestedClaims } from "../../utils/mocks";
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
-
-type ContentViewParams = {
-  decodedPid: PidWithToken;
-  credential: CredentialCatalogItem;
-};
 
 /**
  * This screen displays the information about the credential that is going to be shared
@@ -48,7 +41,6 @@ type ContentViewParams = {
 const ItwCredentialIssuingInfoScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const credential = useIOSelector(ItwCredentialsCheckCredentialSelector);
   const { present, bottomSheet } = useItwDataProcessing();
   const toast = useIOToast();
 
@@ -62,7 +54,7 @@ const ItwCredentialIssuingInfoScreen = () => {
     navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
   };
 
-  const ContentView = ({ decodedPid, credential }: ContentViewParams) => (
+  const ContentView = ({ decodedPid }: { decodedPid: PidWithToken }) => (
     <SafeAreaView style={IOStyles.flex}>
       <ScrollView style={IOStyles.horizontalContentPadding}>
         <VSpacer size={32} />
@@ -128,7 +120,7 @@ const ItwCredentialIssuingInfoScreen = () => {
         <VSpacer size={24} />
 
         {/* Render a list of claims that will be shared with the credential issuer */}
-        <ItwBulletList data={credential.requestedClaims(decodedPid)} />
+        <ItwBulletList data={getRequestedClaims(decodedPid)} />
 
         {/* ItwFooterInfoBox should be replaced with a more ligth component */}
         <ItwFooterInfoBox
@@ -168,10 +160,10 @@ const ItwCredentialIssuingInfoScreen = () => {
 
   const DecodedPidOrErrorView = () =>
     pipe(
-      sequenceS(O.Applicative)({ decodedPid, credential }),
+      decodedPid,
       O.fold(
         () => <ErrorView />,
-        some => <ContentView {...some} />
+        decodedPid => <ContentView {...{ decodedPid }} />
       )
     );
 

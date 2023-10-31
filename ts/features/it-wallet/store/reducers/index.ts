@@ -21,6 +21,7 @@ import itwCredentialsChecksReducer, {
 import itwPresentationReducer, {
   ItwPresentationState
 } from "./new/itwPresentationReducer";
+import itwIssuanceReducer, { ItwIssuanceState } from "./new/itwIssuanceReducer";
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 1;
 
@@ -35,6 +36,7 @@ export type ItWalletState = {
   rpInit: ItwRpInitializationState;
   rpPresentation: ItwRpPresentationState;
   presentation: ItwPresentationState;
+  issuance: ItwIssuanceState;
 };
 
 export type PersistedItWalletState = ItWalletState & PersistPartial;
@@ -61,7 +63,8 @@ const reducers = combineReducers<ItWalletState, Action>({
   decodedPid: itwDecodedPid,
   rpInit: itwRpInitializationReducer,
   rpPresentation: itwRpPresentationReducer,
-  presentation: itwPresentationReducer
+  presentation: itwPresentationReducer,
+  issuance: itwIssuanceReducer
 });
 
 const itwReducer = persistReducer<ItWalletState, Action>(

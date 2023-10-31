@@ -47,10 +47,12 @@ export const FEDERATION_ENTITY = {
 
 export const CREDENTIAL_ISSUER = "eFarma";
 
-export type CredentialCatalogItem = {
+export type CredentialCatalogDisplay = {
+  textColor: React.ComponentProps<typeof ItwCredentialCard>["textColor"];
+  image: ImageSourcePropType;
   title: string;
   icon: IOIcons;
-  incoming: boolean;
+  /* Shape of the credential */
   claims: {
     issuedByNew: string;
     expirationDate: string;
@@ -59,13 +61,30 @@ export type CredentialCatalogItem = {
     taxIdCode: string;
     birthdate: string;
   };
-  textColor: React.ComponentProps<typeof ItwCredentialCard>["textColor"];
-  image: ImageSourcePropType;
-  requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
 };
+
+// A credential shown in the catalog but yet to be requested
+export type CredentialCatalogIncomingItem = {
+  incoming: true;
+} & CredentialCatalogDisplay;
+
+// A credential shown in the catalog that user can request
+export type CredentialCatalogAvailableItem = {
+  incoming: false;
+  /* The type that defines the credential to be issued */
+  type: string;
+  /* The url of the issuer */
+  issuerUrl: string;
+} & CredentialCatalogDisplay;
+
+export type CredentialCatalogItem =
+  | CredentialCatalogAvailableItem
+  | CredentialCatalogIncomingItem;
 
 export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
   {
+    type: "EuropeanDisabilityCard",
+    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.disabilityCard"
     ),
@@ -80,14 +99,14 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       birthdate: "30/12/1978"
     },
     textColor: "black",
-    image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png"),
-    requestedClaims: (decodedPid: PidWithToken) =>
-      getRequestedClaims(decodedPid)
+    image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png")
   },
   {
+    incoming: true,
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
-    incoming: false,
+    textColor: "black",
+    image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
     claims: {
       issuedByNew: "Ragioneria Generale dello Stato",
       expirationDate: "30.12.2028",
@@ -95,11 +114,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       familyName: "Verdi",
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
-    },
-    textColor: "black",
-    image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
-    requestedClaims: (decodedPid: PidWithToken) =>
-      getRequestedClaims(decodedPid)
+    }
   },
   {
     title: I18n.t(
@@ -107,6 +122,8 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     ),
     icon: "driverLicense",
     incoming: true,
+    textColor: "black",
+    image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
     claims: {
       issuedByNew: "Istituto Poligrafico e Zecca dello Stato",
       expirationDate: "30.12.2028",
@@ -114,15 +131,11 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       familyName: "Verdi",
       taxIdCode: "VRDBNC80A41H501X",
       birthdate: "30/12/1978"
-    },
-    textColor: "black",
-    image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
-    requestedClaims: (decodedPid: PidWithToken) =>
-      getRequestedClaims(decodedPid)
+    }
   }
 ];
 
-const getRequestedClaims = (
+export const getRequestedClaims = (
   decodedPid: PidWithToken
 ): ReadonlyArray<BulletItem> => [
   {

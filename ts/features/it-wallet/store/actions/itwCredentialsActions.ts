@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { PidResponse } from "../../utils/types";
-import { CredentialCatalogItem } from "./../../utils/mocks";
+import { CredentialCatalogAvailableItem } from "./../../utils/mocks";
 
 /**
  * Action which requests a PID issuing.
@@ -41,7 +41,11 @@ export const itwCredentialsChecks = createAsyncAction(
   "ITW_CREDENTIALS_CHECKS_REQUEST",
   "ITW_CREDENTIALS_CHECKS_SUCCESS",
   "ITW_CREDENTIALS_CHECKS_FAILURE"
-)<CredentialCatalogItem, CredentialCatalogItem, ItWalletError>();
+)<
+  CredentialCatalogAvailableItem,
+  CredentialCatalogAvailableItem,
+  ItWalletError
+>();
 
 /**
  * Action to add a credential to the wallet.
@@ -50,7 +54,11 @@ export const itwCredentialsAddCredential = createAsyncAction(
   "ITW_CREDENTIALS_ADD_REQUEST",
   "ITW_CREDENTIALS_ADD_SUCCESS",
   "ITW_CREDENTIALS_ADD_FAILURE"
-)<CredentialCatalogItem, CredentialCatalogItem, ItWalletError>();
+)<
+  CredentialCatalogAvailableItem,
+  CredentialCatalogAvailableItem,
+  ItWalletError
+>();
 
 /**
  * Type for credentials related actions.

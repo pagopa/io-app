@@ -22,7 +22,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
-import { CredentialCatalogItem } from "../../utils/mocks";
+import { CredentialCatalogAvailableItem } from "../../utils/mocks";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { useItwInfoBottomSheet } from "../../hooks/useItwInfoBottomSheet";
 import { showCancelAlert } from "../../utils/alert";
@@ -36,7 +36,7 @@ import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
  * Type for the content view component props.
  */
 type ContentViewProps = {
-  credential: CredentialCatalogItem;
+  credential: CredentialCatalogAvailableItem;
 };
 
 /**
