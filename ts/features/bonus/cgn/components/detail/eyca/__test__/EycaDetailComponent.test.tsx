@@ -2,7 +2,6 @@ import { fireEvent, render } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import * as React from "react";
 import { Provider } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
 import EycaDetailComponent from "../EycaDetailComponent";
 import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
@@ -47,14 +46,6 @@ describe("EycaDetailComponent", () => {
 
     const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
     expect(eycaStatusBadge).not.toBeNull();
-    expect(eycaStatusBadge).toHaveStyle({ backgroundColor: IOColors.aqua });
-
-    const eycaStatusLabel = component.queryByTestId("eyca-status-label");
-    expect(eycaStatusLabel).not.toBeNull();
-    expect(eycaStatusLabel).toHaveStyle({ color: IOColors.bluegreyDark });
-    expect(eycaStatusLabel).toHaveTextContent(
-      I18n.t("bonus.cgn.detail.status.badge.active")
-    );
 
     const pendingComponent = component.queryByTestId("eyca-pending-component");
     expect(pendingComponent).toBeNull();

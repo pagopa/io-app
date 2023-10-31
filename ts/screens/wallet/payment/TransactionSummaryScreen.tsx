@@ -10,7 +10,8 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import { ActionSheet } from "native-base";
 import React, { useCallback, useEffect } from "react";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { IOToast } from "../../../components/Toast";
@@ -137,7 +138,7 @@ const renderFooter = (
     return (
       <ButtonSolid
         loading
-        onPress={() => constNull}
+        onPress={constNull}
         fullWidth
         label={I18n.t("wallet.continue")}
         accessibilityLabel={I18n.t("wallet.continue")}
@@ -330,38 +331,39 @@ const TransactionSummaryScreen = (): React.ReactElement => {
       paymentVerifica.request({ rptId, startOrigin: paymentStartOrigin })
     );
 
-  const startOrResumePayment = (
-    paymentVerification: PaymentRequestsGetResponse
-  ) =>
-    dispatch(
-      runStartOrResumePaymentActivationSaga({
-        rptId,
-        verifica: paymentVerification,
-        onSuccess: idPayment =>
-          dispatchPickPspOrConfirm(dispatch)(
-            rptId,
-            initialAmount,
-            paymentVerification,
-            idPayment,
-            maybeFavoriteWallet,
-            () => {
-              // either we cannot use the default payment method for this
-              // payment, or fetching the PSPs for this payment and the
-              // default wallet has failed, ask the user to pick a wallet
+  const startOrResumePayment = useCallback(
+    (paymentVerification: PaymentRequestsGetResponse) =>
+      dispatch(
+        runStartOrResumePaymentActivationSaga({
+          rptId,
+          verifica: paymentVerification,
+          onSuccess: idPayment =>
+            dispatchPickPspOrConfirm(dispatch)(
+              rptId,
+              initialAmount,
+              paymentVerification,
+              idPayment,
+              maybeFavoriteWallet,
+              () => {
+                // either we cannot use the default payment method for this
+                // payment, or fetching the PSPs for this payment and the
+                // default wallet has failed, ask the user to pick a wallet
 
-              navigateToPaymentPickPaymentMethodScreen({
-                rptId,
-                initialAmount,
-                verifica: paymentVerification,
-                idPayment
-              });
-            },
-            hasPayableMethods
-          )
-      })
-    );
+                navigateToPaymentPickPaymentMethodScreen({
+                  rptId,
+                  initialAmount,
+                  verifica: paymentVerification,
+                  idPayment
+                });
+              },
+              hasPayableMethods
+            )
+        })
+      ),
+    [dispatch, hasPayableMethods, initialAmount, maybeFavoriteWallet, rptId]
+  );
 
-  const continueWithPayment = () => {
+  const continueWithPayment = useCallback(() => {
     if (!pot.isSome(paymentVerification)) {
       return;
     }
@@ -369,13 +371,14 @@ const TransactionSummaryScreen = (): React.ReactElement => {
       startOrResumePayment(paymentVerification.value);
       return;
     }
+
     alertNoPayablePaymentMethods(() =>
       navigateToWalletAddPaymentMethod({
         inPayment: O.none,
         showOnlyPayablePaymentMethods: true
       })
     );
-  };
+  }, [hasPayableMethods, startOrResumePayment, paymentVerification]);
 
   const resetPayment = () => {
     dispatch(runDeleteActivePaymentSaga());
