@@ -30,7 +30,7 @@ import { reloadAllMessages } from "../../../../store/actions/messages";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
-  selectedPayment: string | null;
+  selectedPayment?: string;
 };
 
 export type SinglePaymentState = {
@@ -39,7 +39,7 @@ export type SinglePaymentState = {
     | undefined;
 };
 
-export const initialState: MultiplePaymentState = { selectedPayment: null };
+export const initialState: MultiplePaymentState = {};
 
 export const paymentsReducer = (
   state: MultiplePaymentState = initialState,
@@ -89,7 +89,7 @@ export const paymentsReducer = (
     case getType(clearSelectedPayment):
       return {
         ...state,
-        selectedPayment: null
+        selectedPayment: undefined
       };
     case getType(reloadAllMessages.request):
       // console.log(`=== RELOAD ALL MESSAGES REQUEST RECEIVED ===`);
