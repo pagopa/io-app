@@ -23,7 +23,6 @@ import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
 import {
-  EntrypointRoute,
   entrypointRouteSelector,
   paymentVerificaSelector
 } from "../../../store/reducers/wallet/payment";
@@ -151,11 +150,13 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
       outcomeCode={outcomeCode}
-      onClose={() => props.navigateToWalletHome(props.routeEntryPointName)}
+      onClose={() =>
+        props.navigateToWalletHome(props.shouldGoBackToEntrypointOnSuccess)
+      }
       successComponent={renderSuccessComponent}
       successFooter={() =>
         successFooter(() =>
-          props.navigateToWalletHome(props.routeEntryPointName)
+          props.navigateToWalletHome(props.shouldGoBackToEntrypointOnSuccess)
         )
       }
       onLearnMore={onLearnMore}
@@ -164,14 +165,15 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  navigateToWalletHome: (routeEntryPointName?: EntrypointRoute) =>
-    routeEntryPointName?.name === "PN_ROUTES_MESSAGE_DETAILS"
+  navigateToWalletHome: (shouldGoBackToEntrypointOnSuccess: boolean) =>
+    shouldGoBackToEntrypointOnSuccess
       ? dispatch(backToEntrypointPayment())
       : navigateToWalletHome()
 });
 
 const mapStateToProps = (state: GlobalState) => ({
-  routeEntryPointName: entrypointRouteSelector(state),
+  shouldGoBackToEntrypointOnSuccess:
+    entrypointRouteSelector(state)?.name === "PN_ROUTES_MESSAGE_DETAILS",
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
   profileEmail: profileEmailSelector(state),
   verifica: paymentVerificaSelector(state)
