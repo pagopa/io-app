@@ -3477,6 +3477,7 @@ features:
         buttons: 
           confirmData: "Confirm data"
           deny: "Deny"
+        tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
       resultScreen:
         loading: 
           title: "Presenting your data to {{relayingParty}}"

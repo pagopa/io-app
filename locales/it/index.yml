@@ -3503,6 +3503,7 @@ features:
         buttons: 
           confirmData: "Conferma dati"
           deny: "Nega"
+        tos: "Proseguendo accetti i [Termini e condizioni d’uso]() del servizio e confermi di avere letto l’[Informativa Privacy]() di {{relayingParty}}."
       resultScreen:
         loading: 
           title: "Sto presentando i tuoi dati a {{relayingParty}}"
