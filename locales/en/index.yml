@@ -3333,12 +3333,6 @@ features:
       intro: "## IT Wallet: cos'è e come funziona\nIT Wallet è una funzionalità che ti permette di aggiungere nel Portafoglio di IO la tua identità digitale, ovvero l'**insieme dei dati personali che ti permette di autenticarti online**, e i tuoi documenti personali, come la patente di guida, la tessera sanitaria e la Carta Europea della disabilità."
       subContentOne: "###### Online e dal vivo\nUsa l'identità digitale per **accedere ai servizi online, sia pubblici che privati**. Usa i documenti per **condividere con altri i dati che contengono**, online e dal vivo, ogni volta che ne hai bisogno."
       subContentTwo: "###### Facile da attivare\nAvrai bisogno della **Carta d'Identità Elettronica (CIE) e del suo PIN**. I dati della tua CIE faranno parte della tua identità digitale, il primo documento del tuo IT Wallet."
-      title: "Your digital identity and your documents in the IO Wallet."
-      subTitle: "IT Wallet is a feature that allows you to add your digital identity to the IO Wallet, which is a collection of personal data that enables you to authenticate yourself online, and your personal documents like driving license, health insurance card and the European disability card."
-      where: "Online and in person."
-      whereDescription: "Carry the digital version of your documents with you all times. Use your digital identity to access online services, both public and private. Use the other cards to share the data they contain with others, both online and in person, whenever you need to."
-      howActivate: "Easy to activate"
-      howActivateDescription: "You will need your Electronic Identity Card (CIE) and its PIN. The data coming from your CIE will be part of your digital identity, the first credential in your IT Wallet."
       cancel: "Not now"
       confirm: "Activate IT Wallet"
     homeScreen:
