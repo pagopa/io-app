@@ -19,7 +19,12 @@ import {
 } from "vision-camera-code-scanner";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
+import {
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType
+} from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
 import { useWideAngleCameraDevice } from "./useWindeAngleCameraDevice";
@@ -54,11 +59,14 @@ export type IOBarcodeCameraScannerConfiguration = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: (failure: BarcodeFailure) => void;
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
   /**
    * Disables the barcode scanner
    */
@@ -277,7 +285,10 @@ export const useIOBarcodeCameraScanner = ({
 
           pipe(
             handleDetectedBarcode(detectedBarcode),
-            E.fold(onBarcodeError, onBarcodeSuccess)
+            E.fold(
+              failure => onBarcodeError(failure, "camera"),
+              barcode => onBarcodeSuccess([barcode], "camera")
+            )
           );
         })
       ),
