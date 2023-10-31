@@ -52,6 +52,7 @@ import { getUrlBasepath } from "../../utils/url";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
 import UnlockAccessScreen from "../onboarding/UnlockAccessScreen";
+import { apiUrlPrefix } from "../../config";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
@@ -119,8 +120,10 @@ const IdpLoginScreen = (props: Props) => {
   const handleLoadingError = (
     error: WebViewErrorEvent | WebViewHttpErrorEvent
   ): void => {
-    trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
-    setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+    if (error.nativeEvent.url.includes(apiUrlPrefix)) {
+      trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
+      setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+    }
   };
 
   const handleLoginFailure = useCallback(
