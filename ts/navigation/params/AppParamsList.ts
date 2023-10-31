@@ -91,12 +91,13 @@ export type AppParamsList = {
   [IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN]:
     | NavigatorScreenParams<IDPayUnsubscriptionParamsList>
     | IDPayUnsubscriptionNavigatorParams;
-  [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined;
+  [IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN]: undefined; // FIXME IOBP-383: remove after react-navigation 6.x upgrade. This should be insde IDPAY_PAYMENT_MAIN
   [IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN]: NavigatorScreenParams<IDPayPaymentParamsList>;
   [IdPayCodeRoutes.IDPAY_CODE_MAIN]: NavigatorScreenParams<IdPayCodeParamsList>;
 
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
   [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: NavigatorScreenParams<WalletPaymentParamsList>;
+  [WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN]: undefined; // FIXME IOBP-383: remove after react-navigation 6.x upgrade. This should be insde WALLET_PAYMENT_MAIN
 };
 
 /**
