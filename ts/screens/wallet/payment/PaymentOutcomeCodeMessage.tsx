@@ -22,10 +22,15 @@ import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
-import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
+import {
+  EntrypointRoute,
+  entrypointRouteSelector,
+  paymentVerificaSelector
+} from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
 import { mixpanelTrack } from "../../../mixpanel";
+import NavigationService from "../../../navigation/NavigationService";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -146,19 +151,27 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
       outcomeCode={outcomeCode}
-      onClose={props.navigateToWalletHome}
+      onClose={() => props.navigateToWalletHome(props.routeEntryPointName)}
       successComponent={renderSuccessComponent}
-      successFooter={() => successFooter(props.navigateToWalletHome)}
+      successFooter={() =>
+        successFooter(() =>
+          props.navigateToWalletHome(props.routeEntryPointName)
+        )
+      }
       onLearnMore={onLearnMore}
     />
   ) : null;
 };
 
 const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToWalletHome: () => navigateToWalletHome()
+  navigateToWalletHome: (routeEntryPointName?: EntrypointRoute) =>
+    routeEntryPointName?.name === "PN_ROUTES_MESSAGE_DETAILS"
+      ? NavigationService.navigate(routeEntryPointName.name)
+      : navigateToWalletHome()
 });
 
 const mapStateToProps = (state: GlobalState) => ({
+  routeEntryPointName: entrypointRouteSelector(state),
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
   profileEmail: profileEmailSelector(state),
   verifica: paymentVerificaSelector(state)
