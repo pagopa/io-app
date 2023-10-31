@@ -963,8 +963,8 @@ payment:
       iuv: IUV payment {{iuv}}
 wallet:
   methodDetails:
-    cobadgeTitle: 'Debit card'
-    cardGeneric: 'Card'
+    cobadgeTitle: "Debit card"
+    cardGeneric: "Card"
     a11y:
       credit:
         hpan: "{{circuit}} ending {{spacedHpan}}"
@@ -1313,10 +1313,10 @@ wallet:
     expireDate: Expire date
     dueDate: Due date
     tranche: Tranche
-    info: 'More info at:'
-    tel: 'Tel:'
-    email: 'Email:'
-    PEC: 'PEC:'
+    info: "More info at:"
+    tel: "Tel:"
+    email: "Email:"
+    PEC: "PEC:"
     recipient: Payee
     object: Payment details
     date: Date and Time
@@ -1589,6 +1589,19 @@ wallet:
     confirm: Yes, quit
     cancel: Keep adding
     success: Problems while adding your card? Please contact your bank.
+  payment:
+    barcodes:
+      choice:
+        title: Sono stati rilevati più codici. Quale vuoi usare?
+    manual:
+      noticeNumber:
+        title: Inserisci il codice avviso
+        subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
+        placeholder: Codice avviso
+      fiscalCode:
+        title: Inserisci il codice fiscale dell’Ente Creditore
+        subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
+        placeholder: Codice fiscale Ente Creditore
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -2324,7 +2337,7 @@ bonus:
   active: Active
   failed: Failed
   redeemed: Consumed
-  termsAndConditionFooter: "By pressing \"{{ctaText}}\" you declare that you have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy]({{tosUrl}})"
+  termsAndConditionFooter: 'By pressing "{{ctaText}}" you declare that you have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy]({{tosUrl}})'
   tos:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
