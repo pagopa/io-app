@@ -3475,6 +3475,7 @@ features:
           title: "Qualcosa non torna?"
           subtitle: "Se ci sono errori nei dati o vuoi capire meglio cosa significano,
             contatta {{issuer}}."
+          action: "Contatta l'assistenza"
         bottomSheet: 
           about: 
             title: "Chi è?"

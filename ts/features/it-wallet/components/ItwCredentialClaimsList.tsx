@@ -1,26 +1,23 @@
 import React from "react";
-import {
-  Divider,
-  IconButton,
-  ListItemInfo
-} from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import { CredentialCatalogItem } from "../utils/mocks";
-import I18n from "../../../i18n";
+import { IssuanceResultData } from "../store/reducers/new/itwIssuanceReducer";
 
-/**
- * This type is used to extract the claims from the credential mock type.
- */
-type ClaimsType = Partial<keyof CredentialCatalogItem["claims"]>;
+type ClaimList = ReadonlyArray<readonly [string, string]>;
 
-/**
- * This type represents the props of the ClaimsList component.
- */
-type ClaimsListProps = {
-  credential: CredentialCatalogItem;
-  claims: Array<ClaimsType>;
-  onInfoPress?: () => void;
-};
+const parseClaims = (
+  parsedCredential: IssuanceResultData["parsedCredential"],
+  schema: IssuanceResultData["schema"]
+): ClaimList =>
+  Object.entries(schema.credentialSubject)
+    /* 
+  TODO: select locale
+  .map(([key, definitions]) =>
+    definitions.display.filter(_ => _.locale === I18n.locale)
+  ) */
+    .map(
+      ([key, { display }]) => [display[0].name, parsedCredential[key]] as const
+    );
 
 /**
  * This component renders the list of claims for a credential.
@@ -30,45 +27,26 @@ type ClaimsListProps = {
  * @param onLinkPress - function to be called for the issuer info action. To be passed only if claims contains the issuedByNew claim.
  */
 const ItwCredentialClaimsList = ({
-  credential,
-  claims,
-  onInfoPress
-}: ClaimsListProps) => {
-  const RenderClaim = ({ claim }: { claim: ClaimsType }) => {
-    const value = credential.claims[claim];
-    const label = I18n.t(
-      `features.itWallet.verifiableCredentials.claims.${claim}`
-    );
-
-    const hasInfo = (claim: ClaimsType) => claim === "issuedByNew";
-
-    return (
-      <ListItemInfo
-        label={label}
-        value={value}
-        accessibilityLabel={`${label} ${value}`}
-        action={
-          hasInfo(claim) &&
-          onInfoPress && (
-            <IconButton
-              icon="info"
-              onPress={onInfoPress}
-              accessibilityLabel={"info"}
-            />
-          )
-        }
-      />
-    );
-  };
+  data: { parsedCredential, schema }
+}: {
+  data: IssuanceResultData;
+}) => {
+  const claims = parseClaims(parsedCredential, schema);
 
   return (
     <>
-      {claims.map((claim, index) => (
-        <View key={`${index}_${claim}`}>
-          <RenderClaim claim={claim} key={`${index}_${claim}`} />
-          <Divider />
-        </View>
-      ))}
+      {claims.map(
+        ([label, value], index, _, key = `${index}_${label}` /* 🥷 */) => (
+          <View key={key}>
+            <ListItemInfo
+              label={label}
+              value={value}
+              accessibilityLabel={`${label} ${value}`}
+            />
+            <Divider />
+          </View>
+        )
+      )}
     </>
   );
 };

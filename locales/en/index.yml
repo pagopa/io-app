@@ -3449,6 +3449,7 @@ features:
         somethingWrong:
           title: "Something wrong?"
           subtitle: "If there are errors in the data or you want to better understand what they mean, contact {{issuer}}."
+          action: "Ask for help"
         bottomSheet: 
           about: 
             title: "Who is it?"

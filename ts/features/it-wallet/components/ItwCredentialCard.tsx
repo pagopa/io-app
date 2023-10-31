@@ -1,23 +1,16 @@
 import * as React from "react";
-import {
-  View,
-  Dimensions,
-  Image,
-  StyleSheet,
-  ImageSourcePropType
-} from "react-native";
+import { View, Dimensions, Image, StyleSheet } from "react-native";
 import { Body, H6, IOColors, Label } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
+import { CredentialCatalogDisplay } from "../utils/mocks";
 
 /**
  * Props for the component.
  */
 type Props = {
-  title: string;
-  name: string;
-  fiscalCode: string;
-  textColor: Extract<IOColors, "black" | "white">;
-  backgroundImage: ImageSourcePropType;
+  name?: string;
+  fiscalCode?: string;
+  display: CredentialCatalogDisplay;
 };
 
 /**
@@ -75,14 +68,12 @@ const styles = StyleSheet.create({
  * @param backgroundImage - the background image of the card.
  */
 const ItwCredentialCard = ({
-  title,
   name,
   fiscalCode,
-  textColor,
-  backgroundImage
+  display: { image, title, textColor }
 }: Props) => (
   <View>
-    <Image source={backgroundImage} style={styles.cardBackground} />
+    <Image source={image} style={styles.cardBackground} />
     <H6
       color={textColor}
       accessibilityLabel={name}
@@ -90,22 +81,26 @@ const ItwCredentialCard = ({
     >
       {title}
     </H6>
-    <Label
-      weight="Regular"
-      color={textColor}
-      style={[styles.text, styles.nameText]}
-      accessibilityLabel={name}
-    >
-      {name}
-    </Label>
-    <Body
-      weight="SemiBold"
-      color={textColor}
-      style={[styles.text, styles.fiscalCodeText]}
-      accessibilityLabel={name}
-    >
-      {fiscalCode}
-    </Body>
+    {name && (
+      <Label
+        weight="Regular"
+        color={textColor}
+        style={[styles.text, styles.nameText]}
+        accessibilityLabel={name}
+      >
+        {name}
+      </Label>
+    )}
+    {fiscalCode && (
+      <Body
+        weight="SemiBold"
+        color={textColor}
+        style={[styles.text, styles.fiscalCodeText]}
+        accessibilityLabel={name}
+      >
+        {fiscalCode}
+      </Body>
+    )}
   </View>
 );
 

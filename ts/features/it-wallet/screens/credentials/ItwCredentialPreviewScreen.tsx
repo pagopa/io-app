@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
+  Banner,
   BlockButtonProps,
   Body,
   FooterWithButtons,
@@ -12,7 +12,7 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -21,53 +21,47 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { ItwCredentialsCheckCredentialSelector } from "../../store/reducers/itwCredentialsChecksReducer";
-import { CredentialCatalogAvailableItem } from "../../utils/mocks";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { useItwInfoBottomSheet } from "../../hooks/useItwInfoBottomSheet";
 import { showCancelAlert } from "../../utils/alert";
 import ROUTES from "../../../../navigation/routes";
-import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
-import { itwCredentialsSelector } from "../../store/reducers/itwCredentialsReducer";
 import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
-
-/**
- * Type for the content view component props.
- */
-type ContentViewProps = {
-  credential: CredentialCatalogAvailableItem;
-};
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import {
+  itwCancelStoreCredential,
+  itwConfirmStoreCredential,
+  itwIssuanceUserAuthorization
+} from "../../store/actions/new/itwIssuanceActions";
+import {
+  IssuanceResultData,
+  itwIssuanceDataSelector,
+  itwIssuanceResultDataSelector
+} from "../../store/reducers/new/itwIssuanceReducer";
+import { ItWalletError } from "../../utils/errors/itwErrors";
+import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
  */
 const ItwCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const credential = useIOSelector(ItwCredentialsCheckCredentialSelector);
-  const credentialsSelector = useIOSelector(itwCredentialsSelector);
-  const isCredentialAdded = credentialsSelector.find(
-    c => O.isSome(c) && O.isSome(credential) && c.value === credential.value
-  );
+  const issuanceResultData = useIOSelector(itwIssuanceResultDataSelector);
+  const issuanceData = useIOSelector(itwIssuanceDataSelector);
+
+  const bannerViewRef = React.createRef<View>();
+
   const toast = useIOToast();
   const dispatch = useIODispatch();
 
-  React.useEffect(() => {
-    if (isCredentialAdded) {
-      toast.info(
-        I18n.t(
-          "features.itWallet.issuing.credentialPreviewScreen.toast.success"
-        )
-      );
-    }
-  }, [isCredentialAdded, toast]);
+  useOnFirstRender(() => {
+    dispatch(itwIssuanceUserAuthorization.request());
+  });
 
   const { present, bottomSheet } = useItwInfoBottomSheet({
-    title: pipe(
-      credential,
-      O.map(some => some.claims.issuedByNew),
-      O.getOrElse(() => "")
-    ),
+    title: pot.isSome(issuanceResultData)
+      ? issuanceResultData.value.issuerName
+      : "",
     content: [
       {
         title: I18n.t(
@@ -92,6 +86,7 @@ const ItwCredentialPreviewScreen = () => {
     toast.info(
       I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
     );
+    dispatch(itwCancelStoreCredential());
     navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
   };
 
@@ -99,9 +94,9 @@ const ItwCredentialPreviewScreen = () => {
    * Renders the content of the screen if the credential is some.
    * @param credential - credential to be displayed
    */
-  const ContentView = ({ credential }: ContentViewProps) => {
+  const ContentView = ({ data }: { data: IssuanceResultData }) => {
     const addOnPress = () => {
-      dispatch(itwCredentialsAddCredential.request(credential));
+      dispatch(itwConfirmStoreCredential());
     };
 
     /**
@@ -128,10 +123,6 @@ const ItwCredentialPreviewScreen = () => {
       }
     };
 
-    const title = credential.title;
-    const name =
-      credential.claims.givenName + " " + credential.claims.familyName;
-    const fiscalCode = credential.claims.taxIdCode;
     return (
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
@@ -146,25 +137,12 @@ const ItwCredentialPreviewScreen = () => {
           </Body>
           <VSpacer />
           <ItwCredentialCard
-            title={title}
-            name={name}
-            fiscalCode={fiscalCode}
-            textColor={credential.textColor}
-            backgroundImage={credential.image}
+            name={data.parsedCredential.name}
+            fiscalCode={data.parsedCredential.fiscalCode}
+            display={data.schema.display}
           />
           <VSpacer />
-          <ItwCredentialClaimsList
-            credential={credential}
-            claims={[
-              "issuedByNew",
-              "expirationDate",
-              "givenName",
-              "familyName",
-              "taxIdCode",
-              "birthdate"
-            ]}
-            onInfoPress={present}
-          />
+          <ItwCredentialClaimsList data={data} />
           <VSpacer size={32} />
           <H6>
             {I18n.t(
@@ -172,12 +150,26 @@ const ItwCredentialPreviewScreen = () => {
             )}
           </H6>
           <Body>
-            {I18n.t(
-              "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.subtitle",
-              {
-                issuer: credential.claims.issuedByNew
-              }
-            )}
+            <Banner
+              testID={"ItwBannerTestID"}
+              viewRef={bannerViewRef}
+              color={"neutral"}
+              size="big"
+              title={I18n.t(
+                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.title"
+              )}
+              content={I18n.t(
+                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.subtitle",
+                {
+                  issuer: data.issuerName
+                }
+              )}
+              pictogramName={"itWallet"}
+              action={I18n.t(
+                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.action"
+              )}
+              onPress={present}
+            />
           </Body>
           <VSpacer size={32} />
         </ScrollView>
@@ -190,28 +182,41 @@ const ItwCredentialPreviewScreen = () => {
     );
   };
 
-  const ErrorView = () => {
-    const onPress = () => navigation.goBack();
-    const mappedError = getItwGenericMappedError(onPress);
+  // Checks failed
+  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
+    // TODO: handle contextual error
+    const mappedError = getItwGenericMappedError(() => navigation.goBack());
     return <ItwKoView {...mappedError} />;
   };
 
-  /**
-   * Checks if credential is some or none and renders the content of the screen or an error view.
-   * @returns the content of the screen if the credential is some, an error view otherwise.
-   */
-  const ContentOrErrorView = () =>
-    pipe(
-      credential,
-      O.fold(
-        () => <ErrorView />,
-        credential => <ContentView credential={credential} />
-      )
-    );
+  // A generic erro view for cases not mapped
+  const Panic = ({ label: _ = "unknown" }: { label?: string }) => <ErrorView />;
+
+  const LoadingView = () => (
+    <ItwLoadingSpinnerOverlay
+      captionTitle={I18n.t(
+        "features.itWallet.presentation.checksScreen.loading"
+      )}
+      isLoading
+    >
+      <></>
+    </ItwLoadingSpinnerOverlay>
+  );
+  const RenderMask = pot.fold(
+    issuanceResultData,
+    /* foldNone */ () => <LoadingView />,
+    /* foldNoneLoading */ () => <LoadingView />,
+    /* foldNoneUpdating */ () => <Panic label="unexpected foldNoneUpdating" />,
+    /* foldNoneError */ () => <ErrorView />,
+    /* foldSome */ data => <ContentView data={data} />,
+    /* foldSomeLoading */ () => <Panic label="unexpected foldSomeLoading" />,
+    /* foldSomeUpdating */ () => <Panic label="unexpected foldSomeUpdating" />,
+    /* foldSomeError */ (_, error) => <ErrorView error={error} />
+  );
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      {ContentOrErrorView()}
+      {RenderMask}
       {bottomSheet}
     </BaseScreenComponent>
   );

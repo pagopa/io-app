@@ -32,6 +32,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
+import { pidDisplayData } from "../../utils/pid";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -82,13 +83,9 @@ const ItwPidPreviewScreen = () => {
           <VSpacer />
           <View style={IOStyles.horizontalContentPadding}>
             <ItwCredentialCard
-              title={I18n.t(
-                "features.itWallet.verifiableCredentials.type.digitalCredential"
-              )}
               name={name}
               fiscalCode={fiscalCode}
-              textColor="white"
-              backgroundImage={require("../../assets/img/credentials/cards/pidFront.png")}
+              display={pidDisplayData}
             />
             <VSpacer />
             <FeatureInfo

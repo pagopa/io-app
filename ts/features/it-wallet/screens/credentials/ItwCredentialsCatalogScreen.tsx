@@ -31,7 +31,11 @@ import {
   itwIssuanceDataSelector,
   IssuanceData
 } from "../../store/reducers/new/itwIssuanceReducer";
-import { itwStartIssuanceFlow } from "../../store/actions/new/itwIssuanceActions";
+import {
+  itwCancelIssuance,
+  itwConfirmIssuance,
+  itwStartIssuanceFlow
+} from "../../store/actions/new/itwIssuanceActions";
 import ItwContinueScreen from "../../components/ItwResultComponent";
 import { showCancelAlert } from "../../utils/alert";
 import { ItWalletError } from "../../utils/errors/itwErrors";
@@ -65,8 +69,18 @@ const ItwCredentialsCatalogScreen = () => {
   // will be populated once the flow has started
   const maybeIssuanceData = useIOSelector(itwIssuanceDataSelector);
 
-  const onUserConfirmIssuance = () =>
+  const onUserConfirmIssuance = () => {
+    dispatch(itwConfirmIssuance());
     navigation.navigate(ITW_ROUTES.CREDENTIALS.ISSUING_INFO);
+  };
+
+  const onUserAbortIssuance = () =>
+    showCancelAlert(() => {
+      toast.info(
+        I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
+      );
+      dispatch(itwCancelIssuance());
+    });
 
   const onCredentialSelect = ({
     type: credentialType,
@@ -135,15 +149,7 @@ const ItwCredentialsCatalogScreen = () => {
           secondaryAction={{
             label: I18n.t("global.buttons.cancel"),
             accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: () =>
-              showCancelAlert(() => {
-                toast.info(
-                  I18n.t(
-                    "features.itWallet.issuing.credentialsChecksScreen.toast.cancel"
-                  )
-                );
-                dispatch(itwStartIssuanceFlow.cancel());
-              })
+            onPress: onUserAbortIssuance
           }}
         />
       </SafeAreaView>

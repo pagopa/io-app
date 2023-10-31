@@ -29,6 +29,7 @@ import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReduce
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { itWalletExperimentalEnabled } from "../../../config";
 import ItwCredentialCard from "../components/ItwCredentialCard";
+import { pidDisplayData } from "../utils/pid";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -99,34 +100,31 @@ const ItwHomeScreen = () => {
           }
         >
           <ItwCredentialCard
-            title={I18n.t(
-              "features.itWallet.verifiableCredentials.type.digitalCredential"
-            )}
             name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
             fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
-            textColor="white"
-            backgroundImage={require("../assets/img/credentials/cards/pidFront.png")}
+            display={pidDisplayData}
           />
           <VSpacer />
         </Pressable>
-        {credentials.map(
-          (credential, idx) =>
-            O.isSome(credential) && (
-              <Pressable
-                onLongPress={onLongPressCredential}
-                key={`${credential.value.title}-${idx}`}
-              >
-                <ItwCredentialCard
-                  title={credential.value.title}
-                  name={`${credential.value.claims.givenName} ${credential.value.claims.familyName}`}
-                  fiscalCode={credential.value.claims.taxIdCode}
-                  textColor={credential.value.textColor}
-                  backgroundImage={credential.value.image}
-                />
-                <VSpacer />
-              </Pressable>
-            )
-        )}
+        {credentials
+          .filter(O.isSome)
+          .map(_ => _.value)
+          .map((credential, idx) => (
+            <Pressable
+              onLongPress={onLongPressCredential}
+              key={`${credential.schema.display.title}-${idx}`}
+            >
+              <ItwCredentialCard
+                name={[
+                  credential.parsedCredential.givenName,
+                  credential.parsedCredential.familyName
+                ].join(" ")}
+                fiscalCode={credential.parsedCredential.fiscalCode}
+                display={credential.schema.display}
+              />
+              <VSpacer />
+            </Pressable>
+          ))}
         <View
           style={{
             ...IOStyles.flex,

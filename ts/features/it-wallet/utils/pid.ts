@@ -8,6 +8,7 @@ import {
   walletPidProviderUrl,
   walletProviderUrl as walletProviderBaseUrl
 } from "../../../config";
+import I18n from "../../../i18n";
 import { ITW_WIA_KEY_TAG } from "./wia";
 import { getOrGenerateCyptoKey } from "./keychain";
 
@@ -102,4 +103,15 @@ export const getPid = async (
   );
 
   return { credential, format };
+};
+
+/**
+ * Hard coded display feature for PID
+ */
+export const pidDisplayData = {
+  title: I18n.t(
+    "features.itWallet.verifiableCredentials.type.digitalCredential"
+  ),
+  image: require("../assets/img/credentials/cards/pidFront.png"),
+  textColor: "white" as const
 };

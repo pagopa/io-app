@@ -20,6 +20,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
+import { pidDisplayData } from "../../utils/pid";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -49,13 +50,9 @@ const ItwPidDetails = () => {
         <VSpacer />
         <View style={IOStyles.horizontalContentPadding}>
           <ItwCredentialCard
-            title={I18n.t(
-              "features.itWallet.verifiableCredentials.type.digitalCredential"
-            )}
             name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
             fiscalCode={decodedPid.pid.claims.taxIdCode as string}
-            textColor="white"
-            backgroundImage={require("../../assets/img/credentials/cards/pidFront.png")}
+            display={pidDisplayData}
           />
           <VSpacer />
           <ItwPidClaimsList

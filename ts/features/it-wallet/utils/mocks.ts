@@ -2,9 +2,10 @@ import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { IOIcons } from "@pagopa/io-app-design-system";
 import { ImageSourcePropType } from "react-native";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
-import ItwCredentialCard from "../components/ItwCredentialCard";
 import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
@@ -48,19 +49,10 @@ export const FEDERATION_ENTITY = {
 export const CREDENTIAL_ISSUER = "eFarma";
 
 export type CredentialCatalogDisplay = {
-  textColor: React.ComponentProps<typeof ItwCredentialCard>["textColor"];
+  textColor: "black" | "white";
   image: ImageSourcePropType;
   title: string;
-  icon: IOIcons;
-  /* Shape of the credential */
-  claims: {
-    issuedByNew: string;
-    expirationDate: string;
-    givenName: string;
-    familyName: string;
-    taxIdCode: string;
-    birthdate: string;
-  };
+  icon?: IOIcons;
 };
 
 // A credential shown in the catalog but yet to be requested
@@ -90,14 +82,6 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     ),
     icon: "disabilityCard",
     incoming: false,
-    claims: {
-      issuedByNew: "Istituto Poligrafico e Zecca dello Stato",
-      expirationDate: "30.12.2028",
-      givenName: "Anna",
-      familyName: "Verdi",
-      taxIdCode: "VRDBNC80A41H501X",
-      birthdate: "30/12/1978"
-    },
     textColor: "black",
     image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png")
   },
@@ -106,15 +90,7 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
     textColor: "black",
-    image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
-    claims: {
-      issuedByNew: "Ragioneria Generale dello Stato",
-      expirationDate: "30.12.2028",
-      givenName: "Anna",
-      familyName: "Verdi",
-      taxIdCode: "VRDBNC80A41H501X",
-      birthdate: "30/12/1978"
-    }
+    image: require("../assets/img/credentials/cards/healthInsuranceFront.png")
   },
   {
     title: I18n.t(
@@ -123,17 +99,27 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     icon: "driverLicense",
     incoming: true,
     textColor: "black",
-    image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
-    claims: {
-      issuedByNew: "Istituto Poligrafico e Zecca dello Stato",
-      expirationDate: "30.12.2028",
-      givenName: "Anna",
-      familyName: "Verdi",
-      taxIdCode: "VRDBNC80A41H501X",
-      birthdate: "30/12/1978"
-    }
+    image: require("../assets/img/credentials/cards/drivingLicenseFront.png")
   }
 ];
+
+export const defaultDisplayData: CredentialCatalogDisplay = {
+  title: I18n.t("features.itWallet.generic.credential"),
+  icon: "archive",
+  textColor: "black",
+  image: require("../assets/img/credentials/cards/default.png")
+};
+
+export const getFromCatalog = (
+  credentialType: string
+): O.Option<CredentialCatalogAvailableItem> =>
+  pipe(
+    CREDENTIALS_CATALOG.filter(
+      (e): e is CredentialCatalogAvailableItem =>
+        !e.incoming && e.type === credentialType
+    )[0],
+    O.fromNullable
+  );
 
 export const getRequestedClaims = (
   decodedPid: PidWithToken

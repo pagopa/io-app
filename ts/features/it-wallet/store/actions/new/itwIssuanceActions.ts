@@ -6,6 +6,7 @@ import {
 import { Credential } from "@pagopa/io-react-native-wallet";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { CredentialCatalogDisplay } from "../../../utils/mocks";
+import { IssuanceResultData } from "../../reducers/new/itwIssuanceReducer";
 
 export type StartIssuanceFlow = Awaited<
   ReturnType<Credential.Issuance.StartFlow>
@@ -40,11 +41,18 @@ export const itwCancelIssuance = createStandardAction(
   "ITW_CANCEL_ISSUANCE"
 )<void>();
 
+export const itwConfirmStoreCredential = createStandardAction(
+  "ITW_CONFIRM_STORE_CREDENTIAL"
+)<void>();
+export const itwCancelStoreCredential = createStandardAction(
+  "ITW_CANCEL_STORE_CREDENTIAL"
+)<void>();
+
 export const itwIssuanceUserAuthorization = createAsyncAction(
   "ITW_ISSUANCE_USER_AUTHZ_REQUEST",
   "ITW_ISSUANCE_USER_AUTHZ_SUCCESS",
   "ITW_ISSUANCE_USER_AUTHZ_FAILURE"
-)<void, void, ItWalletError>();
+)<void, IssuanceResultData, ItWalletError>();
 
 export const itwIssuanceCredential = createAsyncAction(
   "ITW_ISSUANCE_GET_CREDENTIAL_REQUEST",
@@ -56,6 +64,8 @@ export type itwIssuanceActions =
   | ActionType<typeof itwStartIssuanceFlow>
   | ActionType<typeof itwConfirmIssuance>
   | ActionType<typeof itwCancelIssuance>
+  | ActionType<typeof itwConfirmStoreCredential>
+  | ActionType<typeof itwCancelStoreCredential>
   | ActionType<typeof itwIssuanceUserAuthorization>
   | ActionType<typeof itwIssuanceCredential>
   | ActionType<typeof itwIssuanceChecks>;
