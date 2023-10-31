@@ -25,12 +25,10 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { useIOSelector } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
 import { Table, TableRow } from "../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IDPayUnsubscriptionRoutes } from "../../unsubscription/navigation/navigator";
-import { idPayInitiativeTypeSelector } from "../store";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -47,7 +45,11 @@ const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const { initiativeDetails, beneficiaryDetails, onboardingStatus } = props;
-  const { initiativeId, initiativeName } = initiativeDetails;
+  const {
+    initiativeId,
+    initiativeName,
+    initiativeRewardType: initiativeType
+  } = initiativeDetails;
 
   const ruleInfoBox = pipe(
     beneficiaryDetails.ruleDescription,
@@ -74,14 +76,14 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     O.getOrElse(() => "-")
   );
 
-  const rankingStartDateString = pipe(
+  const fruitionStartDateString = pipe(
     beneficiaryDetails.fruitionStartDate,
     O.fromNullable,
     O.map(formatDate("DD MMM YYYY")),
     O.getOrElse(() => "-")
   );
 
-  const rankingEndDateString = pipe(
+  const fruitionEndDateString = pipe(
     beneficiaryDetails.fruitionEndDate,
     O.fromNullable,
     O.map(formatDate("DD MMM YYYY")),
@@ -95,12 +97,14 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       if (rewardValueType === RewardValueTypeEnum.ABSOLUTE) {
         return {
           label: I18n.t("idpay.initiative.beneficiaryDetails.spendValue"),
-          value: formatNumberCurrencyOrDefault(rewardValue)
+          value: formatNumberCurrencyOrDefault(rewardValue),
+          testID: "spendValueTestID"
         };
       }
       return {
         label: I18n.t("idpay.initiative.beneficiaryDetails.spendPercentage"),
-        value: `${rewardValue}%`
+        value: `${rewardValue}%`,
+        testID: "spendPercentageTestID"
       };
     }),
     O.getOrElse<TableRow>(() => ({ label: "-", value: "-" }))
@@ -123,26 +127,29 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
     O.getOrElse(() => "-")
   );
 
-  const typeDependantEntries = () => {
+  const getTypeDependantTableRows = (): Array<TableRow> => {
     switch (initiativeDetails.initiativeRewardType) {
       case InitiativeRewardTypeEnum.DISCOUNT:
         return [
           {
-            label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
             // in DISCOUNT initiatives, the spent amount is held in the accrued field,
             // while the refunded amount is always 0
+            label: I18n.t("idpay.initiative.beneficiaryDetails.spentUntilNow"),
+            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued),
+            testID: "accruedTestID"
           }
         ];
       case InitiativeRewardTypeEnum.REFUND:
         return [
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.toBeRefunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued)
+            value: formatNumberCurrencyOrDefault(initiativeDetails.accrued),
+            testID: "accruedTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.refunded"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded)
+            value: formatNumberCurrencyOrDefault(initiativeDetails.refunded),
+            testID: "refundedTestID"
           }
         ];
       default:
@@ -162,8 +169,6 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       )
     );
 
-  const initiativeType = useIOSelector(idPayInitiativeTypeSelector);
-
   const handleUnsubscribePress = () =>
     navigation.navigate(IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN, {
       initiativeId,
@@ -179,17 +184,20 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         rows={[
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.status"),
-            value: statusString
+            value: statusString,
+            testID: "statusTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.endDate"),
-            value: endDateString
+            value: endDateString,
+            testID: "endDateTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.amount"),
-            value: formatNumberCurrencyOrDefault(initiativeDetails.amount)
+            value: formatNumberCurrencyOrDefault(initiativeDetails.amount),
+            testID: "amountTestID"
           },
-          ...typeDependantEntries()
+          ...getTypeDependantTableRows()
         ]}
       />
       <VSpacer size={8} />
@@ -202,11 +210,13 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         rows={[
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.spendFrom"),
-            value: rankingStartDateString
+            value: fruitionStartDateString,
+            testID: "fruitionStartDateTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.spendTo"),
-            value: rankingEndDateString
+            value: fruitionEndDateString,
+            testID: "fruitionEndDateTestID"
           },
           rewardRuleRow
         ]}
@@ -217,11 +227,13 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
         rows={[
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.enrollmentDate"),
-            value: onboardingDateString
+            value: onboardingDateString,
+            testID: "onboardingDateTestID"
           },
           {
             label: I18n.t("idpay.initiative.beneficiaryDetails.protocolNumber"),
-            value: "-"
+            value: "-",
+            testID: "protocolTestID"
           }
         ]}
       />
