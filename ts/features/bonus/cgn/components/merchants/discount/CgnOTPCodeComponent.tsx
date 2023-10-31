@@ -1,7 +1,7 @@
 import * as React from "react";
 import { TouchableWithoutFeedback } from "@gorhom/bottom-sheet";
 import { View, StyleSheet } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, LabelLink } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
@@ -9,7 +9,6 @@ import { cgnOtpDataSelector } from "../../../store/reducers/otp";
 import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
 import { cgnGenerateOtp, resetOtpState } from "../../../store/actions/otp";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
-import { Link } from "../../../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../../components/core/typography/H4";
@@ -77,7 +76,7 @@ const CgnOTPCodeContent = ({ onCodePress }: Props) => {
               {I18n.t("bonus.cgn.otp.error")}
             </H4>
 
-            <Link>{I18n.t("global.buttons.retry")}</Link>
+            <LabelLink>{I18n.t("global.buttons.retry")}</LabelLink>
           </View>
         </TouchableWithoutFeedback>
       );

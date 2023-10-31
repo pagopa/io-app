@@ -6,15 +6,18 @@ import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { GlobalState } from "../../../../store/reducers/types";
 import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
+import { PaymentMethodsResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
 
-import { walletStartOnboarding } from "./actions";
+import { walletGetPaymentMethods, walletStartOnboarding } from "./actions";
 
 export type WalletOnboardingState = {
   result: pot.Pot<WalletCreateResponse, NetworkError>;
+  paymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
 };
 
 const INITIAL_STATE: WalletOnboardingState = {
-  result: pot.none
+  result: pot.none,
+  paymentMethods: pot.noneLoading
 };
 
 const walletOnboardingReducer = (
@@ -31,7 +34,7 @@ const walletOnboardingReducer = (
     case getType(walletStartOnboarding.success):
       return {
         ...state,
-        result: pot.some(action.payload)
+        result: pot.some(action.payload as WalletCreateResponse)
       };
     case getType(walletStartOnboarding.failure):
       return {
@@ -43,6 +46,27 @@ const walletOnboardingReducer = (
         ...state,
         result: pot.none
       };
+    // GET ONBOARDABLE PAYMENT METHODS LIST
+    case getType(walletGetPaymentMethods.request):
+      return {
+        ...state,
+        paymentMethods: pot.toLoading(pot.none)
+      };
+    case getType(walletGetPaymentMethods.success):
+      return {
+        ...state,
+        paymentMethods: pot.some(action.payload)
+      };
+    case getType(walletGetPaymentMethods.failure):
+      return {
+        ...state,
+        paymentMethods: pot.toError(state.paymentMethods, action.payload)
+      };
+    case getType(walletGetPaymentMethods.cancel):
+      return {
+        ...state,
+        paymentMethods: pot.none
+      };
   }
   return state;
 };
@@ -53,6 +77,16 @@ const walletOnboardingSelector = (state: GlobalState) =>
 export const walletOnboardingStartupSelector = createSelector(
   walletOnboardingSelector,
   onboarding => onboarding.result
+);
+
+export const walletOnboardingPaymentMethodsSelector = createSelector(
+  walletOnboardingSelector,
+  onboarding => onboarding.paymentMethods
+);
+
+export const isLoadingPaymentMethodsSelector = createSelector(
+  walletOnboardingPaymentMethodsSelector,
+  paymentMethods => pot.isLoading(paymentMethods)
 );
 
 export default walletOnboardingReducer;

@@ -51,6 +51,7 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
+import UnlockAccessScreen from "../onboarding/UnlockAccessScreen";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
@@ -217,14 +218,18 @@ const IdpLoginScreen = (props: Props) => {
         </View>
       );
     } else if (pot.isError(requestState)) {
-      return (
-        <IdpAuthErrorScreen
-          requestStateError={requestState.error}
-          errorCode={errorCode}
-          onCancel={() => props.navigation.goBack()}
-          onRetry={onRetryButtonPressed}
-        />
-      );
+      if (errorCode === "1002") {
+        return <UnlockAccessScreen identifier="SPID" />;
+      } else {
+        return (
+          <IdpAuthErrorScreen
+            requestStateError={requestState.error}
+            errorCode={errorCode}
+            onCancel={() => props.navigation.goBack()}
+            onRetry={onRetryButtonPressed}
+          />
+        );
+      }
     }
     // loading complete, no mask needed
     return null;

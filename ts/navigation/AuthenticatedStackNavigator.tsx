@@ -18,6 +18,16 @@ import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator"
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
+import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
+import {
+  IDPayConfigurationNavigator,
+  IDPayConfigurationRoutes
+} from "../features/idpay/configuration/navigation/navigator";
+import {
+  IDpayDetailsNavigator,
+  IDPayDetailsRoutes
+} from "../features/idpay/details/navigation";
 import {
   IDPayOnboardingNavigator,
   IDPayOnboardingRoutes
@@ -38,14 +48,9 @@ import {
   WalletOnboardingNavigator,
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
-import {
-  IDpayDetailsNavigator,
-  IDPayDetailsRoutes
-} from "../features/idpay/details/navigation";
-import {
-  IDPayConfigurationNavigator,
-  IDPayConfigurationRoutes
-} from "../features/idpay/configuration/navigation/navigator";
+import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
+import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
+import { WalletPaymentBarcodeScanScreen } from "../features/walletV3/payment/screens/WalletPaymentBarcodeScanScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { useIOSelector } from "../store/hooks";
@@ -57,10 +62,6 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
-import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
-import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
-import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
-import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -224,8 +225,8 @@ const AuthenticatedStackNavigator = () => {
             options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           {/* 
-            This screen is outside the main payment navigator to enable the slide from bottom animation.
-            FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator
+            This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
+            FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
           */}
           <Stack.Screen
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
@@ -258,7 +259,17 @@ const AuthenticatedStackNavigator = () => {
         name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
         component={WalletPaymentNavigator}
         options={{
-          /* FIXME: Using react-navigation 6.x we can achive this using a Stack.Group inside the main payment navigator */
+          gestureEnabled: isGestureEnabled
+        }}
+      />
+      {/* 
+        This screen is outside the WalletPaymentNavigator to enable the slide from bottom animation.
+        FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the WalletPaymentNavigator
+      */}
+      <Stack.Screen
+        name={WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN}
+        component={WalletPaymentBarcodeScanScreen}
+        options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: isGestureEnabled
         }}

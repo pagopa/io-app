@@ -1,9 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
-/**
- * The screen allows to identify a transaction by the QR code on the analogic notice
- */
 import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
@@ -17,19 +14,23 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
-import {
-  PaymentStartOrigin,
-  paymentInitializeState
-} from "../../../../store/actions/wallet/payment";
+import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
-  IOBarcode
+  IOBarcode,
+  useIOBarcodeFileReader
 } from "../../../barcode";
-import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
+import * as analytics from "../../../barcode/analytics";
+import {
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType,
+  IO_BARCODE_ALL_FORMATS,
+  PagoPaBarcode
+} from "../../../barcode/types/IOBarcode";
 import { WalletPaymentRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -44,8 +45,19 @@ const WalletPaymentBarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
 
-  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+  const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
+    format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
+  );
+
+  const barcodeTypes: Array<IOBarcodeType> = ["PAGOPA"];
+
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
+    analytics.trackBarcodeScanSuccess("avviso", barcodes[0], origin);
 
     const pagoPaBarcodes: Array<PagoPaBarcode> = pipe(
       barcodes,
@@ -61,16 +73,11 @@ const WalletPaymentBarcodeScanScreen = () => {
       void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
     }
 
-    const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
-      ? "poste_datamatrix_scan"
-      : "qrcode_scan";
-
     if (pagoPaBarcodes.length > 1) {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
         params: {
-          barcodes: pagoPaBarcodes,
-          paymentStartOrigin
+          barcodes: pagoPaBarcodes
         }
       });
       return;
@@ -83,53 +90,79 @@ const WalletPaymentBarcodeScanScreen = () => {
 
       switch (barcode.format) {
         case "QR_CODE":
-          navigateToPaymentTransactionSummaryScreen({
-            rptId: barcode.rptId,
-            initialAmount: barcode.amount,
-            paymentStartOrigin: "qrcode_scan"
+          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+            params: {
+              initialAmount: barcode.amount,
+              rptId: barcode.rptId,
+              paymentStartOrigin: "qrcode_scan"
+            }
           });
           break;
         case "DATA_MATRIX":
           void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-
-          navigateToPaymentTransactionSummaryScreen({
-            rptId: barcode.rptId,
-            initialAmount: barcode.amount,
-            paymentStartOrigin: "poste_datamatrix_scan"
+          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+            params: {
+              initialAmount: barcode.amount,
+              rptId: barcode.rptId,
+              paymentStartOrigin: "poste_datamatrix_scan"
+            }
           });
+
           break;
       }
     }
   };
 
   const handleBarcodeError = (failure: BarcodeFailure) => {
+    IOToast.error(I18n.t("barcodeScan.error"));
     if (
       failure.reason === "UNKNOWN_CONTENT" &&
       failure.format === "DATA_MATRIX"
     ) {
       void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_FAILURE");
     }
-    IOToast.error(I18n.t("barcodeScan.error"));
+    analytics.trackBarcodeScanFailure("avviso", failure);
   };
 
-  const handleManualInputPressed = () =>
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-      params: {}
+  const handleManualInputPressed = () => {
+    analytics.trackBarcodeManualEntryPath("avviso");
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
     });
+  };
+
+  const {
+    showFilePicker,
+    filePickerBottomSheet,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError,
+    barcodeAnalyticsFlow: "avviso"
+  });
 
   return (
-    <BarcodeScanBaseScreenComponent
-      barcodeFormats={
-        dataMatrixPosteEnabled ? ["QR_CODE", "DATA_MATRIX"] : ["QR_CODE"]
-      }
-      barcodeTypes={["PAGOPA"]}
-      onBarcodeSuccess={handleBarcodeSuccess}
-      onBarcodeError={handleBarcodeError}
-      onManualInputPressed={handleManualInputPressed}
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      faqCategories={["wallet"]}
-    />
+    <>
+      <BarcodeScanBaseScreenComponent
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
+        onBarcodeSuccess={handleBarcodeSuccess}
+        onBarcodeError={handleBarcodeError}
+        onFileInputPressed={showFilePicker}
+        onManualInputPressed={handleManualInputPressed}
+        contextualHelpMarkdown={contextualHelpMarkdown}
+        faqCategories={["wallet"]}
+        barcodeAnalyticsFlow="avviso"
+        isDisabled={isFilePickerVisible}
+        isLoading={isFileReaderLoading}
+      />
+      {filePickerBottomSheet}
+    </>
   );
 };
 
