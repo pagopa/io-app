@@ -17,6 +17,7 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
+import { setSelectedPayment } from "../store/actions";
 
 export function getNotificationStatusInfo(status: NotificationStatus) {
   return I18n.t(`features.pn.details.timeline.status.${status}`, {
@@ -148,6 +149,7 @@ export const initializeAndNavigateToWalletForPayment = (
 
   preNavigationCallback?.();
 
+  dispatch(setSelectedPayment(paymentId));
   dispatch(paymentInitializeState());
 
   NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
