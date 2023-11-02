@@ -8,8 +8,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
-import * as React from "react";
-import { useCallback, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+  useContext
+} from "react";
 import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
 import validator from "validator";
 import {
@@ -33,6 +38,7 @@ import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsLi
 import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
+  isProfileEmailAlreadyTakenSelector,
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
@@ -42,6 +48,9 @@ import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import ROUTES from "../../navigation/routes";
 import { emailInsert } from "../../store/actions/onboarding";
+import { usePrevious } from "../../utils/hooks/usePrevious";
+import { LightModalContext } from "../../components/ui/LightModal";
+import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
 
 type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
@@ -65,21 +74,20 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to allow user to insert an email address.
  */
 const NewOnboardingEmailInsertScreen = (props: Props) => {
+  const { showModal } = useContext(LightModalContext);
   const dispatch = useIODispatch();
 
-  // FIXME - < https://pagopa.atlassian.net/browse/IOPID-690> change this state logic and name (this value will be retrive by the backend)
-  const [isCduEmail] = useState<boolean>(false);
-
   const viewRef = React.createRef<View>();
-
   const profile = useIOSelector(profileSelector);
+  const prevUserProfile = usePrevious(profile);
   const optionEmail = useIOSelector(profileEmailSelector);
-
+  const isProfileEmailAlreadyTaken = useIOSelector(
+    isProfileEmailAlreadyTakenSelector
+  );
   const isLoading = useMemo(
     () => pot.isUpdating(profile) || pot.isLoading(profile),
     [profile]
   );
-
   const reloadProfile = useCallback(
     () => dispatch(profileLoadRequest()),
     [dispatch]
@@ -98,8 +106,10 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
       ),
     [dispatch]
   );
-
-  const [email, setEmail] = useState(isCduEmail ? optionEmail : O.none);
+  const [areSameEmails, setAreSameEmails] = useState(false);
+  const [email, setEmail] = useState(
+    isProfileEmailAlreadyTaken ? optionEmail : O.none
+  );
 
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
@@ -115,7 +125,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
         if (
           EMPTY_EMAIL === value ||
           !validator.isEmail(value) ||
-          isSameEmailToChange()
+          areSameEmails
         ) {
           return undefined;
         }
@@ -124,36 +134,6 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
       O.toUndefined
     );
 
-  /**
-   * This function control if the email is the same that the user need to change
-   * @returns boolean
-   */
-  const isSameEmailToChange = () =>
-    !isCduEmail ? areStringsEqual(email, optionEmail, true) : false;
-
-  /**
-   * This function control if the email is already used
-   * @returns boolean
-   *
-   * FIXME - < https://pagopa.atlassian.net/browse/IOPID-690> this function need to be integrated with API that control if the email already exists
-   */
-  const isExistingEmail = () => {
-    const showAlertExistsEmail: boolean = false;
-    if (showAlertExistsEmail) {
-      Alert.alert(
-        I18n.t("email.newinsert.alert.modaltitle"),
-        I18n.t("email.newinsert.alert.modaldescription"),
-        [
-          {
-            text: I18n.t("email.newinsert.alert.modalbutton"),
-            style: "cancel"
-          }
-        ]
-      );
-    }
-    return showAlertExistsEmail;
-  };
-
   const navigateToEmailReadScreen = useCallback(() => {
     props.navigation.dispatch(StackActions.popToTop());
     props.navigation.navigate(ROUTES.ONBOARDING, {
@@ -161,19 +141,37 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
     });
   }, [props.navigation]);
 
+  useEffect(() => {
+    if (prevUserProfile && prevUserProfile !== profile) {
+      if (pot.isError(profile)) {
+        if (profile.error.type === "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR") {
+          Alert.alert(
+            I18n.t("email.newinsert.alert.modaltitle"),
+            I18n.t("email.newinsert.alert.modaldescription"),
+            [
+              {
+                text: I18n.t("email.newinsert.alert.modalbutton"),
+                style: "cancel"
+              }
+            ]
+          );
+        }
+      } else {
+        showModal(<NewRemindEmailValidationOverlay isOnboarding={true} />);
+      }
+    }
+  }, [profile, prevUserProfile, navigateToEmailReadScreen, showModal]);
+
   const continueOnPress = () => {
     Keyboard.dismiss();
-    if (!isExistingEmail()) {
-      pipe(
-        email,
-        O.map(e => {
-          updateEmail(e as EmailString);
-        })
-      );
-      acknowledgeEmailInsert();
-      reloadProfile();
-      navigateToEmailReadScreen();
-    }
+    pipe(
+      email,
+      O.map(e => {
+        updateEmail(e as EmailString);
+      })
+    );
+    acknowledgeEmailInsert();
+    reloadProfile();
   };
 
   const renderFooterButtons = () => {
@@ -194,6 +192,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
   };
 
   const handleOnChangeEmailText = (value: string) => {
+    setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
   };
 
@@ -216,7 +215,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
               </H1>
               <VSpacer size={16} />
               <Body>{I18n.t("email.newinsert.subtitle")}</Body>
-              {!isCduEmail && (
+              {isProfileEmailAlreadyTaken && (
                 <>
                   <VSpacer size={24} />
                   <AlertComponent
@@ -239,15 +238,13 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
                   label={I18n.t("email.newinsert.label")}
                   icon="email"
                   isValid={isValidEmail()}
-                  overrideBorderColor={
-                    isSameEmailToChange() ? IOColors.red : undefined
-                  }
+                  overrideBorderColor={areSameEmails ? IOColors.red : undefined}
                   inputProps={{
                     returnKeyType: "done",
                     onSubmitEditing: continueOnPress,
                     autoCapitalize: "none",
                     keyboardType: "email-address",
-                    defaultValue: isCduEmail
+                    defaultValue: !isProfileEmailAlreadyTaken
                       ? pipe(
                           email,
                           O.getOrElse(() => EMPTY_EMAIL)
@@ -257,7 +254,7 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
                   }}
                   testID="TextField"
                 />
-                {isSameEmailToChange() && (
+                {areSameEmails && (
                   <View
                     testID="error-label"
                     style={{

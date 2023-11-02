@@ -165,8 +165,22 @@ const EmailInsertScreen = (props: Props) => {
   useEffect(() => {
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
       if (pot.isError(profile)) {
+        // the user is trying to enter an email already in use
+        if (profile.error.type === "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR") {
+          Alert.alert(
+            I18n.t("email.insert.alertTitle"),
+            I18n.t("email.insert.alertDescription"),
+            [
+              {
+                text: I18n.t("email.insert.alertButton"),
+                style: "cancel"
+              }
+            ]
+          );
+        } else {
+          showToast(I18n.t("email.edit.upsert_ko"), "danger");
+        }
         // display a toast with error
-        showToast(I18n.t("email.edit.upsert_ko"), "danger");
       } else if (pot.isSome(profile)) {
         // user is inserting his email from onboarding phase
         // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
