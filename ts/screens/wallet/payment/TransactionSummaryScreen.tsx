@@ -1,4 +1,8 @@
-import { ButtonSolid, ContentWrapper } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  ContentWrapper,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
@@ -470,6 +474,7 @@ const TransactionSummaryScreen = (): React.ReactElement => {
             () => continueWithPayment(),
             () => startAssistanceRequest(error, messageId)
           )}
+          <VSpacer />
         </ContentWrapper>
       </SafeAreaView>
     </BaseScreenComponent>
