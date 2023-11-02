@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
-import { Divider } from "@pagopa/io-app-design-system";
+import { Divider, WithTestID } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 
-export type TableRow = {
+export type TableRow = WithTestID<{
   label: string;
   value: string | React.ReactNode;
-};
+}>;
 
 type TableProps = {
   title: string;
@@ -19,8 +19,8 @@ const renderTable = (data: ReadonlyArray<TableRow>): React.ReactNode =>
     const isLast = data.length === index + 1;
 
     return (
-      <Fragment key={item.label}>
-        <View style={styles.infoRow}>
+      <Fragment key={`${item.label}_${index}`}>
+        <View style={styles.infoRow} testID={item.testID}>
           <Body>{item.label}</Body>
           <Body weight="SemiBold">{item.value}</Body>
         </View>

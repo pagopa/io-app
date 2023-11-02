@@ -18,7 +18,18 @@ import I18n from "../../../i18n";
 import { AsyncAlert } from "../../../utils/asyncAlert";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import * as Platform from "../../../utils/platform";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
+import {
+  BarcodeAnalyticsFlow,
+  trackBarcodeFileUpload,
+  trackBarcodeImageUpload,
+  trackBarcodeUploadPath
+} from "../analytics";
+import {
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType
+} from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
@@ -65,11 +76,18 @@ type IOBarcodeFileReaderConfiguration = {
   /**
    * Callback called when there is at least one barcode being successfully decoded
    */
-  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
+  onBarcodeSuccess: (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: (failure: BarcodeFailure) => void;
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
+  /**
+   * Mixpanel analytics parameters
+   */
+  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
 };
 
 const imageLibraryOptions: ImageLibraryOptions = {
@@ -87,19 +105,20 @@ const useIOBarcodeFileReader = ({
   onBarcodeError,
   onBarcodeSuccess,
   barcodeFormats,
-  barcodeTypes
+  barcodeTypes,
+  barcodeAnalyticsFlow
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
   const [isFilePickerVisible, setFilePickerVisible] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     setIsLoading(false);
-    onBarcodeSuccess(barcodes);
+    onBarcodeSuccess(barcodes, "file");
   };
 
   const handleBarcodeError = (failure: BarcodeFailure) => {
     setIsLoading(false);
-    onBarcodeError(failure);
+    onBarcodeError(failure, "file");
   };
 
   /**
@@ -174,7 +193,7 @@ const useIOBarcodeFileReader = ({
   const onDocumentSelected = async ({ uri, type }: DocumentPickerResponse) => {
     if (type !== "application/pdf") {
       // If the file is not a PDF document, show an error
-      return onBarcodeError({ reason: "INVALID_FILE" });
+      return onBarcodeError({ reason: "INVALID_FILE" }, "file");
     }
 
     setIsLoading(true);
@@ -223,6 +242,18 @@ const useIOBarcodeFileReader = ({
     )();
   };
 
+  const handleImageUploadPressed = async () => {
+    trackBarcodeImageUpload(barcodeAnalyticsFlow);
+    filePickerModal.dismiss();
+    await showImagePicker();
+  };
+
+  const handleFileUploadPressed = async () => {
+    trackBarcodeFileUpload(barcodeAnalyticsFlow);
+    filePickerModal.dismiss();
+    await showDocumentPicker();
+  };
+
   /**
    * Components that renders the bottom sheet with the options to select an image or a PDF document
    */
@@ -231,36 +262,31 @@ const useIOBarcodeFileReader = ({
       <ListItemNav
         value={I18n.t("barcodeScan.upload.image")}
         accessibilityLabel={I18n.t("barcodeScan.upload.image")}
-        onPress={async () => {
-          filePickerModal.dismiss();
-          await showImagePicker();
-        }}
+        onPress={handleImageUploadPressed}
         icon="gallery"
       />
       <Divider />
       <ListItemNav
         value={I18n.t("barcodeScan.upload.file")}
         accessibilityLabel={I18n.t("barcodeScan.upload.file")}
-        onPress={async () => {
-          filePickerModal.dismiss();
-          await showDocumentPicker();
-        }}
+        onPress={handleFileUploadPressed}
         icon="docAttach"
       />
       <VSpacer size={16} />
     </View>
   );
 
-  const handleShowFilePickerPressed = () => {
-    setFilePickerVisible(true);
-    filePickerModal.present();
-  };
-
   const filePickerModal = useIOBottomSheetAutoresizableModal({
     component: filePickerModalComponent,
     title: "",
     onDismiss: () => setFilePickerVisible(false)
   });
+
+  const handleShowFilePickerPressed = () => {
+    trackBarcodeUploadPath(barcodeAnalyticsFlow);
+    setFilePickerVisible(true);
+    filePickerModal.present();
+  };
 
   return {
     showImagePicker,
