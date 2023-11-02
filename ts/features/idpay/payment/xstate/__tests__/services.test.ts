@@ -27,7 +27,7 @@ const T_CONTEXT: Context = INITIAL_CONTEXT;
 
 const possibleFailures: ReadonlyArray<{ status: number; code: CodeEnum }> = [
   { status: 404, code: CodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED },
-  // FIXME::ERROR_HANDLING will be handled correctly in upcoming error management PR
+  // FIXME::ERROR_HANDLING [IOBP-379] will be handled correctly in upcoming error management PR
   // { status: 403, code: CodeEnum.PAYMENT_USER_NOT_VALID },
   // { status: 400, code: CodeEnum.PAYMENT_STATUS_NOT_VALID },
   { status: 403, code: CodeEnum.PAYMENT_BUDGET_EXHAUSTED },

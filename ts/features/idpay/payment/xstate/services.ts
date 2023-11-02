@@ -21,7 +21,7 @@ export const failureMap: Record<CodeEnum, PaymentFailureEnum> = {
   [CodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED]: PaymentFailureEnum.EXPIRED,
   [CodeEnum.PAYMENT_BUDGET_EXHAUSTED]: PaymentFailureEnum.BUDGET_EXHAUSTED,
   [CodeEnum.PAYMENT_GENERIC_REJECTED]: PaymentFailureEnum.REJECTED,
-  // FIXME::ERROR_HANDLING
+  // FIXME::ERROR_HANDLING [IOBP-379]
   // those lines had to be commented out since those errors are not in the DTO anymore
   // [CodeEnum.PAYMENT_USER_NOT_VALID]: PaymentFailureEnum.REJECTED,
   // [CodeEnum.PAYMENT_STATUS_NOT_VALID]: PaymentFailureEnum.GENERIC,

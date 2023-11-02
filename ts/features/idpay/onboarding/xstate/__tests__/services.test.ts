@@ -225,11 +225,9 @@ describe("IDPay Onboarding machine services", () => {
     const statusFailures: ReadonlyArray<
       [status: StatusEnum, failure: OnboardingFailureEnum]
     > = [
-      // FIXME::ERROR_HANDLING
       [StatusEnum.ELIGIBLE_KO, OnboardingFailureEnum.NOT_ELIGIBLE],
       [StatusEnum.ONBOARDING_KO, OnboardingFailureEnum.NO_REQUIREMENTS],
       [StatusEnum.ONBOARDING_OK, OnboardingFailureEnum.ONBOARDED],
-
       [StatusEnum.UNSUBSCRIBED, OnboardingFailureEnum.UNSUBSCRIBED],
       [StatusEnum.ON_EVALUATION, OnboardingFailureEnum.ON_EVALUATION]
     ];
