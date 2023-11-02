@@ -3223,6 +3223,7 @@ features:
       signingInProgress: "Firma in corso"   
   itWallet:
     title: "IT Wallet"
+    tos: "Proseguendo accetti i [Termini e condizioni d’uso](https://io.italia.it/privacy-policy/) del servizio e confermi di avere letto l’[Informativa Privacy](https://io.italia.it/privacy-policy/)."
     actionBanner:
       title: "Novità IT Wallet"
       description: "Da oggi puoi collezionare le tue credenziali digitali (come Licenza di Guida, Tessera Sanitaria, etc.) e accedere ai servizi online con IT Wallet."
@@ -3234,13 +3235,9 @@ features:
       action: "Attiva IT Wallet"
       hideLabel: "Nascondi questo banner"
     activationScreen:
-      title: "La tua identità digitale e i tuoi documenti nel Portafoglio di IO"
-      subTitle: "IT Wallet è una funzionalità che ti permette di aggiungere al Portafoglio di IO la tua identità digitale, ovvero l’insieme dei dati personali che ti permette di autenticarti online, e i tuoi documenti personali, come la licenza di guida, la tessera sanitaria e la Carta Europea della disabilità."
-      where: "Online e dal vivo"
-      whereDescription: "Porta la versione digitale dei tuoi documenti sempre con te. Usa l’identità digitale per accedere ai servizi online, sia pubblici che privati. Usa le altre tessere per condividere con altri i dati che contengono, online e dal vivo, ogni volta che ne hai bisogno."
-      howActivate: "Facile da attivare"
-      howActivateDescription: "Avrai bisogno della tua Carta d’Identità Elettronica (CIE) e del relativo PIN. I dati della tua CIE faranno parte della tua identità digitale, la prima tessera del tuo IT Wallet."
-      tos: "Proseguendo accetti i [Termini e condizioni d’uso](https://io.italia.it/privacy-policy/) del servizio e confermi di avere letto l’[Informativa Privacy](https://io.italia.it/privacy-policy/)."
+      intro: "## IT Wallet: cos'è e come funziona\nIT Wallet è una funzionalità che ti permette di aggiungere nel Portafoglio di IO la tua identità digitale, ovvero l'**insieme dei dati personali che ti permette di autenticarti online**, e i tuoi documenti personali, come la patente di guida, la tessera sanitaria e la Carta Europea della disabilità."
+      subContentOne: "###### Online e dal vivo\nUsa l'identità digitale per **accedere ai servizi online, sia pubblici che privati**. Usa i documenti per **condividere con altri i dati che contengono**, online e dal vivo, ogni volta che ne hai bisogno."
+      subContentTwo: "###### Facile da attivare\nAvrai bisogno della **Carta d'Identità Elettronica (CIE) e del suo PIN**. I dati della tua CIE faranno parte della tua identità digitale, il primo documento del tuo IT Wallet."
       cancel: "Non ora"
       confirm: "Attiva IT Wallet"
     homeScreen:
