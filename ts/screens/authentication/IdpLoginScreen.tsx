@@ -120,8 +120,14 @@ const IdpLoginScreen = (props: Props) => {
   const handleLoadingError = (
     error: WebViewErrorEvent | WebViewHttpErrorEvent
   ): void => {
-    if (error.nativeEvent.url.includes(apiUrlPrefix)) {
-      trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
+    trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
+    const webViewHttpError = error as WebViewHttpErrorEvent;
+    if (webViewHttpError.nativeEvent.statusCode) {
+      const { statusCode, url } = webViewHttpError.nativeEvent;
+      if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+        setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+      }
+    } else {
       setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
     }
   };
