@@ -60,6 +60,7 @@ export const MessageDetails = ({
   service,
   payments
 }: Props) => {
+  // console.log(`=== MessageDetails: rendering`);
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();
   const dismissPaymentsBottomSheetRef = useRef<() => void>();
@@ -94,7 +95,6 @@ export const MessageDetails = ({
 
   const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
   const scrollViewRef = React.createRef<ScrollView>();
-  // console.log(`=== MessageDetails: re-rendering`);
   return (
     <>
       <ScrollView
