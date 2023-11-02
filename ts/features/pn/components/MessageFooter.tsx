@@ -35,6 +35,7 @@ export const MessageFooter = ({
   isCancelled,
   presentPaymentsBottomSheetRef
 }: MessageFooterProps) => {
+  // console.log(`=== MessageFooter: rendering`);
   const buttonState = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
@@ -59,7 +60,6 @@ export const MessageFooter = ({
   if (isCancelled || buttonState === "hidden") {
     return null;
   }
-  // console.log(`=== MessageFooter: re-rendering`);
   const isLoading = buttonState === "visibleLoading";
   return (
     <View style={styles.container}>
