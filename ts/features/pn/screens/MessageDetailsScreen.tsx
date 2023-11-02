@@ -2,7 +2,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useStore } from "react-redux";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -30,7 +31,13 @@ import {
 } from "../utils";
 import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
-import { cancelQueuedPaymentUpdates } from "../store/actions";
+import {
+  cancelQueuedPaymentUpdates,
+  clearSelectedPayment,
+  updatePaymentForMessage
+} from "../store/actions";
+import { GlobalState } from "../../../store/reducers/types";
+import { selectedPaymentIdSelector } from "../store/reducers/payments";
 
 export type PnMessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -71,6 +78,7 @@ const renderMessage = (
 export const MessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
+  // console.log(`=== Screen: rendering`);
   const { messageId, serviceId, firstTimeOpening } = props.route.params;
 
   const dispatch = useIODispatch();
@@ -108,6 +116,24 @@ export const MessageDetailsScreen = (
     const isCancelled = isCancelledFromPNMessagePot(message);
     trackPNUxSuccess(paymentCount, firstTimeOpening, isCancelled);
   }
+
+  const store = useStore();
+  useFocusEffect(
+    React.useCallback(() => {
+      const globalState = store.getState() as GlobalState;
+      const selectedPaymentId = selectedPaymentIdSelector(globalState);
+      if (selectedPaymentId) {
+        // console.log(`=== Screen: requesting last payment`);
+        dispatch(clearSelectedPayment());
+        dispatch(
+          updatePaymentForMessage.request({
+            messageId,
+            paymentId: selectedPaymentId
+          })
+        );
+      }
+    }, [dispatch, messageId, store])
+  );
 
   return (
     <BaseScreenComponent
