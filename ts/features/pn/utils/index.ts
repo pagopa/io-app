@@ -135,7 +135,7 @@ export const isCancelledFromPNMessagePot = (
     O.getOrElse(() => false)
   );
 
-export const initializeAndNavigateToWalleForPayment = (
+export const initializeAndNavigateToWalletForPayment = (
   paymentId: string,
   dispatch: Dispatch<any>,
   decodeErrorCallback: (() => void) | undefined,
@@ -154,6 +154,6 @@ export const initializeAndNavigateToWalleForPayment = (
 
   NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params: { rptId: eitherRptId.right }
+    params: { rptId: eitherRptId.right, startOrigin: "message" }
   });
 };
