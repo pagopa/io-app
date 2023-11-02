@@ -3555,7 +3555,7 @@ idpay:
           title: "Usa la Carta d'identità elettronica"
           description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
           actionItem: "Come funziona?"
-        QRCODE:
+        APP_IO_PAYMENT:
           title: "Usa l'app IO"
           description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
           actionItem: "Come funziona?"

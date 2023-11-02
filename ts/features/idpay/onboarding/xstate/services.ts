@@ -16,11 +16,11 @@ import { getBoolRequiredCriteriaFromContext } from "./selectors";
 const onboardingStatusToFailure: Partial<
   Record<OnboardingStatusEnum, OnboardingFailureEnum>
 > = {
+  // FIXME::ERROR_HANDLING
   [OnboardingStatusEnum.ELIGIBLE_KO]: OnboardingFailureEnum.NOT_ELIGIBLE,
   [OnboardingStatusEnum.ONBOARDING_KO]: OnboardingFailureEnum.NO_REQUIREMENTS,
   [OnboardingStatusEnum.ONBOARDING_OK]: OnboardingFailureEnum.ONBOARDED,
   [OnboardingStatusEnum.UNSUBSCRIBED]: OnboardingFailureEnum.UNSUBSCRIBED,
-  [OnboardingStatusEnum.ELIGIBLE]: OnboardingFailureEnum.ON_EVALUATION,
   [OnboardingStatusEnum.ON_EVALUATION]: OnboardingFailureEnum.ON_EVALUATION,
   [OnboardingStatusEnum.SUSPENDED]: OnboardingFailureEnum.SUSPENDED
 };
