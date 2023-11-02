@@ -8,7 +8,7 @@ import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import variables from "../../../theme/variables";
-import { initializeAndNavigateToWalleForPayment } from "../utils";
+import { initializeAndNavigateToWalletForPayment } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { useIOToast } from "../../../components/Toast";
 
@@ -50,7 +50,7 @@ export const MessageFooter = ({
     if (payments?.length === 1) {
       const firstPayment = payments[0];
       const paymentId = getRptIdStringFromPayment(firstPayment);
-      initializeAndNavigateToWalleForPayment(paymentId, dispatch, () =>
+      initializeAndNavigateToWalletForPayment(paymentId, dispatch, () =>
         toast.error(I18n.t("genericError"))
       );
     } else {
