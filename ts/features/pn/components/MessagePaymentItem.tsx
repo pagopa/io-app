@@ -53,19 +53,17 @@ const paymentNoticeStatusFromDetailV2Enum = (
 ): Exclude<PaymentNoticeStatus, "default"> => {
   const errorType = getV2ErrorMainType(detail);
   switch (errorType) {
-    case "EC":
-      // TODO
-      break;
     case "REVOKED":
       return "revoked";
     case "EXPIRED":
       return "expired";
     case "ONGOING":
-      // TODO
-      break;
+      return "in-progress";
     case "DUPLICATED":
       return "paid";
   }
+  // Here EC (an error on the ente-side) is treated like a generic
+  // ERROR since it is later specialized in the payment flow
   return "error";
 };
 
@@ -154,6 +152,7 @@ export const MessagePaymentItem = ({
   noSpaceOnTop = false,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
+  // console.log(`=== PaymentItem ${index}: rendering`);
   const dispatch = useDispatch();
   const store = useStore();
   const toast = useIOToast();
@@ -188,7 +187,6 @@ export const MessagePaymentItem = ({
       dispatch(updateAction);
     }
   }, [dispatch, messageId, paymentId, shouldUpdatePayment]);
-  // console.log(`=== PaymentItem ${index}: re-rendering`);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
