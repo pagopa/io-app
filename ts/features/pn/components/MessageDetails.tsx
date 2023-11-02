@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, createRef, useRef } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -22,6 +21,7 @@ import {
 } from "../../../store/reducers/entities/messages/types";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { LegacyMessageAttachments } from "../../messages/components/LegacyMessageAttachments";
+import NavigationService from "../../../navigation/NavigationService";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -60,7 +60,7 @@ export const MessageDetails = ({
   service,
   payments
 }: Props) => {
-  const navigation = useNavigation();
+  // console.log(`=== MessageDetails: rendering`);
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();
   const dismissPaymentsBottomSheetRef = useRef<() => void>();
@@ -84,17 +84,17 @@ export const MessageDetails = ({
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
       trackPNAttachmentOpening();
-      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
+      NavigationService.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachmentId: attachment.id
+        attachmentId: attachment.id,
+        category: attachment.category
       });
     },
-    [messageId, navigation]
+    [messageId]
   );
 
   const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
   const scrollViewRef = React.createRef<ScrollView>();
-  // console.log(`=== MessageDetails: re-rendering`);
   return (
     <>
       <ScrollView
@@ -150,7 +150,7 @@ export const MessageDetails = ({
 
         {RA.isNonEmpty(f24List) && (
           <>
-            <MessageF24 attachments={f24List} />
+            <MessageF24 attachments={f24List} openPreview={openAttachment} />
             <VSpacer size={24} />
           </>
         )}
