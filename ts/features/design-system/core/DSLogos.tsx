@@ -1,23 +1,23 @@
-import * as React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import {
-  useIOTheme,
+  Avatar,
   HSpacer,
-  VSpacer,
+  IOColors,
+  IOLogoPaymentCardType,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
+  IOPaymentCardLogos,
   IOPaymentExtLogos,
   IOPaymentLogos,
+  IOVisualCostants,
   LogoPayment,
-  LogoPaymentExt,
   LogoPaymentCard,
-  IOPaymentCardLogos,
-  IOLogoPaymentCardType,
-  IOColors,
+  LogoPaymentExt,
+  VSpacer,
   hexToRgba,
-  Avatar,
-  IOVisualCostants
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -150,11 +150,9 @@ const renderAvatar = () => (
             <Avatar
               shape="circle"
               size="small"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={{
+                uri: imageSource
+              }}
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={4} />}
           </React.Fragment>
@@ -172,11 +170,9 @@ const renderAvatar = () => (
             <Avatar
               shape="square"
               size="small"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={{
+                uri: imageSource
+              }}
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
           </React.Fragment>
@@ -194,11 +190,9 @@ const renderAvatar = () => (
             <Avatar
               shape="square"
               size="medium"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={{
+                uri: imageSource
+              }}
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
           </React.Fragment>
