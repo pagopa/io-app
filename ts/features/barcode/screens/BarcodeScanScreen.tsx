@@ -176,7 +176,7 @@ const BarcodeScanScreen = () => {
         value={I18n.t("barcodeScan.manual.notice")}
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
-        icon="gallery"
+        icon="productPagoPA"
       />
       <Divider />
       <ListItemNav
