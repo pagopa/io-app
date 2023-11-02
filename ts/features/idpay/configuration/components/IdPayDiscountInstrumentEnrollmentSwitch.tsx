@@ -13,7 +13,7 @@ import I18n from "../../../../i18n";
 
 type ValidInstrumentType =
   | InstrumentTypeEnum.IDPAYCODE
-  | InstrumentTypeEnum.QRCODE;
+  | InstrumentTypeEnum.APP_IO_PAYMENT;
 
 export type PaymentMethodSwitchRef = {
   switchStatus: boolean;
@@ -26,7 +26,7 @@ type PaymentMethodSwitchProps = {
   status?: StatusEnum;
 } & (
   | {
-      instrumentType: InstrumentTypeEnum.QRCODE;
+      instrumentType: InstrumentTypeEnum.APP_IO_PAYMENT;
       value?: never;
       onValueChange?: never;
     }
@@ -43,7 +43,7 @@ const getInstrumentPaymentMethodIcon = (
   switch (paymentType) {
     case InstrumentTypeEnum.IDPAYCODE:
       return "fiscalCodeIndividual";
-    case InstrumentTypeEnum.QRCODE:
+    case InstrumentTypeEnum.APP_IO_PAYMENT:
     default:
       return "device";
   }
@@ -53,7 +53,7 @@ const getInstrumentPaymentMethodBage = (
   instrumentType: InstrumentTypeEnum,
   status?: StatusEnum
 ) => {
-  if (instrumentType === InstrumentTypeEnum.QRCODE) {
+  if (instrumentType === InstrumentTypeEnum.APP_IO_PAYMENT) {
     return {
       text: I18n.t(
         `idpay.configuration.instruments.paymentMethods.badge.active`
@@ -91,7 +91,7 @@ const IdPayDiscountInstrumentEnrollmentSwitch = (
   } = props;
 
   const renderSwitchAction = () => {
-    if (instrumentType !== InstrumentTypeEnum.QRCODE) {
+    if (instrumentType !== InstrumentTypeEnum.APP_IO_PAYMENT) {
       return {
         label: I18n.t(
           `idpay.configuration.instruments.paymentMethods.${instrumentType}.actionItem`
