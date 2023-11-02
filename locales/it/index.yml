@@ -1589,6 +1589,19 @@ wallet:
     confirm: Sì, esci
     cancel: No, continua
     success: Problemi con l'aggiunta? Contatta la tua banca.
+  payment:
+    barcodes:
+      choice:
+        title: Sono stati rilevati più codici. Quale vuoi usare?
+    manual:
+      noticeNumber:
+        title: Inserisci il codice avviso
+        subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
+        placeholder: Codice avviso
+      fiscalCode:
+        title: Inserisci il codice fiscale dell’Ente Creditore
+        subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
+        placeholder: Codice fiscale Ente Creditore
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
