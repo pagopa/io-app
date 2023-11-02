@@ -1,5 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { createRef, useCallback } from "react";
+import React, { useCallback, createRef, useRef } from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as SEP from "fp-ts/lib/Separated";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -9,7 +12,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
@@ -18,7 +20,8 @@ import {
   UIMessageId
 } from "../../../store/reducers/entities/messages/types";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { MessageAttachments } from "../../messages/components/MessageAttachments";
+import { LegacyMessageAttachments } from "../../messages/components/LegacyMessageAttachments";
+import NavigationService from "../../../navigation/NavigationService";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -31,12 +34,16 @@ import {
   statusIconMap
 } from "../../../components/SectionStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
 import { PnMessageTimeline } from "./PnMessageTimeline";
 import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
-import { MessagePayment } from "./MessagePayment";
+import { MessageF24 } from "./MessageF24";
+import { MessagePayments } from "./MessagePayments";
+import { MessageFooter } from "./MessageFooter";
+import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
 type Props = Readonly<{
   messageId: UIMessageId;
@@ -45,18 +52,30 @@ type Props = Readonly<{
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
 }>;
 
+export const maxVisiblePaymentCountGenerator = () => 5;
+
 export const MessageDetails = ({
   message,
   messageId,
   service,
   payments
 }: Props) => {
-  // const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  // console.log(`=== MessageDetails: rendering`);
   const viewRef = createRef<View>();
+  const presentPaymentsBottomSheetRef = useRef<() => void>();
+  const dismissPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
-  const hasAttachment = message.attachments && message.attachments.length > 0;
+  const partitionedAttachments = pipe(
+    message.attachments,
+    O.fromNullable,
+    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    RA.partition(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
+  );
+
+  const f24List = SEP.right(partitionedAttachments);
+  const attachmentList = SEP.left(partitionedAttachments);
+
   const isCancelled = message.isCancelled ?? false;
   const completedPaymentNoticeCodes = isCancelled
     ? message.completedPayments
@@ -65,16 +84,17 @@ export const MessageDetails = ({
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
       trackPNAttachmentOpening();
-      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
+      NavigationService.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachmentId: attachment.id
+        attachmentId: attachment.id,
+        category: attachment.category
       });
     },
-    [messageId, navigation]
+    [messageId]
   );
 
+  const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
   const scrollViewRef = React.createRef<ScrollView>();
-
   return (
     <>
       <ScrollView
@@ -106,23 +126,35 @@ export const MessageDetails = ({
             </DSFullWidthComponent>
           </>
         )}
-        {hasAttachment && (
+
+        {RA.isNonEmpty(attachmentList) && (
           <PnMessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
-            <MessageAttachments
+            <LegacyMessageAttachments
               disabled={isCancelled}
-              attachments={message.attachments}
+              attachments={attachmentList}
               downloadAttachmentBeforePreview={true}
               openPreview={openAttachment}
             />
           </PnMessageDetailsSection>
         )}
-        <MessagePayment
+        <MessagePayments
+          messageId={messageId}
           isCancelled={isCancelled}
           payments={payments}
           completedPaymentNoticeCodes={completedPaymentNoticeCodes}
+          maxVisiblePaymentCount={maxVisiblePaymentCount}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
+
+        {RA.isNonEmpty(f24List) && (
+          <>
+            <MessageF24 attachments={f24List} openPreview={openAttachment} />
+            <VSpacer size={24} />
+          </>
+        )}
+
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
@@ -146,19 +178,22 @@ export const MessageDetails = ({
         </PnMessageDetailsSection>
       </ScrollView>
 
-      {
-        // TODO
-        !isCancelled && (
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={{
-              block: true,
-              onPress: undefined, // TODO
-              title: I18n.t("wallet.continue")
-            }}
-          />
-        )
-      }
+      {payments && (
+        <MessagePaymentBottomSheet
+          messageId={messageId}
+          payments={payments}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+          dismissPaymentsBottomSheetRef={dismissPaymentsBottomSheetRef}
+        />
+      )}
+
+      <MessageFooter
+        messageId={messageId}
+        payments={payments}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+        isCancelled={isCancelled}
+        presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+      />
     </>
   );
 };
