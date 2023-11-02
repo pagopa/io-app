@@ -1,97 +1,97 @@
 import * as React from "react";
-import { Image, SafeAreaView, View } from "react-native";
+import { Image, SafeAreaView, ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
-import { H6, VSpacer } from "@pagopa/io-app-design-system";
-import walletCards from "../../../../../img/features/it-wallet/wallet-cards.png";
+import {
+  ButtonSolidProps,
+  IconButton,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import I18n from "../../../../i18n";
-import ScreenContent from "../../../../components/screens/ScreenContent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { useIODispatch } from "../../../../store/hooks";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { itwActivationStop } from "../../store/actions/itwActivationActions";
+import ItwTextInfo from "../../components/ItwTextInfo";
+import itwHeroImage from "../../assets/discovery/itw_hero.png";
+import itwCardImage from "../../assets/discovery/itw_card.png";
+import { isAndroid } from "../../../../utils/platform";
+import ItwFooterVerticalButtons from "../../components/ItwFooterVerticalButtons";
 
 const ItwDiscoveryInfoScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
+
+  const bottomButtonProps: ButtonSolidProps = {
+    fullWidth: true,
+    color: "contrast",
+    label: I18n.t("features.itWallet.activationScreen.cancel"),
+    accessibilityLabel: I18n.t("features.itWallet.activationScreen.cancel"),
     onPress: () => {
       dispatch(itwActivationStop());
-    },
-    title: I18n.t("features.itWallet.activationScreen.cancel")
+    }
   };
 
-  const continueButtonProps = {
-    block: true,
-    primary: true,
+  const topButtonProps: ButtonSolidProps = {
+    color: "primary",
+    fullWidth: true,
+    accessibilityLabel: I18n.t("features.itWallet.activationScreen.confirm"),
     onPress: () => navigation.navigate(ITW_ROUTES.DISCOVERY.FEATURES_INFO),
-    title: I18n.t("features.itWallet.activationScreen.confirm")
+    label: I18n.t("features.itWallet.activationScreen.confirm")
   };
 
   return (
     <BaseScreenComponent
       goBack={true}
       customGoBack={
-        <ButtonDefaultOpacity
-          onPress={cancelButtonProps.onPress}
-          transparent={true}
+        <IconButton
+          onPress={bottomButtonProps.onPress}
+          accessibilityLabel={I18n.t(
+            "features.itWallet.activationScreen.cancel"
+          )}
+          icon={isAndroid ? "backAndroid" : "backiOS"}
         />
       }
-      headerTitle={I18n.t("features.itWallet.title")}
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScreenContent
-          title={I18n.t("features.itWallet.activationScreen.title")}
-          subtitle={I18n.t("features.itWallet.activationScreen.subTitle")}
-        >
-          <View style={IOStyles.horizontalContentPadding}>
-            {/* Wallet cards image */}
-            <Image
-              source={walletCards}
-              resizeMode={"contain"}
-              style={{ width: "100%", height: 250 }}
-            />
+        <ScrollView>
+          {/* Header card image */}
+          <Image source={itwHeroImage} style={{ width: "100%" }} />
+          <VSpacer size={24} />
 
-            {/* Info where */}
-            <H6 weight={"SemiBold"} color={"bluegreyDark"}>
-              {I18n.t("features.itWallet.activationScreen.where")}
-            </H6>
-            <VSpacer />
-            <H6 weight={"Regular"} color={"bluegrey"}>
-              {I18n.t("features.itWallet.activationScreen.whereDescription")}
-            </H6>
-            <VSpacer />
+          <View style={IOStyles.horizontalContentPadding}>
+            {/* Detail infobox */}
+            <ItwTextInfo
+              content={I18n.t("features.itWallet.activationScreen.intro")}
+            />
+            <VSpacer size={24} />
+
+            {/* Online infobox */}
+            <ItwTextInfo
+              content={I18n.t(
+                "features.itWallet.activationScreen.subContentOne"
+              )}
+            />
+            <VSpacer size={24} />
+
+            {/* Hero card image */}
+            <Image source={itwCardImage} style={{ width: "100%" }} />
+            <VSpacer size={24} />
 
             {/* Info activation */}
-            <H6 weight={"SemiBold"} color={"bluegreyDark"}>
-              {I18n.t("features.itWallet.activationScreen.howActivate")}
-            </H6>
-            <VSpacer />
-            <H6 weight={"Regular"} color={"bluegrey"}>
-              {I18n.t(
-                "features.itWallet.activationScreen.howActivateDescription"
+            <ItwTextInfo
+              content={I18n.t(
+                "features.itWallet.activationScreen.subContentTwo"
               )}
-            </H6>
+            />
           </View>
-
-          {/* Footer ToS and privacy link */}
-          <ItwFooterInfoBox
-            content={I18n.t("features.itWallet.activationScreen.tos")}
-          />
-          <VSpacer size={48} />
-        </ScreenContent>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
+        </ScrollView>
+        <VSpacer size={24} />
+        <ItwFooterVerticalButtons
+          topButtonProps={topButtonProps}
+          bottomButtonProps={bottomButtonProps}
         />
       </SafeAreaView>
     </BaseScreenComponent>
