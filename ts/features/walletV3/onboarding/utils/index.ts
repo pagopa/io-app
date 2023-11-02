@@ -1,10 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { IOPictograms } from "@pagopa/io-app-design-system";
 
 import URLParse from "url-parse";
 import {
   OnboardingError,
   OnboardingOutcome,
+  OnboardingOutcomeEnum,
+  OnboardingOutcomeFailure,
   OnboardingResult,
   OnboardingStatus
 } from "../types";
@@ -13,7 +16,20 @@ import { isStringNullyOrEmpty } from "../../../../utils/strings";
 // List of outcomes that are considered successful
 export const successOutcomes: ReadonlyArray<OnboardingOutcome> = ["0"];
 
+export const ONBOARDING_FAR_ENABLE_3DS = "https://io.italia.it/faq/#n3_3";
+
 export const ONBOARDING_OUTCOME_PATH = "/outcomeView";
+
+export const ONBOARDING_OUTCOME_ERROR_PICTOGRAM: Record<
+  OnboardingOutcomeFailure,
+  IOPictograms
+> = {
+  [OnboardingOutcomeEnum.GENERIC_ERROR]: "umbrellaNew",
+  [OnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
+  [OnboardingOutcomeEnum.TIMEOUT]: "time",
+  [OnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
+  [OnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew"
+};
 
 /**
  * Function to get the onboarding status from the given outcome
@@ -44,8 +60,14 @@ export const extractOnboardingResult = (url: string): OnboardingResult =>
     O.filter(result => !isStringNullyOrEmpty(result.outcome)),
     O.map(result => ({
       status: getOutcomeStatus(result.outcome),
-      outcome: result.outcome,
+      outcome: result.outcome as OnboardingOutcomeFailure,
       walletId: result.walletId
     })),
-    O.getOrElseW(() => ({ status: "ERROR" } as OnboardingError))
+    O.getOrElseW(
+      () =>
+        ({
+          status: "ERROR",
+          outcome: OnboardingOutcomeEnum.GENERIC_ERROR
+        } as OnboardingError)
+    )
   );

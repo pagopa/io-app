@@ -27,7 +27,7 @@
   "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v5.8.0/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.18.0-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.18.0-RELEASE/openapi/generated/api_fast_login.yaml",
-  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/7907dba7e1e6a9de8ab746319bcd92a92326a66f/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
+  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/4b4bc1a209e88520e4e0623ebce70d779ef0d776/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
   "private": true,
   "scripts": {
     "start": "react-native start",

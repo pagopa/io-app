@@ -1008,7 +1008,28 @@ wallet:
     success:
       title: "Die Karte wurde hinzugefügt!"
       continueButton: "Weiter"
-    failure: "Fehler beim Hinzufügen einer Karte"
+    failure:
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.
+        primaryAction: Chiudi
+        secondaryAction: Scopri di più
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+        primaryAction: Chiudi
+      CANCELED_BY_USER:
+        title: L'operazione è stata annullata
+        subtitle: ""
+        primaryAction: Chiudi
+      INVALID_SESSION:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
