@@ -17,6 +17,7 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
+import { setSelectedPayment } from "../store/actions";
 
 export function getNotificationStatusInfo(status: NotificationStatus) {
   return I18n.t(`features.pn.details.timeline.status.${status}`, {
@@ -134,7 +135,7 @@ export const isCancelledFromPNMessagePot = (
     O.getOrElse(() => false)
   );
 
-export const initializeAndNavigateToWalleForPayment = (
+export const initializeAndNavigateToWalletForPayment = (
   paymentId: string,
   dispatch: Dispatch<any>,
   decodeErrorCallback: (() => void) | undefined,
@@ -148,10 +149,11 @@ export const initializeAndNavigateToWalleForPayment = (
 
   preNavigationCallback?.();
 
+  dispatch(setSelectedPayment(paymentId));
   dispatch(paymentInitializeState());
 
   NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params: { rptId: eitherRptId.right }
+    params: { rptId: eitherRptId.right, startOrigin: "message" }
   });
 };
