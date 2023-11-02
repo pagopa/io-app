@@ -39,7 +39,7 @@ export const extractOnboardingResult = (url: string): OnboardingResult =>
     ),
     O.map(urlParse => ({
       outcome: urlParse.query.outcome as OnboardingOutcome,
-      walletId: urlParse.query.walletId
+      walletId: urlParse.query.walletId as string
     })),
     O.filter(result => !isStringNullyOrEmpty(result.outcome)),
     O.map(result => ({
