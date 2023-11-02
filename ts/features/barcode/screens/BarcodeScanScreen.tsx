@@ -229,7 +229,7 @@ const BarcodeScanScreen = () => {
         contextualHelp={emptyContextualHelp}
         barcodeAnalyticsFlow="home"
         isLoading={isFileReaderLoading}
-        isDisabled={isFilePickerVisible}
+        isDisabled={isFilePickerVisible || isFileReaderLoading}
       />
       {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
