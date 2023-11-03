@@ -63,7 +63,6 @@ export const MessageDetails = ({
   // console.log(`=== MessageDetails: rendering`);
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();
-  const dismissPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const partitionedAttachments = pipe(
@@ -179,12 +178,11 @@ export const MessageDetails = ({
         </PnMessageDetailsSection>
       </ScrollView>
 
-      {payments && (
+      {payments && !isCancelled && (
         <MessagePaymentBottomSheet
           messageId={messageId}
           payments={payments}
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
-          dismissPaymentsBottomSheetRef={dismissPaymentsBottomSheetRef}
         />
       )}
 
