@@ -1,16 +1,10 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Platform, Pressable, StyleSheet, View } from "react-native";
+import { Platform, Pressable, View } from "react-native";
 import { connect, useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  IOColors,
-  VSpacer,
-  IOSpacingScale,
-  ButtonOutline
-} from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import IdpsGrid from "../../components/IdpsGrid";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -53,19 +47,6 @@ const TestIdp: SpidIdp = {
 
 const TAPS_TO_OPEN_TESTIDP = 5;
 
-const styles = StyleSheet.create({
-  footerContainer: {
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: -2
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 20,
-    backgroundColor: IOColors.white
-  }
-});
-
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.idp_selection.contextualHelpTitle",
   body: "authentication.idp_selection.contextualHelpContent"
@@ -75,8 +56,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
-  const inset = useSafeAreaInsets();
-
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
@@ -85,7 +64,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     useNavigation<
       IOStackNavigationProp<
         AuthenticationParamsList,
-        "AUTHENTICATION_IPD_SELECTION"
+        "AUTHENTICATION_IDP_SELECTION"
       >
     >();
 
@@ -138,12 +117,10 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
 
   const spacerComponent = () => <VSpacer size={24} />;
 
-  const spacerFooter: IOSpacingScale = 16;
-
   const headerComponent = () => (
     <>
       <View style={IOStyles.horizontalContentPadding}>
-        <VSpacer size={16} />
+        <VSpacer size={24} />
         {/* Secret login for App Store reviewers */}
         <Pressable accessible={false} onPress={evokeLoginScreenCounter}>
           {/* Add `accessible=false` 'cause it useful only
@@ -159,39 +136,18 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
             {I18n.t("authentication.idp_selection.contentTitle")}
           </H1>
         </Pressable>
+        <VSpacer size={8} />
         <Body>
           {isFastLoginFeatureFlagEnabled
             ? I18n.t("login.expiration_info_FL")
             : I18n.t("login.expiration_info")}
         </Body>
-        <Body>{I18n.t("login.biometric_info")}</Body>
       </View>
       <VSpacer />
       <View style={{ backgroundColor: IOColors.greyUltraLight }}>
         <VSpacer size={24} />
       </View>
     </>
-  );
-
-  const footerComponent = () => (
-    <View
-      style={[
-        styles.footerContainer,
-        IOStyles.horizontalContentPadding,
-        {
-          // Avoid zero margin on iPhones with home button
-          paddingBottom: inset.bottom === 0 ? spacerFooter : inset.bottom
-        }
-      ]}
-    >
-      <VSpacer size={spacerFooter} />
-      <ButtonOutline
-        fullWidth
-        accessibilityLabel={I18n.t("global.buttons.cancel")}
-        label={I18n.t("global.buttons.cancel")}
-        onPress={navigation.goBack}
-      />
-    </View>
   );
 
   return (
@@ -208,7 +164,6 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
           headerComponent={headerComponent}
           footerComponent={spacerComponent}
         />
-        {footerComponent()}
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );

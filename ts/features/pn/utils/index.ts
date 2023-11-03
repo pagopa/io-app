@@ -1,7 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { UIService } from "../../../store/reducers/entities/services/types";
 import { PNMessage } from "../store/types/types";
@@ -9,6 +12,12 @@ import { NotificationStatus } from "../../../../definitions/pn/NotificationStatu
 import { CTAS } from "../../../types/MessageCTA";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
+import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { setSelectedPayment } from "../store/actions";
 
 export function getNotificationStatusInfo(status: NotificationStatus) {
   return I18n.t(`features.pn.details.timeline.status.${status}`, {
@@ -70,7 +79,10 @@ export const isPNOptInMessage = (
     )
   );
 
-export const paymentFromPNMessagePot = (
+/**
+ * @deprecated Use paymentsFromPNMessagePot instead
+ */
+export const legacyPaymentFromPNMessagePot = (
   userFiscalCode: string | undefined,
   message: pot.Pot<O.Option<PNMessage>, Error>
 ) =>
@@ -88,6 +100,32 @@ export const paymentFromPNMessagePot = (
     O.toUndefined
   );
 
+export const paymentsFromPNMessagePot = (
+  userFiscalCode: string | undefined,
+  message: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    message,
+    pot.toOption,
+    O.flatten,
+    O.map(message =>
+      pipe(
+        message.recipients,
+        RA.filterMap(paymentFromUserFiscalCodeAndRecipient(userFiscalCode))
+      )
+    ),
+    O.toUndefined
+  );
+
+const paymentFromUserFiscalCodeAndRecipient =
+  (userFiscalCode: string | undefined) =>
+  (recipient: NotificationRecipient): O.Option<NotificationPaymentInfo> =>
+    pipe(
+      recipient.payment,
+      O.fromNullable,
+      O.filter(() => recipient.taxId === userFiscalCode)
+    );
+
 export const isCancelledFromPNMessagePot = (
   potMessage: pot.Pot<O.Option<PNMessage>, Error>
 ) =>
@@ -96,3 +134,26 @@ export const isCancelledFromPNMessagePot = (
     O.chainNullableK(message => message.isCancelled),
     O.getOrElse(() => false)
   );
+
+export const initializeAndNavigateToWalletForPayment = (
+  paymentId: string,
+  dispatch: Dispatch<any>,
+  decodeErrorCallback: (() => void) | undefined,
+  preNavigationCallback: (() => void) | undefined = undefined
+) => {
+  const eitherRptId = RptIdFromString.decode(paymentId);
+  if (E.isLeft(eitherRptId)) {
+    decodeErrorCallback?.();
+    return;
+  }
+
+  preNavigationCallback?.();
+
+  dispatch(setSelectedPayment(paymentId));
+  dispatch(paymentInitializeState());
+
+  NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
+    screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+    params: { rptId: eitherRptId.right, startOrigin: "message" }
+  });
+};
