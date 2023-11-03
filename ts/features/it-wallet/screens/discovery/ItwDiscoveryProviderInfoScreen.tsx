@@ -11,7 +11,7 @@ import {
   ButtonLink,
   Divider,
   H2,
-  H4,
+  H6,
   IOVisualCostants,
   Icon,
   VSpacer
@@ -146,9 +146,9 @@ const ItwDiscoveryProviderInfoScreen = () => {
           flexDirection: "row"
         }}
       >
-        <H4 style={{ flex: 1 }} color={"bluegrey"}>
+        <H6 style={{ flex: 1 }} color={"bluegrey"}>
           {title}
-        </H4>
+        </H6>
       </View>
     );
 
