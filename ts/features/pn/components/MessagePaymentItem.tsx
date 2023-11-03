@@ -33,7 +33,7 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { useIOToast } from "../../../components/Toast";
-import { initializeAndNavigateToWalleForPayment } from "../utils";
+import { initializeAndNavigateToWalletForPayment } from "../utils";
 
 type MessagePaymentItemProps = {
   index: number;
@@ -170,7 +170,7 @@ export const MessagePaymentItem = ({
   );
 
   const startPaymentCallback = useCallback(() => {
-    initializeAndNavigateToWalleForPayment(
+    initializeAndNavigateToWalletForPayment(
       paymentId,
       dispatch,
       () => toast.error(I18n.t("genericError")),
