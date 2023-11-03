@@ -88,7 +88,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
       subTitle: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cieIdSubTitle"
       ),
-      icon: "cie",
+      icon: "device",
       rightNode: (
         <Badge
           text={I18n.t(

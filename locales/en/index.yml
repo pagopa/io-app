@@ -3370,12 +3370,12 @@ features:
         allFeaturesSection: "Recommended method"
         mainFeaturesSection: "Other methods"
         incomingFeature: "Coming soon"
-        cie: "Electronic Identity Card"
-        cieSubTitle: "Use the card and its 8-digit PIN"
+        cie: "Enter with CIE"
+        cieSubTitle: "Use Electronic Identity Card and PIN"
         spid: "SPID"
         spidSubTitle: "Use credentials and app (or SMS)"
         cieId: "CieID"
-        cieIdSubTitle: "Use credentials and app (or SMS)"
+        cieIdSubTitle: "Use CieID app or credentials"
       compareFeatures: "What is the difference?"
     issuing:
       title: "IT Wallet activation"
@@ -3563,7 +3563,7 @@ features:
     providerInfoScreen:
       showDiff:
         title: "The difference between activation methods"
-        content: "If you activate IT Wallet with 'Log in with CIE', you will be able to use all its features. If you activate it with SPID or CieID, you will only be able to use some of them. This is because the CIE (Electronic Identity Card) has a higher level of security than SPID and CieID. If you have it, we therefore recommend using the CIE."
+        content: "If you activate IT Wallet with 'Log in with CIE', you will be able to use all its features. If you activate it with SPID or CieID, you will only be able to use some of them.\n\nThis is because the CIE (Electronic Identity Card) has a higher level of security than SPID and CieID. If you have it, we therefore recommend using the CIE."
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
