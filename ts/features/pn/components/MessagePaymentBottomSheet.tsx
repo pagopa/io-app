@@ -12,14 +12,12 @@ export type MessagePaymentBottomSheetProps = {
   messageId: UIMessageId;
   payments: ReadonlyArray<NotificationPaymentInfo>;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
-  dismissPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
 };
 
 export const MessagePaymentBottomSheet = ({
   messageId,
   payments,
-  presentPaymentsBottomSheetRef,
-  dismissPaymentsBottomSheetRef
+  presentPaymentsBottomSheetRef
 }: MessagePaymentBottomSheetProps) => {
   // console.log(`=== Bottom Sheet: re-rendering`);
   const dispatch = useDispatch();
@@ -48,8 +46,6 @@ export const MessagePaymentBottomSheet = ({
   });
   // eslint-disable-next-line functional/immutable-data
   presentPaymentsBottomSheetRef.current = present;
-  // eslint-disable-next-line functional/immutable-data
-  dismissPaymentsBottomSheetRef.current = dismiss;
   // console.log(`=== Bottom Sheet: re-rendering`);
   return bottomSheet;
 };
