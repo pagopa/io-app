@@ -8,13 +8,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-  useEffect,
-  useContext
-} from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
 import validator from "validator";
 import {
@@ -24,7 +18,6 @@ import {
   VSpacer,
   Alert as AlertComponent
 } from "@pagopa/io-app-design-system";
-import { StackActions } from "@react-navigation/native";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -33,9 +26,7 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
+import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   isProfileEmailAlreadyTakenSelector,
@@ -46,16 +37,8 @@ import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import ROUTES from "../../navigation/routes";
-import { emailInsert } from "../../store/actions/onboarding";
-import { usePrevious } from "../../utils/hooks/usePrevious";
-import { LightModalContext } from "../../components/ui/LightModal";
-import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
-
-type Props = IOStackNavigationRouteProps<
-  OnboardingParamsList,
-  "ONBOARDING_INSERT_EMAIL_SCREEN"
->;
+import { emailAcknowledged, emailInsert } from "../../store/actions/onboarding";
+import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 
 const styles = StyleSheet.create({
   flex: {
@@ -73,13 +56,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen to allow user to insert an email address.
  */
-const NewOnboardingEmailInsertScreen = (props: Props) => {
-  const { showModal } = useContext(LightModalContext);
+const NewOnboardingEmailInsertScreen = () => {
+  useValidatedEmailModal(true);
   const dispatch = useIODispatch();
 
   const viewRef = React.createRef<View>();
   const profile = useIOSelector(profileSelector);
-  const prevUserProfile = usePrevious(profile);
   const optionEmail = useIOSelector(profileEmailSelector);
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
@@ -88,8 +70,9 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
     () => pot.isUpdating(profile) || pot.isLoading(profile),
     [profile]
   );
-  const reloadProfile = useCallback(
-    () => dispatch(profileLoadRequest()),
+
+  const acknowledgeEmail = useCallback(
+    () => dispatch(emailAcknowledged()),
     [dispatch]
   );
 
@@ -108,59 +91,54 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
   );
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(
-    isProfileEmailAlreadyTaken ? optionEmail : O.none
+    isProfileEmailAlreadyTaken ? optionEmail : O.some(EMPTY_EMAIL)
+  );
+  const isValidEmail = useCallback(
+    () =>
+      pipe(
+        email,
+        O.map(value => {
+          if (
+            EMPTY_EMAIL === value ||
+            !validator.isEmail(value) ||
+            areSameEmails
+          ) {
+            return undefined;
+          }
+          return E.isRight(EmailString.decode(value));
+        }),
+        O.toUndefined
+      ),
+    [areSameEmails, email]
   );
 
-  /** validate email returning three possible values:
-   * - _true_,      if email is valid.
-   * - _false_,     if email has been already changed from the user and it is not
-   * valid.
-   * - _undefined_, if email field is empty. This state is consumed by
-   * LabelledItem Component and it used for style pourposes ONLY.
-   */
-  const isValidEmail = () =>
-    pipe(
-      email,
-      O.map(value => {
-        if (
-          EMPTY_EMAIL === value ||
-          !validator.isEmail(value) ||
-          areSameEmails
-        ) {
-          return undefined;
-        }
-        return E.isRight(EmailString.decode(value));
-      }),
-      O.toUndefined
-    );
-
-  const navigateToEmailReadScreen = useCallback(() => {
-    props.navigation.dispatch(StackActions.popToTop());
-    props.navigation.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
-    });
-  }, [props.navigation]);
-
   useEffect(() => {
-    if (prevUserProfile && prevUserProfile !== profile) {
+    if (!pot.isLoading(profile)) {
       if (pot.isError(profile)) {
+        // the user is trying to enter an email already in use
         if (profile.error.type === "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR") {
           Alert.alert(
-            I18n.t("email.newinsert.alert.modaltitle"),
-            I18n.t("email.newinsert.alert.modaldescription"),
+            I18n.t("email.insert.alertTitle"),
+            I18n.t("email.insert.alertDescription"),
             [
               {
-                text: I18n.t("email.newinsert.alert.modalbutton"),
+                text: I18n.t("email.insert.alertButton"),
                 style: "cancel"
               }
             ]
           );
         }
-      } else {
-        showModal(<NewRemindEmailValidationOverlay isOnboarding={true} />);
+      } else if (pot.isSome(profile)) {
+        acknowledgeEmailInsert();
+        return;
       }
     }
-  }, [profile, prevUserProfile, navigateToEmailReadScreen, showModal]);
+
+    // FIXME -> this acknowledgeEmail need to be called after the email verification. Need to test if in a real case the validation modal works.
+    return () => {
+      acknowledgeEmail();
+    };
+  }, [acknowledgeEmailInsert, acknowledgeEmail, profile]);
 
   const continueOnPress = () => {
     Keyboard.dismiss();
@@ -170,8 +148,6 @@ const NewOnboardingEmailInsertScreen = (props: Props) => {
         updateEmail(e as EmailString);
       })
     );
-    acknowledgeEmailInsert();
-    reloadProfile();
   };
 
   const renderFooterButtons = () => {

@@ -36,6 +36,7 @@ import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -60,6 +61,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to allow user to insert an email address.
  */
 const EmailInsertScreen = (props: Props) => {
+  useValidatedEmailModal();
   const dispatch = useIODispatch();
 
   const profile = useIOSelector(profileSelector);
