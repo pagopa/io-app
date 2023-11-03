@@ -63,7 +63,6 @@ export const MessageDetails = ({
   // console.log(`=== MessageDetails: rendering`);
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();
-  const dismissPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const partitionedAttachments = pipe(
@@ -95,6 +94,7 @@ export const MessageDetails = ({
 
   const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
   const scrollViewRef = React.createRef<ScrollView>();
+
   return (
     <>
       <ScrollView
@@ -148,12 +148,12 @@ export const MessageDetails = ({
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
 
-        {RA.isNonEmpty(f24List) && (
+        {!isCancelled && RA.isNonEmpty(f24List) ? (
           <>
             <MessageF24 attachments={f24List} openPreview={openAttachment} />
             <VSpacer size={24} />
           </>
-        )}
+        ) : null}
 
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
@@ -178,12 +178,11 @@ export const MessageDetails = ({
         </PnMessageDetailsSection>
       </ScrollView>
 
-      {payments && (
+      {payments && !isCancelled && (
         <MessagePaymentBottomSheet
           messageId={messageId}
           payments={payments}
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
-          dismissPaymentsBottomSheetRef={dismissPaymentsBottomSheetRef}
         />
       )}
 
