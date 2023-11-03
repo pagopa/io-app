@@ -474,7 +474,7 @@ const TransactionSummaryScreen = (): React.ReactElement => {
             () => continueWithPayment(),
             () => startAssistanceRequest(error, messageId)
           )}
-          <VSpacer />
+          <VSpacer size={16} />
         </ContentWrapper>
       </SafeAreaView>
     </BaseScreenComponent>
