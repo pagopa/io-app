@@ -131,9 +131,7 @@ const ItwCredentialIssuingInfoScreen = () => {
         <ItwBulletList data={credential.requestedClaims(decodedPid)} />
 
         {/* ItwFooterInfoBox should be replaced with a more ligth component */}
-        <ItwFooterInfoBox
-          content={I18n.t("features.itWallet.activationScreen.tos")}
-        />
+        <ItwFooterInfoBox content={I18n.t("features.itWallet.tos")} />
         <VSpacer size={48} />
       </ScrollView>
       <FooterWithButtons

@@ -169,9 +169,7 @@ const ItwPresentationDataScreen = () => {
         />
         <VSpacer size={32} />
         {/* TOS SECTION */}
-        <ItwFooterInfoBox
-          content={I18n.t("features.itWallet.activationScreen.tos")}
-        />
+        <ItwFooterInfoBox content={I18n.t("features.itWallet.tos")} />
         <VSpacer size={32} />
       </ScrollView>
       <FooterWithButtons

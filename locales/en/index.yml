@@ -3318,6 +3318,7 @@ features:
       signingInProgress: "Signature in progress"  
   itWallet:
     title: "IT Wallet"
+    tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
     actionBanner:
       title: "Novità IT Wallet"
       description: "Starting today, you can collect your digital credentials (such as Driver's License, Health Card, etc.) and access online services with IT Wallet."
@@ -3329,13 +3330,9 @@ features:
       action: "Enable IT Wallet"
       hideLabel: "Hide this banner"
     activationScreen:
-      title: "Your digital identity and your documents in the IO Wallet."
-      subTitle: "IT Wallet is a feature that allows you to add your digital identity to the IO Wallet, which is a collection of personal data that enables you to authenticate yourself online, and your personal documents like driving license, health insurance card and the European disability card."
-      where: "Online and in person."
-      whereDescription: "Carry the digital version of your documents with you all times. Use your digital identity to access online services, both public and private. Use the other cards to share the data they contain with others, both online and in person, whenever you need to."
-      howActivate: "Easy to activate"
-      howActivateDescription: "You will need your Electronic Identity Card (CIE) and its PIN. The data coming from your CIE will be part of your digital identity, the first credential in your IT Wallet."
-      tos: "By continuing, you accept the [Terms and conditions of use](https://io.italia.it/privacy-policy/) of the service and confirm that you have read the [Privacy Policy](https://io.italia.it/privacy-policy/)."
+      intro: "## IT Wallet: what it is and how it works\nIT Wallet is a feature that allows you to add your digital identity to the IO Wallet, i.e. the **set of personal data that allows you to authenticate yourself online**, and the your personal documents, such as your driving license, health card and European Disability Card."
+      subContentOne: "###### Online and live\nUse your digital identity to **access online services, both public and private**. Use documents to **share the data they contain with others**, online and live, whenever you need it."
+      subContentTwo: "###### Easy to activate\nYou will need the **Electronic Identity Card (CIE) and its PIN**. Your CIE data will be part of your digital identity, the first document in your IT Wallet."
       cancel: "Not now"
       confirm: "Activate IT Wallet"
     homeScreen:
@@ -3477,10 +3474,10 @@ features:
           preservation: "Data will be retained for {{numberOfMonths}} months"
           deletion: "You can delete your data at any time"
           conditionsLink: "Terms of Service"
-        tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
         buttons: 
           confirmData: "Confirm data"
           deny: "Deny"
+        tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
       resultScreen:
         loading: 
           title: "Presenting your data to {{relayingParty}}"
