@@ -439,13 +439,13 @@ const TransactionSummaryScreen = (): React.ReactElement => {
   );
 
   return (
-    <BaseScreenComponent
-      backButtonTestID={"back-button-transaction-summary"}
-      goBack={goBack}
-      contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
-    >
-      <SafeAreaView style={IOStyles.flex}>
+    <SafeAreaView style={IOStyles.flex}>
+      <BaseScreenComponent
+        backButtonTestID={"back-button-transaction-summary"}
+        goBack={goBack}
+        contextualHelp={emptyContextualHelp}
+        headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
+      >
         {showsInlineError && <TransactionSummaryStatus error={error} />}
         <ScrollView style={styles.container}>
           <TransactionSummary
@@ -471,8 +471,8 @@ const TransactionSummaryScreen = (): React.ReactElement => {
             () => startAssistanceRequest(error, messageId)
           )}
         </ContentWrapper>
-      </SafeAreaView>
-    </BaseScreenComponent>
+      </BaseScreenComponent>
+    </SafeAreaView>
   );
 };
 
