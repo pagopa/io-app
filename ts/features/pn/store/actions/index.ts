@@ -52,6 +52,14 @@ export const setSelectedPayment = createAction(
 
 export const clearSelectedPayment = createAction("PN_CLEAR_SELECTED_PAYMENT");
 
+export const startPaymentStatusTracking = createAction(
+  "PN_START_TRACKING_PAYMENT_STATUS",
+  resolve => (messageId: UIMessageId) => resolve({ messageId })
+);
+export const cancelPaymentStatusTracking = createAction(
+  "PN_CANCEL_PAYMENT_STATUS_TRACKING"
+);
+
 export type PnActions =
   | ActionType<typeof pnActivationUpsert>
   | ActionType<typeof updatePaymentForMessage>

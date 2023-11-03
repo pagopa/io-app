@@ -32,8 +32,10 @@ import {
 import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 import {
+  cancelPaymentStatusTracking,
   cancelQueuedPaymentUpdates,
   clearSelectedPayment,
+  startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
 import { GlobalState } from "../../../store/reducers/types";
@@ -96,12 +98,14 @@ export const MessageDetailsScreen = (
   const payments = paymentsFromPNMessagePot(currentFiscalCode, message);
 
   const loadContent = React.useCallback(() => {
+    dispatch(startPaymentStatusTracking(messageId));
     dispatch(loadThirdPartyMessage.request(messageId));
   }, [dispatch, messageId]);
 
   const customGoBack = React.useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
   }, [dispatch, navigation]);
 

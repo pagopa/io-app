@@ -18,6 +18,9 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { setSelectedPayment } from "../store/actions";
+import { trackPNPaymentStart } from "../analytics";
+
+export const maxVisiblePaymentCountGenerator = () => 5;
 
 export function getNotificationStatusInfo(status: NotificationStatus) {
   return I18n.t(`features.pn.details.timeline.status.${status}`, {
@@ -148,6 +151,8 @@ export const initializeAndNavigateToWalletForPayment = (
   }
 
   preNavigationCallback?.();
+
+  trackPNPaymentStart();
 
   dispatch(setSelectedPayment(paymentId));
   dispatch(paymentInitializeState());
