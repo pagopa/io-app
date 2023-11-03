@@ -1,0 +1,130 @@
+import React from "react";
+import * as O from "fp-ts/lib/Option";
+import { SafeAreaView } from "react-native";
+import { IOStyles, useIOToast } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import I18n from "../../../../i18n";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
+import { useIOSelector } from "../../../../store/hooks";
+import {
+  itwIssuanceChecksSelector,
+  IssuanceData
+} from "../../store/reducers/new/itwIssuanceReducer";
+import ItwContinueScreen from "../../components/ItwResultComponent";
+import { showCancelAlert } from "../../utils/alert";
+import {
+  ItWalletError,
+  ItWalletErrorTypes,
+  ItwErrorMapping
+} from "../../utils/errors/itwErrors";
+import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
+import ItwKoView from "../../components/ItwKoView";
+import ROUTES from "../../../../navigation/routes";
+
+/**
+ * Renders a preview screen which displays a visual representation and the claims contained in the PID.
+ */
+const ItwCredentialsChecksScreen = () => {
+  const toast = useIOToast();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
+
+  const onUserConfirmIssuance = () => {
+    navigation.navigate(ITW_ROUTES.CREDENTIALS.ISSUING_INFO);
+  };
+
+  const onUserAbortIssuance = () => {
+    showCancelAlert(() => {
+      navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
+      toast.info(
+        I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
+      );
+    });
+  };
+
+  const ErrorView = ({ error }: { error?: ItWalletError }) => {
+    const mappedError = getScreenError(error);
+    return <ItwKoView {...mappedError} />;
+  };
+
+  const ConfirmView = ({ issuanceData }: { issuanceData: IssuanceData }) => (
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <SafeAreaView style={{ ...IOStyles.flex }}>
+        <ItwContinueScreen
+          title={I18n.t(
+            "features.itWallet.issuing.credentialsChecksScreen.success.title",
+            { credentialName: issuanceData.displayData.title }
+          )}
+          pictogram="identityAdd"
+          action={{
+            label: I18n.t("global.buttons.confirm"),
+            accessibilityLabel: I18n.t("global.buttons.confirm"),
+            onPress: onUserConfirmIssuance
+          }}
+          secondaryAction={{
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: onUserAbortIssuance
+          }}
+        />
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+
+  const getScreenError: ItwErrorMapping = (error?: ItWalletError) => {
+    switch (error?.code) {
+      case ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR:
+        return {
+          title: I18n.t(
+            "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.title"
+          ),
+          subtitle: I18n.t(
+            "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.subtitle"
+          ),
+          pictogram: "identityCheck",
+          action: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.actionLabel"
+            ),
+            label: I18n.t(
+              "features.itWallet.issuing.credentialsChecksScreen.failure.alreadyExisting.actionLabel"
+            ),
+            onPress: () =>
+              navigation.navigate(ROUTES.MAIN, { screen: ROUTES.ITWALLET_HOME })
+          }
+        };
+      default:
+        return getItwGenericMappedError(() => navigation.goBack());
+    }
+  };
+
+  const RenderMask = () =>
+    pot.fold(
+      preliminaryChecks,
+      () => <ErrorView />,
+      () => <ErrorView />,
+      () => <ErrorView />,
+      error => <ErrorView error={error} />,
+      maybeIssuanceData =>
+        pipe(
+          maybeIssuanceData,
+          O.fold(
+            () => <ErrorView />,
+            issuanceData => <ConfirmView issuanceData={issuanceData} />
+          )
+        ),
+      () => <ErrorView />,
+      () => <ErrorView />,
+      (_, error) => <ErrorView error={error} />
+    );
+
+  return <RenderMask />;
+};
+
+export default ItwCredentialsChecksScreen;

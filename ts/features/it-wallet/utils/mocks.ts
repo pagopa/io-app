@@ -53,6 +53,8 @@ export type CredentialCatalogDisplay = {
   image: ImageSourcePropType;
   title: string;
   icon?: IOIcons;
+  firstLine?: Array<string>;
+  secondLine?: Array<string>;
 };
 
 // A credential shown in the catalog but yet to be requested
@@ -83,14 +85,18 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     icon: "disabilityCard",
     incoming: false,
     textColor: "black",
-    image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png")
+    image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png"),
+    firstLine: ["given_name", "family_name"],
+    secondLine: ["serial_number"]
   },
   {
     incoming: true,
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
     textColor: "black",
-    image: require("../assets/img/credentials/cards/healthInsuranceFront.png")
+    image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
+    firstLine: [],
+    secondLine: []
   },
   {
     title: I18n.t(
@@ -99,15 +105,31 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     icon: "driverLicense",
     incoming: true,
     textColor: "black",
-    image: require("../assets/img/credentials/cards/drivingLicenseFront.png")
+    image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
+    firstLine: [],
+    secondLine: []
   }
 ];
+
+/**
+ * Hard coded display feature for PID
+ */
+export const pidDisplayData: CredentialCatalogDisplay = {
+  title: I18n.t(
+    "features.itWallet.verifiableCredentials.type.digitalCredential"
+  ),
+  icon: "archive",
+  textColor: "white",
+  image: require("../assets/img/credentials/cards/pidFront.png")
+};
 
 export const defaultDisplayData: CredentialCatalogDisplay = {
   title: I18n.t("features.itWallet.generic.credential"),
   icon: "archive",
   textColor: "black",
-  image: require("../assets/img/credentials/cards/default.png")
+  image: require("../assets/img/credentials/cards/default.png"),
+  firstLine: [],
+  secondLine: []
 };
 
 export const getFromCatalog = (

@@ -3467,6 +3467,7 @@ features:
             firstBodyContent: "Per ottenere il rilascio della tessera L’ente autorizzato ad emettere questa tessera ha bisogno di leggere i tuoi dati per verificarne l’identità."
             secondHeaderTitle: "Sicurezza del trattamento"
             secondBodyContent: "App IO consente la condivisione dei tuoi dati solo con enti verificati e iscritti alle liste che ne garantiscono l’affidabilità."
+        tos: "Per maggiori informazioni leggi l’[Informativa Privacy](https://io.italia.it/privacy-policy/) e i '[Termini e condizioni d’uso](https://io.italia.it/privacy-policy/)"
       credentialPreviewScreen:
         title: "Ecco un’anteprima della tua tessera"
         subtitle: "Prima di aggiungerla, verifica che tutte le informazioni siano
@@ -3484,7 +3485,7 @@ features:
             title: "Protezione dei dati"
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
         toast:
-          success: "Credential added!"
+          success: "Tessera aggiunta!"
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3590,6 +3591,10 @@ features:
         single: "Fornito da {{authSource}}"
       credential: "Credenziale"
       attribute: "Attributo"
+      placeholders: 
+        claimNotAvailable: "Attributo non presente"
+        claimLabelNotAvailable: "Etichetta attributo non presente"
+        organizationName: "Nome ente non disponibile"
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

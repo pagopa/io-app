@@ -29,7 +29,7 @@ import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReduce
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import { itWalletExperimentalEnabled } from "../../../config";
 import ItwCredentialCard from "../components/ItwCredentialCard";
-import { pidDisplayData } from "../utils/pid";
+import { pidDisplayData } from "../utils/mocks";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -100,8 +100,7 @@ const ItwHomeScreen = () => {
           }
         >
           <ItwCredentialCard
-            name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
-            fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
+            pidClaims={decodedPid.pid.claims}
             display={pidDisplayData}
           />
           <VSpacer />
@@ -112,15 +111,11 @@ const ItwHomeScreen = () => {
           .map((credential, idx) => (
             <Pressable
               onLongPress={onLongPressCredential}
-              key={`${credential.schema.display.title}-${idx}`}
+              key={`${credential.displayData.title}-${idx}`}
             >
               <ItwCredentialCard
-                name={[
-                  credential.parsedCredential.givenName,
-                  credential.parsedCredential.familyName
-                ].join(" ")}
-                fiscalCode={credential.parsedCredential.fiscalCode}
-                display={credential.schema.display}
+                parsedCredential={credential.parsedCredential}
+                display={credential.displayData}
               />
               <VSpacer />
             </Pressable>

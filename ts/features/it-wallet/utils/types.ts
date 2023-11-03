@@ -1,8 +1,20 @@
-import { Credential } from "@pagopa/io-react-native-wallet";
+import { Credential, Trust } from "@pagopa/io-react-native-wallet";
+import { CredentialCatalogDisplay } from "./mocks";
 
 export type PidResponse = Awaited<
   ReturnType<Credential.Issuance.ObtainCredential>
 >;
+
+export type StartIssuanceFlow = Awaited<
+  ReturnType<Credential.Issuance.StartFlow>
+>;
+
+// The definition of the credential we are about to request
+// It will include data from the Issuer configuration
+// For now it's fetched from a static catalog
+export type CredentialDefinition = {
+  displayData: CredentialCatalogDisplay;
+};
 
 // Alias for RequestObject
 // It is not exposed from the wallet package, so we extract the type
@@ -11,3 +23,10 @@ export type PidResponse = Awaited<
 export type RequestObject = Awaited<
   ReturnType<Credential.Presentation.GetRequestObject>
 >["requestObject"];
+
+export type CredentialConfigurationSchema =
+  Trust.CredentialIssuerEntityConfiguration["payload"]["metadata"]["openid_credential_issuer"]["credentials_supported"][number]["credential_definition"]["credentialSubject"];
+
+export type IssuerConfiguration = Awaited<
+  ReturnType<typeof Credential.Issuance.evaluateIssuerTrust>
+>["issuerConf"];

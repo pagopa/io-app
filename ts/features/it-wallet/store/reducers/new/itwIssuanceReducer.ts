@@ -1,63 +1,52 @@
-/**
- * A reducer for the authentication by CIE
- */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { Trust } from "@pagopa/io-react-native-wallet/";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import {
-  itwStartIssuanceFlow,
+  itwIssuanceAddCredential,
   itwIssuanceChecks,
-  itwConfirmIssuance,
-  itwIssuanceUserAuthorization
+  itwIssuanceGetCredential
 } from "../../actions/new/itwIssuanceActions";
 import { CredentialCatalogDisplay } from "../../../utils/mocks";
+import {
+  CredentialConfigurationSchema,
+  CredentialDefinition,
+  IssuerConfiguration
+} from "../../../utils/types";
+import { StoredCredential } from "../itwCredentialsReducer";
 
 export type IssuanceData = {
   credentialType: string;
   issuerUrl: string;
   displayData: CredentialCatalogDisplay;
-};
+  credentialConfigurationSchema: CredentialConfigurationSchema;
+  issuerConf: IssuerConfiguration;
+} & CredentialDefinition;
 
 export type IssuanceResultData = {
   issuerName: string;
-  credential: string;
-  credentialType: string;
-  parsedCredential: Record<string, string>;
-  schema: {
-    credentialSubject: Trust.CredentialIssuerEntityConfiguration["payload"]["metadata"]["openid_credential_issuer"]["credentials_supported"][number]["credential_definition"]["credentialSubject"];
-    display: CredentialCatalogDisplay;
-  };
-};
+} & StoredCredential;
 
 /**
  * Type of the state managed by the reducer for the issuance flow.
  */
 export type ItwIssuanceState = {
-  // Informations about the credential to be issued
-  issuanceData: O.Option<IssuanceData>;
+  checks: pot.Pot<O.Option<IssuanceData>, ItWalletError>;
   //
-  checks: pot.Pot<true, ItWalletError>;
-  // whether the flof is running or is completed
-  executingFlow: pot.Pot<void, ItWalletError>;
+  issuanceResult: pot.Pot<O.Option<IssuanceResultData>, ItWalletError>;
   //
-  executingAuthorization: pot.Pot<void, ItWalletError>;
-  //
-  executingObtaining: pot.Pot<IssuanceResultData, ItWalletError>;
+  addCredential: pot.Pot<true, ItWalletError>;
 };
 
 /**
  * Empty state constant which sets the initial state of the reducer.
  */
 const EMPTY_STATE: ItwIssuanceState = {
-  issuanceData: O.none,
   checks: pot.none,
-  executingFlow: pot.none,
-  executingAuthorization: pot.none,
-  executingObtaining: pot.none
+  issuanceResult: pot.none,
+  addCredential: pot.none
 };
 
 const reducer = (
@@ -65,24 +54,6 @@ const reducer = (
   action: Action
 ): ItwIssuanceState => {
   switch (action.type) {
-    /**
-     * Issuance flow.
-     */
-    case getType(itwStartIssuanceFlow.request):
-      return {
-        ...state,
-        executingFlow: pot.toLoading(state.executingFlow),
-        issuanceData: O.some(action.payload)
-      };
-    case getType(itwStartIssuanceFlow.success):
-    case getType(itwStartIssuanceFlow.cancel): // user cancellation is a valid ending for the flow
-      return EMPTY_STATE;
-    case getType(itwStartIssuanceFlow.failure):
-      return {
-        ...state,
-        executingFlow: pot.toError(state.executingFlow, action.payload)
-      };
-
     /**
      * Preliminary checks section.
      */
@@ -94,7 +65,7 @@ const reducer = (
     case getType(itwIssuanceChecks.success):
       return {
         ...state,
-        checks: pot.some(true)
+        checks: pot.some(O.some(action.payload))
       };
     case getType(itwIssuanceChecks.failure):
       return {
@@ -103,34 +74,41 @@ const reducer = (
       };
 
     /**
-     * Authorization phase
+     * Obtain phase
      */
-    case getType(itwConfirmIssuance):
+    case getType(itwIssuanceGetCredential.request):
       return {
         ...state,
-        executingAuthorization: pot.toLoading(state.executingAuthorization)
+        issuanceResult: pot.toLoading(state.issuanceResult)
+      };
+    case getType(itwIssuanceGetCredential.success):
+      return {
+        ...state,
+        issuanceResult: pot.some(O.some(action.payload))
+      };
+    case getType(itwIssuanceGetCredential.failure):
+      return {
+        ...state,
+        issuanceResult: pot.toError(state.issuanceResult, action.payload)
       };
 
     /**
-     * Obtain phase
+     * Add credential
      */
-    case getType(itwIssuanceUserAuthorization.request):
+    case getType(itwIssuanceAddCredential.request):
       return {
         ...state,
-        executingObtaining: pot.toLoading(state.executingObtaining)
+        addCredential: pot.toLoading(state.addCredential)
       };
-    case getType(itwIssuanceUserAuthorization.success):
+    case getType(itwIssuanceAddCredential.success):
       return {
         ...state,
-        executingObtaining: pot.some(action.payload)
+        addCredential: pot.some(true)
       };
-    case getType(itwIssuanceUserAuthorization.failure):
+    case getType(itwIssuanceAddCredential.failure):
       return {
         ...state,
-        executingObtaining: pot.toError(
-          state.executingObtaining,
-          action.payload
-        )
+        addCredential: pot.toError(state.addCredential, action.payload)
       };
 
     default:
@@ -138,19 +116,25 @@ const reducer = (
   }
 };
 
-/**
- *
- * @param state
- * @returns
- */
-
-export const itwIssuanceDataSelector = (state: GlobalState) =>
-  state.features.itWallet.issuance.issuanceData;
+export const itwIssuanceResultSelector = (state: GlobalState) =>
+  state.features.itWallet.issuance.issuanceResult;
 
 export const itwIssuanceResultDataSelector = (state: GlobalState) =>
-  state.features.itWallet.issuance.executingObtaining;
+  pot.getOrElse(
+    pot.map(
+      state.features.itWallet.issuance.issuanceResult,
+      issuanceResultData => issuanceResultData
+    ),
+    O.none
+  );
 
-export const itwIssuancePreliminaryChecksSelector = (state: GlobalState) =>
+export const itwIssuanceChecksSelector = (state: GlobalState) =>
   state.features.itWallet.issuance.checks;
+
+export const itwIssuanceChecksDataSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(state.features.itWallet.issuance.checks, checks => checks),
+    O.none
+  );
 
 export default reducer;

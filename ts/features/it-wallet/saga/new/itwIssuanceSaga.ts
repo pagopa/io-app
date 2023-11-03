@@ -9,212 +9,270 @@ import * as SDJWT from "@pagopa/io-react-native-wallet/src/sd-jwt";
 import { SdJwt4VC } from "@pagopa/io-react-native-wallet/src/sd-jwt/types";
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { ActionType, isActionOf } from "typesafe-actions";
-
-import { pipe } from "fp-ts/lib/function";
+import { toError } from "fp-ts/lib/Either";
+import { CommonActions } from "@react-navigation/native";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { walletProviderUrl } from "../../../../config";
 import {
-  itwCancelIssuance,
-  itwCancelStoreCredential,
-  itwConfirmIssuance,
   itwConfirmStoreCredential,
+  itwIssuanceAddCredential,
   itwIssuanceChecks,
-  itwIssuanceUserAuthorization,
-  itwStartIssuanceFlow
+  itwIssuanceGetCredential
 } from "../../store/actions/new/itwIssuanceActions";
 import { ITW_PID_KEY_TAG } from "../../utils/pid";
 import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
 import { ITW_WIA_KEY_TAG } from "../../utils/wia";
 
 import { itwWiaRequest } from "../../store/actions/itwWiaActions";
-import { ItwCredentialsPidSelector } from "../../store/reducers/itwCredentialsReducer";
+import {
+  ItwCredentialsPidSelector,
+  itwCredentialsSelector
+} from "../../store/reducers/itwCredentialsReducer";
 import { getOrGenerateCyptoKey } from "../../utils/keychain";
 import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
-import { defaultDisplayData, getFromCatalog } from "../../utils/mocks";
+import {
+  itwIssuanceChecksDataSelector,
+  itwIssuanceResultDataSelector
+} from "../../store/reducers/new/itwIssuanceReducer";
+import {
+  identificationRequest,
+  identificationSuccess
+} from "../../../../store/actions/identification";
+import I18n from "../../../../i18n";
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
 
 export function* watchItwIssuanceSaga(): SagaIterator {
-  yield* takeLatest(itwStartIssuanceFlow.request, itwIssuanceSaga);
+  yield* takeLatest(itwIssuanceChecks.request, itwIssuanceChecksSaga);
+  yield* takeLatest(
+    itwIssuanceGetCredential.request,
+    itwIssuanceGetCredentialSaga
+  );
+  yield* takeLatest(itwConfirmStoreCredential, addCredentialWithPin);
 }
 
-export function* itwIssuanceSaga({
-  payload: { credentialType, issuerUrl }
-}: ActionType<typeof itwStartIssuanceFlow.request>): SagaIterator {
-  /**
-   * Setup phase
-   */
-  yield* put(itwIssuanceChecks.request({ credentialType, issuerUrl }));
-  const [walletInstanceAttestation, wiaCryptoContext] = yield* call(
-    getWalletInstanceAttestation
-  );
-  const credentialKeytag = `${Math.random()}`;
-  yield* call(getOrGenerateCyptoKey, credentialKeytag);
-  const credentialCryptoContext = createCryptoContextFor(credentialKeytag);
+export function* itwIssuanceChecksSaga({
+  payload: { credentialType, issuerUrl, displayData }
+}: ActionType<typeof itwIssuanceChecks.request>): SagaIterator {
+  try {
+    // Issuer conf + trust
+    const { issuerConf } = yield* call(
+      Credential.Issuance.evaluateIssuerTrust,
+      issuerUrl
+    );
 
-  // Issuer conf + trust
-  const { issuerConf } = yield* call(
-    Credential.Issuance.evaluateIssuerTrust,
-    issuerUrl
-  );
-
-  const mockDisplayData = pipe(
-    getFromCatalog(credentialType),
-    O.map(_ => ({
-      title: _.title,
-      textColor: _.textColor,
-      image: _.image,
-      icon: _.icon
-    })),
-    O.getOrElse(() => defaultDisplayData)
-  );
-
-  const [credentialConfigurationSchema] =
-    issuerConf.openid_credential_issuer.credentials_supported
-      .filter(_ => _.credential_definition.type.includes(credentialType))
-      .map(_ => ({
-        credentialSubject: _.credential_definition.credentialSubject,
-        display: mockDisplayData
-      }));
-
-  if (!credentialConfigurationSchema) {
-    const error = {
-      code: ItWalletErrorTypes.CREDENTIALS_ADD_ERROR,
-      message: `Cannot find configuration schema for credential of type ${credentialType}`
-    };
-    yield* put(itwIssuanceChecks.failure(error));
-    yield* put(itwStartIssuanceFlow.failure(error));
-    return;
-  }
-
-  yield* put(itwIssuanceChecks.success(true));
-  const waitForConfirm = yield* take([itwCancelIssuance, itwConfirmIssuance]);
-  if (isActionOf(itwCancelIssuance, waitForConfirm)) {
-    yield* put(itwStartIssuanceFlow.cancel());
-    return;
-  }
-
-  /**
-   * User Authz phase
-   */
-
-  // from hard coded conf
-  const walletProviderBaseUrl = walletProviderUrl;
-
-  // start user authz
-  const { requestUri, clientId } = yield* call(
-    Credential.Issuance.startUserAuthorization,
-    issuerConf,
-    credentialType,
-    {
-      walletInstanceAttestation,
-      walletProviderBaseUrl,
-      wiaCryptoContext
+    const [credentialConfigurationSchema] =
+      issuerConf.openid_credential_issuer.credentials_supported
+        .filter(_ => _.credential_definition.type.includes(credentialType))
+        .map(_ => _.credential_definition.credentialSubject);
+    if (!credentialConfigurationSchema) {
+      throw new Error(
+        `Cannot find configuration schema for credential of type ${credentialType}`
+      );
     }
-  );
 
-  // complete user authz
-  // Depending on credential type, use proper authz method
-  /*   const completeUserAuthorization =
-    // Authz by CIE login
-    credentialType === PID_CREDENTIAL_TYPE
-      ? () => call(completeUserAuthorizationWithCIE)
-      : // Authz by PID presentation
-
-        () =>
-          call(completeUserAuthorizationWithPID, requestUri, issuerUrl, {
-            wiaCryptoContext,
-            walletInstanceAttestation
-          }); */
-
-  const { code } = yield* call(
-    completeUserAuthorizationWithPID,
-    requestUri,
-    issuerUrl,
-    {
-      wiaCryptoContext,
-      walletInstanceAttestation
+    // check if credential is already in the wallet
+    const storedCredentials = yield* select(itwCredentialsSelector);
+    const found = storedCredentials
+      .filter(O.isSome)
+      .find(e => e.value.credentialType === credentialType);
+    if (found) {
+      yield* put(
+        itwIssuanceChecks.failure({
+          code: ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR
+        })
+      );
+    } else {
+      yield* put(
+        itwIssuanceChecks.success({
+          credentialType,
+          issuerUrl,
+          displayData,
+          credentialConfigurationSchema,
+          issuerConf
+        })
+      );
     }
-  );
+  } catch (e) {
+    const res = toError(e);
+    yield* put(
+      itwIssuanceChecks.failure({
+        code: ItWalletErrorTypes.CREDENTIAL_CHECKS_GENERIC_ERROR,
+        message: res.message
+      })
+    );
+  }
+}
 
-  // access authz
-  const { accessToken, nonce } = yield* call(
-    Credential.Issuance.authorizeAccess,
-    issuerConf,
-    code,
-    clientId,
-    { walletInstanceAttestation, walletProviderBaseUrl }
-  );
+export function* itwIssuanceGetCredentialSaga(): SagaIterator {
+  try {
+    const issuanceData = yield* select(itwIssuanceChecksDataSelector);
 
-  // obtain cred
-  const { credential, format } = yield* call(
-    Credential.Issuance.obtainCredential,
-    issuerConf,
-    accessToken,
-    nonce,
-    clientId,
-    credentialType,
-    { credentialCryptoContext, walletProviderBaseUrl }
-  );
+    if (O.isNone(issuanceData)) {
+      throw new Error("Unexpected issuanceData");
+    }
 
-  const parsedCredential = SDJWT.decode(
-    credential,
-    SdJwt4VC
-  ).disclosures.reduce(
-    (p, { decoded: [, key, value] }) => ({
-      ...p,
-      [key]: typeof value === "string" ? value : JSON.stringify(value)
-    }),
-    {} as Record<string, string>
-  );
-
-  yield* put(
-    itwIssuanceUserAuthorization.success({
-      // TODO: export organization_name
-      issuerName: "issuerConf.federation_entity.organization_name",
-      credential,
+    const {
       credentialType,
-      parsedCredential,
-      schema: credentialConfigurationSchema
-    })
-  );
+      issuerUrl,
+      issuerConf,
+      credentialConfigurationSchema,
+      displayData
+    } = issuanceData.value;
 
-  const waitForStoreConfirm = yield* take([
-    itwConfirmStoreCredential,
-    itwCancelStoreCredential
-  ]);
-  if (isActionOf(itwCancelStoreCredential, waitForStoreConfirm)) {
-    yield* put(itwStartIssuanceFlow.cancel());
-    return;
-  }
+    const [walletInstanceAttestation, wiaCryptoContext] = yield* call(
+      getWalletInstanceAttestation
+    );
+    const keyTag = `${Math.random()}`;
+    yield* call(getOrGenerateCyptoKey, keyTag);
+    const credentialCryptoContext = createCryptoContextFor(keyTag);
 
-  yield* put(
-    itwCredentialsAddCredential.request({
+    // from app config
+    const walletProviderBaseUrl = walletProviderUrl;
+
+    // start user authz
+    const { requestUri, clientId } = yield* call(
+      Credential.Issuance.startUserAuthorization,
+      issuerConf,
+      credentialType,
+      {
+        walletInstanceAttestation,
+        walletProviderBaseUrl,
+        wiaCryptoContext
+      }
+    );
+
+    const { code } = yield* call(
+      completeUserAuthorizationWithPID,
+      requestUri,
+      issuerUrl,
+      {
+        wiaCryptoContext,
+        walletInstanceAttestation
+      }
+    );
+
+    // access authz
+    const { accessToken, nonce } = yield* call(
+      Credential.Issuance.authorizeAccess,
+      issuerConf,
+      code,
+      clientId,
+      { walletInstanceAttestation, walletProviderBaseUrl }
+    );
+
+    // obtain cred
+    const { credential, format } = yield* call(
+      Credential.Issuance.obtainCredential,
+      issuerConf,
+      accessToken,
+      nonce,
+      clientId,
+      credentialType,
+      { credentialCryptoContext, walletProviderBaseUrl }
+    );
+
+    const parsedCredential = SDJWT.decode(
       credential,
-      format,
-      keyTag: credentialKeytag,
-      schema: credentialConfigurationSchema,
-      parsedCredential
-    })
-  );
-  const errorOrStoredCredential = yield* take([
-    itwCredentialsAddCredential.failure,
-    itwCredentialsAddCredential.success
-  ]);
-  if (
-    isActionOf(itwCredentialsAddCredential.failure, errorOrStoredCredential)
-  ) {
-    throw errorOrStoredCredential.payload;
-  }
+      SdJwt4VC
+    ).disclosures.reduce(
+      (p, { decoded: [, key, value] }) => ({
+        ...p,
+        [key]: typeof value === "string" ? value : JSON.stringify(value)
+      }),
+      {} as Record<string, string>
+    );
 
-  // close saga
-  return yield* put(itwStartIssuanceFlow.success());
+    const issuerName =
+      issuerConf.federation_entity.organization_name ||
+      I18n.t("features.itWallet.generic.placeholders.organizationName");
+
+    yield* put(
+      itwIssuanceGetCredential.success({
+        issuerName,
+        keyTag,
+        credential,
+        format,
+        parsedCredential,
+        credentialConfigurationSchema,
+        credentialType,
+        displayData
+      })
+    );
+  } catch (e) {
+    const res = toError(e);
+    yield* put(
+      itwIssuanceChecks.failure({
+        code: ItWalletErrorTypes.CREDENTIAL_CHECKS_GENERIC_ERROR,
+        message: res.message
+      })
+    );
+  }
 }
 
-/* function* completeUserAuthorizationWithCIE(): Iterator<
-  any,
-  Awaited<ReturnType<Credential.Issuance.CompleteUserAuthorization>>
-> {
-  const code = yield* call(() => "stub");
-  return { code };
-} */
+// add type and error mapping
+function* addCredentialWithPin() {
+  try {
+    const resultData = yield* select(itwIssuanceResultDataSelector);
+    if (O.isNone(resultData)) {
+      throw new Error();
+    }
+    yield* put(
+      identificationRequest(false, true, undefined, {
+        label: I18n.t("global.buttons.cancel"),
+        onCancel: () =>
+          NavigationService.dispatchNavigationAction(CommonActions.goBack())
+      })
+    );
+
+    const res = yield* take(identificationSuccess);
+
+    if (isActionOf(identificationSuccess, res)) {
+      const {
+        keyTag,
+        credential,
+        format,
+        parsedCredential,
+        credentialType,
+        displayData,
+        credentialConfigurationSchema
+      } = resultData.value;
+
+      yield* put(
+        itwCredentialsAddCredential.success({
+          credential,
+          format,
+          keyTag,
+          credentialConfigurationSchema,
+          parsedCredential,
+          credentialType,
+          displayData
+        })
+      );
+
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.navigate(ROUTES.MAIN, {
+          screen: ROUTES.ITWALLET_HOME
+        })
+      );
+
+      IOToast.success(
+        I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.toast.success"
+        )
+      );
+    }
+  } catch (e) {
+    const res = toError(e);
+    yield* put(
+      itwIssuanceAddCredential.failure({
+        code: ItWalletErrorTypes.CREDENTIAL_ADD_ERROR,
+        message: res.message
+      })
+    );
+  }
+}
 
 function* completeUserAuthorizationWithPID(
   requestURI: Awaited<
@@ -254,9 +312,6 @@ function* completeUserAuthorizationWithPID(
     "evidence"
   ];
 
-  // wait for user user confirmation
-  yield* take(itwIssuanceUserAuthorization.request);
-
   // access authz
   const { response_code } = yield* call(
     Credential.Presentation.sendAuthorizationResponse,
@@ -270,36 +325,10 @@ function* completeUserAuthorizationWithPID(
 
   if (!response_code) {
     const message = `Expecting response_code from sendAuthorizationResponse, received undefined`;
-    yield* put(
-      itwIssuanceUserAuthorization.failure({
-        code: ItWalletErrorTypes.CREDENTIALS_ADD_ERROR,
-        message
-      })
-    );
     throw new Error(message);
   }
 
   return { code: response_code };
-}
-
-function* confirmCredential(
-  ..._args: Parameters<Credential.Issuance.ConfirmCredential>
-): Iterator<any, boolean> {
-  // show detail
-  // take confirm action
-  // take reject action
-
-  // if action = reject
-  //  boh
-
-  // if action = confirm
-  //  pin
-  //  if pin ok
-  //    return true
-  //  else
-  //    error pin
-
-  return yield* call(() => true);
 }
 
 function* getWalletInstanceAttestation(): Iterator<
@@ -327,18 +356,10 @@ function* getPID(): Iterator<any, readonly [string, CryptoContext]> {
   const maybePid = yield* select(ItwCredentialsPidSelector);
   if (O.isNone(maybePid)) {
     const message = `Expecting response_code from sendAuthorizationResponse, received undefined`;
-    yield* put(
-      itwIssuanceUserAuthorization.failure({
-        code: ItWalletErrorTypes.CREDENTIALS_ADD_ERROR,
-        message
-      })
-    );
     throw new Error(message);
   }
   const pidKeytag = ITW_PID_KEY_TAG;
   const pidCryptoContext = createCryptoContextFor(pidKeytag);
-
-  // return select WIA
   return yield* call(
     () => [maybePid.value.credential, pidCryptoContext] as const
   );

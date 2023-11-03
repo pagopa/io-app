@@ -32,7 +32,7 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
 import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
-import { pidDisplayData } from "../../utils/pid";
+import { pidDisplayData } from "../../utils/mocks";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -72,9 +72,6 @@ const ItwPidPreviewScreen = () => {
       onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_ADDING),
       title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
     };
-    const name =
-      decodedPid.pid.claims.givenName + " " + decodedPid.pid.claims.familyName;
-    const fiscalCode = decodedPid.pid.claims.taxIdCode;
     return (
       <>
         <ScreenContent
@@ -83,8 +80,7 @@ const ItwPidPreviewScreen = () => {
           <VSpacer />
           <View style={IOStyles.horizontalContentPadding}>
             <ItwCredentialCard
-              name={name}
-              fiscalCode={fiscalCode}
+              pidClaims={decodedPid.pid.claims}
               display={pidDisplayData}
             />
             <VSpacer />

@@ -20,7 +20,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
-import { pidDisplayData } from "../../utils/pid";
+import { pidDisplayData } from "../../utils/mocks";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -50,8 +50,7 @@ const ItwPidDetails = () => {
         <VSpacer />
         <View style={IOStyles.horizontalContentPadding}>
           <ItwCredentialCard
-            name={`${decodedPid.pid.claims.givenName} ${decodedPid.pid.claims.familyName}`}
-            fiscalCode={decodedPid.pid.claims.taxIdCode as string}
+            pidClaims={decodedPid.pid.claims}
             display={pidDisplayData}
           />
           <VSpacer />

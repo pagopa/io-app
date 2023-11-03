@@ -23,7 +23,6 @@ import { useIOSelector } from "../../../../store/hooks";
 import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeReducer";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
 import I18n from "../../../../i18n";
 import ItwBulletList from "../../components/ItwBulletList";
 import { useItwDataProcessing } from "../../hooks/useItwDataProcessing";
@@ -33,6 +32,7 @@ import ROUTES from "../../../../navigation/routes";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
+import ItwTextInfo from "../../components/ItwTextInfo";
 
 /**
  * This screen displays the information about the credential that is going to be shared
@@ -55,101 +55,106 @@ const ItwCredentialIssuingInfoScreen = () => {
   };
 
   const ContentView = ({ decodedPid }: { decodedPid: PidWithToken }) => (
-    <SafeAreaView style={IOStyles.flex}>
-      <ScrollView style={IOStyles.horizontalContentPadding}>
-        <VSpacer size={32} />
-        {/* SECOND HEADER */}
-        <View
-          style={{
-            flexDirection: "row",
-            alignContent: "center",
-            alignItems: "center"
-          }}
-        >
-          {/* LEFT */}
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
+          <VSpacer size={32} />
+          {/* SECOND HEADER */}
           <View
             style={{
               flexDirection: "row",
+              alignContent: "center",
               alignItems: "center"
             }}
           >
-            <IconContained
-              icon={"device"}
-              color={"neutral"}
-              variant={"tonal"}
-            />
-            <HSpacer size={8} />
-            <Icon name={"transactions"} color={"grey-450"} size={24} />
-            <HSpacer size={8} />
-            <IconContained
-              icon={"institution"}
-              color={"neutral"}
-              variant={"tonal"}
+            {/* LEFT */}
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
+              <IconContained
+                icon={"device"}
+                color={"neutral"}
+                variant={"tonal"}
+              />
+              <HSpacer size={8} />
+              <Icon name={"transactions"} color={"grey-450"} size={24} />
+              <HSpacer size={8} />
+              <IconContained
+                icon={"institution"}
+                color={"neutral"}
+                variant={"tonal"}
+              />
+            </View>
+            {/* RIGHT */}
+            <Image
+              source={interno}
+              resizeMode={"contain"}
+              style={{ width: "100%", height: 32 }}
             />
           </View>
-          {/* RIGHT */}
-          <Image
-            source={interno}
-            resizeMode={"contain"}
-            style={{ width: "100%", height: 32 }}
+          <VSpacer size={24} />
+          <H1>
+            {I18n.t(
+              "features.itWallet.issuing.credentialsIssuingInfoScreen.title"
+            )}
+          </H1>
+          <Body>
+            {I18n.t(
+              "features.itWallet.issuing.credentialsIssuingInfoScreen.subtitle",
+              {
+                authsource:
+                  decodedPid.pid.verification.evidence[0].record.source
+                    .organization_name,
+                organization: CREDENTIAL_ISSUER
+              }
+            )}
+          </Body>
+          <VSpacer size={16} />
+          <LabelLink onPress={() => present()}>
+            {I18n.t(
+              "features.itWallet.issuing.credentialsIssuingInfoScreen.readMore"
+            )}
+          </LabelLink>
+          <VSpacer size={24} />
+
+          {/* Render a list of claims that will be shared with the credential issuer */}
+          <ItwBulletList data={getRequestedClaims(decodedPid)} />
+          <VSpacer size={32} />
+          {/* ItwFooterInfoBox should be replaced with a more ligth component */}
+          <ItwTextInfo
+            markdownText={I18n.t(
+              "features.itWallet.issuing.credentialsIssuingInfoScreen.tos"
+            )}
           />
-        </View>
-        <VSpacer size={24} />
-        <H1>
-          {I18n.t(
-            "features.itWallet.issuing.credentialsIssuingInfoScreen.title"
-          )}
-        </H1>
-        <Body>
-          {I18n.t(
-            "features.itWallet.issuing.credentialsIssuingInfoScreen.subtitle",
-            {
-              authsource:
-                decodedPid.pid.verification.evidence[0].record.source
-                  .organization_name,
-              organization: CREDENTIAL_ISSUER
+          <VSpacer size={32} />
+        </ScrollView>
+        <FooterWithButtons
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              color: "primary",
+              accessibilityLabel: I18n.t("global.buttons.cancel"),
+              onPress: () => showCancelAlert(alertOnPress),
+              label: I18n.t("global.buttons.cancel")
             }
-          )}
-        </Body>
-        <VSpacer size={16} />
-        <LabelLink onPress={() => present()}>
-          {I18n.t(
-            "features.itWallet.issuing.credentialsIssuingInfoScreen.readMore"
-          )}
-        </LabelLink>
-        <VSpacer size={24} />
-
-        {/* Render a list of claims that will be shared with the credential issuer */}
-        <ItwBulletList data={getRequestedClaims(decodedPid)} />
-
-        {/* ItwFooterInfoBox should be replaced with a more ligth component */}
-        <ItwFooterInfoBox
-          content={I18n.t("features.itWallet.activationScreen.tos")}
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              color: "primary",
+              accessibilityLabel: I18n.t("global.buttons.continue"),
+              onPress: () =>
+                navigation.navigate(ITW_ROUTES.CREDENTIALS.PREVIEW),
+              label: I18n.t("global.buttons.continue")
+            }
+          }}
+          type="TwoButtonsInlineHalf"
         />
-        <VSpacer size={48} />
-      </ScrollView>
-      <FooterWithButtons
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            color: "primary",
-            accessibilityLabel: I18n.t("global.buttons.cancel"),
-            onPress: () => showCancelAlert(alertOnPress),
-            label: I18n.t("global.buttons.cancel")
-          }
-        }}
-        secondary={{
-          type: "Solid",
-          buttonProps: {
-            color: "primary",
-            accessibilityLabel: I18n.t("global.buttons.continue"),
-            onPress: () => navigation.navigate(ITW_ROUTES.CREDENTIALS.PREVIEW),
-            label: I18n.t("global.buttons.continue")
-          }
-        }}
-        type="TwoButtonsInlineHalf"
-      />
-    </SafeAreaView>
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 
   const ErrorView = () => {
@@ -168,10 +173,10 @@ const ItwCredentialIssuingInfoScreen = () => {
     );
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+    <>
       <DecodedPidOrErrorView />
       {bottomSheet}
-    </BaseScreenComponent>
+    </>
   );
 };
 export default ItwCredentialIssuingInfoScreen;

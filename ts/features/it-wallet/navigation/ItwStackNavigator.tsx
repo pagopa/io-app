@@ -22,6 +22,7 @@ import ItwCredentialIssuingInfoScreen from "../screens/credentials/ItwCredential
 import ItwChecksScreen from "../screens/presentation/crossdevice/new/ItwPresentationChecksScreen";
 import ItwPresentationDataScreen from "../screens/presentation/crossdevice/new/ItwPresentationDataScreen";
 import ItwPresentationResultScreen from "../screens/presentation/crossdevice/new/ItwPresentationResultScreen";
+import ItwCredentialsChecksScreen from "../screens/credentials/ItwCredentialChecksScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -109,6 +110,10 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.CREDENTIALS.CATALOG}
       component={ItwCredentialsCatalogScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.CREDENTIALS.CHECKS}
+      component={ItwCredentialsChecksScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.CREDENTIALS.ISSUING_INFO}

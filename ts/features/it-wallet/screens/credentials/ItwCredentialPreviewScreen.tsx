@@ -7,12 +7,13 @@ import {
   Body,
   FooterWithButtons,
   H2,
-  H6,
   VSpacer,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView, View } from "react-native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -29,14 +30,13 @@ import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
-  itwCancelStoreCredential,
   itwConfirmStoreCredential,
-  itwIssuanceUserAuthorization
+  itwIssuanceGetCredential
 } from "../../store/actions/new/itwIssuanceActions";
 import {
   IssuanceResultData,
-  itwIssuanceDataSelector,
-  itwIssuanceResultDataSelector
+  itwIssuanceResultDataSelector,
+  itwIssuanceResultSelector
 } from "../../store/reducers/new/itwIssuanceReducer";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
@@ -46,20 +46,18 @@ import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay"
  */
 const ItwCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const issuanceResult = useIOSelector(itwIssuanceResultSelector);
   const issuanceResultData = useIOSelector(itwIssuanceResultDataSelector);
-  const issuanceData = useIOSelector(itwIssuanceDataSelector);
-
   const bannerViewRef = React.createRef<View>();
-
   const toast = useIOToast();
   const dispatch = useIODispatch();
 
   useOnFirstRender(() => {
-    dispatch(itwIssuanceUserAuthorization.request());
+    dispatch(itwIssuanceGetCredential.request());
   });
 
   const { present, bottomSheet } = useItwInfoBottomSheet({
-    title: pot.isSome(issuanceResultData)
+    title: O.isSome(issuanceResultData)
       ? issuanceResultData.value.issuerName
       : "",
     content: [
@@ -86,7 +84,6 @@ const ItwCredentialPreviewScreen = () => {
     toast.info(
       I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
     );
-    dispatch(itwCancelStoreCredential());
     navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
   };
 
@@ -107,7 +104,7 @@ const ItwCredentialPreviewScreen = () => {
       buttonProps: {
         label: I18n.t("global.buttons.add"),
         accessibilityLabel: I18n.t("global.buttons.add"),
-        onPress: () => addOnPress() // TODO(SIW-449): Add navigation to the PIN screen
+        onPress: () => addOnPress()
       }
     };
 
@@ -124,32 +121,28 @@ const ItwCredentialPreviewScreen = () => {
     };
 
     return (
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
-          <H2>
-            {I18n.t("features.itWallet.issuing.credentialPreviewScreen.title")}
-          </H2>
-          <VSpacer />
-          <Body>
-            {I18n.t(
-              "features.itWallet.issuing.credentialPreviewScreen.subtitle"
-            )}
-          </Body>
-          <VSpacer />
-          <ItwCredentialCard
-            name={data.parsedCredential.name}
-            fiscalCode={data.parsedCredential.fiscalCode}
-            display={data.schema.display}
-          />
-          <VSpacer />
-          <ItwCredentialClaimsList data={data} />
-          <VSpacer size={32} />
-          <H6>
-            {I18n.t(
-              "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.title"
-            )}
-          </H6>
-          <Body>
+      <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+        <SafeAreaView style={IOStyles.flex}>
+          <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
+            <H2>
+              {I18n.t(
+                "features.itWallet.issuing.credentialPreviewScreen.title"
+              )}
+            </H2>
+            <VSpacer />
+            <Body>
+              {I18n.t(
+                "features.itWallet.issuing.credentialPreviewScreen.subtitle"
+              )}
+            </Body>
+            <VSpacer />
+            <ItwCredentialCard
+              parsedCredential={data.parsedCredential}
+              display={data.displayData}
+            />
+            <VSpacer />
+            <ItwCredentialClaimsList data={data} />
+            <VSpacer size={32} />
             <Banner
               testID={"ItwBannerTestID"}
               viewRef={bannerViewRef}
@@ -164,21 +157,21 @@ const ItwCredentialPreviewScreen = () => {
                   issuer: data.issuerName
                 }
               )}
-              pictogramName={"itWallet"}
+              pictogramName={"security"}
               action={I18n.t(
                 "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.action"
               )}
               onPress={present}
             />
-          </Body>
-          <VSpacer size={32} />
-        </ScrollView>
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          primary={cancelButtonProps}
-          secondary={confirmButtonProps}
-        />
-      </SafeAreaView>
+            <VSpacer size={32} />
+          </ScrollView>
+          <FooterWithButtons
+            type="TwoButtonsInlineHalf"
+            primary={cancelButtonProps}
+            secondary={confirmButtonProps}
+          />
+        </SafeAreaView>
+      </BaseScreenComponent>
     );
   };
 
@@ -188,9 +181,6 @@ const ItwCredentialPreviewScreen = () => {
     const mappedError = getItwGenericMappedError(() => navigation.goBack());
     return <ItwKoView {...mappedError} />;
   };
-
-  // A generic erro view for cases not mapped
-  const Panic = ({ label: _ = "unknown" }: { label?: string }) => <ErrorView />;
 
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
@@ -202,23 +192,31 @@ const ItwCredentialPreviewScreen = () => {
       <></>
     </ItwLoadingSpinnerOverlay>
   );
+
   const RenderMask = pot.fold(
-    issuanceResultData,
-    /* foldNone */ () => <LoadingView />,
-    /* foldNoneLoading */ () => <LoadingView />,
-    /* foldNoneUpdating */ () => <Panic label="unexpected foldNoneUpdating" />,
-    /* foldNoneError */ () => <ErrorView />,
-    /* foldSome */ data => <ContentView data={data} />,
-    /* foldSomeLoading */ () => <Panic label="unexpected foldSomeLoading" />,
-    /* foldSomeUpdating */ () => <Panic label="unexpected foldSomeUpdating" />,
-    /* foldSomeError */ (_, error) => <ErrorView error={error} />
+    issuanceResult,
+    () => <LoadingView />,
+    () => <LoadingView />,
+    () => <ErrorView />,
+    () => <ErrorView />,
+    data =>
+      pipe(
+        data,
+        O.fold(
+          () => <ErrorView />,
+          some => <ContentView data={some} />
+        )
+      ),
+    () => <LoadingView />,
+    () => <ErrorView />,
+    (_, error) => <ErrorView error={error} />
   );
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+    <>
       {RenderMask}
       {bottomSheet}
-    </BaseScreenComponent>
+    </>
   );
 };
 

@@ -2,7 +2,6 @@ import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Trust } from "@pagopa/io-react-native-wallet";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
@@ -10,19 +9,20 @@ import {
   itwCredentialsAddPid
 } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
-import { CredentialCatalogDisplay } from "../../utils/mocks";
-import { PidResponse } from "../../utils/types";
+import {
+  CredentialConfigurationSchema,
+  CredentialDefinition,
+  PidResponse
+} from "../../utils/types";
 
 export type StoredCredential = {
   keyTag: string;
   credential: string;
   format: string;
   parsedCredential: Record<string, string>;
-  schema: {
-    credentialSubject: Trust.CredentialIssuerEntityConfiguration["payload"]["metadata"]["openid_credential_issuer"]["credentials_supported"][number]["credential_definition"]["credentialSubject"];
-    display: CredentialCatalogDisplay;
-  };
-};
+  credentialConfigurationSchema: CredentialConfigurationSchema;
+  credentialType: string;
+} & CredentialDefinition;
 
 /**
  * The type of credentials stored in the wallet.
