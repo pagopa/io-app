@@ -65,4 +65,6 @@ export type PnActions =
   | ActionType<typeof updatePaymentForMessage>
   | ActionType<typeof cancelQueuedPaymentUpdates>
   | ActionType<typeof setSelectedPayment>
-  | ActionType<typeof clearSelectedPayment>;
+  | ActionType<typeof clearSelectedPayment>
+  | ActionType<typeof startPaymentStatusTracking>
+  | ActionType<typeof cancelPaymentStatusTracking>;
