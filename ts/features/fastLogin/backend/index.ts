@@ -6,7 +6,7 @@ import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMet
 import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOriginalURL";
 import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
-import { defaultRetryingFetch, toFetchTimeout } from "../../../utils/fetch";
+import { toFetchTimeout } from "../../../utils/fetch";
 import { createClient } from "../../../../definitions/fast_login/client";
 
 const NONCE_EXPYRING_MS = 60000 as Millisecond;
