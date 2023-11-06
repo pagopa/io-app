@@ -8,7 +8,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, {
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+  createRef
+} from "react";
 import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
 import validator from "validator";
 import {
@@ -39,6 +45,7 @@ import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { emailAcknowledged, emailInsert } from "../../store/actions/onboarding";
 import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
+import { usePrevious } from "../../utils/hooks/usePrevious";
 
 const styles = StyleSheet.create({
   flex: {
@@ -60,12 +67,15 @@ const NewOnboardingEmailInsertScreen = () => {
   useValidatedEmailModal(true);
   const dispatch = useIODispatch();
 
-  const viewRef = React.createRef<View>();
+  const viewRef = createRef<View>();
+
   const profile = useIOSelector(profileSelector);
   const optionEmail = useIOSelector(profileEmailSelector);
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
+  const prevUserProfile = usePrevious(profile);
+
   const isLoading = useMemo(
     () => pot.isUpdating(profile) || pot.isLoading(profile),
     [profile]
@@ -80,6 +90,7 @@ const NewOnboardingEmailInsertScreen = () => {
     () => dispatch(emailInsert()),
     [dispatch]
   );
+
   const updateEmail = useCallback(
     (email: EmailString) =>
       dispatch(
@@ -113,7 +124,7 @@ const NewOnboardingEmailInsertScreen = () => {
   );
 
   useEffect(() => {
-    if (!pot.isLoading(profile)) {
+    if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
       if (pot.isError(profile)) {
         // the user is trying to enter an email already in use
         if (profile.error.type === "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR") {
@@ -128,17 +139,13 @@ const NewOnboardingEmailInsertScreen = () => {
             ]
           );
         }
-      } else if (pot.isSome(profile)) {
+      } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
         acknowledgeEmailInsert();
+        acknowledgeEmail();
         return;
       }
     }
-
-    // FIXME -> this acknowledgeEmail need to be called after the email verification. Need to test if in a real case the validation modal works.
-    return () => {
-      acknowledgeEmail();
-    };
-  }, [acknowledgeEmailInsert, acknowledgeEmail, profile]);
+  }, [acknowledgeEmailInsert, acknowledgeEmail, profile, prevUserProfile]);
 
   const continueOnPress = () => {
     Keyboard.dismiss();
