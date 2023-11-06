@@ -1,7 +1,8 @@
 import {
   Icon,
   ListItemTransaction,
-  ListItemTransactionLogo
+  ListItemTransactionLogo,
+  WithTestID
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import {
@@ -46,42 +47,58 @@ import { localeDateFormat } from "../../../../utils/locale";
 import { getBadgeTextByTransactionStatus } from "../../../walletV3/common/utils";
 import { formatAbsNumberAmountOrDefault } from "../../common/utils/strings";
 
-export type TimelineOperationListItemProps = {
+export type TimelineOperationListItemProps = WithTestID<{
   operation: OperationListDTO;
   onPress?: () => void;
-};
+}>;
 
 export const TimelineOperationListItem = (
   props: TimelineOperationListItemProps
 ) => {
-  const { operation, onPress } = props;
+  const { operation, onPress, testID } = props;
 
   switch (operation.operationType) {
     case TransactionOperationTypeEnum.TRANSACTION:
     case TransactionOperationTypeEnum.REVERSAL:
       return (
-        <TransactionOperationListItem operation={operation} onPress={onPress} />
+        <TransactionOperationListItem
+          operation={operation}
+          onPress={onPress}
+          testID={testID}
+        />
       );
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
       return (
-        <InstrumentOperationListItem operation={operation} onPress={onPress} />
+        <InstrumentOperationListItem
+          operation={operation}
+          onPress={onPress}
+          testID={testID}
+        />
       );
     case IbanOperationTypeEnum.ADD_IBAN:
-      return <IbanOperationListItem operation={operation} />;
+      return <IbanOperationListItem operation={operation} testID={testID} />;
     case OnboardingOperationTypeEnum.ONBOARDING:
-      return <OnboardingOperationListItem operation={operation} />;
+      return (
+        <OnboardingOperationListItem operation={operation} testID={testID} />
+      );
     case RefundOperationTypeEnum.PAID_REFUND:
     case RefundOperationTypeEnum.REJECTED_REFUND:
       return (
-        <RefundOperationListItem operation={operation} onPress={onPress} />
+        <RefundOperationListItem
+          operation={operation}
+          onPress={onPress}
+          testID={testID}
+        />
       );
     case SuspendOperationTypeEnum.SUSPENDED:
-      return <SuspendOperationListItem operation={operation} />;
+      return <SuspendOperationListItem operation={operation} testID={testID} />;
     case ReadmittedOperationTypeEnum.READMITTED:
-      return <ReadmittedOperationListItem operation={operation} />;
+      return (
+        <ReadmittedOperationListItem operation={operation} testID={testID} />
+      );
   }
 };
 
@@ -95,10 +112,10 @@ export const TimelineOperationListItemSkeleton = () => (
   />
 );
 
-type ListItemProps<T extends OperationListDTO> = {
+type ListItemProps<T extends OperationListDTO> = WithTestID<{
   operation: T;
   onPress?: () => void;
-};
+}>;
 
 const TransactionOperationListItem = (
   props: ListItemProps<TransactionOperationDTO>
@@ -122,7 +139,11 @@ const TransactionOperationListItem = (
     operationType === TransactionOperationTypeEnum.REVERSAL;
 
   const logo: ListItemTransactionLogo = brand || (
-    <Icon name={isQRCode ? "merchant" : "creditCard"} color="grey-300" />
+    <Icon
+      name={isQRCode ? "merchant" : "creditCard"}
+      color="grey-300"
+      testID="genericLogoTestID"
+    />
   );
 
   const title: string =
@@ -155,6 +176,7 @@ const TransactionOperationListItem = (
         transactionStatus={"reversal"}
         badgeText={getBadgeTextByTransactionStatus("reversal")}
         onPress={props.onPress}
+        testID={props.testID}
       />
     );
   }
@@ -167,6 +189,7 @@ const TransactionOperationListItem = (
       transactionStatus={"success"}
       transactionAmount={getAccruedString()}
       onPress={props.onPress}
+      testID={props.testID}
     />
   );
 };
@@ -202,9 +225,23 @@ const InstrumentOperationListItem = (
 
   const getLogo = () => {
     if (instrumentType === InstrumentTypeEnum.IDPAYCODE) {
-      return <Icon name={"creditCard"} color="grey-300" />;
+      return (
+        <Icon
+          name={"fiscalCodeIndividual"}
+          color="grey-300"
+          testID="fiscalCodeLogoTestID"
+        />
+      );
     }
-    return brand || <Icon name={"creditCard"} color="grey-300" />;
+    return (
+      brand || (
+        <Icon
+          name={"creditCard"}
+          color="grey-300"
+          testID="creditCardLogoTestID"
+        />
+      )
+    );
   };
 
   if (isRejected) {
@@ -215,6 +252,7 @@ const InstrumentOperationListItem = (
         subtitle={subtitle}
         transactionStatus="failure"
         badgeText={getBadgeTextByTransactionStatus("failure")}
+        testID={props.testID}
       />
     );
   }
@@ -226,13 +264,16 @@ const InstrumentOperationListItem = (
       subtitle={subtitle}
       transactionStatus="success"
       transactionAmount=""
+      testID={props.testID}
     />
   );
 };
 
 const IbanOperationListItem = (props: ListItemProps<IbanOperationDTO>) => (
   <ListItemTransaction
-    paymentLogoIcon={<Icon name={"institution"} color="grey-300" />}
+    paymentLogoIcon={
+      <Icon name={"institution"} color="grey-300" testID="ibanLogoTestID" />
+    }
     title={I18n.t(
       `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
     )}
@@ -240,6 +281,7 @@ const IbanOperationListItem = (props: ListItemProps<IbanOperationDTO>) => (
     transactionStatus={"success"}
     transactionAmount=""
     onPress={props.onPress}
+    testID={props.testID}
   />
 );
 
@@ -247,13 +289,16 @@ const OnboardingOperationListItem = (
   props: ListItemProps<OnboardingOperationDTO>
 ) => (
   <ListItemTransaction
+    paymentLogoIcon={
+      <Icon name={"checkTick"} color="grey-300" testID="onboardingLogoTestID" />
+    }
     title={I18n.t(
       `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
     )}
     subtitle={getOperationSubtitle(props.operation.operationDate)}
-    paymentLogoIcon={<Icon name={"checkTick"} color="grey-300" />}
     transactionStatus={"success"}
     transactionAmount={""}
+    testID={props.testID}
   />
 );
 
@@ -261,7 +306,9 @@ const RefundOperationListItem = (props: ListItemProps<RefundOperationDTO>) => {
   const { operationDate, operationType, amount } = props.operation;
   const isRejected = operationType === RefundOperationTypeEnum.REJECTED_REFUND;
 
-  const operationLogo = <Icon name={"refund"} color="grey-300" />;
+  const operationLogo = (
+    <Icon name={"refund"} color="grey-300" testID="refundLogoTestID" />
+  );
   const title = I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REFUND`
   );
@@ -276,6 +323,7 @@ const RefundOperationListItem = (props: ListItemProps<RefundOperationDTO>) => {
         transactionStatus={"failure"}
         badgeText={getBadgeTextByTransactionStatus("failure")}
         onPress={props.onPress}
+        testID={props.testID}
       />
     );
   }
@@ -288,6 +336,7 @@ const RefundOperationListItem = (props: ListItemProps<RefundOperationDTO>) => {
       transactionStatus={"success"}
       transactionAmount={`${formatAbsNumberAmountOrDefault(amount)} €`}
       onPress={props.onPress}
+      testID={props.testID}
     />
   );
 };
@@ -302,6 +351,7 @@ const SuspendOperationListItem = (
     subtitle={getOperationSubtitle(props.operation.operationDate)}
     transactionStatus={"success"}
     transactionAmount={""}
+    testID={props.testID}
   />
 );
 
@@ -315,10 +365,11 @@ const ReadmittedOperationListItem = (
     subtitle={getOperationSubtitle(props.operation.operationDate)}
     transactionStatus={"success"}
     transactionAmount={""}
+    testID={props.testID}
   />
 );
 
-const getOperationSubtitle = (operationDate: Date): string => {
+export const getOperationSubtitle = (operationDate: Date): string => {
   const dateString = localeDateFormat(
     operationDate,
     I18n.t("global.dateFormats.fullFormatShortMonthLiteral")
@@ -329,7 +380,7 @@ const getOperationSubtitle = (operationDate: Date): string => {
   return `${dateString}, ${timeString}`;
 };
 
-const getOperationSubtitleWithAmount = (
+export const getOperationSubtitleWithAmount = (
   operationDate: Date,
   amount: number | undefined,
   withMinusSign: boolean = false
