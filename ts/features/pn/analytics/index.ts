@@ -81,55 +81,69 @@ export const trackPNServiceStatusChangeError = (currentStatus?: boolean) =>
     })
   );
 
-export function trackPNAttachmentDownloadFailure() {
+export function trackPNAttachmentDownloadFailure(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_DOWNLOAD_FAILURE",
-    buildEventProperties("TECH", undefined)
+    buildEventProperties("TECH", undefined, {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentSave() {
+export function trackPNAttachmentSave(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_SAVE",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentShare() {
+export function trackPNAttachmentShare(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_SHARE",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentSaveShare() {
+export function trackPNAttachmentSaveShare(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_SAVE_SHARE",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentOpen() {
+export function trackPNAttachmentOpen(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_OPEN",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentOpening() {
+export function trackPNAttachmentOpening(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_OPENING",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
 export function trackPNAttachmentOpeningSuccess(
-  previewStatus: "displayer" | "error"
+  previewStatus: "displayer" | "error",
+  category?: string
 ) {
   void mixpanelTrack(
     "PN_ATTACHMENT_OPENING_SUCCESS",
     buildEventProperties("UX", "screen_view", {
-      PREVIEW_STATUS: previewStatus
+      PREVIEW_STATUS: previewStatus,
+      category
     })
   );
 }
@@ -242,7 +256,8 @@ export function legacyTrackPNUxSuccess(
 export function trackPNUxSuccess(
   paymentCount: number,
   firstTimeOpening: boolean,
-  isCancelled: boolean
+  isCancelled: boolean,
+  containsF24: boolean
 ) {
   void mixpanelTrack(
     "PN_UX_SUCCESS",
@@ -252,7 +267,11 @@ export function trackPNUxSuccess(
       notification_status: isCancelled ? "cancelled" : "active",
       contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
       count_payment: paymentCount,
-      contains_f24: "no"
+      contains_f24: containsF24
     })
   );
+}
+
+export function trackPNShowF24() {
+  void mixpanelTrack("PN_SHOW_F24", buildEventProperties("UX", "action"));
 }

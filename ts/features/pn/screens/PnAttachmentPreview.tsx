@@ -54,7 +54,7 @@ export const PnAttachmentPreview = (
   return O.isSome(maybePnMessageAttachment) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      skipDownloadAttachment={false}
+      enableDownloadAttachment={false}
       attachment={maybePnMessageAttachment.value}
       onOpen={trackPNAttachmentOpen}
       onShare={() =>
