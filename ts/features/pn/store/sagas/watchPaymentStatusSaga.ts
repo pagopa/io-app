@@ -167,7 +167,8 @@ function* computeAndTrackPaymentStatuses(
                   ...accumulator,
                   unpaidCount: accumulator.unpaidCount + 1
                 }),
-                details => computeProcessedPaymentStatistics(accumulator, details)
+                details =>
+                  computeProcessedPaymentStatistics(accumulator, details)
               )
             )
           ),
