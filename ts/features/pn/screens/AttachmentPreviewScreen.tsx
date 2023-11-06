@@ -23,7 +23,7 @@ import { isIos } from "../../../utils/platform";
 export type AttachmentPreviewScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
   attachmentId: UIAttachmentId;
-  category: string;
+  category?: string;
 }>;
 
 type AttachmentPreviewScreenProps = IOStackNavigationRouteProps<
@@ -35,7 +35,7 @@ export const AttachmentPreviewScreen = ({
   navigation,
   route
 }: AttachmentPreviewScreenProps) => {
-  const { messageId, attachmentId } = route.params;
+  const { messageId, attachmentId, category } = route.params;
   // This ref is needed otherwise the auto back on the useEffect will fire multiple
   // times, since its dependencies change during the back navigation
   const autoBackOnErrorHandled = useRef(false);
@@ -56,15 +56,23 @@ export const AttachmentPreviewScreen = ({
   return O.isSome(maybePnMessageAttachment) ? (
     <MessageAttachmentPreview
       messageId={messageId}
-      skipDownloadAttachment={false}
+      enableDownloadAttachment={false}
       attachment={maybePnMessageAttachment.value}
-      onOpen={trackPNAttachmentOpen}
+      onOpen={() => trackPNAttachmentOpen(category)}
       onShare={() =>
-        pipe(isIos, B.fold(trackPNAttachmentShare, trackPNAttachmentSaveShare))
+        pipe(
+          isIos,
+          B.fold(
+            () => trackPNAttachmentShare(category),
+            () => trackPNAttachmentSaveShare(category)
+          )
+        )
       }
-      onDownload={trackPNAttachmentSave}
-      onLoadComplete={() => trackPNAttachmentOpeningSuccess("displayer")}
-      onPDFError={() => trackPNAttachmentOpeningSuccess("error")}
+      onDownload={() => trackPNAttachmentSave(category)}
+      onLoadComplete={() =>
+        trackPNAttachmentOpeningSuccess("displayer", category)
+      }
+      onPDFError={() => trackPNAttachmentOpeningSuccess("error", category)}
     />
   ) : (
     <></>

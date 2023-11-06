@@ -26,6 +26,7 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
+  containsF24FromPNMessagePot,
   isCancelledFromPNMessagePot,
   paymentsFromPNMessagePot
 } from "../utils";
@@ -83,7 +84,6 @@ export const MessageDetailsScreen = (
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const uxEventTracked = React.useRef(false);
 
   const service = pot.toUndefined(
     useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
@@ -109,13 +109,21 @@ export const MessageDetailsScreen = (
     loadContent();
   });
 
-  if (!uxEventTracked.current && isStrictSome(message)) {
-    // eslint-disable-next-line functional/immutable-data
-    uxEventTracked.current = true;
-    const paymentCount = payments?.length ?? 0;
-    const isCancelled = isCancelledFromPNMessagePot(message);
-    trackPNUxSuccess(paymentCount, firstTimeOpening, isCancelled);
-  }
+  useOnFirstRender(
+    () => {
+      const paymentCount = payments?.length ?? 0;
+      const isCancelled = isCancelledFromPNMessagePot(message);
+      const containsF24 = containsF24FromPNMessagePot(message);
+
+      trackPNUxSuccess(
+        paymentCount,
+        firstTimeOpening,
+        isCancelled,
+        containsF24
+      );
+    },
+    () => isStrictSome(message)
+  );
 
   const store = useStore();
   useFocusEffect(
