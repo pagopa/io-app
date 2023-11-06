@@ -19,6 +19,8 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { setSelectedPayment } from "../store/actions";
 import { trackPNPaymentStart } from "../analytics";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -136,6 +138,16 @@ export const isCancelledFromPNMessagePot = (
     pot.getOrElse(potMessage, O.none),
     O.chainNullableK(message => message.isCancelled),
     O.getOrElse(() => false)
+  );
+
+export const containsF24FromPNMessagePot = (
+  potMessage: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    pot.getOrElse(potMessage, O.none),
+    O.chainNullableK(message => message.attachments),
+    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
 
 export const initializeAndNavigateToWalletForPayment = (

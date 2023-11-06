@@ -81,7 +81,7 @@ export const MessageDetails = ({
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
-      trackPNAttachmentOpening();
+      trackPNAttachmentOpening(attachment.category);
       NavigationService.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
         attachmentId: attachment.id,
