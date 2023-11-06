@@ -1,23 +1,23 @@
-import * as React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import {
-  useIOTheme,
+  Avatar,
   HSpacer,
-  VSpacer,
+  IOColors,
+  IOLogoPaymentCardType,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
+  IOPaymentCardLogos,
   IOPaymentExtLogos,
   IOPaymentLogos,
+  IOVisualCostants,
   LogoPayment,
-  LogoPaymentExt,
   LogoPaymentCard,
-  IOPaymentCardLogos,
-  IOLogoPaymentCardType,
-  IOColors,
+  LogoPaymentExt,
+  VSpacer,
   hexToRgba,
-  Avatar,
-  IOVisualCostants
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";

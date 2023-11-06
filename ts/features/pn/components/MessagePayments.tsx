@@ -152,57 +152,57 @@ export const MessagePayments = ({
           )}
       </MessageDetailsSection>
     );
-  } else {
-    const showMorePaymentsLink =
-      payments && payments.length > maxVisiblePaymentCount;
-    const morePaymentsLabel = payments
-      ? `${I18n.t("features.pn.details.paymentSection.morePayments")} (${
-          payments.length
-        })`
-      : "";
-    return (
-      <MessageDetailsSection
-        title={I18n.t("features.pn.details.paymentSection.title")}
-        iconName={"productPagoPA"}
-        testID={"PnPaymentSectionTitle"}
-      >
-        {payments && (
-          <>
-            {payments.slice(0, maxVisiblePaymentCount).map((payment, index) => (
-              <MessagePaymentItem
-                index={index}
-                key={`PM_${index}`}
-                messageId={messageId}
-                payment={payment}
-              />
-            ))}
-            {showMorePaymentsLink && (
-              <>
-                <VSpacer size={16} />
-                {morePaymentsLinkState === "visibleLoading" && (
-                  <View style={styles.morePaymentsSkeletonContainer}>
-                    <Placeholder.Box
-                      animate="fade"
-                      radius={8}
-                      width={172}
-                      height={16}
-                    />
-                  </View>
-                )}
-                {morePaymentsLinkState === "visibleEnabled" && (
-                  <View style={styles.morePaymentsLinkContainer}>
-                    <ButtonLink
-                      accessibilityLabel={morePaymentsLabel}
-                      label={morePaymentsLabel}
-                      onPress={() => presentPaymentsBottomSheetRef.current?.()}
-                    />
-                  </View>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </MessageDetailsSection>
-    );
   }
+
+  const showMorePaymentsLink =
+    payments && payments.length > maxVisiblePaymentCount;
+  const morePaymentsLabel = payments
+    ? `${I18n.t("features.pn.details.paymentSection.morePayments")} (${
+        payments.length
+      })`
+    : "";
+  return (
+    <MessageDetailsSection
+      title={I18n.t("features.pn.details.paymentSection.title")}
+      iconName={"productPagoPA"}
+      testID={"PnPaymentSectionTitle"}
+    >
+      {payments && (
+        <>
+          {payments.slice(0, maxVisiblePaymentCount).map((payment, index) => (
+            <MessagePaymentItem
+              index={index}
+              key={`PM_${index}`}
+              messageId={messageId}
+              payment={payment}
+            />
+          ))}
+          {showMorePaymentsLink && (
+            <>
+              <VSpacer size={16} />
+              {morePaymentsLinkState === "visibleLoading" && (
+                <View style={styles.morePaymentsSkeletonContainer}>
+                  <Placeholder.Box
+                    animate="fade"
+                    radius={8}
+                    width={172}
+                    height={16}
+                  />
+                </View>
+              )}
+              {morePaymentsLinkState === "visibleEnabled" && (
+                <View style={styles.morePaymentsLinkContainer}>
+                  <ButtonLink
+                    accessibilityLabel={morePaymentsLabel}
+                    label={morePaymentsLabel}
+                    onPress={() => presentPaymentsBottomSheetRef.current?.()}
+                  />
+                </View>
+              )}
+            </>
+          )}
+        </>
+      )}
+    </MessageDetailsSection>
+  );
 };
