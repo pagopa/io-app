@@ -144,8 +144,7 @@ export const containsF24FromPNMessagePot = (
     pot.getOrElse(potMessage, O.none),
     O.chainNullableK(message => message.attachments),
     O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
-    RA.findFirst(attachment => attachment.category === ATTACHMENT_CATEGORY.F24),
-    O.isSome
+    RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
 
 export const initializeAndNavigateToWalletForPayment = (
