@@ -81,10 +81,12 @@ export const trackPNServiceStatusChangeError = (currentStatus?: boolean) =>
     })
   );
 
-export function trackPNAttachmentDownloadFailure() {
+export function trackPNAttachmentDownloadFailure(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_DOWNLOAD_FAILURE",
-    buildEventProperties("TECH", undefined)
+    buildEventProperties("TECH", undefined, {
+      category
+    })
   );
 }
 
