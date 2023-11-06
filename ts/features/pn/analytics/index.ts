@@ -254,7 +254,8 @@ export function legacyTrackPNUxSuccess(
 export function trackPNUxSuccess(
   paymentCount: number,
   firstTimeOpening: boolean,
-  isCancelled: boolean
+  isCancelled: boolean,
+  containsF24: boolean
 ) {
   void mixpanelTrack(
     "PN_UX_SUCCESS",
@@ -264,7 +265,7 @@ export function trackPNUxSuccess(
       notification_status: isCancelled ? "cancelled" : "active",
       contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
       count_payment: paymentCount,
-      contains_f24: "no"
+      contains_f24: containsF24
     })
   );
 }
