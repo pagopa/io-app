@@ -12,6 +12,16 @@ import {
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
 
+export interface TrackPNPaymentStatus {
+  paymentCount: number;
+  unpaidCount: number;
+  paidCount: number;
+  errorCount: number;
+  expiredCount: number;
+  revokedCount: number;
+  ongoingCount: number;
+}
+
 const pnServiceActivationStatusBoolToString = (activated?: boolean) =>
   activated ? "activated" : "deactivated";
 
@@ -268,6 +278,40 @@ export function trackPNUxSuccess(
       contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
       count_payment: paymentCount,
       contains_f24: containsF24
+    })
+  );
+}
+
+export function trackPNPaymentStart() {
+  void mixpanelTrack("PN_PAYMENT_START", buildEventProperties("UX", "action"));
+}
+
+export function trackPNShowAllPayments() {
+  void mixpanelTrack(
+    "PN_SHOW_ALL_PAYMENT",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackPNPaymentStatus({
+  paymentCount,
+  unpaidCount,
+  paidCount,
+  errorCount,
+  expiredCount,
+  revokedCount,
+  ongoingCount
+}: TrackPNPaymentStatus) {
+  void mixpanelTrack(
+    "PN_PAYMENT_STATUS",
+    buildEventProperties("TECH", undefined, {
+      count_payment: paymentCount,
+      count_unpaid: unpaidCount,
+      count_paid: paidCount,
+      count_error: errorCount,
+      count_expired: expiredCount,
+      count_revoked: revokedCount,
+      count_inprogress: ongoingCount
     })
   );
 }

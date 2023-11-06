@@ -12,7 +12,7 @@ import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPre
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
 import { BackendPnClient } from "../../api/backendPn";
-import { pnActivationUpsert } from "../actions";
+import { pnActivationUpsert, startPaymentStatusTracking } from "../actions";
 import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
@@ -21,6 +21,7 @@ import { servicePreferenceSelector } from "../../../../store/reducers/entities/s
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { BackendClient } from "../../../../api/backend";
 import { watchPaymentUpdateRequests } from "./watchPaymentUpdateRequests";
+import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
 function* upsertPnActivation(
   client: ReturnType<typeof BackendPnClient>,
@@ -88,4 +89,9 @@ export function* watchPnSaga(
   );
 
   yield* fork(watchPaymentUpdateRequests, getVerificaRpt);
+
+  yield* takeLatest(
+    getType(startPaymentStatusTracking),
+    watchPaymentStatusForMixpanelTracking
+  );
 }
