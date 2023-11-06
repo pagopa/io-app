@@ -78,23 +78,22 @@ export const createE2EPin = async () => {
   const onboardingPingFieldInputId = "PinFieldInput";
   await element(by.id(onboardingPingFieldInputId)).typeText(pin);
 
+  const scrollView = element(by.id("pin-creation-form-scroll-view"));
+  await scrollView.scrollTo("bottom");
+
   const onboardingPinConfirmationFieldId = "PinConfirmationFieldInput";
   await element(by.id(onboardingPinConfirmationFieldId)).typeText(wrongPin);
-
-  await element(by.id(onboardingPinTitleId)).tap();
 
   const onboardingPinConfirmButtonId = "pin-creation-form-confirm";
   await waitFor(element(by.id(onboardingPinConfirmButtonId)))
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
-  await element(by.id(onboardingPinTitleId)).tap();
 
-  await element(by.id(onboardingPinConfirmationFieldId)).replaceText(pin);
+  await element(by.id(onboardingPinConfirmButtonId)).tap();
 
-  await element(by.id(onboardingPinTitleId)).tap();
-  await waitFor(element(by.id(onboardingPinConfirmButtonId)))
-    .toBeVisible()
-    .withTimeout(e2eWaitRenderTimeout);
+  await element(by.id(onboardingPinConfirmationFieldId)).clearText();
+  await element(by.id(onboardingPinConfirmationFieldId)).typeText(pin);
+
   await element(by.id(onboardingPinConfirmButtonId)).tap();
 
   const onboardingNotEnrolledConfirmButtonId = "not-enrolled-biometric-confirm";
