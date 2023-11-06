@@ -1,23 +1,23 @@
-import * as React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import {
-  useIOTheme,
+  Avatar,
   HSpacer,
-  VSpacer,
+  IOColors,
+  IOLogoPaymentCardType,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
+  IOPaymentCardLogos,
   IOPaymentExtLogos,
   IOPaymentLogos,
+  IOVisualCostants,
   LogoPayment,
-  LogoPaymentExt,
   LogoPaymentCard,
-  IOPaymentCardLogos,
-  IOLogoPaymentCardType,
-  IOColors,
+  LogoPaymentExt,
+  VSpacer,
   hexToRgba,
-  Avatar,
-  IOVisualCostants
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -108,6 +108,9 @@ const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
 
 const organizationsURIs = [
   {
+    name: "Placeholder"
+  },
+  {
     imageSource: `${cdnPath}1199250158.png`,
     name: "Comune di Milano"
   },
@@ -134,6 +137,10 @@ const organizationsURIs = [
   {
     imageSource: `${cdnPath}80215430580.png`,
     name: "Ministero dell'Interno"
+  },
+  {
+    imageSource: `${cdnPath}wrongUri.png`,
+    name: "Wrong URI"
   }
 ];
 
@@ -150,11 +157,13 @@ const renderAvatar = () => (
             <Avatar
               shape="circle"
               size="small"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={
+                imageSource
+                  ? {
+                      uri: imageSource
+                    }
+                  : undefined
+              }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={4} />}
           </React.Fragment>
@@ -172,11 +181,13 @@ const renderAvatar = () => (
             <Avatar
               shape="square"
               size="small"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={
+                imageSource
+                  ? {
+                      uri: imageSource
+                    }
+                  : undefined
+              }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
           </React.Fragment>
@@ -194,11 +205,13 @@ const renderAvatar = () => (
             <Avatar
               shape="square"
               size="medium"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={
+                imageSource
+                  ? {
+                      uri: imageSource
+                    }
+                  : undefined
+              }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
           </React.Fragment>
