@@ -12,7 +12,7 @@ import {
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
 
-interface TrackPNPaymentStatus {
+export interface TrackPNPaymentStatus {
   paymentCount: number;
   unpaidCount: number;
   paidCount: number;

@@ -1,5 +1,4 @@
 import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { call, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
@@ -22,7 +21,11 @@ import {
   isRevokedPaymentFromDetailV2Enum,
   isOngoingPaymentFromDetailV2Enum
 } from "../../../../utils/payment";
-import { trackPNPaymentStatus } from "../../analytics";
+import { TrackPNPaymentStatus, trackPNPaymentStatus } from "../../analytics";
+
+type PartialTrackPNPaymentStatus = Partial<
+  Omit<TrackPNPaymentStatus, "paymentCount">
+>;
 
 type PayablePayment = {
   kind: "Payable";
@@ -151,129 +154,94 @@ function* computeAndTrackPaymentStatuses(
     currentFiscalCode,
     message
   );
+
   const paymentCount = payments?.length ?? 0;
-  const unpaidCount = paymentStatuses.reduce(
+  const partialPaymentStatistics = paymentStatuses.reduce(
     (accumulator, paymentStatus) =>
-      accumulator + paymentStatusToZeroOrOne(paymentStatus),
-    0
-  );
-  const paidCount = paymentStatuses.reduce(
-    (accumulator, paymentStatus) =>
-      accumulator +
-      paymentStatusToZeroOrOne(
+      pipe(
         paymentStatus,
-        O.some(isPaidPaymentFromDetailV2Enum)
+        computePartialPaymentStatistics,
+        sumPaymentStatistics(accumulator)
       ),
-    0
+    partialPaymentStatusStatistics({})
   );
-  const errorCount = paymentStatuses.reduce(
-    (accumulator, paymentStatus) =>
-      accumulator +
-      paymentStatusToZeroOrOne(
-        paymentStatus,
-        O.some(isErrorPaymentFromDetailV2Enum)
-      ),
-    0
-  );
-  const expiredCount = paymentStatuses.reduce(
-    (accumulator, paymentStatus) =>
-      accumulator +
-      paymentStatusToZeroOrOne(
-        paymentStatus,
-        O.some(isExpiredPaymentFromDetailV2Enum)
-      ),
-    0
-  );
-  const revokedCount = paymentStatuses.reduce(
-    (accumulator, paymentStatus) =>
-      accumulator +
-      paymentStatusToZeroOrOne(
-        paymentStatus,
-        O.some(isRevokedPaymentFromDetailV2Enum)
-      ),
-    0
-  );
-  const ongoingCount = paymentStatuses.reduce(
-    (accumulator, paymentStatus) =>
-      accumulator +
-      paymentStatusToZeroOrOne(
-        paymentStatus,
-        O.some(isOngoingPaymentFromDetailV2Enum)
-      ),
-    0
-  );
-  yield* call(trackPNPaymentStatus, {
+  const paymentStatusStatisticsObj = yield* call(
+    paymentStatusStatistics,
     paymentCount,
-    unpaidCount,
-    paidCount,
-    errorCount,
-    expiredCount,
-    revokedCount,
-    ongoingCount
-  });
+    partialPaymentStatistics
+  );
+  yield* call(trackPNPaymentStatus, paymentStatusStatisticsObj);
 }
 
-/**
- * This function is used in a reducer in order to compute how many payments are of a specific type.
- *
- * If you want to know how many payments are payable, do not provide a `maybeDetailsFunction`.
- * If you want to know how many payments have a specific error, provide a `maybeDetailsFunction` that
- * matches the payment error code(s) you are interest about
- */
-const paymentStatusToZeroOrOne = (
-  maybePaymentStatus: O.Option<PaymentStatus>,
-  maybeDetailsFunction: O.Option<(details: Detail_v2Enum) => boolean> = O.none
-) =>
+const partialPaymentStatusStatistics = ({
+  unpaidCount = 0,
+  paidCount = 0,
+  errorCount = 0,
+  expiredCount = 0,
+  revokedCount = 0,
+  ongoingCount = 0
+}: PartialTrackPNPaymentStatus): PartialTrackPNPaymentStatus => ({
+  unpaidCount,
+  paidCount,
+  errorCount,
+  expiredCount,
+  revokedCount,
+  ongoingCount
+});
+
+const paymentStatusStatistics = (
+  paymentCount: number,
+  partialPaymentStatusStatistics: PartialTrackPNPaymentStatus
+) => ({
+  paymentCount,
+  unpaidCount: partialPaymentStatusStatistics.unpaidCount ?? 0,
+  paidCount: partialPaymentStatusStatistics.paidCount ?? 0,
+  errorCount: partialPaymentStatusStatistics.errorCount ?? 0,
+  expiredCount: partialPaymentStatusStatistics.expiredCount ?? 0,
+  revokedCount: partialPaymentStatusStatistics.revokedCount ?? 0,
+  ongoingCount: partialPaymentStatusStatistics.ongoingCount ?? 0
+});
+
+const computePartialPaymentStatistics = (
+  maybePaymentStatus: O.Option<PaymentStatus>
+): PartialTrackPNPaymentStatus =>
   pipe(
     maybePaymentStatus,
-    O.fold(
-      () => 0, // No payment status
-      paymentStatus =>
-        pipe(
-          paymentStatus,
-          foldPaymentStatus(
-            () =>
-              // This is a payable payment
-              pipe(
-                maybeDetailsFunction,
-                O.fold(
-                  () => 1, // Function has been called to know if the payment is payable, and it is
-                  _ => 0 // Function has been called to know if the payment has an error but it does not (since it is payable)
-                )
-              ),
-            (
-              details // This is a payment with an error
-            ) =>
-              pipe(
-                maybeDetailsFunction,
-                O.fold(
-                  () => 0, // Function has been called to know if the payment is payable but it does not (since it has an error)
-                  matchingDetailsFunction =>
-                    pipe(
-                      details,
-                      matchingDetailsFunction,
-                      B.fold(
-                        () => 0, // Function has been called to check a specific payment error, but it did not match
-                        () => 1 // Function has been called to check a specific payment error and it matched
-                      )
-                    )
-                )
-              )
-          )
+    O.map(paymentStatus =>
+      pipe(
+        paymentStatus,
+        foldPaymentStatus(
+          () => partialPaymentStatusStatistics({ unpaidCount: 1 }),
+          processedPaymentToStatistics
         )
-    )
+      )
+    ),
+    O.getOrElse(() => partialPaymentStatusStatistics({}))
   );
 
 const foldPaymentStatus =
-  (payable: () => number, processed: (details: Detail_v2Enum) => number) =>
+  <T>(payable: () => T, processed: (details: Detail_v2Enum) => T) =>
   (input: PaymentStatus) =>
     input.kind === "Payable" ? payable() : processed(input.details);
 
-/**
- * A payment is considered to have a generic error when it does not match any of the other error ones
- */
-const isErrorPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
-  !isPaidPaymentFromDetailV2Enum(details) &&
-  !isExpiredPaymentFromDetailV2Enum(details) &&
-  !isRevokedPaymentFromDetailV2Enum(details) &&
-  !isOngoingPaymentFromDetailV2Enum(details);
+const processedPaymentToStatistics = (details: Detail_v2Enum) =>
+  isPaidPaymentFromDetailV2Enum(details)
+    ? partialPaymentStatusStatistics({ paidCount: 1 })
+    : isExpiredPaymentFromDetailV2Enum(details)
+    ? partialPaymentStatusStatistics({ expiredCount: 1 })
+    : isRevokedPaymentFromDetailV2Enum(details)
+    ? partialPaymentStatusStatistics({ revokedCount: 1 })
+    : isOngoingPaymentFromDetailV2Enum(details)
+    ? partialPaymentStatusStatistics({ ongoingCount: 1 })
+    : partialPaymentStatusStatistics({ errorCount: 1 });
+
+const sumPaymentStatistics =
+  (first: PartialTrackPNPaymentStatus) =>
+  (second: PartialTrackPNPaymentStatus): PartialTrackPNPaymentStatus => ({
+    unpaidCount: (first.unpaidCount ?? 0) + (second.unpaidCount ?? 0),
+    paidCount: (first.paidCount ?? 0) + (second.paidCount ?? 0),
+    expiredCount: (first.expiredCount ?? 0) + (second.expiredCount ?? 0),
+    revokedCount: (first.revokedCount ?? 0) + (second.revokedCount ?? 0),
+    ongoingCount: (first.ongoingCount ?? 0) + (second.ongoingCount ?? 0),
+    errorCount: (first.errorCount ?? 0) + (second.errorCount ?? 0)
+  });
