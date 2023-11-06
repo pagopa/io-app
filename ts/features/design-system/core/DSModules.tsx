@@ -222,7 +222,7 @@ const renderModuleIDP = () => (
         />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleIDP, saved variant">
+    <DSComponentViewerBox name="ModuleIDP, loose spacing (fka saved) variant">
       <View>
         <ModuleIDP
           withLooseSpacing
