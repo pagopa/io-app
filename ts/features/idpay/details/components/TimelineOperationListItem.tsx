@@ -129,7 +129,7 @@ const TransactionOperationListItem = (
     businessName ||
     I18n.t(
       `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${
-        isQRCode ? "QRCODE_TRANSACTION" : "TRANSACTION"
+        isQRCode ? "TRANSACTION_ONLINE" : "TRANSACTION"
       }`
     );
 
@@ -263,7 +263,7 @@ const RefundOperationListItem = (props: ListItemProps<RefundOperationDTO>) => {
 
   const operationLogo = <Icon name={"refund"} color="grey-300" />;
   const title = I18n.t(
-    `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.${operationType}`
+    `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REFUND`
   );
   const subtitle = getOperationSubtitle(operationDate);
 
