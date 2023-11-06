@@ -74,6 +74,7 @@ global:
         expired: "Scaduto"
         revoked: "Revocato"
         canceled: "Annullato"
+        inprogress: "In corso"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
