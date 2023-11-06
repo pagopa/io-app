@@ -11,6 +11,7 @@ import variables from "../../../theme/variables";
 import { initializeAndNavigateToWalletForPayment } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { useIOToast } from "../../../components/Toast";
+import { trackPNShowAllPayments } from "../analytics";
 
 const styles = StyleSheet.create({
   container: {
@@ -54,6 +55,7 @@ export const MessageFooter = ({
         toast.error(I18n.t("genericError"))
       );
     } else {
+      trackPNShowAllPayments();
       presentPaymentsBottomSheetRef.current?.();
     }
   }, [dispatch, payments, presentPaymentsBottomSheetRef, toast]);
