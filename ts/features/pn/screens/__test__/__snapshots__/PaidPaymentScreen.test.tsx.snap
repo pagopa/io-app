@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PnPaidPaymentScreen should render with back button, title, help button, paid banner and notice code but no creditor tax id 1`] = `
+exports[`PaidPaymentScreen should render with back button, title, help button, paid banner and notice code but no creditor tax id 1`] = `
 <View
   style={
     Object {
@@ -971,7 +971,7 @@ exports[`PnPaidPaymentScreen should render with back button, title, help button,
 </View>
 `;
 
-exports[`PnPaidPaymentScreen should render with back button, title, help button, paid banner, notice code and creditor tax id 1`] = `
+exports[`PaidPaymentScreen should render with back button, title, help button, paid banner, notice code and creditor tax id 1`] = `
 <View
   style={
     Object {

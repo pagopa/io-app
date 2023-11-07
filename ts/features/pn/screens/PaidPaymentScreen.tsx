@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export type PnPaidPaymentScreenNavigationParams = Readonly<{
+export type PaidPaymentScreenNavigationParams = Readonly<{
   noticeCode: string;
   creditorTaxId?: string;
 }>;
@@ -28,7 +28,7 @@ const paidPaymentError = O.some(
   "PPT_PAGAMENTO_DUPLICATO"
 ) as TransactionSummaryError;
 
-export const PnPaidPaymentScreen = (
+export const PaidPaymentScreen = (
   props: IOStackNavigationRouteProps<
     PnParamsList,
     "PN_CANCELLED_MESSAGE_PAID_PAYMENT"

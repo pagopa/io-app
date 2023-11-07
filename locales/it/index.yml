@@ -3055,7 +3055,6 @@ features:
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
         payments: "Pagamenti"
       paymentSection:
-        legacyTitle: Avviso di pagamento
         title: "Avvisi pagoPA"
         morePayments: "Vedi tutti gli avvisi"
         bottomSheetTitle: "Quale avviso vuoi pagare?"
