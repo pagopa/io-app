@@ -6,7 +6,7 @@ import I18n from "../../../../i18n";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { openWebUrl } from "../../../../utils/url";
 import {
-  ONBOARDING_FAR_ENABLE_3DS,
+  ONBOARDING_FAQ_ENABLE_3DS,
   ONBOARDING_OUTCOME_ERROR_PICTOGRAM
 } from "../utils";
 
@@ -33,7 +33,7 @@ const WalletOnboardingError = ({
   const handleOnPressSecondaryAction = () => {
     switch (outcome) {
       case OnboardingOutcomeEnum.AUTH_ERROR:
-        openWebUrl(ONBOARDING_FAR_ENABLE_3DS);
+        openWebUrl(ONBOARDING_FAQ_ENABLE_3DS);
     }
   };
 
