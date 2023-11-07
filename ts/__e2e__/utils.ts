@@ -75,8 +75,8 @@ export const createE2EPin = async () => {
     e2ePinChar4;
   const wrongPin = "123456";
 
-  const onboardingPingFieldInputId = "PinFieldInput";
-  await element(by.id(onboardingPingFieldInputId)).typeText(pin);
+  const onboardingPinFieldInputId = "PinFieldInput";
+  await element(by.id(onboardingPinFieldInputId)).typeText(pin);
 
   const scrollView = element(by.id("pin-creation-form-scroll-view"));
   await scrollView.scrollTo("bottom");
@@ -89,7 +89,7 @@ export const createE2EPin = async () => {
     .toBeVisible()
     .withTimeout(e2eWaitRenderTimeout);
 
-  await element(by.id(onboardingPinConfirmButtonId)).tap();
+  await scrollView.tap();
 
   await element(by.id(onboardingPinConfirmationFieldId)).clearText();
   await element(by.id(onboardingPinConfirmationFieldId)).typeText(pin);
