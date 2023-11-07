@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";

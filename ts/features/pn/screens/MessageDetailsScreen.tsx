@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useStore } from "react-redux";
