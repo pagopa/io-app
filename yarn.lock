@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.16.0":
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.16.0.tgz#7742361734a94ace08a0a9e586d1fb148fb6d023"
-  integrity sha512-WYMV3SMzC2/eEW1W7HhzpzHqY5aIkMmh7Fjoqcy35WVH7eyy3UriRvNQ0XQMWdIS8RKsk5OP1O00q/aNRb/f4g==
+"@pagopa/io-app-design-system@1.16.1":
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.16.1.tgz#163e5e878a8c72140bc4ca6aa249e0a0932a23cf"
+  integrity sha512-LFtCMcSLAHPoCocOlGmsm/BlIWuzbwNPzykbwvyxvu1ycOBzEVHc1JuJGDsaD3pRAvydNiq05nhfYBoAGMGVQA==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
