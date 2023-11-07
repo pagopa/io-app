@@ -2,12 +2,11 @@ import * as React from "react";
 import { Alert, View } from "react-native";
 import {
   ButtonOutline,
-  ButtonSolid,
+  GradientScrollView,
   IOColors
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import { Body } from "../../../components/core/typography/Body";
-import GradientScrollView from "../../../components/ui/GradientScrollView";
 
 export const DSGradientScroll = () => (
   <View
@@ -17,14 +16,11 @@ export const DSGradientScroll = () => (
     }}
   >
     <GradientScrollView
-      primaryAction={
-        <ButtonSolid
-          fullWidth
-          label="Primary action"
-          accessibilityLabel={""}
-          onPress={() => Alert.alert("Primary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")}
-        />
-      }
+      primaryActionProps={{
+        label: "Primary action",
+        accessibilityLabel: "",
+        onPress: () => Alert.alert("Primary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
+      }}
     >
       <H2>Start</H2>
       {[...Array(50)].map((_el, i) => (
