@@ -62,7 +62,7 @@ export default class WalletLayout extends React.Component<Props> {
     /* The dimensions of the screen that will be used
     to hide the white background when inertial
     scrolling is turned on. */
-    const { height: screenHeight, width: ScreenWidth } =
+    const { height: screenHeight, width: screenWidth } =
       Dimensions.get("screen");
 
     return (
@@ -93,7 +93,7 @@ export default class WalletLayout extends React.Component<Props> {
             position: "absolute",
             top: -screenHeight,
             height: screenHeight,
-            width: ScreenWidth,
+            width: screenWidth,
             backgroundColor: IOColors.bluegrey
           }}
         />
