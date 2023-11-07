@@ -19,7 +19,7 @@ const WalletOnboardingSuccess = ({
 }: WalletOnboardingSuccessProps) => (
   <SafeAreaView style={IOStyles.flex}>
     <InfoScreenComponent
-      image={<Pictogram name="fireworks" size={120} />}
+      image={<Pictogram name="success" size={120} />}
       title={I18n.t("wallet.onboarding.success.title")}
       body={<ContinueButton onPress={onContinue} />}
     />
