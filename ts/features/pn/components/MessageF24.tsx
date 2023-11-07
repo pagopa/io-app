@@ -6,19 +6,20 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
+import { trackPNShowF24 } from "../analytics";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
-import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
+import { MessageDetailsSection } from "./MessageDetailsSection";
 
 type Props = {
   attachments: ReadonlyArray<UIAttachment>;
+  openPreview: (attachment: UIAttachment) => void;
 };
 
-const MessageF24Content = ({ attachments }: Props) => {
-  const { present, bottomSheet } = useF24BottomSheet(attachments);
+const MessageF24Content = ({ attachments, openPreview }: Props) => {
+  const { present, bottomSheet } = useF24BottomSheet(attachments, openPreview);
 
   if (attachments.length === 1) {
     return (
@@ -26,9 +27,7 @@ const MessageF24Content = ({ attachments }: Props) => {
         testID="f24-list-container"
         attachments={attachments.slice(0, 1)}
         downloadAttachmentBeforePreview={true}
-        // TODO: navigate to preview
-        // https://pagopa.atlassian.net/browse/IOCOM-457
-        openPreview={constNull}
+        openPreview={openPreview}
       />
     );
   }
@@ -41,7 +40,10 @@ const MessageF24Content = ({ attachments }: Props) => {
         <ButtonLink
           accessibilityLabel={showAllLabel}
           label={showAllLabel}
-          onPress={present}
+          onPress={() => {
+            trackPNShowF24();
+            present();
+          }}
         />
       </View>
       {bottomSheet}
@@ -50,7 +52,7 @@ const MessageF24Content = ({ attachments }: Props) => {
 };
 
 export const MessageF24 = (props: Props) => (
-  <PnMessageDetailsSection
+  <MessageDetailsSection
     title={I18n.t("features.pn.details.f24Section.title")}
     testID={"pn-f24-section"}
   >
@@ -60,5 +62,5 @@ export const MessageF24 = (props: Props) => (
     </Body>
     <VSpacer />
     <MessageF24Content {...props} />
-  </PnMessageDetailsSection>
+  </MessageDetailsSection>
 );
