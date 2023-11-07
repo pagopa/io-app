@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, createRef, useRef } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -22,6 +21,7 @@ import {
 } from "../../../store/reducers/entities/messages/types";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { LegacyMessageAttachments } from "../../messages/components/LegacyMessageAttachments";
+import NavigationService from "../../../navigation/NavigationService";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -35,6 +35,7 @@ import {
 } from "../../../components/SectionStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { maxVisiblePaymentCountGenerator } from "../utils";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
@@ -52,8 +53,6 @@ type Props = Readonly<{
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
 }>;
 
-export const maxVisiblePaymentCountGenerator = () => 5;
-
 export const MessageDetails = ({
   message,
   messageId,
@@ -61,10 +60,8 @@ export const MessageDetails = ({
   payments
 }: Props) => {
   // console.log(`=== MessageDetails: rendering`);
-  const navigation = useNavigation();
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();
-  const dismissPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
   const partitionedAttachments = pipe(
@@ -84,17 +81,19 @@ export const MessageDetails = ({
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
-      trackPNAttachmentOpening();
-      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
+      trackPNAttachmentOpening(attachment.category);
+      NavigationService.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachmentId: attachment.id
+        attachmentId: attachment.id,
+        category: attachment.category
       });
     },
-    [messageId, navigation]
+    [messageId]
   );
 
   const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
   const scrollViewRef = React.createRef<ScrollView>();
+
   return (
     <>
       <ScrollView
@@ -148,12 +147,12 @@ export const MessageDetails = ({
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
 
-        {RA.isNonEmpty(f24List) && (
+        {!isCancelled && RA.isNonEmpty(f24List) ? (
           <>
-            <MessageF24 attachments={f24List} />
+            <MessageF24 attachments={f24List} openPreview={openAttachment} />
             <VSpacer size={24} />
           </>
-        )}
+        ) : null}
 
         <PnMessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
@@ -178,12 +177,11 @@ export const MessageDetails = ({
         </PnMessageDetailsSection>
       </ScrollView>
 
-      {payments && (
+      {payments && !isCancelled && (
         <MessagePaymentBottomSheet
           messageId={messageId}
           payments={payments}
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
-          dismissPaymentsBottomSheetRef={dismissPaymentsBottomSheetRef}
         />
       )}
 

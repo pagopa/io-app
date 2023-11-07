@@ -20,20 +20,22 @@ import {
 } from "../analytics";
 import { isIos } from "../../../utils/platform";
 
-export type PnAttachmentPreviewNavigationParams = Readonly<{
+export type AttachmentPreviewScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
   attachmentId: UIAttachmentId;
+  category?: string;
 }>;
 
-export const PnAttachmentPreview = (
-  props: IOStackNavigationRouteProps<
-    PnParamsList,
-    "PN_ROUTES_MESSAGE_ATTACHMENT"
-  >
-): React.ReactElement => {
-  const navigation = props.navigation;
-  const messageId = props.route.params.messageId;
-  const attachmentId = props.route.params.attachmentId;
+type AttachmentPreviewScreenProps = IOStackNavigationRouteProps<
+  PnParamsList,
+  "PN_ROUTES_MESSAGE_ATTACHMENT"
+>;
+
+export const AttachmentPreviewScreen = ({
+  navigation,
+  route
+}: AttachmentPreviewScreenProps) => {
+  const { messageId, attachmentId, category } = route.params;
   // This ref is needed otherwise the auto back on the useEffect will fire multiple
   // times, since its dependencies change during the back navigation
   const autoBackOnErrorHandled = useRef(false);
@@ -56,13 +58,21 @@ export const PnAttachmentPreview = (
       messageId={messageId}
       enableDownloadAttachment={false}
       attachment={maybePnMessageAttachment.value}
-      onOpen={trackPNAttachmentOpen}
+      onOpen={() => trackPNAttachmentOpen(category)}
       onShare={() =>
-        pipe(isIos, B.fold(trackPNAttachmentShare, trackPNAttachmentSaveShare))
+        pipe(
+          isIos,
+          B.fold(
+            () => trackPNAttachmentShare(category),
+            () => trackPNAttachmentSaveShare(category)
+          )
+        )
       }
-      onDownload={trackPNAttachmentSave}
-      onLoadComplete={() => trackPNAttachmentOpeningSuccess("displayer")}
-      onPDFError={() => trackPNAttachmentOpeningSuccess("error")}
+      onDownload={() => trackPNAttachmentSave(category)}
+      onLoadComplete={() =>
+        trackPNAttachmentOpeningSuccess("displayer", category)
+      }
+      onPDFError={() => trackPNAttachmentOpeningSuccess("error", category)}
     />
   ) : (
     <></>

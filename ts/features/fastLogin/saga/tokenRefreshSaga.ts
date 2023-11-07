@@ -19,11 +19,7 @@ import {
   performFastLogin,
   performGetNonce
 } from "../backend";
-import {
-  apiUrlPrefix,
-  fastLoginBypassGetNonce,
-  fastLoginMaxRetries
-} from "../../../config";
+import { apiUrlPrefix, fastLoginMaxRetries } from "../../../config";
 import { SagaCallReturnType } from "../../../types/utils";
 import { LollipopConfig } from "../../lollipop";
 import { getKeyInfo } from "../../lollipop/saga";
@@ -126,10 +122,7 @@ function* doRefreshTokenSaga(
 
   while (requestState.status === "in-progress") {
     try {
-      const nonceResponse: SagaCallReturnType<typeof performGetNonce> =
-        fastLoginBypassGetNonce
-          ? E.right({ status: 200, value: { nonce: "nonce" }, headers: {} })
-          : yield* call(performGetNonce, nonceClient);
+      const nonceResponse = yield* call(performGetNonce, nonceClient);
 
       if (E.isRight(nonceResponse) && nonceResponse.right.status === 200) {
         const nonce = nonceResponse.right.value.nonce;

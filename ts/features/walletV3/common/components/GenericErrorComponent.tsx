@@ -6,16 +6,20 @@ import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../components/core/typography/Body";
+import {
+  VSpacer,
+  IOPictograms,
+  Pictogram,
+  FooterWithButtons,
+  ButtonSolidProps,
+  Body,
+  IOStyles,
+  H3
+} from "@pagopa/io-app-design-system";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
-import { H2 } from "../../../../components/core/typography/H2";
 import themeVariables from "../../../../theme/variables";
 import I18n from "../../../../i18n";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { WithTestID } from "../../../../types/WithTestID";
-import { FooterStackButton } from "../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 
 type GenericErrorComponentProps = WithTestID<{
   title: string;
@@ -66,28 +70,57 @@ export const GenericErrorComponent = ({
 }: GenericErrorComponentProps) => {
   const elementRef = React.createRef<Text>();
 
-  const retryButtonProps: BlockButtonProps = {
+  const retryButtonProps: ButtonSolidProps = {
     testID: "WalletOnboardingRetryButtonTestID",
-    block: true,
-    primary: true,
-    onPress: onRetry,
-    title: I18n.t("features.fci.errors.buttons.retry")
+    fullWidth: true,
+    accessibilityLabel: I18n.t("features.fci.errors.buttons.retry"),
+    label: I18n.t("features.fci.errors.buttons.retry"),
+    onPress: () => onRetry?.()
   };
 
-  const closeButtonProps: BlockButtonProps = {
+  const closeButtonProps: ButtonSolidProps = {
     testID: "WalletOnboardingCloseButtonTestID",
-    bordered: true,
-    block: true,
-    onPress: onClose,
-    title: I18n.t("features.fci.errors.buttons.close")
+    fullWidth: true,
+    accessibilityLabel: I18n.t("features.fci.errors.buttons.close"),
+    label: I18n.t("features.fci.errors.buttons.close"),
+    onPress: () => onClose?.()
   };
 
-  const renderFooterButtons = () =>
-    pipe(
+  const renderFooterButtons = () => {
+    const buttons = pipe(
       [onRetry && retryButtonProps, onClose && closeButtonProps],
       A.filterMap(O.fromNullable),
       buttons => (A.isEmpty(buttons) ? [closeButtonProps] : buttons)
     );
+
+    if (buttons.length === 1) {
+      return (
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Outline",
+            buttonProps: closeButtonProps
+          }}
+        />
+      );
+    } else if (buttons.length === 2) {
+      return (
+        <FooterWithButtons
+          type="TwoButtonsInlineThird"
+          primary={{
+            type: "Solid",
+            buttonProps: retryButtonProps
+          }}
+          secondary={{
+            type: "Outline",
+            buttonProps: closeButtonProps
+          }}
+        />
+      );
+    }
+
+    return <></>;
+  };
 
   return (
     <SafeAreaView style={IOStyles.flex} testID={testID}>
@@ -97,18 +130,19 @@ export const GenericErrorComponent = ({
         />
         <Pictogram name={pictogram} />
         <VSpacer size={24} />
-        <H2
+        <H3
           testID="infoScreenTitle"
           accessible
           ref={elementRef}
           style={styles.textAlignCenter}
         >
           {title}
-        </H2>
+        </H3>
         <VSpacer size={16} />
         {body && renderBody(body)}
       </View>
-      <FooterStackButton buttons={renderFooterButtons()} />
+
+      {renderFooterButtons()}
     </SafeAreaView>
   );
 };
