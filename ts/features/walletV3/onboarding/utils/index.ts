@@ -37,11 +37,15 @@ export const extractOnboardingResult = (url: string): OnboardingResult =>
     O.fromPredicate(urlParse =>
       urlParse.pathname.includes(ONBOARDING_OUTCOME_PATH)
     ),
-    O.map(urlParse => urlParse.query.outcome as OnboardingOutcome),
-    O.filter(outcome => !isStringNullyOrEmpty(outcome)),
-    O.map(outcome => ({
-      status: getOutcomeStatus(outcome),
-      outcome
+    O.map(urlParse => ({
+      outcome: urlParse.query.outcome as OnboardingOutcome,
+      walletId: urlParse.query.walletId as string
+    })),
+    O.filter(result => !isStringNullyOrEmpty(result.outcome)),
+    O.map(result => ({
+      status: getOutcomeStatus(result.outcome),
+      outcome: result.outcome,
+      walletId: result.walletId
     })),
     O.getOrElseW(() => ({ status: "ERROR" } as OnboardingError))
   );
