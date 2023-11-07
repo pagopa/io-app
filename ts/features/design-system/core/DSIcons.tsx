@@ -7,7 +7,7 @@ import {
   IOBiometricIcons,
   IOCategoryIcons,
   IOProductIcons,
-  // IOIconsNew,
+  IOIconsNew,
   SVGIconProps,
   IOIconSizeScale,
   IOSystemIcons,
@@ -92,7 +92,7 @@ export const DSIcons = () => (
                   size="100%"
                 />
               }
-              // withDot={Object.keys(IOIconsNew).includes(iconItemName)}
+              withDot={Object.keys(IOIconsNew).includes(iconItemName)}
             />
           ))}
         </View>

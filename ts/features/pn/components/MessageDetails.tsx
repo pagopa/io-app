@@ -35,6 +35,7 @@ import {
 } from "../../../components/SectionStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { maxVisiblePaymentCountGenerator } from "../utils";
 import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
 import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
 import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
@@ -51,8 +52,6 @@ type Props = Readonly<{
   service: ServicePublic | undefined;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
 }>;
-
-export const maxVisiblePaymentCountGenerator = () => 5;
 
 export const MessageDetails = ({
   message,
@@ -82,7 +81,7 @@ export const MessageDetails = ({
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
-      trackPNAttachmentOpening();
+      trackPNAttachmentOpening(attachment.category);
       NavigationService.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
         attachmentId: attachment.id,
