@@ -1,32 +1,36 @@
 import * as O from "fp-ts/lib/Option";
 import { v4 as uuid } from "uuid";
 import { testSaga } from "redux-saga-test-plan";
-import { testableData } from "../downloadAttachment";
-import { UIAttachment } from "../../../../../store/reducers/entities/messages/types";
+import {
+  handleRequestInit,
+  testableHandleRequestInitFactory
+} from "../handleRequestInit";
+import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
-} from "../../../../lollipop/store/reducers/lollipop";
-import { generateKeyInfo } from "../../../../lollipop/saga";
-import { lollipopRequestInit } from "../../../../lollipop/utils/fetch";
+} from "../../../lollipop/store/reducers/lollipop";
+import { generateKeyInfo } from "../../../lollipop/saga";
+import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
 
-const testableDataSafe = testableData!;
+const handleRequestInitFactory = testableHandleRequestInitFactory!;
 
-describe("downloadAttachment tests", () => {
-  it("reactNativeBlobUtilsFetchParametersFactory should output the proper object", () => {
+describe("handleDownloadAttachment", () => {
+  it("handleRequestInitFactory should output the proper object", () => {
     const method = "GET" as const;
     const attachmentFullUrl = "https://my.attachment/full/url";
     const headers = { key: "value" };
-    const factory = testableDataSafe.reactNativeBlobUtilsFetchParametersFactory;
+    const factory = handleRequestInitFactory;
     const factoryOutput = factory(method, attachmentFullUrl, headers);
     expect(factoryOutput.method).toBe(method);
     expect(factoryOutput.attachmentFullUrl).toBe(attachmentFullUrl);
     expect(factoryOutput.headers).toBe(headers);
   });
-  it("generateReactNativeBlobUtilsFetchParameters should follow the proper flow and return the enhanced lollipop headers", () => {
+
+  it("handleRequestInit should follow the proper flow and return the enhanced lollipop headers", () => {
     const data = fetchParametersCommonInputData();
     testSaga(
-      testableDataSafe.generateReactNativeBlobUtilsFetchParameters,
+      handleRequestInit,
       {
         resourceUrl: {
           href: data.attachmentFullUrl
@@ -57,10 +61,10 @@ describe("downloadAttachment tests", () => {
       });
   });
 
-  it("generateReactNativeBlobUtilsFetchParameters should follow the proper flow and return standard headers when lollipopRequestInit fails", () => {
+  it("handleRequestInit should follow the proper flow and return standard headers when lollipopRequestInit fails", () => {
     const data = fetchParametersCommonInputData();
     testSaga(
-      testableDataSafe.generateReactNativeBlobUtilsFetchParameters,
+      handleRequestInit,
       {
         resourceUrl: {
           href: data.attachmentFullUrl

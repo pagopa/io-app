@@ -103,12 +103,11 @@ export const scanAdditionalBarcodesEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
+// SPID Relay State
+export const spidRelayState = Config.SPID_RELAY_STATE;
+
 // Fast Login Feature Flag
 export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
-
-// Fast Login Bypass getNonce
-export const fastLoginBypassGetNonce =
-  Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
 
 // Fast login bypass opt-in
 export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";

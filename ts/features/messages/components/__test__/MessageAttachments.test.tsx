@@ -10,7 +10,7 @@ import { MessageAttachments } from "../MessageAttachments";
 import { Downloads } from "../../../../store/reducers/entities/messages/downloads";
 import { mockPdfAttachment } from "../../../../__mocks__/attachment";
 import { downloadAttachment } from "../../../../store/actions/messages";
-import ROUTES from "./../../../../navigation/routes";
+import I18n from "../../../../i18n";
 
 const mockOpenPreview = jest.fn();
 const mockShowToast = jest.fn();
@@ -44,7 +44,9 @@ describe("MessageAttachments", () => {
             }
           );
           expect(
-            component.queryByTestId("attachmentActivityIndicator")
+            component.queryByHintText(
+              I18n.t("global.accessibility.activityIndicator.hint")
+            )
           ).not.toBeNull();
         });
       });
@@ -73,7 +75,9 @@ describe("MessageAttachments", () => {
             }
           );
           expect(
-            component.queryByTestId("attachmentActivityIndicator")
+            component.queryByHintText(
+              I18n.t("global.accessibility.activityIndicator.hint")
+            )
           ).toBeNull();
         });
       });
@@ -140,9 +144,6 @@ const renderComponent = (
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, {
     ...globalState,
-    features: {
-      ...globalState.features
-    },
     entities: {
       ...globalState.entities,
       messages: {
@@ -155,7 +156,7 @@ const renderComponent = (
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <MessageAttachments {...props} />,
-      ROUTES.MESSAGE_DETAIL_ATTACHMENT,
+      "DUMMY",
       {},
       store
     ),

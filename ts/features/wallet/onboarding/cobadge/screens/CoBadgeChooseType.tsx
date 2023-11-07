@@ -1,6 +1,5 @@
 import { CompatNavigationProp } from "@react-navigation/compat";
 import * as O from "fp-ts/lib/Option";
-import { Content, ListItem } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -11,7 +10,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  PressableListItemBase,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -70,7 +73,7 @@ type IAddCardPath = Readonly<{
 }>;
 
 const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
-  <ListItem
+  <PressableListItemBase
     onPress={cardPathItem.item.onPress}
     first={cardPathItem.index === 0}
     testID={`${cardPathItem.item.path}Item`}
@@ -92,7 +95,7 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
         {cardPathItem.item.description}
       </H5>
     </View>
-  </ListItem>
+  </PressableListItemBase>
 );
 /**
  * This screen allows the user to choose the exact type of card he intends to add
@@ -137,7 +140,7 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID="coBadgeChooseType">
-        <Content style={IOStyles.flex}>
+        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           <H1>{I18n.t("wallet.onboarding.coBadge.chooseType.title")}</H1>
           <VSpacer size={16} />
           <H4 weight={"Regular"} color={"bluegreyDark"}>
@@ -151,7 +154,7 @@ const CoBadgeChooseType = (props: Props): React.ReactElement => {
             ListFooterComponent={<VSpacer size={16} />}
             renderItem={i => renderListItem(i)}
           />
-        </Content>
+        </View>
         <FooterWithButtons
           type={"SingleButton"}
           leftButton={cancelButtonProps(props.back)}
