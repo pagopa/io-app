@@ -117,7 +117,9 @@ const NewOptInScreen = (props: Props) => {
           <ButtonSolid
             fullWidth
             label={I18n.t("authentication.opt-in.button-accept-lv")}
-            accessibilityLabel={"Click to continue with fast access"}
+            accessibilityLabel={I18n.t(
+              "authentication.opt-in.button-accept-lv"
+            )}
             onPress={() => navigateToIdpPage(true)}
             testID="accept-button-test"
           />
@@ -125,7 +127,9 @@ const NewOptInScreen = (props: Props) => {
         secondaryAction={
           <ButtonLink
             label={I18n.t("authentication.opt-in.button-decline-lv")}
-            accessibilityLabel={"Click to continue with classic access"}
+            accessibilityLabel={I18n.t(
+              "authentication.opt-in.button-decline-lv"
+            )}
             onPress={() => navigateToIdpPage(false)}
             testID="decline-button-test"
           />
