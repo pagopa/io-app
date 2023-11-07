@@ -6,6 +6,7 @@ import { fciEndRequest, fciStartRequest } from "../store/actions";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { trackFciDocOpening } from "../analytics";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import ErrorComponent from "./ErrorComponent";
 import GenericErrorComponent from "./GenericErrorComponent";
 
@@ -20,6 +21,7 @@ const SuccessComponent = (props: {
   const issuer_email = props.signatureRequest.issuer.email;
   const status = props.signatureRequest.status;
   const fciDocuments = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
   // if the user (signer) has not signed and the request is expired
@@ -44,7 +46,7 @@ const SuccessComponent = (props: {
   // the signature request could have various status
   switch (status) {
     case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
-      trackFciDocOpening(expires_at, fciDocuments.length);
+      trackFciDocOpening(expires_at, fciDocuments.length, fciEnvironment);
       dispatch(fciStartRequest());
       return null;
     case SignatureRequestStatusEnum.WAIT_FOR_QTSP:

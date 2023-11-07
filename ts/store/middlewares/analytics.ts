@@ -113,6 +113,7 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../actions/wallet/wallets";
+import { store } from "../../boot/configureStoreAndPersistor";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -423,7 +424,9 @@ export const actionTracking =
       void trackPaypalOnboarding(mixpanel)(action);
       void trackZendesk(mixpanel)(action);
       void trackCdc(mixpanel)(action);
-      void trackFciAction(mixpanel)(action);
+
+      const fciEnvironment = store.getState().features.fci.environment;
+      void trackFciAction(mixpanel, fciEnvironment)(action);
     }
     return next(action);
   };

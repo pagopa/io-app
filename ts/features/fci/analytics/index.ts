@@ -13,10 +13,7 @@ import {
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { store } from "../../../boot/configureStoreAndPersistor";
-
-// Get the environment from the store
-const getEnvironment = () => store.getState().features.fci.environment;
+import { EnvironmentEnum } from "../../../../definitions/fci/Environment";
 
 // This is the list of events that we want to track in mixpanel
 // The list is not exhaustive, it's just a starting point
@@ -38,43 +35,49 @@ enum FciUxEventType {
 
 export const trackFciDocOpening = (
   expire_date: SignatureRequestDetailView["expires_at"],
-  total_doc_count: number
+  total_doc_count: number,
+  environment: EnvironmentEnum
 ) =>
   void mixpanelTrack("FCI_DOC_OPENING", {
     expire_date,
     total_doc_count,
     event_type: FciUxEventType.ACTION,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
-export const trackFciUserExit = (screen_name: string, cta_id?: string) =>
+export const trackFciUserExit = (
+  screen_name: string,
+  environment: EnvironmentEnum,
+  cta_id?: string
+) =>
   void mixpanelTrack("FCI_USER_EXIT", {
     screen_name,
     cta_id,
     event_type: FciUxEventType.EXIT,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
-export const trackFciUxConversion = () =>
+export const trackFciUxConversion = (environment: EnvironmentEnum) =>
   void mixpanelTrack("FCI_UX_CONVERSION", {
     event_type: FciUxEventType.ACTION,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
-export const trackFciUserDataConfirmed = () =>
+export const trackFciUserDataConfirmed = (environment: EnvironmentEnum) =>
   void mixpanelTrack("FCI_USER_DATA_CONFIRMED", {
     event_type: FciUxEventType.ACTION,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
 export const trackFciDocOpeningSuccess = (
   doc_count: number,
   sign_count: number,
-  optional_sign_count: number
+  optional_sign_count: number,
+  environment: EnvironmentEnum
 ) =>
   void mixpanelTrack("FCI_DOC_OPENING_SUCCESS", {
     doc_count,
@@ -82,27 +85,28 @@ export const trackFciDocOpeningSuccess = (
     optional_sign_count,
     event_type: FciUxEventType.CONTROL,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
-export const trackFciSigningDoc = () =>
+export const trackFciSigningDoc = (environment: EnvironmentEnum) =>
   void mixpanelTrack("FCI_SIGNING_DOC", {
     event_type: FciUxEventType.ACTION,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
-export const trackFciShowSignatureFields = () =>
+export const trackFciShowSignatureFields = (environment: EnvironmentEnum) =>
   void mixpanelTrack("FCI_SHOW_SIGNATURE_FIELDS", {
     event_type: FciUxEventType.MICRO_ACTION,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
 export const trackFciUxSuccess = (
   doc_signed_count: number,
   signed_count: number,
-  optional_signed_count: number
+  optional_signed_count: number,
+  environment: EnvironmentEnum
 ) =>
   void mixpanelTrack("FCI_UX_SUCCESS", {
     doc_signed_count,
@@ -110,18 +114,18 @@ export const trackFciUxSuccess = (
     optional_signed_count,
     event_type: FciUxEventType.SCREEN_VIEW,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
-export const trackFciStartSignature = () =>
+export const trackFciStartSignature = (environment: EnvironmentEnum) =>
   void mixpanelTrack("FCI_START_SIGNATURE", {
     event_type: FciUxEventType.ACTION,
     event_category: FciUxEventCategory.UX,
-    environment: getEnvironment()
+    environment
   });
 
 const trackFciAction =
-  (mp: NonNullable<typeof mixpanel>) =>
+  (mp: NonNullable<typeof mixpanel>, environment: EnvironmentEnum) =>
   (action: Action): Promise<void> => {
     switch (action.type) {
       case getType(fciStartRequest):
@@ -139,13 +143,13 @@ const trackFciAction =
       case getType(fciPollFilledDocument.cancel):
         return mp.track(action.type, {
           event_category: FciUxEventCategory.TECH,
-          environment: getEnvironment()
+          environment
         });
       case getType(fciSigningRequest.success):
         return mp.track(action.type, {
           event_category: FciUxEventCategory.TECH,
           event_type: FciUxEventType.CONTROL,
-          environment: getEnvironment()
+          environment
         });
       case getType(fciSignatureRequestFromId.failure):
       case getType(fciLoadQtspClauses.failure):
@@ -155,7 +159,7 @@ const trackFciAction =
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload),
           event_category: FciUxEventCategory.KO,
-          environment: getEnvironment()
+          environment
         });
     }
     return Promise.resolve();

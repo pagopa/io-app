@@ -14,6 +14,7 @@ import { FCI_ROUTES } from "../navigation/routes";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
 import { useIOSelector } from "../../../store/hooks";
 import { trackFciStartSignature } from "../analytics";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
 type Props = {
   currentDoc: number;
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
 export const useFciNoSignatureFields = (props: Props) => {
   const navigation = useNavigation();
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { currentDoc } = props;
   const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <View style={styles.verticalPad}>
@@ -63,7 +65,7 @@ export const useFciNoSignatureFields = (props: Props) => {
               })
             );
           } else {
-            trackFciStartSignature();
+            trackFciStartSignature(fciEnvironment);
             navigation.navigate(FCI_ROUTES.MAIN, {
               screen: FCI_ROUTES.USER_DATA_SHARE
             });

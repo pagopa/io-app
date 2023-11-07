@@ -37,6 +37,7 @@ import { isServicePreferenceResponseSuccess } from "../../../../types/services/S
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUxConversion } from "../../analytics";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -53,6 +54,7 @@ const FciQtspClausesScreen = () => {
     fciPollFilledDocumentErrorSelector
   );
   const fciServiceId = useSelector(fciMetadataServiceIdSelector);
+  const fciEnvironment = useSelector(fciEnvironmentSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
 
@@ -160,7 +162,7 @@ const FciQtspClausesScreen = () => {
     disabled: clausesChecked !== qtspClausesSelector.length,
     onPress: () => {
       if (isServiceActive) {
-        trackFciUxConversion();
+        trackFciUxConversion(fciEnvironment);
         dispatch(fciStartSigningRequest());
       } else {
         showCheckService();

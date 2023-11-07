@@ -17,6 +17,7 @@ import { isServicePreferenceResponseSuccess } from "../../../types/services/Serv
 import { servicePreferenceSelector } from "../../../store/reducers/entities/services/servicePreference";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../analytics";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
   verticalPad: {
@@ -31,6 +32,7 @@ export const useFciCheckService = () => {
   const dispatch = useIODispatch();
   const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
   const servicePreference = useIOSelector(servicePreferenceSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
   const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <View style={styles.verticalPad}>
@@ -68,7 +70,7 @@ export const useFciCheckService = () => {
               })
             );
           }
-          trackFciUxConversion();
+          trackFciUxConversion(fciEnvironment);
           dispatch(fciStartSigningRequest());
           dismiss();
         }, I18n.t("features.fci.checkService.confirm")),
