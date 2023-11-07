@@ -42,7 +42,6 @@ import {
 } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -71,15 +70,11 @@ const MessagesHomeScreen = ({
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
 
-  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
-
   useOnFirstRender(() => {
     if (needsMigration) {
       migrateMessages(messagesStatus);
     }
   });
-
-  checkToShowWhatsNew();
 
   useEffect(() => {
     if (!latestMessageOperation) {
@@ -131,7 +126,6 @@ const MessagesHomeScreen = ({
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
-      {autoResizableBottomSheet}
       <FocusAwareStatusBar
         barStyle={"dark-content"}
         backgroundColor={IOColors.white}
