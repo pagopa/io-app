@@ -1174,7 +1174,7 @@ wallet:
     generalError: "There was a generic error while adding the payment method"
     success:
       title: "Payment method added successfully!"
-      continueButton: "Continue"
+      continueButton: "Vedi dettagli"
     failure: "Error while adding the card"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.

@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import {
   ContextualHelpProps,
@@ -35,7 +34,7 @@ export const useStartSupportRequest = ({
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
-  return useCallback((): void => {
+  return (): void => {
     switch (choosenTool) {
       case ToolEnum.zendesk:
         // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
@@ -57,12 +56,5 @@ export const useStartSupportRequest = ({
       case ToolEnum.none:
         return;
     }
-  }, [
-    faqCategories,
-    contextualHelp,
-    contextualHelpMarkdown,
-    currentScreenName,
-    dispatch,
-    choosenTool
-  ]);
+  };
 };
