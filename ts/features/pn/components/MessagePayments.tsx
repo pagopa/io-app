@@ -19,6 +19,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { useIOSelector } from "../../../store/hooks";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import { trackPNShowAllPayments } from "../analytics";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
@@ -195,7 +196,10 @@ export const MessagePayments = ({
                   <ButtonLink
                     accessibilityLabel={morePaymentsLabel}
                     label={morePaymentsLabel}
-                    onPress={() => presentPaymentsBottomSheetRef.current?.()}
+                    onPress={() => {
+                      trackPNShowAllPayments();
+                      presentPaymentsBottomSheetRef.current?.();
+                    }}
                   />
                 </View>
               )}
