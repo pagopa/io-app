@@ -13,7 +13,8 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  createRef
+  createRef,
+  useContext
 } from "react";
 import { View, Keyboard, SafeAreaView, StyleSheet, Alert } from "react-native";
 import validator from "validator";
@@ -36,6 +37,7 @@ import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   isProfileEmailAlreadyTakenSelector,
+  isProfileEmailValidatedSelector,
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
@@ -43,9 +45,11 @@ import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { emailAcknowledged, emailInsert } from "../../store/actions/onboarding";
-import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
+import { emailInsert } from "../../store/actions/onboarding";
 import { usePrevious } from "../../utils/hooks/usePrevious";
+import { LightModalContext } from "../../components/ui/LightModal";
+import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
+import { emailValidationSelector } from "../../store/reducers/emailValidation";
 
 const styles = StyleSheet.create({
   flex: {
@@ -64,8 +68,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to allow user to insert an email address.
  */
 const NewOnboardingEmailInsertScreen = () => {
-  useValidatedEmailModal(true);
   const dispatch = useIODispatch();
+  const { showModal } = useContext(LightModalContext);
 
   const viewRef = createRef<View>();
 
@@ -74,16 +78,18 @@ const NewOnboardingEmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
+  const isEmailValidatedSelector = useIOSelector(
+    isProfileEmailValidatedSelector
+  );
+  const { acknowledgeOnEmailValidated } = useIOSelector(
+    emailValidationSelector
+  );
+
   const prevUserProfile = usePrevious(profile);
 
   const isLoading = useMemo(
     () => pot.isUpdating(profile) || pot.isLoading(profile),
     [profile]
-  );
-
-  const acknowledgeEmail = useCallback(
-    () => dispatch(emailAcknowledged()),
-    [dispatch]
   );
 
   const acknowledgeEmailInsert = useCallback(
@@ -100,10 +106,22 @@ const NewOnboardingEmailInsertScreen = () => {
       ),
     [dispatch]
   );
+
+  const isEmailValidated = useMemo(
+    () =>
+      isEmailValidatedSelector &&
+      pipe(
+        acknowledgeOnEmailValidated,
+        O.getOrElse(() => true)
+      ),
+    [isEmailValidatedSelector, acknowledgeOnEmailValidated]
+  );
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(
     isProfileEmailAlreadyTaken ? optionEmail : O.some(EMPTY_EMAIL)
   );
+
+  // this function return a boolean
   const isValidEmail = useCallback(
     () =>
       pipe(
@@ -124,6 +142,8 @@ const NewOnboardingEmailInsertScreen = () => {
   );
 
   useEffect(() => {
+    // this control is true only if the user try to insert a email,
+    // only if the continueOnPress function should be call we exeute this code
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
       if (pot.isError(profile)) {
         // the user is trying to enter an email already in use
@@ -140,13 +160,28 @@ const NewOnboardingEmailInsertScreen = () => {
           );
         }
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
+        // the email is correctly inserted
         acknowledgeEmailInsert();
-        acknowledgeEmail();
         return;
       }
     }
-  }, [acknowledgeEmailInsert, acknowledgeEmail, profile, prevUserProfile]);
+  }, [acknowledgeEmailInsert, profile, prevUserProfile]);
 
+  useEffect(() => {
+    // if the email is correct, the user can validate it.
+    // in fact, if the email il correct the validation modal is open
+    if (
+      prevUserProfile &&
+      pot.isUpdating(prevUserProfile) &&
+      pot.isSome(profile) &&
+      !pot.isUpdating(profile) &&
+      !isEmailValidated
+    ) {
+      showModal(<NewRemindEmailValidationOverlay isOnboarding={true} />);
+    }
+  }, [isEmailValidated, prevUserProfile, profile, showModal]);
+
+  // the user try to update the email
   const continueOnPress = () => {
     Keyboard.dismiss();
     pipe(

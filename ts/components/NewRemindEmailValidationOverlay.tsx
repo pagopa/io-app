@@ -30,6 +30,7 @@ import { useIODispatch, useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
+import { emailAcknowledged } from "../store/actions/onboarding";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -70,7 +71,10 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     () => dispatch(startEmailValidation.request()),
     [dispatch]
   );
-
+  const acknowledgeEmail = useCallback(
+    () => dispatch(emailAcknowledged()),
+    [dispatch]
+  );
   const reloadProfile = useCallback(
     () => dispatch(profileLoadRequest()),
     [dispatch]
@@ -100,6 +104,11 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
+      if (isOnboarding) {
+        // if the user is in the onboarding flow and the email il correctly validated,
+        // the email validation flow is finished
+        acknowledgeEmail();
+      }
       hideModal();
     } else {
       // send email validation only if it exists
@@ -115,9 +124,6 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   const navigateToInsertEmail = () => {
     if (isOnboarding) {
       hideModal();
-      NavigationService.navigate(ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
-      });
     } else {
       hideModal();
       NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {

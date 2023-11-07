@@ -53,6 +53,7 @@ import {
 import { readablePrivacyReport } from "../utils/reporters";
 import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
 import { ProfileError } from "../store/reducers/profileErrorType";
+import { UpdateProfile412ErrorTypesEnum } from "../../definitions/backend/UpdateProfile412ErrorTypes";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -188,7 +189,13 @@ function* createOrUpdateProfileSaga(
         "PROFILE_EMAIL_VALIDATION_ERROR"
       );
     }
-    if (response.right.status === 412) {
+    if (
+      response.right.status === 412 &&
+      response.right.value.type ===
+        UpdateProfile412ErrorTypesEnum[
+          "https://ioapp.it/problems/email-already-taken"
+        ]
+    ) {
       throw new ProfileError(
         response.right.value.title,
         "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR"
