@@ -105,7 +105,7 @@ export const useAttachmentDownload = (
     const download = pot.toUndefined(downloadPot);
 
     if (pot.isError(downloadPot)) {
-      trackPNAttachmentDownloadFailure();
+      trackPNAttachmentDownloadFailure(attachment.category);
       showToast(i18n.t("messageDetails.attachments.failing.details"));
     } else if (download) {
       const { path, attachment } = download;
@@ -116,7 +116,7 @@ export const useAttachmentDownload = (
         await taskDownloadFileIntoAndroidPublicFolder(attachment, path)();
       }
     }
-  }, [downloadPot, openPreview]);
+  }, [downloadPot, openPreview, attachment.category]);
 
   useEffect(() => {
     const wasLoading = isLoading;

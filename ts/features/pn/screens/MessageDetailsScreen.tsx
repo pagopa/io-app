@@ -26,14 +26,17 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
+  containsF24FromPNMessagePot,
   isCancelledFromPNMessagePot,
   paymentsFromPNMessagePot
 } from "../utils";
 import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 import {
+  cancelPaymentStatusTracking,
   cancelQueuedPaymentUpdates,
   clearSelectedPayment,
+  startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
 import { GlobalState } from "../../../store/reducers/types";
@@ -83,7 +86,6 @@ export const MessageDetailsScreen = (
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const uxEventTracked = React.useRef(false);
 
   const service = pot.toUndefined(
     useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
@@ -96,12 +98,14 @@ export const MessageDetailsScreen = (
   const payments = paymentsFromPNMessagePot(currentFiscalCode, message);
 
   const loadContent = React.useCallback(() => {
+    dispatch(startPaymentStatusTracking(messageId));
     dispatch(loadThirdPartyMessage.request(messageId));
   }, [dispatch, messageId]);
 
   const customGoBack = React.useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
   }, [dispatch, navigation]);
 
@@ -109,13 +113,21 @@ export const MessageDetailsScreen = (
     loadContent();
   });
 
-  if (!uxEventTracked.current && isStrictSome(message)) {
-    // eslint-disable-next-line functional/immutable-data
-    uxEventTracked.current = true;
-    const paymentCount = payments?.length ?? 0;
-    const isCancelled = isCancelledFromPNMessagePot(message);
-    trackPNUxSuccess(paymentCount, firstTimeOpening, isCancelled);
-  }
+  useOnFirstRender(
+    () => {
+      const paymentCount = payments?.length ?? 0;
+      const isCancelled = isCancelledFromPNMessagePot(message);
+      const containsF24 = containsF24FromPNMessagePot(message);
+
+      trackPNUxSuccess(
+        paymentCount,
+        firstTimeOpening,
+        isCancelled,
+        containsF24
+      );
+    },
+    () => isStrictSome(message)
+  );
 
   const store = useStore();
   useFocusEffect(

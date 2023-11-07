@@ -97,7 +97,7 @@ const IDPayPaymentCodeScanScreen = () => {
         onManualInputPressed={navigateToCodeInputScreen}
         contextualHelp={emptyContextualHelp}
         barcodeAnalyticsFlow="idpay"
-        isDisabled={isFilePickerVisible}
+        isDisabled={isFilePickerVisible || isFileReaderLoading}
         isLoading={isFileReaderLoading}
       />
       {filePickerBottomSheet}
