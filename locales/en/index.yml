@@ -74,6 +74,7 @@ global:
         expired: "Expired"
         revoked: "Revoked"
         canceled: "Canceled"
+        inprogress: "Ongoing"
   password: Password
   username: Username
   unknown: unknown
@@ -838,7 +839,7 @@ onboarding:
       invalid: The code is not valid
       match: The code doesn’t match
     policy:
-      headerTitle: "For security reasons, the code must not contain:"
+      headerTitle: "Choose a code that's hard to guess and doesn't contain:"
       first: repeated numbers (e.g. 000000)
       second: a number sequence (e.g. 123456 or 654321)
   alert:
@@ -1172,7 +1173,7 @@ wallet:
     generalError: "There was a generic error while adding the payment method"
     success:
       title: "Payment method added successfully!"
-      continueButton: "Continue"
+      continueButton: "Vedi dettagli"
     failure: "Error while adding the card"
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.

@@ -33,7 +33,7 @@ import {
   formatNumberAmount
 } from "../../../utils/stringBuilder";
 import { useIOToast } from "../../../components/Toast";
-import { initializeAndNavigateToWalleForPayment } from "../utils";
+import { initializeAndNavigateToWalletForPayment } from "../utils";
 
 type MessagePaymentItemProps = {
   index: number;
@@ -53,19 +53,17 @@ const paymentNoticeStatusFromDetailV2Enum = (
 ): Exclude<PaymentNoticeStatus, "default"> => {
   const errorType = getV2ErrorMainType(detail);
   switch (errorType) {
-    case "EC":
-      // TODO
-      break;
     case "REVOKED":
       return "revoked";
     case "EXPIRED":
       return "expired";
     case "ONGOING":
-      // TODO
-      break;
+      return "in-progress";
     case "DUPLICATED":
       return "paid";
   }
+  // Here EC (an error on the ente-side) is treated like a generic
+  // ERROR since it is later specialized in the payment flow
   return "error";
 };
 
@@ -172,7 +170,7 @@ export const MessagePaymentItem = ({
   );
 
   const startPaymentCallback = useCallback(() => {
-    initializeAndNavigateToWalleForPayment(
+    initializeAndNavigateToWalletForPayment(
       paymentId,
       dispatch,
       () => toast.error(I18n.t("genericError")),

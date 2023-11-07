@@ -18,6 +18,11 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { setSelectedPayment } from "../store/actions";
+import { trackPNPaymentStart } from "../analytics";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+
+export const maxVisiblePaymentCountGenerator = () => 5;
 
 export function getNotificationStatusInfo(status: NotificationStatus) {
   return I18n.t(`features.pn.details.timeline.status.${status}`, {
@@ -135,7 +140,17 @@ export const isCancelledFromPNMessagePot = (
     O.getOrElse(() => false)
   );
 
-export const initializeAndNavigateToWalleForPayment = (
+export const containsF24FromPNMessagePot = (
+  potMessage: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    pot.getOrElse(potMessage, O.none),
+    O.chainNullableK(message => message.attachments),
+    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
+  );
+
+export const initializeAndNavigateToWalletForPayment = (
   paymentId: string,
   dispatch: Dispatch<any>,
   decodeErrorCallback: (() => void) | undefined,
@@ -149,11 +164,13 @@ export const initializeAndNavigateToWalleForPayment = (
 
   preNavigationCallback?.();
 
+  trackPNPaymentStart();
+
   dispatch(setSelectedPayment(paymentId));
   dispatch(paymentInitializeState());
 
   NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params: { rptId: eitherRptId.right }
+    params: { rptId: eitherRptId.right, startOrigin: "message" }
   });
 };
