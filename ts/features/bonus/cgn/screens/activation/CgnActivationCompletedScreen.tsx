@@ -34,7 +34,8 @@ const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
           buttonProps: {
             label: I18n.t("bonus.cgn.cta.goToDetail"),
             onPress: props.onConfirm,
-            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail")
+            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail"),
+            testID: "cgnConfirmButtonTestId"
           }
         }}
       />
