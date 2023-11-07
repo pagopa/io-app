@@ -73,33 +73,35 @@ export const TimelineOperationListItem = (
     );
   }
 
-  const getProps = () => {
-    switch (operation.operationType) {
-      case TransactionOperationTypeEnum.TRANSACTION:
-      case TransactionOperationTypeEnum.REVERSAL:
-        return getTransactionOperationProps(operation);
-      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
-      case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
-      case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
-      case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
-        return getInstrumentOperationProps(operation);
-      case IbanOperationTypeEnum.ADD_IBAN:
-        return getIbanOperationProps(operation);
-      case OnboardingOperationTypeEnum.ONBOARDING:
-        return getOnboardingOperationProps(operation);
-      case RefundOperationTypeEnum.PAID_REFUND:
-      case RefundOperationTypeEnum.REJECTED_REFUND:
-        return getRefundOperationProps(operation);
-      case SuspendOperationTypeEnum.SUSPENDED:
-        return getSuspendOperationProps(operation);
-      case ReadmittedOperationTypeEnum.READMITTED:
-        return getReadmittedOperationProps(operation);
-    }
-  };
+  const listItemProps = getOperationProps(operation);
 
   return (
-    <ListItemTransaction {...getProps()} onPress={onPress} testID={testID} />
+    <ListItemTransaction {...listItemProps} onPress={onPress} testID={testID} />
   );
+};
+
+const getOperationProps = (operation: OperationListDTO) => {
+  switch (operation.operationType) {
+    case TransactionOperationTypeEnum.TRANSACTION:
+    case TransactionOperationTypeEnum.REVERSAL:
+      return getTransactionOperationProps(operation);
+    case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+    case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
+    case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+    case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+      return getInstrumentOperationProps(operation);
+    case IbanOperationTypeEnum.ADD_IBAN:
+      return getIbanOperationProps(operation);
+    case OnboardingOperationTypeEnum.ONBOARDING:
+      return getOnboardingOperationProps(operation);
+    case RefundOperationTypeEnum.PAID_REFUND:
+    case RefundOperationTypeEnum.REJECTED_REFUND:
+      return getRefundOperationProps(operation);
+    case SuspendOperationTypeEnum.SUSPENDED:
+      return getSuspendOperationProps(operation);
+    case ReadmittedOperationTypeEnum.READMITTED:
+      return getReadmittedOperationProps(operation);
+  }
 };
 
 const getTransactionOperationProps = (
