@@ -7,16 +7,21 @@ import {
   mockSignatureRequestDetailView,
   mockedError
 } from "../../../types/__mocks__/SignatureRequestDetailView.mock";
-import { fciSignatureRequestFromId } from "../../../store/actions";
+import {
+  fciEnvironmentSet,
+  fciSignatureRequestFromId
+} from "../../../store/actions";
 import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
 
 const mockId = "mockId";
 
 const successResponse = {
   status: 200,
-  value: mockSignatureRequestDetailView as SignatureRequestDetailView
+  value: mockSignatureRequestDetailView as SignatureRequestDetailView,
+  headers: [{ "x-io-sign-environment": "prod" }]
 };
 
 const failureResponse = {
@@ -44,6 +49,12 @@ describe("handleGetSignatureRequestById", () => {
       .call(withRefreshApiCall, getSignatureDetailByIdRequest, loadAction)
       .next(right(successResponse))
       .put(fciSignatureRequestFromId.success(successResponse.value))
+      .next()
+      .put(
+        fciEnvironmentSet(
+          successResponse.headers[0]["x-io-sign-environment"] as EnvironmentEnum
+        )
+      )
       .next()
       .isDone();
   });
