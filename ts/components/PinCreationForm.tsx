@@ -119,7 +119,10 @@ export const PinCreationForm = ({ onSubmit }: Props) => {
 
   return (
     <View style={styles.flex}>
-      <ScrollView style={[IOStyles.horizontalContentPadding, { flex: 1 }]}>
+      <ScrollView
+        testID="pin-creation-form-scroll-view"
+        style={[IOStyles.horizontalContentPadding, { flex: 1 }]}
+      >
         <View style={{ marginTop: 10 }} />
 
         <H1 testID="pin-creation-form-title">
