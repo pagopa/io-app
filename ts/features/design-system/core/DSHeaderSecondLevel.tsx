@@ -8,13 +8,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import {
+  HeaderSecondLevel,
   IOVisualCostants,
-  IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { NewH3 } from "../../../components/core/typography/NewH3";
-import HeaderSecondLevel from "../../../components/ui/HeaderSecondLevel";
 
 // This is defined as about the half of a default ListItem… component
 const defaultTriggerOffsetValue: number = 32;
@@ -42,21 +41,21 @@ export const DSHeaderSecondLevel = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
+          goBack={navigation.goBack}
+          backAccessibilityLabel={"Torna indietro"}
           scrollValues={{
             contentOffsetY: translationY,
             triggerOffset: triggerOffsetValue
           }}
           title={"Questo è un titolo lungo, ma lungo lungo davvero, eh!"}
-          firstAction={
-            <IconButton
-              icon="help"
-              color="neutral"
-              onPress={() => {
-                Alert.alert("Contextual Help");
-              }}
-              accessibilityLabel={""}
-            />
-          }
+          type="singleAction"
+          firstAction={{
+            icon: "help",
+            onPress: () => {
+              Alert.alert("Contextual Help");
+            },
+            accessibilityLabel: ""
+          }}
         />
       )
     });
