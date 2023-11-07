@@ -177,6 +177,7 @@ const BarcodeScanScreen = () => {
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
         icon="productPagoPA"
+        iconColor="blueItalia-500"
       />
       <Divider />
       <ListItemNav
