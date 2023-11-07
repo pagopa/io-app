@@ -1,3 +1,4 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { LollipopConfig } from "../../lollipop";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
@@ -5,9 +6,10 @@ import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMet
 import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOriginalURL";
 import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
-import { defaultRetryingFetch } from "../../../utils/fetch";
+import { toFetchTimeout } from "../../../utils/fetch";
 import { createClient } from "../../../../definitions/fast_login/client";
-import { createMockNonceClient } from "./mockedClients";
+
+const NONCE_EXPYRING_MS = 60000 as Millisecond;
 
 // fastLogin call
 export const performFastLogin = async (fastLoginClient: FastLoginClient) =>
@@ -32,12 +34,12 @@ export const createFastLoginClient = (
 
 // getNonce call
 export const performGetNonce = async (nonceClient: GetNonceClient) =>
-  await nonceClient.getNonce({} as never);
+  await nonceClient.lvGenerateNonce({} as never);
 
 type GetNonceClient = ReturnType<typeof createNonceClient>;
 
 export const createNonceClient = (baseUrl: string) =>
-  createMockNonceClient({
+  createClient({
     baseUrl,
-    fetchApi: defaultRetryingFetch()
+    fetchApi: toFetchTimeout(NONCE_EXPYRING_MS)
   });
