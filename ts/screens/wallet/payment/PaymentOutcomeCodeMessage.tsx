@@ -30,6 +30,7 @@ import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
 import { mixpanelTrack } from "../../../mixpanel";
 import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -131,6 +132,11 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const outcomeCode = O.toNullable(props.outcomeCode.outcomeCode);
   const learnMoreLink = "https://io.italia.it/faq/#pagamenti";
   const onLearnMore = () => openWebUrl(learnMoreLink);
+
+  useHardwareBackButton(() => {
+    props.navigateToWalletHome(props.shouldGoBackToEntrypointOnSuccess);
+    return true;
+  });
 
   const renderSuccessComponent = () => {
     if (pot.isSome(props.verifica)) {

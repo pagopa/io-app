@@ -1,4 +1,4 @@
-import { call, put, select, take } from "typed-redux-saga/macro";
+import { call, put, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
@@ -9,8 +9,6 @@ import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
 import NavigationService from "../../navigation/NavigationService";
-import { isWhatsNewDisplayedSelector } from "../../features/whatsnew/store/reducers";
-import { disableWhatsNew } from "../../features/whatsnew/store/actions";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
@@ -41,12 +39,6 @@ export function* checkAcceptedTosSaga(
 
     // Wait the user accept the ToS
     yield* take(tosAccepted);
-
-    // When Tos are accepted, 'what's new' is shown if present. Do not continue nivagation until it is closed
-    const isWhatsNewDisplayed = yield* select(isWhatsNewDisplayedSelector);
-    if (isWhatsNewDisplayed) {
-      yield* take(disableWhatsNew);
-    }
 
     yield* call(
       NavigationService.dispatchNavigationAction,

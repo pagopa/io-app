@@ -1,15 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React from "react";
+import React, { ComponentProps } from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
-  Badge,
   Divider,
   IOColors,
   IOIcons,
-  IconButton,
   ListItemInfo,
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
@@ -46,6 +44,7 @@ const LoadingPlaceholder = (props: { size: "full" | "half" }) => (
   />
 );
 
+type EndElementProps = ComponentProps<typeof ListItemInfo>["endElement"];
 type RowProps = Readonly<{
   title: string;
   value?: string;
@@ -53,16 +52,19 @@ type RowProps = Readonly<{
   isLoading?: boolean;
   hideSeparator?: boolean;
   placeholder?: React.ReactElement;
-  action?: React.ReactNode;
+  endElement?: EndElementProps;
   onPress?: () => void;
 }>;
 
-export const TransactionSummaryRow = (
-  props: React.PropsWithChildren<RowProps>
-): React.ReactElement | null => {
-  const { title, value, icon, isLoading, placeholder, action, hideSeparator } =
-    props;
-
+export const TransactionSummaryRow = ({
+  title,
+  value,
+  icon,
+  isLoading,
+  placeholder,
+  endElement,
+  hideSeparator
+}: React.PropsWithChildren<RowProps>): React.ReactElement | null => {
   if (!value && !isLoading) {
     return null;
   }
@@ -84,7 +86,7 @@ export const TransactionSummaryRow = (
             <View style={styles.placeholder}>{placeholder}</View>
           )
         }
-        action={action}
+        endElement={endElement}
       />
       {!hideSeparator && <Divider />}
     </React.Fragment>
@@ -135,20 +137,27 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
   const { presentPaymentInfoBottomSheet, paymentInfoBottomSheet } =
     usePaymentAmountInfoBottomSheet();
 
-  const renderAmountAction = () => {
+  const amountEndElement: EndElementProps = React.useMemo(() => {
     if (props.isPaid && !isLoading) {
-      return <Badge text={I18n.t("messages.badge.paid")} variant="success" />;
+      return {
+        type: "badge",
+        componentProps: {
+          text: I18n.t("messages.badge.paid"),
+          variant: "success"
+        }
+      };
     } else if (!props.isPaid && !isLoading) {
-      return (
-        <IconButton
-          icon="info"
-          accessibilityLabel="info"
-          onPress={presentPaymentInfoBottomSheet}
-        />
-      );
+      return {
+        type: "iconButton",
+        componentProps: {
+          icon: "info",
+          accessibilityLabel: "info",
+          onPress: presentPaymentInfoBottomSheet
+        }
+      };
     }
-    return null;
-  };
+    return undefined;
+  }, [props.isPaid, isLoading, presentPaymentInfoBottomSheet]);
 
   return (
     <>
@@ -178,7 +187,7 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
         icon="psp"
         placeholder={<LoadingPlaceholder size={"half"} />}
         isLoading={isLoading}
-        action={renderAmountAction()}
+        endElement={amountEndElement}
       />
       <TransactionSummaryRow
         title={I18n.t("wallet.firstTransactionSummary.dueDate")}
