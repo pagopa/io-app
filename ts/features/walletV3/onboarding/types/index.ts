@@ -14,6 +14,7 @@ export type OnboardingStatus = "SUCCESS" | "FAILURE" | "ERROR";
 export type OnboardingSuccess = {
   status: "SUCCESS";
   outcome: OnboardingOutcome;
+  walletId: string;
 };
 
 /**
