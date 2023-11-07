@@ -47,79 +47,64 @@ import { localeDateFormat } from "../../../../utils/locale";
 import { getBadgeTextByTransactionStatus } from "../../../walletV3/common/utils";
 import { formatAbsNumberAmountOrDefault } from "../../common/utils/strings";
 
-export type TimelineOperationListItemProps = WithTestID<{
-  operation: OperationListDTO;
-  onPress?: () => void;
-}>;
+export type TimelineOperationListItemProps = WithTestID<
+  | {
+      isLoading?: false;
+      operation: OperationListDTO;
+      onPress?: () => void;
+    }
+  | { isLoading: true; operation?: never; onPress?: never }
+>;
 
 export const TimelineOperationListItem = (
   props: TimelineOperationListItemProps
 ) => {
-  const { operation, onPress, testID } = props;
+  const { isLoading, operation, onPress, testID } = props;
 
-  switch (operation.operationType) {
-    case TransactionOperationTypeEnum.TRANSACTION:
-    case TransactionOperationTypeEnum.REVERSAL:
-      return (
-        <TransactionOperationListItem
-          operation={operation}
-          onPress={onPress}
-          testID={testID}
-        />
-      );
-    case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
-    case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
-    case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
-    case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
-      return (
-        <InstrumentOperationListItem
-          operation={operation}
-          onPress={onPress}
-          testID={testID}
-        />
-      );
-    case IbanOperationTypeEnum.ADD_IBAN:
-      return <IbanOperationListItem operation={operation} testID={testID} />;
-    case OnboardingOperationTypeEnum.ONBOARDING:
-      return (
-        <OnboardingOperationListItem operation={operation} testID={testID} />
-      );
-    case RefundOperationTypeEnum.PAID_REFUND:
-    case RefundOperationTypeEnum.REJECTED_REFUND:
-      return (
-        <RefundOperationListItem
-          operation={operation}
-          onPress={onPress}
-          testID={testID}
-        />
-      );
-    case SuspendOperationTypeEnum.SUSPENDED:
-      return <SuspendOperationListItem operation={operation} testID={testID} />;
-    case ReadmittedOperationTypeEnum.READMITTED:
-      return (
-        <ReadmittedOperationListItem operation={operation} testID={testID} />
-      );
+  if (isLoading) {
+    return (
+      <ListItemTransaction
+        title=""
+        subtitle=""
+        transactionStatus="pending"
+        badgeText={""}
+        isLoading={true}
+      />
+    );
   }
+
+  const getProps = () => {
+    switch (operation.operationType) {
+      case TransactionOperationTypeEnum.TRANSACTION:
+      case TransactionOperationTypeEnum.REVERSAL:
+        return getTransactionOperationProps(operation);
+      case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
+      case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
+      case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
+      case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
+        return getInstrumentOperationProps(operation);
+      case IbanOperationTypeEnum.ADD_IBAN:
+        return getIbanOperationProps(operation);
+      case OnboardingOperationTypeEnum.ONBOARDING:
+        return getOnboardingOperationProps(operation);
+      case RefundOperationTypeEnum.PAID_REFUND:
+      case RefundOperationTypeEnum.REJECTED_REFUND:
+        return getRefundOperationProps(operation);
+      case SuspendOperationTypeEnum.SUSPENDED:
+        return getSuspendOperationProps(operation);
+      case ReadmittedOperationTypeEnum.READMITTED:
+        return getReadmittedOperationProps(operation);
+    }
+  };
+
+  return (
+    <ListItemTransaction {...getProps()} onPress={onPress} testID={testID} />
+  );
 };
 
-export const TimelineOperationListItemSkeleton = () => (
-  <ListItemTransaction
-    title=""
-    subtitle=""
-    transactionStatus="pending"
-    badgeText={""}
-    isLoading={true}
-  />
-);
-
-type ListItemProps<T extends OperationListDTO> = WithTestID<{
-  operation: T;
-  onPress?: () => void;
-}>;
-
-const TransactionOperationListItem = (
-  props: ListItemProps<TransactionOperationDTO>
-) => {
+const getTransactionOperationProps = (
+  operation: TransactionOperationDTO
+): ListItemTransaction => {
   const {
     operationType,
     operationDate,
@@ -129,7 +114,7 @@ const TransactionOperationListItem = (
     status,
     amount,
     accrued
-  } = props.operation;
+  } = operation;
 
   const isQRCode = channel === ChannelEnum.QRCODE;
 
@@ -138,7 +123,7 @@ const TransactionOperationListItem = (
     status === TransactionStatusEnum.CANCELLED ||
     operationType === TransactionOperationTypeEnum.REVERSAL;
 
-  const logo: ListItemTransactionLogo = brand || (
+  const paymentLogoIcon: ListItemTransactionLogo = brand || (
     <Icon
       name={isQRCode ? "merchant" : "creditCard"}
       color="grey-300"
@@ -168,37 +153,29 @@ const TransactionOperationListItem = (
   };
 
   if (isReversal) {
-    return (
-      <ListItemTransaction
-        paymentLogoIcon={logo}
-        title={title}
-        subtitle={subtitle}
-        transactionStatus={"reversal"}
-        badgeText={getBadgeTextByTransactionStatus("reversal")}
-        onPress={props.onPress}
-        testID={props.testID}
-      />
-    );
+    return {
+      paymentLogoIcon,
+      title,
+      subtitle,
+      transactionStatus: "reversal",
+      badgeText: getBadgeTextByTransactionStatus("reversal")
+    };
   }
 
-  return (
-    <ListItemTransaction
-      paymentLogoIcon={logo}
-      title={title}
-      subtitle={subtitle}
-      transactionStatus={"success"}
-      transactionAmount={getAccruedString()}
-      onPress={props.onPress}
-      testID={props.testID}
-    />
-  );
+  return {
+    paymentLogoIcon,
+    title,
+    subtitle,
+    transactionStatus: "success",
+    transactionAmount: getAccruedString()
+  };
 };
 
-const InstrumentOperationListItem = (
-  props: ListItemProps<InstrumentOperationDTO | RejectedInstrumentOperationDTO>
-) => {
+const getInstrumentOperationProps = (
+  operation: InstrumentOperationDTO | RejectedInstrumentOperationDTO
+): ListItemTransaction => {
   const { operationDate, operationType, maskedPan, instrumentType, brand } =
-    props.operation;
+    operation;
 
   const isRejected =
     operationType ===
@@ -245,68 +222,59 @@ const InstrumentOperationListItem = (
   };
 
   if (isRejected) {
-    return (
-      <ListItemTransaction
-        paymentLogoIcon={getLogo()}
-        title={getTitle()}
-        subtitle={subtitle}
-        transactionStatus="failure"
-        badgeText={getBadgeTextByTransactionStatus("failure")}
-        testID={props.testID}
-      />
-    );
+    return {
+      paymentLogoIcon: getLogo(),
+      title: getTitle(),
+      subtitle,
+      transactionStatus: "failure",
+      badgeText: getBadgeTextByTransactionStatus("failure")
+    };
   }
 
-  return (
-    <ListItemTransaction
-      paymentLogoIcon={getLogo()}
-      title={getTitle()}
-      subtitle={subtitle}
-      transactionStatus="success"
-      transactionAmount=""
-      testID={props.testID}
-    />
-  );
+  return {
+    paymentLogoIcon: getLogo(),
+    title: getTitle(),
+    subtitle,
+    transactionStatus: "success",
+    transactionAmount: ""
+  };
 };
 
-const IbanOperationListItem = (props: ListItemProps<IbanOperationDTO>) => (
-  <ListItemTransaction
-    paymentLogoIcon={
-      <Icon name={"institution"} color="grey-300" testID="ibanLogoTestID" />
-    }
-    title={I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
-    )}
-    subtitle={getOperationSubtitle(props.operation.operationDate)}
-    transactionStatus={"success"}
-    transactionAmount=""
-    onPress={props.onPress}
-    testID={props.testID}
-  />
-);
+const getIbanOperationProps = (
+  operation: IbanOperationDTO
+): ListItemTransaction => ({
+  paymentLogoIcon: (
+    <Icon name={"institution"} color="grey-300" testID="ibanLogoTestID" />
+  ),
+  title: I18n.t(
+    `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
+  ),
+  subtitle: getOperationSubtitle(operation.operationDate),
+  transactionStatus: "success",
+  transactionAmount: ""
+});
 
-const OnboardingOperationListItem = (
-  props: ListItemProps<OnboardingOperationDTO>
-) => (
-  <ListItemTransaction
-    paymentLogoIcon={
-      <Icon name={"checkTick"} color="grey-300" testID="onboardingLogoTestID" />
-    }
-    title={I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
-    )}
-    subtitle={getOperationSubtitle(props.operation.operationDate)}
-    transactionStatus={"success"}
-    transactionAmount={""}
-    testID={props.testID}
-  />
-);
+const getOnboardingOperationProps = (
+  operation: OnboardingOperationDTO
+): ListItemTransaction => ({
+  paymentLogoIcon: (
+    <Icon name={"checkTick"} color="grey-300" testID="onboardingLogoTestID" />
+  ),
+  title: I18n.t(
+    `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
+  ),
+  subtitle: getOperationSubtitle(operation.operationDate),
+  transactionStatus: "success",
+  transactionAmount: ""
+});
 
-const RefundOperationListItem = (props: ListItemProps<RefundOperationDTO>) => {
-  const { operationDate, operationType, amount } = props.operation;
+const getRefundOperationProps = (
+  operation: RefundOperationDTO
+): ListItemTransaction => {
+  const { operationDate, operationType, amount } = operation;
   const isRejected = operationType === RefundOperationTypeEnum.REJECTED_REFUND;
 
-  const operationLogo = (
+  const paymentLogoIcon = (
     <Icon name={"refund"} color="grey-300" testID="refundLogoTestID" />
   );
   const title = I18n.t(
@@ -315,59 +283,45 @@ const RefundOperationListItem = (props: ListItemProps<RefundOperationDTO>) => {
   const subtitle = getOperationSubtitle(operationDate);
 
   if (isRejected) {
-    return (
-      <ListItemTransaction
-        title={title}
-        subtitle={subtitle}
-        paymentLogoIcon={operationLogo}
-        transactionStatus={"failure"}
-        badgeText={getBadgeTextByTransactionStatus("failure")}
-        onPress={props.onPress}
-        testID={props.testID}
-      />
-    );
+    return {
+      title,
+      subtitle,
+      paymentLogoIcon,
+      transactionStatus: "failure",
+      badgeText: getBadgeTextByTransactionStatus("failure")
+    };
   }
 
-  return (
-    <ListItemTransaction
-      title={title}
-      subtitle={subtitle}
-      paymentLogoIcon={operationLogo}
-      transactionStatus={"success"}
-      transactionAmount={`${formatAbsNumberAmountOrDefault(amount)} €`}
-      onPress={props.onPress}
-      testID={props.testID}
-    />
-  );
+  return {
+    title,
+    subtitle,
+    paymentLogoIcon,
+    transactionStatus: "success",
+    transactionAmount: `${formatAbsNumberAmountOrDefault(amount)} €`
+  };
 };
 
-const SuspendOperationListItem = (
-  props: ListItemProps<SuspendOperationDTO>
-) => (
-  <ListItemTransaction
-    title={I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
-    )}
-    subtitle={getOperationSubtitle(props.operation.operationDate)}
-    transactionStatus={"success"}
-    transactionAmount={""}
-    testID={props.testID}
-  />
-);
+const getSuspendOperationProps = (
+  operation: SuspendOperationDTO
+): ListItemTransaction => ({
+  title: I18n.t(
+    `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
+  ),
+  subtitle: getOperationSubtitle(operation.operationDate),
+  transactionStatus: "success",
+  transactionAmount: ""
+});
 
-const ReadmittedOperationListItem = (
-  props: ListItemProps<ReadmittedOperationDTO>
-) => (
-  <ListItemTransaction
-    title={I18n.t(
-      `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
-    )}
-    subtitle={getOperationSubtitle(props.operation.operationDate)}
-    transactionStatus={"success"}
-    transactionAmount={""}
-    testID={props.testID}
-  />
-);
+const getReadmittedOperationProps = (
+  operation: ReadmittedOperationDTO
+): ListItemTransaction => ({
+  title: I18n.t(
+    `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
+  ),
+  subtitle: getOperationSubtitle(operation.operationDate),
+  transactionStatus: "success",
+  transactionAmount: ""
+});
 
 export const getOperationSubtitle = (operationDate: Date): string => {
   const dateString = localeDateFormat(
