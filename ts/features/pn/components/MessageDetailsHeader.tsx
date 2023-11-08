@@ -5,7 +5,7 @@ import { logosForService } from "../../../utils/services";
 
 type Props = Readonly<{ service: ServicePublic }>;
 
-export const PnMessageDetailsHeader = (props: Props) => (
+export const MessageDetailsHeader = (props: Props) => (
   <OrganizationHeader
     serviceName={props.service.service_name}
     organizationName={props.service.organization_name}

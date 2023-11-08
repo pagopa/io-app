@@ -36,11 +36,11 @@ import {
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { maxVisiblePaymentCountGenerator } from "../utils";
-import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
-import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
-import { PnMessageTimeline } from "./PnMessageTimeline";
-import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
+import { MessageDetailsContent } from "./MessageDetailsContent";
+import { MessageDetailsHeader } from "./MessageDetailsHeader";
+import { MessageDetailsSection } from "./MessageDetailsSection";
+import { MessageTimeline } from "./MessageTimeline";
+import { MessageTimelineCTA } from "./MessageTimelineCTA";
 import { MessageF24 } from "./MessageF24";
 import { MessagePayments } from "./MessagePayments";
 import { MessageFooter } from "./MessageFooter";
@@ -59,7 +59,6 @@ export const MessageDetails = ({
   service,
   payments
 }: Props) => {
-  // console.log(`=== MessageDetails: rendering`);
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
@@ -103,9 +102,9 @@ export const MessageDetails = ({
         }}
         ref={scrollViewRef}
       >
-        {service && <PnMessageDetailsHeader service={service} />}
+        {service && <MessageDetailsHeader service={service} />}
         <VSpacer />
-        <PnMessageDetailsContent message={message} />
+        <MessageDetailsContent message={message} />
         {isCancelled && (
           <>
             <VSpacer />
@@ -127,7 +126,7 @@ export const MessageDetails = ({
         )}
 
         {RA.isNonEmpty(attachmentList) && (
-          <PnMessageDetailsSection
+          <MessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
             <LegacyMessageAttachments
@@ -136,7 +135,7 @@ export const MessageDetails = ({
               downloadAttachmentBeforePreview={true}
               openPreview={openAttachment}
             />
-          </PnMessageDetailsSection>
+          </MessageDetailsSection>
         )}
         <MessagePayments
           messageId={messageId}
@@ -154,7 +153,7 @@ export const MessageDetails = ({
           </>
         ) : null}
 
-        <PnMessageDetailsSection
+        <MessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
           <ListItemInfoCopy
@@ -167,14 +166,14 @@ export const MessageDetails = ({
             {I18n.t("features.pn.details.timeline.title")}
           </H5>
           <VSpacer size={24} />
-          <PnMessageTimeline
+          <MessageTimeline
             message={message}
             onExpand={() => {
               scrollViewRef.current?.scrollToEnd({ animated: true });
             }}
           />
-          {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
-        </PnMessageDetailsSection>
+          {frontendUrl.length > 0 && <MessageTimelineCTA url={frontendUrl} />}
+        </MessageDetailsSection>
       </ScrollView>
 
       {payments && !isCancelled && (
