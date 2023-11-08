@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
   }
 });
 
-type Props = Readonly<{ message: PNMessage }>;
+type Props = Readonly<{ message: PNMessage }> & ViewProps;
 
-export const PnMessageDetailsContent = (props: Props & ViewProps) => (
+export const MessageDetailsContent = (props: Props) => (
   <View style={props.style}>
     {!isStringNullyOrEmpty(props.message.senderDenomination) && (
       <H2>{props.message.senderDenomination}</H2>

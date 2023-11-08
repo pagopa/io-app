@@ -152,7 +152,6 @@ export const MessagePaymentItem = ({
   noSpaceOnTop = false,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
-  // console.log(`=== PaymentItem ${index}: rendering`);
   const dispatch = useDispatch();
   const store = useStore();
   const toast = useIOToast();
@@ -183,7 +182,6 @@ export const MessagePaymentItem = ({
         messageId,
         paymentId
       });
-      // console.log(`=== PaymentItem ${index}: dispatch`);
       dispatch(updateAction);
     }
   }, [dispatch, messageId, paymentId, shouldUpdatePayment]);

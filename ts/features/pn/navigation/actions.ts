@@ -1,11 +1,11 @@
 import { CommonActions } from "@react-navigation/native";
 import ROUTES from "../../../navigation/routes";
-import { PnMessageDetailsScreenNavigationParams } from "../screens/PnMessageDetailsScreen";
-import { PnPaidPaymentScreenNavigationParams } from "../screens/PnPaidPaymentScreen";
+import { MessageDetailsScreenNavigationParams } from "../screens/MessageDetailsScreen";
+import { PaidPaymentScreenNavigationParams } from "../screens/PaidPaymentScreen";
 import PN_ROUTES from "./routes";
 
 export const navigateToPnMessageDetailsScreen = (
-  params: PnMessageDetailsScreenNavigationParams
+  params: MessageDetailsScreenNavigationParams
 ) =>
   CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
     screen: PN_ROUTES.MAIN,
@@ -16,7 +16,7 @@ export const navigateToPnMessageDetailsScreen = (
   });
 
 export const navigateToPnCancelledMessagePaidPaymentScreen = (
-  params: PnPaidPaymentScreenNavigationParams
+  params: PaidPaymentScreenNavigationParams
 ) =>
   CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
     screen: PN_ROUTES.MAIN,
