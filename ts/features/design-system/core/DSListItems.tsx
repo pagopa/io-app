@@ -2,11 +2,9 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as React from "react";
 
 import {
-  ButtonLink,
   Divider,
   IOThemeContext,
   Icon,
-  IconButton,
   ListItemAction,
   ListItemInfo,
   ListItemInfoCopy,
@@ -483,13 +481,14 @@ const renderListItemInfo = () => (
         label="Label"
         value="A looong looooong looooooooong looooooooooong title"
         accessibilityLabel="Empty just for testing purposes"
-        action={
-          <ButtonLink
-            label="Modifica"
-            onPress={onButtonPress}
-            accessibilityLabel={""}
-          />
-        }
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: "Modifica",
+            onPress: onButtonPress,
+            accessibilityLabel: ""
+          }
+        }}
       />
       <Divider />
       <ListItemInfo
@@ -497,13 +496,27 @@ const renderListItemInfo = () => (
         label="Label"
         value="A looong looooong looooooooong looooooooooong title"
         accessibilityLabel="Empty just for testing purposes"
-        action={
-          <IconButton
-            icon="info"
-            onPress={onButtonPress}
-            accessibilityLabel={""}
-          />
-        }
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            onPress: onButtonPress,
+            accessibilityLabel: ""
+          }
+        }}
+      />
+      <ListItemInfo
+        icon="psp"
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: "pagato",
+            variant: "success"
+          }
+        }}
       />
       <Divider />
       <ListItemInfo

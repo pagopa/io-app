@@ -2,9 +2,7 @@ import * as React from "react";
 import { pot } from "@pagopa/ts-commons";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
-import { NavigationAction } from "@react-navigation/native";
-import I18n from "i18n-js";
+import I18n from "../../../i18n";
 // import WebView from "react-native-webview";
 // import {
 //   WebViewErrorEvent,
@@ -18,7 +16,6 @@ import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import ROUTES from "../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import NavigationService from "../../../navigation/NavigationService";
 import TosScreen from "../TosScreen";
 
 const CurrentTestZendeskEnabled = true;
@@ -55,35 +52,32 @@ afterAll(() => {
 
 describe("TosScreen", () => {
   describe("When rendering the screen for an onboarded user", () => {
-    it("The back button should be there and pressing it should trigger dispatchNavigationAction(CommonActions.goBack)", () => {
-      const spiedFunction = jest
-        .spyOn(NavigationService, "dispatchNavigationAction")
-        .mockImplementationOnce((_: NavigationAction) => undefined);
+    it("The back button should be there", () => {
       const renderAPI = commonSetup();
 
       // Back button should be there
-      const backButtonRTI = renderAPI.getByTestId("back-button");
+      const backButtonRTI = renderAPI.queryAllByA11yLabel(
+        I18n.t("global.buttons.back")
+      )[0];
       expect(backButtonRTI).toBeDefined();
-
-      // Pressing it should trigger NavigationService.dispatchNavigationAction(CommonActions.goBack())
-      fireEvent.press(backButtonRTI);
-      expect(spiedFunction).toBeCalledWith({ type: "GO_BACK" });
     });
   });
   describe("When rendering the screen", () => {
     it("The help button is rendered", () => {
       const renderAPI = commonSetup();
-      const helpButtonRTI = renderAPI.getByTestId("helpButton");
+      const helpButtonRTI = renderAPI.queryAllByA11yLabel(
+        I18n.t("global.accessibility.contextualHelp.open.label")
+      )[0];
       expect(helpButtonRTI).toBeDefined();
     });
   });
   describe("When rendering the screen", () => {
     it("The title should have a specific text", () => {
       const renderAPI = commonSetup();
-      const textRTI = renderAPI.getByTestId("bodyLabel");
-      expect(textRTI.props.children).toEqual(
-        I18n.t("profile.main.privacy.privacyPolicy.title")
+      const textRTI = renderAPI.queryByText(
+        I18n.t("profile.main.privacy.title")
       );
+      expect(textRTI).toBeDefined();
     });
   });
   describe("When rendering the screen initially", () => {

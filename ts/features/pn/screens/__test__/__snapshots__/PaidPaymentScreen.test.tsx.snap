@@ -379,6 +379,12 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                           "width": 24,
                                         },
                                         Object {
+                                          "alignItems": "center",
+                                        },
+                                        Object {
+                                          "justifyContent": "center",
+                                        },
+                                        Object {
                                           "transform": Array [
                                             Object {
                                               "scale": undefined,
@@ -1348,6 +1354,12 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                         Object {
                                           "height": 24,
                                           "width": 24,
+                                        },
+                                        Object {
+                                          "alignItems": "center",
+                                        },
+                                        Object {
+                                          "justifyContent": "center",
                                         },
                                         Object {
                                           "transform": Array [
