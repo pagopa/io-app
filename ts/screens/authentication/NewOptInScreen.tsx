@@ -28,8 +28,8 @@ import { TranslationKeys } from "../../../locales/locales";
 
 // FIXME -> insert correct contextual help and FAQ https://pagopa.atlassian.net/browse/IOPID-987
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.landing.contextualHelpTitle",
-  body: "authentication.landing.contextualHelpContent"
+  title: "authentication.opt-in.contextualHelpTitle",
+  body: "authentication.opt-in.contextualHelpContent"
 };
 
 export type ChosenIdentifier = {
