@@ -176,7 +176,8 @@ const BarcodeScanScreen = () => {
         value={I18n.t("barcodeScan.manual.notice")}
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
-        icon="gallery"
+        icon="productPagoPA"
+        iconColor="blueItalia-500"
       />
       <Divider />
       <ListItemNav
@@ -229,7 +230,7 @@ const BarcodeScanScreen = () => {
         contextualHelp={emptyContextualHelp}
         barcodeAnalyticsFlow="home"
         isLoading={isFileReaderLoading}
-        isDisabled={isFilePickerVisible}
+        isDisabled={isFilePickerVisible || isFileReaderLoading}
       />
       {filePickerBottomSheet}
       {manualInputModal.bottomSheet}

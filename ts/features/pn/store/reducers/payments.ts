@@ -17,7 +17,11 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../bonus/bpd/model/RemoteValue";
-import { updatePaymentForMessage } from "../actions";
+import {
+  clearSelectedPayment,
+  setSelectedPayment,
+  updatePaymentForMessage
+} from "../actions";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
@@ -26,6 +30,7 @@ import { reloadAllMessages } from "../../../../store/actions/messages";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
+  selectedPayment?: string;
 };
 
 export type SinglePaymentState = {
@@ -76,8 +81,17 @@ export const paymentsReducer = (
         }),
         state
       );
+    case getType(setSelectedPayment):
+      return {
+        ...state,
+        selectedPayment: action.payload.paymentId
+      };
+    case getType(clearSelectedPayment):
+      return {
+        ...state,
+        selectedPayment: undefined
+      };
     case getType(reloadAllMessages.request):
-      // console.log(`=== RELOAD ALL MESSAGES REQUEST RECEIVED ===`);
       return initialState;
   }
   return state;
@@ -222,3 +236,6 @@ const buttonStateFromUpdatedPaymentCount =
         )
       )
     );
+
+export const selectedPaymentIdSelector = (state: GlobalState) =>
+  state.features.pn.payments.selectedPayment;

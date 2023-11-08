@@ -222,10 +222,10 @@ const renderModuleIDP = () => (
         />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleIDP, saved variant">
+    <DSComponentViewerBox name="ModuleIDP, loose spacing (fka saved) variant">
       <View>
         <ModuleIDP
-          saved
+          withLooseSpacing
           name={mockIDPProviderItem.name}
           logo={mockIDPProviderItem.logo as ImageSourcePropType}
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}

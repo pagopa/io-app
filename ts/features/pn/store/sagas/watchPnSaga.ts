@@ -6,13 +6,12 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import _ from "lodash";
 import { apiUrlPrefix } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
 import { BackendPnClient } from "../../api/backendPn";
-import { pnActivationUpsert } from "../actions";
+import { pnActivationUpsert, startPaymentStatusTracking } from "../actions";
 import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
@@ -21,6 +20,7 @@ import { servicePreferenceSelector } from "../../../../store/reducers/entities/s
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { BackendClient } from "../../../../api/backend";
 import { watchPaymentUpdateRequests } from "./watchPaymentUpdateRequests";
+import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
 function* upsertPnActivation(
   client: ReturnType<typeof BackendPnClient>,
@@ -88,4 +88,9 @@ export function* watchPnSaga(
   );
 
   yield* fork(watchPaymentUpdateRequests, getVerificaRpt);
+
+  yield* takeLatest(
+    getType(startPaymentStatusTracking),
+    watchPaymentStatusForMixpanelTracking
+  );
 }
