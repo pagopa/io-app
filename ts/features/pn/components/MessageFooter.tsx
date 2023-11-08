@@ -36,7 +36,6 @@ export const MessageFooter = ({
   isCancelled,
   presentPaymentsBottomSheetRef
 }: MessageFooterProps) => {
-  // console.log(`=== MessageFooter: rendering`);
   const buttonState = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
