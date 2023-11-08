@@ -6,7 +6,7 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { cdcEnabled } from "../../../config";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
 import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
-import PnServiceCTA from "../../../features/pn/components/PnServiceCTA";
+import PnServiceCTA from "../../../features/pn/components/ServiceCTA";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {

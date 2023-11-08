@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, ViewProps } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
@@ -107,7 +107,7 @@ type Props = Readonly<{
   onExpand?: () => void;
 }>;
 
-export const PnMessageTimeline = ({ message, onExpand }: Props & ViewProps) => {
+export const MessageTimeline = ({ message, onExpand }: Props) => {
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
