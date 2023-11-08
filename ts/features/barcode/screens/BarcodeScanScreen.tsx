@@ -13,12 +13,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import {
-  PaymentStartOrigin,
-  paymentInitializeState
-} from "../../../store/actions/wallet/payment";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
@@ -85,10 +81,6 @@ const BarcodeScanScreen = () => {
         barcode => barcode.format === "DATA_MATRIX"
       );
 
-      const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
-        ? "poste_datamatrix_scan"
-        : "qrcode_scan";
-
       if (hasDataMatrix) {
         void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
       }
@@ -96,8 +88,7 @@ const BarcodeScanScreen = () => {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
         params: {
-          barcodes: pagoPABarcodes,
-          paymentStartOrigin
+          barcodes: pagoPABarcodes
         }
       });
       return;
@@ -174,9 +165,8 @@ const BarcodeScanScreen = () => {
 
   const handlePagoPACodeInput = () => {
     manualInputModal.dismiss();
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-      params: {}
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
     });
   };
 
@@ -186,7 +176,8 @@ const BarcodeScanScreen = () => {
         value={I18n.t("barcodeScan.manual.notice")}
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
-        icon="gallery"
+        icon="productPagoPA"
+        iconColor="blueItalia-500"
       />
       <Divider />
       <ListItemNav
@@ -239,7 +230,7 @@ const BarcodeScanScreen = () => {
         contextualHelp={emptyContextualHelp}
         barcodeAnalyticsFlow="home"
         isLoading={isFileReaderLoading}
-        isDisabled={isFilePickerVisible}
+        isDisabled={isFilePickerVisible || isFileReaderLoading}
       />
       {filePickerBottomSheet}
       {manualInputModal.bottomSheet}

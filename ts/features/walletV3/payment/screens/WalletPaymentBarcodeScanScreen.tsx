@@ -14,11 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { navigateToPaymentTransactionSummaryScreen } from "../../../../store/actions/navigation";
-import {
-  PaymentStartOrigin,
-  paymentInitializeState
-} from "../../../../store/actions/wallet/payment";
+import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
 import {
@@ -77,16 +73,11 @@ const WalletPaymentBarcodeScanScreen = () => {
       void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
     }
 
-    const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
-      ? "poste_datamatrix_scan"
-      : "qrcode_scan";
-
     if (pagoPaBarcodes.length > 1) {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
         params: {
-          barcodes: pagoPaBarcodes,
-          paymentStartOrigin
+          barcodes: pagoPaBarcodes
         }
       });
       return;
@@ -99,20 +90,26 @@ const WalletPaymentBarcodeScanScreen = () => {
 
       switch (barcode.format) {
         case "QR_CODE":
-          navigateToPaymentTransactionSummaryScreen({
-            rptId: barcode.rptId,
-            initialAmount: barcode.amount,
-            paymentStartOrigin: "qrcode_scan"
+          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+            params: {
+              initialAmount: barcode.amount,
+              rptId: barcode.rptId,
+              paymentStartOrigin: "qrcode_scan"
+            }
           });
           break;
         case "DATA_MATRIX":
           void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-
-          navigateToPaymentTransactionSummaryScreen({
-            rptId: barcode.rptId,
-            initialAmount: barcode.amount,
-            paymentStartOrigin: "poste_datamatrix_scan"
+          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+            params: {
+              initialAmount: barcode.amount,
+              rptId: barcode.rptId,
+              paymentStartOrigin: "poste_datamatrix_scan"
+            }
           });
+
           break;
       }
     }
@@ -131,9 +128,8 @@ const WalletPaymentBarcodeScanScreen = () => {
 
   const handleManualInputPressed = () => {
     analytics.trackBarcodeManualEntryPath("avviso");
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-      params: {}
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
     });
   };
 
@@ -162,7 +158,7 @@ const WalletPaymentBarcodeScanScreen = () => {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet"]}
         barcodeAnalyticsFlow="avviso"
-        isDisabled={isFilePickerVisible}
+        isDisabled={isFilePickerVisible || isFileReaderLoading}
         isLoading={isFileReaderLoading}
       />
       {filePickerBottomSheet}

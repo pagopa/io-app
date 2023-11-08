@@ -74,6 +74,7 @@ global:
         expired: "Scaduto"
         revoked: "Revocato"
         canceled: "Annullato"
+        inprogress: "In corso"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -723,26 +724,26 @@ authentication:
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
-  unlock: 
+  unlock:
     title: Sblocca l’accesso
-    subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO. 
+    subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO.
     subtitlel3: Per poter accedere all’app con tutte le tue identità SPID o CIE, sblocca l’accesso.
     learnmore: Scopri di più
     loginIO: Chiudi
-  unlockmodal: 
+  unlockmodal:
     title: Cosa significa?
-    description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo. 
+    description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo.
     description1_2: In alternativa, è possibile entrare in app utilizzando un accesso con il
-    description1_3: livello massimo di sicurezza. 
+    description1_3: livello massimo di sicurezza.
     description1_4: Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.
     title2: Come sbloccare l’accesso a IO
-    listitem1:  Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
+    listitem1: Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
     listitem2_1: Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.
     listitem2_2: Vai al sito
-    listitem3_1: Vai alla sezione 
-    listitem3_2: Sblocca accesso a IO 
+    listitem3_1: Vai alla sezione
+    listitem3_2: Sblocca accesso a IO
     listitem3_3: e segui i passaggi indicati. Quando richiesto inserisci il
-    listitem3_4: codice di ripristino 
+    listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
 email:
   cduModal:
@@ -841,7 +842,7 @@ onboarding:
       invalid: Il codice non è valido
       match: Il codice non coincide
     policy:
-      headerTitle: "Per sicurezza, il codice non dovrà contenere:"
+      headerTitle: "Scegli un codice difficile da individuare e che non contenga:"
       first: ripetizioni di numeri (es. 000000)
       second: numeri in sequenza (es. 123456 o 654321)
   alert:
@@ -966,8 +967,8 @@ payment:
       iuv: Codice IUV {{iuv}}
 wallet:
   methodDetails:
-    cobadgeTitle: 'Carta di debito'
-    cardGeneric: 'Carta'
+    cobadgeTitle: "Carta di debito"
+    cardGeneric: "Carta"
     a11y:
       credit:
         hpan: "{{circuit}} che termina con {{spacedHpan}}"
@@ -1175,7 +1176,7 @@ wallet:
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
     success:
       title: "La carta è stata aggiunta!"
-      continueButton: "Continua"
+      continueButton: "Vedi dettagli"
     failure: "Errore durante l'aggiunta della carta"
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
@@ -1592,6 +1593,19 @@ wallet:
     confirm: Sì, esci
     cancel: No, continua
     success: Problemi con l'aggiunta? Contatta la tua banca.
+  payment:
+    barcodes:
+      choice:
+        title: Sono stati rilevati più codici. Quale vuoi usare?
+    manual:
+      noticeNumber:
+        title: Inserisci il codice avviso
+        subtitle: Ha 18 cifre, lo trovi vicino al codice QR.
+        placeholder: Codice avviso
+      fiscalCode:
+        title: Inserisci il codice fiscale dell’Ente Creditore
+        subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
+        placeholder: Codice fiscale Ente Creditore
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -2327,7 +2341,7 @@ bonus:
   active: Attivo
   failed: Fallito
   redeemed: Utilizzato
-  termsAndConditionFooter: "Premendo \"{{ctaText}}\" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l'[Informativa Privacy]({{tosUrl}})"
+  termsAndConditionFooter: 'Premendo "{{ctaText}}" dichiari di aver letto e compreso la [Guida]({{regulationLink}}) e l''[Informativa Privacy]({{tosUrl}})'
   tos:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
@@ -3044,10 +3058,9 @@ features:
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
         payments: "Pagamenti"
       paymentSection:
-        legacyTitle: Avviso di pagamento
         title: "Avvisi pagoPA"
         morePayments: "Vedi tutti gli avvisi"
-        bottomSheetTitle: "Quale avviso vuoi pagare?" 
+        bottomSheetTitle: "Quale avviso vuoi pagare?"
       attachmentsSection:
         title: Allegati
       f24Section:
@@ -3374,6 +3387,7 @@ idpay:
       spendFrom: A partire dal giorno
       spendTo: Entro il giorno
       spendPercentage: Percentuale riconosciuta
+      spendValue: Importo riconosciuto
       enrollmentDetails: Dettagli dell'adesione
       enrollmentDate: Data
       protocolNumber: Numero di protocollo
@@ -3545,7 +3559,7 @@ idpay:
           title: "Usa la Carta d'identità elettronica"
           description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
           actionItem: "Come funziona?"
-        QRCODE:
+        APP_IO_PAYMENT:
           title: "Usa l'app IO"
           description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
           actionItem: "Come funziona?"

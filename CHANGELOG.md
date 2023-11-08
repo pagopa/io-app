@@ -2,6 +2,83 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.46.0-rc.0](https://github.com/pagopa/io-app/compare/2.45.0-rc.0...2.46.0-rc.0) (2023-11-07)
+
+
+### Features
+
+* [[IOBP-201](https://pagopa.atlassian.net/browse/IOBP-201),[IOBP-284](https://pagopa.atlassian.net/browse/IOBP-284)] New wallet success outcome handling ([#5155](https://github.com/pagopa/io-app/issues/5155)) ([e06259d](https://github.com/pagopa/io-app/commit/e06259db73c717f0284e33b3b2c91f5792fe7d15))
+* [[IOCOM-457](https://pagopa.atlassian.net/browse/IOCOM-457)] Navigate to the attachment preview screen ([#5167](https://github.com/pagopa/io-app/issues/5167)) ([c12d1c4](https://github.com/pagopa/io-app/commit/c12d1c4efc594ee07fd890881f0fe050f8eae0d9))
+* [[IOCOM-460](https://pagopa.atlassian.net/browse/IOCOM-460)] Analytics events for PN multiple payments ([#5198](https://github.com/pagopa/io-app/issues/5198)) ([e4f031c](https://github.com/pagopa/io-app/commit/e4f031c910f73f9c4098eaee6cbd02aea08972d4))
+* [[IOCOM-461](https://pagopa.atlassian.net/browse/IOCOM-461)] Add F24 Mixpanel events ([#5193](https://github.com/pagopa/io-app/issues/5193)) ([297f457](https://github.com/pagopa/io-app/commit/297f457a1776a729f06797bf1b096366437961c7))
+* [[IOCOM-499](https://pagopa.atlassian.net/browse/IOCOM-499)] SEND selected payment update after selection ([#5176](https://github.com/pagopa/io-app/issues/5176)) ([6db4a19](https://github.com/pagopa/io-app/commit/6db4a1922009b7ba397370c48a6d78bddc875906))
+* [[IOCOM-642](https://pagopa.atlassian.net/browse/IOCOM-642)] Handle of ONGOING status on SEND's payments ([#5177](https://github.com/pagopa/io-app/issues/5177)) ([3cf093c](https://github.com/pagopa/io-app/commit/3cf093c0bf3c5f21b245df8e73ec7413ac1d5410))
+* [[IOCOM-643](https://pagopa.atlassian.net/browse/IOCOM-643)] Back to SEND message screen upon successful payment completion ([#5182](https://github.com/pagopa/io-app/issues/5182)) ([5316f06](https://github.com/pagopa/io-app/commit/5316f0660b8a200469a7d91f5bda5f74bb240b64))
+* [[IOCOM-657](https://pagopa.atlassian.net/browse/IOCOM-657)] Remove payments' bottom sheet reference in cancelled SEND message ([#5190](https://github.com/pagopa/io-app/issues/5190)) ([e58b66e](https://github.com/pagopa/io-app/commit/e58b66e8fe179d33cf5543391305057c358e9e68))
+* [[IOCOM-658](https://pagopa.atlassian.net/browse/IOCOM-658)] Remove the F24 section on cancelled SEND message ([#5191](https://github.com/pagopa/io-app/issues/5191)) ([d664ad1](https://github.com/pagopa/io-app/commit/d664ad152b2441e9e684f9887569ccb7fb110c29))
+* [[IOPID-1062](https://pagopa.atlassian.net/browse/IOPID-1062)] Change copy ([#5171](https://github.com/pagopa/io-app/issues/5171)) ([8ffc192](https://github.com/pagopa/io-app/commit/8ffc192695bd7e857246a7f623bfa5cec225268b))
+* [[IOPID-296](https://pagopa.atlassian.net/browse/IOPID-296)] Update the generate nonce and set it as mandatory ([#5196](https://github.com/pagopa/io-app/issues/5196)) ([293759d](https://github.com/pagopa/io-app/commit/293759dcafec53b5db524ba7bc647be9084e26bb))
+* [[IOPLT-136](https://pagopa.atlassian.net/browse/IOPLT-136)] `HeaderSecondLevel` integration through react-navigation ([#5028](https://github.com/pagopa/io-app/issues/5028)) ([a66f7fc](https://github.com/pagopa/io-app/commit/a66f7fcfe24ee5ffed6f7b0ca6ee8133a94d025f))
+* [[IOPLT-43](https://pagopa.atlassian.net/browse/IOPLT-43)] Increase iOS target version to deprecate faulty builds ([#5195](https://github.com/pagopa/io-app/issues/5195)) ([f2128b2](https://github.com/pagopa/io-app/commit/f2128b28e2f360cf34995c73c7a0b576068620ec))
+* **Firma con IO:** [[SFEQS-1058](https://pagopa.atlassian.net/browse/SFEQS-1058)] Update `io-backend` definitions to `v13.19.1` ([#5179](https://github.com/pagopa/io-app/issues/5179)) ([b59793d](https://github.com/pagopa/io-app/commit/b59793d3c550da15213c2f24bef2f904b5269d78))
+
+
+### Bug Fixes
+
+* [[IOBP-332](https://pagopa.atlassian.net/browse/IOBP-332)] Add correct pictograms to camera permission view in barcode scan screen ([#5188](https://github.com/pagopa/io-app/issues/5188)) ([db026c4](https://github.com/pagopa/io-app/commit/db026c476e817f99f070fb80a7f4784a1813f329)), closes [1#diff-1e4e400edd0a8debdd16a6c728d260d849b977083ea5aa108a5ba43ce25ac4c2](https://github.com/pagopa/1/issues/diff-1e4e400edd0a8debdd16a6c728d260d849b977083ea5aa108a5ba43ce25ac4c2) [1#diff-052d138722206aca70841ca9fe25e4ab0c8cc2266e26bc7e1b872dd97208e689](https://github.com/pagopa/1/issues/diff-052d138722206aca70841ca9fe25e4ab0c8cc2266e26bc7e1b872dd97208e689)
+* [[IOBP-384](https://pagopa.atlassian.net/browse/IOBP-384)] Header transaction summary safe area view ([#5186](https://github.com/pagopa/io-app/issues/5186)) ([243ea9d](https://github.com/pagopa/io-app/commit/243ea9d2902b0a64f039a02a596e64aa2afdb300))
+* [IOBP-386, IOBP-374] CTA transaction summary padding on Android ([#5185](https://github.com/pagopa/io-app/issues/5185)) ([02ad1d2](https://github.com/pagopa/io-app/commit/02ad1d26dfb95f6fc7c9e704569d0c3f13ae5938))
+* [[IOBP-397](https://pagopa.atlassian.net/browse/IOBP-397)] CGN e2e tests ([#5205](https://github.com/pagopa/io-app/issues/5205)) ([6311fd2](https://github.com/pagopa/io-app/commit/6311fd209993e8f3e8ef27a7c48d2556e00a8431))
+* [[IOPID-1090](https://pagopa.atlassian.net/browse/IOPID-1090)] Fix e2e pin creation ([#5201](https://github.com/pagopa/io-app/issues/5201)) ([0c5c54f](https://github.com/pagopa/io-app/commit/0c5c54fdde4a01d2be3b26c49dfe4c3a6b05c532))
+
+
+### Chores
+
+* [[IOAPPFD0-182](https://pagopa.atlassian.net/browse/IOAPPFD0-182)] Add `outline` variant to the `Badge` component ([#5180](https://github.com/pagopa/io-app/issues/5180)) ([a10850c](https://github.com/pagopa/io-app/commit/a10850cc1a306fe9a7d4ac8502a6def529c4c1e3))
+* [[IOAPPFD0-183](https://pagopa.atlassian.net/browse/IOAPPFD0-183)] Add placeholder to the `Avatar` component ([#5181](https://github.com/pagopa/io-app/issues/5181)) ([6897bb8](https://github.com/pagopa/io-app/commit/6897bb81d4988182bde2b4f3b35c099b01774928))
+* [[IOBP-341](https://pagopa.atlassian.net/browse/IOBP-341)] Update IDPayPaymentCodeInputScreen to use new DS components ([#5136](https://github.com/pagopa/io-app/issues/5136)) ([a738fb1](https://github.com/pagopa/io-app/commit/a738fb16b295687806be49035941c98de68c773a))
+* [[IOBP-363](https://pagopa.atlassian.net/browse/IOBP-363)] Add ID Pay reward type info in initiative details screen ([#5175](https://github.com/pagopa/io-app/issues/5175)) ([c3ee966](https://github.com/pagopa/io-app/commit/c3ee966f19f647a4397cd3281e4a7aa7dbe9bc77))
+* [[IOBP-380](https://pagopa.atlassian.net/browse/IOBP-380)] New idpay error handling DTOs ([#5187](https://github.com/pagopa/io-app/issues/5187)) ([8498c71](https://github.com/pagopa/io-app/commit/8498c71dcb7729a20f92258190c4983ca9a68f95))
+* [[IOBP-387](https://pagopa.atlassian.net/browse/IOBP-387)] Disable scan feature if barcode screen is loading ([#5184](https://github.com/pagopa/io-app/issues/5184)) ([e2f8139](https://github.com/pagopa/io-app/commit/e2f81393a18f5f8a5d419c99df4f94dc650024ec)), closes [1#diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6](https://github.com/pagopa/1/issues/diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6) [1#diff-eaf783c2cc9816aca220690082f4ba077df5954553a99078eb5e3faec9bd4b27](https://github.com/pagopa/1/issues/diff-eaf783c2cc9816aca220690082f4ba077df5954553a99078eb5e3faec9bd4b27) [1#diff-627f530afb8e81f8849fbfbfa2ee5ece0434bdbe062355178c9df587151a9513](https://github.com/pagopa/1/issues/diff-627f530afb8e81f8849fbfbfa2ee5ece0434bdbe062355178c9df587151a9513)
+* [[IOPID-1075](https://pagopa.atlassian.net/browse/IOPID-1075)] Remove what's new bottomsheet ([#5172](https://github.com/pagopa/io-app/issues/5172)) ([92111cd](https://github.com/pagopa/io-app/commit/92111cdc4d9ab91bfc2d230a8e0689076dbc0c82))
+* [[IOPID-897](https://pagopa.atlassian.net/browse/IOPID-897)] Change IDP screen visualization ([#5157](https://github.com/pagopa/io-app/issues/5157)) ([7c48962](https://github.com/pagopa/io-app/commit/7c489622c5555ba939834dbb6fd974cd15b33c5e))
+
+## [2.45.0-rc.0](https://github.com/pagopa/io-app/compare/2.44.0-rc.3...2.45.0-rc.0) (2023-10-31)
+
+
+### Features
+
+* [[IOBP-199](https://pagopa.atlassian.net/browse/IOBP-199),[IOBP-304](https://pagopa.atlassian.net/browse/IOBP-304),[IOBP-306](https://pagopa.atlassian.net/browse/IOBP-306)] Wallet onboarding select payment method ([#5137](https://github.com/pagopa/io-app/issues/5137)) ([5d4d707](https://github.com/pagopa/io-app/commit/5d4d707b78eef85416a543625459d392a25891d4))
+* [[IOCOM-428](https://pagopa.atlassian.net/browse/IOCOM-428)] Add category field in `UIAttachment` ([#5121](https://github.com/pagopa/io-app/issues/5121)) ([d23128b](https://github.com/pagopa/io-app/commit/d23128b0f9d10f699af39f71024a56903559586f))
+* [[IOCOM-435](https://pagopa.atlassian.net/browse/IOCOM-435)] Add polling for download F24 attachments ([#5149](https://github.com/pagopa/io-app/issues/5149)) ([1b9188b](https://github.com/pagopa/io-app/commit/1b9188b5c0cf8126cea86fc198ff5e888f36125f))
+* [[IOCOM-450](https://pagopa.atlassian.net/browse/IOCOM-450),[IOCOM-449](https://pagopa.atlassian.net/browse/IOCOM-449),[IOCOM-508](https://pagopa.atlassian.net/browse/IOCOM-508)] Bottom sheet for multiple payments on SEND message details screen ([#5153](https://github.com/pagopa/io-app/issues/5153)) ([c5a8e47](https://github.com/pagopa/io-app/commit/c5a8e472d131771299ad728ffe5b6d45163938ac))
+* [[IOCOM-453](https://pagopa.atlassian.net/browse/IOCOM-453)] Add F24 section on SEND message screen ([#5156](https://github.com/pagopa/io-app/issues/5156)) ([3bed895](https://github.com/pagopa/io-app/commit/3bed895abad5d10a6fe4abc1251d31bd9f52d666))
+* [[IOCOM-455](https://pagopa.atlassian.net/browse/IOCOM-455)] Add bottom sheet for multiple F24  ([#5161](https://github.com/pagopa/io-app/issues/5161)) ([3fd5362](https://github.com/pagopa/io-app/commit/3fd53626429e100d18fdbf7977276d0e78a29d1a))
+* [[IOCOM-505](https://pagopa.atlassian.net/browse/IOCOM-505)] Multiple payments on SEND message screen ([#5152](https://github.com/pagopa/io-app/issues/5152)) ([59c112e](https://github.com/pagopa/io-app/commit/59c112e51dd8d12e01720af01eba7e5054c823ad))
+* [[IOCOM-624](https://pagopa.atlassian.net/browse/IOCOM-624)] Multiple paid payments on cancelled PN message ([#5139](https://github.com/pagopa/io-app/issues/5139)) ([e0e5638](https://github.com/pagopa/io-app/commit/e0e56386728ab6c3f245d06ac3bc33b9dfc14545))
+* [[IOPID-971](https://pagopa.atlassian.net/browse/IOPID-971),[IOPID-1074](https://pagopa.atlassian.net/browse/IOPID-1074)]  Add IntesiGroup IdP local reference ([#5122](https://github.com/pagopa/io-app/issues/5122)) ([2e1b344](https://github.com/pagopa/io-app/commit/2e1b34413406d3d61300ddca64cd5d35f594be9c))
+
+
+### Bug Fixes
+
+* [[IABT-1498](https://pagopa.atlassian.net/browse/IABT-1498)] Fix crash on android build and align app version ([#5158](https://github.com/pagopa/io-app/issues/5158)) ([3954bd8](https://github.com/pagopa/io-app/commit/3954bd8b4a376d3bbd10dc12d74e0031fd7889ce))
+* [[IOBP-292](https://pagopa.atlassian.net/browse/IOBP-292)] Idpay details monitoring payment method count not handling voiceover correctly ([#5129](https://github.com/pagopa/io-app/issues/5129)) ([5a2b812](https://github.com/pagopa/io-app/commit/5a2b812ab9bf95a4bd73c1ef657905830d24407d))
+* [[IOBP-336](https://pagopa.atlassian.net/browse/IOBP-336)] Fix file upload modal in barcodes scan screen ([#5123](https://github.com/pagopa/io-app/issues/5123)) ([c941938](https://github.com/pagopa/io-app/commit/c94193814c9ee2ec453f00e97e00153cc22954bf))
+* [[IOBP-360](https://pagopa.atlassian.net/browse/IOBP-360)] Fix dates format in ID Pay benificiary details screen ([#5162](https://github.com/pagopa/io-app/issues/5162)) ([908ca28](https://github.com/pagopa/io-app/commit/908ca2875b3e4515312d6039a3fac4b35db7988a)), closes [1#diff-763f13f0b9f72e4763aa758664939937121a62cc637c86ff29bfe6f41ab7d56](https://github.com/pagopa/1/issues/diff-763f13f0b9f72e4763aa758664939937121a62cc637c86ff29bfe6f41ab7d56)
+* [[IOBP-364](https://pagopa.atlassian.net/browse/IOBP-364)] Disable gesture in ID Pay onboarding completed screen ([#5154](https://github.com/pagopa/io-app/issues/5154)) ([be80fe0](https://github.com/pagopa/io-app/commit/be80fe0fd707b275e81edef7661c1056ac7884bc)), closes [1#diff-01b5ae5ce43bd13eb4995f7b94f39e84f2b77491d85513f111a2582d06e06115](https://github.com/pagopa/1/issues/diff-01b5ae5ce43bd13eb4995f7b94f39e84f2b77491d85513f111a2582d06e06115)
+
+
+### Chores
+
+* [[IOAPPFD0-178](https://pagopa.atlassian.net/browse/IOAPPFD0-178)] Partially remove local properties from `IOStyles` ([#5140](https://github.com/pagopa/io-app/issues/5140)) ([9bba118](https://github.com/pagopa/io-app/commit/9bba118540c1f52745bb87c9c0088eff6fc2728e))
+* [[IOBP-147](https://pagopa.atlassian.net/browse/IOBP-147)] Add QR Code Mixpanel analytics events ([#5099](https://github.com/pagopa/io-app/issues/5099)) ([b1427a1](https://github.com/pagopa/io-app/commit/b1427a15830e0ca8cabd01ee8a8a6115583ffd41))
+* [[IOBP-269](https://pagopa.atlassian.net/browse/IOBP-269)] Removal of residue nativeBase imports from wallet flows ([#5068](https://github.com/pagopa/io-app/issues/5068)) ([55f9fee](https://github.com/pagopa/io-app/commit/55f9fee227da55d451a06b89088f1621c2ca2fba))
+* [[IOBP-270](https://pagopa.atlassian.net/browse/IOBP-270),[IOBP-369](https://pagopa.atlassian.net/browse/IOBP-369)] Remove direct-referenced native-base components into CGN screens ([#5063](https://github.com/pagopa/io-app/issues/5063)) ([efc732d](https://github.com/pagopa/io-app/commit/efc732da5f0a65c6e5dfbdc697e55335e78b92c4))
+* [[IOBP-340](https://pagopa.atlassian.net/browse/IOBP-340)] Add loading state to `BarcodeScanBaseScreenComponent` ([#5166](https://github.com/pagopa/io-app/issues/5166)) ([479fde8](https://github.com/pagopa/io-app/commit/479fde8b3a5dbcaa3bce52184973b8d4cc10a966)), closes [1#diff-9a7ca968e85405f3c0468404c3d7592a8f243f9ea801afb6ff5f2f6ee6073](https://github.com/pagopa/1/issues/diff-9a7ca968e85405f3c0468404c3d7592a8f243f9ea801afb6ff5f2f6ee6073) [1#diff-1e4e400edd0a8debdd16a6c728d260d849b977083ea5aa108a5ba43ce25ac4c2](https://github.com/pagopa/1/issues/diff-1e4e400edd0a8debdd16a6c728d260d849b977083ea5aa108a5ba43ce25ac4c2) [1#diff-f9a213668da7a0880622ac4d0690f61c85abd9d961b6b1c05baafdf0717b5957](https://github.com/pagopa/1/issues/diff-f9a213668da7a0880622ac4d0690f61c85abd9d961b6b1c05baafdf0717b5957) [1#diff-36bd07843535011c4a091fd48fba32d133ba39986aa714dbe03a54332c1803a1](https://github.com/pagopa/1/issues/diff-36bd07843535011c4a091fd48fba32d133ba39986aa714dbe03a54332c1803a1) [1#diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6](https://github.com/pagopa/1/issues/diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6) [1#diff-eaf783c2cc9816aca220690082f4ba077df5954553a99078eb5e3faec9bd4b27](https://github.com/pagopa/1/issues/diff-eaf783c2cc9816aca220690082f4ba077df5954553a99078eb5e3faec9bd4b27) [1#diff-627f530afb8e81f8849fbfbfa2ee5ece0434bdbe062355178c9df587151a9513](https://github.com/pagopa/1/issues/diff-627f530afb8e81f8849fbfbfa2ee5ece0434bdbe062355178c9df587151a9513) [/github.com/pagopa/io-app/pull/5166/files#diff-df9889d94972386628b359910ce7aa1909a30d8a8d95b7931cf68fdc46499483](https://github.com/pagopa//github.com/pagopa/io-app/pull/5166/files/issues/diff-df9889d94972386628b359910ce7aa1909a30d8a8d95b7931cf68fdc46499483)
+* [[IOBP-366](https://pagopa.atlassian.net/browse/IOBP-366)] Fix`IOToast` import in `TransactionSummaryScreen` ([#5151](https://github.com/pagopa/io-app/issues/5151)) ([1ef8a55](https://github.com/pagopa/io-app/commit/1ef8a55986a37e3202e33c54bed535d8f6325b95)), closes [1#diff-47963200ba53ae60a3a94216a88c5409031afb1579f67ffd44ba8a4b381909a5](https://github.com/pagopa/1/issues/diff-47963200ba53ae60a3a94216a88c5409031afb1579f67ffd44ba8a4b381909a5)
+* [[IOCOM-626](https://pagopa.atlassian.net/browse/IOCOM-626)] Update API definitions ([#5145](https://github.com/pagopa/io-app/issues/5145)) ([106af0b](https://github.com/pagopa/io-app/commit/106af0b5e47cd2874372b564fa7bcaf1497a4c0a))
+* [[IOPID-966](https://pagopa.atlassian.net/browse/IOPID-966)] L2 Locked Access ([#5148](https://github.com/pagopa/io-app/issues/5148)) ([6142a46](https://github.com/pagopa/io-app/commit/6142a46797c111ab016686025e6bc7915bef9c68))
+
 ## [2.44.0-rc.4](https://github.com/pagopa/io-app/compare/2.44.0-rc.3...2.44.0-rc.4) (2023-10-24)
 
 

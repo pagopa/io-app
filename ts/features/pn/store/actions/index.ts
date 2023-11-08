@@ -45,7 +45,26 @@ export const cancelQueuedPaymentUpdates = createAction(
   "CANCEL_QUEUED_PAYMENT_UPDATES"
 );
 
+export const setSelectedPayment = createAction(
+  "PN_SET_SELECTED_PAYMENT",
+  resolve => (paymentId: string) => resolve({ paymentId })
+);
+
+export const clearSelectedPayment = createAction("PN_CLEAR_SELECTED_PAYMENT");
+
+export const startPaymentStatusTracking = createAction(
+  "PN_START_TRACKING_PAYMENT_STATUS",
+  resolve => (messageId: UIMessageId) => resolve({ messageId })
+);
+export const cancelPaymentStatusTracking = createAction(
+  "PN_CANCEL_PAYMENT_STATUS_TRACKING"
+);
+
 export type PnActions =
   | ActionType<typeof pnActivationUpsert>
   | ActionType<typeof updatePaymentForMessage>
-  | ActionType<typeof cancelQueuedPaymentUpdates>;
+  | ActionType<typeof cancelQueuedPaymentUpdates>
+  | ActionType<typeof setSelectedPayment>
+  | ActionType<typeof clearSelectedPayment>
+  | ActionType<typeof startPaymentStatusTracking>
+  | ActionType<typeof cancelPaymentStatusTracking>;
