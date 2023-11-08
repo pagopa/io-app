@@ -4,11 +4,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   IOColors,
   hexToRgba,
-  ContentWrapper
+  ContentWrapper,
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../components/core/typography/H2";
 import { Body } from "../../../components/core/typography/Body";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 
 const bottomBarHeight: number = 70;
 

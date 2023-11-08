@@ -1,26 +1,34 @@
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { View, Image, SafeAreaView, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView
+} from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonOutline,
+  ButtonSolidProps,
+  FooterWithButtons,
+  H1,
+  H3,
+  LabelLink,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
-import { H3 } from "../../../../components/core/typography/H3";
-import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
@@ -28,7 +36,6 @@ import customVariables from "../../../../theme/variables";
 import { useScreenReaderEnabled } from "../../../../utils/accessibility";
 import { getRemoteLocale } from "../../../../utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
@@ -74,8 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
-  },
-  urlButton: { flex: 1, textAlign: "center" }
+  }
 });
 
 const loadingOpacity = 0.9;
@@ -107,13 +113,13 @@ const getTosFooter = (
                 <Body color="bluegreyDark">
                   {I18n.t("bonus.bonusVacanze.advice")}
                 </Body>
-                <Link
+                <LabelLink
                   weight={"SemiBold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
                 >
                   {I18n.t("bonus.tos.title")}
-                </Link>
+                </LabelLink>
               </>
             ),
             // if tos and regulation url is defined
@@ -151,19 +157,17 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
   const bonusTypeLocalizedContent: BonusAvailableContent =
     bonusType[getRemoteLocale()];
 
-  const cancelButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: props.onCancel,
-    title: I18n.t("global.buttons.cancel")
+  const cancelButtonProps: ButtonSolidProps = {
+    label: I18n.t("global.buttons.cancel"),
+    accessibilityLabel: I18n.t("global.buttons.cancel"),
+    onPress: props.onCancel ?? constNull
   };
-  const requestButtonProps = confirmButtonProps(
-    props.onConfirm ?? constNull,
-    props.primaryCtaText,
-    undefined,
-    "activate-bonus-button"
-  );
+  const requestButtonProps: ButtonSolidProps = {
+    label: props.primaryCtaText,
+    testID: "activate-bonus-button",
+    accessibilityLabel: props.primaryCtaText,
+    onPress: props.onConfirm ?? constNull
+  };
 
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(true);
@@ -189,12 +193,12 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     }
     const buttons = urls.map((url, idx) => (
       <View key={`${idx}_${url.url}`}>
-        <ButtonDefaultOpacity
-          bordered={true}
+        <ButtonOutline
+          fullWidth
+          label={url.name}
+          accessibilityLabel={url.name}
           onPress={() => handleModalPress(url.url)}
-        >
-          <NBButtonText style={styles.urlButton}>{url.name}</NBButtonText>
-        </ButtonDefaultOpacity>
+        />
         {idx !== urls.length - 1 && <VSpacer size={8} />}
       </View>
     ));
@@ -207,13 +211,20 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     bonusType.sponsorship_description
   );
   const footerComponent = props.onConfirm ? (
-    <FooterWithButtons
-      type="TwoButtonsInlineThird"
-      leftButton={cancelButtonProps}
-      rightButton={requestButtonProps}
-    />
+    <View>
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        secondary={{ type: "Solid", buttonProps: requestButtonProps }}
+        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+      />
+    </View>
   ) : (
-    <FooterWithButtons type="SingleButton" leftButton={cancelButtonProps} />
+    <View>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+      />
+    </View>
   );
   const ContainerComponent = withLoadingSpinner(() => (
     <BaseScreenComponent
@@ -225,7 +236,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
     >
       <SafeAreaView style={IOStyles.flex}>
         {isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
-        <Content>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <View style={styles.row}>
             <View style={styles.flexStart}>
               {O.isSome(maybeSponsorshipDescription) && (
@@ -264,7 +275,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
             props.primaryCtaText
           )}
           {isMarkdownLoaded && <EdgeBorderComponent />}
-        </Content>
+        </ScrollView>
         {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
       </SafeAreaView>
     </BaseScreenComponent>

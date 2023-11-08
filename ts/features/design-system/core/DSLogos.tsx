@@ -1,18 +1,23 @@
-import * as React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import {
-  useIOTheme,
+  Avatar,
   HSpacer,
-  VSpacer,
+  IOColors,
+  IOLogoPaymentCardType,
   IOLogoPaymentExtType,
   IOLogoPaymentType,
+  IOPaymentCardLogos,
   IOPaymentExtLogos,
   IOPaymentLogos,
+  IOVisualCostants,
   LogoPayment,
+  LogoPaymentCard,
   LogoPaymentExt,
-  Avatar,
-  IOVisualCostants
+  VSpacer,
+  hexToRgba,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 import { LogoPaymentExtended } from "../../../components/ui/LogoPaymentExtended";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
@@ -84,6 +89,17 @@ export const DSLogos = () => {
         Banks (Extended)
       </H2>
       {renderLogoPaymentExtended()}
+
+      <VSpacer size={16} />
+
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
+        Payment Networks (Card)
+      </H2>
+      {renderPaymentLogosCard()}
     </DesignSystemScreen>
   );
 };
@@ -91,6 +107,9 @@ export const DSLogos = () => {
 const cdnPath = "https://assets.cdn.io.italia.it/logos/organizations/";
 
 const organizationsURIs = [
+  {
+    name: "Placeholder"
+  },
   {
     imageSource: `${cdnPath}1199250158.png`,
     name: "Comune di Milano"
@@ -118,6 +137,10 @@ const organizationsURIs = [
   {
     imageSource: `${cdnPath}80215430580.png`,
     name: "Ministero dell'Interno"
+  },
+  {
+    imageSource: `${cdnPath}wrongUri.png`,
+    name: "Wrong URI"
   }
 ];
 
@@ -134,11 +157,13 @@ const renderAvatar = () => (
             <Avatar
               shape="circle"
               size="small"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={
+                imageSource
+                  ? {
+                      uri: imageSource
+                    }
+                  : undefined
+              }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={4} />}
           </React.Fragment>
@@ -156,11 +181,13 @@ const renderAvatar = () => (
             <Avatar
               shape="square"
               size="small"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={
+                imageSource
+                  ? {
+                      uri: imageSource
+                    }
+                  : undefined
+              }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
           </React.Fragment>
@@ -178,11 +205,13 @@ const renderAvatar = () => (
             <Avatar
               shape="square"
               size="medium"
-              logoUri={[
-                {
-                  uri: imageSource
-                }
-              ]}
+              logoUri={
+                imageSource
+                  ? {
+                      uri: imageSource
+                    }
+                  : undefined
+              }
             />
             {i < organizationsURIs.length - 1 && <HSpacer size={8} />}
           </React.Fragment>
@@ -244,17 +273,45 @@ const renderLogoPaymentExtended = () => (
         dimensions={{ height: 33, width: 150 }}
       />
     </DSComponentViewerBox>
-    <DSComponentViewerBox name={`LogoPaymentExtended · icon = payPal`}>
-      <LogoPaymentExtended
-        icon="payPal"
-        dimensions={{ height: 33, width: 150 }}
-      />
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name={`LogoPaymentExtended · icon = bpay`}>
-      <LogoPaymentExtended
-        icon="bpay"
-        dimensions={{ height: 33, width: 220 }}
-      />
-    </DSComponentViewerBox>
   </>
+);
+
+const renderPaymentLogosCard = () => (
+  <View style={styles.itemsWrapper}>
+    {Object.entries(IOPaymentCardLogos).map(([logoItemName]) => (
+      <DSLogoPaymentViewerBox
+        key={logoItemName}
+        name={logoItemName}
+        size="full"
+        image={
+          <LogoPaymentCard
+            align="start"
+            height={32}
+            name={logoItemName as IOLogoPaymentCardType}
+          />
+        }
+      />
+    ))}
+    <VSpacer size={24} />
+    <DSComponentViewerBox
+      fullWidth
+      name="Debug mode enabled, possible align values"
+    >
+      <View
+        style={{
+          borderRadius: 16,
+          padding: 16,
+          backgroundColor: IOColors.white,
+          borderColor: hexToRgba(IOColors.black, 0.15),
+          borderWidth: 1
+        }}
+      >
+        <LogoPaymentCard debugMode height={32} name="payPal" align="start" />
+        <VSpacer size={8} />
+        <LogoPaymentCard debugMode height={32} name="payPal" align="center" />
+        <VSpacer size={8} />
+        <LogoPaymentCard debugMode height={32} name="payPal" align="end" />
+      </View>
+    </DSComponentViewerBox>
+  </View>
 );

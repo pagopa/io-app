@@ -20,13 +20,11 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   IOBottomSheetHeaderRadius,
-  IOSpacingScale
+  IOSpacingScale,
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
-import {
-  IOStyles,
-  IOVisualCostants
-} from "../../components/core/variables/IOStyles";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { TestID } from "../../types/WithTestID";
 import { isScreenReaderEnabled } from "../accessibility";

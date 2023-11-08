@@ -16,7 +16,7 @@ export const toPNMessage = (
     O.map(details => ({
       ...details,
       attachments: pipe(
-        attachmentsFromThirdPartyMessage(messageFromApi, "PN"),
+        attachmentsFromThirdPartyMessage(messageFromApi),
         O.toUndefined
       )
     }))

@@ -84,8 +84,8 @@ import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
-import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
-import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
+import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
+import { watchMessageAttachmentsSaga } from "../features/messages/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
@@ -103,7 +103,6 @@ import {
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
-import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -209,7 +208,7 @@ export function* initializeApplicationSaga(
   }
 
   // clear cached downloads when the logged user changes
-  yield* takeEvery(differentProfileLoggedIn, clearAllAttachments);
+  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
@@ -520,10 +519,6 @@ export function* initializeApplicationSaga(
     yield* call(completeOnboardingSaga);
   }
 
-  // At the end of the onboarding checks, we enable the whatsnew check so that it is done
-  // only once you get to the messages screen (manual whatsnew management still remains after the tos)
-  yield* put(enableWhatsNewCheck());
-
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
@@ -570,7 +565,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken);
+    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
   }
 
   // Start watching for message attachments actions (general

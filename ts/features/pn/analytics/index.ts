@@ -2,11 +2,24 @@ import { pipe } from "fp-ts/lib/function";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
-import { TransactionSummaryErrorContent } from "../../../screens/wallet/payment/TransactionSummaryScreen";
 import { PNMessage } from "../../pn/store/types/types";
 import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+import {
+  booleanToYesNo,
+  buildEventProperties,
+  numberToYesNoOnThreshold
+} from "../../../utils/analytics";
+
+export interface TrackPNPaymentStatus {
+  paymentCount: number;
+  unpaidCount: number;
+  paidCount: number;
+  errorCount: number;
+  expiredCount: number;
+  revokedCount: number;
+  ongoingCount: number;
+}
 
 const pnServiceActivationStatusBoolToString = (activated?: boolean) =>
   activated ? "activated" : "deactivated";
@@ -77,55 +90,69 @@ export const trackPNServiceStatusChangeError = (currentStatus?: boolean) =>
     })
   );
 
-export function trackPNAttachmentDownloadFailure() {
+export function trackPNAttachmentDownloadFailure(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_DOWNLOAD_FAILURE",
-    buildEventProperties("TECH", undefined)
+    buildEventProperties("TECH", undefined, {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentSave() {
+export function trackPNAttachmentSave(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_SAVE",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentShare() {
+export function trackPNAttachmentShare(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_SHARE",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentSaveShare() {
+export function trackPNAttachmentSaveShare(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_SAVE_SHARE",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentOpen() {
+export function trackPNAttachmentOpen(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_OPEN",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
-export function trackPNAttachmentOpening() {
+export function trackPNAttachmentOpening(category?: string) {
   void mixpanelTrack(
     "PN_ATTACHMENT_OPENING",
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", {
+      category
+    })
   );
 }
 
 export function trackPNAttachmentOpeningSuccess(
-  previewStatus: "displayer" | "error"
+  previewStatus: "displayer" | "error",
+  category?: string
 ) {
   void mixpanelTrack(
     "PN_ATTACHMENT_OPENING_SUCCESS",
     buildEventProperties("UX", "screen_view", {
-      PREVIEW_STATUS: previewStatus
+      PREVIEW_STATUS: previewStatus,
+      category
     })
   );
 }
@@ -164,31 +191,6 @@ export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
   );
 }
 
-export function trackPNPaymentInfoError(
-  paymentVerificationError: O.Some<TransactionSummaryErrorContent>
-) {
-  void mixpanelTrack(
-    "PN_PAYMENT_INFO_ERROR",
-    buildEventProperties("TECH", undefined, {
-      PAYMENT_STATUS: O.toUndefined(paymentVerificationError)
-    })
-  );
-}
-
-export function trackPNPaymentInfoPaid() {
-  void mixpanelTrack(
-    "PN_PAYMENT_INFO_PAID",
-    buildEventProperties("TECH", undefined)
-  );
-}
-
-export function trackPNPaymentInfoPayable() {
-  void mixpanelTrack(
-    "PN_PAYMENT_INFO_PAYABLE",
-    buildEventProperties("TECH", undefined)
-  );
-}
-
 export function trackPNPushOpened() {
   void mixpanelTrack("PN_PUSH_OPENED", buildEventProperties("UX", "action"));
 }
@@ -205,19 +207,58 @@ export function trackPNShowTimeline() {
 }
 
 export function trackPNUxSuccess(
-  containsPayment: boolean,
+  paymentCount: number,
   firstTimeOpening: boolean,
-  isCancelled: boolean
+  isCancelled: boolean,
+  containsF24: boolean
 ) {
   void mixpanelTrack(
     "PN_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {
-      contains_payment: booleanToYesNo(containsPayment),
+      contains_payment: numberToYesNoOnThreshold(paymentCount),
       first_time_opening: booleanToYesNo(firstTimeOpening),
       notification_status: isCancelled ? "cancelled" : "active",
-      contains_multipayment: "no",
-      count_payment: containsPayment ? 1 : 0,
-      contains_f24: "no"
+      contains_multipayment: numberToYesNoOnThreshold(paymentCount, 1),
+      count_payment: paymentCount,
+      contains_f24: containsF24
     })
   );
+}
+
+export function trackPNPaymentStart() {
+  void mixpanelTrack("PN_PAYMENT_START", buildEventProperties("UX", "action"));
+}
+
+export function trackPNShowAllPayments() {
+  void mixpanelTrack(
+    "PN_SHOW_ALL_PAYMENT",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackPNPaymentStatus({
+  paymentCount,
+  unpaidCount,
+  paidCount,
+  errorCount,
+  expiredCount,
+  revokedCount,
+  ongoingCount
+}: TrackPNPaymentStatus) {
+  void mixpanelTrack(
+    "PN_PAYMENT_STATUS",
+    buildEventProperties("TECH", undefined, {
+      count_payment: paymentCount,
+      count_unpaid: unpaidCount,
+      count_paid: paidCount,
+      count_error: errorCount,
+      count_expired: expiredCount,
+      count_revoked: revokedCount,
+      count_inprogress: ongoingCount
+    })
+  );
+}
+
+export function trackPNShowF24() {
+  void mixpanelTrack("PN_SHOW_F24", buildEventProperties("UX", "action"));
 }

@@ -1,12 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useStore } from "react-redux";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import I18n from "../../../i18n";
@@ -19,19 +18,31 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageLoading } from "../../messages/components/MessageLoading";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
 import { MessageDetails } from "../components/MessageDetails";
-import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
+import { MessageDetailsError } from "../components/MessageDetailsError";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
-import { isCancelledFromPNMessagePot, paymentFromPNMessagePot } from "../utils";
-import { getRptIdFromPayment } from "../utils/rptId";
+import {
+  containsF24FromPNMessagePot,
+  isCancelledFromPNMessagePot,
+  paymentsFromPNMessagePot
+} from "../utils";
 import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
+import {
+  cancelPaymentStatusTracking,
+  cancelQueuedPaymentUpdates,
+  clearSelectedPayment,
+  startPaymentStatusTracking,
+  updatePaymentForMessage
+} from "../store/actions";
+import { GlobalState } from "../../../store/reducers/types";
+import { selectedPaymentIdSelector } from "../store/reducers/payments";
 
-export type PnMessageDetailsScreenNavigationParams = Readonly<{
+export type MessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
   serviceId: ServiceId;
   firstTimeOpening: boolean;
@@ -41,8 +52,7 @@ const renderMessage = (
   messageId: UIMessageId,
   messagePot: pot.Pot<O.Option<PNMessage>, Error>,
   service: ServicePublic | undefined,
-  payment: NotificationPaymentInfo | undefined,
-  rptId: RptId | undefined,
+  payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
   onRetry: () => void
 ) =>
   pot.fold(
@@ -50,19 +60,18 @@ const renderMessage = (
     () => <></>,
     () => <MessageLoading />,
     () => <MessageLoading />,
-    () => <PnMessageDetailsError onRetry={onRetry} />,
+    () => <MessageDetailsError onRetry={onRetry} />,
     messageOption =>
       O.isSome(messageOption) ? (
         <MessageDetails
           messageId={messageId}
           message={messageOption.value}
           service={service}
-          payment={payment}
-          rptId={rptId}
+          payments={payments}
         />
       ) : (
         // decoding error
-        <PnMessageDetailsError onRetry={onRetry} />
+        <MessageDetailsError onRetry={onRetry} />
       ),
     () => <MessageLoading />,
     () => <></>,
@@ -76,7 +85,6 @@ export const MessageDetailsScreen = (
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const uxEventTracked = React.useRef(false);
 
   const service = pot.toUndefined(
     useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
@@ -86,15 +94,17 @@ export const MessageDetailsScreen = (
   const message = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
-  const payment = paymentFromPNMessagePot(currentFiscalCode, message);
-  const rptId = getRptIdFromPayment(payment);
+  const payments = paymentsFromPNMessagePot(currentFiscalCode, message);
 
   const loadContent = React.useCallback(() => {
+    dispatch(startPaymentStatusTracking(messageId));
     dispatch(loadThirdPartyMessage.request(messageId));
   }, [dispatch, messageId]);
 
   const customGoBack = React.useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
+    dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
   }, [dispatch, navigation]);
 
@@ -102,12 +112,38 @@ export const MessageDetailsScreen = (
     loadContent();
   });
 
-  if (!uxEventTracked.current && isStrictSome(message)) {
-    // eslint-disable-next-line functional/immutable-data
-    uxEventTracked.current = true;
-    const isCancelled = isCancelledFromPNMessagePot(message);
-    trackPNUxSuccess(!!rptId, firstTimeOpening, isCancelled);
-  }
+  useOnFirstRender(
+    () => {
+      const paymentCount = payments?.length ?? 0;
+      const isCancelled = isCancelledFromPNMessagePot(message);
+      const containsF24 = containsF24FromPNMessagePot(message);
+
+      trackPNUxSuccess(
+        paymentCount,
+        firstTimeOpening,
+        isCancelled,
+        containsF24
+      );
+    },
+    () => isStrictSome(message)
+  );
+
+  const store = useStore();
+  useFocusEffect(
+    React.useCallback(() => {
+      const globalState = store.getState() as GlobalState;
+      const selectedPaymentId = selectedPaymentIdSelector(globalState);
+      if (selectedPaymentId) {
+        dispatch(clearSelectedPayment());
+        dispatch(
+          updatePaymentForMessage.request({
+            messageId,
+            paymentId: selectedPaymentId
+          })
+        );
+      }
+    }, [dispatch, messageId, store])
+  );
 
   return (
     <BaseScreenComponent
@@ -116,14 +152,7 @@ export const MessageDetailsScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex}>
-        {renderMessage(
-          messageId,
-          message,
-          service,
-          payment,
-          rptId,
-          loadContent
-        )}
+        {renderMessage(messageId, message, service, payments, loadContent)}
       </SafeAreaView>
     </BaseScreenComponent>
   );

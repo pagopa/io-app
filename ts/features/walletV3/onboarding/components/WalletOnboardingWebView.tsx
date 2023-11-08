@@ -21,7 +21,8 @@ import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3
 import { extractOnboardingResult } from "../utils";
 
 type WalletOnboardingWebViewProps = {
-  onSuccess: (outcome: OnboardingOutcome) => void;
+  paymentMethodId: string;
+  onSuccess: (outcome: OnboardingOutcome, walletId: string) => void;
   onFailure: (outcome: OnboardingOutcome) => void;
   onError: (
     error: WebViewErrorEvent | WebViewHttpErrorEvent | NetworkError
@@ -41,11 +42,12 @@ const extractOnboardingWebViewUri = (
 
 /**
  * Component used to show the webview for the wallet onboarding flow
- * @param onSuccess callback called when the onboarding flow is completed successfully
+ * @param onSuccess callback called when the onboarding flow is completed successfully, when invoked can have also a walletId param
  * @param onFailure callback called when the onboarding flow is completed with a failure
  * @param onError callback called when the webview or http request encounters an error
  */
 const WalletOnboardingWebView = ({
+  paymentMethodId,
   onSuccess,
   onFailure,
   onError
@@ -58,11 +60,11 @@ const WalletOnboardingWebView = ({
   const isLoading = pot.isLoading(onboardingStartupResult) || !webviewReady;
 
   React.useEffect(() => {
-    dispatch(walletStartOnboarding.request());
+    dispatch(walletStartOnboarding.request({ paymentMethodId }));
     return () => {
       dispatch(walletStartOnboarding.cancel());
     };
-  }, [dispatch]);
+  }, [dispatch, paymentMethodId]);
 
   React.useEffect(() => {
     if (pot.isError(onboardingStartupResult)) {
@@ -77,7 +79,7 @@ const WalletOnboardingWebView = ({
       O.fromNullable,
       O.map(result => {
         if (result.status === "SUCCESS") {
-          onSuccess(result.outcome);
+          onSuccess(result.outcome, result.walletId);
         } else if (result.status === "FAILURE") {
           onFailure(result.outcome);
         }
