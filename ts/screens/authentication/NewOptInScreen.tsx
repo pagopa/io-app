@@ -26,7 +26,6 @@ import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInA
 import { useIODispatch } from "../../store/hooks";
 import { TranslationKeys } from "../../../locales/locales";
 
-// FIXME -> insert correct contextual help and FAQ https://pagopa.atlassian.net/browse/IOPID-987
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt-in.contextualHelpTitle",
   body: "authentication.opt-in.contextualHelpContent"
