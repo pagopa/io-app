@@ -16,29 +16,29 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
-import interno from "../../../../../img/features/it-wallet/interno.png";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeReducer";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import I18n from "../../../../i18n";
-import ItwBulletList from "../../components/ItwBulletList";
-import { useItwDataProcessing } from "../../hooks/useItwDataProcessing";
-import { CREDENTIAL_ISSUER, getRequestedClaims } from "../../utils/mocks";
-import { showCancelAlert } from "../../utils/alert";
-import ROUTES from "../../../../navigation/routes";
-import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import ItwKoView from "../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
-import ItwTextInfo from "../../components/ItwTextInfo";
+import interno from "../../../../../../img/features/it-wallet/interno.png";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwDecodedPidValueSelector } from "../../../store/reducers/itwPidDecodeReducer";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import I18n from "../../../../../i18n";
+import ItwBulletList from "../../../components/ItwBulletList";
+import { useItwDataProcessing } from "../../../hooks/useItwDataProcessing";
+import { CREDENTIAL_ISSUER, getRequestedClaims } from "../../../utils/mocks";
+import { showCancelAlert } from "../../../utils/alert";
+import ROUTES from "../../../../../navigation/routes";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import ItwKoView from "../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import ItwTextInfo from "../../../components/ItwTextInfo";
 
 /**
  * This screen displays the information about the credential that is going to be shared
  * with the issuer.
  */
-const ItwCredentialIssuingInfoScreen = () => {
+const ItwCredentialAuthScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { present, bottomSheet } = useItwDataProcessing();
@@ -147,7 +147,7 @@ const ItwCredentialIssuingInfoScreen = () => {
               color: "primary",
               accessibilityLabel: I18n.t("global.buttons.continue"),
               onPress: () =>
-                navigation.navigate(ITW_ROUTES.CREDENTIALS.PREVIEW),
+                navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.PREVIEW),
               label: I18n.t("global.buttons.continue")
             }
           }}
@@ -179,4 +179,4 @@ const ItwCredentialIssuingInfoScreen = () => {
     </>
   );
 };
-export default ItwCredentialIssuingInfoScreen;
+export default ItwCredentialAuthScreen;

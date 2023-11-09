@@ -68,7 +68,7 @@ const ItwHomeScreen = () => {
   const onPressAddCredentials = () => {
     if (itWalletExperimentalEnabled) {
       navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.CREDENTIALS.CATALOG
+        screen: ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG
       });
     }
   };

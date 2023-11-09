@@ -5,27 +5,27 @@ import { IOStyles, useIOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import I18n from "../../../../i18n";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import { useIOSelector } from "../../../../store/hooks";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import I18n from "../../../../../i18n";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { useIOSelector } from "../../../../../store/hooks";
 import {
   itwIssuanceChecksSelector,
   IssuanceData
-} from "../../store/reducers/new/itwIssuanceReducer";
-import ItwContinueScreen from "../../components/ItwResultComponent";
-import { showCancelAlert } from "../../utils/alert";
+} from "../../../store/reducers/new/itwIssuanceReducer";
+import ItwContinueScreen from "../../../components/ItwResultComponent";
+import { showCancelAlert } from "../../../utils/alert";
 import {
   ItWalletError,
   ItWalletErrorTypes,
   ItwErrorMapping
-} from "../../utils/errors/itwErrors";
-import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
-import ItwKoView from "../../components/ItwKoView";
-import ROUTES from "../../../../navigation/routes";
+} from "../../../utils/errors/itwErrors";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import ItwKoView from "../../../components/ItwKoView";
+import ROUTES from "../../../../../navigation/routes";
 
 /**
  * Screen that displays the result of the credential issuance checks
@@ -40,7 +40,7 @@ const ItwCredentialsChecksScreen = () => {
    * When the user confirms the issuance, the user is redirected to the presentation screen.
    */
   const onUserConfirmIssuance = () => {
-    navigation.navigate(ITW_ROUTES.CREDENTIALS.ISSUING_INFO);
+    navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.AUTH);
   };
 
   /**

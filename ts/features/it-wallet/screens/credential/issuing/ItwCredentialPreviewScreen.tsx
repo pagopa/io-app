@@ -14,32 +14,32 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import ItwCredentialCard from "../../components/ItwCredentialCard";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
-import { useItwInfoBottomSheet } from "../../hooks/useItwInfoBottomSheet";
-import { showCancelAlert } from "../../utils/alert";
-import ROUTES from "../../../../navigation/routes";
-import ItwKoView from "../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import ItwCredentialCard from "../../../components/ItwCredentialCard";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../i18n";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList";
+import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
+import { showCancelAlert } from "../../../utils/alert";
+import ROUTES from "../../../../../navigation/routes";
+import ItwKoView from "../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   itwConfirmStoreCredential,
   itwIssuanceGetCredential
-} from "../../store/actions/new/itwIssuanceActions";
+} from "../../../store/actions/new/itwIssuanceActions";
 import {
   IssuanceResultData,
   itwIssuanceResultDataSelector,
   itwIssuanceResultSelector
-} from "../../store/reducers/new/itwIssuanceReducer";
-import { ItWalletError } from "../../utils/errors/itwErrors";
-import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
+} from "../../../store/reducers/new/itwIssuanceReducer";
+import { ItWalletError } from "../../../utils/errors/itwErrors";
+import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
