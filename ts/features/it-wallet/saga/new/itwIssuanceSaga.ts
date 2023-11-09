@@ -15,7 +15,6 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { walletProviderUrl } from "../../../../config";
 import {
   itwConfirmStoreCredential,
-  itwIssuanceAddCredential,
   itwIssuanceChecks,
   itwIssuanceGetCredential
 } from "../../store/actions/new/itwIssuanceActions";
@@ -277,12 +276,8 @@ function* addCredentialWithPin() {
       );
     }
   } catch (e) {
-    const res = toError(e);
-    yield* put(
-      itwIssuanceAddCredential.failure({
-        code: ItWalletErrorTypes.CREDENTIAL_ADD_ERROR,
-        message: res.message
-      })
+    IOToast.error(
+      I18n.t("features.itWallet.issuing.credentialPreviewScreen.toast.failure")
     );
   }
 }

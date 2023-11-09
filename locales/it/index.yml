@@ -3486,6 +3486,7 @@ features:
             subtitle: "I tuoi dati non vengono salvati su questo dispositivo, ma conservati nella Wallet Instance e potrai decidere di revocarli in qualsiasi momento."
         toast:
           success: "Tessera aggiunta!"
+          failure: "Non siamo riusciti ad aggiungere questa tessera, riprova più tardi."
     presentation: 
       credentialDetails: 
         buttons: 

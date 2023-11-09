@@ -29,12 +29,6 @@ export const itwIssuanceGetCredential = createAsyncAction(
   "ITW_ISSUANCE_GET_CREDENTIAL_FAILURE"
 )<void, IssuanceResultData, ItWalletError>();
 
-export const itwIssuanceAddCredential = createAsyncAction(
-  "ITW_ISSUANCE_GET_CREDENTIAL_REQUEST",
-  "ITW_ISSUANCE_GET_CREDENTIAL_SUCCESS",
-  "ITW_ISSUANCE_GET_CREDENTIAL_FAILURE"
-)<void, void, ItWalletError>();
-
 /**
  * Action which is dispatched when the user confirms the storage of the credential.
  */

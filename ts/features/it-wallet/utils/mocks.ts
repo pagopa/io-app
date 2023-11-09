@@ -2,8 +2,6 @@ import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { IOIcons } from "@pagopa/io-app-design-system";
 import { ImageSourcePropType } from "react-native";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
 import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
@@ -136,17 +134,6 @@ export const defaultDisplayData: CredentialCatalogDisplay = {
   firstLine: [],
   secondLine: []
 };
-
-export const getFromCatalog = (
-  credentialType: string
-): O.Option<CredentialCatalogAvailableItem> =>
-  pipe(
-    CREDENTIALS_CATALOG.filter(
-      (e): e is CredentialCatalogAvailableItem =>
-        !e.incoming && e.type === credentialType
-    )[0],
-    O.fromNullable
-  );
 
 export const getRequestedClaims = (
   decodedPid: PidWithToken

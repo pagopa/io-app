@@ -5,7 +5,6 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import {
-  itwIssuanceAddCredential,
   itwIssuanceChecks,
   itwIssuanceGetCredential
 } from "../../actions/new/itwIssuanceActions";
@@ -41,7 +40,6 @@ export type ItwIssuanceState = {
    * Issuance result pot.
    */
   issuanceResult: pot.Pot<O.Option<IssuanceResultData>, ItWalletError>;
-  addCredential: pot.Pot<true, ItWalletError>;
 };
 
 /**
@@ -49,8 +47,7 @@ export type ItwIssuanceState = {
  */
 const EMPTY_STATE: ItwIssuanceState = {
   checks: pot.none,
-  issuanceResult: pot.none,
-  addCredential: pot.none
+  issuanceResult: pot.none
 };
 
 const reducer = (
@@ -94,25 +91,6 @@ const reducer = (
       return {
         ...state,
         issuanceResult: pot.toError(state.issuanceResult, action.payload)
-      };
-
-    /**
-     * Add credential
-     */
-    case getType(itwIssuanceAddCredential.request):
-      return {
-        ...state,
-        addCredential: pot.toLoading(state.addCredential)
-      };
-    case getType(itwIssuanceAddCredential.success):
-      return {
-        ...state,
-        addCredential: pot.some(true)
-      };
-    case getType(itwIssuanceAddCredential.failure):
-      return {
-        ...state,
-        addCredential: pot.toError(state.addCredential, action.payload)
       };
 
     default:

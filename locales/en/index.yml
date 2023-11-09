@@ -3460,6 +3460,7 @@ features:
             subtitle: "our data is not saved on this device but stored in the Wallet Instance, and you can choose to revoke them at any time."
         toast:
           success: "Credential added!"
+          failure: "We were not able to add this card, try again later."
     presentation: 
       credentialDetails: 
         buttons: 
