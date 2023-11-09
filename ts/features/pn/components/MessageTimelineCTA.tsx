@@ -7,7 +7,7 @@ import i18n from "../../../i18n";
 import { handleItemOnPress } from "../../../utils/url";
 import { trackPNTimelineExternal } from "../analytics";
 
-export const PnMessageTimelineCTA = (props: { url: string }) => (
+export const MessageTimelineCTA = (props: { url: string }) => (
   <View
     style={{
       flexDirection: "column",

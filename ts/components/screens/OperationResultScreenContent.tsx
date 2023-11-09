@@ -1,5 +1,6 @@
 import {
   ButtonLink,
+  ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
   H3,
@@ -23,7 +24,7 @@ type OperationResultScreenContent = {
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   secondaryAction?: Pick<
-    ButtonLink,
+    ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
 };

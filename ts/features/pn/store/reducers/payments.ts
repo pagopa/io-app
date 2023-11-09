@@ -92,7 +92,6 @@ export const paymentsReducer = (
         selectedPayment: undefined
       };
     case getType(reloadAllMessages.request):
-      // console.log(`=== RELOAD ALL MESSAGES REQUEST RECEIVED ===`);
       return initialState;
   }
   return state;
