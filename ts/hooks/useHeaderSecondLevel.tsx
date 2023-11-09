@@ -1,19 +1,25 @@
-import * as React from "react";
 import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { FAQsCategoriesType } from "../utils/faq";
-import I18n from "../i18n";
+import * as React from "react";
+import { useLayoutEffect } from "react";
+import {
+  useAnimatedScrollHandler,
+  useSharedValue
+} from "react-native-reanimated";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../components/screens/BaseScreenComponent";
+import I18n from "../i18n";
+import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 
 type CommonProps = {
   title: string;
   backAccessibilityLabel?: string;
   goBack?: () => void;
+  transparent?: boolean;
+  scrollTriggerOffsetValue?: number;
 };
 
 type NoAdditionalActions = {
@@ -61,8 +67,12 @@ export const useHeaderSecondLevel = ({
   goBack,
   supportRequest,
   secondAction,
-  thirdAction
+  thirdAction,
+  transparent,
+  scrollTriggerOffsetValue = 0
 }: HeaderSecondLevelHookProps) => {
+  const translationY = useSharedValue(0);
+
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
     contextualHelpMarkdown,
@@ -129,9 +139,32 @@ export const useHeaderSecondLevel = ({
     thirdAction
   ]);
 
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    // eslint-disable-next-line functional/immutable-data
+    translationY.value = event.contentOffset.y;
+  });
+
   useLayoutEffect(() => {
     navigation.setOptions({
-      header: () => <HeaderSecondLevel {...headerComponentProps} />
+      header: () => (
+        <HeaderSecondLevel
+          scrollValues={{
+            contentOffsetY: translationY,
+            triggerOffset: scrollTriggerOffsetValue
+          }}
+          transparent={transparent}
+          {...headerComponentProps}
+        />
+      ),
+      headerTransparent: transparent
     });
-  }, [headerComponentProps, navigation]);
+  }, [
+    headerComponentProps,
+    navigation,
+    scrollTriggerOffsetValue,
+    translationY,
+    transparent
+  ]);
+
+  return { scrollHandler };
 };
