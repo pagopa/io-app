@@ -306,6 +306,9 @@ const getRefundOperationProps = (
 const getSuspendOperationProps = (
   operation: SuspendOperationDTO
 ): ListItemTransaction => ({
+  paymentLogoIcon: (
+    <Icon name={"notice"} color="grey-300" testID="creditCardLogoTestID" />
+  ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
   ),
@@ -317,6 +320,13 @@ const getSuspendOperationProps = (
 const getReadmittedOperationProps = (
   operation: ReadmittedOperationDTO
 ): ListItemTransaction => ({
+  paymentLogoIcon: (
+    <Icon
+      name={"checkTickBig"}
+      color="grey-300"
+      testID="creditCardLogoTestID"
+    />
+  ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
   ),
