@@ -1,4 +1,4 @@
-import { IdPayBarcodeActions } from "../../../barcode/store";
+import { IdPayBarcodeActions } from "../../../barcode/store/actions";
 import { IdPayCodeActions } from "../../../code/store/actions";
 import { IDPayInitiativeConfigurationActions } from "../../../configuration/store/actions";
 import { IdPayInitiativeActions } from "../../../details/store/actions";

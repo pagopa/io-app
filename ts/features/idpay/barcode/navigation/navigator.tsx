@@ -1,5 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { IdPayBarcodeRoutes } from "./routes";
+import { IdPayBarcodeParamsList } from "./params";
 
 const Stack = createStackNavigator<IdPayBarcodeParamsList>();
 export const IdPayBarcodeNavigator = () => (
@@ -16,12 +18,3 @@ export const IdPayBarcodeNavigator = () => (
 );
 
 const MockScreen = () => <></>;
-
-export const IdPayBarcodeRoutes = {
-  IDPAY_BARCODE_MAIN: "IDPAY_BARCODE_MAIN",
-  IDPAY_BARCODE_RESULT: "IDPAY_BARCODE_RESULT"
-} as const;
-export type IdPayBarcodeParamsList = {
-  [IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN]: undefined;
-  [IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT]: undefined;
-};

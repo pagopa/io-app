@@ -3,7 +3,6 @@ import { pipe } from "fp-ts/lib/function";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import {
   CodeEnum,
   TransactionErrorDTO
@@ -11,14 +10,14 @@ import {
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
-import { idpayGenerateBarcode } from "../store";
+import { idPayGenerateBarcode } from "../store/actions";
 
 export function* watchIDPayBarcodeSaga(
   idPayClient: IDPayClient,
   bearerToken: string
 ): SagaIterator {
   yield* takeLatest(
-    idpayGenerateBarcode.request,
+    idPayGenerateBarcode.request,
     handleGenerateBarcode,
     idPayClient.createBarCodeTransaction,
     bearerToken
@@ -33,7 +32,7 @@ const genericError: TransactionErrorDTO = {
 export function* handleGenerateBarcode(
   createBarCodeTransaction: IDPayClient["createBarCodeTransaction"],
   bearerToken: string,
-  action: ActionType<typeof idpayGenerateBarcode.request>
+  action: ActionType<typeof idPayGenerateBarcode.request>
 ) {
   const createBarCodeTransactionRequest = createBarCodeTransaction({
     bearerAuth: bearerToken,
@@ -54,7 +53,7 @@ export function* handleGenerateBarcode(
       E.fold(
         _error =>
           put(
-            idpayGenerateBarcode.failure({
+            idPayGenerateBarcode.failure({
               initiativeId: action.payload.initiativeId,
               error: genericError
             })
@@ -62,10 +61,8 @@ export function* handleGenerateBarcode(
         response =>
           put(
             response.status === 201
-              ? idpayGenerateBarcode.success(
-                  response.value
-                )
-              : idpayGenerateBarcode.failure({
+              ? idPayGenerateBarcode.success(response.value)
+              : idPayGenerateBarcode.failure({
                   initiativeId: action.payload.initiativeId,
                   error: response.value
                 })
@@ -74,7 +71,7 @@ export function* handleGenerateBarcode(
     );
   } catch (error) {
     yield* put(
-      idpayGenerateBarcode.failure({
+      idPayGenerateBarcode.failure({
         initiativeId: action.payload.initiativeId,
         error: genericError
       })

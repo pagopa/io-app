@@ -12,7 +12,7 @@ import {
 } from "../../../../../../definitions/idpay/TransactionErrorDTO";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
-import { idpayGenerateBarcode } from "../../store";
+import { idPayGenerateBarcode } from "../../store/actions";
 
 describe("handleGenerateBarcode test", () => {
   const initiativeId = "abcdef";
@@ -30,13 +30,13 @@ describe("handleGenerateBarcode test", () => {
   };
 
   it(`should put ${getType(
-    idpayGenerateBarcode.success
+    idPayGenerateBarcode.success
   )} when createBarCodeTransactionRequest is 201`, () => {
     testSaga(
       handleGenerateBarcode,
       mockIDPayClient.createBarCodeTransaction,
       "bpdtoken",
-      idpayGenerateBarcode.request({ initiativeId })
+      idPayGenerateBarcode.request({ initiativeId })
     )
       .next()
       .call(
@@ -45,22 +45,22 @@ describe("handleGenerateBarcode test", () => {
           bearerAuth: "token",
           body: { initiativeId }
         }),
-        idpayGenerateBarcode.request({ initiativeId })
+        idPayGenerateBarcode.request({ initiativeId })
       )
       .next(E.right({ status: 201, value: mock201 }))
-      .put(idpayGenerateBarcode.success(mock201))
+      .put(idPayGenerateBarcode.success(mock201))
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    idpayGenerateBarcode.failure
+    idPayGenerateBarcode.failure
   )} when createBarCodeTransactionRequest is not 201`, () => {
     testSaga(
       handleGenerateBarcode,
       mockIDPayClient.createBarCodeTransaction,
       "bpdtoken",
-      idpayGenerateBarcode.request({ initiativeId })
+      idPayGenerateBarcode.request({ initiativeId })
     )
       .next()
       .call(
@@ -69,11 +69,11 @@ describe("handleGenerateBarcode test", () => {
           bearerAuth: "token",
           body: { initiativeId }
         }),
-        idpayGenerateBarcode.request({ initiativeId })
+        idPayGenerateBarcode.request({ initiativeId })
       )
       .next(E.right({ status: 401, value: mockError }))
       .put(
-        idpayGenerateBarcode.failure({
+        idPayGenerateBarcode.failure({
           initiativeId,
           error: mockError
         })
@@ -82,13 +82,13 @@ describe("handleGenerateBarcode test", () => {
       .isDone();
   });
   it(`should put ${getType(
-    idpayGenerateBarcode.failure
+    idPayGenerateBarcode.failure
   )} with a generic error when the api call fails`, () => {
     testSaga(
       handleGenerateBarcode,
       mockIDPayClient.createBarCodeTransaction,
       "bpdtoken",
-      idpayGenerateBarcode.request({ initiativeId })
+      idPayGenerateBarcode.request({ initiativeId })
     )
       .next()
       .call(
@@ -97,11 +97,11 @@ describe("handleGenerateBarcode test", () => {
           bearerAuth: "token",
           body: { initiativeId }
         }),
-        idpayGenerateBarcode.request({ initiativeId })
+        idPayGenerateBarcode.request({ initiativeId })
       )
       .next(undefined)
       .put(
-        idpayGenerateBarcode.failure({
+        idPayGenerateBarcode.failure({
           initiativeId,
           error: mockError
         })
@@ -110,13 +110,13 @@ describe("handleGenerateBarcode test", () => {
       .isDone();
   });
   it(`should put ${getType(
-    idpayGenerateBarcode.failure
+    idPayGenerateBarcode.failure
   )} with a generic error when there is a decoding error`, () => {
     testSaga(
       handleGenerateBarcode,
       mockIDPayClient.createBarCodeTransaction,
       "bpdtoken",
-      idpayGenerateBarcode.request({ initiativeId })
+      idPayGenerateBarcode.request({ initiativeId })
     )
       .next()
       .call(
@@ -125,11 +125,11 @@ describe("handleGenerateBarcode test", () => {
           bearerAuth: "token",
           body: { initiativeId }
         }),
-        idpayGenerateBarcode.request({ initiativeId })
+        idPayGenerateBarcode.request({ initiativeId })
       )
       .next(E.left(new Error("error")))
       .put(
-        idpayGenerateBarcode.failure({
+        idPayGenerateBarcode.failure({
           initiativeId,
           error: mockError
         })

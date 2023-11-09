@@ -1,11 +1,12 @@
 import { pot } from "@pagopa/ts-commons";
 import { createSelector } from "reselect";
-import { ActionType, createAsyncAction, getType } from "typesafe-actions";
+import { getType } from "typesafe-actions";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { TransactionErrorDTO } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
+import { idPayGenerateBarcode } from "./actions";
 
 export type IdPayBarcodeState = {
   [initiativeId: string]: pot.Pot<
@@ -21,19 +22,19 @@ const reducer = (
   action: Action
 ): IdPayBarcodeState => {
   switch (action.type) {
-    case getType(idpayGenerateBarcode.request):
+    case getType(idPayGenerateBarcode.request):
       return {
         ...state,
         [action.payload.initiativeId]: pot.toLoading(
           state[action.payload.initiativeId]
         )
       };
-    case getType(idpayGenerateBarcode.success):
+    case getType(idPayGenerateBarcode.success):
       return {
         ...state,
         [action.payload.initiativeId]: pot.some(action.payload)
       };
-    case getType(idpayGenerateBarcode.failure):
+    case getType(idPayGenerateBarcode.failure):
       return {
         ...state,
         [action.payload.initiativeId]: pot.toError(
@@ -47,34 +48,17 @@ const reducer = (
 
 // -------------------- SELECTORS ----------------------
 
-const idpayBarcodeSelector = (state: GlobalState): IdPayBarcodeState =>
+const idPayBarcodeSelector = (state: GlobalState): IdPayBarcodeState =>
   state.features.idPay.barcode;
 
-export const idpayBarcodeByInitiativeIdSelector = createSelector(
-  idpayBarcodeSelector,
+export const idPayBarcodeByInitiativeIdSelector = createSelector(
+  idPayBarcodeSelector,
   state => (initiativeId: string) => state[initiativeId]
 );
-export const isIdpayBarcodeLoadingSelector = createSelector(
-  idpayBarcodeByInitiativeIdSelector,
+export const isIdPayBarcodeLoadin0gSelector = createSelector(
+  idPayBarcodeByInitiativeIdSelector,
   getInitiative => (initiativeId: string) =>
     pot.isLoading(getInitiative(initiativeId))
 );
 
-// -------------------- EXPORTS -----------------------
-
-export type IdpayGenerateBarcodePayload = {
-  initiativeId: string;
-};
-
-export const idpayGenerateBarcode = createAsyncAction(
-  "IDPAY_GENERATE_BARCODE_REQUEST",
-  "IDPAY_GENERATE_BARCODE_SUCCESS",
-  "IDPAY_GENERATE_BARCODE_FAILURE"
-)<
-  IdpayGenerateBarcodePayload,
-  TransactionBarCodeResponse,
-  { initiativeId: string; error: TransactionErrorDTO | NetworkError }
->();
-
-export type IdPayBarcodeActions = ActionType<typeof idpayGenerateBarcode>;
 export default reducer;
