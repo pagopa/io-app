@@ -41,7 +41,7 @@ export const ItwActionBanner = ({
       <Banner
         testID={"ItwBannerTestID"}
         viewRef={viewRef}
-        color={"neutral"}
+        color={"turquoise"}
         size="big"
         title={title}
         content={content}
