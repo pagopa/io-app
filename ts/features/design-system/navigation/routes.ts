@@ -51,6 +51,10 @@ const DESIGN_SYSTEM_ROUTES = {
     WIZARD_SCREEN: {
       route: "WIZARD_SCREEN",
       title: "Wizard Screen"
+    },
+    BONUS_CARD_SCREEN: {
+      route: "BONUS_CARD_SCREEN",
+      title: "Bonus Card Screen"
     }
   },
   DEBUG: {
