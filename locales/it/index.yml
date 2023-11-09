@@ -1188,7 +1188,7 @@ wallet:
         secondaryAction: Scopri di più
       TIMEOUT:
         title: La sessione è scaduta
-        subtitle: Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+        subtitle: Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
         primaryAction: Chiudi
       CANCELED_BY_USER:
         title: L'operazione è stata annullata
