@@ -63,7 +63,7 @@ export function* handleGenerateBarcode(
           put(
             response.status === 201
               ? idpayGenerateBarcode.success(
-                  response.value as TransactionBarCodeResponse
+                  response.value
                 )
               : idpayGenerateBarcode.failure({
                   initiativeId: action.payload.initiativeId,
