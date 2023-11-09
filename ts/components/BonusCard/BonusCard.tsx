@@ -51,7 +51,7 @@ const BonusCardContent = (props: BonusCardProps) => {
   } = props;
 
   return (
-    <>
+    <View style={styles.content} testID="BonudCardContentTestID">
       {!hideLogo && (
         <>
           <Avatar size="medium" shape="square" logoUri={logoUri} />
@@ -77,7 +77,7 @@ const BonusCardContent = (props: BonusCardProps) => {
           );
         })}
       </View>
-    </>
+    </View>
   );
 };
 
@@ -91,15 +91,13 @@ const BonusCard = (props: BonusCardProps) => {
   return (
     <View style={[styles.container, { paddingTop }]}>
       <BonusCardShape />
-      <View style={styles.content}>
-        <BonusCardContent {...props} />
-      </View>
+      <BonusCardContent {...props} />
     </View>
   );
 };
 
 const BonusCardSkeleton = (props: BaseProps) => (
-  <>
+  <View style={styles.content} testID="BonudCardSkeletonTestID">
     {!props.hideLogo && (
       <>
         <Placeholder.Box
@@ -135,7 +133,7 @@ const BonusCardSkeleton = (props: BaseProps) => (
       <HSpacer size={16} />
       <BonusCounter type="Value" isLoading={true} />
     </View>
-  </>
+  </View>
 );
 
 const styles = StyleSheet.create({

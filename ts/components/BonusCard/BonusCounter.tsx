@@ -12,7 +12,6 @@ type CounterType = "Value" | "ValueWithProgress";
 
 type BaseProps = {
   type: CounterType;
-  label?: string;
 };
 
 type AmountProps = {
@@ -27,8 +26,11 @@ type AmountWithProgressProps = {
 };
 
 type LoadingProps =
-  | { isLoading: true }
-  | ({ isLoading?: false } & (AmountProps | AmountWithProgressProps));
+  | { isLoading: true; label?: string }
+  | ({ isLoading?: false; label: string } & (
+      | AmountProps
+      | AmountWithProgressProps
+    ));
 
 export type BonusCounter = BaseProps & LoadingProps;
 
