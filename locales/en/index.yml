@@ -3511,6 +3511,7 @@ features:
             firstBody: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
             secondHeader: "Safety of treatment"
             secondBody: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
+        tos: "For more information, read the [Privacy Policy](https://io.italia.it/privacy-policy/) and the [Terms and Conditions](https://io.italia.it/privacy-policy/)"
       resultScreenNew: 
         success: 
           title: "Done!"

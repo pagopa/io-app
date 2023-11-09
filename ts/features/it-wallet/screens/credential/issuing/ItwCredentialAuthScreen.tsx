@@ -125,7 +125,7 @@ const ItwCredentialAuthScreen = () => {
           <VSpacer size={32} />
           {/* ItwFooterInfoBox should be replaced with a more ligth component */}
           <ItwTextInfo
-            markdownText={I18n.t(
+            content={I18n.t(
               "features.itWallet.issuing.credentialsIssuingInfoScreen.tos"
             )}
           />
