@@ -1,5 +1,6 @@
 import { ActionProp } from "@pagopa/io-app-design-system";
 import React from "react";
+import { Dimensions } from "react-native";
 import Animated from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
@@ -32,8 +33,13 @@ export type BonusScreenComponentProps = ScreenProps &
   SupportRequestProps &
   BonusCardProps;
 
+const deviceScreenHeightLogoThreshold = 700;
+
 const BonusCardScreenComponent = (props: BonusScreenComponentProps) => {
   const insets = useSafeAreaInsets();
+
+  const screenHeight = Dimensions.get("window").height;
+  const shouldHideLogo = screenHeight < deviceScreenHeightLogoThreshold;
 
   const { faqCategories, contextualHelpMarkdown, contextualHelp } = props;
 
@@ -59,7 +65,7 @@ const BonusCardScreenComponent = (props: BonusScreenComponentProps) => {
       snapToEnd={false}
       decelerationRate="normal"
     >
-      <BonusCard {...props} />
+      <BonusCard hideLogo={shouldHideLogo} {...props} />
       {props.children}
     </Animated.ScrollView>
   );
