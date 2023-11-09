@@ -6,16 +6,25 @@ import customVariables from "../../../theme/variables";
 import { CredentialCatalogDisplay } from "../utils/mocks";
 
 /**
- * Props for the component.
+ * Common props for the component.
+ * @param display - the display configuration for the credential.
  */
 type CommonProps = {
   display: CredentialCatalogDisplay;
 };
 
+/**
+ * Props for the component when the credential is a PID.
+ * @param pidClaims - the claims of the PID.
+ */
 type WithPidProps = CommonProps & {
   pidClaims: PidWithToken["pid"]["claims"];
 };
 
+/**
+ * Props for the component when the credential is a generic credential.
+ * @param parsedCredential - the parsed credential.
+ */
 type WithCredentialProps = CommonProps & {
   parsedCredential: Record<string, string>;
 };
@@ -51,6 +60,12 @@ const TITLE_MARGIN_TOP = 50 * SCALE_FACTOR;
  * @param backgroundImage - the background image of the card.
  */
 const ItwCredentialCard = (props: CredentialCardProps) => {
+  /**
+   * This function returns the lines to display in the bottom left corner of the card.
+   * Based on the type of the credential, it returns the name and fiscal code of the owner if the credential is a PID,
+   * the values of the fields specified in the display configuration of the credential otherwise.
+   * @returns an object containing the lines to display.
+   */
   const getLines = (): { firstLine: string; secondLine: string } => {
     if ("pidClaims" in props) {
       const { pidClaims } = props;

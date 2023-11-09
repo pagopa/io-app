@@ -42,6 +42,9 @@ import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 
+/**
+ * Watcher for issuance related sagas.
+ */
 export function* watchItwIssuanceSaga(): SagaIterator {
   yield* takeLatest(itwIssuanceChecks.request, itwIssuanceChecksSaga);
   yield* takeLatest(
@@ -51,6 +54,10 @@ export function* watchItwIssuanceSaga(): SagaIterator {
   yield* takeLatest(itwConfirmStoreCredential, addCredentialWithPin);
 }
 
+/**
+ * Saga which handles the issuance checks before starting the issuance flow.
+ * @param payload - The payload of the action which includes the credentialType, the issuerUrl and the displayData which are currently mocked.
+ */
 export function* itwIssuanceChecksSaga({
   payload: { credentialType, issuerUrl, displayData }
 }: ActionType<typeof itwIssuanceChecks.request>): SagaIterator {
@@ -104,6 +111,9 @@ export function* itwIssuanceChecksSaga({
   }
 }
 
+/**
+ * Saga which handles the issuance flow.
+ */
 export function* itwIssuanceGetCredentialSaga(): SagaIterator {
   try {
     const issuanceData = yield* select(itwIssuanceChecksDataSelector);
@@ -172,6 +182,7 @@ export function* itwIssuanceGetCredentialSaga(): SagaIterator {
       { credentialCryptoContext, walletProviderBaseUrl }
     );
 
+    // TODO(SIW-659): replace with the VerificationAndParseCredential function
     const parsedCredential = SDJWT.decode(
       credential,
       SdJwt4VC
@@ -210,7 +221,9 @@ export function* itwIssuanceGetCredentialSaga(): SagaIterator {
   }
 }
 
-// add type and error mapping
+/**
+ * Saga which handles the addition of a credential to the wallet by showing the pin screen.
+ */
 function* addCredentialWithPin() {
   try {
     const resultData = yield* select(itwIssuanceResultDataSelector);
@@ -274,6 +287,14 @@ function* addCredentialWithPin() {
   }
 }
 
+/**
+ * Function which handles the completion of the user authorization with the PID.
+ * @param requestURI - The request URI.
+ * @param rpUrl - the relying party URL (the issuer acts as a relying party in this case).
+ * @param wiaCryptoContext - The crypto context of the wallet instance attestation.
+ * @param walletInstanceAttestation - The wallet instance attestation.
+ * @returns
+ */
 function* completeUserAuthorizationWithPID(
   requestURI: Awaited<
     ReturnType<Credential.Presentation.StartFlow>
@@ -331,6 +352,10 @@ function* completeUserAuthorizationWithPID(
   return { code: response_code };
 }
 
+/**
+ * Helper function which gets the wallet instance attestation by requesting it and creating a crypto context for it.
+ * @returns the wallet instance attestation and the crypto context.
+ */
 function* getWalletInstanceAttestation(): Iterator<
   any,
   readonly [string, CryptoContext]
@@ -352,6 +377,10 @@ function* getWalletInstanceAttestation(): Iterator<
   }
 }
 
+/**
+ * Helper function which gets the PID from the store and creates a crypto context for it.
+ * @returns the PID and the crypto context.
+ */
 function* getPID(): Iterator<any, readonly [string, CryptoContext]> {
   const maybePid = yield* select(ItwCredentialsPidSelector);
   if (O.isNone(maybePid)) {

@@ -75,6 +75,11 @@ export type CredentialCatalogItem =
   | CredentialCatalogAvailableItem
   | CredentialCatalogIncomingItem;
 
+/**
+ * Hard coded catalog of credentials.
+ * It contains the display data for each credential type.
+ * firstLine and secondLine are used to display the credential attributes in the credential card.
+ */
 export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
   {
     type: "EuropeanDisabilityCard",

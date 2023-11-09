@@ -52,10 +52,16 @@ const ItwCredentialPreviewScreen = () => {
   const toast = useIOToast();
   const dispatch = useIODispatch();
 
+  /**
+   * Starts the issuance process when the screen is rendered for the first time.
+   */
   useOnFirstRender(() => {
     dispatch(itwIssuanceGetCredential.request());
   });
 
+  /**
+   * Bottom sheet with the issuer information.
+   */
   const { present, bottomSheet } = useItwInfoBottomSheet({
     title: O.isSome(issuanceResultData)
       ? issuanceResultData.value.issuerName
@@ -80,6 +86,9 @@ const ItwCredentialPreviewScreen = () => {
     ]
   });
 
+  /**
+   * Alert to show when the user presses the cancel button.
+   */
   const alertOnPress = () => {
     toast.info(
       I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
@@ -88,17 +97,14 @@ const ItwCredentialPreviewScreen = () => {
   };
 
   /**
-   * Renders the content of the screen if the credential is some.
-   * @param credential - credential to be displayed
+   * Content view which asks the user to confirm the issuance of the credential.
+   * @param data - the issuance result data of the credential used to display the credential.
    */
   const ContentView = ({ data }: { data: IssuanceResultData }) => {
     const addOnPress = () => {
       dispatch(itwConfirmStoreCredential());
     };
 
-    /**
-     * Button props for the FooterWithButtons component which opens the PIN screen.
-     */
     const confirmButtonProps: BlockButtonProps = {
       type: "Solid",
       buttonProps: {
@@ -108,9 +114,6 @@ const ItwCredentialPreviewScreen = () => {
       }
     };
 
-    /**
-     * Button props for the FooterWithButtons component which opens an alert screen.
-     */
     const cancelButtonProps: BlockButtonProps = {
       type: "Outline",
       buttonProps: {
@@ -175,13 +178,18 @@ const ItwCredentialPreviewScreen = () => {
     );
   };
 
-  // Checks failed
+  /**
+   * Error view component which currently displays a generic error.
+   * @param error - optional ItWalletError to be displayed.
+   */
   const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
-    // TODO: handle contextual error
     const mappedError = getItwGenericMappedError(() => navigation.goBack());
     return <ItwKoView {...mappedError} />;
   };
 
+  /**
+   * Loading view component.
+   */
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
       captionTitle={I18n.t(

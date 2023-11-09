@@ -37,6 +37,18 @@ const ItwCredentialsCatalogScreen = () => {
   const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
   const [loadingIndex, setLoadingIndex] = React.useState<number>(NONE_LOADING);
 
+  /**
+   * Side effect to navigate to the credential checks screen when the preliminaryChecks pot
+   * transitions to a non loading state and not none state.
+   * This is necessary because folding the pot in this screen would cause too many rerenders
+   * due to the base screen component being contained in the ContentView component which is
+   * rerendered when the pot transitions from a none state to a non none state.
+   * Thus, the pot is folded in the credential checks screen.
+   * This screen dispatches the action which starts the checks process and shows a local loading spinner
+   * besides the catalog item which has been selected. It's not connected to the pot loading state.
+   * The loadingIndex check is necessary to avoid navigating to the credential checks screen
+   * when the user goes back from the credential checks screen.
+   */
   useEffect(() => {
     if (
       loadingIndex !== NONE_LOADING &&
@@ -66,7 +78,9 @@ const ItwCredentialsCatalogScreen = () => {
 
   /**
    * Renders a single credential catalog item in a FlatList.
-   * @param catalogItem: the catalog item to render.
+   * @param catalogItem - the catalog item to render.
+   * @param loading - the loading state of the catalog item.
+   * @param index - the index of the catalog item.
    */
   const CatalogItem = ({
     catalogItem,

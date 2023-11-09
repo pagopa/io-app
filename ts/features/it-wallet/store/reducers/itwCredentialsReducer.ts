@@ -15,6 +15,9 @@ import {
   PidResponse
 } from "../../utils/types";
 
+/**
+ * Type for a stored credential.
+ */
 export type StoredCredential = {
   keyTag: string;
   credential: string;
@@ -26,6 +29,7 @@ export type StoredCredential = {
 
 /**
  * The type of credentials stored in the wallet.
+ * The PID is a particular credential which is stored separately.
  */
 type ItwCredentialsType = {
   pid: O.Option<PidResponse>;
@@ -59,7 +63,7 @@ const reducer = (
     case getType(itwCredentialsAddPid.failure):
       return pot.toError(state, action.payload);
     /**
-     * Credentials related actions, will be merged with PID in the future.
+     * Credentials related actions.
      */
     case getType(itwCredentialsAddCredential.success):
       return pot.some({

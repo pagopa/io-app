@@ -33,10 +33,14 @@ export type IssuanceResultData = {
  * Type of the state managed by the reducer for the issuance flow.
  */
 export type ItwIssuanceState = {
+  /**
+   * Preliminary checks pot.
+   */
   checks: pot.Pot<O.Option<IssuanceData>, ItWalletError>;
-  //
+  /**
+   * Issuance result pot.
+   */
   issuanceResult: pot.Pot<O.Option<IssuanceResultData>, ItWalletError>;
-  //
   addCredential: pot.Pot<true, ItWalletError>;
 };
 

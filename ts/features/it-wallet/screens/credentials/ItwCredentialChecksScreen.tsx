@@ -28,17 +28,24 @@ import ItwKoView from "../../components/ItwKoView";
 import ROUTES from "../../../../navigation/routes";
 
 /**
- * Renders a preview screen which displays a visual representation and the claims contained in the PID.
+ * Screen that displays the result of the credential issuance checks
+ * by folding the preliminaryChecks pot.
  */
 const ItwCredentialsChecksScreen = () => {
   const toast = useIOToast();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
 
+  /**
+   * When the user confirms the issuance, the user is redirected to the presentation screen.
+   */
   const onUserConfirmIssuance = () => {
     navigation.navigate(ITW_ROUTES.CREDENTIALS.ISSUING_INFO);
   };
 
+  /**
+   * When the user aborts the issuance, the user is redirected to the messages home screen.
+   */
   const onUserAbortIssuance = () => {
     showCancelAlert(() => {
       navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
@@ -48,11 +55,19 @@ const ItwCredentialsChecksScreen = () => {
     });
   };
 
+  /**
+   * Error view component.
+   * @param error - optional ItWalletError to be displayed.
+   */
   const ErrorView = ({ error }: { error?: ItWalletError }) => {
     const mappedError = getScreenError(error);
     return <ItwKoView {...mappedError} />;
   };
 
+  /**
+   * Content view which asks the user to confirm the issuance of the credential.
+   * @param issuanceData - the issuance data of the credential used to display the credential title.
+   */
   const ConfirmView = ({ issuanceData }: { issuanceData: IssuanceData }) => (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={{ ...IOStyles.flex }}>
@@ -77,6 +92,11 @@ const ItwCredentialsChecksScreen = () => {
     </BaseScreenComponent>
   );
 
+  /**
+   * Error mapping function for any error that can be displayed in this screen.
+   * @param error - optional ItWalletError to be displayed.
+   * @returns a mapped error object or a generic error object when error is not provided.
+   */
   const getScreenError: ItwErrorMapping = (error?: ItWalletError) => {
     switch (error?.code) {
       case ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR:
