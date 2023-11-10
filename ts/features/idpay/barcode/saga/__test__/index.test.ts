@@ -10,6 +10,7 @@ import {
   CodeEnum,
   TransactionErrorDTO
 } from "../../../../../../definitions/idpay/TransactionErrorDTO";
+import { getNetworkError } from "../../../../../utils/errors";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { idPayGenerateBarcode } from "../../store/actions";
@@ -83,7 +84,7 @@ describe("handleGenerateBarcode test", () => {
   });
   it(`should put ${getType(
     idPayGenerateBarcode.failure
-  )} with a generic error when the api call fails`, () => {
+  )} with a generic error when the decoding fails`, () => {
     testSaga(
       handleGenerateBarcode,
       mockIDPayClient.createBarCodeTransaction,
@@ -99,7 +100,7 @@ describe("handleGenerateBarcode test", () => {
         }),
         idPayGenerateBarcode.request({ initiativeId })
       )
-      .next(undefined)
+      .next(E.left([]))
       .put(
         idPayGenerateBarcode.failure({
           initiativeId,
@@ -111,7 +112,7 @@ describe("handleGenerateBarcode test", () => {
   });
   it(`should put ${getType(
     idPayGenerateBarcode.failure
-  )} with a generic error when there is a decoding error`, () => {
+  )} with a generic error when the fetch fails`, () => {
     testSaga(
       handleGenerateBarcode,
       mockIDPayClient.createBarCodeTransaction,
@@ -127,11 +128,11 @@ describe("handleGenerateBarcode test", () => {
         }),
         idPayGenerateBarcode.request({ initiativeId })
       )
-      .next(E.left(new Error("error")))
+      .throw(new Error("testing throw"))
       .put(
         idPayGenerateBarcode.failure({
           initiativeId,
-          error: mockError
+          error: getNetworkError(new Error("testing throw"))
         })
       )
       .next()

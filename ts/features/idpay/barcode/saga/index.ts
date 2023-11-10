@@ -11,6 +11,7 @@ import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayGenerateBarcode } from "../store/actions";
+import { getNetworkError } from "../../../../utils/errors";
 
 export function* watchIDPayBarcodeSaga(
   idPayClient: IDPayClient,
@@ -51,7 +52,7 @@ export function* handleGenerateBarcode(
     yield pipe(
       createBarCodeTransactionResult,
       E.fold(
-        _error =>
+        () =>
           put(
             idPayGenerateBarcode.failure({
               initiativeId: action.payload.initiativeId,
@@ -73,7 +74,7 @@ export function* handleGenerateBarcode(
     yield* put(
       idPayGenerateBarcode.failure({
         initiativeId: action.payload.initiativeId,
-        error: genericError
+        error: getNetworkError(error)
       })
     );
   }
