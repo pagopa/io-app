@@ -3235,9 +3235,9 @@ features:
       action: "Enable IT Wallet"
       hideLabel: "Hide this banner"
     activationScreen:
-      intro: "## IT Wallet: what it is and how it works\nIT Wallet is a feature that allows you to add your digital identity to the IO Wallet, i.e. the **set of personal data that allows you to authenticate yourself online**, and the your personal documents, such as your driving license, health card and European Disability Card."
-      subContentOne: "###### Online and live\nUse your digital identity to **access online services, both public and private**. Use documents to **share the data they contain with others**, online and live, whenever you need it."
-      subContentTwo: "###### Easy to activate\nYou will need the **Electronic Identity Card (CIE) and its PIN**. Your CIE data will be part of your digital identity, the first document in your IT Wallet."
+      intro: "## IT Wallet: what it is and how it works\n\nIT Wallet is a feature that allows you to add your digital identity to the IO Wallet, i.e. the **set of personal data that allows you to authenticate yourself online**, and the your personal documents, such as your driving license, health card and European Disability Card."
+      subContentOne: "###### Online and live\n\nUse your digital identity to **access online services, both public and private**. Use documents to **share the data they contain with others**, online and live, whenever you need it."
+      subContentTwo: "###### Easy to activate\n\nYou will need the **Electronic Identity Card (CIE) and its PIN**. Your CIE data will be part of your digital identity, the first document in your IT Wallet."
       cancel: "Not now"
       confirm: "Activate IT Wallet"
     homeScreen:
