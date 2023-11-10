@@ -1,3 +1,4 @@
+import { ItwCredentialDetailsScreenNavigationParams } from "../screens/credential/ItwCredentialDetailsScreen";
 import { ItwPidRequestScreenNavigationParams } from "../screens/issuing/ItwPidRequestScreen";
 import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/cie/ItwCieCardReaderScreen";
 import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
@@ -39,6 +40,8 @@ export type ItwParamsList = {
   [ITW_ROUTES.CREDENTIAL.ISSUING.CHECKS]: undefined;
   [ITW_ROUTES.CREDENTIAL.ISSUING.AUTH]: undefined;
   [ITW_ROUTES.CREDENTIAL.ISSUING.PREVIEW]: undefined;
+  [ITW_ROUTES.PRESENTATION
+    .CREDENTIAL_DETAILS]: ItwCredentialDetailsScreenNavigationParams;
   // GENERIC
   [ITW_ROUTES.GENERIC.NOT_AVAILABLE]: undefined;
 };

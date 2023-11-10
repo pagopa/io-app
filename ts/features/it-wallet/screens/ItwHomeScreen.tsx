@@ -108,6 +108,14 @@ const ItwHomeScreen = () => {
           .map((credential, idx) => (
             <Pressable
               onLongPress={onLongPressCredential}
+              onPress={() =>
+                navigation.navigate(ITW_ROUTES.MAIN, {
+                  screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAILS,
+                  params: {
+                    credential
+                  }
+                })
+              }
               key={`${credential.displayData.title}-${idx}`}
             >
               <ItwCredentialCard
