@@ -1,16 +1,27 @@
 import { render } from "@testing-library/react-native";
 import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { BonusCard } from "../BonusCard";
-import { BonusCounter } from "../BonusCounter";
+import { BonusCardCounter } from "../BonusCardCounter";
+
+jest.mock("react-native-safe-area-context", () => {
+  const useSafeAreaInsets = () => ({ top: 0 });
+  return {
+    useSafeAreaInsets
+  };
+});
 
 describe("Test BonusCard", () => {
   describe("when the component is loading", () => {
     it("should display the skeleton", () => {
-      const component = renderComponent(<BonusCard isLoading={true} />);
-
-      expect(component.queryByTestId("BonudCardSkeletonTestID")).toBeTruthy();
-      expect(component.queryByTestId("BonudCardContentTestID")).toBeFalsy();
+      const { queryByTestId, queryAllByTestId } = renderComponent({
+        isLoading: true
+      });
+      expect(queryByTestId("BonusCardSkeletonTestID")).not.toBeNull();
+      expect(queryByTestId("BonusCardContentTestID")).toBeNull();
+      expect(queryByTestId("BonusCardCounterTestID")).toBeNull();
+      expect(queryAllByTestId("BonusCardCounterSkeletonTestID")).toHaveLength(
+        2
+      );
     });
   });
   describe("when the component is not loading", () => {
@@ -19,33 +30,42 @@ describe("Test BonusCard", () => {
       const T_ORG_NAME = "Bonus name";
       const T_END_DATE = new Date(2023, 10, 10);
 
-      const T_COUNTER_WITH_PROGRESS: BonusCounter = {
+      const T_COUNTER_TEXT_1 = "Progress counter";
+      const T_COUNTER_VALUE_1 = "9.999,99 €";
+
+      const T_COUNTER_TEXT_2 = "Value counter";
+      const T_COUNTER_VALUE_2 = "999,99 €";
+
+      const T_COUNTER_WITH_PROGRESS: BonusCardCounter = {
         type: "ValueWithProgress",
         progress: 0.4,
-        label: "Test",
-        value: "9.999,99 €"
+        label: T_COUNTER_TEXT_1,
+        value: T_COUNTER_VALUE_1
       };
-      const T_COUNTER: BonusCounter = {
+      const T_COUNTER: BonusCardCounter = {
         type: "Value",
-        label: "Test",
-        value: "9.999,99 €"
+        label: T_COUNTER_TEXT_2,
+        value: T_COUNTER_VALUE_2
       };
 
-      const component = renderComponent(
-        <BonusCard
-          name={T_NAME}
-          organizationName={T_ORG_NAME}
-          endDate={T_END_DATE}
-          status="ACTIVE"
-          counters={[T_COUNTER_WITH_PROGRESS, T_COUNTER]}
-        />
-      );
+      const { queryByTestId, queryAllByTestId, queryByText } = renderComponent({
+        name: T_NAME,
+        organizationName: T_ORG_NAME,
+        endDate: T_END_DATE,
+        status: "ACTIVE",
+        counters: [T_COUNTER_WITH_PROGRESS, T_COUNTER]
+      });
 
-      expect(component.queryByTestId("BonudCardSkeletonTestID")).toBeFalsy();
-      expect(component.queryByTestId("BonudCardContentTestID")).toBeTruthy();
+      expect(queryByTestId("BonusCardSkeletonTestID")).toBeNull();
+      expect(queryByTestId("BonusCardContentTestID")).not.toBeNull();
+      expect(queryAllByTestId("BonusCardCounterTestID")).toHaveLength(2);
+
+      expect(queryByText(T_COUNTER_TEXT_1)).not.toBeNull();
+      expect(queryByText(T_COUNTER_VALUE_1)).not.toBeNull();
+      expect(queryByText(T_COUNTER_TEXT_2)).not.toBeNull();
+      expect(queryByText(T_COUNTER_VALUE_2)).not.toBeNull();
     });
   });
 });
 
-const renderComponent = (component: React.ReactElement<any>) =>
-  render(<SafeAreaProvider>{component}</SafeAreaProvider>);
+const renderComponent = (props: BonusCard) => render(<BonusCard {...props} />);
