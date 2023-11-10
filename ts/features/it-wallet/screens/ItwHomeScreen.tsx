@@ -27,7 +27,6 @@ import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycl
 import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer";
 import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
-import { itWalletExperimentalEnabled } from "../../../config";
 import ItwCredentialCard from "../components/ItwCredentialCard";
 import { pidDisplayData } from "../utils/mocks";
 
@@ -66,11 +65,9 @@ const ItwHomeScreen = () => {
    * Otherwise do nothing.
    */
   const onPressAddCredentials = () => {
-    if (itWalletExperimentalEnabled) {
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG
-      });
-    }
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG
+    });
   };
 
   /**
