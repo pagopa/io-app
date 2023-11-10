@@ -3354,9 +3354,9 @@ features:
       action: "Attiva IT Wallet"
       hideLabel: "Nascondi questo banner"
     activationScreen:
-      intro: "## IT Wallet: cos'è e come funziona\nIT Wallet è una funzionalità che ti permette di aggiungere nel Portafoglio di IO la tua identità digitale, ovvero l'**insieme dei dati personali che ti permette di autenticarti online**, e i tuoi documenti personali, come la patente di guida, la tessera sanitaria e la Carta Europea della disabilità."
-      subContentOne: "###### Online e dal vivo\nUsa l'identità digitale per **accedere ai servizi online, sia pubblici che privati**. Usa i documenti per **condividere con altri i dati che contengono**, online e dal vivo, ogni volta che ne hai bisogno."
-      subContentTwo: "###### Facile da attivare\nAvrai bisogno della **Carta d'Identità Elettronica (CIE) e del suo PIN**. I dati della tua CIE faranno parte della tua identità digitale, il primo documento del tuo IT Wallet."
+      intro: "## IT Wallet: cos'è e come funziona\n\nIT Wallet è una funzionalità che ti permette di aggiungere nel Portafoglio di IO la tua identità digitale, ovvero l'**insieme dei dati personali che ti permette di autenticarti online**, e i tuoi documenti personali, come la patente di guida, la tessera sanitaria e la Carta Europea della disabilità."
+      subContentOne: "###### Online e dal vivo\n\nUsa l'identità digitale per **accedere ai servizi online, sia pubblici che privati**. Usa i documenti per **condividere con altri i dati che contengono**, online e dal vivo, ogni volta che ne hai bisogno."
+      subContentTwo: "###### Facile da attivare\n\nAvrai bisogno della **Carta d'Identità Elettronica (CIE) e del suo PIN**. I dati della tua CIE faranno parte della tua identità digitale, il primo documento del tuo IT Wallet."
       cancel: "Non ora"
       confirm: "Attiva IT Wallet"
     homeScreen:
