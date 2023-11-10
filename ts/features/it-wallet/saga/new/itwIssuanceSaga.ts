@@ -382,8 +382,7 @@ function* getPID(): Iterator<any, readonly [string, CryptoContext]> {
     const message = `Expecting response_code from sendAuthorizationResponse, received undefined`;
     throw new Error(message);
   }
-  const pidKeytag = ITW_PID_KEY_TAG;
-  const pidCryptoContext = createCryptoContextFor(pidKeytag);
+  const pidCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
   return yield* call(
     () => [maybePid.value.credential, pidCryptoContext] as const
   );
