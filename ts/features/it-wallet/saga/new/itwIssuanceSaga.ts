@@ -45,19 +45,19 @@ import ROUTES from "../../../../navigation/routes";
  * Watcher for issuance related sagas.
  */
 export function* watchItwIssuanceSaga(): SagaIterator {
-  yield* takeLatest(itwIssuanceChecks.request, itwIssuanceChecksSaga);
+  yield* takeLatest(itwIssuanceChecks.request, handleIssuanceChecks);
   yield* takeLatest(
     itwIssuanceGetCredential.request,
-    itwIssuanceGetCredentialSaga
+    handleIssuanceGetCredential
   );
-  yield* takeLatest(itwConfirmStoreCredential, addCredentialWithPin);
+  yield* takeLatest(itwConfirmStoreCredential, handleAddCredentialWithPin);
 }
 
 /**
  * Saga which handles the issuance checks before starting the issuance flow.
  * @param payload - The payload of the action which includes the credentialType, the issuerUrl and the displayData which are currently mocked.
  */
-export function* itwIssuanceChecksSaga({
+export function* handleIssuanceChecks({
   payload: { credentialType, issuerUrl, displayData }
 }: ActionType<typeof itwIssuanceChecks.request>): SagaIterator {
   try {
@@ -113,7 +113,7 @@ export function* itwIssuanceChecksSaga({
 /**
  * Saga which handles the issuance flow.
  */
-export function* itwIssuanceGetCredentialSaga(): SagaIterator {
+export function* handleIssuanceGetCredential(): SagaIterator {
   try {
     const issuanceData = yield* select(itwIssuanceChecksDataSelector);
 
@@ -223,7 +223,7 @@ export function* itwIssuanceGetCredentialSaga(): SagaIterator {
 /**
  * Saga which handles the addition of a credential to the wallet by showing the pin screen.
  */
-function* addCredentialWithPin() {
+function* handleAddCredentialWithPin() {
   try {
     const resultData = yield* select(itwIssuanceResultDataSelector);
     if (O.isNone(resultData)) {
