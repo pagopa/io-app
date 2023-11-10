@@ -3345,21 +3345,24 @@ features:
             firstBodyContent: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
             secondHeaderTitle: "Safety of treatment"
             secondBodyContent: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
+        tos: "For more information, read the [Privacy Policy](https://io.italia.it/privacy-policy/) and the [Terms and Conditions](https://io.italia.it/privacy-policy/)"
       credentialPreviewScreen:
         title: "Here's a preview of your credential"
         subtitle: "Before adding it, check if the data is correct."
         somethingWrong:
           title: "Something wrong?"
           subtitle: "If there are errors in the data or you want to better understand what they mean, contact {{issuer}}."
+          action: "Ask for help"
         bottomSheet: 
           about: 
             title: "Who is it?"
-            subtitle: "t is the source that manages and protects your data. The IO app allows you to view them because it can verify and protect your identity through important security procedures."
+            subtitle: "it is the source that manages and protects your data. The IO app allows you to view them because it can verify and protect your identity through important security procedures."
           data:
             title: "Data protection"
             subtitle: "our data is not saved on this device but stored in the Wallet Instance, and you can choose to revoke them at any time."
         toast:
           success: "Credential added!"
+          failure: "We were not able to add this card, try again later."
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3413,6 +3416,7 @@ features:
             firstBody: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
             secondHeader: "Safety of treatment"
             secondBody: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
+        tos: "For more information, read the [Privacy Policy](https://io.italia.it/privacy-policy/) and the [Terms and Conditions](https://io.italia.it/privacy-policy/)"
       resultScreenNew: 
         success: 
           title: "Done!"
@@ -3465,6 +3469,10 @@ features:
         single: "Provided by {{authSource}}"
       credential: "Credential"
       attribute: "Attribute"
+      placeholders:
+        claimNotAvailable: "Claim not available"
+        claimLabelNotAvailable: "Claim label not available"
+        organizationName: "Issuer name not available"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
