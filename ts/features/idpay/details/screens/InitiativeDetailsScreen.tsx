@@ -82,7 +82,7 @@ const InitiativeDetailsScreen = () => {
       params: { initiativeId }
     });
   };
-  const discountBottomSheet = useIdpayDiscountDetailsBottomSheet();
+  const discountBottomSheet = useIdpayDiscountDetailsBottomSheet(initiativeId);
 
   useFocusEffect(
     React.useCallback(() => {

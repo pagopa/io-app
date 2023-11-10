@@ -2,12 +2,14 @@ import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
 import {
   idpayOperationListSelector,
@@ -17,7 +19,6 @@ import {
   idpayTimelineLastUpdateSelector
 } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
-import I18n from "../../../../i18n";
 
 export const useInitiativeTimelineFetcher = (
   initiativeId: string,
@@ -92,11 +93,17 @@ export const useInitiativeTimelineFetcher = (
   } as const;
 };
 
-export const useIdpayDiscountDetailsBottomSheet = () => {
+export const useIdpayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const navigateToPaymentAuthorization = () => {
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN);
   };
+  const dispatch = useIODispatch();
+  const barcodePressHandler = () => {
+    dispatch(idPayGenerateBarcode.request({ initiativeId }));
+    bottomSheet.dismiss();
+  };
+
   const DiscountInitiativeBottomSheetContent = () => (
     <>
       <ListItemNav
@@ -118,7 +125,7 @@ export const useIdpayDiscountDetailsBottomSheet = () => {
         value={I18n.t(
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}
-        onPress={bottomSheet.dismiss}
+        onPress={barcodePressHandler}
         accessibilityLabel={I18n.t(
           "idpay.initiative.discountDetails.bottomSheetOptions.generateBarcode"
         )}
