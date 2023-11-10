@@ -3464,7 +3464,7 @@ features:
             firstBodyContent: "Per ottenere il rilascio della tessera L’ente autorizzato ad emettere questa tessera ha bisogno di leggere i tuoi dati per verificarne l’identità."
             secondHeaderTitle: "Sicurezza del trattamento"
             secondBodyContent: "App IO consente la condivisione dei tuoi dati solo con enti verificati e iscritti alle liste che ne garantiscono l’affidabilità."
-        tos: "Per maggiori informazioni leggi l’[Informativa Privacy](https://io.italia.it/privacy-policy/) e i '[Termini e condizioni d’uso](https://io.italia.it/privacy-policy/)"
+        tos: "Per maggiori informazioni leggi l’[Informativa Privacy](https://io.italia.it/privacy-policy/) e i [Termini e condizioni d’uso](https://io.italia.it/privacy-policy/)"
       credentialPreviewScreen:
         title: "Ecco un’anteprima della tua tessera"
         subtitle: "Prima di aggiungerla, verifica che tutte le informazioni siano
