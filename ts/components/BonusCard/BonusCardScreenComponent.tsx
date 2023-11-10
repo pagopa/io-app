@@ -11,7 +11,7 @@ import {
 } from "../screens/BaseScreenComponent";
 import { BonusCard, BonusCardProps } from "./BonusCard";
 
-const triggerOffsetValue: number = 16;
+const triggerOffsetValue: number = 32;
 
 type SupportRequestProps = {
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;

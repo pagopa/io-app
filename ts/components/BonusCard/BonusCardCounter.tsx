@@ -22,6 +22,9 @@ type AmountProps = {
 type AmountWithProgressProps = {
   type: "ValueWithProgress";
   value: string;
+  /**
+   * Progress bar value, expressed in a range from 0 to 1
+   */
   progress: number;
 };
 
@@ -32,15 +35,18 @@ type LoadingProps =
       | AmountWithProgressProps
     ));
 
-export type BonusCounter = BaseProps & LoadingProps;
+export type BonusCardCounter = BaseProps & LoadingProps;
 
-const BonusCounter = (props: BonusCounter) => {
+const BonusCardCounter = (props: BonusCardCounter) => {
   if (props.isLoading) {
-    return <BonusCounterSkeleton type={props.type} />;
+    return <BonusCardCounterSkeleton type={props.type} />;
   }
 
   return (
-    <View style={[styles.container, { alignItems: "stretch" }]}>
+    <View
+      style={[styles.container, { alignItems: "stretch" }]}
+      testID="BonusCardCounterTestID"
+    >
       <Label weight="Regular" fontSize="mini" style={styles.label}>
         {props.label}
       </Label>
@@ -72,7 +78,10 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
     width: withTiming(width.value, { duration: 1000 })
   }));
   return (
-    <View style={styles.progressBarContainer}>
+    <View
+      style={styles.progressBarContainer}
+      testID="BonusCardCounterProgressTestID"
+    >
       <Animated.View
         style={[
           {
@@ -87,12 +96,15 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
   );
 };
 
-type BonusCounterSkeletonProps = {
+type BonusCardCounterSkeletonProps = {
   type: CounterType;
 };
 
-const BonusCounterSkeleton = ({ type }: BonusCounterSkeletonProps) => (
-  <View style={[styles.container, { alignItems: "center" }]}>
+const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => (
+  <View
+    style={[styles.container, { alignItems: "center" }]}
+    testID="BonusCardCounterSkeletonTestID"
+  >
     <Placeholder.Box
       height={16}
       width={64}
@@ -142,4 +154,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { BonusCounter };
+export { BonusCardCounter };

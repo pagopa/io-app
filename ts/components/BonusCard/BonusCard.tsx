@@ -11,8 +11,8 @@ import { ImageURISource, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Placeholder from "rn-placeholder";
 import { BonusCardShape } from "./BonusCardShape";
-import { BonusCounter } from "./BonusCounter";
-import { BonusStatusTag } from "./BonusStatusTag";
+import { BonusCardCounter } from "./BonusCardCounter";
+import { BonusCardStatus } from "./BonusCardStatus";
 import { BonusStatus } from "./type";
 
 type BaseProps = {
@@ -26,16 +26,16 @@ type ContentProps = {
   organizationName: string;
   endDate: Date;
   status: BonusStatus;
-  counters: Array<BonusCounter>;
+  counters: Array<BonusCardCounter>;
 };
 
 type LoadingStateProps =
   | { isLoading: true }
   | ({ isLoading?: never } & ContentProps);
 
-type BonusCardProps = LoadingStateProps & BaseProps;
+export type BonusCard = LoadingStateProps & BaseProps;
 
-const BonusCardContent = (props: BonusCardProps) => {
+const BonusCardContent = (props: BonusCard) => {
   if (props.isLoading) {
     return <BonusCardSkeleton {...props} />;
   }
@@ -51,7 +51,7 @@ const BonusCardContent = (props: BonusCardProps) => {
   } = props;
 
   return (
-    <View style={styles.content} testID="BonudCardContentTestID">
+    <View style={styles.content} testID="BonusCardContentTestID">
       {!hideLogo && (
         <>
           <Avatar size="medium" shape="square" logoUri={logoUri} />
@@ -64,14 +64,14 @@ const BonusCardContent = (props: BonusCardProps) => {
         {organizationName}
       </Label>
       <VSpacer size={16} />
-      <BonusStatusTag endDate={endDate} status={status} />
+      <BonusCardStatus endDate={endDate} status={status} />
       <VSpacer size={16} />
       <View style={styles.counters}>
         {counters.map((counter, index) => {
           const isLast = index === counters.length - 1;
           return (
             <React.Fragment key={`${counter.label}_${index}`}>
-              <BonusCounter {...counter} />
+              <BonusCardCounter {...counter} />
               {!isLast && <HSpacer size={16} />}
             </React.Fragment>
           );
@@ -81,11 +81,12 @@ const BonusCardContent = (props: BonusCardProps) => {
   );
 };
 
-const BonusCard = (props: BonusCardProps) => {
+export const BonusCard = (props: BonusCard) => {
   const safeAreaInsets = useSafeAreaInsets();
 
-  // If the logo is hidden, this margin prevents content shift when mutating from loading state
+  // If the logo is hidden, this margin prevents content shift when mutating from a loading state
   const hiddenLogoLoadingMargin = props.hideLogo && props.isLoading ? 8 : 0;
+  // This padding is necessary to get enough space on top to display the header
   const paddingTop = safeAreaInsets.top + hiddenLogoLoadingMargin + 64;
 
   return (
@@ -97,7 +98,7 @@ const BonusCard = (props: BonusCardProps) => {
 };
 
 const BonusCardSkeleton = (props: BaseProps) => (
-  <View style={styles.content} testID="BonudCardSkeletonTestID">
+  <View style={styles.content} testID="BonusCardSkeletonTestID">
     {!props.hideLogo && (
       <>
         <Placeholder.Box
@@ -126,12 +127,12 @@ const BonusCardSkeleton = (props: BaseProps) => (
       radius={28}
     />
     <VSpacer size={16} />
-    <BonusStatusTag isLoading={true} />
+    <BonusCardStatus isLoading={true} />
     <VSpacer size={16} />
     <View style={styles.counters}>
-      <BonusCounter type="ValueWithProgress" isLoading={true} />
+      <BonusCardCounter type="ValueWithProgress" isLoading={true} />
       <HSpacer size={16} />
-      <BonusCounter type="Value" isLoading={true} />
+      <BonusCardCounter type="Value" isLoading={true} />
     </View>
   </View>
 );
@@ -149,6 +150,3 @@ const styles = StyleSheet.create({
     justifyContent: "space-around"
   }
 });
-
-export { BonusCard };
-export type { BonusCardProps };

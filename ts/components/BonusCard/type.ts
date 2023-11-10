@@ -1,1 +1,1 @@
-export type BonusStatus = "ACTIVE" | "PAUSED" | "ENDING" | "REMOVED";
+export type BonusStatus = "ACTIVE" | "PAUSED" | "EXPIRING" | "REMOVED";
