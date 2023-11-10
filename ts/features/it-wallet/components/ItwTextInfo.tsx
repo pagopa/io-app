@@ -1,5 +1,4 @@
 import React from "react";
-import { Text, View } from "react-native";
 import {
   Body,
   H2,
@@ -18,25 +17,21 @@ interface MarkdownParserProps {
 }
 
 const RenderRegularText = (text: string, index: number) => (
-  <Text key={`text-${index}`}>{text}</Text>
+  <Body key={`text-${index}`}>{text}</Body>
 );
 
 const RenderBoldText = (text: string, index: number) => (
-  <Text key={`bold-${index}`} style={{ fontWeight: "bold" }}>
+  <Body key={`bold-${index}`} weight="Bold">
     {text}
-  </Text>
+  </Body>
 );
 
 const RenderHeaderLevel2 = (text: string, index: number) => (
-  <View key={`h2-${index}`} style={{ flexDirection: "row", paddingBottom: 16 }}>
-    <H2>{text}</H2>
-  </View>
+  <H2 key={`h2-${index}`}>{text}</H2>
 );
 
 const RenderHeaderLevel6 = (text: string, index: number) => (
-  <View key={`h6-${index}`} style={{ flexDirection: "row", paddingBottom: 8 }}>
-    <H6>{text}</H6>
-  </View>
+  <H6 key={`h6-${index}`}>{text}</H6>
 );
 
 const RenderLink = (text: string, url: string, index: number) => {
