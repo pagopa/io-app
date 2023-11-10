@@ -9,7 +9,7 @@ import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../screens/BaseScreenComponent";
-import { BonusCard, BonusCardProps } from "./BonusCard";
+import { BonusCard } from "./BonusCard";
 
 const triggerOffsetValue: number = 32;
 
@@ -31,7 +31,7 @@ type ScreenProps = {
 export type BonusScreenComponentProps = ScreenProps &
   HeaderProps &
   SupportRequestProps &
-  BonusCardProps;
+  BonusCard;
 
 const deviceScreenHeightLogoThreshold = 700;
 
