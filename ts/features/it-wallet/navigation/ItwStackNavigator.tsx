@@ -10,19 +10,19 @@ import ItwDiscoveryInfoScreen from "../screens/discovery/ItwDiscoveryInfoScreen"
 import ItwPidAuthInfoScreen from "../screens/issuing/ItwPidAuthInfoScreen";
 import ItwPidPreviewScreen from "../screens/issuing/ItwPidPreviewScreen";
 import ItwPidAddingScreen from "../screens/issuing/ItwPidAddingScreen";
-import ItwCredentialDetails from "../screens/credentials/ItwPidDetails";
+import ItwCredentialDetails from "../screens/credential/ItwPidDetails";
 import ItwPidRequestScreen from "../screens/issuing/ItwPidRequestScreen";
 import ItwRpInitScreen from "../screens/presentation/crossdevice/ItwRpInitScreen";
 import ItwPresentationScreen from "../screens/presentation/crossdevice/ItwRpPresentationScreen";
 import ItwDiscoveryProviderInfoScreen from "../screens/discovery/ItwDiscoveryProviderInfoScreen";
-import ItwCredentialsCatalogScreen from "../screens/credentials/ItwCredentialsCatalogScreen";
 import ItwMissingFeatureScreen from "../screens/generic/ItwMissingFeatureScreen";
-import ItwCredentialPreviewScreen from "../screens/credentials/ItwCredentialPreviewScreen";
-import ItwAddCredentialsCheckScreen from "../screens/credentials/ItwAddCredentialsCheckScreen";
-import ItwCredentialIssuingInfoScreen from "../screens/credentials/ItwCredentialIssuingInfoScreen";
+import ItwCredentialPreviewScreen from "../screens/credential/issuing/ItwCredentialPreviewScreen";
+import ItwCredentialAuthScreen from "../screens/credential/issuing/ItwCredentialAuthScreen";
 import ItwChecksScreen from "../screens/presentation/crossdevice/new/ItwPresentationChecksScreen";
 import ItwPresentationDataScreen from "../screens/presentation/crossdevice/new/ItwPresentationDataScreen";
 import ItwPresentationResultScreen from "../screens/presentation/crossdevice/new/ItwPresentationResultScreen";
+import ItwCredentialsChecksScreen from "../screens/credential/issuing/ItwCredentialChecksScreen";
+import ItwCredentialCatalogScreen from "../screens/credential/issuing/ItwCredentialsCatalogScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -106,21 +106,21 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT}
       component={ItwPresentationScreen}
     />
-    {/* CREDENTIALS */}
+    {/* CREDENTIAL ISSUING */}
     <Stack.Screen
-      name={ITW_ROUTES.CREDENTIALS.CATALOG}
-      component={ItwCredentialsCatalogScreen}
+      name={ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG}
+      component={ItwCredentialCatalogScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.CREDENTIALS.ADD_CHECKS}
-      component={ItwAddCredentialsCheckScreen}
+      name={ITW_ROUTES.CREDENTIAL.ISSUING.CHECKS}
+      component={ItwCredentialsChecksScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.CREDENTIALS.ISSUING_INFO}
-      component={ItwCredentialIssuingInfoScreen}
+      name={ITW_ROUTES.CREDENTIAL.ISSUING.AUTH}
+      component={ItwCredentialAuthScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.CREDENTIALS.PREVIEW}
+      name={ITW_ROUTES.CREDENTIAL.ISSUING.PREVIEW}
       component={ItwCredentialPreviewScreen}
     />
     {/* COMMON */}

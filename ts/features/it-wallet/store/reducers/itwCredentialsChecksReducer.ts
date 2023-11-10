@@ -5,10 +5,10 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwCredentialsChecks } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
-import { CredentialCatalogItem } from "../../utils/mocks";
+import { CredentialCatalogAvailableItem } from "../../utils/mocks";
 
 export type ItwCredentialsChecksState = pot.Pot<
-  O.Option<CredentialCatalogItem>,
+  O.Option<CredentialCatalogAvailableItem>,
   ItWalletError
 >;
 

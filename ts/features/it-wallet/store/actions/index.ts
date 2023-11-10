@@ -5,11 +5,13 @@ import { ItwWiaActions } from "./itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
 import { ItwRpActions } from "./itwRpActions";
 import { ItwPresentationChecks } from "./new/itwPresentationActions";
+import { itwIssuanceActions } from "./new/itwIssuanceActions";
 
 /**
  * Action types for the IT Wallet feature
  */
 export type ItWalletActions =
+  | itwIssuanceActions
   | ItwActivationActions
   | ItwWiaActions
   | ItwLifecycleActions
