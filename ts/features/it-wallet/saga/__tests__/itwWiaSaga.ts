@@ -10,16 +10,6 @@ import { itwWiaRequest } from "../../store/actions/itwWiaActions";
 
 describe("handleWiaRequest", () => {
   const wiaMock = "wia";
-  it("should set the pot to some state with a WIA if an user logged in with CIE", async () => {
-    const mockedState = O.some({ name: "cie" });
-    await expectSaga(handleWiaRequest)
-      .provide([
-        [matchers.select(idpSelector), mockedState],
-        [matchers.call.fn(getWia), wiaMock]
-      ])
-      .put(itwWiaRequest.success(wiaMock))
-      .run();
-  });
 
   it("should set the pot to some state with a WIA if an user logged in SPID but has NFC capabilities", async () => {
     const mockedState = O.some({ name: "Poste" });

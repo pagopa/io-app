@@ -1,4 +1,3 @@
-import { ItwAddCredentialsCheckScreenNavigationParams } from "../screens/credentials/ItwAddCredentialsCheckScreen";
 import { ItwPidRequestScreenNavigationParams } from "../screens/issuing/ItwPidRequestScreen";
 import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/cie/ItwCieCardReaderScreen";
 import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
@@ -36,11 +35,10 @@ export type ItwParamsList = {
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA]: undefined;
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT_NEW]: undefined;
   // CREDENTIALS
-  [ITW_ROUTES.CREDENTIALS.CATALOG]: undefined;
-  [ITW_ROUTES.CREDENTIALS
-    .ADD_CHECKS]: ItwAddCredentialsCheckScreenNavigationParams;
-  [ITW_ROUTES.CREDENTIALS.ISSUING_INFO]: undefined;
-  [ITW_ROUTES.CREDENTIALS.PREVIEW]: undefined;
+  [ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG]: undefined;
+  [ITW_ROUTES.CREDENTIAL.ISSUING.CHECKS]: undefined;
+  [ITW_ROUTES.CREDENTIAL.ISSUING.AUTH]: undefined;
+  [ITW_ROUTES.CREDENTIAL.ISSUING.PREVIEW]: undefined;
   // GENERIC
   [ITW_ROUTES.GENERIC.NOT_AVAILABLE]: undefined;
 };
