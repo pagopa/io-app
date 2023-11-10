@@ -2,10 +2,7 @@ import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useLayoutEffect } from "react";
-import {
-  useAnimatedScrollHandler,
-  useSharedValue
-} from "react-native-reanimated";
+import { useSharedValue } from "react-native-reanimated";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
@@ -14,12 +11,16 @@ import I18n from "../i18n";
 import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
 
+type ScrollValues = React.ComponentProps<
+  typeof HeaderSecondLevel
+>["scrollValues"];
+
 type CommonProps = {
   title: string;
   backAccessibilityLabel?: string;
   goBack?: () => void;
   transparent?: boolean;
-  scrollTriggerOffsetValue?: number;
+  scrollValues?: ScrollValues;
 };
 
 type NoAdditionalActions = {
@@ -69,7 +70,7 @@ export const useHeaderSecondLevel = ({
   secondAction,
   thirdAction,
   transparent,
-  scrollTriggerOffsetValue = 0
+  scrollValues
 }: HeaderSecondLevelHookProps) => {
   const translationY = useSharedValue(0);
 
@@ -139,19 +140,11 @@ export const useHeaderSecondLevel = ({
     thirdAction
   ]);
 
-  const scrollHandler = useAnimatedScrollHandler(event => {
-    // eslint-disable-next-line functional/immutable-data
-    translationY.value = event.contentOffset.y;
-  });
-
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          scrollValues={{
-            contentOffsetY: translationY,
-            triggerOffset: scrollTriggerOffsetValue
-          }}
+          scrollValues={scrollValues}
           transparent={transparent}
           {...headerComponentProps}
         />
@@ -161,10 +154,8 @@ export const useHeaderSecondLevel = ({
   }, [
     headerComponentProps,
     navigation,
-    scrollTriggerOffsetValue,
     translationY,
-    transparent
+    transparent,
+    scrollValues
   ]);
-
-  return { scrollHandler };
 };

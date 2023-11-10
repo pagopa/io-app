@@ -1,4 +1,4 @@
-import { H2 } from "@pagopa/io-app-design-system";
+import { ContentWrapper, H2, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert } from "react-native";
 import { BonusCardScreenComponent } from "../../../components/BonusCard";
@@ -25,15 +25,44 @@ const DSBonusCardScreen = () => (
         value: "9.999,99 €"
       }
     ]}
-    secondAction={{
+    headerAction={{
       icon: "info",
       onPress: () => {
         Alert.alert("info");
       },
       accessibilityLabel: "info"
     }}
+    footerCta={{
+      label: "Ciao",
+      accessibilityLabel: "Ciao",
+      onPress: () => Alert.alert("Hello world!")
+    }}
   >
-    <H2>Hello</H2>
+    <VSpacer size={16} />
+    <ContentWrapper>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+      <H2>Hello world!</H2>
+    </ContentWrapper>
   </BonusCardScreenComponent>
 );
 
