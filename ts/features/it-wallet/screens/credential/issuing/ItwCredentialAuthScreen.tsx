@@ -123,7 +123,6 @@ const ItwCredentialAuthScreen = () => {
           {/* Render a list of claims that will be shared with the credential issuer */}
           <ItwBulletList data={getRequestedClaims(decodedPid)} />
           <VSpacer size={32} />
-          {/* ItwFooterInfoBox should be replaced with a more ligth component */}
           <ItwTextInfo
             content={I18n.t(
               "features.itWallet.issuing.credentialsIssuingInfoScreen.tos"
