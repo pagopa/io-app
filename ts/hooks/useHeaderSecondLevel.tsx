@@ -72,8 +72,6 @@ export const useHeaderSecondLevel = ({
   transparent,
   scrollValues
 }: HeaderSecondLevelHookProps) => {
-  const translationY = useSharedValue(0);
-
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
     contextualHelpMarkdown,
@@ -151,11 +149,5 @@ export const useHeaderSecondLevel = ({
       ),
       headerTransparent: transparent
     });
-  }, [
-    headerComponentProps,
-    navigation,
-    translationY,
-    transparent,
-    scrollValues
-  ]);
+  }, [headerComponentProps, navigation, transparent, scrollValues]);
 };
