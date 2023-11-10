@@ -169,6 +169,7 @@ const ItwPresentationDataScreen = () => {
         />
         <VSpacer size={32} />
         {/* TOS SECTION */}
+        {/* TODO: replace with ItwTextInfo component */}
         <ItwFooterInfoBox
           content={I18n.t("features.itWallet.presentation.dataScreen.tos")}
         />
