@@ -222,3 +222,8 @@ export const rpMock: RpMock = {
     }
   ]
 };
+
+/**
+ * Regex to validate the date format of a credential.
+ */
+export const dateFormatRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);
