@@ -22,7 +22,7 @@ export type ItWalletMappedError = {
  * The function must takes an {@link ItWalletError} and returns a {@link ItwKoViewProps}
  */
 export type ItwErrorMapping = (
-  error: ItWalletError
+  error?: ItWalletError
 ) => React.ComponentProps<typeof ItwKoView>;
 
 /**
@@ -35,6 +35,7 @@ export enum ItWalletErrorTypes {
   PID_DECODING_ERROR = "PID_DECODING_ERROR", // not mapped yet
   RP_INITIALIZATION_ERROR = "RP_INITIALIZATION_ERROR", // not mapped yet
   RP_PRESENTATION_ERROR = "RP_PRESENTATION_ERROR", // not mapped yet
-  CREDENTIALS_ADD_ERROR = "CREDENTIALS_ADD_ERROR", // not mapped yet
-  CREDENTIAL_ALREADY_EXISTING_ERROR = "CREDENTIAL_ALREADY_EXISTING_ERROR"
+  CREDENTIAL_ALREADY_EXISTING_ERROR = "CREDENTIAL_ALREADY_EXISTING_ERROR",
+  CREDENTIAL_CHECKS_GENERIC_ERROR = "CREDENTIAL_CHECKS_GENERIC_ERROR", // not mapped yet
+  CREDENTIAL_ADD_ERROR = "CREDENTIAL_ADD_ERROR" // not mapped yet
 }

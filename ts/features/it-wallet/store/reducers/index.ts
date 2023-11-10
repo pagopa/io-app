@@ -1,8 +1,16 @@
 import { combineReducers } from "redux";
-import { PersistConfig, PersistPartial, persistReducer } from "redux-persist";
+import {
+  MigrationManifest,
+  PersistConfig,
+  PersistPartial,
+  PersistedState,
+  createMigrate,
+  persistReducer
+} from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../store/actions/types";
 import createCredentialsKeychain from "../storages/credentialsKeychain";
+import { isDevEnv } from "../../../../utils/environment";
 import itwCieReducer, { ItwCieState } from "./itwCieReducer";
 import itwWia, { ItwWIAState } from "./itwWiaReducer";
 import itwCredentials, { ItwCredentialsState } from "./itwCredentialsReducer";
@@ -21,8 +29,25 @@ import itwCredentialsChecksReducer, {
 import itwPresentationReducer, {
   ItwPresentationState
 } from "./new/itwPresentationReducer";
+import itwIssuanceReducer, { ItwIssuanceState } from "./new/itwIssuanceReducer";
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 1;
+const CURRENT_REDUX_ITW_STORE_VERSION = 2;
+
+const itwStoreMigration: MigrationManifest = {
+  /**
+   * Version 2 where we reset the state due to redux state changes.
+   */
+  "2": (): PersistedState => undefined as unknown as PersistedState
+};
+
+const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 2;
+
+const itwCredentialsStoreMigration: MigrationManifest = {
+  /**
+   * Version 2 where we reset the state due to redux state changes.
+   */
+  "2": (): PersistedState => undefined as unknown as PersistedState
+};
 
 export type ItWalletState = {
   wia: ItwWIAState;
@@ -35,6 +60,7 @@ export type ItWalletState = {
   rpInit: ItwRpInitializationState;
   rpPresentation: ItwRpPresentationState;
   presentation: ItwPresentationState;
+  issuance: ItwIssuanceState;
 };
 
 export type PersistedItWalletState = ItWalletState & PersistPartial;
@@ -43,12 +69,15 @@ const persistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
-  whitelist: ["lifecycle"]
+  whitelist: ["lifecycle"],
+  migrate: createMigrate(itwStoreMigration, { debug: isDevEnv })
 };
 
 const credentialsPersistConfig = {
   key: "credentials",
-  storage: createCredentialsKeychain()
+  storage: createCredentialsKeychain(),
+  version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
+  migrate: createMigrate(itwCredentialsStoreMigration, { debug: isDevEnv })
 };
 
 const reducers = combineReducers<ItWalletState, Action>({
@@ -61,7 +90,8 @@ const reducers = combineReducers<ItWalletState, Action>({
   decodedPid: itwDecodedPid,
   rpInit: itwRpInitializationReducer,
   rpPresentation: itwRpPresentationReducer,
-  presentation: itwPresentationReducer
+  presentation: itwPresentationReducer,
+  issuance: itwIssuanceReducer
 });
 
 const itwReducer = persistReducer<ItWalletState, Action>(
