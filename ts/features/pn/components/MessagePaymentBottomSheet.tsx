@@ -19,7 +19,6 @@ export const MessagePaymentBottomSheet = ({
   payments,
   presentPaymentsBottomSheetRef
 }: MessagePaymentBottomSheetProps) => {
-  // console.log(`=== Bottom Sheet: re-rendering`);
   const dispatch = useDispatch();
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = (payments.length > 5 ? 0.75 : 0.5) * windowHeight;
@@ -46,6 +45,5 @@ export const MessagePaymentBottomSheet = ({
   });
   // eslint-disable-next-line functional/immutable-data
   presentPaymentsBottomSheetRef.current = present;
-  // console.log(`=== Bottom Sheet: re-rendering`);
   return bottomSheet;
 };

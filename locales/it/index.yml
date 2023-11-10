@@ -675,6 +675,8 @@ authentication:
     contentTitle: Cos'è SPID?
     subtitle: SPID è sicuro
   opt-in:
+    contextualHelpTitle: Autenticazione
+    contextualHelpContent: Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.
     news: novità
     title: Da oggi accedi a IO più velocemente
     identity-check: Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
@@ -3055,7 +3057,6 @@ features:
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
         payments: "Pagamenti"
       paymentSection:
-        legacyTitle: Avviso di pagamento
         title: "Avvisi pagoPA"
         morePayments: "Vedi tutti gli avvisi"
         bottomSheetTitle: "Quale avviso vuoi pagare?"
