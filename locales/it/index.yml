@@ -3469,11 +3469,10 @@ features:
         title: "Ecco un’anteprima della tua tessera"
         subtitle: "Prima di aggiungerla, verifica che tutte le informazioni siano
             corrette."
-        somethingWrong:
+        banner:
           title: "Qualcosa non torna?"
-          subtitle: "Se ci sono errori nei dati o vuoi capire meglio cosa significano,
-            contatta {{issuer}}."
-          action: "Contatta l'assistenza"
+          content: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, contatta l’assistenza."
+          actionTitle: "Contatta l'assistenza"
         bottomSheet: 
           about: 
             title: "Chi è?"
