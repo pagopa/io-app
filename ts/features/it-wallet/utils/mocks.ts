@@ -53,6 +53,7 @@ export type CredentialCatalogDisplay = {
   icon?: IOIcons;
   firstLine?: Array<string>;
   secondLine?: Array<string>;
+  order?: Array<string>;
 };
 
 // A credential shown in the catalog but yet to be requested
@@ -77,6 +78,7 @@ export type CredentialCatalogItem =
  * Hard coded catalog of credentials.
  * It contains the display data for each credential type.
  * firstLine and secondLine are used to display the credential attributes in the credential card.
+ * The order parameter is used to display the attributes in the correct order.
  */
 export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
   {
@@ -90,7 +92,15 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     textColor: "black",
     image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png"),
     firstLine: ["given_name", "family_name"],
-    secondLine: ["serial_number"]
+    secondLine: ["serial_number"],
+    order: [
+      "given_name",
+      "family_name",
+      "birthdate",
+      "accompanying_person_right",
+      "expiration_date",
+      "serial_number"
+    ]
   },
   {
     incoming: true,

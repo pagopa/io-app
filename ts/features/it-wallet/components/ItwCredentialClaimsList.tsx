@@ -8,6 +8,7 @@ import * as E from "fp-ts/Either";
 import { IssuanceResultData } from "../store/reducers/new/itwIssuanceReducer";
 import { getClaimsFullLocale } from "../utils/locales";
 import I18n from "../../../i18n";
+import { CredentialCatalogDisplay } from "../utils/mocks";
 
 /**
  * Type of the claims list.
@@ -66,16 +67,38 @@ const parseClaims = (
     .flat(2);
 
 /**
+ * Sorts the schema according to the order of the displayData.
+ * If the order is not available, the schema is returned as is.
+ * @param schema - the issuance credentialConfigurationSchema of parsedCredential.
+ * @param order - the order of the displayData.
+ * @returns schema sorted according to the order of the displayData.
+ */
+const sortSchema = (
+  schema: IssuanceResultData["credentialConfigurationSchema"],
+  order: CredentialCatalogDisplay["order"]
+) =>
+  order
+    ? Object.fromEntries(
+        Object.entries(schema)
+          .slice()
+          .sort(([key1], [key2]) => order.indexOf(key1) - order.indexOf(key2))
+      )
+    : schema;
+
+/**
  * This component renders the list of claims for a credential.
  * It dinamically renders the list of claims passed as claims prop in the order they are passed.
  * @param data - the {@link IssuanceResultData} of the credential.
  */
 const ItwCredentialClaimsList = ({
-  data: { parsedCredential, credentialConfigurationSchema }
+  data: { parsedCredential, credentialConfigurationSchema, displayData }
 }: {
   data: IssuanceResultData;
 }) => {
-  const claims = parseClaims(parsedCredential, credentialConfigurationSchema);
+  const claims = parseClaims(
+    parsedCredential,
+    sortSchema(credentialConfigurationSchema, displayData.order)
+  );
 
   /**
    * Renders the issuer name from the evidence field of the credential.
