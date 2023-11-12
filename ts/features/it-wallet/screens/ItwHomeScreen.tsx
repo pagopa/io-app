@@ -110,7 +110,7 @@ const ItwHomeScreen = () => {
               onLongPress={onLongPressCredential}
               onPress={() =>
                 navigation.navigate(ITW_ROUTES.MAIN, {
-                  screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAILS,
+                  screen: ITW_ROUTES.CREDENTIAL.PRESENTATION.CREDENTIAL_DETAILS,
                   params: {
                     credential
                   }
