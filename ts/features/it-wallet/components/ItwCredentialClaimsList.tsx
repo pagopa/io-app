@@ -6,7 +6,7 @@ import * as t from "io-ts";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/Either";
 import { IssuanceResultData } from "../store/reducers/new/itwIssuanceReducer";
-import { getClaimsFullLocale } from "../utils/locales";
+import { getClaimsFullLocale, localeDateFormatOrSame } from "../utils/locales";
 import I18n from "../../../i18n";
 import { CredentialCatalogDisplay } from "../utils/mocks";
 
@@ -44,6 +44,7 @@ const EvidenceDecoder = t.array(
  * The key of the object is used to get the value from the parsedCredential.
  * If the value is not available, the value is set to undefined which is then
  * wrapped in an Option.
+ * If the value is a date, it is formatted using the localeDateFormat function which otherwise returns the same value.
  * The value of the object is used to get the label from the credentialConfigurationSchema
  * by filtering the display array for the current locale.
  * If the label is not available for the current locale, the label is set to undefined which is then
@@ -59,7 +60,7 @@ const parseClaims = (
 ): ClaimList =>
   Object.entries(schema)
     .map(([key, elem]) => ({
-      value: O.fromNullable(parsedCredential[key]),
+      value: O.fromNullable(localeDateFormatOrSame(parsedCredential[key])),
       label: O.fromNullable(
         elem.display.filter(e => e.locale === getClaimsFullLocale())[0]?.name
       )
