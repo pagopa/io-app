@@ -24,7 +24,7 @@ export type ItwCredentialDetailsScreenNavigationParams = {
 
 type ItwCredentialDetailscreenRouteProps = RouteProp<
   ItwParamsList,
-  "ITW_CREDENTIAL_DETAILS"
+  "ITW_CREDENTIAL_PRESENTATION_DETAILS"
 >;
 
 /**

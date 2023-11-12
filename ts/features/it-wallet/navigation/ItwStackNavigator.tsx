@@ -86,11 +86,6 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.PRESENTATION.PID_DETAILS}
       component={ItwCredentialDetails}
     />
-    {/* PRESENTATION CREDENTIAL DETAILS */}
-    <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAILS}
-      component={ItwCredentialDetailsScreen}
-    />
     {/* PRESENTATION CROSS DEVICE */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.CHECKS}
@@ -128,6 +123,11 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.CREDENTIAL.ISSUING.PREVIEW}
       component={ItwCredentialPreviewScreen}
+    />
+    {/* CREDENTIAL PRESENTATION */}
+    <Stack.Screen
+      name={ITW_ROUTES.CREDENTIAL.PRESENTATION.CREDENTIAL_DETAILS}
+      component={ItwCredentialDetailsScreen}
     />
     {/* COMMON */}
     <Stack.Screen
