@@ -152,17 +152,17 @@ const ItwCredentialPreviewScreen = () => {
               color={"neutral"}
               size="big"
               title={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.title"
+                "features.itWallet.issuing.credentialPreviewScreen.banner.title"
               )}
               content={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.subtitle",
+                "features.itWallet.issuing.credentialPreviewScreen.banner.content",
                 {
                   issuer: data.issuerName
                 }
               )}
               pictogramName={"security"}
               action={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.action"
+                "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
               )}
               onPress={present}
             />
