@@ -2,6 +2,9 @@ import React from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import * as O from "fp-ts/Option";
+import * as t from "io-ts";
+import { pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/Either";
 import { IssuanceResultData } from "../store/reducers/new/itwIssuanceReducer";
 import { getClaimsFullLocale } from "../utils/locales";
 import I18n from "../../../i18n";
@@ -15,6 +18,23 @@ type ClaimList = ReadonlyArray<{
   value: O.Option<string>;
   label: O.Option<string>;
 }>;
+
+/**
+ * Decoder type for the evidence field of the credential.
+ */
+const EvidenceDecoder = t.array(
+  t.type({
+    type: t.string,
+    record: t.type({
+      type: t.string,
+      source: t.type({
+        organization_name: t.string,
+        organization_id: t.string,
+        country_code: t.string
+      })
+    })
+  })
+);
 
 /**
  * Parses the claims from the credential.
@@ -57,6 +77,36 @@ const ItwCredentialClaimsList = ({
 }) => {
   const claims = parseClaims(parsedCredential, credentialConfigurationSchema);
 
+  /**
+   * Renders the issuer name from the evidence field of the credential.
+   * It uses the EvidenceDecoder to decode the evidence field.
+   * @param evidence - the evidence field of the credential.
+   * @returns the list item with the issuer name or an empty fragment if the evidence field is not available.
+   */
+  const RenderIssuerName = ({ evidence }: { evidence: string }) =>
+    pipe(
+      EvidenceDecoder.decode(JSON.parse(evidence)),
+      E.fold(
+        () => <></>,
+        result => {
+          const label = I18n.t(
+            "features.itWallet.verifiableCredentials.claims.releasedBy"
+          );
+          const value = result[0].record.source.organization_name;
+          return (
+            <>
+              <ListItemInfo
+                label={label}
+                value={value}
+                accessibilityLabel={`${label} ${value}`}
+              />
+              <Divider />
+            </>
+          );
+        }
+      )
+    );
+
   return (
     <>
       {claims.map(
@@ -78,6 +128,9 @@ const ItwCredentialClaimsList = ({
             <Divider />
           </View>
         )
+      )}
+      {parsedCredential.evidence && (
+        <RenderIssuerName evidence={parsedCredential.evidence} />
       )}
     </>
   );
