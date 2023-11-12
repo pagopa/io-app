@@ -3349,10 +3349,10 @@ features:
       credentialPreviewScreen:
         title: "Here's a preview of your credential"
         subtitle: "Before adding it, check if the data is correct."
-        somethingWrong:
-          title: "Something wrong?"
-          subtitle: "If there are errors in the data or you want to better understand what they mean, contact {{issuer}}."
-          action: "Ask for help"
+        banner:
+          title: "Something doesn't add up?"
+          content: "If you want to delve deeper into some data or report errors, contact support."
+          actionTitle: "Contact support"
         bottomSheet: 
           about: 
             title: "Who is it?"
