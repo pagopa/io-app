@@ -3446,6 +3446,7 @@ features:
         issuedBy: "Credenziale emessa da"
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
+        releasedBy: "Rilasciata da"
         securityLevels: 
           high: "Alto"
           na: "Non disponibile"

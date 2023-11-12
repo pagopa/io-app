@@ -3444,6 +3444,7 @@ features:
         securityLevel: "Security level"
         issuedBy: "Credential issued by"
         issuedByNew: "Issued by"
+        releasedBy: "Released by"
         info: "Further information about this data"
         securityLevels: 
           high: "High"
