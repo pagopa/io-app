@@ -98,8 +98,8 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
       "family_name",
       "birthdate",
       "accompanying_person_right",
-      "serial_number",
-      "expiration_date"
+      "expiration_date",
+      "serial_number"
     ]
   },
   {
