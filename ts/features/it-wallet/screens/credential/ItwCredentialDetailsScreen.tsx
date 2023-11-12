@@ -70,17 +70,14 @@ const ItwCredentialDetailsScreen = () => {
               color={"neutral"}
               size="big"
               title={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.title"
+                "features.itWallet.issuing.credentialPreviewScreen.banner.title"
               )}
               content={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.subtitle",
-                {
-                  issuer: credential.parsedCredential
-                }
+                "features.itWallet.issuing.credentialPreviewScreen.banner.content"
               )}
               pictogramName={"security"}
               action={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.somethingWrong.action"
+                "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
               )}
               onPress={constNull}
             />
