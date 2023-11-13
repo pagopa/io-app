@@ -167,10 +167,10 @@ const ItwDiscoveryProviderInfoScreen = () => {
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
-        <H2 style={IOStyles.horizontalContentPadding}>
-          {I18n.t("features.itWallet.featuresInfoScreen.title")}
-        </H2>
         <ScrollView>
+          <H2 style={IOStyles.horizontalContentPadding}>
+            {I18n.t("features.itWallet.featuresInfoScreen.title")}
+          </H2>
           <SectionList
             keyExtractor={(item, index) => `${item.title}-${index}`}
             stickySectionHeadersEnabled={false}
