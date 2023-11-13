@@ -675,6 +675,8 @@ authentication:
     contentTitle: Don't have SPID?
     subtitle: SPID is safe
   opt-in:
+    contextualHelpTitle: Authentication
+    contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
     title: It's now faster to log into IO
     identity-check: You'll need to log in with SPID or CIE only once a year, or in case you log out.
