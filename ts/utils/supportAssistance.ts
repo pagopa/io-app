@@ -58,9 +58,9 @@ export const getZendeskConfig = (zendeskToken: string | undefined) =>
     O.map(
       (zT: string): ZendeskAppConfig => ({
         ...zendeskDefaultJwtConfig,
-        token: zT // this is not used by the zendesk sdk at this point...
-        // https://github.com/pagopa/io-react-native-zendesk/blob/62559dc219583834f0bae2864d959f51f2d19572/ios/RNZendeskChat.m#L180
-        // https://github.com/pagopa/io-react-native-zendesk/blob/62559dc219583834f0bae2864d959f51f2d19572/index.d.ts#L75C3-L75C3
+        token: zT // this is actually not used by the zendesk sdk...
+        // https://github.com/pagopa/io-react-native-zendesk/blob/main/ios/RNZendeskChat.m#L180
+        // https://github.com/pagopa/io-react-native-zendesk/blob/main/index.d.ts#L75C3-L75C3
       })
     ),
     O.getOrElseW(() => zendeskDefaultAnonymousConfig)
