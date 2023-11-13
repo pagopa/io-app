@@ -109,10 +109,6 @@ export const spidRelayState = Config.SPID_RELAY_STATE;
 // Fast Login Feature Flag
 export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
 
-// Fast Login Bypass getNonce
-export const fastLoginBypassGetNonce =
-  Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
-
 // Fast login bypass opt-in
 export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
 
@@ -127,8 +123,6 @@ export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
-
-export const pnNoticesF24Enabled = Config.PN_NOTICES_F24_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;

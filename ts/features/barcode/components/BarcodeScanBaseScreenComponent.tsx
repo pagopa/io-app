@@ -210,6 +210,7 @@ const BarcodeScanBaseScreenComponent = ({
 
       return (
         <CameraPermissionView
+          pictogram="cameraRequest"
           title={I18n.t("barcodeScan.permissions.undefined.title")}
           body={I18n.t("barcodeScan.permissions.undefined.label")}
           action={{
@@ -230,6 +231,7 @@ const BarcodeScanBaseScreenComponent = ({
 
     return (
       <CameraPermissionView
+        pictogram="cameraDenied"
         title={I18n.t("barcodeScan.permissions.denied.title")}
         body={I18n.t("barcodeScan.permissions.denied.label")}
         action={{
