@@ -773,7 +773,7 @@ email:
       title: Email
       content: !include email_insert_help.md
     alertTitle: This email address is already in use
-    alertDescription: Può succedere se condividi lo stesso indirizzo con un familiare
+    alertDescription: This may happen if you share the same email address with a family member
     alertButton: Usa un’altra email
   newinsert:
     header: "Configure IO"
