@@ -9,6 +9,8 @@ import { getError } from "../../utils/errors";
 import { toUIMessageDetails } from "../../store/reducers/entities/messages/transformers";
 import { isTestEnv } from "../../utils/environment";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../../features/messages/utils";
+import { trackLoadMessageDetailsFailure } from "../../features/messages/analytics";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<(typeof loadMessageDetails)["request"]>;
@@ -44,17 +46,22 @@ function tryLoadMessageDetails(getMessage: LocalBeClient) {
           response,
           (message: CreatedMessageWithContentAndAttachments) =>
             loadMessageDetails.success(toUIMessageDetails(message)),
-          error =>
-            loadMessageDetails.failure({
+          error => {
+            const reason = errorToReason(error);
+            trackLoadMessageDetailsFailure(reason);
+            return loadMessageDetails.failure({
               id,
               error: getError(error)
-            })
+            });
+          }
         );
 
       if (nextAction) {
         yield* put(nextAction);
       }
     } catch (error) {
+      const reason = unknownToReason(error);
+      trackLoadMessageDetailsFailure(reason);
       yield* put(
         loadMessageDetails.failure({
           id,
