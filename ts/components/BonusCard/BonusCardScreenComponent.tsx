@@ -42,7 +42,7 @@ export type BonusScreenComponentProps = BaseProps &
   SupportRequestProps &
   BonusCard;
 
-const scrollTriggerOffsetValue: number = 32;
+const scrollTriggerOffsetValue: number = 88;
 
 const deviceScreenHeightLogoThreshold = 700;
 
@@ -142,7 +142,7 @@ const BonusCardScreenComponent = ({
           paddingBottom: safeBottomAreaHeight
         }}
         onScroll={scrollHandler}
-        scrollEventThrottle={8}
+        scrollEventThrottle={16}
         snapToOffsets={[0, scrollTriggerOffsetValue]}
         snapToEnd={false}
         decelerationRate="normal"
