@@ -34,10 +34,10 @@ const ItwDiscoveryProviderInfoScreen = () => {
   const navigation = useNavigation();
 
   const { present, bottomSheet } = useItwInfoBottomSheet({
-    title: I18n.t("features.itWallet.providerInfoScreen.showDiff.title"),
+    title: I18n.t("features.itWallet.featuresInfoScreen.showDiff.title"),
     content: [
       {
-        body: I18n.t("features.itWallet.providerInfoScreen.showDiff.content")
+        body: I18n.t("features.itWallet.featuresInfoScreen.showDiff.content")
       }
     ]
   });
