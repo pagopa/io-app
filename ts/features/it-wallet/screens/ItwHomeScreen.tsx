@@ -27,8 +27,8 @@ import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycl
 import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer";
 import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
-import { itWalletExperimentalEnabled } from "../../../config";
 import ItwCredentialCard from "../components/ItwCredentialCard";
+import { pidDisplayData } from "../utils/mocks";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -65,11 +65,9 @@ const ItwHomeScreen = () => {
    * Otherwise do nothing.
    */
   const onPressAddCredentials = () => {
-    if (itWalletExperimentalEnabled) {
-      navigation.navigate(ITW_ROUTES.MAIN, {
-        screen: ITW_ROUTES.CREDENTIALS.CATALOG
-      });
-    }
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG
+    });
   };
 
   /**
@@ -99,34 +97,34 @@ const ItwHomeScreen = () => {
           }
         >
           <ItwCredentialCard
-            title={I18n.t(
-              "features.itWallet.verifiableCredentials.type.digitalCredential"
-            )}
-            name={`${decodedPid?.pid.claims.givenName} ${decodedPid?.pid.claims.familyName}`}
-            fiscalCode={decodedPid?.pid.claims.taxIdCode as string}
-            textColor="white"
-            backgroundImage={require("../assets/img/credentials/cards/pidFront.png")}
+            pidClaims={decodedPid.pid.claims}
+            display={pidDisplayData}
           />
           <VSpacer />
         </Pressable>
-        {credentials.map(
-          (credential, idx) =>
-            O.isSome(credential) && (
-              <Pressable
-                onLongPress={onLongPressCredential}
-                key={`${credential.value.title}-${idx}`}
-              >
-                <ItwCredentialCard
-                  title={credential.value.title}
-                  name={`${credential.value.claims.givenName} ${credential.value.claims.familyName}`}
-                  fiscalCode={credential.value.claims.taxIdCode}
-                  textColor={credential.value.textColor}
-                  backgroundImage={credential.value.image}
-                />
-                <VSpacer />
-              </Pressable>
-            )
-        )}
+        {credentials
+          .filter(O.isSome)
+          .map(_ => _.value)
+          .map((credential, idx) => (
+            <Pressable
+              onLongPress={onLongPressCredential}
+              onPress={() =>
+                navigation.navigate(ITW_ROUTES.MAIN, {
+                  screen: ITW_ROUTES.CREDENTIAL.PRESENTATION.CREDENTIAL_DETAILS,
+                  params: {
+                    credential
+                  }
+                })
+              }
+              key={`${credential.displayData.title}-${idx}`}
+            >
+              <ItwCredentialCard
+                parsedCredential={credential.parsedCredential}
+                display={credential.displayData}
+              />
+              <VSpacer />
+            </Pressable>
+          ))}
         <View
           style={{
             ...IOStyles.flex,

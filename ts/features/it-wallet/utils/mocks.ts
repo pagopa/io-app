@@ -4,7 +4,6 @@ import { ImageSourcePropType } from "react-native";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
-import ItwCredentialCard from "../components/ItwCredentialCard";
 import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
@@ -47,59 +46,70 @@ export const FEDERATION_ENTITY = {
 
 export const CREDENTIAL_ISSUER = "eFarma";
 
-export type CredentialCatalogItem = {
-  title: string;
-  icon: IOIcons;
-  incoming: boolean;
-  claims: {
-    issuedByNew: string;
-    expirationDate: string;
-    givenName: string;
-    familyName: string;
-    taxIdCode: string;
-    birthdate: string;
-  };
-  textColor: React.ComponentProps<typeof ItwCredentialCard>["textColor"];
+export type CredentialCatalogDisplay = {
+  textColor: "black" | "white";
   image: ImageSourcePropType;
-  requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
+  title: string;
+  icon?: IOIcons;
+  firstLine?: Array<string>;
+  secondLine?: Array<string>;
+  order?: Array<string>;
 };
 
+// A credential shown in the catalog but yet to be requested
+export type CredentialCatalogIncomingItem = {
+  incoming: true;
+} & CredentialCatalogDisplay;
+
+// A credential shown in the catalog that user can request
+export type CredentialCatalogAvailableItem = {
+  incoming: false;
+  /* The type that defines the credential to be issued */
+  type: string;
+  /* The url of the issuer */
+  issuerUrl: string;
+} & CredentialCatalogDisplay;
+
+export type CredentialCatalogItem =
+  | CredentialCatalogAvailableItem
+  | CredentialCatalogIncomingItem;
+
+/**
+ * Hard coded catalog of credentials.
+ * It contains the display data for each credential type.
+ * firstLine and secondLine are used to display the credential attributes in the credential card.
+ * The order parameter is used to display the attributes in the correct order.
+ */
 export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
   {
+    type: "EuropeanDisabilityCard",
+    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.disabilityCard"
     ),
     icon: "disabilityCard",
     incoming: false,
-    claims: {
-      issuedByNew: "Istituto Poligrafico e Zecca dello Stato",
-      expirationDate: "30.12.2028",
-      givenName: "Anna",
-      familyName: "Verdi",
-      taxIdCode: "VRDBNC80A41H501X",
-      birthdate: "30/12/1978"
-    },
     textColor: "black",
     image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png"),
-    requestedClaims: (decodedPid: PidWithToken) =>
-      getRequestedClaims(decodedPid)
+    firstLine: ["given_name", "family_name"],
+    secondLine: ["serial_number"],
+    order: [
+      "given_name",
+      "family_name",
+      "birthdate",
+      "accompanying_person_right",
+      "expiration_date",
+      "serial_number"
+    ]
   },
   {
+    incoming: true,
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
-    incoming: false,
-    claims: {
-      issuedByNew: "Ragioneria Generale dello Stato",
-      expirationDate: "30.12.2028",
-      givenName: "Anna",
-      familyName: "Verdi",
-      taxIdCode: "VRDBNC80A41H501X",
-      birthdate: "30/12/1978"
-    },
     textColor: "black",
     image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
-    requestedClaims: (decodedPid: PidWithToken) =>
-      getRequestedClaims(decodedPid)
+    firstLine: [],
+    secondLine: []
   },
   {
     title: I18n.t(
@@ -107,22 +117,35 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
     ),
     icon: "driverLicense",
     incoming: true,
-    claims: {
-      issuedByNew: "Istituto Poligrafico e Zecca dello Stato",
-      expirationDate: "30.12.2028",
-      givenName: "Anna",
-      familyName: "Verdi",
-      taxIdCode: "VRDBNC80A41H501X",
-      birthdate: "30/12/1978"
-    },
     textColor: "black",
     image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
-    requestedClaims: (decodedPid: PidWithToken) =>
-      getRequestedClaims(decodedPid)
+    firstLine: [],
+    secondLine: []
   }
 ];
 
-const getRequestedClaims = (
+/**
+ * Hard coded display feature for PID
+ */
+export const pidDisplayData: CredentialCatalogDisplay = {
+  title: I18n.t(
+    "features.itWallet.verifiableCredentials.type.digitalCredential"
+  ),
+  icon: "archive",
+  textColor: "white",
+  image: require("../assets/img/credentials/cards/pidFront.png")
+};
+
+export const defaultDisplayData: CredentialCatalogDisplay = {
+  title: I18n.t("features.itWallet.generic.credential"),
+  icon: "archive",
+  textColor: "black",
+  image: require("../assets/img/credentials/cards/default.png"),
+  firstLine: [],
+  secondLine: []
+};
+
+export const getRequestedClaims = (
   decodedPid: PidWithToken
 ): ReadonlyArray<BulletItem> => [
   {
@@ -209,3 +232,8 @@ export const rpMock: RpMock = {
     }
   ]
 };
+
+/**
+ * Regex to validate the date format of a credential.
+ */
+export const dateFormatRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);

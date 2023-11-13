@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "0.4.1-rc.1",
+  "version": "0.5.1-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.10.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.10.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.27/definitions.yml",
@@ -118,7 +118,7 @@
     "@pagopa/io-react-native-crypto": "^0.2.1",
     "@pagopa/io-react-native-jwt": "1.0.0",
     "@pagopa/io-react-native-login-utils": "^0.2.0",
-    "@pagopa/io-react-native-wallet": "^0.9.2",
+    "@pagopa/io-react-native-wallet": "^0.10.0",
     "@pagopa/react-native-cie": "1.2.0",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^1.17.10",

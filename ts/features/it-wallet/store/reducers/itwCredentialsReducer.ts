@@ -9,15 +9,31 @@ import {
   itwCredentialsAddPid
 } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
-import { CredentialCatalogItem } from "../../utils/mocks";
-import { PidResponse } from "../../utils/types";
+import {
+  CredentialConfigurationSchema,
+  CredentialDefinition,
+  PidResponse
+} from "../../utils/types";
+
+/**
+ * Type for a stored credential.
+ */
+export type StoredCredential = {
+  keyTag: string;
+  credential: string;
+  format: string;
+  parsedCredential: Record<string, string>;
+  credentialConfigurationSchema: CredentialConfigurationSchema;
+  credentialType: string;
+} & CredentialDefinition;
 
 /**
  * The type of credentials stored in the wallet.
+ * The PID is a particular credential which is stored separately.
  */
 type ItwCredentialsType = {
   pid: O.Option<PidResponse>;
-  credentials: Array<O.Option<CredentialCatalogItem>>;
+  credentials: Array<O.Option<StoredCredential>>;
 };
 
 export type ItwCredentialsState = pot.Pot<ItwCredentialsType, ItWalletError>;
@@ -47,7 +63,7 @@ const reducer = (
     case getType(itwCredentialsAddPid.failure):
       return pot.toError(state, action.payload);
     /**
-     * Credentials related actions, will be merged with PID in the future.
+     * Credentials related actions.
      */
     case getType(itwCredentialsAddCredential.success):
       return pot.some({

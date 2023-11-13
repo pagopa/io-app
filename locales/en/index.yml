@@ -3330,9 +3330,9 @@ features:
       action: "Enable IT Wallet"
       hideLabel: "Hide this banner"
     activationScreen:
-      intro: "## IT Wallet: what it is and how it works\nIT Wallet is a feature that allows you to add your digital identity to the IO Wallet, i.e. the **set of personal data that allows you to authenticate yourself online**, and the your personal documents, such as your driving license, health card and European Disability Card."
-      subContentOne: "###### Online and live\nUse your digital identity to **access online services, both public and private**. Use documents to **share the data they contain with others**, online and live, whenever you need it."
-      subContentTwo: "###### Easy to activate\nYou will need the **Electronic Identity Card (CIE) and its PIN**. Your CIE data will be part of your digital identity, the first document in your IT Wallet."
+      intro: "## IT Wallet: what it is and how it works\n\nIT Wallet is a feature that allows you to add your digital identity to the IO Wallet, i.e. the **set of personal data that allows you to authenticate yourself online**, and the your personal documents, such as your driving license, health card and European Disability Card."
+      subContentOne: "###### Online and live\n\nUse your digital identity to **access online services, both public and private**. Use documents to **share the data they contain with others**, online and live, whenever you need it."
+      subContentTwo: "###### Easy to activate\n\nYou will need the **Electronic Identity Card (CIE) and its PIN**. Your CIE data will be part of your digital identity, the first document in your IT Wallet."
       cancel: "Not now"
       confirm: "Activate IT Wallet"
     homeScreen:
@@ -3366,6 +3366,9 @@ features:
           body: "To proceed, the NFC function of the device is required."
     featuresInfoScreen:
       title: "How do you want to activate the IT Wallet?"
+      showDiff:
+        title: "The difference between activation methods"
+        content: "If you activate IT Wallet with 'Log in with CIE', you will be able to use all its features. If you activate it with SPID or CieID, you will only be able to use some of them.\n\nThis is because the CIE (Electronic Identity Card) has a higher level of security than SPID and CieID. If you have it, we therefore recommend using the CIE."
       list:
         allFeaturesSection: "Recommended method"
         mainFeaturesSection: "Other methods"
@@ -3440,21 +3443,24 @@ features:
             firstBodyContent: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
             secondHeaderTitle: "Safety of treatment"
             secondBodyContent: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
+        tos: "For more information, read the [Privacy Policy](https://io.italia.it/privacy-policy/) and the [Terms and Conditions](https://io.italia.it/privacy-policy/)"
       credentialPreviewScreen:
         title: "Here's a preview of your credential"
         subtitle: "Before adding it, check if the data is correct."
-        somethingWrong:
-          title: "Something wrong?"
-          subtitle: "If there are errors in the data or you want to better understand what they mean, contact {{issuer}}."
+        banner:
+          title: "Something doesn't add up?"
+          content: "If you want to delve deeper into some data or report errors, contact support."
+          actionTitle: "Contact support"
         bottomSheet: 
           about: 
             title: "Who is it?"
-            subtitle: "t is the source that manages and protects your data. The IO app allows you to view them because it can verify and protect your identity through important security procedures."
+            subtitle: "it is the source that manages and protects your data. The IO app allows you to view them because it can verify and protect your identity through important security procedures."
           data:
             title: "Data protection"
             subtitle: "our data is not saved on this device but stored in the Wallet Instance, and you can choose to revoke them at any time."
         toast:
           success: "Credential added!"
+          failure: "We were not able to add this card, try again later."
     presentation: 
       credentialDetails: 
         buttons: 
@@ -3508,6 +3514,7 @@ features:
             firstBody: "To obtain the issuance of the card The body authorized to issue this card needs to read your data to verify your identity."
             secondHeader: "Safety of treatment"
             secondBody: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
+        tos: "For more information, read the [Privacy Policy](https://io.italia.it/privacy-policy/) and the [Terms and Conditions](https://io.italia.it/privacy-policy/)"
       resultScreenNew: 
         success: 
           title: "Done!"
@@ -3535,6 +3542,7 @@ features:
         securityLevel: "Security level"
         issuedBy: "Credential issued by"
         issuedByNew: "Issued by"
+        releasedBy: "Released by"
         info: "Further information about this data"
         securityLevels: 
           high: "High"
@@ -3560,10 +3568,10 @@ features:
         single: "Provided by {{authSource}}"
       credential: "Credential"
       attribute: "Attribute"
-    providerInfoScreen:
-      showDiff:
-        title: "The difference between activation methods"
-        content: "If you activate IT Wallet with 'Log in with CIE', you will be able to use all its features. If you activate it with SPID or CieID, you will only be able to use some of them.\n\nThis is because the CIE (Electronic Identity Card) has a higher level of security than SPID and CieID. If you have it, we therefore recommend using the CIE."
+      placeholders:
+        claimNotAvailable: "Claim not available"
+        claimLabelNotAvailable: "Claim label not available"
+        organizationName: "Issuer name not available"
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
