@@ -3,6 +3,12 @@ import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
+import {
+  IOColors,
+  IOThemeDark,
+  IOThemeLight,
+  useIOExperimentalDesign
+} from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
@@ -36,6 +42,7 @@ import {
 } from "../utils/navigation";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import { IONavigationLightTheme } from "../theme/navigations";
+import { preferencesDesignSystemSetEnabled } from "../store/actions/persistedPreferences";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
@@ -51,9 +58,24 @@ export const AppStackNavigator = (): React.ReactElement => {
 
   const startupStatus = useIOSelector(isStartupLoaded);
 
+  const { setExperimental } = useIOExperimentalDesign();
+
   React.useEffect(() => {
+    /**
+     * START OF TEMPORARY SOLUTION
+     * Enable the experimental design system regardless of the user preferences.
+     * This is a temporary solution to enable the experimental design system for
+     * the it wallet app. Remove me when backporting on the main app.
+     */
+    dispatch(
+      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+    );
+    setExperimental(true);
+    /**
+     * END OF TEMPORARY SOLUTION
+     */
     dispatch(startApplicationInitialization());
-  }, [dispatch]);
+  }, [dispatch, setExperimental]);
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;
