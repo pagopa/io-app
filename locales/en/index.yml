@@ -772,7 +772,7 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
-    alertTitle: Questa email è già in uso
+    alertTitle: This email address is already in use
     alertDescription: Può succedere se condividi lo stesso indirizzo con un familiare
     alertButton: Usa un’altra email
   newinsert:
