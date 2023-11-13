@@ -124,8 +124,6 @@ export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
 
-export const pnNoticesF24Enabled = Config.PN_NOTICES_F24_ENABLED === "YES";
-
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
 
