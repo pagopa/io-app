@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.46.0-rc.2](https://github.com/pagopa/io-app/compare/2.46.0-rc.0...2.46.0-rc.2) (2023-11-08)
+
+
+### Features
+
+* [[IOCOM-571](https://pagopa.atlassian.net/browse/IOCOM-571)] Remove `pnNoticesF24Enabled` feature flag ([#5202](https://github.com/pagopa/io-app/issues/5202)) ([eec078a](https://github.com/pagopa/io-app/commit/eec078ac093ee39268efdd24121e220216ce8d16))
+* [[IOPID-987](https://pagopa.atlassian.net/browse/IOPID-987)] Add contextual help content ([#5208](https://github.com/pagopa/io-app/issues/5208)) ([4d50cf1](https://github.com/pagopa/io-app/commit/4d50cf1bbaf8db71f7ba4eb29a03ffc5f9d56fac))
+* [[IOPLT-224](https://pagopa.atlassian.net/browse/IOPLT-224),[IOPLT-231](https://pagopa.atlassian.net/browse/IOPLT-231)] Upgrades to latest DS library version and migrates components affected ([#5204](https://github.com/pagopa/io-app/issues/5204)) ([9e3fcc3](https://github.com/pagopa/io-app/commit/9e3fcc3f9e7be3b84d7e6e08118d9f77ed3798da))
+
+
+### Bug Fixes
+
+* [[IOBP-388](https://pagopa.atlassian.net/browse/IOBP-388)] Android back button while success outcome payment screen showed ([#5203](https://github.com/pagopa/io-app/issues/5203)) ([65564fa](https://github.com/pagopa/io-app/commit/65564fab06abff280c32e456dd2b7f0707dbddbe))
+* [[IOPID-878](https://pagopa.atlassian.net/browse/IOPID-878)] Provide a more meaningful feedback on IdPs' 403 HTTP error ([#5183](https://github.com/pagopa/io-app/issues/5183)) ([c102cd6](https://github.com/pagopa/io-app/commit/c102cd6133260cf72ecc286add2f6a400262598a))
+
+
+### Chores
+
+* [[IOBP-334](https://pagopa.atlassian.net/browse/IOBP-334)] Add `productPagoPA` icon to pagoPA notice pay action in barcode scan screen ([#5194](https://github.com/pagopa/io-app/issues/5194)) ([ffd5fdc](https://github.com/pagopa/io-app/commit/ffd5fdcbb7a86c068530aaa315ce22153350a0aa)), closes [/github.com/pagopa/io-app/compare/master...IOBP-334-add-pagopa-icon-in-barcode-scan-bottom-sheet#diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6](https://github.com/pagopa//github.com/pagopa/io-app/compare/master...IOBP-334-add-pagopa-icon-in-barcode-scan-bottom-sheet/issues/diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6)
+* [[IOPID-1103](https://pagopa.atlassian.net/browse/IOPID-1103)] Enable/Deploy/Disable FL in production ([#5207](https://github.com/pagopa/io-app/issues/5207)) ([d2eeef6](https://github.com/pagopa/io-app/commit/d2eeef6360c88c518bef3b27a205d46888b49245))
+
+## [2.46.0-rc.1](https://github.com/pagopa/io-app/compare/2.46.0-rc.0...2.46.0-rc.1) (2023-11-08)
+
+
+### Features
+
+* [[IOCOM-571](https://pagopa.atlassian.net/browse/IOCOM-571)] Remove `pnNoticesF24Enabled` feature flag ([#5202](https://github.com/pagopa/io-app/issues/5202)) ([eec078a](https://github.com/pagopa/io-app/commit/eec078ac093ee39268efdd24121e220216ce8d16))
+* [[IOPLT-224](https://pagopa.atlassian.net/browse/IOPLT-224),[IOPLT-231](https://pagopa.atlassian.net/browse/IOPLT-231)] Upgrades to latest DS library version and migrates components affected ([#5204](https://github.com/pagopa/io-app/issues/5204)) ([9e3fcc3](https://github.com/pagopa/io-app/commit/9e3fcc3f9e7be3b84d7e6e08118d9f77ed3798da))
+
+
+### Bug Fixes
+
+* [[IOBP-388](https://pagopa.atlassian.net/browse/IOBP-388)] Android back button while success outcome payment screen showed ([#5203](https://github.com/pagopa/io-app/issues/5203)) ([65564fa](https://github.com/pagopa/io-app/commit/65564fab06abff280c32e456dd2b7f0707dbddbe))
+
+
+### Chores
+
+* [[IOBP-334](https://pagopa.atlassian.net/browse/IOBP-334)] Add `productPagoPA` icon to pagoPA notice pay action in barcode scan screen ([#5194](https://github.com/pagopa/io-app/issues/5194)) ([ffd5fdc](https://github.com/pagopa/io-app/commit/ffd5fdcbb7a86c068530aaa315ce22153350a0aa)), closes [/github.com/pagopa/io-app/compare/master...IOBP-334-add-pagopa-icon-in-barcode-scan-bottom-sheet#diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6](https://github.com/pagopa//github.com/pagopa/io-app/compare/master...IOBP-334-add-pagopa-icon-in-barcode-scan-bottom-sheet/issues/diff-12570b34029e534a64b24f1cb81383d99557273c4b2f34ad4ced82685fa017f6)
+* enable FL in production ([1828975](https://github.com/pagopa/io-app/commit/1828975ab22979b4fdc03e2dfa179656d099df26))
+
 ## [2.46.0-rc.0](https://github.com/pagopa/io-app/compare/2.45.0-rc.0...2.46.0-rc.0) (2023-11-07)
 
 
