@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1-rc.0](https://github.com/pagopa/io-app/compare/0.5.0-rc.0...0.5.1-rc.0) (2023-11-13)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-667](https://pagopa.atlassian.net/browse/SIW-667)] Add details screen for an issued credential ([#5219](https://github.com/pagopa/io-app/issues/5219)) ([1ba2e67](https://github.com/pagopa/io-app/commit/1ba2e6726eedcaf97bcf1d8605b50a99e5592adb))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-661](https://pagopa.atlassian.net/browse/SIW-661)] Mock claims order ([#5220](https://github.com/pagopa/io-app/issues/5220)) ([0379c2a](https://github.com/pagopa/io-app/commit/0379c2a2c46a6ddad4dd3975e91fb61c3bfed26b)), closes [/github.com/pagopa/io-app/pull/5220/files#diff-e3bd9b364ed748aef657ba6c2ccd65618cfef77ad2292ecbc72ae09b150de736](https://github.com/pagopa//github.com/pagopa/io-app/pull/5220/files/issues/diff-e3bd9b364ed748aef657ba6c2ccd65618cfef77ad2292ecbc72ae09b150de736)
+* **IT Wallet:** [[SIW-664](https://pagopa.atlassian.net/browse/SIW-664)] Format date in credentials claims list ([#5218](https://github.com/pagopa/io-app/issues/5218)) ([c060abe](https://github.com/pagopa/io-app/commit/c060abeba847c213fb070539c718c83d0a90b780))
+* **IT Wallet:** [[SIW-666](https://pagopa.atlassian.net/browse/SIW-666)] Enable experimental design system by default ([#5217](https://github.com/pagopa/io-app/issues/5217)) ([61c1988](https://github.com/pagopa/io-app/commit/61c1988742d468db9897fa1a3d598769f1d615e7))
+* **IT Wallet:** [[SIW-670](https://pagopa.atlassian.net/browse/SIW-670)] Add issuer name in credential preview ([#5221](https://github.com/pagopa/io-app/issues/5221)) ([b7d8004](https://github.com/pagopa/io-app/commit/b7d8004a1b0097dc27aedfbb2b4eb8f2f47ed519))
+
 ## [0.5.0-rc.0](https://github.com/pagopa/io-app/compare/2.43.0-rc.1...0.5.0-rc.0) (2023-11-10)
 
 
