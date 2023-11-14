@@ -28,7 +28,6 @@ const WalletDetailsPaymentMethodSettings = (
     >
       {I18n.t("global.buttons.settings")}
     </H6>
-    {/* TODO: Handling the possibility to enable/disable to pay with this payment method in app */}
     <WalletDetailsPagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     <ItemSeparatorComponent noPadded={true} />
   </>

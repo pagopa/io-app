@@ -15,6 +15,7 @@ export const WalletDetailsRoutes = {
 } as const;
 
 export type WalletDetailsParamsList = {
+  [WalletDetailsRoutes.WALLET_DETAILS_MAIN]: undefined;
   [WalletDetailsRoutes.WALLET_DETAILS_SCREEN]: WalletDetailsScreenNavigationParams;
 };
 
@@ -34,13 +35,12 @@ export const WalletDetailsNavigator = () => (
   </Stack.Navigator>
 );
 
-export type WalletOnboardingStackNavigationProp<
+export type WalletDetailsStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<WalletDetailsParamsList & ParamList, RouteName>;
 
-export type WalletOnboardingStackNavigation =
-  WalletOnboardingStackNavigationProp<
-    WalletDetailsParamsList,
-    keyof WalletDetailsParamsList
-  >;
+export type WalletDetailsStackNavigation = WalletDetailsStackNavigationProp<
+  WalletDetailsParamsList,
+  keyof WalletDetailsParamsList
+>;

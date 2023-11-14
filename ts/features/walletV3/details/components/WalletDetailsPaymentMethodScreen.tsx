@@ -26,6 +26,7 @@ import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { walletDetailsInstrumentPotSelector } from "../store";
+import { walletDetailsDeleteInstrument } from "../store/actions";
 
 type Props = {
   paymentMethod: WalletInfo;
@@ -51,9 +52,9 @@ const WalletDetailsPaymentMethodScreen = (props: Props) => {
 
   const navigation = useNavigation();
 
-  const deleteWallet = (walletId: number) =>
+  const deleteWallet = (walletId: string) =>
     dispatch(
-      deleteWalletRequest({
+      walletDetailsDeleteInstrument.request({
         walletId,
         onSuccess: _ => {
           IOToast.success(I18n.t("wallet.delete.successful"));

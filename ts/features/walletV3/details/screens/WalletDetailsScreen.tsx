@@ -1,6 +1,7 @@
 import * as React from "react";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
+import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
 
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -14,10 +15,17 @@ import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPayment
 import WalletDetailsPaymentMethodFeatures from "../../common/components/WalletDetailsPaymentMethodFeatures";
 import { WalletDetailsParamsList } from "../navigation/navigator";
 import {
+  isErrorWalletInstrumentSelector,
   isLoadingWalletInstrumentSelector,
   walletDetailsInstrumentSelector
 } from "../store";
 import { walletDetailsGetInstrument } from "../store/actions";
+import {
+  TypeEnum,
+  WalletInfoDetails,
+  WalletInfoDetails1,
+  WalletInfoDetails2
+} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 
 export type WalletDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -28,11 +36,49 @@ export type WalletDetailsScreenRouteProps = RouteProp<
   "WALLET_DETAILS_SCREEN"
 >;
 
+const generateCardComponent = (walletDetails: WalletInfoDetails) => {
+  switch (walletDetails.type) {
+    case TypeEnum.CARDS:
+      const cardDetails = walletDetails as WalletInfoDetails1;
+      return (
+        <PaymentCardBig
+          testID="CreditCardComponent"
+          cardType="CREDIT"
+          expirationDate={cardDetails.expiryDate}
+          holderName={cardDetails.holder}
+          hpan={cardDetails.maskedPan}
+          cardIcon={cardDetails.brand.toLowerCase() as IOLogoPaymentExtType}
+        />
+      );
+    case TypeEnum.PAYPAL:
+      const paypalDetails = walletDetails as WalletInfoDetails2;
+      return (
+        <PaymentCardBig
+          testID="CreditCardComponent"
+          cardType="PAYPAL"
+          holderEmail={paypalDetails.maskedEmail}
+        />
+      );
+  }
+};
+
+const generateCardHeaderTitle = (walletDetails?: WalletInfoDetails) => {
+  switch (walletDetails?.type) {
+    case TypeEnum.CARDS:
+      const cardDetails = walletDetails as WalletInfoDetails1;
+      const capitalizedCardCircuit = capitalize(
+        cardDetails.brand.toLowerCase() ?? ""
+      );
+      return `${capitalizedCardCircuit} ••${cardDetails.maskedPan}`;
+    default:
+      return "TITLE";
+  }
+};
+
 /**
  * Detail screen for a credit card
  */
 const WalletDetailsScreen = () => {
-  const [walletExisted, setWalletExisted] = React.useState(false);
   const route = useRoute<WalletDetailsScreenRouteProps>();
   const dispatch = useDispatch();
   const { walletId } = route.params;
@@ -40,19 +86,10 @@ const WalletDetailsScreen = () => {
   const isLoadingWalletDetails = useIOSelector(
     isLoadingWalletInstrumentSelector
   );
+  const isErrorWalletDetails = useIOSelector(isErrorWalletInstrumentSelector);
   const areIdpayInitiativesLoading = useIOSelector(
     idPayAreInitiativesFromInstrumentLoadingSelector
   );
-
-  // This will set the flag `walletExisted` to true
-  // if, during this component lifecycle, a card actually
-  // existed in the state and has been removed. It's used to
-  // prevent the show of the `WorkunitGenericFailure`.
-  // React.useEffect(() => {
-  //   if (storeCreditCard) {
-  //     setWalletExisted(true);
-  //   }
-  // }, [storeCreditCard, setWalletExisted]);
 
   React.useEffect(() => {
     dispatch(walletDetailsGetInstrument.request({ walletId }));
@@ -68,25 +105,10 @@ const WalletDetailsScreen = () => {
       O.fromNullable,
       O.fold(
         () => <PaymentCardBig testID="CreditCardComponent" isLoading={true} />,
-        ({ type, expiryDate, holder, maskedPan, brand }) => (
-          <PaymentCardBig
-            testID="CreditCardComponent"
-            cardType={type}
-            expirationDate={expiryDate}
-            holderName={holder}
-            hpan={maskedPan}
-            cardIcon={brand}
-          />
-        )
+        details => generateCardComponent(details)
       )
     );
-    const capitalizedCardCircuit = capitalize(
-      walletDetails.details?.brand?.toLowerCase() ?? ""
-    );
-    const headerTitle =
-      walletDetails.details.type === "CARD"
-        ? `${capitalizedCardCircuit} ••${walletDetails.details.maskedPan}`
-        : "TITLE";
+
     return (
       <LoadingSpinnerOverlay
         isLoading={areIdpayInitiativesLoading}
@@ -98,11 +120,11 @@ const WalletDetailsScreen = () => {
           content={
             <WalletDetailsPaymentMethodFeatures paymentMethod={walletDetails} />
           }
-          headerTitle={headerTitle}
+          headerTitle={generateCardHeaderTitle(walletDetails.details)}
         />
       </LoadingSpinnerOverlay>
     );
-  } else if (!walletExisted) {
+  } else if (isErrorWalletDetails) {
     return <WorkunitGenericFailure />;
   }
   return null;

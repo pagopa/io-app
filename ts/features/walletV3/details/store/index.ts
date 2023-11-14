@@ -56,13 +56,18 @@ export const walletDetailsInstrumentPotSelector = createSelector(
 );
 
 export const walletDetailsInstrumentSelector = createSelector(
-  walletDetailsSelector,
-  details => pot.toUndefined(details.walletDetails)
+  walletDetailsInstrumentPotSelector,
+  details => pot.toUndefined(details)
 );
 
 export const isLoadingWalletInstrumentSelector = createSelector(
   walletDetailsInstrumentPotSelector,
   walletInstrument => pot.isLoading(walletInstrument)
+);
+
+export const isErrorWalletInstrumentSelector = createSelector(
+  walletDetailsInstrumentPotSelector,
+  walletInstrument => pot.isError(walletInstrument)
 );
 
 export default walletDetailsReducer;

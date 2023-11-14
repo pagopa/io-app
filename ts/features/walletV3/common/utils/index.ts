@@ -7,6 +7,10 @@ import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInf
 import { isExpiredDate } from "../../../../utils/dates";
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
+import {
+  TypeEnum,
+  WalletInfoDetails1
+} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -38,12 +42,11 @@ export const getBadgeTextByTransactionStatus = (
  */
 export const isPaymentMethodExpired = (paymentMethod: WalletInfo): boolean => {
   switch (paymentMethod.details?.type) {
-    case "BPay":
-    case "PayPal":
+    case TypeEnum.PAYPAL:
       return false;
-    case "Bancomat":
-    case "CreditCard":
-      return isExpiredDate(paymentMethod.details.expiryDate);
+    case TypeEnum.CARDS:
+      const cardDetails = paymentMethod.details as WalletInfoDetails1;
+      return isExpiredDate(cardDetails.expiryDate);
   }
   return false;
 };
@@ -57,7 +60,8 @@ export const hasServiceEnabled = (
   paymentMethod: WalletInfo | undefined,
   walletService: ServiceNameEnum
 ): boolean =>
-  paymentMethod !== undefined && paymentMethod.services.includes(walletService);
+  paymentMethod !== undefined &&
+  paymentMethod.services.some(service => service.name === walletService);
 /**
  * return true if the payment method has the payment feature
  */

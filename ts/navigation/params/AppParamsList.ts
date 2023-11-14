@@ -45,6 +45,10 @@ import {
   WalletOnboardingParamsList,
   WalletOnboardingRoutes
 } from "../../features/walletV3/onboarding/navigation/navigator";
+import {
+  WalletDetailsParamsList,
+  WalletDetailsRoutes
+} from "../../features/walletV3/details/navigation/navigator";
 import { WalletPaymentParamsList } from "../../features/walletV3/payment/navigation/params";
 import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
@@ -98,6 +102,7 @@ export type AppParamsList = {
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
   [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: NavigatorScreenParams<WalletPaymentParamsList>;
   [WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN]: undefined; // FIXME IOBP-383: remove after react-navigation 6.x upgrade. This should be insde WALLET_PAYMENT_MAIN
+  [WalletDetailsRoutes.WALLET_DETAILS_MAIN]: NavigatorScreenParams<WalletDetailsParamsList>;
 };
 
 /**
