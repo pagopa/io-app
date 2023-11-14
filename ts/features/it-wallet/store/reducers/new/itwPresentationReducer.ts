@@ -3,7 +3,6 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { state } from "fp-ts";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItWalletError } from "../../../utils/errors/itwErrors";

@@ -4,10 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { itwPresentation } from "../../../../store/actions/new/itwPresentationActions";
-import {
-  itwPresentationChecksSelector,
-  itwPresentationResultSelector
-} from "../../../../store/reducers/new/itwPresentationReducer";
+import { itwPresentationResultSelector } from "../../../../store/reducers/new/itwPresentationReducer";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
