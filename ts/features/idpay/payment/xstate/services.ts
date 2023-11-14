@@ -19,7 +19,7 @@ export type Services = {
 
 // FIXME: mapping is incomplete [IOBP-379]
 // prettier-ignore
-export const failureMap: Partial<
+export const paymentFailureMap: Partial<
   Record<TransactionErrorCodeEnum, PaymentFailureEnum>
 > = {
   [TransactionErrorCodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED]: PaymentFailureEnum.EXPIRED,
@@ -73,7 +73,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 401:
                 return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
-                const failure = failureMap[value.code];
+                const failure = paymentFailureMap[value.code];
                 return Promise.reject(failure || PaymentFailureEnum.GENERIC);
             }
           }),
@@ -116,7 +116,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 401:
                 return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
-                const failure = failureMap[value.code];
+                const failure = paymentFailureMap[value.code];
                 return Promise.reject(failure || PaymentFailureEnum.GENERIC);
             }
           }),
@@ -157,7 +157,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 401:
                 return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
-                const failure = failureMap[value.code];
+                const failure = paymentFailureMap[value.code];
                 return Promise.reject(failure || PaymentFailureEnum.GENERIC);
             }
           }),
