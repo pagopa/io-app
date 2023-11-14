@@ -8,6 +8,8 @@ import { toUIMessage } from "../../store/reducers/entities/messages/transformers
 import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../types/utils";
+import { errorToReason, unknownToReason } from "../../features/messages/utils";
+import { trackLoadMessageByIdFailure } from "../../features/messages/analytics";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<(typeof loadMessageById)["request"]>;
@@ -36,12 +38,18 @@ function* handleLoadMessageById(
       response,
       (message: CreatedMessageWithContentAndAttachments) =>
         loadMessageById.success(toUIMessage(message)),
-      error => loadMessageById.failure({ id, error })
+      error => {
+        const reason = errorToReason(error);
+        trackLoadMessageByIdFailure(reason);
+        return loadMessageById.failure({ id, error });
+      }
     );
     if (nextAction) {
       yield* put(nextAction);
     }
   } catch (e) {
+    const reason = unknownToReason(e);
+    trackLoadMessageByIdFailure(reason);
     yield* put(
       loadMessageById.failure({ id, error: convertUnknownToError(e) })
     );
