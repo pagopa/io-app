@@ -96,7 +96,9 @@ const ItwPidPreviewScreen = () => {
               claims={["givenName", "familyName", "taxIdCode"]}
               expiryDate
               securityLevel
-              onLinkPress={() => null}
+              onLinkPress={() =>
+                navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+              }
               issuerInfo
             />
             <VSpacer />
@@ -123,7 +125,9 @@ const ItwPidPreviewScreen = () => {
               label={I18n.t(
                 "features.itWallet.verifiableCredentials.unrecognizedData.cta"
               )}
-              onPress={() => null}
+              onPress={() =>
+                navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+              }
             />
             <VSpacer />
           </View>
