@@ -1,5 +1,5 @@
 import React from "react";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
   Banner,
   BlockButtonProps,
@@ -17,6 +17,8 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { StoredCredential } from "../../store/reducers/itwCredentialsReducer";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 
 export type ItwCredentialDetailsScreenNavigationParams = {
   credential: StoredCredential;
@@ -32,6 +34,7 @@ type ItwCredentialDetailscreenRouteProps = RouteProp<
  */
 const ItwCredentialDetailsScreen = () => {
   const route = useRoute<ItwCredentialDetailscreenRouteProps>();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { credential } = route.params;
   const bannerViewRef = React.createRef<View>();
 
@@ -49,7 +52,7 @@ const ItwCredentialDetailsScreen = () => {
         accessibilityLabel: I18n.t(
           "features.itWallet.presentation.credentialDetails.buttons.qrCode"
         ),
-        onPress: () => null
+        onPress: () => navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
       }
     };
 
