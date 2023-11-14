@@ -114,7 +114,7 @@ describe("mayUserActivateBiometric function", () => {
     }
   });
 
-  it("returns ACTIVATED when getBiometricsType promise resolves FACE_ID and the authentication  is successful", async () => {
+  it("returns ACTIVATED when getBiometricsType promise resolves FACE_ID and the authentication is successful", async () => {
     const getBiometricsTypeFaceIDMock = Promise.resolve(
       "FACE_ID" as Biometric.BiometricsType
     );
