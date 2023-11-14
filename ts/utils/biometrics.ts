@@ -3,7 +3,8 @@ import FingerprintScanner, {
   AuthenticateAndroid,
   AuthenticateIOS,
   Biometrics,
-  FingerprintScannerError
+  FingerprintScannerError,
+  Errors
 } from "react-native-fingerprint-scanner";
 import { isPinOrFingerprintSet } from "react-native-device-info";
 import { isDebugBiometricIdentificationEnabled } from "../config";
@@ -121,3 +122,51 @@ export const isDevicePinSet = (): Promise<boolean> =>
       })
       .catch(_ => resolve(false));
   });
+
+export type BiometriActivationUserType =
+  | "ACTIVATED"
+  | "AUTH_FAILED"
+  | "PERMISSION_DENIED"
+  | "SENSOR_ERROR";
+
+const mayUserActivateBiometricWithDependency = (
+  getBiometricsType: Promise<BiometricsType>
+): Promise<BiometriActivationUserType> =>
+  new Promise((resolve, reject) => {
+    getBiometricsType
+      .then(value => {
+        if (value === "FACE_ID") {
+          FingerprintScanner.authenticate({
+            description: I18n.t(
+              "identification.biometric.popup.sensorDescription"
+            ),
+            fallbackEnabled: false
+          } as AuthenticateIOS)
+            .then(_ => resolve("ACTIVATED"))
+            .catch((err: Errors) => {
+              reject(handleErrorDuringBiometricActivation(err));
+            });
+        } else {
+          resolve("ACTIVATED");
+        }
+      })
+      .catch(_ => {
+        reject("SENSOR_ERROR");
+      });
+  });
+
+export const mayUserActivateBiometric = () =>
+  mayUserActivateBiometricWithDependency(getBiometricsType());
+
+export const biometricFunctionForTests = {
+  mayUserActivateBiometricWithDependency
+};
+
+function handleErrorDuringBiometricActivation(
+  err: Errors
+): BiometriActivationUserType {
+  if (err.name === "FingerprintScannerNotAvailable") {
+    return "PERMISSION_DENIED";
+  }
+  return "AUTH_FAILED";
+}
