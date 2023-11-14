@@ -4,8 +4,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
+import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
 import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/idpay/OnboardingStatusDTO";
-import { DetailsEnum as PrerequisitesErrorDetailsEnum } from "../../../../../definitions/idpay/PrerequisitesErrorDTO";
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
 import { IDPayClient } from "../../common/api/client";
@@ -24,16 +24,16 @@ const onboardingStatusToFailure: Partial<
   [OnboardingStatusEnum.SUSPENDED]: OnboardingFailureEnum.SUSPENDED
 };
 
+// FIXME: mapping is incomplete [IOBP-379]
 // prettier-ignore
-const prerequisitesErrorToFailure: Record<
-  PrerequisitesErrorDetailsEnum,
+const onboardingErrorToFailure: Partial<Record<
+  OnboardingErrorCodeEnum,
   OnboardingFailureEnum
-> = {
-  [PrerequisitesErrorDetailsEnum.BUDGET_TERMINATED]: OnboardingFailureEnum.NO_BUDGET,
-  [PrerequisitesErrorDetailsEnum.INITIATIVE_END]: OnboardingFailureEnum.ENDED,
-  [PrerequisitesErrorDetailsEnum.INITIATIVE_NOT_STARTED]: OnboardingFailureEnum.NOT_STARTED,
-  [PrerequisitesErrorDetailsEnum.INITIATIVE_SUSPENDED]: OnboardingFailureEnum.SUSPENDED,
-  [PrerequisitesErrorDetailsEnum.GENERIC_ERROR]: OnboardingFailureEnum.GENERIC
+>> = {
+  [OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED]: OnboardingFailureEnum.NO_BUDGET,
+  [OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED]: OnboardingFailureEnum.ENDED,
+  [OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED]: OnboardingFailureEnum.NOT_STARTED,
+  [OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_STATUS_NOT_PUBLISHED]: OnboardingFailureEnum.SUSPENDED,
 };
 
 const createServicesImplementation = (
@@ -139,9 +139,8 @@ const createServicesImplementation = (
             case 204:
               return Promise.resolve(undefined);
             case 403:
-              const prerequisitesError = value.details;
-              const failure = prerequisitesErrorToFailure[prerequisitesError];
-              return Promise.reject(failure);
+              const failure = onboardingErrorToFailure[value.code];
+              return Promise.reject(failure || OnboardingFailureEnum.GENERIC);
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
@@ -177,9 +176,8 @@ const createServicesImplementation = (
             case 202:
               return Promise.resolve(O.none);
             case 403:
-              const prerequisitesError = value.details;
-              const failure = prerequisitesErrorToFailure[prerequisitesError];
-              return Promise.reject(failure);
+              const failure = onboardingErrorToFailure[value.code];
+              return Promise.reject(failure || OnboardingFailureEnum.GENERIC);
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
