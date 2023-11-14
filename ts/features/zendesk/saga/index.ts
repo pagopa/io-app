@@ -29,9 +29,7 @@ function* zendeskGetSessionPollingLoop(
   getSession: ReturnType<typeof BackendClient>["getSession"]
 ) {
   // eslint-disable-next-line functional/no-let
-  let zendeskPollingIsRunning = yield* select(
-    zendeskGetSessionPollingRunningSelector
-  );
+  let zendeskPollingIsRunning = true;
   yield* put(zendeskStartPolling());
   while (zendeskPollingIsRunning) {
     yield* put(zendeskPollingIteration());
@@ -53,7 +51,7 @@ export function* watchZendeskGetSessionSaga(
 ) {
   const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
   if (isFastLoginEnabled) {
-    // zendeskSupportCompleted identifies that
+    // `zendeskSupportCompleted` identifies that
     // the user has successfully completed the zendesk ticket request
     yield* takeLatest(
       zendeskSupportCompleted,

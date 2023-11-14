@@ -20,7 +20,6 @@ import {
   zendeskSelectedSubcategory,
   zendeskStartPolling,
   zendeskStopPolling,
-  zendeskSupportCompleted,
   zendeskSupportStart
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -66,7 +65,7 @@ const reducer = (
         ...state,
         getSessionPollingRunning: false
       };
-    case getType(zendeskSupportCompleted):
+    case getType(zendeskStartPolling):
       return {
         ...state,
         getSessionPollingRunning: true
