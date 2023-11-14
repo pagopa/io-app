@@ -14,13 +14,25 @@ import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import {
   getZendeskConfig,
+  zendeskPollingIteration,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
   zendeskSelectedSubcategory,
+  zendeskStartPolling,
+  zendeskStopPolling,
+  zendeskSupportCompleted,
   zendeskSupportStart
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
+import { setDebugCurrentRouteName } from "../../../../store/actions/debug";
+import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
+import { applicationChangeState } from "../../../../store/actions/application";
+import {
+  checkCurrentSession,
+  sessionInformationLoadFailure,
+  sessionInformationLoadSuccess
+} from "../../../../store/actions/authentication";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -36,6 +48,7 @@ export type ZendeskState = {
   selectedCategory?: ZendeskCategory;
   selectedSubcategory?: ZendeskSubCategory;
   ticketNumber: pot.Pot<number, Error>;
+  getSessionPollingRunning?: boolean;
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -48,6 +61,16 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
+    case getType(zendeskStopPolling):
+      return {
+        ...state,
+        getSessionPollingRunning: false
+      };
+    case getType(zendeskSupportCompleted):
+      return {
+        ...state,
+        getSessionPollingRunning: true
+      };
     case getType(zendeskSupportStart):
       return {
         ...state,
@@ -96,8 +119,49 @@ const reducer = (
         ticketNumber: pot.toError(state.ticketNumber, action.payload)
       };
   }
-  return state;
+  return {
+    ...state,
+    getSessionPollingRunning: resetPollingState(action, state)
+  };
 };
+
+/**
+ * Due to the lack of a proper way to intercept a support request ending,
+ * we need to reset the polling state when the user interacts in any other way with the app.
+ *
+ * No other action but the ones listed in `acceptedActionsDuringGetSessionPolling`
+ * are called during a support request,
+ * started with `zendeskSupportCompleted` action.
+ *
+ * If the user interacts with the app in any other way,
+ * we can safely assume that the support request has ended.
+ */
+function resetPollingState(
+  action: Action,
+  state: ZendeskState
+): boolean | undefined {
+  return !acceptedActionsDuringGetSessionPolling.includes(action.type)
+    ? false
+    : state.getSessionPollingRunning;
+}
+
+type AcceptedActionsDuringGetSessionPollingType = ReturnType<typeof getType>;
+// All the actions that are accepted during a support request
+const acceptedActionsDuringGetSessionPolling: Array<AcceptedActionsDuringGetSessionPollingType> =
+  [
+    getType(setDebugCurrentRouteName),
+    getType(backendStatusLoadSuccess),
+    getType(applicationChangeState),
+    getType(sessionInformationLoadSuccess),
+    getType(sessionInformationLoadFailure),
+    getType(checkCurrentSession.success),
+    getType(checkCurrentSession.failure),
+    getType(zendeskStartPolling),
+    getType(zendeskPollingIteration)
+  ];
+
+export const zendeskGetSessionPollingRunningSelector = (state: GlobalState) =>
+  state.assistanceTools.zendesk.getSessionPollingRunning ?? false;
 
 export const zendeskConfigSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],
