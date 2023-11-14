@@ -1,7 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import * as React from "react";
 
-import { OnboardingOutcome, OnboardingOutcomeEnum } from "../types";
+import { OnboardingOutcomeEnum, OnboardingOutcomeFailure } from "../types";
 import I18n from "../../../../i18n";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { openWebUrl } from "../../../../utils/url";
@@ -12,7 +12,7 @@ import {
 
 type WalletOnboardingErrorProps = {
   onClose: () => void;
-  outcome: Exclude<OnboardingOutcome, `${OnboardingOutcomeEnum.SUCCESS}`>;
+  outcome: OnboardingOutcomeFailure;
 };
 
 type OnboardingErrorEnumKey = Exclude<

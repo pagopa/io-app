@@ -44,7 +44,7 @@ export type OnboardingFailure = {
 /**
  * Rapresents the result of onboarding process when it has a generic error not based on the webview outcome
  */
-export type OnboardingError = {
+export type OnboardingWebViewError = {
   status: "ERROR";
   outcome: OnboardingOutcomeFailure;
 };
@@ -52,4 +52,4 @@ export type OnboardingError = {
 export type OnboardingResult =
   | OnboardingSuccess
   | OnboardingFailure
-  | OnboardingError;
+  | OnboardingWebViewError;

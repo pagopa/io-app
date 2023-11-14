@@ -4,7 +4,7 @@ import { IOPictograms } from "@pagopa/io-app-design-system";
 
 import URLParse from "url-parse";
 import {
-  OnboardingError,
+  OnboardingWebViewError,
   OnboardingOutcome,
   OnboardingOutcomeEnum,
   OnboardingOutcomeFailure,
@@ -43,7 +43,7 @@ export const getOutcomeStatus = (
 
 /**
  * Function to extract the onboarding result from the url of the webview
- * It will return a {@link OnboardingError} if the url is not from the onboarding result page
+ * It will return a {@link OnboardingWebViewError} if the url is not from the onboarding result page
  * @param url url to extract the onboarding result from
  * @returns an {@link OnboardingResult}
  */
@@ -68,6 +68,6 @@ export const extractOnboardingResult = (url: string): OnboardingResult =>
         ({
           status: "ERROR",
           outcome: OnboardingOutcomeEnum.GENERIC_ERROR
-        } as OnboardingError)
+        } as OnboardingWebViewError)
     )
   );
