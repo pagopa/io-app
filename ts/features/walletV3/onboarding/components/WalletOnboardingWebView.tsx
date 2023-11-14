@@ -12,7 +12,7 @@ import {
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { originSchemasWhiteList } from "../../../../screens/authentication/originSchemasWhiteList";
 import { RefreshIndicator } from "../../../../components/ui/RefreshIndicator";
-import { OnboardingOutcome, OnboardingOutcomeFailure } from "../types";
+import { OnboardingOutcomeFailure, OnboardingOutcomeSuccess } from "../types";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletStartOnboarding } from "../store/actions";
 import { walletOnboardingStartupSelector } from "../store";
@@ -22,7 +22,7 @@ import { extractOnboardingResult } from "../utils";
 
 type WalletOnboardingWebViewProps = {
   paymentMethodId: string;
-  onSuccess: (outcome: OnboardingOutcome, walletId: string) => void;
+  onSuccess: (outcome: OnboardingOutcomeSuccess, walletId: string) => void;
   onFailure: (outcome: OnboardingOutcomeFailure) => void;
   onError: (
     error: WebViewErrorEvent | WebViewHttpErrorEvent | NetworkError
@@ -79,7 +79,10 @@ const WalletOnboardingWebView = ({
       O.fromNullable,
       O.map(result => {
         if (result.status === "SUCCESS") {
-          onSuccess(result.outcome, result.walletId);
+          onSuccess(
+            result.outcome as OnboardingOutcomeSuccess,
+            result.walletId
+          );
         } else if (result.status === "FAILURE") {
           onFailure(result.outcome as OnboardingOutcomeFailure);
         }

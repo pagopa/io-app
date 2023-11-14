@@ -1,10 +1,6 @@
 /**
  * All the possible outcomes of the onboarding process
- * 0: success
- * 1: error
- * TODO: Wait for the pagoPA Team to define the other outcomes
  */
-
 export enum OnboardingOutcomeEnum {
   SUCCESS = "0",
   GENERIC_ERROR = "1",

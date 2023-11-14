@@ -11,9 +11,9 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import WalletOnboardingSuccess from "../components/WalletOnboardingSuccess";
 import {
-  OnboardingOutcome,
   OnboardingOutcomeEnum,
   OnboardingOutcomeFailure,
+  OnboardingOutcomeSuccess,
   OnboardingResult
 } from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
@@ -54,7 +54,7 @@ const WalletOnboardingStartScreen = () => {
   };
 
   const handleOnboardingSuccess = (
-    outcome: OnboardingOutcome,
+    outcome: OnboardingOutcomeSuccess,
     walletId: string
   ) => {
     setOnboardingResult({
