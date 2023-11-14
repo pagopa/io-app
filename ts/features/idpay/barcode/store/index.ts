@@ -12,7 +12,7 @@ import { idPayGenerateBarcode } from "./actions";
 
 export type IdPayBarcodeState = {
   [initiativeId: string]: pot.Pot<
-    Omit<TransactionBarCodeResponse, "initiativeId">,
+    TransactionBarCodeResponse,
     TransactionErrorDTO | NetworkError
   >;
 };
