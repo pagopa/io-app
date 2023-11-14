@@ -18,12 +18,13 @@ import ItwDiscoveryProviderInfoScreen from "../screens/discovery/ItwDiscoveryPro
 import ItwMissingFeatureScreen from "../screens/generic/ItwMissingFeatureScreen";
 import ItwCredentialPreviewScreen from "../screens/credential/issuing/ItwCredentialPreviewScreen";
 import ItwCredentialAuthScreen from "../screens/credential/issuing/ItwCredentialAuthScreen";
-import ItwChecksScreen from "../screens/presentation/crossdevice/new/ItwPresentationChecksScreen";
+import ItwPresentationChecksScreen from "../screens/presentation/crossdevice/new/ItwPresentationChecksScreen";
 import ItwPresentationDataScreen from "../screens/presentation/crossdevice/new/ItwPresentationDataScreen";
 import ItwPresentationResultScreen from "../screens/presentation/crossdevice/new/ItwPresentationResultScreen";
 import ItwCredentialsChecksScreen from "../screens/credential/issuing/ItwCredentialChecksScreen";
 import ItwCredentialCatalogScreen from "../screens/credential/issuing/ItwCredentialsCatalogScreen";
 import ItwCredentialDetailsScreen from "../screens/credential/ItwCredentialDetailsScreen";
+import ItwPidPresentationDataScreen from "../screens/presentation/crossdevice/ItwPidPresentationDataScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -86,22 +87,27 @@ export const ItwStackNavigator = () => (
       name={ITW_ROUTES.PRESENTATION.PID_DETAILS}
       component={ItwCredentialDetails}
     />
-    {/* PRESENTATION CROSS DEVICE */}
+    {/* CREDENTIAL PRESENTATION */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.CHECKS}
-      component={ItwChecksScreen}
+      component={ItwPresentationChecksScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA}
+      name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA_NEW}
       component={ItwPresentationDataScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT_NEW}
       component={ItwPresentationResultScreen}
     />
+    {/** PID PRESENTATION */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT}
       component={ItwRpInitScreen}
+    />
+    <Stack.Screen
+      name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA}
+      component={ItwPidPresentationDataScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT}

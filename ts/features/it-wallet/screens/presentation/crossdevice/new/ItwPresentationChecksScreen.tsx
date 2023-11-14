@@ -10,8 +10,6 @@ import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
 import ItwContinueScreen from "../../../../components/ItwResultComponent";
 import I18n from "../../../../../../i18n";
-import { showCancelAlert } from "../../../../utils/alert";
-import ROUTES from "../../../../../../navigation/routes";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -33,13 +31,6 @@ const ItwPresentationChecksScreen = () => {
   const checksPot = useIOSelector(itwPresentationChecksSelector);
   const navigation =
     useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
-
-  /**
-   * Callback to be used in case of cancel button press alert to navigate to the home screen and show a toast.
-   */
-  const alertOnPress = () => {
-    navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
-  };
 
   useOnFirstRender(() => {
     dispatch(itwPresentationChecks.request());
@@ -73,12 +64,7 @@ const ItwPresentationChecksScreen = () => {
           label: I18n.t("global.buttons.confirm"),
           accessibilityLabel: I18n.t("global.buttons.confirm"),
           onPress: () =>
-            navigation.navigate(ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA)
-        }}
-        secondaryAction={{
-          label: I18n.t("global.buttons.cancel"),
-          accessibilityLabel: I18n.t("global.buttons.cancel"),
-          onPress: () => showCancelAlert(alertOnPress)
+            navigation.navigate(ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA_NEW)
         }}
       />
     </SafeAreaView>

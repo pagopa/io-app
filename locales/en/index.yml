@@ -3481,18 +3481,6 @@ features:
           confirmData: "Confirm data"
           deny: "Deny"
         tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
-      resultScreen:
-        loading: 
-          title: "Presenting your data to {{relayingParty}}"
-          subTitle: "Wait a few seconds"
-        error:
-          title: "Data presentation failed"
-          subTitle: "Try again in a few minutes. If it happens again, contact support."
-        success: 
-          title: "Successful login using IT Wallet"
-          subTitle: "You can now return to the {{relayingParty}} website to continue."
-          buttons: 
-            continue: "Ok, thanks"
       checksScreen: 
         loading: "We are checking to verify that this organization is verified"
         success: "{{organizationName}} is a verified organization"
@@ -3512,7 +3500,9 @@ features:
             secondHeader: "Safety of treatment"
             secondBody: "App IO allows the sharing of your data only with verified bodies registered on the lists that guarantee its reliability."
         tos: "For more information, read the [Privacy Policy](https://io.italia.it/privacy-policy/) and the [Terms and Conditions](https://io.italia.it/privacy-policy/)"
-      resultScreenNew: 
+      resultScreen:
+        loading: 
+          title: "We are sharing your data with {{organizationName}}" 
         success: 
           title: "Done!"
           subtitle: "Go back to the {{organizationName}} website to continue."

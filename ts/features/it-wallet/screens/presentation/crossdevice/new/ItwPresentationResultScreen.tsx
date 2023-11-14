@@ -4,7 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { itwPresentation } from "../../../../store/actions/new/itwPresentationActions";
-import { itwPresentationChecksSelector } from "../../../../store/reducers/new/itwPresentationReducer";
+import {
+  itwPresentationChecksSelector,
+  itwPresentationResultSelector
+} from "../../../../store/reducers/new/itwPresentationReducer";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
@@ -27,7 +30,7 @@ import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapp
  */
 const ItwPresentationResultScreen = () => {
   const dispatch = useIODispatch();
-  const checksPot = useIOSelector(itwPresentationChecksSelector);
+  const resultPot = useIOSelector(itwPresentationResultSelector);
   const navigation =
     useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
 
@@ -38,7 +41,10 @@ const ItwPresentationResultScreen = () => {
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
       captionTitle={I18n.t(
-        "features.itWallet.presentation.checksScreen.loading"
+        "features.itWallet.presentation.resultScreen.loading.title",
+        {
+          organizationName: rpMock.organizationName
+        }
       )}
       isLoading
     >
@@ -56,10 +62,10 @@ const ItwPresentationResultScreen = () => {
     <SafeAreaView style={IOStyles.flex}>
       <ItwKoView
         title={I18n.t(
-          "features.itWallet.presentation.resultScreenNew.success.title"
+          "features.itWallet.presentation.resultScreen.success.title"
         )}
         subtitle={I18n.t(
-          "features.itWallet.presentation.resultScreenNew.success.subtitle",
+          "features.itWallet.presentation.resultScreen.success.subtitle",
           {
             organizationName: rpMock.organizationName
           }
@@ -77,7 +83,7 @@ const ItwPresentationResultScreen = () => {
 
   const RenderMask = () =>
     pot.fold(
-      checksPot,
+      resultPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,

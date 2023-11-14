@@ -4,7 +4,6 @@ import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/cie/I
 import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
 import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/cie/ItwCieWrongPinScreen";
 import { ItwRpInitScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpInitScreen";
-import { ItwRpResultScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpPresentationScreen";
 import { ITW_ROUTES } from "./ItwRoutes";
 
 export type ItwParamsList = {
@@ -29,11 +28,11 @@ export type ItwParamsList = {
   // PRESENTATION PID
   [ITW_ROUTES.PRESENTATION.PID_DETAILS]: undefined;
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT]: ItwRpInitScreenNavigationParams;
-  [ITW_ROUTES.PRESENTATION.CROSS_DEVICE
-    .RESULT]: ItwRpResultScreenNavigationParams;
+  [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA]: undefined;
+  [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT]: undefined;
   // PRESENTATION CREDENTIALS
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.CHECKS]: undefined;
-  [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA]: undefined;
+  [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA_NEW]: undefined;
   [ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT_NEW]: undefined;
   // CREDENTIALS
   [ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG]: undefined;
