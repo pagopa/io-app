@@ -3,14 +3,12 @@ import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Banner,
-  BlockButtonProps,
   Body,
-  FooterWithButtons,
+  ButtonSolidProps,
   H2,
   VSpacer,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -40,6 +38,8 @@ import {
 } from "../../../store/reducers/new/itwIssuanceReducer";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
+import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
+import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
@@ -105,74 +105,74 @@ const ItwCredentialPreviewScreen = () => {
       dispatch(itwConfirmStoreCredential());
     };
 
-    const confirmButtonProps: BlockButtonProps = {
-      type: "Solid",
-      buttonProps: {
-        label: I18n.t("global.buttons.add"),
-        accessibilityLabel: I18n.t("global.buttons.add"),
-        onPress: () => addOnPress()
-      }
+    const bottomButtonProps: ButtonSolidProps = {
+      fullWidth: true,
+      color: "contrast",
+      label: I18n.t("global.buttons.cancel"),
+      accessibilityLabel: I18n.t("global.buttons.cancel"),
+      onPress: () => showCancelAlert(alertOnPress)
     };
 
-    const cancelButtonProps: BlockButtonProps = {
-      type: "Outline",
-      buttonProps: {
-        label: I18n.t("global.buttons.cancel"),
-        accessibilityLabel: I18n.t("global.buttons.cancel"),
-        onPress: () => showCancelAlert(alertOnPress)
-      }
+    const topButtonProps: ButtonSolidProps = {
+      fullWidth: true,
+      color: "primary",
+      label: I18n.t("global.buttons.add"),
+      accessibilityLabel: I18n.t("global.buttons.add"),
+      onPress: () => addOnPress()
     };
 
     return (
       <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
         <SafeAreaView style={IOStyles.flex}>
-          <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
-            <H2>
-              {I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.title"
-              )}
-            </H2>
-            <VSpacer />
-            <Body>
-              {I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.subtitle"
-              )}
-            </Body>
-            <VSpacer />
-            <ItwCredentialCard
-              parsedCredential={data.parsedCredential}
-              display={data.displayData}
+          <ForceScrollDownView>
+            <View style={IOStyles.horizontalContentPadding}>
+              <H2>
+                {I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.title"
+                )}
+              </H2>
+              <VSpacer />
+              <Body>
+                {I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.subtitle"
+                )}
+              </Body>
+              <VSpacer />
+              <ItwCredentialCard
+                parsedCredential={data.parsedCredential}
+                display={data.displayData}
+              />
+              <VSpacer />
+              <ItwCredentialClaimsList data={data} />
+              <VSpacer size={32} />
+              <Banner
+                testID={"ItwBannerTestID"}
+                viewRef={bannerViewRef}
+                color={"neutral"}
+                size="big"
+                title={I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.banner.title"
+                )}
+                content={I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.banner.content",
+                  {
+                    issuer: data.issuerName
+                  }
+                )}
+                pictogramName={"security"}
+                action={I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
+                )}
+                onPress={present}
+              />
+              <VSpacer size={32} />
+            </View>
+
+            <ItwFooterVerticalButtons
+              bottomButtonProps={bottomButtonProps}
+              topButtonProps={topButtonProps}
             />
-            <VSpacer />
-            <ItwCredentialClaimsList data={data} />
-            <VSpacer size={32} />
-            <Banner
-              testID={"ItwBannerTestID"}
-              viewRef={bannerViewRef}
-              color={"neutral"}
-              size="big"
-              title={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.banner.title"
-              )}
-              content={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.banner.content",
-                {
-                  issuer: data.issuerName
-                }
-              )}
-              pictogramName={"security"}
-              action={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
-              )}
-              onPress={present}
-            />
-            <VSpacer size={32} />
-          </ScrollView>
-          <FooterWithButtons
-            type="TwoButtonsInlineHalf"
-            primary={cancelButtonProps}
-            secondary={confirmButtonProps}
-          />
+          </ForceScrollDownView>
         </SafeAreaView>
       </BaseScreenComponent>
     );
