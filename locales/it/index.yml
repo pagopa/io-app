@@ -3390,16 +3390,19 @@ features:
           body: "Per proseguire è necessaria la funzione NFC del dispositivo."
     featuresInfoScreen:
       title: "Come vuoi attivare l'IT Wallet?"
+      showDiff:
+        title: "La differenza tra i metodi di attivazione"
+        content: "Se attivi IT Wallet con “Entra con CIE”, potrai utilizzare tutte le sue funzionalità. Se lo attivi con SPID o CieID, potrai utilizzarne solo alcune.\n\nQuesto perché la CIE (Carta d'Identità Elettronica) ha un livello di sicurezza più alto di SPID e CieID. Se ce l'hai, ti consigliamo quindi di usare la CIE."
       list:
         allFeaturesSection: "Metodo consigliato"
-        mainFeaturesSection: "Altre modalità"
+        mainFeaturesSection: "Altri metodi"
         incomingFeature: "In arrivo"
-        cie: "Carta d'Identità Elettronica"
-        cieSubTitle: "Usa la carta e il suo PIN a 8 cifre"
+        cie: "Entra con CIE"
+        cieSubTitle: "Usa Carta d’Identità Elettronica e PIN"
         spid: "SPID"
         spidSubTitle: "Usa credenziali e app (o SMS)"
         cieId: "CieID"
-        cieIdSubTitle: "Usa credenziali e app (o SMS)"
+        cieIdSubTitle: "Usa app o credenziali CieID"
       compareFeatures: "Qual è la differenza?"
     issuing:
       title: "Attivazione IT Wallet"
