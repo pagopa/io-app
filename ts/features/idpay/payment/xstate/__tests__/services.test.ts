@@ -7,11 +7,7 @@ import {
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context, INITIAL_CONTEXT } from "../context";
 import { PaymentFailureEnum } from "../failure";
-import {
-  createServicesImplementation,
-  failureMap,
-  paymentFailureMap
-} from "../services";
+import { createServicesImplementation, paymentFailureMap } from "../services";
 import {
   CodeEnum,
   TransactionErrorDTO
