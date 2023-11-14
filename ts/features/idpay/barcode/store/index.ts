@@ -1,4 +1,6 @@
-import { pot } from "@pagopa/ts-commons";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
@@ -25,8 +27,10 @@ const reducer = (
     case getType(idPayGenerateBarcode.request):
       return {
         ...state,
-        [action.payload.initiativeId]: pot.toLoading(
-          state[action.payload.initiativeId]
+        [action.payload.initiativeId]: pipe(
+          state[action.payload.initiativeId],
+          O.fromNullable,
+          O.fold(() => pot.noneLoading, pot.toLoading)
         )
       };
     case getType(idPayGenerateBarcode.success):
