@@ -7,4 +7,4 @@ const networkErrorToError = (networkError: NetworkError) =>
 export const errorToReason = (error: Error) => error.message;
 
 export const unknownToReason = (e: unknown) =>
-  pipe(e, getNetworkError, networkErrorToError, error => error.message);
+  pipe(e, getNetworkError, networkErrorToError, errorToReason);
