@@ -3,6 +3,7 @@ import { fingerprintAcknowledged } from "../../../../store/actions/onboarding";
 import { isFingerprintAcknowledgedSelector } from "../../../../store/reducers/onboarding";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { getBometricState, isDevicePinSet } from "../../../../utils/biometrics";
+import { isFingerprintEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   handleBiometricAvailable,
   hanldeMissingDevicePin,
@@ -53,8 +54,14 @@ export function* checkAcknowledgedFingerprintSaga(): Generator<
     isFingerprintAcknowledgedSelector
   );
 
+  const isFingerprintEnabled = yield* select(isFingerprintEnabledSelector);
+
   if (!isFingerprintAcknowledged) {
-    // Navigate to the FingerprintScreen and wait for acknowledgment
-    yield* call(onboardFingerprintIfAvailableSaga);
+    if (isFingerprintEnabled) {
+      yield* put(fingerprintAcknowledged());
+    } else {
+      // Navigate to the FingerprintScreen and wait for acknowledgment
+      yield* call(onboardFingerprintIfAvailableSaga);
+    }
   }
 }
