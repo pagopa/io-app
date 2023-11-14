@@ -31,7 +31,7 @@ import Animated, {
   Extrapolate
 } from "react-native-reanimated";
 
-type ListItemItw = WithTestID<{
+export type ListItemItw = WithTestID<{
   title: string;
   subTitle?: string;
   numberOfLines?: number;
