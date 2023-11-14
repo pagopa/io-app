@@ -89,7 +89,7 @@ const DeactivateButton = (props: { dispatch: AppDispatch }) => (
 );
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
-const PnServiceCTA = ({ serviceId, activate }: Props) => {
+const ServiceCTA = ({ serviceId, activate }: Props) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const dispatch = useIODispatch();
@@ -158,4 +158,4 @@ const PnServiceCTA = ({ serviceId, activate }: Props) => {
   );
 };
 
-export default PnServiceCTA;
+export default ServiceCTA;

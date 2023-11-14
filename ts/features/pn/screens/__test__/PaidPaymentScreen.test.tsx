@@ -5,13 +5,13 @@ import { cleanup } from "@testing-library/react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
-import { PnPaidPaymentScreen } from "../PnPaidPaymentScreen";
+import { PaidPaymentScreen } from "../PaidPaymentScreen";
 import PN_ROUTES from "../../navigation/routes";
 import { GlobalState } from "../../../../store/reducers/types";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 
-describe("PnPaidPaymentScreen", () => {
+describe("PaidPaymentScreen", () => {
   // Needed to avoid `ReferenceError: You are trying to `import` a file after the Jest environment has been torn down.`
   afterEach(cleanup);
   it("should render with back button, title, help button, paid banner, notice code and creditor tax id", () => {
@@ -41,7 +41,7 @@ const generateComponent = (noticeCode: string, creditorTaxId?: string) => {
         <Stack.Navigator>
           <Stack.Screen
             name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
-            component={PnPaidPaymentScreen}
+            component={PaidPaymentScreen}
             initialParams={{
               noticeCode,
               creditorTaxId
