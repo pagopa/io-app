@@ -10,7 +10,12 @@ import { WalletOnboardingParamsList } from "../navigation/navigator";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import WalletOnboardingSuccess from "../components/WalletOnboardingSuccess";
-import { OnboardingOutcome, OnboardingResult } from "../types";
+import {
+  OnboardingOutcomeEnum,
+  OnboardingOutcomeFailure,
+  OnboardingOutcomeSuccess,
+  OnboardingResult
+} from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
 import WalletOnboardingWebView from "../components/WalletOnboardingWebView";
 import { WalletDetailsRoutes } from "../../details/navigation/navigator";
@@ -38,11 +43,12 @@ const WalletOnboardingStartScreen = () => {
 
   const handleOnboardingError = () => {
     setOnboardingResult({
-      status: "ERROR"
+      status: "ERROR",
+      outcome: OnboardingOutcomeEnum.GENERIC_ERROR
     });
   };
 
-  const handleOnboardingFailure = (outcome: OnboardingOutcome) => {
+  const handleOnboardingFailure = (outcome: OnboardingOutcomeFailure) => {
     setOnboardingResult({
       status: "FAILURE",
       outcome
@@ -50,7 +56,7 @@ const WalletOnboardingStartScreen = () => {
   };
 
   const handleOnboardingSuccess = (
-    outcome: OnboardingOutcome,
+    outcome: OnboardingOutcomeSuccess,
     walletId: string
   ) => {
     setOnboardingResult({
