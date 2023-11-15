@@ -4,11 +4,9 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
-import {
-  IssuanceData,
-  IssuanceResultData
-} from "../../reducers/new/itwIssuanceReducer";
+import { IssuanceData } from "../../reducers/new/itwIssuanceReducer";
 import { CredentialDefinition, StartIssuanceFlow } from "../../../utils/types";
+import { StoredCredential } from "../../reducers/itwCredentialsReducer";
 
 /**
  * Actions for the issuance checks flow.
@@ -27,7 +25,7 @@ export const itwIssuanceGetCredential = createAsyncAction(
   "ITW_ISSUANCE_GET_CREDENTIAL_REQUEST",
   "ITW_ISSUANCE_GET_CREDENTIAL_SUCCESS",
   "ITW_ISSUANCE_GET_CREDENTIAL_FAILURE"
-)<void, IssuanceResultData, ItWalletError>();
+)<void, StoredCredential, ItWalletError>();
 
 /**
  * Action which is dispatched when the user confirms the storage of the credential.
