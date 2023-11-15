@@ -32,6 +32,10 @@ import {
   sessionInformationLoadFailure,
   sessionInformationLoadSuccess
 } from "../../../../store/actions/authentication";
+import {
+  loadAllBonusActivations,
+  loadAvailableBonuses
+} from "../../../bonus/bonusVacanze/store/actions/bonusVacanze";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -145,7 +149,12 @@ function resetPollingState(
 }
 
 type AcceptedActionsDuringGetSessionPollingType = ReturnType<typeof getType>;
-// All the actions that are accepted during a support request
+/**
+ * All the actions that are accepted during a support request.
+ *
+ * FIXME: find a way to intercept the end of a support request.
+ * https://github.com/pagopa/io-platform/discussions/34
+ */
 const acceptedActionsDuringGetSessionPolling: Array<AcceptedActionsDuringGetSessionPollingType> =
   [
     getType(setDebugCurrentRouteName),
@@ -153,8 +162,15 @@ const acceptedActionsDuringGetSessionPolling: Array<AcceptedActionsDuringGetSess
     getType(applicationChangeState),
     getType(sessionInformationLoadSuccess),
     getType(sessionInformationLoadFailure),
+    getType(checkCurrentSession.request),
     getType(checkCurrentSession.success),
     getType(checkCurrentSession.failure),
+    getType(loadAvailableBonuses.request),
+    getType(loadAvailableBonuses.success),
+    getType(loadAvailableBonuses.failure),
+    getType(loadAllBonusActivations.request),
+    getType(loadAllBonusActivations.success),
+    getType(loadAllBonusActivations.failure),
     getType(zendeskStartPolling),
     getType(zendeskPollingIteration)
   ];
