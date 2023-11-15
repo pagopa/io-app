@@ -64,6 +64,9 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
+    // FIXME: This action is not called when the user closes the support request.
+    // https://github.com/pagopa/io-platform/discussions/34
+    // The action has been created to support a future implementation of the feature.
     case getType(zendeskStopPolling):
       return {
         ...state,
