@@ -62,7 +62,7 @@ const ItwCredentialDetailsScreen = () => {
               display={data.displayData}
             />
             <VSpacer />
-            <ItwCredentialClaimsList data={{ ...data, issuerName: "INPS" }} />
+            <ItwCredentialClaimsList data={data} />
             <VSpacer size={32} />
             <Banner
               testID={"ItwBannerTestID"}

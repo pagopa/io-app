@@ -24,10 +24,6 @@ export type IssuanceData = {
   issuerConf: IssuerConfiguration;
 } & CredentialDefinition;
 
-export type IssuanceResultData = {
-  issuerName: string;
-} & StoredCredential;
-
 /**
  * Type of the state managed by the reducer for the issuance flow.
  */
@@ -39,7 +35,7 @@ export type ItwIssuanceState = {
   /**
    * Issuance result pot.
    */
-  issuanceResult: pot.Pot<O.Option<IssuanceResultData>, ItWalletError>;
+  issuanceResult: pot.Pot<O.Option<StoredCredential>, ItWalletError>;
 };
 
 /**
