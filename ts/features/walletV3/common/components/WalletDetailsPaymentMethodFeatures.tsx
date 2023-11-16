@@ -32,6 +32,7 @@ const WalletDetailsPaymentMethodFeatures = ({ paymentMethod }: Props) => {
       />
     );
   }
+
   return (
     <>
       {isIdpayEnabled ? (

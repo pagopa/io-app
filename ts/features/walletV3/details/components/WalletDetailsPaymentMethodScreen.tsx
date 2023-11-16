@@ -29,7 +29,7 @@ import { walletDetailsInstrumentPotSelector } from "../store";
 import { walletDetailsDeleteInstrument } from "../store/actions";
 
 type Props = {
-  paymentMethod: WalletInfo;
+  paymentMethod?: WalletInfo;
   card: React.ReactNode;
   content: React.ReactNode;
   headerTitle?: string;
@@ -85,7 +85,9 @@ const WalletDetailsPaymentMethodScreen = (props: Props) => {
               : I18n.t(`wallet.delete.android.confirm`),
           style: "destructive",
           onPress: () => {
-            deleteWallet(paymentMethod.walletId);
+            if (paymentMethod) {
+              deleteWallet(paymentMethod.walletId);
+            }
           }
         },
         {
@@ -125,7 +127,7 @@ const WalletDetailsPaymentMethodScreen = (props: Props) => {
         <View style={IOStyles.horizontalContentPadding}>
           {content}
           <VSpacer size={24} />
-          <DeleteButton onPress={onDeleteMethod} />
+          {paymentMethod && <DeleteButton onPress={onDeleteMethod} />}
         </View>
         <VSpacer size={40} />
       </ScrollView>

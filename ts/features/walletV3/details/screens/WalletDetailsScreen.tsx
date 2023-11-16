@@ -71,7 +71,7 @@ const generateCardHeaderTitle = (walletDetails?: WalletInfoDetails) => {
       );
       return `${capitalizedCardCircuit} ••${cardDetails.maskedPan}`;
     default:
-      return "TITLE";
+      return "";
   }
 };
 
@@ -96,7 +96,13 @@ const WalletDetailsScreen = () => {
   }, [walletId, dispatch]);
 
   if (isLoadingWalletDetails) {
-    return <>{/* TODO: RENDER SKELETON PAGE */}</>;
+    return (
+      <WalletDetailsPaymentMethodScreen
+        paymentMethod={walletDetails}
+        card={<PaymentCardBig testID="CreditCardComponent" isLoading={true} />}
+        content={<></>}
+      />
+    );
   }
 
   if (walletDetails !== undefined) {
