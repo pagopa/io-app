@@ -47,7 +47,9 @@ export function* handleItwRpInitializationSaga(
     yield* put(
       itwRpInitialization.success({
         requestObject,
-        entity: rpEntityConfiguration
+        entity: rpEntityConfiguration,
+        authReqUrl,
+        clientId
       })
     );
   } catch (e) {
