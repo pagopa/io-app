@@ -19,10 +19,7 @@ import {
   idpayOperationListSelector,
   idpayPaginatedTimelineSelector
 } from "../store";
-import {
-  TimelineOperationListItem,
-  TimelineOperationListItemSkeleton
-} from "./TimelineOperationListItem";
+import { TimelineOperationListItem } from "./TimelineOperationListItem";
 
 type Props = {
   initiativeId: string;
@@ -100,7 +97,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
   <View testID="IDPayTimelineSkeletonTestID">
     {Array.from({ length: size }).map((_, index) => (
       <React.Fragment key={index}>
-        <TimelineOperationListItemSkeleton />
+        <TimelineOperationListItem isLoading={true} />
         {index < size - 1 ? <Divider /> : undefined}
       </React.Fragment>
     ))}
