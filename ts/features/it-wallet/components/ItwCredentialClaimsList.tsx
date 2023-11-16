@@ -5,10 +5,10 @@ import * as O from "fp-ts/Option";
 import * as t from "io-ts";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/Either";
-import { IssuanceResultData } from "../store/reducers/new/itwIssuanceReducer";
 import { getClaimsFullLocale, localeDateFormatOrSame } from "../utils/locales";
 import I18n from "../../../i18n";
 import { CredentialCatalogDisplay } from "../utils/mocks";
+import { StoredCredential } from "../store/reducers/itwCredentialsReducer";
 
 /**
  * Type of the claims list.
@@ -55,8 +55,8 @@ const EvidenceDecoder = t.array(
  * @returns the list of claims of the credential contained in its configuration schema.
  */
 const parseClaims = (
-  parsedCredential: IssuanceResultData["parsedCredential"],
-  schema: IssuanceResultData["credentialConfigurationSchema"]
+  parsedCredential: StoredCredential["parsedCredential"],
+  schema: StoredCredential["credentialConfigurationSchema"]
 ): ClaimList =>
   Object.entries(schema)
     .map(([key, elem]) => ({
@@ -75,7 +75,7 @@ const parseClaims = (
  * @returns schema sorted according to the order of the displayData.
  */
 const sortSchema = (
-  schema: IssuanceResultData["credentialConfigurationSchema"],
+  schema: StoredCredential["credentialConfigurationSchema"],
   order: CredentialCatalogDisplay["order"]
 ) =>
   order
@@ -89,17 +89,25 @@ const sortSchema = (
 /**
  * This component renders the list of claims for a credential.
  * It dinamically renders the list of claims passed as claims prop in the order they are passed.
- * @param data - the {@link IssuanceResultData} of the credential.
+ * @param data - the {@link StoredCredential} of the credential.
  */
 const ItwCredentialClaimsList = ({
-  data: { parsedCredential, credentialConfigurationSchema, displayData }
+  data: {
+    parsedCredential,
+    credentialConfigurationSchema,
+    displayData,
+    issuerConf
+  }
 }: {
-  data: IssuanceResultData;
+  data: StoredCredential;
 }) => {
   const claims = parseClaims(
     parsedCredential,
     sortSchema(credentialConfigurationSchema, displayData.order)
   );
+
+  const evidence = parsedCredential.evidence;
+  const releaserName = issuerConf.federation_entity.organization_name;
 
   /**
    * Renders the issuer name from the evidence field of the credential.
@@ -131,6 +139,22 @@ const ItwCredentialClaimsList = ({
       )
     );
 
+  const RenderReleaserName = ({ releaserName }: { releaserName: string }) => {
+    const label = I18n.t(
+      "features.itWallet.verifiableCredentials.claims.releasedBy"
+    );
+    return (
+      <>
+        <ListItemInfo
+          label={label}
+          value={releaserName}
+          accessibilityLabel={`${label} ${releaserName}`}
+        />
+        <Divider />
+      </>
+    );
+  };
+
   return (
     <>
       {claims.map(
@@ -153,9 +177,8 @@ const ItwCredentialClaimsList = ({
           </View>
         )
       )}
-      {parsedCredential.evidence && (
-        <RenderIssuerName evidence={parsedCredential.evidence} />
-      )}
+      {evidence && <RenderIssuerName evidence={evidence} />}
+      {releaserName && <RenderReleaserName releaserName={releaserName} />}
     </>
   );
 };

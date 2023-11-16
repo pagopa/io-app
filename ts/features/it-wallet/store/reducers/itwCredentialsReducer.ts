@@ -12,6 +12,7 @@ import { ItWalletError } from "../../utils/errors/itwErrors";
 import {
   CredentialConfigurationSchema,
   CredentialDefinition,
+  IssuerConfiguration,
   PidResponse
 } from "../../utils/types";
 
@@ -25,6 +26,7 @@ export type StoredCredential = {
   parsedCredential: Record<string, string>;
   credentialConfigurationSchema: CredentialConfigurationSchema;
   credentialType: string;
+  issuerConf: IssuerConfiguration;
 } & CredentialDefinition;
 
 /**

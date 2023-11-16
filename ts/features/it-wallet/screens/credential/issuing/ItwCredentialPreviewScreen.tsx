@@ -32,7 +32,6 @@ import {
   itwIssuanceGetCredential
 } from "../../../store/actions/new/itwIssuanceActions";
 import {
-  IssuanceResultData,
   itwIssuanceResultDataSelector,
   itwIssuanceResultSelector
 } from "../../../store/reducers/new/itwIssuanceReducer";
@@ -40,6 +39,7 @@ import { ItWalletError } from "../../../utils/errors/itwErrors";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
+import { StoredCredential } from "../../../store/reducers/itwCredentialsReducer";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
@@ -63,9 +63,15 @@ const ItwCredentialPreviewScreen = () => {
    * Bottom sheet with the issuer information.
    */
   const { present, bottomSheet } = useItwInfoBottomSheet({
-    title: O.isSome(issuanceResultData)
-      ? issuanceResultData.value.issuerName
-      : "",
+    title: pipe(
+      issuanceResultData,
+      O.fold(
+        () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
+        some =>
+          some.issuerConf.federation_entity.organization_name ||
+          I18n.t("features.itWallet.generic.placeholders.organizationName")
+      )
+    ),
     content: [
       {
         title: I18n.t(
@@ -100,7 +106,7 @@ const ItwCredentialPreviewScreen = () => {
    * Content view which asks the user to confirm the issuance of the credential.
    * @param data - the issuance result data of the credential used to display the credential.
    */
-  const ContentView = ({ data }: { data: IssuanceResultData }) => {
+  const ContentView = ({ data }: { data: StoredCredential }) => {
     const addOnPress = () => {
       dispatch(itwConfirmStoreCredential());
     };
@@ -154,10 +160,7 @@ const ItwCredentialPreviewScreen = () => {
                   "features.itWallet.issuing.credentialPreviewScreen.banner.title"
                 )}
                 content={I18n.t(
-                  "features.itWallet.issuing.credentialPreviewScreen.banner.content",
-                  {
-                    issuer: data.issuerName
-                  }
+                  "features.itWallet.issuing.credentialPreviewScreen.banner.content"
                 )}
                 pictogramName={"security"}
                 action={I18n.t(
