@@ -8,11 +8,17 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { itwRpInitialization } from "../actions/itwRpActions";
 import { RequestObject } from "../../utils/types";
 
+export type RpData = {
+  authReqUrl: string;
+  clientId: string;
+};
+
 export type ItwRpInitializationType = {
   requestObject: O.Option<RequestObject>;
   entity: O.Option<
     Trust.RelyingPartyEntityConfiguration["payload"]["metadata"]
   >;
+  data: O.Option<RpData>;
 };
 
 export type ItwRpInitializationState = pot.Pot<
@@ -40,7 +46,11 @@ const reducer = (
     case getType(itwRpInitialization.success):
       return pot.some({
         requestObject: O.some(action.payload.requestObject),
-        entity: O.some(action.payload.entity)
+        entity: O.some(action.payload.entity),
+        data: O.some({
+          authReqUrl: action.payload.authReqUrl,
+          clientId: action.payload.clientId
+        })
       });
     case getType(itwRpInitialization.failure):
       return pot.toError(state, action.payload);
@@ -77,6 +87,17 @@ export const itwRpInitializationRequestObjectValueSelector = (
 export const itwRpInitializationEntityValueSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(state.features.itWallet.rpInit, rpInit => rpInit.entity),
+    O.none
+  );
+
+/**
+ * Selects the RP data configuration from the global state.
+ * @param state - the global state
+ * @returns the rp data value which contains the authReqUrl and the clientId.
+ */
+export const itwRpInitializationDataValueSelector = (state: GlobalState) =>
+  pot.getOrElse(
+    pot.map(state.features.itWallet.rpInit, rpInit => rpInit.data),
     O.none
   );
 
