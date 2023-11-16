@@ -31,15 +31,6 @@ export const mapAssuranceLevel = (level: AssuranceLevel | string) => {
       );
   }
 };
-
-export const FEDERATION_ENTITY = {
-  organization_name: "Comune di Milano",
-  homepage_uri: "https://www.comune.milano.it/",
-  policy_uri: "https://www.comune.milano.it/privacy",
-  logo_uri: "https://www.comune.milano.it/logo.png",
-  contacts: "https://www.comune.milano.it/contacts"
-};
-
 /**
  * Credentials Catalog mocks.
  */
@@ -145,23 +136,11 @@ export const getRequestedClaims = (
         decodedPid.pid.verification.evidence[0].record.source.organization_name
     }),
     data: [
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.givenName")} ${
-        decodedPid.pid.claims.givenName
-      }`,
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.familyName")} ${
-        decodedPid.pid.claims.familyName
-      }`,
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode")} ${
-        decodedPid.pid.claims.taxIdCode
-      }`,
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.birthdate")} ${
-        decodedPid.pid.claims.birthdate
-      }`,
-      `${I18n.t(
-        "features.itWallet.verifiableCredentials.claims.placeOfBirth"
-      )} ${decodedPid.pid.claims.placeOfBirth.locality} (${
-        decodedPid.pid.claims.placeOfBirth.country
-      })`
+      I18n.t("features.itWallet.verifiableCredentials.claims.givenName"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.familyName"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.birthdate"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.placeOfBirth")
     ]
   }
 ];
@@ -175,23 +154,11 @@ const getMultipleRequestedClaims = (
         decodedPid.pid.verification.evidence[0].record.source.organization_name
     }),
     data: [
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.givenName")} ${
-        decodedPid.pid.claims.givenName
-      }`,
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.familyName")} ${
-        decodedPid.pid.claims.familyName
-      }`,
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode")} ${
-        decodedPid.pid.claims.taxIdCode
-      }`,
-      `${I18n.t("features.itWallet.verifiableCredentials.claims.birthdate")} ${
-        decodedPid.pid.claims.birthdate
-      }`,
-      `${I18n.t(
-        "features.itWallet.verifiableCredentials.claims.placeOfBirth"
-      )} ${decodedPid.pid.claims.placeOfBirth.locality} (${
-        decodedPid.pid.claims.placeOfBirth.country
-      })`
+      I18n.t("features.itWallet.verifiableCredentials.claims.givenName"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.familyName"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.taxIdCode"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.birthdate"),
+      I18n.t("features.itWallet.verifiableCredentials.claims.placeOfBirth")
     ]
   },
   {
@@ -223,6 +190,21 @@ export const getRpMock = (): RpMock => ({
     }
   ]
 });
+
+export const rpPidMock: RpMock = {
+  organizationName: "Comune di Milano",
+  requestedClaims: (decodedPid: PidWithToken) => getRequestedClaims(decodedPid),
+  optionalClaims: [
+    {
+      credential: `${I18n.t("features.itWallet.generic.credential")} 1`,
+      claim: I18n.t("global.media.phone")
+    },
+    {
+      credential: `${I18n.t("features.itWallet.generic.credential")} 1`,
+      claim: I18n.t("global.media.email")
+    }
+  ]
+};
 
 /**
  * Regex to validate the date format of a credential.

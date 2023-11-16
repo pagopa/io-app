@@ -82,4 +82,7 @@ const reducer = (
 export const itwPresentationChecksSelector = (state: GlobalState) =>
   state.features.itWallet.presentation.checks;
 
+export const itwPresentationResultSelector = (state: GlobalState) =>
+  state.features.itWallet.presentation.presentation;
+
 export default reducer;
