@@ -37,7 +37,7 @@ import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp
 import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
-import { rpMock } from "../../../../utils/mocks";
+import { getRpMock } from "../../../../utils/mocks";
 import { showCancelAlert } from "../../../../utils/alert";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
@@ -53,6 +53,7 @@ type ContentViewParams = {
 const ItwPresentationDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const rpMock = getRpMock();
   const { present, bottomSheet } = useItwInfoBottomSheet({
     title: rpMock.organizationName,
     content: [

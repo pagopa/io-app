@@ -20,7 +20,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
-import { pidDisplayData } from "../../utils/mocks";
+import { getPidDisplayData } from "../../utils/mocks";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -33,6 +33,7 @@ export type ContentViewParams = {
 const ItwPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const pidDisplayData = getPidDisplayData();
   const spacerSize = 32;
 
   const presentationButton: BlockButtonProps = {
