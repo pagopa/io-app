@@ -193,13 +193,9 @@ export function* handleIssuanceGetCredential(): SagaIterator {
       {} as Record<string, string>
     );
 
-    const issuerName =
-      issuerConf.federation_entity.organization_name ||
-      I18n.t("features.itWallet.generic.placeholders.organizationName");
-
     yield* put(
       itwIssuanceGetCredential.success({
-        issuerName,
+        issuerConf,
         keyTag,
         credential,
         format,
@@ -240,27 +236,7 @@ function* handleAddCredentialWithPin() {
     const res = yield* take(identificationSuccess);
 
     if (isActionOf(identificationSuccess, res)) {
-      const {
-        keyTag,
-        credential,
-        format,
-        parsedCredential,
-        credentialType,
-        displayData,
-        credentialConfigurationSchema
-      } = resultData.value;
-
-      yield* put(
-        itwCredentialsAddCredential.success({
-          credential,
-          format,
-          keyTag,
-          credentialConfigurationSchema,
-          parsedCredential,
-          credentialType,
-          displayData
-        })
-      );
+      yield* put(itwCredentialsAddCredential.success(resultData.value));
 
       yield* call(
         NavigationService.dispatchNavigationAction,
