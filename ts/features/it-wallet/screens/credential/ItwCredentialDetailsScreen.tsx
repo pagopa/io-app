@@ -17,6 +17,7 @@ import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { StoredCredential } from "../../store/reducers/itwCredentialsReducer";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 
 export type ItwCredentialDetailsScreenNavigationParams = {
   credential: StoredCredential;
@@ -31,8 +32,8 @@ type ItwCredentialDetailscreenRouteProps = RouteProp<
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
  */
 const ItwCredentialDetailsScreen = () => {
-  const navigation = useNavigation();
   const route = useRoute<ItwCredentialDetailscreenRouteProps>();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { credential } = route.params;
   const bannerViewRef = React.createRef<View>();
   const spacerSize = 32;

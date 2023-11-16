@@ -19,7 +19,7 @@ import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeRed
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
-import { pidDisplayData } from "../../utils/mocks";
+import { getPidDisplayData } from "../../utils/mocks";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
@@ -36,6 +36,7 @@ export type ContentViewParams = {
 const ItwPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const pidDisplayData = getPidDisplayData();
   const bannerViewRef = React.createRef<View>();
   const spacerSize = 32;
 
