@@ -21,6 +21,7 @@ import ItwPidClaimsList from "../../components/ItwPidClaimsList";
 import { BlockButtonProps } from "../../../../components/ui/BlockButtons";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
 import { getPidDisplayData } from "../../utils/mocks";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -42,7 +43,7 @@ const ItwPidDetails = () => {
     ),
     iconName: "qrCode",
     iconColor: "white",
-    onPress: () => null
+    onPress: () => navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
   };
 
   const ContentView = ({ decodedPid }: ContentViewParams) => (
@@ -60,7 +61,9 @@ const ItwPidDetails = () => {
             claims={["givenName", "familyName", "taxIdCode"]}
             expiryDate
             securityLevel
-            onLinkPress={() => null}
+            onLinkPress={() =>
+              navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+            }
             issuerInfo
           />
           <VSpacer size={spacerSize} />

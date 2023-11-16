@@ -1,5 +1,5 @@
 import React from "react";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
   Banner,
   BlockButtonProps,
@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView, View } from "react-native";
-import { constNull } from "fp-ts/lib/function";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -17,6 +16,8 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { StoredCredential } from "../../store/reducers/itwCredentialsReducer";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 
 export type ItwCredentialDetailsScreenNavigationParams = {
   credential: StoredCredential;
@@ -32,6 +33,7 @@ type ItwCredentialDetailscreenRouteProps = RouteProp<
  */
 const ItwCredentialDetailsScreen = () => {
   const route = useRoute<ItwCredentialDetailscreenRouteProps>();
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { credential } = route.params;
   const bannerViewRef = React.createRef<View>();
 
@@ -49,7 +51,7 @@ const ItwCredentialDetailsScreen = () => {
         accessibilityLabel: I18n.t(
           "features.itWallet.presentation.credentialDetails.buttons.qrCode"
         ),
-        onPress: () => null
+        onPress: () => navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
       }
     };
 
@@ -79,7 +81,9 @@ const ItwCredentialDetailsScreen = () => {
               action={I18n.t(
                 "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
               )}
-              onPress={constNull}
+              onPress={() =>
+                navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+              }
             />
             <VSpacer size={32} />
           </ScrollView>
