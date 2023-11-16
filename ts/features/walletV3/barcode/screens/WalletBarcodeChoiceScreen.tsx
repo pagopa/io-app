@@ -34,7 +34,7 @@ import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
 import { PaymentNoticeListItem } from "../components/PaymentNoticeListItem";
 import { WalletPaymentParamsList } from "../navigation/params";
 
-type WalletPaymentBarcodeChoiceScreenParams = {
+type WalletBarcodeChoiceScreenParams = {
   barcodes: Array<PagoPaBarcode>;
 };
 
@@ -43,7 +43,7 @@ const sortByAmount = pipe(
   contramap((p: PagoPaBarcode) => parseFloat(p.amount))
 );
 
-const WalletPaymentBarcodeChoiceScreen = () => {
+const WalletBarcodeChoiceScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
@@ -52,9 +52,7 @@ const WalletPaymentBarcodeChoiceScreen = () => {
   });
 
   const route =
-    useRoute<
-      RouteProp<WalletPaymentParamsList, "WALLET_PAYMENT_BARCODE_CHOICE">
-    >();
+    useRoute<RouteProp<WalletPaymentParamsList, "WALLET_BARCODE_CHOICE">>();
 
   const { barcodes } = route.params;
 
@@ -111,5 +109,5 @@ const WalletPaymentBarcodeChoiceScreen = () => {
   );
 };
 
-export { WalletPaymentBarcodeChoiceScreen };
-export type { WalletPaymentBarcodeChoiceScreenParams };
+export { WalletBarcodeChoiceScreen };
+export type { WalletBarcodeChoiceScreenParams };

@@ -38,6 +38,7 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
+import { WalletBarcodeRoutes } from "../../walletV3/barcode/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -85,8 +86,8 @@ const BarcodeScanScreen = () => {
         void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
       }
 
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
+      navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
+        screen: WalletBarcodeRoutes.WALLET_BARCODE_CHOICE,
         params: {
           barcodes: pagoPABarcodes
         }
