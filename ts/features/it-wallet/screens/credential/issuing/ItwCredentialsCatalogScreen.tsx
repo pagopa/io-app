@@ -14,7 +14,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import ItwSearchBar from "../../../components/ItwSearchBar";
 import I18n from "../../../../../i18n";
 import {
-  CREDENTIALS_CATALOG,
+  getCredentialsCatalog,
   CredentialCatalogAvailableItem,
   CredentialCatalogItem
 } from "../../../utils/mocks";
@@ -36,6 +36,7 @@ const ItwCredentialCatalogScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
   const [loadingIndex, setLoadingIndex] = React.useState<number>(NONE_LOADING);
+  const catalog = getCredentialsCatalog();
 
   /**
    * Side effect to navigate to the credential checks screen when the preliminaryChecks pot
@@ -131,7 +132,7 @@ const ItwCredentialCatalogScreen = () => {
             <ItwSearchBar />
             <VSpacer />
             <FlatList
-              data={CREDENTIALS_CATALOG}
+              data={catalog}
               renderItem={({ item, index }) => (
                 <CatalogItem
                   index={index}

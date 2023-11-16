@@ -28,7 +28,7 @@ import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer"
 import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import ItwCredentialCard from "../components/ItwCredentialCard";
-import { pidDisplayData } from "../utils/mocks";
+import { getPidDisplayData } from "../utils/mocks";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -59,6 +59,7 @@ const ItwHomeScreen = () => {
     I18n.t("features.itWallet.homeScreen.categories.payments"),
     I18n.t("features.itWallet.homeScreen.categories.bonus")
   ];
+  const pidDisplayData = getPidDisplayData();
 
   /**
    * Condionally navigate to the credentials catalog screen if the experimental feature flag is true.
