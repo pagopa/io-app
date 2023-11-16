@@ -15,7 +15,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { rpMock } from "../../../../utils/mocks";
+import { getRpMock } from "../../../../utils/mocks";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
@@ -30,6 +30,7 @@ const ItwPresentationResultScreen = () => {
   const resultPot = useIOSelector(itwPresentationResultSelector);
   const navigation =
     useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
+  const rpMock = getRpMock();
 
   useOnFirstRender(() => {
     dispatch(itwPresentation.request());
