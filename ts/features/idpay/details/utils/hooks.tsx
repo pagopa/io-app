@@ -19,6 +19,8 @@ import {
   idpayTimelineLastUpdateSelector
 } from "../store";
 import { idpayTimelinePageGet } from "../store/actions";
+import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
+import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
 
 export const useInitiativeTimelineFetcher = (
   initiativeId: string,
@@ -95,13 +97,23 @@ export const useInitiativeTimelineFetcher = (
 
 export const useIdpayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const barcodeSecondsSelector = useIOSelector(
+    idPayBarcodeSecondsTillExpireSelector
+  );
   const navigateToPaymentAuthorization = () => {
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN);
   };
   const dispatch = useIODispatch();
   const barcodePressHandler = () => {
-    dispatch(idPayGenerateBarcode.request({ initiativeId }));
+    const isBarcodeAvailable = barcodeSecondsSelector(initiativeId) > 0;
+    if (!isBarcodeAvailable) {
+      dispatch(idPayGenerateBarcode.request({ initiativeId }));
+    }
     bottomSheet.dismiss();
+    navigation.navigate(IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN, {
+      screen: IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT,
+      params: { initiativeId }
+    });
   };
 
   const DiscountInitiativeBottomSheetContent = () => (
