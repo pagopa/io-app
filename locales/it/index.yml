@@ -3359,20 +3359,18 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: "Pagamento"
-              ONBOARDING: "Adesione all'iniziativa"
-              ADD_IBAN: "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
-              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION: "Pagamento POS"
-              REVERSAL: "Pagamento POS"
-              DELETE_INSTRUMENT: "Disattivazione metodo ···· {{maskedPan}}"
-              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN: "Disattivazione metodo"
-              REJECTED_ADD_INSTRUMENT: "Attivazione metodo"
-              PAID_REFUND: "Rimborso sul tuo conto"
-              REJECTED_REFUND: "Rimborso sul tuo conto"
+              TRANSACTION_ONLINE: "Pagamento online"
+              ONBOARDING: "Adesione all'iniziativa"
+              ADD_IBAN: "IBAN modificato"
+              ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REJECTED_ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              REJECTED_DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REFUND: "Rimborso sul tuo conto"
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
+              CIE: "Abilitazione carta d’identità elettronica"
     discountDetails:
       bottomSheetOptions:
         scanQr: Inquadra un codice QR
