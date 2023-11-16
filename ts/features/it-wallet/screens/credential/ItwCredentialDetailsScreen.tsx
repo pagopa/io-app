@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView, View } from "react-native";
-import { constNull } from "fp-ts/lib/function";
 import ItwCredentialCard from "../../components/ItwCredentialCard";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -82,7 +81,9 @@ const ItwCredentialDetailsScreen = () => {
               action={I18n.t(
                 "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
               )}
-              onPress={constNull}
+              onPress={() =>
+                navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+              }
             />
             <VSpacer size={32} />
           </ScrollView>
