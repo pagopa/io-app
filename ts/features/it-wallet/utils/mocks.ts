@@ -80,7 +80,7 @@ export type CredentialCatalogItem =
  * firstLine and secondLine are used to display the credential attributes in the credential card.
  * The order parameter is used to display the attributes in the correct order.
  */
-export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
+export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   {
     type: "EuropeanDisabilityCard",
     issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
@@ -127,23 +127,14 @@ export const CREDENTIALS_CATALOG: Array<CredentialCatalogItem> = [
 /**
  * Hard coded display feature for PID
  */
-export const pidDisplayData: CredentialCatalogDisplay = {
+export const getPidDisplayData = (): CredentialCatalogDisplay => ({
   title: I18n.t(
     "features.itWallet.verifiableCredentials.type.digitalCredential"
   ),
   icon: "archive",
   textColor: "white",
   image: require("../assets/img/credentials/cards/pidFront.png")
-};
-
-export const defaultDisplayData: CredentialCatalogDisplay = {
-  title: I18n.t("features.itWallet.generic.credential"),
-  icon: "archive",
-  textColor: "black",
-  image: require("../assets/img/credentials/cards/default.png"),
-  firstLine: [],
-  secondLine: []
-};
+});
 
 export const getRequestedClaims = (
   decodedPid: PidWithToken
@@ -217,7 +208,7 @@ export type RpMock = {
   optionalClaims: ReadonlyArray<ItwOptionalClaimItem>;
 };
 
-export const rpMock: RpMock = {
+export const getRpMock = (): RpMock => ({
   organizationName: "eFarma",
   requestedClaims: (decodedPid: PidWithToken) =>
     getMultipleRequestedClaims(decodedPid),
@@ -231,7 +222,7 @@ export const rpMock: RpMock = {
       claim: I18n.t("global.media.email")
     }
   ]
-};
+});
 
 /**
  * Regex to validate the date format of a credential.

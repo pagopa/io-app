@@ -17,7 +17,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { rpMock } from "../../../../utils/mocks";
+import { getRpMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
@@ -33,6 +33,7 @@ const ItwPresentationChecksScreen = () => {
   const checksPot = useIOSelector(itwPresentationChecksSelector);
   const navigation =
     useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
+  const rpMock = getRpMock();
 
   /**
    * Callback to be used in case of cancel button press alert to navigate to the home screen and show a toast.
