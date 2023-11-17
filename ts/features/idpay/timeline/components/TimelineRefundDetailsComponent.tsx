@@ -1,12 +1,11 @@
 import { useBottomSheet } from "@gorhom/bottom-sheet";
+import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { Alert, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-
 import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
 import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";
