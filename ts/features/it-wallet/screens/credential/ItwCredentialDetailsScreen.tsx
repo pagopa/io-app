@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView, View } from "react-native";
-import ItwCredentialCard from "../../components/ItwCredentialCard";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -16,8 +15,9 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import { StoredCredential } from "../../store/reducers/itwCredentialsReducer";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 
 export type ItwCredentialDetailsScreenNavigationParams = {
   credential: StoredCredential;
@@ -36,6 +36,7 @@ const ItwCredentialDetailsScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { credential } = route.params;
   const bannerViewRef = React.createRef<View>();
+  const spacerSize = 32;
 
   /**
    * Content view which asks the user to confirm the issuance of the credential.
@@ -57,35 +58,34 @@ const ItwCredentialDetailsScreen = () => {
 
     return (
       <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-        <SafeAreaView style={IOStyles.flex}>
-          <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
-            <ItwCredentialCard
-              parsedCredential={data.parsedCredential}
-              display={data.displayData}
-            />
-            <VSpacer />
-            <ItwCredentialClaimsList data={data} />
-            <VSpacer size={32} />
-            <Banner
-              testID={"ItwBannerTestID"}
-              viewRef={bannerViewRef}
-              color={"neutral"}
-              size="big"
-              title={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.banner.title"
-              )}
-              content={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.banner.content"
-              )}
-              pictogramName={"security"}
-              action={I18n.t(
-                "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
-              )}
-              onPress={() =>
-                navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
-              }
-            />
-            <VSpacer size={32} />
+        <SafeAreaView style={{ ...IOStyles.flex }}>
+          <ScrollView>
+            <View style={IOStyles.horizontalContentPadding}>
+              <ItwClaimsWrapper displayData={data.displayData}>
+                <ItwCredentialClaimsList data={data} />
+              </ItwClaimsWrapper>
+              <VSpacer size={spacerSize} />
+              <Banner
+                testID={"ItwBannerTestID"}
+                viewRef={bannerViewRef}
+                color={"neutral"}
+                size="big"
+                title={I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.banner.title"
+                )}
+                content={I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.banner.content"
+                )}
+                pictogramName={"security"}
+                action={I18n.t(
+                  "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
+                )}
+                onPress={() =>
+                  navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+                }
+              />
+            </View>
+            <VSpacer size={spacerSize} />
           </ScrollView>
           <FooterWithButtons
             type={"SingleButton"}
