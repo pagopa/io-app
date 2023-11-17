@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.46.0-rc.3](https://github.com/pagopa/io-app/compare/2.46.0-rc.2...2.46.0-rc.3) (2023-11-14)
+
+
+### Features
+
+* [[IOCOM-667](https://pagopa.atlassian.net/browse/IOCOM-667)] Failure logging for messages' sagas ([#5223](https://github.com/pagopa/io-app/issues/5223)) ([5b92210](https://github.com/pagopa/io-app/commit/5b9221013f6b63e998b6f20e752f2dbe07993055))
+
+
+### Chores
+
+* [[IOPID-1015](https://pagopa.atlassian.net/browse/IOPID-1015)] Biometric refinement ([#5141](https://github.com/pagopa/io-app/issues/5141)) ([af94c2a](https://github.com/pagopa/io-app/commit/af94c2a7b48601a13de59022325c8ede3e85cfe5))
+
 ## [2.46.0-rc.2](https://github.com/pagopa/io-app/compare/2.46.0-rc.0...2.46.0-rc.2) (2023-11-08)
 
 
