@@ -8,7 +8,7 @@ import { itwPresentationChecksSelector } from "../../../../store/reducers/new/it
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
-import ItwContinueScreen from "../../../../components/ItwResultComponent";
+import ItwContinueScreen from "../../../../components/ItwContinueView";
 import I18n from "../../../../../../i18n";
 import { showCancelAlert } from "../../../../utils/alert";
 import ROUTES from "../../../../../../navigation/routes";

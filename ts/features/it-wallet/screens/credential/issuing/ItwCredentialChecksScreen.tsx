@@ -16,7 +16,7 @@ import {
   itwIssuanceChecksSelector,
   IssuanceData
 } from "../../../store/reducers/new/itwIssuanceReducer";
-import ItwContinueScreen from "../../../components/ItwResultComponent";
+import ItwContinueScreen from "../../../components/ItwContinueView";
 import { showCancelAlert } from "../../../utils/alert";
 import {
   ItWalletError,

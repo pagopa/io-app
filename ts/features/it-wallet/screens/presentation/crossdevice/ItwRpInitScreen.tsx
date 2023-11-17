@@ -18,7 +18,6 @@ import ScreenContent from "../../../../../components/screens/ScreenContent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { H4 } from "../../../../../components/core/typography/H4";
-import ItwFooterInfoBox from "../../../components/ItwFooterInfoBox";
 import { IOBadge } from "../../../../../components/core/IOBadge";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { itwDecodedPidValueSelector } from "../../../store/reducers/itwPidDecodeReducer";
@@ -36,6 +35,7 @@ import { itwRpInitialization } from "../../../store/actions/itwRpActions";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { FEDERATION_ENTITY } from "../../../utils/mocks";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import ItwFooterInfoBox from "../../../components/ItwFooterInfoBox";
 
 /**
  * ItwRpInitScreenNavigationParams's navigation params.
