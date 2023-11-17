@@ -17,31 +17,33 @@ type ActionProps = {
   onPress: () => void;
 };
 
-type ItwContinueComponentProps = {
+type ItwContinueViewProps = {
   title: string;
   pictogram?: IOPictograms;
   subtitle?: string;
   action?: ActionProps;
   secondaryAction?: ActionProps;
+  closeAction?: ActionProps["onPress"];
 };
 
 /**
  * The base graphical component to show a pictogram, title, a subtitle, an action button and a secondary action button.
+ * This works as a "continue" screen.
  * This component must be used to show a result screen to keep the same style across the flow.
  * @param title the title to be rendered
  * @param subtitle the subtitlte to be rendered below the title (optional)
  * @param action the continue button to be rendered (optional)
  * @param secondaryAction the secondary cancel button to be rendered (optional)
  */
-const ItwContinueScreen = ({
+const ItwContinueView = ({
   title,
   pictogram,
   subtitle,
   action,
   secondaryAction
-}: ItwContinueComponentProps): React.ReactElement => (
+}: ItwContinueViewProps): React.ReactElement => (
   <View style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}>
-    <View style={styles.main} testID={"ItwContinueScreenTestID"}>
+    <View style={styles.main} testID={"ItwContinueViewTestID"}>
       {pictogram && (
         <>
           <Pictogram name={pictogram} size={180} />
@@ -87,7 +89,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     justifyContent: "center",
-    flexDirection: "column"
+    flexDirection: "column",
+    paddingBottom: IOStyles.footer.paddingBottom
   },
   secondaryAction: {
     alignSelf: "center"
@@ -97,4 +100,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ItwContinueScreen;
+export default ItwContinueView;

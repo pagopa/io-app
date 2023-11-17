@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2-rc.0](https://github.com/pagopa/io-app/compare/0.4.1-rc.1...0.5.2-rc.0) (2023-11-17)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-361](https://pagopa.atlassian.net/browse/SIW-361)] Store reset migration ([#5214](https://github.com/pagopa/io-app/issues/5214)) ([fee09b2](https://github.com/pagopa/io-app/commit/fee09b214fcd00bf9fb32571b70954682a281299))
+* **IT Wallet:** [[SIW-362](https://pagopa.atlassian.net/browse/SIW-362)] Adds a component to parse a markdown string and get a collection of ReactNode elements ([#4969](https://github.com/pagopa/io-app/issues/4969)) ([14b512e](https://github.com/pagopa/io-app/commit/14b512e2a4468ba83445f6ff337e5c3fe0139500))
+* **IT Wallet:** [[SIW-449](https://pagopa.atlassian.net/browse/SIW-449)] Update saga with pin/biometric check to add a new credential ([#5109](https://github.com/pagopa/io-app/issues/5109)) ([14dccb6](https://github.com/pagopa/io-app/commit/14dccb64647780b155685526f1a776bdd7ef8624))
+* **IT Wallet:** [[SIW-450](https://pagopa.atlassian.net/browse/SIW-450),[SIW-444](https://pagopa.atlassian.net/browse/SIW-444)] Add credential to the wallet ([#5116](https://github.com/pagopa/io-app/issues/5116)) ([efc1584](https://github.com/pagopa/io-app/commit/efc1584ae85579f10076f39b856a80cdeae1d617))
+* **IT Wallet:** [[SIW-463](https://pagopa.atlassian.net/browse/SIW-463)] Credential presentation checks ([#5126](https://github.com/pagopa/io-app/issues/5126)) ([244cae8](https://github.com/pagopa/io-app/commit/244cae89a5ef130af4a9fe7dd6d1894dec16b8ae))
+* **IT Wallet:** [[SIW-467](https://pagopa.atlassian.net/browse/SIW-467)] Add presentation data screen ([#5131](https://github.com/pagopa/io-app/issues/5131)) ([2643804](https://github.com/pagopa/io-app/commit/264380498c27ea10feaca47a3cd4eca37fc2b287))
+* **IT Wallet:** [[SIW-468](https://pagopa.atlassian.net/browse/SIW-468)] Presentation optional claims selection ([#5138](https://github.com/pagopa/io-app/issues/5138)) ([135ae0e](https://github.com/pagopa/io-app/commit/135ae0e2ce3c7c9d40ab1c85112547d4a5de9eb6))
+* **IT Wallet:** [[SIW-469](https://pagopa.atlassian.net/browse/SIW-469)] Add credential presentation result screen ([#5142](https://github.com/pagopa/io-app/issues/5142)) ([475fb75](https://github.com/pagopa/io-app/commit/475fb758777f6cc3c7f7cd6630c0b1e1319958f5))
+* **IT Wallet:** [[SIW-623](https://pagopa.atlassian.net/browse/SIW-623)] Add credential issuance ([#5213](https://github.com/pagopa/io-app/issues/5213)) ([7983044](https://github.com/pagopa/io-app/commit/798304411cdd684763e8c617277407d944eeeffe))
+* **IT Wallet:** [[SIW-667](https://pagopa.atlassian.net/browse/SIW-667)] Add details screen for an issued credential ([#5219](https://github.com/pagopa/io-app/issues/5219)) ([1ba2e67](https://github.com/pagopa/io-app/commit/1ba2e6726eedcaf97bcf1d8605b50a99e5592adb))
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-663](https://pagopa.atlassian.net/browse/SIW-663)] Update `itwTextInfo` component ([#5215](https://github.com/pagopa/io-app/issues/5215)) ([83ecb20](https://github.com/pagopa/io-app/commit/83ecb20c958c00dbcbd91ea5c607845d42da6d95))
+* **IT Wallet:** [[SIW-674](https://pagopa.atlassian.net/browse/SIW-674)] Untranslated mock data ([#5227](https://github.com/pagopa/io-app/issues/5227)) ([c0d0ab9](https://github.com/pagopa/io-app/commit/c0d0ab9a6235adc10e4163453fb53b95ada3e30b))
+* **IT Wallet:** [[SIW-689](https://pagopa.atlassian.net/browse/SIW-689)] Add bottom padding in continue view ([#5233](https://github.com/pagopa/io-app/issues/5233)) ([8fcd027](https://github.com/pagopa/io-app/commit/8fcd02725546f848d0237561481cc42a566e3d8b))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-432](https://pagopa.atlassian.net/browse/SIW-432)] Update `ItwDiscoveryInfoScreen` with new DS ([#5164](https://github.com/pagopa/io-app/issues/5164)) ([f37f17d](https://github.com/pagopa/io-app/commit/f37f17dc8584e7c03018a7f8e91570debe77138e))
+* **IT Wallet:** [[SIW-434](https://pagopa.atlassian.net/browse/SIW-434)] Update presentation flow ([#5225](https://github.com/pagopa/io-app/issues/5225)) ([f9d7272](https://github.com/pagopa/io-app/commit/f9d727235e33a6b86726658b1130a9f4afd09728))
+* **IT Wallet:** [[SIW-579](https://pagopa.atlassian.net/browse/SIW-579)] Refactor componente `ItwResultScreen` ([#5114](https://github.com/pagopa/io-app/issues/5114)) ([3a60dd7](https://github.com/pagopa/io-app/commit/3a60dd7f7d2695f727e8bb8e0ecbaef52ac95480))
+* **IT Wallet:** [[SIW-580](https://pagopa.atlassian.net/browse/SIW-580)] Update loading screen typography ([#5144](https://github.com/pagopa/io-app/issues/5144)) ([6763ee0](https://github.com/pagopa/io-app/commit/6763ee06ffb444c82dd14e088a1877388feb72a9))
+* **IT Wallet:** [[SIW-589](https://pagopa.atlassian.net/browse/SIW-589)] Update loading spinner ([#5143](https://github.com/pagopa/io-app/issues/5143)) ([7dc6347](https://github.com/pagopa/io-app/commit/7dc63473ae5856d8ea39ec608d64f46fcc075813))
+* **IT Wallet:** [[SIW-603](https://pagopa.atlassian.net/browse/SIW-603)] Autoresizable info bottom sheet ([#5147](https://github.com/pagopa/io-app/issues/5147)) ([04e516e](https://github.com/pagopa/io-app/commit/04e516e484d0d348f250e8faf37aefbf42633c7a))
+* **IT Wallet:** [[SIW-614](https://pagopa.atlassian.net/browse/SIW-614)] Update error screens DS in credential issuing and presentation ([#5165](https://github.com/pagopa/io-app/issues/5165)) ([f76cf6c](https://github.com/pagopa/io-app/commit/f76cf6c085f181b3db7f833e7e0db0d5b8a58bf1))
+* **IT Wallet:** [[SIW-624](https://pagopa.atlassian.net/browse/SIW-624)] Add navigation to missing feature screen ([#5228](https://github.com/pagopa/io-app/issues/5228)) ([2a57491](https://github.com/pagopa/io-app/commit/2a57491a4a8cfee5cbbbc2cec5b66ec63b1c5f21)), closes [/github.com/pagopa/io-app/pull/5228/files#diff-94e935f2d7d760954fd0c0647b59f32cd163d70dac988b5588a985aadef0689](https://github.com/pagopa//github.com/pagopa/io-app/pull/5228/files/issues/diff-94e935f2d7d760954fd0c0647b59f32cd163d70dac988b5588a985aadef0689) [/github.com/pagopa/io-app/pull/5228/files#diff-94e935f2d7d760954fd0c0647b59f32cd163d70dac988b5588a985aadef0689](https://github.com/pagopa//github.com/pagopa/io-app/pull/5228/files/issues/diff-94e935f2d7d760954fd0c0647b59f32cd163d70dac988b5588a985aadef0689) [/github.com/pagopa/io-app/pull/5228/files#diff-1efa65eedbb4bea4a8d61f1d909912fa8a94af60a4df438f01730c624c2c9](https://github.com/pagopa//github.com/pagopa/io-app/pull/5228/files/issues/diff-1efa65eedbb4bea4a8d61f1d909912fa8a94af60a4df438f01730c624c2c9)
+* **IT Wallet:** [[SIW-632](https://pagopa.atlassian.net/browse/SIW-632)] Update package `io-react-native-wallet` from `v0.7.4` to `v0.9.2` ([#5163](https://github.com/pagopa/io-app/issues/5163)) ([13a93cf](https://github.com/pagopa/io-app/commit/13a93cf86f1cfc5a17370b434f059b8821194d40))
+* **IT Wallet:** [[SIW-636](https://pagopa.atlassian.net/browse/SIW-636)] Update provider list screen with new DS ([#5197](https://github.com/pagopa/io-app/issues/5197)) ([72d1196](https://github.com/pagopa/io-app/commit/72d11960985c7908e3bff2bb66cab79fab515ceb))
+* **IT Wallet:** [[SIW-642](https://pagopa.atlassian.net/browse/SIW-642)] Add h2 and h6 header support to `ItwTextInfo` component ([#5173](https://github.com/pagopa/io-app/issues/5173)) ([4010f8b](https://github.com/pagopa/io-app/commit/4010f8bdc176adf7beba352867de05150eb25dbc))
+* **IT Wallet:** [[SIW-643](https://pagopa.atlassian.net/browse/SIW-643)] Update `useItwInfoBottomSheet` hook with optional title ([#5174](https://github.com/pagopa/io-app/issues/5174)) ([4a87baa](https://github.com/pagopa/io-app/commit/4a87baae5e4de0b0053acc7205814a20d22d228e))
+* **IT Wallet:** [[SIW-660](https://pagopa.atlassian.net/browse/SIW-660)] Force scroll to bottom in credential preview ([#5222](https://github.com/pagopa/io-app/issues/5222)) ([83b1bf7](https://github.com/pagopa/io-app/commit/83b1bf712dcf014218f086a62450d993cdf75311))
+* **IT Wallet:** [[SIW-661](https://pagopa.atlassian.net/browse/SIW-661)] Mock claims order ([#5220](https://github.com/pagopa/io-app/issues/5220)) ([0379c2a](https://github.com/pagopa/io-app/commit/0379c2a2c46a6ddad4dd3975e91fb61c3bfed26b)), closes [/github.com/pagopa/io-app/pull/5220/files#diff-e3bd9b364ed748aef657ba6c2ccd65618cfef77ad2292ecbc72ae09b150de736](https://github.com/pagopa//github.com/pagopa/io-app/pull/5220/files/issues/diff-e3bd9b364ed748aef657ba6c2ccd65618cfef77ad2292ecbc72ae09b150de736)
+* **IT Wallet:** [[SIW-664](https://pagopa.atlassian.net/browse/SIW-664)] Format date in credentials claims list ([#5218](https://github.com/pagopa/io-app/issues/5218)) ([c060abe](https://github.com/pagopa/io-app/commit/c060abeba847c213fb070539c718c83d0a90b780))
+* **IT Wallet:** [[SIW-666](https://pagopa.atlassian.net/browse/SIW-666)] Enable experimental design system by default ([#5217](https://github.com/pagopa/io-app/issues/5217)) ([61c1988](https://github.com/pagopa/io-app/commit/61c1988742d468db9897fa1a3d598769f1d615e7))
+* **IT Wallet:** [[SIW-670](https://pagopa.atlassian.net/browse/SIW-670)] Add issuer name in credential preview ([#5221](https://github.com/pagopa/io-app/issues/5221)) ([b7d8004](https://github.com/pagopa/io-app/commit/b7d8004a1b0097dc27aedfbb2b4eb8f2f47ed519))
+* **IT Wallet:** [[SIW-673](https://pagopa.atlassian.net/browse/SIW-673)] Update credential details screen ([#5231](https://github.com/pagopa/io-app/issues/5231)) ([1e2b1bb](https://github.com/pagopa/io-app/commit/1e2b1bb9b8ab18bb13b23a1f76405f6e1c0eb16b)), closes [/github.com/pagopa/io-app/pull/5231/files#diff-c9545e623984ff5a2a5cc4f55ef42aee280f636cd58f43fe1bf6daaab73c0d7](https://github.com/pagopa//github.com/pagopa/io-app/pull/5231/files/issues/diff-c9545e623984ff5a2a5cc4f55ef42aee280f636cd58f43fe1bf6daaab73c0d7)
+* **IT Wallet:** [[SIW-676](https://pagopa.atlassian.net/browse/SIW-676)] Add released by claim for credentials ([#5230](https://github.com/pagopa/io-app/issues/5230)) ([3a2eb5e](https://github.com/pagopa/io-app/commit/3a2eb5e66b96bcc4e7fdeaa9903e6824476ca562))
+* remove experimental check ([dac8453](https://github.com/pagopa/io-app/commit/dac8453b74459ed4331a96cd5886469a34653952))
+
 ### [0.5.1-rc.0](https://github.com/pagopa/io-app/compare/0.5.0-rc.0...0.5.1-rc.0) (2023-11-13)
 
 
