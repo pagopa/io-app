@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.3-rc.0](https://github.com/pagopa/io-app/compare/0.5.2-rc.0...0.5.3-rc.0) (2023-11-17)
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-696](https://pagopa.atlassian.net/browse/SIW-696)] Update `io-react-native-wallet` ([#5235](https://github.com/pagopa/io-app/issues/5235)) ([61953ed](https://github.com/pagopa/io-app/commit/61953edefd4f979d5612ef4edf867192b68d1c20))
+
 ### [0.5.2-rc.0](https://github.com/pagopa/io-app/compare/0.4.1-rc.1...0.5.2-rc.0) (2023-11-17)
 
 
