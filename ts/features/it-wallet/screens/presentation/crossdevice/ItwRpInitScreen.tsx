@@ -18,7 +18,7 @@ import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import ItwKoView from "../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import ItwContinueScreen from "../../../components/ItwResultComponent";
+import ItwContinueView from "../../../components/ItwContinueView";
 
 /**
  * ItwRpInitScreenNavigationParams's navigation params.
@@ -54,7 +54,7 @@ const ItwRpInitScreen = () => {
 
   const SuccessView = () => (
     <SafeAreaView style={IOStyles.flex}>
-      <ItwContinueScreen
+      <ItwContinueView
         title={I18n.t("features.itWallet.presentation.checksScreen.success", {
           organizationName: rpPidMock.organizationName
         })}
