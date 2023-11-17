@@ -19,6 +19,7 @@ import {
 import I18n from "../i18n";
 
 import {
+  acknowledgeOnEmailValidation,
   profileLoadRequest,
   startEmailValidation
 } from "../store/actions/profile";
@@ -28,8 +29,6 @@ import {
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
-import NavigationService from "../navigation/NavigationService";
-import ROUTES from "../navigation/routes";
 import { emailAcknowledged } from "../store/actions/onboarding";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
@@ -79,6 +78,11 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     () => dispatch(profileLoadRequest()),
     [dispatch]
   );
+  const dispatchAcknowledgeOnEmailValidation = useCallback(
+    (maybeAcknowledged: O.Option<boolean>) =>
+      dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
+    [dispatch]
+  );
 
   // function to localize the title of the button. If the email is validated and if it is not, whether the confirmation email was sent or not
   const buttonTitle = () => {
@@ -122,14 +126,9 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   };
 
   const navigateToInsertEmail = () => {
-    if (isOnboarding) {
-      hideModal();
-    } else {
-      hideModal();
-      NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.INSERT_EMAIL_SCREEN
-      });
-    }
+    // FIXME -> understand if this function is needed
+    dispatchAcknowledgeOnEmailValidation(O.none);
+    hideModal();
   };
 
   const renderFooter = () => (

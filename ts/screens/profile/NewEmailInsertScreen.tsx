@@ -8,8 +8,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content, Form } from "native-base";
-import * as React from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useContext
+} from "react";
 import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
@@ -22,8 +27,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
-import { emailInsert } from "../../store/actions/onboarding";
-import { profileLoadRequest, profileUpsert } from "../../store/actions/profile";
+import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   isProfileEmailValidatedSelector,
@@ -36,6 +40,8 @@ import { areStringsEqual } from "../../utils/options";
 import { showToast } from "../../utils/showToast";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
+import { LightModalContext } from "../../components/ui/LightModal";
+import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -59,7 +65,9 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen to allow user to insert an email address.
  */
-const EmailInsertScreen = (props: Props) => {
+const NewEmailInsertScreen = (props: Props) => {
+  const { showModal } = useContext(LightModalContext);
+
   const dispatch = useIODispatch();
 
   const profile = useIOSelector(profileSelector);
@@ -77,14 +85,6 @@ const EmailInsertScreen = (props: Props) => {
           email
         })
       ),
-    [dispatch]
-  );
-  const acknowledgeEmailInsert = useCallback(
-    () => dispatch(emailInsert()),
-    [dispatch]
-  );
-  const reloadProfile = useCallback(
-    () => dispatch(profileLoadRequest()),
     [dispatch]
   );
 
@@ -111,10 +111,16 @@ const EmailInsertScreen = (props: Props) => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    if (isValidEmail()) {
-      // The profile is reloaded to check if the user email
-      // has been updated within another session
-      reloadProfile();
+    const isTheSameEmail = areStringsEqual(optionEmail, email, true);
+    if (!isTheSameEmail) {
+      pipe(
+        email,
+        O.map(e => {
+          updateEmail(e as EmailString);
+        })
+      );
+    } else {
+      Alert.alert(I18n.t("email.insert.alert"));
     }
   };
 
@@ -150,8 +156,6 @@ const EmailInsertScreen = (props: Props) => {
 
   const prevUserProfile = usePrevious(profile);
 
-  const prevOptionEmail = usePrevious(optionEmail);
-
   useEffect(() => {
     if (prevUserProfile) {
       const isPrevCurrentSameState = prevUserProfile.kind === profile.kind;
@@ -165,47 +169,34 @@ const EmailInsertScreen = (props: Props) => {
   useEffect(() => {
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
       if (pot.isError(profile)) {
+        // the user is trying to enter an email already in use
+        if (profile.error.type === "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR") {
+          Alert.alert(
+            I18n.t("email.insert.alertTitle"),
+            I18n.t("email.insert.alertDescription"),
+            [
+              {
+                text: I18n.t("email.insert.alertButton"),
+                style: "cancel"
+              }
+            ]
+          );
+        } else {
+          showToast(I18n.t("email.edit.upsert_ko"), "danger");
+        }
+
         // display a toast with error
-        showToast(I18n.t("email.edit.upsert_ko"), "danger");
-      } else if (pot.isSome(profile)) {
-        // user is inserting his email from onboarding phase
-        // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet
-        // and he has not an email
-        // go back (to the EmailReadScreen)
-        handleGoBack();
+      } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
+        // the email is correctly inserted
+        if (isEmailValidated) {
+          handleGoBack();
+        } else {
+          showModal(<NewRemindEmailValidationOverlay />);
+        }
         return;
       }
     }
-  }, [
-    acknowledgeEmailInsert,
-    handleGoBack,
-    prevOptionEmail,
-    prevUserProfile,
-    profile
-  ]);
-
-  useEffect(() => {
-    // When the profile reload is completed, check if the email is changed since the last reload
-    if (
-      prevUserProfile &&
-      pot.isLoading(prevUserProfile) &&
-      !pot.isLoading(profile)
-    ) {
-      // Check both if the email has been changed within another session and
-      // if the inserted email match with the email stored into the user profile
-      const isTheSameEmail = areStringsEqual(optionEmail, email, true);
-      if (!isTheSameEmail) {
-        pipe(
-          email,
-          O.map(e => {
-            updateEmail(e as EmailString);
-          })
-        );
-      } else {
-        Alert.alert(I18n.t("email.insert.alert"));
-      }
-    }
-  }, [email, prevUserProfile, profile, optionEmail, updateEmail]);
+  }, [handleGoBack, isEmailValidated, prevUserProfile, profile, showModal]);
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
@@ -261,4 +252,4 @@ const EmailInsertScreen = (props: Props) => {
   );
 };
 
-export default EmailInsertScreen;
+export default NewEmailInsertScreen;

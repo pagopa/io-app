@@ -45,7 +45,7 @@ import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { emailInsert } from "../../store/actions/onboarding";
+import { emailAcknowledged } from "../../store/actions/onboarding";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { LightModalContext } from "../../components/ui/LightModal";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
@@ -92,8 +92,8 @@ const NewOnboardingEmailInsertScreen = () => {
     [profile]
   );
 
-  const acknowledgeEmailInsert = useCallback(
-    () => dispatch(emailInsert()),
+  const acknowledgeEmail = useCallback(
+    () => dispatch(emailAcknowledged()),
     [dispatch]
   );
 
@@ -161,25 +161,15 @@ const NewOnboardingEmailInsertScreen = () => {
         }
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
         // the email is correctly inserted
-        acknowledgeEmailInsert();
+        if (isEmailValidated) {
+          acknowledgeEmail();
+        } else {
+          showModal(<NewRemindEmailValidationOverlay isOnboarding={true} />);
+        }
         return;
       }
     }
-  }, [acknowledgeEmailInsert, profile, prevUserProfile]);
-
-  useEffect(() => {
-    // if the email is correct, the user can validate it.
-    // in fact, if the email il correct the validation modal is open
-    if (
-      prevUserProfile &&
-      pot.isUpdating(prevUserProfile) &&
-      pot.isSome(profile) &&
-      !pot.isUpdating(profile) &&
-      !isEmailValidated
-    ) {
-      showModal(<NewRemindEmailValidationOverlay isOnboarding={true} />);
-    }
-  }, [isEmailValidated, prevUserProfile, profile, showModal]);
+  }, [acknowledgeEmail, profile, prevUserProfile, isEmailValidated, showModal]);
 
   // the user try to update the email
   const continueOnPress = () => {
