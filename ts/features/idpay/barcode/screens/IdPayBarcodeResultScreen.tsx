@@ -189,6 +189,7 @@ const BarcodeExpireSlider = ({
   return (
     <View style={{ alignContent: "center" }}>
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
+      <VSpacer size={8} />
       <View style={styles.centeredRow}>
         <LabelSmall weight="Regular" color="black">
           {
