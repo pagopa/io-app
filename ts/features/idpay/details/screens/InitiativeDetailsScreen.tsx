@@ -43,7 +43,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { useIdpayDiscountDetailsBottomSheet } from "../utils/hooks";
+import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -82,7 +82,7 @@ const InitiativeDetailsScreen = () => {
       params: { initiativeId }
     });
   };
-  const discountBottomSheet = useIdpayDiscountDetailsBottomSheet(initiativeId);
+  const discountBottomSheet = useIdPayDiscountDetailsBottomSheet(initiativeId);
 
   useFocusEffect(
     React.useCallback(() => {
