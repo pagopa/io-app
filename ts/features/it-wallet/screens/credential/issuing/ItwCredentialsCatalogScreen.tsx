@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FlatList, SafeAreaView, View } from "react-native";
 import {
   Badge,
@@ -38,6 +38,11 @@ const ItwCredentialCatalogScreen = () => {
   const [loadingIndex, setLoadingIndex] = React.useState<number>(NONE_LOADING);
   const catalog = getCredentialsCatalog();
 
+  const navigateToResultScreen = useCallback(() => {
+    navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.CHECKS);
+    setLoadingIndex(NONE_LOADING);
+  }, [navigation]);
+
   /**
    * Side effect to navigate to the credential checks screen when the preliminaryChecks pot
    * transitions to a non loading state and not none state.
@@ -51,15 +56,10 @@ const ItwCredentialCatalogScreen = () => {
    * when the user goes back from the credential checks screen.
    */
   useEffect(() => {
-    if (
-      loadingIndex !== NONE_LOADING &&
-      !pot.isLoading(preliminaryChecks) &&
-      !pot.isNone(preliminaryChecks)
-    ) {
-      setLoadingIndex(-1);
-      navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.CHECKS);
+    if (loadingIndex !== NONE_LOADING && !pot.isLoading(preliminaryChecks)) {
+      navigateToResultScreen();
     }
-  }, [loadingIndex, navigation, preliminaryChecks]);
+  }, [loadingIndex, navigateToResultScreen, preliminaryChecks]);
 
   const onCredentialSelect = ({
     type: credentialType,
