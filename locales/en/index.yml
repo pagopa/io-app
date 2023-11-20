@@ -3374,6 +3374,9 @@ idpay:
               CIE: "Abilitazione carta d’identità elettronica"
     discountDetails:
       authorizeButton: Autorizza un pagamento
+      bottomSheetOptions:
+        scanQr: Inquadra un codice QR
+        generateBarcode: Crea un codice sconto
       IDPayCode:
         banner:
           title: Paga con la tua carta d’identità elettronica

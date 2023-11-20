@@ -3373,6 +3373,9 @@ idpay:
               READMITTED: "Riattivazione"
               CIE: "Abilitazione carta d’identità elettronica"
     discountDetails:
+      bottomSheetOptions:
+        scanQr: Inquadra un codice QR
+        generateBarcode: Crea un codice sconto
       authorizeButton: Autorizza un pagamento
       IDPayCode:
         banner:
