@@ -14,7 +14,6 @@ import { NetworkError } from "../../../../utils/errors";
 import { Action } from "../../../../store/actions/types";
 import {
   getZendeskConfig,
-  zendeskPollingIteration,
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
   zendeskSelectedSubcategory,
@@ -24,18 +23,6 @@ import {
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ZendeskSubCategory } from "../../../../../definitions/content/ZendeskSubCategory";
-import { setDebugCurrentRouteName } from "../../../../store/actions/debug";
-import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
-import { applicationChangeState } from "../../../../store/actions/application";
-import {
-  checkCurrentSession,
-  sessionInformationLoadFailure,
-  sessionInformationLoadSuccess
-} from "../../../../store/actions/authentication";
-import {
-  loadAllBonusActivations,
-  loadAvailableBonuses
-} from "../../../bonus/bonusVacanze/store/actions/bonusVacanze";
 
 type ZendeskValue = {
   panicMode: boolean;
@@ -64,9 +51,6 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
-    // FIXME: This action is not called when the user closes the support request.
-    // https://github.com/pagopa/io-platform/discussions/34
-    // The action has been created to support a future implementation of the feature.
     case getType(zendeskStopPolling):
       return {
         ...state,
@@ -125,58 +109,8 @@ const reducer = (
         ticketNumber: pot.toError(state.ticketNumber, action.payload)
       };
   }
-  return {
-    ...state,
-    getSessionPollingRunning: resetPollingState(action, state)
-  };
+  return state;
 };
-
-/**
- * Due to the lack of a proper way to intercept a support request ending,
- * we need to reset the polling state when the user interacts in any other way with the app.
- *
- * No other action but the ones listed in `acceptedActionsDuringGetSessionPolling`
- * are called during a support request,
- * started with `zendeskSupportCompleted` action.
- *
- * If the user interacts with the app in any other way,
- * we can safely assume that the support request has ended.
- */
-function resetPollingState(
-  action: Action,
-  state: ZendeskState
-): boolean | undefined {
-  return !acceptedActionsDuringGetSessionPolling.includes(action.type)
-    ? false
-    : state.getSessionPollingRunning;
-}
-
-type AcceptedActionsDuringGetSessionPollingType = ReturnType<typeof getType>;
-/**
- * All the actions that are accepted during a support request.
- *
- * FIXME: find a way to intercept the end of a support request.
- * https://github.com/pagopa/io-platform/discussions/34
- */
-const acceptedActionsDuringGetSessionPolling: Array<AcceptedActionsDuringGetSessionPollingType> =
-  [
-    getType(setDebugCurrentRouteName),
-    getType(backendStatusLoadSuccess),
-    getType(applicationChangeState),
-    getType(sessionInformationLoadSuccess),
-    getType(sessionInformationLoadFailure),
-    getType(checkCurrentSession.request),
-    getType(checkCurrentSession.success),
-    getType(checkCurrentSession.failure),
-    getType(loadAvailableBonuses.request),
-    getType(loadAvailableBonuses.success),
-    getType(loadAvailableBonuses.failure),
-    getType(loadAllBonusActivations.request),
-    getType(loadAllBonusActivations.success),
-    getType(loadAllBonusActivations.failure),
-    getType(zendeskStartPolling),
-    getType(zendeskPollingIteration)
-  ];
 
 export const zendeskGetSessionPollingRunningSelector = (state: GlobalState) =>
   state.assistanceTools.zendesk.getSessionPollingRunning ?? false;

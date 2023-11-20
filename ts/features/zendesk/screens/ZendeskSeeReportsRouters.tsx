@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -17,6 +17,7 @@ import ZendeskEmptyTicketsComponent from "../components/ZendeskEmptyTicketsCompo
 import { ZendeskParamsList } from "../navigation/params";
 import {
   zendeskRequestTicketNumber,
+  zendeskStopPolling,
   zendeskSupportCompleted
 } from "../store/actions";
 import { zendeskTicketNumberSelector } from "../store/reducers";
@@ -45,6 +46,11 @@ const ZendeskSeeReportsRouters = (props: Props) => {
   const { assistanceForPayment, assistanceForCard, assistanceForFci } =
     props.route.params;
 
+  const dispatchZendeskUiDismissed = useCallback(
+    () => dispatch(zendeskStopPolling()),
+    [dispatch]
+  );
+
   useEffect(() => {
     const zendeskConfig = getZendeskConfig(zendeskToken);
     initSupportAssistance(zendeskConfig);
@@ -62,10 +68,10 @@ const ZendeskSeeReportsRouters = (props: Props) => {
 
   useEffect(() => {
     if (isStrictSome(ticketNumber) && ticketNumber.value > 0) {
-      showSupportTickets();
+      showSupportTickets(() => dispatchZendeskUiDismissed());
       dispatch(zendeskSupportCompleted());
     }
-  }, [ticketNumber, dispatch]);
+  }, [ticketNumber, dispatch, dispatchZendeskUiDismissed]);
 
   if (pot.isLoading(ticketNumber) || pot.isError(ticketNumber)) {
     return (
