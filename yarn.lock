@@ -9977,9 +9977,9 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#IOPID-1127-onClose-event":
+"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.25":
   version "0.3.23"
-  resolved "https://github.com/pagopa/io-react-native-zendesk.git#488324cddd7dfbf3f49500c3a3c4658132fded9e"
+  resolved "https://github.com/pagopa/io-react-native-zendesk.git#66492028f52d3c64392ac4174d80d6fbf65d0e92"
 
 io-ts@2.2.20:
   version "2.2.20"
