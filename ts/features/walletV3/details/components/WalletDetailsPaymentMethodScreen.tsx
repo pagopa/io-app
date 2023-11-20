@@ -135,7 +135,7 @@ const WalletDetailsPaymentMethodScreen = (props: Props) => {
   );
 };
 
-// ----------------------------- utils & export -----------------------------------
+// ----------------------------- utils -----------------------------------
 
 const DeleteButton = ({
   onPress
