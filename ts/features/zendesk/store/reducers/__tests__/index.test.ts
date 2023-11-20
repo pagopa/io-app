@@ -24,8 +24,7 @@ import { ZendeskState } from "../index";
 
 const INITIAL_STATE: ZendeskState = {
   zendeskConfig: remoteUndefined,
-  ticketNumber: pot.none,
-  getSessionPollingRunning: undefined
+  ticketNumber: pot.none
 };
 
 const mockCategory: ZendeskCategory = {
