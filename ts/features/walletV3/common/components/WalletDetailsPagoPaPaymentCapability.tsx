@@ -9,7 +9,6 @@ import { constVoid } from "fp-ts/lib/function";
 
 import { isPaymentSupported } from "../utils";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-// import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
