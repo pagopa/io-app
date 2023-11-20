@@ -62,8 +62,6 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
-import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
-import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { ItwStackNavigator } from "../features/it-wallet/navigation/ItwStackNavigator";
 import { ITW_ROUTES } from "../features/it-wallet/navigation/ItwRoutes";
 import { MessagesStackNavigator } from "./MessagesNavigator";

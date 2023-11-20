@@ -104,7 +104,6 @@ import {
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
-import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
 import { watchItwSaga } from "../features/it-wallet/saga";
 import { itwLifecycleIsValidSelector } from "../features/it-wallet/store/reducers/itwLifecycleReducer";
 import { itwDecodePid } from "../features/it-wallet/store/actions/itwCredentialsActions";

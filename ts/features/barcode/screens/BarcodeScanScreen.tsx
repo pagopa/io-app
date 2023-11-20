@@ -1,5 +1,5 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
@@ -38,7 +38,8 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { itWalletEnabled } from "../../../config";
+import NavigationService from "../../../navigation/NavigationService";
+import { ITW_ROUTES } from "../../it-wallet/navigation/ItwRoutes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -139,7 +140,16 @@ const BarcodeScanScreen = () => {
         openDeepLink(barcode.authUrl);
         break;
       case "ITWALLET":
-        // TODO: blocked by [SIW-272]
+        const params = {
+          authReqUrl: barcode.requestUri,
+          clientId: barcode.clientId
+        };
+        NavigationService.dispatchNavigationAction(
+          CommonActions.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.PRESENTATION.CROSS_DEVICE.INIT,
+            params
+          })
+        );
         break;
     }
   };

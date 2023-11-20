@@ -4,7 +4,6 @@ import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOColors } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import { makeFontStyleObject } from "../components/core/fonts";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
@@ -18,7 +17,6 @@ import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { itWalletEnabled } from "../config";
 import ItwHomeScreen from "../features/it-wallet/screens/ItwHomeScreen";
-import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
@@ -121,7 +119,7 @@ export const MainTabNavigator = () => {
             }}
           />
         )}
-        {itWalletEnabled && (
+        {isDesignSystemEnabled && (
           <Tab.Screen
             name={ROUTES.BARCODE_SCAN}
             component={EmptyComponent}
@@ -163,29 +161,6 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {isDesignSystemEnabled && (
-          <Tab.Screen
-            name={ROUTES.BARCODE_SCAN}
-            component={EmptyComponent}
-            listeners={{
-              tabPress: ({ preventDefault }) => {
-                preventDefault();
-                navigateToBarcodeScanScreen();
-              }
-            }}
-            options={{
-              title: I18n.t("global.navigator.scan"),
-              tabBarIcon: ({ color, focused }) => (
-                <TabIconComponent
-                  iconName={"navScan"}
-                  iconNameFocused={"navScan"}
-                  color={color}
-                  focused={focused}
-                />
-              )
-            }}
-          />
-        )}
         <Tab.Screen
           name={ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}

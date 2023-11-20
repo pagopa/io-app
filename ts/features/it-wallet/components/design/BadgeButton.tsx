@@ -12,10 +12,10 @@ import Animated, {
 import {
   IOScaleValues,
   IOSpringValues,
-  Badge
+  Badge,
+  IOButtonStyles
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../../types/WithTestID";
-import { IOButtonStyles } from "../../../../components/core/variables/IOStyles";
 
 export type BadgeButton = WithTestID<
   {

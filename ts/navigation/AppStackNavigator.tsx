@@ -3,12 +3,7 @@ import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
-import {
-  IOColors,
-  IOThemeDark,
-  IOThemeLight,
-  useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,

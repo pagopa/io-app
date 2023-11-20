@@ -63,6 +63,9 @@ const ProfileStackNavigator = () => {
         name={ROUTES.PROFILE_MAIN}
         component={ProfileMainScreen}
         initialParams={{ hasBackButton: true }}
+        options={{
+          headerShown: false
+        }}
       />
       <Stack.Screen
         options={{

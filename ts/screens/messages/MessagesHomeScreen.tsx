@@ -43,7 +43,6 @@ import {
 } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 
 import ROUTES from "../../navigation/routes";
 import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
@@ -74,8 +73,6 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
-
-  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
   const navigation = useNavigation();
 
   useOnFirstRender(() => {
