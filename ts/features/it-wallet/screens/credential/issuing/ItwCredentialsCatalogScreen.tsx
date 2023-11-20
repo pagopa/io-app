@@ -51,13 +51,9 @@ const ItwCredentialCatalogScreen = () => {
    * when the user goes back from the credential checks screen.
    */
   useEffect(() => {
-    if (
-      loadingIndex !== NONE_LOADING &&
-      !pot.isLoading(preliminaryChecks) &&
-      !pot.isNone(preliminaryChecks)
-    ) {
-      setLoadingIndex(-1);
+    if (loadingIndex !== NONE_LOADING && !pot.isLoading(preliminaryChecks)) {
       navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.CHECKS);
+      setLoadingIndex(NONE_LOADING);
     }
   }, [loadingIndex, navigation, preliminaryChecks]);
 
