@@ -13,7 +13,7 @@ export type WalletPaymentState = {
   entryPoint: O.Option<string>;
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
   transaction: pot.Pot<NewTransactionResponse, NetworkError>;
-  psps: pot.Pot<CalculateFeeResponse, NetworkError>;
+  pspList: pot.Pot<CalculateFeeResponse, NetworkError>;
   paymentAuthRequest: pot.Pot<RequestAuthorizationResponse, NetworkError>;
 };
 
@@ -21,7 +21,7 @@ const INITIAL_STATE: WalletPaymentState = {
   entryPoint: O.none,
   paymentDetails: pot.none,
   transaction: pot.none,
-  psps: pot.none,
+  pspList: pot.none,
   paymentAuthRequest: pot.none
 };
 
@@ -32,8 +32,7 @@ const walletPaymentReducer = (
   switch (action.type) {
     case getType(walletInitializePayment):
       return {
-        ...state,
-        entryPoint: O.some(action.payload.entryPoint)
+        ...state
       };
   }
   return state;

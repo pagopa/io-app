@@ -80,7 +80,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
               counterLimit={18}
               textInputProps={{
                 keyboardType: "number-pad",
-                inputMode: "number-pad",
+                inputMode: "numeric",
                 returnKeyType: "done"
               }}
             />

@@ -3,23 +3,18 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { NetworkError } from "../../../../utils/errors";
+import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import { CalculateFeeResponse } from "../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { NewTransactionRequest } from "../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { NewTransactionResponse } from "../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
-import { CalculateFeeResponse } from "../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
-import { CalculateFeeRequest } from "../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
-import { RequestAuthorizationRequest } from "../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RequestAuthorizationResponse } from "../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
-
-export type WalletInitializePaymentPayload = {
-  entryPoint: string;
-};
+import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { NetworkError } from "../../../../utils/errors";
 
 export const walletInitializePayment = createStandardAction(
   "WALLET_PAYMENT_INITIALIZATION"
-)<WalletInitializePaymentPayload>();
+)();
 
 export type WalletGetPaymentDetailsPayload = {
   rptId: RptId;
@@ -38,8 +33,8 @@ export const walletCreateTransaction = createAsyncAction(
 )<NewTransactionRequest, NewTransactionResponse, NetworkError>();
 
 export type WalletGetPaymentFeesPayload = {
-  walletId: RptId;
-  request: CalculateFeeRequest;
+  walletId: string;
+  paymentAmount: AmountEuroCents;
 };
 
 export const walletGetPaymentFees = createAsyncAction(
@@ -49,8 +44,10 @@ export const walletGetPaymentFees = createAsyncAction(
 )<WalletGetPaymentFeesPayload, CalculateFeeResponse, NetworkError>();
 
 export type WalletAuthorizePaymentPayload = {
-  transactionId: RptId;
-  request: RequestAuthorizationRequest;
+  transactionId: string;
+  paymentAmount: AmountEuroCents;
+  paymentFees: AmountEuroCents;
+  pspId: string;
 };
 
 export const walletAuthorizePayment = createAsyncAction(
