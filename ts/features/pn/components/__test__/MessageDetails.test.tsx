@@ -119,7 +119,7 @@ describe("MessageDetails component", () => {
     expect(mockedOnAttachmentSelect).toHaveBeenCalledTimes(0);
   });
 
-  it("should not render the F24 section if there are no F24 attachments", () => {
+  it("should NOT render the F24 section if there are no multiple F24", () => {
     const { component } = renderComponent(
       generateComponentProperties(generatePnMessage())
     );
