@@ -9,7 +9,7 @@ type Props = Readonly<{
   onRetry: () => void;
 }>;
 
-export const PnMessageDetailsError = (props: Props) => (
+export const MessageDetailsError = (props: Props) => (
   <>
     <InfoScreenComponent
       image={renderInfoRasterImage(image)}

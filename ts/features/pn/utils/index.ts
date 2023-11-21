@@ -84,27 +84,6 @@ export const isPNOptInMessage = (
     )
   );
 
-/**
- * @deprecated Use paymentsFromPNMessagePot instead
- */
-export const legacyPaymentFromPNMessagePot = (
-  userFiscalCode: string | undefined,
-  message: pot.Pot<O.Option<PNMessage>, Error>
-) =>
-  pipe(
-    message,
-    pot.toOption,
-    O.flatten,
-    O.chain(message =>
-      pipe(
-        message.recipients,
-        RA.findFirst(recipient => recipient.taxId === userFiscalCode)
-      )
-    ),
-    O.chainNullableK(recipient => recipient.payment),
-    O.toUndefined
-  );
-
 export const paymentsFromPNMessagePot = (
   userFiscalCode: string | undefined,
   message: pot.Pot<O.Option<PNMessage>, Error>
