@@ -31,7 +31,7 @@ export type ItwRpInitScreenNavigationParams = RpData;
  */
 type ItwRpInitScreenRouteProps = RouteProp<
   ItwParamsList,
-  "ITW_PRESENTATION_PID_REMOTE_INIT"
+  "ITW_PRESENTATION_PID_REMOTE_CHECKS"
 >;
 
 const ItwRpInitScreen = () => {

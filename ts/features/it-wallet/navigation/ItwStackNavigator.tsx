@@ -107,7 +107,7 @@ export const ItwStackNavigator = () => (
       component={ItwPidDetails}
     />
     <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.PID.REMOTE.INIT}
+      name={ITW_ROUTES.PRESENTATION.PID.REMOTE.CHECKS}
       component={ItwRpInitScreen}
     />
     <Stack.Screen
