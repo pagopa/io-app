@@ -5,6 +5,7 @@ import {
   Alert,
   GestureResponderEvent,
   Platform,
+  StatusBar,
   StyleSheet,
   View
 } from "react-native";
@@ -22,7 +23,6 @@ import { IOToast } from "../../../../components/Toast";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { walletDetailsInstrumentPotSelector } from "../store";
@@ -118,7 +118,7 @@ const WalletDetailsPaymentMethodScreen = (props: Props) => {
       dark={true}
       headerBackgroundColor={blueHeaderColor}
     >
-      <FocusAwareStatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" />
       <ScrollView>
         <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
           <View style={styles.cardContainer}>{card}</View>
