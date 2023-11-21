@@ -6,7 +6,6 @@ import {
   HeaderSecondLevel,
   IOColors,
   IOVisualCostants,
-  LabelSmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -21,11 +20,12 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { ProgressBar } from "../../../bonus/bpd/screens/details/components/summary/base/ProgressBar";
 import { IDPayDetailsRoutes } from "../../details/navigation";
+import { IdPayBarcodeExpireSlider } from "../components/BarcodeExpirationSlider";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
+import { idpayInitiativeDetailsSelector } from "../../details/store";
 
 // -------------------- types --------------------
 
@@ -36,6 +36,10 @@ type IdPayBarcodeResultRouteProps = RouteProp<
   IdPayBarcodeParamsList,
   "IDPAY_BARCODE_RESULT"
 >;
+type SuccessContentProps = {
+  goBack: () => void;
+  barcode: TransactionBarCodeResponse;
+};
 
 // -------------------- main component --------------------
 
@@ -73,17 +77,17 @@ const IdPayBarcodeResultScreen = () => {
 
 // -------------------- result screens --------------------
 
-const SuccessContent = ({
-  goBack,
-  barcode
-}: {
-  goBack: () => void;
-  barcode: TransactionBarCodeResponse;
-}) => {
+const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
   const trx = barcode.trxCode.toUpperCase();
   const secondsTillExpire = React.useMemo(
     () => calculateIdPayBarcodeSecondsToExpire(barcode),
     [barcode]
+  );
+  const initiativeName = pipe(
+    useIOSelector(idpayInitiativeDetailsSelector),
+    pot.toOption,
+    O.map(({ initiativeName }) => initiativeName),
+    O.toUndefined
   );
 
   return (
@@ -117,7 +121,7 @@ const SuccessContent = ({
         <VSpacer size={16} />
         <Body>
           {I18n.t("idpay.barCode.resultScreen.success.body", {
-            initiativeName: barcode.initiativeId
+            initiativeName
           })}
         </Body>
         <VSpacer size={24} />
@@ -125,7 +129,7 @@ const SuccessContent = ({
           <Barcode format="CODE128" value={trx} />
           <H3 style={{ alignSelf: "center" }}>{trx}</H3>
           <VSpacer size={32} />
-          <BarcodeExpireSlider
+          <IdPayBarcodeExpireSlider
             secondsExpirationTotal={(barcode.trxExpirationMinutes ?? 0) * 60}
             secondsToExpiration={secondsTillExpire}
           />
@@ -157,61 +161,9 @@ const ErrorContent = ({ onCtaPress }: { onCtaPress: () => void }) => (
   />
 );
 
-// -------------------- components --------------------
-
-const BarcodeExpireSlider = ({
-  secondsToExpiration,
-  secondsExpirationTotal
-}: {
-  secondsToExpiration: number;
-  secondsExpirationTotal: number;
-}) => {
-  const [seconds, setSeconds] = React.useState(secondsToExpiration);
-  const isCodeExpired = seconds === 0;
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setSeconds(currentSecs => currentSecs - 1);
-    }, 1000);
-    if (seconds <= 0) {
-      setSeconds(0);
-      clearInterval(timer);
-    }
-    return () => clearInterval(timer);
-    // possible over-engineering, but we actually
-    // only need to run zero checks once the code is expired,
-    // there is no reason to rerun this hook every second
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCodeExpired]);
-
-  const formattedExpireMinutesString = isCodeExpired
-    ? ""
-    : new Date(seconds * 1000).toISOString().slice(14, 19);
-  return (
-    <View style={{ alignContent: "center" }}>
-      <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
-      <VSpacer size={8} />
-      <View style={styles.centeredRow}>
-        <LabelSmall weight="Regular" color="black">
-          {
-            I18n.t(
-              `idpay.barCode.resultScreen.success.${
-                isCodeExpired ? "expired" : "expiresIn"
-              }`
-            ) + " " /* added spacing to better format */
-          }
-        </LabelSmall>
-        <LabelSmall weight="SemiBold" color="black">
-          {formattedExpireMinutesString}
-        </LabelSmall>
-      </View>
-    </View>
-  );
-};
-
 // -------------------- styles --------------------
 
 const styles = StyleSheet.create({
-  centeredRow: { flexDirection: "row", justifyContent: "center" },
   loadingWrapper: {
     flex: 1,
     paddingHorizontal: IOVisualCostants.appMarginDefault,
@@ -228,5 +180,5 @@ const styles = StyleSheet.create({
 
 // -------------------- exports --------------------
 
-export type { IdPayBarcodeResultRouteParams };
 export { IdPayBarcodeResultScreen };
+export type { IdPayBarcodeResultRouteParams };
