@@ -15,8 +15,14 @@ import React, {
   useState,
   useContext
 } from "react";
+import validator from "validator";
 import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  Icon,
+  LabelSmall,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -88,8 +94,8 @@ const NewEmailInsertScreen = (props: Props) => {
     [dispatch]
   );
 
-  const [email, setEmail] = useState(optionEmail);
-
+  const [areSameEmails, setAreSameEmails] = useState(false);
+  const [email, setEmail] = useState(optionEmail ?? O.some(EMPTY_EMAIL));
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
    * - _false_,     if email has been already changed from the user and it is not
@@ -97,36 +103,40 @@ const NewEmailInsertScreen = (props: Props) => {
    * - _undefined_, if email field is empty. This state is consumed by
    * LabelledItem Component and it used for style pourposes ONLY.
    */
-  const isValidEmail = () =>
-    pipe(
-      email,
-      O.map(value => {
-        if (EMPTY_EMAIL === value) {
-          return undefined;
-        }
-        return E.isRight(EmailString.decode(value));
-      }),
-      O.toUndefined
-    );
+  // this function return a boolean
+  const isValidEmail = useCallback(
+    () =>
+      pipe(
+        email,
+        O.map(value => {
+          if (
+            EMPTY_EMAIL === value ||
+            !validator.isEmail(value) ||
+            areSameEmails
+          ) {
+            return undefined;
+          }
+          return E.isRight(EmailString.decode(value));
+        }),
+        O.toUndefined
+      ),
+    [areSameEmails, email]
+  );
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    const isTheSameEmail = areStringsEqual(optionEmail, email, true);
-    if (!isTheSameEmail) {
-      pipe(
-        email,
-        O.map(e => {
-          updateEmail(e as EmailString);
-        })
-      );
-    } else {
-      Alert.alert(I18n.t("email.insert.alert"));
-    }
+
+    pipe(
+      email,
+      O.map(e => {
+        updateEmail(e as EmailString);
+      })
+    );
   };
 
   const renderFooterButtons = () => {
     const continueButtonProps = {
-      disabled: isValidEmail() !== true && !isLoading,
+      disabled: !isValidEmail() && !isLoading,
       onPress: continueOnPress,
       title: I18n.t("global.buttons.continue"),
       block: true,
@@ -142,6 +152,7 @@ const NewEmailInsertScreen = (props: Props) => {
   };
 
   const handleOnChangeEmailText = (value: string) => {
+    setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
   };
 
@@ -226,22 +237,49 @@ const NewEmailInsertScreen = (props: Props) => {
               </Body>
               <VSpacer size={16} />
               <Form>
-                <LabelledItem
-                  label={I18n.t("email.edit.label")}
-                  icon="email"
-                  isValid={isValidEmail()}
-                  inputProps={{
-                    returnKeyType: "done",
-                    onSubmitEditing: continueOnPress,
-                    autoCapitalize: "none",
-                    keyboardType: "email-address",
-                    value: pipe(
-                      email,
-                      O.getOrElse(() => EMPTY_EMAIL)
-                    ),
-                    onChangeText: handleOnChangeEmailText
-                  }}
-                />
+                <View>
+                  <LabelledItem
+                    label={I18n.t("email.edit.label")}
+                    icon="email"
+                    isValid={isValidEmail()}
+                    overrideBorderColor={
+                      areSameEmails ? IOColors.red : undefined
+                    }
+                    inputProps={{
+                      returnKeyType: "done",
+                      onSubmitEditing: continueOnPress,
+                      autoCapitalize: "none",
+                      keyboardType: "email-address",
+                      value: pipe(
+                        email,
+                        O.getOrElse(() => EMPTY_EMAIL)
+                      ),
+                      onChangeText: handleOnChangeEmailText
+                    }}
+                  />
+                  {areSameEmails && (
+                    <View
+                      testID="error-label"
+                      style={{
+                        position: "absolute",
+                        bottom: -25,
+                        left: 2,
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center"
+                      }}
+                      accessibilityElementsHidden={true}
+                      importantForAccessibility="no-hide-descendants"
+                    >
+                      <View style={{ marginRight: 6 }}>
+                        <Icon size={14} name="notice" color="red" />
+                      </View>
+                      <LabelSmall weight="Regular" color="red">
+                        {I18n.t("email.newinsert.alert.description")}
+                      </LabelSmall>
+                    </View>
+                  )}
+                </View>
               </Form>
             </View>
           </Content>
