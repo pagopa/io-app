@@ -41,7 +41,7 @@ export function* stopCieManager(): SagaIterator {
  * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L155
  */
 export function* checkHasApiLevelSupportSaga(
-  hasApiLevelSupported: typeof cieManager["hasApiLevelSupport"]
+  hasApiLevelSupported: (typeof cieManager)["hasApiLevelSupport"]
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof hasApiLevelSupported> =
@@ -57,7 +57,7 @@ export function* checkHasApiLevelSupportSaga(
  * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L169
  */
 export function* checkHasNfcFeatureSaga(
-  hasNfcFeatureSupported: typeof cieManager["hasNFCFeature"]
+  hasNfcFeatureSupported: (typeof cieManager)["hasNFCFeature"]
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof hasNfcFeatureSupported> =
@@ -73,7 +73,7 @@ export function* checkHasNfcFeatureSaga(
  * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L125
  */
 export function* checkCieAvailabilitySaga(
-  isCIEAuthenticationSupported: typeof cieManager["isCIEAuthenticationSupported"]
+  isCIEAuthenticationSupported: (typeof cieManager)["isCIEAuthenticationSupported"]
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof isCIEAuthenticationSupported> =
