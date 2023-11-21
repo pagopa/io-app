@@ -24,6 +24,8 @@ import {
 } from "../store";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
+import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView";
+import { OnboardingOutcomeEnum, OnboardingResult } from "../types";
 
 const WalletOnboardingSelectPaymentMethodScreen = () => {
   const navigation = useNavigation<WalletOnboardingStackNavigation>();
@@ -44,16 +46,35 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
     O.getOrElseW(() => [])
   );
 
+  const { startOnboarding } = useWalletOnboardingWebView({
+    onSuccess: (outcome, walletId) =>
+      navigateToFeedbackPage({ status: "SUCCESS", outcome, walletId }),
+    onFailure: outcome =>
+      navigateToFeedbackPage({ status: "FAILURE", outcome }),
+    onError: () =>
+      navigateToFeedbackPage({
+        status: "ERROR",
+        outcome: OnboardingOutcomeEnum.GENERIC_ERROR
+      })
+  });
+
   useOnFirstRender(() => {
     dispatch(walletGetPaymentMethods.request());
   });
 
-  const handleSelectedPaymentMethod = (
+  const handleSelectedPaymentMethod = async (
     selectedPaymentMethod: PaymentMethodResponse
   ) => {
-    navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_START, {
-      paymentMethodId: selectedPaymentMethod.id
-    });
+    startOnboarding(selectedPaymentMethod.id);
+  };
+
+  const navigateToFeedbackPage = (onboardingResult: OnboardingResult) => {
+    navigation.navigate(
+      WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK,
+      {
+        onboardingResult
+      }
+    );
   };
 
   return (

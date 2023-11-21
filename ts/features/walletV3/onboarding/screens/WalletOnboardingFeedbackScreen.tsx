@@ -4,67 +4,31 @@ import * as React from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { View } from "react-native";
 
-import I18n from "../../../../i18n";
 import { WalletOnboardingParamsList } from "../navigation/navigator";
 
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import WalletOnboardingSuccess from "../components/WalletOnboardingSuccess";
-import {
-  OnboardingOutcomeEnum,
-  OnboardingOutcomeFailure,
-  OnboardingOutcomeSuccess,
-  OnboardingResult
-} from "../types";
+import { OnboardingResult } from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
-import WalletOnboardingWebView from "../components/WalletOnboardingWebView";
 import { WalletDetailsRoutes } from "../../details/navigation/navigator";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 
-export type WalletOnboardingStartScreenParams = {
-  paymentMethodId: string;
+export type WalletOnboardingFeedbackScreenParams = {
+  onboardingResult: OnboardingResult;
 };
 
-type WalletOnboardingStartScreenRouteProps = RouteProp<
+type WalletOnboardingFeedbackScreenRouteProps = RouteProp<
   WalletOnboardingParamsList,
-  "WALLET_ONBOARDING_START"
+  "WALLET_ONBOARDING_RESULT_FEEDBACK"
 >;
 
-const WalletOnboardingStartScreen = () => {
+const WalletOnboardingFeedbackScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const route = useRoute<WalletOnboardingStartScreenRouteProps>();
-  const { paymentMethodId } = route.params;
-
-  const [onboardingResult, setOnboardingResult] =
-    React.useState<OnboardingResult>();
-
-  const handleOnboardingError = () => {
-    setOnboardingResult({
-      status: "ERROR",
-      outcome: OnboardingOutcomeEnum.GENERIC_ERROR
-    });
-  };
-
-  const handleOnboardingFailure = (outcome: OnboardingOutcomeFailure) => {
-    setOnboardingResult({
-      status: "FAILURE",
-      outcome
-    });
-  };
-
-  const handleOnboardingSuccess = (
-    outcome: OnboardingOutcomeSuccess,
-    walletId: string
-  ) => {
-    setOnboardingResult({
-      status: "SUCCESS",
-      outcome,
-      walletId
-    });
-  };
+  const route = useRoute<WalletOnboardingFeedbackScreenRouteProps>();
+  const { onboardingResult } = route.params;
 
   const handleContinueButton = () => {
     if (onboardingResult && onboardingResult.status === "SUCCESS") {
@@ -78,31 +42,12 @@ const WalletOnboardingStartScreen = () => {
   };
 
   // If the onboarding process is completed (with a success or not), we display the result content feedback
-  if (onboardingResult) {
-    return (
-      <OnboardingResultContent
-        onboardingResult={onboardingResult}
-        onClose={() => navigation.pop()}
-        onContinue={handleContinueButton}
-      />
-    );
-  }
-
   return (
-    <BaseScreenComponent
-      customRightIcon={{
-        iconName: "closeLarge",
-        onPress: () => navigation.pop(),
-        accessibilityLabel: I18n.t("global.accessibility.contextualHelp.close")
-      }}
-    >
-      <WalletOnboardingWebView
-        paymentMethodId={paymentMethodId}
-        onSuccess={handleOnboardingSuccess}
-        onError={handleOnboardingError}
-        onFailure={handleOnboardingFailure}
-      />
-    </BaseScreenComponent>
+    <OnboardingResultContent
+      onboardingResult={onboardingResult}
+      onClose={() => navigation.pop()}
+      onContinue={handleContinueButton}
+    />
   );
 };
 
@@ -137,4 +82,4 @@ const OnboardingResultContent = ({
   </View>
 );
 
-export default WalletOnboardingStartScreen;
+export default WalletOnboardingFeedbackScreen;
