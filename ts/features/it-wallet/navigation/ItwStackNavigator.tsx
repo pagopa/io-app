@@ -1,30 +1,30 @@
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
-import ItwCiePinScreen from "../screens/issuing/cie/ItwCiePinScreen";
-import CieCardReaderScreen from "../screens/issuing/cie/ItwCieCardReaderScreen";
-import CieConsentDataUsageScreen from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
-import CieExpiredOrInvalidScreen from "../screens/issuing/cie/ItwCieExpiredOrInvalidScreen";
-import CieWrongCiePinScreen from "../screens/issuing/cie/ItwCieWrongPinScreen";
-import ItwDiscoveryInfoScreen from "../screens/discovery/ItwDiscoveryInfoScreen";
-import ItwPidAuthInfoScreen from "../screens/issuing/ItwPidAuthInfoScreen";
-import ItwPidPreviewScreen from "../screens/issuing/ItwPidPreviewScreen";
-import ItwPidAddingScreen from "../screens/issuing/ItwPidAddingScreen";
-import ItwPidDetails from "../screens/credential/ItwPidDetails";
-import ItwPidRequestScreen from "../screens/issuing/ItwPidRequestScreen";
-import ItwRpInitScreen from "../screens/presentation/crossdevice/ItwRpInitScreen";
-import ItwPresentationScreen from "../screens/presentation/crossdevice/ItwRpPresentationScreen";
-import ItwDiscoveryProviderInfoScreen from "../screens/discovery/ItwDiscoveryProviderInfoScreen";
-import ItwMissingFeatureScreen from "../screens/generic/ItwMissingFeatureScreen";
-import ItwCredentialPreviewScreen from "../screens/credential/issuing/ItwCredentialPreviewScreen";
-import ItwCredentialAuthScreen from "../screens/credential/issuing/ItwCredentialAuthScreen";
-import ItwPresentationChecksScreen from "../screens/presentation/crossdevice/new/ItwPresentationChecksScreen";
-import ItwPresentationDataScreen from "../screens/presentation/crossdevice/new/ItwPresentationDataScreen";
-import ItwPresentationResultScreen from "../screens/presentation/crossdevice/new/ItwPresentationResultScreen";
-import ItwCredentialsChecksScreen from "../screens/credential/issuing/ItwCredentialChecksScreen";
-import ItwCredentialCatalogScreen from "../screens/credential/issuing/ItwCredentialsCatalogScreen";
-import ItwCredentialDetailsScreen from "../screens/credential/ItwCredentialDetailsScreen";
-import ItwPidPresentationDataScreen from "../screens/presentation/crossdevice/ItwPidPresentationDataScreen";
+import ItwCiePinScreen from "../screens/issuing/pid/cie/ItwCiePinScreen";
+import CieCardReaderScreen from "../screens/issuing/pid/cie/ItwCieCardReaderScreen";
+import CieConsentDataUsageScreen from "../screens/issuing/pid/cie/ItwCieConsentDataUsageScreen";
+import CieExpiredOrInvalidScreen from "../screens/issuing/pid/cie/ItwCieExpiredOrInvalidScreen";
+import CieWrongCiePinScreen from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
+import ItwPidInfoScreen from "../screens/issuing/pid/ItwPidInfoScreen";
+import ItwPidAuthInfoScreen from "../screens/issuing/pid/ItwPidAuthInfoScreen";
+import ItwPidPreviewScreen from "../screens/issuing/pid/cie/ItwPidPreviewScreen";
+import ItwPidAddingScreen from "../screens/issuing/pid/ItwPidAddingScreen";
+import ItwPrPidDetails from "../screens/presentation/ItwPrPidDetails";
+import ItwPidRequestScreen from "../screens/issuing/pid/ItwPidRequestScreen";
+import ItwPrPidChecksScreen from "../screens/presentation/remote/pid/ItwPrPidChecksScreen";
+import ItwPrPidResultScreen from "../screens/presentation/remote/pid/ItwPrPidResultScreen";
+import ItwPidAuthScreen from "../screens/issuing/pid/ItwPidAuthScreen";
+import ItwGenericNotAvailableScreen from "../screens/generic/ItwGenericNotAvailableScreen";
+import ItwCredentialPreviewScreen from "../screens/issuing/credential/ItwCredentialPreviewScreen";
+import ItwCredentialAuthScreen from "../screens/issuing/credential/ItwCredentialAuthScreen";
+import ItwPrCredentialChecksScreen from "../screens/presentation/remote/credential/ItwPrCredentialChecksScreen";
+import ItwPrCredentialDataScreen from "../screens/presentation/remote/credential/ItwPrCredentialDataScreen";
+import ItwPrCredentialResultScreen from "../screens/presentation/remote/credential/ItwPrCredentialResultScreen";
+import ItwCredentialsChecksScreen from "../screens/issuing/credential/ItwCredentialChecksScreen";
+import ItwCredentialCatalogScreen from "../screens/issuing/credential/ItwCredentialCatalogScreen";
+import ItwPrCredentialDetailsScreen from "../screens/presentation/ItwPrCredentialDetails";
+import ItwPrPidDataScreen from "../screens/presentation/remote/pid/ItwPrPidDataScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -60,11 +60,11 @@ export const ItwStackNavigator = () => (
     {/* ISSUING PID */}
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.INFO}
-      component={ItwDiscoveryInfoScreen}
+      component={ItwPidInfoScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.AUTH}
-      component={ItwDiscoveryProviderInfoScreen}
+      component={ItwPidAuthScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.AUTH_INFO}
@@ -104,43 +104,43 @@ export const ItwStackNavigator = () => (
     {/* PRESENTATION PID */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.PID.DETAILS}
-      component={ItwPidDetails}
+      component={ItwPrPidDetails}
     />
     <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.PID.REMOTE.INIT}
-      component={ItwRpInitScreen}
+      name={ITW_ROUTES.PRESENTATION.PID.REMOTE.CHECKS}
+      component={ItwPrPidChecksScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.PID.REMOTE.DATA}
-      component={ItwPidPresentationDataScreen}
+      component={ItwPrPidDataScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.PID.REMOTE.RESULT}
-      component={ItwPresentationScreen}
+      component={ItwPrPidResultScreen}
     />
 
     {/* CREDENTIAL PRESENTATION */}
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.DETAILS}
-      component={ItwCredentialDetailsScreen}
+      component={ItwPrCredentialDetailsScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.CHECKS}
-      component={ItwPresentationChecksScreen}
+      component={ItwPrCredentialChecksScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.DATA}
-      component={ItwPresentationDataScreen}
+      component={ItwPrCredentialDataScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.RESULT}
-      component={ItwPresentationResultScreen}
+      component={ItwPrCredentialResultScreen}
     />
 
     {/* GENERIC */}
     <Stack.Screen
       name={ITW_ROUTES.GENERIC.NOT_AVAILABLE}
-      component={ItwMissingFeatureScreen}
+      component={ItwGenericNotAvailableScreen}
     />
   </Stack.Navigator>
 );

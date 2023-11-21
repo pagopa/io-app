@@ -1,9 +1,9 @@
-import { ItwCredentialDetailsScreenNavigationParams } from "../screens/credential/ItwCredentialDetailsScreen";
-import { ItwPidRequestScreenNavigationParams } from "../screens/issuing/ItwPidRequestScreen";
-import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/cie/ItwCieCardReaderScreen";
-import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/cie/ItwCieConsentDataUsageScreen";
-import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/cie/ItwCieWrongPinScreen";
-import { ItwRpInitScreenNavigationParams } from "../screens/presentation/crossdevice/ItwRpInitScreen";
+import { ItwPrCredentialDetailsScreenNavigationParams } from "../screens/presentation/ItwPrCredentialDetails";
+import { ItwPidRequestScreenNavigationParams } from "../screens/issuing/pid/ItwPidRequestScreen";
+import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieCardReaderScreen";
+import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieConsentDataUsageScreen";
+import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
+import { ItwPrPidChecksScreenNavigationParams } from "../screens/presentation/remote/pid/ItwPrPidChecksScreen";
 import { ITW_ROUTES } from "./ItwRoutes";
 
 export type ItwParamsList = {
@@ -34,13 +34,14 @@ export type ItwParamsList = {
 
   // PRESENTATION REMOTE PID
   [ITW_ROUTES.PRESENTATION.PID.DETAILS]: undefined;
-  [ITW_ROUTES.PRESENTATION.PID.REMOTE.INIT]: ItwRpInitScreenNavigationParams;
+  [ITW_ROUTES.PRESENTATION.PID.REMOTE
+    .CHECKS]: ItwPrPidChecksScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION.PID.REMOTE.DATA]: undefined;
   [ITW_ROUTES.PRESENTATION.PID.REMOTE.RESULT]: undefined;
 
   // PRESENTATION REMOTE CREDENTIAL
   [ITW_ROUTES.PRESENTATION.CREDENTIAL
-    .DETAILS]: ItwCredentialDetailsScreenNavigationParams;
+    .DETAILS]: ItwPrCredentialDetailsScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.CHECKS]: undefined;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.DATA]: undefined;
   [ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.RESULT]: undefined;

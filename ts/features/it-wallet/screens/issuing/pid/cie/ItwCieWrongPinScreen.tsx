@@ -6,14 +6,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../../components/core/typography/Body";
-import { ScreenContentHeader } from "../../../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { Body } from "../../../../../../components/core/typography/Body";
+import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
+import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 
 export type ItwCieWrongPinScreenNavigationParams = {
   remainingCount: number;

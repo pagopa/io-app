@@ -35,7 +35,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Chores
 
-* **IT Wallet:** [[SIW-432](https://pagopa.atlassian.net/browse/SIW-432)] Update `ItwDiscoveryInfoScreen` with new DS ([#5164](https://github.com/pagopa/io-app/issues/5164)) ([f37f17d](https://github.com/pagopa/io-app/commit/f37f17dc8584e7c03018a7f8e91570debe77138e))
+* **IT Wallet:** [[SIW-432](https://pagopa.atlassian.net/browse/SIW-432)] Update `ItwPidInfoScreen` with new DS ([#5164](https://github.com/pagopa/io-app/issues/5164)) ([f37f17d](https://github.com/pagopa/io-app/commit/f37f17dc8584e7c03018a7f8e91570debe77138e))
 * **IT Wallet:** [[SIW-434](https://pagopa.atlassian.net/browse/SIW-434)] Update presentation flow ([#5225](https://github.com/pagopa/io-app/issues/5225)) ([f9d7272](https://github.com/pagopa/io-app/commit/f9d727235e33a6b86726658b1130a9f4afd09728))
 * **IT Wallet:** [[SIW-579](https://pagopa.atlassian.net/browse/SIW-579)] Refactor componente `ItwResultScreen` ([#5114](https://github.com/pagopa/io-app/issues/5114)) ([3a60dd7](https://github.com/pagopa/io-app/commit/3a60dd7f7d2695f727e8bb8e0ecbaef52ac95480))
 * **IT Wallet:** [[SIW-580](https://pagopa.atlassian.net/browse/SIW-580)] Update loading screen typography ([#5144](https://github.com/pagopa/io-app/issues/5144)) ([6763ee0](https://github.com/pagopa/io-app/commit/6763ee06ffb444c82dd14e088a1877388feb72a9))
@@ -179,7 +179,7 @@ All notable changes to this project will be documented in this file. See [standa
 * remove experimental check ([dac8453](https://github.com/pagopa/io-app/commit/dac8453b74459ed4331a96cd5886469a34653952))
 * **IT Wallet:** [[SIW-375](https://pagopa.atlassian.net/browse/SIW-375)] Refactor credentials state ([#4937](https://github.com/pagopa/io-app/issues/4937)) ([054bc8c](https://github.com/pagopa/io-app/commit/054bc8c73e5c9a26040ad4009f71e6739e4edaed))
 * **IT Wallet:** [[SIW-426](https://pagopa.atlassian.net/browse/SIW-426)] Update wallet library dependencies ([#4949](https://github.com/pagopa/io-app/issues/4949)) ([a71bb84](https://github.com/pagopa/io-app/commit/a71bb846eab55ea2de5709df4b772d3d1a82b966))
-* **IT Wallet:** [[SIW-432](https://pagopa.atlassian.net/browse/SIW-432)] Update `ItwDiscoveryInfoScreen` with new DS ([#5164](https://github.com/pagopa/io-app/issues/5164)) ([f37f17d](https://github.com/pagopa/io-app/commit/f37f17dc8584e7c03018a7f8e91570debe77138e))
+* **IT Wallet:** [[SIW-432](https://pagopa.atlassian.net/browse/SIW-432)] Update `ItwPidInfoScreen` with new DS ([#5164](https://github.com/pagopa/io-app/issues/5164)) ([f37f17d](https://github.com/pagopa/io-app/commit/f37f17dc8584e7c03018a7f8e91570debe77138e))
 * **IT Wallet:** [[SIW-486](https://pagopa.atlassian.net/browse/SIW-486)] Add incoming badge to spid item into info provider screen ([#4991](https://github.com/pagopa/io-app/issues/4991)) ([fae787f](https://github.com/pagopa/io-app/commit/fae787f9abb54f7b9e91a5851cdd6b7989de37a0))
 * **IT Wallet:** [[SIW-487](https://pagopa.atlassian.net/browse/SIW-487)] Update io-react-native-wallet to 0.4.1 ([#4985](https://github.com/pagopa/io-app/issues/4985)) ([bb514c8](https://github.com/pagopa/io-app/commit/bb514c88b34ea4dc1997ce7ccea6c79139d30052))
 * **IT Wallet:** [[SIW-500](https://pagopa.atlassian.net/browse/SIW-500)] Enable experimental design system by default ([#4997](https://github.com/pagopa/io-app/issues/4997)) ([3b7ba5e](https://github.com/pagopa/io-app/commit/3b7ba5ec6d804f717c5dc3aa4eaf47ac92497b3d))

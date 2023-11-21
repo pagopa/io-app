@@ -23,37 +23,37 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { VSpacer, IOColors } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../../components/core/typography/Body";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { ScreenContentHeader } from "../../../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ReduxProps } from "../../../../../store/actions/types";
-import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { Body } from "../../../../../../components/core/typography/Body";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
+import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
+import { ReduxProps } from "../../../../../../store/actions/types";
+import { assistanceToolConfigSelector } from "../../../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   isScreenReaderEnabled,
   setAccessibilityFocus
-} from "../../../../../utils/accessibility";
-import { isIos } from "../../../../../utils/platform";
+} from "../../../../../../utils/accessibility";
+import { isIos } from "../../../../../../utils/platform";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
-} from "../../../../../utils/supportAssistance";
-import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
+} from "../../../../../../utils/supportAssistance";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import CieNfcOverlay from "../../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
-} from "../../../components/cie/CieReadingCardAnimation";
+} from "../../../../components/cie/CieReadingCardAnimation";
 import {
   CieAuthenticationErrorPayload,
   CieAuthenticationErrorReason,
   cieAuthenticationError
-} from "../../../store/actions/itwCieActions";
-import { isNfcEnabledSelector } from "../../../store/reducers/itwCieReducer";
+} from "../../../../store/actions/itwCieActions";
+import { isNfcEnabledSelector } from "../../../../store/reducers/itwCieReducer";
 
 export type ItwCieCardReaderScreenNavigationParams = {
   ciePin: string;

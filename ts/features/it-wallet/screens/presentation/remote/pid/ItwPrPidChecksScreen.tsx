@@ -3,39 +3,39 @@ import { SafeAreaView } from "react-native";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "../../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import I18n from "../../../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import {
   RpData,
   itwRpInitializationSelector
-} from "../../../store/reducers/itwRpInitializationReducer";
-import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
-import { itwRpInitialization } from "../../../store/actions/itwRpActions";
-import { rpPidMock } from "../../../utils/mocks";
-import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import ItwKoView from "../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import ItwContinueView from "../../../components/ItwContinueView";
+} from "../../../../store/reducers/itwRpInitializationReducer";
+import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
+import { itwRpInitialization } from "../../../../store/actions/itwRpActions";
+import { rpPidMock } from "../../../../utils/mocks";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import ItwKoView from "../../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import ItwContinueView from "../../../../components/ItwContinueView";
 
 /**
- * ItwRpInitScreenNavigationParams's navigation params.
+ * ItwPrPidChecksScreenNavigationParams's navigation params.
  * The authReqUrl is the url to use to start the RP flow.
  */
-export type ItwRpInitScreenNavigationParams = RpData;
+export type ItwPrPidChecksScreenNavigationParams = RpData;
 
 /**
  * Type of the route props for the ItwPidRequestScreen.
  */
-type ItwRpInitScreenRouteProps = RouteProp<
+type ItwPrPidChecksScreenRouteProps = RouteProp<
   ItwParamsList,
-  "ITW_PRESENTATION_PID_REMOTE_INIT"
+  "ITW_PRESENTATION_PID_REMOTE_CHECKS"
 >;
 
-const ItwRpInitScreen = () => {
-  const route = useRoute<ItwRpInitScreenRouteProps>();
+const ItwPrPidChecksScreen = () => {
+  const route = useRoute<ItwPrPidChecksScreenRouteProps>();
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const initStatus = useIOSelector(itwRpInitializationSelector);
@@ -105,4 +105,4 @@ const ItwRpInitScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwRpInitScreen;
+export default ItwPrPidChecksScreen;

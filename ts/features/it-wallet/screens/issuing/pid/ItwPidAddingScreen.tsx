@@ -2,19 +2,19 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
-import ItwActionCompleted from "../../components/ItwActionCompleted";
-import I18n from "../../../../i18n";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
-import { itwCredentialsAddPid } from "../../store/actions/itwCredentialsActions";
-import { itwActivationCompleted } from "../../store/actions/itwActivationActions";
-import ItwErrorView from "../../components/ItwErrorView";
-import { cancelButtonProps } from "../../utils/itwButtonsUtils";
-import { ItwCredentialsStateSelector } from "../../store/reducers/itwCredentialsReducer";
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
+import ItwActionCompleted from "../../../components/ItwActionCompleted";
+import I18n from "../../../../../i18n";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import { itwPidValueSelector } from "../../../store/reducers/itwPidReducer";
+import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
+import { itwActivationCompleted } from "../../../store/actions/itwActivationActions";
+import ItwErrorView from "../../../components/ItwErrorView";
+import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
+import { ItwCredentialsStateSelector } from "../../../store/reducers/itwCredentialsReducer";
+import { ItWalletError } from "../../../utils/errors/itwErrors";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.

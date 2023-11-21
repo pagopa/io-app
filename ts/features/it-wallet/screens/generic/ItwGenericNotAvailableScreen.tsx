@@ -12,7 +12,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import I18n from "../../../../i18n";
 import ItwKoView from "../../components/ItwKoView";
 
-const ItwMissingFeatureScreen = () => {
+const ItwGenericNotAvailableScreen = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const navigation = useNavigation();
 
@@ -82,4 +82,4 @@ const ItwMissingFeatureScreen = () => {
   );
 };
 
-export default ItwMissingFeatureScreen;
+export default ItwGenericNotAvailableScreen;

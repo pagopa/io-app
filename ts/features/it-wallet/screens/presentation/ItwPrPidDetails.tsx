@@ -33,7 +33,7 @@ export type ContentViewParams = {
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  * This screen should be generalized for any verifiable crediential but for now it's only used for the PID.
  */
-const ItwPidDetails = () => {
+const ItwPrPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const pidDisplayData = getPidDisplayData();
@@ -115,4 +115,4 @@ const ItwPidDetails = () => {
   return <DecodedPidOrErrorView />;
 };
 
-export default ItwPidDetails;
+export default ItwPrPidDetails;
