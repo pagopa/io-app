@@ -40,7 +40,7 @@ const ItwCredentialsChecksScreen = () => {
    * When the user confirms the issuance, the user is redirected to the presentation screen.
    */
   const onUserConfirmIssuance = () => {
-    navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.AUTH);
+    navigation.navigate(ITW_ROUTES.ISSUING.CREDENTIAL.AUTH);
   };
 
   /**

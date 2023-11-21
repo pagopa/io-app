@@ -31,7 +31,7 @@ export type ItwRpInitScreenNavigationParams = RpData;
  */
 type ItwRpInitScreenRouteProps = RouteProp<
   ItwParamsList,
-  "ITW_PRESENTATION_CROSS_DEVICE_INIT"
+  "ITW_PRESENTATION_PID_REMOTE_INIT"
 >;
 
 const ItwRpInitScreen = () => {
@@ -63,7 +63,7 @@ const ItwRpInitScreen = () => {
           label: I18n.t("global.buttons.confirm"),
           accessibilityLabel: I18n.t("global.buttons.confirm"),
           onPress: () =>
-            navigation.navigate(ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA)
+            navigation.navigate(ITW_ROUTES.PRESENTATION.PID.REMOTE.DATA)
         }}
       />
     </SafeAreaView>

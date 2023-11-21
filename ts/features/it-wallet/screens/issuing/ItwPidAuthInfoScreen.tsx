@@ -58,7 +58,7 @@ const ItwPidAuthInfoScreen = () => {
    * PID data from the profile store or a mock if the data is not available.
    */
   const bypassCieLogin = () => {
-    navigation.navigate(ITW_ROUTES.ISSUING.PID_REQUEST, {
+    navigation.navigate(ITW_ROUTES.ISSUING.PID.REQUEST, {
       pidData: {
         name: name ?? pidDataMock.name,
         surname: surname ?? pidDataMock.surname,
@@ -80,7 +80,7 @@ const ItwPidAuthInfoScreen = () => {
       onPress: () =>
         isIos
           ? bypassCieLogin()
-          : navigation.navigate(ITW_ROUTES.ISSUING.CIE.PIN_SCREEN),
+          : navigation.navigate(ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN),
       title: I18n.t("features.itWallet.infoAuthScreen.confirm")
     };
     return (
