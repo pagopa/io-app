@@ -27,7 +27,7 @@
   "idpay_api": "https://raw.githubusercontent.com/pagopa/cstar-infrastructure/v5.8.0/src/domains/idpay-app/api/idpay_appio_full/openapi.appio.full.yml",
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.22.0-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.22.0-RELEASE/openapi/generated/api_fast_login.yaml",
-  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/7907dba7e1e6a9de8ab746319bcd92a92326a66f/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
+  "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/4b4bc1a209e88520e4e0623ebce70d779ef0d776/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -146,7 +146,7 @@
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",
     "hoist-non-react-statics": "^3.0.1",
-    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.24",
+    "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.25",
     "io-ts": "^2.2.16",
     "jail-monkey": "^2.3.2",
     "jwk-thumbprint": "^0.1.4",
