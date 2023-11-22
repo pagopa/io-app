@@ -9,21 +9,21 @@ import WebView from "react-native-webview";
 import { WebViewHttpErrorEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
-import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
-import TopScreenComponent from "../../../../../components/screens/TopScreenComponent";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { Dispatch } from "../../../../../store/actions/types";
-import { SessionToken } from "../../../../../types/SessionToken";
-import { originSchemasWhiteList } from "../../../../../screens/authentication/originSchemasWhiteList";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import LoadingSpinnerOverlay from "../../../../../../components/LoadingSpinnerOverlay";
+import GenericErrorComponent from "../../../../../../components/screens/GenericErrorComponent";
+import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
+import I18n from "../../../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
+import { Dispatch } from "../../../../../../store/actions/types";
+import { SessionToken } from "../../../../../../types/SessionToken";
+import { originSchemasWhiteList } from "../../../../../../screens/authentication/originSchemasWhiteList";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import {
   loginFailure,
   loginSuccess
-} from "../../../store/actions/itwCieActions";
+} from "../../../../store/actions/itwCieActions";
 
 export type ItwCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -157,7 +157,7 @@ class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
           )}
           onRetry={this.resetNavigation}
           onCancel={undefined}
-          image={require("../../../../../../img/broken-link.png")} // TODO: use custom or generic image?
+          image={require("../../../../../../../img/broken-link.png")} // TODO: use custom or generic image?
           text={I18n.t(errorTranslationKey, {
             defaultValue: I18n.t("authentication.errors.spid.unknown")
           })}

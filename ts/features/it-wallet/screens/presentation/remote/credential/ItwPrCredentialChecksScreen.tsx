@@ -26,7 +26,7 @@ import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapp
  * It shows an error screen if the checks fail.
  * The view is rendered based on the state of the checks pot.
  */
-const ItwPresentationChecksScreen = () => {
+const ItwPrCredentialChecksScreen = () => {
   const dispatch = useIODispatch();
   const checksPot = useIOSelector(itwPresentationChecksSelector);
   const navigation =
@@ -87,4 +87,4 @@ const ItwPresentationChecksScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPresentationChecksScreen;
+export default ItwPrCredentialChecksScreen;

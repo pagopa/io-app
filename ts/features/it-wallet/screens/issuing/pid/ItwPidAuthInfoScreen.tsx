@@ -3,34 +3,34 @@ import { Image, View, SafeAreaView, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import ScreenContent from "../../../../components/screens/ScreenContent";
-import { H4 } from "../../../../components/core/typography/H4";
-import ItwFooterInfoBox from "../../components/ItwFooterInfoBox";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import authInfoCie from "../../../../../img/features/it-wallet/auth-info-cie.png";
-import { Link } from "../../../../components/core/typography/Link";
-import { openWebUrl } from "../../../../utils/url";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ITW_ROUTES } from "../../navigation/ItwRoutes";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../i18n";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import ScreenContent from "../../../../../components/screens/ScreenContent";
+import { H4 } from "../../../../../components/core/typography/H4";
+import ItwFooterInfoBox from "../../../components/ItwFooterInfoBox";
+import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import authInfoCie from "../../../../../../img/features/it-wallet/auth-info-cie.png";
+import { Link } from "../../../../../components/core/typography/Link";
+import { openWebUrl } from "../../../../../utils/url";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import {
   profileBirthDateSelector,
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSurnameSelector
-} from "../../../../store/reducers/profile";
-import { pidDataMock } from "../../utils/mocks";
-import { formatDateToYYYYMMDD } from "../../../../utils/dates";
-import { isIos } from "../../../../utils/platform";
-import ItwErrorView from "../../components/ItwErrorView";
-import { cancelButtonProps } from "../../utils/itwButtonsUtils";
-import { itwWiaStateSelector } from "../../store/reducers/itwWiaReducer";
-import { itwWiaRequest } from "../../store/actions/itwWiaActions";
+} from "../../../../../store/reducers/profile";
+import { pidDataMock } from "../../../utils/mocks";
+import { formatDateToYYYYMMDD } from "../../../../../utils/dates";
+import { isIos } from "../../../../../utils/platform";
+import ItwErrorView from "../../../components/ItwErrorView";
+import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
+import { itwWiaStateSelector } from "../../../store/reducers/itwWiaReducer";
+import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
 
 /**
  * Delay in milliseconds to bypass the CIE authentication process.

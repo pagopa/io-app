@@ -4,22 +4,22 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
-import I18n from "../../../../../i18n";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { itwRpPresentationSelector } from "../../../store/reducers/itwRpPresentationReducer";
-import { itwRpInitializationEntityValueSelector } from "../../../store/reducers/itwRpInitializationReducer";
-import { itwRpPresentation } from "../../../store/actions/itwRpActions";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { rpPidMock } from "../../../utils/mocks";
-import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
-import ItwKoView from "../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import I18n from "../../../../../../i18n";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
+import { itwRpPresentationSelector } from "../../../../store/reducers/itwRpPresentationReducer";
+import { itwRpInitializationEntityValueSelector } from "../../../../store/reducers/itwRpInitializationReducer";
+import { itwRpPresentation } from "../../../../store/actions/itwRpActions";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import { rpPidMock } from "../../../../utils/mocks";
+import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../../navigation/routes";
+import ItwKoView from "../../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
-const ItwPresentationScreen = () => {
+const ItwPrPidResultScreen = () => {
   const dispatch = useIODispatch();
   const presentationResult = useIOSelector(itwRpPresentationSelector);
   const rpEntity = useIOSelector(itwRpInitializationEntityValueSelector);
@@ -111,4 +111,4 @@ const ItwPresentationScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPresentationScreen;
+export default ItwPrPidResultScreen;

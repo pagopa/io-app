@@ -4,21 +4,21 @@ import { Route, useRoute } from "@react-navigation/core";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import ItwLoadingSpinnerOverlay from "../../components/ItwLoadingSpinnerOverlay";
-import ItwErrorView from "../../components/ItwErrorView";
-import { cancelButtonProps } from "../../utils/itwButtonsUtils";
-import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import { itwPidSelector } from "../../store/reducers/itwPidReducer";
-import { itwPid } from "../../store/actions/itwCredentialsActions";
-import { itwActivationStop } from "../../store/actions/itwActivationActions";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../i18n";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
+import ItwErrorView from "../../../components/ItwErrorView";
+import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { itwPidSelector } from "../../../store/reducers/itwPidReducer";
+import { itwPid } from "../../../store/actions/itwCredentialsActions";
+import { itwActivationStop } from "../../../store/actions/itwActivationActions";
 
 /**
  * ItwPidRequestScreen's navigation params.

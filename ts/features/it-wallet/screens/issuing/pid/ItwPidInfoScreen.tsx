@@ -6,20 +6,20 @@ import {
   IconButton,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import I18n from "../../../../i18n";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import { useIODispatch } from "../../../../store/hooks";
-import { itwActivationStop } from "../../store/actions/itwActivationActions";
-import ItwTextInfo from "../../components/ItwTextInfo";
-import itwHeroImage from "../../assets/discovery/itw_hero.png";
-import itwCardImage from "../../assets/discovery/itw_card.png";
-import { isAndroid } from "../../../../utils/platform";
-import ItwFooterVerticalButtons from "../../components/ItwFooterVerticalButtons";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import I18n from "../../../../../i18n";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { useIODispatch } from "../../../../../store/hooks";
+import { itwActivationStop } from "../../../store/actions/itwActivationActions";
+import ItwTextInfo from "../../../components/ItwTextInfo";
+import itwHeroImage from "../../../assets/img/issuing/itw_hero.png";
+import itwCardImage from "../../../assets/img/issuing/itw_card.png";
+import { isAndroid } from "../../../../../utils/platform";
+import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
 
-const ItwDiscoveryInfoScreen = () => {
+const ItwPidInfoScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
 
@@ -98,4 +98,4 @@ const ItwDiscoveryInfoScreen = () => {
   );
 };
 
-export default ItwDiscoveryInfoScreen;
+export default ItwPidInfoScreen;

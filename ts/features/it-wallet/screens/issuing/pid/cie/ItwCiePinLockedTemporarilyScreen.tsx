@@ -6,16 +6,16 @@ import { Content } from "native-base";
 import * as React from "react";
 import { Linking, Platform } from "react-native";
 import { connect } from "react-redux";
-import { ScreenContentHeader } from "../../../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import Markdown from "../../../../../components/ui/Markdown";
-import I18n from "../../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ReduxProps } from "../../../../../store/actions/types";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
+import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
+import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import Markdown from "../../../../../../components/ui/Markdown";
+import I18n from "../../../../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
+import { ReduxProps } from "../../../../../../store/actions/types";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import { BlockButtonProps } from "../../../../../../components/ui/BlockButtons";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
