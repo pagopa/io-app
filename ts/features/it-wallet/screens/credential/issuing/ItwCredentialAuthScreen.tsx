@@ -25,7 +25,6 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import I18n from "../../../../../i18n";
 import ItwBulletList from "../../../components/ItwBulletList";
-import { useItwDataProcessing } from "../../../hooks/useItwDataProcessing";
 import { CREDENTIAL_ISSUER, getRequestedClaims } from "../../../utils/mocks";
 import { showCancelAlert } from "../../../utils/alert";
 import ROUTES from "../../../../../navigation/routes";
@@ -33,6 +32,7 @@ import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import ItwKoView from "../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 import ItwTextInfo from "../../../components/ItwTextInfo";
+import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
 
 /**
  * This screen displays the information about the credential that is going to be shared
@@ -41,8 +41,30 @@ import ItwTextInfo from "../../../components/ItwTextInfo";
 const ItwCredentialAuthScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const { present, bottomSheet } = useItwDataProcessing();
   const toast = useIOToast();
+  const { present, bottomSheet } = useItwInfoBottomSheet({
+    title: I18n.t(
+      "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.title"
+    ),
+    content: [
+      {
+        title: I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.firstHeaderTitle"
+        ),
+        body: I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.firstBodyContent"
+        )
+      },
+      {
+        title: I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.secondHeaderTitle"
+        ),
+        body: I18n.t(
+          "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.body.secondBodyContent"
+        )
+      }
+    ]
+  });
 
   /**
    * Callback to be used in case of cancel button press alert to navigate to the home screen and show a toast.
