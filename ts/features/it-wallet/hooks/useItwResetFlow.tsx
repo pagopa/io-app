@@ -1,12 +1,9 @@
 import * as React from "react";
 import { View } from "react-native";
 import { useDispatch } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { BlockButtons, Body, IOStyles } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import { H4 } from "../../../components/core/typography/H4";
 import { itwLifecycleOperational } from "../store/actions/itwLifecycleActions";
 
 /**
@@ -16,30 +13,44 @@ export const useItwResetFlow = () => {
   const dispatch = useDispatch();
   const BottomSheetBody = () => (
     <View style={IOStyles.flex}>
-      <H4 color={"bluegreyDark"} weight={"Regular"}>
+      <Body>
         {I18n.t("features.itWallet.homeScreen.reset.bottomSheet.body")}
-      </H4>
+      </Body>
     </View>
   );
   const Footer = () => (
-    <FooterWithButtons
-      type={"TwoButtonsInlineHalf"}
-      leftButton={{
-        onPressWithGestureHandler: true,
-        bordered: true,
-        onPress: () => dismiss(),
-        title: I18n.t("features.itWallet.homeScreen.reset.bottomSheet.cancel")
-      }}
-      rightButton={{
-        onPress: () => {
-          dispatch(itwLifecycleOperational());
-          dismiss();
-        },
-        primary: true,
-        labelColor: IOColors.white,
-        title: I18n.t("features.itWallet.homeScreen.reset.bottomSheet.confirm")
-      }}
-    />
+    <View style={IOStyles.horizontalContentPadding}>
+      <BlockButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.homeScreen.reset.bottomSheet.cancel"
+            ),
+            label: I18n.t(
+              "features.itWallet.homeScreen.reset.bottomSheet.cancel"
+            ),
+            onPress: () => dismiss()
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.homeScreen.reset.bottomSheet.confirm"
+            ),
+            label: I18n.t(
+              "features.itWallet.homeScreen.reset.bottomSheet.confirm"
+            ),
+            onPress: () => {
+              dispatch(itwLifecycleOperational());
+              dismiss();
+            }
+          }
+        }}
+      />
+    </View>
   );
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("features.itWallet.homeScreen.reset.bottomSheet.title"),

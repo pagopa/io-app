@@ -15,6 +15,7 @@ import {
   IssuerConfiguration,
   PidResponse
 } from "../../utils/types";
+import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
 
 /**
  * Type for a stored credential.
@@ -81,6 +82,11 @@ const reducer = (
           O.some(action.payload)
         ]
       });
+    /**
+     * Reset the state when the wallet is operational.
+     */
+    case getType(itwLifecycleOperational):
+      return emptyState;
   }
   return state;
 };
