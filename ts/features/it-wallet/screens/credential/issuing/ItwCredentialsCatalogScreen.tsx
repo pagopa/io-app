@@ -52,7 +52,7 @@ const ItwCredentialCatalogScreen = () => {
    */
   useEffect(() => {
     if (loadingIndex !== NONE_LOADING && !pot.isLoading(preliminaryChecks)) {
-      navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.CHECKS);
+      navigation.navigate(ITW_ROUTES.ISSUING.CREDENTIAL.CHECKS);
       setLoadingIndex(NONE_LOADING);
     }
   }, [loadingIndex, navigation, preliminaryChecks]);

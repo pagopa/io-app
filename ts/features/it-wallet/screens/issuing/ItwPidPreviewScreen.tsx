@@ -70,7 +70,7 @@ const ItwPidPreviewScreen = () => {
     const saveButtonProps = {
       block: true,
       primary: true,
-      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_ADDING),
+      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID.ADDING),
       title: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
     };
     return (

@@ -4,6 +4,7 @@ import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
 import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
@@ -35,7 +36,10 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
+import {
+  DS_PERSISTENCE_KEY,
+  useStoredExperimentalDesign
+} from "../common/context/DSExperimentalContext";
 import { IONavigationLightTheme } from "../theme/navigations";
 import { preferencesDesignSystemSetEnabled } from "../store/actions/persistedPreferences";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
@@ -55,6 +59,22 @@ export const AppStackNavigator = (): React.ReactElement => {
 
   const { setExperimental } = useIOExperimentalDesign();
 
+  /**
+   * Enable the experimental design system and persist the value in AsyncStorage.
+   * Used in the temporary solution to enable the experimental design system for
+   * it wallet app in the following useEffect. Remove me when backporting on the main app.
+   */
+  const enableDesignSystem = React.useCallback(() => {
+    AsyncStorage.setItem(DS_PERSISTENCE_KEY, JSON.stringify(true)).finally(
+      () => {
+        dispatch(
+          preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+        );
+        setExperimental(true);
+      }
+    );
+  }, [dispatch, setExperimental]);
+
   React.useEffect(() => {
     /**
      * START OF TEMPORARY SOLUTION
@@ -62,15 +82,20 @@ export const AppStackNavigator = (): React.ReactElement => {
      * This is a temporary solution to enable the experimental design system for
      * the it wallet app. Remove me when backporting on the main app.
      */
-    dispatch(
-      preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
-    );
-    setExperimental(true);
+    AsyncStorage.getItem(DS_PERSISTENCE_KEY)
+      .then(value => {
+        if (value !== "true") {
+          enableDesignSystem();
+        }
+      })
+      .catch(() => {
+        enableDesignSystem();
+      });
     /**
      * END OF TEMPORARY SOLUTION
      */
     dispatch(startApplicationInitialization());
-  }, [dispatch, setExperimental]);
+  }, [dispatch, enableDesignSystem, setExperimental]);
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;

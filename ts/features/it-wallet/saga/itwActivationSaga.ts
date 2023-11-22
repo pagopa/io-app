@@ -39,7 +39,7 @@ export function* handleActivationStart(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.INFO
+      screen: ITW_ROUTES.ISSUING.PID.INFO
     })
   );
   yield* call(handleStartAuthenticationSaga);
