@@ -96,6 +96,7 @@ const NewEmailInsertScreen = (props: Props) => {
 
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(optionEmail ?? O.some(EMPTY_EMAIL));
+
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
    * - _false_,     if email has been already changed from the user and it is not
@@ -103,7 +104,6 @@ const NewEmailInsertScreen = (props: Props) => {
    * - _undefined_, if email field is empty. This state is consumed by
    * LabelledItem Component and it used for style pourposes ONLY.
    */
-  // this function return a boolean
   const isValidEmail = useCallback(
     () =>
       pipe(
@@ -162,6 +162,7 @@ const NewEmailInsertScreen = (props: Props) => {
   }, [props.navigation]);
 
   useEffect(() => {
+    setAreSameEmails(false);
     setEmail(O.some(EMPTY_EMAIL));
   }, []);
 

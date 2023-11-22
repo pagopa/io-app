@@ -30,6 +30,8 @@ import {
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
 import { emailAcknowledged } from "../store/actions/onboarding";
+import NavigationService from "../navigation/NavigationService";
+import ROUTES from "../navigation/routes";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -114,6 +116,9 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
         acknowledgeEmail();
       }
       hideModal();
+      NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.PROFILE_DATA
+      });
     } else {
       // send email validation only if it exists
       pipe(
