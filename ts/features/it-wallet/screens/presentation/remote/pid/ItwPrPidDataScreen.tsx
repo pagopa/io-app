@@ -19,26 +19,26 @@ import { View } from "native-base";
 import { Image, StyleSheet } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwDecodedPidValueSelector } from "../../../store/reducers/itwPidDecodeReducer";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import I18n from "../../../../../i18n";
-import { showCancelAlert } from "../../../utils/alert";
-import ItwTextInfo from "../../../components/ItwTextInfo";
-import ItwBulletList from "../../../components/ItwBulletList";
-import { rpPidMock } from "../../../utils/mocks";
-import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import interno from "../../../../../../img/features/it-wallet/interno.png";
-import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
-import ItwKoView from "../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
-import ROUTES from "../../../../../navigation/routes";
-import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
+import { useIOSelector } from "../../../../../../store/hooks";
+import { itwDecodedPidValueSelector } from "../../../../store/reducers/itwPidDecodeReducer";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import I18n from "../../../../../../i18n";
+import { showCancelAlert } from "../../../../utils/alert";
+import ItwTextInfo from "../../../../components/ItwTextInfo";
+import ItwBulletList from "../../../../components/ItwBulletList";
+import { rpPidMock } from "../../../../utils/mocks";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import interno from "../../../../../../../img/features/it-wallet/interno.png";
+import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
+import ItwKoView from "../../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import ROUTES from "../../../../../../navigation/routes";
+import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 
-const ItwPidPresentationDataScreen = () => {
+const ItwPrPidDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { present, bottomSheet } = useItwInfoBottomSheet({
@@ -213,7 +213,7 @@ const ItwPidPresentationDataScreen = () => {
   );
 };
 
-export default ItwPidPresentationDataScreen;
+export default ItwPrPidDataScreen;
 
 const styles = StyleSheet.create({
   secondHeader: {

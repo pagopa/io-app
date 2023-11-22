@@ -11,28 +11,28 @@ import {
   FeatureInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import ScreenContent from "../../../../components/screens/ScreenContent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { useItwAbortFlow } from "../../hooks/useItwAbortFlow";
-import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { ItwDecodedPidPotSelector } from "../../store/reducers/itwPidDecodeReducer";
-import ItwErrorView from "../../components/ItwErrorView";
-import { cancelButtonProps } from "../../utils/itwButtonsUtils";
-import { H4 } from "../../../../components/core/typography/H4";
-import ItwPidClaimsList from "../../components/ItwPidClaimsList";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { itwDecodePid } from "../../store/actions/itwCredentialsActions";
-import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
-import ItwCredentialCard from "../../components/ItwCredentialCard";
-import { getPidDisplayData } from "../../utils/mocks";
+import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../../i18n";
+import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
+import ScreenContent from "../../../../../../components/screens/ScreenContent";
+import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import { useItwAbortFlow } from "../../../../hooks/useItwAbortFlow";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
+import LoadingSpinnerOverlay from "../../../../../../components/LoadingSpinnerOverlay";
+import { ItwDecodedPidPotSelector } from "../../../../store/reducers/itwPidDecodeReducer";
+import ItwErrorView from "../../../../components/ItwErrorView";
+import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
+import { H4 } from "../../../../../../components/core/typography/H4";
+import ItwPidClaimsList from "../../../../components/ItwPidClaimsList";
+import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
+import { itwDecodePid } from "../../../../store/actions/itwCredentialsActions";
+import { itwPidValueSelector } from "../../../../store/reducers/itwPidReducer";
+import ItwCredentialCard from "../../../../components/ItwCredentialCard";
+import { getPidDisplayData } from "../../../../utils/mocks";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;

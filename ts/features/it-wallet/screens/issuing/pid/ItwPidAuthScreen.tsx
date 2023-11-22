@@ -18,19 +18,19 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { constNull } from "fp-ts/lib/function";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { ITW_ROUTES } from "../../navigation/ItwRoutes";
-import I18n from "../../../../i18n";
-import ListItemItw from "../../components/ListItems/ListItemItw";
-import { useItwInfoBottomSheet } from "../../hooks/useItwInfoBottomSheet";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import I18n from "../../../../../i18n";
+import ListItemItw from "../../../components/ListItems/ListItemItw";
+import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
 
 /**
  * Renders the screen which display a list of features (or trusty providers)
  * to activate the wallet.
  */
-const ItwDiscoveryProviderInfoScreen = () => {
+const ItwPidAuthScreen = () => {
   const navigation = useNavigation();
 
   const { present, bottomSheet } = useItwInfoBottomSheet({
@@ -204,4 +204,4 @@ const ItwDiscoveryProviderInfoScreen = () => {
   );
 };
 
-export default ItwDiscoveryProviderInfoScreen;
+export default ItwPidAuthScreen;

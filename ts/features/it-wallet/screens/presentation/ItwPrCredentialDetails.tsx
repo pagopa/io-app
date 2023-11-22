@@ -19,7 +19,7 @@ import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 
-export type ItwCredentialDetailsScreenNavigationParams = {
+export type ItwPrCredentialDetailsScreenNavigationParams = {
   credential: StoredCredential;
 };
 
@@ -31,7 +31,7 @@ type ItwCredentialDetailscreenRouteProps = RouteProp<
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
  */
-const ItwCredentialDetailsScreen = () => {
+const ItwPrCredentialDetailsScreen = () => {
   const route = useRoute<ItwCredentialDetailscreenRouteProps>();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { credential } = route.params;
@@ -99,4 +99,4 @@ const ItwCredentialDetailsScreen = () => {
   return <ContentView data={credential} />;
 };
 
-export default ItwCredentialDetailsScreen;
+export default ItwPrCredentialDetailsScreen;
