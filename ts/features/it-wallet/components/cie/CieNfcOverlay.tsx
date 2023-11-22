@@ -18,7 +18,7 @@ import { openNFCSettings } from "../../utils/cie";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_CIE_CARD_READER_SCREEN"
+  "ITW_ISSUING_PID_CIE_CARD_READER_SCREEN"
 >;
 
 type Props = ReduxProps & NavigationProps;
@@ -43,7 +43,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
           style: "default",
           onPress: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
+              screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
             })
         }
       ]

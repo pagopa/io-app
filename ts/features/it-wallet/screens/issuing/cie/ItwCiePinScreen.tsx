@@ -73,7 +73,7 @@ const ItwCiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const navigation =
     useNavigation<
-      IOStackNavigationProp<ItwParamsList, "ITW_ISSUING_CIE_PIN_SCREEN">
+      IOStackNavigationProp<ItwParamsList, "ITW_ISSUING_PID_CIE_PIN_SCREEN">
     >();
   const [pin, setPin] = useState("");
   const continueButtonRef = useRef<FooterWithButtons>(null);
@@ -113,7 +113,7 @@ const ItwCiePinScreen: React.FC<Props> = props => {
 
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      navigation.navigate(ITW_ROUTES.ISSUING.CIE.CARD_READER_SCREEN, {
+      navigation.navigate(ITW_ROUTES.ISSUING.PID.CIE.CARD_READER_SCREEN, {
         ciePin: pin,
         authorizationUri: authUrlGenerated
       });

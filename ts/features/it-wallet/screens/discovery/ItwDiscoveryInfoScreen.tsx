@@ -37,7 +37,7 @@ const ItwDiscoveryInfoScreen = () => {
     color: "primary",
     fullWidth: true,
     accessibilityLabel: I18n.t("features.itWallet.activationScreen.confirm"),
-    onPress: () => navigation.navigate(ITW_ROUTES.DISCOVERY.FEATURES_INFO),
+    onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID.AUTH),
     label: I18n.t("features.itWallet.activationScreen.confirm")
   };
 

@@ -196,7 +196,7 @@ const ItwPresentationDataScreen = () => {
                 accessibilityLabel: I18n.t("global.buttons.continue"),
                 onPress: () =>
                   navigation.navigate(
-                    ITW_ROUTES.PRESENTATION.CROSS_DEVICE.RESULT_NEW
+                    ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.RESULT
                   ),
                 label: I18n.t("global.buttons.continue")
               }

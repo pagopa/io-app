@@ -19,7 +19,7 @@ import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_CIE_PIN_TEMP_LOCKED_SCREEN"
+  "ITW_ISSUING_PID_CIE_PIN_TEMP_LOCKED_SCREEN"
 >;
 
 type Props = NavigationProps & ReduxProps;
@@ -76,7 +76,7 @@ class ItwCiePinLockedTemporarilyScreen extends React.PureComponent<
 
   private handleGoBack = () =>
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
+      screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
     });
 
   public render(): React.ReactNode {

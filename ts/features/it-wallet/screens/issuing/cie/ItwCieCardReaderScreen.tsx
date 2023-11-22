@@ -62,7 +62,7 @@ export type ItwCieCardReaderScreenNavigationParams = {
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_CIE_CARD_READER_SCREEN"
+  "ITW_ISSUING_PID_CIE_CARD_READER_SCREEN"
 >;
 
 type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
@@ -271,7 +271,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.CIE.PIN_TEMP_LOCKED_SCREEN
+              screen: ITW_ROUTES.ISSUING.PID.CIE.PIN_TEMP_LOCKED_SCREEN
             })
         });
         break;
@@ -282,7 +282,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.CIE.WRONG_PIN_SCREEN,
+              screen: ITW_ROUTES.ISSUING.PID.CIE.WRONG_PIN_SCREEN,
               params: {
                 remainingCount: event.attemptsLeft
               }
@@ -297,7 +297,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.CIE.EXPIRED_SCREEN
+              screen: ITW_ROUTES.ISSUING.PID.CIE.EXPIRED_SCREEN
             })
         });
         break;
@@ -373,7 +373,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
       setTimeout(
         async () => {
           this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUING.CIE.CONSENT_DATA_USAGE,
+            screen: ITW_ROUTES.ISSUING.PID.CIE.CONSENT_DATA_USAGE,
             params: {
               cieConsentUri,
               pidData
@@ -461,7 +461,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
 
   private handleCancel = () =>
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
+      screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
     });
 
   private getFooter = () =>

@@ -51,7 +51,7 @@ const ItwDiscoveryProviderInfoScreen = () => {
       title: I18n.t("features.itWallet.featuresInfoScreen.list.cie"),
       subTitle: I18n.t("features.itWallet.featuresInfoScreen.list.cieSubTitle"),
       icon: "fiscalCodeIndividual",
-      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID_AUTH_INFO),
+      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID.AUTH_INFO),
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cie"
       ),
