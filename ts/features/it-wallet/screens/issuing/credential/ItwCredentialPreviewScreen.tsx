@@ -147,6 +147,7 @@ const ItwCredentialPreviewScreen = () => {
               <ItwCredentialCard
                 parsedCredential={data.parsedCredential}
                 display={data.displayData}
+                type={data.credentialType}
               />
               <VSpacer />
               <ItwCredentialClaimsList data={data} />
