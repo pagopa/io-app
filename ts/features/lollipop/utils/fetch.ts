@@ -30,9 +30,9 @@ export const lollipopFetch = (
   lollipopConfig: LollipopConfig,
   keyInfo: KeyInfo,
   maxRetries?: number,
-  timout?: Millisecond
+  timeout?: Millisecond
 ) => {
-  const timeoutFetch = toFetchTimeout(timout);
+  const timeoutFetch = toFetchTimeout(timeout);
   const retriableFetch = toRetriableFetch(maxRetries);
   return retriableFetch(
     async (input: RequestInfo | URL, init?: RequestInit) => {
