@@ -13,16 +13,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  SafeAreaView
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
-import CiePinpad from "../../../../../../components/CiePinpad";
-import { Link } from "../../../../../../components/core/typography/Link";
-import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import {
+  ButtonSolid,
+  H2,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import {
   BottomTopAnimation,
   LightModalContext
@@ -33,13 +33,13 @@ import { IOStackNavigationProp } from "../../../../../../navigation/params/AppPa
 import { Dispatch, ReduxProps } from "../../../../../../store/actions/types";
 import variables from "../../../../../../theme/variables";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
-import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../../../../utils/url";
-import { pinPukHelpUrl } from "../../../../../../config";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { CieRequestAuthenticationOverlay } from "../../../../components/cie/CieRequestAuthenticationOverlay";
 import { nfcIsEnabled } from "../../../../store/actions/itwCieActions";
+import ItwTextInfo from "../../../../components/ItwTextInfo";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import CiePinpad from "../../../../components/cie/CiePinpad";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request())
@@ -50,12 +50,7 @@ type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: variables.contentPadding
-  },
-  bsLinkButton: {
-    paddingRight: 0,
-    paddingLeft: 0,
-    backgroundColor: IOColors.white
+    paddingLeft: 16
   }
 });
 
@@ -67,7 +62,6 @@ const getContextualHelp = () => ({
     <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
   )
 });
-const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const ItwCiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
@@ -76,33 +70,9 @@ const ItwCiePinScreen: React.FC<Props> = props => {
       IOStackNavigationProp<ItwParamsList, "ITW_ISSUING_PID_CIE_PIN_SCREEN">
     >();
   const [pin, setPin] = useState("");
-  const continueButtonRef = useRef<FooterWithButtons>(null);
   const pinPadViewRef = useRef<View>(null);
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
-  );
-
-  useEffect(() => {
-    if (pin.length === CIE_PIN_LENGTH) {
-      setAccessibilityFocus(continueButtonRef, 100 as Millisecond);
-    }
-  }, [pin]);
-
-  const { present, bottomSheet } = useLegacyIOBottomSheetModal(
-    <View>
-      <Markdown avoidTextSelection>
-        {I18n.t("bottomSheets.ciePin.content")}
-      </Markdown>
-      <ButtonDefaultOpacity
-        onPress={onOpenForgotPinPage}
-        style={styles.bsLinkButton}
-        onPressWithGestureHandler={true}
-      >
-        <Link>{I18n.t("authentication.cie.pin.bottomSheetCTA")}</Link>
-      </ButtonDefaultOpacity>
-    </View>,
-    I18n.t("bottomSheets.ciePin.title"),
-    320
   );
 
   const handleAuthenticationOverlayOnClose = useCallback(() => {
@@ -144,54 +114,48 @@ const ItwCiePinScreen: React.FC<Props> = props => {
   }, [pinPadViewRef]);
 
   return (
-    <TopScreenComponent
+    <BaseScreenComponent
       onAccessibilityNavigationHeaderFocus={doSetAccessibilityFocus}
       contextualHelp={getContextualHelp()}
       goBack={true}
-      headerTitle={I18n.t("authentication.cie.pin.pinCardHeader")}
+      headerTitle={I18n.t("features.itWallet.cie.pinScreen.title")}
     >
-      <ScrollView>
-        <ScreenContentHeader
-          title={I18n.t("authentication.cie.pin.pinCardTitle")}
-          rasterIcon={require("../../../../../../../img/icons/icon_insert_cie_pin.png")}
-          subtitle={I18n.t("authentication.cie.pin.subtitleHelp")}
-          subtitleLink={
-            <Link onPress={present}>
-              {I18n.t("authentication.cie.pin.subtitleCTA")}
-            </Link>
-          }
-        />
-
-        <VSpacer size={16} />
-        <View style={styles.container} accessible={true} ref={pinPadViewRef}>
-          <CiePinpad
-            pin={pin}
-            pinLength={CIE_PIN_LENGTH}
-            onPinChanged={setPin}
-            onSubmit={showModal}
+      <SafeAreaView style={IOStyles.flex}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
+          <H2>{I18n.t("features.itWallet.cie.pinScreen.title")}</H2>
+          <VSpacer size={16} />
+          <View style={styles.container} accessible={true} ref={pinPadViewRef}>
+            <CiePinpad
+              pin={pin}
+              pinLength={CIE_PIN_LENGTH}
+              onPinChanged={setPin}
+              onSubmit={showModal}
+            />
+          </View>
+          <VSpacer size={32} />
+          <ItwTextInfo
+            content={I18n.t("features.itWallet.cie.pinScreen.description")}
           />
+        </ScrollView>
+        <View style={IOStyles.horizontalContentPadding}>
+          <ButtonSolid
+            onPress={showModal}
+            label={I18n.t("global.buttons.continue")}
+            accessibilityLabel={I18n.t("global.buttons.continue")}
+            fullWidth={true}
+            disabled={pin.length !== CIE_PIN_LENGTH}
+          />
+          <VSpacer size={16} />
         </View>
-      </ScrollView>
-      {pin.length === CIE_PIN_LENGTH && (
-        <FooterWithButtons
-          ref={continueButtonRef}
-          type={"SingleButton"}
-          leftButton={{
-            primary: true,
-            onPress: showModal,
-            title: I18n.t("global.buttons.continue")
-          }}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "android" ? "height" : "padding"}
+          keyboardVerticalOffset={Platform.select({
+            ios: 0,
+            android: variables.contentPadding
+          })}
         />
-      )}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "android" ? "height" : "padding"}
-        keyboardVerticalOffset={Platform.select({
-          ios: 0,
-          android: variables.contentPadding
-        })}
-      />
-      {bottomSheet}
-    </TopScreenComponent>
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };
 
