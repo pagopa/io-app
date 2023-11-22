@@ -18,7 +18,7 @@ const bookingUrl = I18n.t("cie.booking_url");
 const browseToLink = () => openLink(bookingUrl);
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_CIE_EXPIRED_SCREEN"
+  "ITW_ISSUING_PID_CIE_EXPIRED_SCREEN"
 >;
 type Props = ReduxProps & NavigationProps;
 
@@ -29,7 +29,7 @@ class ItwCieExpiredOrInvalidScreen extends React.PureComponent<Props> {
 
   private handleGoBack = () =>
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
+      screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
     });
 
   public render(): React.ReactNode {

@@ -65,7 +65,7 @@ const ItwPresentationChecksScreen = () => {
           label: I18n.t("global.buttons.confirm"),
           accessibilityLabel: I18n.t("global.buttons.confirm"),
           onPress: () =>
-            navigation.navigate(ITW_ROUTES.PRESENTATION.CROSS_DEVICE.DATA_NEW)
+            navigation.navigate(ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.DATA)
         }}
       />
     </SafeAreaView>

@@ -67,7 +67,7 @@ const ItwHomeScreen = () => {
    */
   const onPressAddCredentials = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.CREDENTIAL.ISSUING.CATALOG
+      screen: ITW_ROUTES.ISSUING.CREDENTIAL.CATALOG
     });
   };
 
@@ -77,7 +77,7 @@ const ItwHomeScreen = () => {
    */
   const onLongPressCredential = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CROSS_DEVICE.CHECKS
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.CHECKS
     });
   };
 
@@ -93,7 +93,7 @@ const ItwHomeScreen = () => {
         <Pressable
           onPress={() =>
             navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.PRESENTATION.PID_DETAILS
+              screen: ITW_ROUTES.PRESENTATION.PID.DETAILS
             })
           }
         >
@@ -111,7 +111,7 @@ const ItwHomeScreen = () => {
               onLongPress={onLongPressCredential}
               onPress={() =>
                 navigation.navigate(ITW_ROUTES.MAIN, {
-                  screen: ITW_ROUTES.CREDENTIAL.PRESENTATION.CREDENTIAL_DETAILS,
+                  screen: ITW_ROUTES.PRESENTATION.CREDENTIAL.DETAILS,
                   params: {
                     credential
                   }

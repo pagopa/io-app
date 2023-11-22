@@ -36,7 +36,7 @@ type OwnProps = {
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_CIE_CONSENT_DATA_USAGE"
+  "ITW_ISSUING_PID_CIE_CONSENT_DATA_USAGE"
 >;
 
 type State = {
@@ -82,7 +82,7 @@ class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
 
   private resetNavigation = () => {
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID_AUTH_INFO
+      screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
     });
   };
 
@@ -201,7 +201,7 @@ class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
           rightButton={{
             primary: true,
             onPress: () =>
-              this.props.navigation.navigate(ITW_ROUTES.ISSUING.PID_REQUEST, {
+              this.props.navigation.navigate(ITW_ROUTES.ISSUING.PID.REQUEST, {
                 pidData: this.props.route.params.pidData
               }),
             title: I18n.t(

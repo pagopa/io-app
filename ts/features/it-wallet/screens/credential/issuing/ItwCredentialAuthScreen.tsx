@@ -146,7 +146,7 @@ const ItwCredentialAuthScreen = () => {
               color: "primary",
               accessibilityLabel: I18n.t("global.buttons.continue"),
               onPress: () =>
-                navigation.navigate(ITW_ROUTES.CREDENTIAL.ISSUING.PREVIEW),
+                navigation.navigate(ITW_ROUTES.ISSUING.CREDENTIAL.PREVIEW),
               label: I18n.t("global.buttons.continue")
             }
           }}

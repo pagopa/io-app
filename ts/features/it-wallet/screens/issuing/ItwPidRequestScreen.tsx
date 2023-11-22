@@ -54,7 +54,7 @@ const ItwPidRequestScreen = () => {
    */
   useEffect(() => {
     if (pot.isSome(pid)) {
-      navigation.navigate(ITW_ROUTES.ISSUING.PID_PREVIEW);
+      navigation.navigate(ITW_ROUTES.ISSUING.PID.PREVIEW);
     }
   }, [navigation, pid]);
 
