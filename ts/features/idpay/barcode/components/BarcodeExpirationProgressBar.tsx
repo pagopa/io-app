@@ -1,16 +1,19 @@
 import { LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import { format } from "date-fns";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { ProgressBar } from "../../../bonus/bpd/screens/details/components/summary/base/ProgressBar";
 
-export const IdPayBarcodeExpireSlider = ({
-  secondsToExpiration,
-  secondsExpirationTotal
-}: {
+type Props = {
   secondsToExpiration: number;
   secondsExpirationTotal: number;
-}) => {
+};
+
+export const IdPayBarcodeExpireProgressBar = ({
+  secondsToExpiration,
+  secondsExpirationTotal
+}: Props) => {
   const [seconds, setSeconds] = React.useState(secondsToExpiration);
   const isCodeExpired = seconds === 0;
   React.useEffect(() => {
@@ -30,7 +33,8 @@ export const IdPayBarcodeExpireSlider = ({
 
   const formattedExpireMinutesString = isCodeExpired
     ? ""
-    : new Date(seconds * 1000).toISOString().slice(14, 19);
+    : format(new Date(seconds * 1000), "mm:ss");
+
   return (
     <View style={{ alignContent: "center" }}>
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />

@@ -21,7 +21,7 @@ import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { IDPayDetailsRoutes } from "../../details/navigation";
-import { IdPayBarcodeExpireSlider } from "../components/BarcodeExpirationSlider";
+import { IdPayBarcodeExpireProgressBar } from "../components/BarcodeExpirationProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
@@ -64,7 +64,17 @@ const IdPayBarcodeResultScreen = () => {
     barcodePot,
     pot.toOption,
     O.fold(
-      () => <ErrorContent onCtaPress={navigateToInitiativeDetails} />,
+      () => (
+        <OperationResultScreenContent
+          title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
+          action={{
+            label: I18n.t("global.buttons.close"),
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: navigateToInitiativeDetails
+          }}
+          pictogram="umbrellaNew"
+        />
+      ),
       barcode => (
         <SuccessContent
           barcode={barcode}
@@ -129,7 +139,7 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
           <Barcode format="CODE128" value={trx} />
           <H3 style={{ alignSelf: "center" }}>{trx}</H3>
           <VSpacer size={32} />
-          <IdPayBarcodeExpireSlider
+          <IdPayBarcodeExpireProgressBar
             secondsExpirationTotal={(barcode.trxExpirationMinutes ?? 0) * 60}
             secondsToExpiration={secondsTillExpire}
           />
@@ -149,17 +159,8 @@ const LoadingScreen = () => (
   </SafeAreaView>
 );
 
-const ErrorContent = ({ onCtaPress }: { onCtaPress: () => void }) => (
-  <OperationResultScreenContent
-    title={I18n.t("idpay.barCode.resultScreen.error.generic.body")}
-    action={{
-      label: I18n.t("global.buttons.close"),
-      accessibilityLabel: I18n.t("global.buttons.close"),
-      onPress: onCtaPress
-    }}
-    pictogram="umbrellaNew"
-  />
-);
+// error screen content will go here, once error mapping
+// is completely defined
 
 // -------------------- styles --------------------
 
