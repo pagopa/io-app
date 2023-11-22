@@ -11,9 +11,9 @@ export type WalletV3State = {
   payment: WalletPaymentState;
 };
 
-const walletV3Reducer = combineReducers({
+const walletReducer = combineReducers({
   onboarding: walletOnboardingReducer,
   payment: walletPaymentReducer
 });
 
-export default walletV3Reducer;
+export default walletReducer;

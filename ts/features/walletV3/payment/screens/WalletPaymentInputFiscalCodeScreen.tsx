@@ -41,7 +41,7 @@ import {
 } from "../../common/utils/validation";
 import { WalletPaymentParamsList } from "../navigation/params";
 
-export type WalletPaymentInputFiscalCodeScreenRouteParams = {
+export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
 };
 

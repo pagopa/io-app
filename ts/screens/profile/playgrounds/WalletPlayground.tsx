@@ -12,6 +12,8 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/navigation/navigator";
+import { WalletPaymentRoutes } from "../../../features/walletV3/payment/navigation/routes";
+import { RptId } from "../../../../definitions/pagopa/ecommerce/RptId";
 
 const WalletPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -19,6 +21,15 @@ const WalletPlayground = () => {
   const navigateToWalletOnboarding = () => {
     navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
       screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
+    });
+  };
+
+  const navigateToWalletPayment = () => {
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
+      params: {
+        rptId: "1234567890" as RptId
+      }
     });
   };
 
@@ -41,7 +52,7 @@ const WalletPlayground = () => {
           value="Payment Playground"
           accessibilityLabel={"Onboarding Playground"}
           description="Start the payment flow to pay with a method of payment"
-          onPress={() => alert("Flow not implemented yet")}
+          onPress={navigateToWalletPayment}
         />
       </ScrollView>
     </BaseScreenComponent>

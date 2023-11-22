@@ -1,41 +1,47 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { CalculateFeeResponse } from "../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
-import { NewTransactionResponse } from "../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { RequestAuthorizationResponse } from "../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
-import { walletInitializePayment } from "./actions";
+import { walletGetPaymentDetails } from "./actions";
 
 export type WalletPaymentState = {
-  entryPoint: O.Option<string>;
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
-  transaction: pot.Pot<NewTransactionResponse, NetworkError>;
-  pspList: pot.Pot<CalculateFeeResponse, NetworkError>;
-  paymentAuthRequest: pot.Pot<RequestAuthorizationResponse, NetworkError>;
+  transactionId: pot.Pot<string, NetworkError>;
+  pspList: pot.Pot<Array<Bundle>, NetworkError>;
+  authorizationUrl: pot.Pot<string, NetworkError>;
 };
 
 const INITIAL_STATE: WalletPaymentState = {
-  entryPoint: O.none,
   paymentDetails: pot.none,
-  transaction: pot.none,
+  transactionId: pot.none,
   pspList: pot.none,
-  paymentAuthRequest: pot.none
+  authorizationUrl: pot.none
 };
 
-const walletPaymentReducer = (
+const reducer = (
   state: WalletPaymentState = INITIAL_STATE,
   action: Action
 ): WalletPaymentState => {
   switch (action.type) {
-    case getType(walletInitializePayment):
+    case getType(walletGetPaymentDetails.request):
       return {
-        ...state
+        ...state,
+        paymentDetails: pot.toLoading(state.paymentDetails)
+      };
+    case getType(walletGetPaymentDetails.success):
+      return {
+        ...state,
+        paymentDetails: pot.some(action.payload)
+      };
+    case getType(walletGetPaymentDetails.failure):
+      return {
+        ...state,
+        paymentDetails: pot.toError(state.paymentDetails, action.payload)
       };
   }
   return state;
 };
 
-export default walletPaymentReducer;
+export default reducer;
