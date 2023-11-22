@@ -70,6 +70,7 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
+import CheckEmailNavigator from "./CheckEmailNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -89,6 +90,8 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
       <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
+
+      <Stack.Screen name={ROUTES.CHECK_EMAIL} component={CheckEmailNavigator} />
 
       <Stack.Screen
         name={ROUTES.UNSUPPORTED_DEVICE}

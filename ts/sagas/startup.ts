@@ -166,6 +166,7 @@ import {
 } from "./../store/storages/keychain";
 import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 import { setLanguageFromProfileIfExists } from "./preferences";
+import { checkEmailSaga } from "./startup/checkEmailSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -510,6 +511,8 @@ export function* initializeApplicationSaga(
     yield* call(checkAcknowledgedFingerprintSaga);
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
+
+  yield* call(checkEmailSaga, userProfile);
 
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
