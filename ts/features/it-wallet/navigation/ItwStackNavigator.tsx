@@ -2,10 +2,10 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
 import ItwCiePinScreen from "../screens/issuing/pid/cie/ItwCiePinScreen";
-import CieCardReaderScreen from "../screens/issuing/pid/cie/ItwCieCardReaderScreen";
-import CieConsentDataUsageScreen from "../screens/issuing/pid/cie/ItwCieConsentDataUsageScreen";
-import CieExpiredOrInvalidScreen from "../screens/issuing/pid/cie/ItwCieExpiredOrInvalidScreen";
-import CieWrongCiePinScreen from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
+import ItwCieCardReaderScreen from "../screens/issuing/pid/cie/ItwCieCardReaderScreen";
+import ItwCieConsentDataUsageScreen from "../screens/issuing/pid/cie/ItwCieConsentDataUsageScreen";
+import ItwCieExpiredOrInvalidScreen from "../screens/issuing/pid/cie/ItwCieExpiredOrInvalidScreen";
+import ItwCieWrongPinScreen from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
 import ItwPidInfoScreen from "../screens/issuing/pid/ItwPidInfoScreen";
 import ItwPidAuthInfoScreen from "../screens/issuing/pid/ItwPidAuthInfoScreen";
 import ItwPidPreviewScreen from "../screens/issuing/pid/cie/ItwPidPreviewScreen";
@@ -38,7 +38,7 @@ export const ItwStackNavigator = () => (
     {/* ISSUING PID CIE */}
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.CIE.EXPIRED_SCREEN}
-      component={CieExpiredOrInvalidScreen}
+      component={ItwCieExpiredOrInvalidScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN}
@@ -46,15 +46,15 @@ export const ItwStackNavigator = () => (
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.CIE.CARD_READER_SCREEN}
-      component={CieCardReaderScreen}
+      component={ItwCieCardReaderScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.CIE.CONSENT_DATA_USAGE}
-      component={CieConsentDataUsageScreen}
+      component={ItwCieConsentDataUsageScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.CIE.WRONG_PIN_SCREEN}
-      component={CieWrongCiePinScreen}
+      component={ItwCieWrongPinScreen}
     />
 
     {/* ISSUING PID */}
