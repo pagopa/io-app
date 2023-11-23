@@ -143,7 +143,7 @@ type TextForState = {
 // some texts changes depending on current running Platform
 const getTextForState = (
   state: ReadingState.waiting_card | ReadingState.error,
-  errorMessage: string = ""
+  _: string = ""
 ): TextForState => {
   const texts: Record<
     ReadingState.waiting_card | ReadingState.error,
@@ -169,12 +169,12 @@ const getTextForState = (
       [ReadingState.waiting_card]: {
         title: I18n.t("features.itWallet.issuing.cie.waiting.title"),
         subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-        content: I18n.t("features.itWallet.issuing.cie.waiting.title")
+        content: I18n.t("features.itWallet.issuing.cie.waiting.content")
       },
       [ReadingState.error]: {
-        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
-        content: errorMessage
+        title: I18n.t("features.itWallet.issuing.cie.error.title"),
+        subtitle: "",
+        content: ""
       }
     }
   });
@@ -490,6 +490,21 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
             <Body style={styles.textCenter} accessible={true}>
               {this.state.content}
             </Body>
+            {this.state.readingState === ReadingState.error && (
+              <ButtonSolid
+                onPress={() =>
+                  this.setState(
+                    { readingState: ReadingState.waiting_card },
+                    () => this.updateContent()
+                  )
+                }
+                label={I18n.t("features.itWallet.issuing.cie.error.retry")}
+                accessibilityLabel={I18n.t(
+                  "features.itWallet.issuing.cie.error.retry"
+                )}
+                fullWidth={true}
+              />
+            )}
           </View>
         </SafeAreaView>
         {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success

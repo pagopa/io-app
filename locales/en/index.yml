@@ -3296,6 +3296,9 @@ features:
         success:
           title: "Reading completed!"
           content: "Continue to add your digital identity and complete IT Wallet activation."
+        error:
+          title: "You removed the CIE too early"
+          retry: "Retry"
         help: "See how to do it"
       infoConsent:
         footer:

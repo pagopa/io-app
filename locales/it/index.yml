@@ -3296,6 +3296,9 @@ features:
         success:
           title: "Lettura completata!"
           content: "Continua per aggiungere la tua identità digitale e completare l’attivazione di IT Wallet."
+        error:
+          title: "Hai rimosso la CIE troppo presto"
+          retry: "Riprova"
         help: "Guarda come fare"
       infoConsent:
         footer:
