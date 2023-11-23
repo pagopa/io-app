@@ -5,6 +5,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ItWalletError } from "../../utils/errors/itwErrors";
 import { itwWiaRequest } from "../actions/itwWiaActions";
+import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
 
 export type ItwWIAState = pot.Pot<O.Option<string>, ItWalletError>;
 
@@ -29,6 +30,11 @@ const reducer = (
       return pot.some(O.some(action.payload));
     case getType(itwWiaRequest.failure):
       return pot.toError(state, action.payload);
+    /**
+     * Reset the state when the wallet is operational.
+     */
+    case getType(itwLifecycleOperational):
+      return emptyState;
   }
   return state;
 };
