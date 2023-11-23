@@ -24,6 +24,6 @@ export function* verifyPin() {
   const res = yield* take(identificationSuccess);
 
   if (!isActionOf(identificationSuccess, res)) {
-    throw new Error("identificationSuccess expected");
+    throw new Error(); // TO DO: needs to be mapped to an ITW error type in the future (SIW-713)
   }
 }
