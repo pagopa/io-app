@@ -1,7 +1,7 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
 import {
   IOColors,
@@ -41,15 +41,12 @@ import {
   addTicketTag,
   anonymousAssistanceAddress,
   anonymousAssistanceAddressWithSubject,
-  AnonymousIdentity,
+  getZendeskConfig,
+  getZendeskIdentity,
   initSupportAssistance,
-  JwtIdentity,
   openSupportTicket,
   setUserIdentity,
-  ZendeskAppConfig,
   zendeskCurrentAppVersionId,
-  zendeskDefaultAnonymousConfig,
-  zendeskDefaultJwtConfig,
   zendeskDeviceAndOSId,
   zendeskidentityProviderId,
   zendeskVersionsHistoryId
@@ -60,6 +57,7 @@ import ZendeskItemPermissionComponent, {
 } from "../components/ZendeskItemPermissionComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {
+  zendeskStopPolling,
   zendeskSupportCompleted,
   zendeskSupportFailure
 } from "../store/actions";
@@ -196,6 +194,10 @@ const ZendeskAskPermissions = () => {
 
   const dispatch = useIODispatch();
   const workUnitCompleted = () => dispatch(zendeskSupportCompleted());
+  const dispatchZendeskUiDismissed = useCallback(
+    () => dispatch(zendeskStopPolling()),
+    [dispatch]
+  );
   const notAvailable = I18n.t("global.remoteStates.notAvailable");
   const isUserLoggedIn = useIOSelector(s => isLoggedIn(s.authentication));
   const identityProvider = pipe(
@@ -219,18 +221,7 @@ const ZendeskAskPermissions = () => {
   const zendeskToken = useIOSelector(zendeskTokenSelector);
 
   useEffect(() => {
-    const zendeskConfig = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map(
-        (zT: string): ZendeskAppConfig => ({
-          ...zendeskDefaultJwtConfig,
-          token: zT
-        })
-      ),
-      O.getOrElseW(() => zendeskDefaultAnonymousConfig)
-    );
-
+    const zendeskConfig = getZendeskConfig(zendeskToken);
     initSupportAssistance(zendeskConfig);
 
     // In Zendesk we have two configuration: JwtConfig and AnonymousConfig.
@@ -239,15 +230,7 @@ const ZendeskAskPermissions = () => {
     // we sequentially check both:
     // - if the zendeskToken is present the user will be authenticated via jwt
     // - nothing is available (the user is not authenticated in IO) the user will be totally anonymous also in Zendesk
-    const zendeskIdentity = pipe(
-      zendeskToken,
-      O.fromNullable,
-      O.map((zT: string): JwtIdentity | AnonymousIdentity => ({
-        token: zT
-      })),
-      O.getOrElseW(() => ({}))
-    );
-
+    const zendeskIdentity = getZendeskIdentity(zendeskToken);
     setUserIdentity(zendeskIdentity);
   }, [dispatch, zendeskToken]);
 
@@ -336,7 +319,7 @@ const ZendeskAskPermissions = () => {
     // Tag the ticket with the current app version
     addTicketTag(currentVersion);
 
-    openSupportTicket();
+    openSupportTicket(() => dispatchZendeskUiDismissed());
     void mixpanelTrack("ZENDESK_OPEN_TICKET");
     workUnitCompleted();
   };
