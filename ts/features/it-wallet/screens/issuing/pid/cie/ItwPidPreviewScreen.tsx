@@ -20,7 +20,6 @@ import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
-import LoadingSpinnerOverlay from "../../../../../../components/LoadingSpinnerOverlay";
 import { ItwDecodedPidPotSelector } from "../../../../store/reducers/itwPidDecodeReducer";
 import ItwErrorView from "../../../../components/ItwErrorView";
 import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
@@ -36,6 +35,7 @@ import ROUTES from "../../../../../../navigation/routes";
 import { getPidDisplayData } from "../../../../utils/mocks";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -96,62 +96,70 @@ const ItwPidPreviewScreen = () => {
     const pidDisplayData = getPidDisplayData();
 
     return (
-      <>
-        <ForceScrollDownView>
-          <VSpacer />
-          <View style={IOStyles.horizontalContentPadding}>
-            <H2>
-              {I18n.t("features.itWallet.issuing.pidPreviewScreen.title")}
-            </H2>
-            <VSpacer size={16} />
-            <Body>
-              {I18n.t("features.itWallet.issuing.pidPreviewScreen.checkNotice")}
-            </Body>
-            <VSpacer size={24} />
-            <ItwCredentialCard
-              pidClaims={decodedPid.pid.claims}
-              display={pidDisplayData}
-            />
+      <BaseScreenComponent
+        goBack={true}
+        headerTitle={I18n.t("features.itWallet.issuing.title")}
+        contextualHelp={emptyContextualHelp}
+      >
+        <SafeAreaView style={IOStyles.flex}>
+          <ForceScrollDownView>
             <VSpacer />
-            <ItwPidClaimsList
-              decodedPid={decodedPid}
-              claims={["givenName", "familyName", "taxIdCode"]}
-              expiryDate
-              securityLevel
-              onLinkPress={() => null}
-              issuerInfo
+            <View style={IOStyles.horizontalContentPadding}>
+              <H2>
+                {I18n.t("features.itWallet.issuing.pidPreviewScreen.title")}
+              </H2>
+              <VSpacer size={16} />
+              <Body>
+                {I18n.t(
+                  "features.itWallet.issuing.pidPreviewScreen.checkNotice"
+                )}
+              </Body>
+              <VSpacer size={24} />
+              <ItwCredentialCard
+                pidClaims={decodedPid.pid.claims}
+                display={pidDisplayData}
+              />
+              <VSpacer />
+              <ItwPidClaimsList
+                decodedPid={decodedPid}
+                claims={["givenName", "familyName", "taxIdCode"]}
+                expiryDate
+                securityLevel
+                onLinkPress={() => null}
+                issuerInfo
+              />
+              <VSpacer />
+              <Banner
+                color="neutral"
+                pictogramName="security"
+                title={I18n.t(
+                  "features.itWallet.issuing.pidPreviewScreen.banner.title"
+                )}
+                size="big"
+                content={I18n.t(
+                  "features.itWallet.issuing.pidPreviewScreen.banner.content"
+                )}
+                action={I18n.t(
+                  "features.itWallet.issuing.pidPreviewScreen.banner.actionTitle"
+                )}
+                onPress={() =>
+                  navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+                }
+                onClose={constNull}
+                labelClose={I18n.t(
+                  "features.itWallet.issuing.pidPreviewScreen.banner.closeTitle"
+                )}
+                viewRef={bannerViewRef}
+              />
+              <VSpacer />
+            </View>
+            <ItwFooterVerticalButtons
+              bottomButtonProps={bottomButtonProps}
+              topButtonProps={topButtonProps}
             />
-            <VSpacer />
-            <Banner
-              color="neutral"
-              pictogramName="security"
-              title={I18n.t(
-                "features.itWallet.issuing.pidPreviewScreen.banner.title"
-              )}
-              size="big"
-              content={I18n.t(
-                "features.itWallet.issuing.pidPreviewScreen.banner.content"
-              )}
-              action={I18n.t(
-                "features.itWallet.issuing.pidPreviewScreen.banner.actionTitle"
-              )}
-              onPress={() =>
-                navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
-              }
-              onClose={constNull}
-              labelClose={I18n.t(
-                "features.itWallet.issuing.pidPreviewScreen.banner.closeTitle"
-              )}
-              viewRef={bannerViewRef}
-            />
-            <VSpacer />
-          </View>
-          <ItwFooterVerticalButtons
-            bottomButtonProps={bottomButtonProps}
-            topButtonProps={topButtonProps}
-          />
-        </ForceScrollDownView>
-      </>
+          </ForceScrollDownView>
+        </SafeAreaView>
+      </BaseScreenComponent>
     );
   };
 
@@ -169,12 +177,29 @@ const ItwPidPreviewScreen = () => {
       )
     );
 
+  /**
+   * Loading view component.
+   */
+  const LoadingView = () => (
+    <ItwLoadingSpinnerOverlay
+      captionTitle={I18n.t(
+        "features.itWallet.issuing.pidPreviewScreen.loading.title"
+      )}
+      captionSubtitle={I18n.t(
+        "features.itWallet.issuing.pidPreviewScreen.loading.subtitle"
+      )}
+      isLoading
+    >
+      <></>
+    </ItwLoadingSpinnerOverlay>
+  );
+
   const RenderMask = () =>
     pot.fold(
       decodedPidPot,
-      () => <LoadingSpinnerOverlay isLoading />,
-      () => <LoadingSpinnerOverlay isLoading />,
-      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      () => <LoadingView />,
       err => (
         <ItwErrorView
           type="SingleButton"
@@ -183,8 +208,8 @@ const ItwPidPreviewScreen = () => {
         />
       ),
       some => getDecodedPidOrErrorView(some.decodedPid),
-      () => <LoadingSpinnerOverlay isLoading />,
-      () => <LoadingSpinnerOverlay isLoading />,
+      () => <LoadingView />,
+      () => <LoadingView />,
       (_, someErr) => (
         <ItwErrorView
           type="SingleButton"
@@ -194,15 +219,7 @@ const ItwPidPreviewScreen = () => {
       )
     );
 
-  return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("features.itWallet.issuing.title")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>{RenderMask()}</SafeAreaView>
-    </BaseScreenComponent>
-  );
+  return <RenderMask />;
 };
 
 export default ItwPidPreviewScreen;

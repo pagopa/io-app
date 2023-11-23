@@ -196,20 +196,20 @@ export default class CieReadingCardAnimation extends React.PureComponent<
                 : customVariables.brandPrimary
             }
             shadowColor={IOColors.greyLight}
-            bgColor={IOColors.greyLight}
+            bgColor={IOColors.white}
           >
             {this.props.readingState === ReadingState.completed ? (
               <Pictogram
                 name={"success"}
                 size={180}
-                pictogramStyle="dark-content"
+                pictogramStyle="default"
                 color="white"
               />
             ) : (
               <Pictogram
                 name={isIos ? "nfcScaniOS" : "nfcScanAndroid"}
                 size={180}
-                pictogramStyle="dark-content"
+                pictogramStyle="default"
                 color="white"
               />
             )}
