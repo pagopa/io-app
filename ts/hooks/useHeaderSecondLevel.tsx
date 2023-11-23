@@ -2,7 +2,6 @@ import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useLayoutEffect } from "react";
-import { useSharedValue } from "react-native-reanimated";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
@@ -69,7 +68,7 @@ export const useHeaderSecondLevel = ({
   supportRequest,
   secondAction,
   thirdAction,
-  transparent,
+  transparent = false,
   scrollValues
 }: HeaderSecondLevelHookProps) => {
   const startSupportRequest = useStartSupportRequest({
