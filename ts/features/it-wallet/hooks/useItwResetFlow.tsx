@@ -19,7 +19,12 @@ export const useItwResetFlow = () => {
     </View>
   );
   const Footer = () => (
-    <View style={IOStyles.horizontalContentPadding}>
+    <View
+      style={{
+        ...IOStyles.horizontalContentPadding,
+        paddingBottom: IOStyles.footer.paddingBottom
+      }}
+    >
       <BlockButtons
         type="TwoButtonsInlineHalf"
         primary={{
