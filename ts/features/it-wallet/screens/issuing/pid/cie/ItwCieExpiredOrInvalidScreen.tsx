@@ -1,12 +1,14 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { Link } from "../../../../../../components/core/typography/Link";
+import {
+  Body,
+  FooterWithButtons,
+  LabelLink,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import { openLink } from "../../../../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../../../../i18n";
 import { ReduxProps } from "../../../../../../store/actions/types";
@@ -44,17 +46,21 @@ class ItwCieExpiredOrInvalidScreen extends React.PureComponent<Props> {
         <Content>
           <Body>{I18n.t("authentication.landing.expiredCardContent")}</Body>
           <VSpacer size={16} />
-          <Link onPress={browseToLink}>
+          <LabelLink onPress={browseToLink}>
             {I18n.t("authentication.landing.expiredCardHelp")}
-          </Link>
+          </LabelLink>
         </Content>
         <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            bordered: true,
-            onPress: this.handleGoBack,
-            title: I18n.t("global.buttons.cancel")
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              color: "primary",
+              accessibilityLabel: I18n.t("global.buttons.cancel"),
+              onPress: this.handleGoBack,
+              label: I18n.t("global.buttons.cancel")
+            }
           }}
+          type="SingleButton"
         />
       </TopScreenComponent>
     );

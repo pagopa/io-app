@@ -5,11 +5,9 @@ import { Content } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../../../components/core/typography/Body";
+import { Body, FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
@@ -44,25 +42,29 @@ class ItwCieWrongPinScreen extends React.PureComponent<Props> {
     return this.props.route.params.remainingCount;
   }
 
-  private renderFooterButtons = () => {
-    const cancelButtonProps = {
-      bordered: true,
-      onPress: this.resetAuthentication,
-      title: I18n.t("global.buttons.cancel")
-    };
-    const retryButtonProps = {
-      primary: true,
-      onPress: this.navigateToCiePinScreen,
-      title: I18n.t("global.buttons.retry")
-    };
-    return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        rightButton={retryButtonProps}
-        leftButton={cancelButtonProps}
-      />
-    );
-  };
+  private renderFooterButtons = () => (
+    <FooterWithButtons
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t("global.buttons.cancel"),
+          onPress: () => this.resetAuthentication(),
+          label: I18n.t("global.buttons.cancel")
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t("global.buttons.retry"),
+          onPress: () => this.navigateToCiePinScreen(),
+          label: I18n.t("global.buttons.retry")
+        }
+      }}
+      type="TwoButtonsInlineHalf"
+    />
+  );
 
   public render(): React.ReactNode {
     const remainingCount = this.ciePinRemainingCount;
