@@ -6,6 +6,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwDecodePid } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/errors/itwErrors";
+import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
 
 type ItwDecodedPidType = {
   decodedPid: O.Option<PidWithToken>;
@@ -33,6 +34,11 @@ const reducer = (
       return pot.some({ decodedPid: action.payload });
     case getType(itwDecodePid.failure):
       return pot.toError(state, action.payload);
+    /**
+     * Reset the state when the wallet is operational.
+     */
+    case getType(itwLifecycleOperational):
+      return emptyState;
   }
   return state;
 };

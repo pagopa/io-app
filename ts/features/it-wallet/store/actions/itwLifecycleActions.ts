@@ -2,6 +2,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 
 /**
  * Actions which sets the wallet lifecycle status to operational.
+ * It is intercepted by itw reducers to reset their state.
  */
 export const itwLifecycleOperational = createStandardAction(
   "ITW_LIFECYCLE_OPERATIONAL"
