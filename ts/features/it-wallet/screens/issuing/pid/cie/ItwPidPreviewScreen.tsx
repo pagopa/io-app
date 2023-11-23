@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import {
   Banner,
@@ -145,10 +145,6 @@ const ItwPidPreviewScreen = () => {
                 onPress={() =>
                   navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
                 }
-                onClose={constNull}
-                labelClose={I18n.t(
-                  "features.itWallet.issuing.pidPreviewScreen.banner.closeTitle"
-                )}
                 viewRef={bannerViewRef}
               />
               <VSpacer />
