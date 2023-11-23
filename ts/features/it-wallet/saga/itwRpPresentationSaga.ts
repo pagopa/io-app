@@ -1,12 +1,13 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
-import { ActionType } from "typesafe-actions";
+import { ActionType, isActionOf } from "typesafe-actions";
 import {
   Credential,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 
+import { CommonActions } from "@react-navigation/native";
 import {
   itwRpInitializationEntityValueSelector,
   itwRpInitializationRequestObjectValueSelector
@@ -16,6 +17,12 @@ import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ITW_PID_KEY_TAG } from "../utils/pid";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
+import {
+  identificationRequest,
+  identificationSuccess
+} from "../../../store/actions/identification";
+import NavigationService from "../../../navigation/NavigationService";
+import I18n from "../../../i18n";
 
 /*
  * This saga handles the RP presentation.
@@ -25,61 +32,73 @@ export function* handleItwRpPresentationSaga(
   _: ActionType<typeof itwRpPresentation.request>
 ): SagaIterator {
   try {
-    // TODO: this claims should be selected by user
-    const claims = [
-      "unique_id",
-      "given_name",
-      "family_name",
-      "birthdate",
-      "place_of_birth",
-      "tax_id_number",
-      "evidence"
-    ];
-
-    const requestObjectValue = yield* select(
-      itwRpInitializationRequestObjectValueSelector
+    yield* put(
+      identificationRequest(false, true, undefined, {
+        label: I18n.t("global.buttons.cancel"),
+        onCancel: () =>
+          NavigationService.dispatchNavigationAction(CommonActions.goBack())
+      })
     );
 
-    const pidToken = yield* select(ItwCredentialsPidSelector);
+    const res = yield* take(identificationSuccess);
 
-    if (O.isNone(requestObjectValue) || O.isNone(pidToken)) {
-      throw new Error("Request object is not defined");
-    } else {
-      // Create PID crypto context
-      const pidCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
-      // Retrieve entity configuration for RP
-      const maybeEntityConfiguration = yield* select(
-        itwRpInitializationEntityValueSelector
+    if (isActionOf(identificationSuccess, res)) {
+      // TODO: this claims should be selected by user
+      const claims = [
+        "unique_id",
+        "given_name",
+        "family_name",
+        "birthdate",
+        "place_of_birth",
+        "tax_id_number",
+        "evidence"
+      ];
+
+      const requestObjectValue = yield* select(
+        itwRpInitializationRequestObjectValueSelector
       );
 
-      // We suppose the WIA has already been loaded into the state from previous steps
-      const maybeWalletInstanceAttestation = yield* select(itwWiaSelector);
+      const pidToken = yield* select(ItwCredentialsPidSelector);
 
-      if (O.isNone(maybeWalletInstanceAttestation)) {
-        throw new Error("WalletInstanceAttestation is not defined");
-      }
+      if (O.isNone(requestObjectValue) || O.isNone(pidToken)) {
+        throw new Error("Request object is not defined");
+      } else {
+        // Create PID crypto context
+        const pidCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
+        // Retrieve entity configuration for RP
+        const maybeEntityConfiguration = yield* select(
+          itwRpInitializationEntityValueSelector
+        );
 
-      if (O.isNone(maybeEntityConfiguration)) {
-        throw new Error("Entity is not defined");
-      }
+        // We suppose the WIA has already been loaded into the state from previous steps
+        const maybeWalletInstanceAttestation = yield* select(itwWiaSelector);
 
-      const walletInstanceAttestation = maybeWalletInstanceAttestation.value;
-
-      const requestObject = requestObjectValue.value;
-      const rpEntityConfiguration = maybeEntityConfiguration.value;
-
-      // Submit authorization response
-      const result = yield* call(
-        Credential.Presentation.sendAuthorizationResponse,
-        requestObject,
-        rpEntityConfiguration,
-        [pidToken.value.credential, claims, pidCryptoContext],
-        {
-          walletInstanceAttestation
+        if (O.isNone(maybeWalletInstanceAttestation)) {
+          throw new Error("WalletInstanceAttestation is not defined");
         }
-      );
 
-      yield* put(itwRpPresentation.success(result));
+        if (O.isNone(maybeEntityConfiguration)) {
+          throw new Error("Entity is not defined");
+        }
+
+        const walletInstanceAttestation = maybeWalletInstanceAttestation.value;
+
+        const requestObject = requestObjectValue.value;
+        const rpEntityConfiguration = maybeEntityConfiguration.value;
+
+        // Submit authorization response
+        const result = yield* call(
+          Credential.Presentation.sendAuthorizationResponse,
+          requestObject,
+          rpEntityConfiguration,
+          [pidToken.value.credential, claims, pidCryptoContext],
+          {
+            walletInstanceAttestation
+          }
+        );
+
+        yield* put(itwRpPresentation.success(result));
+      }
     }
   } catch (e) {
     yield* put(

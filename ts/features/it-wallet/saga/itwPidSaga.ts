@@ -1,10 +1,9 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
 import { PID } from "@pagopa/io-react-native-wallet";
-import { ActionType, isActionOf } from "typesafe-actions";
+import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { CommonActions } from "@react-navigation/native";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
 import { getPid } from "../utils/pid";
 import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
@@ -13,13 +12,9 @@ import {
   itwDecodePid,
   itwPid
 } from "../store/actions/itwCredentialsActions";
-import {
-  identificationRequest,
-  identificationSuccess
-} from "../../../store/actions/identification";
-import NavigationService from "../../../navigation/NavigationService";
-import I18n from "../../../i18n";
+
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
+import { verifyPin } from "./ItwSagaUtils";
 
 /**
  * Watcher for the IT wallet PID related sagas.
@@ -99,22 +94,11 @@ export function* handlePidDecodeRequest(
 export function* handleCredentialsAddPid(
   action: ActionType<typeof itwCredentialsAddPid.request>
 ): SagaIterator {
+  yield* call(verifyPin);
   const pid = action.payload;
   if (O.isSome(pid)) {
-    yield* put(
-      identificationRequest(false, true, undefined, {
-        label: I18n.t("global.buttons.cancel"),
-        onCancel: () =>
-          NavigationService.dispatchNavigationAction(CommonActions.goBack())
-      })
-    );
-
-    const res = yield* take(identificationSuccess);
-
-    if (isActionOf(identificationSuccess, res)) {
-      yield* put(itwCredentialsAddPid.success(pid.value));
-      yield* put(itwLifecycleValid());
-    }
+    yield* put(itwCredentialsAddPid.success(pid.value));
+    yield* put(itwLifecycleValid());
   } else {
     yield* put(
       itwCredentialsAddPid.failure({

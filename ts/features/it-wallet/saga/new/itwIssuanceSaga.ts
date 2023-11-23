@@ -33,13 +33,10 @@ import {
   itwIssuanceChecksDataSelector,
   itwIssuanceResultDataSelector
 } from "../../store/reducers/new/itwIssuanceReducer";
-import {
-  identificationRequest,
-  identificationSuccess
-} from "../../../../store/actions/identification";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
+import { verifyPin } from "../ItwSagaUtils";
 
 /**
  * Watcher for issuance related sagas.
@@ -115,6 +112,7 @@ export function* handleIssuanceChecks({
  */
 export function* handleIssuanceGetCredential(): SagaIterator {
   try {
+    yield* call(verifyPin);
     const issuanceData = yield* select(itwIssuanceChecksDataSelector);
 
     if (O.isNone(issuanceData)) {
@@ -225,32 +223,19 @@ function* handleAddCredentialWithPin() {
     if (O.isNone(resultData)) {
       throw new Error();
     }
-    yield* put(
-      identificationRequest(false, true, undefined, {
-        label: I18n.t("global.buttons.cancel"),
-        onCancel: () =>
-          NavigationService.dispatchNavigationAction(CommonActions.goBack())
+    yield* call(verifyPin);
+    yield* put(itwCredentialsAddCredential.success(resultData.value));
+
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.MAIN, {
+        screen: ROUTES.ITWALLET_HOME
       })
     );
 
-    const res = yield* take(identificationSuccess);
-
-    if (isActionOf(identificationSuccess, res)) {
-      yield* put(itwCredentialsAddCredential.success(resultData.value));
-
-      yield* call(
-        NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(ROUTES.MAIN, {
-          screen: ROUTES.ITWALLET_HOME
-        })
-      );
-
-      IOToast.success(
-        I18n.t(
-          "features.itWallet.issuing.credentialPreviewScreen.toast.success"
-        )
-      );
-    }
+    IOToast.success(
+      I18n.t("features.itWallet.issuing.credentialPreviewScreen.toast.success")
+    );
   } catch (e) {
     IOToast.error(
       I18n.t("features.itWallet.issuing.credentialPreviewScreen.toast.failure")
