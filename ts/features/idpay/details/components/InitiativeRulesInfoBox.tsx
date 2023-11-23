@@ -45,7 +45,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
         </ContentWrapper>
       )
     },
-    130
+    170
   );
 
   return (
