@@ -1,8 +1,4 @@
-import {
-  FooterWithButtons,
-  IOVisualCostants,
-  LoadingSpinner
-} from "@pagopa/io-app-design-system";
+import { GradientScrollView } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   RouteProp,
@@ -11,7 +7,6 @@ import {
   useRoute
 } from "@react-navigation/native";
 import React from "react";
-import { SafeAreaView, View } from "react-native";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -42,7 +37,6 @@ const WalletPaymentDetailScreen = () => {
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const isLoading = pot.isLoading(paymentDetailsPot);
-  const isError = pot.isError(paymentDetailsPot);
 
   const navigateToMethodSelection = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
@@ -56,47 +50,19 @@ const WalletPaymentDetailScreen = () => {
     }, [dispatch, rptId])
   );
 
-  React.useEffect(() => {
-    if (isError) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME
-      });
-    }
-  }, [isError, navigation]);
-
-  if (isLoading) {
-    return (
-      <SafeAreaView
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
-        <LoadingSpinner size={48} />
-      </SafeAreaView>
-    );
-  }
-
   return (
     <BaseScreenComponent goBack={true}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <View
-          style={{
-            flex: 1,
-            marginHorizontal: IOVisualCostants.appMarginDefault
-          }}
-        >
-          <DebugPrettyPrint data={paymentDetailsPot} />
-        </View>
-        <FooterWithButtons
-          type="SingleButton"
-          primary={{
-            type: "Solid",
-            buttonProps: {
-              label: "Vai al pagamento",
-              onPress: navigateToMethodSelection,
-              accessibilityLabel: "Vai al pagamento"
-            }
-          }}
-        />
-      </SafeAreaView>
+      <GradientScrollView
+        primaryActionProps={{
+          label: "Vai al pagamento",
+          accessibilityLabel: "Vai al pagmento",
+          onPress: navigateToMethodSelection,
+          disabled: isLoading,
+          loading: isLoading
+        }}
+      >
+        <DebugPrettyPrint data={paymentDetailsPot} />
+      </GradientScrollView>
     </BaseScreenComponent>
   );
 };
