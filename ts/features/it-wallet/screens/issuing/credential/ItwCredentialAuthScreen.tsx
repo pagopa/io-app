@@ -25,7 +25,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import I18n from "../../../../../i18n";
 import ItwBulletList from "../../../components/ItwBulletList";
-import { CREDENTIAL_ISSUER, getRequestedClaims } from "../../../utils/mocks";
+import { getRequestedClaims } from "../../../utils/mocks";
 import { showCancelAlert } from "../../../utils/alert";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
@@ -33,6 +33,7 @@ import ItwKoView from "../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
+import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIssuanceReducer";
 
 /**
  * This screen displays the information about the credential that is going to be shared
@@ -40,8 +41,18 @@ import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
  */
 const ItwCredentialAuthScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const checks = useIOSelector(itwIssuanceChecksDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const toast = useIOToast();
+  const organization = pipe(
+    checks,
+    O.fold(
+      () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
+      some =>
+        some.issuerConf.federation_entity.organization_name ??
+        I18n.t("features.itWallet.generic.placeholders.organizationName")
+    )
+  );
   const { present, bottomSheet } = useItwInfoBottomSheet({
     title: I18n.t(
       "features.itWallet.issuing.credentialsIssuingInfoScreen.infoBottomSheet.title"
@@ -130,7 +141,7 @@ const ItwCredentialAuthScreen = () => {
                 authsource:
                   decodedPid.pid.verification.evidence[0].record.source
                     .organization_name,
-                organization: CREDENTIAL_ISSUER
+                organization
               }
             )}
           </Body>
