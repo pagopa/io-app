@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessageF24 component Should match the snapshot for a loading item 1`] = `
+exports[`MessagePaymentItem component Should match the snapshot for a loading item 1`] = `
 <View
   style={
     Object {
@@ -602,7 +602,7 @@ exports[`MessageF24 component Should match the snapshot for a loading item 1`] =
 </View>
 `;
 
-exports[`MessageF24 component Should match the snapshot for a payable item 1`] = `
+exports[`MessagePaymentItem component Should match the snapshot for a payable item 1`] = `
 <View
   style={
     Object {
@@ -1310,7 +1310,7 @@ exports[`MessageF24 component Should match the snapshot for a payable item 1`] =
 </View>
 `;
 
-exports[`MessageF24 component Should match the snapshot for a processed item 1`] = `
+exports[`MessagePaymentItem component Should match the snapshot for a processed item 1`] = `
 <View
   style={
     Object {
