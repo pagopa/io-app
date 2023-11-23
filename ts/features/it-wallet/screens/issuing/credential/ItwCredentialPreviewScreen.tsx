@@ -21,7 +21,6 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList";
-import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
 import { showCancelAlert } from "../../../utils/alert";
 import ROUTES from "../../../../../navigation/routes";
 import ItwKoView from "../../../components/ItwKoView";
@@ -31,15 +30,13 @@ import {
   itwConfirmStoreCredential,
   itwIssuanceGetCredential
 } from "../../../store/actions/new/itwIssuanceActions";
-import {
-  itwIssuanceResultDataSelector,
-  itwIssuanceResultSelector
-} from "../../../store/reducers/new/itwIssuanceReducer";
+import { itwIssuanceResultSelector } from "../../../store/reducers/new/itwIssuanceReducer";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
 import { StoredCredential } from "../../../store/reducers/itwCredentialsReducer";
+import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
@@ -47,7 +44,6 @@ import { StoredCredential } from "../../../store/reducers/itwCredentialsReducer"
 const ItwCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const issuanceResult = useIOSelector(itwIssuanceResultSelector);
-  const issuanceResultData = useIOSelector(itwIssuanceResultDataSelector);
   const bannerViewRef = React.createRef<View>();
   const toast = useIOToast();
   const dispatch = useIODispatch();
@@ -57,39 +53,6 @@ const ItwCredentialPreviewScreen = () => {
    */
   useOnFirstRender(() => {
     dispatch(itwIssuanceGetCredential.request());
-  });
-
-  /**
-   * Bottom sheet with the issuer information.
-   */
-  const { present, bottomSheet } = useItwInfoBottomSheet({
-    title: pipe(
-      issuanceResultData,
-      O.fold(
-        () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
-        some =>
-          some.issuerConf.federation_entity.organization_name ||
-          I18n.t("features.itWallet.generic.placeholders.organizationName")
-      )
-    ),
-    content: [
-      {
-        title: I18n.t(
-          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.about.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.about.subtitle"
-        )
-      },
-      {
-        title: I18n.t(
-          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.data.title"
-        ),
-        body: I18n.t(
-          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.data.subtitle"
-        )
-      }
-    ]
   });
 
   /**
@@ -167,7 +130,9 @@ const ItwCredentialPreviewScreen = () => {
                 action={I18n.t(
                   "features.itWallet.issuing.credentialPreviewScreen.banner.actionTitle"
                 )}
-                onPress={present}
+                onPress={() =>
+                  navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+                }
               />
               <VSpacer size={32} />
             </View>
@@ -205,31 +170,27 @@ const ItwCredentialPreviewScreen = () => {
     </ItwLoadingSpinnerOverlay>
   );
 
-  const RenderMask = pot.fold(
-    issuanceResult,
-    () => <LoadingView />,
-    () => <LoadingView />,
-    () => <ErrorView />,
-    () => <ErrorView />,
-    data =>
-      pipe(
-        data,
-        O.fold(
-          () => <ErrorView />,
-          some => <ContentView data={some} />
-        )
-      ),
-    () => <LoadingView />,
-    () => <ErrorView />,
-    (_, error) => <ErrorView error={error} />
-  );
+  const RenderMask = () =>
+    pot.fold(
+      issuanceResult,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      () => <ErrorView />,
+      () => <ErrorView />,
+      data =>
+        pipe(
+          data,
+          O.fold(
+            () => <ErrorView />,
+            some => <ContentView data={some} />
+          )
+        ),
+      () => <LoadingView />,
+      () => <ErrorView />,
+      (_, error) => <ErrorView error={error} />
+    );
 
-  return (
-    <>
-      {RenderMask}
-      {bottomSheet}
-    </>
-  );
+  return <RenderMask />;
 };
 
 export default ItwCredentialPreviewScreen;
