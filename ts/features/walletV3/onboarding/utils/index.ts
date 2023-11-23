@@ -18,7 +18,7 @@ export const successOutcomes: ReadonlyArray<OnboardingOutcome> = ["0"];
 
 export const ONBOARDING_FAQ_ENABLE_3DS = "https://io.italia.it/faq/#n3_3";
 
-export const ONBOARDING_OUTCOME_PATH = "/outcomeView";
+export const ONBOARDING_OUTCOME_PATH = "/wallets/outcomes";
 
 export const ONBOARDING_OUTCOME_ERROR_PICTOGRAM: Record<
   OnboardingOutcomeFailure,
