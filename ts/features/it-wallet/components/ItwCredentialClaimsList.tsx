@@ -9,6 +9,7 @@ import { getClaimsFullLocale, localeDateFormatOrSame } from "../utils/locales";
 import I18n from "../../../i18n";
 import { CredentialCatalogDisplay } from "../utils/mocks";
 import { StoredCredential } from "../store/reducers/itwCredentialsReducer";
+import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 
 /**
  * Type of the claims list.
@@ -106,52 +107,121 @@ const ItwCredentialClaimsList = ({
     sortSchema(credentialConfigurationSchema, displayData.order)
   );
 
-  const evidence = parsedCredential.evidence;
+  const evidence = EvidenceDecoder.decode(
+    JSON.parse(parsedCredential.evidence)
+  );
   const releaserName = issuerConf.federation_entity.organization_name;
 
   /**
-   * Renders the issuer name from the evidence field of the credential.
-   * It uses the EvidenceDecoder to decode the evidence field.
-   * @param evidence - the evidence field of the credential.
-   * @returns the list item with the issuer name or an empty fragment if the evidence field is not available.
+   * Bottom sheet for the issuer name.
    */
-  const RenderIssuerName = ({ evidence }: { evidence: string }) =>
-    pipe(
-      EvidenceDecoder.decode(JSON.parse(evidence)),
+  const issuedByBottomSheet = useItwInfoBottomSheet({
+    title: pipe(
+      evidence,
       E.fold(
-        () => <></>,
-        result => {
-          const label = I18n.t(
-            "features.itWallet.verifiableCredentials.claims.releasedBy"
-          );
-          const value = result[0].record.source.organization_name;
-          return (
-            <>
-              <ListItemInfo
-                label={label}
-                value={value}
-                accessibilityLabel={`${label} ${value}`}
-              />
-              <Divider />
-            </>
-          );
-        }
+        () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
+        right => right[0].record.source.organization_name
       )
-    );
+    ),
+    content: [
+      {
+        title: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.about.title"
+        ),
+        body: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.about.subtitle"
+        )
+      },
+      {
+        title: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.data.title"
+        ),
+        body: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.data.subtitle"
+        )
+      }
+    ]
+  });
 
+  /**
+   * Bottom sheet for the releaser name.
+   */
+  const releasedByBottomSheet = useItwInfoBottomSheet({
+    title:
+      releaserName ??
+      I18n.t("features.itWallet.generic.placeholders.organizationName"),
+    content: [
+      {
+        title: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.about.title"
+        ),
+        body: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.about.subtitle"
+        )
+      },
+      {
+        title: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.data.title"
+        ),
+        body: I18n.t(
+          "features.itWallet.issuing.credentialPreviewScreen.bottomSheet.data.subtitle"
+        )
+      }
+    ]
+  });
+
+  /**
+   * Renders the issuer name with an info button that opens the bottom sheet.
+   * @param issuerName - the issuer name.
+   * @returns the list item with the issuer name.
+   */
+  const RenderIssuerName = ({ issuerName }: { issuerName: string }) => {
+    const label = I18n.t(
+      "features.itWallet.verifiableCredentials.claims.issuedByNew"
+    );
+    return (
+      <>
+        <ListItemInfo
+          endElement={{
+            type: "iconButton",
+            componentProps: {
+              icon: "info",
+              accessibilityLabel: "test",
+              onPress: () => issuedByBottomSheet.present()
+            }
+          }}
+          label={label}
+          value={issuerName}
+          accessibilityLabel={`${label} ${issuerName}`}
+        />
+        <Divider />
+      </>
+    );
+  };
+
+  /**
+   * Renders the releaser name with an info button that opens the bottom sheet.
+   * @param releaserName - the releaser name.
+   * @returns the list item with the releaser name.
+   */
   const RenderReleaserName = ({ releaserName }: { releaserName: string }) => {
     const label = I18n.t(
       "features.itWallet.verifiableCredentials.claims.releasedBy"
     );
     return (
-      <>
-        <ListItemInfo
-          label={label}
-          value={releaserName}
-          accessibilityLabel={`${label} ${releaserName}`}
-        />
-        <Divider />
-      </>
+      <ListItemInfo
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            accessibilityLabel: "test",
+            onPress: () => releasedByBottomSheet.present()
+          }
+        }}
+        label={label}
+        value={releaserName}
+        accessibilityLabel={`${label} ${releaserName}`}
+      />
     );
   };
 
@@ -177,8 +247,20 @@ const ItwCredentialClaimsList = ({
           </View>
         )
       )}
-      {evidence && <RenderIssuerName evidence={evidence} />}
-      {releaserName && <RenderReleaserName releaserName={releaserName} />}
+      {E.isRight(evidence) && (
+        <>
+          <RenderIssuerName
+            issuerName={evidence.right[0].record.source.organization_name}
+          />
+          {issuedByBottomSheet.bottomSheet}
+        </>
+      )}
+      {releaserName && (
+        <>
+          <RenderReleaserName releaserName={releaserName} />
+          {releasedByBottomSheet.bottomSheet}
+        </>
+      )}
     </>
   );
 };
