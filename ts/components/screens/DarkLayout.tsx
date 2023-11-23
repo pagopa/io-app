@@ -105,7 +105,7 @@ export default class DarkLayout extends React.Component<Props> {
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
-        hideBaseHeader={this.props.hideBaseHeader ?? false}
+        hideBaseHeader={!!this.props.hideBaseHeader}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
