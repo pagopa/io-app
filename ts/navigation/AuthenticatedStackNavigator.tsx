@@ -63,6 +63,10 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
+import {
+  WalletDetailsNavigator,
+  WalletDetailsRoutes
+} from "../features/walletV3/details/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -231,6 +235,13 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
         component={WalletPaymentNavigator}
+        options={{
+          gestureEnabled: isGestureEnabled
+        }}
+      />
+      <Stack.Screen
+        name={WalletDetailsRoutes.WALLET_DETAILS_MAIN}
+        component={WalletDetailsNavigator}
         options={{
           gestureEnabled: isGestureEnabled
         }}
