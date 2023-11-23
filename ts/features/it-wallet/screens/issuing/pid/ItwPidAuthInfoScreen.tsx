@@ -63,11 +63,7 @@ const ItwPidAuthInfoScreen = () => {
    * Loading view component.
    */
   const LoadingView = () => (
-    <ItwLoadingSpinnerOverlay
-      captionTitle={I18n.t("features.itWallet.issuing.loading.title")}
-      captionSubtitle={I18n.t("features.itWallet.issuing.loading.subtitle")}
-      isLoading
-    >
+    <ItwLoadingSpinnerOverlay isLoading>
       <></>
     </ItwLoadingSpinnerOverlay>
   );
