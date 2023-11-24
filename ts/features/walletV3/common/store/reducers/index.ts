@@ -4,9 +4,9 @@ import walletOnboardingReducer, {
 } from "../../../onboarding/store";
 import walletPaymentReducer, {
   WalletPaymentState
-} from "../../../payment/store";
+} from "../../../payment/store/reducers";
 
-export type WalletV3State = {
+export type WalletState = {
   onboarding: WalletOnboardingState;
   payment: WalletPaymentState;
 };

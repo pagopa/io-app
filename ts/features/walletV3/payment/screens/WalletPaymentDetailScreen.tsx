@@ -17,7 +17,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletGetPaymentDetails } from "../store/actions";
+import { walletPaymentGetDetails } from "../store/actions";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 
 type WalletPaymentDetailScreenNavigationParams = {
@@ -46,7 +46,7 @@ const WalletPaymentDetailScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(walletGetPaymentDetails.request({ rptId }));
+      dispatch(walletPaymentGetDetails.request(rptId));
     }, [dispatch, rptId])
   );
 
@@ -61,7 +61,7 @@ const WalletPaymentDetailScreen = () => {
           loading: isLoading
         }}
       >
-        <DebugPrettyPrint data={paymentDetailsPot} />
+        <DebugPrettyPrint title="paymentDetailsPot" data={paymentDetailsPot} />
       </GradientScrollView>
     </BaseScreenComponent>
   );
