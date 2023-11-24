@@ -14,7 +14,7 @@ import {
 } from "../store/actions/itwCredentialsActions";
 
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
-import { verifyPin } from "./ItwSagaUtils";
+import { verifyPin } from "./itwSagaUtils";
 
 /**
  * Watcher for the IT wallet PID related sagas.

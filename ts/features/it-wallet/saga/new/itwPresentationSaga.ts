@@ -4,7 +4,7 @@ import {
   itwPresentation,
   itwPresentationChecks
 } from "../../store/actions/new/itwPresentationActions";
-import { verifyPin } from "../ItwSagaUtils";
+import { verifyPin } from "../itwSagaUtils";
 
 export function* watchItwPresentationSaga(): SagaIterator {
   yield* takeLatest(itwPresentationChecks.request, itwPresentationChecksSaga);
