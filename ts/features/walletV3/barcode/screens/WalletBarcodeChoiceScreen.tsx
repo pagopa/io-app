@@ -32,7 +32,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import * as analytics from "../../../barcode/analytics";
 import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
 import { PaymentNoticeListItem } from "../components/PaymentNoticeListItem";
-import { WalletPaymentParamsList } from "../navigation/params";
+import { WalletBarcodeParamsList } from "../navigation/params";
 
 type WalletBarcodeChoiceScreenParams = {
   barcodes: Array<PagoPaBarcode>;
@@ -52,7 +52,7 @@ const WalletBarcodeChoiceScreen = () => {
   });
 
   const route =
-    useRoute<RouteProp<WalletPaymentParamsList, "WALLET_BARCODE_CHOICE">>();
+    useRoute<RouteProp<WalletBarcodeParamsList, "WALLET_BARCODE_CHOICE">>();
 
   const { barcodes } = route.params;
 
