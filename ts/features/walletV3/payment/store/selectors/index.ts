@@ -39,3 +39,8 @@ export const walletPaymentTransactionSelector = createSelector(
   selectWalletPayment,
   state => state.transaction
 );
+
+export const walletPaymentAuthorizationUrlSelector = createSelector(
+  selectWalletPayment,
+  state => state.authorizationUrl
+);

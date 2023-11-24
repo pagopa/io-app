@@ -47,12 +47,13 @@ export const walletPaymentCreateTransaction = createAsyncAction(
 
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;
+  walletId: string;
+  pspId: string;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;
-  pspId: string;
 };
 
-export const walletPaymentAuthorize = createAsyncAction(
+export const walletPaymentAuthorization = createAsyncAction(
   "WALLET_PAYMENT_AUTH_REQUEST",
   "WALLET_PAYMENT_AUTH_SUCCESS",
   "WALLET_PAYMENT_AUTH_FAILURE"
@@ -64,4 +65,4 @@ export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentGetUserWallets>
   | ActionType<typeof walletPaymentCalculateFees>
   | ActionType<typeof walletPaymentCreateTransaction>
-  | ActionType<typeof walletPaymentAuthorize>;
+  | ActionType<typeof walletPaymentAuthorization>;

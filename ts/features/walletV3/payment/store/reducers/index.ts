@@ -9,6 +9,7 @@ import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  walletPaymentAuthorization,
   walletPaymentCalculateFees,
   walletPaymentCreateTransaction,
   walletPaymentGetAllMethods,
@@ -147,6 +148,23 @@ const reducer = (
       return {
         ...state,
         transaction: pot.toError(state.transaction, action.payload)
+      };
+
+    // Authorization url
+    case getType(walletPaymentAuthorization.request):
+      return {
+        ...state,
+        authorizationUrl: pot.toLoading(state.authorizationUrl)
+      };
+    case getType(walletPaymentAuthorization.success):
+      return {
+        ...state,
+        authorizationUrl: pot.some(action.payload.authorizationUrl)
+      };
+    case getType(walletPaymentAuthorization.failure):
+      return {
+        ...state,
+        authorizationUrl: pot.toError(state.authorizationUrl, action.payload)
       };
   }
   return state;

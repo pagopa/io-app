@@ -3,6 +3,7 @@ import { takeLatest } from "typed-redux-saga/macro";
 import { WalletClient } from "../../common/api/client";
 import { PaymentClient } from "../api/client";
 import {
+  walletPaymentAuthorization,
   walletPaymentCalculateFees,
   walletPaymentCreateTransaction,
   walletPaymentGetAllMethods,
@@ -14,6 +15,7 @@ import { handleWalletPaymentCreateTransaction } from "./networking/handleWalletP
 import { handleWalletPaymentGetAllMethods } from "./networking/handleWalletPaymentGetAllMethods";
 import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentGetDetails";
 import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
+import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
 
 /**
  * Handle the pagoPA payments requests
@@ -51,5 +53,11 @@ export function* watchWalletPaymentSaga(
     walletPaymentCreateTransaction.request,
     handleWalletPaymentCreateTransaction,
     paymentClient.newTransaction
+  );
+
+  yield* takeLatest(
+    walletPaymentAuthorization.request,
+    handleWalletPaymentAuthorization,
+    paymentClient.requestTransactionAuthorization
   );
 }
