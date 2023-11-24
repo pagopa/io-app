@@ -163,7 +163,6 @@ const ProfileStackNavigator = () => {
           headerShown: false
         }}
         name={ROUTES.INSERT_EMAIL_SCREEN}
-        // FIXME -> understand if this control is necessary
         component={isNewCduFlow ? NewEmailInsertScreen : EmailInsertScreen}
       />
       <Stack.Screen

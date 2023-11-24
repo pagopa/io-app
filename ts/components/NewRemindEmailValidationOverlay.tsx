@@ -133,7 +133,6 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   };
 
   const navigateToInsertEmail = () => {
-    // FIXME -> understand if this function is needed
     dispatchAcknowledgeOnEmailValidation(O.none);
     hideModal();
   };

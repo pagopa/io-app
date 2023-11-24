@@ -65,7 +65,6 @@ const navigator = () => (
       name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
       component={OnboardingEmailInsertScreen}
     />
-    {/* FIXME -> understand if this control is necessary */}
     <Stack.Screen
       name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
       component={
