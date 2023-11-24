@@ -42,7 +42,6 @@ import CertificateWrongFormat from "../../../../img/features/euCovidCert/certifi
 /* Donations */
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
-import Profile from "../../../../img/icons/profile-illustration.png";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
@@ -210,24 +209,6 @@ export const DSLegacyPictograms = () => {
           image={renderRasterImage(CertificateWrongFormat)}
         />
         {/* ↳ Duplicate of Question */}
-      </View>
-
-      <H2
-        color={theme["textHeading-default"]}
-        weight={"SemiBold"}
-        style={{ marginBottom: 16 }}
-      >
-        Sections
-      </H2>
-      <View style={styles.itemsWrapper}>
-        <DSAssetViewerBox
-          size="small"
-          spacing="small"
-          colorMode="dark"
-          type="raster"
-          name={"Profile"}
-          image={renderRasterImage(Profile)}
-        />
       </View>
     </DesignSystemScreen>
   );
