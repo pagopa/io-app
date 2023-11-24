@@ -1365,6 +1365,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     numberOfLines={1}
@@ -1372,6 +1373,7 @@ exports[`MessageF24 component when there is only one F24 should match the snapsh
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#475A6D",
