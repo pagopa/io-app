@@ -19,6 +19,7 @@ import { createIDPayClient } from "../api/client";
 import { watchIDPayInitiativeDetailsSaga } from "../../details/saga";
 import { watchIDPayTimelineSaga } from "../../timeline/saga";
 import { watchIDPayInitiativeConfigurationSaga } from "../../configuration/saga";
+import { watchIDPayBarcodeSaga } from "../../barcode/saga";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -62,4 +63,5 @@ export function* watchIDPaySaga(bpdToken: string): SagaIterator {
     bearerToken,
     preferredLanguage
   );
+  yield* fork(watchIDPayBarcodeSaga, idPayClient, bearerToken);
 }
