@@ -50,6 +50,8 @@ export function* handleGetSignatureRequestById(
        */
       const env = pipe(
         Environment.decode(
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           getSignatureDetailViewByIdResponse.right.headers.get(
             "x-io-sign-environment"
           )
