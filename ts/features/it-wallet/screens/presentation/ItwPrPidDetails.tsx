@@ -19,7 +19,7 @@ import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeRed
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwPidClaimsList from "../../components/ItwPidClaimsList";
-import { getPidDisplayData } from "../../utils/mocks";
+import { CredentialType, getPidDisplayData } from "../../utils/mocks";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
@@ -60,7 +60,10 @@ const ItwPrPidDetails = () => {
       <SafeAreaView style={{ ...IOStyles.flex }}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
-            <ItwClaimsWrapper displayData={pidDisplayData}>
+            <ItwClaimsWrapper
+              displayData={pidDisplayData}
+              type={CredentialType.PID}
+            >
               <ItwPidClaimsList
                 decodedPid={decodedPid}
                 claims={["givenName", "familyName", "taxIdCode"]}

@@ -61,7 +61,10 @@ const ItwPrCredentialDetailsScreen = () => {
         <SafeAreaView style={{ ...IOStyles.flex }}>
           <ScrollView>
             <View style={IOStyles.horizontalContentPadding}>
-              <ItwClaimsWrapper displayData={data.displayData}>
+              <ItwClaimsWrapper
+                displayData={data.displayData}
+                type={data.credentialType}
+              >
                 <ItwCredentialClaimsList data={data} />
               </ItwClaimsWrapper>
               <VSpacer size={spacerSize} />

@@ -1,6 +1,5 @@
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { IOIcons } from "@pagopa/io-app-design-system";
-import { ImageSourcePropType } from "react-native";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
@@ -37,9 +36,18 @@ export const mapAssuranceLevel = (level: AssuranceLevel | string) => {
 
 export const CREDENTIAL_ISSUER = "eFarma";
 
+/**
+ * Credential types mocks.
+ */
+export enum CredentialType {
+  HEALTH_CARD = "HealthCard",
+  EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
+  DRIVING_LICENSE = "DrivingLicense",
+  PID = "PID"
+}
+
 export type CredentialCatalogDisplay = {
   textColor: "black" | "white";
-  image: ImageSourcePropType;
   title: string;
   icon?: IOIcons;
   firstLine?: Array<string>;
@@ -73,7 +81,7 @@ export type CredentialCatalogItem =
  */
 export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   {
-    type: "EuropeanDisabilityCard",
+    type: CredentialType.EUROPEAN_DISABILITY_CARD,
     issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.disabilityCard"
@@ -81,7 +89,6 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
     icon: "disabilityCard",
     incoming: false,
     textColor: "black",
-    image: require("../assets/img/credentials/cards/europeanDisabilityCardFront.png"),
     firstLine: ["given_name", "family_name"],
     secondLine: ["serial_number"],
     order: [
@@ -98,7 +105,6 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
     textColor: "black",
-    image: require("../assets/img/credentials/cards/healthInsuranceFront.png"),
     firstLine: [],
     secondLine: []
   },
@@ -109,11 +115,26 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
     icon: "driverLicense",
     incoming: true,
     textColor: "black",
-    image: require("../assets/img/credentials/cards/drivingLicenseFront.png"),
     firstLine: [],
     secondLine: []
   }
 ];
+
+/**
+ * Returns the mocked background image for the credential.
+ * @param type - the credential type
+ * @returns the mocked background image.
+ */
+export const getImageFromCredentialType = (type: string) => {
+  switch (type) {
+    case CredentialType.EUROPEAN_DISABILITY_CARD:
+      return require("../assets/img/credentials/cards/europeanDisabilityCardFront.png");
+    case CredentialType.PID:
+      return require("../assets/img/credentials/cards/pidFront.png");
+    default:
+      return require("../assets/img/credentials/cards/default.png");
+  }
+};
 
 /**
  * Hard coded display feature for PID
@@ -123,8 +144,7 @@ export const getPidDisplayData = (): CredentialCatalogDisplay => ({
     "features.itWallet.verifiableCredentials.type.digitalCredential"
   ),
   icon: "archive",
-  textColor: "white",
-  image: require("../assets/img/credentials/cards/pidFront.png")
+  textColor: "white"
 });
 
 export const getRequestedClaims = (
@@ -208,5 +228,6 @@ export const rpPidMock: RpMock = {
 
 /**
  * Regex to validate the date format of a credential.
+ * This is mocked because the date format is not yet defined.
  */
 export const dateFormatRegex = new RegExp(/^\d{4}-\d{2}-\d{2}$/);

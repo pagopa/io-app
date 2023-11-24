@@ -26,7 +26,7 @@ import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer"
 import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import ItwCredentialCard from "../components/ItwCredentialCard";
-import { getPidDisplayData } from "../utils/mocks";
+import { CredentialType, getPidDisplayData } from "../utils/mocks";
 import ItwKoView from "../components/ItwKoView";
 import { getItwGenericMappedError } from "../utils/errors/itwErrorsMapping";
 import { ItWalletError } from "../utils/errors/itwErrors";
@@ -61,6 +61,7 @@ const ItwHomeScreen = () => {
     I18n.t("features.itWallet.homeScreen.categories.bonus")
   ];
   const pidDisplayData = getPidDisplayData();
+  const pidType = CredentialType.PID;
 
   /**
    * Condionally navigate to the credentials catalog screen if the experimental feature flag is true.
@@ -101,6 +102,7 @@ const ItwHomeScreen = () => {
           <ItwCredentialCard
             pidClaims={decodedPid.pid.claims}
             display={pidDisplayData}
+            type={pidType}
           />
           <VSpacer />
         </Pressable>
@@ -123,6 +125,7 @@ const ItwHomeScreen = () => {
               <ItwCredentialCard
                 parsedCredential={credential.parsedCredential}
                 display={credential.displayData}
+                type={credential.credentialType}
               />
               <VSpacer />
             </Pressable>

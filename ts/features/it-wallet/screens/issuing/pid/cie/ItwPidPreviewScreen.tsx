@@ -30,7 +30,7 @@ import { ForceScrollDownView } from "../../../../../../components/ForceScrollDow
 import ItwFooterVerticalButtons from "../../../../components/ItwFooterVerticalButtons";
 import { showCancelAlert } from "../../../../utils/alert";
 import ROUTES from "../../../../../../navigation/routes";
-import { getPidDisplayData } from "../../../../utils/mocks";
+import { CredentialType, getPidDisplayData } from "../../../../utils/mocks";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
@@ -50,6 +50,8 @@ const ItwPidPreviewScreen = () => {
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwPidValueSelector);
   const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
+  const pidDisplayData = getPidDisplayData();
+  const pidType = CredentialType.PID;
 
   /**
    * Dispatches the action to decode the PID on first render.
@@ -119,6 +121,7 @@ const ItwPidPreviewScreen = () => {
               <ItwCredentialCard
                 pidClaims={decodedPid.pid.claims}
                 display={pidDisplayData}
+                type={pidType}
               />
               <VSpacer />
               <ItwPidClaimsList
@@ -126,7 +129,9 @@ const ItwPidPreviewScreen = () => {
                 claims={["givenName", "familyName", "taxIdCode"]}
                 expiryDate
                 securityLevel
-                onLinkPress={() => null}
+                onLinkPress={() =>
+                  navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+                }
                 issuerInfo
               />
               <VSpacer />
