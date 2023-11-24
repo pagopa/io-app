@@ -32,7 +32,7 @@ import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender
 import { itwDecodePid } from "../../../../store/actions/itwCredentialsActions";
 import { itwPidValueSelector } from "../../../../store/reducers/itwPidReducer";
 import ItwCredentialCard from "../../../../components/ItwCredentialCard";
-import { getPidDisplayData } from "../../../../utils/mocks";
+import { CredentialType, getPidDisplayData } from "../../../../utils/mocks";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -48,6 +48,7 @@ const ItwPidPreviewScreen = () => {
   const pid = useIOSelector(itwPidValueSelector);
   const decodedPidPot = useIOSelector(ItwDecodedPidPotSelector);
   const pidDisplayData = getPidDisplayData();
+  const pidType = CredentialType.PID;
 
   /**
    * Dispatches the action to decode the PID on first render.
@@ -83,6 +84,7 @@ const ItwPidPreviewScreen = () => {
             <ItwCredentialCard
               pidClaims={decodedPid.pid.claims}
               display={pidDisplayData}
+              type={pidType}
             />
             <VSpacer />
             <FeatureInfo
