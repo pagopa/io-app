@@ -8,6 +8,7 @@ import {
   fingerprintAcknowledged
 } from "../actions/onboarding";
 import { Action } from "../actions/types";
+import { sessionExpired } from "../actions/authentication";
 import { GlobalState } from "./types";
 
 export type OnboardingState = Readonly<{
@@ -28,7 +29,7 @@ const reducer = (
         ...state,
         isFingerprintAcknowledged: true
       };
-
+    case getType(sessionExpired):
     case getType(clearOnboarding):
       return INITIAL_STATE;
 

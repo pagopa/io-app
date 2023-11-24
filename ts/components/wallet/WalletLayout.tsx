@@ -28,6 +28,7 @@ type Props = Readonly<{
   topContentHeight?: number;
   topContent?: React.ReactNode;
   hideHeader?: boolean;
+  hideBaseHeader?: boolean;
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
   refreshControl?: Animated.ComponentProps<Content>["refreshControl"];
@@ -50,6 +51,7 @@ export default class WalletLayout extends React.Component<Props> {
       accessibilityLabel,
       allowGoBack,
       hideHeader,
+      hideBaseHeader = false,
       footerContent,
       contentStyle,
       appLogo,
@@ -67,6 +69,7 @@ export default class WalletLayout extends React.Component<Props> {
         topContentHeight={this.props.topContentHeight}
         topContent={this.props.topContent}
         hideHeader={hideHeader}
+        hideBaseHeader={hideBaseHeader}
         footerContent={footerContent}
         footerFullWidth={footerFullWidth}
         contextualHelp={this.props.contextualHelp}

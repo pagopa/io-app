@@ -43,6 +43,7 @@ import {
   refreshTokenNoPinError
 } from "../store/actions/tokenRefreshActions";
 import { getPin } from "../../../utils/keychain";
+import { dismissSupport } from "../../../utils/supportAssistance";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -53,6 +54,9 @@ function* handleRefreshSessionToken(
     typeof refreshSessionToken.request
   >
 ) {
+  // Dismiss Zendesk Support Screen if it is visible
+  yield* call(dismissSupport);
+
   const isPinAvailable = O.isSome(yield* call(getPin));
 
   const { withUserInteraction } = refreshSessionTokenRequestAction.payload;

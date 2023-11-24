@@ -10,12 +10,19 @@ import { WalletOnboardingParamsList } from "../navigation/navigator";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import WalletOnboardingSuccess from "../components/WalletOnboardingSuccess";
-import { OnboardingOutcome, OnboardingResult } from "../types";
+import {
+  OnboardingOutcomeEnum,
+  OnboardingOutcomeFailure,
+  OnboardingOutcomeSuccess,
+  OnboardingResult
+} from "../types";
 import WalletOnboardingError from "../components/WalletOnboardingError";
 import WalletOnboardingWebView from "../components/WalletOnboardingWebView";
-import ROUTES from "../../../../navigation/routes";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { WalletDetailsRoutes } from "../../details/navigation/navigator";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 
 export type WalletOnboardingStartScreenParams = {
   paymentMethodId: string;
@@ -27,7 +34,7 @@ type WalletOnboardingStartScreenRouteProps = RouteProp<
 >;
 
 const WalletOnboardingStartScreen = () => {
-  const navigation = useNavigation<IOStackNavigationProp<WalletParamsList>>();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const route = useRoute<WalletOnboardingStartScreenRouteProps>();
   const { paymentMethodId } = route.params;
 
@@ -36,11 +43,12 @@ const WalletOnboardingStartScreen = () => {
 
   const handleOnboardingError = () => {
     setOnboardingResult({
-      status: "ERROR"
+      status: "ERROR",
+      outcome: OnboardingOutcomeEnum.GENERIC_ERROR
     });
   };
 
-  const handleOnboardingFailure = (outcome: OnboardingOutcome) => {
+  const handleOnboardingFailure = (outcome: OnboardingOutcomeFailure) => {
     setOnboardingResult({
       status: "FAILURE",
       outcome
@@ -48,7 +56,7 @@ const WalletOnboardingStartScreen = () => {
   };
 
   const handleOnboardingSuccess = (
-    outcome: OnboardingOutcome,
+    outcome: OnboardingOutcomeSuccess,
     walletId: string
   ) => {
     setOnboardingResult({
@@ -60,13 +68,10 @@ const WalletOnboardingStartScreen = () => {
 
   const handleContinueButton = () => {
     if (onboardingResult && onboardingResult.status === "SUCCESS") {
-      navigation.replace(ROUTES.WALLET_NAVIGATOR, {
-        screen: ROUTES.WALLET_CREDIT_CARD_DETAIL,
+      navigation.replace(WalletDetailsRoutes.WALLET_DETAILS_MAIN, {
+        screen: WalletDetailsRoutes.WALLET_DETAILS_SCREEN,
         params: {
-          creditCard: {
-            // TODO: Replace the behavior of this navigation sending only the idWallet to the detail page (https://pagopa.atlassian.net/browse/IOBP-373)
-            idWallet: onboardingResult.walletId
-          } as any
+          walletId: onboardingResult.walletId
         }
       });
     }

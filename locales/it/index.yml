@@ -84,6 +84,7 @@ global:
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
+    search: "Cerca"
     switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
@@ -1176,7 +1177,28 @@ wallet:
     success:
       title: "La carta è stata aggiunta!"
       continueButton: "Vedi dettagli"
-    failure: "Errore durante l'aggiunta della carta"
+    failure:
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.
+        primaryAction: Chiudi
+        secondaryAction: Scopri di più
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+        primaryAction: Chiudi
+      CANCELED_BY_USER:
+        title: L'operazione è stata annullata
+        subtitle: ""
+        primaryAction: Chiudi
+      INVALID_SESSION:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -3338,21 +3360,22 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: "Pagamento"
-              ONBOARDING: "Adesione all'iniziativa"
-              ADD_IBAN: "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
-              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION: "Pagamento POS"
-              REVERSAL: "Pagamento POS"
-              DELETE_INSTRUMENT: "Disattivazione metodo ···· {{maskedPan}}"
-              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN: "Disattivazione metodo"
-              REJECTED_ADD_INSTRUMENT: "Attivazione metodo"
-              PAID_REFUND: "Rimborso sul tuo conto"
-              REJECTED_REFUND: "Rimborso sul tuo conto"
+              TRANSACTION_ONLINE: "Pagamento online"
+              ONBOARDING: "Adesione all'iniziativa"
+              ADD_IBAN: "IBAN modificato"
+              ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REJECTED_ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              REJECTED_DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REFUND: "Rimborso sul tuo conto"
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
+              CIE: "Abilitazione carta d’identità elettronica"
     discountDetails:
+      bottomSheetOptions:
+        scanQr: Inquadra un codice QR
+        generateBarcode: Crea un codice sconto
       authorizeButton: Autorizza un pagamento
       IDPayCode:
         banner:
