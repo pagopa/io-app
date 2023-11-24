@@ -19,12 +19,13 @@ import {
 import { pidDataMock } from "../../../utils/mocks";
 import { formatDateToYYYYMMDD } from "../../../../../utils/dates";
 import { isIos } from "../../../../../utils/platform";
-import ItwErrorView from "../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
 import { itwWiaStateSelector } from "../../../store/reducers/itwWiaReducer";
 import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
 import ItwContinueView from "../../../components/ItwContinueView";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
+import ItwKoView from "../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import { ItWalletError } from "../../../utils/errors/itwErrors";
 
 /**
  * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
@@ -103,29 +104,26 @@ const ItwPidAuthInfoScreen = () => {
     </BaseScreenComponent>
   );
 
+  /**
+   * Error view component which currently displays a generic error.
+   * @param error - optional ItWalletError to be displayed.
+   */
+  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
+    const mappedError = getItwGenericMappedError(() => navigation.goBack());
+    return <ItwKoView {...mappedError} />;
+  };
+
   const RenderMask = () =>
     pot.fold(
       wia,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={err}
-        />
-      ),
+      err => <ErrorView error={err} />,
       _ => <ContentView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, someErr) => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={someErr}
-        />
-      )
+      (_, someErr) => <ErrorView error={someErr} />
     );
 
   return <RenderMask />;

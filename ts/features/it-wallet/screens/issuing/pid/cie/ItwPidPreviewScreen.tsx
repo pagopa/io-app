@@ -21,8 +21,6 @@ import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { ItwDecodedPidPotSelector } from "../../../../store/reducers/itwPidDecodeReducer";
-import ItwErrorView from "../../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../../utils/itwButtonsUtils";
 import ItwPidClaimsList from "../../../../components/ItwPidClaimsList";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import { itwDecodePid } from "../../../../store/actions/itwCredentialsActions";
@@ -36,6 +34,9 @@ import { getPidDisplayData } from "../../../../utils/mocks";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
+import ItwKoView from "../../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { ItWalletError } from "../../../../utils/errors/itwErrors";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;
@@ -163,12 +164,7 @@ const ItwPidPreviewScreen = () => {
     pipe(
       optionDecodedPid,
       O.fold(
-        () => (
-          <ItwErrorView
-            type="SingleButton"
-            leftButton={cancelButtonProps(navigation.goBack)}
-          />
-        ),
+        () => <ErrorView />,
         decodedPid => <ContentView decodedPid={decodedPid} />
       )
     );
@@ -190,29 +186,26 @@ const ItwPidPreviewScreen = () => {
     </ItwLoadingSpinnerOverlay>
   );
 
+  /**
+   * Error view component which currently displays a generic error.
+   * @param error - optional ItWalletError to be displayed.
+   */
+  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
+    const mappedError = getItwGenericMappedError(() => navigation.goBack());
+    return <ItwKoView {...mappedError} />;
+  };
+
   const RenderMask = () =>
     pot.fold(
       decodedPidPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={err}
-        />
-      ),
+      err => <ErrorView error={err} />,
       some => getDecodedPidOrErrorView(some.decodedPid),
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, someErr) => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={someErr}
-        />
-      )
+      (_, someErr) => <ErrorView error={someErr} />
     );
 
   return <RenderMask />;

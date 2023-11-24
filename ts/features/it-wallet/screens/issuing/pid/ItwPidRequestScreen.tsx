@@ -13,12 +13,13 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
-import ItwErrorView from "../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { itwPidSelector } from "../../../store/reducers/itwPidReducer";
 import { itwPid } from "../../../store/actions/itwCredentialsActions";
 import { itwActivationStop } from "../../../store/actions/itwActivationActions";
+import ItwKoView from "../../../components/ItwKoView";
+import { ItWalletError } from "../../../utils/errors/itwErrors";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 
 /**
  * ItwPidRequestScreen's navigation params.
@@ -72,29 +73,28 @@ const ItwPidRequestScreen = () => {
     </ItwLoadingSpinnerOverlay>
   );
 
+  /**
+   * Error view component which currently displays a generic error.
+   * @param error - optional ItWalletError to be displayed.
+   */
+  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
+    const mappedError = getItwGenericMappedError(() =>
+      dispatch(itwActivationStop())
+    );
+    return <ItwKoView {...mappedError} />;
+  };
+
   const RenderMask = () =>
     pot.fold(
       pid,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      err => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(() => dispatch(itwActivationStop()))}
-          error={err}
-        />
-      ),
+      err => <ErrorView error={err} />,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      (_, someErr) => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(() => dispatch(itwActivationStop()))}
-          error={someErr}
-        />
-      )
+      (_, someErr) => <ErrorView error={someErr} />
     );
 
   return (

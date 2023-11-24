@@ -9,11 +9,11 @@ import I18n from "../../../../../i18n";
 import { itwPidValueSelector } from "../../../store/reducers/itwPidReducer";
 import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
 import { itwActivationCompleted } from "../../../store/actions/itwActivationActions";
-import ItwErrorView from "../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
 import { ItwCredentialsStateSelector } from "../../../store/reducers/itwCredentialsReducer";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
 import ItwContinueView from "../../../components/ItwContinueView";
+import ItwKoView from "../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
@@ -66,13 +66,14 @@ const ItwPidAddingScreen = () => {
     </>
   );
 
-  const ErrorView = ({ error }: { error: ItWalletError }) => (
-    <ItwErrorView
-      error={error}
-      type="SingleButton"
-      leftButton={cancelButtonProps(navigation.goBack)}
-    />
-  );
+  /**
+   * Error view component which currently displays a generic error.
+   * @param error - optional ItWalletError to be displayed.
+   */
+  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
+    const mappedError = getItwGenericMappedError(() => navigation.goBack());
+    return <ItwKoView {...mappedError} />;
+  };
 
   const RenderMask = () =>
     pot.fold(
