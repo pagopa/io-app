@@ -1,14 +1,31 @@
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
+import { reloadAllMessages } from "../../../../../store/actions/messages";
 import { Action } from "../../../../../store/actions/types";
+import { appReducer } from "../../../../../store/reducers";
 import { UIMessageId } from "../../../../../store/reducers/entities/messages/types";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../utils/tests";
 import {
   remoteError,
   remoteLoading,
-  remoteReady
+  remoteReady,
+  remoteUndefined
 } from "../../../../bonus/bpd/model/RemoteValue";
-import { updatePaymentForMessage } from "../../actions";
-import { initialState, paymentsReducer } from "../payments";
+import {
+  clearSelectedPayment,
+  setSelectedPayment,
+  updatePaymentForMessage
+} from "../../actions";
+import {
+  initialState,
+  paymentStatusForUISelector,
+  paymentsButtonStateSelector,
+  paymentsReducer,
+  selectedPaymentIdSelector,
+  shouldUpdatePaymentSelector
+} from "../payments";
 
 describe("PN Payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -303,5 +320,379 @@ describe("PN Payments reducer's tests", () => {
     expect(m3p2S2).toBeUndefined();
     const m3p3S2 = m3S2?.[paymentId3];
     expect(m3p3S2).toBeUndefined();
+  });
+  it("Should have the paymentId for a setSelectedPayment action", () => {
+    const paymentId = "p1";
+    const setSelectedPaymentAction = setSelectedPayment(paymentId);
+    const paymentsState = paymentsReducer(undefined, setSelectedPaymentAction);
+    const selectedPaymentId = paymentsState.selectedPayment;
+    expect(selectedPaymentId).toBe(paymentId);
+  });
+  it("Should clear the paymentId for a clearSelectedPayment action", () => {
+    const paymentId = "p1";
+    const setSelectedPaymentAction = setSelectedPayment(paymentId);
+    const startingPaymentsState = paymentsReducer(
+      undefined,
+      setSelectedPaymentAction
+    );
+    const startingSelectedPaymentId = startingPaymentsState.selectedPayment;
+    expect(startingSelectedPaymentId).toBe(paymentId);
+    const endingPaymentsState = paymentsReducer(
+      startingPaymentsState,
+      clearSelectedPayment()
+    );
+    const endingSelectedPaymentId = endingPaymentsState.selectedPayment;
+    expect(endingSelectedPaymentId).toBeUndefined();
+  });
+  it("Should clear the paymentId for a reloadAllMessages action", () => {
+    const paymentId = "p1";
+    const setSelectedPaymentAction = setSelectedPayment(paymentId);
+    const startingPaymentsState = paymentsReducer(
+      undefined,
+      setSelectedPaymentAction
+    );
+    const startingSelectedPaymentId = startingPaymentsState.selectedPayment;
+    expect(startingSelectedPaymentId).toBe(paymentId);
+    const endingPaymentsState = paymentsReducer(
+      startingPaymentsState,
+      reloadAllMessages.request({ pageSize: 12, filter: {} })
+    );
+    const endingSelectedPaymentId = endingPaymentsState.selectedPayment;
+    expect(endingSelectedPaymentId).toBeUndefined();
+  });
+});
+
+describe("PN Payments selectors' tests", () => {
+  it("shouldUpdatePaymentSelector should return true for an unmatching message Id", () => {
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.request({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1"
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const shouldUpdatePayment = shouldUpdatePaymentSelector(
+      state,
+      "m2" as UIMessageId,
+      "p1"
+    );
+    expect(shouldUpdatePayment).toBeTruthy();
+  });
+  it("shouldUpdatePaymentSelector should return true for a matching message Id with an unmatching payment Id", () => {
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.request({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1"
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const shouldUpdatePayment = shouldUpdatePaymentSelector(
+      state,
+      "m1" as UIMessageId,
+      "p2"
+    );
+    expect(shouldUpdatePayment).toBeTruthy();
+  });
+  it("shouldUpdatePaymentSelector should return false for a matching <message Id, payment Id> pair", () => {
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.request({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1"
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const shouldUpdatePayment = shouldUpdatePaymentSelector(
+      state,
+      "m1" as UIMessageId,
+      "p1"
+    );
+    expect(shouldUpdatePayment).toBeFalsy();
+  });
+  it("paymentStatusForUISelector should return remoteUndefined for an unmatching message Id", () => {
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.request({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1"
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const paymentStatus = paymentStatusForUISelector(
+      state,
+      "m2" as UIMessageId,
+      "p1"
+    );
+    expect(paymentStatus).toBe(remoteUndefined);
+  });
+  it("paymentStatusForUISelector should return remoteUndefined for a matching message Id with an unmatching payment Id", () => {
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.request({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1"
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const paymentStatus = paymentStatusForUISelector(
+      state,
+      "m1" as UIMessageId,
+      "p2"
+    );
+    expect(paymentStatus).toBe(remoteUndefined);
+  });
+  it("paymentStatusForUISelector should return remoteUndefined for a matching <message Id, payment Id> that is loading", () => {
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.request({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1"
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const paymentStatusOnStore =
+      state.features.pn.payments["m1" as UIMessageId]?.p1;
+    expect(paymentStatusOnStore).toBe(remoteLoading);
+    const paymentStatus = paymentStatusForUISelector(
+      state,
+      "m1" as UIMessageId,
+      "p1"
+    );
+    expect(paymentStatus).toBe(remoteUndefined);
+  });
+  it("paymentStatusForUISelector should return remoteReady for a matching <message Id, payment Id> that is payable", () => {
+    const paymentData = {} as PaymentRequestsGetResponse;
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.success({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1",
+      paymentData
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const paymentStatus = paymentStatusForUISelector(
+      state,
+      "m1" as UIMessageId,
+      "p1"
+    );
+    expect(paymentStatus).toStrictEqual(remoteReady(paymentData));
+  });
+  it("paymentStatusForUISelector should return remoteError for a matching <message Id, payment Id> that is not payable anymore", () => {
+    const details = Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO;
+    const startingState = appReducer(undefined, {} as Action);
+    const updatePaymentForMessageAction = updatePaymentForMessage.failure({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1",
+      details
+    });
+    const state = appReducer(startingState, updatePaymentForMessageAction);
+    const paymentStatus = paymentStatusForUISelector(
+      state,
+      "m1" as UIMessageId,
+      "p1"
+    );
+    expect(paymentStatus).toStrictEqual(remoteError(details));
+  });
+  it("paymentsButtonStateSelector should return hidden for an unmatching message Id on store", () => {
+    const updatePaymentForMessageAction = updatePaymentForMessage.request({
+      messageId: "m1" as UIMessageId,
+      paymentId: "p1"
+    });
+    const startingState = appReducer(undefined, updatePaymentForMessageAction);
+    const buttonState = paymentsButtonStateSelector(
+      startingState,
+      "m2" as UIMessageId,
+      undefined,
+      5
+    );
+    expect(buttonState).toBe("hidden");
+  });
+  it("paymentsButtonStateSelector should return hidden when all visible payments are processed", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n1",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n2",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n3",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n4",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n5",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      })
+    ];
+    const appState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const payments = [
+      {
+        noticeCode: "n1",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n2",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n3",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n4",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n5",
+        creditorTaxId: "c1"
+      }
+    ] as Array<NotificationPaymentInfo>;
+    const buttonState = paymentsButtonStateSelector(
+      appState,
+      "m1" as UIMessageId,
+      payments,
+      5
+    );
+    expect(buttonState).toBe("hidden");
+  });
+  it("paymentsButtonStateSelector should return visibleLoading when all visible payments are processing", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n6",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n7",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n8",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n9",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n10",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      })
+    ];
+    const appState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const payments = [
+      {
+        noticeCode: "n1",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n2",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n3",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n4",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n5",
+        creditorTaxId: "c1"
+      }
+    ] as Array<NotificationPaymentInfo>;
+    const buttonState = paymentsButtonStateSelector(
+      appState,
+      "m1" as UIMessageId,
+      payments,
+      5
+    );
+    expect(buttonState).toBe("visibleLoading");
+  });
+  it("paymentsButtonStateSelector should return visibleEnabled when at least one visible payment has completed processing", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n5",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n7",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n8",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n9",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n10",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      })
+    ];
+    const appState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const payments = [
+      {
+        noticeCode: "n1",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n2",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n3",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n4",
+        creditorTaxId: "c1"
+      },
+      {
+        noticeCode: "n5",
+        creditorTaxId: "c1"
+      }
+    ] as Array<NotificationPaymentInfo>;
+    const buttonState = paymentsButtonStateSelector(
+      appState,
+      "m1" as UIMessageId,
+      payments,
+      5
+    );
+    expect(buttonState).toBe("visibleEnabled");
+  });
+  it("selectedPaymentIdSelector should return undefined when none is set", () => {
+    const appState = appReducer(undefined, {} as Action);
+    const selectedPaymentId = selectedPaymentIdSelector(appState);
+    expect(selectedPaymentId).toBeUndefined();
+  });
+  it("selectedPaymentIdSelector should return the selected payment", () => {
+    const appState = appReducer(undefined, setSelectedPayment("p1"));
+    const selectedPaymentId = selectedPaymentIdSelector(appState);
+    expect(selectedPaymentId).toBe("p1");
   });
 });
