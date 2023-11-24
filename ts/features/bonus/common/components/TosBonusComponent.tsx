@@ -87,7 +87,7 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
       <View style={styles.errorContainer}>
         <Image source={brokenLinkImage} resizeMode="contain" />
         <VSpacer size={16} />
-        <H2 weight="Bold">{I18n.t("onboarding.tos.error")}</H2>
+        <H2>{I18n.t("onboarding.tos.error")}</H2>
 
         <View style={styles.errorButtonsContainer}>
           <ButtonOutline

@@ -11,7 +11,7 @@ import { useTypographyFactory } from "./Factory";
 import { ExternalTypographyProps, TypographyProps } from "./common";
 
 type AllowedColors = IOColorsStatusForeground | IOTheme["textHeading-default"];
-type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular">;
+type AllowedWeight = Extract<IOFontWeight, "SemiBold" | "Regular">;
 
 type OwnProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
@@ -23,7 +23,7 @@ const h3LineHeight = 33;
 /* Legacy typographic styles */
 const h3LegacyFontName: IOFontFamily = "TitilliumWeb";
 const h3LegacyDefaultColor: AllowedColors = "bluegreyDark";
-const h3LegacyDefaultWeight: AllowedWeight = "Bold";
+const h3LegacyDefaultWeight: AllowedWeight = "SemiBold";
 
 /**
  * Typography component to render H3 text. This component supports both design system enabled and legacy custom styles.
