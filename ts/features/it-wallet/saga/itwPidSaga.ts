@@ -13,7 +13,7 @@ import {
   itwPid
 } from "../store/actions/itwCredentialsActions";
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
-import { verifyPin } from "./test";
+import { verifyPin } from "./itwSagaUtils";
 
 /**
  * Watcher for the IT wallet PID related sagas.
