@@ -114,6 +114,7 @@ import {
   updatePaymentStatus
 } from "../actions/wallet/wallets";
 import { store } from "../../boot/configureStoreAndPersistor";
+import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -425,7 +426,7 @@ export const actionTracking =
       void trackZendesk(mixpanel)(action);
       void trackCdc(mixpanel)(action);
 
-      const fciEnvironment = store.getState().features.fci.environment;
+      const fciEnvironment = fciEnvironmentSelector(store.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);
     }
     return next(action);

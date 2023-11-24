@@ -50,9 +50,9 @@ export function* handleGetSignatureRequestById(
        */
       const env = pipe(
         Environment.decode(
-          getSignatureDetailViewByIdResponse.right.headers[
+          getSignatureDetailViewByIdResponse.right.headers.get(
             "x-io-sign-environment"
-          ]
+          )
         ),
         E.getOrElse(() => EnvironmentEnum.prod)
       );
