@@ -2,18 +2,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { WalletClient } from "../../common/api/client";
-import { walletPaymentGetUserWallets } from "../store/actions";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { WalletClient } from "../../../common/api/client";
+import { walletPaymentGetUserWallets } from "../../store/actions/networking";
 
-/**
- * Handle the remote call to get all payment methods onboarded by the user
- * @param getWalletsByIdUser
- * @param authToken
- */
 export function* handleWalletPaymentGetUserWallets(
   getWalletsByIdUser: WalletClient["getWalletsByIdUser"],
   action: ActionType<(typeof walletPaymentGetUserWallets)["request"]>

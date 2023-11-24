@@ -16,7 +16,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentCalculateFees } from "../store/actions";
+import { walletPaymentCalculateFees } from "../store/actions/networking";
 import { walletPaymentPspListSelector } from "../store/selectors";
 
 type WalletPaymentPspListScreenNavigationParams = {

@@ -2,18 +2,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { PaymentClient } from "../api/client";
-import { walletPaymentGetDetails } from "../store/actions";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { PaymentClient } from "../../api/client";
+import { walletPaymentGetDetails } from "../../store/actions/networking";
 
-/**
- * Handle the remote call to verify an RptId and get associated payment details
- * @param getPaymentRequestInfo
- * @param authToken
- */
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfo"],
   action: ActionType<(typeof walletPaymentGetDetails)["request"]>

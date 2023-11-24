@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { GlobalState } from "../../../../../store/reducers/types";
 
 const selectWalletPayment = (state: GlobalState) =>
@@ -11,12 +12,12 @@ export const walletPaymentDetailsSelector = createSelector(
 
 export const walletPaymentAllMethodsSelector = createSelector(
   selectWalletPayment,
-  state => state.allPaymentMethods
+  state => pot.map(state.allPaymentMethods, _ => _.paymentMethods ?? [])
 );
 
-export const walletPaymentUserMethodsSelector = createSelector(
+export const walletPaymentUserWalletsSelector = createSelector(
   selectWalletPayment,
-  state => state.userWallets
+  state => pot.map(state.userWallets, _ => _.wallets ?? [])
 );
 
 export const walletPaymentChosenPaymentMethodSelector = createSelector(

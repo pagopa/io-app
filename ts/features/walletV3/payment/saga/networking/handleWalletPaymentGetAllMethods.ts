@@ -2,18 +2,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import { WalletClient } from "../../common/api/client";
-import { walletPaymentGetAllMethods } from "../store/actions";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { WalletClient } from "../../../common/api/client";
+import { walletPaymentGetAllMethods } from "../../store/actions/networking";
 
-/**
- * Handle the remote call to get all available payment methods
- * @param getAllPaymentMethods
- * @param authToken
- */
 export function* handleWalletPaymentGetAllMethods(
   getAllPaymentMethods: WalletClient["getAllPaymentMethods"],
   action: ActionType<(typeof walletPaymentGetAllMethods)["request"]>

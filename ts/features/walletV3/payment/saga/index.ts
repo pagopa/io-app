@@ -8,18 +8,18 @@ import {
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
   walletPaymentGetUserWallets
-} from "../store/actions";
-import { handleWalletPaymentGetAllMethods } from "./handleWalletPaymentGetAllMethods";
-import { handleWalletPaymentGetDetails } from "./handleWalletPaymentGetDetails";
-import { handleWalletPaymentGetUserWallets } from "./handleWalletPaymentGetUserWallets";
-import { handleWalletPaymentCalculateFees } from "./handleWalletPaymentCalculateFees";
-import { handleWalletPaymentCreateTransaction } from "./handleWalletPaymentCreateTransaction";
+} from "../store/actions/networking";
+import { handleWalletPaymentCalculateFees } from "./networking/handleWalletPaymentCalculateFees";
+import { handleWalletPaymentCreateTransaction } from "./networking/handleWalletPaymentCreateTransaction";
+import { handleWalletPaymentGetAllMethods } from "./networking/handleWalletPaymentGetAllMethods";
+import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentGetDetails";
+import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
 
 /**
  * Handle the pagoPA payments requests
  * @param bearerToken
  */
-export function* watchWalletPaymentsSaga(
+export function* watchWalletPaymentSaga(
   walletClient: WalletClient,
   paymentClient: PaymentClient
 ): SagaIterator {

@@ -17,8 +17,8 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentGetDetails } from "../store/actions";
 import { walletPaymentDetailsSelector } from "../store/selectors";
+import { walletPaymentGetDetails } from "../store/actions/networking";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;

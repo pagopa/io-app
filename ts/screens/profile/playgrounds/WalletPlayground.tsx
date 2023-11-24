@@ -15,7 +15,7 @@ import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/na
 import { WalletPaymentRoutes } from "../../../features/walletV3/payment/navigation/routes";
 import { RptId } from "../../../../definitions/pagopa/ecommerce/RptId";
 import { useIODispatch } from "../../../store/hooks";
-import { walletPaymentInitState } from "../../../features/walletV3/payment/store/actions";
+import { walletPaymentInitState } from "../../../features/walletV3/payment/store/actions/orchestration";
 
 const WalletPlayground = () => {
   const dispatch = useIODispatch();

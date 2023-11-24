@@ -9,7 +9,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletPaymentCreateTransaction } from "../store/actions";
+import { walletPaymentCreateTransaction } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors";
 
 const WalletPaymentReviewScreen = () => {

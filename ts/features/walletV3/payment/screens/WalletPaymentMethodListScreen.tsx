@@ -11,10 +11,10 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   walletPaymentGetAllMethods,
   walletPaymentGetUserWallets
-} from "../store/actions";
+} from "../store/actions/networking";
 import {
   walletPaymentAllMethodsSelector,
-  walletPaymentUserMethodsSelector
+  walletPaymentUserWalletsSelector
 } from "../store/selectors";
 import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 import { WalletPaymentRoutes } from "../navigation/routes";
@@ -24,10 +24,10 @@ const WalletPaymentMethodListScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
-  const userMethodsPots = useIOSelector(walletPaymentUserMethodsSelector);
+  const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
 
   const isLoading =
-    pot.isLoading(paymentMethodsPot) || pot.isLoading(userMethodsPots);
+    pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -63,7 +63,7 @@ const WalletPaymentMethodListScreen = () => {
       >
         <DebugPrettyPrint title="paymentMethodsPot" data={paymentMethodsPot} />
         <VSpacer size={16} />
-        <DebugPrettyPrint title="userMethodsPots" data={userMethodsPots} />
+        <DebugPrettyPrint title="userWalletsPots" data={userWalletsPots} />
       </GradientScrollView>
     </BaseScreenComponent>
   );

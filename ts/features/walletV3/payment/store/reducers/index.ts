@@ -2,30 +2,29 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
+import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
   walletPaymentCalculateFees,
-  walletPaymentChoosePaymentMethod,
-  walletPaymentChoosePsp,
   walletPaymentCreateTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
-  walletPaymentGetUserWallets,
+  walletPaymentGetUserWallets
+} from "../actions/networking";
+import {
+  walletPaymentChoosePaymentMethod,
+  walletPaymentChoosePsp,
   walletPaymentInitState
-} from "../actions";
-import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
+} from "../actions/orchestration";
 
 export type WalletPaymentState = {
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
-  userWallets: pot.Pot<ReadonlyArray<WalletInfo>, NetworkError>;
-  allPaymentMethods: pot.Pot<
-    ReadonlyArray<PaymentMethodResponse>,
-    NetworkError
-  >;
+  userWallets: pot.Pot<Wallets, NetworkError>;
+  allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
   chosenPaymentMethod: O.Option<string>;
   chosenPsp: O.Option<string>;
@@ -79,7 +78,7 @@ const reducer = (
     case getType(walletPaymentGetUserWallets.success):
       return {
         ...state,
-        userWallets: pot.some(action.payload.wallets ?? [])
+        userWallets: pot.some(action.payload)
       };
     case getType(walletPaymentGetUserWallets.failure):
       return {
@@ -96,7 +95,7 @@ const reducer = (
     case getType(walletPaymentGetAllMethods.success):
       return {
         ...state,
-        allPaymentMethods: pot.some(action.payload.paymentMethods ?? [])
+        allPaymentMethods: pot.some(action.payload)
       };
     case getType(walletPaymentGetAllMethods.failure):
       return {
@@ -107,7 +106,7 @@ const reducer = (
     case getType(walletPaymentChoosePaymentMethod):
       return {
         ...state,
-        chosenPaymentMethod: O.some(action.payload)
+        chosenPaymentMethod: O.some(action.payload.walletId)
       };
 
     // PSP list
@@ -130,7 +129,7 @@ const reducer = (
     case getType(walletPaymentChoosePsp):
       return {
         ...state,
-        chosenPsp: O.some(action.payload)
+        chosenPsp: O.some(action.payload.bundleId)
       };
 
     // Created transaction data
