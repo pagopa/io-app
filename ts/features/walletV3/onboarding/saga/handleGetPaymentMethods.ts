@@ -12,15 +12,12 @@ import { WalletClient } from "../../common/api/client";
  * @param action
  */
 export function* handleGetPaymentMethods(
-  getPaymentMethods: WalletClient["getAllPaymentMethods"],
-  token: string
+  getPaymentMethods: WalletClient["getAllPaymentMethods"]
 ) {
   try {
     const getPaymentMethodsResult: SagaCallReturnType<
       typeof getPaymentMethods
-    > = yield* call(getPaymentMethods, {
-      bearerAuth: token
-    });
+    > = yield* call(getPaymentMethods, {});
     if (E.isRight(getPaymentMethodsResult)) {
       if (getPaymentMethodsResult.right.status === 200) {
         // handled success

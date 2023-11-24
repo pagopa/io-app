@@ -15,14 +15,12 @@ import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/Serv
  */
 export function* handleStartWalletOnboarding(
   startOnboarding: WalletClient["createWallet"],
-  token: string,
   action: ActionType<(typeof walletStartOnboarding)["request"]>
 ) {
   try {
     const { paymentMethodId } = action.payload;
     const startOnboardingResult: SagaCallReturnType<typeof startOnboarding> =
       yield* call(startOnboarding, {
-        bearerAuth: token,
         body: {
           services: [ServiceNameEnum.PAGOPA],
           useDiagnosticTracing: true,
