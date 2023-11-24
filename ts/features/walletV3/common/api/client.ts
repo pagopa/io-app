@@ -4,7 +4,7 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 const createWalletClient = (baseUrl: string) =>
   createClient({
     baseUrl,
-    basePath: "",
+    basePath: "/payment-wallet/v1",
     fetchApi: defaultRetryingFetch()
   });
 
