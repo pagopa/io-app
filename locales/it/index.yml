@@ -84,6 +84,7 @@ global:
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
+    search: "Cerca"
     switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
