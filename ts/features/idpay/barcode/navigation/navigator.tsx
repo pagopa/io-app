@@ -1,7 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { IdPayBarcodeRoutes } from "./routes";
+import { IdPayBarcodeResultScreen } from "../screens/IdPayBarcodeResultScreen";
 import { IdPayBarcodeParamsList } from "./params";
+import { IdPayBarcodeRoutes } from "./routes";
 
 const Stack = createStackNavigator<IdPayBarcodeParamsList>();
 export const IdPayBarcodeNavigator = () => (
@@ -12,9 +13,7 @@ export const IdPayBarcodeNavigator = () => (
   >
     <Stack.Screen
       name={IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT}
-      component={MockScreen}
+      component={IdPayBarcodeResultScreen}
     />
   </Stack.Navigator>
 );
-
-const MockScreen = () => <></>;
