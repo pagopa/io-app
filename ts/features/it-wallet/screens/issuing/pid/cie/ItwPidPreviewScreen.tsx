@@ -96,8 +96,6 @@ const ItwPidPreviewScreen = () => {
       label: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
     };
 
-    const pidDisplayData = getPidDisplayData();
-
     return (
       <BaseScreenComponent
         goBack={true}
