@@ -5,6 +5,8 @@ import { reloadAllMessages } from "../../../../../store/actions/messages";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
 import { UIMessageId } from "../../../../../store/reducers/entities/messages/types";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../utils/tests";
 import {
   remoteError,
   remoteLoading,
@@ -495,41 +497,37 @@ describe("PN Payments selectors' tests", () => {
     expect(buttonState).toBe("hidden");
   });
   it("paymentsButtonStateSelector should return hidden when all visible payments are processed", () => {
-    const appState = appReducer(
-      appReducer(
-        appReducer(
-          appReducer(
-            appReducer(
-              undefined,
-              updatePaymentForMessage.failure({
-                messageId: "m1" as UIMessageId,
-                paymentId: "c1n1",
-                details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-              })
-            ),
-            updatePaymentForMessage.failure({
-              messageId: "m1" as UIMessageId,
-              paymentId: "c1n2",
-              details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-            })
-          ),
-          updatePaymentForMessage.failure({
-            messageId: "m1" as UIMessageId,
-            paymentId: "c1n3",
-            details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-          })
-        ),
-        updatePaymentForMessage.failure({
-          messageId: "m1" as UIMessageId,
-          paymentId: "c1n4",
-          details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-        })
-      ),
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n1",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n2",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n3",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n4",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
       updatePaymentForMessage.failure({
         messageId: "m1" as UIMessageId,
         paymentId: "c1n5",
         details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
       })
+    ];
+    const appState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
     );
     const payments = [
       {
@@ -562,41 +560,37 @@ describe("PN Payments selectors' tests", () => {
     expect(buttonState).toBe("hidden");
   });
   it("paymentsButtonStateSelector should return visibleLoading when all visible payments are processing", () => {
-    const appState = appReducer(
-      appReducer(
-        appReducer(
-          appReducer(
-            appReducer(
-              undefined,
-              updatePaymentForMessage.failure({
-                messageId: "m1" as UIMessageId,
-                paymentId: "c1n6",
-                details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-              })
-            ),
-            updatePaymentForMessage.failure({
-              messageId: "m1" as UIMessageId,
-              paymentId: "c1n7",
-              details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-            })
-          ),
-          updatePaymentForMessage.failure({
-            messageId: "m1" as UIMessageId,
-            paymentId: "c1n8",
-            details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-          })
-        ),
-        updatePaymentForMessage.failure({
-          messageId: "m1" as UIMessageId,
-          paymentId: "c1n9",
-          details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-        })
-      ),
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n6",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n7",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n8",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n9",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
       updatePaymentForMessage.failure({
         messageId: "m1" as UIMessageId,
         paymentId: "c1n10",
         details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
       })
+    ];
+    const appState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
     );
     const payments = [
       {
@@ -629,41 +623,37 @@ describe("PN Payments selectors' tests", () => {
     expect(buttonState).toBe("visibleLoading");
   });
   it("paymentsButtonStateSelector should return visibleEnabled when at least one visible payment has completed processing", () => {
-    const appState = appReducer(
-      appReducer(
-        appReducer(
-          appReducer(
-            appReducer(
-              undefined,
-              updatePaymentForMessage.failure({
-                messageId: "m1" as UIMessageId,
-                paymentId: "c1n5",
-                details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-              })
-            ),
-            updatePaymentForMessage.failure({
-              messageId: "m1" as UIMessageId,
-              paymentId: "c1n7",
-              details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-            })
-          ),
-          updatePaymentForMessage.failure({
-            messageId: "m1" as UIMessageId,
-            paymentId: "c1n8",
-            details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-          })
-        ),
-        updatePaymentForMessage.failure({
-          messageId: "m1" as UIMessageId,
-          paymentId: "c1n9",
-          details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
-        })
-      ),
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n5",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n7",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n8",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
+      updatePaymentForMessage.failure({
+        messageId: "m1" as UIMessageId,
+        paymentId: "c1n9",
+        details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
+      }),
       updatePaymentForMessage.failure({
         messageId: "m1" as UIMessageId,
         paymentId: "c1n10",
         details: Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO
       })
+    ];
+    const appState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
     );
     const payments = [
       {
