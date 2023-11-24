@@ -10,12 +10,12 @@ import {
   HSpacer,
   VSpacer,
   ContentWrapper,
-  ListItemInfo
+  ListItemInfo,
+  H6
 } from "@pagopa/io-app-design-system";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
-import { NewH6 } from "../../../../components/core/typography/NewH6";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
@@ -146,7 +146,7 @@ const AuthorizationScreenContent = ({
     <Divider />
     <VSpacer size={16} />
     <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-      <NewH6>{I18n.t("idpay.payment.authorization.toAuth")}</NewH6>
+      <H6>{I18n.t("idpay.payment.authorization.toAuth")}</H6>
       <H1>{formatNumberCurrencyCentsOrDefault(data.reward)}</H1>
     </View>
     <VSpacer size={16} />

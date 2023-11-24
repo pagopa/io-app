@@ -6,10 +6,10 @@ import {
   IOColors,
   Icon,
   VSpacer,
-  IOLogoPaymentType
+  IOLogoPaymentType,
+  H6
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../../types/WithTestID";
-import { NewH6 } from "../../../core/typography/NewH6";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 import { useSpringPressScaleAnimation } from "../../utils/hooks/useSpringPressScaleAnimation";
 
@@ -105,14 +105,14 @@ export const PaymentCardSmall = (props: PaymentCardSmallProps) => {
         )}
       </View>
       <VSpacer size={8} />
-      <NewH6
+      <H6
         ellipsizeMode="tail"
         weight="Regular"
         numberOfLines={1}
         color={textColor}
       >
         {bottomText}
-      </NewH6>
+      </H6>
     </View>
   );
 
