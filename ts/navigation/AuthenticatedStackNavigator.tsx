@@ -18,6 +18,8 @@ import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator"
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navigator";
+import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
 import {
@@ -250,6 +252,10 @@ const AuthenticatedStackNavigator = () => {
             name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
             options={hideHeaderOptions}
             component={IdPayCodeNavigator}
+          />
+          <Stack.Screen
+            name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
+            component={IdPayBarcodeNavigator}
           />
         </>
       )}
