@@ -21,14 +21,13 @@ import { useIOSelector } from "../../../store/hooks";
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../navigation/ItwParamsList";
-import ItwErrorView from "../components/ItwErrorView";
-import { cancelButtonProps } from "../utils/itwButtonsUtils";
 import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycleReducer";
 import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer";
 import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import ItwCredentialCard from "../components/ItwCredentialCard";
 import { CredentialType, getPidDisplayData } from "../utils/mocks";
+import ItwKoView from "../components/ItwKoView";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
@@ -172,9 +171,16 @@ const ItwHomeScreen = () => {
       decodedPid,
       O.fold(
         () => (
-          <ItwErrorView
-            type="SingleButton"
-            leftButton={cancelButtonProps(navigation.goBack)}
+          <ItwKoView
+            title={I18n.t("global.jserror.title")}
+            pictogram="fatalError"
+            action={{
+              accessibilityLabel: I18n.t(
+                "features.itWallet.homeScreen.reset.label"
+              ),
+              label: I18n.t("features.itWallet.homeScreen.reset.label"),
+              onPress: () => present()
+            }}
           />
         ),
         some => <ContentView decodedPid={some} />
