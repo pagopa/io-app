@@ -13,7 +13,8 @@ import {
   RadioItem,
   RadioGroup,
   SwitchLabel,
-  VSpacer
+  VSpacer,
+  ListItemRadioWithAmount
 } from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
@@ -53,6 +54,7 @@ export const DSSelection = () => (
       Radio
     </H2>
     <RadioListItemsShowroom />
+
     <H2 weight={"Bold"} style={{ marginVertical: 16 }}>
       Switch
     </H2>
@@ -182,11 +184,18 @@ const renderListItemCheckbox = () => (
 
 const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   {
-    icon: "coggle",
+    startImage: { icon: "coggle" },
     value: "Let's try with a basic title",
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
     id: "example-1"
+  },
+  {
+    startImage: { paymentLogo: "myBank" },
+    value: "Payment method item",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
+    id: "example-paymentLogo"
   },
   {
     value: "Let's try with a basic title",
@@ -207,20 +216,92 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
   }
 ];
 
+const mockRadioItemsSkeleton = (): ReadonlyArray<RadioItem<string>> => [
+  {
+    value: "Skeleton example",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
+    id: "example-loading",
+    disabled: true,
+    loadingProps: {
+      state: true,
+      skeletonIcon: false
+    }
+  },
+  {
+    value: "Skeleton example",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
+    id: "example-loading-withIcon",
+    disabled: true,
+    loadingProps: {
+      state: true,
+      skeletonIcon: true
+    }
+  },
+  {
+    value: "Skeleton example",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
+    id: "example-loading-withDescription",
+    disabled: true,
+    loadingProps: {
+      state: true,
+      skeletonDescription: true
+    }
+  },
+  {
+    value: "Skeleton example",
+    description:
+      "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti.",
+    id: "example-loading-withIcon-withDescription",
+    disabled: true,
+    loadingProps: {
+      state: true,
+      skeletonDescription: true,
+      skeletonIcon: true
+    }
+  }
+];
+
 const RadioListItemsShowroom = () => {
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
     "example-1"
   );
 
   return (
-    <DSComponentViewerBox name="RadioListItem">
-      <RadioGroup<string>
-        key="check_income"
-        items={mockRadioItems()}
-        selectedItem={selectedItem}
-        onPress={setSelectedItem}
-      />
-    </DSComponentViewerBox>
+    <>
+      <DSComponentViewerBox name="RadioListItem">
+        <RadioGroup<string>
+          key="check_income"
+          items={mockRadioItems()}
+          selectedItem={selectedItem}
+          onPress={setSelectedItem}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="RadioListItem, loading states">
+        <RadioGroup<string>
+          key="skeleton"
+          items={mockRadioItemsSkeleton()}
+          selectedItem={selectedItem}
+          onPress={setSelectedItem}
+        />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="ListItemRadioWithAmount">
+        <ListItemRadioWithAmount
+          label="Banca Intesa"
+          formattedAmountString={"2,50 €"}
+          suggestReason="Perché sei già cliente"
+          isSuggested={true}
+        />
+
+        <Divider />
+        <ListItemRadioWithAmount
+          label="Banca un po' costosa"
+          formattedAmountString={"4,50 €"}
+        />
+      </DSComponentViewerBox>
+    </>
   );
 };
 
