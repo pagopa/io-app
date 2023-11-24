@@ -1121,6 +1121,7 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                         <Text
                                           accessibilityLabel="account: someEmail@test.com"
                                           accessible={true}
+                                          allowFontScaling={false}
                                           color="black"
                                           defaultColor="black"
                                           defaultWeight="SemiBold"
@@ -1128,8 +1129,8 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                           font="TitilliumWeb"
                                           fontStyle={
                                             Object {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
+                                              "fontSize": 18,
+                                              "lineHeight": 25,
                                             }
                                           }
                                           numberOfLines={1}
@@ -1139,8 +1140,8 @@ exports[`PaymentCardBig component matches snapshot for paypal 1`] = `
                                                 "width": "75%",
                                               },
                                               Object {
-                                                "fontSize": 16,
-                                                "lineHeight": 24,
+                                                "fontSize": 18,
+                                                "lineHeight": 25,
                                               },
                                               Object {
                                                 "color": "#0E0F13",
@@ -2296,6 +2297,7 @@ exports[`PaymentCardSmall component matches snapshot for paypal 1`] = `
                                           }
                                         />
                                         <Text
+                                          allowFontScaling={false}
                                           color="grey-700"
                                           defaultColor="black"
                                           defaultWeight="SemiBold"
@@ -2303,16 +2305,16 @@ exports[`PaymentCardSmall component matches snapshot for paypal 1`] = `
                                           font="TitilliumWeb"
                                           fontStyle={
                                             Object {
-                                              "fontSize": 16,
-                                              "lineHeight": 24,
+                                              "fontSize": 18,
+                                              "lineHeight": 25,
                                             }
                                           }
                                           numberOfLines={1}
                                           style={
                                             Array [
                                               Object {
-                                                "fontSize": 16,
-                                                "lineHeight": 24,
+                                                "fontSize": 18,
+                                                "lineHeight": 25,
                                               },
                                               Object {
                                                 "color": "#555C70",
