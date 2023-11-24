@@ -4,7 +4,7 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
-import { walletGetPaymentDetails } from "./actions";
+import { walletGetPaymentDetails, walletPaymentInitState } from "./actions";
 
 export type WalletPaymentState = {
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
@@ -25,6 +25,8 @@ const reducer = (
   action: Action
 ): WalletPaymentState => {
   switch (action.type) {
+    case getType(walletPaymentInitState):
+      return INITIAL_STATE;
     case getType(walletGetPaymentDetails.request):
       return {
         ...state,

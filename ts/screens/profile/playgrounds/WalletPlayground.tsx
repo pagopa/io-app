@@ -14,8 +14,11 @@ import {
 import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/navigation/navigator";
 import { WalletPaymentRoutes } from "../../../features/walletV3/payment/navigation/routes";
 import { RptId } from "../../../../definitions/pagopa/ecommerce/RptId";
+import { useIODispatch } from "../../../store/hooks";
+import { walletPaymentInitState } from "../../../features/walletV3/payment/store/actions";
 
 const WalletPlayground = () => {
+  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const navigateToWalletOnboarding = () => {
@@ -25,6 +28,7 @@ const WalletPlayground = () => {
   };
 
   const navigateToWalletPayment = () => {
+    dispatch(walletPaymentInitState());
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
       params: {

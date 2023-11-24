@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { NewTransactionRequest } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
@@ -7,6 +11,10 @@ import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa
 import { RequestAuthorizationResponse } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { NetworkError } from "../../../../../utils/errors";
+
+export const walletPaymentInitState = createStandardAction(
+  "WALLET_PAYMENT_INIT_STATE"
+)();
 
 export type WalletGetPaymentDetailsPayload = {
   rptId: RptId;
@@ -49,6 +57,7 @@ export const walletAuthorizePayment = createAsyncAction(
 )<WalletAuthorizePaymentPayload, RequestAuthorizationResponse, NetworkError>();
 
 export type WalletPaymentActions =
+  | ActionType<typeof walletPaymentInitState>
   | ActionType<typeof walletGetPaymentDetails>
   | ActionType<typeof walletCreateTransaction>
   | ActionType<typeof walletGetPaymentFees>
