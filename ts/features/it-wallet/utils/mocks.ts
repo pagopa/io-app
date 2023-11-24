@@ -40,9 +40,9 @@ export const CREDENTIAL_ISSUER = "eFarma";
  * Credential types mocks.
  */
 export enum CredentialType {
-  HEALTH_CARD = "healthCard",
+  HEALTH_CARD = "HealthCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
-  DRIVING_LICENSE = "drivingLicense",
+  DRIVING_LICENSE = "DrivingLicense",
   PID = "PID"
 }
 
