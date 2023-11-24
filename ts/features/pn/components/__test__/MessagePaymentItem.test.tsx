@@ -65,7 +65,7 @@ const renderComponent = (
               codiceContestoPagamento: `${payment.noticeCode}`,
               importoSingoloVersamento: 99,
               causaleVersamento: "Causale",
-              dueDate: new Date()
+              dueDate: new Date(2023, 10, 23, 10, 30)
             } as PaymentRequestsGetResponse
           })
         )
