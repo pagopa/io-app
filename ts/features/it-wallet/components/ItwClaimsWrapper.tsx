@@ -1,16 +1,21 @@
 import React from "react";
 import { ImageBackground, StyleSheet, View } from "react-native";
 import { H6, IOColors } from "@pagopa/io-app-design-system";
-import { CredentialCatalogDisplay } from "../utils/mocks";
+import {
+  CredentialCatalogDisplay,
+  getImageFromCredentialType
+} from "../utils/mocks";
 
 /**
  * Props of the component.
  * @param displayData - the display data of the credential.
  * @param children - the children of the component.
+ * @param type - the credential type.
  */
 type Props = {
   displayData: CredentialCatalogDisplay;
   children: React.ReactNode;
+  type: string;
 };
 
 /**
@@ -21,11 +26,11 @@ const BORDER_RADIUS = 16;
 /**
  * Renders a wrapper for the claims of a credential which shows an header with background image and title.
  */
-const ItwClaimsWrapper = ({ displayData, children }: Props) => (
+const ItwClaimsWrapper = ({ displayData, children, type }: Props) => (
   <>
     <View style={styles.body}>
       <ImageBackground
-        source={displayData.image}
+        source={getImageFromCredentialType(type)}
         style={styles.backgroundImage}
       >
         <View style={styles.header}>

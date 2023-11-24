@@ -3,14 +3,19 @@ import { View, Dimensions, Image, StyleSheet } from "react-native";
 import { Body, H6, IOColors, Label } from "@pagopa/io-app-design-system";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import customVariables from "../../../theme/variables";
-import { CredentialCatalogDisplay } from "../utils/mocks";
+import {
+  CredentialCatalogDisplay,
+  getImageFromCredentialType
+} from "../utils/mocks";
 
 /**
  * Common props for the component.
  * @param display - the display configuration for the credential.
+ * @param type - the type of the credential.
  */
 type CommonProps = {
   display: CredentialCatalogDisplay;
+  type: string;
 };
 
 /**
@@ -89,7 +94,9 @@ const ItwCredentialCard = (props: CredentialCardProps) => {
 
   const { firstLine, secondLine } = getLines();
 
-  const { image, textColor, title } = props.display;
+  const { textColor, title } = props.display;
+
+  const image = getImageFromCredentialType(props.type);
 
   return (
     <View>
