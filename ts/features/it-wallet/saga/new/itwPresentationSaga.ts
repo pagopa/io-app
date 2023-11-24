@@ -1,11 +1,12 @@
 import { SagaIterator } from "redux-saga";
-import { put, delay, takeLatest, select } from "typed-redux-saga/macro";
+import { put, delay, takeLatest, select, call } from "typed-redux-saga/macro";
 import {
   itwPresentation,
   itwPresentationChecks
 } from "../../store/actions/new/itwPresentationActions";
 import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycleReducer";
 import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
+import { verifyPin } from "../itwSagaUtils";
 
 export function* watchItwPresentationSaga(): SagaIterator {
   yield* takeLatest(itwPresentationChecks.request, itwPresentationChecksSaga);
@@ -38,6 +39,7 @@ export function* itwPresentationChecksSaga(): SagaIterator {
  * action: ActionType<typeof itwPresentation.request>
  */
 export function* itwPresentationSaga(): SagaIterator {
+  yield* call(verifyPin);
   yield* delay(1500);
   yield* put(itwPresentation.success());
 }

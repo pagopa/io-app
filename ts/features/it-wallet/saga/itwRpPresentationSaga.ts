@@ -16,6 +16,7 @@ import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ITW_PID_KEY_TAG } from "../utils/pid";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
+import { verifyPin } from "./itwSagaUtils";
 
 /*
  * This saga handles the RP presentation.
@@ -25,6 +26,8 @@ export function* handleItwRpPresentationSaga(
   _: ActionType<typeof itwRpPresentation.request>
 ): SagaIterator {
   try {
+    yield* call(verifyPin);
+
     // TODO: this claims should be selected by user
     const claims = [
       "unique_id",
