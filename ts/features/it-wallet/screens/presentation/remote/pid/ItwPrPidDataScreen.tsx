@@ -80,7 +80,7 @@ const ItwPrPidDataScreen = () => {
       )}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView edges={["bottom", "left", "right"]} style={IOStyles.flex}>
         <ForceScrollDownView>
           <View style={IOStyles.horizontalContentPadding}>
             <VSpacer size={32} />
