@@ -12,7 +12,6 @@ import {
   itwDecodePid,
   itwPid
 } from "../store/actions/itwCredentialsActions";
-
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
 import { verifyPin } from "./itwSagaUtils";
 
