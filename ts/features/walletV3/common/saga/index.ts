@@ -14,9 +14,9 @@ export function* watchWalletSaga(bpdToken: string): SagaIterator {
     ? walletApiUatBaseUrl
     : walletApiBaseUrl;
 
-  const walletClient = createWalletClient(walletBaseUrl);
+  const walletClient = createWalletClient(walletBaseUrl, bpdToken);
   const paymentClient = createPaymentClient(walletBaseUrl, bpdToken);
 
-  yield* fork(watchWalletOnboardingSaga, walletClient, bpdToken);
-  yield* fork(watchWalletPaymentsSaga, paymentClient);
+  yield* fork(watchWalletOnboardingSaga, walletClient);
+  yield* fork(watchWalletPaymentsSaga, walletClient, paymentClient);
 }

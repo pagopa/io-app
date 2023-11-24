@@ -7,19 +7,19 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { PaymentClient } from "../api/client";
-import { walletGetPaymentDetails } from "../store/actions";
+import { walletPaymentGetDetails } from "../store/actions";
 
 /**
  * Handle the remote call to verify an RptId and get associated payment details
  * @param getPaymentRequestInfo
  * @param authToken
  */
-export function* handleWalletGetPaymentDetails(
+export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfo"],
-  action: ActionType<(typeof walletGetPaymentDetails)["request"]>
+  action: ActionType<(typeof walletPaymentGetDetails)["request"]>
 ) {
   const getPaymentRequestInfoRequest = getPaymentRequestInfo({
-    rpt_id: action.payload.rptId
+    rpt_id: action.payload
   });
 
   try {
@@ -34,15 +34,15 @@ export function* handleWalletGetPaymentDetails(
         getPaymentRequestInfoResult,
         E.fold(
           error =>
-            walletGetPaymentDetails.failure({
+            walletPaymentGetDetails.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
 
           res => {
             if (res.status === 200) {
-              return walletGetPaymentDetails.success(res.value);
+              return walletPaymentGetDetails.success(res.value);
             }
-            return walletGetPaymentDetails.failure({
+            return walletPaymentGetDetails.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))
             });
           }
@@ -50,6 +50,6 @@ export function* handleWalletGetPaymentDetails(
       )
     );
   } catch (e) {
-    yield* put(walletGetPaymentDetails.failure({ ...getNetworkError(e) }));
+    yield* put(walletPaymentGetDetails.failure({ ...getNetworkError(e) }));
   }
 }

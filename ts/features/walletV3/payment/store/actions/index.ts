@@ -10,38 +10,44 @@ import { NewTransactionResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RequestAuthorizationResponse } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/walletv3/CalculateFeeRequest";
 import { NetworkError } from "../../../../../utils/errors";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 
 export const walletPaymentInitState = createStandardAction(
   "WALLET_PAYMENT_INIT_STATE"
 )();
 
-export type WalletGetPaymentDetailsPayload = {
-  rptId: RptId;
-};
+export const walletPaymentGetDetails = createAsyncAction(
+  "WALLET_PAYMENT_GET_DETAILS_REQUEST",
+  "WALLET_PAYMENT_GET_DETAILS_SUCCESS",
+  "WALLET_PAYMENT_GET_DETAILS_FAILURE"
+)<RptId, PaymentRequestsGetResponse, NetworkError>();
 
-export const walletGetPaymentDetails = createAsyncAction(
-  "WALLET_GET_PAYMENT_DETAILS_REQUEST",
-  "WALLET_GET_PAYMENT_DETAILS_SUCCESS",
-  "WALLET_GET_PAYMENT_DETAILS_FAILURE"
-)<WalletGetPaymentDetailsPayload, PaymentRequestsGetResponse, NetworkError>();
+export const walletPaymentGetAllMethods = createAsyncAction(
+  "WALLET_PAYMENT_GET_ALL_METHODS_REQUEST",
+  "WALLET_PAYMENT_GET_ALL_METHODS_SUCCESS",
+  "WALLET_PAYMENT_GET_ALL_METHODS_FAILURE"
+)<undefined, PaymentMethodsResponse, NetworkError>();
 
-export const walletCreateTransaction = createAsyncAction(
-  "WALLET_CREATE_TRANSACTION_REQUEST",
-  "WALLET_CREATE_TRANSACTION_SUCCESS",
-  "WALLET_CREATE_TRANSACTION_FAILURE"
+export const walletPaymentGetUserWallets = createAsyncAction(
+  "WALLET_PAYMENT_GET_USER_WALLETS_REQUEST",
+  "WALLET_PAYMENT_GET_USER_WALLETS_SUCCESS",
+  "WALLET_PAYMENT_GET_USER_WALLETS_FAILURE"
+)<undefined, Wallets, NetworkError>();
+
+export const walletPaymentCreateTransaction = createAsyncAction(
+  "WALLET_PAYMENT_CREATE_TRANSACTION_REQUEST",
+  "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
+  "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
 )<NewTransactionRequest, NewTransactionResponse, NetworkError>();
 
-export type WalletGetPaymentFeesPayload = {
-  walletId: string;
-  paymentAmount: AmountEuroCents;
-};
-
-export const walletGetPaymentFees = createAsyncAction(
-  "WALLET_GET_PAYMET_FEES_REQUEST",
-  "WALLET_GET_PAYMET_FEES_SUCCESS",
-  "WALLET_GET_PAYMET_FEES_FAILURE"
-)<WalletGetPaymentFeesPayload, CalculateFeeResponse, NetworkError>();
+export const walletPaymentCalculateFees = createAsyncAction(
+  "WALLET_PAYMET_CALCULATE_FEES_REQUEST",
+  "WALLET_PAYMET_CALCULATE_FEES_SUCCESS",
+  "WALLET_PAYMET_CALCULATE_FEES_FAILURE"
+)<CalculateFeeRequest, CalculateFeeResponse, NetworkError>();
 
 export type WalletAuthorizePaymentPayload = {
   transactionId: string;
@@ -50,7 +56,7 @@ export type WalletAuthorizePaymentPayload = {
   pspId: string;
 };
 
-export const walletAuthorizePayment = createAsyncAction(
+export const walletPaymentAuthorize = createAsyncAction(
   "WALLET_PAYMENT_AUTH_REQUEST",
   "WALLET_PAYMENT_AUTH_SUCCESS",
   "WALLET_PAYMENT_AUTH_FAILURE"
@@ -58,7 +64,9 @@ export const walletAuthorizePayment = createAsyncAction(
 
 export type WalletPaymentActions =
   | ActionType<typeof walletPaymentInitState>
-  | ActionType<typeof walletGetPaymentDetails>
-  | ActionType<typeof walletCreateTransaction>
-  | ActionType<typeof walletGetPaymentFees>
-  | ActionType<typeof walletAuthorizePayment>;
+  | ActionType<typeof walletPaymentGetDetails>
+  | ActionType<typeof walletPaymentGetAllMethods>
+  | ActionType<typeof walletPaymentGetUserWallets>
+  | ActionType<typeof walletPaymentCreateTransaction>
+  | ActionType<typeof walletPaymentCalculateFees>
+  | ActionType<typeof walletPaymentAuthorize>;
