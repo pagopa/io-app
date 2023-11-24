@@ -35,9 +35,9 @@ const PaymentMethodItem = ({
   onPress
 }: PaymentMethodItemProps) => {
   const listItemNavCommonProps: ListItemNav = {
-    accessibilityLabel: paymentMethod.name,
+    accessibilityLabel: paymentMethod.description,
     onPress,
-    value: paymentMethod.name
+    value: paymentMethod.description
   };
 
   return pipe(
