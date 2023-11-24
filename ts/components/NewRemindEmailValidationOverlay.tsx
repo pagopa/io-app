@@ -114,11 +114,13 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
         // if the user is in the onboarding flow and the email il correctly validated,
         // the email validation flow is finished
         acknowledgeEmail();
+        hideModal();
+      } else {
+        hideModal();
+        NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.PROFILE_DATA
+        });
       }
-      hideModal();
-      NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.PROFILE_DATA
-      });
     } else {
       // send email validation only if it exists
       pipe(
