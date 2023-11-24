@@ -16,7 +16,7 @@ import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ITW_PID_KEY_TAG } from "../utils/pid";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
-import { verifyPin } from "./itwSagaUtils";
+import { verifyPin } from "./test";
 
 /*
  * This saga handles the RP presentation.

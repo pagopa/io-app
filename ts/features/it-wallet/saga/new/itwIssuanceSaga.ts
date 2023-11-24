@@ -36,7 +36,7 @@ import {
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
-import { verifyPin } from "../itwSagaUtils";
+import { verifyPin } from "../test";
 
 /**
  * Watcher for issuance related sagas.
