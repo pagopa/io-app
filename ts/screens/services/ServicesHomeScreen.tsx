@@ -27,28 +27,24 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import {
   View,
-  Animated,
   Image,
   KeyboardAvoidingView,
   Platform,
   StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { Body } from "../../components/core/typography/Body";
-import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
 import SectionStatusComponent from "../../components/SectionStatus";
 import ServicesSearch from "../../components/services/ServicesSearch";
-import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
@@ -94,7 +90,6 @@ import {
   userMetadataSelector
 } from "../../store/reducers/userMetadata";
 import customVariables from "../../theme/variables";
-import { HEADER_HEIGHT } from "../../utils/constants";
 import {
   getChannelsforServicesList,
   getProfileChannelsforServicesList
@@ -148,15 +143,9 @@ const styles = StyleSheet.create({
   },
   customSpacer: {
     height: customSpacerHeight
-  },
-  headerLinkContainer: {
-    flexDirection: "row",
-    alignItems: "center"
   }
 });
 
-const AnimatedScreenContentHeader =
-  Animated.createAnimatedComponent(ScreenContentHeader);
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "services.contextualHelpTitle",
   body: "services.contextualHelpContent"
@@ -223,18 +212,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
       this.props.refreshVisibleServices();
     }
   }
-
-  private animatedTabScrollPositions: ReadonlyArray<Animated.Value> = [
-    new Animated.Value(0),
-    new Animated.Value(0)
-  ];
-
-  private getHeaderHeight = (): Animated.AnimatedInterpolation =>
-    this.animatedTabScrollPositions[this.state.currentTab].interpolate({
-      inputRange: [0, HEADER_HEIGHT],
-      outputRange: [0, 1],
-      extrapolate: "clamp"
-    });
 
   // TODO: evaluate if it can be replaced by the component introduced within https://www.pivotaltracker.com/story/show/168247501
   private renderServiceLoadingPlaceholder() {
@@ -326,21 +303,6 @@ class ServicesHomeScreen extends React.Component<Props, State> {
     }
   };
 
-  private renderHeaderLink = () => (
-    <TouchableDefaultOpacity
-      style={styles.headerLinkContainer}
-      accessible={true}
-      accessibilityRole={"button"}
-      accessibilityLabel={I18n.t("services.accessibility.edit")}
-      onPress={this.props.navigateToServicePreference}
-    >
-      <Icon name="coggle" size={20} color="blue" />
-      <Label color={"blue"} weight={"Bold"} style={{ marginLeft: 8 }}>
-        {I18n.t("global.buttons.edit").toLocaleUpperCase()}
-      </Label>
-    </TouchableDefaultOpacity>
-  );
-
   public render() {
     return (
       <KeyboardAvoidingView
@@ -355,6 +317,7 @@ class ServicesHomeScreen extends React.Component<Props, State> {
           />
           <TopScreenComponent
             accessibilityLabel={I18n.t("services.title")}
+            hideBaseHeader={true}
             headerTitle={I18n.t("services.title")}
             appLogo={true}
             contextualHelpMarkdown={contextualHelpMarkdown}
@@ -366,11 +329,11 @@ class ServicesHomeScreen extends React.Component<Props, State> {
               this.renderSearch()
             ) : (
               <React.Fragment>
-                <AnimatedScreenContentHeader
+                {/* <AnimatedScreenContentHeader
                   title={I18n.t("services.title")}
                   rightComponent={this.renderHeaderLink()}
                   dynamicHeight={this.getHeaderHeight()}
-                />
+                /> */}
                 {this.renderInnerContent()}
               </React.Fragment>
             )}
