@@ -37,8 +37,16 @@ const WalletPaymentMethodListScreen = () => {
   );
 
   const handleContinue = () => {
+    // TODO: check if the user already selected a PSP for the chosen payment method and use it.
+    // In this case we should navigate directly to the payment review screen.
+    // If not, go to the PSP selection screen.
+
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PSP_LIST
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_PSP_LIST,
+      params: {
+        walletId: "123456",
+        paymentAmountInCents: 100
+      }
     });
   };
 

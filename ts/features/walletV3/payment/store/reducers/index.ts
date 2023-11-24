@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
@@ -7,11 +8,16 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/Wallet
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  walletPaymentCalculateFees,
+  walletPaymentChoosePaymentMethod,
+  walletPaymentChoosePsp,
+  walletPaymentCreateTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
   walletPaymentGetUserWallets,
   walletPaymentInitState
 } from "../actions";
+import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 
 export type WalletPaymentState = {
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
@@ -20,8 +26,10 @@ export type WalletPaymentState = {
     ReadonlyArray<PaymentMethodResponse>,
     NetworkError
   >;
-  transactionId: pot.Pot<string, NetworkError>;
-  pspList: pot.Pot<Array<Bundle>, NetworkError>;
+  pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
+  chosenPaymentMethod: O.Option<string>;
+  chosenPsp: O.Option<string>;
+  transaction: pot.Pot<NewTransactionResponse, NetworkError>;
   authorizationUrl: pot.Pot<string, NetworkError>;
 };
 
@@ -29,11 +37,14 @@ const INITIAL_STATE: WalletPaymentState = {
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,
-  transactionId: pot.none,
   pspList: pot.none,
+  chosenPaymentMethod: O.none,
+  chosenPsp: O.none,
+  transaction: pot.none,
   authorizationUrl: pot.none
 };
 
+// eslint-disable-next-line complexity
 const reducer = (
   state: WalletPaymentState = INITIAL_STATE,
   action: Action
@@ -91,6 +102,52 @@ const reducer = (
       return {
         ...state,
         allPaymentMethods: pot.toError(state.allPaymentMethods, action.payload)
+      };
+
+    case getType(walletPaymentChoosePaymentMethod):
+      return {
+        ...state,
+        chosenPaymentMethod: O.some(action.payload)
+      };
+
+    // PSP list
+    case getType(walletPaymentCalculateFees.request):
+      return {
+        ...state,
+        pspList: pot.toLoading(state.pspList)
+      };
+    case getType(walletPaymentCalculateFees.success):
+      return {
+        ...state,
+        pspList: pot.some(action.payload.bundles)
+      };
+    case getType(walletPaymentCalculateFees.failure):
+      return {
+        ...state,
+        pspList: pot.toError(state.pspList, action.payload)
+      };
+
+    case getType(walletPaymentChoosePsp):
+      return {
+        ...state,
+        chosenPsp: O.some(action.payload)
+      };
+
+    // Created transaction data
+    case getType(walletPaymentCreateTransaction.request):
+      return {
+        ...state,
+        transaction: pot.toLoading(state.transaction)
+      };
+    case getType(walletPaymentCreateTransaction.success):
+      return {
+        ...state,
+        transaction: pot.some(action.payload)
+      };
+    case getType(walletPaymentCreateTransaction.failure):
+      return {
+        ...state,
+        transaction: pot.toError(state.transaction, action.payload)
       };
   }
   return state;

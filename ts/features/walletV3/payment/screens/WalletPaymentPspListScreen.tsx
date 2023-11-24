@@ -1,6 +1,73 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { GradientScrollView } from "@pagopa/io-app-design-system";
+import {
+  RouteProp,
+  useFocusEffect,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import React from "react";
+import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { WalletPaymentParamsList } from "../navigation/params";
+import { WalletPaymentRoutes } from "../navigation/routes";
+import { walletPaymentCalculateFees } from "../store/actions";
+import { walletPaymentPspListSelector } from "../store/selectors";
 
-const WalletPaymentPspListScreen = () => <BaseScreenComponent goBack={true} />;
+type WalletPaymentPspListScreenNavigationParams = {
+  walletId: string;
+  paymentAmountInCents: number;
+};
+
+type WalletPaymentPspListRouteProps = RouteProp<
+  WalletPaymentParamsList,
+  "WALLET_PAYMENT_PSP_LIST"
+>;
+
+const WalletPaymentPspListScreen = () => {
+  const { params } = useRoute<WalletPaymentPspListRouteProps>();
+  const { paymentAmountInCents, walletId } = params;
+  const dispatch = useIODispatch();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const isLoading = pot.isLoading(pspListPot);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(
+        walletPaymentCalculateFees.request({ walletId, paymentAmountInCents })
+      );
+    }, [dispatch, walletId, paymentAmountInCents])
+  );
+
+  const handleContinue = () => {
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_REVIEW
+    });
+  };
+
+  return (
+    <BaseScreenComponent goBack={true}>
+      <GradientScrollView
+        primaryActionProps={{
+          label: "Continua",
+          accessibilityLabel: "Continua",
+          onPress: handleContinue,
+          disabled: isLoading,
+          loading: isLoading
+        }}
+      >
+        <DebugPrettyPrint title="pspListPot" data={pspListPot} />
+      </GradientScrollView>
+    </BaseScreenComponent>
+  );
+};
 
 export { WalletPaymentPspListScreen };
+export type { WalletPaymentPspListScreenNavigationParams };

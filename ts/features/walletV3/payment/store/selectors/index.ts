@@ -18,3 +18,23 @@ export const walletPaymentUserMethodsSelector = createSelector(
   selectWalletPayment,
   state => state.userWallets
 );
+
+export const walletPaymentChosenPaymentMethodSelector = createSelector(
+  selectWalletPayment,
+  state => state.chosenPaymentMethod
+);
+
+export const walletPaymentPspListSelector = createSelector(
+  selectWalletPayment,
+  state => state.pspList
+);
+
+export const walletPaymentChosenPspSelector = createSelector(
+  selectWalletPayment,
+  state => state.chosenPsp
+);
+
+export const walletPaymentTransactionSelector = createSelector(
+  selectWalletPayment,
+  state => state.transaction
+);
