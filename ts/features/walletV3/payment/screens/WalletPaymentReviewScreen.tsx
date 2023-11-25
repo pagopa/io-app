@@ -1,6 +1,6 @@
 import { GradientScrollView, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
@@ -14,9 +14,15 @@ import {
   walletPaymentAuthorizationUrlSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
+import { WalletPaymentRoutes } from "../navigation/routes";
 
 const WalletPaymentReviewScreen = () => {
   const dispatch = useIODispatch();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const authorizationUrlPot = useIOSelector(
@@ -31,6 +37,14 @@ const WalletPaymentReviewScreen = () => {
       dispatch(walletPaymentCreateTransaction.request({ paymentNotices: [] }));
     }, [dispatch])
   );
+
+  React.useEffect(() => {
+    if (pot.isSome(authorizationUrlPot)) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME
+      });
+    }
+  }, [authorizationUrlPot, navigation]);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const handleStartPaymentAuthorization = () => {
