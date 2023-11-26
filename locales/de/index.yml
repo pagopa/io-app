@@ -356,10 +356,10 @@ profile:
         title: "Datenschutz"
         listItem:
           title: "Freigabe von Nutzungsdaten"
-          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App"
+          description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
         screen:
           title: "Deine Nutzungsdaten"
-          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App und erlaube im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
+          description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App und erlaube im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
           why:
             description:
               one: "IO sammelt nur die für das Funktionieren der angebotenen Dienste "
@@ -845,6 +845,7 @@ wallet:
       dateTime: "Datum und Uhrzeit"
       detailTitle: "Details"
       help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
+    validUntil: "Gültig bis {{expDate}}"
   searchAbi:
     header: "{{methodName}} hinzufügen"
     bancomat:
@@ -1033,8 +1034,12 @@ wallet:
   transactionsShow: "Zeige deine Transaktionen"
   add: "hinzufügen"
   delete:
-    successful: "Zahlungsmethode von deinem Konto entfernt"
-    failed: "Die Zahlungsmethode konnte nicht von deinem Konto entfernt werden"
+    ios:
+      confirm: "Zahlungsmethode entfernen"
+    android:
+      confirm: "Entfernen"
+    successful: "Zahlungsmethode von deinem Konto entfernt!"
+    failed: "Die Zahlungsmethode kann nicht von deinem Konto entfernt werden"
   newPaymentMethod:
     add: "Hinzufügen"
     show: "Anzeigen"
