@@ -1775,12 +1775,12 @@ bonus:
       news: "Neu"
       online: "Online"
       places: "Orte"
-      navigationTitle: "Ermäßigungen"
-      screenTitle: "Wähle einen Anbieter und entdecke Vorteile und Möglichkeiten"
+      navigationTitle: "Rabatte und Ermäßigungen"
+      screenTitle: "Wähle einen Anbieter und entdecke Rabatte und Ermäßigungen"
       cta:
         filter: "Filtern"
       categoriesList:
-        title: "Wähle eine Kategorie und entdecke Vorteile und Möglichkeiten"
+        title: "Wähle eine Kategorie und entdecke Rabatte und Ermäßigungen"
       filter:
         title: "Anbieter filtern"
         searchTitle: "Suche nach Name"
@@ -1805,79 +1805,79 @@ bonus:
         alert:
           cta: "Verstanden!"
         error:
-          noCode: I codici sconto di questa agevolazione sono al momento terminati, riprova più tardi
+          noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
       title:
-        deals: Agevolazioni e opportunità
-        description: Descrizione
-        services: Servizi
-        addresses: Indirizzi
-        hours: Orari
-        validity: Validità
-        discountCode: Codice Sconto
-        conditions: Condizioni
+        deals: "Rabatte und Ermäßigungen"
+        description: "Beschreibung"
+        services: "Dienste"
+        addresses: "Adressen"
+        hours: "Öffnungszeiten"
+        validity: "Gültigkeit"
+        discountCode: "Rabatt-Code"
+        conditions: "Bedingungen"
       cta:
-        label: Vai al sito dell'operatore
-        landingPage: Accedi all’opportunità
-        discountUrl: Vai all'opportunità
+        label: "Besuche die Website des Anbieters"
+        landingPage: "Die Ermäßigung nutzen"
+        discountUrl: "Nutze die Ermäßigung"
       categories:
-        all: Tutti gli operatori
-        counting: e altre {{count}}
-        cultureAndEntertainment: Cultura e Tempo Libero
-        health: Salute e Benessere
-        learning: Istruzione e Formazione
-        sport: Sport
-        home: Casa
-        telco: Telefonia e Internet
-        finance: Servizi Bancari e Finanziari
-        travel: Viaggi e Trasporti
-        mobility: Mobilità Sostenibile
-        job: Lavoro e Tirocini
+        all: "Alle Anbieter"
+        counting: "und weitere {{count}}"
+        cultureAndEntertainment: "Kultur und Freizeit"
+        health: "Gesundheit und Wohlbefinden"
+        learning: "Aus- und Weiterbildung"
+        sport: "Sport"
+        home: "Haushalt"
+        telco: "Telefonie und Internet"
+        finance: "Bank- und Finanzdienstleistungen"
+        travel: "Reisen und Transport"
+        mobility: "Nachhaltige Mobilität"
+        job: "Jobs und Ausbildungsplätze"
     cta:
-      activeBonus: Richiedi la Carta
-      deactivateBonus: Disattiva la Carta
-      goToDetail: Visualizza la Carta
+      activeBonus: "Die Karte beantragen"
+      deactivateBonus: "Die Karte deaktivieren"
+      goToDetail: "Die Karte anzeigen"
     detail:
       cta:
-        buyers: Vedi le opportunità CGN
-        otp: Genera codice
+        buyers: "CGN Rabatte und Ermäßigungen anzeigen"
+        otp: "Code generieren"
         eyca:
-          copy: Copia numero carta EYCA
-          pending: Vedi le opportunità EYCA
-          bottomSheet: Visita il sito di EYCA
-          showEycaDiscounts: Vedi le opportunità EYCA
+          copy: "EYCA Kartennummer kopieren"
+          pending: "EYCA Rabatte und Ermäßigungen anzeigen"
+          bottomSheet: "Besuche die EYCA Website"
+          showEycaDiscounts: "EYCA Rabatte und Ermäßigungen anzeigen"
       tos:
-        link: Informativa sul trattamento dei dati personali
+        link: "Informationen über die Verarbeitung von personenbezogenen Daten"
       information:
-        active: "La carta è attiva e può essere usata fino al {{date}}"
-        warning: "Attenzione! "
-        revoked: "Questa carta è stata revocata per {{reason}}"
-        expired: "Questa carta è scaduta il {{date}}"
-      ownership: Chi può usare la carta?
+        active: "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden."
+        warning: "Achtung! "
+        revoked: "Diese Karte wurde aus folgendem Grund widerrufen: {{reason}}"
+        expired: "Diese Karte ist am {{date}} abgelaufen"
+      ownership: "Wer kann die Karte benutzen?"
       status:
-        title: Carta Giovani Nazionale (CGN)
-        eyca: Carta EYCA
-        eycaCircuit: Circuito EYCA
-        eycaNumber: Numero carta
-        eycaPending: "Stiamo associando la tua Carta Giovani Nazionale a un Numero EYCA."
-        eycaError: "Abbiamo riscontrato problemi con i sistemi EYCA."
-        eycaBottomSheetTitle: "Numero di carta EYCA"
-        eycaDescription: "Fino al compimento dei 31 anni, **la tua Carta Giovani Nazionale aderisce al circuito EYCA** (European Youth Card Association).\n\nUsando la carta presso gli esercenti aderenti, potrai ottenere sconti e agevolazioni su attività culturali, negozi, trasporti, ristorazione e alloggio anche nei paesi europei aderenti al circuito."
+        title: "Nationale Jugendkarte (CGN)"
+        eyca: "EYCA Karte"
+        eycaCircuit: "EYCA Netzwerk"
+        eycaNumber: "Kartennummer"
+        eycaPending: "Wir verknüpfen deine nationale Jugendkarte mit einer EYCA Nummer."
+        eycaError: "Wir hatten Probleme mit den EYCA Systemen."
+        eycaBottomSheetTitle: "EYCA Kartennummer"
+        eycaDescription: "Bis zum Alter von 31 Jahren ist **deine nationale Jugendkarte Mitglied der EYCA** (European Youth Card Association).\n\nMit der Karte kannst du bei den teilnehmenden Händlern Rabatte und Ermäßigungen bei kulturellen Aktivitäten, beim Einkaufen, im Verkehr, in der Gastronomie und bei der Unterbringung erhalten, und zwar auch in den europäischen Ländern, die an der EYCA teilnehmen."
         badge:
-          active: Attiva
-          revoked: Revocata
-          expired: Scaduta
+          active: "Aktiv"
+          revoked: "Widerrufen"
+          expired: "Abgelaufen"
         date:
-          activated: Attivata il
-          expired: Scaduta il
-          revoked: Revocata il
+          activated: "Aktiviert am"
+          expired: "Abgelaufen am"
+          revoked: "Widerrufen am"
         expiration:
-          cgn: Scade il
-          eyca: Scade il
+          cgn: "Aktiv bis"
+          eyca: "Aktiv bis"
     activation:
       eyca:
         loading:
-          caption: "Stiamo processando la tua richiesta"
-          subCaption: "Ti preghiamo di attendere."
+          caption: "Wir bearbeiten deine Anfrage"
+          subCaption: "Bitte warte etwas."
         error:
           title: "Il servizio di EYCA in questo momento non è disponibile."
           body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
