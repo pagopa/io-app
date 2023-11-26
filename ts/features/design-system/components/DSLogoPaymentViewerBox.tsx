@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Text, ImageBackground } from "react-native";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
 
 /* Fake Transparent BG */
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
@@ -19,10 +19,20 @@ const styles = StyleSheet.create({
   logoWrapperLarge: {
     width: "25%"
   },
+  logoWrapperFull: {
+    width: "100%"
+  },
   fakeTransparentBg: {
     position: "absolute",
     width: "275%",
     height: "275%",
+    opacity: 0.4
+  },
+  fakeTransparentBgFull: {
+    position: "absolute",
+    top: "-25%",
+    width: "150%",
+    height: "150%",
     opacity: 0.4
   },
   nameWrapper: {
@@ -45,16 +55,18 @@ const styles = StyleSheet.create({
   logoItemLarge: {
     aspectRatio: 4 / 3
   },
+  logoItemFull: {
+    aspectRatio: undefined
+  },
   iconLabel: {
-    fontSize: 10,
-    color: IOColors.bluegrey
+    fontSize: 10
   }
 });
 
 type DSLogoPaymentViewerBoxProps = {
   name: string;
   image: React.ReactNode;
-  size: "medium" | "large";
+  size: "medium" | "large" | "full";
 };
 
 const sizeMap = {
@@ -65,6 +77,10 @@ const sizeMap = {
   large: {
     wrapper: styles.logoWrapperLarge,
     item: styles.logoItemLarge
+  },
+  full: {
+    wrapper: styles.logoWrapperFull,
+    item: styles.logoItemFull
   }
 };
 
@@ -72,21 +88,36 @@ export const DSLogoPaymentViewerBox = ({
   name,
   image,
   size
-}: DSLogoPaymentViewerBoxProps) => (
-  <View style={[styles.logoWrapper, sizeMap[size].wrapper]}>
-    <View style={[styles.logoItem, sizeMap[size].item]}>
-      <ImageBackground
-        style={styles.fakeTransparentBg}
-        source={FakeTransparentBg}
-      />
-      {image}
+}: DSLogoPaymentViewerBoxProps) => {
+  const theme = useIOTheme();
+
+  return (
+    <View style={[styles.logoWrapper, sizeMap[size].wrapper]}>
+      <View style={[styles.logoItem, sizeMap[size].item]}>
+        <ImageBackground
+          style={
+            size === "full"
+              ? styles.fakeTransparentBgFull
+              : styles.fakeTransparentBg
+          }
+          source={FakeTransparentBg}
+        />
+        {image}
+      </View>
+      <View style={styles.nameWrapper}>
+        {name && (
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[
+              styles.iconLabel,
+              { color: IOColors[theme["textBody-tertiary"]] }
+            ]}
+          >
+            {name}
+          </Text>
+        )}
+      </View>
     </View>
-    <View style={styles.nameWrapper}>
-      {name && (
-        <Text numberOfLines={1} ellipsizeMode="tail" style={styles.iconLabel}>
-          {name}
-        </Text>
-      )}
-    </View>
-  </View>
-);
+  );
+};

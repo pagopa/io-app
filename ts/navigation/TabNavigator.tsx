@@ -1,22 +1,25 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../components/core/fonts";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import { TabIconComponent } from "../components/ui/TabIconComponent";
 import I18n from "../i18n";
 import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
+import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
-import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
-import { TabIconComponent } from "../components/ui/TabIconComponent";
+import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
+import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
@@ -48,12 +51,22 @@ export const MainTabNavigator = () => {
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const [currentRoute, setCurrentRoute] = React.useState<
+    keyof MainTabParamsList
+  >(ROUTES.MESSAGES_HOME);
+
+  const navigateToBarcodeScanScreen = () => {
+    navigation.navigate(ROUTES.BARCODE_SCAN);
+  };
 
   return (
     <LoadingSpinnerOverlay
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
+      <HeaderFirstLevelHandler currentRoute={currentRoute} />
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: {
@@ -80,6 +93,11 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={ROUTES.MESSAGES_HOME}
           component={MessagesHomeScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.MESSAGES_HOME);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
@@ -97,6 +115,11 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={ROUTES.WALLET_HOME}
           component={WalletHomeScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.WALLET_HOME);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
@@ -109,9 +132,37 @@ export const MainTabNavigator = () => {
             )
           }}
         />
+        {isDesignSystemEnabled && (
+          <Tab.Screen
+            name={ROUTES.BARCODE_SCAN}
+            component={EmptyComponent}
+            listeners={{
+              tabPress: ({ preventDefault }) => {
+                preventDefault();
+                navigateToBarcodeScanScreen();
+              }
+            }}
+            options={{
+              title: I18n.t("global.navigator.scan"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName={"navScan"}
+                  iconNameFocused={"navScan"}
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
         <Tab.Screen
           name={ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.SERVICES_HOME);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
@@ -129,6 +180,11 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={ROUTES.PROFILE_MAIN}
           component={ProfileMainScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.PROFILE_MAIN);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (
@@ -145,3 +201,8 @@ export const MainTabNavigator = () => {
     </LoadingSpinnerOverlay>
   );
 };
+
+/**
+ * Used to mock tab content. This will never be rendered.
+ */
+const EmptyComponent = () => <></>;

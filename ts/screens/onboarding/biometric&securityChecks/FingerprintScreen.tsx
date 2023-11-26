@@ -2,7 +2,7 @@ import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -10,10 +10,13 @@ import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { H5 } from "../../../components/core/typography/H5";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
+import {
+  BiometriActivationUserType,
+  mayUserActivateBiometric
+} from "../../../utils/biometrics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -106,11 +109,23 @@ const FingerprintScreen = () => {
           rightButton={{
             title: I18n.t("global.buttons.activate2"),
             onPress: () =>
-              dispatch(
-                preferenceFingerprintIsEnabledSaveSuccess({
-                  isFingerprintEnabled: true
+              mayUserActivateBiometric()
+                .then(_ =>
+                  dispatch(
+                    preferenceFingerprintIsEnabledSaveSuccess({
+                      isFingerprintEnabled: true
+                    })
+                  )
+                )
+                .catch((err: BiometriActivationUserType) => {
+                  if (err === "PERMISSION_DENIED") {
+                    dispatch(
+                      preferenceFingerprintIsEnabledSaveSuccess({
+                        isFingerprintEnabled: false
+                      })
+                    );
+                  }
                 })
-              )
           }}
         />
       </View>

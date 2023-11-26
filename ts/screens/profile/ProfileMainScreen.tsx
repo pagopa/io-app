@@ -2,9 +2,17 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { List, Toast } from "native-base";
 import * as React from "react";
-import { View, Alert, ScrollView } from "react-native";
+import { View, Alert, ScrollView, Dimensions } from "react-native";
 import { connect } from "react-redux";
-import { ButtonSolid, Divider, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  Divider,
+  IOColors,
+  ListItemInfoCopy,
+  ListItemNav,
+  ListItemSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
 import ContextualInfo from "../../components/ContextualInfo";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -56,9 +64,6 @@ import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
-import ListItemNav from "../../components/ui/ListItemNav";
-import ListItemInfoCopy from "../../components/ui/ListItemInfoCopy";
-import { SwitchListItem } from "../../components/ui/SwitchListItem";
 import AppVersion from "../../components/AppVersion";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -131,7 +136,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     description?: string
   ) {
     return (
-      <SwitchListItem
+      <ListItemSwitch
         label={title}
         description={description}
         value={switchValue}
@@ -446,8 +451,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         <Divider />
         {isDebugModeEnabled && (
           <React.Fragment>
-            {isDevEnv &&
-              isFastLoginEnabled &&
+            {isFastLoginEnabled &&
               this.debugCopyListItem(
                 "Fast Login",
                 `${isFastLoginEnabled}`,
@@ -638,6 +642,12 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       </ScrollView>
     );
 
+    /* The dimensions of the screen that will be used
+    to hide the white background when inertial
+    scrolling is turned on. */
+    const { height: screenHeight, width: screenWidth } =
+      Dimensions.get("screen");
+
     return (
       <DarkLayout
         referenceToContentScreen={(c: ScreenContentRoot) => {
@@ -649,21 +659,35 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           return c;
         }}
         accessibilityLabel={I18n.t("profile.main.title")}
-        bounces={false}
         appLogo={true}
-        title={I18n.t("profile.main.title")}
-        rasterIcon={require("../../../img/icons/profile-illustration.png")}
+        hideBaseHeader={true}
+        hideHeader={true}
         topContent={
-          <TouchableDefaultOpacity
-            accessibilityRole={"button"}
-            onPress={() =>
-              this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_FISCAL_CODE
-              })
-            }
-          >
-            <FiscalCodeComponent type={"Preview"} />
-          </TouchableDefaultOpacity>
+          <>
+            {/* Add a fake View with a dark background to hide
+            the white block when the inertial scroll is enabled
+            (that means the user is using negative scroll values) */}
+            <View
+              style={{
+                position: "absolute",
+                top: -screenHeight,
+                height: screenHeight,
+                width: screenWidth,
+                backgroundColor: IOColors.bluegrey
+              }}
+            />
+            {/* End of the hacky solution */}
+            <TouchableDefaultOpacity
+              accessibilityRole={"button"}
+              onPress={() =>
+                this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                  screen: ROUTES.PROFILE_FISCAL_CODE
+                })
+              }
+            >
+              <FiscalCodeComponent type={"Preview"} />
+            </TouchableDefaultOpacity>
+          </>
         }
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["profile"]}

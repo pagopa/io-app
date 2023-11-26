@@ -5,6 +5,7 @@ import { buffers, channel, Channel } from "redux-saga";
 import { call, fork, put, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { PathTraversalSafePathParam } from "../../../definitions/backend/PathTraversalSafePathParam";
 import { BackendClient } from "../../api/backend";
 import { totServiceFetchWorkers } from "../../config";
 import { applicationChangeState } from "../../store/actions/application";
@@ -28,10 +29,18 @@ import { trackServiceDetailLoadingStatistics } from "../../utils/analytics";
  */
 export function* loadServiceDetailRequestHandler(
   getService: ReturnType<typeof BackendClient>["getService"],
-  action: ActionType<typeof loadServiceDetail["request"]>
+  action: ActionType<(typeof loadServiceDetail)["request"]>
 ): Generator<ReduxSagaEffect, void, SagaCallReturnType<typeof getService>> {
   try {
-    const response = yield* call(getService, { service_id: action.payload });
+    const serviceIdEither = PathTraversalSafePathParam.decode(action.payload);
+
+    if (E.isLeft(serviceIdEither)) {
+      throw Error("Unable to decode ServiceId to PathTraversalSafePathParam");
+    }
+
+    const response = yield* call(getService, {
+      service_id: serviceIdEither.right
+    });
 
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));

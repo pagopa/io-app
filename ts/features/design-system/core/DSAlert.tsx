@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
 import SectionStatusComponent, {
   getStatusTextColor,
@@ -13,7 +13,6 @@ import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { H2 } from "../../../components/core/typography/H2";
-import { Alert } from "../../../components/Alert";
 
 export const DSAlert = () => {
   const viewRef = React.createRef<View>();

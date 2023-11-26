@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@^1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.7.0.tgz#40a8705fb2767e4a5595645ea4153ed1f7e1e986"
-  integrity sha512-UGd1+zDCewbjugY0MkNSse3+eX1QnuwBD0tdbFx2tH3dbnbl2uEFwVHZDEyZdeuhmxSF1b5TNoCR4UdNpRQOmg==
+"@pagopa/io-app-design-system@1.16.1":
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.16.1.tgz#163e5e878a8c72140bc4ca6aa249e0a0932a23cf"
+  integrity sha512-LFtCMcSLAHPoCocOlGmsm/BlIWuzbwNPzykbwvyxvu1ycOBzEVHc1JuJGDsaD3pRAvydNiq05nhfYBoAGMGVQA==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -3136,6 +3136,7 @@
     expo-asset "^8.10.1"
     expo-font "^11.4.0"
     expo-modules-core "^1.5.6"
+    lodash "^4.17.21"
     react-native-gesture-handler "^2.12.0"
     react-native-haptic-feedback "^2.0.2"
     react-native-linear-gradient "^2.5.6"
@@ -4049,10 +4050,10 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.3.2.tgz#fc8c2825e4ed2142473b4a81064e6e081463d1b3"
   integrity sha512-eI5Yrz3Qv4KPUa/nSIAi0h+qX0XyewOliug5F2QAtuRg6Kjg6jfmxe1GIwoIRhZspD1A0RP8ANrPwvEXXtRFog==
 
-"@types/prettier@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.4.0.tgz#900b13362610ccd3570fb6eefb911a6732973d00"
-  integrity sha512-WHRsy5nMpjXfU9B0LqOqPT06EI2+8Xv5NERy0pLxJLbU98q7uhcGogQzfX+rXpU7S5mgHsLxHrLCufZcV/P8TQ==
+"@types/prettier@^2.7.3":
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.7.3.tgz#3e51a17e291d01d17d3fc61422015a933af7a08f"
+  integrity sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==
 
 "@types/prop-types@*", "@types/prop-types@15.5.5":
   version "15.5.5"
@@ -9976,9 +9977,9 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.24":
+"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.25":
   version "0.3.23"
-  resolved "https://github.com/pagopa/io-react-native-zendesk.git#62559dc219583834f0bae2864d959f51f2d19572"
+  resolved "https://github.com/pagopa/io-react-native-zendesk.git#66492028f52d3c64392ac4174d80d6fbf65d0e92"
 
 io-ts@2.2.20:
   version "2.2.20"
@@ -14105,10 +14106,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.4.1.tgz#671e11c89c14a4cfc876ce564106c4a6726c9f5c"
-  integrity sha512-9fbDAXSBcc6Bs1mZrDYb3XKzDLm4EXXL9sC1LqKP5rZkT6KRr/rf9amVUcODVXgguK/isJz0d0hP72WeaKWsvA==
+prettier@2.8.8:
+  version "2.8.8"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
+  integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
 prettier@^1.12.1:
   version "1.19.1"

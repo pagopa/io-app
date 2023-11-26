@@ -1,12 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { cgnActivationCancel } from "../../store/actions/activation";
 import image from "../../../../../../img/messages/empty-due-date-list-icon.png";
@@ -27,15 +26,20 @@ const CgnAlreadyActiveScreen = (props: Props): React.ReactElement => (
       title={I18n.t("bonus.cgn.activation.alreadyActive.title")}
       body={I18n.t("bonus.cgn.activation.alreadyActive.body")}
     />
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={confirmButtonProps(
-        props.navigateToDetail,
-        I18n.t("bonus.cgn.cta.goToDetail"),
-        undefined,
-        "cgnConfirmButtonTestId"
-      )}
-    />
+    <View>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            onPress: props.navigateToDetail,
+            label: I18n.t("bonus.cgn.cta.goToDetail"),
+            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail"),
+            testID: "cgnConfirmButtonTestId"
+          }
+        }}
+      />
+    </View>
   </SafeAreaView>
 );
 

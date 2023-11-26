@@ -3,9 +3,14 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  HSpacer,
+  VSpacer,
+  Badge,
+  Icon
+} from "@pagopa/io-app-design-system";
 import { ProductCategory } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -38,7 +43,7 @@ export const renderCategoryElement = (category: ProductCategory) =>
       () => undefined,
       c => (
         <View style={styles.row}>
-          {c.icon({ height: 22, width: 22, fill: IOColors.bluegrey })}
+          <Icon name={c.icon} size={20} color="bluegrey" />
           <HSpacer size={8} />
           <H5 weight={"SemiBold"} color={"bluegrey"}>
             {I18n.t(c.nameKey).toLocaleUpperCase()}
@@ -115,12 +120,7 @@ const CgnMerchantListItem: React.FunctionComponent<Props> = (props: Props) => (
       <H2 style={IOStyles.flex}>{props.name}</H2>
       {props.isNew && (
         <View style={styles.badgePosition}>
-          <IOBadge
-            small
-            variant="solid"
-            color="blue"
-            text={I18n.t("bonus.cgn.merchantsList.news")}
-          />
+          <Badge variant="blue" text={I18n.t("bonus.cgn.merchantsList.news")} />
         </View>
       )}
     </View>

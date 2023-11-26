@@ -37,7 +37,10 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { watchZendeskSupportSaga } from "../features/zendesk/saga";
+import {
+  watchZendeskGetSessionSaga,
+  watchZendeskSupportSaga
+} from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchWalletV3Saga } from "../features/walletV3/common/saga";
 import I18n from "../i18n";
@@ -84,8 +87,8 @@ import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
-import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
-import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
+import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
+import { watchMessageAttachmentsSaga } from "../features/messages/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
@@ -102,8 +105,7 @@ import {
   backendStatusSelector,
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
-import { refreshSessionToken } from "../features/fastLogin/store/actions";
-import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
+import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -115,7 +117,8 @@ import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStat
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
-  initMixpanel
+  initMixpanel,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
 import {
   handlePendingMessageStateIfAllowedSaga,
@@ -208,7 +211,7 @@ export function* initializeApplicationSaga(
   }
 
   // clear cached downloads when the logged user changes
-  yield* takeEvery(differentProfileLoggedIn, clearAllAttachments);
+  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
@@ -268,6 +271,7 @@ export function* initializeApplicationSaga(
 
   // Handles the expiration of the session token
   yield* fork(watchSessionExpiredSaga);
+  yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate a backend client from the session token
   const backendClient: ReturnType<typeof BackendClient> = BackendClient(
@@ -518,10 +522,6 @@ export function* initializeApplicationSaga(
     yield* call(completeOnboardingSaga);
   }
 
-  // At the end of the onboarding checks, we enable the whatsnew check so that it is done
-  // only once you get to the messages screen (manual whatsnew management still remains after the tos)
-  yield* put(enableWhatsNewCheck());
-
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
@@ -533,6 +533,10 @@ export function* initializeApplicationSaga(
   //
   // User is autenticated, session token is valid
   //
+
+  if (zendeskEnabled) {
+    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
+  }
 
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
@@ -568,7 +572,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken);
+    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
   }
 
   // Start watching for message attachments actions (general

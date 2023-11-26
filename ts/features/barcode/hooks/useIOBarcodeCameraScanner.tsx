@@ -1,3 +1,8 @@
+import {
+  IOColors,
+  IOStyles,
+  LoadingSpinner
+} from "@pagopa/io-app-design-system";
 import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
@@ -5,22 +10,24 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking, StyleSheet, View } from "react-native";
-import {
-  Camera,
-  CameraPermissionStatus,
-  useCameraDevices
-} from "react-native-vision-camera";
+import Animated, { FadeIn } from "react-native-reanimated";
+import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
 import {
   Barcode,
   BarcodeFormat,
   useScanBarcodes
 } from "vision-camera-code-scanner";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
+import {
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType
+} from "../types/IOBarcode";
 import { decodeIOBarcode } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
+import { useWideAngleCameraDevice } from "./useWindeAngleCameraDevice";
 
 type IOBarcodeFormatsType = {
   [K in IOBarcodeFormat]: BarcodeFormat;
@@ -52,15 +59,22 @@ export type IOBarcodeCameraScannerConfiguration = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcode: IOBarcode) => void;
+  onBarcodeSuccess: (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: (failure: BarcodeFailure) => void;
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
   /**
-   * Disables the barcode scanned
+   * Disables the barcode scanner
    */
-  disabled?: boolean;
+  isDisabled?: boolean;
+  /**
+   * If true, the component displays a loading indicator and disables all interactions
+   */
+  isLoading?: boolean;
 };
 
 export type IOBarcodeCameraScanner = {
@@ -80,6 +94,18 @@ export type IOBarcodeCameraScanner = {
    * Opens the system settings screen to let user to change camera permission
    */
   openCameraSettings: () => Promise<void>;
+  /**
+   * Returns true if the device has a torch
+   */
+  hasTorch: boolean;
+  /**
+   * Returns true if the torch is on
+   */
+  isTorchOn: boolean;
+  /**
+   * Toggles the torch states between "on" and "off"
+   */
+  toggleTorch: () => void;
 };
 
 /**
@@ -144,18 +170,22 @@ const QRCODE_SCANNER_REACTIVATION_TIME_MS = 5000;
 export const useIOBarcodeCameraScanner = ({
   onBarcodeSuccess,
   onBarcodeError,
-  disabled,
+  isDisabled,
   barcodeFormats,
-  barcodeTypes
+  barcodeTypes,
+  isLoading = false
 }: IOBarcodeCameraScannerConfiguration): IOBarcodeCameraScanner => {
   const acceptedFormats = React.useMemo<Array<IOBarcodeFormat>>(
     () => barcodeFormats || ["QR_CODE", "DATA_MATRIX"],
     [barcodeFormats]
   );
 
-  const prevDisabled = usePrevious(disabled);
-  const devices = useCameraDevices();
-  const device = devices.back;
+  const prevDisabled = usePrevious(isDisabled);
+  const device = useWideAngleCameraDevice();
+
+  // Checks that the device has a torch
+  const hasTorch = !!device?.hasTorch;
+  const [isTorchOn, setTorchOn] = React.useState<boolean>(false);
 
   // This handles the resting state of the scanner after a scan
   // It is necessary to avoid multiple scans of the same barcode
@@ -255,7 +285,10 @@ export const useIOBarcodeCameraScanner = ({
 
           pipe(
             handleDetectedBarcode(detectedBarcode),
-            E.fold(onBarcodeError, onBarcodeSuccess)
+            E.fold(
+              failure => onBarcodeError(failure, "camera"),
+              barcode => onBarcodeSuccess([barcode], "camera")
+            )
           );
         })
       ),
@@ -270,17 +303,24 @@ export const useIOBarcodeCameraScanner = ({
     // in which the latest frame would be scanned
     // multiple times due to races conditions during
     // the camera disactivation.
-    if (prevDisabled || disabled) {
+    if (prevDisabled || isDisabled) {
       return;
     }
 
-    if (isResting) {
+    if (isResting || isLoading) {
       // Barcode scanner is momentarily disabled, skip
       return;
     }
 
     handleScannedBarcodes(barcodes);
-  }, [prevDisabled, disabled, isResting, barcodes, handleScannedBarcodes]);
+  }, [
+    prevDisabled,
+    isDisabled,
+    isResting,
+    isLoading,
+    barcodes,
+    handleScannedBarcodes
+  ]);
 
   /**
    * Component that renders camera and marker
@@ -294,22 +334,43 @@ export const useIOBarcodeCameraScanner = ({
           audio={false}
           frameProcessor={frameProcessor}
           frameProcessorFps={5}
-          isActive={!disabled}
+          isActive={!isDisabled}
+          torch={isTorchOn ? "on" : "off"}
         />
       )}
-      <View style={{ alignSelf: "center" }}>
-        <AnimatedCameraMarker state={isResting ? "IDLE" : "SCANNING"} />
-      </View>
+      {!isLoading ? (
+        <View style={styles.markerContainer}>
+          <AnimatedCameraMarker isAnimated={!isResting && !isDisabled} />
+        </View>
+      ) : (
+        <View style={styles.markerContainer}>
+          <LoadingMarkerComponent />
+        </View>
+      )}
     </View>
   );
+
+  const toggleTorch = () => setTorchOn(prev => !prev);
 
   return {
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
+    openCameraSettings,
+    hasTorch,
+    isTorchOn,
+    toggleTorch
   };
 };
+
+const LoadingMarkerComponent = () => (
+  <Animated.View
+    entering={FadeIn}
+    style={[IOStyles.flex, IOStyles.centerJustified, { marginTop: "15%" }]}
+  >
+    <LoadingSpinner size={76} color="white" />
+  </Animated.View>
+);
 
 const styles = StyleSheet.create({
   cameraContainer: {
@@ -322,5 +383,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%"
+  },
+  markerContainer: {
+    alignSelf: "center",
+    position: "absolute",
+    top: 0,
+    bottom: 0
   }
 });

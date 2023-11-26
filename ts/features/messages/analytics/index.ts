@@ -1,12 +1,33 @@
 import * as t from "io-ts";
+import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
+import { pipe } from "fp-ts/lib/function";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { buildEventProperties } from "../../../utils/analytics";
+import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+
+export function trackOpenMessage(
+  organizationName: string,
+  serviceName: string,
+  containsPayment: boolean | undefined
+) {
+  void mixpanelTrack(
+    "OPEN_MESSAGE",
+    buildEventProperties("UX", "screen_view", {
+      organization_name: organizationName,
+      service_name: serviceName,
+      contains_payment: pipe(
+        containsPayment,
+        O.fromNullable,
+        O.fold(() => "unknown" as const, booleanToYesNo)
+      )
+    })
+  );
+}
 
 export function trackMessageCTAFrontMatterDecodingError(serviceId?: ServiceId) {
   void mixpanelTrack("CTA_FRONT_MATTER_DECODING_ERROR", {
@@ -140,5 +161,59 @@ export function trackNotificationRejected(tag: MessageCategory["tag"]) {
   void mixpanelTrack(
     `${S.toUpperCase(tag)}_NOTIFICATION_REJECTED`,
     buildEventProperties("UX", "exit")
+  );
+}
+
+export function trackLoadMessageByIdFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_MESSAGE_BY_ID",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackLoadMessageDetailsFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_MESSAGE_DETAILS",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackLoadNextPageMessagesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_NEXT_PAGE_MESSAGES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackLoadPreviousPageMessagesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_PREVIOUS_PAGE_MESSAGES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackReloadAllMessagesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_RELOAD_ALL_MESSAGES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackUpsertMessageStatusAttributesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_UPSERT_MESSAGE_STATUS_ATTRIBUTES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
   );
 }

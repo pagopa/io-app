@@ -1,3 +1,4 @@
+import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { Content, Text as NBButtonText } from "native-base";
@@ -10,7 +11,6 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
@@ -30,7 +30,6 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
-import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import SectionCardComponent, {
   SectionCardStatus
@@ -63,6 +62,7 @@ import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
+import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -87,7 +87,10 @@ import {
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isDesignSystemEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
@@ -450,14 +453,22 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     );
   }
 
+  private navigateToPaymentScanQrCode = () => {
+    if (this.props.isDesignSystemEnabled) {
+      this.props.navigation.navigate(
+        WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
+      );
+    } else {
+      this.props.navigateToPaymentScanQrCode();
+    }
+  };
+
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
     return (
       <ButtonDefaultOpacity
         block={true}
         onPress={
-          pot.isSome(potWallets)
-            ? this.props.navigateToPaymentScanQrCode
-            : undefined
+          pot.isSome(potWallets) ? this.navigateToPaymentScanQrCode : undefined
         }
         activeOpacity={1}
       >
@@ -471,12 +482,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
 
-    const headerContent = (
-      <>
-        <WalletHomeHeader />
-        {this.cardPreview()}
-      </>
-    );
+    const headerContent = <>{this.cardPreview()}</>;
     const transactionContent =
       pot.isError(potTransactions) ||
       (pot.isNone(potTransactions) &&
@@ -504,6 +510,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         allowGoBack={false}
         appLogo={true}
         hideHeader={true}
+        hideBaseHeader={true}
         topContentHeight={this.getHeaderHeight()}
         topContent={headerContent}
         footerContent={footerContent}
@@ -557,7 +564,8 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: isIdPayEnabledSelector(state)
+  isIdPayEnabled: isIdPayEnabledSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -1,13 +1,8 @@
 /* eslint-disable functional/immutable-data */
-import {
-  DefaultTheme,
-  LinkingOptions,
-  NavigationContainer
-} from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import {
   bpdEnabled,
@@ -39,12 +34,19 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
+import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
+import { IONavigationLightTheme } from "../theme/navigations";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import ROUTES from "./routes";
 
 export const AppStackNavigator = (): React.ReactElement => {
+  // This hook is used since we are in a child of the Context Provider
+  // to setup the experimental design system value from AsyncStorage
+  // remove this once the experimental design system is stable
+  useStoredExperimentalDesign();
+
   const dispatch = useIODispatch();
 
   const startupStatus = useIOSelector(isStartupLoaded);
@@ -62,14 +64,6 @@ export const AppStackNavigator = (): React.ReactElement => {
   }
 
   return <AuthenticatedStackNavigator />;
-};
-
-const IOTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: IOColors.white
-  }
 };
 
 const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
@@ -150,7 +144,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   return (
     <NavigationContainer
-      theme={IOTheme}
+      theme={IONavigationLightTheme}
       ref={navigationRef}
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}

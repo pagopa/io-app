@@ -477,9 +477,9 @@ export const getPickPaymentMethodDescription = (
 export const isDuplicatedPayment = (
   error: O.Option<
     PayloadForAction<
-      | typeof paymentVerifica["failure"]
-      | typeof paymentAttiva["failure"]
-      | typeof paymentIdPolling["failure"]
+      | (typeof paymentVerifica)["failure"]
+      | (typeof paymentAttiva)["failure"]
+      | (typeof paymentIdPolling)["failure"]
     >
   >
 ) =>
@@ -491,3 +491,14 @@ export const isDuplicatedPayment = (
         detail === "PPT_PAGAMENTO_DUPLICATO"
     )
   );
+
+export const isPaidPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
+  details === Detail_v2Enum.PAA_PAGAMENTO_DUPLICATO ||
+  details === Detail_v2Enum.PPT_PAGAMENTO_DUPLICATO;
+export const isRevokedPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
+  details === Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO;
+export const isExpiredPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
+  details === Detail_v2Enum.PAA_PAGAMENTO_SCADUTO;
+export const isOngoingPaymentFromDetailV2Enum = (details: Detail_v2Enum) =>
+  details === Detail_v2Enum.PAA_PAGAMENTO_IN_CORSO ||
+  details === Detail_v2Enum.PPT_PAGAMENTO_IN_CORSO;

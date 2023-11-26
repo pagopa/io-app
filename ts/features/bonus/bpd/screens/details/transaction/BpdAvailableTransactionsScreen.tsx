@@ -224,103 +224,104 @@ export const NoPaymentMethodAreActiveWarning = () => (
  * TODO: scroll to refresh, display error, display loading
  * @constructor
  */
-const BpdAvailableTransactionsScreen: React.FunctionComponent<Props> =
-  props => {
-    const transactions = dataForFlatList(props.transactionForSelectedPeriod);
+const BpdAvailableTransactionsScreen: React.FunctionComponent<
+  Props
+> = props => {
+  const transactions = dataForFlatList(props.transactionForSelectedPeriod);
 
-    const trxSortByDate = [...transactions].sort((trx1, trx2) =>
-      compareDesc(trx1.trxDate, trx2.trxDate)
-    );
+  const trxSortByDate = [...transactions].sort((trx1, trx2) =>
+    compareDesc(trx1.trxDate, trx2.trxDate)
+  );
 
-    const maybeLastUpdateDate = pipe(
-      [...trxSortByDate].map(t => t.trxDate),
-      AR.lookup(0)
-    );
+  const maybeLastUpdateDate = pipe(
+    [...trxSortByDate].map(t => t.trxDate),
+    AR.lookup(0)
+  );
 
-    const renderTransactionItem: SectionListRenderItem<
-      BpdTransactionDetailRepresentation | TotalCashbackPerDate
-    > = info => {
-      if (isTotalCashback(info.item)) {
-        return (
-          <BpdCashbackMilestoneComponent
-            cashbackValue={pipe(
-              props.selectedPeriod,
-              O.fromNullable,
-              O.fold(
-                () => 0,
-                p => p.maxPeriodCashback
-              )
-            )}
-          />
-        );
-      }
-      return <BpdTransactionItem transaction={info.item} />;
-    };
-
-    return (
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={I18n.t("bonus.bpd.title")}
-        contextualHelp={emptyContextualHelp}
-      >
-        <SafeAreaView
-          style={IOStyles.flex}
-          testID={"BpdAvailableTransactionsScreen"}
-        >
-          <VSpacer size={16} />
-          <View style={IOStyles.horizontalContentPadding}>
-            <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
-          </View>
-          <ScrollView style={IOStyles.flex}>
-            <View style={IOStyles.horizontalContentPadding}>
-              <VSpacer size={16} />
-              {props.selectedPeriod && O.isSome(maybeLastUpdateDate) && (
-                <>
-                  <BpdTransactionSummaryComponent
-                    lastUpdateDate={localeDateFormat(
-                      maybeLastUpdateDate.value,
-                      I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
-                    )}
-                    period={props.selectedPeriod}
-                    totalAmount={props.selectedPeriod.amount}
-                  />
-                  <VSpacer size={16} />
-                </>
-              )}
-            </View>
-            {props.selectedPeriod &&
-              (transactions.length > 0 ? (
-                <SectionList
-                  renderSectionHeader={renderSectionHeader}
-                  scrollEnabled={true}
-                  stickySectionHeadersEnabled={true}
-                  sections={getTransactionsByDaySections(
-                    trxSortByDate,
-                    props.selectedPeriod.maxPeriodCashback
-                  )}
-                  renderItem={renderTransactionItem}
-                  keyExtractor={t =>
-                    isTotalCashback(t)
-                      ? `awarded_cashback_item${t.totalCashBack}`
-                      : t.keyId
-                  }
-                />
-              ) : !props.atLeastOnePaymentMethodActive &&
-                pot.isSome(props.potWallets) &&
-                props.potWallets.value.length > 0 ? (
-                <View style={IOStyles.horizontalContentPadding}>
-                  <NoPaymentMethodAreActiveWarning />
-                </View>
-              ) : (
-                <View style={IOStyles.horizontalContentPadding}>
-                  <BpdEmptyTransactionsList />
-                </View>
-              ))}
-          </ScrollView>
-        </SafeAreaView>
-      </BaseScreenComponent>
-    );
+  const renderTransactionItem: SectionListRenderItem<
+    BpdTransactionDetailRepresentation | TotalCashbackPerDate
+  > = info => {
+    if (isTotalCashback(info.item)) {
+      return (
+        <BpdCashbackMilestoneComponent
+          cashbackValue={pipe(
+            props.selectedPeriod,
+            O.fromNullable,
+            O.fold(
+              () => 0,
+              p => p.maxPeriodCashback
+            )
+          )}
+        />
+      );
+    }
+    return <BpdTransactionItem transaction={info.item} />;
   };
+
+  return (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t("bonus.bpd.title")}
+      contextualHelp={emptyContextualHelp}
+    >
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"BpdAvailableTransactionsScreen"}
+      >
+        <VSpacer size={16} />
+        <View style={IOStyles.horizontalContentPadding}>
+          <H1>{I18n.t("bonus.bpd.details.transaction.title")}</H1>
+        </View>
+        <ScrollView style={IOStyles.flex}>
+          <View style={IOStyles.horizontalContentPadding}>
+            <VSpacer size={16} />
+            {props.selectedPeriod && O.isSome(maybeLastUpdateDate) && (
+              <>
+                <BpdTransactionSummaryComponent
+                  lastUpdateDate={localeDateFormat(
+                    maybeLastUpdateDate.value,
+                    I18n.t("global.dateFormats.fullFormatFullMonthLiteral")
+                  )}
+                  period={props.selectedPeriod}
+                  totalAmount={props.selectedPeriod.amount}
+                />
+                <VSpacer size={16} />
+              </>
+            )}
+          </View>
+          {props.selectedPeriod &&
+            (transactions.length > 0 ? (
+              <SectionList
+                renderSectionHeader={renderSectionHeader}
+                scrollEnabled={true}
+                stickySectionHeadersEnabled={true}
+                sections={getTransactionsByDaySections(
+                  trxSortByDate,
+                  props.selectedPeriod.maxPeriodCashback
+                )}
+                renderItem={renderTransactionItem}
+                keyExtractor={t =>
+                  isTotalCashback(t)
+                    ? `awarded_cashback_item${t.totalCashBack}`
+                    : t.keyId
+                }
+              />
+            ) : !props.atLeastOnePaymentMethodActive &&
+              pot.isSome(props.potWallets) &&
+              props.potWallets.value.length > 0 ? (
+              <View style={IOStyles.horizontalContentPadding}>
+                <NoPaymentMethodAreActiveWarning />
+              </View>
+            ) : (
+              <View style={IOStyles.horizontalContentPadding}>
+                <BpdEmptyTransactionsList />
+              </View>
+            ))}
+        </ScrollView>
+      </SafeAreaView>
+    </BaseScreenComponent>
+  );
+};
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 

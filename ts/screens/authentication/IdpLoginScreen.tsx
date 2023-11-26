@@ -51,6 +51,8 @@ import {
 import { getUrlBasepath } from "../../utils/url";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { trackSpidLoginError } from "../../utils/analytics";
+import UnlockAccessScreen from "../onboarding/UnlockAccessScreen";
+import { apiUrlPrefix } from "../../config";
 import { originSchemasWhiteList } from "./originSchemasWhiteList";
 import { IdpAuthErrorScreen } from "./idpAuthErrorScreen";
 
@@ -119,7 +121,15 @@ const IdpLoginScreen = (props: Props) => {
     error: WebViewErrorEvent | WebViewHttpErrorEvent
   ): void => {
     trackSpidLoginError(props.loggedOutWithIdpAuth?.idp.id, error);
-    setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+    const webViewHttpError = error as WebViewHttpErrorEvent;
+    if (webViewHttpError.nativeEvent.statusCode) {
+      const { statusCode, url } = webViewHttpError.nativeEvent;
+      if (url.includes(apiUrlPrefix) || statusCode !== 403) {
+        setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+      }
+    } else {
+      setRequestState(pot.noneError(ErrorType.LOADING_ERROR));
+    }
   };
 
   const handleLoginFailure = useCallback(
@@ -217,14 +227,18 @@ const IdpLoginScreen = (props: Props) => {
         </View>
       );
     } else if (pot.isError(requestState)) {
-      return (
-        <IdpAuthErrorScreen
-          requestStateError={requestState.error}
-          errorCode={errorCode}
-          onCancel={() => props.navigation.goBack()}
-          onRetry={onRetryButtonPressed}
-        />
-      );
+      if (errorCode === "1002") {
+        return <UnlockAccessScreen identifier="SPID" />;
+      } else {
+        return (
+          <IdpAuthErrorScreen
+            requestStateError={requestState.error}
+            errorCode={errorCode}
+            onCancel={() => props.navigation.goBack()}
+            onRetry={onRetryButtonPressed}
+          />
+        );
+      }
     }
     // loading complete, no mask needed
     return null;

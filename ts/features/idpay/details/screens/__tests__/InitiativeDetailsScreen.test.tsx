@@ -16,6 +16,13 @@ import { NetworkError } from "../../../../../utils/errors";
 import I18n from "../../../../../i18n";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 
+jest.mock("react-native-reanimated", () => ({
+  ...require("react-native-reanimated/mock"),
+  Layout: {
+    duration: jest.fn()
+  }
+}));
+
 const mockedInitiative: InitiativeDTO = {
   endDate: new Date(2023, 1, 1),
   initiativeId: "ABC123",
@@ -134,7 +141,7 @@ describe("Test InitiativeDetailsScreen screen", () => {
     ).not.toBeTruthy();
 
     expect(component.queryByTestId("IDPayTimelineSkeletonTestID")).toBeNull();
-    expect(component.queryByTestId("IDPayDetailsSettingsTestID")).toBeNull();
+    expect(component.queryByTestId("IDPayDetailsSettingsTestID")).toBeTruthy();
 
     expect(
       component.queryByText(

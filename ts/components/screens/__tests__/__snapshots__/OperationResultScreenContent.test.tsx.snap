@@ -54,7 +54,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -503,10 +503,11 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                         >
                                           <View>
                                             <Text
-                                              color="black"
-                                              defaultColor="black"
-                                              defaultWeight="Regular"
-                                              font="ReadexPro"
+                                              allowFontScaling={false}
+                                              color="bluegreyDark"
+                                              defaultColor="bluegreyDark"
+                                              defaultWeight="Bold"
+                                              font="TitilliumWeb"
                                               fontStyle={
                                                 Object {
                                                   "fontSize": 22,
@@ -523,14 +524,14 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                     "lineHeight": 33,
                                                   },
                                                   Object {
-                                                    "color": "#0E0F13",
-                                                    "fontFamily": "Readex Pro",
+                                                    "color": "#17324D",
+                                                    "fontFamily": "Titillium Web",
                                                     "fontStyle": "normal",
-                                                    "fontWeight": "400",
+                                                    "fontWeight": "700",
                                                   },
                                                 ]
                                               }
-                                              weight="Regular"
+                                              weight="Bold"
                                             >
                                               title
                                             </Text>
@@ -586,6 +587,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                 accessibilityRole="button"
                                                 accessibilityState={
                                                   Object {
+                                                    "busy": false,
                                                     "disabled": false,
                                                   }
                                                 }
@@ -619,6 +621,9 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                         "paddingHorizontal": 16,
                                                         "textAlignVertical": "center",
                                                       },
+                                                      Object {
+                                                        "overflow": "hidden",
+                                                      },
                                                       false,
                                                       Object {
                                                         "height": 40,
@@ -637,12 +642,35 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                     ]
                                                   }
                                                 >
-                                                  <Text
-                                                    color="white"
-                                                    ellipsizeMode="tail"
-                                                    numberOfLines={1}
+                                                  <View
+                                                    entering={[Function]}
+                                                    exiting={[Function]}
                                                     style={
                                                       Array [
+                                                        Object {
+                                                          "alignItems": "center",
+                                                          "flexDirection": "row",
+                                                          "justifyContent": "center",
+                                                        },
+                                                        false,
+                                                      ]
+                                                    }
+                                                  >
+                                                    <Text
+                                                      allowFontScaling={false}
+                                                      color="white"
+                                                      defaultColor="white"
+                                                      defaultWeight="Bold"
+                                                      ellipsizeMode="tail"
+                                                      font="TitilliumWeb"
+                                                      fontStyle={
+                                                        Object {
+                                                          "fontSize": 16,
+                                                        }
+                                                      }
+                                                      maxFontSizeMultiplier={1.3}
+                                                      numberOfLines={1}
+                                                      style={
                                                         Array [
                                                           Object {
                                                             "alignSelf": "center",
@@ -650,20 +678,19 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                           Object {
                                                             "fontSize": 16,
                                                           },
-                                                        ],
-                                                        undefined,
-                                                        Object {
-                                                          "color": "#FFFFFF",
-                                                          "fontFamily": "Titillium Web",
-                                                          "fontStyle": "normal",
-                                                          "fontWeight": "700",
-                                                        },
-                                                      ]
-                                                    }
-                                                    weight="Bold"
-                                                  >
-                                                    Action
-                                                  </Text>
+                                                          Object {
+                                                            "color": "#FFFFFF",
+                                                            "fontFamily": "Titillium Web",
+                                                            "fontStyle": "normal",
+                                                            "fontWeight": "700",
+                                                          },
+                                                        ]
+                                                      }
+                                                      weight="Bold"
+                                                    >
+                                                      Action
+                                                    </Text>
+                                                  </View>
                                                 </View>
                                               </View>
                                             </View>
@@ -733,7 +760,9 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                                   }
                                                 >
                                                   <Text
+                                                    allowFontScaling={false}
                                                     ellipsizeMode="tail"
+                                                    maxFontSizeMultiplier={1.3}
                                                     numberOfLines={1}
                                                     style={
                                                       Array [

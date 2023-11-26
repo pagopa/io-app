@@ -4,17 +4,19 @@ import {
   IOColors,
   Icon,
   HSpacer,
-  IOSpacingScale
+  IOSpacingScale,
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import customVariables from "../../../theme/variables";
 import I18n from "../../../i18n";
 import { TranslationKeys } from "../../../../locales/locales";
-import {
-  IOStyles,
-  IOVisualCostants
-} from "../../../components/core/variables/IOStyles";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+
+const notificationMarginVertical: IOSpacingScale = 4;
+const notificationPaddingVertical: IOSpacingScale = 8;
+const notificationPaddingHorizontal: IOSpacingScale = 16;
 
 const styles = StyleSheet.create({
   notification: {
@@ -25,10 +27,10 @@ const styles = StyleSheet.create({
     borderColor: IOColors.bluegreyLight,
     borderRadius: customVariables.borderRadiusBase,
     minHeight: 72,
-    marginVertical: IOSpacingScale[0],
+    marginVertical: notificationMarginVertical,
     marginHorizontal: IOVisualCostants.appMarginDefault,
-    paddingVertical: IOSpacingScale[2],
-    paddingHorizontal: IOSpacingScale[4]
+    paddingVertical: notificationPaddingVertical,
+    paddingHorizontal: notificationPaddingHorizontal
   }
 });
 

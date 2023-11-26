@@ -9,15 +9,17 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Divider, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  IOVisualCostants,
+  ListItemInfo,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import {
-  IOStyles,
-  IOVisualCostants
-} from "../../components/core/variables/IOStyles";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
 import { openAppSettings } from "../../utils/appSettings";
@@ -30,7 +32,6 @@ import {
   trackNotificationsOptInReminderOnPermissionsOff,
   trackNotificationsOptInSkipSystemPermissions
 } from "../../utils/analytics";
-import ListItemInfo from "../../components/ui/ListItemInfo";
 import { H2 } from "../../components/core/typography/H2";
 import { H1 } from "../../components/core/typography/H1";
 import { Body } from "../../components/core/typography/Body";

@@ -54,7 +54,7 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
             collapsable={false}
             style={
               Object {
-                "backgroundColor": "rgb(255, 255, 255)",
+                "backgroundColor": "#FFFFFF",
                 "borderBottomColor": "rgb(216, 216, 216)",
                 "flex": 1,
                 "shadowColor": "rgb(216, 216, 216)",
@@ -556,6 +556,12 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                             "width": 24,
                                                           },
                                                           Object {
+                                                            "alignItems": "center",
+                                                          },
+                                                          Object {
+                                                            "justifyContent": "center",
+                                                          },
+                                                          Object {
                                                             "transform": Array [
                                                               Object {
                                                                 "scale": undefined,
@@ -684,6 +690,12 @@ exports[`Test InitiativeDetailsBaseScreenComponent component should render a Ini
                                                           Object {
                                                             "height": 24,
                                                             "width": 24,
+                                                          },
+                                                          Object {
+                                                            "alignItems": "center",
+                                                          },
+                                                          Object {
+                                                            "justifyContent": "center",
                                                           },
                                                           Object {
                                                             "transform": Array [

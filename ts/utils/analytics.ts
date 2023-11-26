@@ -24,12 +24,24 @@ export const noAnalyticsRoutes = new Set<string>(
   )
 );
 
-export const booleanToYesNo = (value: boolean): "yes" | "no" =>
+export const booleanToYesNo = (value: boolean) =>
   pipe(
     value,
     B.fold(
-      () => "no",
-      () => "yes"
+      () => "no" as const,
+      () => "yes" as const
+    )
+  );
+
+export const numberToYesNoOnThreshold = (
+  value: number,
+  threshold: number = 0
+) =>
+  pipe(
+    value > threshold,
+    B.fold(
+      () => "no" as const,
+      () => "yes" as const
     )
   );
 

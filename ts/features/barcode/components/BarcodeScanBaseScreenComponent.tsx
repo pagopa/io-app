@@ -1,12 +1,21 @@
-import { useIsFocused, useNavigation } from "@react-navigation/native";
+import { IOColors, IconButton } from "@pagopa/io-app-design-system";
+import {
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BaseHeader } from "../../../components/screens/BaseHeader";
+import {
+  ContextualHelpProps,
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import IconButton from "../../../components/ui/IconButton";
 import { TabItem } from "../../../components/ui/TabItem";
 import { TabNavigation } from "../../../components/ui/TabNavigation";
 import I18n from "../../../i18n";
@@ -14,11 +23,43 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
+import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
+import { currentRouteSelector } from "../../../store/reducers/navigation";
+import { FAQsCategoriesType } from "../../../utils/faq";
+import { isAndroid } from "../../../utils/platform";
+import {
+  assistanceToolRemoteConfig,
+  resetCustomFields
+} from "../../../utils/supportAssistance";
+import { zendeskSupportStart } from "../../zendesk/store/actions";
+import {
+  BarcodeAnalyticsFlow,
+  trackBarcodeCameraAuthorizationDenied,
+  trackBarcodeCameraAuthorizationNotDetermined,
+  trackBarcodeCameraAuthorized,
+  trackBarcodeCameraAuthorizedFromSettings,
+  trackBarcodeScanScreenView,
+  trackBarcodeScanTorch,
+  trackZendeskSupport
+} from "../analytics";
 import { useIOBarcodeCameraScanner } from "../hooks/useIOBarcodeCameraScanner";
-import { useIOBarcodeFileScanner } from "../hooks/useIOBarcodeFileScanner";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
+import {
+  IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType
+} from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { CameraPermissionView } from "./CameraPermissionView";
+
+type HelpProps = {
+  contextualHelp?: ContextualHelpProps;
+  contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
+  faqCategories?: ReadonlyArray<FAQsCategoriesType>;
+  hideHelpButton?: boolean;
+};
 
 type Props = {
   /**
@@ -34,47 +75,117 @@ type Props = {
   /**
    * Callback called when a barcode is successfully decoded
    */
-  onBarcodeSuccess: (barcodes: Array<IOBarcode>) => void;
+  onBarcodeSuccess: (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => void;
   /**
    * Callback called when a barcode is not successfully decoded
    */
-  onBarcodeError: (failure: BarcodeFailure) => void;
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
+  /**
+   * Callback called when the upload file input is pressed, necessary to show the file input modal
+   */
+  onFileInputPressed: () => void;
   /**
    * Callback called when the manual input button is pressed
    * necessary to navigate to the manual input screen or show the manual input modal
    */
   onManualInputPressed: () => void;
-};
+  /**
+   * Mixpanel analytics parameters
+   */
+  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
+  /**
+   * If true, the screen goes into a loading state which disables all interaction and displays a loading indicator
+   */
+  isLoading?: boolean;
+  /**
+   * Disables barcode scan capabilities, putting the component in an idle state
+   */
+  isDisabled?: boolean;
+} & HelpProps;
 
 const BarcodeScanBaseScreenComponent = ({
   barcodeFormats,
   barcodeTypes,
   onBarcodeError,
   onBarcodeSuccess,
-  onManualInputPressed
+  onFileInputPressed,
+  onManualInputPressed,
+  isLoading = false,
+  isDisabled = false,
+  faqCategories,
+  contextualHelp,
+  contextualHelpMarkdown,
+  hideHelpButton,
+  barcodeAnalyticsFlow
 }: Props) => {
   const isFocused = useIsFocused();
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const route = useRoute();
+
+  const currentScreenName = useIOSelector(currentRouteSelector);
+
+  const dispatch = useIODispatch();
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const canShowHelp = useIOSelector(canShowHelpSelector);
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      trackBarcodeScanScreenView(barcodeAnalyticsFlow);
+    }, [barcodeAnalyticsFlow])
+  );
+
+  const onShowHelp = (): (() => void) | undefined => {
+    switch (choosenTool) {
+      case ToolEnum.zendesk:
+        // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
+        return () => {
+          trackZendeskSupport(route.name, barcodeAnalyticsFlow);
+          resetCustomFields();
+          dispatch(
+            zendeskSupportStart({
+              faqCategories,
+              contextualHelp,
+              contextualHelpMarkdown,
+              startingRoute: currentScreenName,
+              assistanceForPayment: false,
+              assistanceForCard: false,
+              assistanceForFci: false
+            })
+          );
+        };
+      default:
+        return undefined;
+    }
+  };
+
+  const canShowHelpButton = () => {
+    if (hideHelpButton || !canShowHelp) {
+      return false;
+    } else {
+      return contextualHelp || contextualHelpMarkdown;
+    }
+  };
 
   const {
     cameraComponent,
     cameraPermissionStatus,
     requestCameraPermission,
-    openCameraSettings
+    openCameraSettings,
+    hasTorch,
+    isTorchOn,
+    toggleTorch
   } = useIOBarcodeCameraScanner({
-    onBarcodeSuccess: barcode => onBarcodeSuccess([barcode]),
+    onBarcodeSuccess,
     onBarcodeError,
     barcodeFormats,
     barcodeTypes,
-    disabled: !isFocused
-  });
-
-  const { showFilePicker, filePickerBottomSheet } = useIOBarcodeFileScanner({
-    barcodeFormats,
-    barcodeTypes,
-    onBarcodeSuccess,
-    onBarcodeError
+    isDisabled: !isFocused || isDisabled,
+    isLoading
   });
 
   const customGoBack = (
@@ -91,14 +202,17 @@ const BarcodeScanBaseScreenComponent = ({
     await openCameraSettings();
   }, [openCameraSettings]);
 
-  const renderCameraView = () => {
+  const cameraView = React.useMemo(() => {
     if (cameraPermissionStatus === "authorized") {
       return cameraComponent;
     }
 
     if (cameraPermissionStatus === "not-determined") {
+      trackBarcodeCameraAuthorizationNotDetermined();
+
       return (
         <CameraPermissionView
+          pictogram="cameraRequest"
           title={I18n.t("barcodeScan.permissions.undefined.title")}
           body={I18n.t("barcodeScan.permissions.undefined.label")}
           action={{
@@ -106,42 +220,74 @@ const BarcodeScanBaseScreenComponent = ({
             accessibilityLabel: I18n.t(
               "barcodeScan.permissions.undefined.action"
             ),
-            onPress: requestCameraPermission
+            onPress: async () => {
+              trackBarcodeCameraAuthorized();
+              await requestCameraPermission();
+            }
           }}
         />
       );
     }
 
+    trackBarcodeCameraAuthorizationDenied();
+
     return (
       <CameraPermissionView
+        pictogram="cameraDenied"
         title={I18n.t("barcodeScan.permissions.denied.title")}
         body={I18n.t("barcodeScan.permissions.denied.label")}
         action={{
           label: I18n.t("barcodeScan.permissions.denied.action"),
           accessibilityLabel: I18n.t("barcodeScan.permissions.denied.action"),
-          onPress: openAppSetting
+          onPress: async () => {
+            trackBarcodeCameraAuthorizedFromSettings();
+            await openAppSetting();
+          }
         }}
       />
     );
+  }, [
+    cameraPermissionStatus,
+    openAppSetting,
+    cameraComponent,
+    requestCameraPermission
+  ]);
+
+  const handleTorchToggle = () => {
+    trackBarcodeScanTorch();
+    toggleTorch();
+  };
+
+  const shouldDisplayTorchButton =
+    cameraPermissionStatus === "authorized" && hasTorch;
+
+  const torchIconButton: React.ComponentProps<
+    typeof BaseHeader
+  >["customRightIcon"] = {
+    iconName: isTorchOn ? "lightFilled" : "light",
+    accessibilityLabel: isTorchOn
+      ? I18n.t("accessibility.buttons.torch.turnOff")
+      : I18n.t("accessibility.buttons.torch.turnOn"),
+    onPress: handleTorchToggle
   };
 
   return (
     <View style={[styles.screen, { paddingBottom: insets.bottom }]}>
-      <View style={styles.cameraContainer}>{renderCameraView()}</View>
+      <View style={styles.cameraContainer}>{cameraView}</View>
       <View style={styles.navigationContainer}>
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
             label={I18n.t("barcodeScan.tabs.scan")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.scan")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.upload")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.upload")}
-            onPress={showFilePicker}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.upload")}
+            onPress={onFileInputPressed}
           />
           <TabItem
             label={I18n.t("barcodeScan.tabs.input")}
-            accessibilityLabel={I18n.t("barcodeScan.tabs.input")}
+            accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.input")}
             onPress={onManualInputPressed}
           />
         </TabNavigation>
@@ -158,19 +304,23 @@ const BarcodeScanBaseScreenComponent = ({
         >
           {/* FIXME: replace with new header */}
           <BaseHeader
+            dark={true}
             backgroundColor={"transparent"}
             goBack={true}
             customGoBack={customGoBack}
+            onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
+            customRightIcon={
+              shouldDisplayTorchButton ? torchIconButton : undefined
+            }
           />
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar
             barStyle={"light-content"}
-            backgroundColor={"transparent"}
-            translucent={true}
+            backgroundColor={isAndroid ? IOColors["blueIO-850"] : "transparent"}
+            translucent={false}
           />
         </SafeAreaView>
       </LinearGradient>
-      {filePickerBottomSheet}
     </View>
   );
 };

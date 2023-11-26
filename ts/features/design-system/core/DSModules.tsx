@@ -1,21 +1,51 @@
 import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
-import { IOThemeContext, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonExtendedOutline,
+  IOThemeContext,
+  ModuleIDP,
+  ModulePaymentNotice,
+  PaymentNoticeStatus,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { ModuleAttachment } from "../../../components/ModuleAttachment";
+import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { ModulePaymentNotice } from "../../../components/ui/ModulePaymentNotice";
-import ButtonExtendedOutline from "../../../components/ui/ButtonExtendedOutline";
-import ModuleIDP from "../../../components/ui/ModuleIDP";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
+type PaymentNoticeStatusWithoutDefault = Exclude<
+  PaymentNoticeStatus,
+  "default"
+>;
+
+const noticeStatusArray: Array<PaymentNoticeStatusWithoutDefault> = [
+  "paid",
+  "error",
+  "expired",
+  "revoked",
+  "canceled"
+];
+
 export const DSModules = () => (
   <IOThemeContext.Consumer>
     {theme => (
       <DesignSystemScreen title="Modules">
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16 }}
+        >
+          ModuleAttachment
+        </H2>
+        {renderModuleAttachment()}
+
+        <VSpacer size={40} />
+
         <H2
           color={theme["textHeading-default"]}
           weight={"SemiBold"}
@@ -51,6 +81,56 @@ export const DSModules = () => (
   </IOThemeContext.Consumer>
 );
 
+const renderModuleAttachment = () => (
+  <DSComponentViewerBox name="ModuleAttachment">
+    <View>
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        format="pdf"
+        isLoading={true}
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        format="pdf"
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        format="pdf"
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title={"This is a very loooooooooooooooooooooong title"}
+        subtitle={"This is a very loooooooooooong subtitle"}
+        format="pdf"
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        format="pdf"
+        isFetching={true}
+        onPress={onButtonPress}
+      />
+      <VSpacer size={16} />
+      <ModuleAttachment
+        title="Nome del documento.pdf"
+        subtitle="123 Kb"
+        format="pdf"
+        disabled={true}
+        onPress={onButtonPress}
+      />
+    </View>
+  </DSComponentViewerBox>
+);
+
 const renderModulePaymentNotice = () => (
   <DSComponentViewerBox name="ModulePaymentNotice">
     <View>
@@ -71,41 +151,22 @@ const renderModulePaymentNotice = () => (
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="payed"
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="error"
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="expired"
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="revoked"
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
-      <ModulePaymentNotice
-        title="Codice avviso"
-        subtitle="9999 9999 9999 9999 99"
-        paymentNoticeStatus="canceled"
-        onPress={onButtonPress}
-      />
-      <VSpacer size={16} />
+
+      {noticeStatusArray.map(
+        (noticeStatus: PaymentNoticeStatusWithoutDefault) => (
+          <React.Fragment key={`paymentNotice-${noticeStatus}`}>
+            <ModulePaymentNotice
+              title="Codice avviso"
+              subtitle="9999 9999 9999 9999 99"
+              paymentNoticeStatus={noticeStatus}
+              badgeText={getBadgeTextByPaymentNoticeStatus(noticeStatus)}
+              onPress={onButtonPress}
+            />
+            <VSpacer size={16} />
+          </React.Fragment>
+        )
+      )}
+
       <ModulePaymentNotice
         subtitle="TARI 2023 - Rata 01"
         paymentNoticeStatus="default"
@@ -156,23 +217,19 @@ const renderModuleIDP = () => (
           name={mockIDPProviderItem.name}
           logo={mockIDPProviderItem.logo as ImageSourcePropType}
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
         />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleIDP, saved variant">
+    <DSComponentViewerBox name="ModuleIDP, loose spacing (fka saved) variant">
       <View>
         <ModuleIDP
-          saved
+          withLooseSpacing
           name={mockIDPProviderItem.name}
           logo={mockIDPProviderItem.logo as ImageSourcePropType}
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
         />
       </View>
@@ -183,9 +240,7 @@ const renderModuleIDP = () => (
           name={"This is a very loooooong IDP provider name"}
           logo={mockIDPProviderItem.logo as ImageSourcePropType}
           localLogo={mockIDPProviderItem.localLogo as ImageSourcePropType}
-          onPress={() => {
-            Alert.alert("Action triggered");
-          }}
+          onPress={onButtonPress}
           testID={`idp-${mockIDPProviderItem.id}-button`}
         />
       </View>

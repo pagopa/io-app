@@ -25,8 +25,8 @@ export function* checkProfileEnabledSaga(
 ): Generator<
   ReduxSagaEffect,
   void,
-  | ActionType<typeof profileUpsert["success"]>
-  | ActionType<typeof profileUpsert["failure"]>
+  | ActionType<(typeof profileUpsert)["success"]>
+  | ActionType<(typeof profileUpsert)["failure"]>
 > {
   const atv = pipe(
     profile.accepted_tos_version,
