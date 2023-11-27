@@ -105,7 +105,11 @@ const AuthenticatedStackNavigator = () => {
         component={OnboardingNavigator}
       />
 
-      <Stack.Screen name={ROUTES.CHECK_EMAIL} component={CheckEmailNavigator} />
+      <Stack.Screen
+        name={ROUTES.CHECK_EMAIL}
+        options={hideHeaderOptions}
+        component={CheckEmailNavigator}
+      />
 
       <Stack.Screen
         name={ROUTES.UNSUPPORTED_DEVICE}

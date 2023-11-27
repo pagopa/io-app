@@ -146,9 +146,8 @@ export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
   user.is_email_validated !== undefined && user.is_email_validated === true;
 
 // return true if the profile has an email and it is validated
-export const isProfileEmailAlreadyTaken = (
-  _user: InitializedProfile
-): boolean => true;
+export const isProfileEmailAlreadyTaken = (user: InitializedProfile): boolean =>
+  !!user.is_email_already_taken;
 
 // Returns true if the profile has service_preferences_settings set to Legacy.
 // A profile that has completed onboarding will have this value mandatory set to auto or manual
