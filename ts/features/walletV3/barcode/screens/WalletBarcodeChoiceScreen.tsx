@@ -47,9 +47,11 @@ const WalletBarcodeChoiceScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  useFocusEffect(() => {
-    analytics.trackBarcodeMultipleCodesScreenView();
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      analytics.trackBarcodeMultipleCodesScreenView();
+    }, [])
+  );
 
   const route =
     useRoute<RouteProp<WalletBarcodeParamsList, "WALLET_BARCODE_CHOICE">>();

@@ -49,6 +49,10 @@ import {
   WalletOnboardingParamsList,
   WalletOnboardingRoutes
 } from "../../features/walletV3/onboarding/navigation/navigator";
+import {
+  WalletDetailsParamsList,
+  WalletDetailsRoutes
+} from "../../features/walletV3/details/navigation/navigator";
 import { WalletPaymentParamsList } from "../../features/walletV3/payment/navigation/params";
 import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
@@ -104,6 +108,7 @@ export type AppParamsList = {
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
   [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: NavigatorScreenParams<WalletPaymentParamsList>;
   [WalletBarcodeRoutes.WALLET_BARCODE_MAIN]: NavigatorScreenParams<WalletBarcodeParamsList>;
+  [WalletDetailsRoutes.WALLET_DETAILS_MAIN]: NavigatorScreenParams<WalletDetailsParamsList>;
 };
 
 /**
