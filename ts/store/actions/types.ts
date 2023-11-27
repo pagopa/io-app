@@ -26,7 +26,7 @@ import { FciActions } from "../../features/fci/store/actions";
 import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
-import { WalletV3Actions } from "../../features/walletV3/common/store/actions";
+import { WalletActions as WalletV3Actions } from "../../features/walletV3/common/store/actions";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
