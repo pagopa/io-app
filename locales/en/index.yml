@@ -3279,6 +3279,20 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  barCode:
+    resultScreen:
+      success:
+        header: Ecco il codice sconto!
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
+        expiresIn: "Il codice scade tra"
+        expired: "Il codice é scaduto."
+        saveImageCta: Salva come immagine
+      error:
+        generic:
+          body: In questo momento non è possibile generare un codice
+      loading:
+        body: Sto recuperando il codice sconto
+        subtitle: Attendi qualche secondo
   code:
     reset:
       title: Codice ID Pay
