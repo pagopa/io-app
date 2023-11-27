@@ -12,6 +12,8 @@ import {
 } from "../store/actions/networking";
 import {
   walletPaymentAuthorizationUrlSelector,
+  walletPaymentChosenPaymentMethodSelector,
+  walletPaymentChosenPspSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
 import {
@@ -28,6 +30,10 @@ const WalletPaymentReviewScreen = () => {
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
   );
+  const selectedMethodOption = useIOSelector(
+    walletPaymentChosenPaymentMethodSelector
+  );
+  const selectedPspOption = useIOSelector(walletPaymentChosenPspSelector);
 
   const isLoading =
     pot.isLoading(transactionPot) || pot.isLoading(authorizationUrlPot);
@@ -70,8 +76,20 @@ const WalletPaymentReviewScreen = () => {
           loading: isLoading
         }}
       >
+        <DebugPrettyPrint
+          title="selectedMethodOption"
+          data={selectedMethodOption}
+          startCollapsed={true}
+        />
+        <VSpacer size={8} />
+        <DebugPrettyPrint
+          title="selectedPspOption"
+          data={selectedPspOption}
+          startCollapsed={true}
+        />
+        <VSpacer size={8} />
         <DebugPrettyPrint title="transactionPot" data={transactionPot} />
-        <VSpacer size={16} />
+        <VSpacer size={8} />
         <DebugPrettyPrint
           title="authorizationUrlPot"
           data={authorizationUrlPot}

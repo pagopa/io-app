@@ -1,23 +1,27 @@
 import { GradientScrollView, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
 import React from "react";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentGetAllMethods,
   walletPaymentGetUserWallets
 } from "../store/actions/networking";
+import { walletPaymentChoosePaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
+  walletPaymentChosenPaymentMethodSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
-import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
-import { WalletPaymentRoutes } from "../navigation/routes";
 
 const WalletPaymentMethodListScreen = () => {
   const dispatch = useIODispatch();
@@ -25,9 +29,13 @@ const WalletPaymentMethodListScreen = () => {
 
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
+  const selectedMethodOption = useIOSelector(
+    walletPaymentChosenPaymentMethodSelector
+  );
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
+  const canContinue = O.isSome(selectedMethodOption);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -36,11 +44,14 @@ const WalletPaymentMethodListScreen = () => {
     }, [dispatch])
   );
 
-  const handleContinue = () => {
-    // TODO: check if the user already selected a PSP for the chosen payment method and use it.
-    // In this case we should navigate directly to the payment review screen.
-    // If not, go to the PSP selection screen.
+  const handleMethodSelection = React.useCallback(
+    (wallet: WalletInfo) => {
+      dispatch(walletPaymentChoosePaymentMethod(wallet));
+    },
+    [dispatch]
+  );
 
+  const handleContinue = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_PSP_LIST,
       params: {
@@ -50,6 +61,17 @@ const WalletPaymentMethodListScreen = () => {
     });
   };
 
+  // TODO just for testing purposes
+  React.useEffect(() => {
+    if (pot.isSome(userWalletsPots) && !canContinue) {
+      const userWallets = userWalletsPots.value;
+
+      if (userWallets.length > 0) {
+        handleMethodSelection(userWallets[0]);
+      }
+    }
+  }, [userWalletsPots, canContinue, handleMethodSelection]);
+
   return (
     <BaseScreenComponent goBack={true}>
       <GradientScrollView
@@ -57,7 +79,7 @@ const WalletPaymentMethodListScreen = () => {
           label: "Continua",
           accessibilityLabel: "Continua",
           onPress: handleContinue,
-          disabled: isLoading,
+          disabled: isLoading || !canContinue,
           loading: isLoading
         }}
       >

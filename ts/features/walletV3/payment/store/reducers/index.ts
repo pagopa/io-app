@@ -21,14 +21,15 @@ import {
   walletPaymentChoosePsp,
   walletPaymentInitState
 } from "../actions/orchestration";
+import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 
 export type WalletPaymentState = {
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
   userWallets: pot.Pot<Wallets, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
-  chosenPaymentMethod: O.Option<string>;
-  chosenPsp: O.Option<string>;
+  chosenPaymentMethod: O.Option<WalletInfo>;
+  chosenPsp: O.Option<Bundle>;
   transaction: pot.Pot<NewTransactionResponse, NetworkError>;
   authorizationUrl: pot.Pot<string, NetworkError>;
 };
@@ -107,7 +108,7 @@ const reducer = (
     case getType(walletPaymentChoosePaymentMethod):
       return {
         ...state,
-        chosenPaymentMethod: O.some(action.payload.walletId)
+        chosenPaymentMethod: O.some(action.payload)
       };
 
     // PSP list
@@ -130,7 +131,7 @@ const reducer = (
     case getType(walletPaymentChoosePsp):
       return {
         ...state,
-        chosenPsp: O.some(action.payload.bundleId)
+        chosenPsp: O.some(action.payload)
       };
 
     // Created transaction data

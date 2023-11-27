@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { GradientScrollView } from "@pagopa/io-app-design-system";
 import {
   RouteProp,
@@ -17,7 +18,12 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentCalculateFees } from "../store/actions/networking";
-import { walletPaymentPspListSelector } from "../store/selectors";
+import {
+  walletPaymentChosenPspSelector,
+  walletPaymentPspListSelector
+} from "../store/selectors";
+import { walletPaymentChoosePsp } from "../store/actions/orchestration";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 
 type WalletPaymentPspListScreenNavigationParams = {
   walletId: string;
@@ -38,6 +44,10 @@ const WalletPaymentPspListScreen = () => {
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const isLoading = pot.isLoading(pspListPot);
 
+  const selectedPspOption = useIOSelector(walletPaymentChosenPspSelector);
+
+  const canContinue = O.isSome(selectedPspOption);
+
   useFocusEffect(
     React.useCallback(() => {
       dispatch(
@@ -45,6 +55,24 @@ const WalletPaymentPspListScreen = () => {
       );
     }, [dispatch, walletId, paymentAmountInCents])
   );
+
+  const handlePspSelection = React.useCallback(
+    (bundle: Bundle) => {
+      dispatch(walletPaymentChoosePsp(bundle));
+    },
+    [dispatch]
+  );
+
+  // TODO just for testing purposes
+  React.useEffect(() => {
+    if (pot.isSome(pspListPot) && !canContinue) {
+      const pspList = pspListPot.value;
+
+      if (pspList.length > 0) {
+        handlePspSelection(pspList[0]);
+      }
+    }
+  }, [pspListPot, canContinue, handlePspSelection]);
 
   const handleContinue = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {

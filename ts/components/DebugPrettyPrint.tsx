@@ -1,14 +1,16 @@
 import {
   IOColors,
+  Icon,
   LabelSmall,
   useTypographyFactory
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 
 type Props = {
   title?: string;
   data?: any;
+  startCollapsed?: boolean;
 };
 
 const CustomBodyMonospace = (props: { children?: React.ReactNode }) =>
@@ -23,29 +25,47 @@ const CustomBodyMonospace = (props: { children?: React.ReactNode }) =>
 /**
  * This simple component allows to print the content of an object in an elegant and readable way.
  */
-export const DebugPrettyPrint = (props: Props) => (
-  <>
-    {props.title && (
-      <View
-        style={{
-          backgroundColor: IOColors["grey-700"],
-          padding: 8
-        }}
-      >
-        <LabelSmall weight="Bold" color="white">
-          {props.title}
-        </LabelSmall>
-      </View>
-    )}
-    <View
-      style={{
-        backgroundColor: IOColors["grey-50"],
-        padding: 8
-      }}
-    >
-      <CustomBodyMonospace>
-        {JSON.stringify(props.data, null, 2)}
-      </CustomBodyMonospace>
-    </View>
-  </>
-);
+export const DebugPrettyPrint = ({
+  title,
+  data,
+  startCollapsed = false
+}: Props) => {
+  const [expanded, setExpanded] = React.useState(!startCollapsed);
+
+  return (
+    <>
+      {title && (
+        <Pressable
+          style={{
+            backgroundColor: IOColors["grey-700"],
+            padding: 8,
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between"
+          }}
+          onPress={() => setExpanded(_ => !_)}
+        >
+          <LabelSmall weight="Bold" color="white">
+            {title}
+          </LabelSmall>
+          <Icon
+            name={expanded ? "chevronTop" : "chevronBottom"}
+            color="white"
+          />
+        </Pressable>
+      )}
+      {expanded && (
+        <View
+          style={{
+            backgroundColor: IOColors["grey-50"],
+            padding: 8
+          }}
+        >
+          <CustomBodyMonospace>
+            {JSON.stringify(data, null, 2)}
+          </CustomBodyMonospace>
+        </View>
+      )}
+    </>
+  );
+};
