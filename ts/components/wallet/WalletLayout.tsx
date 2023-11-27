@@ -10,7 +10,8 @@
 
 import { Content } from "native-base";
 import * as React from "react";
-import { Animated, StyleProp, ViewStyle } from "react-native";
+import { Animated, Dimensions, StyleProp, View, ViewStyle } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { FAQsCategoriesType } from "../../utils/faq";
 import {
@@ -58,10 +59,15 @@ export default class WalletLayout extends React.Component<Props> {
       footerFullWidth
     } = this.props;
 
+    /* The dimensions of the screen that will be used
+    to hide the white background when inertial
+    scrolling is turned on. */
+    const { height: screenHeight, width: screenWidth } =
+      Dimensions.get("screen");
+
     return (
       <DarkLayout
         accessibilityLabel={accessibilityLabel}
-        bounces={false}
         allowGoBack={allowGoBack}
         title={title ? title : I18n.t("wallet.wallet")}
         appLogo={appLogo}
@@ -79,6 +85,20 @@ export default class WalletLayout extends React.Component<Props> {
         headerPaddingMin={this.props.headerPaddingMin}
         referenceToContentScreen={this.props.referenceToContentScreen}
       >
+        {/* Add a fake View with a dark background to hide
+            the white block when the inertial scroll is enabled
+            (that means the user is using negative scroll values) */}
+        <View
+          style={{
+            position: "absolute",
+            top: -screenHeight,
+            height: screenHeight,
+            width: screenWidth,
+            backgroundColor: IOColors.bluegrey
+          }}
+        />
+        {/* End of the hacky solution */}
+
         {this.props.children}
       </DarkLayout>
     );
