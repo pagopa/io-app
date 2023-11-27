@@ -14,13 +14,11 @@ import { WalletClient } from "../../common/api/client";
  */
 export function* handleGetWalletDetails(
   getWalletById: WalletClient["getWalletById"],
-  token: string,
   action: ActionType<(typeof walletDetailsGetInstrument)["request"]>
 ) {
   try {
     const getWalletDetailsResult: SagaCallReturnType<typeof getWalletById> =
       yield* call(getWalletById, {
-        bearerAuth: token,
         walletId: action.payload.walletId
       });
     if (E.isRight(getWalletDetailsResult)) {

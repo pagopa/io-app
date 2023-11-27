@@ -17,13 +17,11 @@ import { WalletClient } from "../../common/api/client";
  */
 export function* handleDeleteWalletDetails(
   deleteWalletById: WalletClient["deleteWalletById"],
-  token: string,
   action: ActionType<(typeof walletDetailsDeleteInstrument)["request"]>
 ) {
   try {
     const deleteWalletResult: SagaCallReturnType<typeof deleteWalletById> =
       yield* call(deleteWalletById, {
-        bearerAuth: token,
         walletId: action.payload.walletId
       });
     if (E.isRight(deleteWalletResult)) {
