@@ -26,6 +26,7 @@ type BaseScreenComponentProps =
   | "contextualHelp"
   | "contextualHelpMarkdown"
   | "headerBody"
+  | "hideBaseHeader"
   | "customGoBack"
   | "isSearchAvailable";
 
@@ -48,6 +49,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
       contextualHelp,
       contextualHelpMarkdown,
       headerBody,
+      hideBaseHeader = false,
       isSearchAvailable,
       customRightIcon,
       customGoBack,
@@ -71,6 +73,7 @@ class TopScreenComponent extends React.PureComponent<Props> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={faqCategories}
         headerBody={headerBody}
+        hideBaseHeader={hideBaseHeader}
         isSearchAvailable={isSearchAvailable}
         customRightIcon={customRightIcon}
         customGoBack={customGoBack}
