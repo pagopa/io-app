@@ -21,7 +21,7 @@ import I18n from "../i18n";
 import {
   acknowledgeOnEmailValidation,
   profileLoadRequest,
-  setEmailCheckAtStartup,
+  setEmailCheckAtStartupFailure,
   startEmailValidation
 } from "../store/actions/profile";
 import {
@@ -121,12 +121,12 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
         acknowledgeEmail();
       } else {
         if (
-          O.isSome(emailValidation.emailCheckAtStartup) &&
-          emailValidation.emailCheckAtStartup.value
+          O.isSome(emailValidation.emailCheckAtStartupFailed) &&
+          emailValidation.emailCheckAtStartupFailed.value
         ) {
           acknowledgeEmail();
           dispatchAcknowledgeOnEmailValidation(O.none);
-          dispatch(setEmailCheckAtStartup(O.none));
+          dispatch(setEmailCheckAtStartupFailure(O.none));
         } else {
           NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
             screen: ROUTES.PROFILE_DATA

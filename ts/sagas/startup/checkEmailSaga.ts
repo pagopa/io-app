@@ -10,14 +10,14 @@ import {
 } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
 import { isNewCduFlow } from "../../config";
-import { setEmailCheckAtStartup } from "../../store/actions/profile";
+import { setEmailCheckAtStartupFailure } from "../../store/actions/profile";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 
 export function* checkEmailSaga(
   userProfile: InitializedProfile
 ): IterableIterator<ReduxSagaEffect> {
   if (isNewCduFlow && !isProfileEmailValidated(userProfile)) {
-    yield* put(setEmailCheckAtStartup(O.some(true)));
+    yield* put(setEmailCheckAtStartupFailure(O.some(true)));
     if (isProfileEmailAlreadyTaken(userProfile)) {
       yield* call(NavigationService.navigate, ROUTES.CHECK_EMAIL, {
         screen: ROUTES.CHECK_EMAIL_ALREADY_TAKEN,

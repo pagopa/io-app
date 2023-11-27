@@ -50,8 +50,8 @@ export const acknowledgeOnEmailValidation = createStandardAction(
   "ACKNOWLEDGE_ON_EMAIL_VALIDATION"
 )<O.Option<boolean>>();
 
-export const setEmailCheckAtStartup = createStandardAction(
-  "SET_EMAIL_CHECK_AT_STARTUP"
+export const setEmailCheckAtStartupFailure = createStandardAction(
+  "SET_EMAIL_CHECK_AT_STARTUP_FAILURE"
 )<O.Option<boolean>>();
 
 export const profileFirstLogin = createStandardAction("PROFILE_FIRST_LOGIN")();
@@ -93,4 +93,4 @@ export type ProfileActions =
   | ActionType<typeof profileFirstLogin>
   | ActionType<typeof clearCache>
   | ActionType<typeof removeAccountMotivation>
-  | ActionType<typeof setEmailCheckAtStartup>;
+  | ActionType<typeof setEmailCheckAtStartupFailure>;
