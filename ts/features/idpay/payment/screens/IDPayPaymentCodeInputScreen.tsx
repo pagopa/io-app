@@ -55,7 +55,6 @@ const IDPayPaymentCodeInputScreen = () => {
           <VSpacer size={40} />
           <TextInput
             textInputProps={{
-              inputMode: "",
               autoCapitalize: "characters",
               autoCorrect: false
             }}
