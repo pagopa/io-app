@@ -40,17 +40,17 @@ const ValidateEmailScreen = (props: Props) => {
     });
   };
 
-  const confirmButtonOnPress = () => {
+  const confirmButtonOnPress = React.useCallback(() => {
     // We dispatch this action to show the InsertEmailScreen with
     // the validation modal already opened.
     dispatch(acknowledgeOnEmailValidation(O.some(false)));
     navigateToInsertEmailScreen();
-  };
+  }, [dispatch]);
 
-  const modifyEmailButtonOnPress = () => {
+  const modifyEmailButtonOnPress = React.useCallback(() => {
     dispatch(acknowledgeOnEmailValidation(O.none));
     navigateToInsertEmailScreen();
-  };
+  }, [dispatch]);
 
   const continueButtonProps = {
     onPress: confirmButtonOnPress,

@@ -27,7 +27,6 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
-  isNewCduFlow,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   svEnabled,

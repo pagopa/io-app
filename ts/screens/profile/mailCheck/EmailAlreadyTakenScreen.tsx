@@ -51,10 +51,10 @@ const EmailAlreadyTakenScreen = (props: Props) => {
 
   const dispatch = useIODispatch();
 
-  const confirmButtonOnPress = () => {
+  const confirmButtonOnPress = React.useCallback(() => {
     dispatch(acknowledgeOnEmailValidation(O.none));
     navigateToInsertEmailScreen();
-  };
+  }, [dispatch]);
 
   const continueButtonProps = {
     onPress: confirmButtonOnPress,
