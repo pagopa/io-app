@@ -85,6 +85,7 @@ global:
     minusSymbol: minus
     switchLabel: "Select to activate"
     reload: "Reload"
+    search: "Search"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
     description: Description
@@ -774,6 +775,9 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+    alertTitle: This email address is already in use
+    alertDescription: This may happen if you share the same email address with a family member
+    alertButton: Use another email address
   newinsert:
     header: "Configure IO"
     title: "What is your email address?"
@@ -3275,6 +3279,20 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  barCode:
+    resultScreen:
+      success:
+        header: Ecco il codice sconto!
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
+        expiresIn: "Il codice scade tra"
+        expired: "Il codice é scaduto."
+        saveImageCta: Salva come immagine
+      error:
+        generic:
+          body: In questo momento non è possibile generare un codice
+      loading:
+        body: Sto recuperando il codice sconto
+        subtitle: Attendi qualche secondo
   code:
     reset:
       title: Codice ID Pay

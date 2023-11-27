@@ -21,7 +21,7 @@ import {
   ViewStyle
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
@@ -531,6 +531,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
         accessibilityLabel={this.accessibilityText.accessibilityLabel}
         accessibilityHint={this.accessibilityText.accessibilityHint}
       >
+        <VSpacer />
         <Image
           source={
             this.props.type !== "Preview" && this.props.getBackSide

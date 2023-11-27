@@ -5,6 +5,7 @@ import * as A from "fp-ts/lib/Array";
 import * as TE from "fp-ts/lib/TaskEither";
 import * as O from "fp-ts/lib/Option";
 
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
   LollipopConfig,
   chainSignPromises,
@@ -28,9 +29,10 @@ import { KeyInfo } from "./crypto";
 export const lollipopFetch = (
   lollipopConfig: LollipopConfig,
   keyInfo: KeyInfo,
-  maxRetries?: number
+  maxRetries?: number,
+  timeout?: Millisecond
 ) => {
-  const timeoutFetch = toFetchTimeout();
+  const timeoutFetch = toFetchTimeout(timeout);
   const retriableFetch = toRetriableFetch(maxRetries);
   return retriableFetch(
     async (input: RequestInfo | URL, init?: RequestInit) => {
