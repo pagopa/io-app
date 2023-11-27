@@ -114,13 +114,12 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
+      hideModal();
       if (isOnboarding) {
         // if the user is in the onboarding flow and the email il correctly validated,
         // the email validation flow is finished
         acknowledgeEmail();
-        hideModal();
       } else {
-        hideModal();
         if (
           O.isSome(emailValidation.emailCheckAtStartup) &&
           emailValidation.emailCheckAtStartup.value
