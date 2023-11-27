@@ -1196,6 +1196,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     numberOfLines={1}
@@ -1203,6 +1204,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#475A6D",
@@ -1225,6 +1227,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     numberOfLines={2}
@@ -1232,6 +1235,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#475A6D",
@@ -1430,6 +1434,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     numberOfLines={1}
@@ -1437,6 +1442,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#475A6D",
@@ -1459,6 +1465,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     numberOfLines={2}
@@ -1466,6 +1473,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#475A6D",
@@ -1664,6 +1672,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     numberOfLines={1}
@@ -1671,6 +1680,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#475A6D",
@@ -1693,6 +1703,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                     fontStyle={
                                                       Object {
                                                         "fontSize": 14,
+                                                        "lineHeight": 21,
                                                       }
                                                     }
                                                     numberOfLines={2}
@@ -1700,6 +1711,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                                       Array [
                                                         Object {
                                                           "fontSize": 14,
+                                                          "lineHeight": 21,
                                                         },
                                                         Object {
                                                           "color": "#475A6D",
