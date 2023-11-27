@@ -2,7 +2,6 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
@@ -14,9 +13,8 @@ import { CheckEmailParamsList } from "../../../navigation/params/CheckEmailParam
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { useIOSelector } from "../../../store/hooks";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { emailValidationSelector } from "../../../store/reducers/emailValidation";
+import { useIODispatch } from "../../../store/hooks";
+import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -42,40 +40,21 @@ export type EmailAlreadyUsedScreenParamList = {
   email: string;
 };
 
-const confirmButtonOnPress = () => {
+const navigateToInsertEmailScreen = () => {
   NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-    screen: ROUTES.READ_EMAIL_SCREEN
+    screen: ROUTES.INSERT_EMAIL_SCREEN
   });
 };
 
 const EmailAlreadyTakenScreen = (props: Props) => {
   const { email } = props.route.params;
 
-  const navigation = useNavigation();
+  const dispatch = useIODispatch();
 
-  const acknowledgeOnEmailValidated = useIOSelector(
-    emailValidationSelector
-  ).acknowledgeOnEmailValidated;
-  const previousAcknowledgeOnEmailValidated = usePrevious(
-    acknowledgeOnEmailValidated
-  );
-
-  // If the user has acknowledged the email validation, go back to the previous screen.
-  // The acknowledgeOnEmailValidated is set to NONE when the user presses the "Continue" button.
-  // The previousAcknowledgeOnEmailValidated is set to SOME(false) when the user see the success screen.
-  React.useEffect(() => {
-    if (
-      previousAcknowledgeOnEmailValidated &&
-      O.isSome(previousAcknowledgeOnEmailValidated) &&
-      O.isNone(acknowledgeOnEmailValidated)
-    ) {
-      navigation.goBack();
-    }
-  }, [
-    acknowledgeOnEmailValidated,
-    navigation,
-    previousAcknowledgeOnEmailValidated
-  ]);
+  const confirmButtonOnPress = () => {
+    dispatch(acknowledgeOnEmailValidation(O.none));
+    navigateToInsertEmailScreen();
+  };
 
   const continueButtonProps = {
     onPress: confirmButtonOnPress,

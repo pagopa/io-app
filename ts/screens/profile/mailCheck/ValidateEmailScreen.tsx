@@ -2,7 +2,6 @@ import * as React from "react";
 import { View, SafeAreaView, StyleSheet } from "react-native";
 import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
@@ -13,9 +12,8 @@ import { Link } from "../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { useIOSelector } from "../../../store/hooks";
-import { usePrevious } from "../../../utils/hooks/usePrevious";
-import { emailValidationSelector } from "../../../store/reducers/emailValidation";
+import { useIODispatch } from "../../../store/hooks";
+import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -33,50 +31,32 @@ export type Props = {
   email: string;
 };
 
-const confirmButtonOnPress = () => {
-  NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-    screen: ROUTES.READ_EMAIL_SCREEN
-  });
-};
-
-const modifyEmailButtonOnPress = () => {
-  NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-    screen: ROUTES.READ_EMAIL_SCREEN
-  });
-};
-
 const ValidateEmailScreen = (props: Props) => {
+  const dispatch = useIODispatch();
+
+  const navigateToInsertEmailScreen = () => {
+    NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.INSERT_EMAIL_SCREEN
+    });
+  };
+
+  const confirmButtonOnPress = () => {
+    // We dispatch this action to show the InsertEmailScreen with
+    // the validation modal already opened.
+    dispatch(acknowledgeOnEmailValidation(O.some(false)));
+    navigateToInsertEmailScreen();
+  };
+
+  const modifyEmailButtonOnPress = () => {
+    dispatch(acknowledgeOnEmailValidation(O.none));
+    navigateToInsertEmailScreen();
+  };
+
   const continueButtonProps = {
     onPress: confirmButtonOnPress,
     title: I18n.t("email.cduModal.validateMail.validateButton"),
     block: true
   };
-
-  const navigation = useNavigation();
-
-  const acknowledgeOnEmailValidated = useIOSelector(
-    emailValidationSelector
-  ).acknowledgeOnEmailValidated;
-  const previousAcknowledgeOnEmailValidated = usePrevious(
-    acknowledgeOnEmailValidated
-  );
-
-  // If the user has acknowledged the email validation, go back to the previous screen.
-  // The acknowledgeOnEmailValidated is set to NONE when the user presses the "Continue" button.
-  // The previousAcknowledgeOnEmailValidated is set to SOME(false) when the user see the success screen.
-  React.useEffect(() => {
-    if (
-      previousAcknowledgeOnEmailValidated &&
-      O.isSome(previousAcknowledgeOnEmailValidated) &&
-      O.isNone(acknowledgeOnEmailValidated)
-    ) {
-      navigation.goBack();
-    }
-  }, [
-    acknowledgeOnEmailValidated,
-    navigation,
-    previousAcknowledgeOnEmailValidated
-  ]);
 
   return (
     <BaseScreenComponent

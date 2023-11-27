@@ -27,6 +27,7 @@ import {
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
+  isNewCduFlow,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
   svEnabled,
@@ -506,9 +507,9 @@ export function* initializeApplicationSaga(
   yield* call(clearKeychainError);
 
   yield* call(checkConfiguredPinSaga);
+  yield* call(checkAcknowledgedFingerprintSaga);
 
   if (!hasPreviousSessionAndPin) {
-    yield* call(checkAcknowledgedFingerprintSaga);
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 

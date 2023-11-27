@@ -21,6 +21,7 @@ import I18n from "../i18n";
 import {
   acknowledgeOnEmailValidation,
   profileLoadRequest,
+  setEmailCheckAtStartup,
   startEmailValidation
 } from "../store/actions/profile";
 import {
@@ -29,9 +30,9 @@ import {
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
-import { emailAcknowledged } from "../store/actions/onboarding";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
+import { emailAcknowledged } from "../store/actions/onboarding";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -72,14 +73,17 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     () => dispatch(startEmailValidation.request()),
     [dispatch]
   );
+
   const acknowledgeEmail = useCallback(
     () => dispatch(emailAcknowledged()),
     [dispatch]
   );
+
   const reloadProfile = useCallback(
     () => dispatch(profileLoadRequest()),
     [dispatch]
   );
+
   const dispatchAcknowledgeOnEmailValidation = useCallback(
     (maybeAcknowledged: O.Option<boolean>) =>
       dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
@@ -117,9 +121,18 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
         hideModal();
       } else {
         hideModal();
-        NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PROFILE_DATA
-        });
+        if (
+          O.isSome(emailValidation.emailCheckAtStartup) &&
+          emailValidation.emailCheckAtStartup.value
+        ) {
+          acknowledgeEmail();
+          dispatchAcknowledgeOnEmailValidation(O.none);
+          dispatch(setEmailCheckAtStartup(O.none));
+        } else {
+          NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_DATA
+          });
+        }
       }
     } else {
       // send email validation only if it exists

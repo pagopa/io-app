@@ -48,6 +48,7 @@ import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { LightModalContext } from "../../components/ui/LightModal";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
+import { emailValidationSelector } from "../../store/reducers/emailValidation";
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -79,6 +80,10 @@ const NewEmailInsertScreen = (props: Props) => {
   const profile = useIOSelector(profileSelector);
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const acknowledgeOnEmailValidated = useIOSelector(
+    emailValidationSelector
+  ).acknowledgeOnEmailValidated;
+
   const isLoading = useMemo(
     () => pot.isUpdating(profile) || pot.isLoading(profile),
     [profile]
@@ -177,6 +182,18 @@ const NewEmailInsertScreen = (props: Props) => {
       }
     }
   }, [prevUserProfile, profile]);
+
+  // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
+  // we show the modal to remind the user to validate the email.
+  // This is used during the check of the email at startup.
+  useEffect(() => {
+    if (
+      O.isSome(acknowledgeOnEmailValidated) &&
+      acknowledgeOnEmailValidated.value === false
+    ) {
+      showModal(<NewRemindEmailValidationOverlay />);
+    }
+  }, [acknowledgeOnEmailValidated, showModal]);
 
   useEffect(() => {
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
