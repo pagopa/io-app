@@ -749,17 +749,25 @@ authentication:
     listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
 email:
-  cduModal:
+  cduScreens:
     validateMail:
-      title: Indirizzo email non validato
+      title: Non hai confermato il tuo indirizzo email
       subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
       editButton: Modifica email
-      validateButton: Valida email
-    editMail:
+      validateButton: Conferma email
+      header: 
+        title: Configura IO
+      help:
+        body: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email.
+    emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
       subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
       editButton: Modifica email
+      header: 
+        title: Configura IO
+      help:
+        body: Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua casella di posta elettronica.

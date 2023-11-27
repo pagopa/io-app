@@ -58,7 +58,7 @@ const EmailAlreadyTakenScreen = (props: Props) => {
 
   const continueButtonProps = {
     onPress: confirmButtonOnPress,
-    title: I18n.t("email.cduModal.editMail.editButton"),
+    title: I18n.t("email.cduScreens.emailAlreadyTaken.editButton"),
     block: true
   };
 
@@ -67,29 +67,29 @@ const EmailAlreadyTakenScreen = (props: Props) => {
       goBack={false}
       accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       contextualHelpMarkdown={{
-        title: "email.validate.title",
-        body: "email.validate.help"
+        title: "email.cduScreens.emailAlreadyTaken.title",
+        body: "email.cduScreens.emailAlreadyTaken.help.body"
       }}
-      headerTitle={I18n.t("email.newinsert.header")}
+      headerTitle={I18n.t("email.cduScreens.emailAlreadyTaken.header.title")}
     >
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.mainContainer}>
           <Pictogram name={"unrecognized"} size={120} />
           <VSpacer size={16} />
           <H3 style={styles.title}>
-            {I18n.t("email.cduModal.editMail.title")}
+            {I18n.t("email.cduScreens.emailAlreadyTaken.title")}
           </H3>
           <VSpacer size={16} />
           <Body style={{ textAlign: "center" }}>
             <Body style={{ textAlign: "center" }}>
-              {I18n.t("email.cduModal.editMail.subtitleStart")}
+              {I18n.t("email.cduScreens.emailAlreadyTaken.subtitleStart")}
             </Body>
             <Body style={{ textAlign: "center" }} weight="SemiBold">
               {" "}
               {" " + email + " "}
             </Body>
             <Body style={{ textAlign: "center" }}>
-              {I18n.t("email.cduModal.editMail.subtitleEnd")}
+              {I18n.t("email.cduScreens.emailAlreadyTaken.subtitleEnd")}
             </Body>
           </Body>
         </View>

@@ -54,7 +54,7 @@ const ValidateEmailScreen = (props: Props) => {
 
   const continueButtonProps = {
     onPress: confirmButtonOnPress,
-    title: I18n.t("email.cduModal.validateMail.validateButton"),
+    title: I18n.t("email.cduScreens.validateMail.validateButton"),
     block: true
   };
 
@@ -63,26 +63,26 @@ const ValidateEmailScreen = (props: Props) => {
       goBack={false}
       accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       contextualHelpMarkdown={{
-        title: "email.validate.title",
-        body: "email.validate.help"
+        title: "email.cduScreens.validateMail.title",
+        body: "email.cduScreens.validateMail.help.body"
       }}
-      headerTitle={I18n.t("email.newinsert.header")}
+      headerTitle={I18n.t("email.cduScreens.validateMail.header.title")}
     >
       <SafeAreaView style={IOStyles.flex}>
         <View style={styles.mainContainer}>
           <Pictogram name={"puzzle"} size={120} />
           <VSpacer size={16} />
           <H3 style={styles.title}>
-            {I18n.t("email.cduModal.validateMail.title")}
+            {I18n.t("email.cduScreens.validateMail.title")}
           </H3>
           <VSpacer size={16} />
           <Body style={{ textAlign: "center" }}>
-            {I18n.t("email.cduModal.validateMail.subtitle")}
+            {I18n.t("email.cduScreens.validateMail.subtitle")}
           </Body>
           <Body weight="SemiBold">{props.email}</Body>
           <VSpacer size={16} />
           <Link onPress={modifyEmailButtonOnPress}>
-            {I18n.t("email.cduModal.validateMail.editButton")}
+            {I18n.t("email.cduScreens.validateMail.editButton")}
           </Link>
         </View>
         <FooterWithButtons
