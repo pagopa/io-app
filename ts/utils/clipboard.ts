@@ -1,7 +1,7 @@
-import { Toast } from "native-base";
 import Clipboard from "@react-native-clipboard/clipboard";
 
 import I18n from "../i18n";
+import { IOToast } from "../components/Toast";
 
 /**
  * Copy a text to the device clipboard and give a feedback.
@@ -9,7 +9,5 @@ import I18n from "../i18n";
 export const clipboardSetStringWithFeedback = (text: string) => {
   Clipboard.setString(text);
 
-  Toast.show({
-    text: I18n.t("clipboard.copyFeedback")
-  });
+  IOToast.success(I18n.t("clipboard.copyFeedback"));
 };
