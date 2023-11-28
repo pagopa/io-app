@@ -1,7 +1,7 @@
 {
   "name": "italia-app",
   "version": "2.47.0-rc.0",
-  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.23.0/api_backend.yaml",
+  "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.23.0-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.23.0-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.28/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v13.23.0-RELEASE/api_bonus.yaml",
