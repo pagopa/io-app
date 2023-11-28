@@ -50,8 +50,6 @@ import { usePrevious } from "../../utils/hooks/usePrevious";
 import { LightModalContext } from "../../components/ui/LightModal";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
 
-import { emailValidationSelector } from "../../store/reducers/emailValidation";
-
 const styles = StyleSheet.create({
   flex: {
     flex: 1
@@ -79,10 +77,6 @@ const NewOnboardingEmailInsertScreen = () => {
   const optionEmail = useIOSelector(profileEmailSelector);
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
-  );
-
-  const { acknowledgeOnEmailValidated } = useIOSelector(
-    emailValidationSelector
   );
 
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);

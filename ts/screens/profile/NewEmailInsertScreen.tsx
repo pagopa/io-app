@@ -176,8 +176,6 @@ const NewEmailInsertScreen = (props: Props) => {
     setEmail(O.some(EMPTY_EMAIL));
   }, []);
 
-  const prevUserProfile = usePrevious(profile);
-
   useEffect(() => {
     if (prevUserProfile) {
       const isPrevCurrentSameState = prevUserProfile.kind === profile.kind;

@@ -33,7 +33,6 @@ import { emailValidationSelector } from "../store/reducers/emailValidation";
 import { emailAcknowledged } from "../store/actions/onboarding";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
-import { emailAcknowledged } from "../store/actions/onboarding";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -82,11 +81,6 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const reloadProfile = useCallback(
     () => dispatch(profileLoadRequest()),
-    [dispatch]
-  );
-  const dispatchAcknowledgeOnEmailValidation = useCallback(
-    (maybeAcknowledged: O.Option<boolean>) =>
-      dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
     [dispatch]
   );
 
