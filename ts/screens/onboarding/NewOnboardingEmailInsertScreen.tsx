@@ -49,7 +49,6 @@ import { emailAcknowledged } from "../../store/actions/onboarding";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { LightModalContext } from "../../components/ui/LightModal";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
-import { emailValidationSelector } from "../../store/reducers/emailValidation";
 
 const styles = StyleSheet.create({
   flex: {
@@ -63,6 +62,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
   body: "email.insert.help.content"
 };
+// FIXME -> refactor logic. Need to integrate the logic of this screen and the NewEmailInsertScreen
 
 /**
  * A screen to allow user to insert an email address.
@@ -78,12 +78,7 @@ const NewOnboardingEmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
-  const isEmailValidatedSelector = useIOSelector(
-    isProfileEmailValidatedSelector
-  );
-  const { acknowledgeOnEmailValidated } = useIOSelector(
-    emailValidationSelector
-  );
+  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
 
   const prevUserProfile = usePrevious(profile);
 
@@ -107,15 +102,6 @@ const NewOnboardingEmailInsertScreen = () => {
     [dispatch]
   );
 
-  const isEmailValidated = useMemo(
-    () =>
-      isEmailValidatedSelector &&
-      pipe(
-        acknowledgeOnEmailValidated,
-        O.getOrElse(() => true)
-      ),
-    [isEmailValidatedSelector, acknowledgeOnEmailValidated]
-  );
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(
     isProfileEmailAlreadyTaken ? optionEmail : O.some(EMPTY_EMAIL)

@@ -67,7 +67,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
   body: "email.insert.help.content"
 };
-
+// FIXME -> refactor logic. Need to integrate the logic of this screen and the NewOnboardingEmailInsertScreen
 /**
  * A screen to allow user to insert an email address.
  */
@@ -79,6 +79,8 @@ const NewEmailInsertScreen = (props: Props) => {
   const profile = useIOSelector(profileSelector);
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const prevUserProfile = usePrevious(profile);
+
   const isLoading = useMemo(
     () => pot.isUpdating(profile) || pot.isLoading(profile),
     [profile]
@@ -160,23 +162,6 @@ const NewEmailInsertScreen = (props: Props) => {
     // goback if the onboarding is completed
     props.navigation.goBack();
   }, [props.navigation]);
-
-  useEffect(() => {
-    setAreSameEmails(false);
-    setEmail(O.some(EMPTY_EMAIL));
-  }, []);
-
-  const prevUserProfile = usePrevious(profile);
-
-  useEffect(() => {
-    if (prevUserProfile) {
-      const isPrevCurrentSameState = prevUserProfile.kind === profile.kind;
-      // do nothing if prev profile is in the same state of the current
-      if (isPrevCurrentSameState) {
-        return;
-      }
-    }
-  }, [prevUserProfile, profile]);
 
   useEffect(() => {
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
