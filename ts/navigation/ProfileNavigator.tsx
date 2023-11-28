@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import LogoutScreen from "../components/screens/LogoutScreen";
-import { remindersOptInEnabled } from "../config";
+import { isNewCduFlow, remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
@@ -34,6 +34,7 @@ import { ContextualHelpPropsMarkdown } from "../components/screens/BaseScreenCom
 import I18n from "../i18n";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
+import NewEmailInsertScreen from "../screens/profile/NewEmailInsertScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -162,7 +163,7 @@ const ProfileStackNavigator = () => {
           headerShown: false
         }}
         name={ROUTES.INSERT_EMAIL_SCREEN}
-        component={EmailInsertScreen}
+        component={isNewCduFlow ? NewEmailInsertScreen : EmailInsertScreen}
       />
       <Stack.Screen
         options={{
