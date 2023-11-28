@@ -22,7 +22,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { WalletPaymentRoutes } from "../navigation/routes";
 
-const WalletPaymentReviewScreen = () => {
+const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
@@ -99,4 +99,4 @@ const WalletPaymentReviewScreen = () => {
   );
 };
 
-export { WalletPaymentReviewScreen };
+export { WalletPaymentConfirmScreen };

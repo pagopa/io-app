@@ -40,7 +40,7 @@ const WalletPaymentDetailScreen = () => {
 
   const navigateToMethodSelection = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_METHOD_LIST
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
     });
   };
 
