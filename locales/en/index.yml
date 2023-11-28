@@ -775,6 +775,9 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+    alertTitle: This email address is already in use
+    alertDescription: This may happen if you share the same email address with a family member
+    alertButton: Use another email address
   newinsert:
     header: "Configure IO"
     title: "What is your email address?"
