@@ -167,6 +167,11 @@ const reducer = (
         ...state,
         authorizationUrl: pot.toError(state.authorizationUrl, action.payload)
       };
+    case getType(walletPaymentAuthorization.cancel):
+      return {
+        ...state,
+        authorizationUrl: pot.none
+      };
   }
   return state;
 };

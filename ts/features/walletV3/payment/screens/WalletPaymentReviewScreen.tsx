@@ -5,38 +5,30 @@ import React from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  walletPaymentAuthorization,
-  walletPaymentCreateTransaction
-} from "../store/actions/networking";
-import {
-  walletPaymentAuthorizationUrlSelector,
-  walletPaymentChosenPaymentMethodSelector,
-  walletPaymentChosenPspSelector,
-  walletPaymentTransactionSelector
-} from "../store/selectors";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { WalletPaymentRoutes } from "../navigation/routes";
+import { walletPaymentCreateTransaction } from "../store/actions/networking";
+import {
+  walletPaymentChosenPaymentMethodSelector,
+  walletPaymentChosenPspSelector,
+  walletPaymentTransactionSelector
+} from "../store/selectors";
 
 const WalletPaymentReviewScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
-  const authorizationUrlPot = useIOSelector(
-    walletPaymentAuthorizationUrlSelector
-  );
+
   const selectedMethodOption = useIOSelector(
     walletPaymentChosenPaymentMethodSelector
   );
   const selectedPspOption = useIOSelector(walletPaymentChosenPspSelector);
-
-  const isLoading =
-    pot.isLoading(transactionPot) || pot.isLoading(authorizationUrlPot);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -44,26 +36,25 @@ const WalletPaymentReviewScreen = () => {
     }, [dispatch])
   );
 
-  React.useEffect(() => {
-    if (pot.isSome(authorizationUrlPot)) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME
-      });
-    }
-  }, [authorizationUrlPot, navigation]);
+  const { isLoadingAuthorizationUrl, startPaymentAuthorizaton } =
+    useWalletPaymentAuthorizationModal({
+      onAuthorizationOutcome: () => {
+        navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+          screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME
+        });
+      }
+    });
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const handleStartPaymentAuthorization = () => {
-    dispatch(
-      walletPaymentAuthorization.request({
-        paymentAmount: 1000 as AmountEuroCents,
-        paymentFees: 1000 as AmountEuroCents,
-        pspId: "A",
-        transactionId: "A",
-        walletId: "A"
-      })
-    );
-  };
+  const handleStartPaymentAuthorization = () =>
+    startPaymentAuthorizaton({
+      paymentAmount: 1000 as AmountEuroCents,
+      paymentFees: 1000 as AmountEuroCents,
+      pspId: "A",
+      transactionId: "A",
+      walletId: "A"
+    });
+
+  const isLoading = pot.isLoading(transactionPot) || isLoadingAuthorizationUrl;
 
   return (
     <BaseScreenComponent goBack={true}>
@@ -89,11 +80,6 @@ const WalletPaymentReviewScreen = () => {
         />
         <VSpacer size={8} />
         <DebugPrettyPrint title="transactionPot" data={transactionPot} />
-        <VSpacer size={8} />
-        <DebugPrettyPrint
-          title="authorizationUrlPot"
-          data={authorizationUrlPot}
-        />
       </GradientScrollView>
     </BaseScreenComponent>
   );
