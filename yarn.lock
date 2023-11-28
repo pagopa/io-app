@@ -10501,10 +10501,10 @@ iterall@^1.2.1, iterall@^1.3.0:
   resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.3.0.tgz#afcb08492e2915cbd8a0884eb93a8c94d0d72fea"
   integrity sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
 
-jail-monkey@^2.3.2:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/jail-monkey/-/jail-monkey-2.3.2.tgz#0a65b2ed92c24c3b7be1b8af2ca78ab4d4ab05db"
-  integrity sha512-2vmj6gE7OkJ6Z+7PXoqFLnftDO+MO1iv/+Sj1ExWWeMCWZj6uDs35GQ3SZOJsfvEzAKsrWKDeLCZIMam1Tykqw==
+jail-monkey@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/jail-monkey/-/jail-monkey-2.8.0.tgz#ff8ce7e57c438c9351d6c97aefe1dce3269220c7"
+  integrity sha512-mz0sldKOEnt7qpqLLYM9Rwq9zGuGtj5nihz87KWBSy6PR9eu0cmyPkW3b+Exw4iVivcb2bFf6uVq0Q9aNgdIhw==
 
 jake@^10.8.5:
   version "10.8.5"

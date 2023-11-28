@@ -148,7 +148,7 @@
     "hoist-non-react-statics": "^3.0.1",
     "io-react-native-zendesk": "https://github.com/pagopa/io-react-native-zendesk.git#0.3.25",
     "io-ts": "^2.2.16",
-    "jail-monkey": "^2.3.2",
+    "jail-monkey": "^2.8.0",
     "jwk-thumbprint": "^0.1.4",
     "lodash": "^4.17.21",
     "metro-babel-register": "^0.72.1",
