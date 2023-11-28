@@ -139,7 +139,6 @@ function* createOrUpdateProfileSaga(
         is_email_validated: currentProfile.is_email_validated || false,
         is_email_already_taken: !!currentProfile.is_email_already_taken,
         is_email_enabled: currentProfile.is_email_enabled,
-        is_email_already_taken: !!currentProfile.is_email_already_taken,
         version: currentProfile.version,
         email: currentProfile.email,
         preferred_languages:
@@ -162,7 +161,6 @@ function* createOrUpdateProfileSaga(
         is_email_enabled: action.payload.is_email_enabled || false,
         is_email_already_taken: !!currentProfile.is_email_already_taken,
         last_app_version: currentProfile.last_app_version ?? appVersion,
-        is_email_already_taken: !!currentProfile.is_email_already_taken,
         ...action.payload,
         accepted_tos_version: tosVersion,
         version: 0
