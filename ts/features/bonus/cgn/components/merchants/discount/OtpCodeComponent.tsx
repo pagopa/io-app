@@ -156,11 +156,13 @@ export const OtpCodeComponent = (props: Props) => {
       toValue: endPercentage,
       duration: currentDuration as number,
       easing: Easing.linear
-    }).start(() => {
+    }).start(({ finished }) => {
       // when animation end
-      setElapsedSeconds(cv => cv + 1);
-      stopInterval();
-      onEnd();
+      if (finished) {
+        setElapsedSeconds(cv => cv + 1);
+        stopInterval();
+        onEnd();
+      }
     });
     // eslint-disable-next-line functional/immutable-data
     intervalRef.current = setInterval(() => {
