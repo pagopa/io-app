@@ -9,6 +9,7 @@ import {
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -21,11 +22,15 @@ export function* handleDeleteWalletDetails(
   action: ActionType<(typeof walletDetailsDeleteInstrument)["request"]>
 ) {
   try {
-    const deleteWalletResult: SagaCallReturnType<typeof deleteWalletById> =
-      yield* call(deleteWalletById, {
-        bearerAuth: token,
-        walletId: action.payload.walletId
-      });
+    const deleteWalletRequest = deleteWalletById({
+      bearerAuth: token,
+      walletId: action.payload.walletId
+    });
+    const deleteWalletResult = (yield* call(
+      withRefreshApiCall,
+      deleteWalletRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof deleteWalletById>;
     if (E.isRight(deleteWalletResult)) {
       if (deleteWalletResult.right.status === 204) {
         // handled success
