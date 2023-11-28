@@ -775,6 +775,9 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+    alertTitle: Questa email è già in uso
+    alertDescription: Può succedere se condividi lo stesso indirizzo con un familiare
+    alertButton: Usa un’altra email
   newinsert:
     header: Configura IO
     title: Qual è la tua email?
