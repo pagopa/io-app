@@ -20,7 +20,7 @@ import {
 } from "../store/selectors";
 import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
 
-const WalletPaymentReviewScreen = () => {
+const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
@@ -90,4 +90,4 @@ const WalletPaymentReviewScreen = () => {
   );
 };
 
-export { WalletPaymentReviewScreen };
+export { WalletPaymentConfirmScreen };

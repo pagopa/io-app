@@ -23,7 +23,7 @@ import {
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 
-const WalletPaymentMethodListScreen = () => {
+const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
@@ -53,7 +53,7 @@ const WalletPaymentMethodListScreen = () => {
 
   const handleContinue = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PSP_LIST,
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP,
       params: {
         walletId: "123456",
         paymentAmountInCents: 100
@@ -91,4 +91,4 @@ const WalletPaymentMethodListScreen = () => {
   );
 };
 
-export { WalletPaymentMethodListScreen };
+export { WalletPaymentPickMethodScreen };

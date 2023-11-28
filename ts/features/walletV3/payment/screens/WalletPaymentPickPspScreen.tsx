@@ -25,18 +25,18 @@ import {
 import { walletPaymentChoosePsp } from "../store/actions/orchestration";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 
-type WalletPaymentPspListScreenNavigationParams = {
+type WalletPaymentPickPspScreenNavigationParams = {
   walletId: string;
   paymentAmountInCents: number;
 };
 
-type WalletPaymentPspListRouteProps = RouteProp<
+type WalletPaymentPickPspRouteProps = RouteProp<
   WalletPaymentParamsList,
-  "WALLET_PAYMENT_PSP_LIST"
+  "WALLET_PAYMENT_PICK_PSP"
 >;
 
-const WalletPaymentPspListScreen = () => {
-  const { params } = useRoute<WalletPaymentPspListRouteProps>();
+const WalletPaymentPickPspScreen = () => {
+  const { params } = useRoute<WalletPaymentPickPspRouteProps>();
   const { paymentAmountInCents, walletId } = params;
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -76,7 +76,7 @@ const WalletPaymentPspListScreen = () => {
 
   const handleContinue = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_REVIEW
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM
     });
   };
 
@@ -97,5 +97,5 @@ const WalletPaymentPspListScreen = () => {
   );
 };
 
-export { WalletPaymentPspListScreen };
-export type { WalletPaymentPspListScreenNavigationParams };
+export { WalletPaymentPickPspScreen };
+export type { WalletPaymentPickPspScreenNavigationParams };

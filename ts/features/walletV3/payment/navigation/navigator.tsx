@@ -5,13 +5,13 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
+import { WalletPaymentConfirmScreen } from "../screens/WalletPaymentConfirmScreen";
 import { WalletPaymentDetailScreen } from "../screens/WalletPaymentDetailScreen";
 import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInputFiscalCodeScreen";
 import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
-import { WalletPaymentMethodListScreen } from "../screens/WalletPaymentMethodListScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
-import { WalletPaymentPspListScreen } from "../screens/WalletPaymentPspListScreen";
-import { WalletPaymentReviewScreen } from "../screens/WalletPaymentReviewScreen";
+import { WalletPaymentPickMethodScreen } from "../screens/WalletPaymentPickMethodScreen";
+import { WalletPaymentPickPspScreen } from "../screens/WalletPaymentPickPspScreen";
 import { WalletPaymentParamsList } from "./params";
 import { WalletPaymentRoutes } from "./routes";
 
@@ -45,22 +45,22 @@ export const WalletPaymentNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_METHOD_LIST}
-      component={WalletPaymentMethodListScreen}
+      name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD}
+      component={WalletPaymentPickMethodScreen}
       options={{
         gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_PSP_LIST}
-      component={WalletPaymentPspListScreen}
+      name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP}
+      component={WalletPaymentPickPspScreen}
       options={{
         gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_REVIEW}
-      component={WalletPaymentReviewScreen}
+      name={WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM}
+      component={WalletPaymentConfirmScreen}
       options={{
         gestureEnabled: isGestureEnabled
       }}
