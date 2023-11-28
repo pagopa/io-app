@@ -69,6 +69,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "email.insert.help.content"
 };
 
+// FIXME -> refactor logic. Need to integrate the logic of this screen and the NewOnboardingEmailInsertScreen
+
 /**
  * A screen to allow user to insert an email address.
  */
@@ -80,9 +82,12 @@ const NewEmailInsertScreen = (props: Props) => {
   const profile = useIOSelector(profileSelector);
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+
   const acknowledgeOnEmailValidated = useIOSelector(
     emailValidationSelector
   ).acknowledgeOnEmailValidated;
+
+  const prevUserProfile = usePrevious(profile);
 
   const isLoading = useMemo(
     () => pot.isUpdating(profile) || pot.isLoading(profile),
