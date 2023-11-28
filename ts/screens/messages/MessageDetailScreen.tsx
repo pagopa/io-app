@@ -26,7 +26,7 @@ import { loadMessageDetails } from "../../store/actions/messages";
 import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
-import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
+import { messageDetailsByIdSelector } from "../../store/reducers/entities/messages/detailsById";
 import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import { UIMessageId } from "../../store/reducers/entities/messages/types";
 import { isNoticePaidSelector } from "../../store/reducers/entities/payments";
@@ -157,7 +157,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const messageId = ownProps.route.params.messageId;
   const serviceId = ownProps.route.params.serviceId;
   const message = pot.toUndefined(getPaginatedMessageById(state, messageId));
-  const messageDetails = getDetailsByMessageId(state, messageId);
+  const messageDetails = messageDetailsByIdSelector(state, messageId);
   const goBack = () => ownProps.navigation.goBack();
   const service = pipe(
     pot.toOption(serviceByIdSelector(serviceId)(state) || pot.none),
