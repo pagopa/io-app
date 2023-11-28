@@ -11,6 +11,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { ProfileError } from "../reducers/profileErrorType";
 
 export const resetProfileState = createStandardAction("RESET_PROFILE_STATE")();
 
@@ -37,7 +38,7 @@ export const profileUpsert = createAsyncAction(
   "PROFILE_UPSERT_REQUEST",
   "PROFILE_UPSERT_SUCCESS",
   "PROFILE_UPSERT_FAILURE"
-)<ProfileUpsertPayload, UpsertProfileSuccessPayload, Error>();
+)<ProfileUpsertPayload, UpsertProfileSuccessPayload, ProfileError>();
 
 export const startEmailValidation = createAsyncAction(
   "START_EMAIL_VALIDATION_REQUEST",
