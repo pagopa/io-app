@@ -7,7 +7,8 @@ export enum OnboardingOutcomeEnum {
   AUTH_ERROR = "2",
   TIMEOUT = "4",
   CANCELED_BY_USER = "8",
-  INVALID_SESSION = "14"
+  INVALID_SESSION = "14",
+  ALREADY_ONBOARDED = "15"
 }
 
 export type OnboardingOutcome = `${OnboardingOutcomeEnum}`;
