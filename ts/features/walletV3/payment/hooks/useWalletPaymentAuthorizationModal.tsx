@@ -11,15 +11,18 @@ import {
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { NetworkError } from "../../../../utils/errors";
-import { isStringNullyOrEmpty } from "../../../../utils/strings";
 import {
   WalletPaymentAuthorizePayload,
   walletPaymentAuthorization
 } from "../store/actions/networking";
 import { walletPaymentAuthorizationUrlSelector } from "../store/selectors";
+import {
+  WalletPaymentOutcome,
+  WalletPaymentOutcomeEnum
+} from "../types/PaymentOutcomeEnum";
 
 type Props = {
-  onAuthorizationOutcome: (outcome: string) => void;
+  onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
   onError?: (
     error?: WebViewErrorEvent | WebViewHttpErrorEvent | NetworkError
   ) => void;
@@ -27,7 +30,8 @@ type Props = {
 };
 
 export type WalletPaymentAuthorizationModal = {
-  isLoadingAuthorizationUrl: boolean;
+  isLoading: boolean;
+  isPendingAuthorization: boolean;
   startPaymentAuthorizaton: (payload: WalletPaymentAuthorizePayload) => void;
 };
 
@@ -40,18 +44,18 @@ export const useWalletPaymentAuthorizationModal = ({
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
   );
-  const isLoadingAuthorizationUrl = pot.isLoading(authorizationUrlPot);
+
+  const isLoading = pot.isLoading(authorizationUrlPot);
 
   const handleAuthorizationResult = React.useCallback(
     (resultUrl: string) => {
       const outcome = pipe(
         new URLParse(resultUrl, true),
-        urlParse => urlParse.query.outcome,
-        O.fromNullable,
-        O.filter(outcome => !isStringNullyOrEmpty(outcome)),
-        O.getOrElse(() => "")
+        ({ query }) => query.outcome,
+        WalletPaymentOutcome.decode,
+        O.fromEither,
+        O.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
-
       onAuthorizationOutcome(outcome);
     },
     [onAuthorizationOutcome]
@@ -93,7 +97,8 @@ export const useWalletPaymentAuthorizationModal = ({
   };
 
   return {
-    isLoadingAuthorizationUrl,
+    isLoading,
+    isPendingAuthorization: false,
     startPaymentAuthorizaton
   };
 };

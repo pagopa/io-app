@@ -10,7 +10,6 @@ import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInpu
 import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
 import { WalletPaymentMethodListScreen } from "../screens/WalletPaymentMethodListScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
-import { WalletPaymentProcessScreen } from "../screens/WalletPaymentProcessScreen";
 import { WalletPaymentPspListScreen } from "../screens/WalletPaymentPspListScreen";
 import { WalletPaymentReviewScreen } from "../screens/WalletPaymentReviewScreen";
 import { WalletPaymentParamsList } from "./params";
@@ -62,13 +61,6 @@ export const WalletPaymentNavigator = () => (
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_REVIEW}
       component={WalletPaymentReviewScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_PROCESS}
-      component={WalletPaymentProcessScreen}
       options={{
         gestureEnabled: isGestureEnabled
       }}

@@ -1,5 +1,6 @@
 import { WalletPaymentDetailScreenNavigationParams } from "../screens/WalletPaymentDetailScreen";
 import { WalletPaymentInputFiscalCodeScreenNavigationParams } from "../screens/WalletPaymentInputFiscalCodeScreen";
+import { WalletPaymentOutcomeScreenNavigationParams } from "../screens/WalletPaymentOutcomeScreen";
 import { WalletPaymentPspListScreenNavigationParams } from "../screens/WalletPaymentPspListScreen";
 import { WalletPaymentRoutes } from "./routes";
 
@@ -11,6 +12,5 @@ export type WalletPaymentParamsList = {
   [WalletPaymentRoutes.WALLET_PAYMENT_METHOD_LIST]: undefined;
   [WalletPaymentRoutes.WALLET_PAYMENT_PSP_LIST]: WalletPaymentPspListScreenNavigationParams;
   [WalletPaymentRoutes.WALLET_PAYMENT_REVIEW]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_PROCESS]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME]: undefined;
+  [WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
 };

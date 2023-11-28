@@ -18,13 +18,13 @@ import {
   walletPaymentChosenPspSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
+import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentReviewScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
-
   const selectedMethodOption = useIOSelector(
     walletPaymentChosenPaymentMethodSelector
   );
@@ -36,13 +36,18 @@ const WalletPaymentReviewScreen = () => {
     }, [dispatch])
   );
 
-  const { isLoadingAuthorizationUrl, startPaymentAuthorizaton } =
-    useWalletPaymentAuthorizationModal({
-      onAuthorizationOutcome: () => {
-        navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-          screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME
-        });
+  const handleAuthorizationOutcome = (outcome: WalletPaymentOutcome) => {
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+      params: {
+        outcome
       }
+    });
+  };
+
+  const { isLoading: isLoadingAuthorizationUrl, startPaymentAuthorizaton } =
+    useWalletPaymentAuthorizationModal({
+      onAuthorizationOutcome: handleAuthorizationOutcome
     });
 
   const handleStartPaymentAuthorization = () =>
