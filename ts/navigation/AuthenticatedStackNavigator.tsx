@@ -278,19 +278,17 @@ const AuthenticatedStackNavigator = () => {
         name={WalletDetailsRoutes.WALLET_DETAILS_MAIN}
         component={WalletDetailsNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
-      {/* 
-        This screen is outside the WalletPaymentNavigator to enable the slide from bottom animation.
-        FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the WalletPaymentNavigator
-      */}
       <Stack.Screen
         name={WalletBarcodeRoutes.WALLET_BARCODE_MAIN}
         component={WalletBarcodeNavigator}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
     </Stack.Navigator>

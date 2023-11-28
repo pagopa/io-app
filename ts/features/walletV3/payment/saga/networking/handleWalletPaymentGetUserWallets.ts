@@ -27,10 +27,9 @@ export function* handleWalletPaymentGetUserWallets(
         getWalletsByIdUserResult,
         E.fold(
           error =>
-            walletPaymentGetUserWallets.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
+            walletPaymentGetUserWallets.failure(
+              getGenericError(new Error(readablePrivacyReport(error)))
+            ),
           res => {
             if (res.status === 200) {
               return walletPaymentGetUserWallets.success(res.value);
