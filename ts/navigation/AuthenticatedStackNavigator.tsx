@@ -256,7 +256,6 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
             options={{
-              ...TransitionPresets.ModalSlideFromBottomIOS,
               gestureEnabled: isGestureEnabled,
               ...hideHeaderOptions
             }}
