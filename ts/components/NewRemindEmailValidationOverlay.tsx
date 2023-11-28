@@ -19,6 +19,7 @@ import {
 import I18n from "../i18n";
 
 import {
+  acknowledgeOnEmailValidation,
   profileLoadRequest,
   startEmailValidation
 } from "../store/actions/profile";
@@ -28,6 +29,7 @@ import {
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
+import { emailAcknowledged } from "../store/actions/onboarding";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { IOStyles } from "./core/variables/IOStyles";
@@ -70,9 +72,17 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     () => dispatch(startEmailValidation.request()),
     [dispatch]
   );
-
+  const acknowledgeEmail = useCallback(
+    () => dispatch(emailAcknowledged()),
+    [dispatch]
+  );
   const reloadProfile = useCallback(
     () => dispatch(profileLoadRequest()),
+    [dispatch]
+  );
+  const dispatchAcknowledgeOnEmailValidation = useCallback(
+    (maybeAcknowledged: O.Option<boolean>) =>
+      dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
     [dispatch]
   );
 
@@ -100,7 +110,17 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
-      hideModal();
+      if (isOnboarding) {
+        // if the user is in the onboarding flow and the email il correctly validated,
+        // the email validation flow is finished
+        acknowledgeEmail();
+        hideModal();
+      } else {
+        hideModal();
+        NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.PROFILE_DATA
+        });
+      }
     } else {
       // send email validation only if it exists
       pipe(
@@ -113,17 +133,8 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   };
 
   const navigateToInsertEmail = () => {
-    if (isOnboarding) {
-      hideModal();
-      NavigationService.navigate(ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
-      });
-    } else {
-      hideModal();
-      NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.INSERT_EMAIL_SCREEN
-      });
-    }
+    dispatchAcknowledgeOnEmailValidation(O.none);
+    hideModal();
   };
 
   const renderFooter = () => (

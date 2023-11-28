@@ -20,12 +20,9 @@ import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../../../utils/showToast";
 import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
-import {
-  TimelineOperationListItem,
-  TimelineOperationListItemSkeleton
-} from "../components/TimelineOperationListItem";
+import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { IDPayDetailsParamsList } from "../navigation";
-import { useInitiativeTimelineFetcher } from "../utils/hooks";
+import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
 import { localeDateFormat } from "../../../../utils/locale";
 export type OperationsListScreenParams = { initiativeId: string };
 
@@ -107,7 +104,7 @@ export const OperationsListScreen = () => {
       contentContainerStyle={styles.listContainer}
       data={Array.from({ length: 10 })}
       keyExtractor={(_, index) => `placeholder${index}`}
-      renderItem={() => <TimelineOperationListItemSkeleton />}
+      renderItem={() => <TimelineOperationListItem isLoading={true} />}
       onRefresh={refresh}
       refreshing={isRefreshing}
     />

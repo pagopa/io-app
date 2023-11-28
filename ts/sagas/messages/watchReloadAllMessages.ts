@@ -8,6 +8,8 @@ import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/
 import { isTestEnv } from "../../utils/environment";
 import { getError } from "../../utils/errors";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../../features/messages/utils";
+import { trackReloadAllMessagesFailure } from "../../features/messages/analytics";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<(typeof reloadAllMessagesAction)["request"]>;
@@ -45,17 +47,22 @@ function tryReloadAllMessages(getMessages: LocalBeClient) {
             pagination: { previous: prev, next },
             filter
           }),
-        error =>
-          reloadAllMessagesAction.failure({
+        error => {
+          const reason = errorToReason(error);
+          trackReloadAllMessagesFailure(reason);
+          return reloadAllMessagesAction.failure({
             error: getError(error),
             filter
-          })
+          });
+        }
       );
 
       if (nextAction) {
         yield* put(nextAction);
       }
     } catch (error) {
+      const reason = unknownToReason(error);
+      trackReloadAllMessagesFailure(reason);
       yield* put(
         reloadAllMessagesAction.failure({
           error: getError(error),

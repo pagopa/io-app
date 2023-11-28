@@ -36,6 +36,27 @@ export const zendeskSupportCompleted = createStandardAction(
 )<void>();
 
 /**
+ * The zendesk getSession polling is stopped
+ */
+export const zendeskStopPolling = createStandardAction(
+  "ZENDESK_STOP_POLLING"
+)<void>();
+
+/**
+ * The zendesk getSession polling is iterated
+ */
+export const zendeskPollingIteration = createStandardAction(
+  "ZENDESK_POLLING_ITERATION"
+)<void>();
+
+/**
+ * The zendesk getSession polling is started
+ */
+export const zendeskStartPolling = createStandardAction(
+  "ZENDESK_START_POLLING"
+)<void>();
+
+/**
  * The user chooses to cancel the support request
  */
 export const zendeskSupportCancel = createStandardAction(
@@ -87,6 +108,9 @@ export const zendeskRequestTicketNumber = createAsyncAction(
 export type ZendeskSupportActions =
   | ActionType<typeof zendeskSupportStart>
   | ActionType<typeof zendeskSupportCompleted>
+  | ActionType<typeof zendeskStopPolling>
+  | ActionType<typeof zendeskPollingIteration>
+  | ActionType<typeof zendeskStartPolling>
   | ActionType<typeof zendeskSupportCancel>
   | ActionType<typeof zendeskSupportBack>
   | ActionType<typeof zendeskSupportFailure>

@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useStore } from "react-redux";
@@ -18,7 +18,7 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageLoading } from "../../messages/components/MessageLoading";
 import { loadThirdPartyMessage } from "../../messages/store/actions";
 import { MessageDetails } from "../components/MessageDetails";
-import { PnMessageDetailsError } from "../components/PnMessageDetailsError";
+import { MessageDetailsError } from "../components/MessageDetailsError";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
 import { PNMessage } from "../store/types/types";
@@ -26,20 +26,23 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
+  containsF24FromPNMessagePot,
   isCancelledFromPNMessagePot,
   paymentsFromPNMessagePot
 } from "../utils";
 import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 import {
+  cancelPaymentStatusTracking,
   cancelQueuedPaymentUpdates,
   clearSelectedPayment,
+  startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
 import { GlobalState } from "../../../store/reducers/types";
 import { selectedPaymentIdSelector } from "../store/reducers/payments";
 
-export type PnMessageDetailsScreenNavigationParams = Readonly<{
+export type MessageDetailsScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
   serviceId: ServiceId;
   firstTimeOpening: boolean;
@@ -57,7 +60,7 @@ const renderMessage = (
     () => <></>,
     () => <MessageLoading />,
     () => <MessageLoading />,
-    () => <PnMessageDetailsError onRetry={onRetry} />,
+    () => <MessageDetailsError onRetry={onRetry} />,
     messageOption =>
       O.isSome(messageOption) ? (
         <MessageDetails
@@ -68,7 +71,7 @@ const renderMessage = (
         />
       ) : (
         // decoding error
-        <PnMessageDetailsError onRetry={onRetry} />
+        <MessageDetailsError onRetry={onRetry} />
       ),
     () => <MessageLoading />,
     () => <></>,
@@ -78,12 +81,10 @@ const renderMessage = (
 export const MessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
 ): React.ReactElement => {
-  // console.log(`=== Screen: rendering`);
   const { messageId, serviceId, firstTimeOpening } = props.route.params;
 
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const uxEventTracked = React.useRef(false);
 
   const service = pot.toUndefined(
     useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
@@ -96,12 +97,14 @@ export const MessageDetailsScreen = (
   const payments = paymentsFromPNMessagePot(currentFiscalCode, message);
 
   const loadContent = React.useCallback(() => {
+    dispatch(startPaymentStatusTracking(messageId));
     dispatch(loadThirdPartyMessage.request(messageId));
   }, [dispatch, messageId]);
 
   const customGoBack = React.useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
   }, [dispatch, navigation]);
 
@@ -109,13 +112,21 @@ export const MessageDetailsScreen = (
     loadContent();
   });
 
-  if (!uxEventTracked.current && isStrictSome(message)) {
-    // eslint-disable-next-line functional/immutable-data
-    uxEventTracked.current = true;
-    const paymentCount = payments?.length ?? 0;
-    const isCancelled = isCancelledFromPNMessagePot(message);
-    trackPNUxSuccess(paymentCount, firstTimeOpening, isCancelled);
-  }
+  useOnFirstRender(
+    () => {
+      const paymentCount = payments?.length ?? 0;
+      const isCancelled = isCancelledFromPNMessagePot(message);
+      const containsF24 = containsF24FromPNMessagePot(message);
+
+      trackPNUxSuccess(
+        paymentCount,
+        firstTimeOpening,
+        isCancelled,
+        containsF24
+      );
+    },
+    () => isStrictSome(message)
+  );
 
   const store = useStore();
   useFocusEffect(
@@ -123,7 +134,6 @@ export const MessageDetailsScreen = (
       const globalState = store.getState() as GlobalState;
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
-        // console.log(`=== Screen: requesting last payment`);
         dispatch(clearSelectedPayment());
         dispatch(
           updatePaymentForMessage.request({

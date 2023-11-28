@@ -92,7 +92,9 @@ const useTimelineDetailsBottomSheet = (
                 />
               );
             }
-          // eslint-disable-next-line no-fallthrough
+            return (
+              <TimelineTransactionDetailsComponent transaction={details} />
+            );
           case TransactionOperationTypeEnum.REVERSAL:
             return (
               <TimelineTransactionDetailsComponent transaction={details} />

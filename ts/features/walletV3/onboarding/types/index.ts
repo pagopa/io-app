@@ -1,12 +1,28 @@
 /**
  * All the possible outcomes of the onboarding process
- * 0: success
- * 1: error
- * TODO: Wait for the pagoPA Team to define the other outcomes
  */
-export type OnboardingOutcome = "0" | "1" | "2" | "3";
+export enum OnboardingOutcomeEnum {
+  SUCCESS = "0",
+  GENERIC_ERROR = "1",
+  AUTH_ERROR = "2",
+  TIMEOUT = "4",
+  CANCELED_BY_USER = "8",
+  INVALID_SESSION = "14"
+}
+
+export type OnboardingOutcome = `${OnboardingOutcomeEnum}`;
 
 export type OnboardingStatus = "SUCCESS" | "FAILURE" | "ERROR";
+
+export type OnboardingOutcomeFailure = Exclude<
+  OnboardingOutcome,
+  `${OnboardingOutcomeEnum.SUCCESS}`
+>;
+
+export type OnboardingOutcomeSuccess = Extract<
+  OnboardingOutcome,
+  `${OnboardingOutcomeEnum.SUCCESS}`
+>;
 
 /**
  * Rapresents the result of onboarding process when it is successfully done
@@ -14,6 +30,7 @@ export type OnboardingStatus = "SUCCESS" | "FAILURE" | "ERROR";
 export type OnboardingSuccess = {
   status: "SUCCESS";
   outcome: OnboardingOutcome;
+  walletId: string;
 };
 
 /**
@@ -21,18 +38,18 @@ export type OnboardingSuccess = {
  */
 export type OnboardingFailure = {
   status: "FAILURE";
-  outcome: OnboardingOutcome;
+  outcome: OnboardingOutcomeFailure;
 };
 
 /**
  * Rapresents the result of onboarding process when it has a generic error not based on the webview outcome
  */
-export type OnboardingError = {
+export type OnboardingWebViewError = {
   status: "ERROR";
-  outcome?: OnboardingOutcome;
+  outcome: OnboardingOutcomeFailure;
 };
 
 export type OnboardingResult =
   | OnboardingSuccess
   | OnboardingFailure
-  | OnboardingError;
+  | OnboardingWebViewError;

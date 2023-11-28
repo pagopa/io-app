@@ -227,6 +227,19 @@ export const isExpired = (
 };
 
 /**
+ * This function returns true or false is the provided expiryDate in format "YYYYMM" is expired or not
+ * @param expiryDate
+ */
+export const isExpiredDate = (expiryDate: string): boolean => {
+  const year = +expiryDate.slice(3, 5);
+  const month = +expiryDate.slice(0, 3);
+  const now = new Date();
+  const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
+  const cardExpirationDate = new Date(year, month);
+  return nowYearMonth > cardExpirationDate;
+};
+
+/**
  * A function to check if the given date is in the past or in the future.
  * It returns:
  * -VALID, if the date is in the future

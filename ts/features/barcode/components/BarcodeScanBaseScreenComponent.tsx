@@ -133,16 +133,18 @@ const BarcodeScanBaseScreenComponent = ({
   const canShowHelp = useIOSelector(canShowHelpSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
 
-  useFocusEffect(() => {
-    trackBarcodeScanScreenView(barcodeAnalyticsFlow);
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      trackBarcodeScanScreenView(barcodeAnalyticsFlow);
+    }, [barcodeAnalyticsFlow])
+  );
 
   const onShowHelp = (): (() => void) | undefined => {
     switch (choosenTool) {
       case ToolEnum.zendesk:
-        trackZendeskSupport(route.name, barcodeAnalyticsFlow);
         // The navigation param assistanceForPayment is fixed to false because in this entry point we don't know the category yet.
         return () => {
+          trackZendeskSupport(route.name, barcodeAnalyticsFlow);
           resetCustomFields();
           dispatch(
             zendeskSupportStart({
@@ -210,6 +212,7 @@ const BarcodeScanBaseScreenComponent = ({
 
       return (
         <CameraPermissionView
+          pictogram="cameraRequest"
           title={I18n.t("barcodeScan.permissions.undefined.title")}
           body={I18n.t("barcodeScan.permissions.undefined.label")}
           action={{
@@ -230,6 +233,7 @@ const BarcodeScanBaseScreenComponent = ({
 
     return (
       <CameraPermissionView
+        pictogram="cameraDenied"
         title={I18n.t("barcodeScan.permissions.denied.title")}
         body={I18n.t("barcodeScan.permissions.denied.label")}
         action={{
