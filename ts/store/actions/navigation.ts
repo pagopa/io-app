@@ -27,6 +27,7 @@ import {
   BPayPaymentMethod,
   CreditCardPaymentMethod
 } from "../../types/pagopa";
+import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
 
 /**
  * @deprecated
@@ -335,9 +336,11 @@ export const navigateToTransactionDetailsScreen = (
   params: TransactionDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.WALLET_TRANSACTION_DETAILS,
-      params
+    CommonActions.navigate(WalletTransactionRoutes.WALLET_TRANSACTION_MAIN, {
+      screen: WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS,
+      params: {
+        transactionId: params.transaction.id
+      }
     })
   );
 

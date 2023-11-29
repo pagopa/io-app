@@ -3786,3 +3786,14 @@ fastLogin:
         description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
+transaction:
+  details:
+    title: Dettaglio operazione
+    totalAmount: Totale
+    totalFee: Il totale comprende 
+    totalFeePsp: di commissione, applicata da {{pspName}}
+    info:
+      title: Informazioni sulla transazione
+      pspName: Gestore della transazione (PSP)
+      dateAndHour: Data e ora
+      transactionId: ID transazione
