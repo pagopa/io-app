@@ -9,31 +9,43 @@ import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/i
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
 import { IDPayClient } from "../../common/api/client";
-import { OnboardingFailureEnum } from "./failure";
+import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 import { Context } from "./machine";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
-const onboardingStatusToFailure: Partial<
-  Record<OnboardingStatusEnum, OnboardingFailureEnum>
-> = {
-  [OnboardingStatusEnum.ELIGIBLE_KO]: OnboardingFailureEnum.NOT_ELIGIBLE,
-  [OnboardingStatusEnum.ONBOARDING_KO]: OnboardingFailureEnum.NO_REQUIREMENTS,
-  [OnboardingStatusEnum.ONBOARDING_OK]: OnboardingFailureEnum.ONBOARDED,
-  [OnboardingStatusEnum.UNSUBSCRIBED]: OnboardingFailureEnum.UNSUBSCRIBED,
-  [OnboardingStatusEnum.ON_EVALUATION]: OnboardingFailureEnum.ON_EVALUATION,
-  [OnboardingStatusEnum.SUSPENDED]: OnboardingFailureEnum.SUSPENDED
+const mapOnboardingStatusToFailure = (status: OnboardingStatusEnum) => {
+  switch (status) {
+    case OnboardingStatusEnum.ONBOARDING_OK:
+    case OnboardingStatusEnum.SUSPENDED:
+      return OnboardingFailureEnum.USER_ONBOARDED;
+    case OnboardingStatusEnum.ELIGIBLE_KO:
+      return OnboardingFailureEnum.NOT_ELIGIBLE;
+    case OnboardingStatusEnum.ON_EVALUATION:
+      return OnboardingFailureEnum.ON_EVALUATION;
+    case OnboardingStatusEnum.UNSUBSCRIBED:
+      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+    default:
+      return undefined;
+  }
 };
 
-// FIXME: mapping is incomplete [IOBP-379]
-// prettier-ignore
-const onboardingErrorToFailure: Partial<Record<
-  OnboardingErrorCodeEnum,
-  OnboardingFailureEnum
->> = {
-  [OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED]: OnboardingFailureEnum.NO_BUDGET,
-  [OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED]: OnboardingFailureEnum.ENDED,
-  [OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED]: OnboardingFailureEnum.NOT_STARTED,
-  [OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_STATUS_NOT_PUBLISHED]: OnboardingFailureEnum.SUSPENDED,
+const mapErrorCodeToFailure = (code: OnboardingErrorCodeEnum) => {
+  switch (code) {
+    case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
+      return OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS;
+    case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
+      return OnboardingFailureEnum.USER_NOT_IN_WHITELIST;
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
+      return OnboardingFailureEnum.INITIATIVE_NOT_STARTED;
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED:
+      return OnboardingFailureEnum.INITIATIVE_ENDED;
+    case OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED:
+      return OnboardingFailureEnum.BUDGET_EXHAUSTED;
+    case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:
+      return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+    default:
+      return OnboardingFailureEnum.GENERIC;
+  }
 };
 
 const createServicesImplementation = (
@@ -48,7 +60,7 @@ const createServicesImplementation = (
 
   const loadInitiative = async (context: Context) => {
     if (context.serviceId === undefined) {
-      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
+      return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
     const dataResponse = await client.getInitiativeData({
@@ -59,7 +71,7 @@ const createServicesImplementation = (
     const data: Promise<InitiativeDataDTO> = pipe(
       dataResponse,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         ({ status, value }) => {
           switch (status) {
             case 200:
@@ -78,7 +90,7 @@ const createServicesImplementation = (
 
   const loadInitiativeStatus = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
+      return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
     const statusResponse = await client.onboardingStatus({
@@ -89,14 +101,13 @@ const createServicesImplementation = (
     const data: Promise<O.Option<OnboardingStatusEnum>> = pipe(
       statusResponse,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         ({ status, value }) => {
           switch (status) {
             case 200:
-              const onboardingStatus = value.status;
-
               return pipe(
-                onboardingStatusToFailure[onboardingStatus],
+                value.status,
+                mapOnboardingStatusToFailure,
                 O.fromNullable,
                 O.fold(
                   () => Promise.resolve(O.some(value.status)), // No failure, return onboarding status
@@ -120,7 +131,7 @@ const createServicesImplementation = (
 
   const acceptTos = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
+      return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
     const response = await client.onboardingCitizen({
@@ -133,14 +144,13 @@ const createServicesImplementation = (
     const dataPromise: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         ({ status, value }) => {
           switch (status) {
             case 204:
               return Promise.resolve(undefined);
             case 403:
-              const failure = onboardingErrorToFailure[value.code];
-              return Promise.reject(failure || OnboardingFailureEnum.GENERIC);
+              return Promise.reject(mapErrorCodeToFailure(value.code));
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
@@ -155,7 +165,7 @@ const createServicesImplementation = (
 
   const loadRequiredCriteria = async (context: Context) => {
     if (context.initiative === undefined) {
-      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
+      return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
     const response = await client.checkPrerequisites({
@@ -168,7 +178,7 @@ const createServicesImplementation = (
     const dataPromise: Promise<O.Option<RequiredCriteriaDTO>> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         ({ status, value }) => {
           switch (status) {
             case 200:
@@ -176,8 +186,7 @@ const createServicesImplementation = (
             case 202:
               return Promise.resolve(O.none);
             case 403:
-              const failure = onboardingErrorToFailure[value.code];
-              return Promise.reject(failure || OnboardingFailureEnum.GENERIC);
+              return Promise.reject(mapErrorCodeToFailure(value.code));
             case 401:
               return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             default:
@@ -194,11 +203,11 @@ const createServicesImplementation = (
     const { initiative, requiredCriteria, multiConsentsAnswers } = context;
 
     if (initiative === undefined || requiredCriteria === undefined) {
-      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
+      return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
     if (O.isNone(requiredCriteria)) {
-      return Promise.reject(OnboardingFailureEnum.UNEXPECTED);
+      return Promise.reject(OnboardingFailureEnum.GENERIC);
     }
 
     const consentsArray = [
@@ -222,7 +231,7 @@ const createServicesImplementation = (
     const dataPromise: Promise<undefined> = pipe(
       response,
       E.fold(
-        _ => Promise.reject(OnboardingFailureEnum.UNEXPECTED),
+        _ => Promise.reject(OnboardingFailureEnum.GENERIC),
         ({ status }) => {
           switch (status) {
             case 202:
