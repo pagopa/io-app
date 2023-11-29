@@ -14,8 +14,8 @@ import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAut
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentCreateTransaction } from "../store/actions/networking";
 import {
-  walletPaymentChosenPaymentMethodSelector,
-  walletPaymentChosenPspSelector,
+  walletPaymentPickedPaymentMethodSelector,
+  walletPaymentPickedPspSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
 import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
@@ -26,9 +26,9 @@ const WalletPaymentConfirmScreen = () => {
 
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const selectedMethodOption = useIOSelector(
-    walletPaymentChosenPaymentMethodSelector
+    walletPaymentPickedPaymentMethodSelector
   );
-  const selectedPspOption = useIOSelector(walletPaymentChosenPspSelector);
+  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
   useFocusEffect(
     React.useCallback(() => {
