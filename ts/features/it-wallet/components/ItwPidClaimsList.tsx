@@ -139,7 +139,7 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
         endElement={{
           type: "iconButton",
           componentProps: {
-            icon: "info",
+            icon: "website",
             onPress: () => Linking.openURL(ISSUER_URL),
             accessibilityLabel: ""
           }
