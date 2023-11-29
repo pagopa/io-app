@@ -34,17 +34,31 @@ import {
   InitiativeRulesInfoBoxSkeleton
 } from "./InitiativeRulesInfoBox";
 
-export type BeneficiaryDetailsProps = {
-  initiativeDetails: InitiativeDTO;
-  beneficiaryDetails: InitiativeDetailDTO;
-  onboardingStatus: OnboardingStatusDTO;
-};
+export type BeneficiaryDetailsProps =
+  | {
+      isLoading?: false;
+      initiativeDetails: InitiativeDTO;
+      beneficiaryDetails: InitiativeDetailDTO;
+      onboardingStatus: OnboardingStatusDTO;
+    }
+  | {
+      isLoading: true;
+      initiativeDetails?: never;
+      beneficiaryDetails?: never;
+      onboardingStatus?: never;
+    };
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
 const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const { initiativeDetails, beneficiaryDetails, onboardingStatus } = props;
+  const { initiativeDetails, beneficiaryDetails, onboardingStatus, isLoading } =
+    props;
+
+  if (isLoading) {
+    return <BeneficiaryDetailsContentSkeleton />;
+  }
+
   const {
     initiativeId,
     initiativeName,
@@ -293,4 +307,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { BeneficiaryDetailsContent, BeneficiaryDetailsContentSkeleton };
+export { BeneficiaryDetailsContent };

@@ -13,6 +13,8 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { isTestEnv } from "../../utils/environment";
 import { getError } from "../../utils/errors";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../../features/messages/utils";
+import { trackUpsertMessageStatusAttributesFailure } from "../../features/messages/analytics";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
@@ -75,17 +77,22 @@ function tryUpsertMessageStatusAttributes(putMessage: LocalBeClient) {
       const nextAction = handleResponse<unknown>(
         response,
         _ => upsertMessageStatusAttributes.success(action.payload),
-        error =>
-          upsertMessageStatusAttributes.failure({
+        error => {
+          const reason = errorToReason(error);
+          trackUpsertMessageStatusAttributesFailure(reason);
+          return upsertMessageStatusAttributes.failure({
             error: getError(error),
             payload: action.payload
-          })
+          });
+        }
       );
 
       if (nextAction) {
         yield* put(nextAction);
       }
     } catch (error) {
+      const reason = unknownToReason(error);
+      trackUpsertMessageStatusAttributesFailure(reason);
       yield* put(
         upsertMessageStatusAttributes.failure({
           error: getError(error),

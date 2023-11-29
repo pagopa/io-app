@@ -1,5 +1,5 @@
-import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as React from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   idpayOperationListSelector,

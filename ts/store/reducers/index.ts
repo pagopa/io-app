@@ -222,9 +222,14 @@ export function createRootReducer(
               ...state.payments
             },
             // isMixpanelEnabled must be kept
+            // isFingerprintEnabled must be kept only if true
             persistedPreferences: {
               ...initialPreferencesState,
-              isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled
+              isMixpanelEnabled: state.persistedPreferences.isMixpanelEnabled,
+              isFingerprintEnabled: state.persistedPreferences
+                .isFingerprintEnabled
+                ? true
+                : undefined
             },
             wallet: {
               wallets: {

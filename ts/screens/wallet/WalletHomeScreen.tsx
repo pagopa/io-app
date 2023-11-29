@@ -30,7 +30,6 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
-import WalletHomeHeader from "../../components/wallet/WalletHomeHeader";
 import WalletLayout from "../../components/wallet/WalletLayout";
 import SectionCardComponent, {
   SectionCardStatus
@@ -483,12 +482,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   public render(): React.ReactNode {
     const { potWallets, potTransactions } = this.props;
 
-    const headerContent = (
-      <>
-        <WalletHomeHeader />
-        {this.cardPreview()}
-      </>
-    );
+    const headerContent = <>{this.cardPreview()}</>;
     const transactionContent =
       pot.isError(potTransactions) ||
       (pot.isNone(potTransactions) &&
@@ -516,6 +510,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         allowGoBack={false}
         appLogo={true}
         hideHeader={true}
+        hideBaseHeader={true}
         topContentHeight={this.getHeaderHeight()}
         topContent={headerContent}
         footerContent={footerContent}

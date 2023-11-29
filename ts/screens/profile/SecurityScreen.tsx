@@ -21,7 +21,8 @@ import { useScreenReaderEnabled } from "../../utils/accessibility";
 import {
   biometricAuthenticationRequest,
   getBiometricsType,
-  isBiometricsValidType
+  isBiometricsValidType,
+  mayUserActivateBiometric
 } from "../../utils/biometrics";
 import { showToast } from "../../utils/showToast";
 
@@ -91,7 +92,10 @@ const SecurityScreen = (): React.ReactElement => {
   const setBiometricPreference = (biometricPreference: boolean): void => {
     if (biometricPreference) {
       // if user asks to enable biometric then call enable action directly
-      setFingerprintPreference(biometricPreference);
+      void mayUserActivateBiometric()
+        .then(_ => setFingerprintPreference(biometricPreference))
+        .catch(_ => undefined);
+
       return;
     }
     // if user asks to disable biometric recnognition is required to proceed
