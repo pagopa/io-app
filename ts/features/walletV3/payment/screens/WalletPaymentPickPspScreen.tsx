@@ -22,7 +22,7 @@ import {
   walletPaymentChosenPspSelector,
   walletPaymentPspListSelector
 } from "../store/selectors";
-import { walletPaymentChoosePsp } from "../store/actions/orchestration";
+import { walletPaymentPickPsp } from "../store/actions/orchestration";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 
 type WalletPaymentPickPspScreenNavigationParams = {
@@ -58,7 +58,7 @@ const WalletPaymentPickPspScreen = () => {
 
   const handlePspSelection = React.useCallback(
     (bundle: Bundle) => {
-      dispatch(walletPaymentChoosePsp(bundle));
+      dispatch(walletPaymentPickPsp(bundle));
     },
     [dispatch]
   );

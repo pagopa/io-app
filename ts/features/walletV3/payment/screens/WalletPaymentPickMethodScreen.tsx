@@ -16,7 +16,7 @@ import {
   walletPaymentGetAllMethods,
   walletPaymentGetUserWallets
 } from "../store/actions/networking";
-import { walletPaymentChoosePaymentMethod } from "../store/actions/orchestration";
+import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
   walletPaymentChosenPaymentMethodSelector,
@@ -46,7 +46,7 @@ const WalletPaymentPickMethodScreen = () => {
 
   const handleMethodSelection = React.useCallback(
     (wallet: WalletInfo) => {
-      dispatch(walletPaymentChoosePaymentMethod(wallet));
+      dispatch(walletPaymentPickPaymentMethod(wallet));
     },
     [dispatch]
   );

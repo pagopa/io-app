@@ -17,8 +17,8 @@ import {
   walletPaymentGetUserWallets
 } from "../actions/networking";
 import {
-  walletPaymentChoosePaymentMethod,
-  walletPaymentChoosePsp,
+  walletPaymentPickPaymentMethod,
+  walletPaymentPickPsp,
   walletPaymentInitState
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -105,7 +105,7 @@ const reducer = (
         allPaymentMethods: pot.toError(state.allPaymentMethods, action.payload)
       };
 
-    case getType(walletPaymentChoosePaymentMethod):
+    case getType(walletPaymentPickPaymentMethod):
       return {
         ...state,
         chosenPaymentMethod: O.some(action.payload)
@@ -128,7 +128,7 @@ const reducer = (
         pspList: pot.toError(state.pspList, action.payload)
       };
 
-    case getType(walletPaymentChoosePsp):
+    case getType(walletPaymentPickPsp):
       return {
         ...state,
         chosenPsp: O.some(action.payload)
