@@ -19,7 +19,7 @@ import {
 import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
-  walletPaymentChosenPaymentMethodSelector,
+  walletPaymentPickedPaymentMethodSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 
@@ -30,7 +30,7 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
   const selectedMethodOption = useIOSelector(
-    walletPaymentChosenPaymentMethodSelector
+    walletPaymentPickedPaymentMethodSelector
   );
 
   const isLoading =

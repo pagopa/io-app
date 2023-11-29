@@ -19,7 +19,7 @@ import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentCalculateFees } from "../store/actions/networking";
 import {
-  walletPaymentChosenPspSelector,
+  walletPaymentPickedPspSelector,
   walletPaymentPspListSelector
 } from "../store/selectors";
 import { walletPaymentPickPsp } from "../store/actions/orchestration";
@@ -44,7 +44,7 @@ const WalletPaymentPickPspScreen = () => {
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const isLoading = pot.isLoading(pspListPot);
 
-  const selectedPspOption = useIOSelector(walletPaymentChosenPspSelector);
+  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
   const canContinue = O.isSome(selectedPspOption);
 
