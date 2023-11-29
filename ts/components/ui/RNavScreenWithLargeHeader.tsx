@@ -1,5 +1,5 @@
 import {
-  H3,
+  H2,
   HeaderSecondLevel,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
@@ -88,7 +88,7 @@ export const RNavScreenWithLargeHeader = ({
       decelerationRate="normal"
     >
       <View onLayout={getTitleHeight}>
-        <H3>{title}</H3>
+        <H2>{title}</H2>
       </View>
       {children}
     </Animated.ScrollView>
