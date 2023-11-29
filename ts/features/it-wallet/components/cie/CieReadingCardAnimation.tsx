@@ -1,10 +1,11 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
-import { View, Animated, Easing, Image, StyleSheet } from "react-native";
+import { View, Animated, Easing, StyleSheet } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { IOColors, Pictogram } from "@pagopa/io-app-design-system";
 import customVariables from "../../../../theme/variables";
 import AnimatedRing from "../../../../components/animations/AnimatedRing";
+import { isIos } from "../../../../utils/platform";
 
 export enum ReadingState {
   "reading" = "reading",
@@ -41,13 +42,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: boxDimension
   },
-  img: {
-    overflow: "hidden",
-    backgroundColor: IOColors.white,
-    height: imgDimension - 3,
-    width: imgDimension - 3,
-    borderRadius: imgDimension / 2
-  },
   rings: {
     height: boxDimension,
     width: boxDimension,
@@ -55,10 +49,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center"
-  },
-  successIcon: {
-    position: "absolute",
-    alignSelf: "flex-start"
   },
   flexStart: {
     justifyContent: "flex-start"
@@ -206,18 +196,24 @@ export default class CieReadingCardAnimation extends React.PureComponent<
                 : customVariables.brandPrimary
             }
             shadowColor={IOColors.greyLight}
-            bgColor={IOColors.greyLight}
+            bgColor={IOColors.white}
           >
-            <Image
-              source={require("../../../../../img/cie/place-card-illustration.png")}
-              style={styles.img}
-            />
+            {this.props.readingState === ReadingState.completed ? (
+              <Pictogram
+                name={"success"}
+                size={180}
+                pictogramStyle="default"
+                color="white"
+              />
+            ) : (
+              <Pictogram
+                name={isIos ? "nfcScaniOS" : "nfcScanAndroid"}
+                size={180}
+                pictogramStyle="default"
+                color="white"
+              />
+            )}
           </ProgressCircle>
-          {this.props.readingState === ReadingState.completed && (
-            <View style={styles.successIcon}>
-              <Icon name="success" color="blue" size={48} />
-            </View>
-          )}
         </View>
       </View>
     );

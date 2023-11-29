@@ -5,12 +5,11 @@
 import { Content } from "native-base";
 import * as React from "react";
 import { Alert } from "react-native";
+import { Body, FooterWithButtons } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { ReduxProps } from "../../../../store/actions/types";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { ScreenContentHeader } from "../../../../components/screens/ScreenContentHeader";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { Body } from "../../../../components/core/typography/Body";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
@@ -63,11 +62,18 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
           <Body>{I18n.t("authentication.cie.nfc.enableNfcContent")}</Body>
         </Content>
         <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            onPress: this.handleOnPressActivateNFC,
-            title: I18n.t("authentication.cie.nfc.enableNfcTitle")
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              color: "primary",
+              accessibilityLabel: I18n.t(
+                "authentication.cie.nfc.enableNfcTitle"
+              ),
+              onPress: () => this.handleOnPressActivateNFC,
+              label: I18n.t("authentication.cie.nfc.enableNfcTitle")
+            }
           }}
+          type="SingleButton"
         />
       </TopScreenComponent>
     );

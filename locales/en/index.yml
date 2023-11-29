@@ -3257,14 +3257,10 @@ features:
       buttons:
         addCredential: "Add credential"
     infoAuthScreen:
-      title: "Log in with CIE + PIN and save your digital identity"
-      subTitle: "To activate IT Wallet you need to authenticate yourself using your Electronic Identity Card (CIE) + PIN."
-      howAuth: "After authentication, you will be able to create your Digital Identity, thanks to which you will be able to access the online services of the Public Administration and request other digital credentials."
-      confirm: "Continue with CIE + PIN"
-      footerBox: "Before continuing, make sure you have the Electronic Identity Card (CIE) with you and remember the PIN [Read more](https://www.cartaidentita.interno.gov.it)"
-      readMoreUrl: "https://identitadigitale.gov.it/"
-      noCieInfo: "If you don't have CIE "
-      noCieCta: "find out how to get it."
+      title: "Let's begin!"
+      subTitle: "Get your CIE and its PIN."
+      readMoreUrl: "https://www.cartaidentita.interno.gov.it/"
+      noCieInfo: "Don't you have the CIE?"
       errors:
         nfc:
           title: "Your device does not support NFC which is required to enable IT Wallet"
@@ -3285,12 +3281,29 @@ features:
         cieId: "CieID"
         cieIdSubTitle: "Use CieID app or credentials"
       compareFeatures: "What is the difference?"
+    cie:
+      pinScreen:
+        title: "Enter your CIE PIN"
+        description: "It is an 8 digit code. It was communicated to you in two moments:\n- you received the first 4 digits at the registry office;\n- you received the last 4 digits at home with the CIE.\nPut them together and enter them in this order.\n\n[Have you forgotten your PIN?](https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/)"
     issuing:
       title: "IT Wallet activation"
+      cie:
+        waiting: 
+          title: "Place the CIE on the back of the device"
+          content: "If the reading doesn't start, move the card to different places and wait a few seconds until you feel a vibration."
+        reading:
+          title: "Hold it still for a few seconds"
+        success:
+          title: "Reading completed!"
+          content: "Continue to add your digital identity and complete IT Wallet activation."
+        error:
+          title: "You removed the CIE too early"
+          retry: "Retry"
+        help: "See how to do it"
       infoConsent:
         footer:
           cancel: "Cancel"
-          confirm: "Authorize"
+          confirm: "Continue"
       loading:
         title: "I am loading the data from the Ministry of the Interior"
         subtitle: "Wait a few seconds"
@@ -3298,8 +3311,13 @@ features:
         title: "Do you want to add this data to the IT Wallet?"
         checkNotice: "Verify that the following data is correct."
         buttons:
-          add: "Yes, add"
-          notNow: "Not now"
+          add: "Add"
+          cancel: "Cancel"
+        banner:
+          title: "Something doesn't add up?"
+          content: "If you want to delve deeper into some data or report errors, contact support."
+          actionTitle: "Contact support"
+          closeTitle: "Close"
         bottomSheet: 
           title: "Cancel the IT Wallet activation"
           body: "Do you want to cancel the obtaining of the digital identity and therefore the activation of the IT Wallet?"
@@ -3314,9 +3332,9 @@ features:
           title: "I'm activating your IT Wallet"
           subtitle: "Wait a few seconds"
         typ:
-          title: "Done! your IT Wallet is active on IO!"
-          content: "Now you can use IO to access the digital services of the Public Administration and obtain new digital credentials."
-          button: "Continue"
+          title: "IT Wallet is active!"
+          content: "Go to Wallet: you can already add other cards and use your digital identity to access online services."
+          button: "Go to Wallet"
       credentialsCatalogScreen:
         title: "Add more credentials"
         incomingFeature: "Coming soon"

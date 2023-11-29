@@ -3257,14 +3257,10 @@ features:
       buttons:
         addCredential: "Aggiungi documento"
     infoAuthScreen:
-      title: "Accedi con CIE + PIN e salva la tua identità digitale"
-      subTitle: "Per attivare IT Wallet è necessario autenticarti utilizzando la tua Carta di Identità Elettronica (CIE) + PIN."
-      howAuth: "Dopo l’autenticazione potrai creare la tua Identità Digitale, grazie alla quale potrai accedere ai servizi online della Pubblica Amministrazione e richiedere altre credenziali digitali."
-      confirm: "Continua con CIE + PIN"
-      footerBox: "Prima di continua, assicurati di avere con te la Carta d’Identità Elettronica (CIE) e ricordare il PIN [Per saperne di più](https://www.cartaidentita.interno.gov.it)"
-      readMoreUrl: "https://identitadigitale.gov.it/"
-      noCieInfo: "Non hai la CIE? "
-      noCieCta: "Scopri come ottenerla"
+      title: "Iniziamo!"
+      subTitle: "Prendi la tua CIE e il suo PIN."
+      readMoreUrl: "https://www.cartaidentita.interno.gov.it/"
+      noCieInfo: "Non hai la CIE?"
       errors:
         nfc:
           title: "Il tuo dispositivo non supporta la funzione NFC necessaria per attivare IT Wallet"
@@ -3285,21 +3281,43 @@ features:
         cieId: "CieID"
         cieIdSubTitle: "Usa app o credenziali CieID"
       compareFeatures: "Qual è la differenza?"
+    cie:
+      pinScreen:
+        title: "Inserisci il PIN della CIE"
+        description: "È un codice di 8 cifre. Ti è stato comunicato in due momenti:\n- le prime 4 cifre le hai ricevute all’anagrafe;\n- le ultime 4 cifre le hai ricevute a casa con la CIE.\nMettile insieme e inseriscile in quest’ordine.\n\n[Hai dimenticato il PIN?](https://www.cartaidentita.interno.gov.it/info-utili/codici-di-sicurezza-pin-e-puk/)"
     issuing:
       title: "Attivazione IT Wallet"
+      cie:
+        waiting: 
+          title: "Appoggia la CIE sul retro del dispositivo"
+          content: "Se la lettura non parte, sposta la carta in punti diversi e attendi qualche secondo finché non senti una vibrazione."
+        reading:
+          title: "Tienila ferma per qualche secondo"
+        success:
+          title: "Lettura completata!"
+          content: "Continua per aggiungere la tua identità digitale e completare l’attivazione di IT Wallet."
+        error:
+          title: "Hai rimosso la CIE troppo presto"
+          retry: "Riprova"
+        help: "Guarda come fare"
       infoConsent:
         footer:
           cancel: "Annulla"
-          confirm: "Autorizza"
+          confirm: "Continua"
       loading:
         title: "Sto caricando i dati dal Ministero dell’Interno"
         subtitle: "Attendi qualche secondo"
       pidPreviewScreen: 
-        title: "Vuoi aggiungere questi dati all’IT Wallet?"
-        checkNotice: "Verifica che i seguenti dati siano corretti"
+        title: "Ecco un’anteprima della tua Identità Digitale"
+        checkNotice: "Verifica che le informazioni siano corrette e aggiungila per completare l’attivazione di IT Wallet."
         buttons:
-          add: "Sì, aggiungi"
-          notNow: "Non ora"
+          add: "Aggiungi"
+          cancel: "Annulla"
+        banner:
+          title: "Qualcosa non torna?"
+          content: "Se vuoi approfondire alcuni dati o segnalare errori, contatta l’assistenza."
+          actionTitle: "Contatta l'assistenza"
+          closeTitle: "Chiudi"
         bottomSheet: 
           title: "Annulla attivazione dell’IT Wallet"
           body: "Vuoi annullare l’ottenimento dell’identità digitale e quindi l’attivazione dell’IT Wallet?"
@@ -3314,9 +3332,9 @@ features:
           title: "Sto attivando il tuo IT Wallet"
           subtitle: "Attendi qualche secondo"
         typ:
-          title: "Fatto! il tuo IT Wallet è attivo su IO!"
-          content: "Ora puoi usare IO per accedere ai servizi digitali della Pubblica Amministrazione e ottenere nuove credenziali digitali."
-          button: "Continua"
+          title: "IT Wallet è attivo!"
+          content: "Vai al Portafoglio: puoi già aggiungere altre tessere e usare la tua identità digitale per accedere ai servizi online."
+          button: "Vai al Portafoglio"
       credentialsCatalogScreen:
         title: "Aggiungi altri documenti"
         incomingFeature: "In arrivo"
