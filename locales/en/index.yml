@@ -3432,6 +3432,8 @@ features:
         success: 
           title: "Done!"
           subtitle: "Go back to the {{organizationName}} website to continue."
+      qrCodeScreen: 
+        loading: "Wait a few seconds for the verification request..."
     missingFeatureScreen: 
       headerTitle: "Screen not available"
       title: "This screen will be available soon."
