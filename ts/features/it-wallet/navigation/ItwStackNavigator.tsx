@@ -25,7 +25,7 @@ import ItwCredentialsChecksScreen from "../screens/issuing/credential/ItwCredent
 import ItwCredentialCatalogScreen from "../screens/issuing/credential/ItwCredentialCatalogScreen";
 import ItwPrCredentialDetailsScreen from "../screens/presentation/ItwPrCredentialDetails";
 import ItwPrPidDataScreen from "../screens/presentation/remote/pid/ItwPrPidDataScreen";
-import ItwPrQrCodeScreen from "../screens/presentation/ItwPrQrCodeScreen";
+import ItwPrProximityQrCodeScreen from "../screens/presentation/ItwPrProximityQrCodeScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -138,10 +138,10 @@ export const ItwStackNavigator = () => (
       component={ItwPrCredentialResultScreen}
     />
 
-    {/* CREDENTIAL PRESENTATION */}
+    {/* PRESENTATION PROXIMITY */}
     <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.QRCODE}
-      component={ItwPrQrCodeScreen}
+      name={ITW_ROUTES.PRESENTATION.PROXIMITY.QRCODE}
+      component={ItwPrProximityQrCodeScreen}
     />
 
     {/* GENERIC */}

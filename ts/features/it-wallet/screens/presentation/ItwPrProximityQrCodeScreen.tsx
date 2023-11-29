@@ -21,7 +21,7 @@ const mockedQrCode =
  * A screen that shows a QR code to be scanned by the other device
  * in order to start the proximity flow.
  */
-const ItwPrQrCodeScreen = () => {
+const ItwPrProximityQrCodeScreen = () => {
   const [qrCodeUri, setQrCodeUri] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
@@ -100,4 +100,4 @@ const ItwPrQrCodeScreen = () => {
   );
 };
 
-export default ItwPrQrCodeScreen;
+export default ItwPrProximityQrCodeScreen;
