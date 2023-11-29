@@ -25,6 +25,7 @@ import ItwCredentialsChecksScreen from "../screens/issuing/credential/ItwCredent
 import ItwCredentialCatalogScreen from "../screens/issuing/credential/ItwCredentialCatalogScreen";
 import ItwPrCredentialDetailsScreen from "../screens/presentation/ItwPrCredentialDetails";
 import ItwPrPidDataScreen from "../screens/presentation/remote/pid/ItwPrPidDataScreen";
+import ItwPrQrCodeScreen from "../screens/presentation/ItwPrQrCodeScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -135,6 +136,12 @@ export const ItwStackNavigator = () => (
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.RESULT}
       component={ItwPrCredentialResultScreen}
+    />
+
+    {/* CREDENTIAL PRESENTATION */}
+    <Stack.Screen
+      name={ITW_ROUTES.PRESENTATION.QRCODE}
+      component={ItwPrQrCodeScreen}
     />
 
     {/* GENERIC */}

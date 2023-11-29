@@ -52,7 +52,7 @@ const ItwPrCredentialDetailsScreen = () => {
         accessibilityLabel: I18n.t(
           "features.itWallet.presentation.credentialDetails.buttons.qrCode"
         ),
-        onPress: () => navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+        onPress: () => navigation.navigate(ITW_ROUTES.PRESENTATION.QRCODE)
       }
     };
 

@@ -40,7 +40,8 @@ export const ITW_ROUTES = {
         DATA: "ITW_PRESENTATION_CREDENTIAL_DATA",
         RESULT: "ITW_PRESETATION_CREDENTIAL_RESULT"
       } as const
-    } as const
+    } as const,
+    QRCODE: "ITW_PRESETATION_CROSS_DEVICE_QRCODE"
   } as const,
   GENERIC: {
     NOT_AVAILABLE: "ITW_GENERIC_NOT_AVAILABLE"
