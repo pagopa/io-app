@@ -20,7 +20,7 @@ export const walletPaymentUserWalletsSelector = createSelector(
   state => pot.map(state.userWallets, _ => _.wallets ?? [])
 );
 
-export const walletPaymentChosenPaymentMethodSelector = createSelector(
+export const walletPaymentPickedPaymentMethodSelector = createSelector(
   selectWalletPayment,
   state => state.chosenPaymentMethod
 );
@@ -30,7 +30,7 @@ export const walletPaymentPspListSelector = createSelector(
   state => state.pspList
 );
 
-export const walletPaymentChosenPspSelector = createSelector(
+export const walletPaymentPickedPspSelector = createSelector(
   selectWalletPayment,
   state => state.chosenPsp
 );

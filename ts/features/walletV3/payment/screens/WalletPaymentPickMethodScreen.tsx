@@ -16,10 +16,10 @@ import {
   walletPaymentGetAllMethods,
   walletPaymentGetUserWallets
 } from "../store/actions/networking";
-import { walletPaymentChoosePaymentMethod } from "../store/actions/orchestration";
+import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
-  walletPaymentChosenPaymentMethodSelector,
+  walletPaymentPickedPaymentMethodSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 
@@ -30,7 +30,7 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
   const selectedMethodOption = useIOSelector(
-    walletPaymentChosenPaymentMethodSelector
+    walletPaymentPickedPaymentMethodSelector
   );
 
   const isLoading =
@@ -46,7 +46,7 @@ const WalletPaymentPickMethodScreen = () => {
 
   const handleMethodSelection = React.useCallback(
     (wallet: WalletInfo) => {
-      dispatch(walletPaymentChoosePaymentMethod(wallet));
+      dispatch(walletPaymentPickPaymentMethod(wallet));
     },
     [dispatch]
   );

@@ -19,10 +19,10 @@ import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentCalculateFees } from "../store/actions/networking";
 import {
-  walletPaymentChosenPspSelector,
+  walletPaymentPickedPspSelector,
   walletPaymentPspListSelector
 } from "../store/selectors";
-import { walletPaymentChoosePsp } from "../store/actions/orchestration";
+import { walletPaymentPickPsp } from "../store/actions/orchestration";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 
 type WalletPaymentPickPspScreenNavigationParams = {
@@ -44,7 +44,7 @@ const WalletPaymentPickPspScreen = () => {
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const isLoading = pot.isLoading(pspListPot);
 
-  const selectedPspOption = useIOSelector(walletPaymentChosenPspSelector);
+  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
   const canContinue = O.isSome(selectedPspOption);
 
@@ -58,7 +58,7 @@ const WalletPaymentPickPspScreen = () => {
 
   const handlePspSelection = React.useCallback(
     (bundle: Bundle) => {
-      dispatch(walletPaymentChoosePsp(bundle));
+      dispatch(walletPaymentPickPsp(bundle));
     },
     [dispatch]
   );
