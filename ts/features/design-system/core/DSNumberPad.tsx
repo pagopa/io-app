@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   CodeInput,
   H2,
-  H5,
   IOColors,
   ListItemSwitch,
   NumberPad,
