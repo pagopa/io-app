@@ -1,17 +1,24 @@
+import { useNavigation } from "@react-navigation/native";
 import Placeholder from "rn-placeholder";
 import React from "react";
 import { View } from "react-native";
 import { Body, H1, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { Psp, Transaction } from "../../../../types/pagopa";
+import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import I18n from "../../../../i18n";
+import {
+  WalletTransactionRoutes,
+  WalletTransactionStackNavigation
+} from "../navigation/navigator";
 
 import { WalletTransactionTotalAmount } from "./WalletTransactionTotalAmount";
+import { WalletTransactionDetailsList } from "./WalletTransactionDetailsList";
 
 type Props = {
   transaction?: Transaction | null;
   psp?: Psp;
-  loading?: boolean;
+  loading: boolean;
 };
 
 export const WalletTransactionHeadingSection = ({
@@ -19,6 +26,18 @@ export const WalletTransactionHeadingSection = ({
   psp,
   loading
 }: Props) => {
+  const navigation = useNavigation<WalletTransactionStackNavigation>();
+
+  const handlePressTransactionDetails = (operationDetails: Dettaglio) => {
+    navigation.navigate(
+      WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS,
+      {
+        operationDetails,
+        operationName: transaction?.description
+      }
+    );
+  };
+
   const FeeAmountSection = () => {
     if (psp && transaction && transaction.fee && !loading) {
       const formattedFee = formatNumberCentsToAmount(
@@ -59,7 +78,11 @@ export const WalletTransactionHeadingSection = ({
     >
       <H1>{I18n.t("transaction.details.title")}</H1>
       <VSpacer size={16} />
-      {/* <DetailsList /> */}
+      <WalletTransactionDetailsList
+        transaction={transaction}
+        loading={loading}
+        onPress={handlePressTransactionDetails}
+      />
       <WalletTransactionTotalAmount
         loading={loading}
         totalAmount={transaction?.amount.amount}

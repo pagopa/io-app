@@ -1,24 +1,75 @@
 import * as React from "react";
-import { SafeAreaView } from "react-native";
-import { H1, IOStyles } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { useNavigation } from "@react-navigation/native";
+import { ScrollView } from "react-native";
+import {
+  Divider,
+  H1,
+  H6,
+  IOStyles,
+  ListItemInfo
+} from "@pagopa/io-app-design-system";
+import { RouteProp, useRoute } from "@react-navigation/native";
 
-import { WalletTransactionStackNavigation } from "../navigation/navigator";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { WalletTransactionParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
+import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+
+export type WalletTransactionOperationDetailsScreenParams = {
+  operationName?: string;
+  operationDetails: Dettaglio;
+};
+
+export type WalletTransactionOperationDetailsScreenProps = RouteProp<
+  WalletTransactionParamsList,
+  "WALLET_TRANSACTION_OPERATION_DETAILS"
+>;
 
 const WalletTransactionOperationDetailsScreen = () => {
-  const navigation = useNavigation<WalletTransactionStackNavigation>();
-  const dispatch = useIODispatch();
+  const route = useRoute<WalletTransactionOperationDetailsScreenProps>();
+  const { operationDetails, operationName } = route.params;
+
+  const getDebitoreText = () => {
+    const debitoreNameLabel = operationDetails.nomePagatore ? (
+      <H6>{operationDetails.nomePagatore}</H6>
+    ) : (
+      <></>
+    );
+    const debitoreCodiceLabel = operationDetails.codicePagatore ? (
+      <H6>({operationDetails.codicePagatore})</H6>
+    ) : (
+      <></>
+    );
+    return (
+      <>
+        {debitoreNameLabel}
+        {debitoreCodiceLabel}
+      </>
+    );
+  };
 
   return (
     <TopScreenComponent goBack>
-      <SafeAreaView style={IOStyles.flex}>
-        <H1>WalletTransactionOperationDetailsScreen</H1>
-      </SafeAreaView>
+      <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+        <H1>{operationName}</H1>
+        {operationDetails.importo && (
+          <ListItemInfo
+            label="Importo"
+            value={formatNumberCentsToAmount(
+              operationDetails.importo,
+              true,
+              "right"
+            )}
+          />
+        )}
+        <Divider />
+        <ListItemInfo
+          label="Ente creditore"
+          value={operationDetails.enteBeneficiario}
+        />
+        <Divider />
+        <ListItemInfo label="Debitore" value={getDebitoreText()} />
+        <ListItemInfo label="IUV" value={operationDetails.IUV} />
+      </ScrollView>
     </TopScreenComponent>
   );
 };

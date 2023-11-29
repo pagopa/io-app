@@ -8,7 +8,9 @@ import { isGestureEnabled } from "../../../../utils/navigation";
 import WalletTransactionDetailsScreen, {
   WalletTransactionDetailsScreenParams
 } from "../screens/WalletTransactionDetailsScreen";
-import WalletTransactionOperationDetailsScreen from "../screens/WalletTransactionOperationDetails";
+import WalletTransactionOperationDetailsScreen, {
+  WalletTransactionOperationDetailsScreenParams
+} from "../screens/WalletTransactionOperationDetails";
 
 export const WalletTransactionRoutes = {
   WALLET_TRANSACTION_MAIN: "WALLET_TRANSACTION_MAIN",
@@ -19,7 +21,7 @@ export const WalletTransactionRoutes = {
 export type WalletTransactionParamsList = {
   [WalletTransactionRoutes.WALLET_TRANSACTION_MAIN]: undefined;
   [WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS]: WalletTransactionDetailsScreenParams;
-  [WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS]: undefined;
+  [WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS]: WalletTransactionOperationDetailsScreenParams;
 };
 
 const Stack = createStackNavigator<WalletTransactionParamsList>();

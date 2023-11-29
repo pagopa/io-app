@@ -8,12 +8,9 @@ import {
   View
 } from "react-native";
 import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 
-import {
-  WalletTransactionParamsList,
-  WalletTransactionStackNavigation
-} from "../navigation/navigator";
+import { WalletTransactionParamsList } from "../navigation/navigator";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
@@ -51,7 +48,6 @@ const styles = StyleSheet.create({
 });
 
 const WalletTransactionDetailsScreen = () => {
-  const navigation = useNavigation<WalletTransactionStackNavigation>();
   const dispatch = useIODispatch();
   const route = useRoute<WalletTransactionDetailsScreenProps>();
   const { transactionId } = route.params;
