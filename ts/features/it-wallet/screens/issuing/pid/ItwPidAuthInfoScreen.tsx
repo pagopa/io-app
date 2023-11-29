@@ -1,22 +1,14 @@
 import * as React from "react";
-import { Image, View, SafeAreaView, Pressable } from "react-native";
+import { SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import ScreenContent from "../../../../../components/screens/ScreenContent";
-import { H4 } from "../../../../../components/core/typography/H4";
-import ItwFooterInfoBox from "../../../components/ItwFooterInfoBox";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import authInfoCie from "../../../../../../img/features/it-wallet/auth-info-cie.png";
-import { Link } from "../../../../../components/core/typography/Link";
 import { openWebUrl } from "../../../../../utils/url";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import {
   profileBirthDateSelector,
@@ -27,15 +19,13 @@ import {
 import { pidDataMock } from "../../../utils/mocks";
 import { formatDateToYYYYMMDD } from "../../../../../utils/dates";
 import { isIos } from "../../../../../utils/platform";
-import ItwErrorView from "../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
 import { itwWiaStateSelector } from "../../../store/reducers/itwWiaReducer";
 import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
-
-/**
- * Delay in milliseconds to bypass the CIE authentication process.
- */
-const MS_TO_BYPASS = 1500;
+import ItwContinueView from "../../../components/ItwContinueView";
+import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
+import ItwKoView from "../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import { ItWalletError } from "../../../utils/errors/itwErrors";
 
 /**
  * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
@@ -71,105 +61,72 @@ const ItwPidAuthInfoScreen = () => {
   };
 
   /**
+   * Loading view component.
+   */
+  const LoadingView = () => (
+    <ItwLoadingSpinnerOverlay isLoading>
+      <></>
+    </ItwLoadingSpinnerOverlay>
+  );
+
+  /**
    * Containts the content of the screen when the requirements are satisfied.
    */
-  const ContentView = () => {
-    const continueButtonProps = {
-      block: true,
-      primary: true,
-      onPress: () =>
-        isIos
-          ? bypassCieLogin()
-          : navigation.navigate(ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN),
-      title: I18n.t("features.itWallet.infoAuthScreen.confirm")
-    };
-    return (
-      <>
-        <ScreenContent
-          title={I18n.t("features.itWallet.infoAuthScreen.title")}
-          subtitle={I18n.t("features.itWallet.infoAuthScreen.subTitle")}
-        >
-          <View style={IOStyles.horizontalContentPadding}>
-            <H4 weight={"Regular"} color={"bluegrey"}>
-              {I18n.t("features.itWallet.infoAuthScreen.noCieInfo")}
-              <Link
-                onPress={() =>
-                  openWebUrl(
-                    I18n.t("features.itWallet.infoAuthScreen.readMoreUrl")
-                  )
-                }
-              >
-                {I18n.t("features.itWallet.infoAuthScreen.noCieCta")}
-              </Link>
-            </H4>
-
-            {/* Wallet cards image */}
-            <Pressable
-              accessible={false}
-              onLongPress={bypassCieLogin}
-              delayLongPress={MS_TO_BYPASS}
-            >
-              <Image
-                source={authInfoCie}
-                resizeMode={"contain"}
-                style={{ width: "100%", height: 200 }}
-              />
-            </Pressable>
-            {/* Info activation */}
-            <H4 weight={"Regular"} color={"bluegrey"}>
-              {I18n.t("features.itWallet.infoAuthScreen.howAuth")}
-            </H4>
-          </View>
-
-          {/* Footer Info Box */}
-          <ItwFooterInfoBox
-            content={I18n.t("features.itWallet.infoAuthScreen.footerBox")}
-            infoIcon
-          />
-          <VSpacer size={48} />
-        </ScreenContent>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
-      </>
-    );
-  };
-
-  const RenderMask = () =>
-    pot.fold(
-      wia,
-      () => <LoadingSpinnerOverlay isLoading />,
-      () => <LoadingSpinnerOverlay isLoading />,
-      () => <LoadingSpinnerOverlay isLoading />,
-      err => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={err}
-        />
-      ),
-      _ => <ContentView />,
-      () => <LoadingSpinnerOverlay isLoading />,
-      () => <LoadingSpinnerOverlay isLoading />,
-      (_, someErr) => (
-        <ItwErrorView
-          type="SingleButton"
-          leftButton={cancelButtonProps(navigation.goBack)}
-          error={someErr}
-        />
-      )
-    );
-
-  return (
+  const ContentView = () => (
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t("features.itWallet.issuing.title")}
       contextualHelp={emptyContextualHelp}
     >
-      <SafeAreaView style={IOStyles.flex}>{RenderMask()}</SafeAreaView>
+      <SafeAreaView style={IOStyles.flex}>
+        <ItwContinueView
+          title={I18n.t("features.itWallet.infoAuthScreen.title")}
+          subtitle={I18n.t("features.itWallet.infoAuthScreen.subTitle")}
+          pictogram="identityAdd"
+          action={{
+            label: I18n.t("global.buttons.confirm"),
+            accessibilityLabel: I18n.t("global.buttons.confirm"),
+            onPress: () =>
+              isIos
+                ? bypassCieLogin()
+                : navigation.navigate(ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN)
+          }}
+          secondaryAction={{
+            label: I18n.t("features.itWallet.infoAuthScreen.noCieInfo"),
+            accessibilityLabel: I18n.t(
+              "features.itWallet.infoAuthScreen.noCieInfo"
+            ),
+            onPress: () =>
+              openWebUrl(I18n.t("features.itWallet.infoAuthScreen.readMoreUrl"))
+          }}
+        />
+      </SafeAreaView>
     </BaseScreenComponent>
   );
+
+  /**
+   * Error view component which currently displays a generic error.
+   * @param error - optional ItWalletError to be displayed.
+   */
+  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
+    const mappedError = getItwGenericMappedError(() => navigation.goBack());
+    return <ItwKoView {...mappedError} />;
+  };
+
+  const RenderMask = () =>
+    pot.fold(
+      wia,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      err => <ErrorView error={err} />,
+      _ => <ContentView />,
+      () => <LoadingView />,
+      () => <LoadingView />,
+      (_, someErr) => <ErrorView error={someErr} />
+    );
+
+  return <RenderMask />;
 };
 
 export default ItwPidAuthInfoScreen;

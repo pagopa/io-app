@@ -6,16 +6,15 @@ import { Content } from "native-base";
 import * as React from "react";
 import { Linking, Platform } from "react-native";
 import { connect } from "react-redux";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import Markdown from "../../../../../../components/ui/Markdown";
 import I18n from "../../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import { ReduxProps } from "../../../../../../store/actions/types";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
-import { BlockButtonProps } from "../../../../../../components/ui/BlockButtons";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
@@ -52,27 +51,29 @@ class ItwCiePinLockedTemporarilyScreen extends React.PureComponent<
     )
   });
 
-  private renderFooterButtons = () => {
-    const cancelButtonProps = {
-      bordered: true,
-      onPress: this.handleGoBack,
-      title: I18n.t("global.buttons.cancel")
-    };
-    const retryButtonProps: BlockButtonProps = {
-      primary: true,
-      iconColor: "white",
-      iconName: "cie",
-      onPress: this.goToCieID,
-      title: I18n.t("authentication.cie.pinTempLocked.button")
-    };
-    return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        rightButton={retryButtonProps}
-        leftButton={cancelButtonProps}
-      />
-    );
-  };
+  private renderFooterButtons = () => (
+    <FooterWithButtons
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t("global.buttons.cancel"),
+          onPress: () => this.handleGoBack(),
+          label: I18n.t("global.buttons.cancel")
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t("authentication.cie.pinTempLocked.button"),
+          onPress: () => this.goToCieID(),
+          label: I18n.t("authentication.cie.pinTempLocked.button")
+        }
+      }}
+      type="TwoButtonsInlineThird"
+    />
+  );
 
   private handleGoBack = () =>
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
