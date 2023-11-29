@@ -25,7 +25,6 @@ import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import ROUTES from "../../../../../../navigation/routes";
 import I18n from "../../../../../../i18n";
 import ItwBulletList from "../../../../components/ItwBulletList";
-import ItwFooterInfoBox from "../../../../components/ItwFooterInfoBox";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
@@ -36,6 +35,7 @@ import { showCancelAlert } from "../../../../utils/alert";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
+import ItwTextInfo from "../../../../components/ItwTextInfo";
 
 type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -171,8 +171,7 @@ const ItwPrCredentialDataScreen = () => {
             />
             <VSpacer size={32} />
             {/* TOS SECTION */}
-            {/* TODO: replace with ItwTextInfo component */}
-            <ItwFooterInfoBox
+            <ItwTextInfo
               content={I18n.t("features.itWallet.presentation.dataScreen.tos")}
             />
             <VSpacer size={32} />
