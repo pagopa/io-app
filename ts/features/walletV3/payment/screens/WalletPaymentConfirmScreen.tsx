@@ -12,8 +12,8 @@ import {
 } from "../store/actions/networking";
 import {
   walletPaymentAuthorizationUrlSelector,
-  walletPaymentChosenPaymentMethodSelector,
-  walletPaymentChosenPspSelector,
+  walletPaymentPickedPaymentMethodSelector,
+  walletPaymentPickedPspSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
 import {
@@ -31,9 +31,9 @@ const WalletPaymentConfirmScreen = () => {
     walletPaymentAuthorizationUrlSelector
   );
   const selectedMethodOption = useIOSelector(
-    walletPaymentChosenPaymentMethodSelector
+    walletPaymentPickedPaymentMethodSelector
   );
-  const selectedPspOption = useIOSelector(walletPaymentChosenPspSelector);
+  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
   const isLoading =
     pot.isLoading(transactionPot) || pot.isLoading(authorizationUrlPot);
