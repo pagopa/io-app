@@ -34,7 +34,7 @@ import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import interno from "../../../../../../../img/features/it-wallet/interno.png";
 import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import ROUTES from "../../../../../../navigation/routes";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 

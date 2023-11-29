@@ -18,7 +18,7 @@ import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { getRpMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.

@@ -12,7 +12,7 @@ import {
   itwRpInitializationRequestObjectValueSelector
 } from "../store/reducers/itwRpInitializationReducer";
 import { itwRpPresentation } from "../store/actions/itwRpActions";
-import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { ITW_PID_KEY_TAG } from "../utils/pid";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
