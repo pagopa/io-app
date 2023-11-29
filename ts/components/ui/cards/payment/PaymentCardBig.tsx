@@ -1,4 +1,6 @@
 import {
+  H3,
+  H6,
   IOColors,
   IOLogoPaymentExtType,
   IOStyles,
@@ -13,8 +15,6 @@ import { WithTestID } from "../../../../types/WithTestID";
 import { format } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
 import { LabelSmall } from "../../../core/typography/LabelSmall";
-import { NewH3 } from "../../../core/typography/NewH3";
-import { NewH6 } from "../../../core/typography/NewH6";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 
@@ -140,7 +140,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
     case "CREDIT":
       return (
         <View style={IOStyles.flex}>
-          <NewH3
+          <H3
             accessibilityLabel={I18n.t(
               "wallet.methodDetails.a11y.credit.hpan",
               {
@@ -154,7 +154,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
             style={{ textTransform: "capitalize" }}
           >
             {`${props.cardIcon} ••${props.hpan}`}
-          </NewH3>
+          </H3>
           <ExpDateComponent expDate={props.expirationDate} />
         </View>
       );
@@ -172,7 +172,7 @@ const BigPaymentCardTopSection = (props: PaymentCardStandardProps) => {
 
 // ------------- utils
 const BottomSectionText = (props: { string: string; a11yLabel: string }) => (
-  <NewH6
+  <H6
     accessible
     accessibilityLabel={props.a11yLabel}
     numberOfLines={1}
@@ -180,7 +180,7 @@ const BottomSectionText = (props: { string: string; a11yLabel: string }) => (
     ellipsizeMode="tail"
   >
     {props.string}
-  </NewH6>
+  </H6>
 );
 const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
   <>
