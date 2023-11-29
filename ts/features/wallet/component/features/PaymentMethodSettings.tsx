@@ -1,7 +1,6 @@
 import * as React from "react";
-import { IOSpacingScale } from "@pagopa/io-app-design-system";
+import { H6, IOSpacingScale } from "@pagopa/io-app-design-system";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { NewH6 } from "../../../../components/core/typography/NewH6";
 import FavoritePaymentMethodSwitch from "../../../../components/wallet/FavoriteMethodSwitch";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
@@ -21,12 +20,12 @@ const componentVerticalSpacing: IOSpacingScale = 12;
  */
 const PaymentMethodSettings = (props: Props): React.ReactElement => (
   <>
-    <NewH6
+    <H6
       color={"grey-700"}
       style={{ paddingVertical: componentVerticalSpacing }}
     >
       {I18n.t("global.buttons.settings")}
-    </NewH6>
+    </H6>
     <PagoPaPaymentCapability paymentMethod={props.paymentMethod} />
     <ItemSeparatorComponent noPadded={true} />
     {isEnabledToPay(props.paymentMethod) && (
