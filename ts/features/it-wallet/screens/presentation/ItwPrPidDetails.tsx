@@ -51,7 +51,8 @@ const ItwPrPidDetails = () => {
       ),
       icon: "qrCode",
       iconPosition: "end",
-      onPress: () => navigation.navigate(ITW_ROUTES.GENERIC.NOT_AVAILABLE)
+      onPress: () =>
+        navigation.navigate(ITW_ROUTES.PRESENTATION.PROXIMITY.QRCODE)
     }
   };
 
