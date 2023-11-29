@@ -5,8 +5,8 @@ import {
   PidWithToken
 } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { isDate } from "date-fns";
+import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { ISSUER_URL, mapAssuranceLevel } from "../utils/mocks";
-import ListItemComponent from "../../../components/screens/ListItemComponent";
 import I18n from "../../../i18n";
 import { localeDateFormat } from "../../../utils/locale";
 
@@ -73,7 +73,7 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
     const title = I18n.t(
       `features.itWallet.verifiableCredentials.claims.${claim}`
     );
-    return <ListItemComponent title={title} subTitle={subTitle} hideIcon />;
+    return <ListItemInfo label={title} value={subTitle} />;
   };
 
   const RenderExpiryDate = () => {
@@ -82,12 +82,11 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
       I18n.t("global.dateFormats.shortFormat")
     );
     return (
-      <ListItemComponent
-        title={I18n.t(
+      <ListItemInfo
+        label={I18n.t(
           "features.itWallet.verifiableCredentials.claims.expirationDate"
         )}
-        subTitle={expirationDate}
-        hideIcon
+        value={expirationDate}
       />
     );
   };
@@ -97,35 +96,54 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
   }: {
     onLinkPress: () => void;
   }) => (
-    <ListItemComponent
-      title={I18n.t(
+    <ListItemInfo
+      label={I18n.t(
         "features.itWallet.verifiableCredentials.claims.securityLevel"
       )}
-      subTitle={mapAssuranceLevel(
+      value={mapAssuranceLevel(
         props.decodedPid.pid.verification.assuranceLevel
       )}
-      iconName={"info"}
-      onPress={onLinkPress}
+      endElement={{
+        type: "iconButton",
+        componentProps: {
+          icon: "info",
+          onPress: onLinkPress,
+          accessibilityLabel: ""
+        }
+      }}
     />
   );
 
   const RenderIssuer = () => (
     <>
-      <ListItemComponent
-        title={I18n.t(
+      <ListItemInfo
+        label={I18n.t(
           "features.itWallet.verifiableCredentials.claims.issuedBy"
         )}
-        subTitle={
+        value={
           props.decodedPid.pid.verification.evidence[0].record.source
             .organization_name
         }
-        hideIcon
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            onPress: () => Linking.openURL(ISSUER_URL),
+            accessibilityLabel: ""
+          }
+        }}
       />
-      <ListItemComponent
-        title={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
-        subTitle={ISSUER_URL}
-        hideIcon
-        onPress={() => Linking.openURL(ISSUER_URL)}
+      <ListItemInfo
+        label={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
+        value={ISSUER_URL}
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "website",
+            onPress: () => Linking.openURL(ISSUER_URL),
+            accessibilityLabel: ""
+          }
+        }}
       />
     </>
   );

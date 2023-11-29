@@ -5,16 +5,15 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
-import ItwActionCompleted from "../../../components/ItwActionCompleted";
 import I18n from "../../../../../i18n";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { itwPidValueSelector } from "../../../store/reducers/itwPidReducer";
 import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
 import { itwActivationCompleted } from "../../../store/actions/itwActivationActions";
-import ItwErrorView from "../../../components/ItwErrorView";
-import { cancelButtonProps } from "../../../utils/itwButtonsUtils";
 import { ItwCredentialsStateSelector } from "../../../store/reducers/itwCredentialsReducer";
 import { ItWalletError } from "../../../utils/errors/itwErrors";
+import ItwContinueView from "../../../components/ItwContinueView";
+import ItwKoView from "../../../components/ItwKoView";
+import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
@@ -28,15 +27,6 @@ const ItwPidAddingScreen = () => {
   useOnFirstRender(() => {
     dispatch(itwCredentialsAddPid.request(pid));
   });
-
-  const continueButtonProps = {
-    block: true,
-    primary: true,
-    onPress: () => {
-      dispatch(itwActivationCompleted());
-    },
-    title: I18n.t("global.buttons.continue")
-  };
 
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
@@ -54,29 +44,36 @@ const ItwPidAddingScreen = () => {
 
   const SuccessView = () => (
     <>
-      <ItwActionCompleted
+      <ItwContinueView
         title={I18n.t(
           "features.itWallet.issuing.pidActivationScreen.typ.title"
         )}
-        content={I18n.t(
+        subtitle={I18n.t(
           "features.itWallet.issuing.pidActivationScreen.typ.content"
         )}
-      />
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={continueButtonProps}
+        pictogram="success"
+        action={{
+          label: I18n.t(
+            "features.itWallet.issuing.pidActivationScreen.typ.button"
+          ),
+          accessibilityLabel: I18n.t(
+            "features.itWallet.issuing.pidActivationScreen.typ.button"
+          ),
+          onPress: () => dispatch(itwActivationCompleted())
+        }}
       />
       <VSpacer size={24} />
     </>
   );
 
-  const ErrorView = ({ error }: { error: ItWalletError }) => (
-    <ItwErrorView
-      error={error}
-      type="SingleButton"
-      leftButton={cancelButtonProps(navigation.goBack)}
-    />
-  );
+  /**
+   * Error view component which currently displays a generic error.
+   * @param error - optional ItWalletError to be displayed.
+   */
+  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
+    const mappedError = getItwGenericMappedError(() => navigation.goBack());
+    return <ItwKoView {...mappedError} />;
+  };
 
   const RenderMask = () =>
     pot.fold(
