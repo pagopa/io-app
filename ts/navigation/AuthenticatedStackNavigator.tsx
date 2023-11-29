@@ -281,7 +281,7 @@ const AuthenticatedStackNavigator = () => {
         component={WalletDetailsNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
-          headerShown: false
+          ...hideHeaderOptions
         }}
       />
       {/* 
