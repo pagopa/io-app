@@ -9,9 +9,8 @@ import cieManager, {
 } from "@pagopa/io-react-native-cie-pid";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -19,15 +18,18 @@ import {
   Platform,
   StyleSheet,
   Vibration,
-  Text
+  Text,
+  SafeAreaView
 } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer, IOColors } from "@pagopa/io-app-design-system";
-import { Body } from "../../../../../../components/core/typography/Body";
-import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { ScreenContentHeader } from "../../../../../../components/screens/ScreenContentHeader";
-import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
+import {
+  VSpacer,
+  IOColors,
+  H2,
+  ButtonSolid,
+  Body,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
 import { ReduxProps } from "../../../../../../store/actions/types";
@@ -44,7 +46,6 @@ import {
 } from "../../../../../../utils/supportAssistance";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import CieNfcOverlay from "../../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../../components/cie/CieReadingCardAnimation";
@@ -54,6 +55,8 @@ import {
   cieAuthenticationError
 } from "../../../../store/actions/itwCieActions";
 import { isNfcEnabledSelector } from "../../../../store/reducers/itwCieReducer";
+import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
+import CieNfcOverlay from "../../../../components/cie/CieNfcOverlay";
 
 export type ItwCieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -71,6 +74,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: IOColors.white
+  },
+  textCenter: {
+    textAlign: "center"
   }
 });
 
@@ -137,7 +143,7 @@ type TextForState = {
 // some texts changes depending on current running Platform
 const getTextForState = (
   state: ReadingState.waiting_card | ReadingState.error,
-  errorMessage: string = ""
+  _: string = ""
 ): TextForState => {
   const texts: Record<
     ReadingState.waiting_card | ReadingState.error,
@@ -161,14 +167,14 @@ const getTextForState = (
     },
     default: {
       [ReadingState.waiting_card]: {
-        title: I18n.t("authentication.cie.card.title"),
+        title: I18n.t("features.itWallet.issuing.cie.waiting.title"),
         subtitle: I18n.t("authentication.cie.card.layCardMessageHeader"),
-        content: I18n.t("authentication.cie.card.layCardMessageFooter")
+        content: I18n.t("features.itWallet.issuing.cie.waiting.content")
       },
       [ReadingState.error]: {
-        title: I18n.t("authentication.cie.card.error.readerCardLostTitle"),
-        subtitle: I18n.t("authentication.cie.card.error.readerCardLostHeader"),
-        content: errorMessage
+        title: I18n.t("features.itWallet.issuing.cie.error.title"),
+        subtitle: "",
+        content: ""
       }
     }
   });
@@ -319,9 +325,9 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
       case ReadingState.reading:
         this.setState(
           {
-            title: I18n.t("authentication.cie.card.readerCardTitle"),
+            title: I18n.t("features.itWallet.issuing.cie.reading.title"),
             subtitle: I18n.t("authentication.cie.card.readerCardHeader"),
-            content: I18n.t("authentication.cie.card.readerCardFooter")
+            content: ""
           },
           this.announceUpdate
         );
@@ -334,14 +340,12 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
         break;
       case ReadingState.completed:
         this.setState(
-          state => ({
-            title: I18n.t("global.buttons.ok2"),
+          {
+            title: I18n.t("features.itWallet.issuing.cie.success.title"),
             subtitle: I18n.t("authentication.cie.card.cieCardValid"),
             // duplicate message so screen reader can read the updated message
-            content: state.isScreenReaderEnabled
-              ? I18n.t("authentication.cie.card.cieCardValid")
-              : undefined
-          }),
+            content: I18n.t("features.itWallet.issuing.cie.success.content")
+          },
           this.announceUpdate
         );
         break;
@@ -459,62 +463,53 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
     setAccessibilityFocus(this.subTitleRef, accessibityTimeout);
   };
 
-  private handleCancel = () =>
-    this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
-    });
-
-  private getFooter = () =>
-    Platform.select({
-      default: (
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            onPress: this.handleCancel,
-            bordered: true,
-            title: I18n.t("global.buttons.cancel")
-          }}
-        />
-      ),
-      ios: (
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            bordered: true,
-            onPress: this.handleCancel,
-            title: I18n.t("global.buttons.cancel")
-          }}
-          rightButton={{
-            onPress: this.startCieiOS,
-            title: I18n.t("authentication.cie.nfc.retry")
-          }}
-        />
-      )
-    });
+  private getFooter = () => (
+    <ButtonSolid
+      onPress={constNull}
+      label={I18n.t("features.itWallet.issuing.cie.help")}
+      accessibilityLabel={I18n.t("features.itWallet.issuing.cie.help")}
+      fullWidth={true}
+      color={"contrast"}
+    />
+  );
 
   public render(): React.ReactNode {
     return (
-      <TopScreenComponent
+      <BaseScreenComponent
         onAccessibilityNavigationHeaderFocus={this.handleOnHeaderFocus}
         goBack={true}
         headerTitle={I18n.t("authentication.cie.card.headerTitle")}
       >
-        <ScreenContentHeader title={this.state.title} />
-        <Content bounces={false} noPadded={true}>
-          <View style={IOStyles.horizontalContentPadding}>
-            <Body ref={this.subTitleRef}>{this.state.subtitle}</Body>
-          </View>
+        <SafeAreaView style={IOStyles.flex}>
           {!isIos && (
             <CieReadingCardAnimation readingState={this.state.readingState} />
           )}
           {isIos && <VSpacer size={16} />}
           <View style={IOStyles.horizontalContentPadding}>
-            <Body accessible={true}>{this.state.content}</Body>
+            <H2 style={styles.textCenter}>{this.state.title}</H2>
+            <Body style={styles.textCenter} accessible={true}>
+              {this.state.content}
+            </Body>
+            {this.state.readingState === ReadingState.error && (
+              <ButtonSolid
+                onPress={() =>
+                  this.setState(
+                    { readingState: ReadingState.waiting_card },
+                    () => this.updateContent()
+                  )
+                }
+                label={I18n.t("features.itWallet.issuing.cie.error.retry")}
+                accessibilityLabel={I18n.t(
+                  "features.itWallet.issuing.cie.error.retry"
+                )}
+                fullWidth={true}
+              />
+            )}
           </View>
-        </Content>
+        </SafeAreaView>
         {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
           this.getFooter()}
-      </TopScreenComponent>
+      </BaseScreenComponent>
     );
   }
 }

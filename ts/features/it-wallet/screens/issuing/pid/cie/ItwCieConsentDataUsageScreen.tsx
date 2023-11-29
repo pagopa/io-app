@@ -8,7 +8,7 @@ import { PidData } from "@pagopa/io-react-native-cie-pid";
 import WebView from "react-native-webview";
 import { WebViewHttpErrorEvent } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import LoadingSpinnerOverlay from "../../../../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../../../../components/screens/TopScreenComponent";
@@ -19,7 +19,6 @@ import { SessionToken } from "../../../../../../types/SessionToken";
 import { originSchemasWhiteList } from "../../../../../../screens/authentication/originSchemasWhiteList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import {
   loginFailure,
   loginSuccess
@@ -192,22 +191,36 @@ class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
       >
         {this.getContent()}
         <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            bordered: true,
-            onPress: this.resetNavigation,
-            title: I18n.t("features.itWallet.issuing.infoConsent.footer.cancel")
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              color: "primary",
+              accessibilityLabel: I18n.t(
+                "features.itWallet.issuing.infoConsent.footer.cancel"
+              ),
+              onPress: this.resetNavigation,
+              label: I18n.t(
+                "features.itWallet.issuing.infoConsent.footer.cancel"
+              )
+            }
           }}
-          rightButton={{
-            primary: true,
-            onPress: () =>
-              this.props.navigation.navigate(ITW_ROUTES.ISSUING.PID.REQUEST, {
-                pidData: this.props.route.params.pidData
-              }),
-            title: I18n.t(
-              "features.itWallet.issuing.infoConsent.footer.confirm"
-            )
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              color: "primary",
+              accessibilityLabel: I18n.t(
+                "features.itWallet.issuing.infoConsent.footer.confirm"
+              ),
+              onPress: () =>
+                this.props.navigation.navigate(ITW_ROUTES.ISSUING.PID.REQUEST, {
+                  pidData: this.props.route.params.pidData
+                }),
+              label: I18n.t(
+                "features.itWallet.issuing.infoConsent.footer.confirm"
+              )
+            }
           }}
+          type="TwoButtonsInlineHalf"
         />
         <VSpacer size={24} />
       </TopScreenComponent>
