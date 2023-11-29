@@ -40,6 +40,9 @@ export const ITW_ROUTES = {
         DATA: "ITW_PRESENTATION_CREDENTIAL_DATA",
         RESULT: "ITW_PRESETATION_CREDENTIAL_RESULT"
       } as const
+    } as const,
+    PROXIMITY: {
+      QRCODE: "ITW_PRESENTATION_CROSS_DEVICE_QRCODE"
     } as const
   } as const,
   GENERIC: {
