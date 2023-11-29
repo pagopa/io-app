@@ -20,6 +20,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { WALLET_WEBVIEW_DEEPLINK_PROTOCOL } from "../../common/utils/const";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
@@ -77,7 +78,8 @@ export const useWalletPaymentAuthorizationModal = ({
       TE.fromOption(() => undefined),
       TE.chain(url =>
         TE.tryCatch(
-          () => openAuthenticationSession(url, "iowallet"),
+          () =>
+            openAuthenticationSession(url, WALLET_WEBVIEW_DEEPLINK_PROTOCOL),
           () => onDismiss?.()
         )
       ),

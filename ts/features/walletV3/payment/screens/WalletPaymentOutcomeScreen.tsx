@@ -29,8 +29,9 @@ const WalletPaymentOutcomeScreen = () => {
   return (
     <OperationResultScreenContent
       title="Hai pagato xx,xx €"
+      subtitle={params.outcome.toString()}
       action={{
-        label: "Ok chiudi",
+        label: "Ok, chiudi",
         accessibilityLabel: "Ok, chiudi",
         onPress: handleContinue
       }}
