@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Dimensions,
   Platform,
@@ -89,18 +90,16 @@ const WalletTransactionDetailsScreen = () => {
       <ScrollView style={styles.scrollViewContent}>
         {/* The following line is used to show the background color of the bounce effect on iOS the same color of the header */}
         {Platform.OS === "ios" && <View style={styles.iosHeaderScroll} />}
-        {transactionDetails && (
-          <>
-            <WalletTransactionHeadingSection
-              transaction={transactionDetails}
-              psp={transactionPsp}
-            />
-            <WalletTransactionInfoSection
-              transaction={transactionDetails}
-              psp={transactionPsp}
-            />
-          </>
-        )}
+        <WalletTransactionHeadingSection
+          transaction={transactionDetails}
+          psp={transactionPsp}
+          loading={pot.isLoading(transactionDetailsPot)}
+        />
+        <WalletTransactionInfoSection
+          transaction={transactionDetails}
+          psp={transactionPsp}
+          loading={pot.isLoading(transactionDetailsPot)}
+        />
       </ScrollView>
     </TopScreenComponent>
   );

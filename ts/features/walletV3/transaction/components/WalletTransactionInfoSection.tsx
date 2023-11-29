@@ -1,6 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import Placeholder from "rn-placeholder";
 import {
   Divider,
   IOColors,
@@ -8,7 +9,8 @@ import {
   IOVisualCostants,
   ListItemHeader,
   ListItemInfo,
-  ListItemInfoCopy
+  ListItemInfoCopy,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
@@ -18,8 +20,9 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
 
 type WalletTransactionInfoSectionProps = {
-  transaction: Transaction;
+  transaction?: Transaction | null;
   psp?: Psp;
+  loading?: boolean;
 };
 
 const styles = StyleSheet.create({
@@ -38,7 +41,8 @@ const styles = StyleSheet.create({
  */
 const WalletTransactionInfoSection = ({
   transaction,
-  psp
+  psp,
+  loading
 }: WalletTransactionInfoSectionProps) => (
   <>
     <TransactionReceiptDivider
@@ -64,31 +68,60 @@ const WalletTransactionInfoSection = ({
           label={I18n.t("transaction.details.info.title")}
           accessibilityLabel={I18n.t("transaction.details.info.title")}
         />
-        {psp?.businessName && (
-          <ListItemInfo
-            accessibilityLabel={I18n.t("transaction.details.info.pspName")}
-            label={I18n.t("transaction.details.info.pspName")}
-            value={psp?.businessName}
-          />
+        {loading && (
+          <>
+            <SkeletonItem />
+            <Divider />
+            <SkeletonItem />
+            <Divider />
+            <SkeletonItem />
+          </>
         )}
-        <Divider />
-        <ListItemInfo
-          accessibilityLabel={I18n.t("transaction.details.info.dateAndHour")}
-          label={I18n.t("transaction.details.info.dateAndHour")}
-          value={format(transaction.created, "DD MMMM YYYY, HH:mm:ss")}
-        />
-        <Divider />
-        <ListItemInfoCopy
-          onPress={() =>
-            clipboardSetStringWithFeedback(transaction.id.toString())
-          }
-          accessibilityLabel={I18n.t("transaction.details.info.transactionId")}
-          label={I18n.t("transaction.details.info.transactionId")}
-          value={transaction.id.toString()}
-        />
+        {!loading && transaction && (
+          <>
+            {psp?.businessName && (
+              <>
+                <ListItemInfo
+                  accessibilityLabel={I18n.t(
+                    "transaction.details.info.pspName"
+                  )}
+                  label={I18n.t("transaction.details.info.pspName")}
+                  value={psp?.businessName}
+                />
+                <Divider />
+              </>
+            )}
+            <ListItemInfo
+              accessibilityLabel={I18n.t(
+                "transaction.details.info.dateAndHour"
+              )}
+              label={I18n.t("transaction.details.info.dateAndHour")}
+              value={format(transaction.created, "DD MMMM YYYY, HH:mm:ss")}
+            />
+            <Divider />
+            <ListItemInfoCopy
+              onPress={() =>
+                clipboardSetStringWithFeedback(transaction.id.toString())
+              }
+              accessibilityLabel={I18n.t(
+                "transaction.details.info.transactionId"
+              )}
+              label={I18n.t("transaction.details.info.transactionId")}
+              value={transaction.id.toString()}
+            />
+          </>
+        )}
       </View>
     </View>
   </>
+);
+
+const SkeletonItem = () => (
+  <View style={[IOStyles.flex, { paddingVertical: 12 }]}>
+    <Placeholder.Box height={16} width="80%" radius={4} />
+    <VSpacer size={8} />
+    <Placeholder.Box height={16} width="25%" radius={4} />
+  </View>
 );
 
 export default WalletTransactionInfoSection;

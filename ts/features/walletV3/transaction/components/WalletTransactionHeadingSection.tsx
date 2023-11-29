@@ -1,3 +1,4 @@
+import Placeholder from "rn-placeholder";
 import React from "react";
 import { View } from "react-native";
 import { Body, H1, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
@@ -8,16 +9,18 @@ import I18n from "../../../../i18n";
 import { WalletTransactionTotalAmount } from "./WalletTransactionTotalAmount";
 
 type Props = {
-  transaction: Transaction;
+  transaction?: Transaction | null;
   psp?: Psp;
+  loading?: boolean;
 };
 
 export const WalletTransactionHeadingSection = ({
   transaction,
-  psp
+  psp,
+  loading
 }: Props) => {
   const FeeAmountSection = () => {
-    if (psp && transaction.fee) {
+    if (psp && transaction && transaction.fee && !loading) {
       const formattedFee = formatNumberCentsToAmount(
         transaction.fee.amount,
         true,
@@ -34,6 +37,16 @@ export const WalletTransactionHeadingSection = ({
         </Body>
       );
     }
+    if (loading) {
+      return (
+        <View style={IOStyles.flex}>
+          <VSpacer size={4} />
+          <Placeholder.Line width="100%" animate="fade" />
+          <VSpacer size={8} />
+          <Placeholder.Line width="50%" animate="fade" />
+        </View>
+      );
+    }
     return <></>;
   };
   return (
@@ -47,7 +60,10 @@ export const WalletTransactionHeadingSection = ({
       <H1>{I18n.t("transaction.details.title")}</H1>
       <VSpacer size={16} />
       {/* <DetailsList /> */}
-      <WalletTransactionTotalAmount totalAmount={transaction.amount.amount} />
+      <WalletTransactionTotalAmount
+        loading={loading}
+        totalAmount={transaction?.amount.amount}
+      />
       <VSpacer size={8} />
       <FeeAmountSection />
       <VSpacer size={8} />

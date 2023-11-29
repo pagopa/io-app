@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { put, select } from "typed-redux-saga/macro";
+import { delay, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { walletTransactionDetailsGet } from "../store/actions";
 import { getTransactions } from "../../../../store/reducers/wallet/transactions";
@@ -24,6 +24,7 @@ export function* handleGetTransactionDetails(
     null
   );
   if (transactionDetails) {
+    yield* delay(4000);
     yield* put(walletTransactionDetailsGet.success(transactionDetails));
     return;
   }
