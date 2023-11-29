@@ -45,7 +45,7 @@ type ContentViewParams = {
  * This screen displays the information about the credential that is going to be shared
  * with the issuer.
  */
-const ItwPrCredentialDataScreen = () => {
+const ItwPrRemoteCredentialDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const rpMock = getRpMock();
@@ -247,4 +247,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ItwPrCredentialDataScreen;
+export default ItwPrRemoteCredentialDataScreen;

@@ -41,7 +41,7 @@ import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
  */
-const ItwCredentialPreviewScreen = () => {
+const ItwIssuingCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const issuanceResult = useIOSelector(itwIssuanceResultSelector);
   const bannerViewRef = React.createRef<View>();
@@ -193,4 +193,4 @@ const ItwCredentialPreviewScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwCredentialPreviewScreen;
+export default ItwIssuingCredentialPreviewScreen;

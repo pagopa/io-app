@@ -19,7 +19,7 @@ import ROUTES from "../../../../../../navigation/routes";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
 
-const ItwPrPidResultScreen = () => {
+const ItwPrRemotePidResultScreen = () => {
   const dispatch = useIODispatch();
   const presentationResult = useIOSelector(itwRpPresentationSelector);
   const rpEntity = useIOSelector(itwRpInitializationEntityValueSelector);
@@ -111,4 +111,4 @@ const ItwPrPidResultScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPrPidResultScreen;
+export default ItwPrRemotePidResultScreen;

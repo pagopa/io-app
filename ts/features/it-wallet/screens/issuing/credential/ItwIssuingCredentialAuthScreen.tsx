@@ -39,7 +39,7 @@ import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIs
  * This screen displays the information about the credential that is going to be shared
  * with the issuer.
  */
-const ItwCredentialAuthScreen = () => {
+const ItwIssuingCredentialAuthScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const checks = useIOSelector(itwIssuanceChecksDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
@@ -211,4 +211,4 @@ const ItwCredentialAuthScreen = () => {
     </>
   );
 };
-export default ItwCredentialAuthScreen;
+export default ItwIssuingCredentialAuthScreen;

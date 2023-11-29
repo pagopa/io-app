@@ -22,20 +22,23 @@ import { ItWalletError } from "../../../utils/errors/itwErrors";
 import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 
 /**
- * ItwPidRequestScreen's navigation params.
+ * ItwIssuingPidRequestScreen's navigation params.
  * The pidData consists of the data needed to request a PID.
  */
-export type ItwPidRequestScreenNavigationParams = {
+export type ItwIssuingPidRequestScreenNavigationParams = {
   pidData: PidData;
 };
 
 /**
  * Renders a preview screen which requests a PID.
  */
-const ItwPidRequestScreen = () => {
+const ItwIssuingPidRequestScreen = () => {
   const route =
     useRoute<
-      Route<"ITW_ACTIVATION_PID_REQUEST", ItwPidRequestScreenNavigationParams>
+      Route<
+        "ITW_ACTIVATION_PID_REQUEST",
+        ItwIssuingPidRequestScreenNavigationParams
+      >
     >();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
@@ -108,4 +111,4 @@ const ItwPidRequestScreen = () => {
   );
 };
 
-export default ItwPidRequestScreen;
+export default ItwIssuingPidRequestScreen;
