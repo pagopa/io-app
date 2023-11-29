@@ -6,7 +6,9 @@ import { CredentialCatalogDisplay } from "./mocks";
  */
 export type PidResponse = Awaited<
   ReturnType<Credential.Issuance.ObtainCredential>
->;
+> & {
+  entityConfiguration: Trust.CredentialIssuerEntityConfiguration["payload"]["metadata"];
+};
 
 /**
  * Alias type for the return type of the start issuance flow operation.

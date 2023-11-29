@@ -9,6 +9,7 @@ import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { ISSUER_URL, mapAssuranceLevel } from "../utils/mocks";
 import I18n from "../../../i18n";
 import { localeDateFormat } from "../../../utils/locale";
+import { PidResponse } from "../utils/types";
 
 /**
  * This type is used to extract the claims from the PID type and exclude the placeOfBirth claim since we don't use it.
@@ -20,6 +21,7 @@ type ClaimsType = Exclude<keyof PID["claims"], "placeOfBirth">;
  */
 type ClaimsListCommonProps = {
   decodedPid: PidWithToken;
+  entityConfiguration: PidResponse["entityConfiguration"];
   claims: Array<ClaimsType>;
   expiryDate?: boolean;
   issuerInfo?: boolean;
@@ -114,39 +116,60 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
     />
   );
 
-  const RenderIssuer = () => (
-    <>
-      <ListItemInfo
-        label={I18n.t(
-          "features.itWallet.verifiableCredentials.claims.issuedBy"
+  const RenderIssuer = () => {
+    const issuerName =
+      props.entityConfiguration.federation_entity.organization_name;
+    const issuerUrl = props.entityConfiguration.federation_entity.homepage_uri;
+    return (
+      <>
+        {issuerName && issuerUrl && (
+          <ListItemInfo
+            label={I18n.t(
+              "features.itWallet.verifiableCredentials.claims.issuedByNew"
+            )}
+            value={issuerName}
+            endElement={{
+              type: "iconButton",
+              componentProps: {
+                icon: "info",
+                onPress: () => Linking.openURL(issuerUrl),
+                accessibilityLabel: ""
+              }
+            }}
+          />
         )}
-        value={
-          props.decodedPid.pid.verification.evidence[0].record.source
-            .organization_name
-        }
-        endElement={{
-          type: "iconButton",
-          componentProps: {
-            icon: "info",
-            onPress: () => Linking.openURL(ISSUER_URL),
-            accessibilityLabel: ""
+        <ListItemInfo
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.releasedBy"
+          )}
+          value={
+            props.decodedPid.pid.verification.evidence[0].record.source
+              .organization_name
           }
-        }}
-      />
-      <ListItemInfo
-        label={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
-        value={ISSUER_URL}
-        endElement={{
-          type: "iconButton",
-          componentProps: {
-            icon: "website",
-            onPress: () => Linking.openURL(ISSUER_URL),
-            accessibilityLabel: ""
-          }
-        }}
-      />
-    </>
-  );
+          endElement={{
+            type: "iconButton",
+            componentProps: {
+              icon: "info",
+              onPress: () => Linking.openURL(ISSUER_URL),
+              accessibilityLabel: ""
+            }
+          }}
+        />
+        <ListItemInfo
+          label={I18n.t("features.itWallet.verifiableCredentials.claims.info")}
+          value={ISSUER_URL}
+          endElement={{
+            type: "iconButton",
+            componentProps: {
+              icon: "website",
+              onPress: () => Linking.openURL(ISSUER_URL),
+              accessibilityLabel: ""
+            }
+          }}
+        />
+      </>
+    );
+  };
 
   return (
     <>

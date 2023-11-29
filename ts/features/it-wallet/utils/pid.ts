@@ -10,6 +10,7 @@ import {
 } from "../../../config";
 import { ITW_WIA_KEY_TAG } from "./wia";
 import { getOrGenerateCyptoKey } from "./keychain";
+import { PidResponse } from "./types";
 
 /**
  * PID Key Tag for interacting with the keychain.
@@ -35,18 +36,18 @@ export const completeUserAuthorizationWithCIE: Credential.Issuance.CompleteUserA
 export const getPid = async (
   walletInstanceAttestation: string,
   pidData: PidData
-) => {
+): Promise<PidResponse> => {
   const wiaCryptoContext = createCryptoContextFor(ITW_WIA_KEY_TAG);
 
   // Obtain PID Entity Configuration
-  const pidEntityConfiguration =
+  const entityConfiguration =
     await Trust.getCredentialIssuerEntityConfiguration(
       walletPidProviderUrl
     ).then(_ => _.payload.metadata);
 
   // Auth Token request
   const authConf = await Credential.Issuance.startUserAuthorization(
-    pidEntityConfiguration,
+    entityConfiguration,
     PID_CREDENTIAL_TYPE,
     {
       wiaCryptoContext,
@@ -79,7 +80,7 @@ export const getPid = async (
 
   // Authorize the User to access the resource (Credential)
   const { accessToken, nonce } = await Credential.Issuance.authorizeAccess(
-    pidEntityConfiguration,
+    entityConfiguration,
     code,
     authConf.clientId,
     {
@@ -90,7 +91,7 @@ export const getPid = async (
 
   // Credential request
   const { credential, format } = await Credential.Issuance.obtainCredential(
-    pidEntityConfiguration,
+    entityConfiguration,
     accessToken,
     nonce,
     authConf.clientId,
@@ -101,5 +102,5 @@ export const getPid = async (
     }
   );
 
-  return { credential, format };
+  return { credential, format, entityConfiguration };
 };
