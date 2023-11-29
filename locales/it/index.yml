@@ -3438,6 +3438,8 @@ features:
         success: 
           title: "Fatto!"
           subtitle: "Torna sul sito di {{organizationName}} per continuare."
+      qrCodeScreen:
+        loading: "Attendi qualche secondo la richiesta di verifica..."
     missingFeatureScreen: 
       headerTitle: "Schermata non disponibile"
       title: "Questa schermata sarà presto disponibile"
