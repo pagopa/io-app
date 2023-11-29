@@ -1,1 +1,1 @@
-export const WALLET_WEBVIEW_DEEPLINK_PROTOCOL = "iowallet";
+export const WALLET_WEBVIEW_OUTCOME_SCHEMA = "iowallet";
