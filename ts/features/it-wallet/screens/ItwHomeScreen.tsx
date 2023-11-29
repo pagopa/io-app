@@ -28,8 +28,7 @@ import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import ItwCredentialCard from "../components/ItwCredentialCard";
 import { CredentialType, getPidDisplayData } from "../utils/mocks";
 import ItwKoView from "../components/ItwKoView";
-import { getItwGenericMappedError } from "../utils/errors/itwErrorsMapping";
-import { ItWalletError } from "../utils/errors/itwErrors";
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
   body: "wallet.contextualHelpContent"
@@ -167,20 +166,23 @@ const ItwHomeScreen = () => {
     </View>
   );
 
-  /**
-   * Error view component which currently displays a generic error.
-   * @param error - optional ItWalletError to be displayed.
-   */
-  const ErrorView = ({ error: _ }: { error?: ItWalletError }) => {
-    const mappedError = getItwGenericMappedError(() => navigation.goBack());
-    return <ItwKoView {...mappedError} />;
-  };
-
   const RenderMask = () =>
     pipe(
       decodedPid,
       O.fold(
-        () => <ErrorView />,
+        () => (
+          <ItwKoView
+            title={I18n.t("global.jserror.title")}
+            pictogram="fatalError"
+            action={{
+              accessibilityLabel: I18n.t(
+                "features.itWallet.homeScreen.reset.label"
+              ),
+              label: I18n.t("features.itWallet.homeScreen.reset.label"),
+              onPress: () => present()
+            }}
+          />
+        ),
         some => <ContentView decodedPid={some} />
       )
     );
