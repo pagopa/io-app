@@ -2,11 +2,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, AlertButton } from "react-native";
+import { Body, VSpacer } from "@pagopa/io-app-design-system";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -20,6 +20,7 @@ import { userDataProcessingSelector } from "../../store/reducers/userDataProcess
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { showToast } from "../../utils/showToast";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -180,16 +181,19 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     );
 
   return (
-    <LoadingSpinnerOverlay
-      isLoading={isLoading}
-      loadingOpacity={0.9}
-      loadingCaption={I18n.t("profile.main.privacy.loading")}
+    <RNavScreenWithLargeHeader
+      title={I18n.t("profile.main.privacy.title")}
+      headerActionsProp={{ showHelp: true }}
     >
-      <ScreenContent
-        title={I18n.t("profile.main.privacy.title")}
-        subtitle={I18n.t("profile.main.privacy.subtitle")}
+      <LoadingSpinnerOverlay
+        isLoading={isLoading}
+        loadingOpacity={0.9}
+        loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <List withContentLateralPadding={true}>
+        <VSpacer size={8} />
+        <Body color="grey-700">{I18n.t("profile.main.privacy.subtitle")}</Body>
+        <VSpacer size={24} />
+        <List withContentLateralPadding={false}>
           {/* Privacy Policy */}
           <ListItemComponent
             title={I18n.t("profile.main.privacy.privacyPolicy.title")}
@@ -248,8 +252,8 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
             testID="profile-delete"
           />
         </List>
-      </ScreenContent>
-    </LoadingSpinnerOverlay>
+      </LoadingSpinnerOverlay>
+    </RNavScreenWithLargeHeader>
   );
 };
 
