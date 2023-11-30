@@ -100,9 +100,7 @@ export const DSTextFields = () => {
       </DSComponentViewerBox>
       <VSpacer />
 
-      <H3 color={theme["textHeading-default"]} weight={"Bold"}>
-        Legacy Text Fields
-      </H3>
+      <H3 color={theme["textHeading-default"]}>Legacy Text Fields</H3>
       <VSpacer />
       <LegacyTextFields />
     </DesignSystemScreen>
