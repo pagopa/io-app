@@ -2,49 +2,18 @@ import { useSelector } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { default as React } from "react";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import {
+  OperationResultScreenContent,
+  OperationResultScreenContentProps
+} from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import { PaymentFailure, PaymentFailureEnum } from "../xstate/failure";
+import { PaymentFailureEnum } from "../types/PaymentFailure";
 import { usePaymentMachineService } from "../xstate/provider";
 import {
   selectFailureOption,
   selectIsCancelled,
   selectIsFailure
 } from "../xstate/selectors";
-
-const mapFailureScreenProps: Partial<
-  Record<PaymentFailure, OperationResultScreenContent>
-> = {
-  [PaymentFailureEnum.GENERIC]: {
-    pictogram: "umbrella", // FIXME: add correct pictogram (IOBP-176)
-    title: I18n.t("idpay.payment.result.failure.GENERIC.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.GENERIC.body")
-  },
-  [PaymentFailureEnum.REJECTED]: {
-    pictogram: "error", // FIXME: add correct pictogram (IOBP-176)
-    title: I18n.t("idpay.payment.result.failure.REJECTED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.REJECTED.body")
-  },
-  [PaymentFailureEnum.EXPIRED]: {
-    pictogram: "timeout", // FIXME: add correct pictogram (IOBP-176)
-    title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body")
-  },
-  [PaymentFailureEnum.SESSION_EXPIRED]: {
-    pictogram: "timeout", // FIXME: add correct pictogram (IOBP-176)
-    title: I18n.t("idpay.payment.result.failure.EXPIRED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.EXPIRED.body")
-  },
-  [PaymentFailureEnum.BUDGET_EXHAUSTED]: {
-    pictogram: "error", // FIXME: add correct pictogram (IOBP-176)
-    title: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.title"),
-    subtitle: I18n.t("idpay.payment.result.failure.BUDGET_EXHAUSTED.body")
-  },
-  [PaymentFailureEnum.AUTHORIZED]: {
-    pictogram: "completed", // FIXME: add correct pictogram (IOBP-176)
-    title: I18n.t("idpay.payment.result.failure.AUTHORIZED.title")
-  }
-};
 
 const IDPayPaymentResultScreen = () => {
   const machine = usePaymentMachineService();
@@ -53,23 +22,26 @@ const IDPayPaymentResultScreen = () => {
   const isCancelled = useSelector(machine, selectIsCancelled);
   const isFailure = useSelector(machine, selectIsFailure);
 
-  const failureProps = pipe(
-    failureOption,
-    O.alt(() => O.some(PaymentFailureEnum.GENERIC)),
-    O.chain(f => O.fromNullable(mapFailureScreenProps[f]))
+  const defaultCloseAction = React.useMemo(
+    () => ({
+      label: "Chiudi",
+      accessibilityLabel: "Chiudi",
+      onPress: () => machine.send({ type: "EXIT" })
+    }),
+    [machine]
   );
 
-  const closeAction: OperationResultScreenContent["action"] = {
-    label: I18n.t("global.buttons.close"),
-    accessibilityLabel: I18n.t("global.buttons.close"),
-    onPress: () => machine.send("EXIT")
-  };
+  if (isFailure) {
+    const failureContentProps = pipe(
+      failureOption,
+      O.map(mapFailureToContentProps),
+      O.getOrElse(() => genericErrorProps)
+    );
 
-  if (isFailure && O.isSome(failureProps)) {
     return (
       <OperationResultScreenContent
-        {...failureProps.value}
-        action={closeAction}
+        {...failureContentProps}
+        action={defaultCloseAction}
         testID="paymentFailureScreenTestID"
       />
     );
@@ -80,7 +52,7 @@ const IDPayPaymentResultScreen = () => {
       <OperationResultScreenContent
         pictogram="unrecognized" // FIXME: add correct pictogram (IOBP-176)
         title={I18n.t("idpay.payment.result.cancelled.title")}
-        action={closeAction}
+        action={defaultCloseAction}
         testID="paymentCancelledScreenTestID"
       />
     );
@@ -91,10 +63,26 @@ const IDPayPaymentResultScreen = () => {
       pictogram="completed" // FIXME: add correct pictogram (IOBP-176)
       title={I18n.t("idpay.payment.result.success.title")}
       subtitle={I18n.t("idpay.payment.result.success.body")}
-      action={closeAction}
+      action={defaultCloseAction}
       testID="paymentSuccessScreenTestID"
     />
   );
+};
+
+const genericErrorProps: OperationResultScreenContentProps = {
+  pictogram: "umbrellaNew",
+  title: "Si è verificato un errore imprevisto",
+  subtitle:
+    "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+};
+
+const mapFailureToContentProps = (
+  failure: PaymentFailureEnum
+): OperationResultScreenContentProps => {
+  switch (failure) {
+    default:
+      return genericErrorProps;
+  }
 };
 
 export { IDPayPaymentResultScreen };

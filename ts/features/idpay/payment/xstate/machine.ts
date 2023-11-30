@@ -2,9 +2,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { assign, createMachine } from "xstate";
 import { LOADING_TAG, WAITING_USER_INPUT_TAG } from "../../../../xstate/utils";
+import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
 import { Context, INITIAL_CONTEXT } from "./context";
 import { Events } from "./events";
-import { PaymentFailure, PaymentFailureEnum } from "./failure";
 import { Services } from "./services";
 
 const createIDPayPaymentMachine = () =>
@@ -191,5 +191,5 @@ const createIDPayPaymentMachine = () =>
 
 type IDPayPaymentMachineType = ReturnType<typeof createIDPayPaymentMachine>;
 
-export type { IDPayPaymentMachineType };
 export { createIDPayPaymentMachine };
+export type { IDPayPaymentMachineType };

@@ -9,11 +9,21 @@ import { StatusEnum as OnboardingStatusEnum } from "../../../../../definitions/i
 import { RequiredCriteriaDTO } from "../../../../../definitions/idpay/RequiredCriteriaDTO";
 import { SelfConsentDTO } from "../../../../../definitions/idpay/SelfConsentDTO";
 import { IDPayClient } from "../../common/api/client";
-import { OnboardingFailureEnum } from "../types/OnboardingFailure";
+import {
+  OnboardingFailure,
+  OnboardingFailureEnum
+} from "../types/OnboardingFailure";
 import { Context } from "./machine";
 import { getBoolRequiredCriteriaFromContext } from "./selectors";
 
-const mapOnboardingStatusToFailure = (status: OnboardingStatusEnum) => {
+/**
+ * Maps the status of the initiative to a possibile UI failure state
+ * @param status The status of the initiative
+ * @returns A failure state enum, if any
+ */
+const mapOnboardingStatusToFailure = (
+  status: OnboardingStatusEnum
+): OnboardingFailure | undefined => {
   switch (status) {
     case OnboardingStatusEnum.ONBOARDING_OK:
     case OnboardingStatusEnum.SUSPENDED:
@@ -29,7 +39,14 @@ const mapOnboardingStatusToFailure = (status: OnboardingStatusEnum) => {
   }
 };
 
-const mapErrorCodeToFailure = (code: OnboardingErrorCodeEnum) => {
+/**
+ * Maps the backed error codes to UI failure states
+ * @param code Error code from backend
+ * @returns The associated failure state
+ */
+const mapErrorCodeToFailure = (
+  code: OnboardingErrorCodeEnum
+): OnboardingFailure => {
   switch (code) {
     case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
       return OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS;

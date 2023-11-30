@@ -32,6 +32,17 @@ const FailureScreen = () => {
     [machine]
   );
 
+  const genericErrorProps = React.useMemo<OperationResultScreenContentProps>(
+    () => ({
+      pictogram: "umbrellaNew",
+      title: "Si è verificato un errore imprevisto",
+      subtitle:
+        "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi.",
+      action: defaultCloseAction
+    }),
+    [defaultCloseAction]
+  );
+
   const mapFailureToContentProps = (
     failure: OnboardingFailureEnum
   ): OperationResultScreenContentProps => {
@@ -107,20 +118,14 @@ const FailureScreen = () => {
           secondaryAction: goToInitiativeAction
         };
       default:
-        return {
-          pictogram: "umbrellaNew",
-          title: "Si è verificato un errore imprevisto",
-          subtitle:
-            "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi.",
-          action: defaultCloseAction
-        };
+        return genericErrorProps;
     }
   };
 
   const contentProps = pipe(
     failureOption,
     O.map(mapFailureToContentProps),
-    O.getOrElse(() => ({ title: "Ciao" }))
+    O.getOrElse(() => genericErrorProps)
   );
 
   return <OperationResultScreenContent {...contentProps} />;

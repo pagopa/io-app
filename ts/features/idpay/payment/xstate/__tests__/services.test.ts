@@ -6,7 +6,7 @@ import {
 } from "../../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context, INITIAL_CONTEXT } from "../context";
-import { PaymentFailureEnum } from "../failure";
+import { PaymentFailureEnum } from "../../types/PaymentFailure";
 import { createServicesImplementation, paymentFailureMap } from "../services";
 import {
   CodeEnum,

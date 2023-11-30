@@ -5,8 +5,8 @@ import { flow, pipe } from "fp-ts/lib/function";
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { CodeEnum as TransactionErrorCodeEnum } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { IDPayClient } from "../../common/api/client";
+import { PaymentFailure, PaymentFailureEnum } from "../types/PaymentFailure";
 import { Context } from "./context";
-import { PaymentFailure, PaymentFailureEnum } from "./failure";
 
 export type Services = {
   preAuthorizePayment: {
@@ -17,17 +17,35 @@ export type Services = {
   };
 };
 
-// FIXME: mapping is incomplete [IOBP-379]
-// prettier-ignore
-export const paymentFailureMap: Partial<
-  Record<TransactionErrorCodeEnum, PaymentFailureEnum>
-> = {
-  [TransactionErrorCodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED]: PaymentFailureEnum.EXPIRED,
-  [TransactionErrorCodeEnum.PAYMENT_BUDGET_EXHAUSTED]: PaymentFailureEnum.BUDGET_EXHAUSTED,
-  [TransactionErrorCodeEnum.PAYMENT_GENERIC_REJECTED]: PaymentFailureEnum.REJECTED,
-  [TransactionErrorCodeEnum.PAYMENT_TOO_MANY_REQUESTS]: PaymentFailureEnum.TOO_MANY_REQUESTS,
-  [TransactionErrorCodeEnum.PAYMENT_ALREADY_AUTHORIZED]: PaymentFailureEnum.AUTHORIZED,
-  [TransactionErrorCodeEnum.PAYMENT_USER_SUSPENDED]: PaymentFailureEnum.AUTHORIZED,
+/**
+ * Maps the backed error codes to UI failure states
+ * @param code Error code from backend
+ * @returns The associated failure state
+ */
+const mapErrorCodeToFailure = (
+  code: TransactionErrorCodeEnum
+): PaymentFailureEnum => {
+  switch (code) {
+    case TransactionErrorCodeEnum.PAYMENT_TRANSACTION_EXPIRED:
+    case TransactionErrorCodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED:
+      return PaymentFailureEnum.TRANSACTION_EXPIRED;
+    case TransactionErrorCodeEnum.PAYMENT_USER_SUSPENDED:
+      return PaymentFailureEnum.USER_SUSPENDED;
+    case TransactionErrorCodeEnum.PAYMENT_USER_NOT_ONBOARDED:
+      return PaymentFailureEnum.USER_NOT_ONBOARDED;
+    case TransactionErrorCodeEnum.PAYMENT_USER_UNSUBSCRIBED:
+      return PaymentFailureEnum.USER_UNSUBSCRIBED;
+    case TransactionErrorCodeEnum.PAYMENT_ALREADY_AUTHORIZED:
+      return PaymentFailureEnum.ALREADY_AUTHORIZED;
+    case TransactionErrorCodeEnum.PAYMENT_BUDGET_EXHAUSTED:
+      return PaymentFailureEnum.BUDGET_EXHAUSTED;
+    case TransactionErrorCodeEnum.PAYMENT_ALREADY_ASSIGNED:
+      return PaymentFailureEnum.ALREADY_ASSIGNED;
+    case TransactionErrorCodeEnum.PAYMENT_INITIATIVE_INVALID_DATE:
+      return PaymentFailureEnum.INVALID_DATE;
+    default:
+      return PaymentFailureEnum.GENERIC;
+  }
 };
 
 /**
@@ -73,8 +91,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 401:
                 return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
-                const failure = paymentFailureMap[value.code];
-                return Promise.reject(failure || PaymentFailureEnum.GENERIC);
+                return Promise.reject(mapErrorCodeToFailure(value.code));
             }
           }),
           E.getOrElse(() => Promise.reject(PaymentFailureEnum.GENERIC))
@@ -116,8 +133,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 401:
                 return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
-                const failure = paymentFailureMap[value.code];
-                return Promise.reject(failure || PaymentFailureEnum.GENERIC);
+                return Promise.reject(mapErrorCodeToFailure(value.code));
             }
           }),
           E.getOrElse(() => Promise.reject(PaymentFailureEnum.GENERIC))
@@ -157,8 +173,7 @@ const createServicesImplementation = (client: IDPayClient, token: string) => {
               case 401:
                 return Promise.reject(PaymentFailureEnum.SESSION_EXPIRED);
               default:
-                const failure = paymentFailureMap[value.code];
-                return Promise.reject(failure || PaymentFailureEnum.GENERIC);
+                return Promise.reject(mapErrorCodeToFailure(value.code));
             }
           }),
           E.getOrElse(() => Promise.reject(PaymentFailureEnum.GENERIC))
