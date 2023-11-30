@@ -3804,3 +3804,4 @@ transaction:
       creditor: Ente creditore
       debtor: Debitore
       iuv: IUV
+      subject: Oggetto del pagamento

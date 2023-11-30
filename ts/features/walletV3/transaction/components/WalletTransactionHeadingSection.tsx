@@ -34,6 +34,7 @@ export const WalletTransactionHeadingSection = ({
         WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS,
         {
           operationDetails,
+          operationSubject: transaction.description,
           operationName: transaction.description
         }
       );

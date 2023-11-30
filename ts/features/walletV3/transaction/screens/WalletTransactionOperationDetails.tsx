@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 
 export type WalletTransactionOperationDetailsScreenParams = {
   operationName: string;
+  operationSubject: string;
   operationDetails: Dettaglio;
 };
 
@@ -35,7 +36,7 @@ export type WalletTransactionOperationDetailsScreenProps = RouteProp<
 
 const WalletTransactionOperationDetailsScreen = () => {
   const route = useRoute<WalletTransactionOperationDetailsScreenProps>();
-  const { operationDetails, operationName } = route.params;
+  const { operationDetails, operationName, operationSubject } = route.params;
 
   const getDebtorText = () => {
     const debtorNameLabel = operationDetails.nomePagatore ? (
@@ -103,7 +104,16 @@ const WalletTransactionOperationDetailsScreen = () => {
               accessibilityLabel={I18n.t("transaction.details.operation.iuv")}
               value={operationDetails.IUV}
             />
+            <Divider />
           </>
+        )}
+        {operationSubject && (
+          <ListItemInfo
+            numberOfLines={4}
+            label={I18n.t("transaction.details.operation.subject")}
+            accessibilityLabel={I18n.t("transaction.details.operation.subject")}
+            value={operationSubject}
+          />
         )}
       </ScrollView>
     </TopScreenComponent>
