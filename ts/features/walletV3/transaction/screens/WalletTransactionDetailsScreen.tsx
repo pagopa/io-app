@@ -55,6 +55,8 @@ const WalletTransactionDetailsScreen = () => {
     walletTransactionDetailsPotSelector
   );
 
+  const isLoading = pot.isLoading(transactionDetailsPot);
+
   const [transactionPsp, setTransactionPsp] = React.useState<Psp | undefined>();
 
   const transactionDetails = useIOSelector(walletTransactionDetailsSelector);
@@ -89,12 +91,12 @@ const WalletTransactionDetailsScreen = () => {
         <WalletTransactionHeadingSection
           transaction={transactionDetails}
           psp={transactionPsp}
-          loading={pot.isLoading(transactionDetailsPot)}
+          loading={isLoading}
         />
         <WalletTransactionInfoSection
           transaction={transactionDetails}
           psp={transactionPsp}
-          loading={pot.isLoading(transactionDetailsPot)}
+          loading={isLoading}
         />
       </ScrollView>
     </TopScreenComponent>
