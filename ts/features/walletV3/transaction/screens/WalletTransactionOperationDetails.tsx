@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import {
   Divider,
   H1,
@@ -15,6 +15,13 @@ import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import I18n from "../../../../i18n";
+
+const styles = StyleSheet.create({
+  scrollViewContainer: {
+    ...IOStyles.flex,
+    ...IOStyles.horizontalContentPadding
+  }
+});
 
 export type WalletTransactionOperationDetailsScreenParams = {
   operationName: string;
@@ -51,7 +58,7 @@ const WalletTransactionOperationDetailsScreen = () => {
 
   return (
     <TopScreenComponent goBack>
-      <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+      <ScrollView style={styles.scrollViewContainer}>
         <H1>{cleanTransactionDescription(operationName)}</H1>
         {operationDetails.importo && (
           <ListItemInfo

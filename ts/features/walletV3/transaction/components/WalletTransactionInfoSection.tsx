@@ -27,9 +27,13 @@ type WalletTransactionInfoSectionProps = {
 
 const styles = StyleSheet.create({
   container: {
+    ...IOStyles.horizontalContentPadding,
+    ...IOStyles.flex,
     backgroundColor: IOColors["grey-50"]
   },
   contentCard: {
+    ...IOStyles.horizontalContentPadding,
+    ...IOStyles.bgWhite,
     borderRadius: IORadiusScale["1"],
     marginVertical: IOVisualCostants.appMarginDefault
   }
@@ -50,20 +54,8 @@ const WalletTransactionInfoSection = ({
       width={"100%"}
       preserveAspectRatio="xMin slice" // Add this property to fit the width to the parent
     />
-    <View
-      style={[
-        IOStyles.horizontalContentPadding,
-        styles.container,
-        IOStyles.flex
-      ]}
-    >
-      <View
-        style={[
-          styles.contentCard,
-          IOStyles.horizontalContentPadding,
-          IOStyles.bgWhite
-        ]}
-      >
+    <View style={styles.container}>
+      <View style={styles.contentCard}>
         <ListItemHeader
           label={I18n.t("transaction.details.info.title")}
           accessibilityLabel={I18n.t("transaction.details.info.title")}

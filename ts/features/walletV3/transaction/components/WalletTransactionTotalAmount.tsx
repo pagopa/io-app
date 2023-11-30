@@ -1,6 +1,6 @@
 import React from "react";
 import Placeholder from "rn-placeholder";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { H3, H6, IOStyles } from "@pagopa/io-app-design-system";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import I18n from "../../../../i18n";
@@ -10,11 +10,19 @@ type TotalAmountSectionProps = {
   loading?: boolean;
 };
 
+const styles = StyleSheet.create({
+  container: {
+    ...IOStyles.rowSpaceBetween,
+    ...IOStyles.alignCenter,
+    ...IOStyles.flex
+  }
+});
+
 export const WalletTransactionTotalAmount = ({
   totalAmount,
   loading
 }: TotalAmountSectionProps) => (
-  <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter, IOStyles.flex]}>
+  <View style={styles.container}>
     <H6 color="info-850">{I18n.t("transaction.details.totalAmount")}</H6>
     {loading && (
       <View>
