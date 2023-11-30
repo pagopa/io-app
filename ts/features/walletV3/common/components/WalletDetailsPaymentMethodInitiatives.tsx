@@ -34,23 +34,23 @@ const WalletDetailsPaymentMethodInitiatives = (
 
   const dispatch = useIODispatch();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(
-        idPayInitiativesFromInstrumentGet.request({
-          idWallet: idWalletString
-        })
-      );
-      dispatch(
-        idPayInitiativesFromInstrumentRefreshStart({
-          idWallet: idWalletString
-        })
-      );
-      return () => {
-        dispatch(idPayInitiativesFromInstrumentRefreshStop());
-      };
-    }, [idWalletString, dispatch])
-  );
+  const startInitiativeRefreshPolling = React.useCallback(() => {
+    dispatch(
+      idPayInitiativesFromInstrumentGet.request({
+        idWallet: idWalletString
+      })
+    );
+    dispatch(
+      idPayInitiativesFromInstrumentRefreshStart({
+        idWallet: idWalletString
+      })
+    );
+    return () => {
+      dispatch(idPayInitiativesFromInstrumentRefreshStop());
+    };
+  }, [idWalletString, dispatch]);
+
+  useFocusEffect(startInitiativeRefreshPolling);
 
   const initiativesList = useIOSelector(
     idPayEnabledInitiativesFromInstrumentSelector
