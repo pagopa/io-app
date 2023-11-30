@@ -37,7 +37,7 @@ const WalletTransactionOperationDetailsScreen = () => {
   const route = useRoute<WalletTransactionOperationDetailsScreenProps>();
   const { operationDetails, operationName } = route.params;
 
-  const getDebitoreText = () => {
+  const getDebtorText = () => {
     const debitoreNameLabel = operationDetails.nomePagatore ? (
       <H6>{operationDetails.nomePagatore}</H6>
     ) : (
@@ -91,7 +91,7 @@ const WalletTransactionOperationDetailsScreen = () => {
               accessibilityLabel={I18n.t(
                 "transaction.details.operation.debtor"
               )}
-              value={getDebitoreText()}
+              value={getDebtorText()}
             />
             <Divider />
           </>
