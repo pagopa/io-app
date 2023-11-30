@@ -20,7 +20,7 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import TransactionReceiptDivider from "../../../../../img/features/wallet/transaction-receipt-divider.svg";
 
 type WalletTransactionInfoSectionProps = {
-  transaction?: Transaction | null;
+  transaction?: Transaction;
   psp?: Psp;
   loading?: boolean;
 };

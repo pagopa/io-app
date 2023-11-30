@@ -16,7 +16,7 @@ import { WalletTransactionTotalAmount } from "./WalletTransactionTotalAmount";
 import { WalletTransactionDetailsList } from "./WalletTransactionDetailsList";
 
 type Props = {
-  transaction?: Transaction | null;
+  transaction?: Transaction;
   psp?: Psp;
   loading: boolean;
 };
