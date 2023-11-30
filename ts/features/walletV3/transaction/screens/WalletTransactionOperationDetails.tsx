@@ -14,6 +14,7 @@ import TopScreenComponent from "../../../../components/screens/TopScreenComponen
 import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
+import I18n from "../../../../i18n";
 
 export type WalletTransactionOperationDetailsScreenParams = {
   operationName: string;
@@ -54,7 +55,8 @@ const WalletTransactionOperationDetailsScreen = () => {
         <H1>{cleanTransactionDescription(operationName)}</H1>
         {operationDetails.importo && (
           <ListItemInfo
-            label="Importo"
+            accessibilityLabel={I18n.t("transaction.details.operation.amount")}
+            label={I18n.t("transaction.details.operation.amount")}
             value={formatNumberCentsToAmount(
               operationDetails.importo,
               true,
@@ -66,7 +68,10 @@ const WalletTransactionOperationDetailsScreen = () => {
         {operationDetails.enteBeneficiario && (
           <>
             <ListItemInfo
-              label="Ente creditore"
+              label={I18n.t("transaction.details.operation.creditor")}
+              accessibilityLabel={I18n.t(
+                "transaction.details.operation.creditor"
+              )}
               value={operationDetails.enteBeneficiario}
             />
             <Divider />
@@ -74,13 +79,23 @@ const WalletTransactionOperationDetailsScreen = () => {
         )}
         {(operationDetails.codicePagatore || operationDetails.nomePagatore) && (
           <>
-            <ListItemInfo label="Debitore" value={getDebitoreText()} />
+            <ListItemInfo
+              label={I18n.t("transaction.details.operation.debtor")}
+              accessibilityLabel={I18n.t(
+                "transaction.details.operation.debtor"
+              )}
+              value={getDebitoreText()}
+            />
             <Divider />
           </>
         )}
         {operationDetails.IUV && (
           <>
-            <ListItemInfo label="IUV" value={operationDetails.IUV} />
+            <ListItemInfo
+              label={I18n.t("transaction.details.operation.iuv")}
+              accessibilityLabel={I18n.t("transaction.details.operation.iuv")}
+              value={operationDetails.IUV}
+            />
           </>
         )}
       </ScrollView>

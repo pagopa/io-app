@@ -3799,3 +3799,8 @@ transaction:
       pspName: Gestore della transazione (PSP)
       dateAndHour: Data e ora
       transactionId: ID transazione
+    operation:
+      amount: Importo
+      creditor: Ente creditore
+      debtor: Debitore
+      iuv: IUV
