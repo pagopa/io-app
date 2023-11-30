@@ -22,7 +22,10 @@ describe("handleGenerateBarcode test", () => {
     trxCode: "123456",
     initiativeId: "abcdef",
     status: StatusEnum.CREATED,
-    trxDate: new Date()
+    trxDate: new Date(),
+    initiativeName: "initiativeName",
+    residualBudgetCents: 1000,
+    trxExpirationSeconds: 1000
   };
 
   const mockError: TransactionErrorDTO = {

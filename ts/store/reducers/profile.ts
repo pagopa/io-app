@@ -22,8 +22,9 @@ import { ServicesPreferencesModeEnum } from "../../../definitions/backend/Servic
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { GlobalState } from "./types";
+import { ProfileError } from "./profileErrorType";
 
-export type ProfileState = pot.Pot<InitializedProfile, Error>;
+export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 
 const INITIAL_STATE: ProfileState = pot.none;
 
@@ -119,6 +120,15 @@ export const profileServicePreferencesModeSelector = createSelector(
   (profile: ProfileState): ServicesPreferencesModeEnum | undefined =>
     pot.getOrElse(
       pot.map(profile, p => p.service_preferences_settings.mode),
+      undefined
+    )
+);
+// return if the profile email user is already taken
+export const isProfileEmailAlreadyTakenSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): boolean | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.is_email_already_taken),
       undefined
     )
 );

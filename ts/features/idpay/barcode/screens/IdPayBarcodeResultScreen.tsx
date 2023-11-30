@@ -5,7 +5,9 @@ import {
   H3,
   HeaderSecondLevel,
   IOColors,
+  IOStyles,
   IOVisualCostants,
+  LabelSmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -20,12 +22,12 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { formatNumberCurrencyCents } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayBarcodeExpireProgressBar } from "../components/BarcodeExpirationProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
-import { idpayInitiativeDetailsSelector } from "../../details/store";
 
 // -------------------- types --------------------
 
@@ -93,12 +95,6 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
     () => calculateIdPayBarcodeSecondsToExpire(barcode),
     [barcode]
   );
-  const initiativeName = pipe(
-    useIOSelector(idpayInitiativeDetailsSelector),
-    pot.toOption,
-    O.map(({ initiativeName }) => initiativeName),
-    O.toUndefined
-  );
 
   return (
     <>
@@ -131,16 +127,25 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
         <VSpacer size={16} />
         <Body>
           {I18n.t("idpay.barCode.resultScreen.success.body", {
-            initiativeName
+            initiativeName: barcode.initiativeName
           })}
         </Body>
         <VSpacer size={24} />
         <View style={styles.barcodeContainer}>
+          <View style={[IOStyles.row, { alignSelf: "center" }]}>
+            <LabelSmall weight="Regular" color="black">
+              {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
+            </LabelSmall>
+            <LabelSmall weight="SemiBold" color="black">
+              {formatNumberCurrencyCents(barcode.residualBudgetCents)}
+            </LabelSmall>
+          </View>
+          <VSpacer size={4} />
           <Barcode format="CODE128" value={trx} />
           <H3 style={{ alignSelf: "center" }}>{trx}</H3>
           <VSpacer size={32} />
           <IdPayBarcodeExpireProgressBar
-            secondsExpirationTotal={(barcode.trxExpirationMinutes ?? 0) * 60}
+            secondsExpirationTotal={barcode.trxExpirationSeconds}
             secondsToExpiration={secondsTillExpire}
           />
         </View>
