@@ -17,17 +17,11 @@ import {
   getTransactionIUV
 } from "../../../../utils/payment";
 
-type Props =
-  | {
-      transaction?: Transaction | null;
-      loading: boolean;
-      onPress: (operationDetails: Dettaglio) => void;
-    }
-  | {
-      transaction?: Transaction | null;
-      loading: true;
-      onPress: (operationDetails: Dettaglio) => void;
-    };
+type Props = {
+  transaction?: Transaction | null;
+  loading: boolean;
+  onPress: (operationDetails: Dettaglio) => void;
+};
 
 /**
  * This component renders a list of transaction details which currently is just a single item

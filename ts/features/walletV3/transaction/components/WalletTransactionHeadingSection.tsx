@@ -88,7 +88,7 @@ export const WalletTransactionHeadingSection = ({
       />
       <WalletTransactionTotalAmount
         loading={loading}
-        totalAmount={transaction?.amount.amount}
+        totalAmount={transaction?.grandTotal.amount}
       />
       <VSpacer size={8} />
       <FeeAmountSection />
