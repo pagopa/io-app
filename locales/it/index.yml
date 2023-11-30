@@ -3284,6 +3284,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
+        validUpTo: "Vale fino a " 
         expiresIn: "Il codice scade tra"
         expired: "Il codice é scaduto."
         saveImageCta: Salva come immagine
@@ -3389,6 +3390,7 @@ idpay:
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
               CIE: "Abilitazione carta d’identità elettronica"
+              UNSUBSCRIBED: "Recesso dall’iniziativa"
     discountDetails:
       bottomSheetOptions:
         scanQr: Inquadra un codice QR
