@@ -30,11 +30,13 @@ export type WalletTransactionDetailsScreenProps = RouteProp<
   "WALLET_TRANSACTION_DETAILS"
 >;
 
+const windowHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
-  iosHeaderScroll: {
+  bottomBackground: {
     position: "absolute",
-    height: Dimensions.get("window").height,
-    bottom: -Dimensions.get("window").height,
+    height: windowHeight,
+    bottom: -windowHeight,
     left: 0,
     right: 0,
     backgroundColor: IOColors["grey-50"]
@@ -85,20 +87,18 @@ const WalletTransactionDetailsScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       <FocusAwareStatusBar barStyle={"dark-content"} />
-      <View style={styles.wrapper}>
-        {/* The following line is used to show the background color of the bounce effect on iOS the same color of the header */}
-        {Platform.OS === "ios" && <View style={styles.iosHeaderScroll} />}
-        <WalletTransactionHeadingSection
-          transaction={transactionDetails}
-          psp={transactionPsp}
-          loading={isLoading}
-        />
-        <WalletTransactionInfoSection
-          transaction={transactionDetails}
-          psp={transactionPsp}
-          loading={isLoading}
-        />
-      </View>
+      {/* The following line is used to show the background color gray that overlay the basic one which is whie */}
+      <View style={styles.bottomBackground} />
+      <WalletTransactionHeadingSection
+        transaction={transactionDetails}
+        psp={transactionPsp}
+        loading={isLoading}
+      />
+      <WalletTransactionInfoSection
+        transaction={transactionDetails}
+        psp={transactionPsp}
+        loading={isLoading}
+      />
     </RNavScreenWithLargeHeader>
   );
 };
