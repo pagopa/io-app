@@ -29,13 +29,15 @@ export const WalletTransactionHeadingSection = ({
   const navigation = useNavigation<WalletTransactionStackNavigation>();
 
   const handlePressTransactionDetails = (operationDetails: Dettaglio) => {
-    navigation.navigate(
-      WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS,
-      {
-        operationDetails,
-        operationName: transaction?.description
-      }
-    );
+    if (transaction) {
+      navigation.navigate(
+        WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS,
+        {
+          operationDetails,
+          operationName: transaction?.description
+        }
+      );
+    }
   };
 
   const FeeAmountSection = () => {
@@ -68,6 +70,7 @@ export const WalletTransactionHeadingSection = ({
     }
     return <></>;
   };
+
   return (
     <View
       style={[

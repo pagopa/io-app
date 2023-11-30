@@ -1,30 +1,29 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { delay, put, select } from "typed-redux-saga/macro";
+import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { walletTransactionDetailsGet } from "../store/actions";
 import { getTransactions } from "../../../../store/reducers/wallet/transactions";
 import { getGenericError } from "../../../../utils/errors";
 
 /**
- * Handle the remote call to start Wallet onboarding payment methods list
+ * Handle the remote call to get the transaction details
+ * TODO: This is a temporary implementation to simulate the BIZ Event API, it will be replaced as soon as the BIZ Event API will be available (https://pagopa.atlassian.net/browse/IOBP-440)
  * @param getPaymentMethods
  * @param action
  */
 export function* handleGetTransactionDetails(
-  getTransactionDetails: any, // TODO: Replace with the real type when the BIZ Event API will be available
-  token: string,
+  _getTransactionDetails: any, // TODO: Replace with the real type when the BIZ Event API will be available
+  _token: string,
   action: ActionType<(typeof walletTransactionDetailsGet)["request"]>
 ) {
   // TODO: Add the whole logic here to call the BIZ Event API as soon as it will be available and replace the following code
   const transactions = yield* select(getTransactions);
-  const transactionDetails = pot.getOrElse(
+  const transactionDetails = pot.toUndefined(
     pot.map(transactions, transactions =>
       transactions.find(trx => trx.id === action.payload.transactionId)
-    ),
-    null
+    )
   );
   if (transactionDetails) {
-    yield* delay(4000);
     yield* put(walletTransactionDetailsGet.success(transactionDetails));
     return;
   }

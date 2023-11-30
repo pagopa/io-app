@@ -13,9 +13,10 @@ import { WalletTransactionParamsList } from "../navigation/navigator";
 import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { cleanTransactionDescription } from "../../../../utils/payment";
 
 export type WalletTransactionOperationDetailsScreenParams = {
-  operationName?: string;
+  operationName: string;
   operationDetails: Dettaglio;
 };
 
@@ -50,7 +51,7 @@ const WalletTransactionOperationDetailsScreen = () => {
   return (
     <TopScreenComponent goBack>
       <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-        <H1>{operationName}</H1>
+        <H1>{cleanTransactionDescription(operationName)}</H1>
         {operationDetails.importo && (
           <ListItemInfo
             label="Importo"
@@ -62,13 +63,26 @@ const WalletTransactionOperationDetailsScreen = () => {
           />
         )}
         <Divider />
-        <ListItemInfo
-          label="Ente creditore"
-          value={operationDetails.enteBeneficiario}
-        />
-        <Divider />
-        <ListItemInfo label="Debitore" value={getDebitoreText()} />
-        <ListItemInfo label="IUV" value={operationDetails.IUV} />
+        {operationDetails.enteBeneficiario && (
+          <>
+            <ListItemInfo
+              label="Ente creditore"
+              value={operationDetails.enteBeneficiario}
+            />
+            <Divider />
+          </>
+        )}
+        {(operationDetails.codicePagatore || operationDetails.nomePagatore) && (
+          <>
+            <ListItemInfo label="Debitore" value={getDebitoreText()} />
+            <Divider />
+          </>
+        )}
+        {operationDetails.IUV && (
+          <>
+            <ListItemInfo label="IUV" value={operationDetails.IUV} />
+          </>
+        )}
       </ScrollView>
     </TopScreenComponent>
   );

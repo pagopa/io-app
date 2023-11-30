@@ -14,7 +14,7 @@ export function* watchWalletTransactionSaga(
   token: string
 ): SagaIterator {
   // token: string
-  // TODO: Connect the saga code here to the BIZ Event API as asoon as it will be available
+  // TODO: Connect the saga code here to the BIZ Event API as asoon as it will be available (https://pagopa.atlassian.net/browse/IOBP-440)
   yield* takeLatest(
     walletTransactionDetailsGet.request,
     handleGetTransactionDetails,

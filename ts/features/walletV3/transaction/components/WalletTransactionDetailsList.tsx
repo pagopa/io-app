@@ -1,4 +1,6 @@
 import React from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
@@ -10,6 +12,10 @@ import {
 import { Transaction } from "../../../../types/pagopa";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
+import {
+  cleanTransactionDescription,
+  getTransactionIUV
+} from "../../../../utils/payment";
 
 type Props =
   | {
@@ -23,6 +29,10 @@ type Props =
       onPress: (operationDetails: Dettaglio) => void;
     };
 
+/**
+ * This component renders a list of transaction details which currently is just a single item
+ * TODO: Using the actual information, this component is already arranged to handle a list that will be implemented from the BIZ Event implementation (https://pagopa.atlassian.net/browse/IOBP-440)
+ */
 export const WalletTransactionDetailsList = ({
   transaction,
   loading,
@@ -35,24 +45,25 @@ export const WalletTransactionDetailsList = ({
     return <></>;
   }
 
+  const operationDetails: Dettaglio = {
+    importo: transaction.amount.amount,
+    enteBeneficiario: transaction.merchant,
+    IUV: pipe(getTransactionIUV(transaction.description), O.toUndefined)
+  };
+
   return (
-    <>
-      {transaction.detailsList?.map((operationDetails, index) => (
-        <ListItemTransaction
-          key={index}
-          title={transaction.description}
-          subtitle={transaction.merchant}
-          transactionStatus="success"
-          transactionAmount={formatNumberCentsToAmount(
-            transaction.amount.amount,
-            true,
-            "right"
-          )}
-          hasChevronRight
-          onPress={() => onPress?.(operationDetails)}
-        />
-      ))}
-    </>
+    <ListItemTransaction
+      title={cleanTransactionDescription(transaction.description)}
+      subtitle={transaction.merchant}
+      transactionStatus="success"
+      transactionAmount={formatNumberCentsToAmount(
+        transaction.amount.amount,
+        true,
+        "right"
+      )}
+      hasChevronRight
+      onPress={() => onPress?.(operationDetails)}
+    />
   );
 };
 
