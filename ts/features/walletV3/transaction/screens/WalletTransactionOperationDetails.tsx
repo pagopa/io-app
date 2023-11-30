@@ -15,6 +15,7 @@ import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import I18n from "../../../../i18n";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 
 const styles = StyleSheet.create({
   scrollViewContainer: {
@@ -58,9 +59,10 @@ const WalletTransactionOperationDetailsScreen = () => {
   };
 
   return (
-    <TopScreenComponent goBack>
+    <RNavScreenWithLargeHeader
+      title={cleanTransactionDescription(operationName)}
+    >
       <ScrollView style={styles.scrollViewContainer}>
-        <H1>{cleanTransactionDescription(operationName)}</H1>
         {operationDetails.importo && (
           <ListItemInfo
             accessibilityLabel={I18n.t("transaction.details.operation.amount")}
@@ -116,7 +118,7 @@ const WalletTransactionOperationDetailsScreen = () => {
           />
         )}
       </ScrollView>
-    </TopScreenComponent>
+    </RNavScreenWithLargeHeader>
   );
 };
 

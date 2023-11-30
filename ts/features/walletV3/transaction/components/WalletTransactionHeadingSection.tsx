@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import Placeholder from "rn-placeholder";
 import React from "react";
 import { View } from "react-native";
-import { Body, H1, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { Psp, Transaction } from "../../../../types/pagopa";
 import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
@@ -73,20 +73,14 @@ export const WalletTransactionHeadingSection = ({
   };
 
   return (
-    <View
-      style={[
-        IOStyles.horizontalContentPadding,
-        IOStyles.flex,
-        IOStyles.bgWhite
-      ]}
-    >
-      <H1>{I18n.t("transaction.details.title")}</H1>
+    <View style={[IOStyles.horizontalContentPadding, IOStyles.bgWhite]}>
       <VSpacer size={16} />
       <WalletTransactionDetailsList
         transaction={transaction}
         loading={loading}
         onPress={handlePressTransactionDetails}
       />
+      <VSpacer size={8} />
       <WalletTransactionTotalAmount
         loading={loading}
         totalAmount={transaction?.grandTotal.amount}

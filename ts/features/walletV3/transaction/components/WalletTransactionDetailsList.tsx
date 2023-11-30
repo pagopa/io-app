@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
+  Divider,
   HSpacer,
   IOStyles,
   ListItemTransaction,
@@ -46,18 +47,21 @@ export const WalletTransactionDetailsList = ({
   };
 
   return (
-    <ListItemTransaction
-      title={cleanTransactionDescription(transaction.description)}
-      subtitle={transaction.merchant}
-      transactionStatus="success"
-      transactionAmount={formatNumberCentsToAmount(
-        transaction.amount.amount,
-        true,
-        "right"
-      )}
-      hasChevronRight
-      onPress={() => onPress?.(operationDetails)}
-    />
+    <>
+      <ListItemTransaction
+        title={cleanTransactionDescription(transaction.description)}
+        subtitle={transaction.merchant}
+        transactionStatus="success"
+        transactionAmount={formatNumberCentsToAmount(
+          transaction.amount.amount,
+          true,
+          "right"
+        )}
+        hasChevronRight
+        onPress={() => onPress?.(operationDetails)}
+      />
+      <Divider />
+    </>
   );
 };
 

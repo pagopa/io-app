@@ -1,18 +1,11 @@
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  Dimensions,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View
-} from "react-native";
-import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import { Dimensions, Platform, StyleSheet, View } from "react-native";
+import { IOColors } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 
 import { WalletTransactionParamsList } from "../navigation/navigator";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -25,6 +18,8 @@ import { fetchPsp } from "../../../../store/actions/wallet/transactions";
 import { Psp } from "../../../../types/pagopa";
 import WalletTransactionInfoSection from "../components/WalletTransactionInfoSection";
 import { WalletTransactionHeadingSection } from "../components/WalletTransactionHeadingSection";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import I18n from "../../../../i18n";
 
 export type WalletTransactionDetailsScreenParams = {
   transactionId: number;
@@ -39,12 +34,16 @@ const styles = StyleSheet.create({
   iosHeaderScroll: {
     position: "absolute",
     height: Dimensions.get("window").height,
-    top: -Dimensions.get("window").height,
+    bottom: -Dimensions.get("window").height,
     left: 0,
     right: 0,
-    ...IOStyles.bgWhite
+    backgroundColor: IOColors["grey-50"]
   },
-  scrollViewContent: { backgroundColor: IOColors["grey-50"] }
+  wrapper: {
+    flexGrow: 1,
+    alignContent: "flex-start",
+    backgroundColor: IOColors["grey-50"]
+  }
 });
 
 const WalletTransactionDetailsScreen = () => {
@@ -79,13 +78,14 @@ const WalletTransactionDetailsScreen = () => {
   }, [dispatch, transactionDetails]);
 
   return (
-    <TopScreenComponent
-      goBack
+    <RNavScreenWithLargeHeader
+      title={I18n.t("transaction.details.title")}
       contextualHelp={emptyContextualHelp}
       faqCategories={["wallet_transaction"]}
+      headerActionsProp={{ showHelp: true }}
     >
       <FocusAwareStatusBar barStyle={"dark-content"} />
-      <ScrollView style={styles.scrollViewContent}>
+      <View style={styles.wrapper}>
         {/* The following line is used to show the background color of the bounce effect on iOS the same color of the header */}
         {Platform.OS === "ios" && <View style={styles.iosHeaderScroll} />}
         <WalletTransactionHeadingSection
@@ -98,8 +98,8 @@ const WalletTransactionDetailsScreen = () => {
           psp={transactionPsp}
           loading={isLoading}
         />
-      </ScrollView>
-    </TopScreenComponent>
+      </View>
+    </RNavScreenWithLargeHeader>
   );
 };
 

@@ -4,7 +4,6 @@ import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import {
   Divider,
-  IOColors,
   IORadiusScale,
   IOVisualCostants,
   ListItemHeader,
@@ -27,9 +26,8 @@ type WalletTransactionInfoSectionProps = {
 
 const styles = StyleSheet.create({
   container: {
-    ...IOStyles.horizontalContentPadding,
-    ...IOStyles.flex,
-    backgroundColor: IOColors["grey-50"]
+    flexGrow: 1,
+    ...IOStyles.horizontalContentPadding
   },
   contentCard: {
     ...IOStyles.horizontalContentPadding,
