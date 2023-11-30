@@ -41,7 +41,7 @@ export const WalletTransactionHeadingSection = ({
   };
 
   const FeeAmountSection = () => {
-    if (psp && transaction && transaction.fee && !loading) {
+    if (psp && transaction?.fee && !loading) {
       const formattedFee = formatNumberCentsToAmount(
         transaction.fee.amount,
         true,
