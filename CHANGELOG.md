@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.47.0-rc.2](https://github.com/pagopa/io-app/compare/2.47.0-rc.1...2.47.0-rc.2) (2023-11-29)
+
+
+### Bug Fixes
+
+* change milliseconds notation ([b22d0d1](https://github.com/pagopa/io-app/commit/b22d0d103feb7b30ff05656605806cb683e1ec8c))
+
 ## [2.47.0-rc.1](https://github.com/pagopa/io-app/compare/2.47.0-rc.0...2.47.0-rc.1) (2023-11-29)
 
 
