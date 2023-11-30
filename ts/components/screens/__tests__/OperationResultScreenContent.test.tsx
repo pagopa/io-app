@@ -4,7 +4,7 @@ import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { OperationResultScreenContent } from "../OperationResultScreenContent";
 
 const defaultProps: OperationResultScreenContent = {
@@ -32,7 +32,7 @@ function renderComponent(
   props: React.ComponentProps<typeof OperationResultScreenContent>
 ) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <OperationResultScreenContent {...props} />,
     ROUTES.WALLET_HOME,
     {},

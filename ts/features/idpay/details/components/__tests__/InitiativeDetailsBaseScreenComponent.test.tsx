@@ -9,7 +9,7 @@ import {
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IDPayDetailsRoutes } from "../../navigation";
 import InitiativeDetailsBaseScreenComponent from "../InitiativeDetailsBaseScreenComponent";
 
@@ -110,7 +110,7 @@ const renderComponent = (component: React.ReactElement) => {
     ...globalState
   } as GlobalState);
 
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => component,
     IDPayDetailsRoutes.IDPAY_DETAILS_MAIN,
     {},

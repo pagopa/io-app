@@ -2,7 +2,7 @@ import { createStore, Store } from "redux";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import ROUTES from "../../../../../navigation/routes";
 import CdcServiceCTA from "../CdcServiceCTA";
 import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
@@ -171,7 +171,7 @@ describe("CdcServiceCTA", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     CdcServiceCTA,
     ROUTES.MAIN,
     {},

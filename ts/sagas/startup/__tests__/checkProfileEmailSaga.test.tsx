@@ -12,7 +12,7 @@ import {
   emailInsert
 } from "../../../store/actions/onboarding";
 import { appReducer } from "../../../store/reducers";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
@@ -20,7 +20,7 @@ describe("checkAcknowledgedEmailSaga", () => {
   beforeEach(() => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+    renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
     jest.useRealTimers();
   });
 
@@ -78,7 +78,7 @@ describe("checkAcknowledgedEmailSaga", () => {
         applicationChangeState("active")
       );
       const store = createStore(appReducer, globalState as any);
-      renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+      renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
       await expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
           screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN

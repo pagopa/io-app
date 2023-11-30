@@ -16,7 +16,7 @@ import {
 } from "../../../store/reducers/entities/messages/transformers";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import MessageDetail from "../MessageDetail";
 
 jest.useFakeTimers();
@@ -130,7 +130,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessageDetail>) => {
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageDetail {...props} />,
       ROUTES.MESSAGES_HOME,
       {},

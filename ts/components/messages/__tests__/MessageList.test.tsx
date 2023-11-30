@@ -10,7 +10,7 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { AllPaginated } from "../../../store/reducers/entities/messages/allPaginated";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import {
   defaultRequestPayload,
   successReloadMessagesPayload
@@ -131,7 +131,7 @@ const renderComponent = (
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageList {...props} />,
       ROUTES.MESSAGES_HOME,
       {},

@@ -14,7 +14,7 @@ import {
 } from "../../../bonus/bonusVacanze/utils/bonus";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 
 jest.mock("react-native-share", () => jest.fn());
@@ -351,7 +351,7 @@ describe("FeaturedCardCarousel", () => {
 });
 
 const getComponent = (mockStore: MockStoreEnhanced<GlobalState>) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FeaturedCardCarousel />,
     ROUTES.MESSAGE_DETAIL,
     {},

@@ -1,5 +1,4 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { NavigationEvents } from "@react-navigation/compat";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Body as NBBody, Left, Right } from "native-base";
@@ -21,6 +20,7 @@ import {
   HSpacer,
   IOSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
@@ -303,7 +303,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             () => true,
             ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
           )
-        ) && <NavigationEvents onWillFocus={this.handleFocus} />}
+        ) && <NavigationEventHandler onFocus={this.handleFocus} />}
       </Right>
     );
   };
@@ -356,6 +356,15 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     }
   };
 }
+
+const NavigationEventHandler = ({ onFocus }: { onFocus: () => void }) => {
+  useFocusEffect(
+    React.useCallback(() => {
+      onFocus();
+    }, [onFocus])
+  );
+  return <></>;
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   isSearchEnabled: isSearchEnabledSelector(state),

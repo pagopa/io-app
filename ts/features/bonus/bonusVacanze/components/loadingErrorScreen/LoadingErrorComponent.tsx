@@ -18,8 +18,8 @@ export type LoadingErrorProps = WithTestID<{
   onAbort?: () => void;
 }>;
 
-const errorRef = React.createRef<GenericErrorComponent>();
-const loadingRef = React.createRef<any>();
+const errorRef = React.createRef<View>();
+const loadingRef = React.createRef<View>();
 
 const renderError = (props: LoadingErrorProps) => (
   <GenericErrorComponent

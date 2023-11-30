@@ -11,7 +11,7 @@ import { service_1 } from "../../../../__mocks__/messages";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 import CtaBar from "../common/CtaBar";
 
@@ -129,7 +129,7 @@ const renderComponent = (props: React.ComponentProps<typeof CtaBar>) => {
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <CtaBar {...props} />,
       ROUTES.MESSAGE_DETAIL,
       {},

@@ -7,7 +7,7 @@ import I18n from "../../../i18n";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
 import { identificationRequest } from "../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../config";
@@ -73,7 +73,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <SecurityScreen />,
       ROUTES.PROFILE_SECURITY,
       {},

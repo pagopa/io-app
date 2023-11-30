@@ -5,7 +5,7 @@ import { interpret } from "xstate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IDPayPaymentRoutes } from "../../navigation/navigator";
 import { Context, INITIAL_CONTEXT } from "../../xstate/context";
 import { PaymentFailureEnum } from "../../xstate/failure";
@@ -115,7 +115,7 @@ const renderComponent = (context?: Partial<Context>) => {
   const mockService = interpret(mockMachine);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => (
         <PaymentMachineContext.Provider value={mockService}>
           <IDPayPaymentResultScreen />

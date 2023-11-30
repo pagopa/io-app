@@ -12,7 +12,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { BackendStatusState } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 import BaseScreenComponent, { Props } from "../index";
 
@@ -99,7 +99,7 @@ describe("BaseScreenComponent", () => {
 
 function renderComponent(props = defaultProps, store: Store<GlobalState>) {
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BaseScreenComponent {...props} ref={undefined} />,
       ROUTES.MESSAGES_HOME,
       {},

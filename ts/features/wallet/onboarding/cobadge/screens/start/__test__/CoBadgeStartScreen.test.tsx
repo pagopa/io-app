@@ -10,7 +10,7 @@ import { applicationChangeState } from "../../../../../../../store/actions/appli
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { getGenericError } from "../../../../../../../utils/errors";
-import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../../utils/testWrapper";
 import { loadAbi } from "../../../../bancomat/store/actions";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../../../navigation/routes";
 import {
@@ -252,7 +252,7 @@ const getInitCoBadgeStartScreen = (abi: string) => {
 };
 
 const renderCoBadgeScreen = (store: Store<GlobalState, Action>) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <CoBadgeStartScreen />,
     WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE,
     {},

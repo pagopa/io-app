@@ -13,7 +13,7 @@ import {
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ProfileDataScreen from "../ProfileDataScreen";
 
 describe("Test ProfileDataScreen", () => {
@@ -94,7 +94,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <ProfileDataScreen />,
       ROUTES.PROFILE_DATA,
       {},

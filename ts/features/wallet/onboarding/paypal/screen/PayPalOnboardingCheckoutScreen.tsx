@@ -25,8 +25,8 @@ import {
   walletAddPaypalOutcome,
   walletAddPaypalRefreshPMToken
 } from "../store/actions";
-import { navigateToPayPalCheckoutCompleted } from "../store/actions/navigation";
 import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
+import PAYPAL_ROUTES from "../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -113,7 +113,9 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 
   const handleCheckoutCompleted = (outcomeCode: O.Option<string>) => {
     props.setOutcomeCode(outcomeCode);
-    navigation.dispatch(navigateToPayPalCheckoutCompleted());
+    navigation.navigate(PAYPAL_ROUTES.ONBOARDING.MAIN, {
+      screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_COMPLETED
+    });
   };
 
   // notify the user that the current onboarding operation will be interrupted

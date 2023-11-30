@@ -12,7 +12,7 @@ import {
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Download } from "../../../../store/reducers/entities/messages/downloads";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 const mockOpenPreview = jest.fn();
 
@@ -116,7 +116,7 @@ const renderComponent = (
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
 
-  return renderScreenFakeNavRedux(
+  return renderScreenWithNavigationStoreContext(
     () => <MessageF24 attachments={attachments} openPreview={openPreview} />,
     "DUMMY",
     {},
