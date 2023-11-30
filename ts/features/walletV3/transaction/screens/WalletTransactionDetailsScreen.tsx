@@ -87,18 +87,20 @@ const WalletTransactionDetailsScreen = () => {
       headerActionsProp={{ showHelp: true }}
     >
       <FocusAwareStatusBar barStyle={"dark-content"} />
-      {/* The following line is used to show the background color gray that overlay the basic one which is whie */}
-      <View style={styles.bottomBackground} />
-      <WalletTransactionHeadingSection
-        transaction={transactionDetails}
-        psp={transactionPsp}
-        loading={isLoading}
-      />
-      <WalletTransactionInfoSection
-        transaction={transactionDetails}
-        psp={transactionPsp}
-        loading={isLoading}
-      />
+      <View style={styles.wrapper}>
+        {/* The following line is used to show the background color gray that overlay the basic one which is white */}
+        <View style={styles.bottomBackground} />
+        <WalletTransactionHeadingSection
+          transaction={transactionDetails}
+          psp={transactionPsp}
+          loading={isLoading}
+        />
+        <WalletTransactionInfoSection
+          transaction={transactionDetails}
+          psp={transactionPsp}
+          loading={isLoading}
+        />
+      </View>
     </RNavScreenWithLargeHeader>
   );
 };
