@@ -9,6 +9,7 @@ import {
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { selectOnboardingFailure } from "../xstate/selectors";
+import I18n from "../../../../i18n";
 
 const FailureScreen = () => {
   const machine = useOnboardingMachineService();
@@ -16,8 +17,8 @@ const FailureScreen = () => {
 
   const defaultCloseAction = React.useMemo(
     () => ({
-      label: "Chiudi",
-      accessibilityLabel: "Chiudi",
+      label: I18n.t("global.buttons.close"),
+      accessibilityLabel: I18n.t("global.buttons.close"),
       onPress: () => machine.send({ type: "QUIT_ONBOARDING" })
     }),
     [machine]
@@ -25,8 +26,10 @@ const FailureScreen = () => {
 
   const goToInitiativeAction = React.useMemo(
     () => ({
-      label: "Vai all’iniziativa",
-      accessibilityLabel: "Vai all’iniziativa",
+      label: I18n.t("idpay.onboarding.failure.button.goToInitiative"),
+      accessibilityLabel: I18n.t(
+        "idpay.onboarding.failure.button.goToInitiative"
+      ),
       onPress: () => machine.send({ type: "SHOW_INITIATIVE_DETAILS" })
     }),
     [machine]
@@ -35,9 +38,8 @@ const FailureScreen = () => {
   const genericErrorProps = React.useMemo<OperationResultScreenContentProps>(
     () => ({
       pictogram: "umbrellaNew",
-      title: "Si è verificato un errore imprevisto",
-      subtitle:
-        "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi.",
+      title: I18n.t("idpay.onboarding.failure.message.GENERIC.title"),
+      subtitle: I18n.t("idpay.onboarding.failure.message.GENERIC.subtitle"),
       action: defaultCloseAction
     }),
     [defaultCloseAction]
@@ -47,75 +49,109 @@ const FailureScreen = () => {
     failure: OnboardingFailureEnum
   ): OperationResultScreenContentProps => {
     switch (failure) {
-      case OnboardingFailureEnum.INITIATIVE_NOT_STARTED:
+      case OnboardingFailureEnum.INITIATIVE_NOT_FOUND:
         return {
-          pictogram: "umbrellaNew",
-          title: "Le iscrizioni non sono ancora aperte",
-          subtitle:
-            "Consulta le regole dell’iniziativa per scoprire quando sarà possibile aderire all’iniziativa.",
-          action: defaultCloseAction
-        };
-      case OnboardingFailureEnum.INITIATIVE_ENDED:
-        return {
-          pictogram: "umbrellaNew",
-          title: "Le iscrizioni sono terminate",
-          subtitle:
-            "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore.",
-          action: defaultCloseAction
-        };
-      case OnboardingFailureEnum.BUDGET_EXHAUSTED:
-        return {
-          pictogram: "fatalError",
-          title: "I fondi messi a disposizione dall’ente sono terminati",
-          subtitle:
-            "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore.",
+          pictogram: "search",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_FOUND.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_FOUND.subtitle"
+          ),
           action: defaultCloseAction
         };
       case OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS:
         return {
           pictogram: "accessDenied",
-          title: "Non hai i requisiti per aderire a questa iniziativa",
-          subtitle:
-            "I controlli di verifica hanno già dato esito negativo.\nSe pensi ci sia un errore, contatta l’ente promotore.",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.subtitle"
+          ),
           action: defaultCloseAction
         };
       case OnboardingFailureEnum.USER_NOT_IN_WHITELIST:
         return {
           pictogram: "accessDenied",
-          title: "Questa iniziativa non è rivolta a te",
-          subtitle:
-            "Il tuo Codice Fiscale non è incluso nella lista di chi ha diritto ai fondi previsti dall’iniziativa. Per maggiori informazioni, contatta l’ente promotore.",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.INITIATIVE_NOT_STARTED:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.INITIATIVE_ENDED:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_ENDED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_ENDED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.BUDGET_EXHAUSTED:
+        return {
+          pictogram: "fatalError",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.USER_UNSUBSCRIBED:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.subtitle"
+          ),
+          action: defaultCloseAction,
+          secondaryAction: goToInitiativeAction
+        };
+      case OnboardingFailureEnum.USER_ONBOARDED:
+        return {
+          pictogram: "success",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_ONBOARDED.title"
+          ),
+          action: goToInitiativeAction
+        };
+      case OnboardingFailureEnum.NOT_ELIGIBLE:
+        return {
+          pictogram: "completed",
+          title: I18n.t("idpay.onboarding.failure.message.NOT_ELIGIBLE.title"),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.NOT_ELIGIBLE.subtitle"
+          ),
           action: defaultCloseAction
         };
       case OnboardingFailureEnum.ON_EVALUATION:
         return {
           pictogram: "pending",
-          title: "L’ente sta valutando la tua domanda d’adesione",
-          subtitle:
-            "Quando pronto, riceverai l’esito tramite un messaggio in app.",
+          title: I18n.t("idpay.onboarding.failure.message.ON_EVALUATION.title"),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.ON_EVALUATION.subtitle"
+          ),
           action: defaultCloseAction
-        };
-      case OnboardingFailureEnum.NOT_ELIGIBLE:
-        return {
-          pictogram: "completed",
-          title: "Non risulti in graduatoria",
-          subtitle: "Per maggiori informazioni, contatta l’ente promotore.",
-          action: defaultCloseAction
-        };
-      case OnboardingFailureEnum.USER_ONBOARDED:
-        return {
-          pictogram: "success",
-          title: "Hai già aderito a questa iniziativa",
-          action: goToInitiativeAction
-        };
-      case OnboardingFailureEnum.USER_UNSUBSCRIBED:
-        return {
-          pictogram: "accessDenied",
-          title: "Non puoi aderire di nuovo",
-          subtitle:
-            "Hai già effettuato il recesso da questa iniziativa. Per maggiori informazioni, contatta l’ente promotore.",
-          action: defaultCloseAction,
-          secondaryAction: goToInitiativeAction
         };
       default:
         return genericErrorProps;

@@ -48,6 +48,8 @@ const mapErrorCodeToFailure = (
   code: OnboardingErrorCodeEnum
 ): OnboardingFailure => {
   switch (code) {
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
+      return OnboardingFailureEnum.INITIATIVE_NOT_FOUND;
     case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
       return OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
