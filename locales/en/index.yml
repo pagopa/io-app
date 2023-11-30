@@ -74,6 +74,7 @@ global:
         expired: "Expired"
         revoked: "Revoked"
         canceled: "Canceled"
+        inprogress: "Ongoing"
   password: Password
   username: Username
   unknown: unknown
@@ -84,6 +85,7 @@ global:
     minusSymbol: minus
     switchLabel: "Select to activate"
     reload: "Reload"
+    search: "Search"
     inputLabel: "{{header}}, Header"
     textField: "{{inputLabel}}, text field"
     description: Description
@@ -674,6 +676,8 @@ authentication:
     contentTitle: Don't have SPID?
     subtitle: SPID is safe
   opt-in:
+    contextualHelpTitle: Authentication
+    contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
     title: It's now faster to log into IO
     identity-check: You'll need to log in with SPID or CIE only once a year, or in case you log out.
@@ -723,24 +727,24 @@ authentication:
   expiredSessionBanner:
     title: Security notice
     message: To keep your private information safe, please login again with your SPID credentials, thanks!
-  unlock: 
+  unlock:
     title: Unlock access
-    subtitlel2: In order to use the app, you must first unlock access to IO. 
+    subtitlel2: In order to use the app, you must first unlock access to IO.
     subtitlel3: To be able to access the app with all your SPID or CIE identities, unlock access.
     learnmore: Learn more
     loginIO: Close
-  unlockmodal: 
+  unlockmodal:
     title: What does it mean?
     description1_1: If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.
     description1_2: Otherwise, you can access it in the app by logging in with the
-    description1_3: maximum level of safety. 
+    description1_3: maximum level of safety.
     description1_4: This type of authentication requires a username, password, and physical device, such as CIE.
     title2: How to unlock IO access
-    listitem1:  Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.
+    listitem1: Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.
     listitem2_1: Access IO from the web, using your SPID or CIE credentials.
     listitem2_2: Go to the site
     listitem3_1: Go to the section
-    listitem3_2: Unlock access to IO 
+    listitem3_2: Unlock access to IO
     listitem3_3: and follow the given steps. When prompted enter the
     listitem3_4: recovery code
     listitem3_5: to confirm the operation.
@@ -771,6 +775,9 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+    alertTitle: This email address is already in use
+    alertDescription: This may happen if you share the same email address with a family member
+    alertButton: Use another email address
   newinsert:
     header: "Configure IO"
     title: "What is your email address?"
@@ -838,7 +845,7 @@ onboarding:
       invalid: The code is not valid
       match: The code doesn’t match
     policy:
-      headerTitle: "For security reasons, the code must not contain:"
+      headerTitle: "Choose a code that's hard to guess and doesn't contain:"
       first: repeated numbers (e.g. 000000)
       second: a number sequence (e.g. 123456 or 654321)
   alert:
@@ -1172,8 +1179,29 @@ wallet:
     generalError: "There was a generic error while adding the payment method"
     success:
       title: "Payment method added successfully!"
-      continueButton: "Continue"
-    failure: "Error while adding the card"
+      continueButton: "Vedi dettagli"
+    failure:
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.
+        primaryAction: Chiudi
+        secondaryAction: Scopri di più
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+        primaryAction: Chiudi
+      CANCELED_BY_USER:
+        title: L'operazione è stata annullata
+        subtitle: ""
+        primaryAction: Chiudi
+      INVALID_SESSION:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -3054,7 +3082,6 @@ features:
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
         payments: "Pagamenti"
       paymentSection:
-        legacyTitle: Avviso di pagamento
         title: Avvisi pagoPA
         morePayments: "Vedi tutti gli avvisi"
         bottomSheetTitle: "Quale avviso vuoi pagare?"
@@ -3252,6 +3279,21 @@ support:
     subTitle:
       category: "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
 idpay:
+  barCode:
+    resultScreen:
+      success:
+        header: Ecco il codice sconto!
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
+        expiresIn: "Il codice scade tra"
+        validUpTo: "Vale fino a "
+        expired: "Il codice é scaduto."
+        saveImageCta: Salva come immagine
+      error:
+        generic:
+          body: In questo momento non è possibile generare un codice
+      loading:
+        body: Sto recuperando il codice sconto
+        subtitle: Attendi qualche secondo
   code:
     reset:
       title: Codice ID Pay
@@ -3336,22 +3378,24 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: "Pagamento"
-              ONBOARDING: "Adesione all'iniziativa"
-              ADD_IBAN: "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
-              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION: "Pagamento POS"
-              REVERSAL: "Pagamento POS"
-              DELETE_INSTRUMENT: "Disattivazione metodo ···· {{maskedPan}}"
-              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN: "Disattivazione metodo"
-              REJECTED_ADD_INSTRUMENT: "Attivazione metodo"
-              PAID_REFUND: "Rimborso sul tuo conto"
-              REJECTED_REFUND: "Rimborso sul tuo conto"
+              TRANSACTION_ONLINE: "Pagamento online"
+              ONBOARDING: "Adesione all'iniziativa"
+              ADD_IBAN: "IBAN modificato"
+              ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REJECTED_ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              REJECTED_DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REFUND: "Rimborso sul tuo conto"
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
+              CIE: "Abilitazione carta d’identità elettronica"
+              UNSUBSCRIBED: "Recesso dall’iniziativa"
     discountDetails:
       authorizeButton: Autorizza un pagamento
+      bottomSheetOptions:
+        scanQr: Inquadra un codice QR
+        generateBarcode: Crea un codice sconto
       IDPayCode:
         banner:
           title: Paga con la tua carta d’identità elettronica
@@ -3384,6 +3428,7 @@ idpay:
       spendFrom: A partire dal giorno
       spendTo: Entro il giorno
       spendPercentage: Percentuale riconosciuta
+      spendValue: Importo riconosciuto
       enrollmentDetails: Dettagli dell'adesione
       enrollmentDate: Data
       protocolNumber: Numero di protocollo
@@ -3555,7 +3600,7 @@ idpay:
           title: "Usa la Carta d'identità elettronica"
           description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
           actionItem: "Come funziona?"
-        QRCODE:
+        APP_IO_PAYMENT:
           title: "Usa l'app IO"
           description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
           actionItem: "Come funziona?"

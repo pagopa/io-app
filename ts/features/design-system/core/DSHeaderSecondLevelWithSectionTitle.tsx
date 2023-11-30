@@ -8,14 +8,13 @@ import Animated, {
 } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
 import {
-  IconButton,
+  H3,
+  HeaderSecondLevel,
   IOColors,
   IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
-import { NewH3 } from "../../../components/core/typography/NewH3";
-import HeaderSecondLevel from "../../../components/ui/HeaderSecondLevel";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 
 const styles = StyleSheet.create({
@@ -48,21 +47,21 @@ export const DSHeaderSecondLevelWithSectionTitle = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
+          goBack={navigation.goBack}
+          backAccessibilityLabel={"Torna indietro"}
           scrollValues={{
             contentOffsetY: translationY,
             triggerOffset: titleHeight
           }}
           title={"Seleziona un argomento"}
-          firstAction={
-            <IconButton
-              icon="help"
-              color="neutral"
-              onPress={() => {
-                Alert.alert("Contextual Help");
-              }}
-              accessibilityLabel={""}
-            />
-          }
+          type="singleAction"
+          firstAction={{
+            icon: "help",
+            onPress: () => {
+              Alert.alert("Contextual Help");
+            },
+            accessibilityLabel: ""
+          }}
         />
       )
     });
@@ -83,7 +82,7 @@ export const DSHeaderSecondLevelWithSectionTitle = () => {
       <View onLayout={getTitleHeight}>
         <VSpacer size={8} />
         <Text style={styles.sectionTitle}>Apri una richiesta</Text>
-        <NewH3>Seleziona un argomento</NewH3>
+        <H3>Seleziona un argomento</H3>
       </View>
       <VSpacer size={8} />
       <Body>

@@ -19,11 +19,7 @@ import {
   performFastLogin,
   performGetNonce
 } from "../backend";
-import {
-  apiUrlPrefix,
-  fastLoginBypassGetNonce,
-  fastLoginMaxRetries
-} from "../../../config";
+import { apiUrlPrefix, fastLoginMaxRetries } from "../../../config";
 import { SagaCallReturnType } from "../../../types/utils";
 import { LollipopConfig } from "../../lollipop";
 import { getKeyInfo } from "../../lollipop/saga";
@@ -47,6 +43,7 @@ import {
   refreshTokenNoPinError
 } from "../store/actions/tokenRefreshActions";
 import { getPin } from "../../../utils/keychain";
+import { dismissSupport } from "../../../utils/supportAssistance";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -57,6 +54,9 @@ function* handleRefreshSessionToken(
     typeof refreshSessionToken.request
   >
 ) {
+  // Dismiss Zendesk Support Screen if it is visible
+  yield* call(dismissSupport);
+
   const isPinAvailable = O.isSome(yield* call(getPin));
 
   const { withUserInteraction } = refreshSessionTokenRequestAction.payload;
@@ -126,10 +126,7 @@ function* doRefreshTokenSaga(
 
   while (requestState.status === "in-progress") {
     try {
-      const nonceResponse: SagaCallReturnType<typeof performGetNonce> =
-        fastLoginBypassGetNonce
-          ? E.right({ status: 200, value: { nonce: "nonce" }, headers: {} })
-          : yield* call(performGetNonce, nonceClient);
+      const nonceResponse = yield* call(performGetNonce, nonceClient);
 
       if (E.isRight(nonceResponse) && nonceResponse.right.status === 200) {
         const nonce = nonceResponse.right.value.nonce;

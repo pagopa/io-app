@@ -32,6 +32,29 @@ export const formatNumberCurrencyCentsOrDefault = (
   );
 
 /**
+ * Formats an absolute number amount or returns a default value if the input is undefined.
+ *
+ * This function takes a number and converts it into its absolute value, then formats it as a string
+ * using the 'formatNumberAmount' function. If the input is undefined, it returns the specified default value.
+ *
+ * @param {number | undefined} amount - The number to be formatted, or undefined if not available.
+ * @param {string} [defaultValue='-'] - The default value to be returned when the input 'amount' is undefined.
+ *
+ * @returns {string} - The formatted absolute number as a string or the default value.
+ */
+export const formatAbsNumberAmountOrDefault = (
+  amount: number | undefined,
+  defaultValue: string = "-"
+) =>
+  pipe(
+    amount,
+    O.fromNullable,
+    O.map(Math.abs),
+    O.map(formatNumberAmount),
+    O.getOrElse(() => defaultValue)
+  );
+
+/**
  *   Takes a nullable date and formats it to a string.
  *   - Base default : '-'
  *   - Base format: 'D MMMM YYYY, HH:mm'

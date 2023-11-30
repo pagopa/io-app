@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.14.0.tgz#8640e84349a36d8518013333a3b194c6ef0d0d2b"
-  integrity sha512-H6ezRY+rTL1zbpwVe3Dl2hR3ftncbaf0LOiVi+U/uDcgSDD7oQhA4ESwgo32qSun+9gwkMYqaQoFdVPhudig2w==
+"@pagopa/io-app-design-system@1.17.2":
+  version "1.17.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.17.2.tgz#69472cb6fd484ffa1a952d1944d4bb63ce6f3004"
+  integrity sha512-RfrjQ781UnYfjAKAP4GNnlgDdlKwcKfsHbxV6x6S+msDZOat3Bpu3I/fMQpD65disydbcFNbi6JNmgABY+f4+Q==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -9977,9 +9977,9 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.24":
+"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.25":
   version "0.3.23"
-  resolved "https://github.com/pagopa/io-react-native-zendesk.git#62559dc219583834f0bae2864d959f51f2d19572"
+  resolved "https://github.com/pagopa/io-react-native-zendesk.git#66492028f52d3c64392ac4174d80d6fbf65d0e92"
 
 io-ts@2.2.20:
   version "2.2.20"

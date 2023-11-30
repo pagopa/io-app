@@ -26,7 +26,6 @@ import {
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 import { H1 } from "../../components/core/typography/H1";
-import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
 import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
@@ -123,8 +122,6 @@ const OnboardingTosScreen = () => {
       ]
     );
 
-  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
-
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
       <BaseScreenComponent
@@ -164,7 +161,6 @@ const OnboardingTosScreen = () => {
             shouldRenderFooter={!isLoading}
             onExit={handleGoBack}
             onAcceptTos={() => {
-              checkToShowWhatsNew(true);
               dispatch(tosAccepted(tosVersion));
               trackTosAccepted(
                 tosVersion,
@@ -172,7 +168,6 @@ const OnboardingTosScreen = () => {
               );
             }}
           />
-          {autoResizableBottomSheet}
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>

@@ -18,6 +18,10 @@ import { useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
 import {
+  BiometriActivationUserType,
+  mayUserActivateBiometric
+} from "../../../utils/biometrics";
+import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined,
   trackBiometricActivationEducationalScreen
@@ -125,16 +129,31 @@ const FingerprintScreen = () => {
           }}
           rightButton={{
             title: I18n.t("global.buttons.activate2"),
-            onPress: () => {
-              trackBiometricActivationAccepted(
-                getFlowType(true, isFirstOnBoarding)
-              );
-              dispatch(
-                preferenceFingerprintIsEnabledSaveSuccess({
-                  isFingerprintEnabled: true
+            onPress: () =>
+              mayUserActivateBiometric()
+                .then(_ => {
+                  trackBiometricActivationAccepted(
+                    getFlowType(true, isFirstOnBoarding)
+                  );
+
+                  dispatch(
+                    preferenceFingerprintIsEnabledSaveSuccess({
+                      isFingerprintEnabled: true
+                    })
+                  );
                 })
-              );
-            }
+                .catch((err: BiometriActivationUserType) => {
+                  if (err === "PERMISSION_DENIED") {
+                    trackBiometricActivationDeclined(
+                      getFlowType(true, isFirstOnBoarding)
+                    );
+                    dispatch(
+                      preferenceFingerprintIsEnabledSaveSuccess({
+                        isFingerprintEnabled: false
+                      })
+                    );
+                  }
+                })
           }}
         />
       </View>

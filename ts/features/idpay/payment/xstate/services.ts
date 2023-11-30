@@ -18,15 +18,35 @@ export type Services = {
 };
 
 export const failureMap: Record<CodeEnum, PaymentFailureEnum> = {
-  [CodeEnum.PAYMENT_NOT_FOUND_EXPIRED]: PaymentFailureEnum.EXPIRED,
+  [CodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED]: PaymentFailureEnum.EXPIRED,
   [CodeEnum.PAYMENT_BUDGET_EXHAUSTED]: PaymentFailureEnum.BUDGET_EXHAUSTED,
   [CodeEnum.PAYMENT_GENERIC_REJECTED]: PaymentFailureEnum.REJECTED,
-  [CodeEnum.PAYMENT_USER_NOT_VALID]: PaymentFailureEnum.REJECTED,
-  [CodeEnum.PAYMENT_STATUS_NOT_VALID]: PaymentFailureEnum.GENERIC,
+  // FIXME::ERROR_HANDLING [IOBP-379]
+  // those lines had to be commented out since those errors are not in the DTO anymore
+  // [CodeEnum.PAYMENT_USER_NOT_VALID]: PaymentFailureEnum.REJECTED,
+  // [CodeEnum.PAYMENT_STATUS_NOT_VALID]: PaymentFailureEnum.GENERIC,
   [CodeEnum.PAYMENT_GENERIC_ERROR]: PaymentFailureEnum.GENERIC,
   [CodeEnum.PAYMENT_TOO_MANY_REQUESTS]: PaymentFailureEnum.TOO_MANY_REQUESTS,
   [CodeEnum.PAYMENT_ALREADY_AUTHORIZED]: PaymentFailureEnum.AUTHORIZED,
-  [CodeEnum.PAYMENT_USER_SUSPENDED]: PaymentFailureEnum.AUTHORIZED
+  [CodeEnum.PAYMENT_USER_SUSPENDED]: PaymentFailureEnum.AUTHORIZED,
+  [CodeEnum.PAYMENT_TRANSACTION_EXPIRED]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_INITIATIVE_NOT_FOUND]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_INITIATIVE_INVALID_DATE]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_INITIATIVE_NOT_DISCOUNT]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_USER_NOT_ONBOARDED]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_USER_UNSUBSCRIBED]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_ALREADY_ASSIGNED]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_NOT_ALLOWED_FOR_TRX_STATUS]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_NOT_ALLOWED_MISMATCHED_MERCHANT]:
+    PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_USER_NOT_ASSOCIATED]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_DELETE_NOT_ALLOWED_FOR_TRX_STATUS]:
+    PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_UNRELATE_NOT_ALLOWED_FOR_TRX_STATUS]:
+    PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_AMOUNT_NOT_VALID]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_MERCHANT_NOT_ONBOARDED]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_INVALID_REQUEST]: PaymentFailureEnum.GENERIC
 };
 
 /**

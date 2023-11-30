@@ -2,8 +2,6 @@ import React from "react";
 import { Dimensions, View } from "react-native";
 import {
   Badge,
-  ButtonLink,
-  ButtonSolid,
   ContentWrapper,
   FeatureInfo,
   GradientScrollView,
@@ -35,10 +33,9 @@ import {
   trackLoginSessionOptInInfo
 } from "../../features/fastLogin/analytics/optinAnalytics";
 
-// FIXME -> insert correct contextual help and FAQ https://pagopa.atlassian.net/browse/IOPID-987
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.landing.contextualHelpTitle",
-  body: "authentication.landing.contextualHelpContent"
+  title: "authentication.opt-in.contextualHelpTitle",
+  body: "authentication.opt-in.contextualHelpContent"
 };
 
 export type ChosenIdentifier = {
@@ -129,23 +126,18 @@ const NewOptInScreen = (props: Props) => {
     >
       <GradientScrollView
         testID="container-test"
-        primaryAction={
-          <ButtonSolid
-            fullWidth
-            label={I18n.t("authentication.opt-in.button-accept-lv")}
-            accessibilityLabel={"Click to continue with fast access"}
-            onPress={() => navigateToIdpPage(true)}
-            testID="accept-button-test"
-          />
-        }
-        secondaryAction={
-          <ButtonLink
-            label={I18n.t("authentication.opt-in.button-decline-lv")}
-            accessibilityLabel={"Click to continue with classic access"}
-            onPress={() => navigateToIdpPage(false)}
-            testID="decline-button-test"
-          />
-        }
+        primaryActionProps={{
+          label: I18n.t("authentication.opt-in.button-accept-lv"),
+          accessibilityLabel: I18n.t("authentication.opt-in.button-accept-lv"),
+          onPress: () => navigateToIdpPage(true),
+          testID: "accept-button-test"
+        }}
+        secondaryActionProps={{
+          label: I18n.t("authentication.opt-in.button-decline-lv"),
+          accessibilityLabel: I18n.t("authentication.opt-in.button-decline-lv"),
+          onPress: () => navigateToIdpPage(false),
+          testID: "decline-button-test"
+        }}
       >
         <ContentWrapper>
           {Dimensions.get("screen").height > 780 && (

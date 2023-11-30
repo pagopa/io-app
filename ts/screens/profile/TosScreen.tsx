@@ -6,14 +6,13 @@ import * as React from "react";
 import { useCallback, useState } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { privacyUrl } from "../../config";
 import I18n from "../../i18n";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { trackTosScreen } from "./analytics";
 
 const styles = StyleSheet.create({
@@ -32,6 +31,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
+  useHeaderSecondLevel({
+    title: I18n.t("profile.main.privacy.privacyPolicy.title"),
+    supportRequest: true,
+    contextualHelpMarkdown,
+    faqCategories: ["privacy"]
+  });
 
   useOnFirstRender(() => {
     trackTosScreen(getFlowType(false, false));
@@ -47,21 +52,14 @@ const TosScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <BaseScreenComponent
-        goBack={true}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["privacy"]}
-        headerTitle={I18n.t("profile.main.privacy.privacyPolicy.title")}
-      >
-        <SafeAreaView style={styles.webViewContainer}>
-          <TosWebviewComponent
-            handleLoadEnd={handleLoadEnd}
-            handleReload={handleReload}
-            webViewSource={{ uri: privacyUrl }}
-            shouldRenderFooter={false}
-          />
-        </SafeAreaView>
-      </BaseScreenComponent>
+      <SafeAreaView style={styles.webViewContainer}>
+        <TosWebviewComponent
+          handleLoadEnd={handleLoadEnd}
+          handleReload={handleReload}
+          webViewSource={{ uri: privacyUrl }}
+          shouldRenderFooter={false}
+        />
+      </SafeAreaView>
     </LoadingSpinnerOverlay>
   );
 };

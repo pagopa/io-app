@@ -74,6 +74,7 @@ global:
         expired: "Scaduto"
         revoked: "Revocato"
         canceled: "Annullato"
+        inprogress: "In corso"
   password: Password
   username: Username
   disclaimer_beta: Se riscontri problemi di accesso, segnalacelo!
@@ -83,6 +84,7 @@ global:
   accessibility:
     minusSymbol: meno
     reload: "Ricarica"
+    search: "Cerca"
     switchLabel: "Seleziona per attivare"
     inputLabel: "{{header}}, Intestazione"
     textField: "{{inputLabel}}, campo di testo"
@@ -674,6 +676,8 @@ authentication:
     contentTitle: Cos'è SPID?
     subtitle: SPID è sicuro
   opt-in:
+    contextualHelpTitle: Autenticazione
+    contextualHelpContent: Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.
     news: novità
     title: Da oggi accedi a IO più velocemente
     identity-check: Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
@@ -723,26 +727,26 @@ authentication:
   expiredSessionBanner:
     title: Avviso di sicurezza
     message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
-  unlock: 
+  unlock:
     title: Sblocca l’accesso
-    subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO. 
+    subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO.
     subtitlel3: Per poter accedere all’app con tutte le tue identità SPID o CIE, sblocca l’accesso.
     learnmore: Scopri di più
     loginIO: Chiudi
-  unlockmodal: 
+  unlockmodal:
     title: Cosa significa?
-    description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo. 
+    description1_1: Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo.
     description1_2: In alternativa, è possibile entrare in app utilizzando un accesso con il
-    description1_3: livello massimo di sicurezza. 
+    description1_3: livello massimo di sicurezza.
     description1_4: Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.
     title2: Come sbloccare l’accesso a IO
-    listitem1:  Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
+    listitem1: Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
     listitem2_1: Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.
     listitem2_2: Vai al sito
-    listitem3_1: Vai alla sezione 
-    listitem3_2: Sblocca accesso a IO 
+    listitem3_1: Vai alla sezione
+    listitem3_2: Sblocca accesso a IO
     listitem3_3: e segui i passaggi indicati. Quando richiesto inserisci il
-    listitem3_4: codice di ripristino 
+    listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
 email:
   cduModal:
@@ -771,6 +775,9 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+    alertTitle: Questa email è già in uso
+    alertDescription: Può succedere se condividi lo stesso indirizzo con un familiare
+    alertButton: Usa un’altra email
   newinsert:
     header: Configura IO
     title: Qual è la tua email?
@@ -838,7 +845,7 @@ onboarding:
       invalid: Il codice non è valido
       match: Il codice non coincide
     policy:
-      headerTitle: "Per sicurezza, il codice non dovrà contenere:"
+      headerTitle: "Scegli un codice difficile da individuare e che non contenga:"
       first: ripetizioni di numeri (es. 000000)
       second: numeri in sequenza (es. 123456 o 654321)
   alert:
@@ -1172,8 +1179,29 @@ wallet:
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
     success:
       title: "La carta è stata aggiunta!"
-      continueButton: "Continua"
-    failure: "Errore durante l'aggiunta della carta"
+      continueButton: "Vedi dettagli"
+    failure:
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: Controlla di aver seguito correttamente le istruzioni della tua banca o app di pagamento.
+        primaryAction: Chiudi
+        secondaryAction: Scopri di più
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Per la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+        primaryAction: Chiudi
+      CANCELED_BY_USER:
+        title: L'operazione è stata annullata
+        subtitle: ""
+        primaryAction: Chiudi
+      INVALID_SESSION:
+        title: Si è verificato un errore imprevisto
+        subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -3054,10 +3082,9 @@ features:
         unpaidPayments: "Per l'eventuale rimborso di pagamenti legati a questa notifica, contatta l'ente mittente."
         payments: "Pagamenti"
       paymentSection:
-        legacyTitle: Avviso di pagamento
         title: "Avvisi pagoPA"
         morePayments: "Vedi tutti gli avvisi"
-        bottomSheetTitle: "Quale avviso vuoi pagare?" 
+        bottomSheetTitle: "Quale avviso vuoi pagare?"
       attachmentsSection:
         title: Allegati
       f24Section:
@@ -3252,6 +3279,21 @@ support:
     subTitle:
       category: "Aiutaci a capire meglio come possiamo aiutarti selezionando l’argomento del tuo problema: ti risponderemo il prima possibile, in orario lavorativo."
 idpay:
+  barCode:
+    resultScreen:
+      success:
+        header: Ecco il codice sconto!
+        body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
+        validUpTo: "Vale fino a " 
+        expiresIn: "Il codice scade tra"
+        expired: "Il codice é scaduto."
+        saveImageCta: Salva come immagine
+      error:
+        generic:
+          body: In questo momento non è possibile generare un codice
+      loading:
+        body: Sto recuperando il codice sconto
+        subtitle: Attendi qualche secondo
   code:
     reset:
       title: Codice ID Pay
@@ -3336,21 +3378,23 @@ idpay:
             title: Lista operazioni
             lastUpdated: "Ultimo aggiornamento: "
             operationDescriptions:
-              QRCODE_TRANSACTION: "Pagamento"
-              ONBOARDING: "Adesione all'iniziativa"
-              ADD_IBAN: "Aggiunto IBAN"
-              ADD_INSTRUMENT: "Attivazione metodo ···· {{maskedPan}}"
-              ADD_INSTRUMENT_WITHOUT_MASKED_PAN: "Attivazione metodo"
               TRANSACTION: "Pagamento POS"
-              REVERSAL: "Pagamento POS"
-              DELETE_INSTRUMENT: "Disattivazione metodo ···· {{maskedPan}}"
-              DELETE_INSTRUMENT_WITHOUT_MASKED_PAN: "Disattivazione metodo"
-              REJECTED_ADD_INSTRUMENT: "Attivazione metodo"
-              PAID_REFUND: "Rimborso sul tuo conto"
-              REJECTED_REFUND: "Rimborso sul tuo conto"
+              TRANSACTION_ONLINE: "Pagamento online"
+              ONBOARDING: "Adesione all'iniziativa"
+              ADD_IBAN: "IBAN modificato"
+              ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REJECTED_ADD_INSTRUMENT: "Attivazione metodo {{maskedPan}}"
+              REJECTED_DELETE_INSTRUMENT: "Disattivazione metodo {{maskedPan}}"
+              REFUND: "Rimborso sul tuo conto"
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
+              CIE: "Abilitazione carta d’identità elettronica"
+              UNSUBSCRIBED: "Recesso dall’iniziativa"
     discountDetails:
+      bottomSheetOptions:
+        scanQr: Inquadra un codice QR
+        generateBarcode: Crea un codice sconto
       authorizeButton: Autorizza un pagamento
       IDPayCode:
         banner:
@@ -3384,6 +3428,7 @@ idpay:
       spendFrom: A partire dal giorno
       spendTo: Entro il giorno
       spendPercentage: Percentuale riconosciuta
+      spendValue: Importo riconosciuto
       enrollmentDetails: Dettagli dell'adesione
       enrollmentDate: Data
       protocolNumber: Numero di protocollo
@@ -3555,7 +3600,7 @@ idpay:
           title: "Usa la Carta d'identità elettronica"
           description: "Appoggia la carta sul POS e inserisci il codice a 5 cifre per autorizzare la spesa."
           actionItem: "Come funziona?"
-        QRCODE:
+        APP_IO_PAYMENT:
           title: "Usa l'app IO"
           description: "Inquadra il codice QR mostrato dall’esercente e segui le istruzioni in app per autorizzare la spesa."
           actionItem: "Come funziona?"

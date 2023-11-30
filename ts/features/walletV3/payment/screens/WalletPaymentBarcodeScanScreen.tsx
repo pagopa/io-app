@@ -158,7 +158,7 @@ const WalletPaymentBarcodeScanScreen = () => {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["wallet"]}
         barcodeAnalyticsFlow="avviso"
-        isDisabled={isFilePickerVisible}
+        isDisabled={isFilePickerVisible || isFileReaderLoading}
         isLoading={isFileReaderLoading}
       />
       {filePickerBottomSheet}

@@ -37,6 +37,7 @@ interface OwnProps {
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   headerBody?: React.ReactNode;
   headerBackgroundColor?: ColorValue;
+  hideBaseHeader?: boolean;
   appLogo?: boolean;
   searchType?: SearchType;
   backButtonTestID?: string;
@@ -64,6 +65,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       hideHelpButton,
       faqCategories,
       goBack,
+      hideBaseHeader = false,
       headerBackgroundColor,
       headerBody,
       headerTitle,
@@ -122,27 +124,29 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
 
     return (
       <Container>
-        <BaseHeader
-          onAccessibilityNavigationHeaderFocus={
-            onAccessibilityNavigationHeaderFocus
-          }
-          backButtonTestID={backButtonTestID}
-          accessibilityEvents={accessibilityEvents}
-          accessibilityLabel={accessibilityLabel}
-          showChat={showChat}
-          primary={primary}
-          dark={dark}
-          goBack={goBack}
-          headerTitle={headerTitle}
-          backgroundColor={headerBackgroundColor}
-          onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
-          isSearchAvailable={isSearchAvailable}
-          body={headerBody}
-          appLogo={appLogo}
-          customRightIcon={customRightIcon}
-          customGoBack={customGoBack}
-          titleColor={titleColor}
-        />
+        {!hideBaseHeader && (
+          <BaseHeader
+            onAccessibilityNavigationHeaderFocus={
+              onAccessibilityNavigationHeaderFocus
+            }
+            backButtonTestID={backButtonTestID}
+            accessibilityEvents={accessibilityEvents}
+            accessibilityLabel={accessibilityLabel}
+            showChat={showChat}
+            primary={primary}
+            dark={dark}
+            goBack={goBack}
+            headerTitle={headerTitle}
+            backgroundColor={headerBackgroundColor}
+            onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
+            isSearchAvailable={isSearchAvailable}
+            body={headerBody}
+            appLogo={appLogo}
+            customRightIcon={customRightIcon}
+            customGoBack={customGoBack}
+            titleColor={titleColor}
+          />
+        )}
         {children}
       </Container>
     );

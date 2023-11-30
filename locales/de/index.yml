@@ -1008,7 +1008,6 @@ wallet:
     success:
       title: "Die Karte wurde hinzugefügt!"
       continueButton: "Weiter"
-    failure: "Fehler beim Hinzufügen einer Karte"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"

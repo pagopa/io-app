@@ -229,7 +229,6 @@ describe("IDPay Onboarding machine services", () => {
       [StatusEnum.ONBOARDING_KO, OnboardingFailureEnum.NO_REQUIREMENTS],
       [StatusEnum.ONBOARDING_OK, OnboardingFailureEnum.ONBOARDED],
       [StatusEnum.UNSUBSCRIBED, OnboardingFailureEnum.UNSUBSCRIBED],
-      [StatusEnum.ELIGIBLE, OnboardingFailureEnum.ON_EVALUATION],
       [StatusEnum.ON_EVALUATION, OnboardingFailureEnum.ON_EVALUATION]
     ];
 

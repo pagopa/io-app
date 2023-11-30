@@ -27,7 +27,7 @@ describe("MessageAttachments", () => {
 
   describe("given an attachment", () => {
     describe("when the pot is loading", () => {
-      it("it should show a loading indicator", async () => {
+      it("it should show a loading indicator", () => {
         [
           pot.noneLoading,
           pot.someLoading({ path: "path", attachment: mockPdfAttachment })
@@ -53,7 +53,7 @@ describe("MessageAttachments", () => {
     });
 
     describe("when the pot is NOT loading", () => {
-      it("it should NOT show a loading indicator", async () => {
+      it("it should NOT show a loading indicator", () => {
         [
           pot.none,
           pot.noneError(new Error()),
@@ -97,7 +97,7 @@ describe("MessageAttachments", () => {
           }
         );
 
-        await act(async () =>
+        await act(() =>
           store.dispatch(
             downloadAttachment.failure({
               attachment: mockPdfAttachment,

@@ -20,6 +20,7 @@ import {
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { isNewCduFlow } from "../../config";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -37,11 +38,17 @@ const ProfileDataScreen: React.FC<Props> = ({
   hasProfileEmail,
   nameSurname
 }): React.ReactElement => {
-  const onPressEmail = () =>
-    hasProfileEmail
-      ? navigateToEmailReadScreen()
-      : navigateToEmailInsertScreen();
-
+  const onPressEmail = () => {
+    if (hasProfileEmail) {
+      if (isNewCduFlow) {
+        navigateToEmailInsertScreen();
+      } else {
+        navigateToEmailReadScreen();
+      }
+    } else {
+      navigateToEmailInsertScreen();
+    }
+  };
   return (
     <TopScreenComponent
       contextualHelpMarkdown={contextualHelpMarkdown}

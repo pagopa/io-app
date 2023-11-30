@@ -17,6 +17,8 @@ import {
   zendeskRequestTicketNumber,
   zendeskSelectedCategory,
   zendeskSelectedSubcategory,
+  zendeskStartPolling,
+  zendeskStopPolling,
   zendeskSupportStart
 } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -36,6 +38,7 @@ export type ZendeskState = {
   selectedCategory?: ZendeskCategory;
   selectedSubcategory?: ZendeskSubCategory;
   ticketNumber: pot.Pot<number, Error>;
+  getSessionPollingRunning?: boolean;
 };
 
 const INITIAL_STATE: ZendeskState = {
@@ -48,6 +51,16 @@ const reducer = (
   action: Action
 ): ZendeskState => {
   switch (action.type) {
+    case getType(zendeskStopPolling):
+      return {
+        ...state,
+        getSessionPollingRunning: false
+      };
+    case getType(zendeskStartPolling):
+      return {
+        ...state,
+        getSessionPollingRunning: true
+      };
     case getType(zendeskSupportStart):
       return {
         ...state,
@@ -98,6 +111,9 @@ const reducer = (
   }
   return state;
 };
+
+export const zendeskGetSessionPollingRunningSelector = (state: GlobalState) =>
+  state.assistanceTools.zendesk.getSessionPollingRunning ?? false;
 
 export const zendeskConfigSelector = createSelector(
   [(state: GlobalState) => state.assistanceTools.zendesk.zendeskConfig],

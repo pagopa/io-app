@@ -1,0 +1,62 @@
+import { LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import { format } from "date-fns";
+import * as React from "react";
+import { StyleSheet, View } from "react-native";
+import I18n from "../../../../i18n";
+import { ProgressBar } from "../../../bonus/bpd/screens/details/components/summary/base/ProgressBar";
+
+type Props = {
+  secondsToExpiration: number;
+  secondsExpirationTotal: number;
+};
+
+export const IdPayBarcodeExpireProgressBar = ({
+  secondsToExpiration,
+  secondsExpirationTotal
+}: Props) => {
+  const [seconds, setSeconds] = React.useState(secondsToExpiration);
+  const isCodeExpired = seconds === 0;
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setSeconds(currentSecs => currentSecs - 1);
+    }, 1000);
+    if (seconds <= 0) {
+      setSeconds(0);
+      clearInterval(timer);
+    }
+    return () => clearInterval(timer);
+    // possible over-engineering, but we actually
+    // only need to run zero checks once the code is expired,
+    // there is no reason to rerun this hook every second
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCodeExpired]);
+
+  const formattedExpireMinutesString = isCodeExpired
+    ? ""
+    : format(new Date(seconds * 1000), "mm:ss");
+
+  return (
+    <View style={{ alignContent: "center" }}>
+      <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
+      <VSpacer size={8} />
+      <View style={styles.centeredRow}>
+        <LabelSmall weight="Regular" color="black">
+          {
+            I18n.t(
+              `idpay.barCode.resultScreen.success.${
+                isCodeExpired ? "expired" : "expiresIn"
+              }`
+            ) + " " /* added spacing to better format */
+          }
+        </LabelSmall>
+        <LabelSmall weight="SemiBold" color="black">
+          {formattedExpireMinutesString}
+        </LabelSmall>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  centeredRow: { flexDirection: "row", justifyContent: "center" }
+});

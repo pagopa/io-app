@@ -18,6 +18,8 @@ export const getBadgeTextByPaymentNoticeStatus = (
       return I18n.t("global.modules.paymentNotice.badges.revoked");
     case "canceled":
       return I18n.t("global.modules.paymentNotice.badges.canceled");
+    case "in-progress":
+      return I18n.t("global.modules.paymentNotice.badges.inprogress");
     default:
       return "";
   }

@@ -5,11 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import {
-  disableWhatsNew,
-  enableWhatsNewCheck,
-  whatsNewDisplayed
-} from "../actions";
+import { disableWhatsNew } from "../actions";
 import { ACTIVE_VERSION } from "../../versions";
 import {
   logoutFailure,
@@ -18,14 +14,10 @@ import {
 
 export type WhatsNewState = {
   lastVisualizedVersion?: number;
-  whatsNewCheckEnabled: boolean;
-  isWhatsNewDisplayed: boolean;
 };
 
 export const whatsNewInitialState: WhatsNewState = {
-  lastVisualizedVersion: undefined,
-  whatsNewCheckEnabled: false,
-  isWhatsNewDisplayed: false
+  lastVisualizedVersion: undefined
 };
 
 export const isActiveVersionVisualizedWhatsNewSelector = (
@@ -40,12 +32,6 @@ export const isActiveVersionVisualizedWhatsNewSelector = (
     )
   );
 
-export const isWhatsNewCheckEnabledSelector = (state: GlobalState): boolean =>
-  state.features.whatsNew.whatsNewCheckEnabled;
-
-export const isWhatsNewDisplayedSelector = (state: GlobalState): boolean =>
-  state.features.whatsNew.isWhatsNewDisplayed;
-
 export const whatsNewReducer = (
   state: WhatsNewState = whatsNewInitialState,
   action: Action
@@ -56,19 +42,7 @@ export const whatsNewReducer = (
       return whatsNewInitialState;
     case getType(disableWhatsNew):
       return {
-        lastVisualizedVersion: action.payload.whatsNewVersion,
-        whatsNewCheckEnabled: false,
-        isWhatsNewDisplayed: false
-      };
-    case getType(enableWhatsNewCheck):
-      return {
-        ...state,
-        whatsNewCheckEnabled: true
-      };
-    case getType(whatsNewDisplayed):
-      return {
-        ...state,
-        isWhatsNewDisplayed: true
+        lastVisualizedVersion: action.payload.whatsNewVersion
       };
   }
   return state;

@@ -34,7 +34,8 @@ const CgnAlreadyActiveScreen = (props: Props): React.ReactElement => (
           buttonProps: {
             onPress: props.navigateToDetail,
             label: I18n.t("bonus.cgn.cta.goToDetail"),
-            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail")
+            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail"),
+            testID: "cgnConfirmButtonTestId"
           }
         }}
       />

@@ -2,7 +2,6 @@ import React from "react";
 import {
   Body,
   ButtonLink,
-  ButtonSolid,
   ContentWrapper,
   FeatureInfo,
   GradientScrollView,
@@ -91,23 +90,18 @@ const UnlockAccessScreen = (props: Props) => {
     >
       <GradientScrollView
         testID="container-test"
-        primaryAction={
-          <ButtonSolid
-            fullWidth
-            testID="button-solid-test"
-            label={I18n.t("authentication.unlock.title")}
-            accessibilityLabel="Click here to unlock your profile"
-            onPress={() => openWebUrl("https://ioapp.it/")}
-          />
-        }
-        secondaryAction={
-          <ButtonLink
-            testID="button-link-test"
-            label={I18n.t("authentication.unlock.loginIO")}
-            accessibilityLabel="Click here to redirect to the landing screen"
-            onPress={() => navigation.navigate(ROUTES.AUTHENTICATION_LANDING)}
-          />
-        }
+        primaryActionProps={{
+          testID: "button-solid-test",
+          label: I18n.t("authentication.unlock.title"),
+          accessibilityLabel: "Click here to unlock your profile",
+          onPress: () => openWebUrl("https://ioapp.it/")
+        }}
+        secondaryActionProps={{
+          testID: "button-link-test",
+          label: I18n.t("authentication.unlock.loginIO"),
+          accessibilityLabel: "Click here to redirect to the landing screen",
+          onPress: () => navigation.navigate(ROUTES.AUTHENTICATION_LANDING)
+        }}
       >
         <SafeAreaView>
           <ContentWrapper>

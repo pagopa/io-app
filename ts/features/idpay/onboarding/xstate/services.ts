@@ -20,7 +20,6 @@ const onboardingStatusToFailure: Partial<
   [OnboardingStatusEnum.ONBOARDING_KO]: OnboardingFailureEnum.NO_REQUIREMENTS,
   [OnboardingStatusEnum.ONBOARDING_OK]: OnboardingFailureEnum.ONBOARDED,
   [OnboardingStatusEnum.UNSUBSCRIBED]: OnboardingFailureEnum.UNSUBSCRIBED,
-  [OnboardingStatusEnum.ELIGIBLE]: OnboardingFailureEnum.ON_EVALUATION,
   [OnboardingStatusEnum.ON_EVALUATION]: OnboardingFailureEnum.ON_EVALUATION,
   [OnboardingStatusEnum.SUSPENDED]: OnboardingFailureEnum.SUSPENDED
 };

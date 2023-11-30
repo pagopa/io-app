@@ -1,3 +1,9 @@
+import {
+  ButtonSolid,
+  ContentWrapper,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import { RouteProp, useFocusEffect } from "@react-navigation/native";
@@ -6,12 +12,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  ButtonSolid,
-  VSpacer,
-  Pictogram,
-  ContentWrapper
-} from "@pagopa/io-app-design-system";
 import Animated, { Layout } from "react-native-reanimated";
 import {
   InitiativeDTO,
@@ -26,8 +26,11 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
+import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
 import { BonusCounter } from "../components/InitiativeBonusCounter";
 import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
+import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
 import {
   InitiativeTimelineComponent,
@@ -40,10 +43,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
-import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
-import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
+import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -82,10 +82,7 @@ const InitiativeDetailsScreen = () => {
       params: { initiativeId }
     });
   };
-
-  const navigateToPaymentAuthorization = () => {
-    navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN);
-  };
+  const discountBottomSheet = useIdPayDiscountDetailsBottomSheet(initiativeId);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -270,8 +267,7 @@ const InitiativeDetailsScreen = () => {
                   accessibilityLabel={I18n.t(
                     "idpay.initiative.discountDetails.authorizeButton"
                   )}
-                  icon="qrCode"
-                  onPress={navigateToPaymentAuthorization}
+                  onPress={discountBottomSheet.present}
                   fullWidth={true}
                 />
               );
@@ -308,6 +304,7 @@ const InitiativeDetailsScreen = () => {
           footer={getInitiativeFooter(initiative)}
         >
           {getInitiativeDetailsContent(initiative)}
+          {discountBottomSheet.bottomSheet}
         </InitiativeDetailsBaseScreenComponent>
       )
     )

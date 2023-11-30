@@ -164,6 +164,7 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
   };
   const requestButtonProps: ButtonSolidProps = {
     label: props.primaryCtaText,
+    testID: "activate-bonus-button",
     accessibilityLabel: props.primaryCtaText,
     onPress: props.onConfirm ?? constNull
   };

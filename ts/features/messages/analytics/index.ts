@@ -163,3 +163,57 @@ export function trackNotificationRejected(tag: MessageCategory["tag"]) {
     buildEventProperties("UX", "exit")
   );
 }
+
+export function trackLoadMessageByIdFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_MESSAGE_BY_ID",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackLoadMessageDetailsFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_MESSAGE_DETAILS",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackLoadNextPageMessagesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_NEXT_PAGE_MESSAGES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackLoadPreviousPageMessagesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_LOAD_PREVIOUS_PAGE_MESSAGES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackReloadAllMessagesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_RELOAD_ALL_MESSAGES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
+
+export function trackUpsertMessageStatusAttributesFailure(reason: string) {
+  void mixpanelTrack(
+    "FAILURE_UPSERT_MESSAGE_STATUS_ATTRIBUTES",
+    buildEventProperties("TECH", undefined, {
+      reason
+    })
+  );
+}
