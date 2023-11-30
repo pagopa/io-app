@@ -5,6 +5,7 @@ import * as React from "react";
 import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { useMemo } from "react";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { setAccessibilityFocus } from "../../utils/accessibility";
@@ -24,7 +25,7 @@ type Props = WithTestID<
     subText?: string;
     retryButtonTitle?: string;
     cancelButtonTitle?: string;
-    ref: React.RefObject<View>;
+    ref?: React.RefObject<View>;
   }>
 >;
 
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
 });
 
 const GenericErrorComponent = (props: Props) => {
+  const ref = useMemo(() => props.ref ?? React.createRef<View>(), [props.ref]);
   const renderFooterButtons = () => {
     const footerProps1: TwoButtonsInlineHalf = {
       type: "TwoButtonsInlineHalf",
@@ -75,9 +77,9 @@ const GenericErrorComponent = (props: Props) => {
   useFocusEffect(
     React.useCallback(() => {
       if (props.avoidNavigationEvents !== true) {
-        setAccessibilityFocus(props.ref);
+        setAccessibilityFocus(ref);
       }
-    }, [props.ref, props.avoidNavigationEvents])
+    }, [ref, props.avoidNavigationEvents])
   );
 
   return (
@@ -97,7 +99,7 @@ const GenericErrorComponent = (props: Props) => {
           />
           <VSpacer size={40} />
           <View style={IOStyles.alignCenter}>
-            <H2 weight="Bold" ref={props.ref}>
+            <H2 weight="Bold" ref={ref}>
               {props.text ? props.text : I18n.t("wallet.errors.GENERIC_ERROR")}
             </H2>
             <Body accessible={subTextAccessible}>
