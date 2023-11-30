@@ -415,7 +415,8 @@ export function* initializeApplicationSaga(
     return;
   }
 
-  const userProfile = maybeUserProfile.value;
+  // eslint-disable-next-line functional/no-let
+  let userProfile = maybeUserProfile.value;
 
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
@@ -512,7 +513,13 @@ export function* initializeApplicationSaga(
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
-  yield* call(checkEmailSaga, userProfile);
+  // If we enetered checkAcknowledgedEmailSaga,
+  // the profile may have been updated, so we need to retrieve it again.
+  const maybeUpdatedEmailFieldUserProfile = yield* select(profileSelector);
+  if (pot.isSome(maybeUpdatedEmailFieldUserProfile)) {
+    userProfile = maybeUpdatedEmailFieldUserProfile.value;
+    yield* call(checkEmailSaga, userProfile);
+  }
 
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
