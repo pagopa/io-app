@@ -255,6 +255,10 @@ const AuthenticatedStackNavigator = () => {
           />
           <Stack.Screen
             name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
             component={IdPayBarcodeNavigator}
           />
         </>
@@ -277,7 +281,7 @@ const AuthenticatedStackNavigator = () => {
         component={WalletDetailsNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
-          headerShown: false
+          ...hideHeaderOptions
         }}
       />
       {/* 

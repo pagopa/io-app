@@ -33,6 +33,7 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSNumberPad } from "../core/DSNumberPad";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -416,6 +417,12 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.SCREENS.WIZARD_SCREEN.route}
         component={DSWizardScreen}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.NUMBERPAD.route}
+        component={DSNumberPad}
         options={{ headerShown: false }}
       />
 
