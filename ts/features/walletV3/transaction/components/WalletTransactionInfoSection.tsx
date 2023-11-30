@@ -86,7 +86,7 @@ const WalletTransactionInfoSection = ({
                     "transaction.details.info.pspName"
                   )}
                   label={I18n.t("transaction.details.info.pspName")}
-                  value={psp?.businessName}
+                  value={psp.businessName}
                 />
                 <Divider />
               </>
