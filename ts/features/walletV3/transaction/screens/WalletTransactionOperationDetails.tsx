@@ -38,20 +38,20 @@ const WalletTransactionOperationDetailsScreen = () => {
   const { operationDetails, operationName } = route.params;
 
   const getDebtorText = () => {
-    const debitoreNameLabel = operationDetails.nomePagatore ? (
+    const debtorNameLabel = operationDetails.nomePagatore ? (
       <H6>{operationDetails.nomePagatore}</H6>
     ) : (
       <></>
     );
-    const debitoreCodiceLabel = operationDetails.codicePagatore ? (
+    const debtorCodeLabel = operationDetails.codicePagatore ? (
       <H6>({operationDetails.codicePagatore})</H6>
     ) : (
       <></>
     );
     return (
       <>
-        {debitoreNameLabel}
-        {debitoreCodiceLabel}
+        {debtorNameLabel}
+        {debtorCodeLabel}
       </>
     );
   };
