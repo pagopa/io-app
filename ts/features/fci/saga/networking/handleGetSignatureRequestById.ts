@@ -17,6 +17,7 @@ import {
   Environment,
   EnvironmentEnum
 } from "../../../../../definitions/fci/Environment";
+import { FciHeaders } from "../../utils/fciHeaders";
 
 /*
  * A saga to load a FCI signature request.
@@ -49,13 +50,12 @@ export function* handleGetSignatureRequestById(
        * Get the environment from the response header with default prod value.
        */
       const env = pipe(
-        Environment.decode(
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          getSignatureDetailViewByIdResponse.right.headers.get(
-            "x-io-sign-environment"
-          )
+        FciHeaders.decode(getSignatureDetailViewByIdResponse.right.headers),
+        E.fold(
+          () => EnvironmentEnum.prod,
+          headers => headers.map["x-io-sign-environment"]
         ),
+        Environment.decode,
         E.getOrElse(() => EnvironmentEnum.prod)
       );
 
