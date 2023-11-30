@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Dimensions, Platform, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 
