@@ -256,6 +256,10 @@ const AuthenticatedStackNavigator = () => {
           />
           <Stack.Screen
             name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
             component={IdPayBarcodeNavigator}
           />
         </>

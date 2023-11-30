@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import {
+  H4,
   IconButton,
   IOColors,
   IOVisualCostants
@@ -10,7 +11,6 @@ import {
 import I18n from "../../i18n";
 import { IOStyles } from "../core/variables/IOStyles";
 import { setAccessibilityFocus } from "../../utils/accessibility";
-import { NewH4 } from "../core/typography/NewH4";
 import { useIOSelector } from "../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
@@ -53,7 +53,7 @@ export const BottomSheetHeader: React.FunctionComponent<Props> = ({
           accessibilityRole={"header"}
           accessibilityLabel={typeof title === "string" ? title : undefined}
         >
-          <NewH4>{title}</NewH4>
+          <H4>{title}</H4>
         </View>
       )}
       {/* ◀ REMOVE_LEGACY_COMPONENT: Remove the following condition */}

@@ -45,7 +45,8 @@ export const failureMap: Record<CodeEnum, PaymentFailureEnum> = {
   [CodeEnum.PAYMENT_UNRELATE_NOT_ALLOWED_FOR_TRX_STATUS]:
     PaymentFailureEnum.GENERIC,
   [CodeEnum.PAYMENT_AMOUNT_NOT_VALID]: PaymentFailureEnum.GENERIC,
-  [CodeEnum.PAYMENT_MERCHANT_NOT_ONBOARDED]: PaymentFailureEnum.GENERIC
+  [CodeEnum.PAYMENT_MERCHANT_NOT_ONBOARDED]: PaymentFailureEnum.GENERIC,
+  [CodeEnum.PAYMENT_INVALID_REQUEST]: PaymentFailureEnum.GENERIC
 };
 
 /**
