@@ -2,7 +2,6 @@ import * as React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import {
   Divider,
-  H1,
   H6,
   IOStyles,
   ListItemInfo
@@ -10,7 +9,6 @@ import {
 import { RouteProp, useRoute } from "@react-navigation/native";
 
 import { WalletTransactionParamsList } from "../navigation/navigator";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
 import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
