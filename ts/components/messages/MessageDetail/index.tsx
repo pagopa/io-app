@@ -150,8 +150,7 @@ const MessageDetailsComponent = ({
   const isPrescription = prescriptionData !== undefined;
 
   const messageId = message.id;
-  const hasThirdPartyDataAttachments =
-    messageDetails.hasThirdPartyDataAttachments;
+  const hasThirdPartyDataAttachments = messageDetails.hasThirdPartyData;
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
