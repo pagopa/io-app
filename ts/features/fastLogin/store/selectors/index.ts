@@ -1,9 +1,23 @@
 import { createSelector } from "reselect";
 import { uniqWith, isEqual } from "lodash";
 import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
-import { fastLoginOptIn, fastLoginEnabled } from "../../../../config";
+import {
+  fastLoginOptIn,
+  fastLoginEnabled,
+  isNewCduFlow
+} from "../../../../config";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
+
+export const isEmailUniquenessValidationEnabledSelector = createSelector(
+  backendStatusSelector,
+  backendStatus =>
+    isPropertyWithMinAppVersionEnabled({
+      backendStatus,
+      mainLocalFlag: isNewCduFlow,
+      configPropertyName: "emailUniquenessValidation"
+    })
+);
 
 const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
