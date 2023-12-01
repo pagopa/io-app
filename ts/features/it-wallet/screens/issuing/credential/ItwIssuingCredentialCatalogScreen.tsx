@@ -31,7 +31,7 @@ const NONE_LOADING = -1;
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
-const ItwCredentialCatalogScreen = () => {
+const ItwIssuingCredentialCatalogScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
@@ -146,4 +146,4 @@ const ItwCredentialCatalogScreen = () => {
   );
 };
 
-export default ItwCredentialCatalogScreen;
+export default ItwIssuingCredentialCatalogScreen;

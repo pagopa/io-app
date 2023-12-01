@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable, ScrollView, StyleSheet, View } from "react-native";
+import { Pressable, ScrollView, View } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import {
   ButtonLink,
   ButtonSolid,
-  IOVisualCostants,
-  VSpacer
+  TabNavigation,
+  VSpacer,
+  TabItem
 } from "@pagopa/io-app-design-system";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import ROUTES from "../../../navigation/routes";
@@ -16,7 +17,6 @@ import I18n from "../../../i18n";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ItwActionBanner } from "../components/ItwActionBanner";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BadgeButton from "../components/design/BadgeButton";
 import { useIOSelector } from "../../../store/hooks";
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
@@ -204,18 +204,17 @@ const ItwHomeScreen = () => {
       }}
       sectionTitle={I18n.t("global.navigator.wallet")}
     >
-      <View style={styles.horizontalScroll}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <View>
+        <TabNavigation>
           {badgesLabels.map((label, idx) => (
-            <BadgeButton
+            <TabItem
               key={`badge-${idx}`}
-              text={label}
-              variant={selectedBadgeIdx === idx ? "default" : "contrast"}
+              label={label}
               accessibilityLabel={label}
               onPress={() => setSelectedBadgeIdx(idx)}
             />
           ))}
-        </ScrollView>
+        </TabNavigation>
       </View>
 
       <View style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}>
@@ -237,11 +236,5 @@ const ItwHomeScreen = () => {
     </TopScreenComponent>
   );
 };
-
-const styles = StyleSheet.create({
-  horizontalScroll: {
-    marginLeft: IOVisualCostants.appMarginDefault
-  }
-});
 
 export default ItwHomeScreen;

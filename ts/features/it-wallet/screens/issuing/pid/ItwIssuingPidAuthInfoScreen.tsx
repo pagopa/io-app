@@ -24,13 +24,15 @@ import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
 import ItwContinueView from "../../../components/ItwContinueView";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import ItwKoView from "../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
-import { ItWalletError } from "../../../utils/errors/itwErrors";
+import {
+  getItwGenericMappedError,
+  ItWalletError
+} from "../../../utils/itwErrorsUtils";
 
 /**
  * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
  */
-const ItwPidAuthInfoScreen = () => {
+const ItwIssuingPidAuthInfoScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
   const wia = useIOSelector(itwWiaStateSelector);
@@ -129,4 +131,4 @@ const ItwPidAuthInfoScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPidAuthInfoScreen;
+export default ItwIssuingPidAuthInfoScreen;

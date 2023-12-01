@@ -1,79 +1,47 @@
 import React from "react";
-import { SafeAreaView } from "react-native";
-import { IOStyles } from "@pagopa/io-app-design-system";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "../../../../../../i18n";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { IOStyles } from "@pagopa/io-app-design-system";
+import { itwPresentationChecks } from "../../../../store/actions/new/itwPresentationActions";
+import { itwPresentationChecksSelector } from "../../../../store/reducers/new/itwPresentationReducer";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
-import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import {
-  RpData,
-  itwRpInitializationSelector
-} from "../../../../store/reducers/itwRpInitializationReducer";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
-import { itwRpInitialization } from "../../../../store/actions/itwRpActions";
-import { rpPidMock } from "../../../../utils/mocks";
+import ItwContinueScreen from "../../../../components/ItwContinueView";
+import I18n from "../../../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import { getRpMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
-import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
-import ItwContinueView from "../../../../components/ItwContinueView";
+import { itwActivationStart } from "../../../../store/actions/itwActivationActions";
 import {
   ItWalletError,
   ItWalletErrorTypes,
-  ItwErrorMapping
-} from "../../../../utils/errors/itwErrors";
-import { itwActivationStart } from "../../../../store/actions/itwActivationActions";
+  ItwErrorMapping,
+  getItwGenericMappedError
+} from "../../../../utils/itwErrorsUtils";
 
 /**
- * ItwPrPidChecksScreenNavigationParams's navigation params.
- * The authReqUrl is the url to use to start the RP flow.
+ * This screen is used to perform different checks before initiating the presentation flow.
+ * It shows a loading spinner while the checks are being performed and then it shows a success screen with the name of the relaying party if the checks are successful.
+ * It shows an error screen if the checks fail.
+ * The view is rendered based on the state of the checks pot.
  */
-export type ItwPrPidChecksScreenNavigationParams = RpData;
-
-/**
- * Type of the route props for the ItwPidRequestScreen.
- */
-type ItwPrPidChecksScreenRouteProps = RouteProp<
-  ItwParamsList,
-  "ITW_PRESENTATION_PID_REMOTE_CHECKS"
->;
-
-const ItwPrPidChecksScreen = () => {
-  const route = useRoute<ItwPrPidChecksScreenRouteProps>();
+const ItwPrRemoteCredentialChecksScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const initStatus = useIOSelector(itwRpInitializationSelector);
+  const checksPot = useIOSelector(itwPresentationChecksSelector);
+  const navigation =
+    useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
+  const rpMock = getRpMock();
 
-  /**
-   * Dispatches the action to start the RP flow on first render.
-   */
   useOnFirstRender(() => {
-    dispatch(
-      itwRpInitialization.request({
-        authReqUrl: route.params.authReqUrl,
-        clientId: route.params.clientId
-      })
-    );
+    dispatch(itwPresentationChecks.request());
   });
-
-  const SuccessView = () => (
-    <SafeAreaView style={IOStyles.flex}>
-      <ItwContinueView
-        title={I18n.t("features.itWallet.presentation.checksScreen.success", {
-          organizationName: rpPidMock.organizationName
-        })}
-        pictogram="security"
-        action={{
-          label: I18n.t("global.buttons.confirm"),
-          accessibilityLabel: I18n.t("global.buttons.confirm"),
-          onPress: () =>
-            navigation.navigate(ITW_ROUTES.PRESENTATION.PID.REMOTE.DATA)
-        }}
-      />
-    </SafeAreaView>
-  );
 
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
@@ -127,12 +95,26 @@ const ItwPrPidChecksScreen = () => {
     return <ItwKoView {...mappedError} />;
   };
 
-  /**
-   * Render mask which folds the initialization status of the RP flow.
-   */
+  const SuccessView = () => (
+    <SafeAreaView style={IOStyles.flex}>
+      <ItwContinueScreen
+        title={I18n.t("features.itWallet.presentation.checksScreen.success", {
+          organizationName: rpMock.organizationName
+        })}
+        pictogram="security"
+        action={{
+          label: I18n.t("global.buttons.confirm"),
+          accessibilityLabel: I18n.t("global.buttons.confirm"),
+          onPress: () =>
+            navigation.navigate(ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.DATA)
+        }}
+      />
+    </SafeAreaView>
+  );
+
   const RenderMask = () =>
     pot.fold(
-      initStatus,
+      checksPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
@@ -146,4 +128,4 @@ const ItwPrPidChecksScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPrPidChecksScreen;
+export default ItwPrRemoteCredentialChecksScreen;

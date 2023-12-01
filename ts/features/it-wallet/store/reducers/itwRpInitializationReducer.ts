@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { Trust } from "@pagopa/io-react-native-wallet";
 import { Action } from "../../../../store/actions/types";
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwRpInitialization } from "../actions/itwRpActions";
 import { RequestObject } from "../../utils/types";

@@ -23,7 +23,7 @@ import { CredentialType, getPidDisplayData } from "../../utils/mocks";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;

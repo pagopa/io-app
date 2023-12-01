@@ -1,7 +1,5 @@
-import React from "react";
-import { useNavigation } from "@react-navigation/native";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
-import { SafeAreaView } from "react-native-safe-area-context";
+import * as React from "react";
+import { View, SafeAreaView, Image, StyleSheet } from "react-native";
 import {
   Body,
   FeatureInfo,
@@ -15,34 +13,44 @@ import {
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { View } from "native-base";
-import { Image, StyleSheet } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { useNavigation } from "@react-navigation/native";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import interno from "../../../../../../../img/features/it-wallet/interno.png";
 import { useIOSelector } from "../../../../../../store/hooks";
 import { itwDecodedPidValueSelector } from "../../../../store/reducers/itwPidDecodeReducer";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
+import ROUTES from "../../../../../../navigation/routes";
+import I18n from "../../../../../../i18n";
+import ItwBulletList from "../../../../components/ItwBulletList";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import I18n from "../../../../../../i18n";
-import { showCancelAlert } from "../../../../utils/alert";
-import ItwTextInfo from "../../../../components/ItwTextInfo";
-import ItwBulletList from "../../../../components/ItwBulletList";
-import { rpPidMock } from "../../../../utils/mocks";
+import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
-import interno from "../../../../../../../img/features/it-wallet/interno.png";
 import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
+import { getRpMock } from "../../../../utils/mocks";
+import { showCancelAlert } from "../../../../utils/alert";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
-import ROUTES from "../../../../../../navigation/routes";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
+import ItwTextInfo from "../../../../components/ItwTextInfo";
 
-const ItwPrPidDataScreen = () => {
+type ContentViewParams = {
+  decodedPid: PidWithToken;
+};
+
+/**
+ * This screen displays the information about the credential that is going to be shared
+ * with the issuer.
+ */
+const ItwPrRemoteCredentialDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
+  const rpMock = getRpMock();
   const { present, bottomSheet } = useItwInfoBottomSheet({
-    title: rpPidMock.organizationName,
+    title: rpMock.organizationName,
     content: [
       {
         title: I18n.t(
@@ -72,15 +80,9 @@ const ItwPrPidDataScreen = () => {
     });
   };
 
-  const RpPreviewView = ({ decodedPid }: { decodedPid: PidWithToken }) => (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t(
-        "features.itWallet.presentation.pidAttributesScreen.headerTitle"
-      )}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView edges={["bottom", "left", "right"]} style={IOStyles.flex}>
+  const ContentView = ({ decodedPid }: ContentViewParams) => (
+    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+      <SafeAreaView style={IOStyles.flex}>
         <ForceScrollDownView>
           <View style={IOStyles.horizontalContentPadding}>
             <VSpacer size={32} />
@@ -116,7 +118,7 @@ const ItwPrPidDataScreen = () => {
             {/* BODY */}
             <Body>
               {I18n.t("features.itWallet.presentation.dataScreen.subtitle", {
-                organizationName: rpPidMock.organizationName
+                organizationName: rpMock.organizationName
               })}
             </Body>
             <VSpacer />
@@ -136,8 +138,23 @@ const ItwPrPidDataScreen = () => {
               </H6>
             </View>
             <VSpacer size={24} />
-            <ItwBulletList data={rpPidMock.requestedClaims(decodedPid)} />
+            <ItwBulletList data={rpMock.requestedClaims(decodedPid)} />
             <VSpacer size={24} />
+            {/* OPTIONAL DATA SECTION */}
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Icon name="option" color="grey-300" />
+              <HSpacer size={8} />
+              <H6 color="grey-700">
+                {I18n.t(
+                  "features.itWallet.presentation.dataScreen.optionalClaims"
+                )}
+              </H6>
+            </View>
+            <VSpacer size={24} />
+            <ItwOptionalClaimsList claims={rpMock.optionalClaims} />
+            <VSpacer size={32} />
+            <VSpacer size={8} />
+            <VSpacer size={32} />
             {/* PRIVACY SECTION */}
             <FeatureInfo
               pictogramName="passcode"
@@ -178,7 +195,7 @@ const ItwPrPidDataScreen = () => {
                 accessibilityLabel: I18n.t("global.buttons.continue"),
                 onPress: () =>
                   navigation.navigate(
-                    ITW_ROUTES.PRESENTATION.PID.REMOTE.RESULT
+                    ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.RESULT
                   ),
                 label: I18n.t("global.buttons.continue")
               }
@@ -196,24 +213,22 @@ const ItwPrPidDataScreen = () => {
     return <ItwKoView {...mappedError} />;
   };
 
-  const DecodePidOrErrorView = () =>
+  const DecodedPidOrErrorView = () =>
     pipe(
       decodedPid,
       O.fold(
         () => <ErrorView />,
-        some => <RpPreviewView decodedPid={some} />
+        some => <ContentView decodedPid={some} />
       )
     );
 
   return (
     <>
-      <DecodePidOrErrorView />
+      <DecodedPidOrErrorView />
       {bottomSheet}
     </>
   );
 };
-
-export default ItwPrPidDataScreen;
 
 const styles = StyleSheet.create({
   secondHeader: {
@@ -230,3 +245,5 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+export default ItwPrRemoteCredentialDataScreen;

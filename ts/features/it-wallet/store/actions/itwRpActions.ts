@@ -1,6 +1,6 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { Trust } from "@pagopa/io-react-native-wallet";
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { RequestObject } from "../../utils/types";
 import { RpData } from "../reducers/itwRpInitializationReducer";
 

@@ -1,4 +1,5 @@
-import ItwKoView from "../../components/ItwKoView";
+import I18n from "../../../i18n";
+import ItwKoView from "../components/ItwKoView";
 
 /**
  * Type for errors which might occur during the it-wallet flow.
@@ -40,3 +41,22 @@ export enum ItWalletErrorTypes {
   CREDENTIAL_CHECKS_GENERIC_ERROR = "CREDENTIAL_CHECKS_GENERIC_ERROR", // not mapped yet
   CREDENTIAL_ADD_ERROR = "CREDENTIAL_ADD_ERROR" // not mapped yet
 }
+
+/**
+ * Getter for a generic mapped error which can be displayed to the user by using {@link ItwKoView}.
+ * It has a title, a body and a back button.
+ * @param onPress the function to be called when the user presses the back button.
+ * @returns a generic ItWalletMappedError.
+ */
+export const getItwGenericMappedError = (
+  onPress: () => any
+): React.ComponentProps<typeof ItwKoView> => ({
+  title: I18n.t("features.itWallet.generic.error.title"),
+  subtitle: I18n.t("features.itWallet.generic.error.body"),
+  action: {
+    accessibilityLabel: I18n.t("global.buttons.back"),
+    label: I18n.t("global.buttons.back"),
+    onPress
+  },
+  pictogram: "fatalError"
+});

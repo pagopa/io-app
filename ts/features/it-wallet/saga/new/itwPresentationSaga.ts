@@ -5,8 +5,8 @@ import {
   itwPresentationChecks
 } from "../../store/actions/new/itwPresentationActions";
 import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycleReducer";
-import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
 import { verifyPin } from "../itwSagaUtils";
+import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
 
 export function* watchItwPresentationSaga(): SagaIterator {
   yield* takeLatest(itwPresentationChecks.request, itwPresentationChecksSaga);

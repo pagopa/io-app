@@ -30,7 +30,7 @@ import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
  * Renders the screen which display a list of features (or trusty providers)
  * to activate the wallet.
  */
-const ItwPidAuthScreen = () => {
+const ItwIssuingPidAuthScreen = () => {
   const navigation = useNavigation();
 
   const { present, bottomSheet } = useItwInfoBottomSheet({
@@ -204,4 +204,4 @@ const ItwPidAuthScreen = () => {
   );
 };
 
-export default ItwPidAuthScreen;
+export default ItwIssuingPidAuthScreen;

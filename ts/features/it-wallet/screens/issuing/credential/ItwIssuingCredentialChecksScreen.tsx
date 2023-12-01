@@ -21,9 +21,9 @@ import { showCancelAlert } from "../../../utils/alert";
 import {
   ItWalletError,
   ItWalletErrorTypes,
-  ItwErrorMapping
-} from "../../../utils/errors/itwErrors";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+  ItwErrorMapping,
+  getItwGenericMappedError
+} from "../../../utils/itwErrorsUtils";
 import ItwKoView from "../../../components/ItwKoView";
 import ROUTES from "../../../../../navigation/routes";
 
@@ -31,7 +31,7 @@ import ROUTES from "../../../../../navigation/routes";
  * Screen that displays the result of the credential issuance checks
  * by folding the preliminaryChecks pot.
  */
-const ItwCredentialsChecksScreen = () => {
+const ItwIssuingCredentialsChecksScreen = () => {
   const toast = useIOToast();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
@@ -147,4 +147,4 @@ const ItwCredentialsChecksScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwCredentialsChecksScreen;
+export default ItwIssuingCredentialsChecksScreen;
