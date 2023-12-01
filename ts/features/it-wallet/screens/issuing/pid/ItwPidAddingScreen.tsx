@@ -10,10 +10,12 @@ import { itwPidValueSelector } from "../../../store/reducers/itwPidReducer";
 import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
 import { itwActivationCompleted } from "../../../store/actions/itwActivationActions";
 import { ItwCredentialsStateSelector } from "../../../store/reducers/itwCredentialsReducer";
-import { ItWalletError } from "../../../utils/errors/itwErrors";
+import {
+  ItWalletError,
+  getItwGenericMappedError
+} from "../../../utils/itwErrorsUtils";
 import ItwContinueView from "../../../components/ItwContinueView";
 import ItwKoView from "../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
 
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.

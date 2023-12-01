@@ -8,7 +8,7 @@ import {
   itwCredentialsAddCredential,
   itwCredentialsAddPid
 } from "../actions/itwCredentialsActions";
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import {
   CredentialConfigurationSchema,
   CredentialDefinition,

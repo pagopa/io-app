@@ -3,7 +3,7 @@ import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import * as O from "fp-ts/lib/Option";
 
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { PidResponse } from "../../utils/types";
 import { StoredCredential } from "../reducers/itwCredentialsReducer";
 import { CredentialCatalogAvailableItem } from "./../../utils/mocks";

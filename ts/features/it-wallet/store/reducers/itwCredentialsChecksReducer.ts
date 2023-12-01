@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwCredentialsChecks } from "../actions/itwCredentialsActions";
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { CredentialCatalogAvailableItem } from "../../utils/mocks";
 
 export type ItwCredentialsChecksState = pot.Pot<
