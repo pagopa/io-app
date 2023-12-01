@@ -31,13 +31,17 @@ import itwPresentationReducer, {
 } from "./new/itwPresentationReducer";
 import itwIssuanceReducer, { ItwIssuanceState } from "./new/itwIssuanceReducer";
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 2;
+const CURRENT_REDUX_ITW_STORE_VERSION = 3;
 
 const itwStoreMigration: MigrationManifest = {
   /**
    * Version 2 where we reset the state due to redux state changes.
    */
-  "2": (): PersistedState => undefined as unknown as PersistedState
+  "2": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 3 where we reset the state due to redux state changes.
+   */
+  "3": (): PersistedState => undefined as unknown as PersistedState
 };
 
 const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 2;
@@ -46,7 +50,11 @@ const itwCredentialsStoreMigration: MigrationManifest = {
   /**
    * Version 2 where we reset the state due to redux state changes.
    */
-  "2": (): PersistedState => undefined as unknown as PersistedState
+  "2": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 2 where we reset the state due to redux state changes.
+   */
+  "3": (): PersistedState => undefined as unknown as PersistedState
 };
 
 export type ItWalletState = {
