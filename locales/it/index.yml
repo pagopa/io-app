@@ -3411,6 +3411,11 @@ features:
       checksScreen: 
         loading: "Stiamo controllando che questo ente sia verificato"
         success: "{{organizationName}} è un ente verificato"
+        errors: 
+          walletNotValid: 
+            title: IT Wallet non è attivo
+            subtitle: Per presentare una credenziale, devi prima attivarlo.
+            actionLabel: Attiva IT Wallet
       dataScreen: 
         title: "Consenti la lettura dei tuoi dati"
         subtitle: "Autorizza {{organizationName}} al trattamento dei tuoi dati per fornirti i servizi che richiedi."

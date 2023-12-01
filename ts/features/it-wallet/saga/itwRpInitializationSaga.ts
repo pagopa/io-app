@@ -1,5 +1,5 @@
 import { SagaIterator } from "redux-saga";
-import { call, put, take } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import {
   Credential,
@@ -10,6 +10,7 @@ import { itwRpInitialization } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
+import { itwLifecycleIsValidSelector } from "../store/reducers/itwLifecycleReducer";
 
 /*
  * This saga handles the RP initialization.
@@ -19,6 +20,17 @@ export function* handleItwRpInitializationSaga(
   action: ActionType<typeof itwRpInitialization.request>
 ): SagaIterator {
   try {
+    // Check if the lifecycle is valid
+    const isItwLifecycleValid = yield* select(itwLifecycleIsValidSelector);
+    if (!isItwLifecycleValid) {
+      yield* put(
+        itwRpInitialization.failure({
+          code: ItWalletErrorTypes.WALLET_NOT_VALID_ERROR
+        })
+      );
+      return;
+    }
+
     const { authReqUrl, clientId } = action.payload;
 
     // Get WIA

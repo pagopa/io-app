@@ -40,6 +40,7 @@ import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../../it-wallet/navigation/ItwRoutes";
+import { itWalletEnabled } from "../../../config";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -55,8 +56,10 @@ const BarcodeScanScreen = () => {
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
   );
 
-  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY" ? isIdPayEnabled : true
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(
+    type =>
+      (type === "IDPAY" ? isIdPayEnabled : true) &&
+      (type === "ITWALLET" ? itWalletEnabled : true)
   );
 
   /**
