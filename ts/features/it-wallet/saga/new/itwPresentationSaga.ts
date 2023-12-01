@@ -1,10 +1,12 @@
 import { SagaIterator } from "redux-saga";
-import { put, delay, takeLatest, call } from "typed-redux-saga/macro";
+import { put, delay, takeLatest, select, call } from "typed-redux-saga/macro";
 import {
   itwPresentation,
   itwPresentationChecks
 } from "../../store/actions/new/itwPresentationActions";
+import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycleReducer";
 import { verifyPin } from "../itwSagaUtils";
+import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
 
 export function* watchItwPresentationSaga(): SagaIterator {
   yield* takeLatest(itwPresentationChecks.request, itwPresentationChecksSaga);
@@ -17,6 +19,16 @@ export function* watchItwPresentationSaga(): SagaIterator {
  * action: ActionType<typeof itwPresentationChecks.request>
  */
 export function* itwPresentationChecksSaga(): SagaIterator {
+  // Check if the lifecycle is valid
+  const isItwLifecycleValid = yield* select(itwLifecycleIsValidSelector);
+  if (!isItwLifecycleValid) {
+    yield* put(
+      itwPresentationChecks.failure({
+        code: ItWalletErrorTypes.WALLET_NOT_VALID_ERROR
+      })
+    );
+    return;
+  }
   yield* delay(1500);
   yield* put(itwPresentationChecks.success());
 }

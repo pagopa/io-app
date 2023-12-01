@@ -3410,6 +3410,11 @@ features:
       checksScreen: 
         loading: "We are checking to verify that this organization is verified"
         success: "{{organizationName}} is a verified organization"
+        errors:
+          walletNotValid: 
+            title: IT Wallet is not active
+            subtitle: To present a credential, you need to activate it first.
+            actionLabel: Activate IT Wallet
       dataScreen: 
         title: "Allow the reading of your data"
         subtitle: "Authorizes {{organizationName}} to process your data to provide you with the services you request."
