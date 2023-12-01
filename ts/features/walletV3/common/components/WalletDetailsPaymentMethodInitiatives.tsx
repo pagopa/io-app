@@ -1,8 +1,7 @@
-import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
-import { NewH6 } from "../../../../components/core/typography/NewH6";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -64,7 +63,7 @@ const WalletDetailsPaymentMethodInitiatives = (
   return initiativesList.length > 0 ? (
     <View testID="idPayInitiativesList" style={props.style}>
       <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
-        <NewH6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</NewH6>
+        <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
         <Body
           weight="SemiBold"
           color="blue"
