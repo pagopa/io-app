@@ -32,7 +32,7 @@ import {
 /**
  * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
  */
-const ItwPidAuthInfoScreen = () => {
+const ItwIssuingPidAuthInfoScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
   const wia = useIOSelector(itwWiaStateSelector);
@@ -131,4 +131,4 @@ const ItwPidAuthInfoScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPidAuthInfoScreen;
+export default ItwIssuingPidAuthInfoScreen;

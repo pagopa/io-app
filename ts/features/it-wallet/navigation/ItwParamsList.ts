@@ -1,9 +1,9 @@
 import { ItwPrCredentialDetailsScreenNavigationParams } from "../screens/presentation/ItwPrCredentialDetails";
-import { ItwPidRequestScreenNavigationParams } from "../screens/issuing/pid/ItwPidRequestScreen";
+import { ItwIssuingPidRequestScreenNavigationParams } from "../screens/issuing/pid/ItwIssuingPidRequestScreen";
 import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieCardReaderScreen";
 import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieConsentDataUsageScreen";
 import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
-import { ItwPrPidChecksScreenNavigationParams } from "../screens/presentation/remote/pid/ItwPrPidChecksScreen";
+import { ItwPrRemotePidChecksScreenNavigationParams } from "../screens/presentation/remote/pid/ItwPrRemotePidChecksScreen";
 import { ITW_ROUTES } from "./ItwRoutes";
 
 export type ItwParamsList = {
@@ -11,7 +11,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUING.PID.INFO]: undefined;
   [ITW_ROUTES.ISSUING.PID.AUTH]: undefined;
   [ITW_ROUTES.ISSUING.PID.AUTH_INFO]: undefined;
-  [ITW_ROUTES.ISSUING.PID.REQUEST]: ItwPidRequestScreenNavigationParams;
+  [ITW_ROUTES.ISSUING.PID.REQUEST]: ItwIssuingPidRequestScreenNavigationParams;
   [ITW_ROUTES.ISSUING.PID.PREVIEW]: undefined;
   [ITW_ROUTES.ISSUING.PID.ADDING]: undefined;
 
@@ -35,7 +35,7 @@ export type ItwParamsList = {
   // PRESENTATION REMOTE PID
   [ITW_ROUTES.PRESENTATION.PID.DETAILS]: undefined;
   [ITW_ROUTES.PRESENTATION.PID.REMOTE
-    .CHECKS]: ItwPrPidChecksScreenNavigationParams;
+    .CHECKS]: ItwPrRemotePidChecksScreenNavigationParams;
   [ITW_ROUTES.PRESENTATION.PID.REMOTE.DATA]: undefined;
   [ITW_ROUTES.PRESENTATION.PID.REMOTE.RESULT]: undefined;
 

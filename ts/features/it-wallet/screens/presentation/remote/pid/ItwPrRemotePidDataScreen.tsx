@@ -38,7 +38,7 @@ import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import ROUTES from "../../../../../../navigation/routes";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 
-const ItwPrPidDataScreen = () => {
+const ItwPrRemotePidDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { present, bottomSheet } = useItwInfoBottomSheet({
@@ -213,7 +213,7 @@ const ItwPrPidDataScreen = () => {
   );
 };
 
-export default ItwPrPidDataScreen;
+export default ItwPrRemotePidDataScreen;
 
 const styles = StyleSheet.create({
   secondHeader: {

@@ -3,19 +3,20 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
-import { itwPresentation } from "../../../../store/actions/new/itwPresentationActions";
-import { itwPresentationResultSelector } from "../../../../store/reducers/new/itwPresentationReducer";
+import { itwPresentationChecks } from "../../../../store/actions/new/itwPresentationActions";
+import { itwPresentationChecksSelector } from "../../../../store/reducers/new/itwPresentationReducer";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
+import ItwContinueScreen from "../../../../components/ItwContinueView";
 import I18n from "../../../../../../i18n";
-import ROUTES from "../../../../../../navigation/routes";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { getRpMock } from "../../../../utils/mocks";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 
@@ -25,24 +26,21 @@ import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
  * It shows an error screen if the checks fail.
  * The view is rendered based on the state of the checks pot.
  */
-const ItwPrCredentialResultScreen = () => {
+const ItwPrRemoteCredentialChecksScreen = () => {
   const dispatch = useIODispatch();
-  const resultPot = useIOSelector(itwPresentationResultSelector);
+  const checksPot = useIOSelector(itwPresentationChecksSelector);
   const navigation =
     useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
   const rpMock = getRpMock();
 
   useOnFirstRender(() => {
-    dispatch(itwPresentation.request());
+    dispatch(itwPresentationChecks.request());
   });
 
   const LoadingView = () => (
     <ItwLoadingSpinnerOverlay
       captionTitle={I18n.t(
-        "features.itWallet.presentation.resultScreen.loading.title",
-        {
-          organizationName: rpMock.organizationName
-        }
+        "features.itWallet.presentation.checksScreen.loading"
       )}
       isLoading
     >
@@ -58,22 +56,16 @@ const ItwPrCredentialResultScreen = () => {
 
   const SuccessView = () => (
     <SafeAreaView style={IOStyles.flex}>
-      <ItwKoView
-        title={I18n.t(
-          "features.itWallet.presentation.resultScreen.success.title"
-        )}
-        subtitle={I18n.t(
-          "features.itWallet.presentation.resultScreen.success.subtitle",
-          {
-            organizationName: rpMock.organizationName
-          }
-        )}
-        pictogram="success"
+      <ItwContinueScreen
+        title={I18n.t("features.itWallet.presentation.checksScreen.success", {
+          organizationName: rpMock.organizationName
+        })}
+        pictogram="security"
         action={{
-          label: I18n.t("global.buttons.close"),
+          label: I18n.t("global.buttons.confirm"),
           accessibilityLabel: I18n.t("global.buttons.confirm"),
           onPress: () =>
-            navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME })
+            navigation.navigate(ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.DATA)
         }}
       />
     </SafeAreaView>
@@ -81,7 +73,7 @@ const ItwPrCredentialResultScreen = () => {
 
   const RenderMask = () =>
     pot.fold(
-      resultPot,
+      checksPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
@@ -95,4 +87,4 @@ const ItwPrCredentialResultScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPrCredentialResultScreen;
+export default ItwPrRemoteCredentialChecksScreen;
