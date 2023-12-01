@@ -50,8 +50,8 @@ const IdPayInitiativeListItemSwitch = ({
   const dispatch = useIODispatch();
   const { initiativeName, status } = item;
 
-  const isInitiativeActive = useIOSelector(state =>
-    idPayInitiativeFromInstrumentPotSelector(state, item.initiativeId)
+  const isInitiativeActive = useIOSelector(
+    idPayInitiativeFromInstrumentPotSelector(item.initiativeId)
   );
 
   const handleSwitchValueChange = React.useCallback(
