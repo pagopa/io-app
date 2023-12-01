@@ -23,7 +23,7 @@ export const WalletTransactionTotalAmount = ({
   loading
 }: TotalAmountSectionProps) => (
   <View style={styles.container}>
-    <H6 color="info-850">{I18n.t("transaction.details.totalAmount")}</H6>
+    <H6 color="grey-700">{I18n.t("transaction.details.totalAmount")}</H6>
     {loading && (
       <View>
         <Placeholder.Box width={72} height={34} animate="fade" radius={8} />
