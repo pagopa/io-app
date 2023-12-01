@@ -513,13 +513,7 @@ export function* initializeApplicationSaga(
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
-  // If we enetered checkAcknowledgedEmailSaga,
-  // the profile may have been updated, so we need to retrieve it again.
-  const maybeUpdatedEmailFieldUserProfile = yield* select(profileSelector);
-  if (pot.isSome(maybeUpdatedEmailFieldUserProfile)) {
-    userProfile = maybeUpdatedEmailFieldUserProfile.value;
-    yield* call(checkEmailSaga, userProfile);
-  }
+  userProfile = (yield* call(checkEmailSaga)) || userProfile;
 
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
