@@ -15,6 +15,7 @@ import {
   VSpacer,
   useIOToast
 } from "@pagopa/io-app-design-system";
+import { sequenceS } from "fp-ts/lib/Apply";
 import I18n from "../../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
@@ -35,14 +36,11 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
 import ItwKoView from "../../../../components/ItwKoView";
+import { PidResponse } from "../../../../utils/types";
 import {
   getItwGenericMappedError,
   ItWalletError
 } from "../../../../utils/itwErrorsUtils";
-
-type ContentViewProps = {
-  decodedPid: PidWithToken;
-};
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
@@ -66,7 +64,13 @@ const ItwPidPreviewScreen = () => {
    * Renders the content of the screen if the PID is decoded.
    * @param decodedPid - the decoded PID
    */
-  const ContentView = ({ decodedPid }: ContentViewProps) => {
+  const ContentView = ({
+    decodedPid,
+    entityConfiguration
+  }: {
+    decodedPid: PidWithToken;
+    entityConfiguration: PidResponse["entityConfiguration"];
+  }) => {
     const bannerViewRef = React.useRef(null);
     const toast = useIOToast();
     const alertOnPress = () => {
@@ -126,6 +130,7 @@ const ItwPidPreviewScreen = () => {
               <VSpacer />
               <ItwPidClaimsList
                 decodedPid={decodedPid}
+                entityConfiguration={entityConfiguration}
                 claims={["givenName", "familyName", "taxIdCode"]}
                 expiryDate
                 securityLevel
@@ -167,10 +172,15 @@ const ItwPidPreviewScreen = () => {
 
   const getDecodedPidOrErrorView = (optionDecodedPid: O.Option<PidWithToken>) =>
     pipe(
-      optionDecodedPid,
+      sequenceS(O.Applicative)({ optionDecodedPid, pid }),
       O.fold(
         () => <ErrorView />,
-        decodedPid => <ContentView decodedPid={decodedPid} />
+        some => (
+          <ContentView
+            decodedPid={some.optionDecodedPid}
+            entityConfiguration={some.pid.entityConfiguration}
+          />
+        )
       )
     );
 

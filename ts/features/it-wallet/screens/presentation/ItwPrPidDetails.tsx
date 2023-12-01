@@ -10,6 +10,7 @@ import {
   FooterWithButtons,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { sequenceS } from "fp-ts/lib/Apply";
 import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -23,6 +24,8 @@ import { CredentialType, getPidDisplayData } from "../../utils/mocks";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
+import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
+import { PidResponse } from "../../utils/types";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
 
 export type ContentViewParams = {
@@ -36,6 +39,7 @@ export type ContentViewParams = {
 const ItwPrPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const pid = useIOSelector(itwPidValueSelector);
   const pidDisplayData = getPidDisplayData();
   const bannerViewRef = React.createRef<View>();
   const spacerSize = 32;
@@ -56,7 +60,13 @@ const ItwPrPidDetails = () => {
     }
   };
 
-  const ContentView = ({ decodedPid }: ContentViewParams) => (
+  const ContentView = ({
+    decodedPid,
+    entityConfiguration
+  }: {
+    decodedPid: PidWithToken;
+    entityConfiguration: PidResponse["entityConfiguration"];
+  }) => (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={{ ...IOStyles.flex }}>
         <ScrollView>
@@ -67,6 +77,7 @@ const ItwPrPidDetails = () => {
             >
               <ItwPidClaimsList
                 decodedPid={decodedPid}
+                entityConfiguration={entityConfiguration}
                 claims={["givenName", "familyName", "taxIdCode"]}
                 expiryDate
                 securityLevel
@@ -109,10 +120,15 @@ const ItwPrPidDetails = () => {
 
   const DecodedPidOrErrorView = () =>
     pipe(
-      decodedPid,
+      sequenceS(O.Applicative)({ decodedPid, pid }),
       O.fold(
         () => <ErrorView />,
-        decodedPid => <ContentView decodedPid={decodedPid} />
+        some => (
+          <ContentView
+            decodedPid={some.decodedPid}
+            entityConfiguration={some.pid.entityConfiguration}
+          />
+        )
       )
     );
 
