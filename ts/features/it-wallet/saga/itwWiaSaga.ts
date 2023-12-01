@@ -4,7 +4,7 @@ import { isSome } from "fp-ts/lib/Option";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import DeviceInfo from "react-native-device-info";
 import { idpSelector } from "../../../store/reducers/authentication";
-import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import { getWia } from "../utils/wia";
 import { isCIEAuthenticationSupported } from "../utils/cie";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";

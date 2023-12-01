@@ -1,5 +1,7 @@
-import * as React from "react";
-import { View, SafeAreaView, Image, StyleSheet } from "react-native";
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Body,
   FeatureInfo,
@@ -13,44 +15,34 @@ import {
   LabelLink,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { View } from "native-base";
+import { Image, StyleSheet } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useNavigation } from "@react-navigation/native";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
-import interno from "../../../../../../../img/features/it-wallet/interno.png";
 import { useIOSelector } from "../../../../../../store/hooks";
 import { itwDecodedPidValueSelector } from "../../../../store/reducers/itwPidDecodeReducer";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import ROUTES from "../../../../../../navigation/routes";
-import I18n from "../../../../../../i18n";
-import ItwBulletList from "../../../../components/ItwBulletList";
-import ItwFooterInfoBox from "../../../../components/ItwFooterInfoBox";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
-import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
-import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
-import { getRpMock } from "../../../../utils/mocks";
+import I18n from "../../../../../../i18n";
 import { showCancelAlert } from "../../../../utils/alert";
+import ItwTextInfo from "../../../../components/ItwTextInfo";
+import ItwBulletList from "../../../../components/ItwBulletList";
+import { rpPidMock } from "../../../../utils/mocks";
+import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
+import interno from "../../../../../../../img/features/it-wallet/interno.png";
+import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
+import ROUTES from "../../../../../../navigation/routes";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 
-type ContentViewParams = {
-  decodedPid: PidWithToken;
-};
-
-/**
- * This screen displays the information about the credential that is going to be shared
- * with the issuer.
- */
-const ItwPrCredentialDataScreen = () => {
+const ItwPrRemotePidDataScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const rpMock = getRpMock();
   const { present, bottomSheet } = useItwInfoBottomSheet({
-    title: rpMock.organizationName,
+    title: rpPidMock.organizationName,
     content: [
       {
         title: I18n.t(
@@ -80,9 +72,15 @@ const ItwPrCredentialDataScreen = () => {
     });
   };
 
-  const ContentView = ({ decodedPid }: ContentViewParams) => (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
-      <SafeAreaView style={IOStyles.flex}>
+  const RpPreviewView = ({ decodedPid }: { decodedPid: PidWithToken }) => (
+    <BaseScreenComponent
+      goBack={true}
+      headerTitle={I18n.t(
+        "features.itWallet.presentation.pidAttributesScreen.headerTitle"
+      )}
+      contextualHelp={emptyContextualHelp}
+    >
+      <SafeAreaView edges={["bottom", "left", "right"]} style={IOStyles.flex}>
         <ForceScrollDownView>
           <View style={IOStyles.horizontalContentPadding}>
             <VSpacer size={32} />
@@ -118,7 +116,7 @@ const ItwPrCredentialDataScreen = () => {
             {/* BODY */}
             <Body>
               {I18n.t("features.itWallet.presentation.dataScreen.subtitle", {
-                organizationName: rpMock.organizationName
+                organizationName: rpPidMock.organizationName
               })}
             </Body>
             <VSpacer />
@@ -138,23 +136,8 @@ const ItwPrCredentialDataScreen = () => {
               </H6>
             </View>
             <VSpacer size={24} />
-            <ItwBulletList data={rpMock.requestedClaims(decodedPid)} />
+            <ItwBulletList data={rpPidMock.requestedClaims(decodedPid)} />
             <VSpacer size={24} />
-            {/* OPTIONAL DATA SECTION */}
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Icon name="option" color="grey-300" />
-              <HSpacer size={8} />
-              <H6 color="grey-700">
-                {I18n.t(
-                  "features.itWallet.presentation.dataScreen.optionalClaims"
-                )}
-              </H6>
-            </View>
-            <VSpacer size={24} />
-            <ItwOptionalClaimsList claims={rpMock.optionalClaims} />
-            <VSpacer size={32} />
-            <VSpacer size={8} />
-            <VSpacer size={32} />
             {/* PRIVACY SECTION */}
             <FeatureInfo
               pictogramName="passcode"
@@ -171,8 +154,7 @@ const ItwPrCredentialDataScreen = () => {
             />
             <VSpacer size={32} />
             {/* TOS SECTION */}
-            {/* TODO: replace with ItwTextInfo component */}
-            <ItwFooterInfoBox
+            <ItwTextInfo
               content={I18n.t("features.itWallet.presentation.dataScreen.tos")}
             />
             <VSpacer size={32} />
@@ -196,7 +178,7 @@ const ItwPrCredentialDataScreen = () => {
                 accessibilityLabel: I18n.t("global.buttons.continue"),
                 onPress: () =>
                   navigation.navigate(
-                    ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.RESULT
+                    ITW_ROUTES.PRESENTATION.PID.REMOTE.RESULT
                   ),
                 label: I18n.t("global.buttons.continue")
               }
@@ -214,22 +196,24 @@ const ItwPrCredentialDataScreen = () => {
     return <ItwKoView {...mappedError} />;
   };
 
-  const DecodedPidOrErrorView = () =>
+  const DecodePidOrErrorView = () =>
     pipe(
       decodedPid,
       O.fold(
         () => <ErrorView />,
-        some => <ContentView decodedPid={some} />
+        some => <RpPreviewView decodedPid={some} />
       )
     );
 
   return (
     <>
-      <DecodedPidOrErrorView />
+      <DecodePidOrErrorView />
       {bottomSheet}
     </>
   );
 };
+
+export default ItwPrRemotePidDataScreen;
 
 const styles = StyleSheet.create({
   secondHeader: {
@@ -246,5 +230,3 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
-
-export default ItwPrCredentialDataScreen;

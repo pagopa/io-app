@@ -30,7 +30,7 @@ import { showCancelAlert } from "../../../utils/alert";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import ItwKoView from "../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../utils/itwErrorsUtils";
 import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
 import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIssuanceReducer";
@@ -39,7 +39,7 @@ import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIs
  * This screen displays the information about the credential that is going to be shared
  * with the issuer.
  */
-const ItwCredentialAuthScreen = () => {
+const ItwIssuingCredentialAuthScreen = () => {
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
   const checks = useIOSelector(itwIssuanceChecksDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
@@ -211,4 +211,4 @@ const ItwCredentialAuthScreen = () => {
     </>
   );
 };
-export default ItwCredentialAuthScreen;
+export default ItwIssuingCredentialAuthScreen;

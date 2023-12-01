@@ -6,25 +6,25 @@ import ItwCieCardReaderScreen from "../screens/issuing/pid/cie/ItwCieCardReaderS
 import ItwCieConsentDataUsageScreen from "../screens/issuing/pid/cie/ItwCieConsentDataUsageScreen";
 import ItwCieExpiredOrInvalidScreen from "../screens/issuing/pid/cie/ItwCieExpiredOrInvalidScreen";
 import ItwCieWrongPinScreen from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
-import ItwPidInfoScreen from "../screens/issuing/pid/ItwPidInfoScreen";
-import ItwPidAuthInfoScreen from "../screens/issuing/pid/ItwPidAuthInfoScreen";
+import ItwIssuingPidInfoScreen from "../screens/issuing/pid/ItwIssuingPidInfoScreen";
+import ItwIssuingPidAuthInfoScreen from "../screens/issuing/pid/ItwIssuingPidAuthInfoScreen";
 import ItwPidPreviewScreen from "../screens/issuing/pid/cie/ItwPidPreviewScreen";
-import ItwPidAddingScreen from "../screens/issuing/pid/ItwPidAddingScreen";
+import ItwIssuingPidAddingScreen from "../screens/issuing/pid/ItwIssuingPidAddingScreen";
 import ItwPrPidDetails from "../screens/presentation/ItwPrPidDetails";
-import ItwPidRequestScreen from "../screens/issuing/pid/ItwPidRequestScreen";
-import ItwPrPidChecksScreen from "../screens/presentation/remote/pid/ItwPrPidChecksScreen";
-import ItwPrPidResultScreen from "../screens/presentation/remote/pid/ItwPrPidResultScreen";
-import ItwPidAuthScreen from "../screens/issuing/pid/ItwPidAuthScreen";
+import ItwIssuingPidRequestScreen from "../screens/issuing/pid/ItwIssuingPidRequestScreen";
+import ItwPrRemotePidChecksScreen from "../screens/presentation/remote/pid/ItwPrRemotePidChecksScreen";
+import ItwPrRemotePidResultScreen from "../screens/presentation/remote/pid/ItwPrRemotePidResultScreen";
+import ItwIssuingPidAuthScreen from "../screens/issuing/pid/ItwIssuingPidAuthScreen";
 import ItwGenericNotAvailableScreen from "../screens/generic/ItwGenericNotAvailableScreen";
-import ItwCredentialPreviewScreen from "../screens/issuing/credential/ItwCredentialPreviewScreen";
-import ItwCredentialAuthScreen from "../screens/issuing/credential/ItwCredentialAuthScreen";
-import ItwPrCredentialChecksScreen from "../screens/presentation/remote/credential/ItwPrCredentialChecksScreen";
-import ItwPrCredentialDataScreen from "../screens/presentation/remote/credential/ItwPrCredentialDataScreen";
-import ItwPrCredentialResultScreen from "../screens/presentation/remote/credential/ItwPrCredentialResultScreen";
-import ItwCredentialsChecksScreen from "../screens/issuing/credential/ItwCredentialChecksScreen";
-import ItwCredentialCatalogScreen from "../screens/issuing/credential/ItwCredentialCatalogScreen";
+import ItwIssuingCredentialPreviewScreen from "../screens/issuing/credential/ItwIssuingCredentialPreviewScreen";
+import ItwIssuingCredentialAuthScreen from "../screens/issuing/credential/ItwIssuingCredentialAuthScreen";
+import ItwPrRemoteCredentialChecksScreen from "../screens/presentation/remote/credential/ItwPrRemoteCredentialChecksScreen";
+import ItwPrRemoteCredentialDataScreen from "../screens/presentation/remote/credential/ItwPrRemoteCredentialDataScreen";
+import ItwPrRemoteCredentialResultScreen from "../screens/presentation/remote/credential/ItwPrRemoteCredentialResultScreen";
+import ItwIssuingCredentialsChecksScreen from "../screens/issuing/credential/ItwIssuingCredentialChecksScreen";
+import ItwIssuingCredentialCatalogScreen from "../screens/issuing/credential/ItwIssuingCredentialCatalogScreen";
 import ItwPrCredentialDetailsScreen from "../screens/presentation/ItwPrCredentialDetails";
-import ItwPrPidDataScreen from "../screens/presentation/remote/pid/ItwPrPidDataScreen";
+import ItwPrRemotePidDataScreen from "../screens/presentation/remote/pid/ItwPrRemotePidDataScreen";
 import ItwPrProximityQrCodeScreen from "../screens/presentation/ItwPrProximityQrCodeScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
@@ -61,19 +61,19 @@ export const ItwStackNavigator = () => (
     {/* ISSUING PID */}
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.INFO}
-      component={ItwPidInfoScreen}
+      component={ItwIssuingPidInfoScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.AUTH}
-      component={ItwPidAuthScreen}
+      component={ItwIssuingPidAuthScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.AUTH_INFO}
-      component={ItwPidAuthInfoScreen}
+      component={ItwIssuingPidAuthInfoScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.REQUEST}
-      component={ItwPidRequestScreen}
+      component={ItwIssuingPidRequestScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.PREVIEW}
@@ -81,25 +81,25 @@ export const ItwStackNavigator = () => (
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.PID.ADDING}
-      component={ItwPidAddingScreen}
+      component={ItwIssuingPidAddingScreen}
     />
 
     {/* ISSUING CREDENTIAL */}
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.CREDENTIAL.CATALOG}
-      component={ItwCredentialCatalogScreen}
+      component={ItwIssuingCredentialCatalogScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.CREDENTIAL.CHECKS}
-      component={ItwCredentialsChecksScreen}
+      component={ItwIssuingCredentialsChecksScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.CREDENTIAL.AUTH}
-      component={ItwCredentialAuthScreen}
+      component={ItwIssuingCredentialAuthScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.ISSUING.CREDENTIAL.PREVIEW}
-      component={ItwCredentialPreviewScreen}
+      component={ItwIssuingCredentialPreviewScreen}
     />
 
     {/* PRESENTATION PID */}
@@ -109,15 +109,15 @@ export const ItwStackNavigator = () => (
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.PID.REMOTE.CHECKS}
-      component={ItwPrPidChecksScreen}
+      component={ItwPrRemotePidChecksScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.PID.REMOTE.DATA}
-      component={ItwPrPidDataScreen}
+      component={ItwPrRemotePidDataScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.PID.REMOTE.RESULT}
-      component={ItwPrPidResultScreen}
+      component={ItwPrRemotePidResultScreen}
     />
 
     {/* CREDENTIAL PRESENTATION */}
@@ -127,15 +127,15 @@ export const ItwStackNavigator = () => (
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.CHECKS}
-      component={ItwPrCredentialChecksScreen}
+      component={ItwPrRemoteCredentialChecksScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.DATA}
-      component={ItwPrCredentialDataScreen}
+      component={ItwPrRemoteCredentialDataScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.RESULT}
-      component={ItwPrCredentialResultScreen}
+      component={ItwPrRemoteCredentialResultScreen}
     />
 
     {/* PRESENTATION PROXIMITY */}

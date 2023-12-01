@@ -19,7 +19,7 @@ import itwCardImage from "../../../assets/img/issuing/itw_card.png";
 import { isAndroid } from "../../../../../utils/platform";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
 
-const ItwPidInfoScreen = () => {
+const ItwIssuingPidInfoScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
 
@@ -98,4 +98,4 @@ const ItwPidInfoScreen = () => {
   );
 };
 
-export default ItwPidInfoScreen;
+export default ItwIssuingPidInfoScreen;

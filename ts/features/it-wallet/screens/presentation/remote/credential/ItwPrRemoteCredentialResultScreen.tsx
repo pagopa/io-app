@@ -17,7 +17,7 @@ import {
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { getRpMock } from "../../../../utils/mocks";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -25,7 +25,7 @@ import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapp
  * It shows an error screen if the checks fail.
  * The view is rendered based on the state of the checks pot.
  */
-const ItwPrCredentialResultScreen = () => {
+const ItwPrRemoteCredentialResultScreen = () => {
   const dispatch = useIODispatch();
   const resultPot = useIOSelector(itwPresentationResultSelector);
   const navigation =
@@ -95,4 +95,4 @@ const ItwPrCredentialResultScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPrCredentialResultScreen;
+export default ItwPrRemoteCredentialResultScreen;

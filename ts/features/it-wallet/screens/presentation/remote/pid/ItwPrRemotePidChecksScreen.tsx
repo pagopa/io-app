@@ -16,26 +16,26 @@ import { itwRpInitialization } from "../../../../store/actions/itwRpActions";
 import { rpPidMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import ItwContinueView from "../../../../components/ItwContinueView";
 
 /**
- * ItwPrPidChecksScreenNavigationParams's navigation params.
+ * ItwPrRemotePidChecksScreenNavigationParams's navigation params.
  * The authReqUrl is the url to use to start the RP flow.
  */
-export type ItwPrPidChecksScreenNavigationParams = RpData;
+export type ItwPrRemotePidChecksScreenNavigationParams = RpData;
 
 /**
- * Type of the route props for the ItwPidRequestScreen.
+ * Type of the route props for the ItwIssuingPidRequestScreen.
  */
-type ItwPrPidChecksScreenRouteProps = RouteProp<
+type ItwPrRemotePidChecksScreenRouteProps = RouteProp<
   ItwParamsList,
   "ITW_PRESENTATION_PID_REMOTE_CHECKS"
 >;
 
-const ItwPrPidChecksScreen = () => {
-  const route = useRoute<ItwPrPidChecksScreenRouteProps>();
+const ItwPrRemotePidChecksScreen = () => {
+  const route = useRoute<ItwPrRemotePidChecksScreenRouteProps>();
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const initStatus = useIOSelector(itwRpInitializationSelector);
@@ -105,4 +105,4 @@ const ItwPrPidChecksScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPrPidChecksScreen;
+export default ItwPrRemotePidChecksScreen;

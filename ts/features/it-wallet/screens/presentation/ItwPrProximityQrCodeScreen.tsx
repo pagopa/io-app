@@ -1,16 +1,20 @@
 import * as React from "react";
 import { Image, SafeAreaView, View } from "react-native";
 import RNQRGenerator from "rn-qr-generator";
-import { IOStyles, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOStyles,
+  LabelSmall,
+  LoadingSpinner,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import ItwLoadingSpinner from "../../components/ItwLoadingSpinner";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ItwKoView from "../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
 
 // A mocked QR code to be used in the proximity flow
 // TODO: remove this mocked QR code after the proximity flow is implemented [SIW-688]
@@ -51,7 +55,7 @@ const ItwPrProximityQrCodeScreen = () => {
    */
   const LoadingComponent = () => (
     <View style={IOStyles.alignCenter}>
-      <ItwLoadingSpinner />
+      <LoadingSpinner />
       <VSpacer size={8} />
       <LabelSmall color={"black"} weight="Regular">
         {I18n.t("features.itWallet.presentation.qrCodeScreen.loading")}
