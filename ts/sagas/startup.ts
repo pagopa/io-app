@@ -70,6 +70,7 @@ import {
   generateLollipopKeySaga,
   getKeyInfo
 } from "../features/lollipop/saga";
+import { watchLoadMessageData } from "../features/messages/saga/messageData";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
   isIdPayTestEnabledSelector,
@@ -334,6 +335,7 @@ export function* initializeApplicationSaga(
     watchMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );
+  yield* fork(watchLoadMessageData);
   yield* fork(
     watchUpsertMessageStatusAttribues,
     backendClient.upsertMessageStatusAttributes
