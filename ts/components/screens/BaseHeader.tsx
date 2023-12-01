@@ -19,7 +19,8 @@ import {
   Icon,
   IconButton,
   HSpacer,
-  IOSpacer
+  IOSpacer,
+  H3
 } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
@@ -36,7 +37,6 @@ import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
 import AppHeader from "../ui/AppHeader";
 import { itWalletEnabled } from "../../config";
-import { NewH3 } from "../../features/it-wallet/components/design/NewH3";
 
 type HelpButtonProps = {
   dark?: boolean;
@@ -389,14 +389,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     const { sectionTitle, dark } = this.props;
     return (
       <Left>
-        <NewH3
+        <H3
           accessible={true}
           accessibilityRole="header"
           testID={"screen-content-header-title"}
           color={dark ? "white" : "black"}
         >
           {sectionTitle}
-        </NewH3>
+        </H3>
       </Left>
     );
   };

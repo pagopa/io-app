@@ -6,12 +6,10 @@ import {
   IOColors,
   LoadingSpinner,
   VSpacer,
-  hexToRgba,
-  useIOExperimentalDesign
+  hexToRgba
 } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
 import { Overlay } from "../../../components/ui/Overlay";
-import ItwLoadingSpinner from "./ItwLoadingSpinner";
 
 const styles = StyleSheet.create({
   main: {
@@ -49,20 +47,13 @@ const ItwLoadingSpinnerOverlay: React.FunctionComponent<Props> = (
     captionSubtitle
   } = props;
 
-  const { isExperimental } = useIOExperimentalDesign();
-
   return (
     <Overlay
       backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
       foreground={
         isLoading && (
           <View style={styles.main}>
-            {isExperimental ? (
-              <LoadingSpinner size={76} />
-            ) : (
-              <ItwLoadingSpinner color={IOColors.blue} size={76} />
-            )}
-
+            <LoadingSpinner size={76} />
             <VSpacer size={48} />
             <H3
               style={styles.textAlignCenter}
