@@ -13,7 +13,8 @@ import React, {
   useEffect,
   useMemo,
   useState,
-  useContext
+  useContext,
+  createRef
 } from "react";
 import validator from "validator";
 import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
@@ -21,7 +22,10 @@ import {
   IOColors,
   Icon,
   LabelSmall,
-  VSpacer
+  VSpacer,
+  Alert as AlertComponent,
+  FooterWithButtons,
+  IOToast
 } from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -29,26 +33,27 @@ import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
+  isProfileEmailAlreadyTakenSelector,
   isProfileEmailValidatedSelector,
+  isProfileFirstOnBoardingSelector,
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
-import { showToast } from "../../utils/showToast";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { LightModalContext } from "../../components/ui/LightModal";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
+import { emailAcknowledged } from "../../store/actions/onboarding";
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -69,12 +74,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "email.insert.help.content"
 };
 
-// FIXME -> refactor logic. Need to integrate the logic of this screen and the NewOnboardingEmailInsertScreen
-
 /**
  * A screen to allow user to insert an email address.
  */
-const NewEmailInsertScreen = (props: Props) => {
+const CduEmailInsertScreen = (props: Props) => {
+  const viewRef = createRef<View>();
   const { showModal } = useContext(LightModalContext);
 
   const dispatch = useIODispatch();
@@ -82,6 +86,10 @@ const NewEmailInsertScreen = (props: Props) => {
   const profile = useIOSelector(profileSelector);
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const isFirstOnboarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const isProfileEmailAlreadyTaken = useIOSelector(
+    isProfileEmailAlreadyTakenSelector
+  );
 
   const acknowledgeOnEmailValidated = useIOSelector(
     emailValidationSelector
@@ -94,6 +102,11 @@ const NewEmailInsertScreen = (props: Props) => {
     [profile]
   );
 
+  const acknowledgeEmail = useCallback(
+    () => dispatch(emailAcknowledged()),
+    [dispatch]
+  );
+
   const updateEmail = useCallback(
     (email: EmailString) =>
       dispatch(
@@ -104,8 +117,11 @@ const NewEmailInsertScreen = (props: Props) => {
     [dispatch]
   );
 
+  const getEmail = (email: O.Option<string>) =>
+    !isProfileEmailAlreadyTaken ? email : O.some(EMPTY_EMAIL);
+
   const [areSameEmails, setAreSameEmails] = useState(false);
-  const [email, setEmail] = useState(optionEmail ?? O.some(EMPTY_EMAIL));
+  const [email, setEmail] = useState(getEmail(optionEmail));
 
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
@@ -135,7 +151,6 @@ const NewEmailInsertScreen = (props: Props) => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-
     pipe(
       email,
       O.map(e => {
@@ -148,7 +163,8 @@ const NewEmailInsertScreen = (props: Props) => {
     const continueButtonProps = {
       disabled: !isValidEmail() && !isLoading,
       onPress: continueOnPress,
-      title: I18n.t("global.buttons.continue"),
+      label: I18n.t("global.buttons.continue"),
+      accessibilityLabel: I18n.t("global.buttons.continue"),
       block: true,
       primary: isValidEmail()
     };
@@ -156,7 +172,10 @@ const NewEmailInsertScreen = (props: Props) => {
     return (
       <FooterWithButtons
         type={"SingleButton"}
-        leftButton={continueButtonProps}
+        primary={{
+          type: "Solid",
+          buttonProps: continueButtonProps
+        }}
       />
     );
   };
@@ -176,16 +195,6 @@ const NewEmailInsertScreen = (props: Props) => {
     setEmail(O.some(EMPTY_EMAIL));
   }, []);
 
-  useEffect(() => {
-    if (prevUserProfile) {
-      const isPrevCurrentSameState = prevUserProfile.kind === profile.kind;
-      // do nothing if prev profile is in the same state of the current
-      if (isPrevCurrentSameState) {
-        return;
-      }
-    }
-  }, [prevUserProfile, profile]);
-
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // we show the modal to remind the user to validate the email.
   // This is used during the check of the email at startup.
@@ -194,10 +203,13 @@ const NewEmailInsertScreen = (props: Props) => {
       O.isSome(acknowledgeOnEmailValidated) &&
       acknowledgeOnEmailValidated.value === false
     ) {
-      showModal(<NewRemindEmailValidationOverlay />);
+      showModal(
+        <NewRemindEmailValidationOverlay isOnboarding={isFirstOnboarding} />
+      );
     }
-  }, [acknowledgeOnEmailValidated, showModal]);
+  }, [acknowledgeOnEmailValidated, isFirstOnboarding, showModal]);
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
       if (pot.isError(profile)) {
@@ -214,53 +226,99 @@ const NewEmailInsertScreen = (props: Props) => {
             ]
           );
         } else {
-          showToast(I18n.t("email.edit.upsert_ko"), "danger");
+          IOToast.error(I18n.t("email.edit.upsert_ko"));
         }
-
         // display a toast with error
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
         // the email is correctly inserted
         if (isEmailValidated) {
-          handleGoBack();
+          if (!isFirstOnboarding) {
+            handleGoBack();
+          }
         } else {
-          showModal(<NewRemindEmailValidationOverlay />);
+          showModal(
+            <NewRemindEmailValidationOverlay isOnboarding={isFirstOnboarding} />
+          );
         }
         return;
       }
     }
-  }, [handleGoBack, isEmailValidated, prevUserProfile, profile, showModal]);
+  }, [
+    acknowledgeEmail,
+    handleGoBack,
+    isEmailValidated,
+    isFirstOnboarding,
+    prevUserProfile,
+    profile,
+    showModal
+  ]);
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <BaseScreenComponent
-        goBack={handleGoBack}
-        headerTitle={I18n.t("profile.data.list.email")}
+        goBack={isFirstOnboarding ? handleGoBack : undefined}
+        headerTitle={
+          isFirstOnboarding
+            ? I18n.t("email.newinsert.header")
+            : I18n.t("profile.data.list.email")
+        }
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <SafeAreaView style={styles.flex}>
-          <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
+          <Content
+            testID="container-test"
+            noPadded={true}
+            style={styles.flex}
+            scrollEnabled={false}
+          >
             <View style={IOStyles.horizontalContentPadding}>
-              <H1 color={"bluegreyDark"} weight={"Bold"}>
-                {I18n.t("email.edit.title")}
+              <H1 color={"bluegreyDark"} weight={"Bold"} testID="title-test">
+                {isFirstOnboarding
+                  ? I18n.t("email.newinsert.title")
+                  : I18n.t("email.edit.title")}
               </H1>
               <VSpacer />
               <VSpacer size={16} />
               <Body>
-                {isEmailValidated
-                  ? I18n.t("email.edit.validated")
-                  : I18n.t("email.edit.subtitle")}
-                <Body weight="SemiBold">
-                  {` ${pipe(
-                    optionEmail,
-                    O.getOrElse(() => "")
-                  )}`}
-                </Body>
+                {isFirstOnboarding ? (
+                  I18n.t("email.newinsert.subtitle")
+                ) : (
+                  <>
+                    {I18n.t("email.edit.subtitle")}
+                    <Body weight="SemiBold">
+                      {` ${pipe(
+                        optionEmail,
+                        O.getOrElse(() => "")
+                      )}`}
+                    </Body>
+                  </>
+                )}
               </Body>
+              {isProfileEmailAlreadyTaken && isFirstOnboarding && (
+                <>
+                  <VSpacer size={24} />
+                  <AlertComponent
+                    testID="alert-test"
+                    viewRef={viewRef}
+                    variant="info"
+                    content={I18n.t("email.newinsert.alert.title", {
+                      email: pipe(
+                        optionEmail,
+                        O.getOrElse(() => EMPTY_EMAIL)
+                      )
+                    })}
+                  />
+                </>
+              )}
               <VSpacer size={16} />
               <Form>
                 <View>
                   <LabelledItem
-                    label={I18n.t("email.edit.label")}
+                    label={
+                      isFirstOnboarding
+                        ? I18n.t("email.edit.label")
+                        : I18n.t("email.newinsert.label")
+                    }
                     icon="email"
                     isValid={isValidEmail()}
                     overrideBorderColor={
@@ -271,12 +329,13 @@ const NewEmailInsertScreen = (props: Props) => {
                       onSubmitEditing: continueOnPress,
                       autoCapitalize: "none",
                       keyboardType: "email-address",
-                      value: pipe(
-                        email,
+                      defaultValue: pipe(
+                        getEmail(email),
                         O.getOrElse(() => EMPTY_EMAIL)
                       ),
                       onChangeText: handleOnChangeEmailText
                     }}
+                    testID="TextField"
                   />
                   {areSameEmails && (
                     <View
@@ -311,4 +370,4 @@ const NewEmailInsertScreen = (props: Props) => {
   );
 };
 
-export default NewEmailInsertScreen;
+export default CduEmailInsertScreen;
