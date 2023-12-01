@@ -10,6 +10,10 @@ import {
   OperationTypeEnum as IbanOperationTypeEnum
 } from "../../../../../definitions/idpay/IbanOperationDTO";
 import {
+  OperationTypeEnum as UnsubscribeOperationTypeEnum,
+  UnsubscribeOperationDTO
+} from "../../../../../definitions/idpay/UnsubscribeOperationDTO";
+import {
   InstrumentOperationDTO,
   OperationTypeEnum as InstrumentOperationTypeEnum,
   InstrumentTypeEnum
@@ -101,6 +105,8 @@ const getOperationProps = (operation: OperationListDTO) => {
       return getSuspendOperationProps(operation);
     case ReadmittedOperationTypeEnum.READMITTED:
       return getReadmittedOperationProps(operation);
+    case UnsubscribeOperationTypeEnum.UNSUBSCRIBED:
+      return getUnsubscribedOperationProps(operation);
   }
 };
 
@@ -329,6 +335,19 @@ const getReadmittedOperationProps = (
   ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.READMITTED`
+  ),
+  subtitle: getOperationSubtitle(operation.operationDate),
+  transactionStatus: "success",
+  transactionAmount: ""
+});
+const getUnsubscribedOperationProps = (
+  operation: UnsubscribeOperationDTO
+): ListItemTransaction => ({
+  paymentLogoIcon: (
+    <Icon name={"logout"} color="grey-300" testID="creditCardLogoTestID" />
+  ),
+  title: I18n.t(
+    `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.UNSUBSCRIBED`
   ),
   subtitle: getOperationSubtitle(operation.operationDate),
   transactionStatus: "success",
