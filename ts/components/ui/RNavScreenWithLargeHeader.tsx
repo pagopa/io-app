@@ -1,8 +1,4 @@
-import {
-  H2,
-  HeaderSecondLevel,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
+import { H2, HeaderSecondLevel, IOStyles } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React, { ComponentProps, useLayoutEffect, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
@@ -11,9 +7,9 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { HeaderActionProps, useHeaderProps } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
-import { HeaderActionProps, useHeaderProps } from "../../hooks/useHeaderProps";
 
 type Props = {
   children: React.ReactNode;
@@ -79,7 +75,7 @@ export const RNavScreenWithLargeHeader = ({
     <Animated.ScrollView
       contentContainerStyle={{
         paddingBottom: insets.bottom,
-        paddingHorizontal: IOVisualCostants.appMarginDefault
+        flexGrow: 1
       }}
       onScroll={scrollHandler}
       scrollEventThrottle={8}
@@ -87,7 +83,7 @@ export const RNavScreenWithLargeHeader = ({
       snapToEnd={false}
       decelerationRate="normal"
     >
-      <View onLayout={getTitleHeight}>
+      <View style={IOStyles.horizontalContentPadding} onLayout={getTitleHeight}>
         <H2>{title}</H2>
       </View>
       {children}
