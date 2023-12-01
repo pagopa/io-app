@@ -18,7 +18,13 @@ import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { getRpMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
+import { itwActivationStart } from "../../../../store/actions/itwActivationActions";
+import {
+  ItWalletError,
+  ItWalletErrorTypes,
+  ItwErrorMapping,
+  getItwGenericMappedError
+} from "../../../../utils/itwErrorsUtils";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -48,9 +54,44 @@ const ItwPrRemoteCredentialChecksScreen = () => {
     </ItwLoadingSpinnerOverlay>
   );
 
-  const ErrorView = () => {
-    const onPress = () => navigation.goBack();
-    const mappedError = getItwGenericMappedError(onPress);
+  /**
+   * Error mapping function for any error that can be displayed in this screen.
+   * @param error - optional ItWalletError to be displayed.
+   * @returns a mapped error object or a generic error object when error is not provided.
+   */
+  const getScreenError: ItwErrorMapping = (error?: ItWalletError) => {
+    switch (error?.code) {
+      case ItWalletErrorTypes.WALLET_NOT_VALID_ERROR:
+        return {
+          title: I18n.t(
+            "features.itWallet.presentation.checksScreen.errors.walletNotValid.title"
+          ),
+          subtitle: I18n.t(
+            "features.itWallet.presentation.checksScreen.errors.walletNotValid.subtitle"
+          ),
+          pictogram: "umbrella",
+          action: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.presentation.checksScreen.errors.walletNotValid.actionLabel"
+            ),
+            label: I18n.t(
+              "features.itWallet.presentation.checksScreen.errors.walletNotValid.actionLabel"
+            ),
+            onPress: () => dispatch(itwActivationStart())
+          },
+          secondaryAction: {
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            label: I18n.t("global.buttons.close"),
+            onPress: () => navigation.goBack()
+          }
+        };
+      default:
+        return getItwGenericMappedError(() => navigation.goBack());
+    }
+  };
+
+  const ErrorView = ({ error }: { error: ItWalletError }) => {
+    const mappedError = getScreenError(error);
     return <ItwKoView {...mappedError} />;
   };
 
@@ -77,11 +118,11 @@ const ItwPrRemoteCredentialChecksScreen = () => {
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      _ => <ErrorView />,
+      error => <ErrorView error={error} />,
       _ => <SuccessView />,
       () => <LoadingView />,
       () => <LoadingView />,
-      _ => <ErrorView />
+      (_, error) => <ErrorView error={error} />
     );
 
   return <RenderMask />;
