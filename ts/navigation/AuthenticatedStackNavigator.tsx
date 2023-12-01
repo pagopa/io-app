@@ -273,7 +273,8 @@ const AuthenticatedStackNavigator = () => {
         name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
         component={WalletPaymentNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
       <Stack.Screen
@@ -293,7 +294,8 @@ const AuthenticatedStackNavigator = () => {
         component={WalletPaymentBarcodeScanScreen}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
     </Stack.Navigator>
