@@ -148,12 +148,15 @@ const MessageDetailsComponent = ({
   // prescription attachments and third party data. That is why, later in the
   // code, the UI rendering is guarded by opposite checks on prescription and
   // third party attachments
-  const { prescriptionAttachments, markdown, prescriptionData } =
-    messageDetails;
+  const {
+    prescriptionAttachments,
+    markdown,
+    prescriptionData,
+    hasThirdPartyData
+  } = messageDetails;
   const isPrescription = prescriptionData !== undefined;
 
   const { id: messageId, title } = message;
-  const hasThirdPartyDataAttachments = messageDetails.hasThirdPartyData;
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
@@ -161,7 +164,7 @@ const MessageDetailsComponent = ({
   // first rendering of this component. We want to send the request only if
   // we have never retrieved data or if there was an error
   const shouldDownloadThirdPartyDataAttachmentList =
-    hasThirdPartyDataAttachments &&
+    hasThirdPartyData &&
     isFirstRendering.current &&
     (isStrictNone(thirdPartyDataPot) || pot.isError(thirdPartyDataPot));
 
@@ -253,7 +256,7 @@ const MessageDetailsComponent = ({
 
         <VSpacer size={24} />
         {prescriptionAttachments &&
-          !hasThirdPartyDataAttachments &&
+          !hasThirdPartyData &&
           isContentLoadCompleted && (
             <>
               <MedicalPrescriptionAttachments
@@ -264,7 +267,7 @@ const MessageDetailsComponent = ({
               <VSpacer size={24} />
             </>
           )}
-        {hasThirdPartyDataAttachments && isContentLoadCompleted && (
+        {hasThirdPartyData && isContentLoadCompleted && (
           <>
             <H2 color="bluegrey" style={styles.attachmentsTitle}>
               {I18n.t("features.pn.details.attachmentsSection.title")}
