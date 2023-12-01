@@ -3,10 +3,9 @@ import { createStore } from "redux";
 import {
   idPayAreInitiativesFromInstrumentLoadingSelector,
   idPayEnabledInitiativesFromInstrumentSelector,
-  idPayInitiativeAwaitingUpdateSelector,
+  idPayInitiativesAwaitingUpdateSelector,
   idPayInitiativesFromInstrumentSelector,
-  idPayWalletInitiativeListSelector,
-  idPayWalletSelector
+  idPayWalletInitiativeListSelector
 } from "..";
 import { InitiativesWithInstrumentDTO } from "../../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
 import { WalletDTO } from "../../../../../../../definitions/idpay/WalletDTO";
@@ -44,7 +43,6 @@ describe("Test IDPay wallet/initiatives reducers and selectors", () => {
     expect(globalState.features.idPay.wallet.initiatives).toStrictEqual(
       pot.none
     );
-    expect(idPayWalletSelector(globalState)).toStrictEqual(pot.none);
     expect(idPayWalletInitiativeListSelector(globalState)).toStrictEqual(
       pot.none
     );
@@ -54,9 +52,6 @@ describe("Test IDPay wallet/initiatives reducers and selectors", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(idPayWalletGet.request());
     expect(store.getState().features.idPay.wallet.initiatives).toStrictEqual(
-      pot.noneLoading
-    );
-    expect(idPayWalletSelector(store.getState())).toStrictEqual(
       pot.noneLoading
     );
     expect(idPayWalletInitiativeListSelector(store.getState())).toStrictEqual(
@@ -71,9 +66,6 @@ describe("Test IDPay wallet/initiatives reducers and selectors", () => {
     expect(store.getState().features.idPay.wallet.initiatives).toStrictEqual(
       pot.some(mockResponseSuccess)
     );
-    expect(idPayWalletSelector(store.getState())).toStrictEqual(
-      pot.some(mockResponseSuccess)
-    );
     expect(idPayWalletInitiativeListSelector(store.getState())).toStrictEqual(
       pot.some(mockResponseSuccess.initiativeList)
     );
@@ -84,9 +76,6 @@ describe("Test IDPay wallet/initiatives reducers and selectors", () => {
     store.dispatch(idPayWalletGet.request());
     store.dispatch(idPayWalletGet.failure(mockFailure));
     expect(store.getState().features.idPay.wallet.initiatives).toStrictEqual(
-      pot.noneError(mockFailure)
-    );
-    expect(idPayWalletSelector(store.getState())).toStrictEqual(
       pot.noneError(mockFailure)
     );
     expect(idPayWalletInitiativeListSelector(store.getState())).toStrictEqual(
@@ -202,37 +191,49 @@ describe("test Idpay Initiative Enroll/Delete reducers and selectors", () => {
   it("adds the initiative to the data structure when enrolling", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
+
+    const T_INITIATIVE_ID_1 = "initiative1";
+    const T_INITIATIVE_ID_2 = "initiative2";
+    const T_INITIATIVE_ID_3 = "initiative3";
+
     store.dispatch(
       idpayInitiativesInstrumentEnroll.request({
         idWallet: "MOCK",
-        initiativeId: "initiative"
+        initiativeId: T_INITIATIVE_ID_1
       })
     );
     store.dispatch(
       idpayInitiativesInstrumentEnroll.request({
         idWallet: "MOCK1",
-        initiativeId: "initiative1"
+        initiativeId: T_INITIATIVE_ID_2
       })
     );
     store.dispatch(
       idpayInitiativesInstrumentDelete.request({
         instrumentId: "MOCK2",
-        initiativeId: "initiative2"
+        initiativeId: T_INITIATIVE_ID_3
       })
     );
     expect(
       store.getState().features.idPay.wallet.initiativesAwaitingStatusUpdate
-    ).toStrictEqual({ initiative: true, initiative1: true, initiative2: true });
+    ).toStrictEqual({
+      [T_INITIATIVE_ID_1]: true,
+      [T_INITIATIVE_ID_2]: true,
+      [T_INITIATIVE_ID_3]: true
+    });
     expect(
       idPayEnabledInitiativesFromInstrumentSelector(store.getState())
     ).toStrictEqual(mockInitiativesWithInstrumentSuccess.initiativeList);
     expect(
-      idPayInitiativeAwaitingUpdateSelector(store.getState(), "initiative") &&
-        idPayInitiativeAwaitingUpdateSelector(
-          store.getState(),
-          "initiative1"
-        ) &&
-        idPayInitiativeAwaitingUpdateSelector(store.getState(), "initiative2")
+      idPayInitiativesAwaitingUpdateSelector(store.getState())[
+        T_INITIATIVE_ID_1
+      ] &&
+        idPayInitiativesAwaitingUpdateSelector(store.getState())[
+          T_INITIATIVE_ID_2
+        ] &&
+        idPayInitiativesAwaitingUpdateSelector(store.getState())[
+          T_INITIATIVE_ID_3
+        ]
     ).toStrictEqual(true);
   });
 });
