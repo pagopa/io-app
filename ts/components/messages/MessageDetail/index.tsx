@@ -168,17 +168,12 @@ const MessageDetailsComponent = ({
     isFirstRendering.current &&
     (isStrictNone(thirdPartyDataPot) || pot.isError(thirdPartyDataPot));
 
-  const messageMarkdown = pipe(
-    useIOSelector(state => messageMarkdownSelector(state, messageId)),
-    O.fromNullable,
-    O.getOrElse(() => markdown)
-  );
+  const messageMarkdown =
+    useIOSelector(state => messageMarkdownSelector(state, messageId)) ??
+    markdown;
 
-  const messageTitle = pipe(
-    useIOSelector(state => messageTitleSelector(state, messageId)),
-    O.fromNullable,
-    O.getOrElse(() => title)
-  );
+  const messageTitle =
+    useIOSelector(state => messageTitleSelector(state, messageId)) ?? title;
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
