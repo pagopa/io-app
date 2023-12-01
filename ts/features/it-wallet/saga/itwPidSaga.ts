@@ -6,7 +6,7 @@ import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
 import { getPid } from "../utils/pid";
-import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import {
   itwCredentialsAddPid,
   itwDecodePid,

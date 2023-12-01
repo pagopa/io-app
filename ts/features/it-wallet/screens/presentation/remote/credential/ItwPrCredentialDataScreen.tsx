@@ -33,7 +33,7 @@ import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
 import { getRpMock } from "../../../../utils/mocks";
 import { showCancelAlert } from "../../../../utils/alert";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 import ItwTextInfo from "../../../../components/ItwTextInfo";
 

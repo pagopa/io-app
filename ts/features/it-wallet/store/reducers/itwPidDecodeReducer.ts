@@ -5,7 +5,7 @@ import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwDecodePid } from "../actions/itwCredentialsActions";
-import { ItWalletError } from "../../utils/errors/itwErrors";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
 
 type ItwDecodedPidType = {

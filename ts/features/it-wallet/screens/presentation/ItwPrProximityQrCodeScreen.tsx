@@ -14,7 +14,7 @@ import { ItwParamsList } from "../../navigation/ItwParamsList";
 import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ItwKoView from "../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
 
 // A mocked QR code to be used in the proximity flow
 // TODO: remove this mocked QR code after the proximity flow is implemented [SIW-688]

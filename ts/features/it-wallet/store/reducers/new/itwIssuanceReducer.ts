@@ -3,7 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ItWalletError } from "../../../utils/errors/itwErrors";
+import { ItWalletError } from "../../../utils/itwErrorsUtils";
 import {
   itwIssuanceChecks,
   itwIssuanceGetCredential
