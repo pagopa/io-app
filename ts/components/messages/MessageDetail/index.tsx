@@ -1,7 +1,4 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import * as O from "fp-ts/lib/Option";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -11,6 +8,9 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { pipe } from "fp-ts/lib/function";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -18,7 +18,11 @@ import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/Th
 import { LegacyMessageAttachments } from "../../../features/messages/components/LegacyMessageAttachments";
 import { loadThirdPartyMessage } from "../../../features/messages/store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
+import {
+  messageMarkdownSelector,
+  messageTitleSelector,
+  thirdPartyFromIdSelector
+} from "../../../store/reducers/entities/messages/thirdPartyById";
 import {
   UIAttachment,
   UIMessage,
@@ -49,8 +53,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: variables.contentPadding
   },
   webview: {
-    marginLeft: variables.contentPadding,
-    marginRight: variables.contentPadding
+    marginHorizontal: variables.contentPadding
   },
   attachmentsTitle: {
     paddingHorizontal: variables.spacerLargeHeight,
@@ -149,7 +152,7 @@ const MessageDetailsComponent = ({
     messageDetails;
   const isPrescription = prescriptionData !== undefined;
 
-  const messageId = message.id;
+  const { id: messageId, title } = message;
   const hasThirdPartyDataAttachments = messageDetails.hasThirdPartyData;
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
@@ -161,6 +164,18 @@ const MessageDetailsComponent = ({
     hasThirdPartyDataAttachments &&
     isFirstRendering.current &&
     (isStrictNone(thirdPartyDataPot) || pot.isError(thirdPartyDataPot));
+
+  const messageMarkdown = pipe(
+    useIOSelector(state => messageMarkdownSelector(state, messageId)),
+    O.fromNullable,
+    O.getOrElse(() => markdown)
+  );
+
+  const messageTitle = pipe(
+    useIOSelector(state => messageTitleSelector(state, messageId)),
+    O.fromNullable,
+    O.getOrElse(() => title)
+  );
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
@@ -218,7 +233,7 @@ const MessageDetailsComponent = ({
 
           <VSpacer size={24} />
 
-          <MessageTitle title={message.title} isPrescription={isPrescription} />
+          <MessageTitle title={messageTitle} isPrescription={isPrescription} />
 
           <VSpacer size={16} />
         </View>
@@ -226,13 +241,14 @@ const MessageDetailsComponent = ({
           hasPaidBadge={hasPaidBadge}
           messageDetails={messageDetails}
         />
+
         <MessageMarkdown
           webViewStyle={styles.webview}
           onLoadEnd={() => {
             setIsContentLoadCompleted(true);
           }}
         >
-          {cleanMarkdownFromCTAs(markdown)}
+          {cleanMarkdownFromCTAs(messageMarkdown)}
         </MessageMarkdown>
 
         <VSpacer size={24} />
