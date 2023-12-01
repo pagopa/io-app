@@ -17,7 +17,7 @@ import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOv
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../../navigation/routes";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 
 const ItwPrRemotePidResultScreen = () => {
   const dispatch = useIODispatch();

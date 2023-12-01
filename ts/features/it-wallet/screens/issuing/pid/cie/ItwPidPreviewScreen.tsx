@@ -35,8 +35,10 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
-import { ItWalletError } from "../../../../utils/errors/itwErrors";
+import {
+  getItwGenericMappedError,
+  ItWalletError
+} from "../../../../utils/itwErrorsUtils";
 
 type ContentViewProps = {
   decodedPid: PidWithToken;

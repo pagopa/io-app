@@ -3,7 +3,7 @@ import * as matchers from "redux-saga-test-plan/matchers";
 import * as O from "fp-ts/lib/Option";
 import { handleWiaRequest } from "../itwWiaSaga";
 import { idpSelector } from "../../../../store/reducers/authentication";
-import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
+import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
 import { getWia } from "../../utils/wia";
 import { isCIEAuthenticationSupported } from "../../utils/cie";
 import { itwWiaRequest } from "../../store/actions/itwWiaActions";

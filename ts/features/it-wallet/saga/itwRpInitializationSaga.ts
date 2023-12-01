@@ -7,7 +7,7 @@ import {
   Trust
 } from "@pagopa/io-react-native-wallet";
 import { itwRpInitialization } from "../store/actions/itwRpActions";
-import { ItWalletErrorTypes } from "../utils/errors/itwErrors";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import { ITW_WIA_KEY_TAG } from "../utils/wia";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
 

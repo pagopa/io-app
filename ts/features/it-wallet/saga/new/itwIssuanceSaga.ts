@@ -19,7 +19,7 @@ import {
   itwIssuanceGetCredential
 } from "../../store/actions/new/itwIssuanceActions";
 import { ITW_PID_KEY_TAG } from "../../utils/pid";
-import { ItWalletErrorTypes } from "../../utils/errors/itwErrors";
+import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
 import { ITW_WIA_KEY_TAG } from "../../utils/wia";
 
 import { itwWiaRequest } from "../../store/actions/itwWiaActions";

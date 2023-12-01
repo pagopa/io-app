@@ -24,14 +24,16 @@ import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList
 import { showCancelAlert } from "../../../utils/alert";
 import ROUTES from "../../../../../navigation/routes";
 import ItwKoView from "../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import {
+  getItwGenericMappedError,
+  ItWalletError
+} from "../../../utils/itwErrorsUtils";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   itwConfirmStoreCredential,
   itwIssuanceGetCredential
 } from "../../../store/actions/new/itwIssuanceActions";
 import { itwIssuanceResultSelector } from "../../../store/reducers/new/itwIssuanceReducer";
-import { ItWalletError } from "../../../utils/errors/itwErrors";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";

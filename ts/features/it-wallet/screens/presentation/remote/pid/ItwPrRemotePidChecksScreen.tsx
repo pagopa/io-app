@@ -16,7 +16,7 @@ import { itwRpInitialization } from "../../../../store/actions/itwRpActions";
 import { rpPidMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
-import { getItwGenericMappedError } from "../../../../utils/errors/itwErrorsMapping";
+import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import ItwContinueView from "../../../../components/ItwContinueView";
 

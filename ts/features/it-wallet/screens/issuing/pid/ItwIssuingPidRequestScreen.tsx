@@ -18,8 +18,10 @@ import { itwPidSelector } from "../../../store/reducers/itwPidReducer";
 import { itwPid } from "../../../store/actions/itwCredentialsActions";
 import { itwActivationStop } from "../../../store/actions/itwActivationActions";
 import ItwKoView from "../../../components/ItwKoView";
-import { ItWalletError } from "../../../utils/errors/itwErrors";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+import {
+  ItWalletError,
+  getItwGenericMappedError
+} from "../../../utils/itwErrorsUtils";
 
 /**
  * ItwIssuingPidRequestScreen's navigation params.

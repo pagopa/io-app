@@ -21,9 +21,9 @@ import { showCancelAlert } from "../../../utils/alert";
 import {
   ItWalletError,
   ItWalletErrorTypes,
-  ItwErrorMapping
-} from "../../../utils/errors/itwErrors";
-import { getItwGenericMappedError } from "../../../utils/errors/itwErrorsMapping";
+  ItwErrorMapping,
+  getItwGenericMappedError
+} from "../../../utils/itwErrorsUtils";
 import ItwKoView from "../../../components/ItwKoView";
 import ROUTES from "../../../../../navigation/routes";
 
