@@ -10,7 +10,6 @@ import { ISSUER_URL, mapAssuranceLevel } from "../utils/mocks";
 import I18n from "../../../i18n";
 import { localeDateFormat } from "../../../utils/locale";
 import { PidResponse } from "../utils/types";
-
 /**
  * This type is used to extract the claims from the PID type and exclude the placeOfBirth claim since we don't use it.
  */
@@ -122,20 +121,24 @@ const ItwPidClaimsList = (props: ClaimsListProps) => {
     const issuerUrl = props.entityConfiguration.federation_entity.homepage_uri;
     return (
       <>
-        {issuerName && issuerUrl && (
+        {issuerName && (
           <ListItemInfo
             label={I18n.t(
               "features.itWallet.verifiableCredentials.claims.issuedByNew"
             )}
             value={issuerName}
-            endElement={{
-              type: "iconButton",
-              componentProps: {
-                icon: "info",
-                onPress: () => Linking.openURL(issuerUrl),
-                accessibilityLabel: ""
-              }
-            }}
+            endElement={
+              issuerUrl
+                ? {
+                    type: "iconButton",
+                    componentProps: {
+                      icon: "info",
+                      onPress: () => Linking.openURL(issuerUrl),
+                      accessibilityLabel: ""
+                    }
+                  }
+                : undefined
+            }
           />
         )}
         <ListItemInfo
