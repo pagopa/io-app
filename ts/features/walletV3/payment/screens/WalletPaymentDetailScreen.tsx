@@ -1,10 +1,16 @@
 import {
+  Body,
   Divider,
   GradientScrollView,
   IOColors,
   ListItemInfo,
+  ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import {
+  PaymentNoticeNumberFromString,
+  RptIdFromString
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   RouteProp,
@@ -14,9 +20,10 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { ComponentProps } from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
+import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -26,7 +33,9 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getAccessibleAmountText } from "../../../../utils/accessibility";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
   centsToAmount,
@@ -66,20 +75,32 @@ const WalletPaymentDetailScreen = () => {
     });
   };
 
+  const amountInfoBottomSheet = useIOBottomSheetAutoresizableModal({
+    title: I18n.t("wallet.firstTransactionSummary.amountInfo.title"),
+    component: (
+      <SafeAreaView>
+        <Body>
+          {I18n.t("wallet.firstTransactionSummary.amountInfo.message")}
+        </Body>
+        <VSpacer size={24} />
+      </SafeAreaView>
+    )
+  });
+
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const isLoading = pot.isLoading(paymentDetailsPot);
 
   const recipient = pipe(
     paymentDetailsPot,
     pot.toOption,
-    O.chainNullableK(_ => _.paName),
+    O.chainNullableK(({ paName }) => paName),
     O.toUndefined
   );
 
   const description = pipe(
     paymentDetailsPot,
     pot.toOption,
-    O.map(_ => _.description),
+    O.map(({ description }) => description),
     O.map(cleanTransactionDescription),
     O.toUndefined
   );
@@ -87,7 +108,7 @@ const WalletPaymentDetailScreen = () => {
   const amount = pipe(
     paymentDetailsPot,
     pot.toOption,
-    O.map(_ => _.amount),
+    O.map(({ amount }) => amount),
     O.map(centsToAmount),
     O.map(amount => formatNumberAmount(amount, true)),
     O.toUndefined
@@ -96,10 +117,45 @@ const WalletPaymentDetailScreen = () => {
   const dueDate = pipe(
     paymentDetailsPot,
     pot.toOption,
-    O.chainNullableK(_ => _.dueDate),
+    O.chainNullableK(({ dueDate }) => dueDate),
     O.map(_ => format(_, "DD/MM/YYYY")),
     O.toUndefined
   );
+
+  const formattedPaymentNoticeNumber = pipe(
+    rptId,
+    RptIdFromString.decode,
+    O.fromEither,
+    O.map(({ paymentNoticeNumber }) => paymentNoticeNumber),
+    O.map(PaymentNoticeNumberFromString.encode),
+    O.map(_ => _.replace(/(\d{4})/g, "$1  ").trim()),
+    O.getOrElse(() => "")
+  );
+
+  const organizationFiscalCode = pipe(
+    rptId,
+    RptIdFromString.decode,
+    O.fromEither,
+    O.map(({ organizationFiscalCode }) => organizationFiscalCode),
+    O.map(OrganizationFiscalCode.encode),
+    O.getOrElse(() => "")
+  );
+
+  const amountEndElement: ComponentProps<typeof ListItemInfo>["endElement"] =
+    React.useMemo(() => {
+      if (isLoading) {
+        return undefined;
+      }
+
+      return {
+        type: "iconButton",
+        componentProps: {
+          icon: "info",
+          accessibilityLabel: "info",
+          onPress: amountInfoBottomSheet.present
+        }
+      };
+    }, [isLoading, amountInfoBottomSheet]);
 
   return (
     <GradientScrollView
@@ -129,7 +185,7 @@ const WalletPaymentDetailScreen = () => {
         placeholder={
           <>
             <LoadingPlaceholder size={180} />
-            <VSpacer size={8} />
+            <View style={{ height: 9 }} />
             <LoadingPlaceholder size={180} />
           </>
         }
@@ -142,6 +198,7 @@ const WalletPaymentDetailScreen = () => {
         value={amount}
         isLoading={isLoading}
         placeholder={<LoadingPlaceholder size={90} />}
+        endElement={amountEndElement}
       />
       <Divider />
       <PaymentDetailRow
@@ -153,7 +210,6 @@ const WalletPaymentDetailScreen = () => {
         placeholder={<LoadingPlaceholder size={90} />}
       />
       <Divider />
-      {/* 
       <ListItemInfoCopy
         icon="docPaymentCode"
         label={I18n.t("payment.noticeCode")}
@@ -163,7 +219,8 @@ const WalletPaymentDetailScreen = () => {
           clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
         }
       />
-      <Divider /> 
+
+      <Divider />
       <ListItemInfoCopy
         icon="entityCode"
         label={I18n.t("wallet.firstTransactionSummary.entityCode")}
@@ -171,7 +228,7 @@ const WalletPaymentDetailScreen = () => {
         value={organizationFiscalCode}
         onPress={() => clipboardSetStringWithFeedback(organizationFiscalCode)}
       />
-      */}
+      {amountInfoBottomSheet.bottomSheet}
     </GradientScrollView>
   );
 };
@@ -209,7 +266,7 @@ export const PaymentDetailRow = (props: PaymentDetailRowProps) => {
 const LoadingPlaceholder = (props: { size: 90 | 180 }) => (
   <Placeholder.Box
     width={props.size}
-    height={16}
+    height={15}
     radius={8}
     animate={"fade"}
     color={IOColors.greyLight}
