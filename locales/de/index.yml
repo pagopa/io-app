@@ -336,13 +336,13 @@ profile:
       exportData:
         cta: "Kopie deiner Daten anfordern"
         title: "Zugriff auf deine Daten"
-        description: "Du erhälst eine Kopie der mit deinem IO-Profil verbundenen Daten"
+        description: "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten"
         info:
           title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
         alert:
           requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
           oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
-          confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
+          confirmSubtitle: "Nach der Bearbeitung erhältst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
         error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
       privacyPolicy:
         title: "Datenschutz und Nutzungsbedingungen"
@@ -470,7 +470,7 @@ profile:
       subtitleExistingUser: "Jetzt kannst du sofort sehen, wer dir geschrieben hat oder dich an wichtige Nachrichten erinnern lassen."
       reminders:
         title: "Erinnerungen zulassen"
-        description: "Auf Antrag der Körperschaft erhälst du Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast"
+        description: "Auf Antrag der Körperschaft erhältst du Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast"
       preview:
         title: "Vorschau anzeigen"
         description: "Absender und Betreff in die Push-Benachrichtigung einfügen · "
@@ -656,7 +656,7 @@ email:
   read:
     title: "Deine E-Mail-Adresse"
     info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
-    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhälst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
+    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhältst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
     alert: "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du sie änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten."
     help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an die IO-App. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
   insert:
@@ -1369,7 +1369,7 @@ wallet:
       description: "Lösche die Karte aus deinem Konto und versuche, sie erneut hinzuzufügen. Vergewissere dich, dass die eingegebenen Daten genau mit denen auf der Karte übereinstimmen."
     code4:
       title: "Prüfe deine E-Mails"
-      description: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, erhälst du in Kürze eine E-Mail mit der Quittung. Solltest du die E-Mail nicht erhalten, wende dich bitte an den Support."
+      description: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, erhältst du in Kürze eine E-Mail mit der Quittung. Solltest du die E-Mail nicht erhalten, wende dich bitte an den Support."
     code7:
       title: "Es liegt ein Problem mit deiner Karte vor"
       description: "Es wurde kein Betrag abgebucht. Für weitere Informationen wende dich bitte an deine Bank."
@@ -1601,7 +1601,7 @@ send_email_messages:
   options:
     disable_all:
       label: "Für alle Dienste deaktivieren"
-      info: "Du erhälst keine Mitteilung mittels E-Mail mehr"
+      info: "Du erhältst keine Mitteilung mittels E-Mail mehr"
     enable_all:
       label: "Für alle aktiven Dienste aktivieren"
       info: "Jede Mitteilung wird an deine E-Mail-Adresse weitergeleitet, wenn der Dienst dies zulässt"
@@ -1636,7 +1636,7 @@ services:
         body:
           text1: "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
         bottomSheet:
-          title: "Wenn du bestätigst, erhälst du keine Mitteilungen"
+          title: "Wenn du bestätigst, erhältst du keine Mitteilungen"
           body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
   title: "Dienste"
   subTitle: "Aktiviere oder deaktiviere die Dienste, die dir Mitteilungen senden dürfen"
@@ -1808,7 +1808,7 @@ bonus:
         addresses: "Adressen"
         hours: "Öffnungszeiten"
         validity: "Gültigkeit"
-        discountCode: "Rabatt-Code"
+        discountCode: "Rabattcode"
         conditions: "Bedingungen"
       cta:
         label: "Besuche die Website des Anbieters"
@@ -1893,7 +1893,7 @@ bonus:
         body: "Du kannst die Details im Abschnitt Konto einsehen."
       pending:
         title: "Deine Nationale Jugendkarte wird gerade aktiviert."
-        body: "Du erhälst eine Nachricht, wenn sie aktiviert ist."
+        body: "Du erhältst eine Nachricht, wenn sie aktiviert ist."
       success:
         title: "Geschafft!"
         body: "Deine Nationale Jugendkarte ist aktiv."
