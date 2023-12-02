@@ -39,6 +39,7 @@ import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { euCovidCertificateEnabled } from "../../../config";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { trackPNPushOpened } from "../../pn/analytics";
+import { isTestEnv } from "../../../utils/environment";
 
 export function* watchLoadMessageData() {
   yield* takeLatest(
@@ -152,6 +153,109 @@ function* loadMessageData({
   yield* call(dispatchSuccessAction, paginatedMessage, messageDetails);
 }
 
+function* getPaginatedMessage(messageId: UIMessageId) {
+  const initialMessagePot = yield* select(getPaginatedMessageById, messageId);
+  if (!pot.isSome(initialMessagePot) || pot.isError(initialMessagePot)) {
+    yield* put(loadMessageById.request({ id: messageId }));
+
+    const outputAction = yield* take([
+      loadMessageById.success,
+      loadMessageById.failure
+    ]);
+    if (!isActionOf(loadMessageById.success, outputAction)) {
+      return undefined;
+    }
+
+    const finalMessagePot = yield* select(getPaginatedMessageById, messageId);
+    return pot.toUndefined(finalMessagePot);
+  }
+
+  return pot.toUndefined(initialMessagePot);
+}
+
+function* getService(serviceId: ServiceId) {
+  const servicePot = yield* select(
+    state => serviceByIdSelector(serviceId)(state) ?? pot.none
+  );
+  if (!pot.isSome(servicePot) || pot.isError(servicePot)) {
+    yield* put(loadServiceDetail.request(serviceId));
+  }
+}
+
+function* getMessageDetails(messageId: UIMessageId) {
+  const initialMessageDetailsPot = yield* select(
+    messageDetailsByIdSelector,
+    messageId
+  );
+  if (
+    !pot.isSome(initialMessageDetailsPot) ||
+    pot.isError(initialMessageDetailsPot)
+  ) {
+    yield* put(loadMessageDetails.request({ id: messageId }));
+
+    const outputAction = yield* take([
+      loadMessageDetails.success,
+      loadMessageDetails.failure
+    ]);
+    if (!isActionOf(loadMessageDetails.success, outputAction)) {
+      return undefined;
+    }
+
+    const finalMessageDetailsPot = yield* select(
+      messageDetailsByIdSelector,
+      messageId
+    );
+    return pot.toUndefined(finalMessageDetailsPot);
+  }
+
+  return pot.toUndefined(initialMessageDetailsPot);
+}
+
+function* getThirdPartyDataMessage(messageId: UIMessageId) {
+  // Third party data may change anytime, so we must retrieve them on every request
+
+  yield* put(loadThirdPartyMessage.request(messageId));
+
+  const outputAction = yield* take([
+    loadThirdPartyMessage.success,
+    loadThirdPartyMessage.failure
+  ]);
+  if (!isActionOf(loadThirdPartyMessage.success, outputAction)) {
+    return undefined;
+  }
+
+  const thirdPartyMessagePot = yield* select(
+    thirdPartyFromIdSelector,
+    messageId
+  );
+
+  // TODO check for proper details type IOCOM-691
+
+  return pot.toUndefined(thirdPartyMessagePot);
+}
+
+function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
+  const userHadReadMessage = paginatedMessage.isRead;
+  if (!userHadReadMessage) {
+    yield* put(
+      upsertMessageStatusAttributes.request({
+        message: paginatedMessage,
+        update: { tag: "reading" }
+      })
+    );
+
+    const outputAction = yield* take([
+      upsertMessageStatusAttributes.success,
+      upsertMessageStatusAttributes.failure
+    ]);
+    if (!isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
+      return undefined;
+    }
+  }
+
+  return true;
+}
+
 function* dispatchSuccessAction(
   paginatedMessage: UIMessage,
   messageDetails: UIMessageDetails
@@ -183,106 +287,14 @@ function* dispatchSuccessAction(
   );
 }
 
-function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
-  const userHadReadMessage = paginatedMessage.isRead;
-  if (!userHadReadMessage) {
-    yield* put(
-      upsertMessageStatusAttributes.request({
-        message: paginatedMessage,
-        update: { tag: "reading" }
-      })
-    );
-
-    const outputAction = yield* take([
-      upsertMessageStatusAttributes.success,
-      upsertMessageStatusAttributes.failure
-    ]);
-    if (!isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
-      return undefined;
+export const testable = isTestEnv
+  ? {
+      loadMessageData,
+      dispatchSuccessAction,
+      setMessageReadIfNeeded,
+      getPaginatedMessage,
+      getService,
+      getMessageDetails,
+      getThirdPartyDataMessage
     }
-  }
-
-  return true;
-}
-
-function* getPaginatedMessage(messageId: UIMessageId) {
-  const initialMessagePot = yield* select(state =>
-    getPaginatedMessageById(state, messageId)
-  );
-  if (!pot.isSome(initialMessagePot) || pot.isError(initialMessagePot)) {
-    yield* put(loadMessageById.request({ id: messageId }));
-
-    const outputAction = yield* take([
-      loadMessageById.success,
-      loadMessageById.failure
-    ]);
-    if (!isActionOf(loadMessageById.success, outputAction)) {
-      return undefined;
-    }
-
-    const finalMessagePot = yield* select(state =>
-      getPaginatedMessageById(state, messageId)
-    );
-    return pot.toUndefined(finalMessagePot);
-  }
-
-  return pot.toUndefined(initialMessagePot);
-}
-
-function* getService(serviceId: ServiceId) {
-  const servicePot = yield* select(
-    state => serviceByIdSelector(serviceId)(state) ?? pot.none
-  );
-  if (!pot.isSome(servicePot) || pot.isError(servicePot)) {
-    yield* put(loadServiceDetail.request(serviceId));
-  }
-}
-
-function* getMessageDetails(messageId: UIMessageId) {
-  const initialMessageDetailsPot = yield* select(state =>
-    messageDetailsByIdSelector(state, messageId)
-  );
-  if (
-    !pot.isSome(initialMessageDetailsPot) ||
-    pot.isError(initialMessageDetailsPot)
-  ) {
-    yield* put(loadMessageDetails.request({ id: messageId }));
-
-    const outputAction = yield* take([
-      loadMessageDetails.success,
-      loadMessageDetails.failure
-    ]);
-    if (!isActionOf(loadMessageDetails.success, outputAction)) {
-      return undefined;
-    }
-
-    const finalMessageDetailsPot = yield* select(state =>
-      messageDetailsByIdSelector(state, messageId)
-    );
-    return pot.toUndefined(finalMessageDetailsPot);
-  }
-
-  return pot.toUndefined(initialMessageDetailsPot);
-}
-
-function* getThirdPartyDataMessage(messageId: UIMessageId) {
-  // Third party data may change anytime, so we must retrieve them on every request
-
-  yield* put(loadThirdPartyMessage.request(messageId));
-
-  const outputAction = yield* take([
-    loadThirdPartyMessage.success,
-    loadThirdPartyMessage.failure
-  ]);
-  if (!isActionOf(loadThirdPartyMessage.success, outputAction)) {
-    return undefined;
-  }
-
-  const thirdPartyMessagePot = yield* select(state =>
-    thirdPartyFromIdSelector(state, messageId)
-  );
-
-  // TODO check for proper details type IOCOM-691
-
-  return pot.toUndefined(thirdPartyMessagePot);
-}
+  : undefined;

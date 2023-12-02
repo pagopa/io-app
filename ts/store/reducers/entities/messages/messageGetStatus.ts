@@ -10,7 +10,6 @@ import { reloadAllMessages } from "../../../actions/messages";
 
 export type MessageGetStatusType =
   | "idle"
-  | "cancelled"
   | "loading"
   | "blocked"
   | "error"
@@ -29,7 +28,7 @@ export type MessageGetStatus = {
   successData: SuccessGetMessageDataActionType | undefined;
 };
 
-const INITIAL_STATE: MessageGetStatus = {
+export const INITIAL_STATE: MessageGetStatus = {
   failurePhase: "none",
   status: "idle",
   successData: undefined
@@ -43,12 +42,6 @@ export const messageGetStatusReducer = (
     case getType(getMessageDataAction.request):
       return {
         status: "loading",
-        failurePhase: "none",
-        successData: undefined
-      };
-    case getType(getMessageDataAction.cancel):
-      return {
-        status: "cancelled",
         failurePhase: "none",
         successData: undefined
       };
@@ -73,18 +66,8 @@ export const messageGetStatusReducer = (
   return state;
 };
 
-export const showSpinnerFromMessageGetStatusSelector = (state: GlobalState) => {
-  const messageGetStatus = state.entities.messages.messageGetStatus.status;
-  switch (messageGetStatus) {
-    case "blocked":
-    case "cancelled":
-    case "idle":
-    case "loading":
-    case "success":
-      return true;
-  }
-  return false;
-};
+export const showSpinnerFromMessageGetStatusSelector = (state: GlobalState) =>
+  state.entities.messages.messageGetStatus.status !== "error";
 export const messageSuccessDataSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.successData;
 export const blockedFromPushNotificationSelector = (state: GlobalState) =>

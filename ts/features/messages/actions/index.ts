@@ -27,8 +27,7 @@ type FailureGetMessageDataActionType = {
 export const getMessageDataAction = createAsyncAction(
   "GET_MESSAGE_DATA_REQUEST",
   "GET_MESSAGE_DATA_SUCCESS",
-  "GET_MESSAGE_DATA_FAILURE",
-  "GET_MESSAGE_DATA_CANCEL"
+  "GET_MESSAGE_DATA_FAILURE"
 )<
   RequestGetMessageDataActionType,
   SuccessGetMessageDataActionType,
