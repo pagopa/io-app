@@ -42,7 +42,8 @@ export const WalletPaymentNavigator = () => (
       name={WalletPaymentRoutes.WALLET_PAYMENT_DETAIL}
       component={WalletPaymentDetailScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen

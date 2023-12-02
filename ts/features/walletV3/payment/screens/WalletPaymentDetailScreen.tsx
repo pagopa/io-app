@@ -2,9 +2,11 @@ import {
   Body,
   Divider,
   GradientScrollView,
-  IOColors,
+  H3,
+  IOSpacingScale,
   ListItemInfo,
   ListItemInfoCopy,
+  LoadingSpinner,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -21,9 +23,9 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
-import Placeholder from "rn-placeholder";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -32,7 +34,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
@@ -58,16 +59,53 @@ type WalletPaymentDetailRouteProps = RouteProp<
 const WalletPaymentDetailScreen = () => {
   const { params } = useRoute<WalletPaymentDetailRouteProps>();
   const { rptId } = params;
-  const dispatch = useIODispatch();
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  useHeaderSecondLevel({ title: "" });
+  const dispatch = useIODispatch();
+  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
 
   useFocusEffect(
     React.useCallback(() => {
       dispatch(walletPaymentGetDetails.request(rptId));
     }, [dispatch, rptId])
   );
+
+  if (pot.isError(paymentDetailsPot)) {
+    // TODO: failure handling (IOBP-309)
+    return null;
+  }
+
+  if (pot.isSome(paymentDetailsPot)) {
+    return (
+      <WalletPaymentDetailContent
+        rptId={rptId}
+        payment={paymentDetailsPot.value}
+      />
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.loadingContainer}>
+      <LoadingSpinner size={48} />
+      <VSpacer size={24} />
+      <H3 style={{ textAlign: "center" }}>
+        {I18n.t("wallet.firstTransactionSummary.loading")}
+      </H3>
+    </SafeAreaView>
+  );
+};
+
+type WalletPaymentDetailContentProps = {
+  rptId: RptId;
+  payment: PaymentRequestsGetResponse;
+};
+
+const WalletPaymentDetailContent = ({
+  rptId,
+  payment
+}: WalletPaymentDetailContentProps) => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  useHeaderSecondLevel({ title: "", goBack: undefined });
 
   const navigateToMethodSelection = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
@@ -87,37 +125,20 @@ const WalletPaymentDetailScreen = () => {
     )
   });
 
-  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
-  const isLoading = pot.isLoading(paymentDetailsPot);
-
-  const recipient = pipe(
-    paymentDetailsPot,
-    pot.toOption,
-    O.chainNullableK(({ paName }) => paName),
-    O.toUndefined
-  );
-
   const description = pipe(
-    paymentDetailsPot,
-    pot.toOption,
-    O.map(({ description }) => description),
+    payment.description,
+    O.fromNullable,
     O.map(cleanTransactionDescription),
     O.toUndefined
   );
 
-  const amount = pipe(
-    paymentDetailsPot,
-    pot.toOption,
-    O.map(({ amount }) => amount),
-    O.map(centsToAmount),
-    O.map(amount => formatNumberAmount(amount, true)),
-    O.toUndefined
+  const amount = pipe(payment.amount, centsToAmount, amount =>
+    formatNumberAmount(amount, true)
   );
 
   const dueDate = pipe(
-    paymentDetailsPot,
-    pot.toOption,
-    O.chainNullableK(({ dueDate }) => dueDate),
+    payment.dueDate,
+    O.fromNullable,
     O.map(_ => format(_, "DD/MM/YYYY")),
     O.toUndefined
   );
@@ -141,73 +162,50 @@ const WalletPaymentDetailScreen = () => {
     O.getOrElse(() => "")
   );
 
-  const amountEndElement: ComponentProps<typeof ListItemInfo>["endElement"] =
-    React.useMemo(() => {
-      if (isLoading) {
-        return undefined;
-      }
-
-      return {
-        type: "iconButton",
-        componentProps: {
-          icon: "info",
-          accessibilityLabel: "info",
-          onPress: amountInfoBottomSheet.present
-        }
-      };
-    }, [isLoading, amountInfoBottomSheet]);
+  const amountEndElement: ComponentProps<typeof ListItemInfo>["endElement"] = {
+    type: "iconButton",
+    componentProps: {
+      icon: "info",
+      accessibilityLabel: "info",
+      onPress: amountInfoBottomSheet.present
+    }
+  };
 
   return (
     <GradientScrollView
       primaryActionProps={{
         label: "Vai al pagamento",
         accessibilityLabel: "Vai al pagmento",
-        onPress: navigateToMethodSelection,
-        disabled: isLoading,
-        loading: isLoading
+        onPress: navigateToMethodSelection
       }}
     >
-      <PaymentDetailRow
+      <ListItemInfo
         icon={"institution"}
         label={I18n.t("wallet.firstTransactionSummary.recipient")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.recipient")}
-        value={recipient}
-        isLoading={isLoading}
-        placeholder={<LoadingPlaceholder size={180} />}
+        value={payment.paName}
       />
       <Divider />
-      <PaymentDetailRow
+      <ListItemInfo
         icon={"notes"}
         label={I18n.t("wallet.firstTransactionSummary.object")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.object")}
         value={description}
-        isLoading={isLoading}
-        placeholder={
-          <>
-            <LoadingPlaceholder size={180} />
-            <View style={{ height: 9 }} />
-            <LoadingPlaceholder size={180} />
-          </>
-        }
       />
       <Divider />
-      <PaymentDetailRow
+      <ListItemInfo
         icon={"psp"}
         label={I18n.t("wallet.firstTransactionSummary.amount")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.amount")}
         value={amount}
-        isLoading={isLoading}
-        placeholder={<LoadingPlaceholder size={90} />}
         endElement={amountEndElement}
       />
       <Divider />
-      <PaymentDetailRow
+      <ListItemInfo
         icon="calendar"
         label={I18n.t("wallet.firstTransactionSummary.dueDate")}
         accessibilityLabel={I18n.t("wallet.firstTransactionSummary.dueDate")}
         value={dueDate}
-        isLoading={isLoading}
-        placeholder={<LoadingPlaceholder size={90} />}
       />
       <Divider />
       <ListItemInfoCopy
@@ -233,49 +231,14 @@ const WalletPaymentDetailScreen = () => {
   );
 };
 
-type PaymentDetailRowProps = ListItemInfo & {
-  isLoading?: boolean;
-  value?: string;
-  placeholder?: React.ReactElement;
-};
-
-export const PaymentDetailRow = (props: PaymentDetailRowProps) => {
-  if (!props.value && !props.isLoading) {
-    return null;
-  }
-
-  const accessibilityLabel = props.value
-    ? `${props.label}, ${getAccessibleAmountText(props.value)}`
-    : props.accessibilityLabel;
-
-  return (
-    <ListItemInfo
-      {...props}
-      accessibilityLabel={accessibilityLabel}
-      value={
-        !props.isLoading ? (
-          props.value
-        ) : (
-          <View style={styles.placeholder}>{props.placeholder}</View>
-        )
-      }
-    />
-  );
-};
-
-const LoadingPlaceholder = (props: { size: 90 | 180 }) => (
-  <Placeholder.Box
-    width={props.size}
-    height={15}
-    radius={8}
-    animate={"fade"}
-    color={IOColors.greyLight}
-  />
-);
+const loadingContainerHorizontalMargin: IOSpacingScale = 48;
 
 const styles = StyleSheet.create({
-  placeholder: {
-    paddingTop: 9
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: loadingContainerHorizontalMargin
   }
 });
 

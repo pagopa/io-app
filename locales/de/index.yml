@@ -1134,6 +1134,7 @@ wallet:
           bottomSheetTitle: "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?"
           bottomSheetDescription: "Die Funktion “In-App-Zahlungen” ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich “Konto”;\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere “In-App-Zahlungen”."
   firstTransactionSummary:
+    loading: Recuepro delle informazioni in corso
     title: "Zahlungsdetails"
     amount: "Betrag"
     total: "Insgesamt bezahlt"

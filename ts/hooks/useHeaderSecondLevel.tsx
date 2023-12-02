@@ -131,7 +131,8 @@ export const useHeaderSecondLevel = ({
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      header: () => <HeaderSecondLevel {...headerComponentProps} />
+      header: () => <HeaderSecondLevel {...headerComponentProps} />,
+      headerShown: true
     });
   }, [headerComponentProps, navigation]);
 };
