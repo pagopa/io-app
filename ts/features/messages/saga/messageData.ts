@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   call,
+  delay,
   put,
   race,
   select,
@@ -70,6 +71,9 @@ function* loadMessageData({
     if (!isSynchronizingInbox) {
       break;
     }
+
+    // TODO mixpanel track IOCOM-692
+    yield* delay(500);
   }
 
   // Make sure that we have the basic message details
@@ -135,7 +139,11 @@ function* loadMessageData({
     }
   }
 
-  if (!setMessageReadIfNeeded(paginatedMessage)) {
+  const messageReadCheckSucceded = yield* call(
+    setMessageReadIfNeeded,
+    paginatedMessage
+  );
+  if (!messageReadCheckSucceded) {
     // TODO mixpanel track IOCOM-692
     yield* put(getMessageDataAction.failure({ phase: "readStatusUpdate" }));
     return;
@@ -187,8 +195,7 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
 
     const outputAction = yield* take([
       upsertMessageStatusAttributes.success,
-      upsertMessageStatusAttributes.failure,
-      upsertMessageStatusAttributes.cancel
+      upsertMessageStatusAttributes.failure
     ]);
     if (!isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
       return undefined;
@@ -207,8 +214,7 @@ function* getPaginatedMessage(messageId: UIMessageId) {
 
     const outputAction = yield* take([
       loadMessageById.success,
-      loadMessageById.failure,
-      loadMessageById.cancel
+      loadMessageById.failure
     ]);
     if (!isActionOf(loadMessageById.success, outputAction)) {
       return undefined;
@@ -244,8 +250,7 @@ function* getMessageDetails(messageId: UIMessageId) {
 
     const outputAction = yield* take([
       loadMessageDetails.success,
-      loadMessageDetails.failure,
-      loadMessageDetails.cancel
+      loadMessageDetails.failure
     ]);
     if (!isActionOf(loadMessageDetails.success, outputAction)) {
       return undefined;
@@ -267,8 +272,7 @@ function* getThirdPartyDataMessage(messageId: UIMessageId) {
 
   const outputAction = yield* take([
     loadThirdPartyMessage.success,
-    loadThirdPartyMessage.failure,
-    loadThirdPartyMessage.cancel
+    loadThirdPartyMessage.failure
   ]);
   if (!isActionOf(loadThirdPartyMessage.success, outputAction)) {
     return undefined;

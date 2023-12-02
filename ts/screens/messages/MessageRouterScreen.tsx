@@ -134,7 +134,10 @@ export const MessageRouterScreen = (
   ]);
 
   return (
-    <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
+    <BaseScreenComponent
+      goBack={onCancelCallback}
+      contextualHelp={emptyContextualHelp}
+    >
       <LoadingErrorComponent
         errorText={I18n.t("global.genericError")}
         isLoading={showSpinner}

@@ -1,7 +1,8 @@
 import { getType } from "typesafe-actions";
 import {
   SuccessGetMessageDataActionType,
-  getMessageDataAction
+  getMessageDataAction,
+  resetGetMessageDataAction
 } from "../../../../features/messages/actions";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -65,6 +66,7 @@ export const messageGetStatusReducer = (
         failurePhase: "none",
         successData: action.payload
       };
+    case getType(resetGetMessageDataAction):
     case getType(reloadAllMessages.request):
       return INITIAL_STATE;
   }

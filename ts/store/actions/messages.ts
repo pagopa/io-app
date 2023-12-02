@@ -27,7 +27,8 @@ import { ThirdPartyMessagePrecondition } from "../../../definitions/backend/Thir
 import { MessageCategory } from "../../../definitions/backend/MessageCategory";
 import {
   cancelGetMessageDataAction,
-  getMessageDataAction
+  getMessageDataAction,
+  resetGetMessageDataAction
 } from "../../features/messages/actions";
 
 /**
@@ -211,4 +212,5 @@ export type MessagesActions = ActionType<
   | typeof clearMessagePrecondition
   | typeof getMessageDataAction
   | typeof cancelGetMessageDataAction
+  | typeof resetGetMessageDataAction
 >;

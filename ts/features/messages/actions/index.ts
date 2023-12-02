@@ -35,6 +35,10 @@ export const getMessageDataAction = createAsyncAction(
   FailureGetMessageDataActionType
 >();
 
+export const resetGetMessageDataAction = createAction(
+  "GET_MESSAGE_DATA_RESET_REQUEST"
+);
+
 export const cancelGetMessageDataAction = createAction(
   "GET_MESSAGE_DATA_CANCEL_REQUEST"
 );
