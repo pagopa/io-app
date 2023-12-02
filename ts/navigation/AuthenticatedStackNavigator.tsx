@@ -255,6 +255,10 @@ const AuthenticatedStackNavigator = () => {
           />
           <Stack.Screen
             name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
             component={IdPayBarcodeNavigator}
           />
         </>
@@ -269,14 +273,16 @@ const AuthenticatedStackNavigator = () => {
         name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
         component={WalletPaymentNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
       <Stack.Screen
         name={WalletDetailsRoutes.WALLET_DETAILS_MAIN}
         component={WalletDetailsNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
       {/* 
@@ -288,7 +294,8 @@ const AuthenticatedStackNavigator = () => {
         component={WalletPaymentBarcodeScanScreen}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
     </Stack.Navigator>

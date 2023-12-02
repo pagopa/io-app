@@ -4,7 +4,7 @@ export const calculateIdPayBarcodeSecondsToExpire = (
   barcode: TransactionBarCodeResponse
 ) => {
   const expireDateEpoch =
-    barcode.trxDate.getTime() + (barcode.trxExpirationMinutes ?? 0) * 60 * 1000;
+    barcode.trxDate.getTime() + barcode.trxExpirationSeconds * 1000;
   // needs floor to avoid floating point problems
   const secondsToExpire = Math.floor(
     (expireDateEpoch - new Date().getTime()) / 1000

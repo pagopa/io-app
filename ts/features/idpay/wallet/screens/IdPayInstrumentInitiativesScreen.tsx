@@ -34,6 +34,7 @@ type Props = IOStackNavigationRouteProps<
 export const IdPayInstrumentInitiativesScreen = (props: Props) => {
   const { idWallet } = props.route.params;
   const dispatch = useIODispatch();
+  const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
 
   React.useEffect(() => {
     dispatch(
@@ -46,7 +47,6 @@ export const IdPayInstrumentInitiativesScreen = (props: Props) => {
     };
   }, [idWallet, dispatch]);
 
-  const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
   const [maskedPan, brand, idpayInitiatives] = pipe(
     initiatives,
     pot.toOption,

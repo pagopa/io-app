@@ -775,6 +775,9 @@ email:
     help:
       title: Email
       content: !include email_insert_help.md
+    alertTitle: Questa email è già in uso
+    alertDescription: Può succedere se condividi lo stesso indirizzo con un familiare
+    alertButton: Usa un’altra email
   newinsert:
     header: Configura IO
     title: Qual è la tua email?
@@ -3281,6 +3284,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
+        validUpTo: "Vale fino a " 
         expiresIn: "Il codice scade tra"
         expired: "Il codice é scaduto."
         saveImageCta: Salva come immagine
@@ -3386,6 +3390,7 @@ idpay:
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
               CIE: "Abilitazione carta d’identità elettronica"
+              UNSUBSCRIBED: "Recesso dall’iniziativa"
     discountDetails:
       bottomSheetOptions:
         scanQr: Inquadra un codice QR
