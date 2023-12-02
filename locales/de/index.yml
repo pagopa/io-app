@@ -1879,58 +1879,58 @@ bonus:
           caption: "Wir bearbeiten deine Anfrage"
           subCaption: "Bitte warte etwas."
         error:
-          title: "Il servizio di EYCA in questo momento non è disponibile."
-          body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+          title: "Der EYCA-Dienst ist zurzeit nicht verfügbar."
+          body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
       loading:
-        caption: "Stiamo attivando la tua Carta Giovani Nazionale"
-        subCaption: "Ti preghiamo di attendere."
+        caption: "Wir aktivieren deine Nationale Jugendkarte"
+        subCaption: "Bitte warte etwas."
       error:
-        title: "Il servizio Carta Giovani Nazionale in questo momento non è disponibile."
-        body: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
+        title: "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar."
+        body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
       ineligible:
-        title: "Purtroppo non hai i requisiti per attivare la Carta Giovani Nazionale."
-        body: "La Carta Giovani Nazionali è disponibile solo per i cittadini italiani ed europei residenti in Italia, dai 18 ai 35 anni di età."
+        title: "Leider erfüllst du nicht die Voraussetzungen für die Nationale Jugendkarte."
+        body: "Die Nationale Jugendkarte ist nur für italienische und europäische Staatsbürger mit Wohnsitz in Italien im Alter von 18 bis 35 Jahren erhältlich."
       timeout:
-        title: "Stiamo processando la tua richiesta."
-        body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
+        title: "Wir bearbeiten deine Anfrage."
+        body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
       alreadyActive:
-        title: "La tua Carta Giovani Nazionale è attiva!"
-        body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
+        title: "Deine Nationale Jugendkarte ist aktiv!"
+        body: "Du kannst die Details im Abschnitt Konto einsehen."
       pending:
-        title: "La tua Carta Giovani Nazionale è in fase di attivazione."
-        body: "Riceverai un messaggio quando sarà attivata."
+        title: "Deine Nationale Jugendkarte wird gerade aktiviert."
+        body: "Du erhälst eine Nachricht, wenn sie aktiviert ist."
       success:
-        title: "Fatto!"
-        body: "La tua Carta Giovani Nazionale è attiva."
+        title: "Geschafft!"
+        body: "Deine Nationale Jugendkarte ist aktiv."
       deactivate:
-        toast: "La richiesta di disattivazione è avvenuta correttamente"
+        toast: "Die Anfrage zur Deaktivierung war erfolgreich"
         alert:
-          title: "Disattiva carta"
-          message: "Sei sicuro di voler disattivare la tua Carta Giovani Nazionale? Se confermi, perderai la possibilità di accedere alle agevolazioni previste dall’iniziativa e la carta scomparirà dal Portafoglio."
+          title: "Karte deaktivieren"
+          message: "Bist du sicher, dass du deine Nationale Jugendkarte deaktivieren möchtest? Wenn du dies bestätigst, verlierst du die Möglichkeit, die Vorteile der Initiative in Anspruch zu nehmen und die Karte wird aus deinem Konto verschwinden."
     otp:
-      error: "Per un problema tecnico non siamo riusciti a generare un codice sconto. Ti chiediamo di riprovare."
+      error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
       screen:
-        title: Usa codice sconto
-        cta: Copia codice
-        text1: "Copia questo codice nell'apposito campo sul sito dell'esercente entro"
-        text2: "Una volta scaduto, il codice non è più valido"
-        link: Il codice non funziona?
+        title: "Rabattcode verwenden"
+        cta: "Code kopieren"
+        text1: "Kopiere diesen Code in das entsprechende Feld auf der Website des Betreibers innerhalb"
+        text2: "Nach Ablauf ist der Code nicht mehr gültig."
+        link: "Der Code funktioniert nicht?"
         bottomSheet:
           body:
-            text1: "Alcuni esercenti richiedono l’inserimento di un "
-            text2: "codice sconto statico."
-            text3: "Cerca l’esercente che ti interessa nella lista degli esercenti online, e verifica le offerte in corso."
-            text4: "All’interno della scheda relativa all’offerta troverai il codice per ottenere l’agevolazione che potrai copiare e incollare sul sito dell’esercente."
-          cta: Vai alla lista esercenti
+            text1: "Bei einigen Händlern ist die Eingabe eines "
+            text2: "statischen Rabattcodes erforderlich."
+            text3: "Suche in der Liste der Online-Händler nach dem Händler, der dich interessiert und prüfe die aktuellen Angebote."
+            text4: "In der Angebotskarte findest du den Code für die Ermäßigung, den du kopieren und auf der Website des Händlers einfügen kannst."
+          cta: "Zur Händlerliste wechseln"
       code:
-        title: Il tuo codice sconto
-        validUntil: Valido ancora per
+        title: "Dein Rabattcode"
+        validUntil: "Noch gültig für"
         minutes:
-          one: 1 minuto
-          other: "{{minutes}} minuti"
+          one: "1 Minute"
+          other: "{{minutes}} Minuten"
         seconds:
-          one: 1 secondo
-          other: "{{seconds}} secondi"
+          one: "1 Sekunde"
+          other: "{{seconds}} Sekunden"
 features:
   euCovidCertificate:
     save:
