@@ -845,7 +845,6 @@ wallet:
       dateTime: "Datum und Uhrzeit"
       detailTitle: "Details"
       help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
-    validUntil: "Gültig bis {{expDate}}"
   searchAbi:
     header: "{{methodName}} hinzufügen"
     bancomat:
@@ -1034,12 +1033,8 @@ wallet:
   transactionsShow: "Zeige deine Transaktionen"
   add: "hinzufügen"
   delete:
-    ios:
-      confirm: "Zahlungsmethode entfernen"
-    android:
-      confirm: "Entfernen"
-    successful: "Zahlungsmethode von deinem Konto entfernt!"
-    failed: "Die Zahlungsmethode kann nicht von deinem Konto entfernt werden"
+    successful: "Zahlungsmethode von deinem Konto entfernt"
+    failed: "Die Zahlungsmethode konnte nicht von deinem Konto entfernt werden"
   newPaymentMethod:
     add: "Hinzufügen"
     show: "Anzeigen"
