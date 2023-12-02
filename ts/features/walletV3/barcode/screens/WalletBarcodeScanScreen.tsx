@@ -17,6 +17,7 @@ import ROUTES from "../../../../navigation/routes";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -31,8 +32,8 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
-import { WalletBarcodeRoutes } from "../navigation/routes";
 import { WalletPaymentRoutes } from "../../payment/navigation/routes";
+import { WalletBarcodeRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
@@ -45,6 +46,7 @@ const WalletBarcodeScanScreen = () => {
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
@@ -129,9 +131,17 @@ const WalletBarcodeScanScreen = () => {
 
   const handleManualInputPressed = () => {
     analytics.trackBarcodeManualEntryPath("avviso");
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
-    });
+
+    if (isDesignSystemEnabled) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
+      });
+    } else {
+      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
+        params: {}
+      });
+    }
   };
 
   const {
