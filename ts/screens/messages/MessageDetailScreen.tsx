@@ -163,7 +163,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const message = pot.toUndefined(getPaginatedMessageById(state, messageId));
   const messageDetails = messageDetailsByIdSelector(state, messageId);
   const service = pipe(
-    pot.toOption(serviceByIdSelector(serviceId)(state) || pot.none),
+    pot.toOption(serviceByIdSelector(state, serviceId)),
     O.map(toUIService),
     O.toUndefined
   );

@@ -174,9 +174,7 @@ function* getPaginatedMessage(messageId: UIMessageId) {
 }
 
 function* getService(serviceId: ServiceId) {
-  const servicePot = yield* select(
-    state => serviceByIdSelector(serviceId)(state) ?? pot.none
-  );
+  const servicePot = yield* select(serviceByIdSelector, serviceId);
   if (!pot.isSome(servicePot) || pot.isError(servicePot)) {
     yield* put(loadServiceDetail.request(serviceId));
   }

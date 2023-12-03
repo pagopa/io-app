@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import * as O from "fp-ts/lib/Option";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -16,8 +16,7 @@ import { OrganizationFiscalCode } from "../../../../definitions/backend/Organiza
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { LegacyMessageAttachments } from "../../../features/messages/components/LegacyMessageAttachments";
-import { loadThirdPartyMessage } from "../../../features/messages/store/actions";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
 import {
   UIAttachment,
@@ -35,7 +34,6 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { isStrictNone } from "../../../utils/pot";
 import StatusContent from "../../SectionStatus/StatusContent";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
@@ -133,14 +131,11 @@ const MessageDetailsComponent = ({
   service,
   serviceMetadata
 }: Props) => {
-  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const viewRef = React.createRef<View>();
   // This is used to make sure that no attachments are shown before the
-  // markdown content has rendered. Note that the third party attachment
-  // request is run in parallel with the markdown rendering.
+  // markdown content has rendered
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
-  const isFirstRendering = React.useRef(true);
   // Note that it is not possibile for a message to have both medical
   // prescription attachments and third party data. That is why, later in the
   // code, the UI rendering is guarded by opposite checks on prescription and
@@ -150,17 +145,12 @@ const MessageDetailsComponent = ({
   const isPrescription = prescriptionData !== undefined;
 
   const messageId = message.id;
-  const hasThirdPartyDataAttachments = messageDetails.hasThirdPartyData;
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
-  // Third party attachments are retrieved from the third party service upon
-  // first rendering of this component. We want to send the request only if
-  // we have never retrieved data or if there was an error
-  const shouldDownloadThirdPartyDataAttachmentList =
-    hasThirdPartyDataAttachments &&
-    isFirstRendering.current &&
-    (isStrictNone(thirdPartyDataPot) || pot.isError(thirdPartyDataPot));
+  const thirdPartyMessagePotOrUndefined = pot.toUndefined(thirdPartyDataPot);
+  const hasThirdPartyDataAttachments =
+    !!thirdPartyMessagePotOrUndefined?.third_party_message.attachments;
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
@@ -197,16 +187,6 @@ const MessageDetailsComponent = ({
     },
     [openAttachment, viewRef]
   );
-
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isFirstRendering.current = false;
-    // Third party attachments, if available, are downloaded upon
-    // first rendering of this component
-    if (shouldDownloadThirdPartyDataAttachmentList) {
-      dispatch(loadThirdPartyMessage.request(messageId));
-    }
-  }, [dispatch, messageId, shouldDownloadThirdPartyDataAttachmentList]);
 
   return (
     <>
