@@ -32,6 +32,7 @@ import {
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
 import { WalletPaymentRoutes } from "../navigation/routes";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
@@ -44,6 +45,7 @@ const WalletPaymentBarcodeScanScreen = () => {
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
   );
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
@@ -128,9 +130,17 @@ const WalletPaymentBarcodeScanScreen = () => {
 
   const handleManualInputPressed = () => {
     analytics.trackBarcodeManualEntryPath("avviso");
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
-    });
+
+    if (isDesignSystemEnabled) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
+      });
+    } else {
+      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
+        params: {}
+      });
+    }
   };
 
   const {
