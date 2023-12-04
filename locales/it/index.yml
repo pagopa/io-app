@@ -3796,3 +3796,20 @@ fastLogin:
         description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
 whatsNew:
   title: Cosa cambia?
+transaction:
+  details:
+    title: Dettaglio operazione
+    totalAmount: Totale
+    totalFee: Il totale comprende 
+    totalFeePsp: di commissione, applicata da {{pspName}}
+    info:
+      title: Informazioni sulla transazione
+      pspName: Gestore della transazione (PSP)
+      dateAndHour: Data e ora
+      transactionId: ID transazione
+    operation:
+      amount: Importo
+      creditor: Ente creditore
+      debtor: Debitore
+      iuv: IUV
+      subject: Oggetto del pagamento
