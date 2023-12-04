@@ -10,6 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentMethod } from "../../../../types/pagopa";
 import { IdPayInstrumentInitiativesList } from "../../../idpay/wallet/components/IdPayInstrumentInitiativesList";
 import {
+  idPayInitiativesFromInstrumentGet,
   idPayInitiativesFromInstrumentRefreshStart,
   idPayInitiativesFromInstrumentRefreshStop
 } from "../../../idpay/wallet/store/actions";
@@ -30,7 +31,12 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
 
   const dispatch = useIODispatch();
 
-  const refresh = React.useCallback(() => {
+  const startInitiativeRefreshPolling = React.useCallback(() => {
+    dispatch(
+      idPayInitiativesFromInstrumentGet.request({
+        idWallet: idWalletString
+      })
+    );
     dispatch(
       idPayInitiativesFromInstrumentRefreshStart({
         idWallet: idWalletString
@@ -41,7 +47,7 @@ const PaymentMethodInitiatives = (props: Props): React.ReactElement | null => {
     };
   }, [idWalletString, dispatch]);
 
-  useFocusEffect(refresh);
+  useFocusEffect(startInitiativeRefreshPolling);
 
   const initiativesList = useIOSelector(
     idPayEnabledInitiativesFromInstrumentSelector
