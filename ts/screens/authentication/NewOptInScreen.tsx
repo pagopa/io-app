@@ -7,8 +7,6 @@ import {
   GradientScrollView,
   H3,
   IOStyles,
-  LabelLink,
-  LabelSmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -17,18 +15,17 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../utils/url";
 import ROUTES from "../../navigation/routes";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import I18n from "../../i18n";
 import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
 import { useIODispatch } from "../../store/hooks";
-import { TranslationKeys } from "../../../locales/locales";
+import SecuritySuggestions from "../../features/fastLogin/components/SecuritySuggestions";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "authentication.opt-in.contextualHelpTitle",
-  body: "authentication.opt-in.contextualHelpContent"
+  title: "authentication.opt_in.contextualHelpTitle",
+  body: "authentication.opt_in.contextualHelpContent"
 };
 
 export type ChosenIdentifier = {
@@ -55,53 +52,14 @@ const NewOptInScreen = (props: Props) => {
     dispatch(setFastLoginOptIn({ enabled: isLV }));
   };
 
-  const renderItem = (value: TranslationKeys) => (
-    <LabelSmall weight="Regular" color="grey-700">
-      {I18n.t(value)}{" "}
-      <LabelLink
-        onPress={() => openWebUrl("https://ioapp.it/")}
-        testID="link-test"
-      >
-        {I18n.t("authentication.opt-in.io-site")}
-      </LabelLink>
-    </LabelSmall>
-  );
-
-  const ModalContent = () => (
-    <>
-      <FeatureInfo
-        iconName="biomFingerprint"
-        body={I18n.t("authentication.opt-in.fingerprint")}
-      />
-      <VSpacer size={16} />
-      <FeatureInfo
-        iconName="logout"
-        body={renderItem("authentication.opt-in.io-logout")}
-      />
-      <VSpacer size={16} />
-      <FeatureInfo
-        iconName="locked"
-        body={renderItem("authentication.opt-in.io-lock-access")}
-      />
-      <VSpacer size={16} />
-      <FeatureInfo
-        iconName="device"
-        body={I18n.t("authentication.opt-in.access-new-device")}
-      />
-    </>
-  );
-
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
     bottomSheet: veryLongAutoResizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal(
-    {
-      title: I18n.t("authentication.opt-in.security-suggests"),
-      component: <ModalContent />,
-      fullScreen: true
-    },
-    120
-  );
+  } = useIOBottomSheetAutoresizableModal({
+    title: I18n.t("authentication.opt_in.security_suggests"),
+    component: <SecuritySuggestions />,
+    fullScreen: true
+  });
 
   return (
     <BaseScreenComponent
@@ -111,14 +69,14 @@ const NewOptInScreen = (props: Props) => {
       <GradientScrollView
         testID="container-test"
         primaryActionProps={{
-          label: I18n.t("authentication.opt-in.button-accept-lv"),
-          accessibilityLabel: I18n.t("authentication.opt-in.button-accept-lv"),
+          label: I18n.t("authentication.opt_in.button_accept_lv"),
+          accessibilityLabel: I18n.t("authentication.opt_in.button_accept_lv"),
           onPress: () => navigateToIdpPage(true),
           testID: "accept-button-test"
         }}
         secondaryActionProps={{
-          label: I18n.t("authentication.opt-in.button-decline-lv"),
-          accessibilityLabel: I18n.t("authentication.opt-in.button-decline-lv"),
+          label: I18n.t("authentication.opt_in.button_decline_lv"),
+          accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
           onPress: () => navigateToIdpPage(false),
           testID: "decline-button-test"
         }}
@@ -132,7 +90,7 @@ const NewOptInScreen = (props: Props) => {
           <VSpacer size={24} />
           <View style={IOStyles.selfCenter}>
             <Badge
-              text={I18n.t("authentication.opt-in.news")}
+              text={I18n.t("authentication.opt_in.news")}
               variant="info"
               testID="badge-test"
             />
@@ -142,24 +100,24 @@ const NewOptInScreen = (props: Props) => {
             style={{ textAlign: "center", alignItems: "center" }}
             testID="title-test"
           >
-            {I18n.t("authentication.opt-in.title")}
+            {I18n.t("authentication.opt_in.title")}
           </H3>
           <VSpacer size={24} />
           <FeatureInfo
             pictogramName="identityCheck"
-            body={I18n.t("authentication.opt-in.identity-check")}
-            actionLabel={I18n.t("authentication.opt-in.security-suggests")}
-            actionOnPress={presentVeryLongAutoresizableBottomSheetWithFooter}
+            body={I18n.t("authentication.opt_in.identity_check")}
           />
           <VSpacer size={24} />
           <FeatureInfo
             pictogramName="passcode"
-            body={I18n.t("authentication.opt-in.passcode")}
+            body={I18n.t("authentication.opt_in.passcode")}
           />
           <VSpacer size={24} />
           <FeatureInfo
             pictogramName="notification"
-            body={I18n.t("authentication.opt-in.notification")}
+            body={I18n.t("authentication.opt_in.notification")}
+            actionLabel={I18n.t("authentication.opt_in.security_suggests")}
+            actionOnPress={presentVeryLongAutoresizableBottomSheetWithFooter}
           />
         </ContentWrapper>
         {veryLongAutoResizableBottomSheetWithFooter}

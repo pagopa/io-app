@@ -675,22 +675,23 @@ authentication:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
     subtitle: SPID è sicuro
-  opt-in:
+  opt_in:
     contextualHelpTitle: Autenticazione
     contextualHelpContent: Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.
     news: novità
-    title: Da oggi accedi a IO più velocemente
-    identity-check: Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
-    security-suggests: Consigli di sicurezza
-    passcode: Dopo il primo accesso con SPID o CIE, potrai entrare in app solo con il codice di sblocco o con il biometrico.
-    notification: Ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email.
-    button-accept-lv: Continua con l’accesso rapido
-    button-decline-lv: No, voglio accedere ogni 30 giorni
-    fingerprint: Per accedere a IO basta il codice o il biometrico, non condividerli con nessuno.
-    io-logout: Se perdi il dispositivo, esci da IO da
-    io-lock-access: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
-    access-new-device: Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app.
-    io-site: ioapp.it
+    title: Ora è più facile accedere!
+    identity_check: Non dovrai più autenticarti ogni 30 giorni, ma solo una volta all’anno o se ti disconnetti dall’app.
+    security_suggests: Alcuni consigli di sicurezza
+    passcode: Dopo la prima autenticazione con SPID o CIE, potrai accedere solo con il codice di sblocco o con il biometrico.
+    notification: Riceverai un’email dopo ogni accesso. Potrai così bloccare l’accesso a IO se necessario.
+    button_accept_lv: Continua con l’accesso rapido
+    button_decline_lv: No, voglio autenticarmi ogni 30 giorni
+  security_suggestions: 
+    fingerprint: Per accedere a IO, basta inserire il codice o il riconoscimento biometrico. Non condividerli con nessuno.
+    io_logout: Se perdi il dispositivo, esci dall’app accedendo a IO dal web.
+    io_lock_access: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso all’app entrando su IO dal web.
+    access_new_device: Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app.
+    navigate_to_the_site: Vai al sito
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
