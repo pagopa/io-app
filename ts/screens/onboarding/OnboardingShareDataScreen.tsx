@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
@@ -25,6 +25,8 @@ import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import SecuritySuggestions from "../../features/fastLogin/components/SecuritySuggestions";
+import { useIOSelector } from "../../store/hooks";
+import { isSecurityAdviceAcknowledgedEnabled } from "../../features/fastLogin/store/selectors";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -35,8 +37,9 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
     props.setMixpanelEnabled(false);
   });
 
-  const [state, _] = useState(false);
-
+  const isSecurityAdviceAcknowledged = useIOSelector(
+    isSecurityAdviceAcknowledgedEnabled
+  );
   const executeAbortOnboarding = () => {
     dispatch(abortOnboarding());
   };
@@ -88,7 +91,7 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
   });
 
   const handleConfirm = () => {
-    if (state) {
+    if (isSecurityAdviceAcknowledged) {
       props.setMixpanelEnabled(true);
     } else {
       presentVeryLongAutoresizableBottomSheetWithFooter();

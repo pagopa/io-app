@@ -8,6 +8,14 @@ import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/f
 const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
 
+const securityAdviceAcknowledgedSelector = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.securityAdviceAcknowledged;
+
+export const isSecurityAdviceAcknowledgedEnabled = createSelector(
+  securityAdviceAcknowledgedSelector,
+  value => value.acknowledged
+);
+
 /**
  * return the remote config about FastLoginOptIn enabled/disabled
  * based on a minumum version of the app.
