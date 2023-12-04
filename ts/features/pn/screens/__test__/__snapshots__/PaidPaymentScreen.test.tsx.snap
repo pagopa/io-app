@@ -841,24 +841,24 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
+                                      color="grey-700"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
                                       font="TitilliumWeb"
                                       fontStyle={
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
                                         }
                                       }
                                       style={
                                         Array [
                                           Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
                                           },
                                           Object {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -869,29 +869,34 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     >
                                       Notice code
                                     </Text>
-                                    <View
-                                      style={
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="blue"
+                                      defaultColor="black"
+                                      defaultWeight="SemiBold"
+                                      font="TitilliumWeb"
+                                      fontStyle={
                                         Object {
-                                          "height": 4,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         }
                                       }
-                                    />
-                                    <Text
                                       numberOfLines={2}
                                       style={
                                         Array [
                                           Object {
-                                            "fontFamily": "Titillium Web",
                                             "fontSize": 18,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 25,
                                           },
                                           Object {
                                             "color": "#0073E6",
+                                            "fontFamily": "Titillium Web",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
+                                      weight="SemiBold"
                                     >
                                       0180  1198  8086  4794  97
                                     </Text>
@@ -1818,24 +1823,24 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
+                                      color="grey-700"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
                                       font="TitilliumWeb"
                                       fontStyle={
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
                                         }
                                       }
                                       style={
                                         Array [
                                           Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
                                           },
                                           Object {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -1846,29 +1851,34 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     >
                                       Notice code
                                     </Text>
-                                    <View
-                                      style={
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="blue"
+                                      defaultColor="black"
+                                      defaultWeight="SemiBold"
+                                      font="TitilliumWeb"
+                                      fontStyle={
                                         Object {
-                                          "height": 4,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         }
                                       }
-                                    />
-                                    <Text
                                       numberOfLines={2}
                                       style={
                                         Array [
                                           Object {
-                                            "fontFamily": "Titillium Web",
                                             "fontSize": 18,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 25,
                                           },
                                           Object {
                                             "color": "#0073E6",
+                                            "fontFamily": "Titillium Web",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
+                                      weight="SemiBold"
                                     >
                                       0180  1198  8086  4794  97
                                     </Text>
@@ -1995,24 +2005,24 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                   >
                                     <Text
                                       allowFontScaling={false}
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
+                                      color="grey-700"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
                                       font="TitilliumWeb"
                                       fontStyle={
                                         Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
                                         }
                                       }
                                       style={
                                         Array [
                                           Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
                                           },
                                           Object {
-                                            "color": "#475A6D",
+                                            "color": "#555C70",
                                             "fontFamily": "Titillium Web",
                                             "fontStyle": "normal",
                                             "fontWeight": "400",
@@ -2023,29 +2033,34 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     >
                                       Payee Fiscal Code
                                     </Text>
-                                    <View
-                                      style={
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="blue"
+                                      defaultColor="black"
+                                      defaultWeight="SemiBold"
+                                      font="TitilliumWeb"
+                                      fontStyle={
                                         Object {
-                                          "height": 4,
+                                          "fontSize": 18,
+                                          "lineHeight": 25,
                                         }
                                       }
-                                    />
-                                    <Text
                                       numberOfLines={2}
                                       style={
                                         Array [
                                           Object {
-                                            "fontFamily": "Titillium Web",
                                             "fontSize": 18,
-                                            "fontStyle": "normal",
-                                            "fontWeight": "600",
-                                            "lineHeight": 24,
+                                            "lineHeight": 25,
                                           },
                                           Object {
                                             "color": "#0073E6",
+                                            "fontFamily": "Titillium Web",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
                                           },
                                         ]
                                       }
+                                      weight="SemiBold"
                                     >
                                       00000000009
                                     </Text>

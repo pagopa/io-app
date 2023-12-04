@@ -51,6 +51,10 @@ const DESIGN_SYSTEM_ROUTES = {
     WIZARD_SCREEN: {
       route: "WIZARD_SCREEN",
       title: "Wizard Screen"
+    },
+    NUMBERPAD: {
+      route: "DS_NUMBERPAD",
+      title: "NumberPad"
     }
   },
   DEBUG: {
