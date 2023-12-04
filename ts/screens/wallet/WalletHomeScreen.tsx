@@ -86,7 +86,10 @@ import {
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isDesignSystemEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
@@ -575,6 +578,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
