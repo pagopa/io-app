@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
@@ -19,9 +20,12 @@ import {
 import {
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
-  walletPaymentInitState
+  walletPaymentInitState,
+  walletPaymentResetPickedPsp,
+  walletPaymentSortPsp
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { getSortedPspList } from "../../../common/utils";
 
 export type WalletPaymentState = {
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
@@ -133,6 +137,22 @@ const reducer = (
         ...state,
         chosenPsp: O.some(action.payload)
       };
+
+    case getType(walletPaymentResetPickedPsp):
+      return {
+        ...state,
+        chosenPsp: O.none
+      };
+
+    case getType(walletPaymentSortPsp):
+      const pspList = pot.toUndefined(state.pspList);
+      if (pspList) {
+        return {
+          ...state,
+          pspList: pot.some(getSortedPspList(pspList, action.payload))
+        };
+      }
+      return state;
 
     // Created transaction data
     case getType(walletPaymentCreateTransaction.request):
