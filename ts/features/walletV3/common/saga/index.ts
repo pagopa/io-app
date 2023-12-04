@@ -9,6 +9,7 @@ import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persiste
 import { createWalletClient } from "../api/client";
 import { watchWalletOnboardingSaga } from "../../onboarding/saga";
 import { watchWalletDetailsSaga } from "../../details/saga";
+import { watchWalletTransactionSaga } from "../../transaction/saga";
 
 export function* watchWalletV3Saga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -23,4 +24,6 @@ export function* watchWalletV3Saga(bpdToken: string): SagaIterator {
   yield* fork(watchWalletOnboardingSaga, client, token);
 
   yield* fork(watchWalletDetailsSaga, client, token);
+
+  yield* fork(watchWalletTransactionSaga, client, token);
 }
