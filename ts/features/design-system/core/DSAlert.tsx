@@ -231,7 +231,7 @@ export const DSAlert = () => {
           foregroundColor={getStatusTextColor(LevelEnum.normal)}
           iconName={statusIconMap.normal}
           testID={"SectionStatusComponentContent"}
-          viewRef={viewRef}
+          ref={viewRef}
         >
           {
             "L’invio dei Certificati Verdi è in corso e potrebbe richiedere diversi giorni."
@@ -250,7 +250,7 @@ export const DSAlert = () => {
           foregroundColor={getStatusTextColor(LevelEnum.warning)}
           iconName={statusIconMap.warning}
           testID={"SectionStatusComponentContent"}
-          viewRef={viewRef}
+          ref={viewRef}
         >
           {"La sezione Messaggi è in manutenzione, tornerà operativa a breve"}
         </StatusContent>
@@ -263,7 +263,7 @@ export const DSAlert = () => {
           foregroundColor={getStatusTextColor(LevelEnum.critical)}
           iconName={statusIconMap.critical}
           testID={"SectionStatusComponentContent"}
-          viewRef={viewRef}
+          ref={viewRef}
         >
           {
             "I nostri sistemi potrebbero rispondere con lentezza, ci scusiamo per il disagio."

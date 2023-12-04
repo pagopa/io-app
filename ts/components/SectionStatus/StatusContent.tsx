@@ -1,5 +1,5 @@
+import React, { ComponentProps, forwardRef } from "react";
 import { AccessibilityRole, StyleSheet, View } from "react-native";
-import React, { ComponentProps } from "react";
 import { IOColors, IOIcons, Icon } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
 import { Label } from "../core/typography/Label";
@@ -28,46 +28,45 @@ type Props = WithTestID<{
   accessibilityRole?: AccessibilityRole;
   backgroundColor: IOColors;
   iconName: IOIcons;
-  viewRef: React.RefObject<View>;
   foregroundColor: ComponentProps<typeof Label>["color"];
   labelPaddingVertical?: number;
 }>;
 
-const StatusContent: React.FC<Props> = ({
-  accessible,
-  accessibilityHint,
-  accessibilityLabel,
-  accessibilityRole,
-  backgroundColor,
-  children,
-  iconName,
-  viewRef,
-  foregroundColor,
-  labelPaddingVertical
-}) => (
-  <View
-    accessibilityHint={accessibilityHint}
-    accessibilityLabel={accessibilityLabel}
-    accessibilityRole={accessibilityRole}
-    accessible={accessible ?? true}
-    ref={viewRef}
-    style={[styles.container, { backgroundColor: IOColors[backgroundColor] }]}
-    testID={"SectionStatusContent"}
-  >
-    <View style={styles.alignCenter}>
-      <Icon color={foregroundColor} name={iconName} size={iconSize} />
-    </View>
-    <Label
-      color={foregroundColor}
-      style={[
-        styles.text,
-        labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
-      ]}
-      weight={"Regular"}
+const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
+  (
+    {
+      accessible = true,
+      backgroundColor,
+      children,
+      iconName,
+      foregroundColor,
+      labelPaddingVertical,
+      ...rest
+    },
+    ref
+  ) => (
+    <View
+      {...rest}
+      ref={ref}
+      accessible={accessible}
+      style={[styles.container, { backgroundColor: IOColors[backgroundColor] }]}
+      testID={"SectionStatusContent"}
     >
-      {children}
-    </Label>
-  </View>
+      <View style={styles.alignCenter}>
+        <Icon color={foregroundColor} name={iconName} size={iconSize} />
+      </View>
+      <Label
+        color={foregroundColor}
+        style={[
+          styles.text,
+          labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
+        ]}
+        weight={"Regular"}
+      >
+        {children}
+      </Label>
+    </View>
+  )
 );
 
 export default StatusContent;

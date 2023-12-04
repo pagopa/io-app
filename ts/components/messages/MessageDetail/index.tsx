@@ -7,7 +7,7 @@ import {
   View
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
@@ -41,6 +41,7 @@ import ROUTES from "../../../navigation/routes";
 import { isStrictNone } from "../../../utils/pot";
 import StatusContent from "../../SectionStatus/StatusContent";
 import CtaBar from "./common/CtaBar";
+import { RemoteContentBanner } from "./common/RemoteContentBanner";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
 import { MessageTitle } from "./common/MessageTitle";
 import MessageContent from "./Content";
@@ -48,9 +49,6 @@ import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
 
 const styles = StyleSheet.create({
-  padded: {
-    paddingHorizontal: variables.contentPadding
-  },
   webview: {
     marginHorizontal: variables.contentPadding
   },
@@ -87,13 +85,12 @@ const OrganizationTitle = ({ name, organizationName, logoURLs }: UIService) => (
   />
 );
 
-const renderThirdPartyAttachmentsError = (viewRef: React.RefObject<View>) => (
+const renderThirdPartyAttachmentsError = () => (
   <>
     <StatusContent
       backgroundColor={"orange"}
       foregroundColor={"white"}
       iconName={"notice"}
-      viewRef={viewRef}
       labelPaddingVertical={16}
     >
       <Text style={styles.message}>
@@ -137,7 +134,6 @@ const MessageDetailsComponent = ({
 }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const viewRef = React.createRef<View>();
   // This is used to make sure that no attachments are shown before the
   // markdown content has rendered. Note that the third party attachment
   // request is run in parallel with the markdown rendering.
@@ -197,17 +193,17 @@ const MessageDetailsComponent = ({
       const maybeThirdPartyMessageAttachments =
         attachmentsFromThirdPartyMessage(thirdPartyMessage);
       return O.isSome(maybeThirdPartyMessageAttachments) ? (
-        <View style={styles.padded}>
+        <View style={IOStyles.horizontalContentPadding}>
           <LegacyMessageAttachments
             attachments={maybeThirdPartyMessageAttachments.value}
             openPreview={openAttachment}
           />
         </View>
       ) : (
-        renderThirdPartyAttachmentsError(viewRef)
+        renderThirdPartyAttachmentsError()
       );
     },
-    [openAttachment, viewRef]
+    [openAttachment]
   );
 
   useEffect(() => {
@@ -223,8 +219,8 @@ const MessageDetailsComponent = ({
   return (
     <>
       <ScrollView>
-        <View style={styles.padded}>
-          <VSpacer size={24} />
+        <View style={IOStyles.horizontalContentPadding}>
+          <VSpacer size={16} />
 
           {service && <OrganizationTitle {...service} />}
 
@@ -232,7 +228,7 @@ const MessageDetailsComponent = ({
 
           <MessageTitle title={messageTitle} isPrescription={isPrescription} />
 
-          <VSpacer size={16} />
+          <VSpacer size={24} />
         </View>
         <HeaderDueDateBar
           hasPaidBadge={hasPaidBadge}
@@ -247,8 +243,8 @@ const MessageDetailsComponent = ({
         >
           {cleanMarkdownFromCTAs(messageMarkdown)}
         </MessageMarkdown>
-
         <VSpacer size={24} />
+
         {prescriptionAttachments &&
           !hasThirdPartyData &&
           isContentLoadCompleted && (
@@ -261,6 +257,14 @@ const MessageDetailsComponent = ({
               <VSpacer size={24} />
             </>
           )}
+
+        {hasThirdPartyData && isContentLoadCompleted ? (
+          <>
+            <RemoteContentBanner />
+            <VSpacer size={24} />
+          </>
+        ) : null}
+
         {hasThirdPartyData && isContentLoadCompleted && (
           <>
             <H2 color="bluegrey" style={styles.attachmentsTitle}>
@@ -273,12 +277,12 @@ const MessageDetailsComponent = ({
               ),
               () => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
-              _ => renderThirdPartyAttachmentsError(viewRef),
+              _ => renderThirdPartyAttachmentsError(),
               thirdPartyMessage =>
                 renderThirdPartyAttachments(thirdPartyMessage),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
-              _ => renderThirdPartyAttachmentsError(viewRef)
+              _ => renderThirdPartyAttachmentsError()
             )}
           </>
         )}
