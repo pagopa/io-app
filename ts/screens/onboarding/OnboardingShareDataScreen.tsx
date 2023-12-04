@@ -1,8 +1,13 @@
-import * as React from "react";
+import React, { ReactElement, useState } from "react";
 import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  ContentWrapper,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -18,15 +23,19 @@ import { GlobalState } from "../../store/reducers/types";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
+import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
+import SecuritySuggestions from "../../features/fastLogin/components/SecuritySuggestions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
+const OnboardingShareDataScreen = (props: Props): ReactElement => {
   const dispatch = useDispatch();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     props.setMixpanelEnabled(false);
   });
+
+  const [state, _] = useState(false);
 
   const executeAbortOnboarding = () => {
     dispatch(abortOnboarding());
@@ -48,6 +57,42 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
         }
       ]
     );
+  };
+  const handlePressDismiss = () => {
+    props.setMixpanelEnabled(true);
+    dismissBottomSheet();
+  };
+
+  const defaultFooter = (
+    <ContentWrapper>
+      <VSpacer size={16} />
+      <ButtonSolid
+        fullWidth
+        accessibilityLabel={I18n.t("global.buttons.continue")}
+        label={I18n.t("global.buttons.continue")}
+        onPress={handlePressDismiss}
+      />
+      <VSpacer size={16} />
+    </ContentWrapper>
+  );
+
+  const {
+    present: presentVeryLongAutoresizableBottomSheetWithFooter,
+    bottomSheet: veryLongAutoResizableBottomSheetWithFooter,
+    dismiss: dismissBottomSheet
+  } = useIOBottomSheetAutoresizableModal({
+    title: I18n.t("authentication.opt_in.security_suggests"),
+    component: <SecuritySuggestions />,
+    fullScreen: true,
+    footer: defaultFooter
+  });
+
+  const handleConfirm = () => {
+    if (state) {
+      props.setMixpanelEnabled(true);
+    } else {
+      presentVeryLongAutoresizableBottomSheetWithFooter();
+    }
   };
 
   return (
@@ -73,13 +118,14 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
             I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
           )}
           rightButton={confirmButtonProps(
-            () => props.setMixpanelEnabled(true),
+            handleConfirm,
             I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
             undefined,
             "share-data-confirm-button"
           )}
         />
         {bottomSheet}
+        {veryLongAutoResizableBottomSheetWithFooter}
       </SafeAreaView>
     </BaseScreenComponent>
   );
