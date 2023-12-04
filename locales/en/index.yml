@@ -749,17 +749,25 @@ authentication:
     listitem3_4: recovery code
     listitem3_5: to confirm the operation.
 email:
-  cduModal:
+  cduScreens:
     validateMail:
       title: Email address not validated
       subtitle: To continue using the app, you must validate your email address
       editButton: Edit email address
       validateButton: Validate email address
-    editMail:
+      header: 
+        title: Configure IO
+      help: 
+        body: To continue using the app, you must validate your email address.      
+    emailAlreadyTaken:
       title: Edit your email address
       subtitleStart: This email address
       subtitleEnd: seems to be already in use on IO. Please enter a different one to continue using the app.
       editButton: Edit email address
+      header: 
+        title: Configure IO
+      help: 
+        body: This email address seems to be already in use on IO. Please enter a different one to continue using the app.
   read:
     title: Your email address
     info: This is the email address associated to your SPID account. You can use in IO app a different email address, if you wish. To make operative the new email address, you will need to validate it by clicking on the link you will receive by email.
@@ -3788,3 +3796,20 @@ fastLogin:
         description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
+transaction:
+  details:
+    title: Dettaglio operazione
+    totalAmount: Totale
+    totalFee: Il totale comprende 
+    totalFeePsp: di commissione, applicata da {{pspName}}
+    info:
+      title: Informazioni sulla transazione
+      pspName: Gestore della transazione (PSP)
+      dateAndHour: Data e ora
+      transactionId: ID transazione
+    operation:
+      amount: Importo
+      creditor: Ente creditore
+      debtor: Debitore
+      iuv: IUV
+      subject: Oggetto del pagamento
