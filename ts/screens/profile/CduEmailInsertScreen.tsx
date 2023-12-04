@@ -341,9 +341,6 @@ const CduEmailInsertScreen = (props: Props) => {
                     <View
                       testID="error-label"
                       style={{
-                        position: "absolute",
-                        bottom: -25,
-                        left: 2,
                         display: "flex",
                         flexDirection: "row",
                         alignItems: "center"
