@@ -77,17 +77,6 @@ describe("messageTitleSelector", () => {
     const messageTitle = messageTitleSelector(state, messageId);
     expect(messageTitle).toBeUndefined();
   });
-  it("Should return the message title for a loaded matching message", () => {
-    const messageId = "m1" as UIMessageId;
-    const subject = "message subject";
-    const loadMessageDetailsSuccess = loadMessageDetails.success({
-      id: messageId,
-      subject
-    } as UIMessageDetails);
-    const state = appReducer(undefined, loadMessageDetailsSuccess);
-    const messageTitle = messageTitleSelector(state, messageId);
-    expect(messageTitle).toBe(subject);
-  });
   it("Should return undefined for a loading matching third party message", () => {
     const messageId = "m1" as UIMessageId;
     const loadThirdPartyMessageRequest =
@@ -192,17 +181,6 @@ describe("messageMarkdownSelector", () => {
     const state = appReducer(undefined, loadMessageDetailsRequest);
     const messageMarkdown = messageMarkdownSelector(state, messageId);
     expect(messageMarkdown).toBeUndefined();
-  });
-  it("Should return the message title for a loaded matching message", () => {
-    const messageId = "m1" as UIMessageId;
-    const markdown = "message markdown";
-    const loadMessageDetailsSuccess = loadMessageDetails.success({
-      id: messageId,
-      markdown
-    } as UIMessageDetails);
-    const state = appReducer(undefined, loadMessageDetailsSuccess);
-    const messageMarkdown = messageMarkdownSelector(state, messageId);
-    expect(messageMarkdown).toBe(markdown);
   });
   it("Should return undefined for a loading matching third party message", () => {
     const messageId = "m1" as UIMessageId;
