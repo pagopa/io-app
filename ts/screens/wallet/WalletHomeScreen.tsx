@@ -68,7 +68,6 @@ import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsLi
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
-  navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod
 } from "../../store/actions/navigation";
@@ -87,10 +86,7 @@ import {
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
-import {
-  isDesignSystemEnabledSelector,
-  isPagoPATestEnabledSelector
-} from "../../store/reducers/persistedPreferences";
+import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
@@ -473,13 +469,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   private navigateToPaymentScanQrCode = () => {
-    if (this.props.isDesignSystemEnabled) {
-      this.props.navigation.navigate(
-        WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
-      );
-    } else {
-      this.props.navigateToPaymentScanQrCode();
-    }
+    this.props.navigation.navigate(
+      WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
+    );
   };
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
@@ -583,8 +575,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: isIdPayEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
+  isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -593,7 +584,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
-  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     navigateToTransactionDetailsScreen({
       transaction,
