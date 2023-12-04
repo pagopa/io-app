@@ -80,6 +80,7 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
+import CheckEmailNavigator from "./CheckEmailNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -106,6 +107,12 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.ONBOARDING}
         options={hideHeaderOptions}
         component={OnboardingNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CHECK_EMAIL}
+        options={hideHeaderOptions}
+        component={CheckEmailNavigator}
       />
 
       <Stack.Screen
