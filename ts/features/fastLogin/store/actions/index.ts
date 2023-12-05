@@ -1,8 +1,8 @@
 import { fastLoginOptInActions } from "./optInActions";
-import { securityAdviceActions } from "./securityAdviceActions";
+import { SecurityAdviceActions } from "./securityAdviceActions";
 import { FastLoginTokenRefreshActions } from "./tokenRefreshActions";
 
 export type FastLoginActions =
   | fastLoginOptInActions
   | FastLoginTokenRefreshActions
-  | securityAdviceActions;
+  | SecurityAdviceActions;

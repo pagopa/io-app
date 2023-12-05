@@ -12,7 +12,7 @@ const SecuritySuggestions = () => {
   const dispatch = useIODispatch();
 
   useOnFirstRender(() => {
-    dispatch(setSecurityAdviceAcknowledged());
+    dispatch(setSecurityAdviceAcknowledged({ acknowledged: true }));
   });
 
   return (

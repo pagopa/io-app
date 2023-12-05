@@ -8,32 +8,31 @@ export type SecurityAdviceAcknowledgedState = {
   acknowledged: boolean | undefined;
 };
 
-export const securityAdviceAcknowledgedInitialState: SecurityAdviceAcknowledgedState =
-  {
-    acknowledged: false
-  };
+export const INITIAL_STATE: SecurityAdviceAcknowledgedState = {
+  acknowledged: false
+};
 
 const securityAdviceAcknowledgedReducer = (
-  state: SecurityAdviceAcknowledgedState = securityAdviceAcknowledgedInitialState,
+  state: SecurityAdviceAcknowledgedState = INITIAL_STATE,
   action: Action
 ): SecurityAdviceAcknowledgedState => {
   switch (action.type) {
     case getType(setSecurityAdviceAcknowledged):
       return {
         ...state,
-        acknowledged: true
+        acknowledged: action.payload.acknowledged
       };
     default:
       return state;
   }
 };
 
-const CURRENT_REDUX_FEATURES_STORE_VERSION = -1;
+const CURRENT_REDUX_SECURITY_SUGGESTIONS_ACKNOWLEDGE_STORE_VERSION = -1;
 
 const persistConfig: PersistConfig = {
   key: "securityAdviceAcknowledged",
   storage: AsyncStorage,
-  version: CURRENT_REDUX_FEATURES_STORE_VERSION,
+  version: CURRENT_REDUX_SECURITY_SUGGESTIONS_ACKNOWLEDGE_STORE_VERSION,
   whitelist: ["enabled"]
 };
 
