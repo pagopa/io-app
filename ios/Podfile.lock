@@ -140,7 +140,7 @@ PODS:
     - React-Core
   - pagopa-io-react-native-crypto (0.2.1):
     - React-Core
-  - pagopa-io-react-native-jwt (1.0.0):
+  - pagopa-io-react-native-jwt (1.1.0):
     - JOSESwift (~> 2.3)
     - React-Core
   - pagopa-io-react-native-login-utils (0.2.0):
@@ -950,7 +950,7 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-cie-pid: a3f213959fb23b82822a0bf987610831eb01a5fd
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
-  pagopa-io-react-native-jwt: c97d8a1d137f34d3f2ab354fca8433fea5676b91
+  pagopa-io-react-native-jwt: 0b096d1b173e438a963cb81f251a33988b46f5fa
   pagopa-io-react-native-login-utils: 929e584c817572ce7a3e41e0c6f96c7990bd314d
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
