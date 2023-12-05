@@ -206,7 +206,7 @@ export function* handleIssuanceGetCredential(): SagaIterator {
   } catch (e) {
     const res = toError(e);
     yield* put(
-      itwIssuanceChecks.failure({
+      itwIssuanceGetCredential.failure({
         code: ItWalletErrorTypes.CREDENTIAL_CHECKS_GENERIC_ERROR,
         message: res.message
       })
