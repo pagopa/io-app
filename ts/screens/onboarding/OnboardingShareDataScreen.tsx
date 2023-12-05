@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
@@ -33,8 +33,9 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const OnboardingShareDataScreen = (props: Props): ReactElement => {
   const dispatch = useDispatch();
+  const [mixpanelChoice, setMixpanelChoice] = useState(false);
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
-    props.setMixpanelEnabled(false);
+    handleConfirm(false);
   });
 
   const isSecurityAdviceAcknowledged = useIOSelector(
@@ -62,7 +63,7 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
     );
   };
   const handlePressDismiss = () => {
-    props.setMixpanelEnabled(true);
+    props.setMixpanelEnabled(mixpanelChoice);
     dismissBottomSheet();
   };
 
@@ -90,9 +91,10 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
     footer: defaultFooter
   });
 
-  const handleConfirm = () => {
+  const handleConfirm = (mixpanelChoice: boolean) => {
+    setMixpanelChoice(mixpanelChoice);
     if (isSecurityAdviceAcknowledged) {
-      props.setMixpanelEnabled(true);
+      props.setMixpanelEnabled(mixpanelChoice);
     } else {
       presentVeryLongAutoresizableBottomSheetWithFooter();
     }
@@ -121,7 +123,7 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
             I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
           )}
           rightButton={confirmButtonProps(
-            handleConfirm,
+            () => handleConfirm(true),
             I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
             undefined,
             "share-data-confirm-button"
