@@ -5,6 +5,7 @@ import { isNewCduFlow, remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
+import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
@@ -25,12 +26,11 @@ import ServicesPreferenceScreen from "../screens/profile/ServicesPreferenceScree
 import ShareDataScreen from "../screens/profile/ShareDataScreen";
 import TosScreen from "../screens/profile/TosScreen";
 import WebPlayground from "../screens/profile/WebPlayground";
+import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { isGestureEnabled } from "../utils/navigation";
-import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
-import NewEmailInsertScreen from "../screens/profile/NewEmailInsertScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -132,7 +132,7 @@ const ProfileStackNavigator = () => (
         headerShown: false
       }}
       name={ROUTES.INSERT_EMAIL_SCREEN}
-      component={isNewCduFlow ? NewEmailInsertScreen : EmailInsertScreen}
+      component={isNewCduFlow ? CduEmailInsertScreen : EmailInsertScreen}
     />
     <Stack.Screen
       options={{
