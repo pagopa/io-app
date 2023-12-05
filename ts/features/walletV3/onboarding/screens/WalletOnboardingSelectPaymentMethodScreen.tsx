@@ -62,7 +62,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
     dispatch(walletGetPaymentMethods.request());
   });
 
-  const handleSelectedPaymentMethod = async (
+  const handleSelectedPaymentMethod = (
     selectedPaymentMethod: PaymentMethodResponse
   ) => {
     startOnboarding(selectedPaymentMethod.id);
