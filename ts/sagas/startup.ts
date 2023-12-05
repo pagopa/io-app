@@ -167,6 +167,7 @@ import {
 } from "./../store/storages/keychain";
 import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 import { setLanguageFromProfileIfExists } from "./preferences";
+import { checkEmailSaga } from "./startup/checkEmailSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -416,7 +417,8 @@ export function* initializeApplicationSaga(
     return;
   }
 
-  const userProfile = maybeUserProfile.value;
+  // eslint-disable-next-line functional/no-let
+  let userProfile = maybeUserProfile.value;
 
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
@@ -507,11 +509,13 @@ export function* initializeApplicationSaga(
   yield* call(clearKeychainError);
 
   yield* call(checkConfiguredPinSaga);
+  yield* call(checkAcknowledgedFingerprintSaga);
 
   if (!hasPreviousSessionAndPin) {
-    yield* call(checkAcknowledgedFingerprintSaga);
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
+
+  userProfile = (yield* call(checkEmailSaga)) || userProfile;
 
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
