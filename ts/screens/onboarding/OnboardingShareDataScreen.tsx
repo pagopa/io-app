@@ -62,23 +62,11 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
       ]
     );
   };
+
   const handlePressDismiss = () => {
     props.setMixpanelEnabled(mixpanelChoice);
     dismissBottomSheet();
   };
-
-  const defaultFooter = (
-    <ContentWrapper>
-      <VSpacer size={16} />
-      <ButtonSolid
-        fullWidth
-        accessibilityLabel={I18n.t("global.buttons.continue")}
-        label={I18n.t("global.buttons.continue")}
-        onPress={handlePressDismiss}
-      />
-      <VSpacer size={16} />
-    </ContentWrapper>
-  );
 
   const {
     present: presentVeryLongAutoresizableBottomSheetWithFooter,
@@ -88,7 +76,7 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
     title: I18n.t("authentication.opt_in.security_suggests"),
     component: <SecuritySuggestions />,
     fullScreen: true,
-    footer: defaultFooter
+    onDismiss: handlePressDismiss
   });
 
   const handleConfirm = (mixpanelChoice: boolean) => {
