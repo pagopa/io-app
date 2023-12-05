@@ -5,9 +5,9 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import I18n from "../../../i18n";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import NewOnboardingEmailInsertScreen from "../NewOnboardingEmailInsertScreen";
+import CduEmailInsertScreen from "../../profile/CduEmailInsertScreen";
 
-describe("NewOnboardingEmailInsertScreen", async () => {
+describe("CduEmailInsertScreen", async () => {
   it("the components into the page should be render correctly", () => {
     const component = renderComponent();
     expect(component).toBeDefined();
@@ -61,7 +61,7 @@ const renderComponent = () => {
   const store = createStore(appReducer, globalState as any);
 
   return renderScreenWithNavigationStoreContext(
-    NewOnboardingEmailInsertScreen,
+    CduEmailInsertScreen,
     ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
     {},
     store

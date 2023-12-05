@@ -86,7 +86,10 @@ import {
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isDesignSystemEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
@@ -103,6 +106,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -432,6 +436,24 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.props.loadTransactions(this.props.transactionsLoadedLength);
   };
 
+  private navigateToWalletTransactionDetailsScreen = (
+    transaction: Transaction
+  ) => {
+    if (this.props.isDesignSystemEnabled) {
+      this.props.navigation.navigate(
+        WalletTransactionRoutes.WALLET_TRANSACTION_MAIN,
+        {
+          screen: WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS,
+          params: {
+            transactionId: transaction.id
+          }
+        }
+      );
+    } else {
+      this.props.navigateToTransactionDetailsScreen(transaction);
+    }
+  };
+
   private transactionList(
     potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
   ) {
@@ -442,7 +464,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
-          this.props.navigateToTransactionDetailsScreen
+          this.navigateToWalletTransactionDetailsScreen
         }
         ListEmptyComponent={this.listEmptyComponent()}
       />
@@ -556,6 +578,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
