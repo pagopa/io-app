@@ -32,7 +32,7 @@ import {
 import { loadServiceDetail } from "../../store/actions/services";
 import { useIOSelector } from "../../store/hooks";
 import { isPnEnabledSelector } from "../../store/reducers/backendStatus";
-import { getDetailsByMessageId } from "../../store/reducers/entities/messages/detailsById";
+import { messageDetailsByIdSelector } from "../../store/reducers/entities/messages/detailsById";
 import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,
@@ -271,7 +271,7 @@ const mapStateToProps = (state: GlobalState, ownProps: NavigationProps) => {
     O.map(_ => Boolean(pot.toUndefined(_))),
     O.getOrElse(() => false)
   );
-  const maybeMessageDetails = getDetailsByMessageId(state, messageId);
+  const maybeMessageDetails = messageDetailsByIdSelector(state, messageId);
   const isSynchronizingInbox = isLoadingOrUpdatingInbox(state);
   return {
     isServiceAvailable,
