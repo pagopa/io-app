@@ -1,6 +1,16 @@
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
+import { profileLoadSuccess } from "../../../store/actions/profile";
+import { GlobalState } from "../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../utils/analytics";
+
+export async function trackProfileLoadSuccess(state: GlobalState) {
+  await updateMixpanelSuperProperties(state);
+  await updateMixpanelProfileProperties(state);
+  await mixpanelTrack(profileLoadSuccess.toString());
+}
 
 export function trackTosScreen(flow: FlowType) {
   void mixpanelTrack(
@@ -55,8 +65,16 @@ export function trackCreatePinSuccess(flow: FlowType) {
   );
 }
 
-export function trackTosAccepted(acceptedTosVersion: number, flow: FlowType) {
-  void mixpanelTrack(
+export async function trackTosAccepted(
+  acceptedTosVersion: number,
+  flow: FlowType,
+  state: GlobalState
+) {
+  await updateMixpanelProfileProperties(state, {
+    property: "TOS_ACCEPTED_VERSION",
+    value: acceptedTosVersion
+  });
+  await mixpanelTrack(
     "TOS_ACCEPTED",
     buildEventProperties(
       "UX",
@@ -103,11 +121,25 @@ export function trackNotificationsPreferencesReminderStatus(
   );
 }
 
-export function trackServiceConfiguration(
-  mode: ServicesPreferencesModeEnum | undefined,
-  flow: FlowType
+export type ServiceConfigurationTrackingType =
+  | ServicesPreferencesModeEnum
+  | undefined
+  | "not set";
+
+export async function trackServiceConfiguration(
+  mode: ServiceConfigurationTrackingType,
+  flow: FlowType,
+  state: GlobalState
 ) {
-  void mixpanelTrack(
+  await updateMixpanelProfileProperties(state, {
+    property: "SERVICE_CONFIGURATION",
+    value: mode
+  });
+  await updateMixpanelSuperProperties(state, {
+    property: "SERVICE_CONFIGURATION",
+    value: mode
+  });
+  await mixpanelTrack(
     "SERVICE_PREFERENCE_CONFIGURATION",
     buildEventProperties(
       "UX",
@@ -120,16 +152,20 @@ export function trackServiceConfiguration(
   );
 }
 
-type NotificationPreferenceConfiguration =
+export type NotificationPreferenceConfiguration =
   | "preview"
   | "reminder"
   | "none"
-  | "complete";
+  | "complete"
+  | "not set";
 
-function getNotificationPreferenceConfiguration(
-  isReminderEnabled: boolean,
-  isPreviewEnabled: boolean
+export function getNotificationPreferenceConfiguration(
+  isReminderEnabled: boolean | undefined,
+  isPreviewEnabled: boolean | undefined
 ): NotificationPreferenceConfiguration {
+  if (isReminderEnabled === undefined || isPreviewEnabled === undefined) {
+    return "not set";
+  }
   if (isReminderEnabled && isPreviewEnabled) {
     return "complete";
   }
@@ -142,14 +178,23 @@ function getNotificationPreferenceConfiguration(
   return "none";
 }
 
-export function trackNotificationPreferenceConfiguration(
+export async function trackNotificationPreferenceConfiguration(
   isReminderEnabled: boolean,
   isPreviewEnabled: boolean,
-  flow: FlowType
+  flow: FlowType,
+  state: GlobalState
 ) {
   const configuration: NotificationPreferenceConfiguration =
     getNotificationPreferenceConfiguration(isReminderEnabled, isPreviewEnabled);
-  void mixpanelTrack(
+  await updateMixpanelProfileProperties(state, {
+    property: "NOTIFICATION_CONFIGURATION",
+    value: configuration
+  });
+  await updateMixpanelSuperProperties(state, {
+    property: "NOTIFICATION_CONFIGURATION",
+    value: configuration
+  });
+  await mixpanelTrack(
     "NOTIFICATION_PREFERENCE_CONFIGURATION",
     buildEventProperties(
       "UX",

@@ -184,6 +184,39 @@ export const profilePreferencesSelector = createSelector(
     }))
 );
 
+// return the profile notification settings actual state or undefined if ProfileState pot is in an Error state
+export const profileNotificationSettingsSelector = createSelector(
+  profileSelector,
+  (
+    profile: ProfileState
+  ):
+    | { reminder: boolean | undefined; preview: boolean | undefined }
+    | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => ({
+        reminder:
+          p.reminder_status === undefined
+            ? undefined
+            : p.reminder_status === ReminderStatusEnum.ENABLED,
+        preview:
+          p.push_notifications_content_type === undefined
+            ? undefined
+            : p.push_notifications_content_type ===
+              PushNotificationsContentTypeEnum.FULL
+      })),
+      undefined
+    )
+);
+
+// return the tos version or undefined if ProfileState pot is in an Error state
+export const tosVersionSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): number | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.accepted_tos_version),
+      undefined
+    )
+);
 const reducer = (
   state: ProfileState = INITIAL_STATE,
   action: Action

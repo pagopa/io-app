@@ -1,5 +1,6 @@
-import { IdpData } from "../../../../definitions/content/IdpData";
 import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 
 function trackLoginSpidGenericError() {
@@ -84,8 +85,15 @@ export function trackLoginSpidError(errorCode?: string) {
   }
 }
 
-export function trackLoginSpidIdpSelected(idp: string) {
-  void mixpanelTrack(
+export async function trackLoginSpidIdpSelected(
+  idp: string,
+  state: GlobalState
+) {
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value: idp
+  });
+  await mixpanelTrack(
     "LOGIN_SPID_IDP_SELECTED",
     buildEventProperties("UX", "action", {
       idp

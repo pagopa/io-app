@@ -54,6 +54,8 @@ import { readablePrivacyReport } from "../utils/reporters";
 import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
 import { ProfileError } from "../store/reducers/profileErrorType";
 import { UpdateProfile412ErrorTypesEnum } from "../../definitions/backend/UpdateProfile412ErrorTypes";
+import { GlobalState } from "../store/reducers/types";
+import { trackProfileLoadSuccess } from "../screens/profile/analytics";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -418,6 +420,9 @@ function* checkStoreHashedFiscalCode(
 function* checkLoadedProfile(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
+  const state = (yield* select()) as GlobalState;
+  void trackProfileLoadSuccess(state);
+
   yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
   // If the tos has never been accepted or is not part of the upsert payload, do not run check that could upsert profile
   if (!profileLoadSuccessAction.payload.accepted_tos_version) {

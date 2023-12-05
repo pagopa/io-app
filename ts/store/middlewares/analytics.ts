@@ -60,7 +60,6 @@ import {
   profileFirstLogin,
   profileLoadFailure,
   profileLoadRequest,
-  profileLoadSuccess,
   profileUpsert,
   removeAccountMotivation
 } from "../actions/profile";
@@ -322,7 +321,6 @@ const trackAction =
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):
-      case getType(profileLoadSuccess):
       // userMetadata
       case getType(userMetadataUpsert.request):
       case getType(userMetadataUpsert.success):
