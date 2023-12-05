@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
@@ -9,6 +8,9 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentCalculateFees } from "../../store/actions/networking";
+import { getSortedPspList } from "../../../common/utils";
+import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
+import { walletPaymentPickPsp } from "../../store/actions/orchestration";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
@@ -31,26 +33,38 @@ export function* handleWalletPaymentCalculateFees(
       action
     )) as unknown as SagaCallReturnType<typeof calculateFees>;
 
-    yield* put(
-      pipe(
-        calculateFeesResult,
-        E.fold(
-          error =>
-            walletPaymentCalculateFees.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
-          res => {
-            if (res.status === 200) {
-              return walletPaymentCalculateFees.success(res.value);
-            }
-            return walletPaymentCalculateFees.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
-          }
-        )
-      )
-    );
+    if (E.isLeft(calculateFeesResult)) {
+      yield* put(
+        walletPaymentCalculateFees.failure({
+          ...getGenericError(
+            new Error(readablePrivacyReport(calculateFeesResult.left))
+          )
+        })
+      );
+      return;
+    } else {
+      const res = calculateFeesResult.right;
+      if (res.status === 200) {
+        const bundlesSortedByDefault = getSortedPspList(
+          res.value.bundles,
+          "default"
+        );
+        if (bundlesSortedByDefault[0]?.onUs) {
+          yield* put(walletPaymentPickPsp(bundlesSortedByDefault[0]));
+        }
+        const sortedResponse: CalculateFeeResponse = {
+          ...res.value,
+          bundles: bundlesSortedByDefault
+        };
+        yield* put(walletPaymentCalculateFees.success(sortedResponse));
+        return;
+      }
+      yield* put(
+        walletPaymentCalculateFees.failure({
+          ...getGenericError(new Error(`Error: ${res.status}`))
+        })
+      );
+    }
   } catch (e) {
     yield* put(walletPaymentCalculateFees.failure({ ...getNetworkError(e) }));
   }

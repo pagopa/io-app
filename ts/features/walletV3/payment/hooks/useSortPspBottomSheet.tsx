@@ -19,22 +19,24 @@ const useSortPspBottomSheet = ({
     <>
       <ListItemNav
         hideChevron
-        accessibilityLabel="Default"
-        value="Default"
+        accessibilityLabel={I18n.t(
+          "wallet.payment.psp.sortBottomSheet.default"
+        )}
+        value={I18n.t("wallet.payment.psp.sortBottomSheet.default")}
         onPress={() => onSortChange("default")}
       />
       <Divider />
       <ListItemNav
         hideChevron
-        accessibilityLabel="Per nome"
-        value="Per nome"
+        accessibilityLabel={I18n.t("wallet.payment.psp.sortBottomSheet.name")}
+        value={I18n.t("wallet.payment.psp.sortBottomSheet.name")}
         onPress={() => onSortChange("name")}
       />
       <Divider />
       <ListItemNav
         hideChevron
-        accessibilityLabel="Per importo"
-        value="Per importo"
+        accessibilityLabel={I18n.t("wallet.payment.psp.sortBottomSheet.amount")}
+        value={I18n.t("wallet.payment.psp.sortBottomSheet.amount")}
         onPress={() => onSortChange("amount")}
       />
       <VSpacer size={24} />

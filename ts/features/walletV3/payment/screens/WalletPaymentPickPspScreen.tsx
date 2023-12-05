@@ -3,6 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import {
   Body,
+  Divider,
   GradientScrollView,
   H2,
   ListItemHeader,
@@ -39,6 +40,8 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { WalletPaymentPspSortType } from "../types";
+import I18n from "../../../../i18n";
+import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 
 type WalletPaymentPickPspScreenNavigationParams = {
   walletId: string;
@@ -55,6 +58,7 @@ const WalletPaymentPickPspScreen = () => {
   const { paymentAmountInCents, walletId } = params;
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const pspList = pot.toUndefined(pspListPot);
@@ -87,6 +91,7 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
+    setShowFeaturedPsp(sortType === "default");
     dispatch(walletPaymentSortPsp(sortType));
     dismiss();
   };
@@ -112,65 +117,85 @@ const WalletPaymentPickPspScreen = () => {
     });
   };
 
-  const sortButtonProps: ListItemHeader["endElement"] = {
-    type: "buttonLink",
-    componentProps: {
-      label: "Ordina",
-      accessibilityLabel: "Ordina",
-      onPress: () => {
-        present();
+  const sortButtonProps: ListItemHeader["endElement"] = React.useMemo(
+    () => ({
+      type: "buttonLink",
+      componentProps: {
+        label: I18n.t("wallet.payment.psp.pspSortButton"),
+        accessibilityLabel: I18n.t("wallet.payment.psp.pspSortButton"),
+        onPress: () => {
+          present();
+        }
       }
-    }
-  };
+    }),
+    [present]
+  );
 
-  const isPspSelected = (psp: Bundle) =>
-    pipe(
-      selectedPspOption,
-      O.map(selectedPsp => selectedPsp.idBundle === psp.idBundle),
-      O.getOrElse(() => false)
-    );
+  const isPspSelected = React.useCallback(
+    (psp: Bundle) =>
+      pipe(
+        selectedPspOption,
+        O.map(selectedPsp => selectedPsp.idBundle === psp.idBundle),
+        O.getOrElse(() => false)
+      ),
+    [selectedPspOption]
+  );
+
+  const SelectPspHeadingContent = React.useCallback(
+    () => (
+      <>
+        <H2>{I18n.t("wallet.payment.psp.title")}</H2>
+        <VSpacer size={16} />
+        <Body>{I18n.t("wallet.payment.psp.description")}</Body>
+        <Body>
+          {I18n.t("wallet.payment.psp.taxDescription")}{" "}
+          <Body weight="SemiBold">
+            {I18n.t("wallet.payment.psp.taxDescriptionBold")}
+          </Body>
+        </Body>
+        <VSpacer size={16} />
+        <ListItemHeader
+          label={I18n.t("wallet.payment.psp.pspTitle")}
+          accessibilityLabel={I18n.t("wallet.payment.psp.pspTitle")}
+          endElement={sortButtonProps}
+        />
+      </>
+    ),
+    [sortButtonProps]
+  );
 
   return (
     <GradientScrollView
       primaryActionProps={{
-        label: "Continua",
-        accessibilityLabel: "Continua",
+        label: I18n.t("wallet.payment.psp.continueButton"),
+        accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
         onPress: handleContinue,
         disabled: isLoading || !canContinue,
         loading: isLoading
       }}
     >
-      <H2>Scegli chi gestierà il pagamento</H2>
-      <VSpacer size={16} />
-      <Body>Ogni gestore propone una commissione. </Body>
-      <Body>
-        In questa lista trovi tutti i gestori compatibili,{" "}
-        <Body weight="SemiBold"> anche se non sei loro cliente.</Body>
-      </Body>
-      <VSpacer size={16} />
-      <ListItemHeader
-        label="Gestore"
-        accessibilityLabel="Gestore"
-        endElement={sortButtonProps}
-      />
+      <SelectPspHeadingContent />
       {!isLoading &&
-        pspList?.map(psp => (
-          <ListItemRadioWithAmount
-            key={psp.idPsp}
-            label={psp.bundleName ?? "Nessun nome"}
-            isSuggested={psp.onUs}
-            selected={isPspSelected(psp)}
-            onPress={_ => handlePspSelection(psp)}
-            suggestReason="Perchè sei già cliente"
-            formattedAmountString={formatNumberCentsToAmount(
-              psp.taxPayerFee || 0,
-              true
-            )}
-          />
+        pspList?.map((psp, index) => (
+          <>
+            <ListItemRadioWithAmount
+              key={index.toString()}
+              label={psp.bundleName ?? I18n.t("wallet.payment.psp.defaultName")}
+              isSuggested={psp.onUs && showFeaturedPsp}
+              selected={isPspSelected(psp)}
+              onPress={_ => handlePspSelection(psp)}
+              suggestReason={I18n.t("wallet.payment.psp.featuredReason")}
+              formattedAmountString={formatNumberCentsToAmount(
+                psp.taxPayerFee || 0,
+                true,
+                "right"
+              )}
+            />
+            {index !== pspList.length - 1 && <Divider />}
+          </>
         ))}
+      {isLoading && <WalletPspListSkeleton />}
       {sortPspBottomSheet}
-      {/* <DebugPrettyPrint title="pspListPot" data={pspListPot} /> */}
-      {/* <DebugPrettyPrint title="selectedPspOption" data={selectedPspOption} /> */}
     </GradientScrollView>
   );
 };
