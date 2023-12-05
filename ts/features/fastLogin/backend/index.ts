@@ -6,10 +6,10 @@ import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMet
 import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOriginalURL";
 import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
 import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
-import { toFetchTimeout } from "../../../utils/fetch";
+import { defaultRetryingFetch } from "../../../utils/fetch";
 import { createClient } from "../../../../definitions/fast_login/client";
 
-const NONCE_EXPYRING_MS = 60000 as Millisecond;
+const FAST_LOGIN_TIMEOUT_MS = 9000 as Millisecond;
 
 // fastLogin call
 export const performFastLogin = async (fastLoginClient: FastLoginClient) =>
@@ -29,7 +29,7 @@ export const createFastLoginClient = (
 ) =>
   createClient({
     baseUrl,
-    fetchApi: lollipopFetch(lollipopConfig, keyInfo, 1)
+    fetchApi: lollipopFetch(lollipopConfig, keyInfo, 1, FAST_LOGIN_TIMEOUT_MS)
   });
 
 // getNonce call
@@ -41,5 +41,5 @@ type GetNonceClient = ReturnType<typeof createNonceClient>;
 export const createNonceClient = (baseUrl: string) =>
   createClient({
     baseUrl,
-    fetchApi: toFetchTimeout(NONCE_EXPYRING_MS)
+    fetchApi: defaultRetryingFetch()
   });

@@ -15,13 +15,18 @@ export const centsToAmount = (cents: number): number =>
 
 export const formatNumberAmount = (
   amount: number,
-  displayCurrency: boolean = false
+  displayCurrency: boolean = false,
+  currencyPosition: "left" | "right" = "left"
 ): string =>
   I18n.toCurrency(amount, {
     precision: DISPLAYED_DIGITS,
     delimiter: I18n.t("global.localization.delimiterSeparator"),
     separator: I18n.t("global.localization.decimalSeparator"),
-    format: displayCurrency ? "€ %n" : "%n"
+    format: displayCurrency
+      ? currencyPosition === "left"
+        ? "€ %n"
+        : "%n €"
+      : "%n"
   });
 
 /**
@@ -42,8 +47,10 @@ export const formatNumberWithNoDigits = (
 
 export const formatNumberCentsToAmount = (
   cents: number,
-  displayCurrency: boolean = false
-): string => formatNumberAmount(centsToAmount(cents), displayCurrency);
+  displayCurrency: boolean = false,
+  currencyPosition: "left" | "right" = "left"
+): string =>
+  formatNumberAmount(centsToAmount(cents), displayCurrency, currencyPosition);
 
 export const buildExpirationDate = (creditCard: CardInfo): string =>
   `${creditCard.expireMonth}/${creditCard.expireYear}`;

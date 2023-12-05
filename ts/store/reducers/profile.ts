@@ -22,8 +22,9 @@ import { ServicesPreferencesModeEnum } from "../../../definitions/backend/Servic
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { GlobalState } from "./types";
+import { ProfileError } from "./profileErrorType";
 
-export type ProfileState = pot.Pot<InitializedProfile, Error>;
+export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 
 const INITIAL_STATE: ProfileState = pot.none;
 
@@ -122,6 +123,15 @@ export const profileServicePreferencesModeSelector = createSelector(
       undefined
     )
 );
+// return if the profile email user is already taken
+export const isProfileEmailAlreadyTakenSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): boolean | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.is_email_already_taken),
+      undefined
+    )
+);
 
 // return true if the profile services preference mode is set (mode is set only when AUTO or MANUAL is the current mode)
 export const isServicesPreferenceModeSet = (
@@ -134,6 +144,10 @@ export const isServicesPreferenceModeSet = (
 // return true if the profile has an email and it is validated
 export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
   user.is_email_validated !== undefined && user.is_email_validated === true;
+
+// return true if the profile has an email and it is validated
+export const isProfileEmailAlreadyTaken = (user: InitializedProfile): boolean =>
+  !!user.is_email_already_taken;
 
 // Returns true if the profile has service_preferences_settings set to Legacy.
 // A profile that has completed onboarding will have this value mandatory set to auto or manual

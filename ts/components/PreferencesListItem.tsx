@@ -1,10 +1,10 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { H6 } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import { TestID } from "../types/WithTestID";
 import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOStyles } from "./core/variables/IOStyles";
-import { NewH6 } from "./core/typography/NewH6";
 
 type MoreInfoProps = {
   moreInfoText: string | React.ReactNode;
@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
 export const PreferencesListItem = (props: Props): React.ReactElement => (
   <View style={styles.row} testID={props.testID}>
     <View style={styles.left}>
-      <NewH6>{props.title}</NewH6>
+      <H6>{props.title}</H6>
       <LabelSmall weight="Regular" color="grey-700">
         {props.description}
       </LabelSmall>
       {props.moreInfo && (
-        <NewH6
+        <H6
           weight={"Regular"}
           color={"bluegrey"}
           accessibilityRole="link"
@@ -54,7 +54,7 @@ export const PreferencesListItem = (props: Props): React.ReactElement => (
           <LabelSmall accessibilityRole="link">
             {props.moreInfo.moreInfoText}
           </LabelSmall>
-        </NewH6>
+        </H6>
       )}
     </View>
     {props.rightElement}

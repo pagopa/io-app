@@ -55,6 +55,10 @@ import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/rou
 import { WalletPaymentBarcodeScanScreen } from "../features/walletV3/payment/screens/WalletPaymentBarcodeScanScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+import {
+  WalletTransactionNavigator,
+  WalletTransactionRoutes
+} from "../features/walletV3/transaction/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -76,6 +80,7 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
+import CheckEmailNavigator from "./CheckEmailNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -102,6 +107,12 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.ONBOARDING}
         options={hideHeaderOptions}
         component={OnboardingNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CHECK_EMAIL}
+        options={hideHeaderOptions}
+        component={CheckEmailNavigator}
       />
 
       <Stack.Screen
@@ -255,6 +266,10 @@ const AuthenticatedStackNavigator = () => {
           />
           <Stack.Screen
             name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
             component={IdPayBarcodeNavigator}
           />
         </>
@@ -269,14 +284,24 @@ const AuthenticatedStackNavigator = () => {
         name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
         component={WalletPaymentNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
       <Stack.Screen
         name={WalletDetailsRoutes.WALLET_DETAILS_MAIN}
         component={WalletDetailsNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
+      />
+      <Stack.Screen
+        name={WalletTransactionRoutes.WALLET_TRANSACTION_MAIN}
+        component={WalletTransactionNavigator}
+        options={{
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
       {/* 
@@ -288,7 +313,8 @@ const AuthenticatedStackNavigator = () => {
         component={WalletPaymentBarcodeScanScreen}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
     </Stack.Navigator>
