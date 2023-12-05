@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import {
   ButtonLink,
   ButtonSolid,
@@ -23,7 +23,7 @@ type ItwContinueViewProps = {
   subtitle?: string;
   action?: ActionProps;
   secondaryAction?: ActionProps;
-  closeAction?: ActionProps["onPress"];
+  onPictogramPress?: ActionProps["onPress"]; // temporary workaround for the long press on the pictogram to be removed when the cie bypass will be removed.
 };
 
 /**
@@ -40,15 +40,16 @@ const ItwContinueView = ({
   pictogram,
   subtitle,
   action,
-  secondaryAction
+  secondaryAction,
+  onPictogramPress
 }: ItwContinueViewProps): React.ReactElement => (
   <View style={{ ...IOStyles.flex, ...IOStyles.horizontalContentPadding }}>
     <View style={styles.main} testID={"ItwContinueViewTestID"}>
       {pictogram && (
-        <>
+        <Pressable onLongPress={onPictogramPress}>
           <Pictogram name={pictogram} size={180} />
           <VSpacer size={24} />
-        </>
+        </Pressable>
       )}
       <H3 style={styles.text}>{title}</H3>
       {subtitle && (

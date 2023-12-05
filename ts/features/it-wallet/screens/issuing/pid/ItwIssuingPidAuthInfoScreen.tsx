@@ -93,6 +93,7 @@ const ItwIssuingPidAuthInfoScreen = () => {
                 ? bypassCieLogin()
                 : navigation.navigate(ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN)
           }}
+          onPictogramPress={() => bypassCieLogin()}
           secondaryAction={{
             label: I18n.t("features.itWallet.infoAuthScreen.noCieInfo"),
             accessibilityLabel: I18n.t(
