@@ -3408,7 +3408,7 @@ features:
           deny: "Deny"
         tos: "By continuing, you accept the [Terms and conditions of use]() of the service and confirm that you have read the [Privacy Policy]() of {{relayingParty}}."
       checksScreen: 
-        loading: "We are checking to verify that this organization is verified"
+        loading: "We are checking that this organization is verified"
         success: "{{organizationName}} is a verified organization"
         errors:
           walletNotValid: 
