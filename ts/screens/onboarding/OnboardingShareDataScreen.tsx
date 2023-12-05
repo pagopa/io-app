@@ -2,12 +2,7 @@ import React, { ReactElement, useState } from "react";
 import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import {
-  ButtonSolid,
-  ContentWrapper,
-  IOColors,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
