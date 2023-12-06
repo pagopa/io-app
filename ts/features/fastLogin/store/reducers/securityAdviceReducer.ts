@@ -2,15 +2,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { setSecurityAdviceAcknowledged } from "../actions/securityAdviceActions";
+import {
+  setSecurityAdviceAcknowledged,
+  setSecurityAdviceReadyToShow
+} from "../actions/securityAdviceActions";
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 
 export type SecurityAdviceAcknowledgedState = {
   acknowledged: boolean | undefined;
+  readyToShow: boolean | undefined;
 };
 
 export const INITIAL_STATE: SecurityAdviceAcknowledgedState = {
-  acknowledged: false
+  acknowledged: false,
+  readyToShow: false
 };
 
 const securityAdviceAcknowledgedReducer = (
@@ -23,7 +28,12 @@ const securityAdviceAcknowledgedReducer = (
     case getType(setSecurityAdviceAcknowledged):
       return {
         ...state,
-        acknowledged: action.payload.acknowledged
+        acknowledged: action.payload
+      };
+    case getType(setSecurityAdviceReadyToShow):
+      return {
+        ...state,
+        readyToShow: action.payload
       };
     default:
       return state;

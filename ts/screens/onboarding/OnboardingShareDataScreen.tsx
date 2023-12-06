@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import * as React from "react";
 import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
@@ -18,24 +18,16 @@ import { GlobalState } from "../../store/reducers/types";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
-import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
-import SecuritySuggestions from "../../features/fastLogin/components/SecuritySuggestions";
-import { useIOSelector } from "../../store/hooks";
-import { isSecurityAdviceAcknowledgedEnabled } from "../../features/fastLogin/store/selectors";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const OnboardingShareDataScreen = (props: Props): ReactElement => {
+const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
   const dispatch = useDispatch();
-  const [mixpanelChoice, setMixpanelChoice] = useState(false);
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
-    handleConfirm(false);
+    props.setMixpanelEnabled(false);
   });
 
-  const isSecurityAdviceAcknowledged = useIOSelector(
-    isSecurityAdviceAcknowledgedEnabled
-  );
   const executeAbortOnboarding = () => {
     dispatch(abortOnboarding());
   };
@@ -56,31 +48,6 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
         }
       ]
     );
-  };
-
-  const handlePressDismiss = () => {
-    props.setMixpanelEnabled(mixpanelChoice);
-    dismissBottomSheet();
-  };
-
-  const {
-    present: presentVeryLongAutoresizableBottomSheetWithFooter,
-    bottomSheet: veryLongAutoResizableBottomSheetWithFooter,
-    dismiss: dismissBottomSheet
-  } = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("authentication.opt_in.security_suggests"),
-    component: <SecuritySuggestions />,
-    fullScreen: true,
-    onDismiss: handlePressDismiss
-  });
-
-  const handleConfirm = (mixpanelChoice: boolean) => {
-    setMixpanelChoice(mixpanelChoice);
-    if (isSecurityAdviceAcknowledged) {
-      props.setMixpanelEnabled(mixpanelChoice);
-    } else {
-      presentVeryLongAutoresizableBottomSheetWithFooter();
-    }
   };
 
   return (
@@ -106,14 +73,13 @@ const OnboardingShareDataScreen = (props: Props): ReactElement => {
             I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
           )}
           rightButton={confirmButtonProps(
-            () => handleConfirm(true),
+            () => props.setMixpanelEnabled(true),
             I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
             undefined,
             "share-data-confirm-button"
           )}
         />
         {bottomSheet}
-        {veryLongAutoResizableBottomSheetWithFooter}
       </SafeAreaView>
     </BaseScreenComponent>
   );

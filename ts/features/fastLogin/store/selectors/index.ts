@@ -16,6 +16,9 @@ export const isSecurityAdviceAcknowledgedEnabled = createSelector(
   value => value.acknowledged
 );
 
+export const isSecurityAdviceReadyToShow = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.securityAdviceAcknowledged.readyToShow;
+
 /**
  * return the remote config about FastLoginOptIn enabled/disabled
  * based on a minumum version of the app.

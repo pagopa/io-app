@@ -1,10 +1,13 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { SecurityAdviceAcknowledgedState } from "../reducers/securityAdviceReducer";
 
 export const setSecurityAdviceAcknowledged = createStandardAction(
   "SET_SECURITY_ADVICE_ACKNOWLEDGED"
-)<SecurityAdviceAcknowledgedState>();
+)<boolean>();
 
-export type SecurityAdviceActions = ActionType<
-  typeof setSecurityAdviceAcknowledged
->;
+export const setSecurityAdviceReadyToShow = createStandardAction(
+  "SET_SECURITY_ADVICE_READY_TO_SHOW"
+)<boolean>();
+
+export type SecurityAdviceActions =
+  | ActionType<typeof setSecurityAdviceAcknowledged>
+  | ActionType<typeof setSecurityAdviceReadyToShow>;

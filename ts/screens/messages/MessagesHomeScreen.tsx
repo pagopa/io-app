@@ -6,7 +6,6 @@ import React, { useCallback, useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOColors } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
@@ -46,7 +45,10 @@ import SecuritySuggestions from "../../features/fastLogin/components/SecuritySug
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import { useIOSelector } from "../../store/hooks";
 import { progressSelector } from "../../store/reducers/identification";
-import { isSecurityAdviceAcknowledgedEnabled } from "../../features/fastLogin/store/selectors";
+import {
+  isSecurityAdviceAcknowledgedEnabled,
+  isSecurityAdviceReadyToShow
+} from "../../features/fastLogin/store/selectors";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -74,8 +76,6 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
-  const navigation = useNavigation();
-  const [focusCount, setFocusCount] = React.useState(0);
 
   const {
     present: presentSecuritySuggestionBottomSheet,
@@ -91,6 +91,9 @@ const MessagesHomeScreen = ({
   const securityAdviceAcknowledged = useIOSelector(
     isSecurityAdviceAcknowledgedEnabled
   );
+  const isSecurityAdviceReadyToBeShown = useIOSelector(
+    isSecurityAdviceReadyToShow
+  );
 
   const showSecuritySuggestionModal = useCallback(() => {
     if (!securityAdviceAcknowledged) {
@@ -99,32 +102,19 @@ const MessagesHomeScreen = ({
   }, [presentSecuritySuggestionBottomSheet, securityAdviceAcknowledged]);
 
   useEffect(() => {
-    // eslint-disable-next-line sonarjs/prefer-immediate-return
-    const unsubscribe = navigation.addListener("focus", () => {
-      // During onboarding, the navigation focus event is triggered twice
-      setFocusCount(count => count + 1);
-      if (focusCount > 0) {
-        showSecuritySuggestionModal();
-      }
-    });
-
-    // Return the function to unsubscribe
-    // from the event so it gets removed on unmount
-    return unsubscribe;
-  }, [
-    focusCount,
-    identificationProgressState,
-    navigation,
-    showSecuritySuggestionModal
-  ]);
-
-  useEffect(() => {
     // During the current session, we listen to the identification progress state
     // to show the security suggestion bottom sheet when the user is identified
-    if (identificationProgressState.kind === "identified") {
+    if (
+      identificationProgressState.kind === "identified" ||
+      isSecurityAdviceReadyToBeShown
+    ) {
       showSecuritySuggestionModal();
     }
-  }, [identificationProgressState, focusCount, showSecuritySuggestionModal]);
+  }, [
+    identificationProgressState,
+    showSecuritySuggestionModal,
+    isSecurityAdviceReadyToBeShown
+  ]);
 
   useOnFirstRender(() => {
     if (needsMigration) {

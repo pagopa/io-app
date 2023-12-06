@@ -106,6 +106,7 @@ import {
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
+import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -679,6 +680,9 @@ export function* initializeApplicationSaga(
 
   // Check if we have a pending notification message
   yield* call(handlePendingMessageStateIfAllowedSaga, true);
+
+  // This tells the security advice bottomsheet that it can be shown
+  yield* put(setSecurityAdviceReadyToShow(true));
 
   yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }
