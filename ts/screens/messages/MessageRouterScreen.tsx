@@ -77,7 +77,8 @@ export const MessageRouterScreen = (
         data.firstTimeOpening,
         data.containsPayment,
         data.hasRemoteContent,
-        data.containsAttachments
+        data.containsAttachments,
+        fromPushNotification
       );
 
       navigation.goBack();
@@ -115,7 +116,7 @@ export const MessageRouterScreen = (
         });
       }
     },
-    [navigation]
+    [fromPushNotification, navigation]
   );
 
   useEffect(() => {

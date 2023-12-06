@@ -17,7 +17,8 @@ export function trackOpenMessage(
   firstTimeOpening: boolean,
   containsPayment: boolean | undefined,
   hasRemoteContent: boolean,
-  containsAttachments: boolean
+  containsAttachments: boolean,
+  fromPushNotification: boolean
 ) {
   void mixpanelTrack(
     "OPEN_MESSAGE",
@@ -31,7 +32,8 @@ export function trackOpenMessage(
       ),
       remote_content: booleanToYesNo(hasRemoteContent),
       contains_attachment: booleanToYesNo(containsAttachments),
-      first_time_opening: booleanToYesNo(firstTimeOpening)
+      first_time_opening: booleanToYesNo(firstTimeOpening),
+      fromPushNotification: booleanToYesNo(fromPushNotification)
     })
   );
 }
@@ -229,7 +231,7 @@ export function trackRemoteContentLoadRequest(tag: string) {
   void mixpanelTrack(
     "REMOTE_CONTENT_LOAD_REQUEST",
     buildEventProperties("TECH", undefined, {
-      tag
+      message_category_tag: tag
     })
   );
 }
@@ -238,7 +240,7 @@ export function trackRemoteContentLoadSuccess(tag: string) {
   void mixpanelTrack(
     "REMOTE_CONTENT_LOAD_SUCCESS",
     buildEventProperties("TECH", undefined, {
-      tag
+      message_category_tag: tag
     })
   );
 }
@@ -253,7 +255,7 @@ export function trackRemoteContentLoadFailure(
     buildEventProperties("TECH", undefined, {
       reason,
       serviceId,
-      tag
+      message_category_tag: tag
     })
   );
 }
@@ -308,7 +310,7 @@ export function trackRemoteContentMessageDecodingWarning(
     buildEventProperties("TECH", undefined, {
       reason,
       serviceId,
-      tag
+      message_category_tag: tag
     })
   );
 }
