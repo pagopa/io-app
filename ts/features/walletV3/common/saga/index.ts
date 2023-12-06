@@ -7,6 +7,7 @@ import { watchWalletPaymentSaga } from "../../payment/saga";
 import { createWalletClient } from "../api/client";
 import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { watchWalletDetailsSaga } from "../../details/saga";
+import { watchWalletTransactionSaga } from "../../transaction/saga";
 
 export function* watchWalletSaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -21,4 +22,5 @@ export function* watchWalletSaga(bpdToken: string): SagaIterator {
   yield* fork(watchWalletOnboardingSaga, walletClient);
   yield* fork(watchWalletPaymentSaga, walletClient, paymentClient);
   yield* fork(watchWalletDetailsSaga, walletClient);
+  yield* fork(watchWalletTransactionSaga, walletClient);
 }

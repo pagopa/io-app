@@ -7,6 +7,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -19,14 +20,18 @@ export function* handleStartWalletOnboarding(
 ) {
   try {
     const { paymentMethodId } = action.payload;
-    const startOnboardingResult: SagaCallReturnType<typeof startOnboarding> =
-      yield* call(startOnboarding, {
-        body: {
-          services: [ServiceNameEnum.PAGOPA],
-          useDiagnosticTracing: true,
-          paymentMethodId
-        }
-      });
+    const startOnboardingRequest = startOnboarding({
+      body: {
+        services: [ServiceNameEnum.PAGOPA],
+        useDiagnosticTracing: true,
+        paymentMethodId
+      }
+    });
+    const startOnboardingResult = (yield* call(
+      withRefreshApiCall,
+      startOnboardingRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof startOnboarding>;
     if (E.isRight(startOnboardingResult)) {
       if (startOnboardingResult.right.status === 201) {
         // handled success
