@@ -5,8 +5,6 @@ import {
   Credential,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
-import * as SDJWT from "@pagopa/io-react-native-wallet/src/sd-jwt";
-import { SdJwt4VC } from "@pagopa/io-react-native-wallet/src/sd-jwt/types";
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { toError } from "fp-ts/lib/Either";
@@ -179,16 +177,12 @@ export function* handleIssuanceGetCredential(): SagaIterator {
       { credentialCryptoContext, walletProviderBaseUrl }
     );
 
-    // TODO(SIW-659): replace with the VerificationAndParseCredential function
-    const parsedCredential = SDJWT.decode(
+    const { parsedCredential } = yield* call(
+      Credential.Issuance.verifyAndParseCredential,
+      issuerConf,
       credential,
-      SdJwt4VC
-    ).disclosures.reduce(
-      (p, { decoded: [, key, value] }) => ({
-        ...p,
-        [key]: typeof value === "string" ? value : JSON.stringify(value)
-      }),
-      {} as Record<string, string>
+      format,
+      { credentialCryptoContext, ignoreMissingAttributes: true }
     );
 
     yield* put(

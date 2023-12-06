@@ -1,30 +1,29 @@
 import React from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import * as O from "fp-ts/Option";
 import * as t from "io-ts";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/Either";
-import { getClaimsFullLocale, localeDateFormatOrSame } from "../utils/locales";
+import { getClaimsFullLocale } from "../utils/locales";
 import I18n from "../../../i18n";
 import { CredentialCatalogDisplay } from "../utils/mocks";
 import { StoredCredential } from "../store/reducers/itwCredentialsReducer";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { ParsedCredential } from "../utils/types";
 
 /**
  * Type of the claims list.
- * Consists of a list of claims, each claim is a couple of label and value
- * wrapped in an Option.
+ * Consists of a list of claims, each claim is a couple of label and value.
  */
-type ClaimList = ReadonlyArray<{
-  value: O.Option<string>;
-  label: O.Option<string>;
+type ClaimList = Array<{
+  label: string;
+  value: unknown;
 }>;
 
 /**
  * Decoder type for the evidence field of the credential.
  */
-const EvidenceDecoder = t.array(
+const EvidenceClaimDecoder = t.array(
   t.type({
     type: t.string,
     record: t.type({
@@ -39,53 +38,50 @@ const EvidenceDecoder = t.array(
 );
 
 /**
- * Parses the claims from the credential.
- * It uses the credentialConfigurationSchema to get the label for each claim by
- * creating an object with its entries and then mapping them to a list of claims.
- * The key of the object is used to get the value from the parsedCredential.
- * If the value is not available, the value is set to undefined which is then
- * wrapped in an Option.
- * If the value is a date, it is formatted using the localeDateFormat function which otherwise returns the same value.
- * The value of the object is used to get the label from the credentialConfigurationSchema
- * by filtering the display array for the current locale.
- * If the label is not available for the current locale, the label is set to undefined which is then
- * wrapped in an Option.
- * The resulting list of claims is then flattened by two levels to get a list of claims.
- * @param parsedCredential - the parsed credential.
- * @param schema - the issuance credentialConfigurationSchema of parsedCredential.
- * @returns the list of claims of the credential contained in its configuration schema.
+ * Decoder for string claims.
  */
-const parseClaims = (
-  parsedCredential: StoredCredential["parsedCredential"],
-  schema: StoredCredential["credentialConfigurationSchema"]
-): ClaimList =>
-  Object.entries(schema)
-    .map(([key, elem]) => ({
-      value: O.fromNullable(localeDateFormatOrSame(parsedCredential[key])),
-      label: O.fromNullable(
-        elem.display.filter(e => e.locale === getClaimsFullLocale())[0]?.name
-      )
-    }))
-    .flat(2);
+const StringClaimDecoder = t.string;
 
 /**
- * Sorts the schema according to the order of the displayData.
- * If the order is not available, the schema is returned as is.
+ * Parses the claims from the credential.
+ * For each Record entry it maps the key and the attribute value to a label and a value.
+ * The label is taken from the attribute name which is either a string or a record of locale and string.
+ * If the type of the attribute name is string then when take it's value because locales have not been set.
+ * If the type of the attribute name is record then we take the value of the locale that matches the current locale.
+ * If there's no locale that matches the current locale then we take the attribute key as the name.
+ * The value is taken from the attribute value.
+ * @param parsedCredential - the parsed credential.
  * @param schema - the issuance credentialConfigurationSchema of parsedCredential.
- * @param order - the order of the displayData.
- * @returns schema sorted according to the order of the displayData.
+ * @returns the {@link ClaimList} of the credential contained in its configuration schema.
  */
-const sortSchema = (
-  schema: StoredCredential["credentialConfigurationSchema"],
-  order: CredentialCatalogDisplay["order"]
+const parseClaims = (parsedCredential: ParsedCredential): ClaimList =>
+  Object.entries(parsedCredential).map(([key, attribute]) => {
+    const attributeName =
+      typeof attribute.name === "string"
+        ? attribute.name
+        : attribute.name[getClaimsFullLocale()] || key;
+
+    return { label: attributeName, value: attribute.value };
+  });
+
+/**
+ * Sorts the parsedCredential according to the order of the displayData.
+ * If the order is not available, the schema is returned as is.
+ * @param parsedCredential - the parsed credential.
+ * @param order - the order of the displayData.
+ * @returns a new parsedCredential sorted according to the order of the displayData.
+ */
+const sortClaims = (
+  order: CredentialCatalogDisplay["order"],
+  parsedCredential: ParsedCredential
 ) =>
   order
     ? Object.fromEntries(
-        Object.entries(schema)
+        Object.entries(parsedCredential)
           .slice()
           .sort(([key1], [key2]) => order.indexOf(key1) - order.indexOf(key2))
       )
-    : schema;
+    : parsedCredential;
 
 /**
  * This component renders the list of claims for a credential.
@@ -93,22 +89,14 @@ const sortSchema = (
  * @param data - the {@link StoredCredential} of the credential.
  */
 const ItwCredentialClaimsList = ({
-  data: {
-    parsedCredential,
-    credentialConfigurationSchema,
-    displayData,
-    issuerConf
-  }
+  data: { parsedCredential, displayData, issuerConf }
 }: {
   data: StoredCredential;
 }) => {
-  const claims = parseClaims(
-    parsedCredential,
-    sortSchema(credentialConfigurationSchema, displayData.order)
-  );
+  const claims = parseClaims(sortClaims(displayData.order, parsedCredential));
 
-  const evidence = EvidenceDecoder.decode(
-    JSON.parse(parsedCredential.evidence)
+  const evidence = EvidenceClaimDecoder.decode(
+    claims.find(claim => claim.label === "evidence")?.value
   );
   const releaserName = issuerConf.federation_entity.organization_name;
 
@@ -228,24 +216,24 @@ const ItwCredentialClaimsList = ({
   return (
     <>
       {claims.map(
-        ({ label, value }, index, _, key = `${index}_${label}` /* 🥷 */) => (
-          <View key={key}>
-            <ListItemInfo
-              label={O.getOrElse(() =>
-                I18n.t(
-                  "features.itWallet.generic.placeholders.claimLabelNotAvailable"
-                )
-              )(label)}
-              value={O.getOrElse(() =>
-                I18n.t(
-                  "features.itWallet.generic.placeholders.claimNotAvailable"
-                )
-              )(value)}
-              accessibilityLabel={`${label} ${value}`}
-            />
-            <Divider />
-          </View>
-        )
+        ({ label, value }, index, _, key = `${index}_${label}` /* 🥷 */) =>
+          pipe(
+            value,
+            StringClaimDecoder.decode,
+            E.fold(
+              () => null,
+              () => (
+                <View key={key}>
+                  <ListItemInfo
+                    label={label}
+                    value={value}
+                    accessibilityLabel={`${label} ${value}`}
+                  />
+                  <Divider />
+                </View>
+              )
+            )
+          )
       )}
       {E.isRight(evidence) && (
         <>
