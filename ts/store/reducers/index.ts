@@ -20,7 +20,6 @@ import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
-import { INITIAL_STATE as securityAdviceAcknowledgedInitialState } from "../../features/fastLogin/store/reducers/securityAdviceReducer";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -205,7 +204,9 @@ export function createRootReducer(
                       state.features.loginFeatures.fastLogin.optIn._persist
                   },
                   securityAdviceAcknowledged: {
-                    ...securityAdviceAcknowledgedInitialState,
+                    acknowledged:
+                      state.features.loginFeatures.fastLogin
+                        .securityAdviceAcknowledged.acknowledged,
                     _persist:
                       // eslint-disable-next-line no-underscore-dangle
                       state.features.loginFeatures.fastLogin

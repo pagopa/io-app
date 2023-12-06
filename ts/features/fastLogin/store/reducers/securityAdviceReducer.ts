@@ -3,6 +3,7 @@ import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { setSecurityAdviceAcknowledged } from "../actions/securityAdviceActions";
+import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 
 export type SecurityAdviceAcknowledgedState = {
   acknowledged: boolean | undefined;
@@ -17,6 +18,8 @@ const securityAdviceAcknowledgedReducer = (
   action: Action
 ): SecurityAdviceAcknowledgedState => {
   switch (action.type) {
+    case getType(differentProfileLoggedIn):
+      return INITIAL_STATE;
     case getType(setSecurityAdviceAcknowledged):
       return {
         ...state,
@@ -33,7 +36,7 @@ const persistConfig: PersistConfig = {
   key: "securityAdviceAcknowledged",
   storage: AsyncStorage,
   version: CURRENT_REDUX_SECURITY_SUGGESTIONS_ACKNOWLEDGE_STORE_VERSION,
-  whitelist: ["enabled"]
+  whitelist: ["acknowledged"]
 };
 
 export const securityAdviceAcknowledgedPersistor = persistReducer<
