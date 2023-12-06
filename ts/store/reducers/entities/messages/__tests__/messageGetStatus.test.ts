@@ -52,7 +52,9 @@ describe("messageGetStatusReducer", () => {
       serviceName: "name",
       firstTimeOpening: true,
       isPNMessage: false,
-      organizationName: "orgName"
+      organizationName: "orgName",
+      containsAttachments: false,
+      hasRemoteContent: false
     };
     const expectedSuccessState = {
       status: "success",
@@ -159,7 +161,9 @@ describe("showSpinnerFromMessageGetStatusSelector", () => {
         serviceName: "name",
         firstTimeOpening: true,
         isPNMessage: false,
-        organizationName: "orgName"
+        organizationName: "orgName",
+        containsAttachments: false,
+        hasRemoteContent: false
       })
     );
     const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
@@ -217,7 +221,9 @@ describe("messageSuccessDataSelector", () => {
       serviceName: "name",
       firstTimeOpening: true,
       isPNMessage: false,
-      organizationName: "orgName"
+      organizationName: "orgName",
+      containsAttachments: false,
+      hasRemoteContent: false
     };
     const globalState = appReducer(
       undefined,
@@ -253,7 +259,9 @@ describe("blockedFromPushNotificationSelector", () => {
         serviceName: "name",
         firstTimeOpening: true,
         isPNMessage: false,
-        organizationName: "orgName"
+        organizationName: "orgName",
+        containsAttachments: false,
+        hasRemoteContent: false
       })
     );
     const blockedFromPush = blockedFromPushNotificationSelector(globalState);

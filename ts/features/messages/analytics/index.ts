@@ -9,11 +9,15 @@ import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
+import { MessageGetStatusFailurePhaseType } from "../../../store/reducers/entities/messages/messageGetStatus";
 
 export function trackOpenMessage(
   organizationName: string,
   serviceName: string,
-  containsPayment: boolean | undefined
+  firstTimeOpening: boolean,
+  containsPayment: boolean | undefined,
+  hasRemoteContent: boolean,
+  containsAttachments: boolean
 ) {
   void mixpanelTrack(
     "OPEN_MESSAGE",
@@ -24,7 +28,10 @@ export function trackOpenMessage(
         containsPayment,
         O.fromNullable,
         O.fold(() => "unknown" as const, booleanToYesNo)
-      )
+      ),
+      remote_content: booleanToYesNo(hasRemoteContent),
+      contains_attachment: booleanToYesNo(containsAttachments),
+      first_time_opening: booleanToYesNo(firstTimeOpening)
     })
   );
 }
@@ -214,6 +221,94 @@ export function trackUpsertMessageStatusAttributesFailure(reason: string) {
     "FAILURE_UPSERT_MESSAGE_STATUS_ATTRIBUTES",
     buildEventProperties("TECH", undefined, {
       reason
+    })
+  );
+}
+
+export function trackRemoteContentLoadRequest(tag: string) {
+  void mixpanelTrack(
+    "REMOTE_CONTENT_LOAD_REQUEST",
+    buildEventProperties("TECH", undefined, {
+      tag
+    })
+  );
+}
+
+export function trackRemoteContentLoadSuccess(tag: string) {
+  void mixpanelTrack(
+    "REMOTE_CONTENT_LOAD_SUCCESS",
+    buildEventProperties("TECH", undefined, {
+      tag
+    })
+  );
+}
+
+export function trackRemoteContentLoadFailure(
+  serviceId: ServiceId,
+  tag: string,
+  reason: string
+) {
+  void mixpanelTrack(
+    "REMOTE_CONTENT_LOAD_FAILURE",
+    buildEventProperties("TECH", undefined, {
+      reason,
+      serviceId,
+      tag
+    })
+  );
+}
+
+export function trackMessageDataLoadRequest(fromPushNotification: boolean) {
+  void mixpanelTrack(
+    "MESSAGE_DATA_LOAD_REQUEST",
+    buildEventProperties("TECH", undefined, {
+      fromPushNotification
+    })
+  );
+}
+
+export function trackMessageDataLoadPending(fromPushNotification: boolean) {
+  void mixpanelTrack(
+    "MESSAGE_DATA_LOAD_PENDING",
+    buildEventProperties("TECH", undefined, {
+      fromPushNotification
+    })
+  );
+}
+
+export function trackMessageDataLoadFailure(
+  fromPushNotification: boolean,
+  phase: MessageGetStatusFailurePhaseType
+) {
+  void mixpanelTrack(
+    "MESSAGE_DATA_LOAD_FAILURE",
+    buildEventProperties("TECH", undefined, {
+      fromPushNotification,
+      phase
+    })
+  );
+}
+
+export function trackMessageDataLoadSuccess(fromPushNotification: boolean) {
+  void mixpanelTrack(
+    "MESSAGE_DATA_LOAD_SUCCESS",
+    buildEventProperties("TECH", undefined, {
+      fromPushNotification
+    })
+  );
+}
+
+export function trackRemoteContentMessageDecodingWarning(
+  reason: string,
+  serviceId: ServiceId,
+  tag: string
+) {
+  void mixpanelTrack(
+    "REMOTE_CONTENT_DETAILS_DECODING_WARNING",
+    buildEventProperties("TECH", undefined, {
+      reason,
+      serviceId,
+      tag
     })
   );
 }

@@ -74,7 +74,10 @@ export const MessageRouterScreen = (
       trackOpenMessage(
         data.organizationName,
         data.serviceName,
-        data.containsPayment
+        data.firstTimeOpening,
+        data.containsPayment,
+        data.hasRemoteContent,
+        data.containsAttachments
       );
 
       navigation.goBack();

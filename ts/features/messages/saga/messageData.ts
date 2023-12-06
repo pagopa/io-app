@@ -1,6 +1,7 @@
 import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   call,
@@ -12,6 +13,7 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
   RequestGetMessageDataActionType,
@@ -40,6 +42,15 @@ import { euCovidCertificateEnabled } from "../../../config";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { trackPNPushOpened } from "../../pn/analytics";
 import { isTestEnv } from "../../../utils/environment";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
+import {
+  trackMessageDataLoadFailure,
+  trackMessageDataLoadPending,
+  trackMessageDataLoadRequest,
+  trackMessageDataLoadSuccess,
+  trackRemoteContentMessageDecodingWarning
+} from "../analytics";
+import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 
 export function* watchLoadMessageData() {
   yield* takeLatest(
@@ -61,6 +72,8 @@ function* loadMessageData({
   messageId,
   fromPushNotification
 }: RequestGetMessageDataActionType) {
+  trackMessageDataLoadRequest(fromPushNotification);
+
   while (true) {
     // Make sure that the later `loadMessageById` and `setMessageReadState`
     // are called after any  update on the message list has ended, otherwise
@@ -73,15 +86,17 @@ function* loadMessageData({
       break;
     }
 
-    // TODO mixpanel track IOCOM-692
+    trackMessageDataLoadPending(fromPushNotification);
+
     yield* delay(500);
   }
 
   // Make sure that we have the basic message details
   const paginatedMessage = yield* call(getPaginatedMessage, messageId);
   if (!paginatedMessage) {
-    // TODO mixpanel track IOCOM-692
-    yield* put(getMessageDataAction.failure({ phase: "paginatedMessage" }));
+    const phase = "paginatedMessage";
+    trackMessageDataLoadFailure(fromPushNotification, phase);
+    yield* put(getMessageDataAction.failure({ phase }));
     return;
   }
 
@@ -93,8 +108,9 @@ function* loadMessageData({
   // Make sure that we have the message details
   const messageDetails = yield* call(getMessageDetails, messageId);
   if (!messageDetails) {
-    // TODO mixpanel track IOCOM-692
-    yield* put(getMessageDataAction.failure({ phase: "messageDetails" }));
+    const phase = "messageDetails";
+    trackMessageDataLoadFailure(fromPushNotification, phase);
+    yield* put(getMessageDataAction.failure({ phase }));
     return;
   }
 
@@ -108,14 +124,15 @@ function* loadMessageData({
     fromPushNotification &&
     (isPNMessage || paginatedMessage.hasPrecondition)
   ) {
-    // TODO mixpanel track IOCOM-692
+    const phase = "preconditions";
+    trackMessageDataLoadFailure(fromPushNotification, phase);
     if (isPNMessage) {
       trackPNPushOpened();
     }
     yield* put(
       getMessageDataAction.failure({
         blockedFromPushNotificationOpt: true,
-        phase: "preconditions"
+        phase
       })
     );
     return;
@@ -129,13 +146,15 @@ function* loadMessageData({
   if (shouldDownloadThirdPartyData) {
     const thirdPartyMessageDetails = yield* call(
       getThirdPartyDataMessage,
-      messageId
+      messageId,
+      isPNMessage,
+      serviceId,
+      paginatedMessage.category.tag
     );
     if (!thirdPartyMessageDetails) {
-      // TODO mixpanel track IOCOM-692
-      yield* put(
-        getMessageDataAction.failure({ phase: "thirdPartyMessageDetails" })
-      );
+      const phase = "thirdPartyMessageDetails";
+      trackMessageDataLoadFailure(fromPushNotification, phase);
+      yield* put(getMessageDataAction.failure({ phase }));
       return;
     }
   }
@@ -145,11 +164,13 @@ function* loadMessageData({
     paginatedMessage
   );
   if (!messageReadCheckSucceded) {
-    // TODO mixpanel track IOCOM-692
-    yield* put(getMessageDataAction.failure({ phase: "readStatusUpdate" }));
+    const phase = "readStatusUpdate";
+    trackMessageDataLoadFailure(fromPushNotification, phase);
+    yield* put(getMessageDataAction.failure({ phase }));
     return;
   }
 
+  trackMessageDataLoadSuccess(fromPushNotification);
   yield* call(dispatchSuccessAction, paginatedMessage, messageDetails);
 }
 
@@ -209,10 +230,15 @@ function* getMessageDetails(messageId: UIMessageId) {
   return pot.toUndefined(initialMessageDetailsPot);
 }
 
-function* getThirdPartyDataMessage(messageId: UIMessageId) {
+function* getThirdPartyDataMessage(
+  messageId: UIMessageId,
+  isPNMessage: boolean,
+  serviceId: ServiceId,
+  tag: string
+) {
   // Third party data may change anytime, so we must retrieve them on every request
 
-  yield* put(loadThirdPartyMessage.request(messageId));
+  yield* put(loadThirdPartyMessage.request({ id: messageId, serviceId, tag }));
 
   const outputAction = yield* take([
     loadThirdPartyMessage.success,
@@ -227,9 +253,16 @@ function* getThirdPartyDataMessage(messageId: UIMessageId) {
     messageId
   );
 
-  // TODO check for proper details type IOCOM-691
+  const thirdPartyMessageOrUndefined = pot.toUndefined(thirdPartyMessagePot);
+  yield* call(
+    decodeAndTrackThirdPartyMessageDetailsIfNeeded,
+    isPNMessage,
+    thirdPartyMessageOrUndefined,
+    serviceId,
+    tag
+  );
 
-  return pot.toUndefined(thirdPartyMessagePot);
+  return thirdPartyMessageOrUndefined;
 }
 
 function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
@@ -256,7 +289,8 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
 
 function* dispatchSuccessAction(
   paginatedMessage: UIMessage,
-  messageDetails: UIMessageDetails
+  messageDetails: UIMessageDetails,
+  thirdPartyMessage?: ThirdPartyMessageWithContent
 ) {
   const isPNMessageCategory = paginatedMessage.category.tag === TagEnum.PN;
   const containsPayment = pipe(
@@ -266,16 +300,20 @@ function* dispatchSuccessAction(
       constUndefined
     )
   );
+  const attachmentCount =
+    thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
 
   const isPnEnabled = yield* select(isPnEnabledSelector);
 
   yield* put(
     getMessageDataAction.success({
+      containsAttachments: attachmentCount > 0,
       containsPayment,
       euCovidCerficateAuthCode: euCovidCertificateEnabled
         ? messageDetails.euCovidCertificate?.authCode
         : undefined,
       firstTimeOpening: !paginatedMessage.isRead,
+      hasRemoteContent: !!thirdPartyMessage,
       isPNMessage: isPnEnabled && isPNMessageCategory,
       messageId: paginatedMessage.id,
       organizationName: paginatedMessage.organizationName,
@@ -285,9 +323,36 @@ function* dispatchSuccessAction(
   );
 }
 
+const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (
+  isPNMessage: boolean,
+  thirdPartyMessageOrUndefined: ThirdPartyMessageWithContent | undefined,
+  serviceId: ServiceId,
+  tag: string
+) =>
+  pipe(
+    thirdPartyMessageOrUndefined,
+    O.fromNullable,
+    O.filter(_ => !isPNMessage),
+    O.chainNullableK(
+      thirdPartyMessage => thirdPartyMessage.third_party_message.details
+    ),
+    O.map(details =>
+      pipe(
+        details,
+        RemoteContentDetails.decode,
+        E.mapLeft(errors =>
+          pipe(errors, readableReport, reason =>
+            trackRemoteContentMessageDecodingWarning(reason, serviceId, tag)
+          )
+        )
+      )
+    )
+  );
+
 export const testable = isTestEnv
   ? {
       loadMessageData,
+      decodeAndTrackThirdPartyMessageDetailsIfNeeded,
       dispatchSuccessAction,
       setMessageReadIfNeeded,
       getPaginatedMessage,
