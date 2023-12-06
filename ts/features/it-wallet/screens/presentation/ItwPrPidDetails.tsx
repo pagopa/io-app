@@ -24,13 +24,15 @@ import { CredentialType, getPidDisplayData } from "../../utils/mocks";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
-import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 import { PidResponse } from "../../utils/types";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
+import { ItwCredentialsPidSelector } from "../../store/reducers/itwCredentialsReducer";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
 };
+
+const SPACER_SIZE = 32;
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
@@ -39,10 +41,9 @@ export type ContentViewParams = {
 const ItwPrPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
-  const pid = useIOSelector(itwPidValueSelector);
+  const pid = useIOSelector(ItwCredentialsPidSelector);
   const pidDisplayData = getPidDisplayData();
   const bannerViewRef = React.createRef<View>();
-  const spacerSize = 32;
 
   const presentationButton: BlockButtonProps = {
     type: "Solid",
@@ -85,7 +86,7 @@ const ItwPrPidDetails = () => {
                 issuerInfo
               />
             </ItwClaimsWrapper>
-            <VSpacer size={spacerSize} />
+            <VSpacer size={SPACER_SIZE} />
             <Banner
               testID={"ItwBannerTestID"}
               viewRef={bannerViewRef}
@@ -106,7 +107,7 @@ const ItwPrPidDetails = () => {
               }
             />
           </View>
-          <VSpacer size={spacerSize} />
+          <VSpacer size={SPACER_SIZE} />
         </ScrollView>
         <FooterWithButtons type={"SingleButton"} primary={presentationButton} />
       </SafeAreaView>
