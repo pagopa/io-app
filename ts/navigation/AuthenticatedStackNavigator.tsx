@@ -47,18 +47,23 @@ import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDev
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import {
+  WalletDetailsNavigator,
+  WalletDetailsRoutes
+} from "../features/walletV3/details/navigation/navigator";
+import {
   WalletOnboardingNavigator,
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
 import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
 import { WalletPaymentBarcodeScanScreen } from "../features/walletV3/payment/screens/WalletPaymentBarcodeScanScreen";
-import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
-import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import {
   WalletTransactionNavigator,
   WalletTransactionRoutes
 } from "../features/walletV3/transaction/navigation/navigator";
+import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
+import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+import { AndroidMediaPermissionRequestScreen } from "../screens/misc/AndroidMediaPermissionRequestScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -67,11 +72,8 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import {
-  WalletDetailsNavigator,
-  WalletDetailsRoutes
-} from "../features/walletV3/details/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
+import CheckEmailNavigator from "./CheckEmailNavigator";
 import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -80,7 +82,6 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
-import CheckEmailNavigator from "./CheckEmailNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -149,6 +150,15 @@ const AuthenticatedStackNavigator = () => {
           headerShown: false,
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: false
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.ANDROID_MEDIA_PERMISSIONS}
+        component={AndroidMediaPermissionRequestScreen}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled
         }}
       />
 
