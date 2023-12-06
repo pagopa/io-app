@@ -32,8 +32,6 @@ export type ContentViewParams = {
   decodedPid: PidWithToken;
 };
 
-const SPACER_SIZE = 32;
-
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  * This screen should be generalized for any verifiable crediential but for now it's only used for the PID.
@@ -44,6 +42,7 @@ const ItwPrPidDetails = () => {
   const pid = useIOSelector(ItwCredentialsPidSelector);
   const pidDisplayData = getPidDisplayData();
   const bannerViewRef = React.createRef<View>();
+  const spacerSize = 32;
 
   const presentationButton: BlockButtonProps = {
     type: "Solid",
@@ -86,7 +85,7 @@ const ItwPrPidDetails = () => {
                 issuerInfo
               />
             </ItwClaimsWrapper>
-            <VSpacer size={SPACER_SIZE} />
+            <VSpacer size={spacerSize} />
             <Banner
               testID={"ItwBannerTestID"}
               viewRef={bannerViewRef}
@@ -107,7 +106,7 @@ const ItwPrPidDetails = () => {
               }
             />
           </View>
-          <VSpacer size={SPACER_SIZE} />
+          <VSpacer size={spacerSize} />
         </ScrollView>
         <FooterWithButtons type={"SingleButton"} primary={presentationButton} />
       </SafeAreaView>
