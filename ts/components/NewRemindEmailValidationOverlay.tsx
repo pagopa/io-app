@@ -21,6 +21,7 @@ import I18n from "../i18n";
 import {
   acknowledgeOnEmailValidation,
   profileLoadRequest,
+  setEmailCheckAtStartupFailure,
   startEmailValidation
 } from "../store/actions/profile";
 import {
@@ -72,14 +73,17 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     () => dispatch(startEmailValidation.request()),
     [dispatch]
   );
+
   const acknowledgeEmail = useCallback(
     () => dispatch(emailAcknowledged()),
     [dispatch]
   );
+
   const reloadProfile = useCallback(
     () => dispatch(profileLoadRequest()),
     [dispatch]
   );
+
   const dispatchAcknowledgeOnEmailValidation = useCallback(
     (maybeAcknowledged: O.Option<boolean>) =>
       dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
@@ -110,16 +114,24 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
+      hideModal();
       if (isOnboarding) {
         // if the user is in the onboarding flow and the email il correctly validated,
         // the email validation flow is finished
         acknowledgeEmail();
-        hideModal();
       } else {
-        hideModal();
-        NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PROFILE_DATA
-        });
+        if (
+          O.isSome(emailValidation.emailCheckAtStartupFailed) &&
+          emailValidation.emailCheckAtStartupFailed.value
+        ) {
+          acknowledgeEmail();
+          dispatchAcknowledgeOnEmailValidation(O.none);
+          dispatch(setEmailCheckAtStartupFailure(O.none));
+        } else {
+          NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_DATA
+          });
+        }
       }
     } else {
       // send email validation only if it exists
