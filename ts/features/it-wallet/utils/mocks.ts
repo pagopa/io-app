@@ -40,7 +40,7 @@ export const CREDENTIAL_ISSUER = "eFarma";
  * Credential types mocks.
  */
 export enum CredentialType {
-  HEALTH_CARD = "HealthCard",
+  HEALTH_CARD = "EuropeanHealthInsuranceCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "DrivingLicense",
   PID = "PID"
@@ -101,12 +101,15 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
     ]
   },
   {
-    incoming: true,
+    type: CredentialType.HEALTH_CARD,
+    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    incoming: false,
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
     textColor: "black",
-    firstLine: [],
-    secondLine: []
+    firstLine: ["given_name", "family_name"],
+    secondLine: ["tax_id"],
+    order: ["abc"]
   },
   {
     title: I18n.t(
