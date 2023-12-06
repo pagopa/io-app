@@ -40,3 +40,23 @@ export const checkIOAndroidPermission = async (
   }
   return await PermissionsAndroid.check(permission);
 };
+
+export const requestIOAndroidMediaPermission = async (
+  rationale: Rationale
+): Promise<boolean> => {
+  if (Platform.OS === "android") {
+    if (Platform.Version >= 33) {
+      return requestIOAndroidPermission(
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+        rationale
+      );
+    } else {
+      return requestIOAndroidPermission(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        rationale
+      );
+    }
+  }
+
+  return true;
+};

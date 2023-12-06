@@ -7,15 +7,22 @@ import {
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Linking } from "react-native";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../navigation/params/AppParamsList";
 
 const AndroidMediaPermissionRequestScreen = () => {
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   useHeaderSecondLevel({ title: "" });
 
   const handleOpenAppSettings = async () => {
     await Linking.openSettings();
+    navigation.pop();
   };
 
   return (

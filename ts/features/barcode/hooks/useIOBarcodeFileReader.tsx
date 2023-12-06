@@ -7,13 +7,7 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import {
-  Alert,
-  Linking,
-  PermissionsAndroid,
-  Platform,
-  View
-} from "react-native";
+import { Alert, Linking, Platform, View } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
@@ -28,6 +22,7 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
+import { requestIOAndroidMediaPermission } from "../../../utils/permission";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeFileUpload,
@@ -44,7 +39,6 @@ import { BarcodeFailure } from "../types/failure";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
-import { AsyncAlert } from "../../../utils/asyncAlert";
 
 type IOBarcodeFileReader = {
   /**
@@ -182,19 +176,12 @@ const useIOBarcodeFileReader = ({
     // on Android we have to show a prominent disclosure on how we use READ_EXTERNAL_STORAGE permission
     // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/444727486/2021-11-18+Android#2021-12-08
     if (Platform.OS === "android") {
-      await AsyncAlert(
-        I18n.t("wallet.QRtoPay.readStorageDisclosure.title"),
-        I18n.t("wallet.QRtoPay.readStorageDisclosure.message"),
-        [
-          {
-            text: I18n.t("global.buttons.choose"),
-            style: "default"
-          }
-        ]
-      );
-
-      const hasPermission = await hasAndroidMediaPermission();
-      if (!hasPermission) {
+      const permissionGranted = await requestIOAndroidMediaPermission({
+        title: I18n.t("wallet.QRtoPay.readStorageDisclosure.title"),
+        message: I18n.t("wallet.QRtoPay.readStorageDisclosure.message"),
+        buttonPositive: I18n.t("global.buttons.choose")
+      });
+      if (!permissionGranted) {
         navigation.navigate(ROUTES.ANDROID_MEDIA_PERMISSIONS);
         return;
       }
@@ -314,45 +301,6 @@ const useIOBarcodeFileReader = ({
     isLoading,
     isFilePickerVisible
   };
-};
-
-const hasAndroidMediaPermission = async () => {
-  const isAndroidTiramisu = Platform.OS === "android" && Platform.Version >= 33;
-  const isAndroid = Platform.OS === "android";
-
-  const checkAndroidPermission = () => {
-    if (isAndroidTiramisu) {
-      return PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
-      );
-    } else if (isAndroid) {
-      return PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
-      );
-    } else {
-      return Promise.resolve(true);
-    }
-  };
-
-  const requestAndroidPermission = () => {
-    if (isAndroidTiramisu) {
-      return PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
-      ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
-    } else if (isAndroid) {
-      return PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
-      ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
-    } else {
-      return Promise.resolve(true);
-    }
-  };
-
-  if (await checkAndroidPermission()) {
-    return true;
-  }
-
-  return await requestAndroidPermission();
 };
 
 export { useIOBarcodeFileReader };
