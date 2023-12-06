@@ -7,7 +7,10 @@ import {
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context, INITIAL_CONTEXT } from "../context";
 import { PaymentFailureEnum } from "../../types/PaymentFailure";
-import { createServicesImplementation, paymentFailureMap } from "../services";
+import {
+  createServicesImplementation,
+  mapErrorCodeToFailure
+} from "../services";
 import {
   CodeEnum,
   TransactionErrorDTO
@@ -25,7 +28,6 @@ const T_TRANSACTION_DATA_DTO: AuthPaymentResponseDTO = {
 
 const T_CONTEXT: Context = INITIAL_CONTEXT;
 
-// FIXME [IOBP-379]
 // This object maps status code to possibile failures
 const possibleFailures: ReadonlyArray<[number, CodeEnum]> = [
   [404, CodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED],
@@ -77,7 +79,7 @@ describe("IDPay Payment machine services", () => {
     test.each(possibleFailures)(
       "when status code is %s it should get a %s failure",
       async (status, code) => {
-        const T_FAILURE = paymentFailureMap[code] || PaymentFailureEnum.GENERIC;
+        const T_FAILURE = mapErrorCodeToFailure(code);
 
         const response: E.Either<
           Error,
@@ -141,7 +143,7 @@ describe("IDPay Payment machine services", () => {
     test.each(possibleFailures)(
       "when status code is %s it should get a %s failure",
       async (status, code) => {
-        const T_FAILURE = paymentFailureMap[code] || PaymentFailureEnum.GENERIC;
+        const T_FAILURE = mapErrorCodeToFailure(code);
 
         const response: E.Either<
           Error,
@@ -203,7 +205,7 @@ describe("IDPay Payment machine services", () => {
     test.each(possibleFailures)(
       "when status code is %s it should get a %s failure",
       async (status, code) => {
-        const T_FAILURE = paymentFailureMap[code] || PaymentFailureEnum.GENERIC;
+        const T_FAILURE = mapErrorCodeToFailure(code);
 
         const response: E.Either<
           Error,

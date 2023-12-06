@@ -22,7 +22,7 @@ export type Services = {
  * @param code Error code from backend
  * @returns The associated failure state
  */
-const mapErrorCodeToFailure = (
+export const mapErrorCodeToFailure = (
   code: TransactionErrorCodeEnum
 ): PaymentFailureEnum => {
   switch (code) {

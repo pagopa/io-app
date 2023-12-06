@@ -114,7 +114,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("loadInitiative", () => {
     it("should fail if not service id is provided in context", async () => {
       await expect(services.loadInitiative(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.UNEXPECTED
+        OnboardingFailureEnum.GENERIC
       );
 
       expect(mockIDPayClient.getInitiativeData).toHaveBeenCalledTimes(0);
@@ -170,7 +170,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("loadInitiativeStatus", () => {
     it("should fail if initiative is not provided with context", async () => {
       await expect(services.loadInitiativeStatus(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.UNEXPECTED
+        OnboardingFailureEnum.GENERIC
       );
 
       expect(mockIDPayClient.onboardingStatus).toHaveBeenCalledTimes(0);
@@ -226,9 +226,9 @@ describe("IDPay Onboarding machine services", () => {
       [status: StatusEnum, failure: OnboardingFailureEnum]
     > = [
       [StatusEnum.ELIGIBLE_KO, OnboardingFailureEnum.NOT_ELIGIBLE],
-      [StatusEnum.ONBOARDING_KO, OnboardingFailureEnum.NO_REQUIREMENTS],
-      [StatusEnum.ONBOARDING_OK, OnboardingFailureEnum.ONBOARDED],
-      [StatusEnum.UNSUBSCRIBED, OnboardingFailureEnum.UNSUBSCRIBED],
+      [StatusEnum.ONBOARDING_KO, OnboardingFailureEnum.GENERIC],
+      [StatusEnum.ONBOARDING_OK, OnboardingFailureEnum.USER_ONBOARDED],
+      [StatusEnum.UNSUBSCRIBED, OnboardingFailureEnum.USER_UNSUBSCRIBED],
       [StatusEnum.ON_EVALUATION, OnboardingFailureEnum.ON_EVALUATION]
     ];
 
@@ -281,7 +281,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("acceptTos", () => {
     it("should fail if initiative is not provided with context", async () => {
       await expect(services.acceptTos(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.UNEXPECTED
+        OnboardingFailureEnum.GENERIC
       );
 
       expect(mockIDPayClient.onboardingCitizen).toHaveBeenCalledTimes(0);
@@ -341,7 +341,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("loadRequiredCriteria", () => {
     it("should fail if initiative is not provided with context", async () => {
       await expect(services.loadRequiredCriteria(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.UNEXPECTED
+        OnboardingFailureEnum.GENERIC
       );
 
       expect(mockIDPayClient.checkPrerequisites).toHaveBeenCalledTimes(0);
@@ -431,7 +431,7 @@ describe("IDPay Onboarding machine services", () => {
   describe("acceptRequiredCriteria", () => {
     it("should fail if initiative or required criterias are not provided with context", async () => {
       await expect(services.acceptRequiredCriteria(T_CONTEXT)).rejects.toMatch(
-        OnboardingFailureEnum.UNEXPECTED
+        OnboardingFailureEnum.GENERIC
       );
 
       expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledTimes(0);
@@ -443,7 +443,7 @@ describe("IDPay Onboarding machine services", () => {
           ...T_CONTEXT,
           requiredCriteria: O.none
         })
-      ).rejects.toMatch(OnboardingFailureEnum.UNEXPECTED);
+      ).rejects.toMatch(OnboardingFailureEnum.GENERIC);
 
       expect(mockIDPayClient.consentOnboarding).toHaveBeenCalledTimes(0);
     });

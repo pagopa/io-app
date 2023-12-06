@@ -34,6 +34,8 @@ const mapOnboardingStatusToFailure = (
       return OnboardingFailureEnum.ON_EVALUATION;
     case OnboardingStatusEnum.UNSUBSCRIBED:
       return OnboardingFailureEnum.USER_UNSUBSCRIBED;
+    case OnboardingStatusEnum.ONBOARDING_KO:
+      return OnboardingFailureEnum.GENERIC;
     default:
       return undefined;
   }
