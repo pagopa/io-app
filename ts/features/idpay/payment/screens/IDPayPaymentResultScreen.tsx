@@ -81,7 +81,7 @@ const mapFailureToContentProps = (
   switch (failure) {
     case PaymentFailureEnum.TRANSACTION_EXPIRED:
       return {
-        pictogram: "fatalError",
+        pictogram: "timing",
         title: I18n.t("idpay.payment.result.failure.TRANSACTION_EXPIRED.title"),
         subtitle: I18n.t(
           "idpay.payment.result.failure.TRANSACTION_EXPIRED.subtitle"
