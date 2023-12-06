@@ -262,7 +262,7 @@ export function trackMessageDataLoadRequest(fromPushNotification: boolean) {
   void mixpanelTrack(
     "MESSAGE_DATA_LOAD_REQUEST",
     buildEventProperties("TECH", undefined, {
-      fromPushNotification
+      fromPushNotification: booleanToYesNo(fromPushNotification)
     })
   );
 }
@@ -271,7 +271,7 @@ export function trackMessageDataLoadPending(fromPushNotification: boolean) {
   void mixpanelTrack(
     "MESSAGE_DATA_LOAD_PENDING",
     buildEventProperties("TECH", undefined, {
-      fromPushNotification
+      fromPushNotification: booleanToYesNo(fromPushNotification)
     })
   );
 }
@@ -283,7 +283,7 @@ export function trackMessageDataLoadFailure(
   void mixpanelTrack(
     "MESSAGE_DATA_LOAD_FAILURE",
     buildEventProperties("TECH", undefined, {
-      fromPushNotification,
+      fromPushNotification: booleanToYesNo(fromPushNotification),
       phase
     })
   );
@@ -293,7 +293,7 @@ export function trackMessageDataLoadSuccess(fromPushNotification: boolean) {
   void mixpanelTrack(
     "MESSAGE_DATA_LOAD_SUCCESS",
     buildEventProperties("TECH", undefined, {
-      fromPushNotification
+      fromPushNotification: booleanToYesNo(fromPushNotification)
     })
   );
 }
