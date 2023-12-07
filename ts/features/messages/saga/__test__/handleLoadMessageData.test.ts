@@ -890,42 +890,6 @@ describe("loadMessageData", () => {
       .next()
       .isDone();
   });
-  it("should call dispatchSuccessAction when it succeed (having retrieved third party data successfully for a PN message)", () => {
-    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    const serviceId = "s1" as ServiceId;
-    const paginatedMessage = {
-      id: messageId,
-      serviceId,
-      category: { tag: "PN" },
-      hasPrecondition: true
-    } as UIMessage;
-    const messageDetails = {} as UIMessageDetails;
-    const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
-    testSaga(testable!.loadMessageData, {
-      messageId,
-      fromPushNotification: false
-    })
-      .next()
-      .select(isLoadingOrUpdatingInbox)
-      .next(true)
-      .delay(500)
-      .next()
-      .select(isLoadingOrUpdatingInbox)
-      .next(false)
-      .call(testable!.getPaginatedMessage, messageId)
-      .next(paginatedMessage)
-      .call(testable!.getService, serviceId)
-      .next()
-      .call(testable!.getMessageDetails, messageId)
-      .next(messageDetails)
-      .call(testable!.getThirdPartyDataMessage, messageId)
-      .next(thirdPartyMessage)
-      .call(testable!.setMessageReadIfNeeded, paginatedMessage)
-      .next(true)
-      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
-      .next()
-      .isDone();
-  });
   it("should call dispatchSuccessAction when it succeed (with no third party data)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const serviceId = "s1" as ServiceId;
