@@ -15,6 +15,7 @@ import {
   MessagePrecondition,
   messagePreconditionReducer
 } from "./messagePrecondition";
+import { MessageGetStatus, messageGetStatusReducer } from "./messageGetStatus";
 
 export type MessagesState = Readonly<{
   allPaginated: AllPaginated;
@@ -23,6 +24,7 @@ export type MessagesState = Readonly<{
   thirdPartyById: ThirdPartyById;
   downloads: Downloads;
   messagePrecondition: MessagePrecondition;
+  messageGetStatus: MessageGetStatus;
 }>;
 
 const reducer = combineReducers<MessagesState, Action>({
@@ -31,7 +33,8 @@ const reducer = combineReducers<MessagesState, Action>({
   detailsById: detailsByIdReducer,
   thirdPartyById: thirdPartyByIdReducer,
   downloads: downloadsReducer,
-  messagePrecondition: messagePreconditionReducer
+  messagePrecondition: messagePreconditionReducer,
+  messageGetStatus: messageGetStatusReducer
 });
 
 export default reducer;
