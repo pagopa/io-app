@@ -38,7 +38,7 @@ export const thirdPartyByIdReducer = (
 ): ThirdPartyById => {
   switch (action.type) {
     case getType(loadThirdPartyMessage.request):
-      return toLoading(action.payload, state);
+      return toLoading(action.payload.id, state);
     case getType(loadThirdPartyMessage.success):
       return toSome(action.payload.id, state, action.payload.content);
     case getType(loadThirdPartyMessage.failure):
