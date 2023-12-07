@@ -59,7 +59,9 @@ function* getThirdPartyMessage(
         loadThirdPartyMessage.success({ id, content: thirdPartyMessage })
       );
     } else {
-      const reason = `Response status ${result.right.status}`;
+      const reason = `Response status ${result.right.status} - ${
+        result.right.value?.detail || "UNKNOWN"
+      }`;
       throw new Error(reason);
     }
   } catch (error) {
