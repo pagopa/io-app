@@ -1,7 +1,6 @@
 import React from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-import * as t from "io-ts";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/Either";
 import { getClaimsFullLocale } from "../utils/locales";
@@ -11,36 +10,16 @@ import { StoredCredential } from "../store/reducers/itwCredentialsReducer";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { ParsedCredential } from "../utils/types";
 
+export type Claim = {
+  label: string;
+  value: unknown;
+};
+
 /**
  * Type of the claims list.
  * Consists of a list of claims, each claim is a couple of label and value.
  */
-type ClaimList = Array<{
-  label: string;
-  value: unknown;
-}>;
-
-/**
- * Decoder type for the evidence field of the credential.
- */
-const EvidenceClaimDecoder = t.array(
-  t.type({
-    type: t.string,
-    record: t.type({
-      type: t.string,
-      source: t.type({
-        organization_name: t.string,
-        organization_id: t.string,
-        country_code: t.string
-      })
-    })
-  })
-);
-
-/**
- * Decoder for string claims.
- */
-const StringClaimDecoder = t.string;
+export type ClaimList = Array<Claim>;
 
 /**
  * Parses the claims from the credential.
