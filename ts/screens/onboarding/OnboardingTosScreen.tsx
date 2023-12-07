@@ -8,6 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import { useStore } from "react-redux";
 import { Body } from "../../components/core/typography/Body";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
@@ -122,6 +123,8 @@ const OnboardingTosScreen = () => {
       ]
     );
 
+  const store = useStore();
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
       <BaseScreenComponent
@@ -162,9 +165,10 @@ const OnboardingTosScreen = () => {
             onExit={handleGoBack}
             onAcceptTos={() => {
               dispatch(tosAccepted(tosVersion));
-              trackTosAccepted(
+              void trackTosAccepted(
                 tosVersion,
-                getFlowType(true, isFirstOnBoarding)
+                getFlowType(true, isFirstOnBoarding),
+                store.getState()
               );
             }}
           />

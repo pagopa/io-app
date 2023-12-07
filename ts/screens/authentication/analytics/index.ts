@@ -1,6 +1,9 @@
-import { LoginSessionDuration } from "../../../features/fastLogin/analytics/optinAnalytics";
 import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../utils/analytics";
+import { IdpCIE } from "../LandingScreen";
+import { LoginSessionDuration } from "../../../features/fastLogin/analytics/optinAnalytics";
 
 export function trackLoginFlowStarting() {
   void mixpanelTrack(
@@ -9,8 +12,12 @@ export function trackLoginFlowStarting() {
   );
 }
 
-export function trackCieLoginSelected() {
-  void mixpanelTrack(
+export async function trackCieLoginSelected(state: GlobalState) {
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value: IdpCIE.id
+  });
+  await mixpanelTrack(
     "LOGIN_CIE_SELECTED",
     buildEventProperties("UX", "action")
   );

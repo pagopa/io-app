@@ -248,7 +248,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private navigateToCiePinScreen = () => {
     if (this.isCieSupported()) {
-      trackCieLoginSelected();
+      void trackCieLoginSelected(this.props.state);
       this.props.dispatchIdpCieSelected();
       if (this.props.isFastLoginOptInFFEnabled) {
         this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
@@ -460,7 +460,8 @@ const mapStateToProps = (state: GlobalState) => {
     isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false),
     hasCieApiLevelSupport: pot.getOrElse(hasApiLevelSupport, false),
     hasCieNFCFeature: pot.getOrElse(hasNFCFeature, false),
-    isCieUatEnabled: isCieLoginUatEnabledSelector(state)
+    isCieUatEnabled: isCieLoginUatEnabledSelector(state),
+    state
   };
 };
 

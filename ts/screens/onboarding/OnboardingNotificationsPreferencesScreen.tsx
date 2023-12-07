@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import {
   IOColors,
   Divider,
@@ -175,11 +175,14 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
     }
   }, [isError, isUpdating]);
 
+  const store = useStore();
+
   const upsertPreferences = () => {
-    trackNotificationPreferenceConfiguration(
+    void trackNotificationPreferenceConfiguration(
       remindersEnabled,
       previewEnabled,
-      getFlowType(true, isFirstOnboarding)
+      getFlowType(true, isFirstOnboarding),
+      store.getState()
     );
     dispatch(
       profileUpsert.request({

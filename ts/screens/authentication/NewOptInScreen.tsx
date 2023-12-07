@@ -13,6 +13,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import { useStore } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -51,6 +52,11 @@ const NewOptInScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
   const navigation = useNavigation();
+  const store = useStore();
+
+  useOnFirstRender(() => {
+    trackLoginSessionOptIn();
+  });
 
   useOnFirstRender(() => {
     trackLoginSessionOptIn();
@@ -58,9 +64,9 @@ const NewOptInScreen = (props: Props) => {
 
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {
-      trackLoginSessionOptIn365();
+      void trackLoginSessionOptIn365(store.getState());
     } else {
-      trackLoginSessionOptIn30();
+      void trackLoginSessionOptIn30(store.getState());
     }
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen:
