@@ -1840,8 +1840,6 @@ bonus:
           pending: "EYCA Rabatte und Ermäßigungen anzeigen"
           bottomSheet: "Besuche die EYCA Website"
           showEycaDiscounts: "EYCA Rabatte und Ermäßigungen anzeigen"
-      tos:
-        link: "Informationen über die Verarbeitung von personenbezogenen Daten"
       information:
         active: "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden."
         warning: "Achtung! "
