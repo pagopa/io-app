@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import LogoutScreen from "../components/screens/LogoutScreen";
-import { isNewCduFlow, remindersOptInEnabled } from "../config";
+import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
@@ -35,6 +35,8 @@ import I18n from "../i18n";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
 import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
+import { useIOSelector } from "../store/hooks";
+import { isEmailUniquenessValidationEnabledSelector } from "../features/fastLogin/store/selectors";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -53,6 +55,9 @@ const ProfileStackNavigator = () => {
     faqCategories: ["privacy"],
     contextualHelpMarkdown: profilePrivacyContextualHelpMarkdown
   });
+  const isEmailUniquenessValidationEnabled = useIOSelector(
+    isEmailUniquenessValidationEnabledSelector
+  );
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.PROFILE_DATA}
@@ -158,13 +163,23 @@ const ProfileStackNavigator = () => {
         name={ROUTES.READ_EMAIL_SCREEN}
         component={EmailReadScreen}
       />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={ROUTES.INSERT_EMAIL_SCREEN}
-        component={isNewCduFlow ? CduEmailInsertScreen : EmailInsertScreen}
-      />
+      {isEmailUniquenessValidationEnabled ? (
+        <Stack.Screen
+          options={{
+            headerShown: false
+          }}
+          name={ROUTES.INSERT_EMAIL_SCREEN}
+          component={CduEmailInsertScreen}
+        />
+      ) : (
+        <Stack.Screen
+          options={{
+            headerShown: false
+          }}
+          name={ROUTES.INSERT_EMAIL_SCREEN}
+          component={EmailInsertScreen}
+        />
+      )}
       <Stack.Screen
         options={{
           headerShown: false
