@@ -383,10 +383,6 @@ const trackAction =
           choice: action.payload.choice,
           reason: action.payload.error.message
         });
-      case getType(setMixpanelEnabled):
-        return mp.track(action.type, {
-          value: action.payload
-        });
     }
     return Promise.resolve();
   };
