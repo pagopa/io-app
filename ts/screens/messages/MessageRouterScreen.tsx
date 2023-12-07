@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
@@ -77,39 +77,40 @@ export const MessageRouterScreen = (
         data.containsPayment
       );
 
-      navigation.goBack();
-
       if (data.euCovidCerficateAuthCode) {
-        navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-          screen: EUCOVIDCERT_ROUTES.MAIN,
-          params: {
-            screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
+        navigation.dispatch(
+          StackActions.replace(ROUTES.MESSAGES_NAVIGATOR, {
+            screen: EUCOVIDCERT_ROUTES.MAIN,
             params: {
-              authCode: data.euCovidCerficateAuthCode,
-              messageId: data.messageId
+              screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
+              params: {
+                authCode: data.euCovidCerficateAuthCode,
+                messageId: data.messageId
+              }
             }
-          }
-        });
+          })
+        );
       } else if (data.isPNMessage) {
-        navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-          screen: PN_ROUTES.MAIN,
-          params: {
-            screen: PN_ROUTES.MESSAGE_DETAILS,
+        navigation.dispatch(
+          StackActions.replace(ROUTES.MESSAGES_NAVIGATOR, {
+            screen: PN_ROUTES.MAIN,
             params: {
-              messageId: data.messageId,
-              serviceId: data.serviceId,
-              firstTimeOpening: data.firstTimeOpening
+              screen: PN_ROUTES.MESSAGE_DETAILS,
+              params: {
+                messageId: data.messageId,
+                serviceId: data.serviceId,
+                firstTimeOpening: data.firstTimeOpening
+              }
             }
-          }
-        });
+          })
+        );
       } else {
-        navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-          screen: ROUTES.MESSAGE_DETAIL,
-          params: {
+        navigation.dispatch(
+          StackActions.replace(ROUTES.MESSAGE_DETAIL, {
             messageId: data.messageId,
             serviceId: data.serviceId
-          }
-        });
+          })
+        );
       }
     },
     [navigation]

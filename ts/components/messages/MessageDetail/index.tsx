@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
