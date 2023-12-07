@@ -755,7 +755,7 @@ email:
       subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
       editButton: Modifica email
       validateButton: Conferma email
-      header: 
+      header:
         title: Configura IO
       help:
         body: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email.
@@ -764,7 +764,7 @@ email:
       subtitleStart: Il tuo indirizzo email
       subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
       editButton: Modifica email
-      header: 
+      header:
         title: Configura IO
       help:
         body: Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
@@ -3292,7 +3292,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        validUpTo: "Vale fino a " 
+        validUpTo: "Vale fino a "
         expiresIn: "Il codice scade tra"
         expired: "Il codice é scaduto."
         saveImageCta: Salva come immagine
@@ -3800,7 +3800,7 @@ transaction:
   details:
     title: Dettaglio operazione
     totalAmount: Totale
-    totalFee: Il totale comprende 
+    totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
     info:
       title: Informazioni sulla transazione
@@ -3813,3 +3813,16 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+permissionRequest:
+  media:
+    title: Consenti a IO di accedere alle tue foto
+    subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
+    caption: "Ecco come:"
+    step: Step {{step}}
+    steps:
+      1: Vai su “Impostazioni”
+      2: Seleziona “Applicazioni”
+      3: Seleziona “IO”
+      4: Seleziona la voce relativa alle autorizzazioni
+      5: Consenti l’accesso a file e media
+    cta: Apri Impostazioni

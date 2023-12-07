@@ -755,18 +755,18 @@ email:
       subtitle: To continue using the app, you must validate your email address
       editButton: Edit email address
       validateButton: Validate email address
-      header: 
+      header:
         title: Configure IO
-      help: 
-        body: To continue using the app, you must validate your email address.      
+      help:
+        body: To continue using the app, you must validate your email address.
     emailAlreadyTaken:
       title: Edit your email address
       subtitleStart: This email address
       subtitleEnd: seems to be already in use on IO. Please enter a different one to continue using the app.
       editButton: Edit email address
-      header: 
+      header:
         title: Configure IO
-      help: 
+      help:
         body: This email address seems to be already in use on IO. Please enter a different one to continue using the app.
   read:
     title: Your email address
@@ -3800,7 +3800,7 @@ transaction:
   details:
     title: Dettaglio operazione
     totalAmount: Totale
-    totalFee: Il totale comprende 
+    totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
     info:
       title: Informazioni sulla transazione
@@ -3813,3 +3813,16 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+permissionRequest:
+  media:
+    title: Consenti a IO di accedere alle tue foto
+    subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
+    caption: "Ecco come:"
+    step: Step {{step}}
+    steps:
+      1: Vai su “Impostazioni”
+      2: Seleziona “Applicazioni”
+      3: Seleziona “IO”
+      4: Seleziona la voce relativa alle autorizzazioni
+      5: Consenti l’accesso a file e media
+    cta: Apri Impostazioni

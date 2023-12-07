@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Linking } from "react-native";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import I18n from "../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -28,47 +29,44 @@ const AndroidMediaPermissionRequestScreen = () => {
   return (
     <GradientScrollView
       primaryActionProps={{
-        label: "Apri Impostazioni",
-        accessibilityLabel: "Apri Impostazioni",
+        label: I18n.t("permissionRequest.media.cta"),
+        accessibilityLabel: I18n.t("permissionRequest.media.cta"),
         onPress: handleOpenAppSettings
       }}
     >
       <>
-        <H2>Consenti a IO di accedere alle tue foto</H2>
+        <H2>{I18n.t("permissionRequest.media.title")}</H2>
         <VSpacer size={8} />
-        <Body>
-          Per farlo, devi modificare le preferenze nelle impostazioni di sistema
-          del tuo dispositivo.
-        </Body>
+        <Body>{I18n.t("permissionRequest.media.subtitle")}</Body>
         <VSpacer size={8} />
-        <ListItemHeader label="Ecco come:" />
+        <ListItemHeader label={I18n.t("permissionRequest.media.caption")} />
         <ListItemInfo
-          label="Step 1"
-          value="Vai su “Impostazioni”"
+          label={I18n.t("permissionRequest.media.step", { step: 1 })}
+          value={I18n.t("permissionRequest.media.steps.1")}
           icon="systemSettingsAndroid"
         />
         <Divider />
         <ListItemInfo
-          label="Step 2"
-          value="Seleziona “Applicazioni”"
+          label={I18n.t("permissionRequest.media.step", { step: 2 })}
+          value={I18n.t("permissionRequest.media.steps.2")}
           icon="systemAppsAndroid"
         />
         <Divider />
         <ListItemInfo
-          label="Step 3"
-          value="Seleziona “IO”"
+          label={I18n.t("permissionRequest.media.step", { step: 3 })}
+          value={I18n.t("permissionRequest.media.steps.3")}
           icon="productIOAppBlueBg"
         />
         <Divider />
         <ListItemInfo
-          label="Step 4"
-          value="Seleziona la voce relativa alle autorizzazioni"
+          label={I18n.t("permissionRequest.media.step", { step: 4 })}
+          value={I18n.t("permissionRequest.media.steps.4")}
           icon="systemSettingsAndroid"
         />
         <Divider />
         <ListItemInfo
-          label="Step 5"
-          value="Consenti l’accesso a file e media"
+          label={I18n.t("permissionRequest.media.step", { step: 5 })}
+          value={I18n.t("permissionRequest.media.steps.5")}
           icon="systemToggleInstructions"
         />
       </>
