@@ -1,4 +1,7 @@
 import { mixpanelTrack } from "../../../mixpanel";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
+import { GlobalState } from "../../../store/reducers/types";
 import { buildEventProperties } from "../../../utils/analytics";
 
 export function trackLoginSessionOptIn() {
@@ -15,15 +18,31 @@ export function trackLoginSessionOptInInfo() {
   );
 }
 
-export function trackLoginSessionOptIn365() {
-  void mixpanelTrack(
+export async function trackLoginSessionOptIn365(state: GlobalState) {
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_SESSION",
+    value: "365"
+  });
+  await updateMixpanelSuperProperties(state, {
+    property: "LOGIN_SESSION",
+    value: "365"
+  });
+  await mixpanelTrack(
     "LOGIN_SESSION_OPTIN_365_SELECTED",
     buildEventProperties("UX", "action")
   );
 }
 
-export function trackLoginSessionOptIn30() {
-  void mixpanelTrack(
+export async function trackLoginSessionOptIn30(state: GlobalState) {
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_SESSION",
+    value: "30"
+  });
+  await updateMixpanelSuperProperties(state, {
+    property: "LOGIN_SESSION",
+    value: "30"
+  });
+  await mixpanelTrack(
     "LOGIN_SESSION_OPTIN_30_SELECTED",
     buildEventProperties("UX", "action")
   );

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, View } from "react-native";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useStore } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
@@ -87,10 +87,12 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     props.nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
 
+  const store = useStore();
+
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
-    trackLoginSpidIdpSelected(idp.id);
+    void trackLoginSpidIdpSelected(idp.id, store.getState());
     if (isNativeLoginEnabled()) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_AUTH_SESSION
