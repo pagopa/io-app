@@ -12,7 +12,6 @@ import {
   LanguageEnum,
   RequestAuthorizationRequest
 } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
-import { DetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentInstrumentDetail";
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorization"],
@@ -24,10 +23,7 @@ export function* handleWalletPaymentAuthorization(
     isAllCCP: true,
     language: LanguageEnum.IT,
     pspId: action.payload.pspId,
-    details: {
-      walletId: action.payload.walletId,
-      detailType: DetailTypeEnum.WALLET
-    }
+    walletId: action.payload.walletId
   };
   const requestTransactionAuthorizationRequest =
     requestTransactionAuthorization({
