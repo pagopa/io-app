@@ -62,6 +62,10 @@ import { getFlowType } from "../../utils/analytics";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
 
+export type CduEmailInsertScreenNavigationParams = Readonly<{
+  isOnboarding: boolean;
+}>;
+
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
   "INSERT_EMAIL_SCREEN"
@@ -100,11 +104,13 @@ const CduEmailInsertScreen = (props: Props) => {
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
 
+  const flow = getFlowType(props.route.params.isOnboarding, isFirstOnBoarding);
+
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
-      trackEmailEditing(getFlowType(true, isFirstOnBoarding));
+      trackEmailEditing(flow);
     } else {
-      trackEmailDuplicateEditing(getFlowType(true, isFirstOnBoarding));
+      trackEmailDuplicateEditing(flow);
     }
   });
 
@@ -142,9 +148,9 @@ const CduEmailInsertScreen = (props: Props) => {
 
   useEffect(() => {
     if (areSameEmails) {
-      trackEmailEditingError(getFlowType(true, isFirstOnBoarding));
+      trackEmailEditingError(flow);
     }
-  }, [areSameEmails, isFirstOnBoarding]);
+  }, [areSameEmails, flow]);
 
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
