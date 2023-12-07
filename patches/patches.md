@@ -164,12 +164,3 @@ Updated on **13/07/2023**
 #### Reason:
 
 - This patch applies security fixes to avoid access on camera and microphone without user permission.
-
-### @pagopa+io-react-native-login-utils+0.2.0
-
-Updated on **29/11/2023**
-
-#### Reason:
-
-- This patch adds `iowallet` in the accepted schemes for the webview url handling. 
-  This patch will be removed once the package will be updated or a new solution is found
