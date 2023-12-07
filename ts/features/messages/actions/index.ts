@@ -9,9 +9,11 @@ export type RequestGetMessageDataActionType = {
 };
 
 export type SuccessGetMessageDataActionType = {
-  euCovidCerficateAuthCode?: string;
+  containsAttachments: boolean;
   containsPayment?: boolean;
+  euCovidCerficateAuthCode?: string;
   firstTimeOpening: boolean;
+  hasRemoteContent: boolean;
   isPNMessage: boolean;
   messageId: UIMessageId;
   organizationName: string;
