@@ -1904,19 +1904,6 @@ bonus:
           message: "Bist du sicher, dass du deine Nationale Jugendkarte deaktivieren möchtest? Wenn du dies bestätigst, verlierst du die Möglichkeit, die Vorteile der Initiative in Anspruch zu nehmen und die Karte wird aus deinem Konto verschwinden."
     otp:
       error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
-      screen:
-        title: "Rabattcode verwenden"
-        cta: "Code kopieren"
-        text1: "Kopiere diesen Code in das entsprechende Feld auf der Website des Betreibers innerhalb"
-        text2: "Nach Ablauf ist der Code nicht mehr gültig."
-        link: "Der Code funktioniert nicht?"
-        bottomSheet:
-          body:
-            text1: "Bei einigen Händlern ist die Eingabe eines "
-            text2: "statischen Rabattcodes erforderlich."
-            text3: "Suche in der Liste der Online-Händler nach dem Händler, der dich interessiert und prüfe die aktuellen Angebote."
-            text4: "In der Angebotskarte findest du den Code für die Ermäßigung, den du kopieren und auf der Website des Händlers einfügen kannst."
-          cta: "Zur Händlerliste wechseln"
       code:
         title: "Dein Rabattcode"
         validUntil: "Noch gültig für"
