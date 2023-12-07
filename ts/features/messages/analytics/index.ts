@@ -314,3 +314,10 @@ export function trackRemoteContentMessageDecodingWarning(
     })
   );
 }
+
+export function trackRemoteContentInfo() {
+  void mixpanelTrack(
+    "REMOTE_CONTENT_INFO",
+    buildEventProperties("UX", "action")
+  );
+}

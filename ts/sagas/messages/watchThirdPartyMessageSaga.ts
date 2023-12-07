@@ -22,6 +22,7 @@ import { SagaCallReturnType } from "../../types/utils";
 import { unknownToReason } from "../../features/messages/utils";
 import { ThirdPartyMessageWithContent } from "../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { TagEnum } from "../../../definitions/backend/MessageCategoryPN";
 
 export function* watchThirdPartyMessageSaga(
   client: BackendClient
@@ -73,7 +74,7 @@ const trackSuccess = (
   tag: string
 ) => {
   trackRemoteContentLoadSuccess(tag);
-  if (tag === "PN") {
+  if (tag === TagEnum.PN) {
     const pnMessageOption = toPNMessage(messageFromApi);
 
     if (O.isSome(pnMessageOption)) {
@@ -92,7 +93,7 @@ const trackSuccess = (
 const trackFailure = (reason: string, serviceId: ServiceId, tag: string) => {
   trackRemoteContentLoadFailure(serviceId, tag, reason);
 
-  if (tag === "PN") {
+  if (tag === TagEnum.PN) {
     trackPNNotificationLoadError(reason);
   }
 };
