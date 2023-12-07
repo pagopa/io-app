@@ -3,6 +3,7 @@ import { Body, LabelLink, LabelSmall } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import StatusContent from "../../../SectionStatus/StatusContent";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { trackRemoteContentInfo } from "../../../../features/messages/analytics";
 
 export const RemoteContentBanner = () => {
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(
@@ -28,7 +29,13 @@ export const RemoteContentBanner = () => {
         </LabelSmall>
         {I18n.t("messageDetails.banner.content3")}
         {"\n"}
-        <LabelLink fontSize="small" onPress={present}>
+        <LabelLink
+          fontSize="small"
+          onPress={() => {
+            trackRemoteContentInfo();
+            present();
+          }}
+        >
           {I18n.t("messageDetails.banner.action")}
         </LabelLink>
       </StatusContent>

@@ -217,3 +217,10 @@ export function trackUpsertMessageStatusAttributesFailure(reason: string) {
     })
   );
 }
+
+export function trackRemoteContentInfo() {
+  void mixpanelTrack(
+    "REMOTE_CONTENT_INFO",
+    buildEventProperties("UX", "action")
+  );
+}
