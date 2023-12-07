@@ -106,11 +106,11 @@ function* loadMessageData({
     return;
   }
 
-  // Make sure to download the third party data if the message has them. Do not
-  // download them if it is a PN message, since it has its own message implementation
-  // that takes care of downloading them
+  // Make sure to download the third party data if the message has them
+  // (PN is always a third party message so in that case make sure to
+  // download it regardless of what is in messageDetails)
   const shouldDownloadThirdPartyData =
-    messageDetails.hasThirdPartyData && !isPNMessage;
+    messageDetails.hasThirdPartyData || isPNMessage;
   if (shouldDownloadThirdPartyData) {
     const thirdPartyMessageDetails = yield* call(
       getThirdPartyDataMessage,
