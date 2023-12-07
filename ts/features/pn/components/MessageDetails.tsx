@@ -117,7 +117,7 @@ export const MessageDetails = ({
                 foregroundColor={getStatusTextColor(LevelEnum.warning)}
                 iconName={statusIconMap.warning}
                 testID={"PnCancelledMessageBanner"}
-                viewRef={viewRef}
+                ref={viewRef}
               >
                 {I18n.t("features.pn.details.cancelledMessage.body")}
               </StatusContent>
