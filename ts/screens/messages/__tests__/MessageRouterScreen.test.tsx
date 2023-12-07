@@ -154,7 +154,9 @@ const globalStateFromStatus = (
           organizationName: "orgName",
           firstTimeOpening: true,
           isPNMessage: false,
+          containsAttachments: false,
           containsPayment: undefined,
+          hasRemoteContent: false,
           euCovidCerficateAuthCode: undefined
         })
       );
