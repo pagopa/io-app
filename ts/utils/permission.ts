@@ -41,6 +41,12 @@ export const checkIOAndroidPermission = async (
   return await PermissionsAndroid.check(permission);
 };
 
+/**
+ * Wrapper function for `requestIOAndroidPermission`.
+ * Handles media permissions based on Android API levels.
+ * @param rationale
+ * @returns
+ */
 export const requestIOAndroidMediaPermission = async (
   rationale: Rationale
 ): Promise<boolean> => {
