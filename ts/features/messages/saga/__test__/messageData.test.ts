@@ -1,7 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { testable } from "../messageData";
+import { testable } from "../handleLoadMessageData";
 import {
   UIMessage,
   UIMessageDetails,

@@ -70,7 +70,6 @@ import {
   generateLollipopKeySaga,
   getKeyInfo
 } from "../features/lollipop/saga";
-import { watchLoadMessageData } from "../features/messages/saga/messageData";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
   isIdPayTestEnabledSelector,
@@ -89,7 +88,10 @@ import {
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
-import { watchMessageAttachmentsSaga } from "../features/messages/saga";
+import {
+  watchLoadMessageData,
+  watchMessageAttachmentsSaga
+} from "../features/messages/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";

@@ -3,16 +3,8 @@ import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  call,
-  delay,
-  put,
-  race,
-  select,
-  take,
-  takeLatest
-} from "typed-redux-saga/macro";
-import { ActionType, getType, isActionOf } from "typesafe-actions";
+import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
+import { ActionType, isActionOf } from "typesafe-actions";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
@@ -52,14 +44,7 @@ import {
 } from "../analytics";
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 
-export function* watchLoadMessageData() {
-  yield* takeLatest(
-    getType(getMessageDataAction.request),
-    handleLoadMessageData
-  );
-}
-
-function* handleLoadMessageData(
+export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
 ) {
   yield* race({
@@ -183,7 +168,7 @@ function* getPaginatedMessage(messageId: UIMessageId) {
       loadMessageById.success,
       loadMessageById.failure
     ]);
-    if (!isActionOf(loadMessageById.success, outputAction)) {
+    if (isActionOf(loadMessageById.failure, outputAction)) {
       return undefined;
     }
 
@@ -216,7 +201,7 @@ function* getMessageDetails(messageId: UIMessageId) {
       loadMessageDetails.success,
       loadMessageDetails.failure
     ]);
-    if (!isActionOf(loadMessageDetails.success, outputAction)) {
+    if (isActionOf(loadMessageDetails.failure, outputAction)) {
       return undefined;
     }
 
@@ -244,7 +229,7 @@ function* getThirdPartyDataMessage(
     loadThirdPartyMessage.success,
     loadThirdPartyMessage.failure
   ]);
-  if (!isActionOf(loadThirdPartyMessage.success, outputAction)) {
+  if (isActionOf(loadThirdPartyMessage.failure, outputAction)) {
     return undefined;
   }
 
@@ -279,7 +264,7 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
       upsertMessageStatusAttributes.success,
       upsertMessageStatusAttributes.failure
     ]);
-    if (!isActionOf(upsertMessageStatusAttributes.success, outputAction)) {
+    if (isActionOf(upsertMessageStatusAttributes.failure, outputAction)) {
       return undefined;
     }
   }
