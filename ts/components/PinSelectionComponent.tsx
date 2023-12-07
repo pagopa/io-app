@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as O from "fp-ts/lib/Option";
 import { useContext } from "react";
 import { KeyboardAvoidingView, Platform, SafeAreaView } from "react-native";
 import I18n from "../i18n";
@@ -24,9 +23,6 @@ import {
   trackPinScreen
 } from "../screens/profile/analytics";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
-import { trackLoginEnded } from "../screens/authentication/analytics";
-import { isFastLoginEnabledSelector } from "../features/fastLogin/store/selectors";
-import { idpSelector } from "../store/reducers/authentication";
 import { PinCreationForm } from "./PinCreationForm";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -70,10 +66,6 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
   }, [showModal]);
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
-  const idpSelected = useIOSelector(idpSelector);
-
-  const idp = O.isSome(idpSelected) ? idpSelected.value.name : "";
 
   const handleSubmit = React.useCallback(
     (pin: PinString) => {
@@ -82,11 +74,6 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
           handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
           dispatch(createPinSuccess(pin));
           trackCreatePinSuccess(getFlowType(isOnboarding, isFirstOnBoarding));
-          trackLoginEnded(
-            isFastLoginEnabled,
-            idp,
-            getFlowType(isOnboarding, isFirstOnBoarding)
-          );
           if (!isOnboarding) {
             // We need to ask the user to restart the app
             showRestartModal();
@@ -105,12 +92,10 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
     [
       assistanceTool,
       dispatch,
-      isOnboarding,
       isFirstOnBoarding,
-      isFastLoginEnabled,
-      idp,
-      showRestartModal,
-      navigation
+      isOnboarding,
+      navigation,
+      showRestartModal
     ]
   );
 

@@ -1,4 +1,3 @@
-import { IdpData } from "../../../../definitions/content/IdpData";
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
@@ -18,7 +17,7 @@ function trackLoginSpidAttemptsError() {
 
 function trackLoginSpid2StepError() {
   void mixpanelTrack(
-    "LOGIN_SPID_2STEP_ERROR",
+    "LOGIN_SPID_SECURITY_LEVEL",
     buildEventProperties("KO", undefined)
   );
 }

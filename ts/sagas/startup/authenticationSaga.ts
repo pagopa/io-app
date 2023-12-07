@@ -18,6 +18,7 @@ import {
 } from "../../screens/authentication/analytics";
 import { idpSelector } from "../../store/reducers/authentication";
 import { IdpCIE } from "../../screens/authentication/LandingScreen";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**
  * A saga that makes the user go through the authentication process until
@@ -51,13 +52,17 @@ export function* authenticationSaga(): Generator<
   // stop cie manager from listening nfc
   yield* call(stopCieManager);
 
+  const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
   const idpSelected = yield* select(idpSelector);
 
   if (O.isSome(idpSelected)) {
     if (idpSelected.value.id === IdpCIE.id) {
-      trackCieLoginSuccess();
+      trackCieLoginSuccess(isFastLoginEnabled ? "365" : "30");
     } else {
-      trackSpidLoginSuccess();
+      trackSpidLoginSuccess(
+        isFastLoginEnabled ? "365" : "30",
+        idpSelected.value.id
+      );
     }
   }
   // User logged in successfully dispatch an AUTHENTICATION_COMPLETED action.

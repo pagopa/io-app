@@ -30,6 +30,10 @@ import { GlobalState } from "../../../store/reducers/types";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 import UnlockAccessScreen from "../../onboarding/UnlockAccessScreen";
+import {
+  trackLoginCieConsentDataUsageScreen,
+  trackLoginCieDataSharingError
+} from "../analytics/cieAnalytics";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -65,6 +69,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
+    trackLoginCieConsentDataUsageScreen();
     this.state = {
       hasError: false,
       isLoginSuccess: undefined
@@ -151,6 +156,9 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
       return loaderComponent;
     }
     if (this.state.hasError) {
+      if (this.state.errorCode === "22") {
+        trackLoginCieDataSharingError();
+      }
       if (this.state.errorCode === "1002") {
         return <UnlockAccessScreen identifier="CIE" />;
       } else {

@@ -28,3 +28,5 @@ export function trackLoginSessionOptIn30() {
     buildEventProperties("UX", "action")
   );
 }
+
+export type LoginSessionDuration = "365" | "30" | "not set";
