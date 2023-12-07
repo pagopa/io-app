@@ -1,12 +1,13 @@
 import React, { ComponentProps, forwardRef } from "react";
 import { AccessibilityRole, StyleSheet, View } from "react-native";
 import {
+  FontSize,
   IOColors,
   IOIcons,
-  Icon,
-  LabelSmall
+  Icon
 } from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
+import { Label } from "../core/typography/Label";
 
 const iconSize = 24;
 
@@ -32,7 +33,8 @@ type Props = WithTestID<{
   accessibilityRole?: AccessibilityRole;
   backgroundColor: IOColors;
   iconName: IOIcons;
-  foregroundColor: ComponentProps<typeof LabelSmall>["color"];
+  fontSize?: FontSize;
+  foregroundColor: ComponentProps<typeof Label>["color"];
   labelPaddingVertical?: number;
 }>;
 
@@ -43,6 +45,7 @@ const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
       backgroundColor,
       children,
       iconName,
+      fontSize,
       foregroundColor,
       labelPaddingVertical,
       ...rest
@@ -59,8 +62,9 @@ const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
       <View style={styles.alignCenter}>
         <Icon color={foregroundColor} name={iconName} size={iconSize} />
       </View>
-      <LabelSmall
+      <Label
         color={foregroundColor}
+        fontSize={fontSize}
         style={[
           styles.text,
           labelPaddingVertical ? { paddingVertical: labelPaddingVertical } : {}
@@ -68,7 +72,7 @@ const StatusContent = forwardRef<View, React.PropsWithChildren<Props>>(
         weight={"Regular"}
       >
         {children}
-      </LabelSmall>
+      </Label>
     </View>
   )
 );

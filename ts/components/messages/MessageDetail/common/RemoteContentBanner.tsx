@@ -7,6 +7,7 @@ import StatusContent from "../../../SectionStatus/StatusContent";
 export const RemoteContentBanner = () => (
   <StatusContent
     backgroundColor={"white"}
+    fontSize="small"
     foregroundColor={"bluegrey"}
     iconName={"notice"}
     labelPaddingVertical={6}
