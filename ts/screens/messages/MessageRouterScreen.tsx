@@ -74,7 +74,11 @@ export const MessageRouterScreen = (
       trackOpenMessage(
         data.organizationName,
         data.serviceName,
-        data.containsPayment
+        data.firstTimeOpening,
+        data.containsPayment,
+        data.hasRemoteContent,
+        data.containsAttachments,
+        fromPushNotification
       );
 
       if (data.euCovidCerficateAuthCode) {
@@ -113,7 +117,7 @@ export const MessageRouterScreen = (
         );
       }
     },
-    [navigation]
+    [fromPushNotification, navigation]
   );
 
   useEffect(() => {
