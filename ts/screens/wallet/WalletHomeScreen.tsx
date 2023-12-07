@@ -68,7 +68,6 @@ import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsLi
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
-  navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod
 } from "../../store/actions/navigation";
@@ -107,6 +106,7 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
+import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -436,6 +436,24 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.props.loadTransactions(this.props.transactionsLoadedLength);
   };
 
+  private navigateToWalletTransactionDetailsScreen = (
+    transaction: Transaction
+  ) => {
+    if (this.props.isDesignSystemEnabled) {
+      this.props.navigation.navigate(
+        WalletTransactionRoutes.WALLET_TRANSACTION_MAIN,
+        {
+          screen: WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS,
+          params: {
+            transactionId: transaction.id
+          }
+        }
+      );
+    } else {
+      this.props.navigateToTransactionDetailsScreen(transaction);
+    }
+  };
+
   private transactionList(
     potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
   ) {
@@ -446,7 +464,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
-          this.props.navigateToTransactionDetailsScreen
+          this.navigateToWalletTransactionDetailsScreen
         }
         ListEmptyComponent={this.listEmptyComponent()}
       />
@@ -454,13 +472,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   private navigateToPaymentScanQrCode = () => {
-    if (this.props.isDesignSystemEnabled) {
-      this.props.navigation.navigate(
-        WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
-      );
-    } else {
-      this.props.navigateToPaymentScanQrCode();
-    }
+    this.props.navigation.navigate(
+      WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
+    );
   };
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
@@ -564,8 +578,8 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: isIdPayEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
+  isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -574,7 +588,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
-  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     navigateToTransactionDetailsScreen({
       transaction,

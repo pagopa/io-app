@@ -88,7 +88,8 @@ const OnboardingServicesPreferenceScreen = (
     prevPotProfile,
     potProfile,
     profileServicePreferenceMode,
-    onContinue
+    onContinue,
+    store
   ]);
 
   const handleOnContinue = () => {

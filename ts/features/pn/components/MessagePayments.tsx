@@ -9,17 +9,18 @@ import {
   ModulePaymentNotice,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import Placeholder from "rn-placeholder";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { InfoBox } from "../../../components/box/InfoBox";
-import { navigateToPnCancelledMessagePaidPaymentScreen } from "../navigation/actions";
 import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { useIOSelector } from "../../../store/hooks";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { trackPNShowAllPayments } from "../analytics";
+import ROUTES from "../../../navigation/routes";
+import PN_ROUTES from "../navigation/routes";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
@@ -78,9 +79,15 @@ const generateNavigationToPaidPaymentScreenAction = (
       payment => payment.creditorTaxId
     ),
     maybeCreditorTaxId =>
-      navigateToPnCancelledMessagePaidPaymentScreen({
-        noticeCode,
-        creditorTaxId: maybeCreditorTaxId
+      CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT,
+          params: {
+            noticeCode,
+            creditorTaxId: maybeCreditorTaxId
+          }
+        }
       })
   );
 

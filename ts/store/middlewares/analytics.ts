@@ -50,7 +50,6 @@ import {
   migrateToPaginatedMessages,
   removeMessages
 } from "../actions/messages";
-import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure,
@@ -380,10 +379,6 @@ const trackAction =
         return mp.track(action.type, {
           choice: action.payload.choice,
           reason: action.payload.error.message
-        });
-      case getType(setMixpanelEnabled):
-        return mp.track(action.type, {
-          value: action.payload
         });
     }
     return Promise.resolve();

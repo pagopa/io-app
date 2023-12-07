@@ -58,6 +58,10 @@ const NewOptInScreen = (props: Props) => {
     trackLoginSessionOptIn();
   });
 
+  useOnFirstRender(() => {
+    trackLoginSessionOptIn();
+  });
+
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {
       void trackLoginSessionOptIn365(store.getState());

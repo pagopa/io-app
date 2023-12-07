@@ -8,10 +8,24 @@ export function trackLoginCiePinScreen() {
   );
 }
 
+export function trackLoginCiePinInfo() {
+  void mixpanelTrack(
+    "LOGIN_CIE_PIN_INFO",
+    buildEventProperties("UX", "action")
+  );
+}
+
 export function trackLoginCieCardReaderScreen() {
   void mixpanelTrack(
-    "LOGIN_CIE_CARD_READER_SCREEN",
+    "LOGIN_CIE_CARD_READER",
     buildEventProperties("UX", "screen_view")
+  );
+}
+
+export function trackLoginCieCardReadingSuccess() {
+  void mixpanelTrack(
+    "LOGIN_CIE_CARD_READING_SUCCESS",
+    buildEventProperties("UX", "confirm")
   );
 }
 
@@ -33,12 +47,5 @@ export function trackLoginCieDataSharingError() {
   void mixpanelTrack(
     "LOGIN_CIE_DATA_SHARING_ERROR",
     buildEventProperties("KO", undefined)
-  );
-}
-
-export function trackLoginCiePinInfo() {
-  void mixpanelTrack(
-    "LOGIN_CIE_PIN_INFO",
-    buildEventProperties("UX", "action")
   );
 }

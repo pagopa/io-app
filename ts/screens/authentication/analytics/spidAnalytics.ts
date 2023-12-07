@@ -19,7 +19,7 @@ function trackLoginSpidAttemptsError() {
 
 function trackLoginSpid2StepError() {
   void mixpanelTrack(
-    "LOGIN_SPID_2STEP_ERROR",
+    "LOGIN_SPID_SECURITY_LEVEL",
     buildEventProperties("KO", undefined)
   );
 }

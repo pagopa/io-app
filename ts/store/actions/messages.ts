@@ -25,6 +25,11 @@ import {
 } from "../reducers/entities/messages/downloads";
 import { ThirdPartyMessagePrecondition } from "../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { MessageCategory } from "../../../definitions/backend/MessageCategory";
+import {
+  cancelGetMessageDataAction,
+  getMessageDataAction,
+  resetGetMessageDataAction
+} from "../../features/messages/actions";
 
 /**
  * Load a single message given its ID
@@ -205,4 +210,7 @@ export type MessagesActions = ActionType<
   | typeof removeCachedAttachment
   | typeof getMessagePrecondition
   | typeof clearMessagePrecondition
+  | typeof getMessageDataAction
+  | typeof cancelGetMessageDataAction
+  | typeof resetGetMessageDataAction
 >;

@@ -19,12 +19,19 @@ import { getFlowType } from "../../utils/analytics";
 import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
 import { ShareDataComponent } from "./components/ShareDataComponent";
 import { trackMixpanelScreen } from "./analytics";
+import {
+  trackMixpanelDeclined,
+  trackMixpanelSetEnabled
+} from "./analytics/mixpanel/mixpanelAnalytics";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const ShareDataScreen = (props: Props): React.ReactElement => {
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
+    const flow = getFlowType(false, false);
+    trackMixpanelDeclined(flow);
+    trackMixpanelSetEnabled(false, flow);
     props.setMixpanelEnabled(false);
     showToast(
       I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
@@ -44,6 +51,7 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
       )
     : confirmButtonProps(
         () => {
+          trackMixpanelSetEnabled(true, getFlowType(false, false));
           props.setMixpanelEnabled(true);
           showToast(
             I18n.t("profile.main.privacy.shareData.screen.confirmToast"),

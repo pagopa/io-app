@@ -3,6 +3,7 @@ import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profile
 import { GlobalState } from "../../../store/reducers/types";
 import { FlowType, buildEventProperties } from "../../../utils/analytics";
 import { IdpCIE } from "../LandingScreen";
+import { LoginSessionDuration } from "../../../features/fastLogin/analytics/optinAnalytics";
 
 export function trackLoginFlowStarting() {
   void mixpanelTrack(
@@ -40,17 +41,25 @@ export function trackMethodInfo() {
   void mixpanelTrack("LOGIN_METHOD_INFO", buildEventProperties("UX", "exit"));
 }
 
-export function trackCieLoginSuccess() {
+export function trackCieLoginSuccess(login_session: LoginSessionDuration) {
   void mixpanelTrack(
     "LOGIN_CIE_UX_SUCCESS",
-    buildEventProperties("UX", "confirm")
+    buildEventProperties("UX", "confirm", {
+      login_session
+    })
   );
 }
 
-export function trackSpidLoginSuccess() {
+export function trackSpidLoginSuccess(
+  login_session: LoginSessionDuration,
+  idp: string
+) {
   void mixpanelTrack(
     "LOGIN_SPID_UX_SUCCESS",
-    buildEventProperties("UX", "confirm")
+    buildEventProperties("UX", "confirm", {
+      login_session,
+      idp
+    })
   );
 }
 
