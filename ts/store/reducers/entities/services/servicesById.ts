@@ -82,18 +82,16 @@ const reducer = (
 export const servicesByIdSelector = (state: GlobalState): ServicesByIdState =>
   state.entities.services.byId;
 
-export const serviceByIdSelector =
-  (id: ServiceId) =>
-  (state: GlobalState): pot.Pot<ServicePublic, Error> | undefined =>
-    state.entities.services.byId[id];
+export const serviceByIdSelector = (
+  state: GlobalState,
+  id: ServiceId
+): pot.Pot<ServicePublic, Error> =>
+  state.entities.services.byId[id] ?? pot.none;
 
 export const serviceMetadataByIdSelector =
   (id: ServiceId) =>
   (state: GlobalState): ServiceMetadata | undefined => {
-    const maybeServiceById = serviceByIdSelector(id)(state);
-
-    return maybeServiceById
-      ? pot.toUndefined(maybeServiceById)?.service_metadata
-      : undefined;
+    const maybeServiceById = serviceByIdSelector(state, id);
+    return pot.toUndefined(maybeServiceById)?.service_metadata;
   };
 export default reducer;
