@@ -50,7 +50,6 @@ import {
   migrateToPaginatedMessages,
   removeMessages
 } from "../actions/messages";
-import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure,
