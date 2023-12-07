@@ -1,15 +1,10 @@
-import { Appearance } from "react-native";
 import { MixpanelInstance } from "react-native-mixpanel";
 import { mixpanelToken } from "./config";
-import { isScreenReaderEnabled } from "./utils/accessibility";
-import { getAppVersion } from "./utils/appVersion";
 import { isAndroid, isIos } from "./utils/platform";
-import {
-  getDeviceId,
-  getFontScale,
-  isScreenLockSet as isScreenLockSetFunc
-} from "./utils/device";
-import { getBiometricsType } from "./utils/biometrics";
+import { getDeviceId } from "./utils/device";
+import { GlobalState } from "./store/reducers/types";
+import { updateMixpanelSuperProperties } from "./mixpanelConfig/superProperties";
+import { updateMixpanelProfileProperties } from "./mixpanelConfig/profileProperties";
 
 // eslint-disable-next-line
 export let mixpanel: MixpanelInstance | undefined;
@@ -17,7 +12,7 @@ export let mixpanel: MixpanelInstance | undefined;
 /**
  * Initialize mixpanel at start
  */
-export const initializeMixPanel = async () => {
+export const initializeMixPanel = async (state: GlobalState) => {
   if (mixpanel !== undefined) {
     return;
   }
@@ -26,11 +21,10 @@ export const initializeMixPanel = async () => {
   mixpanel = privateInstance;
   // On app first open
   // On profile page, when user opt-in
-  await setupMixpanel(mixpanel);
+  await setupMixpanel(mixpanel, state);
 };
 
-const setupMixpanel = async (mp: MixpanelInstance) => {
-  const screenReaderEnabled: boolean = await isScreenReaderEnabled();
+const setupMixpanel = async (mp: MixpanelInstance, state: GlobalState) => {
   await mp.optInTracking();
   // on iOS it can be deactivate by invoking a SDK method
   // on Android it can be done adding an extra config in AndroidManifest
@@ -38,17 +32,9 @@ const setupMixpanel = async (mp: MixpanelInstance) => {
   if (isIos) {
     await mp.disableIpAddressGeolocalization();
   }
-  const fontScale = await getFontScale();
-  const biometricTechnology = await getBiometricsType();
-  const isScreenLockSet = await isScreenLockSetFunc();
-  await mp.registerSuperProperties({
-    isScreenReaderEnabled: screenReaderEnabled,
-    fontScale,
-    appReadableVersion: getAppVersion(),
-    colorScheme: Appearance.getColorScheme(),
-    biometricTechnology,
-    isScreenLockSet
-  });
+
+  await updateMixpanelSuperProperties(state);
+  await updateMixpanelProfileProperties(state);
 };
 
 export const identifyMixpanel = async () => {
