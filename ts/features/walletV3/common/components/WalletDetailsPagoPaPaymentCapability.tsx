@@ -7,7 +7,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { constVoid } from "fp-ts/lib/function";
 
-import { isPaymentSupported } from "../utils";
+import { hasPaymentFeature, isPaymentSupported } from "../utils";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import Markdown from "../../../../components/ui/Markdown";
@@ -75,7 +75,7 @@ const WalletDetailsPagoPaPaymentCapability: React.FC<Props> = props => {
             description={I18n.t(
               "wallet.methods.card.pagoPaCapability.description"
             )}
-            value={true}
+            value={hasPaymentFeature(props.paymentMethod)}
             // TODO: Handling the possibility to enable/disable to pay with this payment method in app switching the toggle (PATCH request) - https://pagopa.atlassian.net/browse/IOBP-405
             onSwitchValueChange={() => constVoid}
           />
