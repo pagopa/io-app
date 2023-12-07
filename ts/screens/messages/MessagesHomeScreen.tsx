@@ -2,7 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOColors } from "@pagopa/io-app-design-system";
@@ -41,14 +41,7 @@ import {
 } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-import SecuritySuggestions from "../../features/fastLogin/components/SecuritySuggestions";
-import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
-import { useIOSelector } from "../../store/hooks";
-import { progressSelector } from "../../store/reducers/identification";
-import {
-  isSecurityAdviceAcknowledgedEnabled,
-  isSecurityAdviceReadyToShow
-} from "../../features/fastLogin/store/selectors";
+import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -76,45 +69,7 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
-
-  const {
-    present: presentSecuritySuggestionBottomSheet,
-    bottomSheet: securitySuggestionBottomSheet,
-    dismiss: _dismissSecuritySuggestionBottomSheet
-  } = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("authentication.opt_in.security_suggests"),
-    component: <SecuritySuggestions />,
-    fullScreen: true
-  });
-
-  const identificationProgressState = useIOSelector(progressSelector);
-  const securityAdviceAcknowledged = useIOSelector(
-    isSecurityAdviceAcknowledgedEnabled
-  );
-  const isSecurityAdviceReadyToBeShown = useIOSelector(
-    isSecurityAdviceReadyToShow
-  );
-
-  const showSecuritySuggestionModal = useCallback(() => {
-    if (!securityAdviceAcknowledged) {
-      presentSecuritySuggestionBottomSheet();
-    }
-  }, [presentSecuritySuggestionBottomSheet, securityAdviceAcknowledged]);
-
-  useEffect(() => {
-    // During the current session, we listen to the identification progress state
-    // to show the security suggestion bottom sheet when the user is identified
-    if (
-      identificationProgressState.kind === "identified" ||
-      isSecurityAdviceReadyToBeShown
-    ) {
-      showSecuritySuggestionModal();
-    }
-  }, [
-    identificationProgressState,
-    showSecuritySuggestionModal,
-    isSecurityAdviceReadyToBeShown
-  ]);
+  const { securitySuggestionBottomSheet } = useSecuritySuggestionsBottomSheet();
 
   useOnFirstRender(() => {
     if (needsMigration) {
