@@ -70,7 +70,7 @@ export const messageDetailsByIdSelector = (
   state: GlobalState,
   id: string
 ): pot.Pot<UIMessageDetails, string> =>
-  state.entities.messages.detailsById[id] || pot.none;
+  state.entities.messages.detailsById[id] ?? pot.none;
 
 export const detailedMessageHasThirdPartyDataSelector = (
   state: GlobalState,

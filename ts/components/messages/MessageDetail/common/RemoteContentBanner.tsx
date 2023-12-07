@@ -1,9 +1,7 @@
 import React from "react";
-import { Body } from "@pagopa/io-app-design-system";
+import { Body, LabelLink, LabelSmall } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import StatusContent from "../../../SectionStatus/StatusContent";
-import { Link } from "../../../core/typography/Link";
-import { Label } from "../../../core/typography/Label";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
 export const RemoteContentBanner = () => {
@@ -19,19 +17,20 @@ export const RemoteContentBanner = () => {
     <>
       <StatusContent
         backgroundColor={"white"}
+        fontSize="small"
         foregroundColor={"bluegrey"}
         iconName={"notice"}
         labelPaddingVertical={6}
       >
         {`${I18n.t("messageDetails.banner.content1")} `}
-        <Label weight="Bold" color="bluegrey">
+        <LabelSmall weight="Bold" color="bluegrey">
           {`${I18n.t("messageDetails.banner.content2")} `}
-        </Label>
+        </LabelSmall>
         {I18n.t("messageDetails.banner.content3")}
         {"\n"}
-        <Link onPress={present} weight={"SemiBold"}>
+        <LabelLink fontSize="small" onPress={present}>
           {I18n.t("messageDetails.banner.action")}
-        </Link>
+        </LabelLink>
       </StatusContent>
       {bottomSheet}
     </>

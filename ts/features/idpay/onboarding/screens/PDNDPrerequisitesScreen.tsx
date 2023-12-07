@@ -51,7 +51,7 @@ export const PDNDPrerequisitesScreen = () => {
   const serviceId = useSelector(machine, selectServiceId);
 
   const serviceName = pipe(
-    useIOSelector(serviceByIdSelector(serviceId as ServiceId)) || pot.none,
+    useIOSelector(state => serviceByIdSelector(state, serviceId as ServiceId)),
     pot.toOption,
     O.fold(
       () => I18n.t("idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"),

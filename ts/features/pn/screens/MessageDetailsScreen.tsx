@@ -87,7 +87,7 @@ export const MessageDetailsScreen = (
   const navigation = useNavigation();
 
   const service = pot.toUndefined(
-    useIOSelector(state => serviceByIdSelector(serviceId)(state)) ?? pot.none
+    useIOSelector(state => serviceByIdSelector(state, serviceId))
   );
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
