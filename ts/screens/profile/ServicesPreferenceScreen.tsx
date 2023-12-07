@@ -16,8 +16,14 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
-import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
+import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
+import {
+  trackServiceConfiguration,
+  trackServiceConfigurationScreen
+} from "./analytics";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -29,12 +35,19 @@ type Props = ReturnType<typeof mapStateToProps> &
  * @constructor
  */
 const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
+  const { potProfile, state } = props;
   const { present: confirmManualConfig, manualConfigBottomSheet } =
     useManualConfigBottomSheet(() =>
-      props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
+      props.onServicePreferenceSelected(
+        ServicesPreferencesModeEnum.MANUAL,
+        state
+      )
     );
 
-  const { potProfile } = props;
+  useOnFirstRender(() => {
+    trackServiceConfigurationScreen(getFlowType(false, false));
+  });
+
   const [prevPotProfile, setPrevPotProfile] = React.useState<
     typeof props.potProfile
   >(props.potProfile);
@@ -54,7 +67,7 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
       confirmManualConfig();
       return;
     }
-    props.onServicePreferenceSelected(mode);
+    props.onServicePreferenceSelected(mode, state);
   };
 
   return (
@@ -79,13 +92,19 @@ const mapStateToProps = (state: GlobalState) => {
   return {
     isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
     potProfile: profile,
-    profileServicePreferenceMode: profileServicePreferencesModeSelector(state)
+    profileServicePreferenceMode: profileServicePreferencesModeSelector(state),
+    state
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onServicePreferenceSelected: (mode: ServicesPreferencesModeEnum) =>
-    dispatch(profileUpsert.request({ service_preferences_settings: { mode } }))
+  onServicePreferenceSelected: (
+    mode: ServicesPreferencesModeEnum,
+    state: GlobalState
+  ) => {
+    void trackServiceConfiguration(mode, getFlowType(false, false), state);
+    dispatch(profileUpsert.request({ service_preferences_settings: { mode } }));
+  }
 });
 
 export default connect(
