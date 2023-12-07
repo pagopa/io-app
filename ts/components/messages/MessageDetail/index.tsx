@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -15,13 +15,13 @@ import { OrganizationFiscalCode } from "../../../../definitions/backend/Organiza
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { LegacyMessageAttachments } from "../../../features/messages/components/LegacyMessageAttachments";
-import { loadThirdPartyMessage } from "../../../features/messages/store/actions";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import {
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector
 } from "../../../store/reducers/entities/messages/thirdPartyById";
+
 import {
   UIAttachment,
   UIMessage,
@@ -38,7 +38,6 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { isStrictNone } from "../../../utils/pot";
 import StatusContent from "../../SectionStatus/StatusContent";
 import CtaBar from "./common/CtaBar";
 import { RemoteContentBanner } from "./common/RemoteContentBanner";
@@ -132,13 +131,10 @@ const MessageDetailsComponent = ({
   service,
   serviceMetadata
 }: Props) => {
-  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   // This is used to make sure that no attachments are shown before the
-  // markdown content has rendered. Note that the third party attachment
-  // request is run in parallel with the markdown rendering.
+  // markdown content has rendered
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
-  const isFirstRendering = React.useRef(true);
   // Note that it is not possibile for a message to have both medical
   // prescription attachments and third party data. That is why, later in the
   // code, the UI rendering is guarded by opposite checks on prescription and
@@ -155,13 +151,9 @@ const MessageDetailsComponent = ({
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
-  // Third party attachments are retrieved from the third party service upon
-  // first rendering of this component. We want to send the request only if
-  // we have never retrieved data or if there was an error
-  const shouldDownloadThirdPartyDataAttachmentList =
-    hasThirdPartyData &&
-    isFirstRendering.current &&
-    (isStrictNone(thirdPartyDataPot) || pot.isError(thirdPartyDataPot));
+  const thirdPartyMessagePotOrUndefined = pot.toUndefined(thirdPartyDataPot);
+  const hasThirdPartyDataAttachments =
+    !!thirdPartyMessagePotOrUndefined?.third_party_message.attachments;
 
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ??
@@ -206,16 +198,6 @@ const MessageDetailsComponent = ({
     [openAttachment]
   );
 
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isFirstRendering.current = false;
-    // Third party attachments, if available, are downloaded upon
-    // first rendering of this component
-    if (shouldDownloadThirdPartyDataAttachmentList) {
-      dispatch(loadThirdPartyMessage.request(messageId));
-    }
-  }, [dispatch, messageId, shouldDownloadThirdPartyDataAttachmentList]);
-
   return (
     <>
       <ScrollView>
@@ -246,7 +228,7 @@ const MessageDetailsComponent = ({
         <VSpacer size={24} />
 
         {prescriptionAttachments &&
-          !hasThirdPartyData &&
+          !hasThirdPartyDataAttachments &&
           isContentLoadCompleted && (
             <>
               <MedicalPrescriptionAttachments
@@ -265,7 +247,7 @@ const MessageDetailsComponent = ({
           </>
         ) : null}
 
-        {hasThirdPartyData && isContentLoadCompleted && (
+        {hasThirdPartyDataAttachments && isContentLoadCompleted && (
           <>
             <H2 color="bluegrey" style={styles.attachmentsTitle}>
               {I18n.t("features.pn.details.attachmentsSection.title")}
