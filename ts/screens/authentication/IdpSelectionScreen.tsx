@@ -33,6 +33,9 @@ import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackSpidLoginIdpSelection } from "./analytics";
+import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -56,6 +59,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
+  useOnFirstRender(() => {
+    trackSpidLoginIdpSelection();
+  });
+
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
@@ -83,6 +90,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+    trackLoginSpidIdpSelected(idp.id);
     if (isNativeLoginEnabled()) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_AUTH_SESSION

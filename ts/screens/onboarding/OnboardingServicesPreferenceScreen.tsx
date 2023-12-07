@@ -28,6 +28,12 @@ import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import {
+  trackServiceConfiguration,
+  trackServiceConfigurationScreen
+} from "../profile/analytics";
+import { getFlowType } from "../../utils/analytics";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -54,9 +60,17 @@ const OnboardingServicesPreferenceScreen = (
 
   const { profileServicePreferenceMode, potProfile, onContinue } = props;
 
+  useOnFirstRender(() => {
+    trackServiceConfigurationScreen(getFlowType(true, isFirstOnboarding));
+  });
+
   React.useEffect(() => {
     // when the user made a choice (the profile is right updated), continue to the next step
     if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
+      trackServiceConfiguration(
+        profileServicePreferenceMode,
+        getFlowType(true, isFirstOnboarding)
+      );
       onContinue(isFirstOnboarding);
       return;
     }

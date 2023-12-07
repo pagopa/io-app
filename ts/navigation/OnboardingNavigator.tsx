@@ -70,6 +70,7 @@ const navigator = () => (
       component={
         isNewCduFlow ? CduEmailInsertScreen : OnboardingEmailReadScreen
       }
+      initialParams={{ isOnboarding: true }}
     />
     <Stack.Screen
       name={ROUTES.ONBOARDING_COMPLETED}

@@ -16,8 +16,14 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
-import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
+import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
+import {
+  trackServiceConfiguration,
+  trackServiceConfigurationScreen
+} from "./analytics";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -33,6 +39,10 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
     useManualConfigBottomSheet(() =>
       props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
     );
+
+  useOnFirstRender(() => {
+    trackServiceConfigurationScreen(getFlowType(false, false));
+  });
 
   const { potProfile } = props;
   const [prevPotProfile, setPrevPotProfile] = React.useState<
@@ -84,8 +94,10 @@ const mapStateToProps = (state: GlobalState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onServicePreferenceSelected: (mode: ServicesPreferencesModeEnum) =>
-    dispatch(profileUpsert.request({ service_preferences_settings: { mode } }))
+  onServicePreferenceSelected: (mode: ServicesPreferencesModeEnum) => {
+    trackServiceConfiguration(mode, getFlowType(false, false));
+    dispatch(profileUpsert.request({ service_preferences_settings: { mode } }));
+  }
 });
 
 export default connect(
