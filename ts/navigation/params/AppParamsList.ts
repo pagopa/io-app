@@ -67,12 +67,14 @@ import { OnboardingParamsList } from "./OnboardingParamsList";
 import { ProfileParamsList } from "./ProfileParamsList";
 import { ServicesParamsList } from "./ServicesParamsList";
 import { WalletParamsList } from "./WalletParamsList";
+import { CheckEmailParamsList } from "./CheckEmailParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
   [ROUTES.UNSUPPORTED_DEVICE]: undefined;
   [ROUTES.BACKGROUND]: undefined;
   [ROUTES.AUTHENTICATION]: NavigatorScreenParams<AuthenticationParamsList>;
+  [ROUTES.CHECK_EMAIL]: NavigatorScreenParams<CheckEmailParamsList>;
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
   [ROUTES.MAIN]: NavigatorScreenParams<MainTabParamsList>;
 
