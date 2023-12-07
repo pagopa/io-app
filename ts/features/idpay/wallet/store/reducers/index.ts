@@ -128,29 +128,30 @@ const reducer = (
   return state;
 };
 
-export const idPayWalletSelector = (state: GlobalState) =>
-  state.features.idPay.wallet.initiatives;
+const selectIdPayWallet = (state: GlobalState) => state.features.idPay.wallet;
 
 export const idPayWalletInitiativeListSelector = createSelector(
-  idPayWalletSelector,
-  walletPot => pot.map(walletPot, wallet => wallet.initiativeList)
+  selectIdPayWallet,
+  ({ initiatives }) =>
+    pot.map(initiatives, ({ initiativeList }) => initiativeList)
 );
 
 export const idPayWalletSubscribedInitiativeListSelector = createSelector(
   idPayWalletInitiativeListSelector,
   initiativeListPot =>
-    pot.map(initiativeListPot, initiativeList =>
-      initiativeList.filter(
-        initiative => initiative.status !== InitiativeStatus.UNSUBSCRIBED
-      )
+    pot.map(initiativeListPot, list =>
+      list.filter(({ status }) => status !== InitiativeStatus.UNSUBSCRIBED)
     )
 );
 
-export const idPayInitiativesFromInstrumentSelector = (state: GlobalState) =>
-  pot.map(state.features.idPay.wallet.initiativesWithInstrument, w => w);
+export const idPayInitiativesFromInstrumentSelector = createSelector(
+  selectIdPayWallet,
+  ({ initiativesWithInstrument }) => initiativesWithInstrument
+);
+
 export const idPayWalletInitiativesListWithInstrumentSelector = createSelector(
   [idPayInitiativesFromInstrumentSelector],
-  initiatives => pot.map(initiatives, w => w.initiativeList)
+  initiatives => pot.map(initiatives, ({ initiativeList }) => initiativeList)
 );
 
 export const idPayEnabledInitiativesFromInstrumentSelector = createSelector(
@@ -159,45 +160,49 @@ export const idPayEnabledInitiativesFromInstrumentSelector = createSelector(
     isIdpayEnabled ? pot.getOrElse(initiatives, []) : []
 );
 
-const idPayInitiativesFromInstrumentPotSelector = (state: GlobalState) =>
-  state.features.idPay.wallet.initiativesWithInstrument;
-
 export const idPayAreInitiativesFromInstrumentLoadingSelector = createSelector(
-  [isIdPayEnabledSelector, idPayInitiativesFromInstrumentPotSelector],
+  [isIdPayEnabledSelector, idPayInitiativesFromInstrumentSelector],
   (isIDPayEnabled, initiativesPot) =>
     isIDPayEnabled && pot.isLoading(initiativesPot)
 );
-export const idPayAreInitiativesFromInstrumentErrorSelector = (
-  state: GlobalState
-) => pot.isError(state.features.idPay.wallet.initiativesWithInstrument);
 
-export const idPayInitiativeAwaitingUpdateSelector = (
-  state: GlobalState,
-  initiativeId: string
-) => state.features.idPay.wallet.initiativesAwaitingStatusUpdate[initiativeId];
+export const idPayAreInitiativesFromInstrumentErrorSelector = createSelector(
+  selectIdPayWallet,
+  wallet => pot.isError(wallet.initiativesWithInstrument)
+);
+
+export const idPayInitiativesAwaitingUpdateSelector = createSelector(
+  selectIdPayWallet,
+  wallet => wallet.initiativesAwaitingStatusUpdate
+);
 
 export const idPayInitiativeFromInstrumentPotSelector = (
-  state: GlobalState,
   initiativeId: string
-) => {
-  const initiative = idPayEnabledInitiativesFromInstrumentSelector(state).find(
-    i => i.initiativeId === initiativeId
+) =>
+  createSelector(
+    [
+      idPayEnabledInitiativesFromInstrumentSelector,
+      idPayInitiativesAwaitingUpdateSelector
+    ],
+    (initiativesByInstrument, initiativesAwaitingUpdate) => {
+      const initiative = initiativesByInstrument.find(
+        i => i.initiativeId === initiativeId
+      );
+      const isItemActive =
+        initiative?.status === InstrumentInitiativeStatus.ACTIVE;
+      const isAwaitingUpdate = initiativesAwaitingUpdate[initiativeId];
+
+      switch (isAwaitingUpdate) {
+        case undefined:
+          return pot.some(isItemActive);
+        case true:
+          return pot.someLoading(isItemActive);
+        case false:
+          return pot.someLoading(isItemActive);
+        default:
+          return pot.none;
+      }
+    }
   );
-  const isItemActive = initiative?.status === InstrumentInitiativeStatus.ACTIVE;
-  const isAwaitingUpdate = idPayInitiativeAwaitingUpdateSelector(
-    state,
-    initiativeId
-  );
-  switch (isAwaitingUpdate) {
-    case undefined:
-      return pot.some(isItemActive);
-    case true:
-      return pot.someLoading(isItemActive);
-    case false:
-      return pot.someLoading(isItemActive);
-    default:
-      return pot.none;
-  }
-};
 
 export default reducer;

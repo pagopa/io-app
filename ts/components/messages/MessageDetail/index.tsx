@@ -1,7 +1,4 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import * as O from "fp-ts/lib/Option";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   ScrollView,
@@ -11,14 +8,20 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { LegacyMessageAttachments } from "../../../features/messages/components/LegacyMessageAttachments";
-import { loadThirdPartyMessage } from "../../../features/messages/store/actions";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
+import { useIOSelector } from "../../../store/hooks";
+import {
+  messageMarkdownSelector,
+  messageTitleSelector,
+  thirdPartyFromIdSelector
+} from "../../../store/reducers/entities/messages/thirdPartyById";
+
 import {
   UIAttachment,
   UIMessage,
@@ -35,7 +38,6 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { isStrictNone } from "../../../utils/pot";
 import StatusContent from "../../SectionStatus/StatusContent";
 import CtaBar from "./common/CtaBar";
 import { HeaderDueDateBar } from "./common/HeaderDueDateBar";
@@ -49,8 +51,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: variables.contentPadding
   },
   webview: {
-    marginLeft: variables.contentPadding,
-    marginRight: variables.contentPadding
+    marginHorizontal: variables.contentPadding
   },
   attachmentsTitle: {
     paddingHorizontal: variables.spacerLargeHeight,
@@ -133,14 +134,11 @@ const MessageDetailsComponent = ({
   service,
   serviceMetadata
 }: Props) => {
-  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const viewRef = React.createRef<View>();
   // This is used to make sure that no attachments are shown before the
-  // markdown content has rendered. Note that the third party attachment
-  // request is run in parallel with the markdown rendering.
+  // markdown content has rendered
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
-  const isFirstRendering = React.useRef(true);
   // Note that it is not possibile for a message to have both medical
   // prescription attachments and third party data. That is why, later in the
   // code, the UI rendering is guarded by opposite checks on prescription and
@@ -149,19 +147,20 @@ const MessageDetailsComponent = ({
     messageDetails;
   const isPrescription = prescriptionData !== undefined;
 
-  const messageId = message.id;
-  const hasThirdPartyDataAttachments =
-    messageDetails.hasThirdPartyDataAttachments;
+  const { id: messageId, title } = message;
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
-  // Third party attachments are retrieved from the third party service upon
-  // first rendering of this component. We want to send the request only if
-  // we have never retrieved data or if there was an error
-  const shouldDownloadThirdPartyDataAttachmentList =
-    hasThirdPartyDataAttachments &&
-    isFirstRendering.current &&
-    (isStrictNone(thirdPartyDataPot) || pot.isError(thirdPartyDataPot));
+  const thirdPartyMessagePotOrUndefined = pot.toUndefined(thirdPartyDataPot);
+  const hasThirdPartyDataAttachments =
+    !!thirdPartyMessagePotOrUndefined?.third_party_message.attachments;
+
+  const messageMarkdown =
+    useIOSelector(state => messageMarkdownSelector(state, messageId)) ??
+    markdown;
+
+  const messageTitle =
+    useIOSelector(state => messageTitleSelector(state, messageId)) ?? title;
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
@@ -199,16 +198,6 @@ const MessageDetailsComponent = ({
     [openAttachment, viewRef]
   );
 
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isFirstRendering.current = false;
-    // Third party attachments, if available, are downloaded upon
-    // first rendering of this component
-    if (shouldDownloadThirdPartyDataAttachmentList) {
-      dispatch(loadThirdPartyMessage.request(messageId));
-    }
-  }, [dispatch, messageId, shouldDownloadThirdPartyDataAttachmentList]);
-
   return (
     <>
       <ScrollView>
@@ -219,7 +208,7 @@ const MessageDetailsComponent = ({
 
           <VSpacer size={24} />
 
-          <MessageTitle title={message.title} isPrescription={isPrescription} />
+          <MessageTitle title={messageTitle} isPrescription={isPrescription} />
 
           <VSpacer size={16} />
         </View>
@@ -227,13 +216,14 @@ const MessageDetailsComponent = ({
           hasPaidBadge={hasPaidBadge}
           messageDetails={messageDetails}
         />
+
         <MessageMarkdown
           webViewStyle={styles.webview}
           onLoadEnd={() => {
             setIsContentLoadCompleted(true);
           }}
         >
-          {cleanMarkdownFromCTAs(markdown)}
+          {cleanMarkdownFromCTAs(messageMarkdown)}
         </MessageMarkdown>
 
         <VSpacer size={24} />

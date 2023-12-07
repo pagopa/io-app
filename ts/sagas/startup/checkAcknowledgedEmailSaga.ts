@@ -10,6 +10,7 @@ import {
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
+import { isNewCduFlow } from "../../config";
 
 /**
  * Launch email saga that consists of:
@@ -25,7 +26,7 @@ export function* checkAcknowledgedEmailSaga(
   if (hasProfileEmail(userProfile)) {
     if (
       isProfileFirstOnBoarding(userProfile) ||
-      !isProfileEmailValidated(userProfile)
+      (!isNewCduFlow && !isProfileEmailValidated(userProfile))
     ) {
       // The user profile is just created (first onboarding), the conditional
       // view displays the screen to show the user's email used in app

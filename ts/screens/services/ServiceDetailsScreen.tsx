@@ -212,12 +212,7 @@ const mapStateToProps = (state: GlobalState, props: OwnProps) => {
   return {
     serviceId,
     activate,
-    service: pipe(
-      serviceByIdSelector(serviceId)(state),
-      O.fromNullable,
-      O.chain(pot.toOption),
-      O.toUndefined
-    ),
+    service: pipe(serviceByIdSelector(state, serviceId), pot.toUndefined),
     isInboxEnabled: isInboxEnabledSelector(state),
     isEmailEnabled: isEmailEnabledSelector(state),
     isEmailValidated: isProfileEmailValidatedSelector(state),

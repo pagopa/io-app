@@ -1,4 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
 import { loadMessageDetails } from "../../../actions/messages";
@@ -64,10 +66,23 @@ const reducer = (
  * @param state
  * @param id
  */
-export const getDetailsByMessageId = (
+export const messageDetailsByIdSelector = (
   state: GlobalState,
   id: string
 ): pot.Pot<UIMessageDetails, string> =>
-  state.entities.messages.detailsById[id] || pot.none;
+  state.entities.messages.detailsById[id] ?? pot.none;
+
+export const detailedMessageHasThirdPartyDataSelector = (
+  state: GlobalState,
+  id: string
+) =>
+  pipe(
+    messageDetailsByIdSelector(state, id),
+    pot.toOption,
+    O.fold(
+      () => false,
+      messageDetails => messageDetails.hasThirdPartyData
+    )
+  );
 
 export default reducer;
