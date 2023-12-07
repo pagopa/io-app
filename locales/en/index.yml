@@ -1797,6 +1797,9 @@ messageDetails:
   sendEmail: Send email
   write: Write
   id: "ID:"
+  remoteContentError:
+    title: "Non è stato possibile recuperare i dettagli del messaggio"
+    body: "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
   attachments:
     loading: "Loading document..."
     badFormat: "The attachment format is not supported. Please contact the sender"
