@@ -40,7 +40,7 @@ export const CREDENTIAL_ISSUER = "eFarma";
  * Credential types mocks.
  */
 export enum CredentialType {
-  HEALTH_CARD = "HealthCard",
+  EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "DrivingLicense",
   PID = "PID"
@@ -101,12 +101,27 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
     ]
   },
   {
-    incoming: true,
+    type: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    incoming: false,
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
     textColor: "black",
-    firstLine: [],
-    secondLine: []
+    firstLine: ["given_name", "family_name"],
+    secondLine: ["fiscal_code"],
+    order: [
+      "given_name",
+      "family_name",
+      "birthdate",
+      "place_of_birth",
+      "sex",
+      "fiscal_code",
+      "expiry_date",
+      "province",
+      "nation",
+      "institution_number_team",
+      "document_number_team"
+    ]
   },
   {
     title: I18n.t(
@@ -129,6 +144,8 @@ export const getImageFromCredentialType = (type: string) => {
   switch (type) {
     case CredentialType.EUROPEAN_DISABILITY_CARD:
       return require("../assets/img/credentials/cards/europeanDisabilityCardFront.png");
+    case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
+      return require("../assets/img/credentials/cards/europeanHealthInsuranceCardFront.png");
     case CredentialType.PID:
       return require("../assets/img/credentials/cards/pidFront.png");
     default:

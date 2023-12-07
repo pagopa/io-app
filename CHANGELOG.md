@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1-rc.0](https://github.com/pagopa/io-app/compare/0.6.0-rc.0...0.6.1-rc.0) (2023-12-06)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-741](https://pagopa.atlassian.net/browse/SIW-741)] PID detail screen error after app restart ([#5311](https://github.com/pagopa/io-app/issues/5311)) ([9d99a97](https://github.com/pagopa/io-app/commit/9d99a9779e5fd300d044b777cd7e29d0a863a52f))
+
 ## [0.6.0-rc.0](https://github.com/pagopa/io-app/compare/2.46.0-rc.3...0.6.0-rc.0) (2023-12-05)
 
 
