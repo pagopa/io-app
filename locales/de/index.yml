@@ -1,6 +1,10 @@
 ---
 accessibility:
   doubleTapToActivateHint: "Doppeltippen zum Aktivieren"
+  buttons:
+    torch:
+      turnOn: "Taschenlampe einschalten"
+      turnOff: "Taschenlampe ausschalten"
 date:
   formats:
     default: "%d.%m.%Y"
@@ -62,6 +66,15 @@ global:
     failed: "Fehlgeschlagen"
     cancelled: "Abgebrochen"
     reversal: "Stornierung"
+  modules:
+    paymentNotice:
+      badges:
+        paid: "Bezahlt"
+        error: "Fehler"
+        expired: "Abgelaufen"
+        revoked: "Widerrufen"
+        canceled: "Annulliert"
+        inprogress: "In Bearbeitung"
   password: "Passwort"
   username: "Benutzername"
   disclaimer_beta: "Wenn du Probleme bei der Anmeldung hast, lass es uns bitte wissen!"
@@ -71,6 +84,7 @@ global:
   accessibility:
     minusSymbol: "minus"
     reload: "Neu laden"
+    search: "Suchen"
     switchLabel: "Zum Aktivieren auswählen"
     inputLabel: "{{header}}, Überschrift"
     textField: "{{inputLabel}}, Textfeld"
@@ -149,6 +163,7 @@ global:
     ok: "OK"
     ok2: "Ok"
     continue: "Weiter"
+    notNow: "Jetzt nicht"
     retry: "Wiederholen"
     back: "Zurück"
     confirm: "Bestätigen"
@@ -161,9 +176,11 @@ global:
     edit: "Ändern"
     info: "Info"
     activate: "Aktivieren"
+    activate2: "Aktivieren"
     deactivate: "Deaktivieren"
     show: "Anzeigen"
     update: "Aktualisieren"
+    updateIO: "IO aktualisieren"
     findOutMore: "Mehr erfahren"
     details: "Details"
     choose: "Auswählen"
@@ -227,6 +244,9 @@ permissionRationale:
   calendar:
     title: "Zugriff auf den Kalender gewähren"
     message: "Du kannst Fälligkeiten in deinem Kalender eintragen und eine Benachrichtigung einstellen."
+  torch:
+    title: "Zugriff auf die Kamera gewähren"
+    message: "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
 startup:
   title: "Initialisierung"
   authentication: "Benutzer authentifiziert"
@@ -540,6 +560,7 @@ authentication:
     card4-content: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht"
     card5-title: "Willkommen bei der ersten öffentlichen Version von IO!"
     card5-content: "In der rechten oberen Ecke findest du das Symbol '?', mit dem du einen Chat mit dem IO-Team beginnen kannst, wenn etwas nicht so funktioniert, wie es sollte."
+    card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
     expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
     expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn du dich anmelden und auf die IO zugreifen möchtest, musst du SPID verwenden."
@@ -1336,7 +1357,7 @@ wallet:
     EC: "Die Körperschaft hat Probleme bei der Beantwortung"
     ONGOING: "Die Zahlung ist bereits im Gange, bitte versuche es in ein paar Minuten erneut."
     ONGOING_SUBTITLE: "Wenn es zu lange her ist, lasse es uns wissen!"
-    REVOKED: "Die Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
+    REVOKED: "Die Körperschaft hat diese Zahlungsmitteilung widerrufen"
     EXPIRED: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden"
     GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
     GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
