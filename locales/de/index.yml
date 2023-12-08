@@ -1937,7 +1937,7 @@ systemsOff:
   title: "IO kann nicht verwendet werden"
   closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
-  title: "Die IO-App hilft dir"
+  title: "IO hilft dir"
   sendPersonalInfo:
     title: "Neues Ticket"
 bottomSheets:
@@ -1945,8 +1945,29 @@ bottomSheets:
     title: "Wo finde ich meine PIN?"
     content: !include bottomsheets/ciePin.md
 bonus:
+  accessibility:
+    sectionCardLabel: "Boni und Rabatte aktualisieren"
+    sectionCardHint: "Aktualisiere die Liste der aktiven Boni"
+  state:
+    completed:
+      caption: "beendet"
+      description: "Diese Initiative ist beendet und kann nicht mehr beantragt werden."
+  bonusList:
+    title: "Bonus oder Rabatt hinzufügen"
+    contentTitle: "Wähle einen der verfügbaren Boni aus"
+    contextualHelp:
+      title: "Hinzufügen eines Bonus oder Rabatts"
+      body: "Hier kannst du den Bonus oder Rabatt auswählen, die du hinzufügen möchten. Sobald sie aktiviert sind, werden sie in der Rubrik “Konto” angezeigt. Du kannst die Details des Bonus oder des Rabatts jederzeit einsehen, indem du den Bereich “Konto” aufrufst und das entsprechende Element in der Liste auswählst."
+  request: "Beantrage einen neuen Bonus"
   requestLabel: "Boni und Rabatte"
 features:
+  messages:
+    loading:
+      title: "Die Details der Mitteilung werden geladen"
+      subtitle: "Warte ein paar Sekunden"
+    updateBottomSheet:
+      title: "Aktualisiere die IO-App"
+      subtitle: "App IO Version {{value}} ist erforderlich, um diese Funktion zu nutzen. Bitte aktualisiere die App, um fortzufahren."
   euCovidCertificate:
     save:
       album: "IO"
