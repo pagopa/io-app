@@ -689,7 +689,48 @@ authentication:
       error_1001: "Zugang verweigert: Du hast nicht das Mindestalter für die Nutzung von IO"
   expiredSessionBanner:
     title: "Sicherheitshinweis"
+    message: "Um deine privaten Daten zu schützen, melde dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
+  unlock:
+    title: "Zugang entsperren"
+    subtitlel2: "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren."
+    subtitlel3: "Um mit all deinen SPID-Anmeldedaten oder der CIE auf die App zugreifen zu können, musst du den Zugang entsperren."
+    learnmore: "Mehr erfahren"
+    loginIO: "Schließen"
+  unlockmodal:
+    title: "Was bedeutet das?"
+    description1_1: "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können."
+    description1_2: "Alternativ kannst du die App auch über ein Login mit der"
+    description1_3: "höchsten Sicherheitsstufe betreten."
+    description1_4: "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE."
+    title2: "Wie man den Zugang zu IO entsperrst"
+    listitem1: "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst."
+    listitem2_1: "Greif über das Internet auf IO zu, indem du deine SPID- oder CIE-Anmeldedaten verwendest."
+    listitem2_2: "Geh zur Website"
+    listitem3_1: "Geh zum Abschnitt"
+    listitem3_2: "IO-Zugang entsperren"
+    listitem3_3: "und folge den angegebenen Schritten. Wenn du dazu aufgefordert wirst, gib den"
+    listitem3_4: "Wiederherstellungscode"
+    listitem3_5: "ein, um den Vorgang zu bestätigen."
 email:
+  cduScreens:
+    validateMail:
+      title: "Du hast deine E-Mail-Adresse nicht bestätigt"
+      subtitle: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
+      editButton: "E-Mail-Adresse ändern"
+      validateButton: "E-Mail-Adresse bestätigen"
+      header: 
+        title: "IO konfigurieren"
+      help:
+        body: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
+    emailAlreadyTaken:
+      title: "Deine E-Mail-Adresse ändern"
+      subtitleStart: "Deine E-Mail-Adresse"
+      subtitleEnd: "wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
+      editButton: "E-Mail-Adresse ändern""
+      header: 
+        title: "IO konfigurieren"
+      help:
+        body: "Deine E-Mail-Adresse wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
   read:
     title: "Deine E-Mail-Adresse"
     info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
@@ -704,6 +745,9 @@ email:
     alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
       title: "E-Mail"
+    alertTitle: "Diese E-Mail-Adresse wird bereits verwendet"
+    alertDescription: "Dies kann der Fall sein, wenn du mit einem Familienmitglied die gleiche Adresse teilst"
+    alertButton: "Andere E-Mail-Adresse verwenden"
   newinsert:
     header: "IO konfigurieren"
     title: "Wie lautet Ihre E-Mail?"
