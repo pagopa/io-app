@@ -805,7 +805,7 @@ onboarding:
   pin:
     headerTitle: "IO einrichten"
     title: "Entsperrcode"
-    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige In-App-Operationen zu bestätigen. Falls dein Gerät dies unterstützt, kannst du ihn später durch biometrische Daten ersetzen."
+    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige In-App-Vorgänge zu bestätigen. Falls dein Gerät dies unterstützt, kannst du ihn später durch biometrische Daten ersetzen."
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
@@ -935,6 +935,29 @@ payment:
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
 wallet:
+  methodDetails:
+    cobadgeTitle: "Debitkarte"
+    cardGeneric: "Karte"
+    a11y:
+      credit:
+        hpan: "{{circuit}} mit der Endung {{spacedHpan}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+      paypal:
+        owner: "Konto: {{email}}"
+      bpay:
+        phone: "Mobiltelefonnummer: {{phoneNumber}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+      bancomat:
+        bank: "PagoBANCOMAT-Karte {{bankName}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+      cobadge:
+        bank: "Kreditkarte {{bankName}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+    expired: "Die Zahlungsmethode ist abgelaufen und kann nicht mehr für In-App-Zahlungen verwendet werden."
+    isSupportedBanner:
+      title: "Möchtest du in der App bezahlen?"
+      content: "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst."
+      cta: "Mehr erfahren"
   wallet: "Konto"
   refreshWallet: "Konto aktualisieren"
   favourite:
@@ -995,6 +1018,10 @@ wallet:
     cardsPreview: "Vorschau der Zahlungsmethoden. Aktiviere, um die Liste deiner Zahlungsmethoden aufzurufen"
     cardHolder: "Karteninhaber"
   onboarding:
+    paymentMethodsList:
+      header:
+        title: "Zahlungsmethode hinzufügen"
+        subtitle: "Die Zahlungsmethode wird gespeichert und kann verwendet werden, um In-App-Zahlungen vorzunehmen oder kompatiblen Initiativen beizutreten."
     bancomat:
       headerTitle: "PagoBANCOMAT-Karte hinzufügen"
       koTimeout:
@@ -1119,6 +1146,28 @@ wallet:
     success:
       title: "Die Karte wurde hinzugefügt!"
       continueButton: "Weiter"
+    failure:
+      GENERIC_ERROR:
+        title: "Es ist ein unerwarteter Fehler aufgetreten"
+        subtitle: "Versuche es erneut oder kontaktiere den Support"
+        primaryAction: "Schließen"
+      AUTH_ERROR:
+        title: "Autorisierung verweigert"
+        subtitle: "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungs-App korrekt befolgt hast."
+        primaryAction: "Schließen"
+        secondaryAction: "Mehr erfahren"
+      TIMEOUT:
+        title: "Die Sitzung ist abgelaufen"
+        subtitle: "Zu deiner Sicherheit habst du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
+        primaryAction: "Schließen"
+      CANCELED_BY_USER:
+        title: "Der Vorgang wurde abgebrochen"
+        subtitle: ""
+        primaryAction: "Schließen"
+      INVALID_SESSION:
+        title: "Es ist ein unerwarteter Fehler aufgetreten"
+        subtitle: "Versuche es erneut oder kontaktiere den Support"
+        primaryAction: "Schließen"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
@@ -1330,6 +1379,8 @@ wallet:
         bottomSheetTitle: "Warum kann ich nicht in der App bezahlen?"
         bottomSheetBody: "Diese Zahlungsmethode ist nicht für Online-Zahlungen geeignet."
         bottomSheetCTA: "Entdecke die unterstützten Zahlungsmethoden"
+        operationCompleted: "Vorgang abgeschlossen!"
+        operationError: "Deaktivierung fehlgeschlagen"
     bonus:
       name: "Rabatte, Boni und andere Initiativen"
       description: "Initiativen von öffentlichen Verwaltungen zur Unterstützung von Ausgaben oder Dienstleistungen im Zusammenhang mit Zahlungen"
@@ -1516,10 +1567,23 @@ wallet:
         description1: "Wir senden eine Quittung an"
         description2: "Du kannst sie auch in deinem Konto finden."
   abortWebView:
-    title: "Möchtest du die aktuelle Operation abbrechen?"
+    title: "Möchtest du den aktuellen Vorgang abbrechen?"
     confirm: "Ja, beenden"
     cancel: "Nein, fortfahren"
     success: "Probleme beim Hinzufügen? Wende dich an deine Bank."
+  payment:
+    barcodes:
+      choice:
+        title: "Es wurden mehrere Codes entdeckt. Welchen möchtest du verwenden?"
+    manual:
+      noticeNumber:
+        title: "Gib den Zahlungskodex ein"
+        subtitle: "Er hat 18 Ziffern und ist neben dem QR-Code zu finden."
+        placeholder: "Zahlungskodex"
+      fiscalCode:
+        title: "Gib die Steuernummer der Körperschaft ein"
+        subtitle: "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden."
+        placeholder: "Steuernummer der Körperschaft"
 saveCard:
   saveCard: "Karte speichern"
   header: "Möchtest du diese Karte speichern?"
