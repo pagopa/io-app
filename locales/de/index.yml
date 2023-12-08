@@ -780,6 +780,16 @@ email:
     validation_ok: "Deine E-Mail-Adresse wurde bestätigt. Du kannst nun alle Funktionen von IO benutzen."
     validated: "E-Mail bestätigt!"
     validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
+  newvalidate:
+    title: "Bestätige deine E-Mail-Adresse"
+    subtitle: "Folge den Anweisungen, die an folgende Adresse gesendet wurden:"
+    link: "Ist sie nicht korrekt?"
+    buttonlabelsent: "E-Mail gesendet"
+    buttonlabelsentagain: "E-Mail erneut senden"
+    toast: "Erledigt! Prüf deinen Posteingang."
+  newvalidemail:
+    title: "E-Mail bestätigt!"
+    subtitle: "Du empfängst IO-Mitteilungen unter:"
 onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
