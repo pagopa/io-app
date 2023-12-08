@@ -1752,6 +1752,14 @@ messageDetails:
       thirdPart: " für weitere Informationen."
     failing:
       details: "Der Anhang konnte nicht heruntergeladen werden. Bitte versuche es erneut oder öffne eine Ticket"
+  banner:
+    content1: "Dies ist eine"
+    content2: "dynamische Mitteilung:"
+    content3: "der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst."
+    action: "Mehr erfahren"
+  bottomSheet:
+    title: "Was ist eine dynamische Mitteilung?"
+    body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anlagen.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
 messagePDFPreview:
   title: "PDF-Vorschau"
   singleBtn: "Speichern oder freigeben"
@@ -1929,7 +1937,9 @@ systemsOff:
   title: "IO kann nicht verwendet werden"
   closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
-  title: Die IO-App hilft Ihnen
+  title: "Die IO-App hilft dir"
+  sendPersonalInfo:
+    title: "Neues Ticket"
 bottomSheets:
   ciePin:
     title: "Wo finde ich meine PIN?"
