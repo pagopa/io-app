@@ -2018,6 +2018,53 @@ features:
         title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktieren Sie den Support"
         subtitle: "Nützliche Informationen um Support zu erhalten:"
         cta: "Support kontaktieren"
+  pn:
+    service:
+      activate: "Aktiviere den Dienst"
+      deactivate: "Deaktiviere den Dienst"
+      toast:
+        activated: "Vielen Dank, der Dienst ist aktiv!"
+        error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
+    details:
+      title: "Details der Mitteilung
+      noticeCode: "Zahlungskodex"
+      loadError:
+        title: "Etwas ist schief gelaufen"
+        body: "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
+      cancelledMessage:
+        body: "Dieser Bescheid wurde vom Absender gelöscht. Du kannst ihren Inhalt ignorieren."
+        unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
+        payments: "Zahlungen"
+      paymentSection:
+        title: "pagoPA Zahlungsaufforderungen"
+        morePayments: "Alle Zahlungsaufforderungen anzeigen"
+        bottomSheetTitle: "Welche Zahlungsaufforderung möchtest du bezahlen?"
+      attachmentsSection:
+        title: "Anhänge"
+      f24Section:
+        title: "F24-Formulare"
+        description: "Wenn du es vorziehst, kannst du diesen Bescheid über F24 bezahlen.
+        showAll: "F24-Formulare anzeigen"
+        bottomSheet:
+          title: "Beiliegende F24-Formulare"
+      infoSection:
+        title: "Informationen zum Bescheid"
+        iun: "IUN-Code"
+      timeline:
+        title: "STATUS DES BESCHEIDS"
+        status:
+          DELIVERED: "Zugestellt"
+          DELIVERING: "In Zustellung"
+          UNREACHABLE: "Empfänger nicht auffindbar"
+          PAID: "Bezahlt"
+          ACCEPTED: "Hinterlegt"
+          EFFECTIVE_DATE: "Abgeschlossen wegen Ablaufs der Frist"
+          VIEWED: "Gelesen"
+          REFUSED: "VERWEIGERT"
+          CANCELLED: "Annulliert"
+        expand: "Vorherigen Status anzeigen"
+        info: "Über die Web-Version des Dienstes kannst du die Details zu jedem Status, die Annahmebestätigung und den Zustellnachweis, die gegenüber Dritten geltend gemacht werden können, einsehen"
+        cta: "Zugang zur Webversion"
 support:
   ticketList:
     noTicket:
