@@ -34,7 +34,7 @@ import { ContextualHelpPropsMarkdown } from "../components/screens/BaseScreenCom
 import I18n from "../i18n";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
-import NewEmailInsertScreen from "../screens/profile/NewEmailInsertScreen";
+import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -163,7 +163,10 @@ const ProfileStackNavigator = () => {
           headerShown: false
         }}
         name={ROUTES.INSERT_EMAIL_SCREEN}
-        component={isNewCduFlow ? NewEmailInsertScreen : EmailInsertScreen}
+        component={isNewCduFlow ? CduEmailInsertScreen : EmailInsertScreen}
+        initialParams={{
+          isOnboarding: false
+        }}
       />
       <Stack.Screen
         options={{

@@ -7,6 +7,7 @@ import NewRemindEmailValidationOverlay from "../NewRemindEmailValidationOverlay"
 import { appReducer } from "../../store/reducers";
 import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
+import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 
 describe("NewRemindEmailValidationOverlay with isEmailValidated as true", () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -14,11 +15,13 @@ describe("NewRemindEmailValidationOverlay with isEmailValidated as true", () => 
 
   // eslint-disable-next-line functional/no-let
   let finalState: ReturnType<typeof mockStore>;
-
   beforeAll(() => {
     finalState = mockStore({
       ...globalState,
       profile: pot.some({
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.AUTO
+        },
         is_email_validated: true,
         email: "prova.prova@prova.com"
       })
@@ -57,6 +60,9 @@ describe("NewRemindEmailValidationOverlay with isEmailValidated as false", () =>
     finalState = mockStore({
       ...globalState,
       profile: pot.some({
+        service_preferences_settings: {
+          mode: ServicesPreferencesModeEnum.AUTO
+        },
         is_email_validated: false,
         email: "prova.prova@prova.com"
       })

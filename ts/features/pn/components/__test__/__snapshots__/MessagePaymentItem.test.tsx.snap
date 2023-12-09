@@ -1135,6 +1135,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                                 fontStyle={
                                                   Object {
                                                     "fontSize": 14,
+                                                    "lineHeight": 21,
                                                   }
                                                 }
                                                 numberOfLines={1}
@@ -1142,6 +1143,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                                   Array [
                                                     Object {
                                                       "fontSize": 14,
+                                                      "lineHeight": 21,
                                                     },
                                                     Object {
                                                       "color": "#475A6D",
@@ -1164,6 +1166,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                                 fontStyle={
                                                   Object {
                                                     "fontSize": 14,
+                                                    "lineHeight": 21,
                                                   }
                                                 }
                                                 numberOfLines={2}
@@ -1171,6 +1174,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                                   Array [
                                                     Object {
                                                       "fontSize": 14,
+                                                      "lineHeight": 21,
                                                     },
                                                     Object {
                                                       "color": "#475A6D",
@@ -1209,15 +1213,15 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                                 font="TitilliumWeb"
                                                 fontStyle={
                                                   Object {
-                                                    "fontSize": 16,
-                                                    "lineHeight": 24,
+                                                    "fontSize": 18,
+                                                    "lineHeight": 25,
                                                   }
                                                 }
                                                 style={
                                                   Array [
                                                     Object {
-                                                      "fontSize": 16,
-                                                      "lineHeight": 24,
+                                                      "fontSize": 18,
+                                                      "lineHeight": 25,
                                                     },
                                                     Object {
                                                       "color": "#0073E6",
@@ -1843,6 +1847,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                                 fontStyle={
                                                   Object {
                                                     "fontSize": 14,
+                                                    "lineHeight": 21,
                                                   }
                                                 }
                                                 numberOfLines={1}
@@ -1850,6 +1855,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                                   Array [
                                                     Object {
                                                       "fontSize": 14,
+                                                      "lineHeight": 21,
                                                     },
                                                     Object {
                                                       "color": "#475A6D",
@@ -1872,6 +1878,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                                 fontStyle={
                                                   Object {
                                                     "fontSize": 14,
+                                                    "lineHeight": 21,
                                                   }
                                                 }
                                                 numberOfLines={2}
@@ -1879,6 +1886,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                                   Array [
                                                     Object {
                                                       "fontSize": 14,
+                                                      "lineHeight": 21,
                                                     },
                                                     Object {
                                                       "color": "#475A6D",
