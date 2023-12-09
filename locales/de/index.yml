@@ -648,7 +648,7 @@ authentication:
     identity-check: "Wir werden dich nur einmal im Jahr oder wenn du dich aus der App ausloggst auffordern, dich mit SPID oder CIE neu zu authentifizieren."
     security-suggests: "Sicherheitstipps"
     passcode: "Nach der ersten Anmeldung mit SPID oder CIE kannst du die App nur noch mit dem Entsperrcode oder biometrischen Daten öffnen."
-    notification: "Jedes Mal, wenn du dich über SPID oder CIE bei der App anmeldest, wirst du per E-Mail benachrichtigt."
+    notification: "Jedes Mal, wenn du dich mit SPID oder CIE bei der App anmeldest, wirst du per E-Mail benachrichtigt."
     button-accept-lv: "Ja, Schnellzugriff einrichten"
     button-decline-lv: "Nein, ich möchte mich alle 30 Tage neu anmelden"
     fingerprint: "Um IO zu öffnen benötigst du deinen Entsperrcode oder deine biometrischen Daten, teile sie mit niemanden."
@@ -693,18 +693,18 @@ authentication:
   unlock:
     title: "Zugang entsperren"
     subtitlel2: "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren."
-    subtitlel3: "Um mit all deinen SPID-Anmeldedaten oder der CIE auf die App zugreifen zu können, musst du den Zugang entsperren."
+    subtitlel3: "Um mit all deinen SPID-Anmeldedaten oder deiner CIE auf die App zugreifen zu können, musst du den Zugang entsperren."
     learnmore: "Mehr erfahren"
     loginIO: "Schließen"
   unlockmodal:
     title: "Was bedeutet das?"
     description1_1: "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können."
     description1_2: "Alternativ kannst du die App auch über ein Login mit der"
-    description1_3: "höchsten Sicherheitsstufe betreten."
+    description1_3: "höchsten Sicherheitsstufe öffnen."
     description1_4: "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE."
     title2: "Wie man den Zugang zu IO entsperrst"
     listitem1: "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst."
-    listitem2_1: "Greif über das Internet auf IO zu, indem du deine SPID- oder CIE-Anmeldedaten verwendest."
+    listitem2_1: "Greif über das Internet auf IO zu, indem du deine SPID-Anmeldedaten oder deine CIE verwendest."
     listitem2_2: "Geh zur Website"
     listitem3_1: "Geh zum Abschnitt"
     listitem3_2: "IO-Zugang entsperren"
@@ -1153,12 +1153,12 @@ wallet:
         primaryAction: "Schließen"
       AUTH_ERROR:
         title: "Autorisierung verweigert"
-        subtitle: "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungs-App korrekt befolgt hast."
+        subtitle: "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast."
         primaryAction: "Schließen"
         secondaryAction: "Mehr erfahren"
       TIMEOUT:
         title: "Die Sitzung ist abgelaufen"
-        subtitle: "Zu deiner Sicherheit habst du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
+        subtitle: "Zu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
         primaryAction: "Schließen"
       CANCELED_BY_USER:
         title: "Der Vorgang wurde abgebrochen"
@@ -1753,7 +1753,7 @@ messageDetails:
     failing:
       details: "Der Anhang konnte nicht heruntergeladen werden. Bitte versuche es erneut oder öffne eine Ticket"
   banner:
-    content1: "Dies ist eine"
+    content1: "Das ist eine"
     content2: "dynamische Mitteilung:"
     content3: "der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst."
     action: "Mehr erfahren"
@@ -2026,13 +2026,13 @@ features:
         activated: "Vielen Dank, der Dienst ist aktiv!"
         error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
     details:
-      title: "Details der Mitteilung
+      title: "Details der Mitteilung"
       noticeCode: "Zahlungskodex"
       loadError:
         title: "Etwas ist schief gelaufen"
         body: "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
       cancelledMessage:
-        body: "Dieser Bescheid wurde vom Absender gelöscht. Du kannst ihren Inhalt ignorieren."
+        body: "Dieser Bescheid wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
         unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
         payments: "Zahlungen"
       paymentSection:
@@ -2043,7 +2043,7 @@ features:
         title: "Anhänge"
       f24Section:
         title: "F24-Formulare"
-        description: "Wenn du es vorziehst, kannst du diesen Bescheid über F24 bezahlen.
+        description: "Wenn du es vorziehst, kannst du diesen Bescheid über F24 bezahlen."
         showAll: "F24-Formulare anzeigen"
         bottomSheet:
           title: "Beiliegende F24-Formulare"
@@ -2058,7 +2058,7 @@ features:
           UNREACHABLE: "Empfänger nicht auffindbar"
           PAID: "Bezahlt"
           ACCEPTED: "Hinterlegt"
-          EFFECTIVE_DATE: "Abgeschlossen wegen Ablaufs der Frist"
+          EFFECTIVE_DATE: "Abgeschlossen wegen Ablaufs der Hinterlegungsfrist"
           VIEWED: "Gelesen"
           REFUSED: "VERWEIGERT"
           CANCELLED: "Annulliert"
