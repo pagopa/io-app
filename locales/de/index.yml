@@ -726,7 +726,7 @@ email:
       title: "Deine E-Mail-Adresse ändern"
       subtitleStart: "Deine E-Mail-Adresse"
       subtitleEnd: "wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
-      editButton: "E-Mail-Adresse ändern""
+      editButton: "E-Mail-Adresse ändern"
       header: 
         title: "IO konfigurieren"
       help:
