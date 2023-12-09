@@ -2100,6 +2100,8 @@ support:
     stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
     card: "Angaben zur Zahlungsmethode"
     cardValue: "Nummer (verschlüsselt), Ablaufdatum, Zahlungsnetzwerk"
+    fci: "Identifikation der Signaturanfrage"
+    fciValue: "Um die aktuelle Anfrage zu prüfen"
     prominentDisclosure: "Zugriff auf die Galerie des Geräts"
     prominentDisclosureData: "Zum Hochladen von Fotos und Screenshots"
     header: "Erstelle ein Ticket"
@@ -2121,3 +2123,86 @@ support:
       subCategory: "Kannst du uns mehr Details nennen?"
     subTitle:
       category: "Hilf uns, besser zu verstehen, wie wir dir helfen können, indem du den Bereich deines Problems auswählst: Wir werden uns so schnell wie möglich während der Geschäftszeiten bei dir melden."
+barcodeScan:
+  error: "IO kann diesen Code nicht erkennen"
+  tabs:
+    scan: "Scannen"
+    upload: "Laden"
+    input: "Eingeben"
+    a11y:
+      scan: "Scannen, 1 von 3"
+      upload: "Laden, 2 von 3"
+      input: "Eingeben, 3 von 3"
+  upload:
+    image: "Ein Bild hochladen"
+    file: "Eine Datei hochladen"
+  manual:
+    authorize: "Eine Transaktion genehmigen"
+    notice: "Eine pagoPA-Mitteilung bezahlen"
+  permissions:
+    undefined:
+      title: "Wir brauchen deine Zustimmung"
+      label: "Erlaube den Zugriff um QR-Codes mit der Kamera deines Geräts scannen zu können."
+      action: "Zugriff gewähren"
+    denied:
+      title: "Du hast den Zugriff verweigert, die Kamera zu benutzen"
+      label: "Um den Zugriff zu gewähren, geh zu den Einstellungen deines Betriebssystems."
+      action: "Zu den Einstellungen"
+  multipleResultsAlert:
+    title: "Du hast mehrere Codes gescannt"
+    body: "Scanne nur einen Code auf einmal"
+    action: "Erneut versuchen"
+unsupportedDevice:
+  warning: "Dein Gerät könnte bald nicht mehr mit IO kompatibel sein."
+  title: "Dieses Gerät ist nicht mehr kompatibel mit IO"
+  subtitle: "Stell sicher, dass dein Betriebssystem auf die neueste Version aktualisiert ist. Wenn dies bereits der Fall ist, musst du dich von einem anderen Gerät aus anmelden, um IO weiter nutzen zu können."
+  cta:
+    faq: "Warum?"
+fastLogin:
+  userInteraction:
+    sessionExpired:
+      noPin:
+        title: "Es ist zu lange her!"
+        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE authentifizieren. Anschließend kannst du die IO-Konfiguration dort fortsetzen, wo du aufgehört hast."
+        submitButtonTitle: "Fortfahren"
+      continueNavigation:
+        title: "Deine Sitzung ist abgelaufen"
+        subtitle: "Um die App weiter zu verwenden, drück auf “Fortsetzen”."
+        submitButtonTitle: "Fortsetzen"
+        cancelButtonTitle: "Abbrechen"
+      transientError:
+        title: "Wir konnten dich nicht authentifizieren"
+        subtitle: "Schließ die App und versuche es in ein paar Minuten erneut."
+        submitButtonTitle: "Zu den FAQ"
+  whatsNew:
+    title: "Wir haben den Zugang zu IO verbessert!"
+    subtitle: "Du musst dich jetzt nur noch einmal im Jahr mit Ihrer SPID oder CIE authentifizieren. Danach musst du dich nur noch mit deinem Entsperrcode oder biometrischen Merkmalen anmelden."
+    changes:
+      first:
+        title: "Einfacher"
+        description: "Zugang nur durch Eingabe des Entsperrcodes der App oder mit biometrischen Merkmalen."
+      second:
+        title: "Schneller"
+        description: "Wir werden dich nur einmal im Jahr oder wenn du dich aus der App ausloggst auffordern, dich mit SPID oder CIE zu authentifizieren."
+      third:
+        title: "Sicherer"
+        description: "Jedes Mal, wenn du dich erneut mit SPID oder CIE anmeldest, senden wir dir eine E-Mail."
+whatsNew:
+  title: "Was ändert sich?"
+transaction:
+  details:
+    title: "Details zur Transaktion"
+    totalAmount: "Insgesamt"
+    totalFee: "Der Gesamtbetrag umfasst "
+    totalFeePsp: "Provision, berechnet von {{pspName}}"
+    info:
+      title: "Informationen zur Transaktion"
+      pspName: "Zahlungsdienstleister (PSP)"
+      dateAndHour: "Datum und Uhrzeit"
+      transactionId: "Transaktions-ID"
+    operation:
+      amount: "Betrag"
+      creditor: "Gläubiger"
+      debtor: "Schuldner"
+      iuv: "IUV"
+      subject: "Zahlungsgrund"
