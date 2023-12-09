@@ -2127,11 +2127,11 @@ barcodeScan:
   error: "IO kann diesen Code nicht erkennen"
   tabs:
     scan: "Scannen"
-    upload: "Laden"
+    upload: "Hochladen"
     input: "Eingeben"
     a11y:
       scan: "Scannen, 1 von 3"
-      upload: "Laden, 2 von 3"
+      upload: "Hochladen, 2 von 3"
       input: "Eingeben, 3 von 3"
   upload:
     image: "Ein Bild hochladen"
@@ -2142,7 +2142,7 @@ barcodeScan:
   permissions:
     undefined:
       title: "Wir brauchen deine Zustimmung"
-      label: "Erlaube den Zugriff um QR-Codes mit der Kamera deines Geräts scannen zu können."
+      label: "Erlaube den Zugriff, um QR-Codes mit der Kamera deines Geräts scannen zu können."
       action: "Zugriff gewähren"
     denied:
       title: "Du hast den Zugriff verweigert, die Kamera zu benutzen"
@@ -2176,7 +2176,7 @@ fastLogin:
         submitButtonTitle: "Zu den FAQ"
   whatsNew:
     title: "Wir haben den Zugang zu IO verbessert!"
-    subtitle: "Du musst dich jetzt nur noch einmal im Jahr mit Ihrer SPID oder CIE authentifizieren. Danach musst du dich nur noch mit deinem Entsperrcode oder biometrischen Merkmalen anmelden."
+    subtitle: "Du musst dich jetzt nur noch einmal im Jahr mit deinem SPID oder deiner CIE authentifizieren. Danach brauchst du dich nur noch mit deinem Entsperrcode oder biometrischen Merkmalen anmelden."
     changes:
       first:
         title: "Einfacher"
