@@ -19,6 +19,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
+import { reloadAllMessages } from "../../../actions/messages";
 import { attachmentFromThirdPartyMessage } from "./transformers";
 
 export type ThirdPartyById = IndexedById<
@@ -43,6 +44,8 @@ export const thirdPartyByIdReducer = (
       return toSome(action.payload.id, state, action.payload.content);
     case getType(loadThirdPartyMessage.failure):
       return toError(action.payload.id, state, action.payload.error);
+    case getType(reloadAllMessages.request):
+      return initialState;
   }
   return state;
 };
