@@ -75,6 +75,7 @@ const genericErrorProps: OperationResultScreenContentProps = {
   subtitle: I18n.t("idpay.payment.result.failure.GENERIC.subtitle")
 };
 
+// TODO add missing pictograms IOBP-176
 const mapFailureToContentProps = (
   failure: PaymentFailureEnum
 ): OperationResultScreenContentProps => {

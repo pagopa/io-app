@@ -45,6 +45,7 @@ const FailureScreen = () => {
     [defaultCloseAction]
   );
 
+  // TODO add missing pictograms IOBP-176
   const mapFailureToContentProps = (
     failure: OnboardingFailureEnum
   ): OperationResultScreenContentProps => {
