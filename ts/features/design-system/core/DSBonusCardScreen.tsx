@@ -1,12 +1,8 @@
-import {
-  Body,
-  ContentWrapper,
-  H2,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert } from "react-native";
 import { BonusCardScreenComponent } from "../../../components/BonusCard";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 
 const DSBonusCardScreen = () => (
   <BonusCardScreenComponent
@@ -42,6 +38,7 @@ const DSBonusCardScreen = () => (
       accessibilityLabel: "Autorizza una transazione",
       onPress: () => Alert.alert("Autorizzata!")
     }}
+    contextualHelp={emptyContextualHelp}
   >
     <VSpacer size={16} />
     <ContentWrapper>
