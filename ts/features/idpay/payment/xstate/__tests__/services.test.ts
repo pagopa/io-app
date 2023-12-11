@@ -6,8 +6,11 @@ import {
 } from "../../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { mockIDPayClient } from "../../../common/api/__mocks__/client";
 import { Context, INITIAL_CONTEXT } from "../context";
-import { PaymentFailureEnum } from "../failure";
-import { createServicesImplementation, failureMap } from "../services";
+import { PaymentFailureEnum } from "../../types/PaymentFailure";
+import {
+  createServicesImplementation,
+  mapErrorCodeToFailure
+} from "../services";
 import {
   CodeEnum,
   TransactionErrorDTO
@@ -25,15 +28,13 @@ const T_TRANSACTION_DATA_DTO: AuthPaymentResponseDTO = {
 
 const T_CONTEXT: Context = INITIAL_CONTEXT;
 
-const possibleFailures: ReadonlyArray<{ status: number; code: CodeEnum }> = [
-  { status: 404, code: CodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED },
-  // FIXME::ERROR_HANDLING [IOBP-379] will be handled correctly in upcoming error management PR
-  // { status: 403, code: CodeEnum.PAYMENT_USER_NOT_VALID },
-  // { status: 400, code: CodeEnum.PAYMENT_STATUS_NOT_VALID },
-  { status: 403, code: CodeEnum.PAYMENT_BUDGET_EXHAUSTED },
-  { status: 403, code: CodeEnum.PAYMENT_GENERIC_REJECTED },
-  { status: 429, code: CodeEnum.PAYMENT_TOO_MANY_REQUESTS },
-  { status: 500, code: CodeEnum.PAYMENT_GENERIC_ERROR }
+// This object maps status code to possibile failures
+const possibleFailures: ReadonlyArray<[number, CodeEnum]> = [
+  [404, CodeEnum.PAYMENT_NOT_FOUND_OR_EXPIRED],
+  [403, CodeEnum.PAYMENT_BUDGET_EXHAUSTED],
+  [403, CodeEnum.PAYMENT_GENERIC_REJECTED],
+  [429, CodeEnum.PAYMENT_TOO_MANY_REQUESTS],
+  [500, CodeEnum.PAYMENT_GENERIC_ERROR]
 ];
 
 describe("IDPay Payment machine services", () => {
@@ -75,8 +76,11 @@ describe("IDPay Payment machine services", () => {
       );
     });
 
-    possibleFailures.forEach(({ status, code }) => {
-      it(`should get a ${code} failure if status code is ${status}`, async () => {
+    test.each(possibleFailures)(
+      "when status code is %s it should get a %s failure",
+      async (status, code) => {
+        const T_FAILURE = mapErrorCodeToFailure(code);
+
         const response: E.Either<
           Error,
           { status: number; value?: TransactionErrorDTO }
@@ -92,7 +96,7 @@ describe("IDPay Payment machine services", () => {
             ...T_CONTEXT,
             trxCode: O.some(T_TRX_CODE)
           })
-        ).rejects.toStrictEqual(failureMap[code]);
+        ).rejects.toStrictEqual(T_FAILURE);
 
         expect(mockIDPayClient.putPreAuthPayment).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -100,8 +104,8 @@ describe("IDPay Payment machine services", () => {
             trxCode: T_TRX_CODE
           })
         );
-      });
-    });
+      }
+    );
   });
 
   describe("authorizePayment", () => {
@@ -136,8 +140,11 @@ describe("IDPay Payment machine services", () => {
       );
     });
 
-    possibleFailures.forEach(({ status, code }) => {
-      it(`should get a ${code} failure if status code is ${status}`, async () => {
+    test.each(possibleFailures)(
+      "when status code is %s it should get a %s failure",
+      async (status, code) => {
+        const T_FAILURE = mapErrorCodeToFailure(code);
+
         const response: E.Either<
           Error,
           { status: number; value?: TransactionErrorDTO }
@@ -153,7 +160,7 @@ describe("IDPay Payment machine services", () => {
             ...T_CONTEXT,
             transactionData: O.some(T_TRANSACTION_DATA_DTO)
           })
-        ).rejects.toStrictEqual(failureMap[code]);
+        ).rejects.toStrictEqual(T_FAILURE);
 
         expect(mockIDPayClient.putAuthPayment).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -161,8 +168,8 @@ describe("IDPay Payment machine services", () => {
             trxCode: T_TRX_CODE
           })
         );
-      });
-    });
+      }
+    );
   });
 
   describe("deletePayment", () => {
@@ -195,8 +202,11 @@ describe("IDPay Payment machine services", () => {
       );
     });
 
-    possibleFailures.forEach(({ status, code }) => {
-      it(`should get a ${code} failure if status code is ${status}`, async () => {
+    test.each(possibleFailures)(
+      "when status code is %s it should get a %s failure",
+      async (status, code) => {
+        const T_FAILURE = mapErrorCodeToFailure(code);
+
         const response: E.Either<
           Error,
           { status: number; value?: TransactionErrorDTO }
@@ -212,7 +222,7 @@ describe("IDPay Payment machine services", () => {
             ...T_CONTEXT,
             transactionData: O.some(T_TRANSACTION_DATA_DTO)
           })
-        ).rejects.toStrictEqual(failureMap[code]);
+        ).rejects.toStrictEqual(T_FAILURE);
 
         expect(mockIDPayClient.deletePayment).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -220,7 +230,7 @@ describe("IDPay Payment machine services", () => {
             trxCode: T_TRX_CODE
           })
         );
-      });
-    });
+      }
+    );
   });
 });
