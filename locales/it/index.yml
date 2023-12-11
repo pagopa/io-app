@@ -756,7 +756,7 @@ email:
       subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
       editButton: Modifica email
       validateButton: Conferma email
-      header: 
+      header:
         title: Configura IO
       help:
         body: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email.
@@ -765,7 +765,7 @@ email:
       subtitleStart: Il tuo indirizzo email
       subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
       editButton: Modifica email
-      header: 
+      header:
         title: Configura IO
       help:
         body: Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
@@ -3304,7 +3304,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        validUpTo: "Vale fino a " 
+        validUpTo: "Vale fino a "
         expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
         expired:
@@ -3824,11 +3824,16 @@ fastLogin:
         description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
 whatsNew:
   title: Cosa cambia?
+bonusCard:
+  validUntil: Valida fino al {{endDate}}
+  expiring: Scade il {{endDate}}
+  paused: In pausa
+  removed: Rimossa
 transaction:
   details:
     title: Dettaglio operazione
     totalAmount: Totale
-    totalFee: Il totale comprende 
+    totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
     info:
       title: Informazioni sulla transazione
