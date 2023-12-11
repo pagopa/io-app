@@ -24,6 +24,7 @@ export type PropertyToUpdate<K> = {
 export const loginSessionConfigHandler = (
   state: GlobalState
 ): LoginSessionDuration => {
+  // FIXME -> control if this selector is correct
   const optInState = fastLoginOptInSelector(state).enabled;
   switch (optInState) {
     case undefined:
