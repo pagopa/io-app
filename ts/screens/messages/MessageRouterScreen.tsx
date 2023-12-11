@@ -13,7 +13,8 @@ import { trackOpenMessage } from "../../features/messages/analytics";
 import {
   blockedFromPushNotificationSelector,
   messageSuccessDataSelector,
-  showSpinnerFromMessageGetStatusSelector
+  showSpinnerFromMessageGetStatusSelector,
+  thirdPartyMessageDetailsErrorSelector
 } from "../../store/reducers/entities/messages/messageGetStatus";
 import {
   cancelGetMessageDataAction,
@@ -42,6 +43,9 @@ export const MessageRouterScreen = (
   const navigation = useNavigation();
   const isFirstRendering = useRef(true);
   const showSpinner = useIOSelector(showSpinnerFromMessageGetStatusSelector);
+  const thirdPartyMessageDetailsError = useIOSelector(
+    thirdPartyMessageDetailsErrorSelector
+  );
   const messageSuccessDataOrUndefined = useIOSelector(
     messageSuccessDataSelector
   );
@@ -144,7 +148,16 @@ export const MessageRouterScreen = (
       contextualHelp={emptyContextualHelp}
     >
       <LoadingErrorComponent
-        errorText={I18n.t("global.genericError")}
+        errorText={
+          thirdPartyMessageDetailsError
+            ? I18n.t("messageDetails.remoteContentError.title")
+            : I18n.t("global.genericError")
+        }
+        errorSubText={
+          thirdPartyMessageDetailsError
+            ? I18n.t("messageDetails.remoteContentError.body")
+            : undefined
+        }
         isLoading={showSpinner}
         loadingCaption={I18n.t("messageDetails.loadingText")}
         onAbort={onCancelCallback}

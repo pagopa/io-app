@@ -3,7 +3,10 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { loadMessageDetails } from "../../../actions/messages";
+import {
+  loadMessageDetails,
+  reloadAllMessages
+} from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -52,6 +55,7 @@ const reducer = (
     }
 
     case getType(clearCache):
+    case getType(reloadAllMessages.request):
       return INITIAL_STATE;
 
     default:
