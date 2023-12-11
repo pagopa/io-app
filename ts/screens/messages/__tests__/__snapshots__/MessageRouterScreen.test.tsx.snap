@@ -1962,6 +1962,13 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                   >
                                     There is a temporary problem, please try again.
                                   </Text>
+                                  <View
+                                    style={
+                                      Object {
+                                        "height": 16,
+                                      }
+                                    }
+                                  />
                                   <Text
                                     accessible={false}
                                     color="bluegrey"
