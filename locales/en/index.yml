@@ -1809,6 +1809,14 @@ messageDetails:
       thirdPart: " for more information."
     failing:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
+  banner:
+    content1: "Questo è un"
+    content2: "messaggio dinamico:"
+    content3: "il contenuto potrebbe cambiare nel tempo per darti informazioni aggiornate."
+    action: "Scopri di più"
+  bottomSheet:
+    title: "Cos'è un messaggio dinamico?"
+    body: "L'Ente mittente potrebbe aggiornare il contenuto di questo messaggio anche dopo l'invio, per assicurare che le informazioni siano sempre accurate e rilevanti.\n\n Questa operazione avviene in casi specifici, come l'aggiornamento di informazioni obsolete o di allegati non più validi.\n\n Se l'Ente deve invece comunicarti nuove informazioni o aggiornamenti importanti, lo farà tramite un nuovo messaggio."
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"

@@ -1,5 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { testable } from "../handleLoadMessageData";
 import {
   UIMessage,
@@ -24,6 +25,8 @@ import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { getMessageDataAction } from "../../actions";
 import * as config from "../../../../config";
 import { isLoadingOrUpdatingInbox } from "../../../../store/reducers/entities/messages/allPaginated";
+import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
 // eslint-disable-next-line functional/immutable-data
 Object.defineProperty(config, "euCovidCertificateEnabled", { value: true });
@@ -210,10 +213,24 @@ describe("getMessageDetails", () => {
 describe("getThirdPartyDataMessage", () => {
   it("should dispatch a loadThirdPartyMessage.request and return the third party message when the related saga succeeds ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "s1" as ServiceId;
+    const messageCategoryTag = "GENERIC";
     const thirdPartyMessage = { id: "1" } as ThirdPartyMessageWithContent;
-    testSaga(testable!.getThirdPartyDataMessage, messageId)
+    testSaga(
+      testable!.getThirdPartyDataMessage,
+      messageId,
+      false,
+      serviceId,
+      messageCategoryTag
+    )
       .next()
-      .put(loadThirdPartyMessage.request(messageId))
+      .put(
+        loadThirdPartyMessage.request({
+          id: messageId,
+          serviceId,
+          tag: messageCategoryTag
+        })
+      )
       .next()
       .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
       .next(
@@ -224,13 +241,35 @@ describe("getThirdPartyDataMessage", () => {
       )
       .select(thirdPartyFromIdSelector, messageId)
       .next(pot.some(thirdPartyMessage))
+      .call(
+        testable!.decodeAndTrackThirdPartyMessageDetailsIfNeeded,
+        false,
+        thirdPartyMessage,
+        serviceId,
+        messageCategoryTag
+      )
+      .next(O.none)
       .returns(thirdPartyMessage);
   });
   it("should dispatch a loadThirdPartyMessage.request and return undefined when the related saga fails ", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
-    testSaga(testable!.getThirdPartyDataMessage, messageId)
+    const serviceId = "s1" as ServiceId;
+    const messageCategoryTag = "GENERIC";
+    testSaga(
+      testable!.getThirdPartyDataMessage,
+      messageId,
+      false,
+      serviceId,
+      messageCategoryTag
+    )
       .next()
-      .put(loadThirdPartyMessage.request(messageId))
+      .put(
+        loadThirdPartyMessage.request({
+          id: messageId,
+          serviceId,
+          tag: messageCategoryTag
+        })
+      )
       .next()
       .take([loadThirdPartyMessage.success, loadThirdPartyMessage.failure])
       .next(
@@ -311,17 +350,117 @@ describe("dispatchSuccessAction", () => {
       category: { tag: TagEnum.PN }
     } as UIMessage;
     const messageDetails = {} as UIMessageDetails;
+    const thirdPartyMessage = {
+      third_party_message: {
+        attachments: [{} as ThirdPartyAttachment]
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
     const expectedOutput = {
+      containsAttachments: true,
       containsPayment: undefined,
       euCovidCerficateAuthCode: undefined,
       firstTimeOpening: !isRead,
+      hasRemoteContent: true,
       isPNMessage: true,
       messageId,
       organizationName,
       serviceId,
       serviceName
     };
-    testSaga(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      thirdPartyMessage
+    )
+      .next()
+      .select(isPnEnabledSelector)
+      .next(true)
+      .put(getMessageDataAction.success(expectedOutput))
+      .next()
+      .isDone();
+  });
+  it("should properly report a Third Party message with attachments", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "s1" as ServiceId;
+    const serviceName = "serName";
+    const organizationName = "orgName";
+    const isRead = true;
+    const paginatedMessage = {
+      id: messageId,
+      serviceId,
+      organizationName,
+      serviceName,
+      isRead,
+      category: { tag: "GENERIC" }
+    } as UIMessage;
+    const messageDetails = {} as UIMessageDetails;
+    const thirdPartyMessage = {
+      third_party_message: {
+        attachments: [{} as ThirdPartyAttachment]
+      } as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+    const expectedOutput = {
+      containsAttachments: true,
+      containsPayment: false,
+      euCovidCerficateAuthCode: undefined,
+      firstTimeOpening: !isRead,
+      hasRemoteContent: true,
+      isPNMessage: false,
+      messageId,
+      organizationName,
+      serviceId,
+      serviceName
+    };
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      thirdPartyMessage
+    )
+      .next()
+      .select(isPnEnabledSelector)
+      .next(true)
+      .put(getMessageDataAction.success(expectedOutput))
+      .next()
+      .isDone();
+  });
+  it("should properly report a Third Party message with no attachments", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "s1" as ServiceId;
+    const serviceName = "serName";
+    const organizationName = "orgName";
+    const isRead = true;
+    const paginatedMessage = {
+      id: messageId,
+      serviceId,
+      organizationName,
+      serviceName,
+      isRead,
+      category: { tag: "GENERIC" }
+    } as UIMessage;
+    const messageDetails = {} as UIMessageDetails;
+    const thirdPartyMessage = {
+      third_party_message: {} as ThirdPartyMessage
+    } as ThirdPartyMessageWithContent;
+    const expectedOutput = {
+      containsAttachments: false,
+      containsPayment: false,
+      euCovidCerficateAuthCode: undefined,
+      firstTimeOpening: !isRead,
+      hasRemoteContent: true,
+      isPNMessage: false,
+      messageId,
+      organizationName,
+      serviceId,
+      serviceName
+    };
+    testSaga(
+      testable!.dispatchSuccessAction,
+      paginatedMessage,
+      messageDetails,
+      thirdPartyMessage
+    )
       .next()
       .select(isPnEnabledSelector)
       .next(true)
@@ -345,9 +484,11 @@ describe("dispatchSuccessAction", () => {
     } as UIMessage;
     const messageDetails = {} as UIMessageDetails;
     const expectedOutput = {
+      containsAttachments: false,
       containsPayment: false,
       euCovidCerficateAuthCode: undefined,
       firstTimeOpening: !isRead,
+      hasRemoteContent: false,
       isPNMessage: false,
       messageId,
       organizationName,
@@ -378,9 +519,11 @@ describe("dispatchSuccessAction", () => {
     } as UIMessage;
     const messageDetails = { paymentData: {} } as UIMessageDetails;
     const expectedOutput = {
+      containsAttachments: false,
       containsPayment: true,
       euCovidCerficateAuthCode: undefined,
       firstTimeOpening: !isRead,
+      hasRemoteContent: false,
       isPNMessage: false,
       messageId,
       organizationName,
@@ -414,9 +557,11 @@ describe("dispatchSuccessAction", () => {
       euCovidCertificate: { authCode }
     } as UIMessageDetails;
     const expectedOutput = {
+      containsAttachments: false,
       containsPayment: false,
       euCovidCerficateAuthCode: authCode,
       firstTimeOpening: !isRead,
+      hasRemoteContent: false,
       isPNMessage: false,
       messageId,
       organizationName,
@@ -552,10 +697,11 @@ describe("loadMessageData", () => {
   it("should dispatch a getMessageDataAction.failure if thirdPartyMessageDetails returns a failure", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const serviceId = "s1" as ServiceId;
+    const tag = "GENERIC";
     const paginatedMessage = {
       id: messageId,
       serviceId,
-      category: { tag: "GENERIC" },
+      category: { tag },
       hasPrecondition: false
     } as UIMessage;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
@@ -576,7 +722,13 @@ describe("loadMessageData", () => {
       .next()
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
-      .call(testable!.getThirdPartyDataMessage, messageId)
+      .call(
+        testable!.getThirdPartyDataMessage,
+        messageId,
+        false,
+        serviceId,
+        tag
+      )
       .next(undefined)
       .put(getMessageDataAction.failure({ phase: "thirdPartyMessageDetails" }))
       .next()
@@ -585,10 +737,11 @@ describe("loadMessageData", () => {
   it("should dispatch a getMessageDataAction.failure if setMessageReadIfNeeded returns a failure (having retrieved third party data successfully)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const serviceId = "s1" as ServiceId;
+    const tag = "GENERIC";
     const paginatedMessage = {
       id: messageId,
       serviceId,
-      category: { tag: "GENERIC" },
+      category: { tag },
       hasPrecondition: false
     } as UIMessage;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
@@ -610,7 +763,13 @@ describe("loadMessageData", () => {
       .next()
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
-      .call(testable!.getThirdPartyDataMessage, messageId)
+      .call(
+        testable!.getThirdPartyDataMessage,
+        messageId,
+        false,
+        serviceId,
+        tag
+      )
       .next(thirdPartyMessage)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(undefined)
@@ -651,13 +810,14 @@ describe("loadMessageData", () => {
       .next()
       .isDone();
   });
-  it("should call dispatchSuccessAction when it succeed (having retrieved third party data successfully)", () => {
+  it("should call dispatchSuccessAction when it succeed (having retrieved third party data successfully for a remoted content message)", () => {
     const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
     const serviceId = "s1" as ServiceId;
+    const tag = "GENERIC";
     const paginatedMessage = {
       id: messageId,
       serviceId,
-      category: { tag: "GENERIC" },
+      category: { tag },
       hasPrecondition: false
     } as UIMessage;
     const messageDetails = { hasThirdPartyData: true } as UIMessageDetails;
@@ -679,7 +839,50 @@ describe("loadMessageData", () => {
       .next()
       .call(testable!.getMessageDetails, messageId)
       .next(messageDetails)
-      .call(testable!.getThirdPartyDataMessage, messageId)
+      .call(
+        testable!.getThirdPartyDataMessage,
+        messageId,
+        false,
+        serviceId,
+        tag
+      )
+      .next(thirdPartyMessage)
+      .call(testable!.setMessageReadIfNeeded, paginatedMessage)
+      .next(true)
+      .call(testable!.dispatchSuccessAction, paginatedMessage, messageDetails)
+      .next()
+      .isDone();
+  });
+  it("should call dispatchSuccessAction when it succeed (having retrieved third party data successfully for a PN message)", () => {
+    const messageId = "01HGP8EMP365Y7ANBNK8AJ87WD" as UIMessageId;
+    const serviceId = "s1" as ServiceId;
+    const tag = "PN";
+    const paginatedMessage = {
+      id: messageId,
+      serviceId,
+      category: { tag },
+      hasPrecondition: true
+    } as UIMessage;
+    const messageDetails = {} as UIMessageDetails;
+    const thirdPartyMessage = {} as ThirdPartyMessageWithContent;
+    testSaga(testable!.loadMessageData, {
+      messageId,
+      fromPushNotification: false
+    })
+      .next()
+      .select(isLoadingOrUpdatingInbox)
+      .next(true)
+      .delay(500)
+      .next()
+      .select(isLoadingOrUpdatingInbox)
+      .next(false)
+      .call(testable!.getPaginatedMessage, messageId)
+      .next(paginatedMessage)
+      .call(testable!.getService, serviceId)
+      .next()
+      .call(testable!.getMessageDetails, messageId)
+      .next(messageDetails)
+      .call(testable!.getThirdPartyDataMessage, messageId, true, serviceId, tag)
       .next(thirdPartyMessage)
       .call(testable!.setMessageReadIfNeeded, paginatedMessage)
       .next(true)
