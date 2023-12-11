@@ -24,9 +24,9 @@ import { CredentialType, getPidDisplayData } from "../../utils/mocks";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
-import { itwPidValueSelector } from "../../store/reducers/itwPidReducer";
 import { PidResponse } from "../../utils/types";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
+import { ItwCredentialsPidSelector } from "../../store/reducers/itwCredentialsReducer";
 
 export type ContentViewParams = {
   decodedPid: PidWithToken;
@@ -39,7 +39,7 @@ export type ContentViewParams = {
 const ItwPrPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const decodedPid = useIOSelector(itwDecodedPidValueSelector);
-  const pid = useIOSelector(itwPidValueSelector);
+  const pid = useIOSelector(ItwCredentialsPidSelector);
   const pidDisplayData = getPidDisplayData();
   const bannerViewRef = React.createRef<View>();
   const spacerSize = 32;
