@@ -97,7 +97,8 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
       "birthdate",
       "accompanying_person_right",
       "expiration_date",
-      "serial_number"
+      "serial_number",
+      "evidence"
     ]
   },
   {
@@ -120,7 +121,8 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
       "province",
       "nation",
       "institution_number_team",
-      "document_number_team"
+      "document_number_team",
+      "evidence"
     ]
   },
   {
