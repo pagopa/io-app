@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as config from "../config";
 import { SessionToken } from "../types/SessionToken";
+import { trackLoginSpidError } from "../screens/authentication/analytics/spidAnalytics";
 import { isStringNullyOrEmpty } from "./strings";
 /**
  * Helper functions for handling the SPID login flow through a webview.
@@ -63,6 +64,7 @@ export const extractLoginResult = (url: string): LoginResult | undefined => {
   // LOGIN_FAILURE
   if (urlParse.pathname.includes(LOGIN_FAILURE_PAGE)) {
     const errorCode = urlParse.query.errorCode;
+    trackLoginSpidError(errorCode);
     return {
       success: false,
       errorCode: isStringNullyOrEmpty(errorCode) ? undefined : errorCode

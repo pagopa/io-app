@@ -42,6 +42,8 @@ describe("authenticationSaga", () => {
       .next()
       .call(stopCieManager)
       .next()
+      .next(false) // fastloginSelector
+      .next({ _tag: "some" }) // idpSelector
       .put(analyticsAuthenticationCompleted())
       .next()
       .returns(aSessionToken);

@@ -1,34 +1,46 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
-import {
-  put,
-  select,
-  takeEvery,
-  takeLatest,
-  call
-} from "typed-redux-saga/macro";
+import { put, takeLatest, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../api/backend";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import { toPNMessage } from "../../features/pn/store/types/transformers";
-import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
-import { getError } from "../../utils/errors";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
 } from "../../features/pn/analytics";
-import { trackThirdPartyMessageAttachmentCount } from "../../features/messages/analytics";
+import {
+  trackRemoteContentLoadFailure,
+  trackRemoteContentLoadRequest,
+  trackRemoteContentLoadSuccess,
+  trackThirdPartyMessageAttachmentCount
+} from "../../features/messages/analytics";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../types/utils";
+import { unknownToReason } from "../../features/messages/utils";
+import { ThirdPartyMessageWithContent } from "../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { TagEnum } from "../../../definitions/backend/MessageCategoryPN";
+
+export function* watchThirdPartyMessageSaga(
+  client: BackendClient
+): SagaIterator {
+  yield* takeLatest(
+    getType(loadThirdPartyMessage.request),
+    getThirdPartyMessage,
+    client
+  );
+}
 
 function* getThirdPartyMessage(
   client: BackendClient,
   action: ActionType<typeof loadThirdPartyMessage.request>
 ) {
-  const id = action.payload;
+  const { id, serviceId, tag } = action.payload;
+  trackRemoteContentLoadRequest(tag);
+
   const getThirdPartyMessage = client.getThirdPartyMessage();
 
   try {
@@ -38,40 +50,33 @@ function* getThirdPartyMessage(
       action
     )) as unknown as SagaCallReturnType<typeof getThirdPartyMessage>;
     if (E.isLeft(result)) {
-      yield* put(
-        loadThirdPartyMessage.failure({
-          id,
-          error: new Error(readableReport(result.left))
-        })
-      );
+      const reason = readableReport(result.left);
+      throw new Error(reason);
     } else if (result.right.status === 200) {
+      const thirdPartyMessage = result.right.value;
+      yield* call(trackSuccess, thirdPartyMessage, tag);
       yield* put(
-        loadThirdPartyMessage.success({ id, content: result.right.value })
+        loadThirdPartyMessage.success({ id, content: thirdPartyMessage })
       );
     } else {
-      yield* put(
-        loadThirdPartyMessage.failure({
-          id,
-          error: new Error(`response status ${result.right.status}`)
-        })
-      );
+      const reason = `Response status ${result.right.status} - ${
+        result.right.value?.detail || "no detail field provided"
+      }`;
+      throw new Error(reason);
     }
-  } catch (e) {
-    yield* put(loadThirdPartyMessage.failure({ id, error: getError(e) }));
+  } catch (error) {
+    const reason = unknownToReason(error);
+    yield* call(trackFailure, reason, serviceId, tag);
+    yield* put(loadThirdPartyMessage.failure({ id, error: new Error(reason) }));
   }
 }
 
-function* trackSuccess(
-  action: ActionType<typeof loadThirdPartyMessage.success>
-) {
-  const messageFromApi = action.payload.content;
-  const messageId = messageFromApi.id;
-
-  const message = pot.toUndefined(
-    yield* select(getPaginatedMessageById, messageId)
-  );
-
-  if (message?.category.tag === "PN") {
+const trackSuccess = (
+  messageFromApi: ThirdPartyMessageWithContent,
+  tag: string
+) => {
+  trackRemoteContentLoadSuccess(tag);
+  if (tag === TagEnum.PN) {
     const pnMessageOption = toPNMessage(messageFromApi);
 
     if (O.isSome(pnMessageOption)) {
@@ -85,31 +90,12 @@ function* trackSuccess(
     const attachmentCount = attachments?.length ?? 0;
     trackThirdPartyMessageAttachmentCount(attachmentCount);
   }
-}
+};
 
-function* trackFailure(
-  action: ActionType<typeof loadThirdPartyMessage.failure>
-) {
-  const messageId = action.payload.id;
-  const message = pot.toUndefined(
-    yield* select(getPaginatedMessageById, messageId)
-  );
+const trackFailure = (reason: string, serviceId: ServiceId, tag: string) => {
+  trackRemoteContentLoadFailure(serviceId, tag, reason);
 
-  if (message?.category.tag === "PN") {
-    const errorCode = action.payload.error.message;
-    trackPNNotificationLoadError(errorCode);
+  if (tag === TagEnum.PN) {
+    trackPNNotificationLoadError(reason);
   }
-}
-
-export function* watchThirdPartyMessageSaga(
-  client: BackendClient
-): SagaIterator {
-  yield* takeLatest(
-    getType(loadThirdPartyMessage.request),
-    getThirdPartyMessage,
-    client
-  );
-
-  yield* takeEvery(getType(loadThirdPartyMessage.success), trackSuccess);
-  yield* takeEvery(getType(loadThirdPartyMessage.failure), trackFailure);
-}
+};
