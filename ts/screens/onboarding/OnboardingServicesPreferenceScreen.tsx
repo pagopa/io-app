@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { connect } from "react-redux";
+import { connect, useStore } from "react-redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { InfoBox } from "../../components/box/InfoBox";
@@ -28,6 +28,12 @@ import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { showToast } from "../../utils/showToast";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import {
+  trackServiceConfiguration,
+  trackServiceConfigurationScreen
+} from "../profile/analytics";
+import { getFlowType } from "../../utils/analytics";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -54,9 +60,20 @@ const OnboardingServicesPreferenceScreen = (
 
   const { profileServicePreferenceMode, potProfile, onContinue } = props;
 
+  useOnFirstRender(() => {
+    trackServiceConfigurationScreen(getFlowType(true, isFirstOnboarding));
+  });
+
+  const store = useStore();
+
   React.useEffect(() => {
     // when the user made a choice (the profile is right updated), continue to the next step
     if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
+      void trackServiceConfiguration(
+        profileServicePreferenceMode,
+        getFlowType(true, isFirstOnboarding),
+        store.getState()
+      );
       onContinue(isFirstOnboarding);
       return;
     }
@@ -71,7 +88,8 @@ const OnboardingServicesPreferenceScreen = (
     prevPotProfile,
     potProfile,
     profileServicePreferenceMode,
-    onContinue
+    onContinue,
+    store
   ]);
 
   const handleOnContinue = () => {

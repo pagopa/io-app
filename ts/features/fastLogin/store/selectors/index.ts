@@ -19,7 +19,7 @@ export const isEmailUniquenessValidationEnabledSelector = createSelector(
     })
 );
 
-const fastLoginOptInSelector = (state: GlobalState) =>
+export const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
 
 /**
