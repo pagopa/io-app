@@ -64,6 +64,11 @@ import {
 } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
+import {
+  trackCieLoginSelected,
+  trackMethodInfo,
+  trackSpidLoginSelected
+} from "./analytics";
 
 type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
 
@@ -167,7 +172,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const IdpCIE: SpidIdp = {
+export const IdpCIE: SpidIdp = {
   id: "cie",
   name: "CIE",
   logo: "",
@@ -228,6 +233,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
     });
 
   private navigateToIdpSelection = () => {
+    trackSpidLoginSelected();
     if (this.props.isFastLoginOptInFFEnabled) {
       this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_OPT_IN,
@@ -242,6 +248,7 @@ class LandingScreen extends React.PureComponent<Props, State> {
 
   private navigateToCiePinScreen = () => {
     if (this.isCieSupported()) {
+      void trackCieLoginSelected(this.props.state);
       this.props.dispatchIdpCieSelected();
       if (this.props.isFastLoginOptInFFEnabled) {
         this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
@@ -258,6 +265,11 @@ class LandingScreen extends React.PureComponent<Props, State> {
     }
   };
 
+  private navigateToSpidCieInformationRequest = () => {
+    trackMethodInfo();
+    openWebUrl(cieSpidMoreInfoUrl);
+  };
+
   private navigateToCieUatSelectionScreen = () => {
     if (this.isCieSupported()) {
       this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
@@ -265,9 +277,6 @@ class LandingScreen extends React.PureComponent<Props, State> {
       });
     }
   };
-
-  private navigateToSpidCieInformationRequest = () =>
-    openWebUrl(cieSpidMoreInfoUrl);
 
   private renderCardComponents = () => {
     const cardProps = getCards(this.isCieSupported());
@@ -451,7 +460,8 @@ const mapStateToProps = (state: GlobalState) => {
     isCieSupported: pot.getOrElse(isCIEAuthenticationSupported, false),
     hasCieApiLevelSupport: pot.getOrElse(hasApiLevelSupport, false),
     hasCieNFCFeature: pot.getOrElse(hasNFCFeature, false),
-    isCieUatEnabled: isCieLoginUatEnabledSelector(state)
+    isCieUatEnabled: isCieLoginUatEnabledSelector(state),
+    state
   };
 };
 

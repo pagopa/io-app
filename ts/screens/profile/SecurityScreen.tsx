@@ -25,6 +25,11 @@ import {
   mayUserActivateBiometric
 } from "../../utils/biometrics";
 import { showToast } from "../../utils/showToast";
+import {
+  trackBiometricActivationAccepted,
+  trackBiometricActivationDeclined
+} from "../onboarding/biometric&securityChecks/analytics";
+import { getFlowType } from "../../utils/analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -91,16 +96,21 @@ const SecurityScreen = (): React.ReactElement => {
 
   const setBiometricPreference = (biometricPreference: boolean): void => {
     if (biometricPreference) {
-      // if user asks to enable biometric then call enable action directly
       void mayUserActivateBiometric()
-        .then(_ => setFingerprintPreference(biometricPreference))
+        .then(_ => {
+          trackBiometricActivationAccepted(getFlowType(false, false));
+          setFingerprintPreference(biometricPreference);
+        })
         .catch(_ => undefined);
 
       return;
     }
     // if user asks to disable biometric recnognition is required to proceed
     void biometricAuthenticationRequest(
-      () => setFingerprintPreference(biometricPreference),
+      () => {
+        trackBiometricActivationDeclined(getFlowType(false, false));
+        setFingerprintPreference(biometricPreference);
+      },
       _ =>
         showToast(
           I18n.t(

@@ -56,6 +56,11 @@ import { isDevEnv } from "../../../utils/environment";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 import { getCieUatEndpoint } from "../../../features/cieLogin/utils/endpoints";
+import {
+  trackLoginCieCardReaderScreen,
+  trackLoginCieCardReadingError,
+  trackLoginCieCardReadingSuccess
+} from "../analytics/cieAnalytics";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -187,6 +192,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
   );
   constructor(props: Props) {
     super(props);
+    trackLoginCieCardReaderScreen();
     this.state = {
       /*
       These are the states that can occur when reading the cie (from SDK)
@@ -358,6 +364,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
+    trackLoginCieCardReadingError();
     handleSendAssistanceLog(this.choosenTool, error.message);
     this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
@@ -371,6 +378,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
+          trackLoginCieCardReadingSuccess();
           this.props.navigation.navigate(ROUTES.AUTHENTICATION, {
             screen: ROUTES.CIE_CONSENT_DATA_USAGE,
             params: {
