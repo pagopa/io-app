@@ -11,6 +11,11 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { useIOSelector } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { getFlowType } from "../../../utils/analytics";
+import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -24,6 +29,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const MissingDeviceBiometricScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
+  useOnFirstRender(() => {
+    trackBiometricConfigurationEducationalScreen(
+      getFlowType(true, isFirstOnBoarding)
+    );
+  });
 
   const handleGoBack = () =>
     Alert.alert(

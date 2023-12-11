@@ -18,6 +18,15 @@ import { GlobalState } from "../../store/reducers/types";
 import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
 import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
+import { useIOSelector } from "../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
+import { trackMixpanelScreen } from "../profile/analytics";
+import {
+  trackMixpanelDeclined,
+  trackMixpanelSetEnabled
+} from "../profile/analytics/mixpanel/mixpanelAnalytics";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -25,7 +34,16 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
   const dispatch = useDispatch();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
+    const flow = getFlowType(true, isFirstOnBoarding);
+    trackMixpanelDeclined(flow);
+    trackMixpanelSetEnabled(false, flow);
     props.setMixpanelEnabled(false);
+  });
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
+  useOnFirstRender(() => {
+    trackMixpanelScreen(getFlowType(true, isFirstOnBoarding));
   });
 
   const executeAbortOnboarding = () => {
@@ -73,7 +91,13 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
             I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
           )}
           rightButton={confirmButtonProps(
-            () => props.setMixpanelEnabled(true),
+            () => {
+              trackMixpanelSetEnabled(
+                true,
+                getFlowType(true, isFirstOnBoarding)
+              );
+              props.setMixpanelEnabled(true);
+            },
             I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
             undefined,
             "share-data-confirm-button"
