@@ -50,19 +50,15 @@ import {
   migrateToPaginatedMessages,
   removeMessages
 } from "../actions/messages";
-import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure,
   updateNotificationsInstallationToken
 } from "../actions/notifications";
-import { tosAccepted } from "../actions/onboarding";
-import { createPinSuccess } from "../actions/pinset";
 import {
   profileFirstLogin,
   profileLoadFailure,
   profileLoadRequest,
-  profileLoadSuccess,
   profileUpsert,
   removeAccountMotivation
 } from "../actions/profile";
@@ -128,13 +124,6 @@ const trackAction =
       case getType(applicationChangeState):
         return mp.track("APP_STATE_CHANGE", {
           APPLICATION_STATE_NAME: action.payload
-        });
-      //
-      // Onboarding (with properties)
-      //
-      case getType(tosAccepted):
-        return mp.track(action.type, {
-          acceptedTosVersion: action.payload
         });
       //
       // Authentication actions (with properties)
@@ -328,12 +317,9 @@ const trackAction =
       case getType(identificationFailure):
       case getType(identificationPinReset):
       case getType(identificationForceLogout):
-      // onboarding
-      case getType(createPinSuccess):
       // profile
       case getType(profileUpsert.success):
       case getType(profileLoadRequest):
-      case getType(profileLoadSuccess):
       // userMetadata
       case getType(userMetadataUpsert.request):
       case getType(userMetadataUpsert.success):
@@ -393,10 +379,6 @@ const trackAction =
         return mp.track(action.type, {
           choice: action.payload.choice,
           reason: action.payload.error.message
-        });
-      case getType(setMixpanelEnabled):
-        return mp.track(action.type, {
-          value: action.payload
         });
     }
     return Promise.resolve();

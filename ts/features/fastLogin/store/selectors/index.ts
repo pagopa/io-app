@@ -5,7 +5,7 @@ import { fastLoginOptIn, fastLoginEnabled } from "../../../../config";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 
-const fastLoginOptInSelector = (state: GlobalState) =>
+export const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
 
 const securityAdviceAcknowledgedSelector = (state: GlobalState) =>

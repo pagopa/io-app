@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, View } from "react-native";
-import { connect, useSelector } from "react-redux";
+import { connect, useSelector, useStore } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
@@ -33,6 +33,9 @@ import { nativeLoginSelector } from "../../features/nativeLogin/store/reducers";
 import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/selectors";
 import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackSpidLoginIdpSelection } from "./analytics";
+import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -56,6 +59,10 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen = (props: Props): React.ReactElement => {
+  useOnFirstRender(() => {
+    trackSpidLoginIdpSelection();
+  });
+
   const [counter, setCounter] = useState(0);
   const { requestIdps, setSelectedIdp } = props;
   const choosenTool = assistanceToolRemoteConfig(props.assistanceToolConfig);
@@ -80,9 +87,12 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     props.nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
 
+  const store = useStore();
+
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
     handleSendAssistanceLog(choosenTool, `IDP selected: ${idp.id}`);
+    void trackLoginSpidIdpSelected(idp.id, store.getState());
     if (isNativeLoginEnabled()) {
       navigation.navigate(ROUTES.AUTHENTICATION, {
         screen: ROUTES.AUTHENTICATION_AUTH_SESSION
