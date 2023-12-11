@@ -17,16 +17,18 @@ import { AsyncAlert } from "./asyncAlert";
  */
 export const requestIOAndroidPermission = async (
   permission: Permission,
-  rationale: Rationale
+  rationale?: Rationale
 ): Promise<boolean> => {
   const hasPermission = await checkIOAndroidPermission(permission);
   if (hasPermission) {
     return true;
   }
 
-  await AsyncAlert(rationale.title, rationale.message, [
-    { text: rationale.buttonPositive, style: "default" }
-  ]);
+  if (rationale !== undefined) {
+    await AsyncAlert(rationale.title, rationale.message, [
+      { text: rationale.buttonPositive, style: "default" }
+    ]);
+  }
 
   const status = await PermissionsAndroid.request(permission);
   return status === "granted";
@@ -44,22 +46,17 @@ export const checkIOAndroidPermission = async (
 /**
  * Wrapper function for `requestIOAndroidPermission`.
  * Handles media permissions based on Android API levels.
- * @param rationale
  * @returns
  */
-export const requestIOAndroidMediaPermission = async (
-  rationale: Rationale
-): Promise<boolean> => {
+export const requestIOAndroidMediaPermission = async (): Promise<boolean> => {
   if (Platform.OS === "android") {
     if (Platform.Version >= 33) {
       return requestIOAndroidPermission(
-        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-        rationale
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
       );
     } else {
       return requestIOAndroidPermission(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-        rationale
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
       );
     }
   }
