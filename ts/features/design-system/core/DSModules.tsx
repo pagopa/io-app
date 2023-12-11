@@ -3,6 +3,7 @@ import { Alert, View, ImageSourcePropType } from "react-native";
 import {
   ButtonExtendedOutline,
   IOThemeContext,
+  ModuleCheckout,
   ModuleIDP,
   ModulePaymentNotice,
   PaymentNoticeStatus,
@@ -54,6 +55,17 @@ export const DSModules = () => (
           ModulePaymentNotice
         </H2>
         {renderModulePaymentNotice()}
+
+        <VSpacer size={40} />
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16 }}
+        >
+          ModuleCheckout
+        </H2>
+        {renderModuleCheckout()}
 
         <VSpacer size={40} />
 
@@ -177,6 +189,31 @@ const renderModulePaymentNotice = () => (
   </DSComponentViewerBox>
 );
 
+const renderModuleCheckout = () => (
+  <>
+    <DSComponentViewerBox name="ModuleCheckout, default">
+      <ModuleCheckout
+        paymentLogo="amex"
+        title="Amex"
+        subtitle="arien_c********@**hoo.it"
+        ctaText="Modifica"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, no icon">
+      <ModuleCheckout
+        title="3,50 $"
+        subtitle="Piú o meno"
+        ctaText="Modifica"
+        onPress={onButtonPress}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ModuleCheckout, loading">
+      <ModuleCheckout isLoading ctaText="Loading" />
+    </DSComponentViewerBox>
+  </>
+);
+
 const renderButtonExtendedOutline = () => (
   <DSComponentViewerBox name="ButtonExtendedOutline (using Pressable API)">
     <View>
@@ -191,7 +228,7 @@ const renderButtonExtendedOutline = () => (
     <VSpacer size={16} />
     <View>
       <ButtonExtendedOutline
-        icon="chevronRight"
+        icon="chevronRightListItem"
         label={"Label only"}
         onPress={() => {
           alert("Action triggered");
@@ -222,7 +259,7 @@ const renderModuleIDP = () => (
         />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name="ModuleIDP, loose spacing (fka saved) variant">
+    <DSComponentViewerBox name="ModuleIDP, loose spacing (saved) variant">
       <View>
         <ModuleIDP
           withLooseSpacing

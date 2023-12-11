@@ -146,7 +146,8 @@ const OnboardingEmailInsertScreen = (props: Props) => {
   const navigateToEmailReadScreen = useCallback(() => {
     props.navigation.dispatch(StackActions.popToTop());
     props.navigation.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+      params: { isOnboarding: true }
     });
   }, [props.navigation]);
 

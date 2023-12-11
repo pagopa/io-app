@@ -6,8 +6,13 @@ import {
 } from "../../../../../__mocks__/message";
 
 import { loadMessageDetails } from "../../../../actions/messages";
-import reducer from "../detailsById";
-import { UIMessageId } from "../types";
+import reducer, {
+  detailedMessageHasThirdPartyDataSelector,
+  messageDetailsByIdSelector
+} from "../detailsById";
+import { UIMessageDetails, UIMessageId } from "../types";
+import { applicationChangeState } from "../../../../actions/application";
+import { appReducer } from "../../..";
 
 const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
 
@@ -59,5 +64,60 @@ describe("detailsById reducer", () => {
         expect(pot.toUndefined(entry)).toBeDefined();
       });
     });
+  });
+});
+
+describe("messageDetailsByIdSelector", () => {
+  it("Should return pot.none for an unmatching message id", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const messageDetailsPot = messageDetailsByIdSelector(
+      state,
+      "" as UIMessageId
+    );
+    expect(messageDetailsPot).toBe(pot.none);
+  });
+  it("Should return pot.noneLoading for a matching loading message id", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.request({ id: messageId });
+    const state = appReducer(undefined, action);
+    const messageDetailsPot = messageDetailsByIdSelector(state, messageId);
+    expect(messageDetailsPot).toBe(pot.noneLoading);
+  });
+});
+
+describe("detailedMessageHasThirdPartyDataSelector", () => {
+  it("Should return false for an unmatching message id", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const hasThirdPartyData = detailedMessageHasThirdPartyDataSelector(
+      state,
+      "" as UIMessageId
+    );
+    expect(hasThirdPartyData).toBe(false);
+  });
+  it("Should return false for a matching message id with a hasThirdPartyData set to false", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      hasThirdPartyData: false
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+    const hasThirdPartyData = detailedMessageHasThirdPartyDataSelector(
+      state,
+      messageId
+    );
+    expect(hasThirdPartyData).toBe(false);
+  });
+  it("Should return true for a matching message id with a hasThirdPartyData set to true", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      hasThirdPartyData: true
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+    const hasThirdPartyData = detailedMessageHasThirdPartyDataSelector(
+      state,
+      messageId
+    );
+    expect(hasThirdPartyData).toBe(true);
   });
 });

@@ -38,6 +38,7 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSNumberPad } from "../core/DSNumberPad";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -424,6 +425,12 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
         component={DSBonusCardScreen}
         options={{ headerShown: true }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.NUMBERPAD.route}
+        component={DSNumberPad}
+        options={{ headerShown: false }}
       />
 
       {/* DEBUG */}

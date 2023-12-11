@@ -55,6 +55,10 @@ const DESIGN_SYSTEM_ROUTES = {
     BONUS_CARD_SCREEN: {
       route: "BONUS_CARD_SCREEN",
       title: "Bonus Card Screen"
+    },
+    NUMBERPAD: {
+      route: "DS_NUMBERPAD",
+      title: "NumberPad"
     }
   },
   DEBUG: {

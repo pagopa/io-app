@@ -8,6 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import { useStore } from "react-redux";
 import { Body } from "../../components/core/typography/Body";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent, {
@@ -20,11 +21,16 @@ import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   isProfileFirstOnBoarding,
+  isProfileFirstOnBoardingSelector,
   profileSelector
 } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { showToast } from "../../utils/showToast";
 import { H1 } from "../../components/core/typography/H1";
+import { trackTosUserExit } from "../authentication/analytics";
+import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
 
 const styles = StyleSheet.create({
   titlePadding: {
@@ -61,6 +67,12 @@ const OnboardingTosScreen = () => {
 
   const isUpdatingProfile = pot.isUpdating(potProfile);
   const hasProfileError = pot.isError(potProfile);
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
+  useOnFirstRender(() => {
+    trackTosScreen(getFlowType(true, isFirstOnBoarding));
+  });
 
   const hasAcceptedCurrentTos = pot.getOrElse(
     pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
@@ -103,10 +115,15 @@ const OnboardingTosScreen = () => {
         {
           text: I18n.t("global.buttons.exit"),
           style: "default",
-          onPress: () => dispatch(abortOnboarding())
+          onPress: () => {
+            trackTosUserExit(getFlowType(true, isFirstOnBoarding));
+            dispatch(abortOnboarding());
+          }
         }
       ]
     );
+
+  const store = useStore();
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading || isUpdatingProfile}>
@@ -148,6 +165,11 @@ const OnboardingTosScreen = () => {
             onExit={handleGoBack}
             onAcceptTos={() => {
               dispatch(tosAccepted(tosVersion));
+              void trackTosAccepted(
+                tosVersion,
+                getFlowType(true, isFirstOnBoarding),
+                store.getState()
+              );
             }}
           />
         </SafeAreaView>

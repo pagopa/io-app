@@ -13,6 +13,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import { useStore } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -25,6 +26,13 @@ import I18n from "../../i18n";
 import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
 import { useIODispatch } from "../../store/hooks";
 import { TranslationKeys } from "../../../locales/locales";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import {
+  trackLoginSessionOptIn,
+  trackLoginSessionOptIn30,
+  trackLoginSessionOptIn365,
+  trackLoginSessionOptInInfo
+} from "../../features/fastLogin/analytics/optinAnalytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt-in.contextualHelpTitle",
@@ -44,8 +52,22 @@ const NewOptInScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
   const navigation = useNavigation();
+  const store = useStore();
+
+  useOnFirstRender(() => {
+    trackLoginSessionOptIn();
+  });
+
+  useOnFirstRender(() => {
+    trackLoginSessionOptIn();
+  });
 
   const navigateToIdpPage = (isLV: boolean) => {
+    if (isLV) {
+      void trackLoginSessionOptIn365(store.getState());
+    } else {
+      void trackLoginSessionOptIn30(store.getState());
+    }
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen:
         props.route.params.identifier === "CIE"
@@ -112,13 +134,13 @@ const NewOptInScreen = (props: Props) => {
         testID="container-test"
         primaryActionProps={{
           label: I18n.t("authentication.opt-in.button-accept-lv"),
-          accessibilityLabel: "Click to continue with fast access",
+          accessibilityLabel: I18n.t("authentication.opt-in.button-accept-lv"),
           onPress: () => navigateToIdpPage(true),
           testID: "accept-button-test"
         }}
         secondaryActionProps={{
           label: I18n.t("authentication.opt-in.button-decline-lv"),
-          accessibilityLabel: "Click to continue with classic access",
+          accessibilityLabel: I18n.t("authentication.opt-in.button-decline-lv"),
           onPress: () => navigateToIdpPage(false),
           testID: "decline-button-test"
         }}
@@ -149,7 +171,10 @@ const NewOptInScreen = (props: Props) => {
             pictogramName="identityCheck"
             body={I18n.t("authentication.opt-in.identity-check")}
             actionLabel={I18n.t("authentication.opt-in.security-suggests")}
-            actionOnPress={presentVeryLongAutoresizableBottomSheetWithFooter}
+            actionOnPress={() => {
+              trackLoginSessionOptInInfo();
+              return presentVeryLongAutoresizableBottomSheetWithFooter();
+            }}
           />
           <VSpacer size={24} />
           <FeatureInfo

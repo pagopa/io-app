@@ -18,6 +18,8 @@ import { FciStackNavigator } from "../features/fci/navigation/FciStackNavigator"
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import { FimsNavigator } from "../features/fims/navigation/navigator";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
+import { IdPayBarcodeNavigator } from "../features/idpay/barcode/navigation/navigator";
+import { IdPayBarcodeRoutes } from "../features/idpay/barcode/navigation/routes";
 import { IdPayCodeNavigator } from "../features/idpay/code/navigation/navigator";
 import { IdPayCodeRoutes } from "../features/idpay/code/navigation/routes";
 import {
@@ -53,6 +55,10 @@ import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/rou
 import { WalletPaymentBarcodeScanScreen } from "../features/walletV3/payment/screens/WalletPaymentBarcodeScanScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+import {
+  WalletTransactionNavigator,
+  WalletTransactionRoutes
+} from "../features/walletV3/transaction/navigation/navigator";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -74,8 +80,13 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
+import CheckEmailNavigator from "./CheckEmailNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
+
+const hideHeaderOptions = {
+  headerShown: false
+};
 
 const AuthenticatedStackNavigator = () => {
   const cdcEnabled = useIOSelector(isCdcEnabledSelector);
@@ -87,32 +98,47 @@ const AuthenticatedStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN}
-      headerMode={"none"}
+      headerMode={"screen"}
       screenOptions={{ gestureEnabled: false }}
     >
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 
-      <Stack.Screen name={ROUTES.ONBOARDING} component={OnboardingNavigator} />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING}
+        options={hideHeaderOptions}
+        component={OnboardingNavigator}
+      />
+
+      <Stack.Screen
+        name={ROUTES.CHECK_EMAIL}
+        options={hideHeaderOptions}
+        component={CheckEmailNavigator}
+      />
 
       <Stack.Screen
         name={ROUTES.UNSUPPORTED_DEVICE}
+        options={hideHeaderOptions}
         component={UnsupportedDeviceScreen}
       />
 
       <Stack.Screen
         name={ROUTES.MESSAGES_NAVIGATOR}
+        options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
       <Stack.Screen
         name={ROUTES.WALLET_NAVIGATOR}
+        options={hideHeaderOptions}
         component={WalletNavigator}
       />
       <Stack.Screen
         name={ROUTES.SERVICES_NAVIGATOR}
+        options={hideHeaderOptions}
         component={ServicesNavigator}
       />
       <Stack.Screen
         name={ROUTES.PROFILE_NAVIGATOR}
+        options={hideHeaderOptions}
         component={ProfileStackNavigator}
       />
 
@@ -120,6 +146,7 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.BARCODE_SCAN}
         component={BarcodeScanScreen}
         options={{
+          headerShown: false,
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: false
         }}
@@ -128,6 +155,7 @@ const AuthenticatedStackNavigator = () => {
       {cgnEnabled && (
         <Stack.Screen
           name={CGN_ROUTES.ACTIVATION.MAIN}
+          options={hideHeaderOptions}
           component={CgnActivationNavigator}
         />
       )}
@@ -135,6 +163,7 @@ const AuthenticatedStackNavigator = () => {
       {cgnEnabled && (
         <Stack.Screen
           name={CGN_ROUTES.DETAILS.MAIN}
+          options={hideHeaderOptions}
           component={CgnDetailsNavigator}
         />
       )}
@@ -142,37 +171,52 @@ const AuthenticatedStackNavigator = () => {
       {cgnEnabled && (
         <Stack.Screen
           name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
+          options={hideHeaderOptions}
           component={CgnEYCAActivationNavigator}
         />
       )}
 
       <Stack.Screen
         name={ROUTES.WORKUNIT_GENERIC_FAILURE}
+        options={hideHeaderOptions}
         component={WorkunitGenericFailure}
       />
       <Stack.Screen
         name={ZENDESK_ROUTES.MAIN}
         component={ZendeskStackNavigator}
-        options={{ ...TransitionPresets.ModalSlideFromBottomIOS }}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          ...hideHeaderOptions
+        }}
       />
       <Stack.Screen
         name={UADONATION_ROUTES.WEBVIEW}
+        options={hideHeaderOptions}
         component={UAWebViewScreen}
       />
 
       {isFimsEnabled && (
-        <Stack.Screen name={FIMS_ROUTES.MAIN} component={FimsNavigator} />
+        <Stack.Screen
+          name={FIMS_ROUTES.MAIN}
+          options={hideHeaderOptions}
+          component={FimsNavigator}
+        />
       )}
 
       {cdcEnabled && (
         <Stack.Screen
           name={CDC_ROUTES.BONUS_REQUEST_MAIN}
+          options={hideHeaderOptions}
           component={CdcStackNavigator}
         />
       )}
 
       {isFciEnabled && (
-        <Stack.Screen name={FCI_ROUTES.MAIN} component={FciStackNavigator} />
+        <Stack.Screen
+          name={FCI_ROUTES.MAIN}
+          options={hideHeaderOptions}
+          component={FciStackNavigator}
+        />
       )}
 
       {isIdPayEnabled && (
@@ -180,22 +224,22 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
             component={IDPayOnboardingNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
+            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
             name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
             component={IDpayDetailsNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
+            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
             name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN}
             component={IDPayConfigurationNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
+            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           <Stack.Screen
             name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
             component={IDPayUnsubscriptionNavigator}
-            options={{ gestureEnabled: isGestureEnabled }}
+            options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
           />
           {/* 
             This screen is outside the IDPayPaymentNavigator to enable the slide from bottom animation.
@@ -205,6 +249,7 @@ const AuthenticatedStackNavigator = () => {
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
             component={IDPayPaymentCodeScanScreen}
             options={{
+              ...hideHeaderOptions,
               ...TransitionPresets.ModalSlideFromBottomIOS,
               gestureEnabled: isGestureEnabled
             }}
@@ -212,11 +257,20 @@ const AuthenticatedStackNavigator = () => {
           <Stack.Screen
             name={IDPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
             component={IDPayPaymentNavigator}
-            options={{ gestureEnabled: false }}
+            options={{ gestureEnabled: false, ...hideHeaderOptions }}
           />
           <Stack.Screen
             name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
+            options={hideHeaderOptions}
             component={IdPayCodeNavigator}
+          />
+          <Stack.Screen
+            name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
+            options={{
+              gestureEnabled: isGestureEnabled,
+              ...hideHeaderOptions
+            }}
+            component={IdPayBarcodeNavigator}
           />
         </>
       )}
@@ -224,20 +278,30 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Screen
         name={WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN}
         component={WalletOnboardingNavigator}
-        options={{ gestureEnabled: isGestureEnabled }}
+        options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
         name={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
         component={WalletPaymentNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
       <Stack.Screen
         name={WalletDetailsRoutes.WALLET_DETAILS_MAIN}
         component={WalletDetailsNavigator}
         options={{
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
+      />
+      <Stack.Screen
+        name={WalletTransactionRoutes.WALLET_TRANSACTION_MAIN}
+        component={WalletTransactionNavigator}
+        options={{
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
       {/* 
@@ -249,7 +313,8 @@ const AuthenticatedStackNavigator = () => {
         component={WalletPaymentBarcodeScanScreen}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
-          gestureEnabled: isGestureEnabled
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
         }}
       />
     </Stack.Navigator>

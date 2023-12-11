@@ -62,6 +62,7 @@ const testPaymentButton = (
       is_email_enabled: true,
       is_webhook_enabled: true,
       is_email_validated: true,
+      is_email_already_taken: false,
       family_name: "Red",
       fiscal_code: "FiscalCode" as FiscalCode,
       has_profile: true,
