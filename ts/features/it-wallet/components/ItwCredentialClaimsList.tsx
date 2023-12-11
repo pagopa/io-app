@@ -7,7 +7,7 @@ import { StoredCredential } from "../store/reducers/itwCredentialsReducer";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { ParsedCredential } from "../utils/types";
 import { getClaimsFullLocale } from "../utils/itwClaimsUtils";
-import ItwCredentialClaim from "./itwCredentialClaim";
+import ItwCredentialClaim from "./ItwCredentialClaim";
 
 export type Claim = {
   label: string;
