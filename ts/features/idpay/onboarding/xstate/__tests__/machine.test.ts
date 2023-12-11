@@ -286,7 +286,7 @@ describe("IDPay Onboarding machine", () => {
     );
 
     mockServices.loadInitiativeStatus.mockImplementation(async () =>
-      Promise.reject(OnboardingFailureEnum.ONBOARDED)
+      Promise.reject(OnboardingFailureEnum.USER_ONBOARDED)
     );
 
     const machine = createIDPayOnboardingMachine().withConfig({
