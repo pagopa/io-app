@@ -103,6 +103,7 @@ export default class GenericErrorComponent extends React.PureComponent<Props> {
                   ? this.props.text
                   : I18n.t("wallet.errors.GENERIC_ERROR")}
               </H2>
+              <VSpacer size={16} />
               <Body accessible={subTextAccessible}>
                 {this.props.subText !== undefined
                   ? this.props.subText
