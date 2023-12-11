@@ -91,7 +91,7 @@ const ErrorButton = (props: ErrorButtonProp) => {
         backgroundColor={"orange"}
         foregroundColor={"white"}
         iconName={"notice"}
-        viewRef={viewRef}
+        ref={viewRef}
       >
         {I18n.t("bonus.cdc.serviceCta.error.status")}
       </StatusContent>

@@ -85,7 +85,7 @@ export const InnerSectionStatus = (
           backgroundColor={backgroundColor}
           iconName={iconName}
           testID={"SectionStatusComponentContent"}
-          viewRef={viewRef}
+          ref={viewRef}
           foregroundColor={color}
         >
           {`${sectionStatus.message[locale]} `}
@@ -108,7 +108,7 @@ export const InnerSectionStatus = (
             accessible={false}
             backgroundColor={backgroundColor}
             iconName={iconName}
-            viewRef={viewRef}
+            ref={viewRef}
             foregroundColor={color}
           >
             {`${sectionStatus.message[locale]} `}
