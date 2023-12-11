@@ -16,6 +16,7 @@ import {
   sessionExpired,
   sessionInvalid
 } from "../store/actions/authentication";
+import { GlobalState } from "../store/reducers/types";
 
 export function* watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel() {
   yield* takeLatest(
@@ -46,7 +47,8 @@ export function* initMixpanel(): Generator<ReduxSagaEffect, void, boolean> {
 
   if (isMixpanelEnabledResult ?? true) {
     // initialize mixpanel
-    yield* call(initializeMixPanel);
+    const state = (yield* select()) as GlobalState;
+    yield* call(initializeMixPanel, state);
   }
 }
 
@@ -54,7 +56,8 @@ export function* handleSetMixpanelEnabled(
   action: ActionType<typeof setMixpanelEnabled>
 ) {
   if (action.payload) {
-    yield* call(initializeMixPanel);
+    const state = (yield* select()) as GlobalState;
+    yield* call(initializeMixPanel, state);
     // The user has opted in
     yield* call(identifyMixpanelSaga);
   } else {
