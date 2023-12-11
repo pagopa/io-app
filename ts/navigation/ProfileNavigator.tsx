@@ -164,6 +164,9 @@ const ProfileStackNavigator = () => {
         }}
         name={ROUTES.INSERT_EMAIL_SCREEN}
         component={isNewCduFlow ? CduEmailInsertScreen : EmailInsertScreen}
+        initialParams={{
+          isOnboarding: false
+        }}
       />
       <Stack.Screen
         options={{
