@@ -11,6 +11,7 @@ import {
   TypeEnum,
   WalletInfoDetails1
 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
+import { WalletServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletServiceStatus";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -61,7 +62,11 @@ export const hasServiceEnabled = (
   walletService: ServiceNameEnum
 ): boolean =>
   paymentMethod !== undefined &&
-  paymentMethod.services.some(service => service.name === walletService);
+  paymentMethod.services.some(
+    service =>
+      service.name === walletService &&
+      service.status === WalletServiceStatusEnum.ENABLED
+  );
 /**
  * return true if the payment method has the payment feature
  */

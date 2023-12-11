@@ -4,10 +4,12 @@ import { takeLatest } from "typed-redux-saga/macro";
 import { WalletClient } from "../../common/api/client";
 import {
   walletDetailsDeleteInstrument,
-  walletDetailsGetInstrument
+  walletDetailsGetInstrument,
+  walletDetailsPagoPaCapabilityToggle
 } from "../store/actions";
 import { handleGetWalletDetails } from "./handleGetWalletDetails";
 import { handleDeleteWalletDetails } from "./handleDeleteWalletDetails";
+import { handleTogglePagoPaCapability } from "./handleTogglePagoPaCapability";
 
 /**
  * Handle Wallet onboarding requests
@@ -31,5 +33,12 @@ export function* watchWalletDetailsSaga(
     handleDeleteWalletDetails,
     walletClient.deleteWalletById,
     token
+  );
+
+  // handle request to a wallet
+  yield* takeLatest(
+    walletDetailsPagoPaCapabilityToggle.request,
+    handleTogglePagoPaCapability,
+    walletClient.updateWalletServicesById
   );
 }

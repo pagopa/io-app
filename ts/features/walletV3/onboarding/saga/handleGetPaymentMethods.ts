@@ -18,10 +18,10 @@ export function* handleGetPaymentMethods(
   token: string,
   action: ActionType<(typeof walletGetPaymentMethods)["request"]>
 ) {
+  const getPaymentMethodsRequest = getPaymentMethods({
+    bearerAuth: token
+  });
   try {
-    const getPaymentMethodsRequest = getPaymentMethods({
-      bearerAuth: token
-    });
     const getPaymentMethodsResult = (yield* call(
       withRefreshApiCall,
       getPaymentMethodsRequest,
