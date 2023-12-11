@@ -10,7 +10,10 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import TosWebviewComponent from "../../components/TosWebviewComponent";
 import { privacyUrl } from "../../config";
 import I18n from "../../i18n";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { trackTosScreen } from "./analytics";
 
 const styles = StyleSheet.create({
   webViewContainer: {
@@ -33,6 +36,10 @@ const TosScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown,
     faqCategories: ["privacy"]
+  });
+
+  useOnFirstRender(() => {
+    trackTosScreen(getFlowType(false, false));
   });
 
   const handleLoadEnd = useCallback(() => {

@@ -7,9 +7,9 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { HeaderActionProps, useHeaderProps } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
-import { HeaderActionProps, useHeaderProps } from "../../hooks/useHeaderProps";
 
 type Props = {
   children: React.ReactNode;

@@ -16,6 +16,13 @@ import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../utils/supportAssistance";
+import { isProfileFirstOnBoardingSelector } from "../store/reducers/profile";
+import { getFlowType } from "../utils/analytics";
+import {
+  trackCreatePinSuccess,
+  trackPinScreen
+} from "../screens/profile/analytics";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import { PinCreationForm } from "./PinCreationForm";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -58,13 +65,15 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
     );
   }, [showModal]);
 
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
   const handleSubmit = React.useCallback(
     (pin: PinString) => {
       setPin(pin)
         .then(() => {
           handleSendAssistanceLog(assistanceTool, `createPinSuccess`);
           dispatch(createPinSuccess(pin));
-
+          trackCreatePinSuccess(getFlowType(isOnboarding, isFirstOnBoarding));
           if (!isOnboarding) {
             // We need to ask the user to restart the app
             showRestartModal();
@@ -80,8 +89,19 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
           // end user probably.
         });
     },
-    [assistanceTool, dispatch, navigation, showRestartModal, isOnboarding]
+    [
+      assistanceTool,
+      dispatch,
+      isFirstOnBoarding,
+      isOnboarding,
+      navigation,
+      showRestartModal
+    ]
   );
+
+  useOnFirstRender(() => {
+    trackPinScreen(getFlowType(isOnboarding, isFirstOnBoarding));
+  });
 
   const pinSelectionView = () => (
     <BaseScreenComponent
@@ -91,7 +111,7 @@ const PinSelectionComponent = ({ navigation, isOnboarding }: Props) => {
       headerTitle={I18n.t("onboarding.pin.headerTitle")}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <PinCreationForm onSubmit={handleSubmit} />
+        <PinCreationForm onSubmit={handleSubmit} isOnboarding={isOnboarding} />
       </SafeAreaView>
     </BaseScreenComponent>
   );
