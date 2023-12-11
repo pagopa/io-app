@@ -8,11 +8,13 @@ import { ProgressBar } from "../../../bonus/bpd/screens/details/components/summa
 type Props = {
   secondsToExpiration: number;
   secondsExpirationTotal: number;
+  setIsExpired: (isExpired: boolean) => void;
 };
 
 export const IdPayBarcodeExpireProgressBar = ({
   secondsToExpiration,
-  secondsExpirationTotal
+  secondsExpirationTotal,
+  setIsExpired
 }: Props) => {
   const [seconds, setSeconds] = React.useState(secondsToExpiration);
   const isCodeExpired = seconds === 0;
@@ -23,6 +25,7 @@ export const IdPayBarcodeExpireProgressBar = ({
     if (seconds <= 0) {
       setSeconds(0);
       clearInterval(timer);
+      setIsExpired(true);
     }
     return () => clearInterval(timer);
     // possible over-engineering, but we actually
@@ -30,27 +33,20 @@ export const IdPayBarcodeExpireProgressBar = ({
     // there is no reason to rerun this hook every second
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCodeExpired]);
-
-  const formattedExpireMinutesString = isCodeExpired
-    ? ""
-    : format(new Date(seconds * 1000), "mm:ss");
-
+  const formattedSecondsToExpiration = format(
+    new Date(seconds * 1000),
+    "mm:ss"
+  );
   return (
     <View style={{ alignContent: "center" }}>
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
       <VSpacer size={8} />
       <View style={styles.centeredRow}>
         <LabelSmall weight="Regular" color="black">
-          {
-            I18n.t(
-              `idpay.barCode.resultScreen.success.${
-                isCodeExpired ? "expired" : "expiresIn"
-              }`
-            ) + " " /* added spacing to better format */
-          }
+          {I18n.t("idpay.barCode.resultScreen.success.expiresIn")}
         </LabelSmall>
         <LabelSmall weight="SemiBold" color="black">
-          {formattedExpireMinutesString}
+          {formattedSecondsToExpiration}
         </LabelSmall>
       </View>
     </View>
