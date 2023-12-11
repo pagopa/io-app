@@ -17,9 +17,9 @@ describe("NewOptInScreen", () => {
     const declineButton = component.getByTestId("decline-button-test");
     expect(declineButton).toBeDefined();
     expect(component.getByTestId("badge-test")).toBeDefined();
-    const suggestButton = component.getByText(
+    const suggestButton = component.getAllByText(
       I18n.t("authentication.opt_in.security_suggests")
-    );
+    )[1];
     expect(suggestButton).toBeDefined();
 
     if (acceptButton) {
