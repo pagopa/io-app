@@ -64,6 +64,7 @@ export function* handleIssuanceChecks({
 
     const [credentialConfigurationSchema] =
       issuerConf.openid_credential_issuer.credentials_supported
+        .filter(_ => _.format === "vc+sd-jwt")
         .filter(_ => _.credential_definition.type.includes(credentialType))
         .map(_ => _.credential_definition.credentialSubject);
     if (!credentialConfigurationSchema) {
