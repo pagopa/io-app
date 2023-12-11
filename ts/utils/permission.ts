@@ -63,3 +63,14 @@ export const requestIOAndroidMediaPermission = async (): Promise<boolean> => {
 
   return true;
 };
+
+export const requestMediaPermission = async () => {
+  switch (Platform.OS) {
+    case "android":
+      return requestIOAndroidMediaPermission();
+    case "ios":
+      return true;
+    default:
+      return false;
+  }
+};

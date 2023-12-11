@@ -3303,7 +3303,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        validUpTo: "Vale fino a " 
+        validUpTo: "Vale fino a "
         expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
         expired:
@@ -3847,9 +3847,15 @@ permissionRequest:
     caption: "Ecco come:"
     step: Step {{step}}
     steps:
-      1: Vai su “Impostazioni”
-      2: Seleziona “Applicazioni”
-      3: Seleziona “IO”
-      4: Seleziona la voce relativa alle autorizzazioni
-      5: Consenti l’accesso a file e media
+      android:
+        1: Vai su “Impostazioni”
+        2: Seleziona “Applicazioni”
+        3: Seleziona “IO”
+        4: Seleziona la voce relativa alle autorizzazioni
+        5: Consenti l’accesso a file e media
+      ios:
+        1: Vai su “Impostazioni”
+        2: Seleziona “Privacy”
+        3: Seleziona “Foto”
+        4: Seleziona “IO” e consenti l’accesso a file e media
     cta: Apri Impostazioni

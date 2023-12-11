@@ -7,7 +7,7 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { Alert, Linking, Platform, View } from "react-native";
+import { Alert, Linking, View } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
@@ -22,7 +22,7 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { requestIOAndroidMediaPermission } from "../../../utils/permission";
+import { requestMediaPermission } from "../../../utils/permission";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeFileUpload,
@@ -173,12 +173,10 @@ const useIOBarcodeFileReader = ({
   };
 
   const showImagePicker = async () => {
-    if (Platform.OS === "android") {
-      const permissionGranted = await requestIOAndroidMediaPermission();
-      if (!permissionGranted) {
-        navigation.navigate(ROUTES.ANDROID_MEDIA_PERMISSIONS);
-        return;
-      }
+    const permissionGranted = await requestMediaPermission();
+    if (!permissionGranted) {
+      navigation.navigate(ROUTES.MEDIA_PERMISSION_INSTRUCTIONS);
+      return;
     }
 
     setIsLoading(true);
