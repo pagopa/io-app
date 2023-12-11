@@ -1797,6 +1797,9 @@ messageDetails:
   sendEmail: Manda email
   write: Scrivi
   id: "ID:"
+  remoteContentError:
+    title: "Non è stato possibile recuperare i dettagli del messaggio"
+    body: "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
   attachments:
     loading: "Caricamento del documento..."
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
@@ -3301,9 +3304,11 @@ idpay:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
         validUpTo: "Vale fino a " 
-        expiresIn: "Il codice scade tra"
-        expired: "Il codice é scaduto."
+        expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
+        expired:
+          header: "Il codice è scaduto"
+          CTA: Usa un nuovo codice
       error:
         generic:
           body: In questo momento non è possibile generare un codice
