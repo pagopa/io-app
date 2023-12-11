@@ -97,5 +97,4 @@ const OnboardingNavigator = () => {
   );
 };
 
-
 export default OnboardingNavigator;
