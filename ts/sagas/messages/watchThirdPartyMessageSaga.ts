@@ -60,7 +60,7 @@ function* getThirdPartyMessage(
       );
     } else {
       const reason = `Response status ${result.right.status} - ${
-        result.right.value?.detail || "UNKNOWN"
+        result.right.value?.detail || "no detail field provided"
       }`;
       throw new Error(reason);
     }
