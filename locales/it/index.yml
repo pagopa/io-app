@@ -434,7 +434,7 @@ profile:
     pnEnvironment:
       pnEnv: SEND (PN)
     idpay:
-      idpayTest: PARI (IDPay)
+      idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
     designSystemEnvironment: Design System sperimentale
     appVersion: Versione
