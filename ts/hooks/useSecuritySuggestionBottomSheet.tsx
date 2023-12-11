@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import {
+  isFastLoginFFEnabledSelector,
   isSecurityAdviceAcknowledgedEnabled,
   isSecurityAdviceReadyToShow
 } from "../features/fastLogin/store/selectors";
@@ -8,10 +9,10 @@ import { useIOSelector } from "../store/hooks";
 import { progressSelector } from "../store/reducers/identification";
 import { useIOBottomSheetAutoresizableModal } from "../utils/hooks/bottomSheet";
 import SecuritySuggestions from "../features/fastLogin/components/SecuritySuggestions";
-import { isNewCduFlow } from "../config";
 
 export const useSecuritySuggestionsBottomSheet = () => {
   const identificationProgressState = useIOSelector(progressSelector);
+  const isFastLoginFFEnabled = useIOSelector(isFastLoginFFEnabledSelector);
   const securityAdviceAcknowledged = useIOSelector(
     isSecurityAdviceAcknowledgedEnabled
   );
@@ -29,10 +30,14 @@ export const useSecuritySuggestionsBottomSheet = () => {
   });
 
   const showSecuritySuggestionModal = useCallback(() => {
-    if (!securityAdviceAcknowledged && isNewCduFlow) {
+    if (!securityAdviceAcknowledged && isFastLoginFFEnabled) {
       presentSecuritySuggestionBottomSheet();
     }
-  }, [presentSecuritySuggestionBottomSheet, securityAdviceAcknowledged]);
+  }, [
+    isFastLoginFFEnabled,
+    presentSecuritySuggestionBottomSheet,
+    securityAdviceAcknowledged
+  ]);
 
   useEffect(() => {
     // During the current session, we listen to the identification progress state

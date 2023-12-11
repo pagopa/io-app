@@ -52,7 +52,7 @@ const isFastLoginOptInEnabledSelector = createSelector(
  * based on a minumum version of the app.
  * if there is no data, false is the default value -> (FastLogin disabled)
  */
-const isFastLoginFFEnabled = createSelector(
+export const isFastLoginFFEnabledSelector = createSelector(
   backendStatusSelector,
   backendStatus =>
     isPropertyWithMinAppVersionEnabled({
@@ -69,7 +69,7 @@ const isFastLoginFFEnabled = createSelector(
  * false is the default value -> (FastLogin disabled)
  */
 export const isFastLoginEnabledSelector = createSelector(
-  isFastLoginFFEnabled,
+  isFastLoginFFEnabledSelector,
   isFastLoginOptInEnabledSelector,
   (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && !!optInEnabled
 );
