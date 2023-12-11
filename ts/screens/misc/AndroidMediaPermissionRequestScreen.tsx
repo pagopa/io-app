@@ -61,7 +61,7 @@ const AndroidMediaPermissionRequestScreen = () => {
         <ListItemInfo
           label={I18n.t("permissionRequest.media.step", { step: 4 })}
           value={I18n.t("permissionRequest.media.steps.4")}
-          icon="systemSettingsAndroid"
+          icon="systemPermissionsAndroid"
         />
         <Divider />
         <ListItemInfo
