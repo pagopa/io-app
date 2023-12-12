@@ -24,7 +24,7 @@ import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
   AuthenticationState,
-  INITIAL_STATE as autenticationInitialState
+  INITIAL_STATE as authenticationInitialState
 } from "./authentication";
 import backendStatusReducer from "./backendStatus";
 import backoffErrorReducer from "./backoffError";
@@ -167,7 +167,7 @@ export function createRootReducer(
       state = state
         ? ({
             authentication: {
-              ...autenticationInitialState,
+              ...authenticationInitialState,
               // eslint-disable-next-line no-underscore-dangle
               _persist: state.authentication._persist
             },
@@ -175,7 +175,8 @@ export function createRootReducer(
             backendStatus: state.backendStatus,
             // keep servicesMetadata from content section
             content: {
-              ...contentInitialContentState
+              ...contentInitialContentState,
+              contextualHelp: state.content.contextualHelp
             },
             // keep hashed fiscal code
             crossSessions: state.crossSessions,

@@ -16,13 +16,11 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  */
 export function* handleStartWalletOnboarding(
   startOnboarding: WalletClient["createWallet"],
-  token: string,
   action: ActionType<(typeof walletStartOnboarding)["request"]>
 ) {
   try {
     const { paymentMethodId } = action.payload;
     const startOnboardingRequest = startOnboarding({
-      bearerAuth: token,
       body: {
         services: [ServiceNameEnum.PAGOPA],
         useDiagnosticTracing: true,

@@ -68,7 +68,14 @@ export const messageGetStatusReducer = (
 
 export const showSpinnerFromMessageGetStatusSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.status !== "error";
+
+export const thirdPartyMessageDetailsErrorSelector = (state: GlobalState) =>
+  state.entities.messages.messageGetStatus.status === "error" &&
+  state.entities.messages.messageGetStatus.failurePhase ===
+    "thirdPartyMessageDetails";
+
 export const messageSuccessDataSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.successData;
+
 export const blockedFromPushNotificationSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.status === "blocked";

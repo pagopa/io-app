@@ -756,7 +756,7 @@ email:
       subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
       editButton: Modifica email
       validateButton: Conferma email
-      header: 
+      header:
         title: Configura IO
       help:
         body: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email.
@@ -765,7 +765,7 @@ email:
       subtitleStart: Il tuo indirizzo email
       subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
       editButton: Modifica email
-      header: 
+      header:
         title: Configura IO
       help:
         body: Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
@@ -1798,6 +1798,9 @@ messageDetails:
   sendEmail: Manda email
   write: Scrivi
   id: "ID:"
+  remoteContentError:
+    title: "Non è stato possibile recuperare i dettagli del messaggio"
+    body: "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
   attachments:
     loading: "Caricamento del documento..."
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
@@ -3301,10 +3304,12 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        validUpTo: "Vale fino a " 
-        expiresIn: "Il codice scade tra"
-        expired: "Il codice é scaduto."
+        validUpTo: "Vale fino a "
+        expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
+        expired:
+          header: "Il codice è scaduto"
+          CTA: Usa un nuovo codice
       error:
         generic:
           body: In questo momento non è possibile generare un codice
@@ -3518,35 +3523,37 @@ idpay:
         goToInitiative: Vai all'iniziativa
       message:
         GENERIC:
-          title: "C’è un problema sui nostri sistemi"
-          subtitle: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-        NOT_STARTED:
-          title: "Non è ancora possibile aderire a questa iniziativa."
-          subtitle: "Testo generico di errore dove spieghiamo che l’iniziativa non è ancora partita."
-        ENDED:
-          title: "Il periodo di adesione è terminato."
-          subtitle: "Testo generico di errore dove spieghiamo che il periodo di adesione è terminato."
-        NO_BUDGET:
-          title: "Non è più possibile aderire a questa iniziativa."
-          subtitle: "So’ finiti i soldi TBD"
-        SUSPENDED:
-          title: "L’iniziativa è sospesa."
-          subtitle: "Testo generico di errore dove spieghiamo che il l’iniziativa è stata sospesa."
-        NO_REQUIREMENTS:
-          title: "Non hai i requisiti per aderire a questa iniziativa."
-          subtitle: "O non sei stato invitato oppure i controlli hanno dato esito KO. Se sta roba non ti torna, chiedi aiuto."
-        ON_EVALUATION:
-          title: "Valutazione in corso TBD"
-          subtitle: "TBD"
+          title: "Si è verificato un errore imprevisto"
+          subtitle: "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+        INITIATIVE_NOT_FOUND:
+          title: "Non riusciamo a trovare quest’iniziativa"
+          subtitle: "L’iniziativa potrebbe essere terminata. Per ricevere assistenza, contatta l’ente promotore."
+        UNSATISFIED_REQUIREMENTS:
+          title: "Non hai i requisiti per aderire a questa iniziativa"
+          subtitle: "I controlli di verifica hanno già dato esito negativo.\nSe pensi ci sia un errore, contatta l’ente promotore."
+        USER_NOT_IN_WHITELIST:
+          title: "Questa iniziativa non è rivolta a te"
+          subtitle: "Il tuo Codice Fiscale non è incluso nella lista di chi ha diritto ai fondi previsti dall’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        INITIATIVE_NOT_STARTED:
+          title: "Le iscrizioni non sono ancora aperte"
+          subtitle: "Consulta le regole dell’iniziativa per scoprire quando sarà possibile aderire all’iniziativa."
+        INITIATIVE_ENDED:
+          title: "Le iscrizioni sono terminate"
+          subtitle: "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        BUDGET_EXHAUSTED:
+          title: "I fondi messi a disposizione dall’ente sono terminati"
+          subtitle: "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        USER_UNSUBSCRIBED:
+          title: "Non puoi aderire di nuovo"
+          subtitle: "Hai già effettuato il recesso da questa iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        USER_ONBOARDED:
+          title: "Hai già aderito a questa iniziativa"
         NOT_ELIGIBLE:
-          title: "Graduatoria KO"
-          subtitle: "TBD"
-        ONBOARDED:
-          title: "Evviva, hai già aderito"
-          subtitle: "Vatte a vedè l’iniziativa"
-        UNSUBSCRIBED:
-          title: "Hai fatto il recesso"
-          subtitle: "TBD"
+          title: "Non risulti in graduatoria"
+          subtitle: "Per maggiori informazioni, contatta l’ente promotore."
+        ON_EVALUATION:
+          title: "L’ente sta valutando la tua domanda d’adesione"
+          subtitle: "Quando pronto, riceverai l’esito tramite un messaggio in app."
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
       text1: "Proseguendo accetti i "
@@ -3722,18 +3729,30 @@ idpay:
       failure:
         GENERIC:
           title: Si è verificato un errore imprevisto
-          body: Non è stato addebitato alcun importo.
-        REJECTED:
-          title: Autorizzazione negata
-          body: Testo TBD
-        EXPIRED:
-          title: La sessione è scaduta
-          body: Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+          subtitle: Non è stato addebitato alcun importo.
+        TRANSACTION_EXPIRED:
+          title: Il codice è scaduto
+          subtitle: Chiedi all’esercente di crearne uno nuovo.
+        USER_SUSPENDED:
+          title: Non puoi autorizzare quest’operazione
+          subtitle: "Il tuo profilo è stato sospeso per accertamenti.\nSegui le istruzioni ricevute dall’ente promotore dell’iniziativa."
+        USER_NOT_ONBOARDED:
+          title: Non puoi autorizzare quest’operazione
+          subtitle: La richiesta di pagamento fa riferimento ad un’iniziativa a cui non hai aderito.
+        USER_UNSUBSCRIBED:
+          title: Non puoi più usare i fondi previsti dall’iniziativa
+          subtitle: Hai effettuato il recesso dall’iniziativa.
+        ALREADY_AUTHORIZED:
+          title: L’operazione è stata già confermata!
         BUDGET_EXHAUSTED:
-          title: Autorizzazione negata
-          body: Non hai abbastanza soldi per autorizzare
-        AUTHORIZED:
-          title: L’operazione è stata già autorizzata!
+          title: Il saldo è insufficiente
+          subtitle: L’importo richiesto dall’esercente è superiore al saldo disponibile della tua iniziativa.
+        ALREADY_ASSIGNED:
+          title: Il codice è stato già usato da un altro utente
+          subtitle: Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo.
+        INVALID_DATE:
+          title: Non puoi usare i fondi previsti dall’iniziativa
+          subtitle: Controlla le regole dell’iniziativa per scoprire il periodo in cui è possibile farlo.
     manualInput:
       title: Autorizza una transazione
       subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
@@ -3805,11 +3824,16 @@ fastLogin:
         description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
 whatsNew:
   title: Cosa cambia?
+bonusCard:
+  validUntil: Valida fino al {{endDate}}
+  expiring: Scade il {{endDate}}
+  paused: In pausa
+  removed: Rimossa
 transaction:
   details:
     title: Dettaglio operazione
     totalAmount: Totale
-    totalFee: Il totale comprende 
+    totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
     info:
       title: Informazioni sulla transazione
