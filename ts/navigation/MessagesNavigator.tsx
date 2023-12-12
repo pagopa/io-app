@@ -3,7 +3,7 @@ import * as React from "react";
 import { EUCovidCertStackNavigator } from "../features/euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import MessageDetailScreen from "../screens/messages/MessageDetailScreen";
-import MessageRouterScreen from "../screens/messages/MessageRouterScreen";
+import { MessageRouterScreen } from "../screens/messages/MessageRouterScreen";
 import { PnStackNavigator } from "../features/pn/navigation/navigator";
 import PN_ROUTES from "../features/pn/navigation/routes";
 import { useIOSelector } from "../store/hooks";

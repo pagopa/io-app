@@ -14,8 +14,8 @@ import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePrefer
 import { isGestureEnabled } from "../utils/navigation";
 import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChecks/MissingDevicePinScreen";
 import MissingDeviceBiometricScreen from "../screens/onboarding/biometric&securityChecks/MissingDeviceBiometricScreen";
-import NewOnboardingEmailInsertScreen from "../screens/onboarding/NewOnboardingEmailInsertScreen";
 import { isNewCduFlow } from "../config";
+import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
@@ -68,10 +68,9 @@ const navigator = () => (
     <Stack.Screen
       name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
       component={
-        isNewCduFlow
-          ? NewOnboardingEmailInsertScreen
-          : OnboardingEmailReadScreen
+        isNewCduFlow ? CduEmailInsertScreen : OnboardingEmailReadScreen
       }
+      initialParams={{ isOnboarding: true }}
     />
     <Stack.Screen
       name={ROUTES.ONBOARDING_COMPLETED}

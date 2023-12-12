@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import {
   IOColors,
   Divider,
@@ -35,6 +35,14 @@ import { profilePreferencesSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import { showToast } from "../../utils/showToast";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { getFlowType } from "../../utils/analytics";
+import {
+  trackNotificationPreferenceConfiguration,
+  trackNotificationScreen,
+  trackNotificationsPreferencesPreviewStatus,
+  trackNotificationsPreferencesReminderStatus
+} from "../profile/analytics";
 import { NotificationsPreferencesPreview } from "./components/NotificationsPreferencesPreview";
 
 const styles = StyleSheet.create({
@@ -143,13 +151,39 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   const { isFirstOnboarding } = props.route.params;
 
+  useOnFirstRender(() => {
+    trackNotificationScreen(getFlowType(true, isFirstOnboarding));
+  });
+
+  useEffect(() => {
+    trackNotificationsPreferencesPreviewStatus(
+      previewEnabled,
+      getFlowType(true, isFirstOnboarding)
+    );
+  }, [isFirstOnboarding, previewEnabled]);
+
+  useEffect(() => {
+    trackNotificationsPreferencesReminderStatus(
+      remindersEnabled,
+      getFlowType(true, isFirstOnboarding)
+    );
+  }, [isFirstOnboarding, remindersEnabled]);
+
   useEffect(() => {
     if (isError && !isUpdating) {
       showToast(I18n.t("profile.preferences.notifications.error"));
     }
   }, [isError, isUpdating]);
 
+  const store = useStore();
+
   const upsertPreferences = () => {
+    void trackNotificationPreferenceConfiguration(
+      remindersEnabled,
+      previewEnabled,
+      getFlowType(true, isFirstOnboarding),
+      store.getState()
+    );
     dispatch(
       profileUpsert.request({
         reminder_status: remindersEnabled

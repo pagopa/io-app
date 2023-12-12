@@ -63,6 +63,7 @@ import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMe
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
 import { WalletBarcodeRoutes } from "../../features/walletV3/barcode/navigation/routes";
+import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -86,7 +87,10 @@ import {
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
 import { paymentsHistorySelector } from "../../store/reducers/payments/history";
-import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPreferences";
+import {
+  isDesignSystemEnabledSelector,
+  isPagoPATestEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { creditCardAttemptsSelector } from "../../store/reducers/wallet/creditCard";
 import {
@@ -432,6 +436,24 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.props.loadTransactions(this.props.transactionsLoadedLength);
   };
 
+  private navigateToWalletTransactionDetailsScreen = (
+    transaction: Transaction
+  ) => {
+    if (this.props.isDesignSystemEnabled) {
+      this.props.navigation.navigate(
+        WalletTransactionRoutes.WALLET_TRANSACTION_MAIN,
+        {
+          screen: WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS,
+          params: {
+            transactionId: transaction.id
+          }
+        }
+      );
+    } else {
+      this.props.navigateToTransactionDetailsScreen(transaction);
+    }
+  };
+
   private transactionList(
     potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
   ) {
@@ -442,7 +464,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
-          this.props.navigateToTransactionDetailsScreen
+          this.navigateToWalletTransactionDetailsScreen
         }
         ListEmptyComponent={this.listEmptyComponent()}
       />
@@ -556,6 +578,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 

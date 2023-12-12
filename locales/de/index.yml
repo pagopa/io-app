@@ -356,15 +356,15 @@ profile:
         title: "Datenschutz"
         listItem:
           title: "Freigabe von Nutzungsdaten"
-          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App"
+          description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
         screen:
           title: "Deine Nutzungsdaten"
-          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App und erlaube im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
+          description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App und erlaube, im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
           why:
             description:
               one: "IO sammelt nur die für das Funktionieren der angebotenen Dienste "
-              two: "notwendigen "
-              three: "Daten."
+              two: "notwendigen Daten"
+              three: "."
             cta: "Warum?"
           security:
             description:
@@ -728,6 +728,25 @@ onboarding:
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
+  biometric:
+    headerTitle: "IO einrichten"
+    available:
+      title: "Biometrische Erkennung aktiveren"
+      settings: "Du kannst deine Präferenz jederzeit unter Profil > Sicherheit ändern."
+      body:
+        infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
+        biometricType: "mit deinem Gesicht oder Fingerabdruck"
+        infoEnd: "auf schnellere und sicherere Weise."
+        enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
+        notEnrolled:
+          text: "Um sie zu verwenden, geh zu den Geräteeinstellungen und konfiguriere sie. Aktiviere sie dann auf IO unter Profil > Sicherheit."
+    unavailable:
+      title: "Schütze dein Gerät"
+      body:
+        firstInfoStart: "IO schickt dir Mitteilungen, die dich"
+        firstInfoEnd: "persönlich betreffen."
+        secondInfoStart: "Schütze dein Gerät vor unerwünschtem Zugriff und stell sicher, dass nur du auf die App zugreifen kannst. Geh dazu in die Einstellungen deines Geräts, leg"
+        secondInfoEnd: "einen Entsperrcode fest oder konfiguriere die biometrische Erkennung."
   shareData:
     title: "IO einrichten"
   thankYouPage:
@@ -845,6 +864,7 @@ wallet:
       dateTime: "Datum und Uhrzeit"
       detailTitle: "Details"
       help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
+    validUntil: "Gültig bis {{expDate}}"
   searchAbi:
     header: "{{methodName}} hinzufügen"
     bancomat:
@@ -1033,8 +1053,12 @@ wallet:
   transactionsShow: "Zeige deine Transaktionen"
   add: "hinzufügen"
   delete:
-    successful: "Zahlungsmethode von deinem Konto entfernt"
-    failed: "Die Zahlungsmethode konnte nicht von deinem Konto entfernt werden"
+    ios:
+      confirm: "Zahlungsmethode entfernen"
+    android:
+      confirm: "Entfernen"
+    successful: "Zahlungsmethode von deinem Konto entfernt!"
+    failed: "Die Zahlungsmethode kann nicht von deinem Konto entfernt werden"
   newPaymentMethod:
     add: "Hinzufügen"
     show: "Anzeigen"
@@ -1139,6 +1163,7 @@ wallet:
     amount: "Betrag"
     total: "Insgesamt bezahlt"
     expireDate: "Zahlungsfrist"
+    dueDate: "Zahlbar innerhalb"
     tranche: "Rate"
     info: "Mehr Infos unter:"
     tel: "Tel:"

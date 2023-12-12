@@ -1,9 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
-import { constUndefined, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { loadThirdPartyMessage } from "../../../../features/messages/store/actions";
 import { Action } from "../../../../store/actions/types";
@@ -20,8 +19,8 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
+import { reloadAllMessages } from "../../../actions/messages";
 import { attachmentFromThirdPartyMessage } from "./transformers";
-import { messageDetailsByIdSelector } from "./detailsById";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -40,11 +39,13 @@ export const thirdPartyByIdReducer = (
 ): ThirdPartyById => {
   switch (action.type) {
     case getType(loadThirdPartyMessage.request):
-      return toLoading(action.payload, state);
+      return toLoading(action.payload.id, state);
     case getType(loadThirdPartyMessage.success):
       return toSome(action.payload.id, state, action.payload.content);
     case getType(loadThirdPartyMessage.failure):
       return toError(action.payload.id, state, action.payload.error);
+    case getType(reloadAllMessages.request):
+      return initialState;
   }
   return state;
 };
@@ -76,6 +77,7 @@ export const messageTitleSelector = (
     (messageContent: RemoteContentDetails | UIMessageDetails) =>
       messageContent.subject
   );
+
 export const messageMarkdownSelector = (
   state: GlobalState,
   ioMessageId: UIMessageId
@@ -112,32 +114,28 @@ export const thirdPartyMessageUIAttachment =
       )
     );
 
-const messageContentSelector = (
+const messageContentSelector = <T>(
   state: GlobalState,
   ioMessageId: UIMessageId,
-  extractionFunction: (input: RemoteContentDetails | UIMessageDetails) => string
-): string | undefined =>
+  extractionFunction: (input: RemoteContentDetails | UIMessageDetails) => T
+) =>
   pipe(
     state.entities.messages.thirdPartyById[ioMessageId],
     O.fromNullable,
-    O.map(messagePot =>
+    O.chain(messagePot =>
       pipe(
         messagePot,
         pot.toOption,
-        O.fold(constUndefined, thirdPartyMessage =>
+        O.chainNullableK(message => message.third_party_message.details),
+        O.chain(details =>
           pipe(
-            thirdPartyMessage.third_party_message.details,
+            details,
             RemoteContentDetails.decode,
-            E.fold(constUndefined, extractionFunction)
+            O.fromEither,
+            O.map(extractionFunction)
           )
         )
       )
     ),
-    O.getOrElse(() =>
-      pipe(
-        messageDetailsByIdSelector(state, ioMessageId),
-        pot.toOption,
-        O.fold(constUndefined, extractionFunction)
-      )
-    )
+    O.toUndefined
   );

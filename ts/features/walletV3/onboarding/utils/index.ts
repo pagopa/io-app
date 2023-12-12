@@ -30,7 +30,8 @@ export const ONBOARDING_OUTCOME_ERROR_PICTOGRAM: Record<
   [OnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
   [OnboardingOutcomeEnum.TIMEOUT]: "time",
   [OnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
-  [OnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew"
+  [OnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew",
+  [OnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success"
 };
 
 /**

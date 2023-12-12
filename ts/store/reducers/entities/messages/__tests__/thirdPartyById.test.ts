@@ -12,6 +12,7 @@ import {
 import { UIMessageDetails, UIMessageId } from "../types";
 import { loadMessageDetails } from "../../../../actions/messages";
 import { ThirdPartyMessageDetails } from "../../../../../../definitions/backend/ThirdPartyMessage";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("thirdPartyFromIdSelector", () => {
   it("Should return pot none for an unmatching message id", () => {
@@ -77,21 +78,13 @@ describe("messageTitleSelector", () => {
     const messageTitle = messageTitleSelector(state, messageId);
     expect(messageTitle).toBeUndefined();
   });
-  it("Should return the message title for a loaded matching message", () => {
-    const messageId = "m1" as UIMessageId;
-    const subject = "message subject";
-    const loadMessageDetailsSuccess = loadMessageDetails.success({
-      id: messageId,
-      subject
-    } as UIMessageDetails);
-    const state = appReducer(undefined, loadMessageDetailsSuccess);
-    const messageTitle = messageTitleSelector(state, messageId);
-    expect(messageTitle).toBe(subject);
-  });
   it("Should return undefined for a loading matching third party message", () => {
     const messageId = "m1" as UIMessageId;
-    const loadThirdPartyMessageRequest =
-      loadThirdPartyMessage.request(messageId);
+    const loadThirdPartyMessageRequest = loadThirdPartyMessage.request({
+      id: messageId,
+      serviceId: "s1" as ServiceId,
+      tag: "GENERIC"
+    });
     const state = appReducer(undefined, loadThirdPartyMessageRequest);
     const messageTitle = messageTitleSelector(state, messageId);
     expect(messageTitle).toBeUndefined();
@@ -193,21 +186,13 @@ describe("messageMarkdownSelector", () => {
     const messageMarkdown = messageMarkdownSelector(state, messageId);
     expect(messageMarkdown).toBeUndefined();
   });
-  it("Should return the message title for a loaded matching message", () => {
-    const messageId = "m1" as UIMessageId;
-    const markdown = "message markdown";
-    const loadMessageDetailsSuccess = loadMessageDetails.success({
-      id: messageId,
-      markdown
-    } as UIMessageDetails);
-    const state = appReducer(undefined, loadMessageDetailsSuccess);
-    const messageMarkdown = messageMarkdownSelector(state, messageId);
-    expect(messageMarkdown).toBe(markdown);
-  });
   it("Should return undefined for a loading matching third party message", () => {
     const messageId = "m1" as UIMessageId;
-    const loadThirdPartyMessageRequest =
-      loadThirdPartyMessage.request(messageId);
+    const loadThirdPartyMessageRequest = loadThirdPartyMessage.request({
+      id: messageId,
+      serviceId: "s1" as ServiceId,
+      tag: "GENERIC"
+    });
     const state = appReducer(undefined, loadThirdPartyMessageRequest);
     const messageMarkdown = messageMarkdownSelector(state, messageId);
     expect(messageMarkdown).toBeUndefined();

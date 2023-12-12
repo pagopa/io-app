@@ -1,19 +1,25 @@
-import * as React from "react";
 import { ActionProp, HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import { useLayoutEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { FAQsCategoriesType } from "../utils/faq";
-import I18n from "../i18n";
+import * as React from "react";
+import { useLayoutEffect } from "react";
 import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "../components/screens/BaseScreenComponent";
+import I18n from "../i18n";
+import { FAQsCategoriesType } from "../utils/faq";
 import { useStartSupportRequest } from "./useStartSupportRequest";
+
+type ScrollValues = React.ComponentProps<
+  typeof HeaderSecondLevel
+>["scrollValues"];
 
 type CommonProps = {
   title: string;
   backAccessibilityLabel?: string;
   goBack?: () => void;
+  transparent?: boolean;
+  scrollValues?: ScrollValues;
 };
 
 type NoAdditionalActions = {
@@ -61,7 +67,9 @@ export const useHeaderSecondLevel = ({
   goBack,
   supportRequest,
   secondAction,
-  thirdAction
+  thirdAction,
+  transparent = false,
+  scrollValues
 }: HeaderSecondLevelHookProps) => {
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
@@ -131,8 +139,14 @@ export const useHeaderSecondLevel = ({
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      header: () => <HeaderSecondLevel {...headerComponentProps} />,
-      headerShown: true
+      header: () => (
+        <HeaderSecondLevel
+          scrollValues={scrollValues}
+          transparent={transparent}
+          {...headerComponentProps}
+        />
+      ),
+      headerTransparent: transparent
     });
-  }, [headerComponentProps, navigation]);
+  }, [headerComponentProps, navigation, transparent, scrollValues]);
 };
