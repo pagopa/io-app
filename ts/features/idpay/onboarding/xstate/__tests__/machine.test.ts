@@ -19,7 +19,7 @@ import {
   _typeEnum as SelfDeclarationMultiDTOType
 } from "../../../../../../definitions/idpay/SelfDeclarationMultiDTO";
 import { SelfConsentMultiDTO } from "../../../../../../definitions/idpay/SelfConsentMultiDTO";
-import { OnboardingFailureEnum } from "../failure";
+import { OnboardingFailureEnum } from "../../types/OnboardingFailure";
 import { mockActions } from "../__mocks__/actions";
 import { mockServices } from "../__mocks__/services";
 
@@ -286,7 +286,7 @@ describe("IDPay Onboarding machine", () => {
     );
 
     mockServices.loadInitiativeStatus.mockImplementation(async () =>
-      Promise.reject(OnboardingFailureEnum.ONBOARDED)
+      Promise.reject(OnboardingFailureEnum.USER_ONBOARDED)
     );
 
     const machine = createIDPayOnboardingMachine().withConfig({

@@ -1,3 +1,4 @@
+import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
@@ -6,7 +7,7 @@ import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserD
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -180,76 +181,89 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     );
 
   return (
-    <LoadingSpinnerOverlay
-      isLoading={isLoading}
-      loadingOpacity={0.9}
-      loadingCaption={I18n.t("profile.main.privacy.loading")}
+    <RNavScreenWithLargeHeader
+      title={I18n.t("profile.main.privacy.title")}
+      headerActionsProp={{ showHelp: true }}
     >
-      <ScreenContent
-        title={I18n.t("profile.main.privacy.title")}
-        subtitle={I18n.t("profile.main.privacy.subtitle")}
+      <LoadingSpinnerOverlay
+        isLoading={isLoading}
+        loadingOpacity={0.9}
+        loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <List withContentLateralPadding={true}>
-          {/* Privacy Policy */}
-          <ListItemComponent
-            title={I18n.t("profile.main.privacy.privacyPolicy.title")}
-            subTitle={I18n.t("profile.main.privacy.privacyPolicy.description")}
-            onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY)}
-            useExtendedSubTitle={true}
-          />
-          {/* Share data */}
-          <ListItemComponent
-            title={I18n.t("profile.main.privacy.shareData.listItem.title")}
-            subTitle={I18n.t(
-              "profile.main.privacy.shareData.listItem.description"
-            )}
-            onPress={() =>
-              navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
-            }
-            useExtendedSubTitle={true}
-          />
-          {/* Export your data */}
-          <ListItemComponent
-            title={I18n.t("profile.main.privacy.exportData.title")}
-            subTitle={I18n.t("profile.main.privacy.exportData.description")}
-            onPress={() => {
-              setRequestProcess(true);
-              dispatch(
-                loadUserDataProcessing.request(
-                  UserDataProcessingChoiceEnum.DOWNLOAD
-                )
-              );
-            }}
-            useExtendedSubTitle={true}
-            titleBadge={
-              isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
-                ? I18n.t("profile.preferences.list.wip")
-                : undefined
-            }
-            testID="profile-export-data"
-          />
-          {/* Remove account */}
-          <ListItemComponent
-            title={I18n.t("profile.main.privacy.removeAccount.title")}
-            subTitle={I18n.t("profile.main.privacy.removeAccount.description")}
-            onPress={() => {
-              if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
-                handleUserDataRequestAlert(UserDataProcessingChoiceEnum.DELETE);
-              } else {
-                navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+        <ContentWrapper>
+          <VSpacer size={8} />
+          <Body color="grey-700">
+            {I18n.t("profile.main.privacy.subtitle")}
+          </Body>
+          <VSpacer size={24} />
+          <List withContentLateralPadding={false}>
+            {/* Privacy Policy */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.privacyPolicy.title")}
+              subTitle={I18n.t(
+                "profile.main.privacy.privacyPolicy.description"
+              )}
+              onPress={() => navigation.navigate(ROUTES.PROFILE_PRIVACY)}
+              useExtendedSubTitle={true}
+            />
+            {/* Share data */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.shareData.listItem.title")}
+              subTitle={I18n.t(
+                "profile.main.privacy.shareData.listItem.description"
+              )}
+              onPress={() =>
+                navigation.navigate(ROUTES.PROFILE_PRIVACY_SHARE_DATA)
               }
-            }}
-            useExtendedSubTitle={true}
-            titleBadge={
-              isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
-                ? I18n.t("profile.preferences.list.wip")
-                : undefined
-            }
-            testID="profile-delete"
-          />
-        </List>
-      </ScreenContent>
-    </LoadingSpinnerOverlay>
+              useExtendedSubTitle={true}
+            />
+            {/* Export your data */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.exportData.title")}
+              subTitle={I18n.t("profile.main.privacy.exportData.description")}
+              onPress={() => {
+                setRequestProcess(true);
+                dispatch(
+                  loadUserDataProcessing.request(
+                    UserDataProcessingChoiceEnum.DOWNLOAD
+                  )
+                );
+              }}
+              useExtendedSubTitle={true}
+              titleBadge={
+                isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
+                  ? I18n.t("profile.preferences.list.wip")
+                  : undefined
+              }
+              testID="profile-export-data"
+            />
+            {/* Remove account */}
+            <ListItemComponent
+              title={I18n.t("profile.main.privacy.removeAccount.title")}
+              subTitle={I18n.t(
+                "profile.main.privacy.removeAccount.description"
+              )}
+              onPress={() => {
+                if (isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)) {
+                  handleUserDataRequestAlert(
+                    UserDataProcessingChoiceEnum.DELETE
+                  );
+                } else {
+                  navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
+                }
+              }}
+              useExtendedSubTitle={true}
+              titleBadge={
+                isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
+                  ? I18n.t("profile.preferences.list.wip")
+                  : undefined
+              }
+              testID="profile-delete"
+            />
+          </List>
+        </ContentWrapper>
+      </LoadingSpinnerOverlay>
+    </RNavScreenWithLargeHeader>
   );
 };
 

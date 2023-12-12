@@ -5,13 +5,13 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import { WalletPaymentConfirmScreen } from "../screens/WalletPaymentConfirmScreen";
 import { WalletPaymentDetailScreen } from "../screens/WalletPaymentDetailScreen";
 import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInputFiscalCodeScreen";
 import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
-import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
 import { WalletPaymentPickMethodScreen } from "../screens/WalletPaymentPickMethodScreen";
+import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
 import { WalletPaymentPickPspScreen } from "../screens/WalletPaymentPickPspScreen";
+import { WalletPaymentConfirmScreen } from "../screens/WalletPaymentConfirmScreen";
 import { WalletPaymentParamsList } from "./params";
 import { WalletPaymentRoutes } from "./routes";
 

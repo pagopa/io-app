@@ -1,121 +1,171 @@
-import React from "react";
 import { useSelector } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
 import {
-  VSpacer,
-  IOPictograms,
-  Pictogram,
-  ButtonSolid,
-  ButtonOutline,
-  IOStyles
-} from "@pagopa/io-app-design-system";
-import { H3 } from "../../../../components/core/typography/H3";
-import I18n from "../../../../i18n";
-import themeVariables from "../../../../theme/variables";
-import { OnboardingFailureEnum } from "../xstate/failure";
+  OperationResultScreenContent,
+  OperationResultScreenContentProps
+} from "../../../../components/screens/OperationResultScreenContent";
+import { OnboardingFailureEnum } from "../types/OnboardingFailure";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { selectOnboardingFailure } from "../xstate/selectors";
-import { Body } from "../../../../components/core/typography/Body";
-
-const failurePictures: Record<OnboardingFailureEnum, IOPictograms> = {
-  [OnboardingFailureEnum.GENERIC]: "umbrella",
-  [OnboardingFailureEnum.UNEXPECTED]: "umbrella",
-  [OnboardingFailureEnum.NOT_STARTED]: "hourglass",
-  [OnboardingFailureEnum.ENDED]: "timeout",
-  [OnboardingFailureEnum.NO_BUDGET]: "timeout",
-  [OnboardingFailureEnum.SUSPENDED]: "timeout",
-  [OnboardingFailureEnum.SESSION_EXPIRED]: "timeout",
-  [OnboardingFailureEnum.NO_REQUIREMENTS]: "error",
-  [OnboardingFailureEnum.ON_EVALUATION]: "hourglass",
-  [OnboardingFailureEnum.NOT_ELIGIBLE]: "error",
-  [OnboardingFailureEnum.ONBOARDED]: "fireworks",
-  [OnboardingFailureEnum.UNSUBSCRIBED]: "error"
-};
+import I18n from "../../../../i18n";
 
 const FailureScreen = () => {
   const machine = useOnboardingMachineService();
   const failureOption = useSelector(machine, selectOnboardingFailure);
 
-  const failure = pipe(
-    failureOption,
-    O.getOrElse(() => OnboardingFailureEnum.GENERIC)
+  const defaultCloseAction = React.useMemo(
+    () => ({
+      label: I18n.t("global.buttons.close"),
+      accessibilityLabel: I18n.t("global.buttons.close"),
+      onPress: () => machine.send({ type: "QUIT_ONBOARDING" })
+    }),
+    [machine]
   );
 
-  const isAlreadyOnboarded = failure === OnboardingFailureEnum.ONBOARDED;
+  const goToInitiativeAction = React.useMemo(
+    () => ({
+      label: I18n.t("idpay.onboarding.failure.button.goToInitiative"),
+      accessibilityLabel: I18n.t(
+        "idpay.onboarding.failure.button.goToInitiative"
+      ),
+      onPress: () => machine.send({ type: "SHOW_INITIATIVE_DETAILS" })
+    }),
+    [machine]
+  );
 
-  const handleClosePress = () => {
-    machine.send({ type: "QUIT_ONBOARDING" });
-  };
+  const genericErrorProps = React.useMemo<OperationResultScreenContentProps>(
+    () => ({
+      pictogram: "umbrellaNew",
+      title: I18n.t("idpay.onboarding.failure.message.GENERIC.title"),
+      subtitle: I18n.t("idpay.onboarding.failure.message.GENERIC.subtitle"),
+      action: defaultCloseAction
+    }),
+    [defaultCloseAction]
+  );
 
-  const handleNavigateToInitiativePress = () => {
-    machine.send({ type: "SHOW_INITIATIVE_DETAILS" });
-  };
-
-  const renderCloseButton = () => {
-    if (isAlreadyOnboarded) {
-      return (
-        <ButtonSolid
-          label={I18n.t("idpay.onboarding.failure.button.goToInitiative")}
-          accessibilityLabel={I18n.t(
-            "idpay.onboarding.failure.button.goToInitiative"
-          )}
-          onPress={handleNavigateToInitiativePress}
-          fullWidth={true}
-        />
-      );
+  // TODO add missing pictograms IOBP-176
+  const mapFailureToContentProps = (
+    failure: OnboardingFailureEnum
+  ): OperationResultScreenContentProps => {
+    switch (failure) {
+      case OnboardingFailureEnum.INITIATIVE_NOT_FOUND:
+        return {
+          pictogram: "search",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_FOUND.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_FOUND.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.UNSATISFIED_REQUIREMENTS:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.UNSATISFIED_REQUIREMENTS.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.USER_NOT_IN_WHITELIST:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.USER_NOT_IN_WHITELIST.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.INITIATIVE_NOT_STARTED:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.INITIATIVE_ENDED:
+        return {
+          pictogram: "umbrellaNew",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_ENDED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.INITIATIVE_ENDED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.BUDGET_EXHAUSTED:
+        return {
+          pictogram: "fatalError",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.BUDGET_EXHAUSTED.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.USER_UNSUBSCRIBED:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.title"
+          ),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.USER_UNSUBSCRIBED.subtitle"
+          ),
+          action: defaultCloseAction,
+          secondaryAction: goToInitiativeAction
+        };
+      case OnboardingFailureEnum.USER_ONBOARDED:
+        return {
+          pictogram: "success",
+          title: I18n.t(
+            "idpay.onboarding.failure.message.USER_ONBOARDED.title"
+          ),
+          action: goToInitiativeAction
+        };
+      case OnboardingFailureEnum.NOT_ELIGIBLE:
+        return {
+          pictogram: "completed",
+          title: I18n.t("idpay.onboarding.failure.message.NOT_ELIGIBLE.title"),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.NOT_ELIGIBLE.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      case OnboardingFailureEnum.ON_EVALUATION:
+        return {
+          pictogram: "pending",
+          title: I18n.t("idpay.onboarding.failure.message.ON_EVALUATION.title"),
+          subtitle: I18n.t(
+            "idpay.onboarding.failure.message.ON_EVALUATION.subtitle"
+          ),
+          action: defaultCloseAction
+        };
+      default:
+        return genericErrorProps;
     }
-
-    return (
-      <ButtonOutline
-        label={I18n.t("global.buttons.close")}
-        accessibilityLabel={I18n.t("global.buttons.close")}
-        onPress={handleClosePress}
-        fullWidth={true}
-      />
-    );
   };
 
-  return (
-    <SafeAreaView style={IOStyles.flex}>
-      <View style={styles.errorContainer}>
-        <Pictogram name={failurePictures[failure]} size={80} />
-        <VSpacer size={16} />
-        <H3 style={styles.title}>
-          {I18n.t(`idpay.onboarding.failure.message.${failure}.title`, {
-            defaultValue: I18n.t(
-              "idpay.onboarding.failure.message.GENERIC.title"
-            )
-          })}
-        </H3>
-        <VSpacer size={16} />
-        <Body style={{ textAlign: "center" }}>
-          {I18n.t(`idpay.onboarding.failure.message.${failure}.subtitle`, {
-            defaultValue: I18n.t(
-              "idpay.onboarding.failure.message.GENERIC.subtitle"
-            )
-          })}
-        </Body>
-      </View>
-      <View style={styles.buttonContainer}>{renderCloseButton()}</View>
-    </SafeAreaView>
+  const contentProps = pipe(
+    failureOption,
+    O.map(mapFailureToContentProps),
+    O.getOrElse(() => genericErrorProps)
   );
-};
 
-const styles = StyleSheet.create({
-  errorContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 56
-  },
-  buttonContainer: {
-    padding: themeVariables.contentPadding
-  },
-  title: {
-    textAlign: "center"
-  }
-});
+  return <OperationResultScreenContent {...contentProps} />;
+};
 
 export default FailureScreen;
