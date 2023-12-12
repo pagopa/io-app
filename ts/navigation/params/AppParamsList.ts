@@ -43,6 +43,8 @@ import {
 } from "../../features/idpay/unsubscription/navigation/navigator";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
+import { WalletBarcodeParamsList } from "../../features/walletV3/barcode/navigation/params";
+import { WalletBarcodeRoutes } from "../../features/walletV3/barcode/navigation/routes";
 import {
   WalletOnboardingParamsList,
   WalletOnboardingRoutes
@@ -113,7 +115,7 @@ export type AppParamsList = {
 
   [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
   [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: NavigatorScreenParams<WalletPaymentParamsList>;
-  [WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN]: undefined; // FIXME IOBP-383: remove after react-navigation 6.x upgrade. This should be insde WALLET_PAYMENT_MAIN
+  [WalletBarcodeRoutes.WALLET_BARCODE_MAIN]: NavigatorScreenParams<WalletBarcodeParamsList>;
   [WalletDetailsRoutes.WALLET_DETAILS_MAIN]: NavigatorScreenParams<WalletDetailsParamsList>;
   [WalletTransactionRoutes.WALLET_TRANSACTION_MAIN]: NavigatorScreenParams<WalletTransactionParamsList>;
 };

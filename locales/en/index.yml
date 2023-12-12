@@ -1210,6 +1210,10 @@ wallet:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
         primaryAction: Chiudi
+      ALREADY_ONBOARDED:
+        title: Hai già aggiunto questo metodo
+        subtitle: ""
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -3303,7 +3307,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        validUpTo: "Vale fino a " 
+        validUpTo: "Vale fino a "
         expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
         expired:
@@ -3823,6 +3827,11 @@ fastLogin:
         description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
+bonusCard:
+  validUntil: Valida fino al {{endDate}}
+  expiring: Scade il {{endDate}}
+  paused: In pausa
+  removed: Rimossa
 transaction:
   details:
     title: Dettaglio operazione
