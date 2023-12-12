@@ -1,19 +1,22 @@
 import React from "react";
-import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, H6, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import { pipe } from "fp-ts/lib/function";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import {
   ClaimValue,
+  DrivingPrivilegesClaim,
+  DrivingPrivilegesClaimType,
   EvidenceClaim,
+  ImageClaim,
   PlaceOfBirthClaim,
   PlaceOfBirthClaimType,
-  TextClaim
+  PlainTextClaim
 } from "../utils/itwClaimsUtils";
 import I18n from "../../../i18n";
-import { localeDateFormat } from "../../../utils/locale";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
+import { localeDateFormat } from "../../../utils/locale";
 import { Claim } from "./ItwCredentialClaimsList";
 
 /**
@@ -21,13 +24,19 @@ import { Claim } from "./ItwCredentialClaimsList";
  * @param label - the label of the claim
  * @param claim - the claim value
  */
-const PlaceOfBirthClaimItem = (label: string, claim: PlaceOfBirthClaimType) => {
+const PlaceOfBirthClaimItem = ({
+  label,
+  claim
+}: {
+  label: string;
+  claim: PlaceOfBirthClaimType;
+}) => {
   const value = `${claim.locality} (${claim.country})`;
   return (
-    <View key={`${label}-${value}`}>
+    <>
       <ListItemInfo label={label} value={value} accessibilityLabel={value} />
       <Divider />
-    </View>
+    </>
   );
 };
 
@@ -36,15 +45,21 @@ const PlaceOfBirthClaimItem = (label: string, claim: PlaceOfBirthClaimType) => {
  * @param label - the label of the claim
  * @param claim - the claim value
  */
-const TextClaimItem = (label: string, claim: string) => (
-  <View key={`${label}-${claim}`}>
+const PlainTextClaimItem = ({
+  label,
+  claim
+}: {
+  label: string;
+  claim: string;
+}) => (
+  <>
     <ListItemInfo
       label={label}
       value={claim}
       accessibilityLabel={`${label} ${claim}`}
     />
     <Divider />
-  </View>
+  </>
 );
 
 /**
@@ -52,7 +67,7 @@ const TextClaimItem = (label: string, claim: string) => (
  * @param label - the label of the claim
  * @param claim - the value of the claim
  */
-const DateClaimItem = (label: string, claim: Date) => {
+const DateClaimItem = ({ label, claim }: { label: string; claim: Date }) => {
   const value = localeDateFormat(
     claim,
     I18n.t("global.dateFormats.shortFormat")
@@ -74,7 +89,7 @@ const DateClaimItem = (label: string, claim: Date) => {
  * It features a bottom sheet with information about the issuer of the claim.
  * @param issuerName - the organization name of the issuer of the evidence claim.
  */
-const EvidenceClaimItem = (issuerName: string) => {
+const EvidenceClaimItem = ({ issuerName }: { issuerName: string }) => {
   const issuedByBottomSheet = useItwInfoBottomSheet({
     title: issuerName,
     content: [
@@ -121,13 +136,78 @@ const EvidenceClaimItem = (issuerName: string) => {
 };
 
 /**
+ * Component which renders a claim of unknown type with a placeholder.
+ * @param label - the label of the claim
+ * @param _claim - the claim value of unknown type. We are not interested in its value but it's needed for the exaustive type checking.
+ */
+const UnknownClaimItem = ({ label }: { label: string; _claim?: never }) => (
+  <PlainTextClaimItem
+    label={label}
+    claim={I18n.t("features.itWallet.generic.placeholders.claimNotAvailable")}
+  />
+);
+
+const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
+  <>
+    <ListItemInfo
+      label={label}
+      value={
+        <Image
+          source={{ uri: claim }}
+          style={{
+            width: 100,
+            height: 100
+          }}
+          resizeMode="contain"
+        />
+      }
+      accessibilityLabel={`${label} ${claim}`}
+    />
+    <Divider />
+  </>
+);
+
+const DrivingPrivilegesClaimItem = ({
+  label,
+  claim
+}: {
+  label: string;
+  claim: DrivingPrivilegesClaimType;
+}) => (
+  <>
+    <ListItemInfo
+      label={label}
+      value={
+        <>
+          <H6>
+            {I18n.t(
+              "features.itWallet.verifiableCredentials.claims.mdl.category",
+              { category: claim.vehicle_category_code }
+            )}
+          </H6>
+          <H6>
+            {I18n.t(
+              "features.itWallet.verifiableCredentials.claims.mdl.expirationDate",
+              { expirationDate: claim.expiry_date }
+            )}
+          </H6>
+          <H6>
+            {I18n.t(
+              "features.itWallet.verifiableCredentials.claims.mdl.issuedDate",
+              { issuedDate: claim.issue_date }
+            )}
+          </H6>
+        </>
+      }
+      accessibilityLabel={`${label} ${claim}`}
+    />
+    <Divider />
+  </>
+);
+
+/**
  * Component which renders a claim.
  * It renders a different component based on the type of the claim.
- * Currently supported types are:
- * - PlaceOfBirthClaim
- * - TextClaim
- * - DateFromString
- * - EvidenceClaim
  * @param claim - the claim to render
  */
 const ItwCredentialClaim = ({ claim }: { claim: Claim }) =>
@@ -135,18 +215,28 @@ const ItwCredentialClaim = ({ claim }: { claim: Claim }) =>
     claim.value,
     ClaimValue.decode,
     E.fold(
-      () => null,
+      () => <UnknownClaimItem label={claim.label} />,
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
-          return PlaceOfBirthClaimItem(claim.label, decoded);
-        } else if (TextClaim.is(decoded)) {
-          return TextClaimItem(claim.label, decoded);
+          return <PlaceOfBirthClaimItem label={claim.label} claim={decoded} />;
         } else if (DateFromString.is(decoded)) {
-          return DateClaimItem(claim.label, decoded);
+          return <DateClaimItem label={claim.label} claim={decoded} />;
         } else if (EvidenceClaim.is(decoded)) {
-          return EvidenceClaimItem(decoded[0].record.source.organization_name);
+          return (
+            <EvidenceClaimItem
+              issuerName={decoded[0].record.source.organization_name}
+            />
+          );
+        } else if (ImageClaim.is(decoded)) {
+          return <ImageClaimItem label={claim.label} claim={decoded} />;
+        } else if (DrivingPrivilegesClaim.is(decoded)) {
+          return (
+            <DrivingPrivilegesClaimItem label={claim.label} claim={decoded} />
+          );
+        } else if (PlainTextClaim.is(decoded)) {
+          return <PlainTextClaimItem label={claim.label} claim={decoded} />; // must be the last one to be checked due to overlap with IPatternStringTag
         } else {
-          return null;
+          return <UnknownClaimItem label={claim.label} _claim={decoded} />;
         }
       }
     )

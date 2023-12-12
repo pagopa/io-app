@@ -1,9 +1,8 @@
 import * as t from "io-ts";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
 import { Locales } from "../../../../locales/locales";
 import I18n from "../../../i18n";
-import { dateFormatRegex } from "./mocks";
 
 /**
  * Enum for the claims locales.
@@ -32,28 +31,22 @@ export const getClaimsFullLocale = (): ClaimsLocales =>
   localeToClaimsLocales.get(I18n.currentLocale()) ?? ClaimsLocales.it;
 
 /**
+ * Regex for the date format which is used to validate the date claim as ISO 8601:2004 YYYY-MM-DD format.
+ */
+const DATE_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2}$";
+
+/**
+ * Regex for the picture URL format which is used to validate the image claim as a base64 encoded png image.
+ */
+const PICTURE_URL_REGEX = "^data:image\\/png;base64,";
+
+/**
  * io-ts decoder for the date claim field of the credential.
  * The date format is checked against the regex dateFormatRegex, which is currenlty mocked.
  * This is needed because a generic date decoder would accept invalid dates like numbers,
  * thus decoding properly and returning a wrong claim item to be displayed.
  */
-const DateClaim = new t.Type<Date, string, unknown>(
-  "DateClaim",
-  (u): u is Date => u instanceof Date,
-  (u, c) =>
-    pipe(
-      t.string.validate(u, c),
-      E.chain(str => {
-        const regex = dateFormatRegex.test(str);
-        if (!regex) {
-          return t.failure(u, c);
-        }
-        const d = new Date(str);
-        return isNaN(d.getTime()) ? t.failure(u, c) : t.success(d);
-      })
-    ),
-  a => a.toString()
-);
+export const DateClaim = patternDateFromString(DATE_FORMAT_REGEX, "DateClaim");
 
 /**
  * io-ts decoder for the evidence claim field of the credential.
@@ -79,15 +72,26 @@ export const PlaceOfBirthClaim = t.type({
   country: t.string,
   locality: t.string
 });
+export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
 
 /**
- * Alias for the place of birth claim type.
+ * io-ts decoder for the mDL driving privileges
  */
-export type PlaceOfBirthClaimType = t.TypeOf<typeof PlaceOfBirthClaim>;
+export const DrivingPrivilegesClaim = t.type({
+  issue_date: t.string,
+  vehicle_category_code: t.string,
+  expiry_date: t.string
+});
+export type DrivingPrivilegesClaimType = t.TypeOf<
+  typeof DrivingPrivilegesClaim
+>;
+
 /**
  * Alias for the string fallback of the claim field of the credential.
  */
-export const TextClaim = t.string;
+export const PlainTextClaim = t.string;
+
+export const ImageClaim = PatternString(PICTURE_URL_REGEX);
 
 /**
  * Decoder type for the claim field of the credential.
@@ -98,10 +102,14 @@ export const TextClaim = t.string;
 export const ClaimValue = t.union([
   // Parse an object representing the place of birth
   PlaceOfBirthClaim,
+  // Parse an object representing a mDL driving privileges
+  DrivingPrivilegesClaim,
   // Parse an object representing the claim evidence
   EvidenceClaim,
   // Otherwise parse a date
   DateClaim,
+  // Otherwise parse an image
+  ImageClaim,
   // Otherwise fallback to string
-  TextClaim
+  PlainTextClaim
 ]);

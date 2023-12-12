@@ -3468,6 +3468,10 @@ features:
         securityLevels: 
           high: "Alto"
           na: "Non disponibile"
+        mdl: 
+          category: "Categoria: {{category}}"
+          expirationDate: "Scadenza: {{expirationDate}}"
+          issuedDate: "Rilasciata il: {{issuedDate}}"
       unrecognizedData: 
         title: "Non riconosci alcuni dati?"
         body: "Se ci sono errori nei dati o vuoi capire meglio cosa significano, puoi contattare il Ministero dell’Interno."
@@ -3490,7 +3494,7 @@ features:
       credential: "Credenziale"
       attribute: "Attributo"
       placeholders: 
-        claimNotAvailable: "Attributo non presente"
+        claimNotAvailable: "Attributo non riconosciuto"
         claimLabelNotAvailable: "Etichetta attributo non presente"
         organizationName: "Nome ente non disponibile"
 webView:
