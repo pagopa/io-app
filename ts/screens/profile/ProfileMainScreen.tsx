@@ -23,9 +23,7 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { TranslationKeys } from "../../../locales/locales";
 import AppVersion from "../../components/AppVersion";
-import ContextualInfo from "../../components/ContextualInfo";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -41,7 +39,6 @@ import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import SectionHeaderComponent from "../../components/screens/SectionHeaderComponent";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
 import { isPlaygroundsEnabled } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
@@ -562,19 +559,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   public render() {
     const { navigation } = this.props;
 
-    const showInformationModal = (
-      title: TranslationKeys,
-      body: TranslationKeys
-    ) => {
-      this.props.showModal(
-        <ContextualInfo
-          onClose={this.props.hideModal}
-          title={I18n.t(title)}
-          body={() => <Markdown>{I18n.t(body)}</Markdown>}
-        />
-      );
-    };
-
     const profileNavListItems: ReadonlyArray<ProfileNavListItem> = [
       {
         // Data
@@ -617,11 +601,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         value: I18n.t("profile.main.appInfo.title"),
         description: I18n.t("profile.main.appInfo.description"),
         onPress: () =>
-          showInformationModal(
-            "profile.main.appInfo.title",
-            "profile.main.appInfo.contextualHelpContent"
-          ),
-        hideChevron: true
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_ABOUT_APP
+          })
       },
       {
         // Logout/Exit
