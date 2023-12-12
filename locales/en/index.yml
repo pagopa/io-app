@@ -755,18 +755,18 @@ email:
       subtitle: To continue using the app, you must validate your email address
       editButton: Edit email address
       validateButton: Validate email address
-      header: 
+      header:
         title: Configure IO
-      help: 
-        body: To continue using the app, you must validate your email address.      
+      help:
+        body: To continue using the app, you must validate your email address.
     emailAlreadyTaken:
       title: Edit your email address
       subtitleStart: This email address
       subtitleEnd: seems to be already in use on IO. Please enter a different one to continue using the app.
       editButton: Edit email address
-      header: 
+      header:
         title: Configure IO
-      help: 
+      help:
         body: This email address seems to be already in use on IO. Please enter a different one to continue using the app.
   read:
     title: Your email address
@@ -3303,7 +3303,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        validUpTo: "Vale fino a " 
+        validUpTo: "Vale fino a "
         expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
         expired:
@@ -3823,11 +3823,16 @@ fastLogin:
         description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
+bonusCard:
+  validUntil: Valida fino al {{endDate}}
+  expiring: Scade il {{endDate}}
+  paused: In pausa
+  removed: Rimossa
 transaction:
   details:
     title: Dettaglio operazione
     totalAmount: Totale
-    totalFee: Il totale comprende 
+    totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
     info:
       title: Informazioni sulla transazione
