@@ -13,7 +13,6 @@ import { getGenericError } from "../../../../utils/errors";
  */
 export function* handleGetTransactionDetails(
   _getTransactionDetails: any, // TODO: Replace with the real type when the BIZ Event API will be available
-  _token: string,
   action: ActionType<(typeof walletTransactionDetailsGet)["request"]>
 ) {
   // TODO: Add the whole logic here to call the BIZ Event API as soon as it will be available and replace the following code
