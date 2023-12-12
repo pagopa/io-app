@@ -42,7 +42,7 @@ import {
   watchZendeskSupportSaga
 } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
-import { watchWalletV3Saga } from "../features/walletV3/common/saga";
+import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
