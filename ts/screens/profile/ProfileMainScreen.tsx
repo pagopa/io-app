@@ -1,8 +1,10 @@
 import {
   ButtonSolid,
+  ContentWrapper,
   Divider,
   H2,
   IOColors,
+  IOVisualCostants,
   ListItemHeader,
   ListItemInfoCopy,
   ListItemNav,
@@ -11,9 +13,17 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { List, Toast } from "native-base";
+import { Toast } from "native-base";
 import * as React from "react";
-import { Alert, Dimensions, ScrollView, View } from "react-native";
+import { ComponentProps } from "react";
+import {
+  Alert,
+  Dimensions,
+  FlatList,
+  ListRenderItemInfo,
+  ScrollView,
+  View
+} from "react-native";
 import { connect } from "react-redux";
 import { TranslationKeys } from "../../../locales/locales";
 import AppVersion from "../../components/AppVersion";
@@ -28,7 +38,6 @@ import {
 } from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
-import ListItemComponent from "../../components/screens/ListItemComponent";
 import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -78,6 +87,13 @@ type Props = IOStackNavigationRouteProps<MainTabParamsList, "PROFILE_MAIN"> &
 type State = {
   tapsOnAppVersion: number;
 };
+
+type ProfileNavListItem = {
+  value: string;
+} & Pick<
+  ComponentProps<typeof ListItemNav>,
+  "description" | "testID" | "onPress" | "hideChevron"
+>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
@@ -583,86 +599,102 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       );
     };
 
+    const profileNavListItems: ReadonlyArray<ProfileNavListItem> = [
+      {
+        // Data
+        value: I18n.t("profile.main.data.title"),
+        description: I18n.t("profile.main.data.description"),
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_DATA
+          })
+      },
+      {
+        // Preferences
+        value: I18n.t("profile.main.preferences.title"),
+        description: I18n.t("profile.main.preferences.description"),
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_PREFERENCES_HOME
+          })
+      },
+      {
+        // Security
+        value: I18n.t("profile.main.security.title"),
+        description: I18n.t("profile.main.security.description"),
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_SECURITY
+          })
+      },
+      {
+        // Privacy
+        value: I18n.t("profile.main.privacy.title"),
+        description: I18n.t("profile.main.privacy.description"),
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_PRIVACY_MAIN
+          })
+      },
+      {
+        // Info about IO app
+        value: I18n.t("profile.main.appInfo.title"),
+        description: I18n.t("profile.main.appInfo.description"),
+        onPress: () =>
+          showInformationModal(
+            "profile.main.appInfo.title",
+            "profile.main.appInfo.contextualHelpContent"
+          ),
+        hideChevron: true
+      },
+      {
+        // Logout/Exit
+        value: I18n.t("profile.main.logout"),
+        description: I18n.t("profile.logout.menulabel"),
+        onPress: this.onLogoutPress,
+        hideChevron: true
+      }
+    ];
+
+    const renderProfileNavItem = ({
+      item: { value, description, onPress, testID, hideChevron }
+    }: ListRenderItemInfo<ProfileNavListItem>) => (
+      <ListItemNav
+        accessibilityLabel={value}
+        value={value}
+        description={description}
+        onPress={onPress}
+        testID={testID}
+        hideChevron={hideChevron}
+      />
+    );
+
     const screenContent = () => (
       <ScrollView style={IOStyles.bgWhite}>
-        <VSpacer size={16} />
-        <List withContentLateralPadding={true}>
-          {/* Data */}
-          <ListItemComponent
-            title={I18n.t("profile.main.data.title")}
-            subTitle={I18n.t("profile.main.data.description")}
-            onPress={() =>
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_DATA
-              })
-            }
-            isFirstItem
-          />
+        <VSpacer size={24} />
+        <FlatList
+          scrollEnabled={false}
+          keyExtractor={(item: ProfileNavListItem, index: number) =>
+            `${item.value}-${index}`
+          }
+          contentContainerStyle={{
+            paddingHorizontal: IOVisualCostants.appMarginDefault
+          }}
+          data={profileNavListItems}
+          renderItem={renderProfileNavItem}
+          ItemSeparatorComponent={() => <Divider />}
+        />
 
-          {/* Preferences */}
-          <ListItemComponent
-            title={I18n.t("profile.main.preferences.title")}
-            subTitle={I18n.t("profile.main.preferences.description")}
-            onPress={() =>
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_PREFERENCES_HOME
-              })
-            }
-          />
-
-          {/* Security */}
-          <ListItemComponent
-            title={I18n.t("profile.main.security.title")}
-            subTitle={I18n.t("profile.main.security.description")}
-            onPress={() =>
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_SECURITY
-              })
-            }
-          />
-
-          {/* Privacy */}
-          <ListItemComponent
-            title={I18n.t("profile.main.privacy.title")}
-            subTitle={I18n.t("profile.main.privacy.description")}
-            onPress={() =>
-              navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                screen: ROUTES.PROFILE_PRIVACY_MAIN
-              })
-            }
-          />
-
-          {/* APP IO */}
-          <ListItemComponent
-            title={I18n.t("profile.main.appInfo.title")}
-            subTitle={I18n.t("profile.main.appInfo.description")}
-            onPress={() =>
-              showInformationModal(
-                "profile.main.appInfo.title",
-                "profile.main.appInfo.contextualHelpContent"
-              )
-            }
-          />
-
-          {/* Logout/Exit */}
-          <ListItemComponent
-            title={I18n.t("profile.main.logout")}
-            subTitle={I18n.t("profile.logout.menulabel")}
-            onPress={this.onLogoutPress}
-            hideIcon={true}
-            isLastItem={true}
-          />
-
-          {/* Show the app version + Enable debug mode */}
+        <ContentWrapper>
           <AppVersion onPress={this.onTapAppVersion} />
 
           {/* Developers Section */}
           {(this.props.isDebugModeEnabled || isDevEnv) &&
             this.renderDeveloperSection()}
 
-          {/* end list */}
+          {/* End margin */}
           <VSpacer size={24} />
-        </List>
+        </ContentWrapper>
       </ScrollView>
     );
 

@@ -29,7 +29,7 @@ import {
 } from "../../../cieLogin/store/reducers";
 
 import walletV3Reducer, {
-  WalletV3State
+  WalletState as WalletV3State
 } from "../../../walletV3/common/store/reducers";
 import {
   fastLoginReducer,
