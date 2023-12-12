@@ -3,12 +3,6 @@ import React from "react";
 import Markdown from "../../components/ui/Markdown";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
-import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
-
-type Props = {
-  navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_ABOUT_APP">;
-};
 
 const ProfileAboutApp = () => (
   <RNavScreenWithLargeHeader
