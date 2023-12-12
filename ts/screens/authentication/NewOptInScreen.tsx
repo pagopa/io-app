@@ -15,14 +15,12 @@ import { useStore } from "react-redux";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import ROUTES from "../../navigation/routes";
 import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import I18n from "../../i18n";
 import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
 import { useIODispatch } from "../../store/hooks";
-import SecuritySuggestions from "../../features/fastLogin/components/SecuritySuggestions";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import {
   trackLoginSessionOptIn,
@@ -30,6 +28,7 @@ import {
   trackLoginSessionOptIn365,
   trackLoginSessionOptInInfo
 } from "../../features/fastLogin/analytics/optinAnalytics";
+import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
@@ -47,6 +46,10 @@ type Props = IOStackNavigationRouteProps<
 
 const NewOptInScreen = (props: Props) => {
   const dispatch = useIODispatch();
+  const {
+    securitySuggestionBottomSheet,
+    presentSecuritySuggestionBottomSheet
+  } = useSecuritySuggestionsBottomSheet();
 
   const navigation = useNavigation();
   const store = useStore();
@@ -73,15 +76,6 @@ const NewOptInScreen = (props: Props) => {
     });
     dispatch(setFastLoginOptIn({ enabled: isLV }));
   };
-
-  const {
-    present: presentVeryLongAutoresizableBottomSheetWithFooter,
-    bottomSheet: veryLongAutoResizableBottomSheetWithFooter
-  } = useIOBottomSheetAutoresizableModal({
-    title: I18n.t("authentication.opt_in.security_suggests"),
-    component: <SecuritySuggestions />,
-    fullScreen: true
-  });
 
   return (
     <BaseScreenComponent
@@ -128,11 +122,6 @@ const NewOptInScreen = (props: Props) => {
           <FeatureInfo
             pictogramName="identityCheck"
             body={I18n.t("authentication.opt_in.identity_check")}
-            actionLabel={I18n.t("authentication.opt_in.security_suggests")}
-            actionOnPress={() => {
-              trackLoginSessionOptInInfo();
-              return presentVeryLongAutoresizableBottomSheetWithFooter();
-            }}
           />
           <VSpacer size={24} />
           <FeatureInfo
@@ -144,10 +133,13 @@ const NewOptInScreen = (props: Props) => {
             pictogramName="notification"
             body={I18n.t("authentication.opt_in.notification")}
             actionLabel={I18n.t("authentication.opt_in.security_suggests")}
-            actionOnPress={presentVeryLongAutoresizableBottomSheetWithFooter}
+            actionOnPress={() => {
+              trackLoginSessionOptInInfo();
+              return presentSecuritySuggestionBottomSheet();
+            }}
           />
         </ContentWrapper>
-        {veryLongAutoResizableBottomSheetWithFooter}
+        {securitySuggestionBottomSheet}
       </GradientScrollView>
     </BaseScreenComponent>
   );

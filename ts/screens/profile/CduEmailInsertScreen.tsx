@@ -282,10 +282,21 @@ const CduEmailInsertScreen = (props: Props) => {
     showModal
   ]);
 
+  const showGoBack = () => {
+    if (isFirstOnBoarding) {
+      return undefined;
+    } else {
+      if (!isEmailValidated) {
+        return undefined;
+      }
+      return handleGoBack;
+    }
+  };
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <BaseScreenComponent
-        goBack={isFirstOnboarding ? handleGoBack : undefined}
+        goBack={showGoBack()}
         headerTitle={
           isFirstOnboarding
             ? I18n.t("email.newinsert.header")

@@ -409,7 +409,11 @@ function* checkStoreHashedFiscalCode(
   ) {
     // delete current store pin
     yield* call(deletePin);
-    yield* put(differentProfileLoggedIn());
+    yield* put(
+      differentProfileLoggedIn({
+        isDifferentProfile: checkIsDifferentFiscalCode === undefined
+      })
+    );
   }
   yield* put(
     setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)

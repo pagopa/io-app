@@ -69,7 +69,8 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
-  const { securitySuggestionBottomSheet } = useSecuritySuggestionsBottomSheet();
+  const { securitySuggestionBottomSheet } =
+    useSecuritySuggestionsBottomSheet(false);
 
   useOnFirstRender(() => {
     if (needsMigration) {

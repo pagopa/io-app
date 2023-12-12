@@ -10,7 +10,14 @@ import { progressSelector } from "../store/reducers/identification";
 import { useIOBottomSheetAutoresizableModal } from "../utils/hooks/bottomSheet";
 import SecuritySuggestions from "../features/fastLogin/components/SecuritySuggestions";
 
-export const useSecuritySuggestionsBottomSheet = () => {
+/**
+ * @param useManualBottomsheetOpening if true the caller must use the methods exported by
+ * useIOBottomSheetAutoresizableModal whitout automation on bottomsheet opening.
+ */
+
+export const useSecuritySuggestionsBottomSheet = (
+  useManualBottomsheetOpening: boolean = true
+) => {
   const identificationProgressState = useIOSelector(progressSelector);
   const isFastLoginFFEnabled = useIOSelector(isFastLoginFFEnabledSelector);
   const securityAdviceAcknowledged = useIOSelector(
@@ -42,19 +49,25 @@ export const useSecuritySuggestionsBottomSheet = () => {
   useEffect(() => {
     // During the current session, we listen to the identification progress state
     // to show the security suggestion bottom sheet when the user is identified
-    if (
-      identificationProgressState.kind === "identified" ||
-      isSecurityAdviceReadyToBeShown
-    ) {
-      showSecuritySuggestionModal();
+
+    // eslint-disable-next-line sonarjs/no-collapsible-if
+    if (!useManualBottomsheetOpening) {
+      if (
+        identificationProgressState.kind === "identified" ||
+        isSecurityAdviceReadyToBeShown
+      ) {
+        showSecuritySuggestionModal();
+      }
     }
   }, [
     identificationProgressState,
     showSecuritySuggestionModal,
-    isSecurityAdviceReadyToBeShown
+    isSecurityAdviceReadyToBeShown,
+    useManualBottomsheetOpening
   ]);
 
   return {
-    securitySuggestionBottomSheet
+    securitySuggestionBottomSheet,
+    presentSecuritySuggestionBottomSheet
   };
 };
