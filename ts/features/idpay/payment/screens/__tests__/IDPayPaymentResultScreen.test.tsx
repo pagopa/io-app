@@ -8,7 +8,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { IDPayPaymentRoutes } from "../../navigation/navigator";
 import { Context, INITIAL_CONTEXT } from "../../xstate/context";
-import { PaymentFailureEnum } from "../../xstate/failure";
+import { PaymentFailureEnum } from "../../types/PaymentFailure";
 import { createIDPayPaymentMachine } from "../../xstate/machine";
 import { PaymentMachineContext } from "../../xstate/provider";
 import {
