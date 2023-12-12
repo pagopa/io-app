@@ -1210,6 +1210,10 @@ wallet:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
         primaryAction: Chiudi
+      ALREADY_ONBOARDED:
+        title: Hai già aggiunto questo metodo
+        subtitle: ""
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
