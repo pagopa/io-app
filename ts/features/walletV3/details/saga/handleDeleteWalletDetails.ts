@@ -18,12 +18,10 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  */
 export function* handleDeleteWalletDetails(
   deleteWalletById: WalletClient["deleteWalletById"],
-  token: string,
   action: ActionType<(typeof walletDetailsDeleteInstrument)["request"]>
 ) {
   try {
     const deleteWalletRequest = deleteWalletById({
-      bearerAuth: token,
       walletId: action.payload.walletId
     });
     const deleteWalletResult = (yield* call(
