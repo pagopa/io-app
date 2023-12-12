@@ -4,7 +4,6 @@ import {
   Platform,
   Rationale
 } from "react-native";
-import { AsyncAlert } from "./asyncAlert";
 
 /**
  * This function enhance and wraps the react-native function {@link PermissionsAndroid.request}, in order to give to the user
@@ -24,13 +23,7 @@ export const requestIOAndroidPermission = async (
     return true;
   }
 
-  if (rationale !== undefined) {
-    await AsyncAlert(rationale.title, rationale.message, [
-      { text: rationale.buttonPositive, style: "default" }
-    ]);
-  }
-
-  const status = await PermissionsAndroid.request(permission);
+  const status = await PermissionsAndroid.request(permission, rationale);
   return status === "granted";
 };
 
@@ -48,15 +41,19 @@ export const checkIOAndroidPermission = async (
  * Handles media permissions based on Android API levels.
  * @returns
  */
-export const requestIOAndroidMediaPermission = async (): Promise<boolean> => {
+export const requestIOAndroidMediaPermission = async (
+  rationale?: Rationale
+): Promise<boolean> => {
   if (Platform.OS === "android") {
     if (Platform.Version >= 33) {
       return requestIOAndroidPermission(
-        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES
+        PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+        rationale
       );
     } else {
       return requestIOAndroidPermission(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        rationale
       );
     }
   }

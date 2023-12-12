@@ -46,6 +46,8 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
+import { WalletBarcodeNavigator } from "../features/walletV3/barcode/navigation/navigator";
+import { WalletBarcodeRoutes } from "../features/walletV3/barcode/navigation/routes";
 import {
   WalletDetailsNavigator,
   WalletDetailsRoutes
@@ -56,7 +58,6 @@ import {
 } from "../features/walletV3/onboarding/navigation/navigator";
 import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
-import { WalletPaymentBarcodeScanScreen } from "../features/walletV3/payment/screens/WalletPaymentBarcodeScanScreen";
 import {
   WalletTransactionNavigator,
   WalletTransactionRoutes
@@ -314,13 +315,9 @@ const AuthenticatedStackNavigator = () => {
           ...hideHeaderOptions
         }}
       />
-      {/* 
-        This screen is outside the WalletPaymentNavigator to enable the slide from bottom animation.
-        FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the WalletPaymentNavigator
-      */}
       <Stack.Screen
-        name={WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN}
-        component={WalletPaymentBarcodeScanScreen}
+        name={WalletBarcodeRoutes.WALLET_BARCODE_MAIN}
+        component={WalletBarcodeNavigator}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: isGestureEnabled,
