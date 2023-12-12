@@ -10,14 +10,12 @@ import { handleGetTransactionDetails } from "./handleGetTransactionDetails";
  * @param bearerToken
  */
 export function* watchWalletTransactionSaga(
-  walletClient: WalletClient,
-  token: string
+  walletClient: WalletClient
 ): SagaIterator {
   // TODO: Connect the saga code here to the BIZ Event API as asoon as it will be available (https://pagopa.atlassian.net/browse/IOBP-440)
   yield* takeLatest(
     walletTransactionDetailsGet.request,
     handleGetTransactionDetails,
-    walletClient.getWalletById, // TODO: Add the get transaction details API call here when BIZ Event API will be available
-    token
+    walletClient.getWalletById // TODO: Add the get transaction details API call here when BIZ Event API will be available
   );
 }

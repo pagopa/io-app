@@ -31,7 +31,8 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { WalletBarcodeRoutes } from "../navigation/routes";
+import { WalletPaymentRoutes } from "../../payment/navigation/routes";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -39,7 +40,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "wallet.QRtoPay.contextualHelpContent"
 };
 
-const WalletPaymentBarcodeScanScreen = () => {
+const WalletBarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const { dataMatrixPosteEnabled } = useIOSelector(
@@ -76,8 +77,8 @@ const WalletPaymentBarcodeScanScreen = () => {
     }
 
     if (pagoPaBarcodes.length > 1) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
+      navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
+        screen: WalletBarcodeRoutes.WALLET_BARCODE_CHOICE,
         params: {
           barcodes: pagoPaBarcodes
         }
@@ -176,4 +177,4 @@ const WalletPaymentBarcodeScanScreen = () => {
   );
 };
 
-export { WalletPaymentBarcodeScanScreen };
+export { WalletBarcodeScanScreen };

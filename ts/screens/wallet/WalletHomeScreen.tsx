@@ -62,7 +62,8 @@ import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
+import { WalletBarcodeRoutes } from "../../features/walletV3/barcode/navigation/routes";
+import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -106,7 +107,6 @@ import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
 import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
-import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -472,9 +472,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   private navigateToPaymentScanQrCode = () => {
-    this.props.navigation.navigate(
-      WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
-    );
+    this.props.navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
+      screen: WalletBarcodeRoutes.WALLET_BARCODE_SCAN
+    });
   };
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
