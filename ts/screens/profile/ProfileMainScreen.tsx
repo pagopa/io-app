@@ -671,7 +671,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     const screenContent = () => (
       <ScrollView style={IOStyles.bgWhite}>
-        <VSpacer size={24} />
+        <VSpacer size={16} />
         <FlatList
           scrollEnabled={false}
           keyExtractor={(item: ProfileNavListItem, index: number) =>
