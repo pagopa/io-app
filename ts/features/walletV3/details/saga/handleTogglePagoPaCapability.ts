@@ -12,13 +12,12 @@ import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletDetailsInstrumentSelector } from "../store";
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
-import { WalletServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletServiceStatus";
 import { Service } from "../../../../../definitions/pagopa/walletv3/Service";
+import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
+import { WalletService } from "../../../../../definitions/pagopa/walletv3/WalletService";
 
 /**
  * Handle the remote call to toggle the Wallet pagopa capability
- * @param getPaymentMethods
- * @param action
  */
 export function* handleTogglePagoPaCapability(
   updateWalletServicesById: WalletClient["updateWalletServicesById"],
@@ -37,7 +36,7 @@ export function* handleTogglePagoPaCapability(
     const updateWalletPagoPaServicesRequest = updateWalletServicesById({
       walletId: action.payload.walletId,
       body: {
-        services: updatedServices
+        services: updatedServices as Array<WalletService>
       }
     });
     const updateWalletResult = (yield* call(
@@ -84,11 +83,11 @@ export function* handleTogglePagoPaCapability(
 
 const updatePagoPaServiceStatus = (
   service: Service
-): WalletServiceStatusEnum => {
+): ServiceStatusEnum | undefined => {
   if (service.name === ServiceNameEnum.PAGOPA) {
-    return service.status === WalletServiceStatusEnum.DISABLED
-      ? WalletServiceStatusEnum.ENABLED
-      : WalletServiceStatusEnum.DISABLED;
+    return service.status === ServiceStatusEnum.DISABLED
+      ? ServiceStatusEnum.ENABLED
+      : ServiceStatusEnum.DISABLED;
   }
   return service.status;
 };

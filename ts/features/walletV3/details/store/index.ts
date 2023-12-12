@@ -5,10 +5,10 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { GlobalState } from "../../../../store/reducers/types";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
-import { WalletServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletServiceStatus";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
 import {
   walletDetailsGetInstrument,
   walletDetailsPagoPaCapabilityToggle
@@ -59,9 +59,9 @@ const walletDetailsReducer = (
           return {
             ...service,
             status:
-              service.status === WalletServiceStatusEnum.ENABLED
-                ? WalletServiceStatusEnum.DISABLED
-                : WalletServiceStatusEnum.ENABLED
+              service.status === ServiceStatusEnum.ENABLED
+                ? ServiceStatusEnum.DISABLED
+                : ServiceStatusEnum.ENABLED
           };
         }
         return service;

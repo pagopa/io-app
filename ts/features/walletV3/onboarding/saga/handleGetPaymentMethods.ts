@@ -17,9 +17,7 @@ export function* handleGetPaymentMethods(
   getPaymentMethods: WalletClient["getAllPaymentMethods"],
   action: ActionType<(typeof walletGetPaymentMethods)["request"]>
 ) {
-  const getPaymentMethodsRequest = getPaymentMethods({
-    bearerAuth: token
-  });
+  const getPaymentMethodsRequest = getPaymentMethods({});
   try {
     const getPaymentMethodsResult = (yield* call(
       withRefreshApiCall,
