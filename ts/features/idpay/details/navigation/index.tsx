@@ -31,7 +31,6 @@ const Stack = createStackNavigator<IDPayDetailsParamsList>();
 export const IDpayDetailsNavigator = () => (
   <Stack.Navigator
     initialRouteName={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
-    headerMode={"none"}
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen

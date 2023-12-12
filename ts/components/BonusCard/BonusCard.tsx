@@ -26,7 +26,7 @@ type ContentProps = {
   organizationName: string;
   endDate: Date;
   status: BonusStatus;
-  counters: Array<BonusCardCounter>;
+  counters: ReadonlyArray<BonusCardCounter>;
 };
 
 type LoadingStateProps =
@@ -58,9 +58,11 @@ const BonusCardContent = (props: BonusCard) => {
           <VSpacer size={16} />
         </>
       )}
-      <H2 color="blueItalia-850">{name}</H2>
+      <H2 color="blueItalia-850" style={{ textAlign: "center" }}>
+        {name}
+      </H2>
       <VSpacer size={4} />
-      <Label weight="Regular" fontSize="small">
+      <Label weight="Regular" fontSize="small" style={{ textAlign: "center" }}>
         {organizationName}
       </Label>
       <VSpacer size={16} />

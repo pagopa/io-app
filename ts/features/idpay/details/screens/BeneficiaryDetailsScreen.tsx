@@ -1,10 +1,10 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { ScrollView } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -20,6 +20,7 @@ import {
   idPayBeneficiaryDetailsGet,
   idPayOnboardingStatusGet
 } from "../store/actions";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 export type BeneficiaryDetailsScreenParams = {
   initiativeId: string;
@@ -68,12 +69,13 @@ const BeneficiaryDetailsScreen = () => {
     )
   );
 
+  useHeaderSecondLevel({ title: headerTitle || "" });
+
   return (
-    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
-      <ScrollView scrollIndicatorInsets={{ right: 1 }}>
-        <ContentWrapper>{content}</ContentWrapper>
-      </ScrollView>
-    </BaseScreenComponent>
+    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+      <VSpacer size={16} />
+      <ContentWrapper>{content}</ContentWrapper>
+    </ScrollView>
   );
 };
 

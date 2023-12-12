@@ -1,5 +1,6 @@
 import {
   ButtonSolid,
+  ButtonSolidProps,
   ContentWrapper,
   Pictogram,
   VSpacer
@@ -15,9 +16,9 @@ import { StyleSheet, View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import {
   InitiativeDTO,
-  InitiativeRewardTypeEnum,
-  StatusEnum as InitiativeStatusEnum
+  InitiativeRewardTypeEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
+import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
@@ -26,9 +27,9 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import { BonusCounter } from "../components/InitiativeBonusCounter";
 import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
@@ -37,13 +38,13 @@ import {
   InitiativeTimelineComponentSkeleton
 } from "../components/InitiativeTimelineComponent";
 import { MissingConfigurationAlert } from "../components/MissingConfigurationAlert";
+import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import {
   idpayInitiativeDetailsSelector,
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 
 export type InitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -64,7 +65,7 @@ const InitiativeDetailsScreen = () => {
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
 
   const navigateToBeneficiaryDetails = () => {
-    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+    navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY,
       params: {
         initiativeId,
@@ -77,7 +78,7 @@ const InitiativeDetailsScreen = () => {
   };
 
   const navigateToConfiguration = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+    navigation.push(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
       params: { initiativeId }
     });
@@ -99,9 +100,7 @@ const InitiativeDetailsScreen = () => {
 
   const getInitiativeCounters = (
     initiative: InitiativeDTO
-  ): ReadonlyArray<BonusCounter> | undefined => {
-    const isRefundable = initiative.status === InitiativeStatusEnum.REFUNDABLE;
-
+  ): ReadonlyArray<BonusCardCounter> => {
     const availableAmount = initiative.amount || 0;
     const accruedAmount = initiative.accrued || 0;
 
@@ -125,39 +124,36 @@ const InitiativeDetailsScreen = () => {
       O.fromNullable,
       O.alt(() => O.some(InitiativeRewardTypeEnum.REFUND)),
       O.fold(
-        () => undefined,
-        (type): ReadonlyArray<BonusCounter> => {
+        () => [],
+        (type): ReadonlyArray<BonusCardCounter> => {
           switch (type) {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return [
                 {
-                  type: "AmountWithProgress",
+                  type: "ValueWithProgress",
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  amount: availableAmount,
-                  progress: amountProgress,
-                  isDisabled: !isRefundable
+                  value: formatNumberAmount(availableAmount, true, "right"),
+                  progress: amountProgress
                 }
               ];
             case InitiativeRewardTypeEnum.REFUND:
               return [
                 {
-                  type: "AmountWithProgress",
+                  type: "ValueWithProgress",
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  amount: availableAmount,
-                  progress: amountProgress,
-                  isDisabled: !isRefundable
+                  value: formatNumberAmount(availableAmount, true, "right"),
+                  progress: amountProgress
                 },
                 {
-                  type: "Amount",
+                  type: "Value",
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.toRefund"
                   ),
-                  amount: accruedAmount,
-                  isDisabled: !isRefundable
+                  value: formatNumberAmount(accruedAmount, true, "right")
                 }
               ];
           }
@@ -249,7 +245,9 @@ const InitiativeDetailsScreen = () => {
       )
     );
 
-  const getInitiativeFooter = (initiative: InitiativeDTO) =>
+  const getInitiativeFooter = (
+    initiative: InitiativeDTO
+  ): ButtonSolidProps | undefined =>
     pipe(
       initiative.initiativeRewardType,
       O.fromNullable,
@@ -259,19 +257,15 @@ const InitiativeDetailsScreen = () => {
         rewardType => {
           switch (rewardType) {
             case InitiativeRewardTypeEnum.DISCOUNT:
-              return (
-                <ButtonSolid
-                  label={I18n.t(
-                    "idpay.initiative.discountDetails.authorizeButton"
-                  )}
-                  accessibilityLabel={I18n.t(
-                    "idpay.initiative.discountDetails.authorizeButton"
-                  )}
-                  onPress={discountBottomSheet.present}
-                  fullWidth={true}
-                />
-              );
-
+              return {
+                label: I18n.t(
+                  "idpay.initiative.discountDetails.authorizeButton"
+                ),
+                accessibilityLabel: I18n.t(
+                  "idpay.initiative.discountDetails.authorizeButton"
+                ),
+                onPress: discountBottomSheet.present
+              };
             case InitiativeRewardTypeEnum.REFUND:
               return undefined;
           }
@@ -287,7 +281,6 @@ const InitiativeDetailsScreen = () => {
         <InitiativeDetailsBaseScreenComponent
           isLoading={true}
           onHeaderDetailsPress={navigateToBeneficiaryDetails}
-          counters={defaultLoadingCounters}
         >
           <ContentWrapper>
             <VSpacer size={8} />
@@ -310,13 +303,6 @@ const InitiativeDetailsScreen = () => {
     )
   );
 };
-
-const defaultLoadingCounters: ReadonlyArray<BonusCounter> = [
-  {
-    type: "AmountWithProgress",
-    isLoading: true
-  }
-];
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
