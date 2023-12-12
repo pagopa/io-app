@@ -15,12 +15,10 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  */
 export function* handleGetWalletDetails(
   getWalletById: WalletClient["getWalletById"],
-  token: string,
   action: ActionType<(typeof walletDetailsGetInstrument)["request"]>
 ) {
   try {
     const getwalletDetailsRequest = getWalletById({
-      bearerAuth: token,
       walletId: action.payload.walletId
     });
     const getWalletDetailsResult = (yield* call(
