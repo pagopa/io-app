@@ -11,8 +11,11 @@ import {
   UPSERTING_TAG,
   WAITING_USER_INPUT_TAG
 } from "../../../../xstate/utils";
+import {
+  OnboardingFailure,
+  OnboardingFailureEnum
+} from "../types/OnboardingFailure";
 import { Events } from "./events";
-import { OnboardingFailure, OnboardingFailureEnum } from "./failure";
 import {
   getBoolRequiredCriteriaFromContext,
   getMultiRequiredCriteriaFromContext
