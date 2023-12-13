@@ -78,41 +78,6 @@ export const WalletPaymentNavigator = () => (
         headerShown: false
       }}
     />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_DETAIL}
-      component={WalletPaymentDetailScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD}
-      component={WalletPaymentPickMethodScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP}
-      component={WalletPaymentPickPspScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM}
-      component={WalletPaymentConfirmScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME}
-      component={WalletPaymentOutcomeScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
   </Stack.Navigator>
 );
 
