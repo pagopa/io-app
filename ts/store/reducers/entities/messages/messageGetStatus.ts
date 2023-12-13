@@ -10,13 +10,6 @@ import { reloadAllMessages } from "../../../actions/messages";
 import { startApplicationInitialization } from "../../../actions/application";
 import { UIMessageId } from "./types";
 
-export type MessageGetStatusType =
-  | "idle"
-  | "loading"
-  | "blocked"
-  | "error"
-  | "success"
-  | "retry";
 export type MessageGetStatusFailurePhaseType =
   | "none"
   | "paginatedMessage"
@@ -53,14 +46,6 @@ export type MessageGetStatus =
   | LoadingOrRetryState
   | SuccessState;
 
-const isRetryType = (
-  messageGetStatus: MessageGetStatus
-): messageGetStatus is LoadingOrRetryState =>
-  messageGetStatus.status === "retry";
-const isSuccessType = (
-  messageGetStatus: MessageGetStatus
-): messageGetStatus is SuccessState => messageGetStatus.status === "success";
-
 export const INITIAL_STATE: MessageGetStatus = {
   status: "idle"
 };
@@ -81,7 +66,7 @@ export const messageGetStatusReducer = (
     case getType(startApplicationInitialization):
       const fastLoginSessionExpired =
         !!(action.payload && action.payload.handleSessionExpiration) &&
-        isRetryType(state);
+        isLoadingStatus(state);
       return fastLoginSessionExpired
         ? {
             ...state,
@@ -107,6 +92,18 @@ export const messageGetStatusReducer = (
   return state;
 };
 
+const isLoadingStatus = (
+  messageGetStatus: MessageGetStatus
+): messageGetStatus is LoadingOrRetryState =>
+  messageGetStatus.status === "loading";
+const isRetryStatus = (
+  messageGetStatus: MessageGetStatus
+): messageGetStatus is LoadingOrRetryState =>
+  messageGetStatus.status === "retry";
+const isSuccessStatus = (
+  messageGetStatus: MessageGetStatus
+): messageGetStatus is SuccessState => messageGetStatus.status === "success";
+
 export const showSpinnerFromMessageGetStatusSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.status !== "error";
 
@@ -116,7 +113,7 @@ export const thirdPartyMessageDetailsErrorSelector = (state: GlobalState) =>
     "thirdPartyMessageDetails";
 
 export const messageSuccessDataSelector = (state: GlobalState) =>
-  isSuccessType(state.entities.messages.messageGetStatus)
+  isSuccessStatus(state.entities.messages.messageGetStatus)
     ? state.entities.messages.messageGetStatus.successData
     : undefined;
 
@@ -126,7 +123,6 @@ export const blockedFromPushNotificationSelector = (state: GlobalState) =>
 export const retryDataAfterFastLoginSessionExpirationSelector = (
   state: GlobalState
 ) =>
-  isRetryType(state.entities.messages.messageGetStatus) &&
-  state.entities.messages.messageGetStatus.status === "retry"
+  isRetryStatus(state.entities.messages.messageGetStatus)
     ? state.entities.messages.messageGetStatus.data
     : undefined;
