@@ -3,11 +3,11 @@
  * email, mobile number, preferred language, biometric recognition usage and digital address.
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { List } from "native-base";
 import * as React from "react";
-import { Alert, PermissionsAndroid } from "react-native";
+import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
@@ -41,7 +41,6 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { openAppSettings } from "../../utils/appSettings";
-import { AsyncAlert } from "../../utils/asyncAlert";
 import {
   checkAndRequestPermission,
   convertLocalCalendarName
@@ -50,7 +49,7 @@ import {
   getLocalePrimary,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
-import { checkIOAndroidPermission } from "../../utils/permission";
+import { requestWriteCalendarPermission } from "../../utils/permission";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
@@ -101,21 +100,11 @@ class PreferencesScreen extends React.Component<Props> {
   }
 
   private checkPermissionThenGoCalendar = async () => {
-    const hasPermission = await checkIOAndroidPermission(
-      PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR
-    );
-    if (!hasPermission) {
-      await AsyncAlert(
-        I18n.t("permissionRationale.calendar.title"),
-        I18n.t("permissionRationale.calendar.message"),
-        [
-          {
-            text: I18n.t("global.buttons.choose")
-          }
-        ],
-        { cancelable: true }
-      );
-    }
+    await requestWriteCalendarPermission({
+      title: I18n.t("permissionRationale.calendar.title"),
+      message: I18n.t("permissionRationale.calendar.message"),
+      buttonPositive: I18n.t("global.buttons.choose")
+    });
 
     void checkAndRequestPermission()
       .then(calendarPermission => {
