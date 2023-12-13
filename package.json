@@ -188,6 +188,7 @@
     "react-native-modal-datetime-picker": "^10.2.0",
     "react-native-pdf": "^6.4.0",
     "react-native-pdf-thumbnail": "^1.2.1",
+    "react-native-permissions": "^4.0.0",
     "react-native-popup-menu": "^0.15.11",
     "react-native-progress-circle": "^2.1.0",
     "react-native-push-notification": "^8.1.1",

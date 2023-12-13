@@ -502,6 +502,8 @@ PODS:
     - React
   - RNKeychain (4.0.5):
     - React
+  - RNPermissions (4.0.0):
+    - React-Core
   - RNQrGenerator (1.4.0):
     - React
     - ZXingObjC
@@ -680,6 +682,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -877,6 +880,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-i18n"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNQrGenerator:
     :path: "../node_modules/rn-qr-generator"
   RNReactNativeHapticFeedback:
@@ -998,6 +1003,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
+  RNPermissions: 4bf1df574a4cad6b290930449d56c674573b754d
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: 7faa787e8d4493fbc95fab2ad331fa7625828cfa
@@ -1024,6 +1030,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: 92e6f9d334e81e9186f8a17583862350460a5393
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 0d78c2a7f58353c7eed2163b7e3b3747b00ff101
+PODFILE CHECKSUM: 6b8aea611c6377c6c9c038e303f2cb500d4afcf0
 
 COCOAPODS: 1.12.1
