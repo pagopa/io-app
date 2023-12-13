@@ -2,7 +2,7 @@ import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { IDPayDetailsRoutes } from "../../navigation";
-import { InitiativeDetailsScreen } from "../InitiativeDetailsScreen";
+import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -34,7 +34,7 @@ const mockedInitiative: InitiativeDTO = {
   lastCounterUpdate: new Date()
 };
 
-describe("Test InitiativeDetailsScreen screen", () => {
+describe("Test IdPayInitiativeDetailsScreen screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
@@ -172,7 +172,7 @@ const renderComponent = (
 
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
-      () => <InitiativeDetailsScreen />,
+      () => <IdPayInitiativeDetailsScreen />,
       IDPayDetailsRoutes.IDPAY_DETAILS_MAIN,
       {},
       store
