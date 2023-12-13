@@ -1,4 +1,4 @@
-import { call, take } from "typed-redux-saga/macro";
+import { call, select, take } from "typed-redux-saga/macro";
 import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../navigation/NavigationService";
@@ -10,7 +10,7 @@ import {
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
-import { isNewCduFlow } from "../../config";
+import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**
  * Launch email saga that consists of:
@@ -22,11 +22,16 @@ import { isNewCduFlow } from "../../config";
 export function* checkAcknowledgedEmailSaga(
   userProfile: InitializedProfile
 ): IterableIterator<ReduxSagaEffect> {
+  const isEmailUniquenessValidationEnabled = yield* select(
+    isEmailUniquenessValidationEnabledSelector
+  );
+
   // Check if the profile has an email
   if (hasProfileEmail(userProfile)) {
     if (
       isProfileFirstOnBoarding(userProfile) ||
-      (!isNewCduFlow && !isProfileEmailValidated(userProfile))
+      (!isEmailUniquenessValidationEnabled &&
+        !isProfileEmailValidated(userProfile))
     ) {
       // The user profile is just created (first onboarding), the conditional
       // view displays the screen to show the user's email used in app
