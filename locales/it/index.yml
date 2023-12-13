@@ -1803,7 +1803,7 @@ messageDetails:
   id: "ID:"
   remoteContentError:
     title: "Non è stato possibile recuperare i dettagli del messaggio"
-    body: "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
+    body: "Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
   attachments:
     loading: "Caricamento del documento..."
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
@@ -1819,11 +1819,11 @@ messageDetails:
   banner:
     content1: "Questo è un"
     content2: "messaggio dinamico:"
-    content3: "il contenuto potrebbe cambiare nel tempo per darti informazioni aggiornate."
+    content3: "il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate."
     action: "Scopri di più"
   bottomSheet:
     title: "Cos'è un messaggio dinamico?"
-    body: "L'Ente mittente potrebbe aggiornare il contenuto di questo messaggio anche dopo l'invio, per assicurare che le informazioni siano sempre accurate e rilevanti.\n\n Questa operazione avviene in casi specifici, come l'aggiornamento di informazioni obsolete o di allegati non più validi.\n\n Se l'Ente deve invece comunicarti nuove informazioni o aggiornamenti importanti, lo farà tramite un nuovo messaggio."
+    body: "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
