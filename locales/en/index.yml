@@ -679,7 +679,7 @@ authentication:
     contextualHelpTitle: Authentication
     contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
-    title: Ora è più facile accedere!
+    title: It is now easier to access!
     identity_check: Non dovrai più autenticarti ogni 30 giorni, ma solo una volta all’anno o se ti disconnetti dall’app.
     security_suggests: Alcuni consigli di sicurezza
     passcode: Dopo la prima autenticazione con SPID o CIE, potrai accedere solo con il codice di sblocco o con il biometrico.
