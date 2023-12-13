@@ -3468,9 +3468,9 @@ features:
           high: "High"
           na: "Not available"
         mdl: 
-          category: "Category: {{category}}"
-          expirationDate: "Expiration: {{expirationDate}}"
-          issuedDate: "Released: {{issuedDate}}"
+          category: "License {{category}}"
+          issuedDate: "Valid from"
+          expirationDate: "Valid until"
       unrecognizedData: 
         title: "Not recognizing some data?"
         body: "If there are errors in the data or if you want to better understand their meaning, you can contact the {{issuer}}."

@@ -72,6 +72,7 @@ const ItwCredentialClaimsList = ({
   data: StoredCredential;
 }) => {
   const claims = parseClaims(sortClaims(displayData.order, parsedCredential));
+
   const releaserName = issuerConf.federation_entity.organization_name;
 
   /**

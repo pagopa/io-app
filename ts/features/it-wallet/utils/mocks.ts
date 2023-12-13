@@ -146,8 +146,8 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
       "issuing_authority",
       "document_number",
       "un_distinguishing_sing",
-      "portrait",
       "driving_privileges",
+      "portrait",
       "evidence"
     ]
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Divider, H6, ListItemInfo } from "@pagopa/io-app-design-system";
+import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/Either";
 import { pipe } from "fp-ts/lib/function";
 import { View, Image } from "react-native";
@@ -17,6 +17,7 @@ import {
 import I18n from "../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { localeDateFormat } from "../../../utils/locale";
+import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { Claim } from "./ItwCredentialClaimsList";
 
 /**
@@ -147,6 +148,11 @@ const UnknownClaimItem = ({ label }: { label: string; _claim?: never }) => (
   />
 );
 
+/**
+ * Component which renders a image type claim in a square container.
+ * @param label - the label of the claim
+ * @param claim - the claim value
+ */
 const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
   <>
     <ListItemInfo
@@ -155,8 +161,8 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
         <Image
           source={{ uri: claim }}
           style={{
-            width: 100,
-            height: 100
+            width: 250,
+            height: 250
           }}
           resizeMode="contain"
         />
@@ -167,43 +173,65 @@ const ImageClaimItem = ({ label, claim }: { label: string; claim: string }) => (
   </>
 );
 
+/**
+ * Component which renders a driving privileges type claim.
+ * It features a bottom sheet with information about the issued and expiration date of the claim.
+ * @param label - the label of the claim
+ * @param claim - the claim value
+ * @returns
+ */
 const DrivingPrivilegesClaimItem = ({
   label,
   claim
 }: {
   label: string;
   claim: DrivingPrivilegesClaimType;
-}) => (
-  <>
-    <ListItemInfo
-      label={label}
-      value={
-        <>
-          <H6>
-            {I18n.t(
-              "features.itWallet.verifiableCredentials.claims.mdl.category",
-              { category: claim.vehicle_category_code }
-            )}
-          </H6>
-          <H6>
-            {I18n.t(
-              "features.itWallet.verifiableCredentials.claims.mdl.expirationDate",
-              { expirationDate: claim.expiry_date }
-            )}
-          </H6>
-          <H6>
-            {I18n.t(
-              "features.itWallet.verifiableCredentials.claims.mdl.issuedDate",
-              { issuedDate: claim.issue_date }
-            )}
-          </H6>
-        </>
-      }
-      accessibilityLabel={`${label} ${claim}`}
-    />
-    <Divider />
-  </>
-);
+}) => {
+  const privilegeBottomSheet = useIOBottomSheetAutoresizableModal({
+    title: I18n.t(
+      "features.itWallet.verifiableCredentials.claims.mdl.category",
+      { category: claim.vehicle_category_code }
+    ),
+    component: (
+      <>
+        <ListItemInfo
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.issuedDate"
+          )}
+          value={claim.issue_date}
+          accessibilityLabel={`${label} ${claim.issue_date}`}
+        />
+        <Divider />
+        <ListItemInfo
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.mdl.expirationDate"
+          )}
+          value={claim.expiry_date}
+          accessibilityLabel={`${label} ${claim.expiry_date}`}
+        />
+      </>
+    )
+  });
+  return (
+    <>
+      <ListItemInfo
+        label={label}
+        value={claim.vehicle_category_code}
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            accessibilityLabel: "test",
+            onPress: () => privilegeBottomSheet.present()
+          }
+        }}
+        accessibilityLabel={`${label} ${claim}`}
+      />
+      <Divider />
+      {privilegeBottomSheet.bottomSheet}
+    </>
+  );
+};
 
 /**
  * Component which renders a claim.
