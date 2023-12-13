@@ -14,8 +14,7 @@ import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { IOToast } from "../../../../components/Toast";
 import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -24,7 +23,6 @@ import { useTimelineDetailsBottomSheet } from "../../timeline/components/Timelin
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
 import { IDPayDetailsParamsList } from "../navigation";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 export type IdPayOperationsListScreenParams = { initiativeId: string };
 
@@ -54,12 +52,6 @@ export const IdPayOperationsListScreen = () => {
   const handleOnError = () => {
     IOToast.error("Errore nel caricamento, riprova.");
   };
-
-  useHeaderSecondLevel({
-    title: I18n.t(
-      "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.header"
-    )
-  });
 
   const {
     isLoading,
@@ -137,33 +129,25 @@ export const IdPayOperationsListScreen = () => {
   );
 
   return (
-    <>
-      <BaseScreenComponent
-        headerTitle={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.header"
-        )}
-        goBack={true}
-      >
-        <ContentWrapper>
-          <H1>
-            {I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
-            )}
-          </H1>
-          <VSpacer size={8} />
-          <Body>
-            {I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
-            )}
-            <HSpacer size={4} />
-            {lastUpdateComponent}
-          </Body>
-        </ContentWrapper>
-        <VSpacer size={16} />
-        {operationList}
-      </BaseScreenComponent>
+    <RNavScreenWithLargeHeader
+      title={I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
+      )}
+    >
+      <ContentWrapper>
+        <VSpacer size={8} />
+        <Body>
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+          )}
+          <HSpacer size={4} />
+          {lastUpdateComponent}
+        </Body>
+      </ContentWrapper>
+      <VSpacer size={16} />
+      {operationList}
       {detailsBottomSheet.bottomSheet}
-    </>
+    </RNavScreenWithLargeHeader>
   );
 };
 
