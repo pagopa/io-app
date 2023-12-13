@@ -2,10 +2,8 @@ import { Divider, ListItemNav } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../config";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
 import { isIdPayCodeOnboardedSelector } from "../../features/idpay/code/store/selectors";
@@ -18,6 +16,7 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isIdPayEnabledSelector } from "../../store/reducers/backendStatus";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
+import { getFlowType } from "../../utils/analytics";
 import {
   biometricAuthenticationRequest,
   getBiometricsType,
@@ -29,12 +28,6 @@ import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
 } from "../onboarding/biometric&securityChecks/analytics";
-import { getFlowType } from "../../utils/analytics";
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.contextualHelpTitle",
-  body: "profile.preferences.contextualHelpContent"
-};
 
 const SecurityScreen = (): React.ReactElement => {
   const dispatch = useIODispatch();
@@ -122,74 +115,68 @@ const SecurityScreen = (): React.ReactElement => {
   };
 
   return (
-    <TopScreenComponent
-      contextualHelpMarkdown={contextualHelpMarkdown}
+    <RNavScreenWithLargeHeader
+      title={I18n.t("profile.security.title")}
+      description={I18n.t("profile.security.subtitle")}
+      headerActionsProp={{ showHelp: true }}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
-      goBack
     >
-      <ScreenContent
-        title={I18n.t("profile.security.title")}
-        subtitle={I18n.t("profile.security.subtitle")}
-      >
-        <List withContentLateralPadding>
-          {/* Ask for verification and reset unlock code */}
-          <ListItemNav
-            value={I18n.t("identification.unlockCode.reset.button_short")}
-            accessibilityLabel={I18n.t(
-              "identification.unlockCode.reset.button_short"
-            )}
-            description={I18n.t("identification.unlockCode.reset.subtitle")}
-            onPress={requestIdentificationAndResetPin}
-            testID="reset-unlock-code"
-          />
-          <Divider />
-          {isIdPayEnabled && (
-            /* Reset IDPay code */
-            <>
-              <ListItemNav
-                value={I18n.t("idpay.code.reset.title")}
-                accessibilityLabel={I18n.t("idpay.code.reset.title")}
-                description={I18n.t("idpay.code.reset.body")}
-                onPress={idPayCodeHandler}
-                testID="reset-idpay-code"
-              />
-              <Divider />
-            </>
+      <List withContentLateralPadding>
+        {/* Ask for verification and reset unlock code */}
+        <ListItemNav
+          value={I18n.t("identification.unlockCode.reset.button_short")}
+          accessibilityLabel={I18n.t(
+            "identification.unlockCode.reset.button_short"
           )}
-
-          {/* Enable/disable biometric recognition */}
-          {isFingerprintAvailable && (
-            <ListItemComponent
-              title={I18n.t(
-                "profile.security.list.biometric_recognition.title"
-              )}
-              subTitle={I18n.t(
-                "profile.security.list.biometric_recognition.subtitle"
-              )}
-              // if the screen reader is disabled, the user can enable/disable
-              // the biometric recognition only by pressing the switch
-              onSwitchValueChanged={
-                !isScreenReaderEnabled
-                  ? () => setBiometricPreference(!isFingerprintEnabled)
-                  : undefined
-              }
-              switchValue={isFingerprintEnabled}
-              isLongPressEnabled
-              accessibilityState={{ checked: isFingerprintEnabled }}
-              accessibilityRole="switch"
-              // if the screen reader is enabled, the user can enable/disable
-              // the biometric recognition only by pressing the whole ListItemComponent
-              onPress={
-                isScreenReaderEnabled
-                  ? () => setBiometricPreference(!isFingerprintEnabled)
-                  : undefined
-              }
-              testID="biometric-recognition"
+          description={I18n.t("identification.unlockCode.reset.subtitle")}
+          onPress={requestIdentificationAndResetPin}
+          testID="reset-unlock-code"
+        />
+        <Divider />
+        {isIdPayEnabled && (
+          /* Reset IDPay code */
+          <>
+            <ListItemNav
+              value={I18n.t("idpay.code.reset.title")}
+              accessibilityLabel={I18n.t("idpay.code.reset.title")}
+              description={I18n.t("idpay.code.reset.body")}
+              onPress={idPayCodeHandler}
+              testID="reset-idpay-code"
             />
-          )}
-        </List>
-      </ScreenContent>
-    </TopScreenComponent>
+            <Divider />
+          </>
+        )}
+
+        {/* Enable/disable biometric recognition */}
+        {isFingerprintAvailable && (
+          <ListItemComponent
+            title={I18n.t("profile.security.list.biometric_recognition.title")}
+            subTitle={I18n.t(
+              "profile.security.list.biometric_recognition.subtitle"
+            )}
+            // if the screen reader is disabled, the user can enable/disable
+            // the biometric recognition only by pressing the switch
+            onSwitchValueChanged={
+              !isScreenReaderEnabled
+                ? () => setBiometricPreference(!isFingerprintEnabled)
+                : undefined
+            }
+            switchValue={isFingerprintEnabled}
+            isLongPressEnabled
+            accessibilityState={{ checked: isFingerprintEnabled }}
+            accessibilityRole="switch"
+            // if the screen reader is enabled, the user can enable/disable
+            // the biometric recognition only by pressing the whole ListItemComponent
+            onPress={
+              isScreenReaderEnabled
+                ? () => setBiometricPreference(!isFingerprintEnabled)
+                : undefined
+            }
+            testID="biometric-recognition"
+          />
+        )}
+      </List>
+    </RNavScreenWithLargeHeader>
   );
 };
 

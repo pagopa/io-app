@@ -1,4 +1,11 @@
-import { H2, HeaderSecondLevel, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ContentWrapper,
+  H2,
+  HeaderSecondLevel,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React, { ComponentProps, useLayoutEffect, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
@@ -14,6 +21,7 @@ import I18n from "../../i18n";
 type Props = {
   children: React.ReactNode;
   title: string;
+  description?: string;
   headerActionsProp?: HeaderActionProps;
 } & SupportRequestParams;
 
@@ -31,6 +39,7 @@ type Props = {
 export const RNavScreenWithLargeHeader = ({
   children,
   title,
+  description,
   contextualHelp,
   contextualHelpMarkdown,
   faqCategories,
@@ -86,6 +95,15 @@ export const RNavScreenWithLargeHeader = ({
       <View style={IOStyles.horizontalContentPadding} onLayout={getTitleHeight}>
         <H2>{title}</H2>
       </View>
+
+      {description && (
+        <ContentWrapper>
+          <VSpacer size={4} />
+          <Body color="grey-700">{description}</Body>
+          <VSpacer size={16} />
+        </ContentWrapper>
+      )}
+
       {children}
     </Animated.ScrollView>
   );

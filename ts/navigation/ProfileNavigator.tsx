@@ -64,13 +64,7 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_PRIVACY_SHARE_DATA}
       component={ShareDataScreen}
     />
-    <Stack.Screen
-      options={{
-        headerShown: false
-      }}
-      name={ROUTES.PROFILE_SECURITY}
-      component={SecurityScreen}
-    />
+    <Stack.Screen name={ROUTES.PROFILE_SECURITY} component={SecurityScreen} />
     <Stack.Screen
       options={{
         headerShown: false

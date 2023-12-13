@@ -1,10 +1,7 @@
 import {
-  Body,
-  ContentWrapper,
   Divider,
   IOVisualCostants,
-  ListItemNav,
-  VSpacer
+  ListItemNav
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ComponentProps, useCallback, useEffect, useState } from "react";
@@ -262,6 +259,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
   return (
     <RNavScreenWithLargeHeader
       title={I18n.t("profile.main.privacy.title")}
+      description={I18n.t("profile.main.privacy.subtitle")}
       headerActionsProp={{ showHelp: true }}
     >
       <LoadingSpinnerOverlay
@@ -269,13 +267,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         loadingOpacity={0.9}
         loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <ContentWrapper>
-          <VSpacer size={8} />
-          <Body color="grey-700">
-            {I18n.t("profile.main.privacy.subtitle")}
-          </Body>
-          <VSpacer size={24} />
-        </ContentWrapper>
         <FlatList
           scrollEnabled={false}
           keyExtractor={(item: PrivacyNavListItem, index: number) =>
