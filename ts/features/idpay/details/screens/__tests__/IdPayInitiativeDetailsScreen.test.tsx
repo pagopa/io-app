@@ -14,7 +14,6 @@ import {
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../utils/errors";
 import I18n from "../../../../../i18n";
-import { formatDateAsLocal } from "../../../../../utils/dates";
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
@@ -47,10 +46,6 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
     expect(
-      component.getByTestId("IDPayDetailsHeroSkeletonTestID")
-    ).not.toBeNull();
-    expect(component.queryByTestId("IDPayDetailsHeroTestID")).toBeNull();
-    expect(
       component.queryByTestId("IDPayTimelineSkeletonTestID")
     ).not.toBeNull();
     expect(component.queryByTestId("IDPayDetailsSettingsTestID")).toBeNull();
@@ -65,20 +60,11 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     const { component } = renderComponent(pot.some(mockedInitiative));
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("IDPayDetailsHeroTestID")).not.toBeNull();
     expect(
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
     expect(component.queryByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
-
-    expect(
-      component.queryByText(
-        I18n.t(`idpay.initiative.details.initiativeCard.validUntil`, {
-          expiryDate: formatDateAsLocal(mockedInitiative.endDate, true)
-        })
-      )
-    ).toBeTruthy();
 
     expect(
       component.queryByText(
@@ -112,21 +98,12 @@ describe("Test IdPayInitiativeDetailsScreen screen", () => {
     );
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("IDPayDetailsHeroTestID")).not.toBeNull();
     expect(
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
 
     expect(component.queryByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
-
-    expect(
-      component.queryByText(
-        I18n.t(`idpay.initiative.details.initiativeCard.validUntil`, {
-          expiryDate: formatDateAsLocal(mockedInitiative.endDate, true)
-        })
-      )
-    ).toBeTruthy();
 
     expect(
       component.queryByText(
