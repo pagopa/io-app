@@ -1803,7 +1803,7 @@ messageDetails:
   id: "ID:"
   remoteContentError:
     title: "Non è stato possibile recuperare i dettagli del messaggio"
-    body: "Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
+    body: "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
   attachments:
     loading: "Caricamento del documento..."
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"

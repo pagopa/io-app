@@ -1803,7 +1803,7 @@ messageDetails:
   id: "ID:"
   remoteContentError:
     title: "The message details could not be retrieved"
-    body: "Try again in a few minutes. If the issue persists, contact Support."
+    body: "We detected an error in the information provided by the sender. Try again in a few minutes. If the issue persists, contact Support."
   attachments:
     loading: "Loading document..."
     badFormat: "The attachment format is not supported. Please contact the sender"
