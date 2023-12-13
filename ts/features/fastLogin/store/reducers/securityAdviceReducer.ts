@@ -24,7 +24,7 @@ const securityAdviceAcknowledgedReducer = (
 ): SecurityAdviceAcknowledgedState => {
   switch (action.type) {
     case getType(differentProfileLoggedIn):
-      return action.payload?.isDifferentProfile ? { ...state } : INITIAL_STATE;
+      return action.payload?.isNewInstall ? { ...state } : INITIAL_STATE;
     case getType(setSecurityAdviceAcknowledged):
       return {
         ...state,

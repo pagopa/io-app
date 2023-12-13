@@ -6,7 +6,7 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
 type DifferentProfileLoggedInType = {
-  isDifferentProfile: boolean;
+  isNewInstall: boolean;
 };
 /**
  * set the profile hashed fiscal code

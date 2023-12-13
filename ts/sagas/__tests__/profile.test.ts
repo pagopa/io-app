@@ -78,7 +78,7 @@ describe("profile", () => {
       )
         .withState(globalState)
         .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
-        .not.put(differentProfileLoggedIn({ isDifferentProfile: false }))
+        .not.put(differentProfileLoggedIn({ isNewInstall: false }))
         .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))
         .run());
 
@@ -102,7 +102,7 @@ describe("profile", () => {
           .select(isDifferentFiscalCodeSelector, mockedProfile.fiscal_code)
           .put(
             differentProfileLoggedIn({
-              isDifferentProfile: storedFiscalCode === undefined ? true : false
+              isNewInstall: storedFiscalCode === undefined ? true : false
             })
           )
           .put(setProfileHashedFiscalCode(mockedProfile.fiscal_code))

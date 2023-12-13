@@ -411,7 +411,7 @@ function* checkStoreHashedFiscalCode(
     yield* call(deletePin);
     yield* put(
       differentProfileLoggedIn({
-        isDifferentProfile: checkIsDifferentFiscalCode === undefined
+        isNewInstall: checkIsDifferentFiscalCode === undefined
       })
     );
   }
