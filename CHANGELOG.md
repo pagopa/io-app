@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.48.0-rc.3](https://github.com/pagopa/io-app/compare/2.48.0-rc.2...2.48.0-rc.3) (2023-12-13)
+
+
+### Features
+
+* [[IOBP-405](https://pagopa.atlassian.net/browse/IOBP-405)] Wallet details update services pagoPA capability ([#5322](https://github.com/pagopa/io-app/issues/5322)) ([7a9f52b](https://github.com/pagopa/io-app/commit/7a9f52b62a0eb62a5b1ba17316395c5f5b2e9b1a))
+
+
+### Bug Fixes
+
+* [[IOBP-467](https://pagopa.atlassian.net/browse/IOBP-467)] Add correct details component in ID Pay timeline transaction item ([#5328](https://github.com/pagopa/io-app/issues/5328)) ([df350b6](https://github.com/pagopa/io-app/commit/df350b6893deb9f11fe8c70bae7cdefa43ccf7ef)), closes [1#diff-290dfda62f62d0a913eb406f4e342bfd3b05c46736f47193e32eed53fae9a073](https://github.com/pagopa/1/issues/diff-290dfda62f62d0a913eb406f4e342bfd3b05c46736f47193e32eed53fae9a073)
+
+
+### Chores
+
+* [[IOBP-176](https://pagopa.atlassian.net/browse/IOBP-176)] Add new pictograms in ID Pay onboarding failure screen ([#5330](https://github.com/pagopa/io-app/issues/5330)) ([2a3b29f](https://github.com/pagopa/io-app/commit/2a3b29f1c64316f0d44c7f50bb3926788be496a6))
+* [[IOCOM-735](https://pagopa.atlassian.net/browse/IOCOM-735)] RC copy changes ([#5331](https://github.com/pagopa/io-app/issues/5331)) ([7ed4612](https://github.com/pagopa/io-app/commit/7ed4612858602c2c23800b1c5a9c367d46ca8e36))
+* [[IOPID-1181](https://pagopa.atlassian.net/browse/IOPID-1181)] Add email uniqueness validation FF ([#5288](https://github.com/pagopa/io-app/issues/5288)) ([d6bf80f](https://github.com/pagopa/io-app/commit/d6bf80fa400b62016d4c71c36ce3c5ce6f83161d)), closes [/github.com/pagopa/io-dev-api-server/blob/00c956a2176dcf667f9334a539295d6c523a90ca/src/payloads/backend.ts#L112](https://github.com/pagopa//github.com/pagopa/io-dev-api-server/blob/00c956a2176dcf667f9334a539295d6c523a90ca/src/payloads/backend.ts/issues/L112)
+
 ## [2.48.0-rc.2](https://github.com/pagopa/io-app/compare/2.48.0-rc.1...2.48.0-rc.2) (2023-12-12)
 
 
