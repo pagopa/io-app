@@ -103,8 +103,9 @@ const CduEmailInsertScreen = (props: Props) => {
   );
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const { isOnboarding } = props.route.params ?? {};
 
-  const flow = getFlowType(props.route.params.isOnboarding, isFirstOnBoarding);
+  const flow = getFlowType(isOnboarding, isFirstOnBoarding);
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
@@ -282,10 +283,21 @@ const CduEmailInsertScreen = (props: Props) => {
     showModal
   ]);
 
+  const showGoBack = () => {
+    if (isFirstOnBoarding) {
+      return undefined;
+    } else {
+      if (!isEmailValidated) {
+        return undefined;
+      }
+      return handleGoBack;
+    }
+  };
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <BaseScreenComponent
-        goBack={isFirstOnboarding ? handleGoBack : undefined}
+        goBack={showGoBack()}
         headerTitle={
           isFirstOnboarding
             ? I18n.t("email.newinsert.header")
