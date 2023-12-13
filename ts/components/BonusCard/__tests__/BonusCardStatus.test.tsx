@@ -1,8 +1,13 @@
 import { render } from "@testing-library/react-native";
 import React from "react";
-import { BonusCardStatus } from "../BonusCardStatus";
+import { Provider } from "react-redux";
+import { Store, createStore } from "redux";
 import I18n from "../../../i18n";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
 import { format } from "../../../utils/dates";
+import { BonusCardStatus } from "../BonusCardStatus";
 
 jest.mock("react-native-safe-area-context", () => {
   const useSafeAreaInsets = () => ({ top: 0 });
@@ -85,5 +90,14 @@ describe("Test BonusCardStatus", () => {
   });
 });
 
-const renderComponent = (props: BonusCardStatus) =>
-  render(<BonusCardStatus {...props} />);
+const renderComponent = (props: BonusCardStatus) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const store: Store<GlobalState> = createStore(appReducer, globalState as any);
+
+  return render(
+    <Provider store={store}>
+      <BonusCardStatus {...props} />
+    </Provider>
+  );
+};

@@ -1,5 +1,10 @@
 import { render } from "@testing-library/react-native";
 import React from "react";
+import { Provider } from "react-redux";
+import { Store, createStore } from "redux";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
 import { BonusCardCounter } from "../BonusCardCounter";
 
 describe("Test BonusCardCounter", () => {
@@ -67,5 +72,14 @@ describe("Test BonusCardCounter", () => {
   });
 });
 
-const renderComponent = (props: BonusCardCounter) =>
-  render(<BonusCardCounter {...props} />);
+const renderComponent = (props: BonusCardCounter) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const store: Store<GlobalState> = createStore(appReducer, globalState as any);
+
+  return render(
+    <Provider store={store}>
+      <BonusCardCounter {...props} />
+    </Provider>
+  );
+};

@@ -1,8 +1,10 @@
 import { Chip, HSpacer, IOColors, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useSelector } from "react-redux";
 import Placeholder from "rn-placeholder";
 import I18n from "../../i18n";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { format } from "../../utils/dates";
 import { BonusStatus } from "./type";
 
@@ -70,17 +72,25 @@ export const BonusCardStatusContent = ({ status, endDate }: BaseProps) => {
   );
 };
 
-const BonusCardStatusSkeleton = () => (
-  <View style={styles.container} testID="BonusCardStatusSkeletonTestID">
-    <Placeholder.Box
-      height={16}
-      width={278}
-      color={IOColors["blueItalia-100"]}
-      animate="fade"
-      radius={16}
-    />
-  </View>
-);
+const BonusCardStatusSkeleton = () => {
+  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+
+  const placeholderColor = isDesignSystemEnabled
+    ? IOColors["blueItalia-100"]
+    : IOColors["blueIO-100"];
+
+  return (
+    <View style={styles.container} testID="BonusCardStatusSkeletonTestID">
+      <Placeholder.Box
+        height={16}
+        width={278}
+        color={placeholderColor}
+        animate="fade"
+        radius={16}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

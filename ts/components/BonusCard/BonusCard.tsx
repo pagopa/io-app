@@ -9,9 +9,11 @@ import {
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 import Placeholder from "rn-placeholder";
-import { BonusCardShape } from "./BonusCardShape";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { BonusCardCounter } from "./BonusCardCounter";
+import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
 import { BonusStatus } from "./type";
 
@@ -91,53 +93,69 @@ export const BonusCard = (props: BonusCard) => {
   // This padding is necessary to get enough space on top to display the header
   const paddingTop = safeAreaInsets.top + hiddenLogoLoadingMargin + 64;
 
+  // This will generate a new key based on isLoading state.
+  // A new key will force BonusCardShape to rerender, remeasuring the layout and adapting to new
+  // container size.
+  const shapeKey = React.useMemo(
+    () => props.isLoading && Math.random().toString(36).slice(2),
+    [props.isLoading]
+  );
+
   return (
     <View style={[styles.container, { paddingTop }]}>
-      <BonusCardShape />
+      <BonusCardShape key={shapeKey} />
       <BonusCardContent {...props} />
     </View>
   );
 };
 
-const BonusCardSkeleton = (props: BaseProps) => (
-  <View style={styles.content} testID="BonusCardSkeletonTestID">
-    {!props.hideLogo && (
-      <>
-        <Placeholder.Box
-          height={66}
-          width={66}
-          color={IOColors["blueItalia-100"]}
-          animate="fade"
-          radius={8}
-        />
-        <VSpacer size={24} />
-      </>
-    )}
-    <Placeholder.Box
-      height={28}
-      width={198}
-      color={IOColors["blueItalia-100"]}
-      animate="fade"
-      radius={28}
-    />
-    <VSpacer size={8} />
-    <Placeholder.Box
-      height={28}
-      width={108}
-      color={IOColors["blueItalia-100"]}
-      animate="fade"
-      radius={28}
-    />
-    <VSpacer size={16} />
-    <BonusCardStatus isLoading={true} />
-    <VSpacer size={16} />
-    <View style={styles.counters}>
-      <BonusCardCounter type="ValueWithProgress" isLoading={true} />
-      <HSpacer size={16} />
-      <BonusCardCounter type="Value" isLoading={true} />
+const BonusCardSkeleton = (props: BaseProps) => {
+  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+
+  const placeholderColor = isDesignSystemEnabled
+    ? IOColors["blueItalia-100"]
+    : IOColors["blueIO-100"];
+
+  return (
+    <View style={styles.content} testID="BonusCardSkeletonTestID">
+      {!props.hideLogo && (
+        <>
+          <Placeholder.Box
+            height={66}
+            width={66}
+            color={placeholderColor}
+            animate="fade"
+            radius={8}
+          />
+          <VSpacer size={24} />
+        </>
+      )}
+      <Placeholder.Box
+        height={28}
+        width={198}
+        color={placeholderColor}
+        animate="fade"
+        radius={28}
+      />
+      <VSpacer size={8} />
+      <Placeholder.Box
+        height={28}
+        width={108}
+        color={placeholderColor}
+        animate="fade"
+        radius={28}
+      />
+      <VSpacer size={16} />
+      <BonusCardStatus isLoading={true} />
+      <VSpacer size={16} />
+      <View style={styles.counters}>
+        <BonusCardCounter type="ValueWithProgress" isLoading={true} />
+        <HSpacer size={16} />
+        <BonusCardCounter type="Value" isLoading={true} />
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
