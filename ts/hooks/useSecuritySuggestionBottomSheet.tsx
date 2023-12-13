@@ -47,8 +47,10 @@ export const useSecuritySuggestionsBottomSheet = (
   ]);
 
   useEffect(() => {
-    // During the current session, we listen to the identification progress state
-    // to show the security suggestion bottom sheet when the user is identified
+    // During the actual session, we listen to the identification progress state
+    // to show the security suggestion bottom sheet when the user is identified.
+    // During the onboarding or the first onboarding we wait for isSecurityAdviceReadyToBeShown
+    // before showing the bottom sheet.
 
     // eslint-disable-next-line sonarjs/no-collapsible-if
     if (!useManualBottomsheetOpening) {
