@@ -103,8 +103,9 @@ const CduEmailInsertScreen = (props: Props) => {
   );
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const { isOnboarding } = props.route.params ?? {};
 
-  const flow = getFlowType(props.route.params.isOnboarding, isFirstOnBoarding);
+  const flow = getFlowType(isOnboarding, isFirstOnBoarding);
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
