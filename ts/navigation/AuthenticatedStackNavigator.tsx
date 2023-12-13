@@ -158,7 +158,6 @@ const AuthenticatedStackNavigator = () => {
         name={ROUTES.MEDIA_PERMISSION_INSTRUCTIONS}
         component={MediaPermissionInstructionsScreen}
         options={{
-          ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: isGestureEnabled
         }}
       />
