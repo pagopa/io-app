@@ -3,9 +3,7 @@ import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import CalendarsListContainer from "../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -28,11 +26,6 @@ type State = {
   isLoading: boolean;
 };
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.calendar.contextualHelpTitle",
-  body: "profile.preferences.calendar.contextualHelpContent"
-};
-
 /**
  * Allows the user to select one of the device available Calendars
  */
@@ -51,24 +44,19 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
   public render() {
     const { isLoading } = this.state;
     return (
-      <LoadingSpinnerOverlay isLoading={isLoading}>
-        <TopScreenComponent
-          contextualHelpMarkdown={contextualHelpMarkdown}
-          headerTitle={I18n.t("profile.preferences.title")}
-          goBack={() => this.props.navigation.goBack()}
-        >
-          <ScreenContent
-            title={I18n.t("profile.preferences.list.preferred_calendar.title")}
-            subtitle={I18n.t("messages.cta.reminderCalendarSelect")}
-          >
-            <CalendarsListContainer
-              onCalendarSelected={this.props.preferredCalendarSaveSuccess}
-              onCalendarRemove={this.props.preferredCalendarRemoveSuccess}
-              onCalendarsLoaded={this.onCalendarsLoaded}
-            />
-          </ScreenContent>
-        </TopScreenComponent>
-      </LoadingSpinnerOverlay>
+      <RNavScreenWithLargeHeader
+        title={I18n.t("profile.preferences.list.preferred_calendar.title")}
+        description={I18n.t("messages.cta.reminderCalendarSelect")}
+        headerActionsProp={{ showHelp: true }}
+      >
+        <LoadingSpinnerOverlay isLoading={isLoading}>
+          <CalendarsListContainer
+            onCalendarSelected={this.props.preferredCalendarSaveSuccess}
+            onCalendarRemove={this.props.preferredCalendarRemoveSuccess}
+            onCalendarsLoaded={this.onCalendarsLoaded}
+          />
+        </LoadingSpinnerOverlay>
+      </RNavScreenWithLargeHeader>
     );
   }
 }

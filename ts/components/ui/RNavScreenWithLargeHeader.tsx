@@ -20,6 +20,7 @@ import I18n from "../../i18n";
 
 type Props = {
   children: React.ReactNode;
+  fixedBottomSlot?: React.ReactNode;
   title: string;
   description?: string;
   headerActionsProp?: HeaderActionProps;
@@ -30,6 +31,7 @@ type Props = {
  * It also handles the contextual help and the faq. The usage of LargeHeader naming is due to a similar behaviour
  * offered by react-navigation/native-stack, referencing the native API from iOS platform.
  * @param children
+ * @param fixedBottomSlot An optional React node that is fixed to the bottom of the screen. Useful for buttons or other actions. It will be positioned outside the main `ScrollView`.
  * @param title
  * @param contextualHelp
  * @param contextualHelpMarkdown
@@ -38,6 +40,7 @@ type Props = {
  */
 export const RNavScreenWithLargeHeader = ({
   children,
+  fixedBottomSlot,
   title,
   description,
   contextualHelp,
@@ -81,30 +84,37 @@ export const RNavScreenWithLargeHeader = ({
   }, [headerProps, navigation]);
 
   return (
-    <Animated.ScrollView
-      contentContainerStyle={{
-        paddingBottom: insets.bottom,
-        flexGrow: 1
-      }}
-      onScroll={scrollHandler}
-      scrollEventThrottle={8}
-      snapToOffsets={[0, titleHeight]}
-      snapToEnd={false}
-      decelerationRate="normal"
-    >
-      <View style={IOStyles.horizontalContentPadding} onLayout={getTitleHeight}>
-        <H2>{title}</H2>
-      </View>
+    <>
+      <Animated.ScrollView
+        contentContainerStyle={{
+          paddingBottom: insets.bottom,
+          flexGrow: 1
+        }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={8}
+        snapToOffsets={[0, titleHeight]}
+        snapToEnd={false}
+        decelerationRate="normal"
+      >
+        <View
+          style={IOStyles.horizontalContentPadding}
+          onLayout={getTitleHeight}
+        >
+          <H2>{title}</H2>
+        </View>
 
-      {description && (
-        <ContentWrapper>
-          <VSpacer size={4} />
-          <Body color="grey-700">{description}</Body>
-          <VSpacer size={16} />
-        </ContentWrapper>
-      )}
+        {description && (
+          <ContentWrapper>
+            <VSpacer size={4} />
+            <Body color="grey-700">{description}</Body>
+          </ContentWrapper>
+        )}
 
-      {children}
-    </Animated.ScrollView>
+        <VSpacer size={16} />
+
+        {children}
+      </Animated.ScrollView>
+      {fixedBottomSlot}
+    </>
   );
 };

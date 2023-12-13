@@ -1,16 +1,13 @@
-import { Content } from "native-base";
+import { Body, ContentWrapper } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { Dispatch } from "redux";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
-import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
 import { navigateToRemoveAccountDetailScreen } from "../../store/actions/navigation";
+import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -30,23 +27,24 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
   };
 
   const footerComponent = (
-    <FooterWithButtons type={"SingleButton"} leftButton={continueButtonProps} />
+    <SafeAreaView>
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={continueButtonProps}
+      />
+    </SafeAreaView>
   );
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.title")}
+    <RNavScreenWithLargeHeader
+      title={I18n.t("profile.main.privacy.removeAccount.title")}
+      fixedBottomSlot={footerComponent}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <Content>
-          <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
-          <H4 weight="Regular">
-            {I18n.t("profile.main.privacy.removeAccount.info.body")}
-          </H4>
-        </Content>
-        {footerComponent}
-      </SafeAreaView>
-    </BaseScreenComponent>
+      <ContentWrapper>
+        <Body weight="Regular">
+          {I18n.t("profile.main.privacy.removeAccount.info.body")}
+        </Body>
+      </ContentWrapper>
+    </RNavScreenWithLargeHeader>
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
