@@ -665,7 +665,7 @@ authentication:
         unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
         unknownCardHelpLink: What is the Electronic Identity Card?
     dataUsageConsent:
-      retryCTA: Entra
+      retryCTA: Enter
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address
@@ -680,18 +680,18 @@ authentication:
     contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
     title: It is now easier to access!
-    identity_check: Non dovrai più autenticarti ogni 30 giorni, ma solo una volta all’anno o se ti disconnetti dall’app.
-    security_suggests: Alcuni consigli di sicurezza
-    passcode: Dopo la prima autenticazione con SPID o CIE, potrai accedere solo con il codice di sblocco o con il biometrico.
-    notification: Riceverai un’email dopo ogni accesso. Potrai così bloccare l’accesso a IO se necessario.
-    button_accept_lv: Continua con l’accesso rapido
-    button_decline_lv: No, voglio autenticarmi ogni 30 giorni
+    identity_check: You’ll no longer have to authenticate with SPID or CIE not every 30 days, but only once a year or if you log out.
+    security_suggests: Safety tips
+    passcode: Any other time, you’ll just need your fingerprint, face recognition or unlock code.
+    notification: - Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
+    button_accept_lv: Continue with quick access
+    button_decline_lv: Authenticate with SPID or CIE every 30 days
   security_suggestions: 
-    fingerprint: Per accedere a IO, basta inserire il codice o il riconoscimento biometrico. Non condividerli con nessuno.
-    io_logout: Se perdi il dispositivo, esci dall’app accedendo a IO dal web.
-    io_lock_access: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso all’app entrando su IO dal web.
-    access_new_device: If you log in to IO with a device that belongs to someone else, make sure to log out once you're done.
-    navigate_to_the_site: Vai al sito
+    fingerprint: Do not share your or unlock code or biometric recognition with anyone.
+    io_logout: If you lose your device, log out from the web.
+    io_lock_access: If you fear that someone might use your SPID or CIE, remotely lock access to the app.
+    access_new_device: If you access IO with someone else's device, remember to log out when you are finished.
+    navigate_to_the_site: Learn more
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
