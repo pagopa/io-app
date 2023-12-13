@@ -120,7 +120,8 @@ const IdPayInitiativeDetailsScreen = () => {
     organizationName,
     endDate,
     lastCounterUpdate,
-    initiativeRewardType
+    initiativeRewardType,
+    logoURL
   } = initiative;
 
   const getInitiativeCounters = (
@@ -295,6 +296,7 @@ const IdPayInitiativeDetailsScreen = () => {
         onPress: navigateToBeneficiaryDetails,
         accessibilityLabel: "info"
       }}
+      logoUri={{ uri: logoURL }}
       name={initiativeName || ""}
       organizationName={organizationName || ""}
       endDate={endDate}
