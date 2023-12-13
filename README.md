@@ -447,19 +447,6 @@ This section lists possible solutions to problems you might encounter while buil
     ---
 
 -   ```
-    error: Can't find 'node' binary to build React Native bundle If you have non-standard nodejs installation, select your project in Xcode, find 'Build Phases' - 'Bundle React Native code and images' and change NODE_BINARY to absolute path to your node executable (you can find it by invoking 'which node' in the terminal)
-    ```
-    While using a virtual node enviroment and building with Xcode you might encounter the aformentioned error.
-    Create a local Xcode enviroment file by running: 
-    ```bash
-    $ cd ios
-    $ cp .xcode.env .xcode.env.local
-    ```
-    Edit `.xcode.env.local` to your needs by adding your node binary path which can be found by running `which node`.
-
-    ---
-
--   ```
     error No simulator available with name "iPhone 13".
     ```
     This happens because new versions of Xcode do not automatically create a simulator for the iPhone 13. 
