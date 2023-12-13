@@ -755,18 +755,18 @@ email:
       subtitle: To continue using the app, you must validate your email address
       editButton: Edit email address
       validateButton: Validate email address
-      header: 
+      header:
         title: Configure IO
-      help: 
-        body: To continue using the app, you must validate your email address.      
+      help:
+        body: To continue using the app, you must validate your email address.
     emailAlreadyTaken:
       title: Edit your email address
       subtitleStart: This email address
       subtitleEnd: seems to be already in use on IO. Please enter a different one to continue using the app.
       editButton: Edit email address
-      header: 
+      header:
         title: Configure IO
-      help: 
+      help:
         body: This email address seems to be already in use on IO. Please enter a different one to continue using the app.
   read:
     title: Your email address
@@ -1209,6 +1209,10 @@ wallet:
       INVALID_SESSION:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
+        primaryAction: Chiudi
+      ALREADY_ONBOARDED:
+        title: Hai già aggiunto questo metodo
+        subtitle: ""
         primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
@@ -1798,8 +1802,8 @@ messageDetails:
   write: Write
   id: "ID:"
   remoteContentError:
-    title: "Non è stato possibile recuperare i dettagli del messaggio"
-    body: "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
+    title: "The message details could not be retrieved"
+    body: "We detected an error in the information provided by the sender. Try again in a few minutes. If the issue persists, contact Support."
   attachments:
     loading: "Loading document..."
     badFormat: "The attachment format is not supported. Please contact the sender"
@@ -1813,13 +1817,13 @@ messageDetails:
     failing:
       details: "An error occurred while downloading the attachment. Retry or create a ticket"
   banner:
-    content1: "Questo è un"
-    content2: "messaggio dinamico:"
-    content3: "il contenuto potrebbe cambiare nel tempo per darti informazioni aggiornate."
-    action: "Scopri di più"
+    content1: "This is a"
+    content2: "dynamic message:"
+    content3: "its content may change over time to give you up-to-date information."
+    action: "Learn more"
   bottomSheet:
-    title: "Cos'è un messaggio dinamico?"
-    body: "L'Ente mittente potrebbe aggiornare il contenuto di questo messaggio anche dopo l'invio, per assicurare che le informazioni siano sempre accurate e rilevanti.\n\n Questa operazione avviene in casi specifici, come l'aggiornamento di informazioni obsolete o di allegati non più validi.\n\n Se l'Ente deve invece comunicarti nuove informazioni o aggiornamenti importanti, lo farà tramite un nuovo messaggio."
+    title: "What's a dynamic message?"
+    body: "It's a message that the sender can edit after you've received it. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in specific cases. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
@@ -3303,7 +3307,7 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        validUpTo: "Vale fino a " 
+        validUpTo: "Vale fino a "
         expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
         expired:
@@ -3823,11 +3827,16 @@ fastLogin:
         description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
+bonusCard:
+  validUntil: Valida fino al {{endDate}}
+  expiring: Scade il {{endDate}}
+  paused: In pausa
+  removed: Rimossa
 transaction:
   details:
     title: Dettaglio operazione
     totalAmount: Totale
-    totalFee: Il totale comprende 
+    totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
     info:
       title: Informazioni sulla transazione

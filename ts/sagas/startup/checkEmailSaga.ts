@@ -9,18 +9,25 @@ import {
   isProfileEmailAlreadyTaken,
   profileSelector
 } from "../../store/reducers/profile";
-import { isNewCduFlow } from "../../config";
 import { setEmailCheckAtStartupFailure } from "../../store/actions/profile";
 import { emailAcknowledged } from "../../store/actions/onboarding";
+import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 export function* checkEmailSaga() {
   // We get the latest profile from the store
   const profile = yield* select(profileSelector);
+  const isEmailUniquenessValidationEnabled = yield* select(
+    isEmailUniquenessValidationEnabledSelector
+  );
+
   // When we use this saga, we are sure that the profile is not none
   if (pot.isSome(profile)) {
     // eslint-disable-next-line functional/no-let
     let userProfile = profile.value;
-    if (isNewCduFlow && !isProfileEmailValidated(userProfile)) {
+    if (
+      isEmailUniquenessValidationEnabled &&
+      !isProfileEmailValidated(userProfile)
+    ) {
       yield* put(setEmailCheckAtStartupFailure(O.some(true)));
       if (isProfileEmailAlreadyTaken(userProfile)) {
         yield* call(NavigationService.navigate, ROUTES.CHECK_EMAIL, {

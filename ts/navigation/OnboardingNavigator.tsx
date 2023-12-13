@@ -14,8 +14,9 @@ import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePrefer
 import { isGestureEnabled } from "../utils/navigation";
 import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChecks/MissingDevicePinScreen";
 import MissingDeviceBiometricScreen from "../screens/onboarding/biometric&securityChecks/MissingDeviceBiometricScreen";
-import { isNewCduFlow } from "../config";
 import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
+import { useIOSelector } from "../store/hooks";
+import { isEmailUniquenessValidationEnabledSelector } from "../features/fastLogin/store/selectors";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
@@ -23,68 +24,77 @@ const Stack = createStackNavigator<OnboardingParamsList>();
 /**
  * The onboarding related stack of screens of the application.
  */
-const navigator = () => (
-  <Stack.Navigator
-    initialRouteName={ROUTES.ONBOARDING_SHARE_DATA}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
-  >
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_SHARE_DATA}
-      component={OnboardingShareDataScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_SERVICES_PREFERENCE}
-      component={OnboardingServicesPreferenceScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE}
-      component={ServicePreferenceCompleteScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_TOS}
-      component={OnboardingTosScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_PIN}
-      component={OnboardingPinScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_FINGERPRINT}
-      component={FingerprintScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_MISSING_DEVICE_PIN}
-      component={MissingDevicePinScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC}
-      component={MissingDeviceBiometricScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
-      component={OnboardingEmailInsertScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
-      component={
-        isNewCduFlow ? CduEmailInsertScreen : OnboardingEmailReadScreen
-      }
-      initialParams={{ isOnboarding: true }}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_COMPLETED}
-      component={OnboardingCompletedScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
-      component={OnboardingNotificationsPreferencesScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
-      component={OnboardingNotificationsInfoScreenConsent}
-    />
-  </Stack.Navigator>
-);
+const OnboardingNavigator = () => {
+  const isEmailUniquenessValidationEnabled = useIOSelector(
+    isEmailUniquenessValidationEnabledSelector
+  );
+  return (
+    <Stack.Navigator
+      initialRouteName={ROUTES.ONBOARDING_SHARE_DATA}
+      headerMode={"none"}
+      screenOptions={{ gestureEnabled: isGestureEnabled }}
+    >
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_SHARE_DATA}
+        component={OnboardingShareDataScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_SERVICES_PREFERENCE}
+        component={OnboardingServicesPreferenceScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE}
+        component={ServicePreferenceCompleteScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_TOS}
+        component={OnboardingTosScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_PIN}
+        component={OnboardingPinScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_FINGERPRINT}
+        component={FingerprintScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_MISSING_DEVICE_PIN}
+        component={MissingDevicePinScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC}
+        component={MissingDeviceBiometricScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
+        component={OnboardingEmailInsertScreen}
+      />
+      {isEmailUniquenessValidationEnabled ? (
+        <Stack.Screen
+          name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
+          component={CduEmailInsertScreen}
+        />
+      ) : (
+        <Stack.Screen
+          name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
+          component={OnboardingEmailReadScreen}
+        />
+      )}
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_COMPLETED}
+        component={OnboardingCompletedScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES}
+        component={OnboardingNotificationsPreferencesScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.ONBOARDING_NOTIFICATIONS_INFO_SCREEN_CONSENT}
+        component={OnboardingNotificationsInfoScreenConsent}
+      />
+    </Stack.Navigator>
+  );
+};
 
-export default navigator;
+export default OnboardingNavigator;
