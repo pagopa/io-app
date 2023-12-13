@@ -395,7 +395,7 @@ You can target the production server by copying the included `.env.production` f
 $ cp .env.production .env
 ```
 
-> **Note**
+> [!NOTE]
 > The sample configuration sets the app to interface with our test environment, on which we work continuously; therefore, it may occur that some features are not always available or fully working. Check the comments in the file for more informations about environment variables.
 
 ### io-dev-api-server
@@ -423,10 +423,13 @@ $ yarn run-android
 $ yarn run-ios
 ```
 
-### Pyshical devices
-The React Native documentation provides a [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on pyshical devices.
-> **Warning**
-> On iOS you also have to change the `Bundle Identifier` to something unique before running io-app on your pyshical device. This can be done in the `Signing (Debug)` section of Xcode.
+### Physical devices
+The React Native documentation provides a [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on physical devices.
+> [!IMPORTANT]  
+> For building the app on an iOS physical device, a few additional steps are necessary:
+> - Navigate to `Build Phases` in Xcode and expand `Bundle React Native code and images`. Update the `NODE_BINARY` variable with the path to your Node.js environment. You can find the correct path by running `which node` in a terminal from the app's root directory.
+> - If you're not part of the PagoPA S.p.A organization then you must change the `Bundle Identifier` to something unique. This adjustment can be made in the `Signing (Debug)`
+> section of Xcode.
 
 
 
