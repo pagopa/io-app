@@ -63,7 +63,7 @@ const textLeftMarginF = 140 * fullScaleFactor + 6;
 const textGenderLeftMarginF = 800 * fullScaleFactor + 6;
 
 const cardHeightF = 546 * fullScaleFactor;
-const cardHeaderHeightF = 154 * fullScaleFactor;
+const cardHeaderHeightF = 194 * fullScaleFactor;
 const cardSpacerF = 16 * fullScaleFactor;
 const cardLargeSpacerF = 24 * fullScaleFactor;
 const cardLineHeightF = 26 * fullScaleFactor;
@@ -86,8 +86,8 @@ const dateHeightF = birthCityHeightF + cardLineHeightF + cardSpacerF;
 const landscapeScaleFactor = contentWidth / 546;
 const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line height
 const textFontSizeL = 21;
-const textLeftMarginL = 140 * landscapeScaleFactor + 8;
-const textGenderLeftMarginL = 800 * landscapeScaleFactor + 8;
+const textLeftMarginL = 170 * landscapeScaleFactor + 8;
+const textGenderLeftMarginL = 830 * landscapeScaleFactor + 8;
 
 const cardWidthL = 870 * landscapeScaleFactor;
 const cardHeaderHeightL = 154 * landscapeScaleFactor;
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
   },
 
   fullFacSimileText: {
-    marginTop: 310 * fullScaleFactor,
+    marginTop: 350 * fullScaleFactor,
     lineHeight: 38 * fullScaleFactor,
     position: "absolute",
     fontSize: textFontSizeF,

@@ -16,6 +16,16 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import { checkAcknowledgedEmailSaga } from "../checkAcknowledgedEmailSaga";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 
+jest.mock("../../../features/fastLogin/store/selectors", () => {
+  const originalModule = jest.requireActual(
+    "../../../features/fastLogin/store/selectors"
+  );
+  return {
+    ...originalModule,
+    isEmailUniquenessValidationEnabledSelector: () => false
+  };
+});
+
 describe("checkAcknowledgedEmailSaga", () => {
   beforeEach(() => {
     const globalState = appReducer(undefined, applicationChangeState("active"));

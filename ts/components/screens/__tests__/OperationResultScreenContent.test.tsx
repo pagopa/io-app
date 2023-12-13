@@ -5,9 +5,12 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import { OperationResultScreenContent } from "../OperationResultScreenContent";
+import {
+  OperationResultScreenContent,
+  OperationResultScreenContentProps
+} from "../OperationResultScreenContent";
 
-const defaultProps: OperationResultScreenContent = {
+const defaultProps: OperationResultScreenContentProps = {
   title: "title",
   subtitle: "subtitle",
   action: {

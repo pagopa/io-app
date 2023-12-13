@@ -23,7 +23,10 @@ import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
 import { loadMessageDetails } from "../../store/actions/messages";
-import { navigateToServiceDetailsScreen } from "../../store/actions/navigation";
+import {
+  navigateBack,
+  navigateToServiceDetailsScreen
+} from "../../store/actions/navigation";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageDetailsByIdSelector } from "../../store/reducers/entities/messages/detailsById";
@@ -37,6 +40,7 @@ import {
 import { toUIService } from "../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../store/reducers/types";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { resetGetMessageDataAction } from "../../features/messages/actions";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {
@@ -158,9 +162,8 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   const serviceId = ownProps.route.params.serviceId;
   const message = pot.toUndefined(getPaginatedMessageById(state, messageId));
   const messageDetails = messageDetailsByIdSelector(state, messageId);
-  const goBack = () => ownProps.navigation.goBack();
   const service = pipe(
-    pot.toOption(serviceByIdSelector(serviceId)(state) || pot.none),
+    pot.toOption(serviceByIdSelector(state, serviceId)),
     O.map(toUIService),
     O.toUndefined
   );
@@ -173,7 +176,6 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   return {
     messageId,
     serviceId,
-    goBack,
     hasPaidBadge,
     message,
     messageDetails,
@@ -186,7 +188,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   refreshService: (serviceId: string) =>
     dispatch(loadServiceDetail.request(serviceId)),
   loadMessageDetails: (id: UIMessageId) =>
-    dispatch(loadMessageDetails.request({ id }))
+    dispatch(loadMessageDetails.request({ id })),
+  goBack: () => {
+    dispatch(resetGetMessageDataAction());
+    return navigateBack();
+  }
 });
 
 export default connect(

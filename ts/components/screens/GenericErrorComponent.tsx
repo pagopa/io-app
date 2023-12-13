@@ -102,6 +102,7 @@ const GenericErrorComponent = (props: Props) => {
             <H2 weight="Bold" ref={ref}>
               {props.text ? props.text : I18n.t("wallet.errors.GENERIC_ERROR")}
             </H2>
+            <VSpacer size={16} />
             <Body accessible={subTextAccessible}>
               {props.subText !== undefined
                 ? props.subText

@@ -48,6 +48,11 @@ import { loginSuccess } from "../../../store/actions/authentication";
 import { IdpData } from "../../../../definitions/content/IdpData";
 import { SessionToken } from "../../../types/SessionToken";
 import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import {
+  trackLoginCiePinInfo,
+  trackLoginCiePinScreen
+} from "../analytics/cieAnalytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request()),
@@ -80,6 +85,10 @@ const getContextualHelp = () => ({
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
 const CiePinScreen: React.FC<Props> = props => {
+  useOnFirstRender(() => {
+    trackLoginCiePinScreen();
+  });
+
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const navigation =
     useNavigation<
@@ -180,7 +189,12 @@ const CiePinScreen: React.FC<Props> = props => {
           rasterIcon={require("../../../../img/icons/icon_insert_cie_pin.png")}
           subtitle={I18n.t("authentication.cie.pin.subtitleHelp")}
           subtitleLink={
-            <Link onPress={present}>
+            <Link
+              onPress={() => {
+                trackLoginCiePinInfo();
+                present();
+              }}
+            >
               {I18n.t("authentication.cie.pin.subtitleCTA")}
             </Link>
           }

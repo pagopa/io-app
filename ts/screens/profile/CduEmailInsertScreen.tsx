@@ -52,8 +52,19 @@ import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { LightModalContext } from "../../components/ui/LightModal";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import {
+  trackEmailDuplicateEditing,
+  trackEmailEditing,
+  trackEmailEditingError
+} from "../analytics/emailAnalytics";
+import { getFlowType } from "../../utils/analytics";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
+
+export type CduEmailInsertScreenNavigationParams = Readonly<{
+  isOnboarding: boolean;
+}>;
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -91,6 +102,19 @@ const CduEmailInsertScreen = (props: Props) => {
     isProfileEmailAlreadyTakenSelector
   );
 
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const { isOnboarding } = props.route.params ?? {};
+
+  const flow = getFlowType(isOnboarding, isFirstOnBoarding);
+
+  useOnFirstRender(() => {
+    if (isProfileEmailAlreadyTaken) {
+      trackEmailEditing(flow);
+    } else {
+      trackEmailDuplicateEditing(flow);
+    }
+  });
+
   const acknowledgeOnEmailValidated = useIOSelector(
     emailValidationSelector
   ).acknowledgeOnEmailValidated;
@@ -122,6 +146,12 @@ const CduEmailInsertScreen = (props: Props) => {
 
   const [areSameEmails, setAreSameEmails] = useState(false);
   const [email, setEmail] = useState(getEmail(optionEmail));
+
+  useEffect(() => {
+    if (areSameEmails) {
+      trackEmailEditingError(flow);
+    }
+  }, [areSameEmails, flow]);
 
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
@@ -253,10 +283,21 @@ const CduEmailInsertScreen = (props: Props) => {
     showModal
   ]);
 
+  const showGoBack = () => {
+    if (isFirstOnBoarding) {
+      return undefined;
+    } else {
+      if (!isEmailValidated) {
+        return undefined;
+      }
+      return handleGoBack;
+    }
+  };
+
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <BaseScreenComponent
-        goBack={isFirstOnboarding ? handleGoBack : undefined}
+        goBack={showGoBack()}
         headerTitle={
           isFirstOnboarding
             ? I18n.t("email.newinsert.header")

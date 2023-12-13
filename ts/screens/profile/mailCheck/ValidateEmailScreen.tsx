@@ -35,8 +35,8 @@ const ValidateEmailScreen = (props: Props) => {
   const dispatch = useIODispatch();
 
   const navigateToInsertEmailScreen = () => {
-    NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.INSERT_EMAIL_SCREEN
+    NavigationService.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
     });
   };
 

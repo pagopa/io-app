@@ -19,6 +19,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
+import { reloadAllMessages } from "../../../actions/messages";
 import { attachmentFromThirdPartyMessage } from "./transformers";
 
 export type ThirdPartyById = IndexedById<
@@ -38,11 +39,13 @@ export const thirdPartyByIdReducer = (
 ): ThirdPartyById => {
   switch (action.type) {
     case getType(loadThirdPartyMessage.request):
-      return toLoading(action.payload, state);
+      return toLoading(action.payload.id, state);
     case getType(loadThirdPartyMessage.success):
       return toSome(action.payload.id, state, action.payload.content);
     case getType(loadThirdPartyMessage.failure):
       return toError(action.payload.id, state, action.payload.error);
+    case getType(reloadAllMessages.request):
+      return initialState;
   }
   return state;
 };
