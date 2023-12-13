@@ -20,7 +20,7 @@ import {
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { isNewCduFlow } from "../../config";
+import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -33,6 +33,7 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const ProfileDataScreen: React.FC<Props> = ({
   profileEmail,
   isEmailValidated,
+  isEmailUniquenessValidationEnabled,
   navigateToEmailReadScreen,
   navigateToEmailInsertScreen,
   hasProfileEmail,
@@ -40,7 +41,7 @@ const ProfileDataScreen: React.FC<Props> = ({
 }): React.ReactElement => {
   const onPressEmail = () => {
     if (hasProfileEmail) {
-      if (isNewCduFlow) {
+      if (isEmailUniquenessValidationEnabled) {
         navigateToEmailInsertScreen();
       } else {
         navigateToEmailReadScreen();
@@ -99,7 +100,9 @@ const mapStateToProps = (state: GlobalState) => ({
   profileEmail: profileEmailSelector(state),
   isEmailValidated: isProfileEmailValidatedSelector(state),
   hasProfileEmail: hasProfileEmailSelector(state),
-  nameSurname: profileNameSurnameSelector(state)
+  nameSurname: profileNameSurnameSelector(state),
+  isEmailUniquenessValidationEnabled:
+    isEmailUniquenessValidationEnabledSelector(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileDataScreen);
