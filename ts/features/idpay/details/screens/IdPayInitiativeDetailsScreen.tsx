@@ -18,6 +18,7 @@ import {
   InitiativeDTO,
   InitiativeRewardTypeEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
+import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
@@ -27,10 +28,11 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
+import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
 import {
@@ -46,17 +48,17 @@ import {
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
 
-export type InitiativeDetailsScreenParams = {
+export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
 };
 
-type InitiativeDetailsScreenRouteProps = RouteProp<
+type IdPayInitiativeDetailsScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
   "IDPAY_DETAILS_MONITORING"
 >;
 
-const InitiativeDetailsScreen = () => {
-  const route = useRoute<InitiativeDetailsScreenRouteProps>();
+const IdPayInitiativeDetailsScreen = () => {
+  const route = useRoute<IdPayInitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
 
@@ -97,6 +99,29 @@ const InitiativeDetailsScreen = () => {
   const initiativeNeedsConfiguration = useIOSelector(
     initiativeNeedsConfigurationSelector
   );
+
+  if (!pot.isSome(initiativeDataPot)) {
+    return (
+      <BonusCardScreenComponent isLoading={true}>
+        <ContentWrapper>
+          <VSpacer size={8} />
+          <IdPayInitiativeLastUpdateCounter isLoading={true} />
+          <VSpacer size={8} />
+          <InitiativeTimelineComponentSkeleton size={5} />
+          <VSpacer size={32} />
+        </ContentWrapper>
+      </BonusCardScreenComponent>
+    );
+  }
+
+  const initiative = initiativeDataPot.value;
+  const {
+    initiativeName,
+    organizationName,
+    endDate,
+    lastCounterUpdate,
+    initiativeRewardType
+  } = initiative;
 
   const getInitiativeCounters = (
     initiative: InitiativeDTO
@@ -245,62 +270,43 @@ const InitiativeDetailsScreen = () => {
       )
     );
 
-  const getInitiativeFooter = (
-    initiative: InitiativeDTO
-  ): ButtonSolidProps | undefined =>
-    pipe(
-      initiative.initiativeRewardType,
-      O.fromNullable,
-      O.alt(() => O.some(InitiativeRewardTypeEnum.REFUND)),
-      O.fold(
-        () => undefined,
-        rewardType => {
-          switch (rewardType) {
-            case InitiativeRewardTypeEnum.DISCOUNT:
-              return {
-                label: I18n.t(
-                  "idpay.initiative.discountDetails.authorizeButton"
-                ),
-                accessibilityLabel: I18n.t(
-                  "idpay.initiative.discountDetails.authorizeButton"
-                ),
-                onPress: discountBottomSheet.present
-              };
-            case InitiativeRewardTypeEnum.REFUND:
-              return undefined;
-          }
-        }
-      )
-    );
+  const getInitiativeFooterProps = (
+    rewardType?: InitiativeRewardTypeEnum
+  ): ButtonSolidProps | undefined => {
+    switch (rewardType) {
+      case InitiativeRewardTypeEnum.DISCOUNT:
+        return {
+          label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
+          accessibilityLabel: I18n.t(
+            "idpay.initiative.discountDetails.authorizeButton"
+          ),
+          onPress: discountBottomSheet.present
+        };
+      default:
+      case InitiativeRewardTypeEnum.REFUND:
+        return undefined;
+    }
+  };
 
-  return pipe(
-    initiativeDataPot,
-    pot.toOption,
-    O.fold(
-      () => (
-        <InitiativeDetailsBaseScreenComponent
-          isLoading={true}
-          onHeaderDetailsPress={navigateToBeneficiaryDetails}
-        >
-          <ContentWrapper>
-            <VSpacer size={8} />
-            <InitiativeTimelineComponentSkeleton size={5} />
-            <VSpacer size={32} />
-          </ContentWrapper>
-        </InitiativeDetailsBaseScreenComponent>
-      ),
-      initiative => (
-        <InitiativeDetailsBaseScreenComponent
-          initiative={initiative}
-          onHeaderDetailsPress={navigateToBeneficiaryDetails}
-          counters={getInitiativeCounters(initiative)}
-          footer={getInitiativeFooter(initiative)}
-        >
-          {getInitiativeDetailsContent(initiative)}
-          {discountBottomSheet.bottomSheet}
-        </InitiativeDetailsBaseScreenComponent>
-      )
-    )
+  return (
+    <BonusCardScreenComponent
+      headerAction={{
+        icon: "info",
+        onPress: navigateToBeneficiaryDetails,
+        accessibilityLabel: "info"
+      }}
+      name={initiativeName || ""}
+      organizationName={organizationName || ""}
+      endDate={endDate}
+      status={"ACTIVE"}
+      contextualHelp={emptyContextualHelp}
+      counters={getInitiativeCounters(initiative)}
+      footerCta={getInitiativeFooterProps(initiativeRewardType)}
+    >
+      <IdPayInitiativeLastUpdateCounter lastUpdateDate={lastCounterUpdate} />
+      {getInitiativeDetailsContent(initiative)}
+      {discountBottomSheet.bottomSheet}
+    </BonusCardScreenComponent>
   );
 };
 
@@ -314,4 +320,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { InitiativeDetailsScreen };
+export { IdPayInitiativeDetailsScreen };
