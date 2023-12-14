@@ -1,18 +1,16 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, { FadeIn } from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
 import { useSineWaveAnimation } from "../../../components/ui/utils/hooks/useSineWaveAnimation";
 
 const ANIMATION_DURATION = 1500;
 
-type ScanState = "SCANNING" | "IDLE";
-
 type Props = {
   size?: number;
   cornerSize?: number;
-  state?: ScanState;
+  isAnimated?: boolean;
 };
 
 const defaultMarkerSize = 230;
@@ -21,12 +19,12 @@ const defaultCornerSize = 44;
 const AnimatedCameraMarker = ({
   size = defaultMarkerSize,
   cornerSize = defaultCornerSize,
-  state = "SCANNING"
+  isAnimated = true
 }: Props) => {
   const lineSpan = size / 2 - cornerSize - 8;
 
   const { animatedStyle: animatedLineStyle } = useSineWaveAnimation({
-    enabled: state === "SCANNING",
+    enabled: isAnimated,
     span: lineSpan,
     duration: ANIMATION_DURATION,
     axis: "y"
@@ -43,7 +41,7 @@ const AnimatedCameraMarker = ({
   );
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={styles.container} entering={FadeIn}>
       <View style={[styles.marker, { width: size, height: size }]}>
         <View style={styles.corners}>
           <View style={styles.cornersSide}>
@@ -59,7 +57,7 @@ const AnimatedCameraMarker = ({
           <CameraMarkerLine width={size - 10} height={size} />
         </Animated.View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 

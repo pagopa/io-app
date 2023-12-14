@@ -4,9 +4,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   ContentWrapper,
   IOColors,
+  IOVisualCostants,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { IOVisualCostants } from "../../../components/core/variables/IOStyles";
 
 type Props = {
   title: string;

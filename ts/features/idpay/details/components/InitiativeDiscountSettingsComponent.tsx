@@ -50,27 +50,31 @@ const InitiativeDiscountSettingsComponent = (props: Props) => {
           onPress={() => null}
         />
       ),
-      initiative => (
-        <ListItemNav
-          value={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
-          description={I18n.t(
-            `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
-            {
-              defaultValue: I18n.t(
-                `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
-                { count: initiative.nInstr }
-              ),
-              count: initiative.nInstr
-            }
-          )}
-          onPress={() => navigateToInstrumentsConfiguration(initiative)}
-          accessibilityLabel={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
-        />
-      )
+      initiative => {
+        const methodCountString = I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods`,
+          {
+            defaultValue: I18n.t(
+              `idpay.initiative.details.initiativeDetailsScreen.configured.settings.methods.other`,
+              { count: initiative.nInstr }
+            ),
+            count: initiative.nInstr
+          }
+        );
+        return (
+          <ListItemNav
+            value={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+            )}
+            description={methodCountString}
+            onPress={() => navigateToInstrumentsConfiguration(initiative)}
+            accessibilityLabel={`${I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+            )}
+         ${methodCountString}`}
+          />
+        );
+      }
     )
   );
 

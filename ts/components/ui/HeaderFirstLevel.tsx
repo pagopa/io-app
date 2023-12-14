@@ -1,10 +1,14 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors, HSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  HSpacer,
+  IOVisualCostants,
+  H3,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../types/WithTestID";
-import { IOStyles, IOVisualCostants } from "../core/variables/IOStyles";
-import { NewH3 } from "../core/typography/NewH3";
 
 export type HeaderFirstLevel = WithTestID<{
   title: string;
@@ -47,9 +51,9 @@ export const HeaderFirstLevel = ({
       testID={testID}
     >
       <View style={styles.headerInner}>
-        <NewH3 style={{ flexShrink: 1 }} numberOfLines={1}>
+        <H3 style={{ flexShrink: 1 }} numberOfLines={1}>
           {title}
-        </NewH3>
+        </H3>
         <View style={[IOStyles.row, { flexShrink: 0 }]}>
           {firstAction}
           {secondAction && (

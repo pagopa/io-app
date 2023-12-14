@@ -136,7 +136,8 @@ export default function preferencesReducer(
   if (isActionOf(differentProfileLoggedIn, action)) {
     return {
       ...state,
-      isMixpanelEnabled: null
+      isMixpanelEnabled: null,
+      isFingerprintEnabled: undefined
     };
   }
 

@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react-native";
 import * as React from "react";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import I18n from "../../../../../../i18n";
@@ -46,9 +45,6 @@ describe("CgnStatusDetail", () => {
     expect(component.queryByTestId("status-badge")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.badge.active")
     );
-    expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.aqua
-    });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.date.activated")
     );
@@ -77,9 +73,6 @@ describe("CgnStatusDetail", () => {
     expect(component.queryByTestId("status-badge")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.badge.revoked")
     );
-    expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.grey
-    });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.date.activated")
     );
@@ -108,9 +101,6 @@ describe("CgnStatusDetail", () => {
     expect(component.queryByTestId("status-badge")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.badge.expired")
     );
-    expect(component.queryByTestId("status-badge")).toHaveStyle({
-      backgroundColor: IOColors.grey
-    });
     expect(component.queryByTestId("activation-date-label")).toHaveTextContent(
       I18n.t("bonus.cgn.detail.status.date.activated")
     );

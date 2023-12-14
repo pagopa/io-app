@@ -2,10 +2,8 @@ import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
-import { PnMessageDetailsScreen } from "../screens/PnMessageDetailsScreen";
-import { PnAttachmentPreview } from "../screens/PnAttachmentPreview";
-import { PnPaidPaymentScreen } from "../screens/PnPaidPaymentScreen";
-import { pnNoticesF24Enabled } from "../../../config";
+import { AttachmentPreviewScreen } from "../screens/AttachmentPreviewScreen";
+import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -19,17 +17,15 @@ export const PnStackNavigator = () => (
   >
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}
-      component={
-        pnNoticesF24Enabled ? MessageDetailsScreen : PnMessageDetailsScreen
-      }
+      component={MessageDetailsScreen}
     />
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_ATTACHMENT}
-      component={PnAttachmentPreview}
+      component={AttachmentPreviewScreen}
     />
     <Stack.Screen
       name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
-      component={PnPaidPaymentScreen}
+      component={PaidPaymentScreen}
     />
   </Stack.Navigator>
 );

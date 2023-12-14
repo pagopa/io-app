@@ -1,15 +1,13 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { ButtonOutline, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
-import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../../../components/core/typography/Label";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { openWebUrl } from "../../../../../../utils/url";
-import { showToast } from "../../../../../../utils/showToast";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
+import { IOToast } from "../../../../../../components/Toast";
 
 type Props = {
   openBottomSheet: () => void;
@@ -45,20 +43,17 @@ const EycaStatusDetailsComponent = (props: Props) => (
       </H4>
     </InfoBox>
     <VSpacer size={16} />
-    <ButtonDefaultOpacity
-      bordered
-      style={{ width: "100%" }}
+    <ButtonOutline
+      fullWidth
       onPress={() =>
         openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
-          showToast(I18n.t("bonus.cgn.generic.linkError"))
+          IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
         )
       }
-      testID={"eyca-pending-button"}
-    >
-      <Label color={"blue"}>
-        {I18n.t("bonus.cgn.detail.cta.eyca.pending")}
-      </Label>
-    </ButtonDefaultOpacity>
+      label={I18n.t("bonus.cgn.detail.cta.eyca.pending")}
+      accessibilityLabel={I18n.t("bonus.cgn.detail.cta.eyca.pending")}
+      testID="eyca-pending-button"
+    />
   </>
 );
 

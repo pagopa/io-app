@@ -19,6 +19,7 @@ import variables from "../theme/variables";
 import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
+import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
@@ -52,6 +53,10 @@ export const MainTabNavigator = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
+  const [currentRoute, setCurrentRoute] = React.useState<
+    keyof MainTabParamsList
+  >(ROUTES.MESSAGES_HOME);
+
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
   };
@@ -61,6 +66,7 @@ export const MainTabNavigator = () => {
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
+      <HeaderFirstLevelHandler currentRoute={currentRoute} />
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: {
@@ -87,6 +93,11 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={ROUTES.MESSAGES_HOME}
           component={MessagesHomeScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.MESSAGES_HOME);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
@@ -104,6 +115,11 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={ROUTES.WALLET_HOME}
           component={WalletHomeScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.WALLET_HOME);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
@@ -142,6 +158,11 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.SERVICES_HOME);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
@@ -159,6 +180,11 @@ export const MainTabNavigator = () => {
         <Tab.Screen
           name={ROUTES.PROFILE_MAIN}
           component={ProfileMainScreen}
+          listeners={{
+            tabPress: _ => {
+              setCurrentRoute(ROUTES.PROFILE_MAIN);
+            }
+          }}
           options={{
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (

@@ -53,18 +53,16 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
   const keyExtractor = (bank: Abi, index: number): string =>
     bank.abi ? bank.abi : `abi_item_${index}`;
 
-  const renderListItem = (isList: boolean) => (info: ListRenderItemInfo<Abi>) =>
-    (
-      <BankPreviewItem
-        bank={info.item}
-        inList={isList}
-        onPress={(abi: string) => {
-          props.onItemPress(abi);
-          setSearchText("");
-          Keyboard.dismiss();
-        }}
-      />
-    );
+  const renderListItem = (info: ListRenderItemInfo<Abi>) => (
+    <BankPreviewItem
+      bank={info.item}
+      onPress={(abi: string) => {
+        props.onItemPress(abi);
+        setSearchText("");
+        Keyboard.dismiss();
+      }}
+    />
+  );
 
   return (
     <>
@@ -96,7 +94,7 @@ export const SearchBankComponent: React.FunctionComponent<Props> = (
       ) : (
         <FlatList
           data={filteredList}
-          renderItem={renderListItem(true)}
+          renderItem={renderListItem}
           keyExtractor={keyExtractor}
           keyboardShouldPersistTaps={"handled"}
         />

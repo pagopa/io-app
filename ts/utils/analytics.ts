@@ -24,9 +24,51 @@ export const noAnalyticsRoutes = new Set<string>(
   )
 );
 
-export const booleanToYesNo = (value: boolean) =>
+export type FlowType =
+  | "firstOnboarding"
+  | "onBoarding"
+  | "preferenze"
+  | "browsing";
+
+/**
+ *
+ * @param isOnBoarding existing user making new login
+ * @param isFirstOnBoarding new user making new login
+ * @param isUserBrowsing user navigating the app after firstOnboarding/onboarding
+ * @returns
+ */
+export const getFlowType = (
+  isOnBoarding: boolean,
+  isFirstOnBoarding?: boolean,
+  isUserBrowsing?: boolean
+): FlowType => {
+  if (isFirstOnBoarding) {
+    return "firstOnboarding";
+  }
+  if (isOnBoarding) {
+    return "onBoarding";
+  }
+  if (isUserBrowsing) {
+    return "browsing";
+  }
+  return "preferenze";
+};
+
+export const booleanToYesNo = (value: boolean): "yes" | "no" =>
   pipe(
     value,
+    B.fold(
+      () => "no" as const,
+      () => "yes" as const
+    )
+  );
+
+export const numberToYesNoOnThreshold = (
+  value: number,
+  threshold: number = 0
+) =>
+  pipe(
+    value > threshold,
     B.fold(
       () => "no" as const,
       () => "yes" as const
@@ -41,12 +83,16 @@ export const buildEventProperties = (
     | "exit"
     | "micro_action"
     | "screen_view"
+    | "confirm"
+    | "error"
     | undefined,
-  customProperties: Record<string, unknown> = {}
+  customProperties: Record<string, unknown> = {},
+  flow?: FlowType
 ) => ({
   event_category: eventCategory,
   event_type: eventType,
-  ...customProperties
+  ...customProperties,
+  flow
 });
 
 // Notifications related events
@@ -95,24 +141,6 @@ export function trackNotificationsOptInSkipSystemPermissions() {
   void mixpanelTrack(
     "NOTIFICATIONS_OPTIN_SKIP_SYSTEM_PERMISSIONS",
     buildEventProperties("UX", "action")
-  );
-}
-
-export function trackNotificationsPreferencesPreviewStatus(enabled: boolean) {
-  void mixpanelTrack(
-    "NOTIFICATIONS_PREFERENCES_PREVIEW_STATUS",
-    buildEventProperties("UX", "action", {
-      enabled
-    })
-  );
-}
-
-export function trackNotificationsPreferencesReminderStatus(enabled: boolean) {
-  void mixpanelTrack(
-    "NOTIFICATIONS_PREFERENCES_REMINDER_STATUS",
-    buildEventProperties("UX", "action", {
-      enabled
-    })
   );
 }
 

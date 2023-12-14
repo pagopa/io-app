@@ -103,12 +103,11 @@ export const scanAdditionalBarcodesEnabled =
 // FCI (Firma con IO) Feature Flag
 export const fciEnabled = Config.FCI_ENABLED === "YES";
 
+// SPID Relay State
+export const spidRelayState = Config.SPID_RELAY_STATE;
+
 // Fast Login Feature Flag
 export const fastLoginEnabled = Config.FAST_LOGIN_ENABLED === "YES";
-
-// Fast Login Bypass getNonce
-export const fastLoginBypassGetNonce =
-  Config.FAST_LOGIN_BYPASS_GET_NONCE === "YES";
 
 // Fast login bypass opt-in
 export const fastLoginOptIn = Config.FAST_LOGIN_OPTIN === "YES";
@@ -124,8 +123,6 @@ export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
-
-export const pnNoticesF24Enabled = Config.PN_NOTICES_F24_ENABLED === "YES";
 
 // version of ToS
 export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
@@ -267,8 +264,8 @@ export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
 
-export const walletV3ApiBaseUrl = Config.WALLETV3_API_BASEURL;
-export const walletV3ApiUatBaseUrl = Config.WALLETV3_API_UAT_BASEURL;
+export const walletApiBaseUrl = Config.WALLET_API_BASEURL;
+export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";

@@ -13,7 +13,6 @@ import { ContentTypeValues } from "../../../../types/contentType";
 
 import {
   Attachment,
-  AttachmentType,
   EUCovidCertificate,
   PaymentData,
   PrescriptionData,
@@ -133,8 +132,8 @@ export const toUIMessageDetails = (
     euCovidCertificate: getEUCovidCertificate(content),
     subject: content.subject,
     serviceId: messageFromApi.sender_service_id,
-    hasThirdPartyDataAttachments:
-      content.third_party_data?.has_attachments ?? false,
+    hasThirdPartyData: !!content.third_party_data,
+    hasRemoteContent: !!content.third_party_data?.has_remote_content,
     raw: messageFromApi
   };
 };
@@ -146,8 +145,7 @@ const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
   )}`;
 
 export const attachmentsFromThirdPartyMessage = (
-  messageFromApi: ThirdPartyMessageWithContent,
-  category: AttachmentType
+  messageFromApi: ThirdPartyMessageWithContent
 ): O.Option<Array<UIAttachment>> =>
   pipe(
     messageFromApi.third_party_message.attachments,
@@ -156,8 +154,7 @@ export const attachmentsFromThirdPartyMessage = (
       thirdPartyMessageAttachmentArray.map(thirdPartyMessageAttachment =>
         attachmentFromThirdPartyMessage(
           messageFromApi.id,
-          thirdPartyMessageAttachment,
-          category
+          thirdPartyMessageAttachment
         )
       )
     )
@@ -165,8 +162,7 @@ export const attachmentsFromThirdPartyMessage = (
 
 export const attachmentFromThirdPartyMessage = (
   thirdPartyMessageId: string,
-  thirPartyMessageAttachment: ThirdPartyAttachment,
-  category: AttachmentType
+  thirPartyMessageAttachment: ThirdPartyAttachment
 ): UIAttachment => ({
   messageId: thirdPartyMessageId as UIMessageId,
   id: thirPartyMessageAttachment.id as string as UIAttachmentId,
@@ -180,5 +176,5 @@ export const attachmentFromThirdPartyMessage = (
       thirPartyMessageAttachment.url
     )
   },
-  category
+  category: thirPartyMessageAttachment.category
 });

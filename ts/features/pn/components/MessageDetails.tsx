@@ -1,7 +1,8 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
+import React, { useCallback, createRef, useRef } from "react";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { createRef, useCallback, useEffect, useState } from "react";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as SEP from "fp-ts/lib/Separated";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
@@ -9,34 +10,22 @@ import {
   ListItemInfoCopy,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { H5 } from "../../../components/core/typography/H5";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
-import ROUTES from "../../../navigation/routes";
-import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
-import { paymentVerifica } from "../../../store/actions/wallet/payment";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
 import {
   UIAttachment,
   UIMessageId
 } from "../../../store/reducers/entities/messages/types";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { isDuplicatedPayment } from "../../../utils/payment";
-import { MessageAttachments } from "../../messages/components/MessageAttachments";
+import { LegacyMessageAttachments } from "../../messages/components/LegacyMessageAttachments";
+import NavigationService from "../../../navigation/NavigationService";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import {
-  trackPNAttachmentOpening,
-  trackPNPaymentInfoError,
-  trackPNPaymentInfoPaid,
-  trackPNPaymentInfoPayable
-} from "../analytics";
+import { trackPNAttachmentOpening } from "../analytics";
 import { DSFullWidthComponent } from "../../design-system/components/DSFullWidthComponent";
 import StatusContent from "../../../components/SectionStatus/StatusContent";
 import {
@@ -45,119 +34,67 @@ import {
   statusIconMap
 } from "../../../components/SectionStatus";
 import { LevelEnum } from "../../../../definitions/content/SectionStatus";
-import { PnMessageDetailsContent } from "./PnMessageDetailsContent";
-import { PnMessageDetailsHeader } from "./PnMessageDetailsHeader";
-import { PnMessageDetailsSection } from "./PnMessageDetailsSection";
-import { PnMessageTimeline } from "./PnMessageTimeline";
-import { PnMessageTimelineCTA } from "./PnMessageTimelineCTA";
-import { PnMessagePayment } from "./PnMessagePayment";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { maxVisiblePaymentCountGenerator } from "../utils";
+import { MessageDetailsContent } from "./MessageDetailsContent";
+import { MessageDetailsHeader } from "./MessageDetailsHeader";
+import { MessageDetailsSection } from "./MessageDetailsSection";
+import { MessageTimeline } from "./MessageTimeline";
+import { MessageTimelineCTA } from "./MessageTimelineCTA";
+import { MessageF24 } from "./MessageF24";
+import { MessagePayments } from "./MessagePayments";
+import { MessageFooter } from "./MessageFooter";
+import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
 type Props = Readonly<{
   messageId: UIMessageId;
   message: PNMessage;
   service: ServicePublic | undefined;
-  payment: NotificationPaymentInfo | undefined;
-  rptId: RptId | undefined;
+  payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
 }>;
 
 export const MessageDetails = ({
   message,
   messageId,
   service,
-  payment,
-  rptId
+  payments
 }: Props) => {
-  const [firstLoadingRequest, setFirstLoadingRequest] = useState(false);
-  const [shouldTrackMixpanel, setShouldTrackMixpanel] = useState(true);
-
-  const dispatch = useIODispatch();
-  const navigation = useNavigation();
   const viewRef = createRef<View>();
+  const presentPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
 
-  const hasAttachment = message.attachments && message.attachments.length > 0;
-  const isCancelled = message.isCancelled ?? false;
-  const completedPaymentNoticeCode =
-    isCancelled && message.completedPayments
-      ? message.completedPayments[0]
-      : undefined;
-
-  const paymentVerification = useIOSelector(
-    state => state.wallet.payment.verifica
+  const partitionedAttachments = pipe(
+    message.attachments,
+    O.fromNullable,
+    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    RA.partition(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
 
-  const paymentVerificationError: TransactionSummaryError = pot.isError(
-    paymentVerification
-  )
-    ? O.some(paymentVerification.error)
-    : O.none;
+  const f24List = SEP.right(partitionedAttachments);
+  const attachmentList = SEP.left(partitionedAttachments);
 
-  const verifyPaymentIfNeeded = useCallback(() => {
-    if (!isCancelled && rptId) {
-      dispatch(
-        paymentVerifica.request({
-          rptId,
-          startOrigin: "message"
-        })
-      );
-      setFirstLoadingRequest(true);
-    }
-  }, [isCancelled, rptId, dispatch]);
-
-  const startPayment = useCallback(() => {
-    if (!isCancelled && rptId) {
-      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-        screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-        params: { rptId }
-      });
-    }
-  }, [isCancelled, rptId, navigation]);
+  const isCancelled = message.isCancelled ?? false;
+  const completedPaymentNoticeCodes = isCancelled
+    ? message.completedPayments
+    : undefined;
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
-      trackPNAttachmentOpening();
-      navigation.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
+      trackPNAttachmentOpening(attachment.category);
+      NavigationService.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
         messageId,
-        attachmentId: attachment.id
+        attachmentId: attachment.id,
+        category: attachment.category
       });
     },
-    [messageId, navigation]
+    [messageId]
   );
 
-  useOnFirstRender(verifyPaymentIfNeeded);
-
+  const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
   const scrollViewRef = React.createRef<ScrollView>();
-
-  const isVerifyingPayment = pot.isLoading(paymentVerification);
-  const isPaid = isDuplicatedPayment(paymentVerificationError);
-
-  useEffect(() => {
-    if (!firstLoadingRequest || isVerifyingPayment || !shouldTrackMixpanel) {
-      return;
-    }
-
-    if (isPaid) {
-      trackPNPaymentInfoPaid();
-    } else if (O.isSome(paymentVerificationError)) {
-      trackPNPaymentInfoError(paymentVerificationError);
-    } else if (!isCancelled) {
-      trackPNPaymentInfoPayable();
-    }
-    setShouldTrackMixpanel(false);
-  }, [
-    firstLoadingRequest,
-    isCancelled,
-    isPaid,
-    isVerifyingPayment,
-    paymentVerificationError,
-    shouldTrackMixpanel
-  ]);
 
   return (
     <>
-      {firstLoadingRequest && O.isSome(paymentVerificationError) && (
-        <TransactionSummaryStatus error={paymentVerificationError} />
-      )}
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -165,9 +102,9 @@ export const MessageDetails = ({
         }}
         ref={scrollViewRef}
       >
-        {service && <PnMessageDetailsHeader service={service} />}
+        {service && <MessageDetailsHeader service={service} />}
         <VSpacer />
-        <PnMessageDetailsContent message={message} />
+        <MessageDetailsContent message={message} />
         {isCancelled && (
           <>
             <VSpacer />
@@ -180,35 +117,43 @@ export const MessageDetails = ({
                 foregroundColor={getStatusTextColor(LevelEnum.warning)}
                 iconName={statusIconMap.warning}
                 testID={"PnCancelledMessageBanner"}
-                viewRef={viewRef}
+                ref={viewRef}
               >
                 {I18n.t("features.pn.details.cancelledMessage.body")}
               </StatusContent>
             </DSFullWidthComponent>
           </>
         )}
-        {hasAttachment && (
-          <PnMessageDetailsSection
+
+        {RA.isNonEmpty(attachmentList) && (
+          <MessageDetailsSection
             title={I18n.t("features.pn.details.attachmentsSection.title")}
           >
-            <MessageAttachments
-              attachments={message.attachments}
-              openPreview={openAttachment}
+            <LegacyMessageAttachments
               disabled={isCancelled}
+              attachments={attachmentList}
+              downloadAttachmentBeforePreview={true}
+              openPreview={openAttachment}
             />
-          </PnMessageDetailsSection>
+          </MessageDetailsSection>
         )}
-        <PnMessagePayment
+        <MessagePayments
           messageId={messageId}
-          firstLoadingRequest={firstLoadingRequest}
           isCancelled={isCancelled}
-          isPaid={isPaid}
-          payment={payment}
-          paymentVerification={paymentVerification}
-          paymentVerificationError={paymentVerificationError}
-          completedPaymentNoticeCode={completedPaymentNoticeCode}
+          payments={payments}
+          completedPaymentNoticeCodes={completedPaymentNoticeCodes}
+          maxVisiblePaymentCount={maxVisiblePaymentCount}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
-        <PnMessageDetailsSection
+
+        {!isCancelled && RA.isNonEmpty(f24List) ? (
+          <>
+            <MessageF24 attachments={f24List} openPreview={openAttachment} />
+            <VSpacer size={24} />
+          </>
+        ) : null}
+
+        <MessageDetailsSection
           title={I18n.t("features.pn.details.infoSection.title")}
         >
           <ListItemInfoCopy
@@ -221,29 +166,31 @@ export const MessageDetails = ({
             {I18n.t("features.pn.details.timeline.title")}
           </H5>
           <VSpacer size={24} />
-          <PnMessageTimeline
+          <MessageTimeline
             message={message}
             onExpand={() => {
               scrollViewRef.current?.scrollToEnd({ animated: true });
             }}
           />
-          {frontendUrl.length > 0 && <PnMessageTimelineCTA url={frontendUrl} />}
-        </PnMessageDetailsSection>
+          {frontendUrl.length > 0 && <MessageTimelineCTA url={frontendUrl} />}
+        </MessageDetailsSection>
       </ScrollView>
 
-      {firstLoadingRequest &&
-        !isCancelled &&
-        !pot.isLoading(paymentVerification) &&
-        pot.isSome(paymentVerification) && (
-          <FooterWithButtons
-            type="SingleButton"
-            leftButton={{
-              block: true,
-              onPress: startPayment,
-              title: I18n.t("wallet.continue")
-            }}
-          />
-        )}
+      {payments && !isCancelled && (
+        <MessagePaymentBottomSheet
+          messageId={messageId}
+          payments={payments}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+        />
+      )}
+
+      <MessageFooter
+        messageId={messageId}
+        payments={payments}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+        isCancelled={isCancelled}
+        presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+      />
     </>
   );
 };

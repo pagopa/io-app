@@ -15,6 +15,7 @@ const mockedProfile: InitializedProfile = {
   is_email_validated: true,
   is_inbox_enabled: true,
   is_webhook_enabled: true,
+  is_email_already_taken: false,
   name: "John",
   spid_email: "test@example.com" as EmailString,
   version: 1 as Version

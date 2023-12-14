@@ -12,13 +12,16 @@ import {
 } from "../../../../store/reducers/entities/messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
+import { MultiplePaymentState, paymentsReducer } from "./payments";
 
 export type PnState = {
   activation: PnActivationState;
+  payments: MultiplePaymentState;
 };
 
 export const pnReducer = combineReducers<PnState, Action>({
-  activation: pnActivationReducer
+  activation: pnActivationReducer,
+  payments: paymentsReducer
 });
 
 export const pnMessageFromIdSelector = createSelector(

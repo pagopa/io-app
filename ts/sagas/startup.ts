@@ -37,9 +37,12 @@ import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
-import { watchZendeskSupportSaga } from "../features/zendesk/saga";
+import {
+  watchZendeskGetSessionSaga,
+  watchZendeskSupportSaga
+} from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
-import { watchWalletV3Saga } from "../features/walletV3/common/saga";
+import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -84,8 +87,11 @@ import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
-import { clearAllAttachments } from "../features/messages/saga/clearAttachments";
-import { watchMessageAttachmentsSaga } from "../features/messages/saga/attachments";
+import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
+import {
+  watchLoadMessageData,
+  watchMessageAttachmentsSaga
+} from "../features/messages/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
@@ -103,7 +109,7 @@ import {
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
-import { enableWhatsNewCheck } from "../features/whatsnew/store/actions";
+import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -164,6 +170,7 @@ import {
 } from "./../store/storages/keychain";
 import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 import { setLanguageFromProfileIfExists } from "./preferences";
+import { checkEmailSaga } from "./startup/checkEmailSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -209,7 +216,7 @@ export function* initializeApplicationSaga(
   }
 
   // clear cached downloads when the logged user changes
-  yield* takeEvery(differentProfileLoggedIn, clearAllAttachments);
+  yield* takeEvery(differentProfileLoggedIn, handleClearAllAttachments);
 
   // Get last logged in Profile from the state
   const lastLoggedInProfileState: ReturnType<typeof profileSelector> =
@@ -332,6 +339,7 @@ export function* initializeApplicationSaga(
     watchMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );
+  yield* fork(watchLoadMessageData);
   yield* fork(
     watchUpsertMessageStatusAttribues,
     backendClient.upsertMessageStatusAttributes
@@ -412,7 +420,8 @@ export function* initializeApplicationSaga(
     return;
   }
 
-  const userProfile = maybeUserProfile.value;
+  // eslint-disable-next-line functional/no-let
+  let userProfile = maybeUserProfile.value;
 
   // If user logged in with different credentials, but this device still has
   // user data loaded, then delete data keeping current session (user already
@@ -503,11 +512,13 @@ export function* initializeApplicationSaga(
   yield* call(clearKeychainError);
 
   yield* call(checkConfiguredPinSaga);
+  yield* call(checkAcknowledgedFingerprintSaga);
 
   if (!hasPreviousSessionAndPin) {
-    yield* call(checkAcknowledgedFingerprintSaga);
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
+
+  userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
@@ -520,10 +531,6 @@ export function* initializeApplicationSaga(
     yield* call(completeOnboardingSaga);
   }
 
-  // At the end of the onboarding checks, we enable the whatsnew check so that it is done
-  // only once you get to the messages screen (manual whatsnew management still remains after the tos)
-  yield* put(enableWhatsNewCheck());
-
   // Stop the watchAbortOnboardingSaga
   yield* cancel(watchAbortOnboardingSagaTask);
 
@@ -535,6 +542,10 @@ export function* initializeApplicationSaga(
   //
   // User is autenticated, session token is valid
   //
+
+  if (zendeskEnabled) {
+    yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
+  }
 
   if (bonusVacanzeEnabled) {
     // Start watching for requests about bonus
@@ -570,7 +581,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken);
+    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
   }
 
   // Start watching for message attachments actions (general
@@ -673,6 +684,9 @@ export function* initializeApplicationSaga(
 
   // Check if we have a pending notification message
   yield* call(handlePendingMessageStateIfAllowedSaga, true);
+
+  // This tells the security advice bottomsheet that it can be shown
+  yield* put(setSecurityAdviceReadyToShow(true));
 
   yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }

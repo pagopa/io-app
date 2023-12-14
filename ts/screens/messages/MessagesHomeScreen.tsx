@@ -10,7 +10,6 @@ import { useMessageOpening } from "../../features/messages/hooks/useMessageOpeni
 import MessageList from "../../components/messages/MessageList";
 import MessagesSearch from "../../components/messages/MessagesSearch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { ScreenContentHeader } from "../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
@@ -42,7 +41,7 @@ import {
 } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-import { useWhatsNew } from "../../features/whatsnew/hook/useWhatsNew";
+import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -70,16 +69,14 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
-
-  const { checkToShowWhatsNew, autoResizableBottomSheet } = useWhatsNew();
+  const { securitySuggestionBottomSheet } =
+    useSecuritySuggestionsBottomSheet(false);
 
   useOnFirstRender(() => {
     if (needsMigration) {
       migrateMessages(messagesStatus);
     }
   });
-
-  checkToShowWhatsNew();
 
   useEffect(() => {
     if (!latestMessageOperation) {
@@ -124,14 +121,13 @@ const MessagesHomeScreen = ({
       accessibilityEvents={{
         disableAccessibilityFocus: messageSectionStatusActive
       }}
+      hideBaseHeader={!isSearchEnabled}
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["messages"]}
-      headerTitle={I18n.t("messages.contentTitle")}
       isSearchAvailable={{ enabled: true, searchType: "Messages" }}
       appLogo={true}
     >
-      {autoResizableBottomSheet}
       <FocusAwareStatusBar
         barStyle={"dark-content"}
         backgroundColor={IOColors.white}
@@ -139,10 +135,6 @@ const MessagesHomeScreen = ({
       {isScreenReaderEnabled && statusComponent}
       {!isSearchEnabled && (
         <React.Fragment>
-          <ScreenContentHeader
-            title={I18n.t("messages.contentTitle")}
-            pictogram={"messages"}
-          />
           {needsMigration ? (
             <MigratingMessage
               status={migrationStatus}
@@ -180,6 +172,7 @@ const MessagesHomeScreen = ({
         )}
       {!isScreenReaderEnabled && statusComponent}
       {bottomSheet}
+      {securitySuggestionBottomSheet}
     </TopScreenComponent>
   );
 };

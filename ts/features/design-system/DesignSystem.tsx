@@ -4,12 +4,10 @@ import {
   useIOTheme,
   Divider,
   VSpacer,
-  ListItemNav
-} from "@pagopa/io-app-design-system";
-import {
-  IOStyles,
+  ListItemNav,
   IOVisualCostants
-} from "../../components/core/variables/IOStyles";
+} from "@pagopa/io-app-design-system";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import {
   AppParamsList,
   IOStackNavigationRouteProps

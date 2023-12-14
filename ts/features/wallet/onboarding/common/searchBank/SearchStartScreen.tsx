@@ -1,8 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView } from "react-native";
-import { Content } from "native-base";
+import { SafeAreaView, View } from "react-native";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -86,7 +85,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
       contextualHelp={emptyContextualHelp}
     >
       <SafeAreaView style={IOStyles.flex} testID={props.testID}>
-        <Content style={IOStyles.flex}>
+        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           <SearchStartComponent
             openTosModal={props.handleTosModal}
             onSearch={props.navigateToSearchBank}
@@ -95,7 +94,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
             openParticipatingBanksModal={props.handleParticipatingBanksModal}
             showCircuitLogo={props.methodType === "cobadge"}
           />
-        </Content>
+        </View>
         <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />
         {renderFooterButtons(props.onCancel, onContinueHandler)}
       </SafeAreaView>

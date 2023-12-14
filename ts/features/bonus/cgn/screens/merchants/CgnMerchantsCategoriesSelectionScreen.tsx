@@ -8,10 +8,10 @@ import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
   getGradientColorValues,
   VSpacer,
+  Badge,
   Icon
 } from "@pagopa/io-app-design-system";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -20,13 +20,13 @@ import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../../utils/showToast";
 import CgnMerchantCategoryItem from "../../components/merchants/CgnMerchantCategoryItem";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
+import { IOToast } from "../../../../../components/Toast";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);
@@ -47,7 +47,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   useEffect(() => {
     if (!isFirstRender.current && isError) {
-      showToast(I18n.t("global.genericError"), "danger");
+      IOToast.error(I18n.t("global.genericError"));
     }
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
@@ -69,13 +69,11 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
             <View style={[{ justifyContent: "flex-end" }, IOStyles.flex]}>
               <VSpacer size={16} />
               <View style={{ alignSelf: "flex-start" }}>
-                <IOBadge
-                  small
+                <Badge
                   text={`${info.item.newDiscounts} ${I18n.t(
                     "bonus.cgn.merchantsList.news"
                   )}`}
-                  variant="solid"
-                  color="white"
+                  variant="default"
                 />
               </View>
             </View>
@@ -100,13 +98,11 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
               {countAvailable && (
                 <View style={IOStyles.flex}>
                   <View style={{ alignSelf: "flex-start" }}>
-                    <IOBadge
-                      small
+                    <Badge
                       text={`${info.item.newDiscounts} ${I18n.t(
                         "bonus.cgn.merchantsList.news"
                       )}`}
-                      variant="solid"
-                      color="white"
+                      variant="default"
                     />
                   </View>
                 </View>

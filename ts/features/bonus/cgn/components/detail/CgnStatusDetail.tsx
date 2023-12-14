@@ -1,8 +1,7 @@
 import * as React from "react";
 import { View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Badge, VSpacer } from "@pagopa/io-app-design-system";
 import { Card } from "../../../../../../definitions/cgn/Card";
-import { IOBadge } from "../../../../../components/core/IOBadge";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -36,11 +35,10 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "ACTIVATED":
       return {
         badge: (
-          <IOBadge
+          <Badge
             testID={"status-badge"}
             text={I18n.t("bonus.cgn.detail.status.badge.active")}
-            variant="solid"
-            color="aqua"
+            variant="success"
           />
         ),
         dateInformation: (
@@ -89,11 +87,10 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "EXPIRED":
       return {
         badge: (
-          <IOBadge
+          <Badge
             testID={"status-badge"}
             text={I18n.t("bonus.cgn.detail.status.badge.expired")}
-            variant="solid"
-            color="grey"
+            variant="default"
           />
         ),
         dateInformation: (
@@ -142,11 +139,10 @@ const elementsFromStatus = ({ cgnDetail }: Props): StatusElements => {
     case "REVOKED":
       return {
         badge: (
-          <IOBadge
+          <Badge
             testID={"status-badge"}
             text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
-            variant="solid"
-            color="grey"
+            variant="default"
           />
         ),
         dateInformation: (

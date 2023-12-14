@@ -1,6 +1,8 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -8,8 +10,6 @@ import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoSc
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import image from "../../../../../../img/messages/empty-message-list-icon.png";
 import I18n from "../../../../../i18n";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { cgnActivationCancel } from "../../store/actions/activation";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -26,13 +26,19 @@ const CgnActivationPendingScreen = (props: Props): React.ReactElement => (
       title={I18n.t("bonus.cgn.activation.pending.title")}
       body={I18n.t("bonus.cgn.activation.pending.body")}
     />
-    <FooterWithButtons
-      type="SingleButton"
-      leftButton={cancelButtonProps(
-        props.onExit,
-        I18n.t("global.buttons.exit")
-      )}
-    />
+    <View>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            onPress: props.onExit,
+            label: I18n.t("global.buttons.exit"),
+            accessibilityLabel: I18n.t("global.buttons.exit")
+          }
+        }}
+      />
+    </View>
   </SafeAreaView>
 );
 

@@ -15,6 +15,7 @@ import TestAuthenticationScreen from "../screens/authentication/TestAuthenticati
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
+import NewOptInScreen from "../screens/authentication/NewOptInScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
@@ -29,6 +30,11 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}
       component={LandingScreen}
+    />
+
+    <Stack.Screen
+      name={ROUTES.AUTHENTICATION_OPT_IN}
+      component={NewOptInScreen}
     />
 
     <Stack.Screen

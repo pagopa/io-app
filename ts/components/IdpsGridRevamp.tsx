@@ -16,12 +16,12 @@ import { connect } from "react-redux";
 import {
   VSpacer,
   IOSpacingScale,
-  ModuleIDP
+  ModuleIDP,
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../store/reducers/types";
 import { idpsStateSelector } from "../store/reducers/content";
 import { LocalIdpsFallback } from "../utils/idps";
-import { IOVisualCostants } from "./core/variables/IOStyles";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;

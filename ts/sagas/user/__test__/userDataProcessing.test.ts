@@ -14,6 +14,7 @@ import {
   loadUserDataProcessingSaga,
   upsertUserDataProcessingSaga
 } from "../userDataProcessing";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 
 describe("loadUserDataProcessingSaga", () => {
   const getUserDataProcessingRequest = jest.fn();
@@ -30,9 +31,13 @@ describe("loadUserDataProcessingSaga", () => {
       loadAction
     )
       .next()
-      .call(getUserDataProcessingRequest, {
-        choice: loadAction.payload
-      })
+      .call(
+        withRefreshApiCall,
+        getUserDataProcessingRequest({
+          choice: loadAction.payload
+        }),
+        loadAction
+      )
       .next(get404Response)
       .put(
         loadUserDataProcessing.success({
@@ -58,9 +63,13 @@ describe("loadUserDataProcessingSaga", () => {
       loadAction
     )
       .next()
-      .call(getUserDataProcessingRequest, {
-        choice: loadAction.payload
-      })
+      .call(
+        withRefreshApiCall,
+        getUserDataProcessingRequest({
+          choice: loadAction.payload
+        }),
+        loadAction
+      )
       .next(get200Response)
       .put(
         loadUserDataProcessing.success({
@@ -83,9 +92,13 @@ describe("loadUserDataProcessingSaga", () => {
       loadAction
     )
       .next()
-      .call(getUserDataProcessingRequest, {
-        choice: loadAction.payload
-      })
+      .call(
+        withRefreshApiCall,
+        getUserDataProcessingRequest({
+          choice: loadAction.payload
+        }),
+        loadAction
+      )
       .next(get500Response)
       .put(
         loadUserDataProcessing.failure({
@@ -119,9 +132,13 @@ describe("upsertUserDataProcessingSaga", () => {
       requestAction
     )
       .next()
-      .call(postUserDataProcessingRequest, {
-        body: { choice: requestAction.payload }
-      })
+      .call(
+        withRefreshApiCall,
+        postUserDataProcessingRequest({
+          body: { choice: requestAction.payload }
+        }),
+        requestAction
+      )
       .next(post200Response)
       .put(upsertUserDataProcessing.success(mokedNewStatus))
       .next()
@@ -141,9 +158,13 @@ describe("upsertUserDataProcessingSaga", () => {
       requestAction
     )
       .next()
-      .call(postUserDataProcessingRequest, {
-        body: { choice: requestAction.payload }
-      })
+      .call(
+        withRefreshApiCall,
+        postUserDataProcessingRequest({
+          body: { choice: requestAction.payload }
+        }),
+        requestAction
+      )
       .next(get500Response)
       .put(
         upsertUserDataProcessing.failure({
@@ -177,9 +198,13 @@ describe("deleteUserDataProcessingSaga", () => {
       requestAction
     )
       .next()
-      .call(deleteUserDataProcessingRequest, {
-        choice: requestAction.payload
-      })
+      .call(
+        withRefreshApiCall,
+        deleteUserDataProcessingRequest({
+          choice: requestAction.payload
+        }),
+        requestAction
+      )
       .next(post202Response)
       .put(deleteUserDataProcessing.success({ choice: requestAction.payload }))
       .next()
@@ -201,9 +226,13 @@ describe("deleteUserDataProcessingSaga", () => {
       requestActionDownload
     )
       .next()
-      .call(deleteUserDataProcessingRequest, {
-        choice
-      })
+      .call(
+        withRefreshApiCall,
+        deleteUserDataProcessingRequest({
+          choice
+        }),
+        requestActionDownload
+      )
       .next(get409Response)
       .put(
         deleteUserDataProcessing.failure({

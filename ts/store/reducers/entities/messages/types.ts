@@ -55,7 +55,8 @@ export type UIMessageDetails = WithUIMessageId<{
   dueDate?: Date;
   paymentData?: PaymentData;
   euCovidCertificate?: EUCovidCertificate;
-  hasThirdPartyDataAttachments: boolean;
+  hasThirdPartyData: boolean;
+  hasRemoteContent: boolean;
   // @deprecated please use it only for backward compatibility
   raw: CreatedMessageWithContentAndAttachments;
 }>;
@@ -84,7 +85,10 @@ export type Attachment = {
 };
 
 export type UIAttachmentId = string & IUnitTag<"UIAttachmentId">;
-export type AttachmentType = "GENERIC" | "PN";
+
+export type WithSkipMixpanelTrackingOnFailure<T> = T & {
+  skipMixpanelTrackingOnFailure: boolean;
+};
 
 /**
  * Represent an attachment with the metadata and resourceUrl to retrieve the attachment
@@ -102,9 +106,8 @@ export type UIAttachment = {
   size?: Byte;
   // The url that can be used to retrieve the resource
   resourceUrl: ValidUrl;
-  // This category is needed to differentiate between generic and PN attachments
-  // which has a different download handling
-  category: AttachmentType;
+  // This category is needed to distinguish between generic and f24 attachments
+  category?: string;
 };
 
 export const getPaymentExpirationInfo = (

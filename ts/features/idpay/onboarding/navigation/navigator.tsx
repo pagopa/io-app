@@ -65,6 +65,7 @@ export const IDPayOnboardingNavigator = () => (
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_COMPLETION}
         component={CompletionScreen}
+        options={{ gestureEnabled: false }}
       />
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_FAILURE}

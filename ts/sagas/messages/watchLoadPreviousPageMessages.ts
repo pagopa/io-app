@@ -8,6 +8,8 @@ import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/
 import { isTestEnv } from "../../utils/environment";
 import { convertUnknownToError, getError } from "../../utils/errors";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../../features/messages/utils";
+import { trackLoadPreviousPageMessagesFailure } from "../../features/messages/analytics";
 import { handleResponse } from "./utils";
 
 type LocalActionType = ActionType<
@@ -48,17 +50,22 @@ function tryLoadPreviousPageMessages(getMessages: LocalBeClient) {
             pagination: { previous: prev },
             filter
           }),
-        error =>
-          loadPreviousPageMessagesAction.failure({
+        error => {
+          const reason = errorToReason(error);
+          trackLoadPreviousPageMessagesFailure(reason);
+          return loadPreviousPageMessagesAction.failure({
             error: getError(error),
             filter
-          })
+          });
+        }
       );
 
       if (nextAction) {
         yield* put(nextAction);
       }
     } catch (e) {
+      const reason = unknownToReason(e);
+      trackLoadPreviousPageMessagesFailure(reason);
       yield* put(
         loadPreviousPageMessagesAction.failure({
           error: convertUnknownToError(e),

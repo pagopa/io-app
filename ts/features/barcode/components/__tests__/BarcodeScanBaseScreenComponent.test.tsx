@@ -145,7 +145,9 @@ const renderComponent = () => {
         <BarcodeScanBaseScreenComponent
           onBarcodeSuccess={() => null}
           onBarcodeError={() => null}
+          onFileInputPressed={() => null}
           onManualInputPressed={() => null}
+          barcodeAnalyticsFlow="home"
         />
       ),
       ROUTES.MAIN,

@@ -1,23 +1,20 @@
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { IOToast } from "../../../components/Toast";
+import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import ROUTES from "../../../navigation/routes";
 import { navigateToPaymentTransactionSummaryScreen } from "../../../store/actions/navigation";
-import {
-  PaymentStartOrigin,
-  paymentInitializeState
-} from "../../../store/actions/wallet/payment";
+import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   barcodesScannerConfigSelector,
@@ -27,15 +24,21 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
+import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
+import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
 import {
   IOBarcode,
+  IOBarcodeFormat,
+  IOBarcodeOrigin,
+  IOBarcodeType,
   IO_BARCODE_ALL_FORMATS,
   IO_BARCODE_ALL_TYPES,
   PagoPaBarcode
 } from "../types/IOBarcode";
+import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
+import { WalletBarcodeRoutes } from "../../walletV3/barcode/navigation/routes";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -47,12 +50,23 @@ const BarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
 
+  const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
+    format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
+  );
+
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
+    type === "IDPAY" ? isIdPayEnabled : true
+  );
+
   /**
    * Handles the case with multiple barcodes.It gives priority to pagoPA barcodes.
    * If barcode type does not support multiple barcode, it shows an alert.
    * @param barcodes Array of scanned barcodes
    */
-  const handleMultipleBarcodes = (barcodes: Array<IOBarcode>) => {
+  const handleMultipleBarcodes = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     const barcodesByType = getIOBarcodesByType(barcodes);
 
     if (barcodesByType.PAGOPA) {
@@ -62,23 +76,20 @@ const BarcodeScanScreen = () => {
         HapticFeedbackTypes.notificationSuccess
       );
 
+      analytics.trackBarcodeScanSuccess("home", pagoPABarcodes[0], origin);
+
       const hasDataMatrix = pagoPABarcodes.some(
         barcode => barcode.format === "DATA_MATRIX"
       );
-
-      const paymentStartOrigin: PaymentStartOrigin = hasDataMatrix
-        ? "poste_datamatrix_scan"
-        : "qrcode_scan";
 
       if (hasDataMatrix) {
         void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
       }
 
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_CHOICE,
+      navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
+        screen: WalletBarcodeRoutes.WALLET_BARCODE_CHOICE,
         params: {
-          barcodes: pagoPABarcodes,
-          paymentStartOrigin
+          barcodes: pagoPABarcodes
         }
       });
       return;
@@ -101,8 +112,10 @@ const BarcodeScanScreen = () => {
    * Handles a single barcode and navigates to the correct screen.
    * @param barcode Scanned barcode
    */
-  const handleSingleBarcode = (barcode: IOBarcode) => {
+  const handleSingleBarcode = (barcode: IOBarcode, origin: IOBarcodeOrigin) => {
     ReactNativeHapticFeedback.trigger(HapticFeedbackTypes.notificationSuccess);
+
+    analytics.trackBarcodeScanSuccess("home", barcode, origin);
 
     switch (barcode.type) {
       case "PAGOPA":
@@ -128,16 +141,20 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
+  const handleBarcodeSuccess = (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => {
     if (barcodes.length > 1) {
-      handleMultipleBarcodes(barcodes);
+      handleMultipleBarcodes(barcodes, origin);
     } else if (barcodes.length > 0) {
-      handleSingleBarcode(barcodes[0]);
+      handleSingleBarcode(barcodes[0], origin);
     }
   };
 
-  const handleBarcodeError = () => {
+  const handleBarcodeError = (failure: BarcodeFailure) => {
     IOToast.error(I18n.t("barcodeScan.error"));
+    analytics.trackBarcodeScanFailure("home", failure);
   };
 
   const handleIdPayPaymentCodeInput = () => {
@@ -149,9 +166,8 @@ const BarcodeScanScreen = () => {
 
   const handlePagoPACodeInput = () => {
     manualInputModal.dismiss();
-    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_MANUAL_DATA_INSERTION,
-      params: {}
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
     });
   };
 
@@ -161,7 +177,8 @@ const BarcodeScanScreen = () => {
         value={I18n.t("barcodeScan.manual.notice")}
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
         onPress={handlePagoPACodeInput}
-        icon="gallery"
+        icon="productPagoPA"
+        iconColor="blueItalia-500"
       />
       <Divider />
       <ListItemNav
@@ -180,6 +197,8 @@ const BarcodeScanScreen = () => {
   });
 
   const handleManualInputPressed = () => {
+    analytics.trackBarcodeManualEntryPath("home");
+
     if (isIdPayEnabled) {
       manualInputModal.present();
     } else {
@@ -187,34 +206,34 @@ const BarcodeScanScreen = () => {
     }
   };
 
-  const enabledFormats = IO_BARCODE_ALL_FORMATS.filter(format => {
-    switch (format) {
-      case "DATA_MATRIX":
-        return dataMatrixPosteEnabled;
-      default:
-        return true;
-    }
-  });
-
-  const enabledTypes = IO_BARCODE_ALL_TYPES.filter(type => {
-    switch (type) {
-      case "IDPAY":
-        return isIdPayEnabled;
-      default:
-        return true;
-    }
+  const {
+    filePickerBottomSheet,
+    showFilePicker,
+    isLoading: isFileReaderLoading,
+    isFilePickerVisible
+  } = useIOBarcodeFileReader({
+    barcodeFormats,
+    barcodeTypes,
+    onBarcodeSuccess: handleBarcodeSuccess,
+    onBarcodeError: handleBarcodeError,
+    barcodeAnalyticsFlow: "home"
   });
 
   return (
     <>
       <BarcodeScanBaseScreenComponent
-        barcodeFormats={enabledFormats}
-        barcodeTypes={enabledTypes}
+        barcodeFormats={barcodeFormats}
+        barcodeTypes={barcodeTypes}
         onBarcodeSuccess={handleBarcodeSuccess}
         onBarcodeError={handleBarcodeError}
+        onFileInputPressed={showFilePicker}
         onManualInputPressed={handleManualInputPressed}
         contextualHelp={emptyContextualHelp}
+        barcodeAnalyticsFlow="home"
+        isLoading={isFileReaderLoading}
+        isDisabled={isFilePickerVisible || isFileReaderLoading}
       />
+      {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>
   );

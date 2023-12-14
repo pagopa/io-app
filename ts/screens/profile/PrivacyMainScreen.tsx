@@ -1,3 +1,4 @@
+import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
@@ -5,10 +6,8 @@ import { Alert, AlertButton } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -25,11 +24,6 @@ import { showToast } from "../../utils/showToast";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
-};
-
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.main.privacy.privacyPolicy.contextualHelpTitle",
-  body: "profile.main.privacy.privacyPolicy.contextualHelpContent"
 };
 
 const getRequestProcessingAlertTitle = () => ({
@@ -51,6 +45,7 @@ const getRequestProcessingAlertSubtitle = () => ({
  */
 const PrivacyMainScreen = ({ navigation }: Props) => {
   const dispatch = useIODispatch();
+
   const userDataProcessing = useIOSelector(userDataProcessingSelector);
   const prevUserDataProcessing = usePrevious(userDataProcessing);
   const [requestProcess, setRequestProcess] = useState(false);
@@ -186,21 +181,22 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     );
 
   return (
-    <LoadingSpinnerOverlay
-      isLoading={isLoading}
-      loadingOpacity={0.9}
-      loadingCaption={I18n.t("profile.main.privacy.loading")}
+    <RNavScreenWithLargeHeader
+      title={I18n.t("profile.main.privacy.title")}
+      headerActionsProp={{ showHelp: true }}
     >
-      <TopScreenComponent
-        goBack={() => navigation.goBack()}
-        contextualHelpMarkdown={contextualHelpMarkdown}
-        faqCategories={["privacy"]}
+      <LoadingSpinnerOverlay
+        isLoading={isLoading}
+        loadingOpacity={0.9}
+        loadingCaption={I18n.t("profile.main.privacy.loading")}
       >
-        <ScreenContent
-          title={I18n.t("profile.main.privacy.title")}
-          subtitle={I18n.t("profile.main.privacy.subtitle")}
-        >
-          <List withContentLateralPadding={true}>
+        <ContentWrapper>
+          <VSpacer size={8} />
+          <Body color="grey-700">
+            {I18n.t("profile.main.privacy.subtitle")}
+          </Body>
+          <VSpacer size={24} />
+          <List withContentLateralPadding={false}>
             {/* Privacy Policy */}
             <ListItemComponent
               title={I18n.t("profile.main.privacy.privacyPolicy.title")}
@@ -265,9 +261,9 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
               testID="profile-delete"
             />
           </List>
-        </ScreenContent>
-      </TopScreenComponent>
-    </LoadingSpinnerOverlay>
+        </ContentWrapper>
+      </LoadingSpinnerOverlay>
+    </RNavScreenWithLargeHeader>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useIOBarcodeCameraScanner } from "./hooks/useIOBarcodeCameraScanner";
-import { useIOBarcodeFileScanner } from "./hooks/useIOBarcodeFileScanner";
+import { useIOBarcodeFileReader } from "./hooks/useIOBarcodeFileReader";
 import { IOBarcodeFormat, IOBarcodeType, IOBarcode } from "./types/IOBarcode";
 import { BarcodeScanBaseScreenComponent } from "./components/BarcodeScanBaseScreenComponent";
 import { BarcodeFailure } from "./types/failure";
@@ -17,7 +17,7 @@ export type {
 };
 export {
   useIOBarcodeCameraScanner,
-  useIOBarcodeFileScanner,
+  useIOBarcodeFileReader,
   BarcodeScanBaseScreenComponent,
   getIOBarcodesByType
 };

@@ -4,20 +4,23 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
-import { call, put, select, takeLatest } from "typed-redux-saga/macro";
+import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
 import { BackendPnClient } from "../../api/backendPn";
-import { pnActivationUpsert } from "../actions";
+import { pnActivationUpsert, startPaymentStatusTracking } from "../actions";
 import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
 } from "../../analytics";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
+import { BackendClient } from "../../../../api/backend";
+import { watchPaymentUpdateRequests } from "./watchPaymentUpdateRequests";
+import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
 function* upsertPnActivation(
   client: ReturnType<typeof BackendPnClient>,
@@ -72,12 +75,22 @@ function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
   trackPNServiceStatusChangeError(isServiceActive);
 }
 
-export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {
-  const client = BackendPnClient(apiUrlPrefix, bearerToken);
+export function* watchPnSaga(
+  bearerToken: SessionToken,
+  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
+): SagaIterator {
+  const pnBackendClient = BackendPnClient(apiUrlPrefix, bearerToken);
 
   yield* takeLatest(
     getType(pnActivationUpsert.request),
     upsertPnActivation,
-    client
+    pnBackendClient
+  );
+
+  yield* fork(watchPaymentUpdateRequests, getVerificaRpt);
+
+  yield* takeLatest(
+    getType(startPaymentStatusTracking),
+    watchPaymentStatusForMixpanelTracking
   );
 }

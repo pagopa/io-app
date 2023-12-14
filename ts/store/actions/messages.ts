@@ -14,7 +14,8 @@ import {
   UIMessageDetails,
   UIMessageId,
   UIAttachment,
-  WithUIMessageId
+  WithUIMessageId,
+  WithSkipMixpanelTrackingOnFailure
 } from "../reducers/entities/messages/types";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
 import { loadThirdPartyMessage } from "../../features/messages/store/actions";
@@ -24,6 +25,11 @@ import {
 } from "../reducers/entities/messages/downloads";
 import { ThirdPartyMessagePrecondition } from "../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { MessageCategory } from "../../../definitions/backend/MessageCategory";
+import {
+  cancelGetMessageDataAction,
+  getMessageDataAction,
+  resetGetMessageDataAction
+} from "../../features/messages/actions";
 
 /**
  * Load a single message given its ID
@@ -170,7 +176,12 @@ export const downloadAttachment = createAsyncAction(
   "DOWNLOAD_ATTACHMENT_SUCCESS",
   "DOWNLOAD_ATTACHMENT_FAILURE",
   "DOWNLOAD_ATTACHMENT_CANCEL"
-)<UIAttachment, Download, DownloadError<Error>, UIAttachment>();
+)<
+  WithSkipMixpanelTrackingOnFailure<UIAttachment>,
+  Download,
+  DownloadError<Error>,
+  UIAttachment
+>();
 
 export const cancelPreviousAttachmentDownload = createAction(
   "CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD"
@@ -199,4 +210,7 @@ export type MessagesActions = ActionType<
   | typeof removeCachedAttachment
   | typeof getMessagePrecondition
   | typeof clearMessagePrecondition
+  | typeof getMessageDataAction
+  | typeof cancelGetMessageDataAction
+  | typeof resetGetMessageDataAction
 >;

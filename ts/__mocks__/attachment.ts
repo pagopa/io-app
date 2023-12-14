@@ -4,6 +4,7 @@ import {
   UIAttachment,
   UIAttachmentId
 } from "../store/reducers/entities/messages/types";
+import { ATTACHMENT_CATEGORY } from "../features/messages/types/attachmentCategory";
 import { message_1 } from "./message";
 
 export const mockPdfAttachment: UIAttachment = {
@@ -13,7 +14,7 @@ export const mockPdfAttachment: UIAttachment = {
   contentType: "application/pdf",
   size: 1959520 as Byte,
   resourceUrl: { href: "https://www.invoicepdf.com/invoice.pdf" },
-  category: "PN"
+  category: ATTACHMENT_CATEGORY.DOCUMENT
 };
 
 export const mockOtherAttachment: UIAttachment = {
@@ -23,5 +24,5 @@ export const mockOtherAttachment: UIAttachment = {
   contentType: "other",
   size: 125952 as Byte,
   resourceUrl: { href: "htts://www.randomImage.com/image.png" },
-  category: "PN"
+  category: ATTACHMENT_CATEGORY.F24
 };

@@ -42,7 +42,7 @@ export const DSTextFields = () => {
       <DSComponentViewerBox name="Base input with value formatted">
         <InputComponentWrapper
           placeholder={"Base input"}
-          inputTyoe={"credit-card"}
+          inputType={"credit-card"}
           bottomMessage="Handles credit card input type"
         />
       </DSComponentViewerBox>
@@ -100,9 +100,7 @@ export const DSTextFields = () => {
       </DSComponentViewerBox>
       <VSpacer />
 
-      <H3 color={theme["textHeading-default"]} weight={"Bold"}>
-        Legacy Text Fields
-      </H3>
+      <H3 color={theme["textHeading-default"]}>Legacy Text Fields</H3>
       <VSpacer />
       <LegacyTextFields />
     </DesignSystemScreen>

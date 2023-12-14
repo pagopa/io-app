@@ -17,7 +17,10 @@ describe("downloadsReducer", () => {
 
       const afterRequestState = downloadsReducer(
         initialState,
-        downloadAttachment.request(attachment)
+        downloadAttachment.request({
+          ...attachment,
+          skipMixpanelTrackingOnFailure: false
+        })
       );
 
       it("then it returns pot.loading", () => {

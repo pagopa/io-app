@@ -67,13 +67,13 @@ export const remoteError = <E>(e: E): RemoteError<E> => ({
   error: e
 });
 
-export const fold = <T, E, B>(
+export const foldW = <T, E, B, C>(
   rm: RemoteValue<T, E>,
   onUndefined: () => B,
   onLoading: () => B,
   onReady: (value: T) => B,
-  onError: (error: E) => B
-): B => {
+  onError: (error: E) => C
+): B | C => {
   switch (rm.kind) {
     case "undefined": {
       return onUndefined();
@@ -89,3 +89,31 @@ export const fold = <T, E, B>(
     }
   }
 };
+
+export const fold = <T, E, B>(
+  rm: RemoteValue<T, E>,
+  onUndefined: () => B,
+  onLoading: () => B,
+  onReady: (value: T) => B,
+  onError: (error: E) => B
+): B => foldW(rm, onUndefined, onLoading, onReady, onError);
+
+export const foldK =
+  <T, E, B>(
+    onUndefined: () => B,
+    onLoading: () => B,
+    onReady: (value: T) => B,
+    onError: (error: E) => B
+  ) =>
+  (rm: RemoteValue<T, E>): B =>
+    foldW(rm, onUndefined, onLoading, onReady, onError);
+
+export const foldKW =
+  <T, E, B, C>(
+    onUndefined: () => B,
+    onLoading: () => B,
+    onReady: (value: T) => B,
+    onError: (error: E) => C
+  ) =>
+  (rm: RemoteValue<T, E>): B | C =>
+    foldW(rm, onUndefined, onLoading, onReady, onError);
