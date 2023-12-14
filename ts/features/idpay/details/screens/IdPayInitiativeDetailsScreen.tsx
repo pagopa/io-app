@@ -123,7 +123,7 @@ const IdPayInitiativeDetailsScreen = () => {
 
     const now = new Date();
     if (now > initiative.endDate) {
-      return "EXPIRING";
+      return "EXPIRED";
     }
 
     const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));

@@ -1,4 +1,4 @@
-import { Chip, HSpacer, IOColors, Tag } from "@pagopa/io-app-design-system";
+import { Chip, IOColors, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
@@ -28,46 +28,44 @@ export const BonusCardStatus = (props: BonusCardStatus) =>
   );
 
 export const BonusCardStatusContent = ({ status, endDate }: BaseProps) => {
-  const validityText = React.useMemo(() => {
+  const renderStatusContent = () => {
     switch (status) {
       case "ACTIVE":
-      case "PAUSED":
-        return I18n.t("bonusCard.validUntil", {
-          endDate: format(endDate, "DD/MM/YY")
-        });
+        return (
+          <Chip color="grey-650">
+            {I18n.t("bonusCard.validUntil", {
+              endDate: format(endDate, "DD/MM/YY")
+            })}
+          </Chip>
+        );
       case "EXPIRING":
-        return I18n.t("bonusCard.expiring", {
-          endDate: format(endDate, "DD MMMM YYYY")
-        });
-      default:
-        return undefined;
+        return (
+          <Tag
+            variant="warning"
+            text={I18n.t("bonusCard.expiring", {
+              endDate: format(endDate, "DD/MM/YY")
+            })}
+          />
+        );
+      case "EXPIRED":
+        return (
+          <Tag
+            variant="error"
+            text={I18n.t("bonusCard.expired", {
+              endDate: format(endDate, "DD/MM/YY")
+            })}
+          />
+        );
+      case "PAUSED":
+        return <Tag variant="info" text={I18n.t("bonusCard.paused")} />;
+      case "REMOVED":
+        return <Tag variant="error" text={I18n.t("bonusCard.removed")} />;
     }
-  }, [status, endDate]);
-
-  const content = React.useMemo(() => {
-    {
-      switch (status) {
-        case "ACTIVE":
-          return <Chip color="grey-650">{validityText}</Chip>;
-        case "PAUSED":
-          return (
-            <>
-              <Tag variant="info" text={I18n.t("bonusCard.paused")} />
-              <HSpacer size={8} />
-              <Chip color="grey-650">{validityText}</Chip>
-            </>
-          );
-        case "EXPIRING":
-          return <Tag variant="warning" text={validityText} />;
-        case "REMOVED":
-          return <Tag variant="error" text={I18n.t("bonusCard.removed")} />;
-      }
-    }
-  }, [status, validityText]);
+  };
 
   return (
     <View style={styles.container} testID="BonusCardStatusTestID">
-      {content}
+      {renderStatusContent()}
     </View>
   );
 };
