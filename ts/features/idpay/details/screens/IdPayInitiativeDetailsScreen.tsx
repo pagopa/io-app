@@ -16,7 +16,8 @@ import { StyleSheet, View } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import {
   InitiativeDTO,
-  InitiativeRewardTypeEnum
+  InitiativeRewardTypeEnum,
+  StatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
@@ -116,15 +117,20 @@ const IdPayInitiativeDetailsScreen = () => {
   }
 
   const getInitiativeStatus = (initiative: InitiativeDTO): BonusStatus => {
-    const now = new Date();
-    const next7Days = new Date();
-    next7Days.setDate(now.getDate() + 7);
-
-    if (initiative.endDate < now) {
+    if (initiative.status === StatusEnum.UNSUBSCRIBED) {
       return "REMOVED";
-    } else if (initiative.endDate < next7Days) {
+    }
+
+    const now = new Date();
+    if (now > initiative.endDate) {
       return "EXPIRING";
     }
+
+    const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
+    if (next7Days > initiative.endDate) {
+      return "EXPIRING";
+    }
+
     return "ACTIVE";
   };
 
