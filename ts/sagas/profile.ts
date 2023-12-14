@@ -174,13 +174,16 @@ function* createOrUpdateProfileSaga(
         body: newProfile
       }),
       undefined,
-      I18n.t("profile.errors.upsert")
+      undefined,
+      true
     )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 
     if (E.isLeft(response)) {
       throw new Error(readablePrivacyReport(response.left));
     }
-
+    if (response.right.status === 401) {
+      return;
+    }
     if (response.right.status === 409) {
       // It could happen that profile update fails due to version number mismatch
       // app has a different version of profile compared to that one owned by the backend
