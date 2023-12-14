@@ -30,6 +30,13 @@ export type FlowType =
   | "preferenze"
   | "browsing";
 
+/**
+ *
+ * @param isOnBoarding existing user making new login
+ * @param isFirstOnBoarding new user making new login
+ * @param isUserBrowsing user navigating the app after firstOnboarding/onboarding
+ * @returns
+ */
 export const getFlowType = (
   isOnBoarding: boolean,
   isFirstOnBoarding?: boolean,
