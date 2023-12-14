@@ -143,7 +143,7 @@ const MessageDetailsComponent = ({
     prescriptionAttachments,
     markdown,
     prescriptionData,
-    hasThirdPartyData
+    hasRemoteContent
   } = messageDetails;
   const isPrescription = prescriptionData !== undefined;
 
@@ -240,7 +240,7 @@ const MessageDetailsComponent = ({
             </>
           )}
 
-        {hasThirdPartyData && isContentLoadCompleted ? (
+        {hasRemoteContent && isContentLoadCompleted ? (
           <>
             <RemoteContentBanner />
             <VSpacer size={24} />
