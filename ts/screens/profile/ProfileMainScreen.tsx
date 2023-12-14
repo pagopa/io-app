@@ -95,6 +95,14 @@ type ProfileNavListItem = {
   "description" | "testID" | "onPress" | "hideChevron"
 >;
 
+type PlaygroundsNavListItem = {
+  value: string;
+  condition?: boolean;
+} & Pick<
+  ComponentProps<typeof ListItemNav>,
+  "description" | "testID" | "onPress"
+>;
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
   body: "profile.main.contextualHelpContent"
@@ -313,123 +321,110 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     clearInterval(this.idResetTap);
   };
 
-  private renderDeveloperSection() {
-    const {
-      dispatchSessionExpired,
-      isDebugModeEnabled,
-      isPagoPATestEnabled,
-      isPnTestEnabled,
-      navigation,
-      notificationId,
-      notificationToken,
-      sessionToken,
-      isFastLoginEnabled,
-      walletToken,
-      setDebugModeEnabled,
-      isIdPayTestEnabled,
-      publicKey
-    } = this.props;
-    const deviceUniqueId = getDeviceId();
-    const thumbprint = toThumbprint(publicKey);
+  private renderDeveloperPlaygroundsSection() {
+    const { navigation, isIdPayTestEnabled } = this.props;
+
+    const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
+      {
+        value: "Lollipop",
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.LOLLIPOP_PLAYGROUND
+          })
+      },
+      {
+        value: "MyPortal Web",
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.WEB_PLAYGROUND
+          })
+      },
+      {
+        value: "Markdown",
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.MARKDOWN_PLAYGROUND
+          })
+      },
+      {
+        value: "CGN Landing Page",
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.CGN_LANDING_PLAYGROUND
+          })
+      },
+      {
+        condition: isIdPayTestEnabled,
+        value: "IDPay Onboarding",
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
+          })
+      },
+      {
+        condition: isIdPayTestEnabled,
+        value: "IDPay Code",
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.IDPAY_CODE_PLAYGROUND
+          })
+      },
+      {
+        // New Wallet
+        value: I18n.t("profile.main.walletPlayground.titleSection"),
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.WALLET_PLAYGROUND
+          })
+      }
+    ];
+
+    // Don't render the separator, even if the item is null
+    const filteredPlaygroundsNavListItems = playgroundsNavListItems.filter(
+      item => item.condition !== false
+    );
+
+    const renderPlaygroundsNavItem = ({
+      item: { value, onPress, testID, condition }
+    }: ListRenderItemInfo<PlaygroundsNavListItem>) => {
+      // If condition is either true or undefined, render the item
+      if (condition !== false) {
+        return (
+          <ListItemNav
+            accessibilityLabel={value}
+            value={value}
+            onPress={onPress}
+            testID={testID}
+          />
+        );
+      } else {
+        return null;
+      }
+    };
 
     return (
-      <React.Fragment>
-        <VSpacer size={24} />
-        <H2>{I18n.t("profile.main.developersSectionHeader")}</H2>
+      <FlatList
+        ListHeaderComponent={<ListItemHeader label="Playground" />}
+        scrollEnabled={false}
+        keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
+          `${item.value}-${index}`
+        }
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={filteredPlaygroundsNavListItems}
+        renderItem={renderPlaygroundsNavItem}
+        ItemSeparatorComponent={() => <Divider />}
+      />
+    );
+  }
 
-        <VSpacer size={8} />
-        {this.developerListItem(
-          I18n.t("profile.main.debugMode"),
-          isDebugModeEnabled,
-          setDebugModeEnabled
-        )}
+  private renderDeveloperTestEnvironmentSection() {
+    const { isPagoPATestEnabled, isPnTestEnabled, isIdPayTestEnabled } =
+      this.props;
 
-        {isPlaygroundsEnabled && (
-          <>
-            <VSpacer size={8} />
-            <ListItemHeader label="Playground" />
-            <ListItemNav
-              value={"Lollipop"}
-              accessibilityLabel={"Lollipop"}
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                  screen: ROUTES.LOLLIPOP_PLAYGROUND
-                })
-              }
-            />
-            {/* We should use FlatList or FlashList to manage
-            automatically the <Divider /> component */}
-            <Divider />
-            <ListItemNav
-              value={"MyPortal Web"}
-              accessibilityLabel={"MyPortal Web"}
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                  screen: ROUTES.WEB_PLAYGROUND
-                })
-              }
-            />
-            <Divider />
-            <ListItemNav
-              value={"Markdown"}
-              accessibilityLabel={"Markdown"}
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                  screen: ROUTES.MARKDOWN_PLAYGROUND
-                })
-              }
-            />
-            <Divider />
-            <ListItemNav
-              value={"CGN Landing Page"}
-              accessibilityLabel="CGN Landing Page"
-              onPress={() =>
-                navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                  screen: ROUTES.CGN_LANDING_PLAYGROUND
-                })
-              }
-            />
-            {isIdPayTestEnabled && (
-              <>
-                <Divider />
-                <ListItemNav
-                  value={"IDPay Onboarding"}
-                  accessibilityLabel="IDPay Onboarding Playground"
-                  onPress={() =>
-                    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                      screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
-                    })
-                  }
-                />
-                <Divider />
-                <ListItemNav
-                  value={"IDPay Code"}
-                  accessibilityLabel="IDPay CIE onboarding playground"
-                  onPress={() =>
-                    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                      screen: ROUTES.IDPAY_CODE_PLAYGROUND
-                    })
-                  }
-                />
-              </>
-            )}
-          </>
-        )}
-        <Divider />
-        {/* New Wallet Playground */}
-        <ListItemNav
-          value={I18n.t("profile.main.walletPlayground.titleSection")}
-          accessibilityLabel={I18n.t(
-            "profile.main.walletPlayground.titleSection"
-          )}
-          onPress={() =>
-            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.WALLET_PLAYGROUND
-            })
-          }
-        />
-
-        <VSpacer size={24} />
+    return (
+      <ContentWrapper>
         <ListItemHeader
           label={I18n.t("profile.main.testEnvironmentSectionHeader")}
         />
@@ -460,11 +455,15 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
           this.onIdPayTestToggle,
           I18n.t("profile.main.idpay.idpayTestAlert")
         )}
+      </ContentWrapper>
+    );
+  }
 
-        {/* —————————————————— */}
+  private renderDeveloperDesignSystemSection() {
+    const { navigation } = this.props;
 
-        {/* Human Interface/Design System */}
-        <VSpacer size={24} />
+    return (
+      <ContentWrapper>
         <ListItemHeader label="Human Interface" />
 
         <ListItemNav
@@ -478,113 +477,126 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         />
         <Divider />
         <DSEnableSwitch />
+      </ContentWrapper>
+    );
+  }
 
-        {/* —————————————————— */}
+  private renderDeveloperDataSection() {
+    const {
+      isFastLoginEnabled,
+      sessionToken,
+      walletToken,
+      notificationToken,
+      notificationId,
+      publicKey
+    } = this.props;
 
-        {/* Data */}
+    const deviceUniqueId = getDeviceId();
+    const thumbprint = toThumbprint(publicKey);
 
-        {isDebugModeEnabled && (
-          <>
-            <VSpacer size={24} />
-            <ListItemHeader label="Data" />
-            <React.Fragment>
-              {isFastLoginEnabled &&
-                this.debugCopyListItem(
-                  "Fast Login",
-                  `${isFastLoginEnabled}`,
-                  () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
-                )}
+    return (
+      <ContentWrapper>
+        <ListItemHeader label="Data" />
+        <React.Fragment>
+          {isFastLoginEnabled &&
+            this.debugCopyListItem("Fast Login", `${isFastLoginEnabled}`, () =>
+              clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+            )}
 
-              {isDevEnv &&
-                sessionToken &&
-                this.debugCopyListItem("Session token", sessionToken, () =>
-                  clipboardSetStringWithFeedback(sessionToken)
-                )}
+          {isDevEnv &&
+            sessionToken &&
+            this.debugCopyListItem("Session token", sessionToken, () =>
+              clipboardSetStringWithFeedback(sessionToken)
+            )}
 
-              {isDevEnv &&
-                walletToken &&
-                this.debugCopyListItem("Wallet token", walletToken, () =>
-                  clipboardSetStringWithFeedback(walletToken)
-                )}
+          {isDevEnv &&
+            walletToken &&
+            this.debugCopyListItem("Wallet token", walletToken, () =>
+              clipboardSetStringWithFeedback(walletToken)
+            )}
 
-              {isDevEnv &&
-                this.debugCopyListItem("Notification ID", notificationId, () =>
-                  clipboardSetStringWithFeedback(notificationId)
-                )}
+          {isDevEnv &&
+            this.debugCopyListItem("Notification ID", notificationId, () =>
+              clipboardSetStringWithFeedback(notificationId)
+            )}
 
-              {isDevEnv &&
-                notificationToken &&
-                this.debugCopyListItem(
-                  "Notification token",
-                  notificationToken,
-                  () => clipboardSetStringWithFeedback(notificationToken)
-                )}
+          {isDevEnv &&
+            notificationToken &&
+            this.debugCopyListItem(
+              "Notification token",
+              notificationToken,
+              () => clipboardSetStringWithFeedback(notificationToken)
+            )}
 
-              {this.debugCopyListItem("Device unique ID", deviceUniqueId, () =>
-                clipboardSetStringWithFeedback(deviceUniqueId)
-              )}
+          {this.debugCopyListItem("Device unique ID", deviceUniqueId, () =>
+            clipboardSetStringWithFeedback(deviceUniqueId)
+          )}
 
-              {thumbprint &&
-                this.debugCopyListItem("Thumbprint", thumbprint, () =>
-                  clipboardSetStringWithFeedback(thumbprint)
-                )}
+          {thumbprint &&
+            this.debugCopyListItem("Thumbprint", thumbprint, () =>
+              clipboardSetStringWithFeedback(thumbprint)
+            )}
+        </React.Fragment>
+      </ContentWrapper>
+    );
+  }
 
-              <VSpacer size={32} />
+  private renderDeveloperActionsSection() {
+    const { dispatchSessionExpired } = this.props;
 
-              <ListItemHeader label="Actions" />
+    return (
+      <ContentWrapper>
+        <ListItemHeader label="Actions" />
 
-              {this.debugListItem(
-                I18n.t("profile.main.cache.clear"),
-                this.handleClearCachePress,
-                true
-              )}
-
-              {isDevEnv &&
-                this.debugListItem(
-                  I18n.t("profile.main.forgetCurrentSession"),
-                  dispatchSessionExpired,
-                  true
-                )}
-              {isDevEnv &&
-                this.debugListItem(
-                  I18n.t("profile.main.clearAsyncStorage"),
-                  () => {
-                    void AsyncStorage.clear();
-                  },
-                  true
-                )}
-              {isDevEnv &&
-                this.debugListItem(
-                  I18n.t("profile.main.dumpAsyncStorage"),
-                  () => {
-                    /* eslint-disable no-console */
-                    console.log("[DUMP START]");
-                    AsyncStorage.getAllKeys()
-                      .then(keys => {
-                        console.log(`\tAvailable keys: ${keys.join(", ")}`);
-                        return Promise.all(
-                          keys.map(key =>
-                            AsyncStorage.getItem(key).then(value => {
-                              console.log(`\tValue for ${key}\n\t\t`, value);
-                            })
-                          )
-                        );
-                      })
-                      .then(() => console.log("[DUMP END]"))
-                      .catch(e => console.error(e));
-                    /* eslint-enable no-console */
-                  },
-                  false
-                )}
-            </React.Fragment>
-          </>
+        {this.debugListItem(
+          I18n.t("profile.main.cache.clear"),
+          this.handleClearCachePress,
+          true
         )}
-      </React.Fragment>
+
+        {isDevEnv &&
+          this.debugListItem(
+            I18n.t("profile.main.forgetCurrentSession"),
+            dispatchSessionExpired,
+            true
+          )}
+        {isDevEnv &&
+          this.debugListItem(
+            I18n.t("profile.main.clearAsyncStorage"),
+            () => {
+              void AsyncStorage.clear();
+            },
+            true
+          )}
+        {isDevEnv &&
+          this.debugListItem(
+            I18n.t("profile.main.dumpAsyncStorage"),
+            () => {
+              /* eslint-disable no-console */
+              console.log("[DUMP START]");
+              AsyncStorage.getAllKeys()
+                .then(keys => {
+                  console.log(`\tAvailable keys: ${keys.join(", ")}`);
+                  return Promise.all(
+                    keys.map(key =>
+                      AsyncStorage.getItem(key).then(value => {
+                        console.log(`\tValue for ${key}\n\t\t`, value);
+                      })
+                    )
+                  );
+                })
+                .then(() => console.log("[DUMP END]"))
+                .catch(e => console.error(e));
+              /* eslint-enable no-console */
+            },
+            false
+          )}
+      </ContentWrapper>
     );
   }
 
   public render() {
-    const { navigation } = this.props;
+    const { navigation, isDebugModeEnabled, setDebugModeEnabled } = this.props;
 
     const showInformationModal = (
       title: TranslationKeys,
@@ -687,14 +699,59 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
         <ContentWrapper>
           <AppVersion onPress={this.onTapAppVersion} />
-
-          {/* Developers Section */}
-          {(this.props.isDebugModeEnabled || isDevEnv) &&
-            this.renderDeveloperSection()}
-
-          {/* End margin */}
-          <VSpacer size={24} />
         </ContentWrapper>
+
+        {/* —————————————————————————— */}
+        {/* Developer Section */}
+
+        {(isDebugModeEnabled || isDevEnv) && (
+          <>
+            <ContentWrapper>
+              <VSpacer size={24} />
+              <H2>{I18n.t("profile.main.developersSectionHeader")}</H2>
+              <VSpacer size={8} />
+
+              {/* Enable/Disable Developer Mode */}
+              {this.developerListItem(
+                I18n.t("profile.main.debugMode"),
+                isDebugModeEnabled,
+                setDebugModeEnabled
+              )}
+            </ContentWrapper>
+
+            <VSpacer size={8} />
+
+            {/* Playgrounds */}
+            {isPlaygroundsEnabled && this.renderDeveloperPlaygroundsSection()}
+
+            <VSpacer size={24} />
+            {/* Test Environments */}
+            {this.renderDeveloperTestEnvironmentSection()}
+
+            <VSpacer size={24} />
+            {/* Human Interface/Design System */}
+            {this.renderDeveloperDesignSystemSection()}
+
+            {/* Data */}
+            {isDebugModeEnabled && (
+              <React.Fragment>
+                <VSpacer size={24} />
+                {this.renderDeveloperDataSection()}
+              </React.Fragment>
+            )}
+
+            {/* Actions */}
+            {isDebugModeEnabled && (
+              <React.Fragment>
+                <VSpacer size={32} />
+                {this.renderDeveloperActionsSection()}
+              </React.Fragment>
+            )}
+          </>
+        )}
+
+        {/* End Page */}
+        <VSpacer size={24} />
       </ScrollView>
     );
 
