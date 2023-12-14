@@ -3850,7 +3850,7 @@ transaction:
       iuv: IUV
       subject: Oggetto del pagamento
 permissionRequest:
-  media:
+  gallery:
     title: Consenti a IO di accedere alle tue foto
     subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
     caption: "Ecco come:"

@@ -175,7 +175,7 @@ const useIOBarcodeFileReader = ({
   const showImagePicker = async () => {
     const permissionGranted = await requestMediaPermission();
     if (!permissionGranted) {
-      navigation.navigate(ROUTES.MEDIA_PERMISSION_INSTRUCTIONS);
+      navigation.navigate(ROUTES.GALLERY_PERMISSION_INSTRUCTIONS);
       return;
     }
 

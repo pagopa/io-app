@@ -17,7 +17,7 @@ import {
   IOStackNavigationProp
 } from "../../navigation/params/AppParamsList";
 
-const MediaPermissionInstructionsScreen = () => {
+const GalleryPermissionInstructionsScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   useHeaderSecondLevel({ title: "" });
 
@@ -29,17 +29,17 @@ const MediaPermissionInstructionsScreen = () => {
   return (
     <GradientScrollView
       primaryActionProps={{
-        label: I18n.t("permissionRequest.media.cta"),
-        accessibilityLabel: I18n.t("permissionRequest.media.cta"),
+        label: I18n.t("permissionRequest.gallery.cta"),
+        accessibilityLabel: I18n.t("permissionRequest.gallery.cta"),
         onPress: handleOpenAppSettings
       }}
     >
       <>
-        <H2>{I18n.t("permissionRequest.media.title")}</H2>
+        <H2>{I18n.t("permissionRequest.gallery.title")}</H2>
         <VSpacer size={8} />
-        <Body>{I18n.t("permissionRequest.media.subtitle")}</Body>
+        <Body>{I18n.t("permissionRequest.gallery.subtitle")}</Body>
         <VSpacer size={8} />
-        <ListItemHeader label={I18n.t("permissionRequest.media.caption")} />
+        <ListItemHeader label={I18n.t("permissionRequest.gallery.caption")} />
         {Platform.OS === "android" ? (
           <AndroidMediaPermissionSteps />
         ) : (
@@ -53,32 +53,32 @@ const MediaPermissionInstructionsScreen = () => {
 const AndroidMediaPermissionSteps = () => (
   <>
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 1 })}
-      value={I18n.t("permissionRequest.media.steps.android.1")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 1 })}
+      value={I18n.t("permissionRequest.gallery.steps.android.1")}
       icon="systemSettingsAndroid"
     />
     <Divider />
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 2 })}
-      value={I18n.t("permissionRequest.media.steps.android.2")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 2 })}
+      value={I18n.t("permissionRequest.gallery.steps.android.2")}
       icon="systemAppsAndroid"
     />
     <Divider />
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 3 })}
-      value={I18n.t("permissionRequest.media.steps.android.3")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 3 })}
+      value={I18n.t("permissionRequest.gallery.steps.android.3")}
       icon="productIOAppBlueBg"
     />
     <Divider />
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 4 })}
-      value={I18n.t("permissionRequest.media.steps.android.4")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 4 })}
+      value={I18n.t("permissionRequest.gallery.steps.android.4")}
       icon="systemPermissionsAndroid"
     />
     <Divider />
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 5 })}
-      value={I18n.t("permissionRequest.media.steps.android.5")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 5 })}
+      value={I18n.t("permissionRequest.gallery.steps.android.5")}
       icon="systemToggleInstructions"
     />
   </>
@@ -87,23 +87,23 @@ const AndroidMediaPermissionSteps = () => (
 const IOSMediaPermissionSteps = () => (
   <>
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 1 })}
-      value={I18n.t("permissionRequest.media.steps.ios.1")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 1 })}
+      value={I18n.t("permissionRequest.gallery.steps.ios.1")}
       icon="systemSettingsiOS"
     />
     <Divider />
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 2 })}
-      value={I18n.t("permissionRequest.media.steps.ios.2")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 2 })}
+      value={I18n.t("permissionRequest.gallery.steps.ios.2")}
       icon="productIOAppBlueBg"
     />
     <Divider />
     <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 3 })}
-      value={I18n.t("permissionRequest.media.steps.ios.3")}
+      label={I18n.t("permissionRequest.gallery.step", { step: 3 })}
+      value={I18n.t("permissionRequest.gallery.steps.ios.3")}
       // TODO add missing pictogram
     />
   </>
 );
 
-export { MediaPermissionInstructionsScreen };
+export { GalleryPermissionInstructionsScreen };
