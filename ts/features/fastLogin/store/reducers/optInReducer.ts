@@ -34,12 +34,12 @@ const fastLoginOptInReducer = (
   }
 };
 
-const CURRENT_REDUX_FEATURES_STORE_VERSION = -1;
+const CURRENT_REDUX_OPT_IN_STORE_VERSION = -1;
 
 const persistConfig: PersistConfig = {
   key: "optIn",
   storage: AsyncStorage,
-  version: CURRENT_REDUX_FEATURES_STORE_VERSION,
+  version: CURRENT_REDUX_OPT_IN_STORE_VERSION,
   whitelist: ["enabled"]
 };
 

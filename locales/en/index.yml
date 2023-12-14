@@ -666,7 +666,7 @@ authentication:
         unknownCardContent: The card used does not seem to be an Electronic Identity Card (CIE).
         unknownCardHelpLink: What is the Electronic Identity Card?
     dataUsageConsent:
-      retryCTA: Entra
+      retryCTA: Enter
   spid: SPID
   spid_information_request:
     headerTitle: Insert email address
@@ -676,22 +676,23 @@ authentication:
     headerTitle: What is SPID?
     contentTitle: Don't have SPID?
     subtitle: SPID is safe
-  opt-in:
+  opt_in:
     contextualHelpTitle: Authentication
     contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
-    title: It's now faster to log into IO
-    identity-check: You'll need to log in with SPID or CIE only once a year, or in case you log out.
-    security-suggests: Safety tips
-    passcode: After logging in with SPID or CIE once, you'll just need your unlock code, face or fingerprint to use the app.
-    notification: Whenever there is a new login with SPID or CIE, we'll send you an e-mail to let you know.
-    button-accept-lv: Yes, log in faster
-    button-decline-lv: No, I want to log in with SPID or CIE every 30 days
-    fingerprint: To log in, simply use your unlock code, face or fingerprint. Do not share these with anyone.
-    io-logout: If you lose your device, to remotely log out of IO visit
-    io-lock-access: If you think your SPID or CIE credentials have been stolen, to block access to IO visit
-    access-new-device: If you log in to IO with a device that belongs to someone else, make sure to log out once you're done.
-    io-site: ioapp.it
+    title: It is now easier to access!
+    identity_check: You’ll no longer have to authenticate with SPID or CIE not every 30 days, but only once a year or if you log out.
+    security_suggests: Safety tips
+    passcode: Any other time, you’ll just need your fingerprint, face recognition or unlock code.
+    notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
+    button_accept_lv: Continue with quick access
+    button_decline_lv: Authenticate with SPID or CIE every 30 days
+  security_suggestions: 
+    fingerprint: Do not share your or unlock code or biometric recognition with anyone.
+    io_logout: If you lose your device, log out from the web.
+    io_lock_access: If you fear that someone might use your SPID or CIE, remotely lock access to the app.
+    access_new_device: If you access IO with someone else's device, remember to log out when you are finished.
+    navigate_to_the_site: Learn more
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
