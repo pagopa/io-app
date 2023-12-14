@@ -681,7 +681,7 @@ authentication:
     contextualHelpContent: Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.
     news: novità
     title: Ora è più facile accedere!
-    identity_check: Non dovrai più autenticarti con SPID o CIE non ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
+    identity_check: Non dovrai più autenticarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
     security_suggests: Alcuni consigli di sicurezza
     passcode: Per tutte le altre volte basterà il tuo volto, impronta o codice di sblocco
     notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO.
@@ -690,9 +690,9 @@ authentication:
   security_suggestions: 
     fingerprint: Non condividere il tuo o codice di sblocco o riconoscimento biometrico con nessuno
     io_logout: Se perdi il dispositivo, esci dall’app da web
-    io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app
+    io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
     access_new_device: Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito
-    navigate_to_the_site: Scopri come
+    navigate_to_the_site: Vai al sito
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
