@@ -63,7 +63,7 @@ const textLeftMarginF = 140 * fullScaleFactor + 6;
 const textGenderLeftMarginF = 800 * fullScaleFactor + 6;
 
 const cardHeightF = 546 * fullScaleFactor;
-const cardHeaderHeightF = 194 * fullScaleFactor;
+const cardHeaderHeightF = 154 * fullScaleFactor;
 const cardSpacerF = 16 * fullScaleFactor;
 const cardLargeSpacerF = 24 * fullScaleFactor;
 const cardLineHeightF = 26 * fullScaleFactor;
@@ -71,9 +71,9 @@ const cardLineHeightF = 26 * fullScaleFactor;
 const barCodeHeightF = 107 * fullScaleFactor;
 const barCodeWidthF = 512 * fullScaleFactor;
 const barCodeMarginLeftF = 162 * fullScaleFactor;
-const barCodeMarginTopF = 164 * fullScaleFactor;
+const barCodeMarginTopF = 204 * fullScaleFactor;
 
-const fiscalCodeHeightF = cardHeaderHeightF + cardLargeSpacerF;
+const fiscalCodeHeightF = 15 + cardHeaderHeightF + cardLargeSpacerF;
 const lastNameHeightF = fiscalCodeHeightF + cardLineHeightF * 2 + cardSpacerF;
 const nameHeightF = lastNameHeightF + cardLineHeightF + cardSpacerF;
 const birdPlaceHeightF = nameHeightF + cardLineHeightF + cardSpacerF;
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
   },
 
   fullFacSimileText: {
-    marginTop: 350 * fullScaleFactor,
+    marginTop: 310 * fullScaleFactor,
     lineHeight: 38 * fullScaleFactor,
     position: "absolute",
     fontSize: textFontSizeF,
