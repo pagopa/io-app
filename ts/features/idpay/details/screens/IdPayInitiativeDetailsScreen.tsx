@@ -47,6 +47,7 @@ import {
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
+import { BonusStatus } from "../../../../components/BonusCard/type";
 
 export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
@@ -114,15 +115,18 @@ const IdPayInitiativeDetailsScreen = () => {
     );
   }
 
-  const initiative = initiativeDataPot.value;
-  const {
-    initiativeName,
-    organizationName,
-    endDate,
-    lastCounterUpdate,
-    initiativeRewardType,
-    logoURL
-  } = initiative;
+  const getInitiativeStatus = (initiative: InitiativeDTO): BonusStatus => {
+    const now = new Date();
+    const next7Days = new Date();
+    next7Days.setDate(now.getDate() + 7);
+
+    if (initiative.endDate < now) {
+      return "REMOVED";
+    } else if (initiative.endDate < next7Days) {
+      return "EXPIRING";
+    }
+    return "ACTIVE";
+  };
 
   const getInitiativeCounters = (
     initiative: InitiativeDTO
@@ -204,7 +208,7 @@ const IdPayInitiativeDetailsScreen = () => {
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
                   <Animated.View layout={Layout.duration(200)}>
                     <InitiativeTimelineComponent
-                      initiativeId={initiativeId}
+                      initiativeId={initiative.initiativeId}
                       size={5}
                     />
                     <VSpacer size={32} />
@@ -289,6 +293,16 @@ const IdPayInitiativeDetailsScreen = () => {
     }
   };
 
+  const initiative = initiativeDataPot.value;
+  const {
+    initiativeName,
+    organizationName,
+    endDate,
+    lastCounterUpdate,
+    initiativeRewardType,
+    logoURL
+  } = initiative;
+
   return (
     <BonusCardScreenComponent
       headerAction={{
@@ -300,7 +314,7 @@ const IdPayInitiativeDetailsScreen = () => {
       name={initiativeName || ""}
       organizationName={organizationName || ""}
       endDate={endDate}
-      status={"ACTIVE"}
+      status={getInitiativeStatus(initiative)}
       contextualHelp={emptyContextualHelp}
       counters={getInitiativeCounters(initiative)}
       footerCta={getInitiativeFooterProps(initiativeRewardType)}
