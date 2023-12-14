@@ -51,7 +51,9 @@ export function* checkAcknowledgedEmailSaga(
     // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
     // to validate it
     yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+      screen: isEmailUniquenessValidationEnabled
+        ? ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+        : ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
     });
   }
 
