@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.48.0-rc.5](https://github.com/pagopa/io-app/compare/2.48.0-rc.4...2.48.0-rc.5) (2023-12-14)
+
+
+### Bug Fixes
+
+* [[IOCOM-737](https://pagopa.atlassian.net/browse/IOCOM-737)] Update the display rule of the RemoteContentBanner component ([#5336](https://github.com/pagopa/io-app/issues/5336)) ([10cab8e](https://github.com/pagopa/io-app/commit/10cab8e5ed1126fa63d0a2ae35cf88dbee00ab85))
+* [[IOPID-1205](https://pagopa.atlassian.net/browse/IOPID-1205)] Hide error snack bar on refresh ([#5337](https://github.com/pagopa/io-app/issues/5337)) ([215172f](https://github.com/pagopa/io-app/commit/215172fde2adf48593f6637131639ac09763c63b))
+
+## [2.48.0-rc.4](https://github.com/pagopa/io-app/compare/2.48.0-rc.3...2.48.0-rc.4) (2023-12-13)
+
+
+### Chores
+
+* [[IOPID-1186](https://pagopa.atlassian.net/browse/IOPID-1186)] Add bottomsheet logic for security suggestion acknowledged ([#5297](https://github.com/pagopa/io-app/issues/5297)) ([6c1e9ac](https://github.com/pagopa/io-app/commit/6c1e9ac3146a87d62833482f6ccc8fbaa9257f61))
+
 ## [2.48.0-rc.3](https://github.com/pagopa/io-app/compare/2.48.0-rc.2...2.48.0-rc.3) (2023-12-13)
 
 
