@@ -6,7 +6,6 @@ import {
 } from "../features/fastLogin/store/selectors";
 import I18n from "../i18n";
 import { useIOSelector } from "../store/hooks";
-import { progressSelector } from "../store/reducers/identification";
 import { useIOBottomSheetAutoresizableModal } from "../utils/hooks/bottomSheet";
 import SecuritySuggestions from "../features/fastLogin/components/SecuritySuggestions";
 
@@ -18,7 +17,6 @@ import SecuritySuggestions from "../features/fastLogin/components/SecuritySugges
 export const useSecuritySuggestionsBottomSheet = (
   useManualBottomsheetOpening: boolean = true
 ) => {
-  const identificationProgressState = useIOSelector(progressSelector);
   const isFastLoginFFEnabled = useIOSelector(isFastLoginFFEnabledSelector);
   const securityAdviceAcknowledged = useIOSelector(
     isSecurityAdviceAcknowledgedEnabled
@@ -54,15 +52,11 @@ export const useSecuritySuggestionsBottomSheet = (
 
     // eslint-disable-next-line sonarjs/no-collapsible-if
     if (!useManualBottomsheetOpening) {
-      if (
-        identificationProgressState.kind === "identified" ||
-        isSecurityAdviceReadyToBeShown
-      ) {
+      if (isSecurityAdviceReadyToBeShown) {
         showSecuritySuggestionModal();
       }
     }
   }, [
-    identificationProgressState,
     showSecuritySuggestionModal,
     isSecurityAdviceReadyToBeShown,
     useManualBottomsheetOpening
