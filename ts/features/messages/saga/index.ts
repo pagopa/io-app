@@ -1,6 +1,6 @@
 import { SagaIterator } from "redux-saga";
 import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
@@ -8,11 +8,13 @@ import {
   downloadAttachment,
   removeCachedAttachment
 } from "../../../store/actions/messages";
+import { getMessageDataAction } from "../actions";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
   handleClearAttachment
 } from "./handleClearAttachments";
+import { handleLoadMessageData } from "./handleLoadMessageData";
 
 /**
  * Handle the message attachment requests
@@ -47,5 +49,12 @@ export function* watchMessageAttachmentsSaga(
     function* (_: ActionType<typeof logoutSuccess>) {
       yield* call(handleClearAllAttachments);
     }
+  );
+}
+
+export function* watchLoadMessageData() {
+  yield* takeLatest(
+    getType(getMessageDataAction.request),
+    handleLoadMessageData
   );
 }

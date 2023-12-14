@@ -6,13 +6,15 @@ import {
   IOThemeContext,
   Icon,
   ListItemAction,
+  ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
   ListItemNav,
   ListItemNavAlert,
   ListItemTransaction,
   ListItemTransactionLogo,
-  ListItemTransactionStatusWithBadge
+  ListItemTransactionStatusWithBadge,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { Alert, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
@@ -75,6 +77,15 @@ export const DSListItems = () => (
           weight={"SemiBold"}
           style={{ marginBottom: 16, marginTop: 16 }}
         >
+          ListItemHeader
+        </H2>
+        {renderListItemHeader()}
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
           ListItemAction
         </H2>
         {renderListItemAction()}
@@ -87,6 +98,29 @@ export const DSListItems = () => (
           ListItemTransaction
         </H2>
         {renderListItemTransaction()}
+
+        <VSpacer size={24} />
+
+        <H2
+          color={"bluegrey"}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          NativeBase lookalikes (not NativeBase)
+        </H2>
+        <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
+          <BankPreviewItem
+            bank={{
+              abi: "03069",
+              logoUrl: "https://assets.cdn.io.italia.it/logos/abi/03069.png",
+              name: "Intesa Sanpaolo"
+            }}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+
+        <VSpacer size={40} />
+
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -176,23 +210,6 @@ export const DSListItems = () => (
             iconName={"legRadioOn"}
             smallIconSize={true}
             iconOnTop={true}
-            onPress={() => alert("Action triggered")}
-          />
-        </DSComponentViewerBox>
-        <H2
-          color={"bluegrey"}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16, marginTop: 16 }}
-        >
-          NativeBase lookalikes (not NativeBase)
-        </H2>
-        <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
-          <BankPreviewItem
-            bank={{
-              abi: "03069",
-              logoUrl: "https://assets.cdn.io.italia.it/logos/abi/03069.png",
-              name: "Intesa Sanpaolo"
-            }}
             onPress={() => alert("Action triggered")}
           />
         </DSComponentViewerBox>
@@ -326,7 +343,45 @@ const renderListItemNav = () => (
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
+        <ListItemNav
+          value={"Value"}
+          description="This is a list item nav with badge"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+          badgeProps={{
+            text: "Novità",
+            variant: "blue"
+          }}
+        />
       </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemNav, without chevron">
+      <ListItemNav
+        value={"Value"}
+        description="This is a list item nav without chevron icon"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+        hideChevron
+      />
+      <Divider />
+      <ListItemNav
+        value={"Value"}
+        description="This is a list item nav with badge without chevron"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+        badgeProps={{
+          text: "Novità",
+          variant: "blue"
+        }}
+        hideChevron
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
       <View>
@@ -505,6 +560,7 @@ const renderListItemInfo = () => (
           }
         }}
       />
+      <Divider />
       <ListItemInfo
         icon="psp"
         label="Label"
@@ -527,6 +583,89 @@ const renderListItemInfo = () => (
       />
     </View>
   </DSComponentViewerBox>
+);
+
+/* LIST ITEM HEADER */
+
+const renderListItemHeader = () => (
+  <>
+    <DSComponentViewerBox name="ListItemHeader, without icon">
+      <ListItemHeader
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemHeader
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: "Modifica",
+            accessibilityLabel: "Modifica",
+            onPress: onButtonPress
+          }
+        }}
+      />
+      <ListItemHeader
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            accessibilityLabel: "info",
+            onPress: onButtonPress
+          }
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemHeader, with icon">
+      <ListItemHeader
+        label="Label"
+        iconName="gallery"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemHeader
+        iconName="creditCard"
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: "Modifica",
+            accessibilityLabel: "Modifica",
+            onPress: onButtonPress
+          }
+        }}
+      />
+      <ListItemHeader
+        iconName="psp"
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            accessibilityLabel: "info",
+            onPress: onButtonPress
+          }
+        }}
+      />
+
+      <ListItemHeader
+        iconName="psp"
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: "Pagato",
+            variant: "success"
+          }
+        }}
+      />
+    </DSComponentViewerBox>
+  </>
 );
 
 /* LIST ITEM TRANSACTION */

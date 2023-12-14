@@ -8,6 +8,7 @@ import { TransactionErrorDTO } from "../../../../../definitions/idpay/Transactio
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
+import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { idPayGenerateBarcode } from "./actions";
 
 export type IdPayBarcodeState = {
@@ -57,12 +58,21 @@ const idPayBarcodeSelector = (state: GlobalState): IdPayBarcodeState =>
 
 export const idPayBarcodeByInitiativeIdSelector = createSelector(
   idPayBarcodeSelector,
-  state => (initiativeId: string) => state[initiativeId]
+  state => (initiativeId: string) => state[initiativeId] ?? pot.none
+  // type checker does not complain if the null check is removed, but
+  // since it's a map access it could very well return undefined
 );
-export const isIdPayBarcodeLoadin0gSelector = createSelector(
+
+// gracefully failing expire time selector
+export const idPayBarcodeSecondsTillExpireSelector = createSelector(
   idPayBarcodeByInitiativeIdSelector,
   getInitiative => (initiativeId: string) =>
-    pot.isLoading(getInitiative(initiativeId))
+    pipe(
+      pot.map(getInitiative(initiativeId), barcode =>
+        calculateIdPayBarcodeSecondsToExpire(barcode)
+      ),
+      seconds => pot.getOrElse(seconds, 0)
+    )
 );
 
 export default reducer;

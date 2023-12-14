@@ -1,12 +1,37 @@
 import { createSelector } from "reselect";
 import { uniqWith, isEqual } from "lodash";
 import { backendStatusSelector } from "../../../../store/reducers/backendStatus";
-import { fastLoginOptIn, fastLoginEnabled } from "../../../../config";
+import {
+  fastLoginOptIn,
+  fastLoginEnabled,
+  isNewCduFlow
+} from "../../../../config";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 
-const fastLoginOptInSelector = (state: GlobalState) =>
+export const isEmailUniquenessValidationEnabledSelector = createSelector(
+  backendStatusSelector,
+  backendStatus =>
+    isPropertyWithMinAppVersionEnabled({
+      backendStatus,
+      mainLocalFlag: isNewCduFlow,
+      configPropertyName: "emailUniquenessValidation"
+    })
+);
+
+export const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;
+
+const securityAdviceAcknowledgedSelector = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.securityAdviceAcknowledged;
+
+export const isSecurityAdviceAcknowledgedEnabled = createSelector(
+  securityAdviceAcknowledgedSelector,
+  value => value.acknowledged
+);
+
+export const isSecurityAdviceReadyToShow = (state: GlobalState) =>
+  state.features.loginFeatures.fastLogin.securityAdviceAcknowledged.readyToShow;
 
 /**
  * return the remote config about FastLoginOptIn enabled/disabled
@@ -41,7 +66,7 @@ const isFastLoginOptInEnabledSelector = createSelector(
  * based on a minumum version of the app.
  * if there is no data, false is the default value -> (FastLogin disabled)
  */
-const isFastLoginFFEnabled = createSelector(
+export const isFastLoginFFEnabledSelector = createSelector(
   backendStatusSelector,
   backendStatus =>
     isPropertyWithMinAppVersionEnabled({
@@ -58,7 +83,7 @@ const isFastLoginFFEnabled = createSelector(
  * false is the default value -> (FastLogin disabled)
  */
 export const isFastLoginEnabledSelector = createSelector(
-  isFastLoginFFEnabled,
+  isFastLoginFFEnabledSelector,
   isFastLoginOptInEnabledSelector,
   (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && !!optInEnabled
 );

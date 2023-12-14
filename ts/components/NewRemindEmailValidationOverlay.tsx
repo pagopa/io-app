@@ -19,17 +19,28 @@ import {
 import I18n from "../i18n";
 
 import {
+  acknowledgeOnEmailValidation,
   profileLoadRequest,
+  setEmailCheckAtStartupFailure,
   startEmailValidation
 } from "../store/actions/profile";
 import {
   isProfileEmailValidatedSelector,
+  isProfileFirstOnBoardingSelector,
   profileEmailSelector
 } from "../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { emailValidationSelector } from "../store/reducers/emailValidation";
+import { emailAcknowledged } from "../store/actions/onboarding";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
+import { getFlowType } from "../utils/analytics";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import {
+  trackEmailValidation,
+  trackEmailValidationSuccess,
+  trackEmailValidationSuccessConfirmed
+} from "../screens/analytics/emailAnalytics";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -56,6 +67,17 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const emailValidation = useIOSelector(emailValidationSelector);
 
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
+
+  useOnFirstRender(() => {
+    if (isEmailValidated) {
+      trackEmailValidationSuccess(flow);
+    } else {
+      trackEmailValidation(flow);
+    }
+  });
+
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
     useState(false);
   const timeout = useRef<number | undefined>();
@@ -71,8 +93,19 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     [dispatch]
   );
 
+  const acknowledgeEmail = useCallback(
+    () => dispatch(emailAcknowledged()),
+    [dispatch]
+  );
+
   const reloadProfile = useCallback(
     () => dispatch(profileLoadRequest()),
+    [dispatch]
+  );
+
+  const dispatchAcknowledgeOnEmailValidation = useCallback(
+    (maybeAcknowledged: O.Option<boolean>) =>
+      dispatch(acknowledgeOnEmailValidation(maybeAcknowledged)),
     [dispatch]
   );
 
@@ -100,7 +133,26 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const handleSendEmailValidationButton = () => {
     if (isEmailValidated) {
+      trackEmailValidationSuccessConfirmed(flow);
       hideModal();
+      if (isOnboarding) {
+        // if the user is in the onboarding flow and the email il correctly validated,
+        // the email validation flow is finished
+        acknowledgeEmail();
+      } else {
+        if (
+          O.isSome(emailValidation.emailCheckAtStartupFailed) &&
+          emailValidation.emailCheckAtStartupFailed.value
+        ) {
+          acknowledgeEmail();
+          dispatchAcknowledgeOnEmailValidation(O.none);
+          dispatch(setEmailCheckAtStartupFailure(O.none));
+        } else {
+          NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_DATA
+          });
+        }
+      }
     } else {
       // send email validation only if it exists
       pipe(
@@ -113,17 +165,8 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   };
 
   const navigateToInsertEmail = () => {
-    if (isOnboarding) {
-      hideModal();
-      NavigationService.navigate(ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
-      });
-    } else {
-      hideModal();
-      NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-        screen: ROUTES.INSERT_EMAIL_SCREEN
-      });
-    }
+    dispatchAcknowledgeOnEmailValidation(O.none);
+    hideModal();
   };
 
   const renderFooter = () => (

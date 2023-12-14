@@ -132,8 +132,8 @@ export const toUIMessageDetails = (
     euCovidCertificate: getEUCovidCertificate(content),
     subject: content.subject,
     serviceId: messageFromApi.sender_service_id,
-    hasThirdPartyDataAttachments:
-      content.third_party_data?.has_attachments ?? false,
+    hasThirdPartyData: !!content.third_party_data,
+    hasRemoteContent: !!content.third_party_data?.has_remote_content,
     raw: messageFromApi
   };
 };

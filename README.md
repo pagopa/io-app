@@ -423,10 +423,10 @@ $ yarn run-android
 $ yarn run-ios
 ```
 
-### Pyshical devices
-The React Native documentation provides a [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on pyshical devices.
+### Physical devices
+The React Native documentation provides a [useful guide](https://reactnative.dev/docs/running-on-device) for running projects on physical devices.
 > **Warning**
-> On iOS you also have to change the `Bundle Identifier` to something unique before running io-app on your pyshical device. This can be done in the `Signing (Debug)` section of Xcode.
+> On iOS you also have to change the `Bundle Identifier` to something unique before running io-app on your physical device. This can be done in the `Signing (Debug)` section of Xcode.
 
 
 

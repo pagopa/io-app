@@ -14,8 +14,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {
   IOColors,
   IOIcons,
-  getGradientColorValues,
-  VSpacer
+  getGradientColorValues
 } from "@pagopa/io-app-design-system";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
 import customVariables from "../../theme/variables";
@@ -39,6 +38,7 @@ type Props = Readonly<{
   contentStyle?: StyleProp<ViewStyle>;
   appLogo?: boolean;
   bounces?: boolean;
+  hideBaseHeader?: boolean;
   topContent?: React.ReactNode;
   topContentHeight?: number;
   footerContent?: React.ReactNode;
@@ -91,12 +91,7 @@ export default class DarkLayout extends React.Component<Props> {
       );
     return (
       <React.Fragment>
-        {wrapper(
-          <React.Fragment>
-            <VSpacer size={16} />
-            {this.props.topContent}
-          </React.Fragment>
-        )}
+        {wrapper(<React.Fragment>{this.props.topContent}</React.Fragment>)}
         {this.props.children}
       </React.Fragment>
     );
@@ -110,6 +105,7 @@ export default class DarkLayout extends React.Component<Props> {
         headerTitle={this.props.title ? this.props.title : ""}
         dark={true}
         headerBody={this.props.headerBody}
+        hideBaseHeader={!!this.props.hideBaseHeader}
         appLogo={this.props.appLogo}
         contextualHelp={this.props.contextualHelp}
         contextualHelpMarkdown={this.props.contextualHelpMarkdown}
