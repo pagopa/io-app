@@ -56,6 +56,7 @@ export type UIMessageDetails = WithUIMessageId<{
   paymentData?: PaymentData;
   euCovidCertificate?: EUCovidCertificate;
   hasThirdPartyData: boolean;
+  hasRemoteContent: boolean;
   // @deprecated please use it only for backward compatibility
   raw: CreatedMessageWithContentAndAttachments;
 }>;
