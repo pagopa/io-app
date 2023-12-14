@@ -89,25 +89,19 @@ const IOSMediaPermissionSteps = () => (
     <ListItemInfo
       label={I18n.t("permissionRequest.media.step", { step: 1 })}
       value={I18n.t("permissionRequest.media.steps.ios.1")}
-      icon="systemSettingsAndroid"
+      icon="systemSettingsiOS"
     />
     <Divider />
     <ListItemInfo
       label={I18n.t("permissionRequest.media.step", { step: 2 })}
       value={I18n.t("permissionRequest.media.steps.ios.2")}
-      icon="systemAppsAndroid"
+      icon="productIOAppBlueBg"
     />
     <Divider />
     <ListItemInfo
       label={I18n.t("permissionRequest.media.step", { step: 3 })}
       value={I18n.t("permissionRequest.media.steps.ios.3")}
-      icon="productIOAppBlueBg"
-    />
-    <Divider />
-    <ListItemInfo
-      label={I18n.t("permissionRequest.media.step", { step: 4 })}
-      value={I18n.t("permissionRequest.media.steps.ios.4")}
-      icon="systemPermissionsAndroid"
+      // TODO add missing pictogram
     />
   </>
 );
