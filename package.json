@@ -324,12 +324,6 @@
     "@types/react": "16.7.18",
     "@types/prop-types": "15.5.5"
   },
-  "react-native": {
-    "path": "path-browserify"
-  },
-  "browser": {
-    "path": "path-browserify"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pagopa/io-app.git"
