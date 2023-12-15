@@ -30,6 +30,24 @@ export const walletDetailsDeleteInstrument = createAsyncAction(
   "WALLET_DETAILS_DELETE_INSTRUMENT_CANCEL"
 )<WalletDetailsDeleteinstrumentPayload, void, NetworkError, void>();
 
+export type WalletDetailsPagoPaCapabilityTogglePayload = {
+  walletId: string;
+  onSuccess?: (
+    action: ActionType<typeof walletDetailsPagoPaCapabilityToggle.success>
+  ) => void;
+  onFailure?: (
+    action: ActionType<typeof walletDetailsPagoPaCapabilityToggle.failure>
+  ) => void;
+};
+
+export const walletDetailsPagoPaCapabilityToggle = createAsyncAction(
+  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_REQUEST",
+  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_SUCCESS",
+  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_FAILURE",
+  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_CANCEL"
+)<WalletDetailsPagoPaCapabilityTogglePayload, void, NetworkError, void>();
+
 export type WalletDetailsActions =
   | ActionType<typeof walletDetailsGetInstrument>
-  | ActionType<typeof walletDetailsDeleteInstrument>;
+  | ActionType<typeof walletDetailsDeleteInstrument>
+  | ActionType<typeof walletDetailsPagoPaCapabilityToggle>;

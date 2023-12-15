@@ -21,11 +21,9 @@ import {
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
   walletPaymentInitState,
-  walletPaymentResetPickedPsp,
-  walletPaymentSortPsp
+  walletPaymentResetPickedPsp
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { getSortedPspList } from "../../../common/utils";
 
 export type WalletPaymentState = {
   paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
@@ -143,16 +141,6 @@ const reducer = (
         ...state,
         chosenPsp: O.none
       };
-
-    case getType(walletPaymentSortPsp):
-      const pspList = pot.toUndefined(state.pspList);
-      if (pspList) {
-        return {
-          ...state,
-          pspList: pot.some(getSortedPspList(pspList, action.payload))
-        };
-      }
-      return state;
 
     // Created transaction data
     case getType(walletPaymentCreateTransaction.request):

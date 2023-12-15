@@ -3,11 +3,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import {
   Body,
-  Divider,
   GradientScrollView,
   H2,
   ListItemHeader,
-  ListItemRadioWithAmount,
+  RadioGroup,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -31,8 +30,7 @@ import {
 } from "../store/selectors";
 import {
   walletPaymentPickPsp,
-  walletPaymentResetPickedPsp,
-  walletPaymentSortPsp
+  walletPaymentResetPickedPsp
 } from "../store/actions/orchestration";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -42,6 +40,7 @@ import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { WalletPaymentPspSortType } from "../types";
 import I18n from "../../../../i18n";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
+import { getSortedPspList } from "../../common/utils";
 
 type WalletPaymentPickPspScreenNavigationParams = {
   walletId: string;
@@ -59,6 +58,8 @@ const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
+  const [sortType, setSortType] =
+    React.useState<WalletPaymentPspSortType>("default");
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const pspList = pot.toUndefined(pspListPot);
@@ -92,7 +93,7 @@ const WalletPaymentPickPspScreen = () => {
 
   const handleChangePspSorting = (sortType: WalletPaymentPspSortType) => {
     setShowFeaturedPsp(sortType === "default");
-    dispatch(walletPaymentSortPsp(sortType));
+    setSortType(sortType);
     dismiss();
   };
 
@@ -104,11 +105,23 @@ const WalletPaymentPickPspScreen = () => {
     onSortChange: handleChangePspSorting
   });
 
+  const sortedPspList = pipe(
+    pot.toOption(pspListPot),
+    O.map(_ => getSortedPspList(_, sortType)),
+    O.toUndefined
+  );
+
   const handlePspSelection = React.useCallback(
-    (bundle: Bundle) => {
-      dispatch(walletPaymentPickPsp(bundle));
+    (bundleId: string) => {
+      if (!pspList) {
+        return;
+      }
+      const selectedBundle = pspList.find(psp => psp.idBundle === bundleId);
+      if (selectedBundle) {
+        dispatch(walletPaymentPickPsp(selectedBundle));
+      }
     },
-    [dispatch]
+    [dispatch, pspList]
   );
 
   const handleContinue = () => {
@@ -123,23 +136,13 @@ const WalletPaymentPickPspScreen = () => {
       componentProps: {
         label: I18n.t("wallet.payment.psp.pspSortButton"),
         accessibilityLabel: I18n.t("wallet.payment.psp.pspSortButton"),
-        onPress: () => {
-          present();
-        }
+        onPress: present
       }
     }),
     [present]
   );
 
-  const isPspSelected = React.useCallback(
-    (psp: Bundle) =>
-      pipe(
-        selectedPspOption,
-        O.map(selectedPsp => selectedPsp.idBundle === psp.idBundle),
-        O.getOrElse(() => false)
-      ),
-    [selectedPspOption]
-  );
+  const pspSelected = pipe(selectedPspOption, O.toUndefined);
 
   const SelectPspHeadingContent = React.useCallback(
     () => (
@@ -175,30 +178,35 @@ const WalletPaymentPickPspScreen = () => {
       }}
     >
       <SelectPspHeadingContent />
-      {!isLoading &&
-        pspList?.map((psp, index) => (
-          <>
-            <ListItemRadioWithAmount
-              key={index.toString()}
-              label={psp.bundleName ?? I18n.t("wallet.payment.psp.defaultName")}
-              isSuggested={psp.onUs && showFeaturedPsp}
-              selected={isPspSelected(psp)}
-              onPress={_ => handlePspSelection(psp)}
-              suggestReason={I18n.t("wallet.payment.psp.featuredReason")}
-              formattedAmountString={formatNumberCentsToAmount(
-                psp.taxPayerFee || 0,
-                true,
-                "right"
-              )}
-            />
-            {index !== pspList.length - 1 && <Divider />}
-          </>
-        ))}
+      {/* <RadioGroup<string>
+        onPress={handlePspSelection}
+        type="radioListItemWithAmount"
+        selectedItem={pspSelected?.idBundle}
+        items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
+      /> */}
       {isLoading && <WalletPspListSkeleton />}
       {sortPspBottomSheet}
     </GradientScrollView>
   );
 };
+
+const getRadioItemsFromPspList = (
+  pspList?: Array<Bundle>,
+  showFeaturedPsp?: boolean
+) =>
+  !pspList
+    ? []
+    : pspList?.map((psp, index) => ({
+        id: psp.idBundle ?? index.toString(),
+        label: psp.bundleName ?? I18n.t("wallet.payment.psp.defaultName"),
+        isSuggested: psp.onUs && showFeaturedPsp,
+        suggestReason: I18n.t("wallet.payment.psp.featuredReason"),
+        formattedAmountString: formatNumberCentsToAmount(
+          psp.taxPayerFee || 0,
+          true,
+          "right"
+        )
+      }));
 
 export { WalletPaymentPickPspScreen };
 export type { WalletPaymentPickPspScreenNavigationParams };

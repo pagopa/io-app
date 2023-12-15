@@ -4,7 +4,6 @@ import { ListItemTransactionStatusWithBadge } from "@pagopa/io-app-design-system
 import I18n from "i18n-js";
 import { pipe } from "fp-ts/lib/function";
 
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { isExpiredDate } from "../../../../utils/dates";
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
@@ -14,6 +13,7 @@ import {
 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletPaymentPspSortType } from "../../payment/types";
+import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -64,7 +64,11 @@ export const hasServiceEnabled = (
   walletService: ServiceNameEnum
 ): boolean =>
   paymentMethod !== undefined &&
-  paymentMethod.services.some(service => service.name === walletService);
+  paymentMethod.services.some(
+    service =>
+      service.name === walletService &&
+      service.status === ServiceStatusEnum.ENABLED
+  );
 /**
  * return true if the payment method has the payment feature
  */

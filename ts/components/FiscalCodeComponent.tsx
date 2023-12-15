@@ -71,9 +71,9 @@ const cardLineHeightF = 26 * fullScaleFactor;
 const barCodeHeightF = 107 * fullScaleFactor;
 const barCodeWidthF = 512 * fullScaleFactor;
 const barCodeMarginLeftF = 162 * fullScaleFactor;
-const barCodeMarginTopF = 164 * fullScaleFactor;
+const barCodeMarginTopF = 204 * fullScaleFactor;
 
-const fiscalCodeHeightF = cardHeaderHeightF + cardLargeSpacerF;
+const fiscalCodeHeightF = 15 + cardHeaderHeightF + cardLargeSpacerF;
 const lastNameHeightF = fiscalCodeHeightF + cardLineHeightF * 2 + cardSpacerF;
 const nameHeightF = lastNameHeightF + cardLineHeightF + cardSpacerF;
 const birdPlaceHeightF = nameHeightF + cardLineHeightF + cardSpacerF;
@@ -86,8 +86,8 @@ const dateHeightF = birthCityHeightF + cardLineHeightF + cardSpacerF;
 const landscapeScaleFactor = contentWidth / 546;
 const textLineHeightL = 28; // to solve misalignment on font, 28 is the fist value that seems to give text centered to line height
 const textFontSizeL = 21;
-const textLeftMarginL = 140 * landscapeScaleFactor + 8;
-const textGenderLeftMarginL = 800 * landscapeScaleFactor + 8;
+const textLeftMarginL = 170 * landscapeScaleFactor + 8;
+const textGenderLeftMarginL = 830 * landscapeScaleFactor + 8;
 
 const cardWidthL = 870 * landscapeScaleFactor;
 const cardHeaderHeightL = 154 * landscapeScaleFactor;

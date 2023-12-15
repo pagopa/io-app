@@ -17,8 +17,8 @@ export function* handleGetPaymentMethods(
   getPaymentMethods: WalletClient["getAllPaymentMethods"],
   action: ActionType<(typeof walletGetPaymentMethods)["request"]>
 ) {
+  const getPaymentMethodsRequest = getPaymentMethods({});
   try {
-    const getPaymentMethodsRequest = getPaymentMethods({});
     const getPaymentMethodsResult = (yield* call(
       withRefreshApiCall,
       getPaymentMethodsRequest,
