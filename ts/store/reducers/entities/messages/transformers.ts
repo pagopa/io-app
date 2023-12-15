@@ -133,6 +133,7 @@ export const toUIMessageDetails = (
     subject: content.subject,
     serviceId: messageFromApi.sender_service_id,
     hasThirdPartyData: !!content.third_party_data,
+    hasRemoteContent: !!content.third_party_data?.has_remote_content,
     raw: messageFromApi
   };
 };
