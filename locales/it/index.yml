@@ -979,12 +979,15 @@ payment:
       iuv: Codice IUV {{iuv}}
   confirm: 
     totalAmount: Totale da pagare
+    pay: Paga
     payWith: Paga con
     fee: Commissione
     feeAppliedBy: Applicata da
     editButton: Modifica
     termsAndConditions: Proseguendo dichiari di aver letto e compreso i
     termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
+    loading:
+      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Carta di debito"

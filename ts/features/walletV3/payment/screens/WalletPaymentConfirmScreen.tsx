@@ -1,8 +1,12 @@
+import { StyleSheet, SafeAreaView } from "react-native";
 import {
   Body,
   GradientScrollView,
+  H3,
+  IOSpacingScale,
   LabelLink,
   ListItemHeader,
+  LoadingSpinner,
   ModuleCheckout,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -21,6 +25,7 @@ import {
 } from "../store/actions/networking";
 import {
   walletPaymentAuthorizationUrlSelector,
+  walletPaymentDetailsSelector,
   walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
   walletPaymentTransactionSelector
@@ -48,6 +53,7 @@ const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
+  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
@@ -59,6 +65,9 @@ const WalletPaymentConfirmScreen = () => {
 
   const isLoading =
     pot.isLoading(transactionPot) || pot.isLoading(authorizationUrlPot);
+
+  const isError =
+    pot.isError(transactionPot) || pot.isError(authorizationUrlPot);
 
   useHeaderSecondLevel({
     title: "",
@@ -81,27 +90,62 @@ const WalletPaymentConfirmScreen = () => {
     }
   }, [authorizationUrlPot, navigation]);
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  const handleStartPaymentAuthorization = () => {
-    dispatch(
-      walletPaymentAuthorization.request({
-        paymentAmount: 1000 as AmountEuroCents,
-        paymentFees: 1000 as AmountEuroCents,
-        pspId: "A",
-        transactionId: "A",
-        walletId: "A"
-      })
-    );
-  };
+  const taxFee = pipe(
+    selectedPspOption,
+    O.chain(psp => O.fromNullable(psp.taxPayerFee)),
+    O.getOrElse(() => 0)
+  );
+
+  const paymentAmount = pipe(
+    pot.toUndefined(paymentDetailsPot),
+    O.fromNullable,
+    O.chain(paymentDetails => O.fromNullable(paymentDetails.amount)),
+    O.getOrElse(() => 0)
+  );
+
+  const paymentMethodDetails = pipe(
+    selectedMethodOption,
+    O.chain(method => O.fromNullable(method.details)),
+    O.toUndefined
+  );
+
+  const totalAmount = paymentAmount + taxFee;
 
   const selectedMethod = O.toUndefined(selectedMethodOption);
+
   const selectedPsp = O.toUndefined(selectedPspOption);
-  if (selectedMethod?.details && selectedPsp) {
+
+  const handleStartPaymentAuthorization = () => {
+    if (selectedMethod && selectedPsp && pot.isSome(transactionPot)) {
+      dispatch(
+        walletPaymentAuthorization.request({
+          paymentAmount: paymentAmount as AmountEuroCents,
+          paymentFees: taxFee as AmountEuroCents,
+          pspId: selectedPsp.idBundle ?? "",
+          transactionId: transactionPot.value.transactionId,
+          walletId: selectedMethod.walletId
+        })
+      );
+    }
+  };
+
+  if (isError) {
+    // TODO: Failure handling (https://pagopa.atlassian.net/browse/IOBP-471)
+    return <></>;
+  }
+
+  if (paymentMethodDetails && selectedPsp && selectedMethod) {
     return (
       <GradientScrollView
         primaryActionProps={{
-          label: "Paga xx,xx €",
-          accessibilityLabel: "Paga xx,xx €",
+          label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
+            totalAmount,
+            true,
+            "right"
+          )}`,
+          accessibilityLabel: `${I18n.t(
+            "payment.confirm.pay"
+          )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
           onPress: handleStartPaymentAuthorization,
           disabled: isLoading,
           loading: isLoading
@@ -114,9 +158,9 @@ const WalletPaymentConfirmScreen = () => {
         />
         <ModuleCheckout
           ctaText={I18n.t("payment.confirm.editButton")}
-          paymentLogo={getPaymentLogo(selectedMethod.details)}
-          title={getPaymentTitle(selectedMethod.details)}
-          subtitle={getPaymentSubtitle(selectedMethod.details)}
+          paymentLogo={getPaymentLogo(paymentMethodDetails)}
+          title={getPaymentTitle(paymentMethodDetails)}
+          subtitle={getPaymentSubtitle(paymentMethodDetails)}
           onPress={() =>
             navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
               screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
@@ -131,18 +175,22 @@ const WalletPaymentConfirmScreen = () => {
         />
         <ModuleCheckout
           ctaText={I18n.t("payment.confirm.editButton")}
-          title={formatNumberCentsToAmount(
-            selectedPsp.taxPayerFee ?? 0,
-            true,
-            "right"
-          )}
+          title={formatNumberCentsToAmount(taxFee, true, "right")}
           subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${
             selectedPsp.bundleName
           }`}
-          onPress={() => constVoid}
+          onPress={() =>
+            navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+              screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP,
+              params: {
+                walletId: selectedMethod.walletId,
+                paymentAmountInCents: paymentAmount
+              }
+            })
+          }
         />
         <VSpacer size={24} />
-        <WalletPaymentTotalAmount totalAmount={17250} />
+        <WalletPaymentTotalAmount totalAmount={totalAmount} />
         <VSpacer size={16} />
         <Body>
           {I18n.t("payment.confirm.termsAndConditions")}{" "}
@@ -153,7 +201,16 @@ const WalletPaymentConfirmScreen = () => {
       </GradientScrollView>
     );
   }
-  return <></>;
+
+  return (
+    <SafeAreaView style={styles.loadingContainer}>
+      <LoadingSpinner size={48} />
+      <VSpacer size={24} />
+      <H3 style={{ textAlign: "center" }}>
+        {I18n.t("payment.confirm.loading.title")}
+      </H3>
+    </SafeAreaView>
+  );
 };
 
 const getPaymentSubtitle = (cardDetails: WalletInfoDetails) => {
@@ -189,5 +246,16 @@ const getPaymentTitle = (cardDetails: WalletInfoDetails) => {
       return "";
   }
 };
+
+const loadingContainerHorizontalMargin: IOSpacingScale = 48;
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: loadingContainerHorizontalMargin
+  }
+});
 
 export { WalletPaymentConfirmScreen };
