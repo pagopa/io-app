@@ -103,6 +103,14 @@ type PlaygroundsNavListItem = {
   "description" | "testID" | "onPress"
 >;
 
+type DevDataCopyListItem = {
+  value: string;
+  condition?: boolean;
+} & Pick<
+  ComponentProps<typeof ListItemInfoCopy>,
+  "label" | "testID" | "onPress"
+>;
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.main.contextualHelpTitle",
   body: "profile.main.contextualHelpContent"
@@ -169,22 +177,11 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     );
   }
 
-  private debugCopyListItem(label: string, value: string, onPress: () => void) {
-    return (
-      <>
-        <ListItemInfoCopy
-          label={label}
-          value={value}
-          onPress={onPress}
-          accessibilityLabel={value}
-          numberOfLines={5}
-        />
-        <Divider />
-      </>
-    );
-  }
-
-  private debugListItem(title: string, onPress: () => void, isDanger: boolean) {
+  private debugActionItem(
+    title: string,
+    onPress: () => void,
+    isDanger: boolean
+  ) {
     return (
       <View style={{ paddingVertical: 8 }}>
         {isDanger ? (
@@ -494,50 +491,89 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
     const deviceUniqueId = getDeviceId();
     const thumbprint = toThumbprint(publicKey);
 
+    const devDataCopyListItems: ReadonlyArray<DevDataCopyListItem> = [
+      {
+        condition: isFastLoginEnabled,
+        label: "Fast Login",
+        value: `${isFastLoginEnabled}`,
+        onPress: () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+      },
+      {
+        condition: isDevEnv && !!sessionToken,
+        label: "Session token",
+        value: `${sessionToken}`,
+        onPress: () => clipboardSetStringWithFeedback(`${sessionToken}`)
+      },
+      {
+        condition: isDevEnv && !!walletToken,
+        label: "Wallet token",
+        value: `${walletToken}`,
+        onPress: () => clipboardSetStringWithFeedback(`${walletToken}`)
+      },
+      {
+        condition: isDevEnv,
+        label: "Notification ID",
+        value: `${notificationId}`,
+        onPress: () => clipboardSetStringWithFeedback(`${notificationId}`)
+      },
+      {
+        condition: isDevEnv && !!notificationToken,
+        label: "Notification token",
+        value: `${notificationToken}`,
+        onPress: () => clipboardSetStringWithFeedback(`${notificationToken}`)
+      },
+      {
+        label: "Device unique ID",
+        value: `${deviceUniqueId}`,
+        onPress: () => clipboardSetStringWithFeedback(`${deviceUniqueId}`)
+      },
+      {
+        condition: !!thumbprint,
+        label: "Thumbprint",
+        value: `${thumbprint}`,
+        onPress: () => clipboardSetStringWithFeedback(`${thumbprint}`)
+      }
+    ];
+
+    // Don't render the separator, even if the item is null
+    const filtereddevDataCopyListItems = devDataCopyListItems.filter(
+      item => item.condition !== false
+    );
+
+    const renderDevDataCopyItem = ({
+      item: { label, value, onPress, testID, condition }
+    }: ListRenderItemInfo<DevDataCopyListItem>) => {
+      // If condition is either true or undefined, render the item
+      if (condition !== false) {
+        return (
+          <ListItemInfoCopy
+            label={label}
+            value={value}
+            onPress={onPress}
+            testID={testID}
+            accessibilityLabel={value}
+            numberOfLines={5}
+          />
+        );
+      } else {
+        return null;
+      }
+    };
+
     return (
-      <ContentWrapper>
-        <ListItemHeader label="Data" />
-        <React.Fragment>
-          {isFastLoginEnabled &&
-            this.debugCopyListItem("Fast Login", `${isFastLoginEnabled}`, () =>
-              clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
-            )}
-
-          {isDevEnv &&
-            sessionToken &&
-            this.debugCopyListItem("Session token", sessionToken, () =>
-              clipboardSetStringWithFeedback(sessionToken)
-            )}
-
-          {isDevEnv &&
-            walletToken &&
-            this.debugCopyListItem("Wallet token", walletToken, () =>
-              clipboardSetStringWithFeedback(walletToken)
-            )}
-
-          {isDevEnv &&
-            this.debugCopyListItem("Notification ID", notificationId, () =>
-              clipboardSetStringWithFeedback(notificationId)
-            )}
-
-          {isDevEnv &&
-            notificationToken &&
-            this.debugCopyListItem(
-              "Notification token",
-              notificationToken,
-              () => clipboardSetStringWithFeedback(notificationToken)
-            )}
-
-          {this.debugCopyListItem("Device unique ID", deviceUniqueId, () =>
-            clipboardSetStringWithFeedback(deviceUniqueId)
-          )}
-
-          {thumbprint &&
-            this.debugCopyListItem("Thumbprint", thumbprint, () =>
-              clipboardSetStringWithFeedback(thumbprint)
-            )}
-        </React.Fragment>
-      </ContentWrapper>
+      <FlatList
+        ListHeaderComponent={<ListItemHeader label="Data" />}
+        scrollEnabled={false}
+        keyExtractor={(item: DevDataCopyListItem, index: number) =>
+          `${item.value}-${index}`
+        }
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={filtereddevDataCopyListItems}
+        renderItem={renderDevDataCopyItem}
+        ItemSeparatorComponent={() => <Divider />}
+      />
     );
   }
 
@@ -548,20 +584,20 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       <ContentWrapper>
         <ListItemHeader label="Actions" />
 
-        {this.debugListItem(
+        {this.debugActionItem(
           I18n.t("profile.main.cache.clear"),
           this.handleClearCachePress,
           true
         )}
 
         {isDevEnv &&
-          this.debugListItem(
+          this.debugActionItem(
             I18n.t("profile.main.forgetCurrentSession"),
             dispatchSessionExpired,
             true
           )}
         {isDevEnv &&
-          this.debugListItem(
+          this.debugActionItem(
             I18n.t("profile.main.clearAsyncStorage"),
             () => {
               void AsyncStorage.clear();
@@ -569,7 +605,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
             true
           )}
         {isDevEnv &&
-          this.debugListItem(
+          this.debugActionItem(
             I18n.t("profile.main.dumpAsyncStorage"),
             () => {
               /* eslint-disable no-console */
