@@ -52,7 +52,6 @@ import {
 } from "../../common/utils";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { format } from "../../../../utils/dates";
-import { openWebUrl } from "../../../../utils/url";
 import { capitalize } from "../../../../utils/strings";
 
 const WalletPaymentConfirmScreen = () => {

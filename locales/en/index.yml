@@ -1359,6 +1359,7 @@ wallet:
           bottomSheetTitle: "Why can't I pay with this method?"
           bottomSheetDescription: "The “In app payments“ feature may be turned off.\nBefore trying to make the payment again, please do the following:\n\n1. go to the “Wallet“ section;\n2. select the payment method you want to use;\n3. enable “In app payments“."
   firstTransactionSummary:
+    loading: Recupero delle informazioni in corso
     title: Payment information
     amount: Amount
     total: Total paid
