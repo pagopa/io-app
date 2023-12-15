@@ -1,5 +1,6 @@
 const { getDefaultConfig } = require("metro-config");
 
+// eslint-disable-next-line functional/immutable-data
 module.exports = (async () => {
   const {
     resolver: { sourceExts, assetExts }
@@ -15,7 +16,10 @@ module.exports = (async () => {
     },
     resolver: {
       assetExts: assetExts.filter(ext => ext !== "svg"),
-      sourceExts: [...withE2ESourceExts, "svg"]
+      sourceExts: [...withE2ESourceExts, "svg"],
+      extraNodeModules: {
+        ...require("@pagopa/react-native-nodelibs")
+      }
     }
   };
 })();
