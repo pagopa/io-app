@@ -1,5 +1,11 @@
 import { SagaIterator } from "redux-saga";
-import { call, takeEvery, takeLatest } from "typed-redux-saga/macro";
+import {
+  call,
+  put,
+  select,
+  takeEvery,
+  takeLatest
+} from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
@@ -9,6 +15,7 @@ import {
   removeCachedAttachment
 } from "../../../store/actions/messages";
 import { getMessageDataAction } from "../actions";
+import { retryDataAfterFastLoginSessionExpirationSelector } from "../../../store/reducers/entities/messages/messageGetStatus";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
@@ -57,4 +64,16 @@ export function* watchLoadMessageData() {
     getType(getMessageDataAction.request),
     handleLoadMessageData
   );
+
+  const retryDataOrUndefined = yield* select(
+    retryDataAfterFastLoginSessionExpirationSelector
+  );
+  if (retryDataOrUndefined) {
+    yield* put(
+      getMessageDataAction.request({
+        messageId: retryDataOrUndefined.messageId,
+        fromPushNotification: retryDataOrUndefined.fromPushNotification
+      })
+    );
+  }
 }
