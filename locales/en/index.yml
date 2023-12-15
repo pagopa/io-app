@@ -680,7 +680,7 @@ authentication:
     contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
     title: It is now easier to access!
-    identity_check: You’ll no longer have to authenticate with SPID or CIE not every 30 days, but only once a year or if you log out.
+    identity_check: You’ll no longer have to authenticate with SPID or CIE every 30 days, but only once a year or if you log out.
     security_suggests: Safety tips
     passcode: Any other time, you’ll just need your fingerprint, face recognition or unlock code.
     notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
@@ -689,9 +689,9 @@ authentication:
   security_suggestions: 
     fingerprint: Do not share your or unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
-    io_lock_access: If you fear that someone might use your SPID or CIE, remotely lock access to the app.
+    io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
     access_new_device: If you access IO with someone else's device, remember to log out when you are finished.
-    navigate_to_the_site: Learn more
+    navigate_to_the_site: Go to website
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider

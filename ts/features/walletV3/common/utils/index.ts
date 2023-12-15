@@ -11,9 +11,8 @@ import {
   TypeEnum,
   WalletInfoDetails1
 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { WalletPaymentPspSortType } from "../../payment/types";
 import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 
 /**
  * A simple function to get the corresponding translated badge text,
