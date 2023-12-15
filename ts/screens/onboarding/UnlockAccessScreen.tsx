@@ -93,13 +93,13 @@ const UnlockAccessScreen = (props: Props) => {
         primaryActionProps={{
           testID: "button-solid-test",
           label: I18n.t("authentication.unlock.title"),
-          accessibilityLabel: "Click here to unlock your profile",
+          accessibilityLabel: I18n.t("authentication.unlock.title"),
           onPress: () => openWebUrl("https://ioapp.it/")
         }}
         secondaryActionProps={{
           testID: "button-link-test",
           label: I18n.t("authentication.unlock.loginIO"),
-          accessibilityLabel: "Click here to redirect to the landing screen",
+          accessibilityLabel: I18n.t("authentication.unlock.loginIO"),
           onPress: () => navigation.navigate(ROUTES.AUTHENTICATION_LANDING)
         }}
       >

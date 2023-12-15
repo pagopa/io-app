@@ -114,6 +114,7 @@ describe("initializeApplicationSaga", () => {
       .next()
       .next()
       .next()
+      .next()
       .select(sessionInfoSelector)
       .next(O.none)
       .next(O.none) // loadSessionInformationSaga
@@ -248,6 +249,7 @@ describe("initializeApplicationSaga", () => {
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
+      .next()
       .next()
       .next()
       .next()
