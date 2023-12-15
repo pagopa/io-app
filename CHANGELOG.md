@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.48.0-rc.6](https://github.com/pagopa/io-app/compare/2.48.0-rc.5...2.48.0-rc.6) (2023-12-15)
+
+
+### Features
+
+* [[IOCOM-740](https://pagopa.atlassian.net/browse/IOCOM-740)] Update `tosVersion` to 4.7 ([#5341](https://github.com/pagopa/io-app/issues/5341)) ([f797c19](https://github.com/pagopa/io-app/commit/f797c1968d5debdda8133aa90c3c8755a344af4d))
+
+
+### Bug Fixes
+
+* [[IOCOM-736](https://pagopa.atlassian.net/browse/IOCOM-736)] Message retrieval fix for fast login ([#5335](https://github.com/pagopa/io-app/issues/5335)) ([81bf8d5](https://github.com/pagopa/io-app/commit/81bf8d5578a87ffc116604f906a9fddfd42bda95))
+* [[IOPID-1257](https://pagopa.atlassian.net/browse/IOPID-1257)] Fix: no-mail user onboarding ([#5338](https://github.com/pagopa/io-app/issues/5338)) ([47aa4a0](https://github.com/pagopa/io-app/commit/47aa4a03be30c630c7a0d63ab4c590fc034fc106))
+* [[IOPLT-304](https://pagopa.atlassian.net/browse/IOPLT-304)] HeaderFirstLevelHandler logic on current route selector instead of local status ([#5340](https://github.com/pagopa/io-app/issues/5340)) ([41bfa5b](https://github.com/pagopa/io-app/commit/41bfa5b55143bfe5e2f304ef9087aff30fd62206))
+
+
+### Chores
+
+* **deps:** bump urllib3 from 1.26.6 to 1.26.18 in /scripts/check_cie_button_exists ([#5132](https://github.com/pagopa/io-app/issues/5132)) ([ee48c2e](https://github.com/pagopa/io-app/commit/ee48c2e59c0f9d6b53ea714cb5661d3f0c90ce67))
+* **deps:** bump urllib3 from 1.26.6 to 1.26.18 in /scripts/check_urls ([#5133](https://github.com/pagopa/io-app/issues/5133)) ([05f033b](https://github.com/pagopa/io-app/commit/05f033bd3b551b3a6357e19da8eb4245900f00b8))
+
 ## [2.48.0-rc.5](https://github.com/pagopa/io-app/compare/2.48.0-rc.4...2.48.0-rc.5) (2023-12-14)
 
 
