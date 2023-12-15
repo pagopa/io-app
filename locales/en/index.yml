@@ -977,6 +977,14 @@ payment:
         description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
+  confirm: 
+    totalAmount: Totale da pagare
+    payWith: Paga con
+    fee: Commissione
+    feeAppliedBy: Applicata da
+    editButton: Modifica
+    termsAndConditions: Proseguendo dichiari di aver letto e compreso i
+    termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
 wallet:
   methodDetails:
     cobadgeTitle: "Debit card"

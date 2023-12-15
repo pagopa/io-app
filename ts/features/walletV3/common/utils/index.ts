@@ -1,5 +1,8 @@
 import * as O from "fp-ts/lib/Option";
-import { ListItemTransactionStatusWithBadge } from "@pagopa/io-app-design-system";
+import {
+  IOLogoPaymentType,
+  ListItemTransactionStatusWithBadge
+} from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { pipe } from "fp-ts/lib/function";
 
@@ -8,6 +11,7 @@ import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/Serv
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import {
   TypeEnum,
+  WalletInfoDetails,
   WalletInfoDetails1
 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
@@ -99,4 +103,18 @@ export const isPaymentSupported = (
     O.alt(() => notAvailableCustomRepresentation),
     O.getOrElseW(() => "notAvailable" as const)
   );
+};
+
+export const getPaymentLogo = (
+  selectedMethod: WalletInfoDetails
+): IOLogoPaymentType => {
+  switch (selectedMethod.type) {
+    case TypeEnum.CARDS:
+      const cardsType = selectedMethod as WalletInfoDetails1;
+      return cardsType.brand.toLowerCase() as IOLogoPaymentType;
+    case TypeEnum.PAYPAL:
+      return "payPal";
+    default:
+      return "visa";
+  }
 };

@@ -1,11 +1,20 @@
-import { GradientScrollView, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  GradientScrollView,
+  LabelLink,
+  ListItemHeader,
+  ModuleCheckout,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { constVoid, pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import I18n from "../../../../i18n";
+
 import {
   walletPaymentAuthorization,
   walletPaymentCreateTransaction
@@ -21,6 +30,19 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { WalletPaymentRoutes } from "../navigation/routes";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { WalletPaymentTotalAmount } from "../components/WalletPaymentTotalAmount";
+import {
+  TypeEnum,
+  WalletInfoDetails,
+  WalletInfoDetails1,
+  WalletInfoDetails2,
+  WalletInfoDetails3
+} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
+import { getPaymentLogo } from "../../common/utils";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { format } from "../../../../utils/dates";
 
 const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
@@ -37,6 +59,13 @@ const WalletPaymentConfirmScreen = () => {
 
   const isLoading =
     pot.isLoading(transactionPot) || pot.isLoading(authorizationUrlPot);
+
+  useHeaderSecondLevel({
+    title: "",
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["payment"],
+    supportRequest: true
+  });
 
   useFocusEffect(
     React.useCallback(() => {
@@ -65,8 +94,10 @@ const WalletPaymentConfirmScreen = () => {
     );
   };
 
-  return (
-    <BaseScreenComponent goBack={true}>
+  const selectedMethod = O.toUndefined(selectedMethodOption);
+  const selectedPsp = O.toUndefined(selectedPspOption);
+  if (selectedMethod?.details && selectedPsp) {
+    return (
       <GradientScrollView
         primaryActionProps={{
           label: "Paga xx,xx €",
@@ -76,27 +107,87 @@ const WalletPaymentConfirmScreen = () => {
           loading: isLoading
         }}
       >
-        <DebugPrettyPrint
-          title="selectedMethodOption"
-          data={selectedMethodOption}
-          startCollapsed={true}
+        <ListItemHeader
+          label={I18n.t("payment.confirm.payWith")}
+          accessibilityLabel={I18n.t("payment.confirm.payWith")}
+          iconName="creditCard"
         />
-        <VSpacer size={8} />
-        <DebugPrettyPrint
-          title="selectedPspOption"
-          data={selectedPspOption}
-          startCollapsed={true}
+        <ModuleCheckout
+          ctaText={I18n.t("payment.confirm.editButton")}
+          paymentLogo={getPaymentLogo(selectedMethod.details)}
+          title={getPaymentTitle(selectedMethod.details)}
+          subtitle={getPaymentSubtitle(selectedMethod.details)}
+          onPress={() =>
+            navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+              screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
+            })
+          }
         />
-        <VSpacer size={8} />
-        <DebugPrettyPrint title="transactionPot" data={transactionPot} />
-        <VSpacer size={8} />
-        <DebugPrettyPrint
-          title="authorizationUrlPot"
-          data={authorizationUrlPot}
+        <VSpacer size={24} />
+        <ListItemHeader
+          label={I18n.t("payment.confirm.fee")}
+          accessibilityLabel={I18n.t("payment.confirm.fee")}
+          iconName="psp"
         />
+        <ModuleCheckout
+          ctaText={I18n.t("payment.confirm.editButton")}
+          title={formatNumberCentsToAmount(
+            selectedPsp.taxPayerFee ?? 0,
+            true,
+            "right"
+          )}
+          subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${
+            selectedPsp.bundleName
+          }`}
+          onPress={() => constVoid}
+        />
+        <VSpacer size={24} />
+        <WalletPaymentTotalAmount totalAmount={17250} />
+        <VSpacer size={16} />
+        <Body>
+          {I18n.t("payment.confirm.termsAndConditions")}{" "}
+          <LabelLink onPress={() => constVoid}>
+            {I18n.t("payment.confirm.termsAndConditionsLink")}
+          </LabelLink>
+        </Body>
       </GradientScrollView>
-    </BaseScreenComponent>
-  );
+    );
+  }
+  return <></>;
+};
+
+const getPaymentSubtitle = (cardDetails: WalletInfoDetails) => {
+  switch (cardDetails.type) {
+    case TypeEnum.CARDS:
+      const cardsDetail = cardDetails as WalletInfoDetails1;
+      return `${cardsDetail.holder} - ${format(
+        cardsDetail.expiryDate,
+        "MM/YY"
+      )}`;
+    case TypeEnum.PAYPAL:
+      return I18n.t("wallet.onboarding.paypal.name");
+    case TypeEnum.BANCOMATPAY:
+      const bancomatpayDetail = cardDetails as WalletInfoDetails3;
+      return `${bancomatpayDetail.bankName}`;
+    default:
+      return "";
+  }
+};
+
+const getPaymentTitle = (cardDetails: WalletInfoDetails) => {
+  switch (cardDetails.type) {
+    case TypeEnum.CARDS:
+      const cardsDetail = cardDetails as WalletInfoDetails1;
+      return `${cardsDetail.brand} ••${cardsDetail.maskedPan}`;
+    case TypeEnum.PAYPAL:
+      const paypalDetail = cardDetails as WalletInfoDetails2;
+      return `${paypalDetail.maskedEmail}`;
+    case TypeEnum.BANCOMATPAY:
+      const bancomatpayDetail = cardDetails as WalletInfoDetails3;
+      return `${bancomatpayDetail.maskedNumber}`;
+    default:
+      return "";
+  }
 };
 
 export { WalletPaymentConfirmScreen };

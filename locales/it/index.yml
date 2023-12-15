@@ -977,6 +977,14 @@ payment:
         description: IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
+  confirm: 
+    totalAmount: Totale da pagare
+    payWith: Paga con
+    fee: Commissione
+    feeAppliedBy: Applicata da
+    editButton: Modifica
+    termsAndConditions: Proseguendo dichiari di aver letto e compreso i
+    termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
 wallet:
   methodDetails:
     cobadgeTitle: "Carta di debito"
