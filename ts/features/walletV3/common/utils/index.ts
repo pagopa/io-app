@@ -118,3 +118,6 @@ export const getPaymentLogo = (
       return "visa";
   }
 };
+
+export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
+  "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/";

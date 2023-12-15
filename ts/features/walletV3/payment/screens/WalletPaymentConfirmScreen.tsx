@@ -11,7 +11,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import { constVoid, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
@@ -45,9 +45,14 @@ import {
   WalletInfoDetails2,
   WalletInfoDetails3
 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
-import { getPaymentLogo } from "../../common/utils";
+import {
+  WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
+  getPaymentLogo
+} from "../../common/utils";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { format } from "../../../../utils/dates";
+import { openWebUrl } from "../../../../utils/url";
+import { capitalize } from "../../../../utils/strings";
 
 const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
@@ -194,7 +199,9 @@ const WalletPaymentConfirmScreen = () => {
         <VSpacer size={16} />
         <Body>
           {I18n.t("payment.confirm.termsAndConditions")}{" "}
-          <LabelLink onPress={() => constVoid}>
+          <LabelLink
+            onPress={() => openWebUrl(WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL)}
+          >
             {I18n.t("payment.confirm.termsAndConditionsLink")}
           </LabelLink>
         </Body>
@@ -217,7 +224,7 @@ const getPaymentSubtitle = (cardDetails: WalletInfoDetails) => {
   switch (cardDetails.type) {
     case TypeEnum.CARDS:
       const cardsDetail = cardDetails as WalletInfoDetails1;
-      return `${cardsDetail.holder} - ${format(
+      return `${cardsDetail.holder} · ${format(
         cardsDetail.expiryDate,
         "MM/YY"
       )}`;
@@ -235,7 +242,7 @@ const getPaymentTitle = (cardDetails: WalletInfoDetails) => {
   switch (cardDetails.type) {
     case TypeEnum.CARDS:
       const cardsDetail = cardDetails as WalletInfoDetails1;
-      return `${cardsDetail.brand} ••${cardsDetail.maskedPan}`;
+      return `${capitalize(cardsDetail.brand)} ••${cardsDetail.maskedPan}`;
     case TypeEnum.PAYPAL:
       const paypalDetail = cardDetails as WalletInfoDetails2;
       return `${paypalDetail.maskedEmail}`;
