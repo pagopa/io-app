@@ -28,7 +28,7 @@ export type WalletPaymentState = {
   userWallets: pot.Pot<Wallets, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
-  chosenPaymentMethod: O.Option<WalletInfo>;
+  chosenPaymentMethod: O.Option<WalletInfo | PaymentMethodsResponse>;
   chosenPsp: O.Option<Bundle>;
   transaction: pot.Pot<NewTransactionResponse, NetworkError>;
   authorizationUrl: pot.Pot<string, NetworkError>;

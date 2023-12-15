@@ -13,7 +13,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React from "react";
+import React, { useMemo } from "react";
 import { SafeAreaView } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -38,9 +38,24 @@ import {
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 
+// ----------------- SCREEN -----------------
+
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const [selectedSavedMethod, setSelectedSavedMethod] = React.useState<
+    string | undefined
+  >(undefined);
+  const [selectedGenericMethod, setSelectedGenericMethod] = React.useState<
+    string | undefined
+  >(undefined);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(walletPaymentGetAllMethods.request());
+      dispatch(walletPaymentGetUserWallets.request());
+    }, [dispatch])
+  );
 
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
@@ -50,125 +65,98 @@ const WalletPaymentPickMethodScreen = () => {
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
+
   const canContinue = O.isSome(selectedMethodOption);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(walletPaymentGetAllMethods.request());
-      dispatch(walletPaymentGetUserWallets.request());
-    }, [dispatch])
-  );
+  // ------------------------ HANDLERS --------------------------
 
-  const handleMethodSelection = React.useCallback(
-    (wallet: WalletInfo) => {
-      dispatch(walletPaymentPickPaymentMethod(wallet));
-    },
-    [dispatch]
-  );
-
-  const handleContinue = () => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP,
-      params: {
-        walletId: "123456",
-        paymentAmountInCents: 100
-      }
-    });
-  };
-  // IOIcons or IOLogoPaymentType
-  const getIconWithFallback = (
-    brand?: string
-  ): ComponentProps<typeof ListItemRadio>["startImage"] => {
-    const logos = IOPaymentLogos;
-    return pipe(
-      brand,
-      O.fromNullable,
-      O.chain(findFirstCaseInsensitive(logos)),
-      O.map(([brand]) => brand),
+  const handleSelectSavedMethod = (walletId: string) => {
+    setSelectedSavedMethod(walletId);
+    setSelectedGenericMethod(undefined);
+    pipe(
+      userWalletsPots,
+      pot.toOption,
+      O.map(methods =>
+        O.fromNullable(methods.find(method => method.walletId === walletId))
+      ),
+      O.flatten,
       O.fold(
-        () => ({ icon: "creditCard" }),
-        brand => ({ paymentLogo: brand as IOPaymentLogos })
+        () => void null,
+        method => {
+          dispatch(walletPaymentPickPaymentMethod(method));
+        }
       )
     );
   };
 
-  const mapNotSavedToRadioItem = (
-    method: PaymentMethodResponse
-  ): RadioItem<string> => ({
-    id: method.id,
-    value: method.name,
-    startImage: getIconWithFallback(method.asset)
-  });
-  const mapSavedToRadioItem = (method: WalletInfo): RadioItem<string> => {
-    switch (method.details?.type) {
-      case "CARDS":
-        const cardDetails = method.details as WalletInfoDetails1;
-        return {
-          id: method.walletId,
-          value: cardDetails.brand,
-          startImage: getIconWithFallback(cardDetails.brand)
-        };
-      case "PAYPAL":
-        return {
-          id: method.walletId,
-          value: "PayPal",
-          startImage: getIconWithFallback("paypal")
-        };
-      case "BANCOMATPAY":
-        return {
-          id: method.walletId,
-          value: "BANCOMAT Pay",
-          startImage: getIconWithFallback("bancomatpay")
-        };
+  const handleSelectNotSavedMethod = (id: string) => {
+    setSelectedSavedMethod(undefined);
+    setSelectedGenericMethod(id);
+    pipe(
+      paymentMethodsPot,
+      pot.toOption,
+      O.map(methods =>
+        O.fromNullable(methods.find(method => method.id === id))
+      ),
+      O.flatten,
+      O.fold(
+        () => void null,
+        method => {
+          dispatch(walletPaymentPickPaymentMethod(method));
+        }
+      )
+    );
+  };
+
+  const handleContinue = () => {
+    if (selectedGenericMethod || selectedSavedMethod) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP,
+        params: {
+          // has been even double checked
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          walletId: (selectedSavedMethod ?? selectedGenericMethod)!,
+          paymentAmountInCents: 100
+        }
+      });
     }
   };
-  const loadingRadios: Array<RadioItem<string>> = [
-    {
-      id: "123456",
-      disabled: true,
-      loadingProps: { state: true },
-      value: "123456"
-    }
-  ];
-  const notSavedMethods = pipe(
-    paymentMethodsPot,
-    pot.toOption,
-    O.fold(
-      () => [],
-      methods => methods.map(mapNotSavedToRadioItem)
-    )
-    // O.map(a => a.),
-    // O.getOrElse(loadingRadios)
+
+  // -------------------------- LISTITEMS --------------------------
+  const savedMethodsListItems = useMemo(
+    () =>
+      isLoading
+        ? loadingRadios
+        : pipe(
+            userWalletsPots,
+            pot.toOption,
+            O.fold(
+              () => [],
+              // possibly void, so we coalesce to empty array
+              methods =>
+                (methods.map(mapSavedToRadioItem) ?? []) as Array<
+                  RadioItem<string>
+                >
+            )
+          ),
+    [isLoading, userWalletsPots]
   );
-  const savedMethods = pipe(
-    userWalletsPots,
-    pot.toOption,
-    O.fold(
-      () => [],
-      methods => methods.map(mapSavedToRadioItem)
-    )
+  const notSavedMethodsListItems = useMemo(
+    () =>
+      isLoading
+        ? loadingRadios
+        : pipe(
+            paymentMethodsPot,
+            pot.toOption,
+            O.fold(
+              () => [],
+              methods => methods.map(mapGenericToRadioItem)
+            )
+          ),
+    [isLoading, paymentMethodsPot]
   );
-  // TODO just for testing purposes
-  // React.useEffect(() => {
-  //   if (pot.isSome(userWalletsPots) && !canContinue) {
-  //     const userWallets = userWalletsPots.value;
 
-  //     // userWallets[0].
-  //     if (userWallets.length > 0) {
-  //       handleMethodSelection(userWallets[0]);
-  //       // console.log(userWallets[0]);
-  //     }
-  //   }
-  // }, [userWalletsPots, canContinue, handleMethodSelection]);
-
-  // const mapToRadioItem = (wallet: WalletInfo): RadioItem<string> => {
-  // switch(wallet.details?.type){
-  //   case TypeEnu
-  // }
-
-  //  return{ id: wallet.walletId,
-  //   value: wallet.}
-  // };
+  // -------------------------- RENDER --------------------------
 
   return (
     <>
@@ -194,14 +182,18 @@ const WalletPaymentPickMethodScreen = () => {
         <VSpacer size={16} />
         <ListItemHeader label="I TUOI METODI" />
 
-        <RadioGroup<string> items={savedMethods} onPress={() => void null} />
+        <RadioGroup<string>
+          selectedItem={selectedSavedMethod}
+          items={savedMethodsListItems}
+          onPress={handleSelectSavedMethod}
+        />
 
         <ListItemHeader label="ALTRI METODI" />
 
         <RadioGroup<string>
-          items={notSavedMethods}
-          onPress={() => void null}
-          // onPress={handleMethodSelection}
+          items={notSavedMethodsListItems}
+          selectedItem={selectedGenericMethod}
+          onPress={handleSelectNotSavedMethod}
         />
         <DebugPrettyPrint title="paymentMethodsPot" data={paymentMethodsPot} />
         <VSpacer size={16} />
@@ -210,5 +202,84 @@ const WalletPaymentPickMethodScreen = () => {
     </>
   );
 };
+
+// ------------------------------ UTILS --------------------------------
+
+const getIconWithFallback = (
+  brand?: string
+): ComponentProps<typeof ListItemRadio>["startImage"] => {
+  const logos = IOPaymentLogos;
+  return pipe(
+    brand,
+    O.fromNullable,
+    O.chain(findFirstCaseInsensitive(logos)),
+    O.map(([brand]) => brand),
+    O.fold(
+      () => ({ icon: "creditCard" }),
+      // @ts-expect-error ts whines because this function can return
+      // two different -- both correct -- types
+      brand => ({ paymentLogo: brand as IOPaymentLogos })
+    )
+  );
+};
+
+const mapGenericToRadioItem = (
+  method: PaymentMethodResponse
+): RadioItem<string> => ({
+  id: method.id,
+  value: method.name,
+  startImage: getIconWithFallback(method.asset)
+});
+
+// should never return void, but since this is a map function it's not a big deal
+const mapSavedToRadioItem = (method: WalletInfo): RadioItem<string> | void => {
+  switch (method.details?.type) {
+    case "CARDS":
+      const cardDetails = method.details as WalletInfoDetails1;
+      return {
+        id: method.walletId,
+        value: cardDetails.brand,
+        startImage: getIconWithFallback(cardDetails.brand)
+      };
+    case "PAYPAL":
+      return {
+        id: method.walletId,
+        value: "PayPal",
+        startImage: getIconWithFallback("paypal")
+      };
+    case "BANCOMATPAY":
+      return {
+        id: method.walletId,
+        value: "BANCOMAT Pay",
+        startImage: getIconWithFallback("bancomatpay")
+      };
+    default:
+      void null;
+  }
+};
+
+const loadingRadios: Array<RadioItem<string>> = [
+  {
+    id: "1",
+    disabled: true,
+    loadingProps: { state: true },
+    value: "123456"
+  },
+
+  {
+    id: "2",
+    disabled: true,
+    loadingProps: { state: true },
+    value: "123456"
+  },
+  {
+    id: "3",
+    disabled: true,
+    loadingProps: { state: true },
+    value: "123456"
+  }
+];
+
+// ------------- EXPORTS -------------
 
 export { WalletPaymentPickMethodScreen };
