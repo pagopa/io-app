@@ -55,7 +55,7 @@ const isFastLoginOptInEnabledSelector = createSelector(
   fastLoginOptInSelector,
   (featureFlag, optIn) => {
     if (featureFlag) {
-      return optIn.enabled;
+      return optIn.enabled ?? true;
     }
     return true;
   }
@@ -85,7 +85,7 @@ export const isFastLoginFFEnabledSelector = createSelector(
 export const isFastLoginEnabledSelector = createSelector(
   isFastLoginFFEnabledSelector,
   isFastLoginOptInEnabledSelector,
-  (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && !!optInEnabled
+  (fastloginFFEnabled, optInEnabled) => fastloginFFEnabled && optInEnabled
 );
 
 const fastLoginTokenRefreshHandlerSelector = (state: GlobalState) =>
