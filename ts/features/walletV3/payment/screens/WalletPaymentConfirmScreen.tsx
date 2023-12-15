@@ -15,6 +15,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import React from "react";
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import I18n from "../../../../i18n";
@@ -200,7 +201,12 @@ const WalletPaymentConfirmScreen = () => {
         <Body>
           {I18n.t("payment.confirm.termsAndConditions")}{" "}
           <LabelLink
-            onPress={() => openWebUrl(WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL)}
+            onPress={() =>
+              openAuthenticationSession(
+                WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
+                "https"
+              )
+            }
           >
             {I18n.t("payment.confirm.termsAndConditionsLink")}
           </LabelLink>
