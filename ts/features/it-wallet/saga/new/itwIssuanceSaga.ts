@@ -167,7 +167,7 @@ export function* handleIssuanceGetCredential(): SagaIterator {
       { walletInstanceAttestation, walletProviderBaseUrl }
     );
 
-    // obtain cred
+    // obtain credential
     const { credential, format } = yield* call(
       Credential.Issuance.obtainCredential,
       issuerConf,
@@ -175,7 +175,11 @@ export function* handleIssuanceGetCredential(): SagaIterator {
       nonce,
       clientId,
       credentialType,
-      { credentialCryptoContext, walletProviderBaseUrl }
+      "vc+sd-jwt",
+      {
+        walletProviderBaseUrl,
+        credentialCryptoContext
+      }
     );
 
     const { parsedCredential } = yield* call(
