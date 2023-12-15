@@ -109,6 +109,7 @@ import {
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
+import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -513,11 +514,11 @@ export function* initializeApplicationSaga(
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
 
-  if (!hasPreviousSessionAndPin) {
+  if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
-  userProfile = (yield* call(checkEmailSaga)) || userProfile;
+  userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
@@ -683,6 +684,9 @@ export function* initializeApplicationSaga(
 
   // Check if we have a pending notification message
   yield* call(handlePendingMessageStateIfAllowedSaga, true);
+
+  // This tells the security advice bottomsheet that it can be shown
+  yield* put(setSecurityAdviceReadyToShow(true));
 
   yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }

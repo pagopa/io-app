@@ -45,7 +45,6 @@ const FailureScreen = () => {
     [defaultCloseAction]
   );
 
-  // TODO add missing pictograms IOBP-176
   const mapFailureToContentProps = (
     failure: OnboardingFailureEnum
   ): OperationResultScreenContentProps => {
@@ -85,7 +84,7 @@ const FailureScreen = () => {
         };
       case OnboardingFailureEnum.INITIATIVE_NOT_STARTED:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "eventClose",
           title: I18n.t(
             "idpay.onboarding.failure.message.INITIATIVE_NOT_STARTED.title"
           ),
@@ -96,7 +95,7 @@ const FailureScreen = () => {
         };
       case OnboardingFailureEnum.INITIATIVE_ENDED:
         return {
-          pictogram: "umbrellaNew",
+          pictogram: "ended",
           title: I18n.t(
             "idpay.onboarding.failure.message.INITIATIVE_ENDED.title"
           ),
@@ -138,7 +137,7 @@ const FailureScreen = () => {
         };
       case OnboardingFailureEnum.NOT_ELIGIBLE:
         return {
-          pictogram: "completed",
+          pictogram: "ended",
           title: I18n.t("idpay.onboarding.failure.message.NOT_ELIGIBLE.title"),
           subtitle: I18n.t(
             "idpay.onboarding.failure.message.NOT_ELIGIBLE.subtitle"
