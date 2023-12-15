@@ -515,7 +515,7 @@ export function* initializeApplicationSaga(
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
 
-  if (!hasPreviousSessionAndPin) {
+  if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
