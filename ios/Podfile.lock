@@ -145,7 +145,7 @@ PODS:
     - React-Core
   - pagopa-io-react-native-login-utils (0.2.0):
     - React-Core
-  - pagopa-io-react-native-proximity (0.1.0):
+  - pagopa-io-react-native-proximity (0.1.6):
     - React-Core
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.1)
@@ -962,7 +962,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
   pagopa-io-react-native-jwt: 0b096d1b173e438a963cb81f251a33988b46f5fa
   pagopa-io-react-native-login-utils: 929e584c817572ce7a3e41e0c6f96c7990bd314d
-  pagopa-io-react-native-proximity: 875cae20661690bbbc798bfeb58e6935f92965ab
+  pagopa-io-react-native-proximity: 457b07c792ab2e52739abf4a696565132d4b5dda
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a

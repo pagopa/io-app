@@ -3,6 +3,7 @@
  */
 import "@pagopa/react-native-nodelibs/globals";
 import "react-native-get-random-values";
+import "text-encoding-polyfill";
 import {
   AlertStatic as Alert,
   AppRegistry,
