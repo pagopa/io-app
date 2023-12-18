@@ -89,18 +89,27 @@ export const getPid = async (
     }
   );
 
-  // Credential request
   const { credential, format } = await Credential.Issuance.obtainCredential(
     entityConfiguration,
     accessToken,
     nonce,
     authConf.clientId,
     PID_CREDENTIAL_TYPE,
+    "vc+sd-jwt",
     {
-      credentialCryptoContext,
-      walletProviderBaseUrl
+      walletProviderBaseUrl,
+      credentialCryptoContext
     }
   );
 
-  return { credential, format, entityConfiguration };
+  // TODO: SIW-766 add verifyAndParseCredential for PID
+  // const { parsedCredential } =
+  //   await Credential.Issuance.verifyAndParseCredential(
+  //     entityConfiguration,
+  //     credential,
+  //     format,
+  //     { credentialCryptoContext, ignoreMissingAttributes: true }
+  //   );
+
+  return { credential, format, nonce, entityConfiguration };
 };

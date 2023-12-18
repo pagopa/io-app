@@ -46,3 +46,10 @@ export type CredentialConfigurationSchema =
 export type IssuerConfiguration = Awaited<
   ReturnType<typeof Credential.Issuance.evaluateIssuerTrust>
 >["issuerConf"];
+
+/**
+ * Alias for the ParseCredential type
+ */
+export type ParsedCredential = Awaited<
+  ReturnType<typeof Credential.Issuance.verifyAndParseCredential>
+>["parsedCredential"];
