@@ -339,11 +339,12 @@ export function* initializeApplicationSaga(
     watchMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );
-  yield* fork(watchLoadMessageData);
+  yield* fork(watchThirdPartyMessageSaga, backendClient);
   yield* fork(
     watchUpsertMessageStatusAttribues,
     backendClient.upsertMessageStatusAttributes
   );
+  yield* fork(watchLoadMessageData);
   yield* fork(
     watchMigrateToPagination,
     backendClient.upsertMessageStatusAttributes
@@ -514,7 +515,7 @@ export function* initializeApplicationSaga(
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
 
-  if (!hasPreviousSessionAndPin) {
+  if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
@@ -675,9 +676,6 @@ export function* initializeApplicationSaga(
       loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
     );
   }
-
-  // Load third party message content when requested
-  yield* fork(watchThirdPartyMessageSaga, backendClient);
 
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
