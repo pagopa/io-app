@@ -69,6 +69,7 @@ import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsLi
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
+  navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod
 } from "../../store/actions/navigation";
@@ -472,9 +473,13 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   private navigateToPaymentScanQrCode = () => {
-    this.props.navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
-      screen: WalletBarcodeRoutes.WALLET_BARCODE_SCAN
-    });
+    if (this.props.isDesignSystemEnabled) {
+      this.props.navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
+        screen: WalletBarcodeRoutes.WALLET_BARCODE_SCAN
+      });
+    } else {
+      this.props.navigateToPaymentScanQrCode();
+    }
   };
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
@@ -588,6 +593,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
+  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     navigateToTransactionDetailsScreen({
       transaction,

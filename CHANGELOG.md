@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.48.0-rc.7](https://github.com/pagopa/io-app/compare/2.48.0-rc.6...2.48.0-rc.7) (2023-12-15)
+
+
+### Features
+
+* [[IOBP-442](https://pagopa.atlassian.net/browse/IOBP-442)] New wallet payment details screen ([#5291](https://github.com/pagopa/io-app/issues/5291)) ([81ee7c3](https://github.com/pagopa/io-app/commit/81ee7c3a4bbd178480e42ef2d258dfc8e781d901))
+
 ## [2.48.0-rc.6](https://github.com/pagopa/io-app/compare/2.48.0-rc.5...2.48.0-rc.6) (2023-12-15)
 
 
