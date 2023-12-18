@@ -42,7 +42,7 @@ import {
   watchZendeskSupportSaga
 } from "../features/zendesk/saga";
 import { watchFciSaga } from "../features/fci/saga";
-import { watchWalletV3Saga } from "../features/walletV3/common/saga";
+import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -109,6 +109,7 @@ import {
   isPnEnabledSelector
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
+import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -338,11 +339,12 @@ export function* initializeApplicationSaga(
     watchMessagePrecondition,
     backendClient.getThirdPartyMessagePrecondition
   );
-  yield* fork(watchLoadMessageData);
+  yield* fork(watchThirdPartyMessageSaga, backendClient);
   yield* fork(
     watchUpsertMessageStatusAttribues,
     backendClient.upsertMessageStatusAttributes
   );
+  yield* fork(watchLoadMessageData);
   yield* fork(
     watchMigrateToPagination,
     backendClient.upsertMessageStatusAttributes
@@ -513,11 +515,11 @@ export function* initializeApplicationSaga(
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
 
-  if (!hasPreviousSessionAndPin) {
+  if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);
   }
 
-  userProfile = (yield* call(checkEmailSaga)) || userProfile;
+  userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 
   // check if the user must set preferences for push notifications (e.g. reminders)
   yield* call(checkNotificationsPreferencesSaga, userProfile);
@@ -675,14 +677,14 @@ export function* initializeApplicationSaga(
     );
   }
 
-  // Load third party message content when requested
-  yield* fork(watchThirdPartyMessageSaga, backendClient);
-
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
 
   // Check if we have a pending notification message
   yield* call(handlePendingMessageStateIfAllowedSaga, true);
+
+  // This tells the security advice bottomsheet that it can be shown
+  yield* put(setSecurityAdviceReadyToShow(true));
 
   yield* put(applicationInitialized({ actionsToWaitFor: [] }));
 }

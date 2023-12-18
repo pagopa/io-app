@@ -36,6 +36,9 @@ export function* loadUserDataProcessingSaga(
     )) as unknown as SagaCallReturnType<typeof getUserDataProcessingRequest>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
       if (response.right.status === 404 || response.right.status === 200) {
         yield* put(
           loadUserDataProcessing.success({
@@ -78,6 +81,9 @@ export function* upsertUserDataProcessingSaga(
       action
     )) as unknown as SagaCallReturnType<typeof postUserDataProcessingRequest>;
 
+    if (E.isRight(response) && response.right.status === 401) {
+      return;
+    }
     if (E.isRight(response) && response.right.status === 200) {
       yield* put(upsertUserDataProcessing.success(response.right.value));
       return E.right(response.right.value);
@@ -115,6 +121,9 @@ export function* deleteUserDataProcessingSaga(
     )) as unknown as SagaCallReturnType<typeof deleteUserDataProcessingRequest>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
       if (response.right.status === 202) {
         yield* put(
           deleteUserDataProcessing.success({
