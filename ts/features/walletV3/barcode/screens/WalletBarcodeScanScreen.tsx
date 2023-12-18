@@ -17,6 +17,7 @@ import ROUTES from "../../../../navigation/routes";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -31,9 +32,8 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
-import { WalletBarcodeRoutes } from "../navigation/routes";
 import { WalletPaymentRoutes } from "../../payment/navigation/routes";
-import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { WalletBarcodeRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
