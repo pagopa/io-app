@@ -15,7 +15,10 @@ module.exports = (async () => {
     },
     resolver: {
       assetExts: assetExts.filter(ext => ext !== "svg"),
-      sourceExts: [...withE2ESourceExts, "svg"]
+      sourceExts: [...withE2ESourceExts, "svg"],
+      extraNodeModules: {
+        ...require("@pagopa/react-native-nodelibs")
+      }
     }
   };
 })();
