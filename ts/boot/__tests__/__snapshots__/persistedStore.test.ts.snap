@@ -68,9 +68,7 @@ Object {
     "detailsById": Object {},
     "downloads": Object {},
     "messageGetStatus": Object {
-      "failurePhase": "none",
       "status": "idle",
-      "successData": undefined,
     },
     "messagePrecondition": Object {
       "content": Object {
