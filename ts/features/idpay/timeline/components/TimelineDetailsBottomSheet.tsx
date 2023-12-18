@@ -85,16 +85,17 @@ const useTimelineDetailsBottomSheet = (
       O.map(details => {
         switch (details.operationType) {
           case TransactionOperationTypeEnum.TRANSACTION:
-            if (details.channel === ChannelEnum.QRCODE) {
+            if (details.channel === ChannelEnum.RTD) {
               return (
-                <TimelineDiscountTransactionDetailsComponent
-                  transaction={details}
-                />
+                <TimelineTransactionDetailsComponent transaction={details} />
               );
             }
             return (
-              <TimelineTransactionDetailsComponent transaction={details} />
+              <TimelineDiscountTransactionDetailsComponent
+                transaction={details}
+              />
             );
+
           case TransactionOperationTypeEnum.REVERSAL:
             return (
               <TimelineTransactionDetailsComponent transaction={details} />
