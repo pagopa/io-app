@@ -22,8 +22,9 @@ import { ServicesPreferencesModeEnum } from "../../../definitions/backend/Servic
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { GlobalState } from "./types";
+import { ProfileError } from "./profileErrorType";
 
-export type ProfileState = pot.Pot<InitializedProfile, Error>;
+export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 
 const INITIAL_STATE: ProfileState = pot.none;
 
@@ -122,6 +123,15 @@ export const profileServicePreferencesModeSelector = createSelector(
       undefined
     )
 );
+// return if the profile email user is already taken
+export const isProfileEmailAlreadyTakenSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): boolean | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.is_email_already_taken),
+      undefined
+    )
+);
 
 // return true if the profile services preference mode is set (mode is set only when AUTO or MANUAL is the current mode)
 export const isServicesPreferenceModeSet = (
@@ -134,6 +144,10 @@ export const isServicesPreferenceModeSet = (
 // return true if the profile has an email and it is validated
 export const isProfileEmailValidated = (user: InitializedProfile): boolean =>
   user.is_email_validated !== undefined && user.is_email_validated === true;
+
+// return true if the profile has an email and it is validated
+export const isProfileEmailAlreadyTaken = (user: InitializedProfile): boolean =>
+  !!user.is_email_already_taken;
 
 // Returns true if the profile has service_preferences_settings set to Legacy.
 // A profile that has completed onboarding will have this value mandatory set to auto or manual
@@ -174,6 +188,39 @@ export const profilePreferencesSelector = createSelector(
     }))
 );
 
+// return the profile notification settings actual state or undefined if ProfileState pot is in an Error state
+export const profileNotificationSettingsSelector = createSelector(
+  profileSelector,
+  (
+    profile: ProfileState
+  ):
+    | { reminder: boolean | undefined; preview: boolean | undefined }
+    | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => ({
+        reminder:
+          p.reminder_status === undefined
+            ? undefined
+            : p.reminder_status === ReminderStatusEnum.ENABLED,
+        preview:
+          p.push_notifications_content_type === undefined
+            ? undefined
+            : p.push_notifications_content_type ===
+              PushNotificationsContentTypeEnum.FULL
+      })),
+      undefined
+    )
+);
+
+// return the tos version or undefined if ProfileState pot is in an Error state
+export const tosVersionSelector = createSelector(
+  profileSelector,
+  (profile: ProfileState): number | undefined =>
+    pot.getOrElse(
+      pot.map(profile, p => p.accepted_tos_version),
+      undefined
+    )
+);
 const reducer = (
   state: ProfileState = INITIAL_STATE,
   action: Action

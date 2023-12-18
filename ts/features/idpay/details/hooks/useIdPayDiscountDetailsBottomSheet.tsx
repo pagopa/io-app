@@ -5,21 +5,35 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idPayGenerateBarcode } from "../../barcode/store/actions";
 import { IDPayPaymentRoutes } from "../../payment/navigation/navigator";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+import { idPayBarcodeSecondsTillExpireSelector } from "../../barcode/store";
+import { IdPayBarcodeRoutes } from "../../barcode/navigation/routes";
 
 export const useIdPayDiscountDetailsBottomSheet = (initiativeId: string) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const barcodeSecondsSelector = useIOSelector(
+    idPayBarcodeSecondsTillExpireSelector
+  );
+  const dispatch = useIODispatch();
+
   const navigateToPaymentAuthorization = () => {
     navigation.navigate(IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN);
   };
-  const dispatch = useIODispatch();
+
   const barcodePressHandler = () => {
-    dispatch(idPayGenerateBarcode.request({ initiativeId }));
+    const isBarcodeAvailable = barcodeSecondsSelector(initiativeId) > 0;
+    if (!isBarcodeAvailable) {
+      dispatch(idPayGenerateBarcode.request({ initiativeId }));
+    }
     bottomSheet.dismiss();
+    navigation.navigate(IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN, {
+      screen: IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT,
+      params: { initiativeId }
+    });
   };
 
   const DiscountInitiativeBottomSheetContent = () => (

@@ -5,7 +5,7 @@ import {
   AuthPaymentResponseDTO,
   StatusEnum
 } from "../../../../../../definitions/idpay/AuthPaymentResponseDTO";
-import { PaymentFailureEnum } from "../failure";
+import { PaymentFailureEnum } from "../../types/PaymentFailure";
 import { createIDPayPaymentMachine } from "../machine";
 
 const T_TRX_CODE = "ABCD1234";

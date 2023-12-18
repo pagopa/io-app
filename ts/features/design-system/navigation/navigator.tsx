@@ -1,3 +1,9 @@
+import {
+  IOThemeContext,
+  IOThemes,
+  IOVisualCostants,
+  IconButton
+} from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import {
   StackNavigationOptions,
@@ -8,20 +14,19 @@ import * as React from "react";
 import { useMemo } from "react";
 import { Alert, Platform, View, useColorScheme } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  IOThemeContext,
-  IOThemes,
-  IOVisualCostants,
-  IconButton
-} from "@pagopa/io-app-design-system";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
+import {
+  IONavigationDarkTheme,
+  IONavigationLightTheme
+} from "../../../theme/navigations";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSAdvice } from "../core/DSAdvice";
 import { DSAlert } from "../core/DSAlert";
 import { DSBadges } from "../core/DSBadges";
+import { DSBonusCardScreen } from "../core/DSBonusCardScreen";
 import { DSBottomSheet } from "../core/DSBottomSheet";
 import { DSButtons } from "../core/DSButtons";
 import { DSCards } from "../core/DSCards";
@@ -33,15 +38,16 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
+import { DSNumberPad } from "../core/DSNumberPad";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSListItems } from "../core/DSListItems";
-import { DSModules } from "../core/DSModules";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
+import { DSModules } from "../core/DSModules";
 import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
@@ -50,12 +56,8 @@ import { DSSelection } from "../core/DSSelection";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
-import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DSTypography } from "../core/DSTypography";
-import {
-  IONavigationDarkTheme,
-  IONavigationLightTheme
-} from "../../../theme/navigations";
+import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
@@ -416,6 +418,18 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.SCREENS.WIZARD_SCREEN.route}
         component={DSWizardScreen}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
+        component={DSBonusCardScreen}
+        options={{ headerShown: true }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.NUMBERPAD.route}
+        component={DSNumberPad}
         options={{ headerShown: false }}
       />
 

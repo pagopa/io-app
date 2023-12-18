@@ -1,4 +1,4 @@
-import { call, take } from "typed-redux-saga/macro";
+import { call, select, take } from "typed-redux-saga/macro";
 import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../navigation/NavigationService";
@@ -10,6 +10,7 @@ import {
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
+import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**
  * Launch email saga that consists of:
@@ -21,11 +22,16 @@ import { ReduxSagaEffect } from "../../types/utils";
 export function* checkAcknowledgedEmailSaga(
   userProfile: InitializedProfile
 ): IterableIterator<ReduxSagaEffect> {
+  const isEmailUniquenessValidationEnabled = yield* select(
+    isEmailUniquenessValidationEnabledSelector
+  );
+
   // Check if the profile has an email
   if (hasProfileEmail(userProfile)) {
     if (
       isProfileFirstOnBoarding(userProfile) ||
-      !isProfileEmailValidated(userProfile)
+      (!isEmailUniquenessValidationEnabled &&
+        !isProfileEmailValidated(userProfile))
     ) {
       // The user profile is just created (first onboarding), the conditional
       // view displays the screen to show the user's email used in app
@@ -45,7 +51,9 @@ export function* checkAcknowledgedEmailSaga(
     // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
     // to validate it
     yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+      screen: isEmailUniquenessValidationEnabled
+        ? ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+        : ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
     });
   }
 
