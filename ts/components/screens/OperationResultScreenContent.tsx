@@ -15,7 +15,7 @@ import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { LabelSmall } from "../core/typography/LabelSmall";
 
-type OperationResultScreenContent = {
+type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string;
@@ -27,7 +27,7 @@ type OperationResultScreenContent = {
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
-};
+}>;
 
 const OperationResultScreenContent = ({
   pictogram,
@@ -36,7 +36,7 @@ const OperationResultScreenContent = ({
   action,
   secondaryAction,
   testID
-}: WithTestID<OperationResultScreenContent>) => (
+}: OperationResultScreenContentProps) => (
   <SafeAreaView style={styles.container} testID={testID}>
     <ScrollView
       centerContent={true}
@@ -101,4 +101,5 @@ const styles = StyleSheet.create({
   }
 });
 
+export type { OperationResultScreenContentProps };
 export { OperationResultScreenContent };

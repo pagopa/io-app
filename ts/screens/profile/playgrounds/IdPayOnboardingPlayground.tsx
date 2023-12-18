@@ -20,6 +20,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
+import { isDevEnv } from "../../../utils/environment";
 
 const IdPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -55,16 +56,20 @@ const IdPayOnboardingPlayground = () => {
         />
         <VSpacer size={16} />
         <Button onPress={handleServiceSubmit} title="Start onboarding" />
-        <VSpacer size={24} />
-        <H2>Iniziative di test</H2>
-        <Body>Iniziative disponibili tramite io-dev-server</Body>
-        {testServices.map(srv => (
-          <TestServiceItem
-            key={srv.serviceId}
-            service={srv}
-            onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
-          />
-        ))}
+        {isDevEnv && (
+          <>
+            <VSpacer size={24} />
+            <H2>Iniziative di test</H2>
+            <Body>Iniziative disponibili tramite io-dev-server</Body>
+            {testServices.map(srv => (
+              <TestServiceItem
+                key={srv.serviceId}
+                service={srv}
+                onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
+              />
+            ))}
+          </>
+        )}
         <VSpacer size={32} />
       </ScrollView>
     </BaseScreenComponent>
@@ -100,47 +105,52 @@ const testServices: ReadonlyArray<TestService> = [
   },
   {
     serviceId: "TESTSRV06",
-    label: "No criteri di ammissione",
+    label: "KO - Generico",
     willFail: true
   },
   {
     serviceId: "TESTSRV07",
-    label: "No requisiti",
+    label: "KO - Iniziativa non iniziata",
     willFail: true
   },
   {
     serviceId: "TESTSRV08",
-    label: "Onboarding già concluso",
+    label: "KO - Iniziativa conclusa",
     willFail: true
   },
   {
     serviceId: "TESTSRV09",
-    label: "Recesso",
+    label: "KO - Budget terminato",
     willFail: true
   },
   {
     serviceId: "TESTSRV10",
-    label: "Applicazione in valutazione",
+    label: "KO - Requisiti non soddisfatti",
     willFail: true
   },
   {
     serviceId: "TESTSRV11",
-    label: "Budget terminato",
+    label: "KO - Non in whitelist",
     willFail: true
   },
   {
     serviceId: "TESTSRV12",
-    label: "Periodo di iscrizione terminato",
+    label: "KO - In valutazione",
     willFail: true
   },
   {
     serviceId: "TESTSRV13",
-    label: "Periodo di iscrizione non iniziato",
+    label: "KO - Non ammissibile",
     willFail: true
   },
   {
     serviceId: "TESTSRV14",
-    label: "Iniziativa sospesa",
+    label: "KO - Utente già ammesso",
+    willFail: true
+  },
+  {
+    serviceId: "TESTSRV15",
+    label: "KO - Recesso",
     willFail: true
   }
 ];
