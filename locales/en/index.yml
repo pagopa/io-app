@@ -978,6 +978,13 @@ payment:
       title: Payment attempts
       iuv: IUV payment {{iuv}}
 wallet:
+  methodSelection:
+      header: Seleziona un metodo
+      yourMethods: I tuoi metodi
+      otherMethods: Altri metodi
+      alert: 
+        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+        cta: "Ok, ho capito!"
   methodDetails:
     cobadgeTitle: "Debit card"
     cardGeneric: "Card"

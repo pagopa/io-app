@@ -9,6 +9,10 @@ export const walletPaymentDetailsSelector = createSelector(
   selectWalletPayment,
   state => state.paymentDetails
 );
+export const walletPaymentAmountSelector = createSelector(
+  walletPaymentDetailsSelector,
+  state => pot.map(state, payment => payment.amount)
+);
 
 export const walletPaymentAllMethodsSelector = createSelector(
   selectWalletPayment,

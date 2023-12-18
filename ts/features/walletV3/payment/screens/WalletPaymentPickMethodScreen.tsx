@@ -1,7 +1,7 @@
 import {
+  Alert,
   GradientScrollView,
   H2,
-  HeaderSecondLevel,
   IOPaymentLogos,
   ListItemHeader,
   ListItemRadio,
@@ -9,22 +9,26 @@ import {
   RadioItem,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { capitalize } from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React, { useMemo } from "react";
-import { SafeAreaView } from "react-native";
+import { View } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletInfoDetails1 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
-import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ComponentProps } from "../../../../types/react";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
@@ -34,6 +38,7 @@ import {
 import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
+  walletPaymentAmountSelector,
   walletPaymentPickedPaymentMethodSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
@@ -43,6 +48,8 @@ import {
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const [shouldShowWarningBanner, setShouldShowWarningBanner] =
+    React.useState<boolean>(false);
   const [selectedSavedMethod, setSelectedSavedMethod] = React.useState<
     string | undefined
   >(undefined);
@@ -57,11 +64,14 @@ const WalletPaymentPickMethodScreen = () => {
     }, [dispatch])
   );
 
+  const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
   const selectedMethodOption = useIOSelector(
     walletPaymentPickedPaymentMethodSelector
   );
+
+  const paymentAmount = pot.getOrElse(paymentAmountPot, undefined);
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
@@ -77,6 +87,8 @@ const WalletPaymentPickMethodScreen = () => {
       userWalletsPots,
       pot.toOption,
       O.map(methods =>
+        // wallets?: [{walletId}] so wallets can be null, and we are checking
+        // a possibly empty array, so we need the double option
         O.fromNullable(methods.find(method => method.walletId === walletId))
       ),
       O.flatten,
@@ -96,6 +108,7 @@ const WalletPaymentPickMethodScreen = () => {
       paymentMethodsPot,
       pot.toOption,
       O.map(methods =>
+        // same goes here
         O.fromNullable(methods.find(method => method.id === id))
       ),
       O.flatten,
@@ -109,20 +122,21 @@ const WalletPaymentPickMethodScreen = () => {
   };
 
   const handleContinue = () => {
-    if (selectedGenericMethod || selectedSavedMethod) {
+    // todo:: should handle the case where the user
+    // selects a non saved method
+    if (paymentAmount && selectedSavedMethod) {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP,
         params: {
-          // has been even double checked
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          walletId: (selectedSavedMethod ?? selectedGenericMethod)!,
-          paymentAmountInCents: 100
+          walletId: selectedSavedMethod,
+          paymentAmountInCents: paymentAmount
         }
       });
     }
   };
 
   // -------------------------- LISTITEMS --------------------------
+
   const savedMethodsListItems = useMemo(
     () =>
       isLoading
@@ -141,6 +155,7 @@ const WalletPaymentPickMethodScreen = () => {
           ),
     [isLoading, userWalletsPots]
   );
+
   const notSavedMethodsListItems = useMemo(
     () =>
       isLoading
@@ -150,60 +165,73 @@ const WalletPaymentPickMethodScreen = () => {
             pot.toOption,
             O.fold(
               () => [],
-              methods => methods.map(mapGenericToRadioItem)
+              methods =>
+                methods.map(item => {
+                  const radio = mapGenericToRadioItem(item, paymentAmount);
+                  if (radio.disabled === true) {
+                    setShouldShowWarningBanner(true);
+                  }
+                  return radio;
+                })
             )
           ),
-    [isLoading, paymentMethodsPot]
+    [isLoading, paymentMethodsPot, paymentAmount]
   );
+
+  useHeaderSecondLevel({
+    title: "",
+    backAccessibilityLabel: I18n.t("global.buttons.back"),
+    goBack: navigation.goBack,
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["payment"],
+    supportRequest: true
+  });
 
   // -------------------------- RENDER --------------------------
 
+  const alertRef = React.useRef<View>(null);
+
   return (
-    <>
-      <SafeAreaView>
-        <HeaderSecondLevel
-          backAccessibilityLabel="Torna indietro"
-          goBack={navigation.goBack}
-          title=""
-          type="base"
+    <GradientScrollView
+      primaryActionProps={{
+        label: I18n.t("global.buttons.continue"),
+        accessibilityLabel: I18n.t("global.buttons.continue"),
+        onPress: handleContinue,
+        disabled: isLoading || !canContinue,
+        loading: isLoading
+      }}
+    >
+      <H2>{I18n.t("wallet.methodSelection.header")}</H2>
+      <VSpacer size={16} />
+      {shouldShowWarningBanner && (
+        <Alert
+          content={I18n.t("wallet.methodSelection.alert.body")}
+          variant="warning"
+          viewRef={alertRef}
+          onPress={() => null}
+          action={I18n.t("wallet.methodSelection.alert.cta")}
         />
-      </SafeAreaView>
+      )}
+      <ListItemHeader label={I18n.t("wallet.methodSelection.yourMethods")} />
 
-      <GradientScrollView
-        primaryActionProps={{
-          label: "Continua",
-          accessibilityLabel: "Continua",
-          onPress: handleContinue,
-          disabled: isLoading || !canContinue,
-          loading: isLoading
-        }}
-      >
-        <H2>SCEGLI METODO</H2>
-        <VSpacer size={16} />
-        <ListItemHeader label="I TUOI METODI" />
+      <RadioGroup<string>
+        selectedItem={selectedSavedMethod}
+        items={savedMethodsListItems}
+        onPress={handleSelectSavedMethod}
+      />
 
-        <RadioGroup<string>
-          selectedItem={selectedSavedMethod}
-          items={savedMethodsListItems}
-          onPress={handleSelectSavedMethod}
-        />
+      <ListItemHeader label={I18n.t("wallet.methodSelection.otherMethods")} />
 
-        <ListItemHeader label="ALTRI METODI" />
-
-        <RadioGroup<string>
-          items={notSavedMethodsListItems}
-          selectedItem={selectedGenericMethod}
-          onPress={handleSelectNotSavedMethod}
-        />
-        <DebugPrettyPrint title="paymentMethodsPot" data={paymentMethodsPot} />
-        <VSpacer size={16} />
-        <DebugPrettyPrint title="userWalletsPots" data={userWalletsPots} />
-      </GradientScrollView>
-    </>
+      <RadioGroup<string>
+        items={notSavedMethodsListItems}
+        selectedItem={selectedGenericMethod}
+        onPress={handleSelectNotSavedMethod}
+      />
+    </GradientScrollView>
   );
 };
 
-// ------------------------------ UTILS --------------------------------
+// ----------------------- UTILS -----------------------
 
 const getIconWithFallback = (
   brand?: string
@@ -217,28 +245,29 @@ const getIconWithFallback = (
     O.fold(
       () => ({ icon: "creditCard" }),
       // @ts-expect-error ts whines because this function can return
-      // two different -- both correct -- types
+      // two different -- both correct -- types (see return type)
       brand => ({ paymentLogo: brand as IOPaymentLogos })
     )
   );
 };
-
 const mapGenericToRadioItem = (
-  method: PaymentMethodResponse
+  method: PaymentMethodResponse,
+  transactionAmount?: number
 ): RadioItem<string> => ({
   id: method.id,
   value: method.name,
+  disabled: isDisabled(method, transactionAmount),
   startImage: getIconWithFallback(method.asset)
 });
 
-// should never return void, but since this is a map function it's not a big deal
+// should never return void, but since this is a map function it's expectable
 const mapSavedToRadioItem = (method: WalletInfo): RadioItem<string> | void => {
   switch (method.details?.type) {
     case "CARDS":
       const cardDetails = method.details as WalletInfoDetails1;
       return {
         id: method.walletId,
-        value: cardDetails.brand,
+        value: `${capitalize(cardDetails.brand)} ••${cardDetails.maskedPan}`,
         startImage: getIconWithFallback(cardDetails.brand)
       };
     case "PAYPAL":
@@ -257,6 +286,25 @@ const mapSavedToRadioItem = (method: WalletInfo): RadioItem<string> | void => {
       void null;
   }
 };
+
+// not sure if this ranges[0] thing is the right way, but
+// it's pretty easy to add full traversal, even though it
+// makes the code more complex
+const isDisabled = (
+  method: PaymentMethodResponse,
+  transactionAmount?: number
+): boolean =>
+  pipe(
+    sequenceS(O.Monad)({
+      min: O.fromNullable(method.ranges[0].min),
+      max: O.fromNullable(method.ranges[0].max),
+      amount: O.fromNullable(transactionAmount)
+    }),
+    O.fold(
+      () => false,
+      ({ min, max, amount }) => min > amount || max < amount
+    )
+  );
 
 const loadingRadios: Array<RadioItem<string>> = [
   {
