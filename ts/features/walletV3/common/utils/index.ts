@@ -1,6 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import {
   IOLogoPaymentType,
+  IOPaymentLogos,
   ListItemTransactionStatusWithBadge
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
@@ -16,6 +17,7 @@ import {
 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -107,15 +109,23 @@ export const isPaymentSupported = (
 
 export const getPaymentLogo = (
   selectedMethod: WalletInfoDetails
-): IOLogoPaymentType => {
+): IOLogoPaymentType | undefined => {
   switch (selectedMethod.type) {
     case TypeEnum.CARDS:
       const cardsType = selectedMethod as WalletInfoDetails1;
-      return cardsType.brand.toLowerCase() as IOLogoPaymentType;
+      const { brand } = cardsType;
+      return pipe(
+        brand,
+        findFirstCaseInsensitive(IOPaymentLogos),
+        O.fold(
+          () => undefined,
+          ([logoName, _]) => logoName
+        )
+      ) as IOLogoPaymentType;
     case TypeEnum.PAYPAL:
       return "payPal";
     default:
-      return "visa";
+      return undefined;
   }
 };
 
