@@ -391,7 +391,7 @@ PODS:
     - React
   - react-native-flipper (0.154.0):
     - React-Core
-  - react-native-get-random-values (1.7.0):
+  - react-native-get-random-values (1.10.0):
     - React-Core
   - react-native-image-picker (4.10.3):
     - React-Core
@@ -977,7 +977,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: 2b8f18667caee73a96708a82b284a4f40b30a156
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
-  react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
+  react-native-get-random-values: 384787fd76976f5aec9465aff6fa9e9129af1e74
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
