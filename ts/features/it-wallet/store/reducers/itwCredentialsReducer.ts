@@ -13,6 +13,7 @@ import {
   CredentialConfigurationSchema,
   CredentialDefinition,
   IssuerConfiguration,
+  ParsedCredential,
   PidResponse
 } from "../../utils/types";
 import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
@@ -24,7 +25,7 @@ export type StoredCredential = {
   keyTag: string;
   credential: string;
   format: string;
-  parsedCredential: Record<string, string>;
+  parsedCredential: ParsedCredential;
   credentialConfigurationSchema: CredentialConfigurationSchema;
   credentialType: string;
   issuerConf: IssuerConfiguration;

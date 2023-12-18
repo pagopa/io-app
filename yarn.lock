@@ -3216,10 +3216,10 @@
     js-crypto-hkdf "^1.0.7"
     zod "^3.22.4"
 
-"@pagopa/io-react-native-wallet@^0.10.2":
-  version "0.10.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.10.2.tgz#7b7a947f734da182fdb2db847a615500e4b9fcb5"
-  integrity sha512-nvL/HlcfRCKbDIg+Ca/LN7X4zpL93X5JHJaspqc2wgcxbgt7pCCeyFVfps65Tm4X3P/OAD1Z+jzXiFRh3IR0eg==
+"@pagopa/io-react-native-wallet@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-wallet/-/io-react-native-wallet-0.11.1.tgz#0a23f1f9444982bfdc16e9d302978d8bdcaa3467"
+  integrity sha512-UURorbS0QWCyByCgibKiXi7zIhHwrsmP0PRCUk2PczGe2afbOiLbfoeV49/fDEz4Jz2l/ep1gDimrJ6MaxJGVw==
   dependencies:
     react-native-url-polyfill "^2.0.0"
     react-native-uuid "^2.0.1"

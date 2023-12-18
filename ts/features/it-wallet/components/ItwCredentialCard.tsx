@@ -7,6 +7,7 @@ import {
   CredentialCatalogDisplay,
   getImageFromCredentialType
 } from "../utils/mocks";
+import { ParsedCredential } from "../utils/types";
 
 /**
  * Common props for the component.
@@ -31,7 +32,7 @@ type WithPidProps = CommonProps & {
  * @param parsedCredential - the parsed credential.
  */
 type WithCredentialProps = CommonProps & {
-  parsedCredential: Record<string, string>;
+  parsedCredential: ParsedCredential;
 };
 
 type CredentialCardProps = WithPidProps | WithCredentialProps;
@@ -82,11 +83,11 @@ const ItwCredentialCard = (props: CredentialCardProps) => {
       const { firstLine, secondLine } = props.display;
       const flText =
         firstLine && firstLine.length > 0
-          ? firstLine.map(item => props.parsedCredential[item]).join(" ")
+          ? firstLine.map(item => props.parsedCredential[item].value).join(" ")
           : "";
       const slText =
         secondLine && secondLine.length > 0
-          ? secondLine.map(item => props.parsedCredential[item]).join(" ")
+          ? secondLine.map(item => props.parsedCredential[item].value).join(" ")
           : "";
       return { firstLine: flText, secondLine: slText };
     }
