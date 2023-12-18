@@ -125,7 +125,7 @@ export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 4.7 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
@@ -264,8 +264,8 @@ export const idPayApiUatBaseUrl = Config.IDPAY_API_UAT_BASEURL;
 
 export const idPayApiBaseUrl = Config.IDPAY_API_BASEURL;
 
-export const walletV3ApiBaseUrl = Config.WALLETV3_API_BASEURL;
-export const walletV3ApiUatBaseUrl = Config.WALLETV3_API_UAT_BASEURL;
+export const walletApiBaseUrl = Config.WALLET_API_BASEURL;
+export const walletApiUatBaseUrl = Config.WALLET_API_UAT_BASEURL;
 
 // Default pin for dev mode
 export const defaultPin = "162534";

@@ -675,22 +675,23 @@ authentication:
     headerTitle: Non hai SPID?
     contentTitle: Cos'è SPID?
     subtitle: SPID è sicuro
-  opt-in:
+  opt_in:
     contextualHelpTitle: Autenticazione
     contextualHelpContent: Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.
     news: novità
-    title: Da oggi accedi a IO più velocemente
-    identity-check: Ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
-    security-suggests: Consigli di sicurezza
-    passcode: Dopo il primo accesso con SPID o CIE, potrai entrare in app solo con il codice di sblocco o con il biometrico.
-    notification: Ogni volta che verrà effettuato un accesso all’app tramite SPID o CIE, verrai avvisato tramite email.
-    button-accept-lv: Continua con l’accesso rapido
-    button-decline-lv: No, voglio accedere ogni 30 giorni
-    fingerprint: Per accedere a IO basta il codice o il biometrico, non condividerli con nessuno.
-    io-logout: Se perdi il dispositivo, esci da IO da
-    io-lock-access: Se pensi che le tue credenziali SPID o CIE siano compromesse, blocca l’accesso a IO da
-    access-new-device: Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app.
-    io-site: ioapp.it
+    title: Ora è più facile accedere!
+    identity_check: Non dovrai più autenticarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
+    security_suggests: Alcuni consigli di sicurezza
+    passcode: Per tutte le altre volte basterà il tuo volto, impronta o codice di sblocco
+    notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO.
+    button_accept_lv: Continua con l’accesso rapido
+    button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
+  security_suggestions: 
+    fingerprint: Non condividere il tuo o codice di sblocco o riconoscimento biometrico con nessuno
+    io_logout: Se perdi il dispositivo, esci dall’app da web
+    io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
+    access_new_device: Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito
+    navigate_to_the_site: Vai al sito
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
@@ -749,17 +750,25 @@ authentication:
     listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
 email:
-  cduModal:
+  cduScreens:
     validateMail:
-      title: Indirizzo email non validato
+      title: Non hai confermato il tuo indirizzo email
       subtitle: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email
       editButton: Modifica email
-      validateButton: Valida email
-    editMail:
+      validateButton: Conferma email
+      header:
+        title: Configura IO
+      help:
+        body: Per continuare a utilizzare l’app è necessario validare il tuo indirizzo email.
+    emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
       subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
       editButton: Modifica email
+      header:
+        title: Configura IO
+      help:
+        body: Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
   read:
     title: Il tuo indirizzo email
     info: Questo è l'indirizzo email che hai associato all'account SPID. Puoi usare in IO un indirizzo email diverso, se preferisci. Per rendere operativo il nuovo indirizzo, dovrai validarlo cliccando sul link che riceverai nella tua casella di posta elettronica.
@@ -1202,6 +1211,10 @@ wallet:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
         primaryAction: Chiudi
+      ALREADY_ONBOARDED:
+        title: Hai già aggiunto questo metodo
+        subtitle: ""
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
     msgErrorUpdateApp: "Si è verificato un errore durante l'apertura dello store delle app"
@@ -1339,6 +1352,7 @@ wallet:
           bottomSheetTitle: "Perché non riesco a pagare con questo metodo?"
           bottomSheetDescription: "La funzionalità “Pagamenti in app” potrebbe essere disattivata.\nPrima di riprovare ad effettuare il pagamento, procedi come segue:\n\n1. vai nella sezione “Portafoglio”;\n2. seleziona il metodo di pagamento che vuoi utilizzare;\n3. abilita “Pagamenti in app”."
   firstTransactionSummary:
+    loading: Recupero delle informazioni in corso
     title: Dati del pagamento
     amount: Importo
     total: Totale pagato
@@ -1789,6 +1803,9 @@ messageDetails:
   sendEmail: Manda email
   write: Scrivi
   id: "ID:"
+  remoteContentError:
+    title: "Non è stato possibile recuperare i dettagli del messaggio"
+    body: "Abbiamo riscontrato un errore nelle informazioni fornite dall'Ente. Riprova tra qualche minuto. Se il problema persiste, contatta l’assistenza."
   attachments:
     loading: "Caricamento del documento..."
     badFormat: "Il formato dell'allegato non è supportato. Contatta l'ente mittente"
@@ -1801,6 +1818,14 @@ messageDetails:
       thirdPart: " per maggiori informazioni."
     failing:
       details: "Non sono riuscito a scaricare l’allegato. Riprova o apri una segnalazione"
+  banner:
+    content1: "Questo è un"
+    content2: "messaggio dinamico:"
+    content3: "il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate."
+    action: "Scopri di più"
+  bottomSheet:
+    title: "Cos'è un messaggio dinamico?"
+    body: "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
@@ -3284,9 +3309,12 @@ idpay:
       success:
         header: Ecco il codice sconto!
         body: "Chiedi all’esercente di poter pagare tramite l’iniziativa {{initiativeName}} e mostra questo codice a barre:"
-        expiresIn: "Il codice scade tra"
-        expired: "Il codice é scaduto."
+        validUpTo: "Vale fino a "
+        expiresIn: "Il codice scade tra "
         saveImageCta: Salva come immagine
+        expired:
+          header: "Il codice è scaduto"
+          CTA: Usa un nuovo codice
       error:
         generic:
           body: In questo momento non è possibile generare un codice
@@ -3389,6 +3417,7 @@ idpay:
               SUSPENDED: "Sospensione"
               READMITTED: "Riattivazione"
               CIE: "Abilitazione carta d’identità elettronica"
+              UNSUBSCRIBED: "Recesso dall’iniziativa"
     discountDetails:
       bottomSheetOptions:
         scanQr: Inquadra un codice QR
@@ -3499,35 +3528,37 @@ idpay:
         goToInitiative: Vai all'iniziativa
       message:
         GENERIC:
-          title: "C’è un problema sui nostri sistemi"
-          subtitle: "Ci scusiamo per il disagio.\nTi invitiamo a riprovare più tardi."
-        NOT_STARTED:
-          title: "Non è ancora possibile aderire a questa iniziativa."
-          subtitle: "Testo generico di errore dove spieghiamo che l’iniziativa non è ancora partita."
-        ENDED:
-          title: "Il periodo di adesione è terminato."
-          subtitle: "Testo generico di errore dove spieghiamo che il periodo di adesione è terminato."
-        NO_BUDGET:
-          title: "Non è più possibile aderire a questa iniziativa."
-          subtitle: "So’ finiti i soldi TBD"
-        SUSPENDED:
-          title: "L’iniziativa è sospesa."
-          subtitle: "Testo generico di errore dove spieghiamo che il l’iniziativa è stata sospesa."
-        NO_REQUIREMENTS:
-          title: "Non hai i requisiti per aderire a questa iniziativa."
-          subtitle: "O non sei stato invitato oppure i controlli hanno dato esito KO. Se sta roba non ti torna, chiedi aiuto."
-        ON_EVALUATION:
-          title: "Valutazione in corso TBD"
-          subtitle: "TBD"
+          title: "Si è verificato un errore imprevisto"
+          subtitle: "Siamo già a lavoro per risolverlo: ti invitiamo a riprovare più tardi."
+        INITIATIVE_NOT_FOUND:
+          title: "Non riusciamo a trovare quest’iniziativa"
+          subtitle: "L’iniziativa potrebbe essere terminata. Per ricevere assistenza, contatta l’ente promotore."
+        UNSATISFIED_REQUIREMENTS:
+          title: "Non hai i requisiti per aderire a questa iniziativa"
+          subtitle: "I controlli di verifica hanno già dato esito negativo.\nSe pensi ci sia un errore, contatta l’ente promotore."
+        USER_NOT_IN_WHITELIST:
+          title: "Questa iniziativa non è rivolta a te"
+          subtitle: "Il tuo Codice Fiscale non è incluso nella lista di chi ha diritto ai fondi previsti dall’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        INITIATIVE_NOT_STARTED:
+          title: "Le iscrizioni non sono ancora aperte"
+          subtitle: "Consulta le regole dell’iniziativa per scoprire quando sarà possibile aderire all’iniziativa."
+        INITIATIVE_ENDED:
+          title: "Le iscrizioni sono terminate"
+          subtitle: "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        BUDGET_EXHAUSTED:
+          title: "I fondi messi a disposizione dall’ente sono terminati"
+          subtitle: "Non è più possibile aderire all’iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        USER_UNSUBSCRIBED:
+          title: "Non puoi aderire di nuovo"
+          subtitle: "Hai già effettuato il recesso da questa iniziativa. Per maggiori informazioni, contatta l’ente promotore."
+        USER_ONBOARDED:
+          title: "Hai già aderito a questa iniziativa"
         NOT_ELIGIBLE:
-          title: "Graduatoria KO"
-          subtitle: "TBD"
-        ONBOARDED:
-          title: "Evviva, hai già aderito"
-          subtitle: "Vatte a vedè l’iniziativa"
-        UNSUBSCRIBED:
-          title: "Hai fatto il recesso"
-          subtitle: "TBD"
+          title: "Non risulti in graduatoria"
+          subtitle: "Per maggiori informazioni, contatta l’ente promotore."
+        ON_EVALUATION:
+          title: "L’ente sta valutando la tua domanda d’adesione"
+          subtitle: "Quando pronto, riceverai l’esito tramite un messaggio in app."
     headerTitle: "Adesione all'iniziativa"
     beforeContinue:
       text1: "Proseguendo accetti i "
@@ -3703,18 +3734,30 @@ idpay:
       failure:
         GENERIC:
           title: Si è verificato un errore imprevisto
-          body: Non è stato addebitato alcun importo.
-        REJECTED:
-          title: Autorizzazione negata
-          body: Testo TBD
-        EXPIRED:
-          title: La sessione è scaduta
-          body: Non è stato addebitato alcun importo. Per la tua sicurezza, hai a disposizione 5 minuti per completare l’operazione.
+          subtitle: Non è stato addebitato alcun importo.
+        TRANSACTION_EXPIRED:
+          title: Il codice è scaduto
+          subtitle: Chiedi all’esercente di crearne uno nuovo.
+        USER_SUSPENDED:
+          title: Non puoi autorizzare quest’operazione
+          subtitle: "Il tuo profilo è stato sospeso per accertamenti.\nSegui le istruzioni ricevute dall’ente promotore dell’iniziativa."
+        USER_NOT_ONBOARDED:
+          title: Non puoi autorizzare quest’operazione
+          subtitle: La richiesta di pagamento fa riferimento ad un’iniziativa a cui non hai aderito.
+        USER_UNSUBSCRIBED:
+          title: Non puoi più usare i fondi previsti dall’iniziativa
+          subtitle: Hai effettuato il recesso dall’iniziativa.
+        ALREADY_AUTHORIZED:
+          title: L’operazione è stata già confermata!
         BUDGET_EXHAUSTED:
-          title: Autorizzazione negata
-          body: Non hai abbastanza soldi per autorizzare
-        AUTHORIZED:
-          title: L’operazione è stata già autorizzata!
+          title: Il saldo è insufficiente
+          subtitle: L’importo richiesto dall’esercente è superiore al saldo disponibile della tua iniziativa.
+        ALREADY_ASSIGNED:
+          title: Il codice è stato già usato da un altro utente
+          subtitle: Se si tratta di un errore, chiedi all’esercente di crearne uno nuovo.
+        INVALID_DATE:
+          title: Non puoi usare i fondi previsti dall’iniziativa
+          subtitle: Controlla le regole dell’iniziativa per scoprire il periodo in cui è possibile farlo.
     manualInput:
       title: Autorizza una transazione
       subtitle: Inserisci il codice di 8 caratteri riportato sotto al codice QR.
@@ -3786,3 +3829,25 @@ fastLogin:
         description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
 whatsNew:
   title: Cosa cambia?
+bonusCard:
+  validUntil: Valida fino al {{endDate}}
+  expiring: Scade il {{endDate}}
+  paused: In pausa
+  removed: Rimossa
+transaction:
+  details:
+    title: Dettaglio operazione
+    totalAmount: Totale
+    totalFee: Il totale comprende
+    totalFeePsp: di commissione, applicata da {{pspName}}
+    info:
+      title: Informazioni sulla transazione
+      pspName: Gestore della transazione (PSP)
+      dateAndHour: Data e ora
+      transactionId: ID transazione
+    operation:
+      amount: Importo
+      creditor: Ente creditore
+      debtor: Debitore
+      iuv: IUV
+      subject: Oggetto del pagamento

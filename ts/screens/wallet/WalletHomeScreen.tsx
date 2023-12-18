@@ -62,7 +62,8 @@ import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
+import { WalletBarcodeRoutes } from "../../features/walletV3/barcode/navigation/routes";
+import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -436,6 +437,24 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.props.loadTransactions(this.props.transactionsLoadedLength);
   };
 
+  private navigateToWalletTransactionDetailsScreen = (
+    transaction: Transaction
+  ) => {
+    if (this.props.isDesignSystemEnabled) {
+      this.props.navigation.navigate(
+        WalletTransactionRoutes.WALLET_TRANSACTION_MAIN,
+        {
+          screen: WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS,
+          params: {
+            transactionId: transaction.id
+          }
+        }
+      );
+    } else {
+      this.props.navigateToTransactionDetailsScreen(transaction);
+    }
+  };
+
   private transactionList(
     potTransactions: pot.Pot<ReadonlyArray<Transaction>, Error>
   ) {
@@ -446,7 +465,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         areMoreTransactionsAvailable={this.props.areMoreTransactionsAvailable}
         onLoadMoreTransactions={this.handleLoadMoreTransactions}
         navigateToTransactionDetails={
-          this.props.navigateToTransactionDetailsScreen
+          this.navigateToWalletTransactionDetailsScreen
         }
         ListEmptyComponent={this.listEmptyComponent()}
       />
@@ -455,9 +474,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private navigateToPaymentScanQrCode = () => {
     if (this.props.isDesignSystemEnabled) {
-      this.props.navigation.navigate(
-        WalletPaymentRoutes.WALLET_PAYMENT_BARCODE_SCAN
-      );
+      this.props.navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
+        screen: WalletBarcodeRoutes.WALLET_BARCODE_SCAN
+      });
     } else {
       this.props.navigateToPaymentScanQrCode();
     }
@@ -564,8 +583,8 @@ const mapStateToProps = (state: GlobalState) => ({
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
   bpdConfig: bpdRemoteConfigSelector(state),
-  isIdPayEnabled: isIdPayEnabledSelector(state),
-  isDesignSystemEnabled: isDesignSystemEnabledSelector(state)
+  isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
+  isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

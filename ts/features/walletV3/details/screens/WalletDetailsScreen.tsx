@@ -38,7 +38,17 @@ export type WalletDetailsScreenRouteProps = RouteProp<
 
 const generateCardComponent = (walletDetails: WalletInfoDetails) => {
   switch (walletDetails.type) {
+    case TypeEnum.PAYPAL:
+      const paypalDetails = walletDetails as WalletInfoDetails2;
+      return (
+        <PaymentCardBig
+          testID="CreditCardComponent"
+          cardType="PAYPAL"
+          holderEmail={paypalDetails.maskedEmail}
+        />
+      );
     case TypeEnum.CARDS:
+    default:
       const cardDetails = walletDetails as WalletInfoDetails1;
       return (
         <PaymentCardBig
@@ -48,15 +58,6 @@ const generateCardComponent = (walletDetails: WalletInfoDetails) => {
           holderName={cardDetails.holder}
           hpan={cardDetails.maskedPan}
           cardIcon={cardDetails.brand.toLowerCase() as IOLogoPaymentExtType}
-        />
-      );
-    case TypeEnum.PAYPAL:
-      const paypalDetails = walletDetails as WalletInfoDetails2;
-      return (
-        <PaymentCardBig
-          testID="CreditCardComponent"
-          cardType="PAYPAL"
-          holderEmail={paypalDetails.maskedEmail}
         />
       );
   }

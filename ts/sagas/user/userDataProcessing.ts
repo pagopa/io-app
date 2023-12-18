@@ -12,6 +12,7 @@ import {
 } from "../../store/actions/userDataProcessing";
 import { SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError, getError } from "../../utils/errors";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 
 /**
  * The following logic:
@@ -26,11 +27,18 @@ export function* loadUserDataProcessingSaga(
 ): SagaIterator {
   const choice = action.payload;
   try {
-    const response: SagaCallReturnType<typeof getUserDataProcessingRequest> =
-      yield* call(getUserDataProcessingRequest, {
+    const response = (yield* call(
+      withRefreshApiCall,
+      getUserDataProcessingRequest({
         choice
-      });
+      }),
+      action
+    )) as unknown as SagaCallReturnType<typeof getUserDataProcessingRequest>;
+
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
       if (response.right.status === 404 || response.right.status === 200) {
         yield* put(
           loadUserDataProcessing.success({
@@ -65,11 +73,17 @@ export function* upsertUserDataProcessingSaga(
 ): SagaIterator {
   const choice = action.payload;
   try {
-    const response: SagaCallReturnType<typeof postUserDataProcessingRequest> =
-      yield* call(postUserDataProcessingRequest, {
+    const response = (yield* call(
+      withRefreshApiCall,
+      postUserDataProcessingRequest({
         body: { choice }
-      });
+      }),
+      action
+    )) as unknown as SagaCallReturnType<typeof postUserDataProcessingRequest>;
 
+    if (E.isRight(response) && response.right.status === 401) {
+      return;
+    }
     if (E.isRight(response) && response.right.status === 200) {
       yield* put(upsertUserDataProcessing.success(response.right.value));
       return E.right(response.right.value);
@@ -98,11 +112,18 @@ export function* deleteUserDataProcessingSaga(
   const choice = action.payload;
 
   try {
-    const response: SagaCallReturnType<typeof deleteUserDataProcessingRequest> =
-      yield* call(deleteUserDataProcessingRequest, {
+    const response = (yield* call(
+      withRefreshApiCall,
+      deleteUserDataProcessingRequest({
         choice
-      });
+      }),
+      action
+    )) as unknown as SagaCallReturnType<typeof deleteUserDataProcessingRequest>;
+
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        return;
+      }
       if (response.right.status === 202) {
         yield* put(
           deleteUserDataProcessing.success({

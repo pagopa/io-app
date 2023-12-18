@@ -5,7 +5,9 @@ import {
   H3,
   HeaderSecondLevel,
   IOColors,
+  IOStyles,
   IOVisualCostants,
+  LabelSmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -19,13 +21,14 @@ import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/Tra
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { formatNumberCurrencyCents } from "../../common/utils/strings";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayBarcodeExpireProgressBar } from "../components/BarcodeExpirationProgressBar";
 import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
-import { idpayInitiativeDetailsSelector } from "../../details/store";
+import { idPayGenerateBarcode } from "../store/actions";
 
 // -------------------- types --------------------
 
@@ -39,6 +42,9 @@ type IdPayBarcodeResultRouteProps = RouteProp<
 type SuccessContentProps = {
   goBack: () => void;
   barcode: TransactionBarCodeResponse;
+};
+type BarcodeExpiredContentProps = {
+  initiativeId: string;
 };
 
 // -------------------- main component --------------------
@@ -89,17 +95,19 @@ const IdPayBarcodeResultScreen = () => {
 
 const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
   const trx = barcode.trxCode.toUpperCase();
+  const [isBarcodeExpired, setIsBarcodeExpired] = React.useState(false);
+  // expire check is handled by the progress bar
+  // to avoid unnecessary rerenders, which could also be on the
+  // heavier side due to barcode generation
+
   const secondsTillExpire = React.useMemo(
     () => calculateIdPayBarcodeSecondsToExpire(barcode),
     [barcode]
   );
-  const initiativeName = pipe(
-    useIOSelector(idpayInitiativeDetailsSelector),
-    pot.toOption,
-    O.map(({ initiativeName }) => initiativeName),
-    O.toUndefined
-  );
 
+  if (isBarcodeExpired) {
+    return <BarcodeExpiredContent initiativeId={barcode.initiativeId} />;
+  }
   return (
     <>
       <HeaderSecondLevel
@@ -131,21 +139,60 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
         <VSpacer size={16} />
         <Body>
           {I18n.t("idpay.barCode.resultScreen.success.body", {
-            initiativeName
+            initiativeName: barcode.initiativeName
           })}
         </Body>
         <VSpacer size={24} />
         <View style={styles.barcodeContainer}>
+          <View style={[IOStyles.row, { alignSelf: "center" }]}>
+            <LabelSmall weight="Regular" color="black">
+              {I18n.t("idpay.barCode.resultScreen.success.validUpTo")}
+            </LabelSmall>
+            <LabelSmall weight="SemiBold" color="black">
+              {formatNumberCurrencyCents(barcode.residualBudgetCents)}
+            </LabelSmall>
+          </View>
+          <VSpacer size={4} />
           <Barcode format="CODE128" value={trx} />
           <H3 style={{ alignSelf: "center" }}>{trx}</H3>
           <VSpacer size={32} />
           <IdPayBarcodeExpireProgressBar
-            secondsExpirationTotal={(barcode.trxExpirationMinutes ?? 0) * 60}
+            secondsExpirationTotal={barcode.trxExpirationSeconds}
             secondsToExpiration={secondsTillExpire}
+            setIsExpired={setIsBarcodeExpired}
           />
         </View>
       </GradientScrollView>
     </>
+  );
+};
+
+const BarcodeExpiredContent = ({
+  initiativeId
+}: BarcodeExpiredContentProps) => {
+  const navigation = useNavigation();
+  const dispatch = useIODispatch();
+  const { goBack } = navigation;
+  const ctaClickHandler = () => {
+    dispatch(idPayGenerateBarcode.request({ initiativeId }));
+  };
+  return (
+    <OperationResultScreenContent
+      title={I18n.t("idpay.barCode.resultScreen.success.expired.header")}
+      action={{
+        label: I18n.t("idpay.barCode.resultScreen.success.expired.CTA"),
+        accessibilityLabel: I18n.t(
+          "idpay.barCode.resultScreen.success.expired.CTA"
+        ),
+        onPress: ctaClickHandler
+      }}
+      secondaryAction={{
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        onPress: goBack
+      }}
+      pictogram="timing"
+    />
   );
 };
 

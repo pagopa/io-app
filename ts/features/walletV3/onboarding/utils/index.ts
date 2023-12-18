@@ -18,6 +18,8 @@ export const successOutcomes: ReadonlyArray<OnboardingOutcome> = ["0"];
 
 export const ONBOARDING_FAQ_ENABLE_3DS = "https://io.italia.it/faq/#n3_3";
 
+export const ONBOARDING_CALLBACK_URL_SCHEMA = "iowallet";
+
 export const ONBOARDING_OUTCOME_PATH = "/wallets/outcomes";
 
 export const ONBOARDING_OUTCOME_ERROR_PICTOGRAM: Record<
@@ -28,7 +30,8 @@ export const ONBOARDING_OUTCOME_ERROR_PICTOGRAM: Record<
   [OnboardingOutcomeEnum.AUTH_ERROR]: "accessDenied",
   [OnboardingOutcomeEnum.TIMEOUT]: "time",
   [OnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
-  [OnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew"
+  [OnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew",
+  [OnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success"
 };
 
 /**

@@ -9,7 +9,7 @@ import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSign
 import { defaultRetryingFetch } from "../../../utils/fetch";
 import { createClient } from "../../../../definitions/fast_login/client";
 
-const FAST_LOGIN_TIMEOUT_MS = 9_000 as Millisecond;
+const FAST_LOGIN_TIMEOUT_MS = 9000 as Millisecond;
 
 // fastLogin call
 export const performFastLogin = async (fastLoginClient: FastLoginClient) =>
