@@ -203,6 +203,15 @@ export function createRootReducer(
                     _persist:
                       // eslint-disable-next-line no-underscore-dangle
                       state.features.loginFeatures.fastLogin.optIn._persist
+                  },
+                  securityAdviceAcknowledged: {
+                    acknowledged:
+                      state.features.loginFeatures.fastLogin
+                        .securityAdviceAcknowledged.acknowledged,
+                    _persist:
+                      // eslint-disable-next-line no-underscore-dangle
+                      state.features.loginFeatures.fastLogin
+                        .securityAdviceAcknowledged._persist
                   }
                 }
               },

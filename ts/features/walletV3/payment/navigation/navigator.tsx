@@ -20,56 +20,62 @@ const Stack = createStackNavigator<WalletPaymentParamsList>();
 export const WalletPaymentNavigator = () => (
   <Stack.Navigator
     initialRouteName={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
-    headerMode={"none"}
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER}
       component={WalletPaymentInputNoticeNumberScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE}
       component={WalletPaymentInputFiscalCodeScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_DETAIL}
       component={WalletPaymentDetailScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD}
       component={WalletPaymentPickMethodScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP}
       component={WalletPaymentPickPspScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM}
       component={WalletPaymentConfirmScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME}
       component={WalletPaymentOutcomeScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
   </Stack.Navigator>
