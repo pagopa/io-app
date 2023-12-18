@@ -1,7 +1,8 @@
-import * as React from "react";
-import type {
-  IOColors,
-  IOColorsStatusForeground
+import {
+  FontSize,
+  fontSizeMapping,
+  type IOColors,
+  type IOColorsStatusForeground
 } from "@pagopa/io-app-design-system";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { ExternalTypographyProps, TypographyProps } from "./common";
@@ -13,12 +14,11 @@ type PartialAllowedColors = Extract<
 >;
 type AllowedColors = PartialAllowedColors | IOColorsStatusForeground;
 type AllowedWeight = Extract<IOFontWeight, "Bold" | "Regular" | "SemiBold">;
-type OwnProps = ExternalTypographyProps<
+type LabelProps = ExternalTypographyProps<
   TypographyProps<AllowedWeight, AllowedColors>
->;
+> & { fontSize?: FontSize };
 
 const fontName: IOFontFamily = "TitilliumWeb";
-const fontSize = 16;
 
 /**
  * Typography component to render `Label` text with font size {@link fontSize} and fontFamily {@link fontName}.
@@ -26,11 +26,13 @@ const fontSize = 16;
  * @param props`
  * @constructor
  */
-export const Label: React.FunctionComponent<OwnProps> = props =>
+export const Label = ({ fontSize, ...rest }: LabelProps) =>
   useTypographyFactory<AllowedWeight, AllowedColors>({
-    ...props,
+    ...rest,
     defaultWeight: "Bold",
     defaultColor: "blue",
     font: fontName,
-    fontStyle: { fontSize }
+    fontStyle: {
+      fontSize: fontSize ? fontSizeMapping[fontSize] : fontSizeMapping.regular
+    }
   });

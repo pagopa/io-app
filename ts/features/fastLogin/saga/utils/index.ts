@@ -14,7 +14,8 @@ import {
 export function* withRefreshApiCall<R, A extends Action>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,
   action?: A | undefined,
-  errorMessage?: string
+  errorMessage?: string,
+  skipThrowingError: boolean = false
 ): SagaIterator<t.Validation<IResponseType<401, any> | R>> {
   const response = yield* call(() => apiCall);
   // BEWARE: we can cast to any only because we know for sure that f will
@@ -24,7 +25,7 @@ export function* withRefreshApiCall<R, A extends Action>(
       yield* put(savePendingAction({ pendingAction: action }));
     }
     yield* call(handleSessionExpiredSaga);
-    if (!action) {
+    if (!action && !skipThrowingError) {
       throw new Error(errorMessage ?? "UNKNOWN");
     }
   }

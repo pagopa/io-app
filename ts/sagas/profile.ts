@@ -52,6 +52,10 @@ import {
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
 import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
+import { ProfileError } from "../store/reducers/profileErrorType";
+import { UpdateProfile412ErrorTypesEnum } from "../../definitions/backend/UpdateProfile412ErrorTypes";
+import { GlobalState } from "../store/reducers/types";
+import { trackProfileLoadSuccess } from "../screens/profile/analytics";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -135,6 +139,7 @@ function* createOrUpdateProfileSaga(
         is_inbox_enabled: currentProfile.is_inbox_enabled,
         is_webhook_enabled: currentProfile.is_webhook_enabled,
         is_email_validated: currentProfile.is_email_validated || false,
+        is_email_already_taken: !!currentProfile.is_email_already_taken,
         is_email_enabled: currentProfile.is_email_enabled,
         version: currentProfile.version,
         email: currentProfile.email,
@@ -156,6 +161,7 @@ function* createOrUpdateProfileSaga(
         is_webhook_enabled: false,
         is_email_validated: action.payload.is_email_validated || false,
         is_email_enabled: action.payload.is_email_enabled || false,
+        is_email_already_taken: !!currentProfile.is_email_already_taken,
         last_app_version: currentProfile.last_app_version ?? appVersion,
         ...action.payload,
         accepted_tos_version: tosVersion,
@@ -168,19 +174,37 @@ function* createOrUpdateProfileSaga(
         body: newProfile
       }),
       undefined,
-      I18n.t("profile.errors.upsert")
+      undefined,
+      true
     )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 
     if (E.isLeft(response)) {
       throw new Error(readablePrivacyReport(response.left));
     }
-
+    if (response.right.status === 401) {
+      return;
+    }
     if (response.right.status === 409) {
       // It could happen that profile update fails due to version number mismatch
       // app has a different version of profile compared to that one owned by the backend
       // so we force profile reloading (see https://www.pivotaltracker.com/n/projects/2048617/stories/171994417)
       yield* put(profileLoadRequest());
-      throw new Error(response.right.value.title);
+      throw new ProfileError(
+        response.right.value.title,
+        "PROFILE_EMAIL_VALIDATION_ERROR"
+      );
+    }
+    if (
+      response.right.status === 412 &&
+      response.right.value.type ===
+        UpdateProfile412ErrorTypesEnum[
+          "https://ioapp.it/problems/email-already-taken"
+        ]
+    ) {
+      throw new ProfileError(
+        response.right.value.title,
+        "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR"
+      );
     }
 
     if (response.right.status !== 200) {
@@ -388,7 +412,11 @@ function* checkStoreHashedFiscalCode(
   ) {
     // delete current store pin
     yield* call(deletePin);
-    yield* put(differentProfileLoggedIn());
+    yield* put(
+      differentProfileLoggedIn({
+        isNewInstall: checkIsDifferentFiscalCode === undefined
+      })
+    );
   }
   yield* put(
     setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
@@ -399,6 +427,9 @@ function* checkStoreHashedFiscalCode(
 function* checkLoadedProfile(
   profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
 ) {
+  const state = (yield* select()) as GlobalState;
+  void trackProfileLoadSuccess(state);
+
   yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
   // If the tos has never been accepted or is not part of the upsert payload, do not run check that could upsert profile
   if (!profileLoadSuccessAction.payload.accepted_tos_version) {

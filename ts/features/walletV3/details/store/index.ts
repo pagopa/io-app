@@ -5,9 +5,14 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { NetworkError } from "../../../../utils/errors";
 import { GlobalState } from "../../../../store/reducers/types";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 
-import { walletDetailsGetInstrument } from "./actions";
+import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
+import {
+  walletDetailsGetInstrument,
+  walletDetailsPagoPaCapabilityToggle
+} from "./actions";
 
 export type WalletDetailsState = {
   walletDetails: pot.Pot<WalletInfo, NetworkError>;
@@ -42,6 +47,31 @@ const walletDetailsReducer = (
       return {
         ...state,
         walletDetails: pot.none
+      };
+    // TOGGLE PAGOPA CAPABILITY
+    case getType(walletDetailsPagoPaCapabilityToggle.success):
+      const walletDetails = pot.getOrElse(
+        state.walletDetails,
+        {} as WalletInfo
+      );
+      const updatedServices = walletDetails.services.map(service => {
+        if (service.name === ServiceNameEnum.PAGOPA) {
+          return {
+            ...service,
+            status:
+              service.status === ServiceStatusEnum.ENABLED
+                ? ServiceStatusEnum.DISABLED
+                : ServiceStatusEnum.ENABLED
+          };
+        }
+        return service;
+      });
+      return {
+        ...state,
+        walletDetails: pot.some({
+          ...walletDetails,
+          services: updatedServices
+        })
       };
   }
   return state;

@@ -1,7 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { loadMessageDetails } from "../../../actions/messages";
+import {
+  loadMessageDetails,
+  reloadAllMessages
+} from "../../../actions/messages";
 import { clearCache } from "../../../actions/profile";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
@@ -50,6 +55,7 @@ const reducer = (
     }
 
     case getType(clearCache):
+    case getType(reloadAllMessages.request):
       return INITIAL_STATE;
 
     default:
@@ -64,10 +70,23 @@ const reducer = (
  * @param state
  * @param id
  */
-export const getDetailsByMessageId = (
+export const messageDetailsByIdSelector = (
   state: GlobalState,
   id: string
 ): pot.Pot<UIMessageDetails, string> =>
-  state.entities.messages.detailsById[id] || pot.none;
+  state.entities.messages.detailsById[id] ?? pot.none;
+
+export const detailedMessageHasThirdPartyDataSelector = (
+  state: GlobalState,
+  id: string
+) =>
+  pipe(
+    messageDetailsByIdSelector(state, id),
+    pot.toOption,
+    O.fold(
+      () => false,
+      messageDetails => messageDetails.hasThirdPartyData
+    )
+  );
 
 export default reducer;
