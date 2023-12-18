@@ -1,8 +1,7 @@
 import { NavigationEvents } from "@react-navigation/compat";
-import { Content } from "native-base";
 import * as React from "react";
 import { useRef } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -80,13 +79,13 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     >
       <NavigationEvents onDidBlur={() => clearTimeout(errorRetry.current)} />
       <SafeAreaView style={IOStyles.flex}>
-        <Content style={IOStyles.flex}>
+        <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           <SearchBankComponent
             bankList={props.bankList}
             isLoading={props.isLoading || props.isError}
             onItemPress={props.onItemPress}
           />
-        </Content>
+        </View>
         <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />
         {renderFooterButtons(props.onBack)}
       </SafeAreaView>

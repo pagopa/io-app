@@ -29,6 +29,11 @@ import { originSchemasWhiteList } from "../originSchemasWhiteList";
 import { GlobalState } from "../../../store/reducers/types";
 import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
+import UnlockAccessScreen from "../../onboarding/UnlockAccessScreen";
+import {
+  trackLoginCieConsentDataUsageScreen,
+  trackLoginCieDataSharingError
+} from "../analytics/cieAnalytics";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -64,6 +69,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
+    trackLoginCieConsentDataUsageScreen();
     this.state = {
       hasError: false,
       isLoginSuccess: undefined
@@ -150,22 +156,29 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
       return loaderComponent;
     }
     if (this.state.hasError) {
-      const errorTranslationKey = this.state.errorCode
-        ? `authentication.errors.spid.error_${this.state.errorCode}`
-        : "authentication.errors.network.title";
-      return (
-        <GenericErrorComponent
-          retryButtonTitle={I18n.t(
-            "authentication.cie.dataUsageConsent.retryCTA"
-          )}
-          onRetry={this.props.resetNavigation}
-          onCancel={undefined}
-          image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
-          text={I18n.t(errorTranslationKey, {
-            defaultValue: I18n.t("authentication.errors.spid.unknown")
-          })}
-        />
-      );
+      if (this.state.errorCode === "22") {
+        trackLoginCieDataSharingError();
+      }
+      if (this.state.errorCode === "1002") {
+        return <UnlockAccessScreen identifier="CIE" />;
+      } else {
+        const errorTranslationKey = this.state.errorCode
+          ? `authentication.errors.spid.error_${this.state.errorCode}`
+          : "authentication.errors.network.title";
+        return (
+          <GenericErrorComponent
+            retryButtonTitle={I18n.t(
+              "authentication.cie.dataUsageConsent.retryCTA"
+            )}
+            onRetry={this.props.resetNavigation}
+            onCancel={undefined}
+            image={require("../../../../img/broken-link.png")} // TODO: use custom or generic image?
+            text={I18n.t(errorTranslationKey, {
+              defaultValue: I18n.t("authentication.errors.spid.unknown")
+            })}
+          />
+        );
+      }
     } else {
       return (
         <WebView

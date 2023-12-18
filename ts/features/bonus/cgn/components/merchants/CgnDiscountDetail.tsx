@@ -8,25 +8,24 @@ import {
   HSpacer,
   VSpacer,
   Icon,
-  IOIconSizeScale
+  IOIconSizeScale,
+  ButtonOutline
 } from "@pagopa/io-app-design-system";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import {
   DiscountCodeType,
   DiscountCodeTypeEnum
 } from "../../../../../../definitions/cgn/merchants/DiscountCodeType";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { H5 } from "../../../../../components/core/typography/H5";
-import { Label } from "../../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { profileSelector } from "../../../../../store/reducers/profile";
 import { localeDateFormat } from "../../../../../utils/locale";
-import { showToast } from "../../../../../utils/showToast";
+import { IOToast } from "../../../../../components/Toast";
 import { openWebUrl } from "../../../../../utils/url";
 import { getCgnUserAgeRange } from "../../utils/dates";
 import { getCategorySpecs } from "../../utils/filters";
@@ -153,8 +152,12 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
         </>
       )}
       {discount.landingPageUrl && discount.landingPageReferrer && (
-        <ButtonDefaultOpacity
-          style={{ width: "100%" }}
+        <ButtonOutline
+          fullWidth
+          label={I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
+          accessibilityLabel={I18n.t(
+            "bonus.cgn.merchantDetail.cta.landingPage"
+          )}
           onPress={() => {
             mixpanelCgnEvent("CGN_LANDING_PAGE_REQUEST");
             onLandingCtaPress?.(
@@ -162,30 +165,23 @@ export const CgnDiscountDetail: React.FunctionComponent<Props> = ({
               discount.landingPageReferrer as string
             );
           }}
-          onPressWithGestureHandler={true}
-        >
-          <Label color={"white"}>
-            {I18n.t("bonus.cgn.merchantDetail.cta.landingPage")}
-          </Label>
-        </ButtonDefaultOpacity>
+        />
       )}
       {discount.discountUrl &&
         merchantType !== DiscountCodeTypeEnum.landingpage && (
-          <ButtonDefaultOpacity
-            style={{ width: "100%" }}
+          <ButtonOutline
+            fullWidth
+            label={I18n.t("bonus.cgn.merchantDetail.cta.discountUrl")}
+            accessibilityLabel={I18n.t(
+              "bonus.cgn.merchantDetail.cta.discountUrl"
+            )}
             onPress={() => {
               mixpanelCgnEvent("CGN_DISCOUNT_URL_REQUEST");
               openWebUrl(discount.discountUrl, () =>
-                showToast(I18n.t("bonus.cgn.generic.linkError"))
+                IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
               );
             }}
-            onPressWithGestureHandler={true}
-            bordered
-          >
-            <Label color={"blue"}>
-              {I18n.t("bonus.cgn.merchantDetail.cta.discountUrl")}
-            </Label>
-          </ButtonDefaultOpacity>
+          />
         )}
       <VSpacer size={16} />
     </View>

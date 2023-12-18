@@ -36,6 +36,9 @@ type Props = {
   isLocal: boolean;
 };
 
+/**
+ * This component is unused and could be deprecated since it's not used in the app.
+ */
 const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [address, setAddress] = useState<string>("");

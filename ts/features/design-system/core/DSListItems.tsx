@@ -1,14 +1,12 @@
-import * as React from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import * as React from "react";
 
-import { Alert, View } from "react-native";
 import {
-  ButtonLink,
   Divider,
   IOThemeContext,
   Icon,
-  IconButton,
   ListItemAction,
+  ListItemHeader,
   ListItemInfo,
   ListItemInfoCopy,
   ListItemNav,
@@ -18,21 +16,22 @@ import {
   ListItemTransactionStatusWithBadge,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Alert, View } from "react-native";
 import { H2 } from "../../../components/core/typography/H2";
 
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 import ListItemComponent from "../../../components/screens/ListItemComponent";
-import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 import CgnMerchantDiscountItem from "../../bonus/cgn/components/merchants/CgnMerchantsDiscountItem";
+import { BankPreviewItem } from "../../wallet/onboarding/bancomat/components/BankPreviewItem";
 
-import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
-import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/ProductCategory";
-import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
+import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
 import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
+import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -78,6 +77,15 @@ export const DSListItems = () => (
           weight={"SemiBold"}
           style={{ marginBottom: 16, marginTop: 16 }}
         >
+          ListItemHeader
+        </H2>
+        {renderListItemHeader()}
+
+        <H2
+          color={theme["textHeading-default"]}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
           ListItemAction
         </H2>
         {renderListItemAction()}
@@ -90,6 +98,29 @@ export const DSListItems = () => (
           ListItemTransaction
         </H2>
         {renderListItemTransaction()}
+
+        <VSpacer size={24} />
+
+        <H2
+          color={"bluegrey"}
+          weight={"SemiBold"}
+          style={{ marginBottom: 16, marginTop: 16 }}
+        >
+          NativeBase lookalikes (not NativeBase)
+        </H2>
+        <DSComponentViewerBox name="BankPreviewItem -- using PressableListItemBase">
+          <BankPreviewItem
+            bank={{
+              abi: "03069",
+              logoUrl: "https://assets.cdn.io.italia.it/logos/abi/03069.png",
+              name: "Intesa Sanpaolo"
+            }}
+            onPress={() => alert("Action triggered")}
+          />
+        </DSComponentViewerBox>
+
+        <VSpacer size={40} />
+
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -182,6 +213,7 @@ export const DSListItems = () => (
             onPress={() => alert("Action triggered")}
           />
         </DSComponentViewerBox>
+
         <H2
           color={"bluegrey"}
           weight={"SemiBold"}
@@ -200,17 +232,6 @@ export const DSListItems = () => (
             text={"Unchecked"}
             value={"Value"}
             checked={false}
-            onPress={() => alert("Action triggered")}
-          />
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="BankPreviewItem">
-          <BankPreviewItem
-            bank={{
-              abi: "03069",
-              logoUrl: "https://assets.cdn.io.italia.it/logos/abi/03069.png",
-              name: "Intesa Sanpaolo"
-            }}
-            inList={true}
             onPress={() => alert("Action triggered")}
           />
         </DSComponentViewerBox>
@@ -279,7 +300,6 @@ export const DSListItems = () => (
             isNew={true}
           />
         </DSComponentViewerBox>
-        <VSpacer size={40} />
       </DesignSystemScreen>
     )}
   </IOThemeContext.Consumer>
@@ -323,7 +343,45 @@ const renderListItemNav = () => (
           onPress={onButtonPress}
           accessibilityLabel="Empty just for testing purposes"
         />
+        <Divider />
+        <ListItemNav
+          value={"Value"}
+          description="This is a list item nav with badge"
+          onPress={() => {
+            alert("Action triggered");
+          }}
+          accessibilityLabel="Empty just for testing purposes"
+          badgeProps={{
+            text: "Novità",
+            variant: "blue"
+          }}
+        />
       </View>
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemNav, without chevron">
+      <ListItemNav
+        value={"Value"}
+        description="This is a list item nav without chevron icon"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+        hideChevron
+      />
+      <Divider />
+      <ListItemNav
+        value={"Value"}
+        description="This is a list item nav with badge without chevron"
+        onPress={() => {
+          alert("Action triggered");
+        }}
+        accessibilityLabel="Empty just for testing purposes"
+        badgeProps={{
+          text: "Novità",
+          variant: "blue"
+        }}
+        hideChevron
+      />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
       <View>
@@ -478,13 +536,14 @@ const renderListItemInfo = () => (
         label="Label"
         value="A looong looooong looooooooong looooooooooong title"
         accessibilityLabel="Empty just for testing purposes"
-        action={
-          <ButtonLink
-            label="Modifica"
-            onPress={onButtonPress}
-            accessibilityLabel={""}
-          />
-        }
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: "Modifica",
+            onPress: onButtonPress,
+            accessibilityLabel: ""
+          }
+        }}
       />
       <Divider />
       <ListItemInfo
@@ -492,13 +551,28 @@ const renderListItemInfo = () => (
         label="Label"
         value="A looong looooong looooooooong looooooooooong title"
         accessibilityLabel="Empty just for testing purposes"
-        action={
-          <IconButton
-            icon="info"
-            onPress={onButtonPress}
-            accessibilityLabel={""}
-          />
-        }
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            onPress: onButtonPress,
+            accessibilityLabel: ""
+          }
+        }}
+      />
+      <Divider />
+      <ListItemInfo
+        icon="psp"
+        label="Label"
+        value="A looong looooong looooooooong looooooooooong title"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: "pagato",
+            variant: "success"
+          }
+        }}
       />
       <Divider />
       <ListItemInfo
@@ -509,6 +583,89 @@ const renderListItemInfo = () => (
       />
     </View>
   </DSComponentViewerBox>
+);
+
+/* LIST ITEM HEADER */
+
+const renderListItemHeader = () => (
+  <>
+    <DSComponentViewerBox name="ListItemHeader, without icon">
+      <ListItemHeader
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemHeader
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: "Modifica",
+            accessibilityLabel: "Modifica",
+            onPress: onButtonPress
+          }
+        }}
+      />
+      <ListItemHeader
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            accessibilityLabel: "info",
+            onPress: onButtonPress
+          }
+        }}
+      />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="ListItemHeader, with icon">
+      <ListItemHeader
+        label="Label"
+        iconName="gallery"
+        accessibilityLabel="Empty just for testing purposes"
+      />
+      <ListItemHeader
+        iconName="creditCard"
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: "Modifica",
+            accessibilityLabel: "Modifica",
+            onPress: onButtonPress
+          }
+        }}
+      />
+      <ListItemHeader
+        iconName="psp"
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "iconButton",
+          componentProps: {
+            icon: "info",
+            accessibilityLabel: "info",
+            onPress: onButtonPress
+          }
+        }}
+      />
+
+      <ListItemHeader
+        iconName="psp"
+        label="Label"
+        accessibilityLabel="Empty just for testing purposes"
+        endElement={{
+          type: "badge",
+          componentProps: {
+            text: "Pagato",
+            variant: "success"
+          }
+        }}
+      />
+    </DSComponentViewerBox>
+  </>
 );
 
 /* LIST ITEM TRANSACTION */

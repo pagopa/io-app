@@ -182,6 +182,7 @@ const WalletNavigator = () => {
         component={AddCreditCardOutcomeCodeMessage}
       />
       <Stack.Screen
+        options={{ gestureEnabled: false }}
         name={ROUTES.PAYMENT_OUTCOMECODE_MESSAGE}
         component={PaymentOutcomeCodeMessage}
       />

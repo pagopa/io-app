@@ -13,6 +13,19 @@ import { abortOnboarding } from "../../../store/actions/onboarding";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { H5 } from "../../../components/core/typography/H5";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { useIOSelector } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { getFlowType } from "../../../utils/analytics";
+import {
+  BiometriActivationUserType,
+  mayUserActivateBiometric
+} from "../../../utils/biometrics";
+import {
+  trackBiometricActivationAccepted,
+  trackBiometricActivationDeclined,
+  trackBiometricActivationEducationalScreen
+} from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "onboarding.contextualHelpTitle",
@@ -26,6 +39,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const FingerprintScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
+
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+
+  useOnFirstRender(() => {
+    trackBiometricActivationEducationalScreen(
+      getFlowType(true, isFirstOnBoarding)
+    );
+  });
 
   const handleGoBack = () =>
     Alert.alert(
@@ -95,21 +116,44 @@ const FingerprintScreen = () => {
           leftButton={{
             title: I18n.t("global.buttons.notNow"),
             bordered: true,
-            onPress: () =>
+            onPress: () => {
+              trackBiometricActivationDeclined(
+                getFlowType(true, isFirstOnBoarding)
+              );
               dispatch(
                 preferenceFingerprintIsEnabledSaveSuccess({
                   isFingerprintEnabled: false
                 })
-              )
+              );
+            }
           }}
           rightButton={{
             title: I18n.t("global.buttons.activate2"),
             onPress: () =>
-              dispatch(
-                preferenceFingerprintIsEnabledSaveSuccess({
-                  isFingerprintEnabled: true
+              mayUserActivateBiometric()
+                .then(_ => {
+                  trackBiometricActivationAccepted(
+                    getFlowType(true, isFirstOnBoarding)
+                  );
+
+                  dispatch(
+                    preferenceFingerprintIsEnabledSaveSuccess({
+                      isFingerprintEnabled: true
+                    })
+                  );
                 })
-              )
+                .catch((err: BiometriActivationUserType) => {
+                  if (err === "PERMISSION_DENIED") {
+                    trackBiometricActivationDeclined(
+                      getFlowType(true, isFirstOnBoarding)
+                    );
+                    dispatch(
+                      preferenceFingerprintIsEnabledSaveSuccess({
+                        isFingerprintEnabled: false
+                      })
+                    );
+                  }
+                })
           }}
         />
       </View>

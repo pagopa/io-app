@@ -1,22 +1,24 @@
-import {
-  Body,
-  Container,
-  Content,
-  Right,
-  Text as NBButtonText,
-  View
-} from "native-base";
 import * as React from "react";
-import { BackHandler, Image, SafeAreaView, StyleSheet } from "react-native";
+import {
+  BackHandler,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import WebView from "react-native-webview";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  ButtonSolidProps,
+  FooterWithButtons,
+  H2,
+  IconButton,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../../../../img/broken-link.png";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { H2 } from "../../../../components/core/typography/H2";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
-import AppHeader from "../../../../components/ui/AppHeader";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
 
@@ -65,11 +67,10 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
     return () => subscription.remove();
   });
 
-  const closeButtonProps = {
-    block: true,
-    primary: true,
+  const closeButtonProps: ButtonSolidProps = {
     onPress: props.onClose,
-    title: I18n.t("global.buttons.close")
+    label: I18n.t("global.buttons.close"),
+    accessibilityLabel: I18n.t("global.buttons.close")
   };
 
   const handleLoadEnd = () => setOnLoadEnd(true);
@@ -86,60 +87,60 @@ const TosBonusComponent: React.FunctionComponent<Props> = props => {
       <View style={styles.errorContainer}>
         <Image source={brokenLinkImage} resizeMode="contain" />
         <VSpacer size={16} />
-        <H2 weight="Bold">{I18n.t("onboarding.tos.error")}</H2>
+        <H2>{I18n.t("onboarding.tos.error")}</H2>
 
         <View style={styles.errorButtonsContainer}>
-          <ButtonDefaultOpacity
+          <ButtonOutline
+            label={I18n.t("global.buttons.retry")}
+            accessibilityLabel={I18n.t("global.buttons.retry")}
             onPress={() => {
               setOnLoadEnd(false);
               setHasError(false);
             }}
-            style={{ flex: 2 }}
-            block={true}
-            primary={true}
-          >
-            <NBButtonText>{I18n.t("global.buttons.retry")}</NBButtonText>
-          </ButtonDefaultOpacity>
+            fullWidth
+          />
         </View>
       </View>
     );
   };
   const ContainerComponent = withLoadingSpinner(() => (
-    <Container>
-      <AppHeader noLeft={true}>
-        <Body />
-        <Right>
-          <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="closeLarge" />
-          </ButtonDefaultOpacity>
-        </Right>
-      </AppHeader>
-      <SafeAreaView style={IOStyles.flex}>
-        <Content contentContainerStyle={styles.flex1} noPadded={true}>
-          {renderError()}
-          {!hasError && (
-            <View style={styles.flex1}>
-              <WebView
-                androidCameraAccessDisabled={true}
-                androidMicrophoneAccessDisabled={true}
-                textZoom={100}
-                style={styles.flex2}
-                onLoadEnd={handleLoadEnd}
-                onError={handleError}
-                source={{ uri: props.tos_url }}
-                injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-              />
-            </View>
-          )}
-        </Content>
-        {isLoadEnd && (
+    <SafeAreaView style={[IOStyles.flex, IOStyles.bgWhite]}>
+      <View
+        style={[IOStyles.horizontalContentPadding, { alignItems: "flex-end" }]}
+      >
+        <IconButton
+          color="neutral"
+          accessibilityLabel={I18n.t("global.buttons.close")}
+          icon="closeLarge"
+          onPress={props.onClose}
+        />
+      </View>
+      <ScrollView contentContainerStyle={styles.flex1}>
+        {renderError()}
+        {!hasError && (
+          <View style={styles.flex1}>
+            <WebView
+              androidCameraAccessDisabled={true}
+              androidMicrophoneAccessDisabled={true}
+              textZoom={100}
+              style={styles.flex2}
+              onLoadEnd={handleLoadEnd}
+              onError={handleError}
+              source={{ uri: props.tos_url }}
+              injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
+            />
+          </View>
+        )}
+      </ScrollView>
+      {isLoadEnd && (
+        <View>
           <FooterWithButtons
             type="SingleButton"
-            leftButton={closeButtonProps}
+            primary={{ type: "Outline", buttonProps: closeButtonProps }}
           />
-        )}
-      </SafeAreaView>
-    </Container>
+        </View>
+      )}
+    </SafeAreaView>
   ));
   return <ContainerComponent isLoading={!isLoadEnd} />;
 };

@@ -139,7 +139,7 @@ const IdPayDiscountInstrumentsScreen = () => {
             />
             <Divider />
             <IdPayDiscountInstrumentEnrollmentSwitch
-              instrumentType={InstrumentTypeEnum.QRCODE}
+              instrumentType={InstrumentTypeEnum.APP_IO_PAYMENT}
             />
             <VSpacer size={16} />
           </ScrollView>

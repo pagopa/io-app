@@ -85,14 +85,17 @@ const useTimelineDetailsBottomSheet = (
       O.map(details => {
         switch (details.operationType) {
           case TransactionOperationTypeEnum.TRANSACTION:
-            if (details.channel === ChannelEnum.QRCODE) {
+            if (details.channel === ChannelEnum.RTD) {
               return (
-                <TimelineDiscountTransactionDetailsComponent
-                  transaction={details}
-                />
+                <TimelineTransactionDetailsComponent transaction={details} />
               );
             }
-          // eslint-disable-next-line no-fallthrough
+            return (
+              <TimelineDiscountTransactionDetailsComponent
+                transaction={details}
+              />
+            );
+
           case TransactionOperationTypeEnum.REVERSAL:
             return (
               <TimelineTransactionDetailsComponent transaction={details} />

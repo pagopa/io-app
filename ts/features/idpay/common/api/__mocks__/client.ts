@@ -23,5 +23,6 @@ export const mockIDPayClient = {
   deletePayment: jest.fn(),
   enrollInstrumentCode: jest.fn(),
   generateCode: jest.fn(),
-  getIdpayCodeStatus: jest.fn()
+  getIdpayCodeStatus: jest.fn(),
+  createBarCodeTransaction: jest.fn()
 };

@@ -32,7 +32,7 @@ import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/
 type Props = {
   messageId: UIMessageId;
   attachment: UIAttachment;
-  skipDownloadAttachment?: boolean;
+  enableDownloadAttachment?: boolean;
   onLoadComplete?: () => void;
   onPDFError?: () => void;
   onShare?: () => void;
@@ -79,7 +79,7 @@ const renderError = (title: string, body: string) => (
 const renderPDF = (
   downloadPath: string,
   isPDFError: boolean,
-  props: Omit<Props, "skipDownloadAttachment">,
+  props: Omit<Props, "enableDownloadAttachment">,
   onPDFLoadingError: () => void
 ) => (
   <>
@@ -183,7 +183,7 @@ const renderFooter = (
   );
 
 export const MessageAttachmentPreview = ({
-  skipDownloadAttachment = true,
+  enableDownloadAttachment = true,
   ...props
 }: Props): React.ReactElement => {
   const dispatch = useIODispatch();
@@ -209,7 +209,7 @@ export const MessageAttachmentPreview = ({
   // blob data is present or if there was a previous error in
   // downloading the data
   const shouldDownloadAttachment =
-    skipDownloadAttachment &&
+    enableDownloadAttachment &&
     isFirstRendering.current &&
     (isStrictNone(downloadPot) || pot.isError(downloadPot));
 
@@ -226,7 +226,7 @@ export const MessageAttachmentPreview = ({
   // since PN attachments are downloaded before entering this component)
   const customGoBack = useCallback(() => {
     if (
-      skipDownloadAttachment &&
+      enableDownloadAttachment &&
       (pot.isLoading(downloadPot) || pot.isUpdating(downloadPot))
     ) {
       dispatch(cancelPreviousAttachmentDownload());
@@ -234,7 +234,7 @@ export const MessageAttachmentPreview = ({
     // eslint-disable-next-line functional/immutable-data
     autoBackOnErrorHandled.current = true;
     navigation.goBack();
-  }, [downloadPot, dispatch, skipDownloadAttachment, navigation]);
+  }, [downloadPot, dispatch, enableDownloadAttachment, navigation]);
 
   useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -248,7 +248,7 @@ export const MessageAttachmentPreview = ({
       );
     } else if (
       !autoBackOnErrorHandled.current &&
-      skipDownloadAttachment &&
+      enableDownloadAttachment &&
       pot.isError(downloadPot)
     ) {
       // eslint-disable-next-line functional/immutable-data
@@ -261,7 +261,7 @@ export const MessageAttachmentPreview = ({
     attachment,
     downloadPot,
     dispatch,
-    skipDownloadAttachment,
+    enableDownloadAttachment,
     navigation,
     shouldDownloadAttachment
   ]);

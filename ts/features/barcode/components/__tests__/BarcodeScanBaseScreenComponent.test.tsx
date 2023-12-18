@@ -147,6 +147,7 @@ const renderComponent = () => {
           onBarcodeError={() => null}
           onFileInputPressed={() => null}
           onManualInputPressed={() => null}
+          barcodeAnalyticsFlow="home"
         />
       ),
       ROUTES.MAIN,

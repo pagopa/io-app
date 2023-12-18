@@ -5,25 +5,25 @@ import {
   IconButton,
   HSpacer,
   VSpacer,
-  IOSpacingScale
+  IOSpacingScale,
+  Badge,
+  ButtonOutline
 } from "@pagopa/io-app-design-system";
 import { EycaCardActivated } from "../../../../../../../definitions/cgn/EycaCardActivated";
+import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
+import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRevoked";
+
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { Monospace } from "../../../../../../components/core/typography/Monospace";
-import { EycaCardExpired } from "../../../../../../../definitions/cgn/EycaCardExpired";
-import { EycaCardRevoked } from "../../../../../../../definitions/cgn/EycaCardRevoked";
 import { H5 } from "../../../../../../components/core/typography/H5";
 import { localeDateFormat } from "../../../../../../utils/locale";
-import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../../../components/core/typography/Label";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
-import { IOBadge } from "../../../../../../components/core/IOBadge";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
-import { showToast } from "../../../../../../utils/showToast";
+import { IOToast } from "../../../../../../components/Toast";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;
@@ -48,32 +48,26 @@ const EycaStatusDetailsComponent = (props: Props) => {
     switch (props.eycaCard.status) {
       case "ACTIVATED":
         return (
-          <IOBadge
+          <Badge
             testID={"eyca-status-badge"}
-            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.active")}
-            variant="solid"
-            color="aqua"
+            variant="success"
           />
         );
       case "REVOKED":
         return (
-          <IOBadge
+          <Badge
             testID={"eyca-status-badge"}
-            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
-            variant="solid"
-            color="grey"
+            variant="default"
           />
         );
       case "EXPIRED":
         return (
-          <IOBadge
+          <Badge
             testID={"eyca-status-badge"}
-            labelTestID={"eyca-status-label"}
             text={I18n.t("bonus.cgn.detail.status.badge.expired")}
-            variant="solid"
-            color="grey"
+            variant="default"
           />
         );
       default:
@@ -123,19 +117,18 @@ const EycaStatusDetailsComponent = (props: Props) => {
         </H5>
       </View>
       <VSpacer size={16} />
-      <ButtonDefaultOpacity
-        bordered
-        style={{ width: "100%" }}
+      <ButtonOutline
+        fullWidth
+        label={I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts")}
+        accessibilityLabel={I18n.t(
+          "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
+        )}
         onPress={() =>
           openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
-            showToast(I18n.t("bonus.cgn.generic.linkError"))
+            IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
           )
         }
-      >
-        <Label color={"blue"}>
-          {I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts")}
-        </Label>
-      </ButtonDefaultOpacity>
+      />
     </>
   );
 };

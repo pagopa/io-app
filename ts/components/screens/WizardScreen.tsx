@@ -1,6 +1,7 @@
 import {
   Body,
   ButtonLink,
+  ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
   ContentWrapper,
@@ -24,7 +25,7 @@ export type WizardScreenProps = {
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   actionButton?: Pick<
-    ButtonLink,
+    ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   goBack?: () => void;

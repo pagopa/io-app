@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ListItem } from "native-base";
 import React, { useEffect } from "react";
 import {
   View,
@@ -11,7 +10,11 @@ import {
   StyleSheet
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Icon,
+  PressableListItemBase,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
@@ -108,7 +111,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
     psp.logoUrl
   );
   return (
-    <ListItem
+    <PressableListItemBase
       testID={`pspItemTestID_${psp.id}`}
       style={styles.pspListItem}
       accessibilityRole={"button"}
@@ -147,7 +150,7 @@ const PspItem = (props: { psp: IOPayPalPsp; onPress: () => void }) => {
           <Icon name="chevronRightListItem" size={24} color="blue" />
         </View>
       </View>
-    </ListItem>
+    </PressableListItemBase>
   );
 };
 export type PayPalPspUpdateScreenNavigationParams = {

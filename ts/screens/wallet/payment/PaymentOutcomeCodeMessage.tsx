@@ -22,10 +22,15 @@ import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
-import { paymentVerificaSelector } from "../../../store/reducers/wallet/payment";
+import {
+  entrypointRouteSelector,
+  paymentVerificaSelector
+} from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
 import { mixpanelTrack } from "../../../mixpanel";
+import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -128,6 +133,11 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   const learnMoreLink = "https://io.italia.it/faq/#pagamenti";
   const onLearnMore = () => openWebUrl(learnMoreLink);
 
+  useHardwareBackButton(() => {
+    props.navigateToWalletHome(props.shouldGoBackToEntrypointOnSuccess);
+    return true;
+  });
+
   const renderSuccessComponent = () => {
     if (pot.isSome(props.verifica)) {
       const totalAmount =
@@ -146,19 +156,30 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
   return outcomeCode ? (
     <OutcomeCodeMessageComponent
       outcomeCode={outcomeCode}
-      onClose={props.navigateToWalletHome}
+      onClose={() =>
+        props.navigateToWalletHome(props.shouldGoBackToEntrypointOnSuccess)
+      }
       successComponent={renderSuccessComponent}
-      successFooter={() => successFooter(props.navigateToWalletHome)}
+      successFooter={() =>
+        successFooter(() =>
+          props.navigateToWalletHome(props.shouldGoBackToEntrypointOnSuccess)
+        )
+      }
       onLearnMore={onLearnMore}
     />
   ) : null;
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToWalletHome: () => navigateToWalletHome()
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  navigateToWalletHome: (shouldGoBackToEntrypointOnSuccess: boolean) =>
+    shouldGoBackToEntrypointOnSuccess
+      ? dispatch(backToEntrypointPayment())
+      : navigateToWalletHome()
 });
 
 const mapStateToProps = (state: GlobalState) => ({
+  shouldGoBackToEntrypointOnSuccess:
+    entrypointRouteSelector(state)?.name === "PN_ROUTES_MESSAGE_DETAILS",
   outcomeCode: lastPaymentOutcomeCodeSelector(state),
   profileEmail: profileEmailSelector(state),
   verifica: paymentVerificaSelector(state)

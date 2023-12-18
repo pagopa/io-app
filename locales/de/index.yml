@@ -336,13 +336,13 @@ profile:
       exportData:
         cta: "Kopie deiner Daten anfordern"
         title: "Zugriff auf deine Daten"
-        description: "Du erhälst eine Kopie der mit deinem IO-Profil verbundenen Daten"
+        description: "Du erhältst eine Kopie der mit deinem IO-Profil verbundenen Daten"
         info:
           title: "Du kannst deine IO-Profilinformationen jederzeit herunterladen."
         alert:
           requestTitle: "Möchtest du wirklich all deine Daten exportieren?"
           oldRequest: "Wir bearbeiten bereits eine Anfrage zum Datenexport"
-          confirmSubtitle: "Nach der Bearbeitung erhälst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
+          confirmSubtitle: "Nach der Bearbeitung erhältst du eine E-Mail mit allen Informationen, die mit deinem Profil verbunden sind."
         error: "Bei der Anfrage zum Datenexport ist ein Fehler aufgetreten, bitte versuche es erneut!"
       privacyPolicy:
         title: "Datenschutz und Nutzungsbedingungen"
@@ -356,15 +356,15 @@ profile:
         title: "Datenschutz"
         listItem:
           title: "Freigabe von Nutzungsdaten"
-          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App"
+          description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App"
         screen:
           title: "Deine Nutzungsdaten"
-          description: "Unterstütze das IO-Teams bei der Überwachung der Funktionsweise der App und erlaube im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
+          description: "Unterstütze das IO-Team bei der Überwachung der Funktionsweise der App und erlaube, im Falle von Problemen, dir die entsprechende Unterstützung zukommen zu lassen."
           why:
             description:
               one: "IO sammelt nur die für das Funktionieren der angebotenen Dienste "
-              two: "notwendigen "
-              three: "Daten."
+              two: "notwendigen Daten"
+              three: "."
             cta: "Warum?"
           security:
             description:
@@ -470,7 +470,7 @@ profile:
       subtitleExistingUser: "Jetzt kannst du sofort sehen, wer dir geschrieben hat oder dich an wichtige Nachrichten erinnern lassen."
       reminders:
         title: "Erinnerungen zulassen"
-        description: "Auf Antrag der Körperschaft erhälst du Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast"
+        description: "Auf Antrag der Körperschaft erhältst du Push-Benachrichtigungen kurz vor Fälligkeit oder wenn du die Nachrichten noch nicht gelesen hast"
       preview:
         title: "Vorschau anzeigen"
         description: "Absender und Betreff in die Push-Benachrichtigung einfügen · "
@@ -656,7 +656,7 @@ email:
   read:
     title: "Deine E-Mail-Adresse"
     info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
-    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhälst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
+    details: "Du kannst diese Adresse ändern, die du dann mittels Link, den du als E-Mail erhältst, bestätigen musst. In der Zwischenzeit werden IO-Funktionen, die von E-Mails abhängig sind (Zahlungen, Weiterleitung von Nachrichten usw.), deaktiviert."
     alert: "Achtung: dein pagoPA Konto ist mit deiner E-Mail-Adresse verknüpft. Wenn du sie änderst, wird IO deine registrierten Zahlungsmethoden und Transaktionen nicht mehr auflisten."
     help: "Dein SPID-Profil übermittelt deine E-Mail-Adresse an die IO-App. Sollte die Adresse falsch sein oder nicht mehr verwendet werden, kannst du sie direkt in deinem SPID-Konto bearbeiten."
   insert:
@@ -728,6 +728,25 @@ onboarding:
   alert:
     title: "Möchtest du dich wirklich abmelden?"
     description: "Du musst dich erneut anmelden, um die App wieder zu verwenden"
+  biometric:
+    headerTitle: "IO einrichten"
+    available:
+      title: "Biometrische Erkennung aktiveren"
+      settings: "Du kannst deine Präferenz jederzeit unter Profil > Sicherheit ändern."
+      body:
+        infoStart: "Du kannst die biometrische Erkennung anstelle des Entsperrcodes verwenden. Sie ermöglicht dir den Zugriff auf die App und die Bestätigung von Transaktionen und Zahlungen"
+        biometricType: "mit deinem Gesicht oder Fingerabdruck"
+        infoEnd: "auf schnellere und sicherere Weise."
+        enrolledText: "Die biometrischen Daten werden im Speicher deines Telefons gespeichert und werden in keiner Weise an IO-Systeme weitergegeben oder von anderen Parteien gespeichert."
+        notEnrolled:
+          text: "Um sie zu verwenden, geh zu den Geräteeinstellungen und konfiguriere sie. Aktiviere sie dann auf IO unter Profil > Sicherheit."
+    unavailable:
+      title: "Schütze dein Gerät"
+      body:
+        firstInfoStart: "IO schickt dir Mitteilungen, die dich"
+        firstInfoEnd: "persönlich betreffen."
+        secondInfoStart: "Schütze dein Gerät vor unerwünschtem Zugriff und stell sicher, dass nur du auf die App zugreifen kannst. Geh dazu in die Einstellungen deines Geräts, leg"
+        secondInfoEnd: "einen Entsperrcode fest oder konfiguriere die biometrische Erkennung."
   shareData:
     title: "IO einrichten"
   thankYouPage:
@@ -845,6 +864,7 @@ wallet:
       dateTime: "Datum und Uhrzeit"
       detailTitle: "Details"
       help: "Wenn du bei der Eingabe dieser Zahlungsmethode auf ein Problem gestoßen bist, dann schreib uns bitte für weitere Informationen und Details"
+    validUntil: "Gültig bis {{expDate}}"
   searchAbi:
     header: "{{methodName}} hinzufügen"
     bancomat:
@@ -1008,7 +1028,6 @@ wallet:
     success:
       title: "Die Karte wurde hinzugefügt!"
       continueButton: "Weiter"
-    failure: "Fehler beim Hinzufügen einer Karte"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
@@ -1034,8 +1053,12 @@ wallet:
   transactionsShow: "Zeige deine Transaktionen"
   add: "hinzufügen"
   delete:
-    successful: "Zahlungsmethode von deinem Konto entfernt"
-    failed: "Die Zahlungsmethode konnte nicht von deinem Konto entfernt werden"
+    ios:
+      confirm: "Zahlungsmethode entfernen"
+    android:
+      confirm: "Entfernen"
+    successful: "Zahlungsmethode von deinem Konto entfernt!"
+    failed: "Die Zahlungsmethode kann nicht von deinem Konto entfernt werden"
   newPaymentMethod:
     add: "Hinzufügen"
     show: "Anzeigen"
@@ -1139,6 +1162,7 @@ wallet:
     amount: "Betrag"
     total: "Insgesamt bezahlt"
     expireDate: "Zahlungsfrist"
+    dueDate: "Zahlbar innerhalb"
     tranche: "Rate"
     info: "Mehr Infos unter:"
     tel: "Tel:"
@@ -1370,7 +1394,7 @@ wallet:
       description: "Lösche die Karte aus deinem Konto und versuche, sie erneut hinzuzufügen. Vergewissere dich, dass die eingegebenen Daten genau mit denen auf der Karte übereinstimmen."
     code4:
       title: "Prüfe deine E-Mails"
-      description: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, erhälst du in Kürze eine E-Mail mit der Quittung. Solltest du die E-Mail nicht erhalten, wende dich bitte an den Support."
+      description: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, erhältst du in Kürze eine E-Mail mit der Quittung. Solltest du die E-Mail nicht erhalten, wende dich bitte an den Support."
     code7:
       title: "Es liegt ein Problem mit deiner Karte vor"
       description: "Es wurde kein Betrag abgebucht. Für weitere Informationen wende dich bitte an deine Bank."
@@ -1602,7 +1626,7 @@ send_email_messages:
   options:
     disable_all:
       label: "Für alle Dienste deaktivieren"
-      info: "Du erhälst keine Mitteilung mittels E-Mail mehr"
+      info: "Du erhältst keine Mitteilung mittels E-Mail mehr"
     enable_all:
       label: "Für alle aktiven Dienste aktivieren"
       info: "Jede Mitteilung wird an deine E-Mail-Adresse weitergeleitet, wenn der Dienst dies zulässt"
@@ -1637,7 +1661,7 @@ services:
         body:
           text1: "Kein Dienst wird dich kontaktieren können. Um Mitteilungen zu empfangen, musst du sie einzeln konfigurieren."
         bottomSheet:
-          title: "Wenn du bestätigst, erhälst du keine Mitteilungen"
+          title: "Wenn du bestätigst, erhältst du keine Mitteilungen"
           body: "Bei einer manuellen Konfiguration können dir weder aktuelle noch zukünftige IO-Dienste Mitteilungen senden. Damit Dienste, an denen du interessiert bist, dich kontaktieren können, musst du sie einzeln konfigurieren, indem du den Punkt “In der App kontaktieren” auf jeder Registerkarte des Dienstes aktivierst."
   title: "Dienste"
   subTitle: "Aktiviere oder deaktiviere die Dienste, die dir Mitteilungen senden dürfen"
@@ -1756,7 +1780,162 @@ bottomSheets:
     title: "Wo finde ich meine PIN?"
     content: !include bottomsheets/ciePin.md
 bonus:
+  bonusList:
+    title: "Bonus oder Rabatt hinzufügen"
+    contentTitle: "Wähle einen der verfügbaren Boni oder Rabatte"
   requestLabel: "Boni und Rabatte"
+  cgn:
+    generic:
+      linkError: "Die Website des Anbieters ist zur Zeit nicht erreichbar. Bitte versuche es später noch einmal."
+    accessibility:
+      code: "Durch Drücken des Elements wird der Code kopiert"
+    name: "Nationale Jugendkarte"
+    departmentName: "Präsidium des italienischen Ministerrates, Abteilung für Jugendpolitik und Zivildienst"
+    merchantsList:
+      news: "Neu"
+      online: "Online"
+      places: "Orte"
+      navigationTitle: "Rabatte und Ermäßigungen"
+      screenTitle: "Wähle einen Anbieter und entdecke Rabatte und Ermäßigungen"
+      cta:
+        filter: "Filtern"
+      categoriesList:
+        title: "Wähle eine Kategorie und entdecke Rabatte und Ermäßigungen"
+      filter:
+        title: "Anbieter filtern"
+        searchTitle: "Suche nach Name"
+        inputPlaceholder: "Suche nach Geschäft, Theater oder sonstigem"
+        addressTitle: "Suche nach Adresse"
+        addressPlaceholder: "Adresse suchen"
+        sliderLabel: "Entfernung, in der gesucht werden soll"
+        sliderUnit: "Km"
+        orderTitle: "Anzeigen"
+        categories: "Kategorien"
+        cta:
+          cancel: "Entfernen"
+          confirm:
+            zero: "Filter anwenden"
+            one: "({{count}}) Filter anwenden"
+            other: "({{count}}) Filter anwenden"
+        order:
+          byDistance: "Nach der Nähe zu deinem Standort"
+          byName: "Alphabetisch geordnet"
+    merchantDetail:
+      bucket:
+        alert:
+          cta: "Verstanden!"
+        error:
+          noCode: "Die Rabattcodes für diese Ermäßigung sind derzeit abgelaufen, bitte versuche es später noch einmal."
+      title:
+        deals: "Rabatte und Ermäßigungen"
+        description: "Beschreibung"
+        services: "Dienste"
+        addresses: "Adressen"
+        hours: "Öffnungszeiten"
+        validity: "Gültigkeit"
+        discountCode: "Rabattcode"
+        conditions: "Bedingungen"
+      cta:
+        label: "Besuche die Website des Anbieters"
+        landingPage: "Die Ermäßigung nutzen"
+        discountUrl: "Nutze die Ermäßigung"
+      categories:
+        all: "Alle Anbieter"
+        counting: "und weitere {{count}}"
+        cultureAndEntertainment: "Kultur und Freizeit"
+        health: "Gesundheit und Wohlbefinden"
+        learning: "Aus- und Weiterbildung"
+        sport: "Sport"
+        home: "Haushalt"
+        telco: "Telefonie und Internet"
+        finance: "Bank- und Finanzdienstleistungen"
+        travel: "Reisen und Transport"
+        mobility: "Nachhaltige Mobilität"
+        job: "Jobs und Ausbildungsplätze"
+    cta:
+      activeBonus: "Die Karte beantragen"
+      deactivateBonus: "Die Karte deaktivieren"
+      goToDetail: "Die Karte anzeigen"
+    detail:
+      cta:
+        buyers: "CGN Rabatte und Ermäßigungen anzeigen"
+        otp: "Code generieren"
+        eyca:
+          copy: "EYCA Kartennummer kopieren"
+          pending: "EYCA Rabatte und Ermäßigungen anzeigen"
+          bottomSheet: "Besuche die EYCA Website"
+          showEycaDiscounts: "EYCA Rabatte und Ermäßigungen anzeigen"
+      information:
+        active: "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden."
+        warning: "Achtung! "
+        revoked: "Diese Karte wurde aus folgendem Grund widerrufen: {{reason}}"
+        expired: "Diese Karte ist am {{date}} abgelaufen"
+      ownership: "Wer kann die Karte benutzen?"
+      status:
+        title: "Nationale Jugendkarte (CGN)"
+        eyca: "EYCA Karte"
+        eycaCircuit: "EYCA Netzwerk"
+        eycaNumber: "Kartennummer"
+        eycaPending: "Wir verknüpfen deine nationale Jugendkarte mit einer EYCA Nummer."
+        eycaError: "Wir hatten Probleme mit den EYCA Systemen."
+        eycaBottomSheetTitle: "EYCA Kartennummer"
+        eycaDescription: "Bis zum Alter von 31 Jahren ist **deine nationale Jugendkarte Mitglied der EYCA** (European Youth Card Association).\n\nMit der Karte kannst du bei den teilnehmenden Händlern Rabatte und Ermäßigungen bei kulturellen Aktivitäten, beim Einkaufen, im Verkehr, in der Gastronomie und bei der Unterbringung erhalten, und zwar auch in den europäischen Ländern, die an der EYCA teilnehmen."
+        badge:
+          active: "Aktiv"
+          revoked: "Widerrufen"
+          expired: "Abgelaufen"
+        date:
+          activated: "Aktiviert am"
+          expired: "Abgelaufen am"
+          revoked: "Widerrufen am"
+        expiration:
+          cgn: "Aktiv bis"
+          eyca: "Aktiv bis"
+    activation:
+      eyca:
+        loading:
+          caption: "Wir bearbeiten deine Anfrage"
+          subCaption: "Bitte warte etwas."
+        error:
+          title: "Der EYCA-Dienst ist zurzeit nicht verfügbar."
+          body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
+      loading:
+        caption: "Wir aktivieren deine Nationale Jugendkarte"
+        subCaption: "Bitte warte etwas."
+      error:
+        title: "Der Dienst Nationale Jugendkarte ist derzeit nicht verfügbar."
+        body: "Wir entschuldigen uns für die Unannehmlichkeiten.\nBitte versuche es später noch einmal."
+      ineligible:
+        title: "Leider erfüllst du nicht die Voraussetzungen für die Nationale Jugendkarte."
+        body: "Die Nationale Jugendkarte ist nur für italienische und europäische Staatsbürger mit Wohnsitz in Italien im Alter von 18 bis 35 Jahren erhältlich."
+      timeout:
+        title: "Wir bearbeiten deine Anfrage."
+        body: "Wir werden dir eine Nachricht in der App schicken, wenn deine Jugendkarte aktiv ist."
+      alreadyActive:
+        title: "Deine Nationale Jugendkarte ist aktiv!"
+        body: "Du kannst die Details im Abschnitt Konto einsehen."
+      pending:
+        title: "Deine Nationale Jugendkarte wird gerade aktiviert."
+        body: "Du erhältst eine Nachricht, wenn sie aktiviert ist."
+      success:
+        title: "Geschafft!"
+        body: "Deine Nationale Jugendkarte ist aktiv."
+      deactivate:
+        toast: "Die Anfrage zur Deaktivierung war erfolgreich"
+        alert:
+          title: "Karte deaktivieren"
+          message: "Bist du sicher, dass du deine Nationale Jugendkarte deaktivieren möchtest? Wenn du dies bestätigst, verlierst du die Möglichkeit, die Vorteile der Initiative in Anspruch zu nehmen und die Karte wird aus deinem Konto verschwinden."
+    otp:
+      error: "Aufgrund eines technischen Problems war es uns nicht möglich, einen Rabattcode zu generieren. Bitte versuche es erneut."
+      code:
+        title: "Dein Rabattcode"
+        validUntil: "Noch gültig für"
+        minutes:
+          one: "1 Minute"
+          other: "{{minutes}} Minuten"
+        seconds:
+          one: "1 Sekunde"
+          other: "{{seconds}} Sekunden"
 features:
   euCovidCertificate:
     save:

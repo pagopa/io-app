@@ -55,7 +55,10 @@ const styles = StyleSheet.create({
 
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
- * @param props
+ *
+ * This screen is unused and could be deprecated
+ *
+ *  @param props
  * @constructor
  */
 const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (

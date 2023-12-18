@@ -19,6 +19,7 @@ import variables from "../theme/variables";
 import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
+import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
@@ -61,6 +62,7 @@ export const MainTabNavigator = () => {
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
+      <HeaderFirstLevelHandler />
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: {

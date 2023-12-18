@@ -3397,10 +3397,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.13.1":
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.13.1.tgz#409c065e5cb96fe7dcf65c3550f32e795481ee78"
-  integrity sha512-99/ojMGrEEzDYSI9BzfCT8W774QGmRQfJdDv9hn9UohSTZSacOQJxWWYwYRQzeSYz/kYnj/v0nH0FP5bu7H/mw==
+"@pagopa/io-app-design-system@1.18.0":
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.18.0.tgz#7e15ab07107ab8ae411d885f26196725824ea1a2"
+  integrity sha512-AeExqeir6a/+bOZEyoeV1Ee3MrUS/Kg7vBdO6c8G7vm2yiE+5ghybSQkNTH15QNHag28lRasygrvWNbBNFsO9A==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -10333,9 +10333,9 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   dependencies:
     loose-envify "^1.0.0"
 
-"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.24":
+"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.25":
   version "0.3.23"
-  resolved "https://github.com/pagopa/io-react-native-zendesk.git#62559dc219583834f0bae2864d959f51f2d19572"
+  resolved "https://github.com/pagopa/io-react-native-zendesk.git#66492028f52d3c64392ac4174d80d6fbf65d0e92"
 
 io-ts@2.2.20:
   version "2.2.20"
@@ -16297,10 +16297,10 @@ rn-placeholder@1.3.3, rn-placeholder@^1.3.3:
   dependencies:
     prop-types "15.6.2"
 
-rn-qr-generator@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.3.0.tgz#5f51f2b2798cecc7073af5fca7fed25f1664d90d"
-  integrity sha512-ig8RoUi0vWxkJigWosj7MZuugYIoSH7lSyw3oZT7fesacMYvoO91kyj2Zfejhu9TT6N5EbDLdMnNGcd2C3GKiA==
+rn-qr-generator@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/rn-qr-generator/-/rn-qr-generator-1.4.0.tgz#57ea7109df809d70103ee5ee0569f7bd4fb07a79"
+  integrity sha512-L3HS1eahpAA3k2s/CGZOBuv3bELshodNHO/aw9tWVrbZagSXJ9BrDat/CUnDVNWjCl8/qt9Dv+8CYY2K1q4iMQ==
 
 rsvp@^4.8.4:
   version "4.8.5"
