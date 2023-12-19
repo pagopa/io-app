@@ -19,9 +19,7 @@ import { UIMessageId } from "../types";
 describe("messageGetStatusReducer", () => {
   it("INITIAL_STATE should match expected one", () => {
     const expectedInitialState = {
-      status: "idle",
-      failurePhase: "none",
-      successData: undefined
+      status: "idle"
     };
     expect(INITIAL_STATE).toStrictEqual(expectedInitialState);
   });
@@ -30,17 +28,21 @@ describe("messageGetStatusReducer", () => {
     expect(initialState).toStrictEqual(INITIAL_STATE);
   });
   it("should match loading state after getMessageDataAction.request action", () => {
+    const messageId = "m1" as UIMessageId;
+    const fromPushNotification = false;
     const expectedLoadingState = {
       status: "loading",
-      failurePhase: "none",
-      successData: undefined
+      data: {
+        messageId,
+        fromPushNotification
+      }
     };
     const initialState = messageGetStatusReducer(undefined, {} as Action);
     const loadingState = messageGetStatusReducer(
       initialState,
       getMessageDataAction.request({
-        messageId: "m1" as UIMessageId,
-        fromPushNotification: false
+        messageId,
+        fromPushNotification
       })
     );
     expect(loadingState).toStrictEqual(expectedLoadingState);
@@ -58,7 +60,6 @@ describe("messageGetStatusReducer", () => {
     };
     const expectedSuccessState = {
       status: "success",
-      failurePhase: "none",
       successData
     };
     const initialState = messageGetStatusReducer(undefined, {} as Action);
@@ -72,8 +73,7 @@ describe("messageGetStatusReducer", () => {
     const failurePhase = "paginatedMessage";
     const expectedFailureState = {
       status: "error",
-      failurePhase,
-      successData: undefined
+      failurePhase
     };
     const initialState = messageGetStatusReducer(undefined, {} as Action);
     const failureState = messageGetStatusReducer(
@@ -86,8 +86,7 @@ describe("messageGetStatusReducer", () => {
     const failurePhase = "preconditions";
     const expectedBlockedFailureState = {
       status: "blocked",
-      failurePhase,
-      successData: undefined
+      failurePhase
     };
     const initialState = messageGetStatusReducer(undefined, {} as Action);
     const blockedFailureState = messageGetStatusReducer(
