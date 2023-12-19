@@ -1,5 +1,7 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import * as O from "fp-ts/lib/Option";
+
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { SagaCallReturnType } from "../../../../../types/utils";
@@ -11,6 +13,7 @@ import { walletPaymentCalculateFees } from "../../store/actions/networking";
 import { getSortedPspList } from "../../../common/utils";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { walletPaymentPickPsp } from "../../store/actions/orchestration";
+import { walletPaymentPickedPspSelector } from "../../store/selectors";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
@@ -49,12 +52,14 @@ export function* handleWalletPaymentCalculateFees(
           res.value.bundles,
           "default"
         );
-        if (bundlesSortedByDefault[0]?.onUs) {
+        const chosenPsp = yield* select(walletPaymentPickedPspSelector);
+        // If the sorted psp list has the first element marked as "onUs" and the user has not already chosen a psp, we pre-select the first element
+        if (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) {
           yield* put(walletPaymentPickPsp(bundlesSortedByDefault[0]));
         }
         const sortedResponse: CalculateFeeResponse = {
           ...res.value,
-          bundles: bundlesSortedByDefault
+          bundles: res.value.bundles
         };
         yield* put(walletPaymentCalculateFees.success(sortedResponse));
         return;

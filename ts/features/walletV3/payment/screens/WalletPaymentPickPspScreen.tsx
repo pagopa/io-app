@@ -62,8 +62,13 @@ const WalletPaymentPickPspScreen = () => {
     React.useState<WalletPaymentPspSortType>("default");
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
-  const pspList = pot.toUndefined(pspListPot);
   const isLoading = pot.isLoading(pspListPot);
+
+  const sortedPspList = pipe(
+    pot.toOption(pspListPot),
+    O.map(_ => getSortedPspList(_, sortType)),
+    O.toUndefined
+  );
 
   const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
@@ -105,23 +110,20 @@ const WalletPaymentPickPspScreen = () => {
     onSortChange: handleChangePspSorting
   });
 
-  const sortedPspList = pipe(
-    pot.toOption(pspListPot),
-    O.map(_ => getSortedPspList(_, sortType)),
-    O.toUndefined
-  );
-
   const handlePspSelection = React.useCallback(
     (bundleId: string) => {
-      if (!pspList) {
+      if (!sortedPspList) {
         return;
       }
-      const selectedBundle = pspList.find(psp => psp.idBundle === bundleId);
+      const selectedBundle = sortedPspList.find(
+        psp => psp.idBundle === bundleId
+      );
+
       if (selectedBundle) {
         dispatch(walletPaymentPickPsp(selectedBundle));
       }
     },
-    [dispatch, pspList]
+    [dispatch, sortedPspList]
   );
 
   const handleContinue = () => {
@@ -178,12 +180,14 @@ const WalletPaymentPickPspScreen = () => {
       }}
     >
       <SelectPspHeadingContent />
-      {/* <RadioGroup<string>
-        onPress={handlePspSelection}
-        type="radioListItemWithAmount"
-        selectedItem={pspSelected?.idBundle}
-        items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
-      /> */}
+      {!isLoading && (
+        <RadioGroup<string>
+          onPress={handlePspSelection}
+          type="radioListItemWithAmount"
+          selectedItem={pspSelected?.idBundle}
+          items={getRadioItemsFromPspList(sortedPspList, showFeaturedPsp)}
+        />
+      )}
       {isLoading && <WalletPspListSkeleton />}
       {sortPspBottomSheet}
     </GradientScrollView>
