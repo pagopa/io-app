@@ -280,7 +280,6 @@ const DeveloperModeSection = () => {
       <ListItemHeader
         label={I18n.t("profile.main.testEnvironmentSectionHeader")}
       />
-
       <ListItemSwitch
         label={I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv")}
         description={I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")}
@@ -517,27 +516,29 @@ const DeveloperModeSection = () => {
       {isPlaygroundsEnabled && renderDeveloperPlaygroundsSection()}
 
       <VSpacer size={24} />
+
       {/* Test Environments */}
       {renderDeveloperTestEnvironmentSection()}
 
       <VSpacer size={24} />
+
       {/* Human Interface/Design System */}
       {renderDeveloperDesignSystemSection()}
 
       {/* Data */}
       {isDebugModeEnabled && (
-        <React.Fragment>
+        <>
           <VSpacer size={24} />
           {renderDeveloperDataSection()}
-        </React.Fragment>
+        </>
       )}
 
       {/* Actions */}
       {isDebugModeEnabled && (
-        <React.Fragment>
+        <>
           <VSpacer size={32} />
           {renderDeveloperActionsSection()}
-        </React.Fragment>
+        </>
       )}
     </>
   );
