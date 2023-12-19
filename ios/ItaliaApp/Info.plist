@@ -62,9 +62,9 @@
     <key>NSAppleMusicUsageDescription</key>
     <string>The app needs NSAppleMusicUsageDescription permission</string>
     <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>The app needs NSBluetoothAlwaysUsageDescription permission</string>
+    <string>IO needs access to Bluetooth to allow you to search and exchange data with the verification app</string>
     <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>The app needs NSBluetoothPeripheralUsageDescription permission</string>
+    <string>IO need access to Bluetooth to allow you to search and exchange data with the verification app</string>
     <key>NSCalendarsUsageDescription</key>
     <string>So that you’ll be able to add deadlines to your calendar and set a reminder.</string>
     <key>NSCameraUsageDescription</key>
