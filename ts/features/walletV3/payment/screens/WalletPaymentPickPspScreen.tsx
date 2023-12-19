@@ -1,13 +1,11 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { GradientScrollView } from "@pagopa/io-app-design-system";
-import {
-  RouteProp,
-  useFocusEffect,
-  useNavigation,
-  useRoute
-} from "@react-navigation/native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import {
@@ -15,29 +13,21 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentCalculateFees } from "../store/actions/networking";
+import { walletPaymentPickPsp } from "../store/actions/orchestration";
 import {
+  walletPaymentAmountSelector,
+  walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
   walletPaymentPspListSelector
 } from "../store/selectors";
-import { walletPaymentPickPsp } from "../store/actions/orchestration";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-
-type WalletPaymentPickPspScreenNavigationParams = {
-  walletId: string;
-  paymentAmountInCents: number;
-};
-
-type WalletPaymentPickPspRouteProps = RouteProp<
-  WalletPaymentParamsList,
-  "WALLET_PAYMENT_PICK_PSP"
->;
 
 const WalletPaymentPickPspScreen = () => {
-  const { params } = useRoute<WalletPaymentPickPspRouteProps>();
-  const { paymentAmountInCents, walletId } = params;
+  const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
+  const selectedWalletOption = useIOSelector(
+    walletPaymentPickedPaymentMethodSelector
+  );
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
@@ -48,6 +38,14 @@ const WalletPaymentPickPspScreen = () => {
 
   const canContinue = O.isSome(selectedPspOption);
 
+  const walletId = pipe(
+    selectedWalletOption as O.Option<WalletInfo>,
+    O.fold(
+      () => "",
+      (wallet: WalletInfo) => wallet.walletId
+    )
+  );
+  const paymentAmountInCents = pot.getOrElse(paymentAmountPot, 99999999);
   useFocusEffect(
     React.useCallback(() => {
       dispatch(
@@ -98,4 +96,3 @@ const WalletPaymentPickPspScreen = () => {
 };
 
 export { WalletPaymentPickPspScreen };
-export type { WalletPaymentPickPspScreenNavigationParams };

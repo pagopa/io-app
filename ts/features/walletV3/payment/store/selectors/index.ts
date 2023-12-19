@@ -18,10 +18,19 @@ export const walletPaymentAllMethodsSelector = createSelector(
   selectWalletPayment,
   state => pot.map(state.allPaymentMethods, _ => _.paymentMethods ?? [])
 );
-
+export const walletPaymentGenericMethodByIdSelector = createSelector(
+  walletPaymentAllMethodsSelector,
+  state => (id: string) =>
+    pot.map(state, methods => methods.find(_ => _.id === id))
+);
 export const walletPaymentUserWalletsSelector = createSelector(
   selectWalletPayment,
   state => pot.map(state.userWallets, _ => _.wallets ?? [])
+);
+export const walletPaymentSavedMethodByIdSelector = createSelector(
+  walletPaymentUserWalletsSelector,
+  state => (id: string) =>
+    pot.map(state, methods => methods.find(_ => _.walletId === id))
 );
 
 export const walletPaymentPickedPaymentMethodSelector = createSelector(

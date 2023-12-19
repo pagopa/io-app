@@ -9,12 +9,12 @@ import {
   RadioItem,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { capitalize } from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { capitalize } from "lodash";
 import React, { useMemo } from "react";
 import { View } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
@@ -39,23 +39,42 @@ import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
   walletPaymentAmountSelector,
-  walletPaymentPickedPaymentMethodSelector,
+  walletPaymentSavedMethodByIdSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 
+type SavedMethodState = {
+  kind: "saved";
+  walletId: string;
+  methodId?: undefined;
+};
+type NotSavedMethodState = {
+  kind: "generic";
+  methodId: string;
+  walletId?: undefined;
+};
+
+type SelectedMethodState = SavedMethodState | NotSavedMethodState | undefined;
 // ----------------- SCREEN -----------------
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const getSavedtMethodById = useIOSelector(
+    walletPaymentSavedMethodByIdSelector
+  );
+  const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
+  const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
+  const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
+  // todo:: will be needed when generic method selection is implemented
+  // const getGenericMethodById = useIOSelector(
+  //   walletPaymentGenericMethodByIdSelector
+  // );
+
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
     React.useState<boolean>(false);
-  const [selectedSavedMethod, setSelectedSavedMethod] = React.useState<
-    string | undefined
-  >(undefined);
-  const [selectedGenericMethod, setSelectedGenericMethod] = React.useState<
-    string | undefined
-  >(undefined);
+  const [selectedMethod, setSelectedMethod] =
+    React.useState<SelectedMethodState>(undefined);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -64,73 +83,41 @@ const WalletPaymentPickMethodScreen = () => {
     }, [dispatch])
   );
 
-  const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
-  const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
-  const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
-  const selectedMethodOption = useIOSelector(
-    walletPaymentPickedPaymentMethodSelector
-  );
-
-  const paymentAmount = pot.getOrElse(paymentAmountPot, undefined);
-
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
 
-  const canContinue = O.isSome(selectedMethodOption);
+  const paymentAmount = pot.getOrElse(paymentAmountPot, undefined);
+  const canContinue = selectedMethod !== undefined;
 
   // ------------------------ HANDLERS --------------------------
 
   const handleSelectSavedMethod = (walletId: string) => {
-    setSelectedSavedMethod(walletId);
-    setSelectedGenericMethod(undefined);
-    pipe(
-      userWalletsPots,
-      pot.toOption,
-      O.map(methods =>
-        // wallets?: [{walletId}] so wallets can be null, and we are checking
-        // a possibly empty array, so we need the double option
-        O.fromNullable(methods.find(method => method.walletId === walletId))
-      ),
-      O.flatten,
-      O.fold(
-        () => void null,
-        method => {
-          dispatch(walletPaymentPickPaymentMethod(method));
-        }
-      )
-    );
+    setSelectedMethod({
+      kind: "saved",
+      walletId
+    });
   };
 
-  const handleSelectNotSavedMethod = (id: string) => {
-    setSelectedSavedMethod(undefined);
-    setSelectedGenericMethod(id);
-    pipe(
-      paymentMethodsPot,
-      pot.toOption,
-      O.map(methods =>
-        // same goes here
-        O.fromNullable(methods.find(method => method.id === id))
-      ),
-      O.flatten,
-      O.fold(
-        () => void null,
-        method => {
-          dispatch(walletPaymentPickPaymentMethod(method));
-        }
-      )
-    );
+  const handleSelectNotSavedMethod = (methodId: string) => {
+    setSelectedMethod({
+      kind: "generic",
+      methodId
+    });
   };
 
   const handleContinue = () => {
     // todo:: should handle the case where the user
     // selects a non saved method
-    if (paymentAmount && selectedSavedMethod) {
+    if (paymentAmount && selectedMethod?.kind === "saved") {
+      pipe(
+        getSavedtMethodById(selectedMethod.walletId),
+        pot.toOption,
+        O.chainNullableK(
+          method => method && dispatch(walletPaymentPickPaymentMethod(method))
+        )
+      );
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP,
-        params: {
-          walletId: selectedSavedMethod,
-          paymentAmountInCents: paymentAmount
-        }
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
       });
     }
   };
@@ -215,7 +202,7 @@ const WalletPaymentPickMethodScreen = () => {
       <ListItemHeader label={I18n.t("wallet.methodSelection.yourMethods")} />
 
       <RadioGroup<string>
-        selectedItem={selectedSavedMethod}
+        selectedItem={selectedMethod?.walletId}
         items={savedMethodsListItems}
         onPress={handleSelectSavedMethod}
       />
@@ -224,7 +211,7 @@ const WalletPaymentPickMethodScreen = () => {
 
       <RadioGroup<string>
         items={notSavedMethodsListItems}
-        selectedItem={selectedGenericMethod}
+        selectedItem={selectedMethod?.methodId}
         onPress={handleSelectNotSavedMethod}
       />
     </GradientScrollView>
