@@ -159,6 +159,10 @@ export function* fetchTransactionsRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(fetchTransactionsFailure(convertUnknownToError(e)));
   }
 }
@@ -186,6 +190,10 @@ export function* fetchTransactionRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(fetchTransactionFailure(convertUnknownToError(e)));
   }
 }
@@ -226,6 +234,10 @@ export function* fetchPspRequestHandler(
       idPsp: action.payload.idPsp,
       error: convertUnknownToError(e)
     });
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(failureAction);
     if (action.payload.onFailure) {
       action.payload.onFailure(failureAction);
@@ -276,6 +288,10 @@ export function* updatePaymentStatusSaga(
       );
     }
   } catch (error) {
+    if (isTimeoutError(getNetworkError(error))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(updatePaymentStatus.failure(getNetworkError(error)));
   }
 }
@@ -308,6 +324,10 @@ export function* setFavouriteWalletRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(setFavouriteWalletFailure(convertUnknownToError(e)));
   }
 }
@@ -377,6 +397,10 @@ export function* updateWalletPspRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     const failureAction = paymentUpdateWalletPsp.failure(
       convertUnknownToError(e)
     );
@@ -440,6 +464,10 @@ export function* deleteAllPaymentMethodsByFunctionRequestHandler(
       );
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(
       deleteAllPaymentMethodsByFunction.failure({
         error: getErrorFromNetworkError(getNetworkError(e))
@@ -492,6 +520,10 @@ export function* deleteWalletRequestHandler(
       );
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     const failureAction = deleteWalletFailure(
       e instanceof Error ? e : new Error()
     );
@@ -535,6 +567,10 @@ export function* addWalletCreditCardRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(
       addWalletCreditCardFailure({
         kind: "GENERIC_ERROR",
@@ -576,6 +612,10 @@ export function* paymentCheckRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(paymentCheck.failure(e instanceof Error ? e : new Error()));
   }
 }
@@ -626,6 +666,10 @@ export function* paymentDeletePaymentRequestHandler(
       throw Error(readablePrivacyReport(response.left));
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(
       paymentDeletePayment.failure(e instanceof Error ? e : new Error())
     );
@@ -831,6 +875,10 @@ export function* getPspV2(
       );
     }
   } catch (e) {
+    if (isTimeoutError(getNetworkError(e))) {
+      // check if also the IO session is expired
+      yield* put(checkCurrentSession.request());
+    }
     yield* put(pspForPaymentV2.failure(getNetworkError(e)));
   }
 }
