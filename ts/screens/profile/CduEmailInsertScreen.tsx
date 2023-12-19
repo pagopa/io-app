@@ -24,8 +24,7 @@ import {
   LabelSmall,
   VSpacer,
   Alert as AlertComponent,
-  FooterWithButtons,
-  IOToast
+  FooterWithButtons
 } from "@pagopa/io-app-design-system";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -61,6 +60,7 @@ import {
 import { getFlowType } from "../../utils/analytics";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
+import { showToast } from "../../utils/showToast";
 
 export type CduEmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -256,7 +256,7 @@ const CduEmailInsertScreen = (props: Props) => {
             ]
           );
         } else {
-          IOToast.error(I18n.t("email.edit.upsert_ko"));
+          showToast(I18n.t("email.edit.upsert_ko"));
         }
         // display a toast with error
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
