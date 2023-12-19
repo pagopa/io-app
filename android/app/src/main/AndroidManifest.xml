@@ -44,6 +44,27 @@
   <!-- Required for local notifications -->
   <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
+  <!-- Request legacy Bluetooth permissions on older devices. -->
+  <uses-permission android:name="android.permission.BLUETOOTH"
+                   android:maxSdkVersion="30" />
+  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
+                   android:maxSdkVersion="30" />
+
+  <!-- Needed only if your app looks for Bluetooth devices.
+       If your app doesn't use Bluetooth scan results to derive physical
+       location information, you can
+       <a href="#assert-never-for-location">strongly assert that your app
+       doesn't derive physical location</a>. -->
+  <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+  <!-- Needed only if your app makes the device discoverable to Bluetooth
+       devices. -->
+  <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+
+  <!-- Needed only if your app communicates with already-paired Bluetooth
+       devices. -->
+  <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
   <application android:name=".MainApplication" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:usesCleartextTraffic="true" android:roundIcon="@mipmap/ic_launcher_round" android:allowBackup="false" android:requestLegacyExternalStorage="true" android:theme="@style/AppTheme">
 
     <!-- START Required by react-native-push-notification -->

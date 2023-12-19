@@ -5,3 +5,4 @@
 "NSPhotoLibraryUsageDescription" = "Potrai salvare bonus e certificati, caricare screenshot e avvisi di pagamento.";
 "NSMicrophoneUsageDescription" = "IO ha necessità di accedere al microfono nel caso in cui desideri mandare una nota vocale";
 "NSPhotoLibraryAddUsageDescription" = "Potrai salvare immagini dall'app sul tuo dispositivo.";
+"NSBluetoothAlwaysUsageDescription" = "IO ha necessità di accedere al Bluetooth per permetterti di cercare e scambiare dati con app di verifica";
