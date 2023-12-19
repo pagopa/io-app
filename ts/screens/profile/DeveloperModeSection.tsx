@@ -16,11 +16,9 @@ import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo, View } from "react-native";
-import { connect } from "react-redux";
 import { IOToast } from "../../components/Toast";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { AlertModal } from "../../components/ui/AlertModal";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
@@ -35,10 +33,9 @@ import {
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
-import { Dispatch } from "../../store/actions/types";
 import {
-  isLoggedIn,
-  isLoggedInWithSessionInfo
+  sessionTokenSelector,
+  walletTokenSelector
 } from "../../store/reducers/authentication";
 import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
@@ -47,10 +44,10 @@ import {
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../store/reducers/types";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -69,30 +66,27 @@ type DevDataCopyListItem = {
   "label" | "testID" | "onPress"
 >;
 
-type Props = LightModalContextInterface &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-const DeveloperModeSection = (props: Props) => {
+const DeveloperModeSection = () => {
   const navigation = useNavigation();
-  const { isDebugModeEnabled, setDebugModeEnabled } = props;
-
-  const developerListItem = (
-    title: string,
-    switchValue: boolean,
-    onSwitchValueChange: (value: boolean) => void,
-    description?: string
-  ) => (
-    <ListItemSwitch
-      label={title}
-      description={description}
-      value={switchValue}
-      onSwitchValueChange={onSwitchValueChange}
-    />
+  const { showModal } = React.useContext(LightModalContext);
+  const dispatch = useIODispatch();
+  const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
+  const sessionToken = useIOSelector(sessionTokenSelector);
+  const walletToken = useIOSelector(walletTokenSelector);
+  const { id: notificationId } = useIOSelector(
+    notificationsInstallationSelector
   );
+  const { token: notificationToken } = useIOSelector(
+    notificationsInstallationSelector
+  );
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
+  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
+  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const publicKey = useIOSelector(lollipopPublicKeySelector);
 
   const onAddTestCard = () => {
-    if (!props.isPagoPATestEnabled) {
+    if (!isPagoPATestEnabled) {
       Alert.alert(
         I18n.t("profile.main.addCard.warning.title"),
         I18n.t("profile.main.addCard.warning.message"),
@@ -106,11 +100,11 @@ const DeveloperModeSection = (props: Props) => {
       );
       return;
     }
-    props.startAddTestCard();
+    dispatch(walletAddCoBadgeStart(undefined));
   };
 
-  const showModal = () => {
-    props.showModal(
+  const handleShowModal = () => {
+    showModal(
       <AlertModal
         message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
       />
@@ -118,12 +112,14 @@ const DeveloperModeSection = (props: Props) => {
   };
 
   const onPnEnvironmentToggle = (enabled: boolean) => {
-    props.setPnTestEnabled(enabled);
+    dispatch(
+      preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
+    );
   };
 
   const onIdPayTestToggle = (enabled: boolean) => {
-    props.setIdPayTestEnabled(enabled);
-    showModal();
+    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
+    handleShowModal();
   };
 
   const handleClearCachePress = () => {
@@ -139,7 +135,7 @@ const DeveloperModeSection = (props: Props) => {
           text: I18n.t("global.buttons.confirm"),
           style: "destructive",
           onPress: () => {
-            props.clearCache();
+            dispatch(clearCache());
             IOToast.show(I18n.t("profile.main.cache.cleared"));
           }
         }
@@ -162,22 +158,28 @@ const DeveloperModeSection = (props: Props) => {
             text: I18n.t("global.buttons.confirm"),
             style: "destructive",
             onPress: () => {
-              props.setPagoPATestEnabled(enabled);
-              showModal();
+              dispatch(
+                preferencesPagoPaTestEnvironmentSetEnabled({
+                  isPagoPATestEnabled: enabled
+                })
+              );
+              handleShowModal();
             }
           }
         ],
         { cancelable: false }
       );
     } else {
-      props.setPagoPATestEnabled(enabled);
-      showModal();
+      dispatch(
+        preferencesPagoPaTestEnvironmentSetEnabled({
+          isPagoPATestEnabled: enabled
+        })
+      );
+      handleShowModal();
     }
   };
 
   const renderDeveloperPlaygroundsSection = () => {
-    const { isIdPayTestEnabled } = props;
-
     const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
       {
         value: "Lollipop",
@@ -273,44 +275,40 @@ const DeveloperModeSection = (props: Props) => {
     );
   };
 
-  const renderDeveloperTestEnvironmentSection = () => {
-    const { isPagoPATestEnabled, isPnTestEnabled, isIdPayTestEnabled } = props;
+  const renderDeveloperTestEnvironmentSection = () => (
+    <ContentWrapper>
+      <ListItemHeader
+        label={I18n.t("profile.main.testEnvironmentSectionHeader")}
+      />
 
-    return (
-      <ContentWrapper>
-        <ListItemHeader
-          label={I18n.t("profile.main.testEnvironmentSectionHeader")}
-        />
-
-        {developerListItem(
-          I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-          isPagoPATestEnabled,
-          onPagoPAEnvironmentToggle,
-          I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-        )}
-        <Divider />
-        {/* Add Test Card CTA */}
-        <ListItemNav
-          value={I18n.t("profile.main.addCard.titleSection")}
-          accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
-          onPress={onAddTestCard}
-        />
-        <Divider />
-        {developerListItem(
-          I18n.t("profile.main.pnEnvironment.pnEnv"),
-          isPnTestEnabled,
-          onPnEnvironmentToggle
-        )}
-        <Divider />
-        {developerListItem(
-          I18n.t("profile.main.idpay.idpayTest"),
-          isIdPayTestEnabled,
-          onIdPayTestToggle,
-          I18n.t("profile.main.idpay.idpayTestAlert")
-        )}
-      </ContentWrapper>
-    );
-  };
+      <ListItemSwitch
+        label={I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv")}
+        description={I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")}
+        value={isPagoPATestEnabled}
+        onSwitchValueChange={onPagoPAEnvironmentToggle}
+      />
+      <Divider />
+      {/* Add Test Card CTA */}
+      <ListItemNav
+        value={I18n.t("profile.main.addCard.titleSection")}
+        accessibilityLabel={I18n.t("profile.main.addCard.titleSection")}
+        onPress={onAddTestCard}
+      />
+      <Divider />
+      <ListItemSwitch
+        label={I18n.t("profile.main.pnEnvironment.pnEnv")}
+        value={isPnTestEnabled}
+        onSwitchValueChange={onPnEnvironmentToggle}
+      />
+      <Divider />
+      <ListItemSwitch
+        label={I18n.t("profile.main.idpay.idpayTest")}
+        description={I18n.t("profile.main.idpay.idpayTestAlert")}
+        value={isIdPayTestEnabled}
+        onSwitchValueChange={onIdPayTestToggle}
+      />
+    </ContentWrapper>
+  );
 
   const debugActionItem = (
     title: string,
@@ -357,15 +355,6 @@ const DeveloperModeSection = (props: Props) => {
   );
 
   const renderDeveloperDataSection = () => {
-    const {
-      isFastLoginEnabled,
-      sessionToken,
-      walletToken,
-      notificationToken,
-      notificationId,
-      publicKey
-    } = props;
-
     const deviceUniqueId = getDeviceId();
     const thumbprint = toThumbprint(publicKey);
 
@@ -455,59 +444,55 @@ const DeveloperModeSection = (props: Props) => {
     );
   };
 
-  const renderDeveloperActionsSection = () => {
-    const { dispatchSessionExpired } = props;
+  const renderDeveloperActionsSection = () => (
+    <ContentWrapper>
+      <ListItemHeader label="Actions" />
 
-    return (
-      <ContentWrapper>
-        <ListItemHeader label="Actions" />
+      {debugActionItem(
+        I18n.t("profile.main.cache.clear"),
+        handleClearCachePress,
+        true
+      )}
 
-        {debugActionItem(
-          I18n.t("profile.main.cache.clear"),
-          handleClearCachePress,
+      {isDevEnv &&
+        debugActionItem(
+          I18n.t("profile.main.forgetCurrentSession"),
+          () => dispatch(sessionExpired()),
           true
         )}
-
-        {isDevEnv &&
-          debugActionItem(
-            I18n.t("profile.main.forgetCurrentSession"),
-            dispatchSessionExpired,
-            true
-          )}
-        {isDevEnv &&
-          debugActionItem(
-            I18n.t("profile.main.clearAsyncStorage"),
-            () => {
-              void AsyncStorage.clear();
-            },
-            true
-          )}
-        {isDevEnv &&
-          debugActionItem(
-            I18n.t("profile.main.dumpAsyncStorage"),
-            () => {
-              /* eslint-disable no-console */
-              console.log("[DUMP START]");
-              AsyncStorage.getAllKeys()
-                .then(keys => {
-                  console.log(`\tAvailable keys: ${keys.join(", ")}`);
-                  return Promise.all(
-                    keys.map(key =>
-                      AsyncStorage.getItem(key).then(value => {
-                        console.log(`\tValue for ${key}\n\t\t`, value);
-                      })
-                    )
-                  );
-                })
-                .then(() => console.log("[DUMP END]"))
-                .catch(e => console.error(e));
-              /* eslint-enable no-console */
-            },
-            false
-          )}
-      </ContentWrapper>
-    );
-  };
+      {isDevEnv &&
+        debugActionItem(
+          I18n.t("profile.main.clearAsyncStorage"),
+          () => {
+            void AsyncStorage.clear();
+          },
+          true
+        )}
+      {isDevEnv &&
+        debugActionItem(
+          I18n.t("profile.main.dumpAsyncStorage"),
+          () => {
+            /* eslint-disable no-console */
+            console.log("[DUMP START]");
+            AsyncStorage.getAllKeys()
+              .then(keys => {
+                console.log(`\tAvailable keys: ${keys.join(", ")}`);
+                return Promise.all(
+                  keys.map(key =>
+                    AsyncStorage.getItem(key).then(value => {
+                      console.log(`\tValue for ${key}\n\t\t`, value);
+                    })
+                  )
+                );
+              })
+              .then(() => console.log("[DUMP END]"))
+              .catch(e => console.error(e));
+            /* eslint-enable no-console */
+          },
+          false
+        )}
+    </ContentWrapper>
+  );
 
   return (
     <>
@@ -517,11 +502,13 @@ const DeveloperModeSection = (props: Props) => {
         <VSpacer size={8} />
 
         {/* Enable/Disable Developer Mode */}
-        {developerListItem(
-          I18n.t("profile.main.debugMode"),
-          isDebugModeEnabled,
-          setDebugModeEnabled
-        )}
+        <ListItemSwitch
+          label={I18n.t("profile.main.debugMode")}
+          value={isDebugModeEnabled}
+          onSwitchValueChange={enabled =>
+            dispatch(setDebugModeEnabled(enabled))
+          }
+        />
       </ContentWrapper>
 
       <VSpacer size={8} />
@@ -556,40 +543,4 @@ const DeveloperModeSection = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  isFastLoginEnabled: isFastLoginEnabledSelector(state),
-  sessionToken: isLoggedIn(state.authentication)
-    ? state.authentication.sessionToken
-    : undefined,
-  walletToken: isLoggedInWithSessionInfo(state.authentication)
-    ? state.authentication.sessionInfo.walletToken
-    : undefined,
-  notificationId: notificationsInstallationSelector(state).id,
-  notificationToken: notificationsInstallationSelector(state).token,
-  isDebugModeEnabled: isDebugModeEnabledSelector(state),
-  isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  isPnTestEnabled: isPnTestEnabledSelector(state),
-  isIdPayTestEnabled: isIdPayTestEnabledSelector(state),
-  publicKey: lollipopPublicKeySelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  clearCache: () => dispatch(clearCache()),
-  setDebugModeEnabled: (enabled: boolean) =>
-    dispatch(setDebugModeEnabled(enabled)),
-  setPagoPATestEnabled: (isPagoPATestEnabled: boolean) =>
-    dispatch(
-      preferencesPagoPaTestEnvironmentSetEnabled({ isPagoPATestEnabled })
-    ),
-  setPnTestEnabled: (isPnTestEnabled: boolean) =>
-    dispatch(preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled })),
-  dispatchSessionExpired: () => dispatch(sessionExpired()),
-  setIdPayTestEnabled: (isIdPayTestEnabled: boolean) =>
-    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled })),
-  startAddTestCard: () => dispatch(walletAddCoBadgeStart(undefined))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withLightModalContext(DeveloperModeSection));
+export default DeveloperModeSection;
