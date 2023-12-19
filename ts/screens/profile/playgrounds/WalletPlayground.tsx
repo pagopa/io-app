@@ -32,7 +32,7 @@ const WalletPlayground = () => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
       params: {
-        rptId: "1234567890" as RptId
+        rptId: "00000123456002160020399398578" as RptId
       }
     });
   };
