@@ -50,7 +50,6 @@ import {
   WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
   getPaymentLogo
 } from "../../common/utils";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { format } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
 import { formatNumberCurrencyCentsOrDefault } from "../../../idpay/common/utils/strings";
