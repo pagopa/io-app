@@ -1,4 +1,8 @@
 const { getDefaultConfig } = require("metro-config");
+const OriginalResolver = require("metro-resolver");
+const path = require("path");
+
+const blacklistedModules = ["module"];
 
 // eslint-disable-next-line functional/immutable-data
 module.exports = (async () => {
@@ -16,9 +20,23 @@ module.exports = (async () => {
     },
     resolver: {
       assetExts: assetExts.filter(ext => ext !== "svg"),
-      sourceExts: [...withE2ESourceExts, "svg"],
+      sourceExts: [...withE2ESourceExts, "svg", "cjs"],
       extraNodeModules: {
         ...require("@pagopa/react-native-nodelibs")
+      },
+      resolveRequest: (context, moduleName, platform) => {
+        if (blacklistedModules.includes(moduleName)) {
+          return {
+            filePath: path.resolve(__dirname + "/shim-module.js"),
+            type: "sourceFile"
+          };
+        } else {
+          return OriginalResolver.resolve(
+            { ...context, resolveRequest: undefined },
+            moduleName,
+            platform
+          );
+        }
       }
     }
   };
