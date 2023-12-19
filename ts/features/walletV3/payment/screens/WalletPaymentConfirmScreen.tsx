@@ -53,6 +53,7 @@ import {
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { format } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
+import { formatNumberCurrencyCentsOrDefault } from "../../../idpay/common/utils/strings";
 
 const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
@@ -143,14 +144,12 @@ const WalletPaymentConfirmScreen = () => {
     return (
       <GradientScrollView
         primaryActionProps={{
-          label: `${I18n.t("payment.confirm.pay")} ${formatNumberCentsToAmount(
-            totalAmount,
-            true,
-            "right"
-          )}`,
+          label: `${I18n.t(
+            "payment.confirm.pay"
+          )} ${formatNumberCurrencyCentsOrDefault(totalAmount)}`,
           accessibilityLabel: `${I18n.t(
             "payment.confirm.pay"
-          )} ${formatNumberCentsToAmount(totalAmount, true, "right")}`,
+          )} ${formatNumberCurrencyCentsOrDefault(totalAmount)}`,
           onPress: handleStartPaymentAuthorization,
           disabled: isLoading,
           loading: isLoading
@@ -180,7 +179,7 @@ const WalletPaymentConfirmScreen = () => {
         />
         <ModuleCheckout
           ctaText={I18n.t("payment.confirm.editButton")}
-          title={formatNumberCentsToAmount(taxFee, true, "right")}
+          title={formatNumberCurrencyCentsOrDefault(taxFee)}
           subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${
             selectedPsp.bundleName
           }`}

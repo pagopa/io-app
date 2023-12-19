@@ -2,8 +2,8 @@ import React from "react";
 import Placeholder from "rn-placeholder";
 import { StyleSheet, View } from "react-native";
 import { Divider, H3, H6, IOStyles } from "@pagopa/io-app-design-system";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import I18n from "../../../../i18n";
+import { formatNumberCurrencyCentsOrDefault } from "../../../idpay/common/utils/strings";
 
 type TotalAmountSectionProps = {
   totalAmount?: number;
@@ -31,9 +31,7 @@ export const WalletPaymentTotalAmount = ({
           <Placeholder.Box width={72} height={34} animate="fade" radius={8} />
         </View>
       )}
-      {!loading && totalAmount && (
-        <H3>{formatNumberCentsToAmount(totalAmount, true, "right")}</H3>
-      )}
+      {!loading && <H3>{formatNumberCurrencyCentsOrDefault(totalAmount)}</H3>}
     </View>
     <Divider />
   </>
