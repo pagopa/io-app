@@ -77,20 +77,6 @@ const DeveloperModeSection = (props: Props) => {
   const navigation = useNavigation();
   const { isDebugModeEnabled, setDebugModeEnabled } = props;
 
-  const developerListItem = (
-    title: string,
-    switchValue: boolean,
-    onSwitchValueChange: (value: boolean) => void,
-    description?: string
-  ) => (
-    <ListItemSwitch
-      label={title}
-      description={description}
-      value={switchValue}
-      onSwitchValueChange={onSwitchValueChange}
-    />
-  );
-
   const onAddTestCard = () => {
     if (!props.isPagoPATestEnabled) {
       Alert.alert(
@@ -282,12 +268,12 @@ const DeveloperModeSection = (props: Props) => {
           label={I18n.t("profile.main.testEnvironmentSectionHeader")}
         />
 
-        {developerListItem(
-          I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
-          isPagoPATestEnabled,
-          onPagoPAEnvironmentToggle,
-          I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")
-        )}
+        <ListItemSwitch
+          label={I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv")}
+          description={I18n.t("profile.main.pagoPaEnvironment.pagoPAEnvAlert")}
+          value={isPagoPATestEnabled}
+          onSwitchValueChange={onPagoPAEnvironmentToggle}
+        />
         <Divider />
         {/* Add Test Card CTA */}
         <ListItemNav
@@ -296,18 +282,18 @@ const DeveloperModeSection = (props: Props) => {
           onPress={onAddTestCard}
         />
         <Divider />
-        {developerListItem(
-          I18n.t("profile.main.pnEnvironment.pnEnv"),
-          isPnTestEnabled,
-          onPnEnvironmentToggle
-        )}
+        <ListItemSwitch
+          label={I18n.t("profile.main.pnEnvironment.pnEnv")}
+          value={isPnTestEnabled}
+          onSwitchValueChange={onPnEnvironmentToggle}
+        />
         <Divider />
-        {developerListItem(
-          I18n.t("profile.main.idpay.idpayTest"),
-          isIdPayTestEnabled,
-          onIdPayTestToggle,
-          I18n.t("profile.main.idpay.idpayTestAlert")
-        )}
+        <ListItemSwitch
+          label={I18n.t("profile.main.idpay.idpayTest")}
+          description={I18n.t("profile.main.idpay.idpayTestAlert")}
+          value={isIdPayTestEnabled}
+          onSwitchValueChange={onIdPayTestToggle}
+        />
       </ContentWrapper>
     );
   };
@@ -517,11 +503,11 @@ const DeveloperModeSection = (props: Props) => {
         <VSpacer size={8} />
 
         {/* Enable/Disable Developer Mode */}
-        {developerListItem(
-          I18n.t("profile.main.debugMode"),
-          isDebugModeEnabled,
-          setDebugModeEnabled
-        )}
+        <ListItemSwitch
+          label={I18n.t("profile.main.debugMode")}
+          value={isDebugModeEnabled}
+          onSwitchValueChange={setDebugModeEnabled}
+        />
       </ContentWrapper>
 
       <VSpacer size={8} />
@@ -530,27 +516,29 @@ const DeveloperModeSection = (props: Props) => {
       {isPlaygroundsEnabled && renderDeveloperPlaygroundsSection()}
 
       <VSpacer size={24} />
+
       {/* Test Environments */}
       {renderDeveloperTestEnvironmentSection()}
 
       <VSpacer size={24} />
+
       {/* Human Interface/Design System */}
       {renderDeveloperDesignSystemSection()}
 
       {/* Data */}
       {isDebugModeEnabled && (
-        <React.Fragment>
+        <>
           <VSpacer size={24} />
           {renderDeveloperDataSection()}
-        </React.Fragment>
+        </>
       )}
 
       {/* Actions */}
       {isDebugModeEnabled && (
-        <React.Fragment>
+        <>
           <VSpacer size={32} />
           {renderDeveloperActionsSection()}
-        </React.Fragment>
+        </>
       )}
     </>
   );
