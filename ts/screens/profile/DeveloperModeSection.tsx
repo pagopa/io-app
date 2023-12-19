@@ -15,7 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
-import { Alert, FlatList, ListRenderItemInfo, View } from "react-native";
+import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import { IOToast } from "../../components/Toast";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
@@ -66,61 +66,8 @@ type DevDataCopyListItem = {
   "label" | "testID" | "onPress"
 >;
 
-const DeveloperModeSection = () => {
-  const navigation = useNavigation();
-  const { showModal } = React.useContext(LightModalContext);
+const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
-  const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
-  const sessionToken = useIOSelector(sessionTokenSelector);
-  const walletToken = useIOSelector(walletTokenSelector);
-  const { id: notificationId } = useIOSelector(
-    notificationsInstallationSelector
-  );
-  const { token: notificationToken } = useIOSelector(
-    notificationsInstallationSelector
-  );
-  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
-  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
-  const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
-  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
-  const publicKey = useIOSelector(lollipopPublicKeySelector);
-
-  const onAddTestCard = () => {
-    if (!isPagoPATestEnabled) {
-      Alert.alert(
-        I18n.t("profile.main.addCard.warning.title"),
-        I18n.t("profile.main.addCard.warning.message"),
-        [
-          {
-            text: I18n.t("profile.main.addCard.warning.closeButton"),
-            style: "cancel"
-          }
-        ],
-        { cancelable: false }
-      );
-      return;
-    }
-    dispatch(walletAddCoBadgeStart(undefined));
-  };
-
-  const handleShowModal = () => {
-    showModal(
-      <AlertModal
-        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
-      />
-    );
-  };
-
-  const onPnEnvironmentToggle = (enabled: boolean) => {
-    dispatch(
-      preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
-    );
-  };
-
-  const onIdPayTestToggle = (enabled: boolean) => {
-    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
-    handleShowModal();
-  };
 
   const handleClearCachePress = () => {
     Alert.alert(
@@ -142,6 +89,328 @@ const DeveloperModeSection = () => {
       ],
       { cancelable: false }
     );
+  };
+
+  return (
+    <ContentWrapper>
+      <ListItemHeader label="Actions" />
+
+      <VSpacer size={8} />
+      <ButtonSolid
+        fullWidth
+        color="danger"
+        label={I18n.t("profile.main.cache.clear")}
+        onPress={handleClearCachePress}
+        accessibilityLabel={I18n.t("profile.main.cache.clear")}
+      />
+      <VSpacer size={8} />
+      {isDevEnv && (
+        <>
+          <VSpacer size={8} />
+          <ButtonSolid
+            fullWidth
+            color="danger"
+            label={I18n.t("profile.main.forgetCurrentSession")}
+            onPress={() => dispatch(sessionExpired())}
+            accessibilityLabel={I18n.t("profile.main.forgetCurrentSession")}
+          />
+          <VSpacer size={8} />
+        </>
+      )}
+      {isDevEnv && (
+        <>
+          <VSpacer size={8} />
+          <ButtonSolid
+            fullWidth
+            color="danger"
+            label={I18n.t("profile.main.clearAsyncStorage")}
+            onPress={() => {
+              void AsyncStorage.clear();
+            }}
+            accessibilityLabel={I18n.t("profile.main.clearAsyncStorage")}
+          />
+          <VSpacer size={8} />
+        </>
+      )}
+      {isDevEnv && (
+        <>
+          <VSpacer size={8} />
+          <ButtonSolid
+            fullWidth
+            color="danger"
+            label={I18n.t("profile.main.dumpAsyncStorage")}
+            onPress={() => {
+              /* eslint-disable no-console */
+              console.log("[DUMP START]");
+              AsyncStorage.getAllKeys()
+                .then(keys => {
+                  console.log(`\tAvailable keys: ${keys.join(", ")}`);
+                  return Promise.all(
+                    keys.map(key =>
+                      AsyncStorage.getItem(key).then(value => {
+                        console.log(`\tValue for ${key}\n\t\t`, value);
+                      })
+                    )
+                  );
+                })
+                .then(() => console.log("[DUMP END]"))
+                .catch(e => console.error(e));
+              /* eslint-enable no-console */
+            }}
+            accessibilityLabel={I18n.t("profile.main.dumpAsyncStorage")}
+          />
+          <VSpacer size={8} />
+        </>
+      )}
+    </ContentWrapper>
+  );
+};
+
+const DeveloperDataSection = () => {
+  const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
+  const sessionToken = useIOSelector(sessionTokenSelector);
+  const walletToken = useIOSelector(walletTokenSelector);
+  const { id: notificationId } = useIOSelector(
+    notificationsInstallationSelector
+  );
+  const { token: notificationToken } = useIOSelector(
+    notificationsInstallationSelector
+  );
+  const publicKey = useIOSelector(lollipopPublicKeySelector);
+  const deviceUniqueId = getDeviceId();
+  const thumbprint = toThumbprint(publicKey);
+
+  const devDataCopyListItems: ReadonlyArray<DevDataCopyListItem> = [
+    {
+      condition: isFastLoginEnabled,
+      label: "Fast Login",
+      value: `${isFastLoginEnabled}`,
+      onPress: () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
+    },
+    {
+      condition: isDevEnv && !!sessionToken,
+      label: "Session token",
+      value: `${sessionToken}`,
+      onPress: () => clipboardSetStringWithFeedback(`${sessionToken}`)
+    },
+    {
+      condition: isDevEnv && !!walletToken,
+      label: "Wallet token",
+      value: `${walletToken}`,
+      onPress: () => clipboardSetStringWithFeedback(`${walletToken}`)
+    },
+    {
+      condition: isDevEnv,
+      label: "Notification ID",
+      value: `${notificationId}`,
+      onPress: () => clipboardSetStringWithFeedback(`${notificationId}`)
+    },
+    {
+      condition: isDevEnv && !!notificationToken,
+      label: "Notification token",
+      value: `${notificationToken}`,
+      onPress: () => clipboardSetStringWithFeedback(`${notificationToken}`)
+    },
+    {
+      label: "Device unique ID",
+      value: `${deviceUniqueId}`,
+      onPress: () => clipboardSetStringWithFeedback(`${deviceUniqueId}`)
+    },
+    {
+      condition: !!thumbprint,
+      label: "Thumbprint",
+      value: `${thumbprint}`,
+      onPress: () => clipboardSetStringWithFeedback(`${thumbprint}`)
+    }
+  ];
+
+  // Don't render the separator, even if the item is null
+  const filtereddevDataCopyListItems = devDataCopyListItems.filter(
+    item => item.condition !== false
+  );
+
+  const renderDevDataCopyItem = ({
+    item: { label, value, onPress, testID, condition }
+  }: ListRenderItemInfo<DevDataCopyListItem>) => {
+    // If condition is either true or undefined, render the item
+    if (condition !== false) {
+      return (
+        <ListItemInfoCopy
+          label={label}
+          value={value}
+          onPress={onPress}
+          testID={testID}
+          accessibilityLabel={value}
+          numberOfLines={5}
+        />
+      );
+    } else {
+      return null;
+    }
+  };
+
+  return (
+    <FlatList
+      ListHeaderComponent={<ListItemHeader label="Data" />}
+      scrollEnabled={false}
+      keyExtractor={(item: DevDataCopyListItem, index: number) =>
+        `${item.value}-${index}`
+      }
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      data={filtereddevDataCopyListItems}
+      renderItem={renderDevDataCopyItem}
+      ItemSeparatorComponent={() => <Divider />}
+    />
+  );
+};
+
+const DesignSystemSection = () => {
+  const navigation = useNavigation();
+
+  return (
+    <ContentWrapper>
+      <ListItemHeader label="Human Interface" />
+
+      <ListItemNav
+        value={I18n.t("profile.main.designSystem")}
+        accessibilityLabel={I18n.t("profile.main.designSystem")}
+        onPress={() =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.DESIGN_SYSTEM
+          })
+        }
+      />
+      <Divider />
+      <DSEnableSwitch />
+    </ContentWrapper>
+  );
+};
+
+const PlaygroundsSection = () => {
+  const navigation = useNavigation();
+  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
+    {
+      value: "Lollipop",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.LOLLIPOP_PLAYGROUND
+        })
+    },
+    {
+      value: "MyPortal Web",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.WEB_PLAYGROUND
+        })
+    },
+    {
+      value: "Markdown",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.MARKDOWN_PLAYGROUND
+        })
+    },
+    {
+      value: "CGN Landing Page",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.CGN_LANDING_PLAYGROUND
+        })
+    },
+    {
+      condition: isIdPayTestEnabled,
+      value: "IDPay Onboarding",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
+        })
+    },
+    {
+      condition: isIdPayTestEnabled,
+      value: "IDPay Code",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.IDPAY_CODE_PLAYGROUND
+        })
+    },
+    {
+      // New Wallet
+      value: I18n.t("profile.main.walletPlayground.titleSection"),
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.WALLET_PLAYGROUND
+        })
+    }
+  ];
+
+  // Don't render the separator, even if the item is null
+  const filteredPlaygroundsNavListItems = playgroundsNavListItems.filter(
+    item => item.condition !== false
+  );
+
+  const renderPlaygroundsNavItem = ({
+    item: { value, onPress, testID, condition }
+  }: ListRenderItemInfo<PlaygroundsNavListItem>) => {
+    // If condition is either true or undefined, render the item
+    if (condition !== false) {
+      return (
+        <ListItemNav
+          accessibilityLabel={value}
+          value={value}
+          onPress={onPress}
+          testID={testID}
+        />
+      );
+    } else {
+      return null;
+    }
+  };
+
+  return (
+    <FlatList
+      ListHeaderComponent={<ListItemHeader label="Playground" />}
+      scrollEnabled={false}
+      keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
+        `${item.value}-${index}`
+      }
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      data={filteredPlaygroundsNavListItems}
+      renderItem={renderPlaygroundsNavItem}
+      ItemSeparatorComponent={() => <Divider />}
+    />
+  );
+};
+
+const DeveloperTestEnvironmentSection = ({
+  handleShowModal
+}: {
+  handleShowModal: () => void;
+}) => {
+  const dispatch = useIODispatch();
+  const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
+  const isPnTestEnabled = useIOSelector(isPnTestEnabledSelector);
+  const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
+  const onAddTestCard = () => {
+    if (!isPagoPATestEnabled) {
+      Alert.alert(
+        I18n.t("profile.main.addCard.warning.title"),
+        I18n.t("profile.main.addCard.warning.message"),
+        [
+          {
+            text: I18n.t("profile.main.addCard.warning.closeButton"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
+    dispatch(walletAddCoBadgeStart(undefined));
   };
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
@@ -179,103 +448,17 @@ const DeveloperModeSection = () => {
     }
   };
 
-  const renderDeveloperPlaygroundsSection = () => {
-    const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
-      {
-        value: "Lollipop",
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.LOLLIPOP_PLAYGROUND
-          })
-      },
-      {
-        value: "MyPortal Web",
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.WEB_PLAYGROUND
-          })
-      },
-      {
-        value: "Markdown",
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.MARKDOWN_PLAYGROUND
-          })
-      },
-      {
-        value: "CGN Landing Page",
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.CGN_LANDING_PLAYGROUND
-          })
-      },
-      {
-        condition: isIdPayTestEnabled,
-        value: "IDPay Onboarding",
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.IDPAY_ONBOARDING_PLAYGROUND
-          })
-      },
-      {
-        condition: isIdPayTestEnabled,
-        value: "IDPay Code",
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.IDPAY_CODE_PLAYGROUND
-          })
-      },
-      {
-        // New Wallet
-        value: I18n.t("profile.main.walletPlayground.titleSection"),
-        onPress: () =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.WALLET_PLAYGROUND
-          })
-      }
-    ];
-
-    // Don't render the separator, even if the item is null
-    const filteredPlaygroundsNavListItems = playgroundsNavListItems.filter(
-      item => item.condition !== false
-    );
-
-    const renderPlaygroundsNavItem = ({
-      item: { value, onPress, testID, condition }
-    }: ListRenderItemInfo<PlaygroundsNavListItem>) => {
-      // If condition is either true or undefined, render the item
-      if (condition !== false) {
-        return (
-          <ListItemNav
-            accessibilityLabel={value}
-            value={value}
-            onPress={onPress}
-            testID={testID}
-          />
-        );
-      } else {
-        return null;
-      }
-    };
-
-    return (
-      <FlatList
-        ListHeaderComponent={<ListItemHeader label="Playground" />}
-        scrollEnabled={false}
-        keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
-          `${item.value}-${index}`
-        }
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
-        data={filteredPlaygroundsNavListItems}
-        renderItem={renderPlaygroundsNavItem}
-        ItemSeparatorComponent={() => <Divider />}
-      />
+  const onPnEnvironmentToggle = (enabled: boolean) => {
+    dispatch(
+      preferencesPnTestEnvironmentSetEnabled({ isPnTestEnabled: enabled })
     );
   };
 
-  const renderDeveloperTestEnvironmentSection = () => (
+  const onIdPayTestToggle = (enabled: boolean) => {
+    dispatch(preferencesIdPayTestSetEnabled({ isIdPayTestEnabled: enabled }));
+    handleShowModal();
+  };
+  return (
     <ContentWrapper>
       <ListItemHeader
         label={I18n.t("profile.main.testEnvironmentSectionHeader")}
@@ -308,190 +491,20 @@ const DeveloperModeSection = () => {
       />
     </ContentWrapper>
   );
+};
 
-  const debugActionItem = (
-    title: string,
-    onPress: () => void,
-    isDanger: boolean
-  ) => (
-    <View style={{ paddingVertical: 8 }}>
-      {isDanger ? (
-        <ButtonSolid
-          fullWidth
-          color="danger"
-          label={title}
-          onPress={onPress}
-          accessibilityLabel={title}
-        />
-      ) : (
-        <ButtonSolid
-          fullWidth
-          color="primary"
-          label={title}
-          onPress={onPress}
-          accessibilityLabel={title}
-        />
-      )}
-    </View>
-  );
+const DeveloperModeSection = () => {
+  const { showModal } = React.useContext(LightModalContext);
+  const dispatch = useIODispatch();
+  const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
-  const renderDeveloperDesignSystemSection = () => (
-    <ContentWrapper>
-      <ListItemHeader label="Human Interface" />
-
-      <ListItemNav
-        value={I18n.t("profile.main.designSystem")}
-        accessibilityLabel={I18n.t("profile.main.designSystem")}
-        onPress={() =>
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.DESIGN_SYSTEM
-          })
-        }
-      />
-      <Divider />
-      <DSEnableSwitch />
-    </ContentWrapper>
-  );
-
-  const renderDeveloperDataSection = () => {
-    const deviceUniqueId = getDeviceId();
-    const thumbprint = toThumbprint(publicKey);
-
-    const devDataCopyListItems: ReadonlyArray<DevDataCopyListItem> = [
-      {
-        condition: isFastLoginEnabled,
-        label: "Fast Login",
-        value: `${isFastLoginEnabled}`,
-        onPress: () => clipboardSetStringWithFeedback(`${isFastLoginEnabled}`)
-      },
-      {
-        condition: isDevEnv && !!sessionToken,
-        label: "Session token",
-        value: `${sessionToken}`,
-        onPress: () => clipboardSetStringWithFeedback(`${sessionToken}`)
-      },
-      {
-        condition: isDevEnv && !!walletToken,
-        label: "Wallet token",
-        value: `${walletToken}`,
-        onPress: () => clipboardSetStringWithFeedback(`${walletToken}`)
-      },
-      {
-        condition: isDevEnv,
-        label: "Notification ID",
-        value: `${notificationId}`,
-        onPress: () => clipboardSetStringWithFeedback(`${notificationId}`)
-      },
-      {
-        condition: isDevEnv && !!notificationToken,
-        label: "Notification token",
-        value: `${notificationToken}`,
-        onPress: () => clipboardSetStringWithFeedback(`${notificationToken}`)
-      },
-      {
-        label: "Device unique ID",
-        value: `${deviceUniqueId}`,
-        onPress: () => clipboardSetStringWithFeedback(`${deviceUniqueId}`)
-      },
-      {
-        condition: !!thumbprint,
-        label: "Thumbprint",
-        value: `${thumbprint}`,
-        onPress: () => clipboardSetStringWithFeedback(`${thumbprint}`)
-      }
-    ];
-
-    // Don't render the separator, even if the item is null
-    const filtereddevDataCopyListItems = devDataCopyListItems.filter(
-      item => item.condition !== false
-    );
-
-    const renderDevDataCopyItem = ({
-      item: { label, value, onPress, testID, condition }
-    }: ListRenderItemInfo<DevDataCopyListItem>) => {
-      // If condition is either true or undefined, render the item
-      if (condition !== false) {
-        return (
-          <ListItemInfoCopy
-            label={label}
-            value={value}
-            onPress={onPress}
-            testID={testID}
-            accessibilityLabel={value}
-            numberOfLines={5}
-          />
-        );
-      } else {
-        return null;
-      }
-    };
-
-    return (
-      <FlatList
-        ListHeaderComponent={<ListItemHeader label="Data" />}
-        scrollEnabled={false}
-        keyExtractor={(item: DevDataCopyListItem, index: number) =>
-          `${item.value}-${index}`
-        }
-        contentContainerStyle={{
-          paddingHorizontal: IOVisualCostants.appMarginDefault
-        }}
-        data={filtereddevDataCopyListItems}
-        renderItem={renderDevDataCopyItem}
-        ItemSeparatorComponent={() => <Divider />}
+  const handleShowModal = () => {
+    showModal(
+      <AlertModal
+        message={I18n.t("profile.main.pagoPaEnvironment.alertMessage")}
       />
     );
   };
-
-  const renderDeveloperActionsSection = () => (
-    <ContentWrapper>
-      <ListItemHeader label="Actions" />
-
-      {debugActionItem(
-        I18n.t("profile.main.cache.clear"),
-        handleClearCachePress,
-        true
-      )}
-
-      {isDevEnv &&
-        debugActionItem(
-          I18n.t("profile.main.forgetCurrentSession"),
-          () => dispatch(sessionExpired()),
-          true
-        )}
-      {isDevEnv &&
-        debugActionItem(
-          I18n.t("profile.main.clearAsyncStorage"),
-          () => {
-            void AsyncStorage.clear();
-          },
-          true
-        )}
-      {isDevEnv &&
-        debugActionItem(
-          I18n.t("profile.main.dumpAsyncStorage"),
-          () => {
-            /* eslint-disable no-console */
-            console.log("[DUMP START]");
-            AsyncStorage.getAllKeys()
-              .then(keys => {
-                console.log(`\tAvailable keys: ${keys.join(", ")}`);
-                return Promise.all(
-                  keys.map(key =>
-                    AsyncStorage.getItem(key).then(value => {
-                      console.log(`\tValue for ${key}\n\t\t`, value);
-                    })
-                  )
-                );
-              })
-              .then(() => console.log("[DUMP END]"))
-              .catch(e => console.error(e));
-            /* eslint-enable no-console */
-          },
-          false
-        )}
-    </ContentWrapper>
-  );
 
   return (
     <>
@@ -513,23 +526,23 @@ const DeveloperModeSection = () => {
       <VSpacer size={8} />
 
       {/* Playgrounds */}
-      {isPlaygroundsEnabled && renderDeveloperPlaygroundsSection()}
+      {isPlaygroundsEnabled && <PlaygroundsSection />}
 
       <VSpacer size={24} />
 
       {/* Test Environments */}
-      {renderDeveloperTestEnvironmentSection()}
+      <DeveloperTestEnvironmentSection handleShowModal={handleShowModal} />
 
       <VSpacer size={24} />
 
       {/* Human Interface/Design System */}
-      {renderDeveloperDesignSystemSection()}
+      <DesignSystemSection />
 
       {/* Data */}
       {isDebugModeEnabled && (
         <>
           <VSpacer size={24} />
-          {renderDeveloperDataSection()}
+          <DeveloperDataSection />
         </>
       )}
 
@@ -537,7 +550,7 @@ const DeveloperModeSection = () => {
       {isDebugModeEnabled && (
         <>
           <VSpacer size={32} />
-          {renderDeveloperActionsSection()}
+          <DeveloperActionsSection />
         </>
       )}
     </>
