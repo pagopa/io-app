@@ -30,6 +30,7 @@ import itwPresentationReducer, {
   ItwPresentationState
 } from "./new/itwPresentationReducer";
 import itwIssuanceReducer, { ItwIssuanceState } from "./new/itwIssuanceReducer";
+import itwProximityReducer, { ItwProximityState } from "./itwProximityReducer";
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 3;
 
@@ -69,6 +70,7 @@ export type ItWalletState = {
   rpPresentation: ItwRpPresentationState;
   presentation: ItwPresentationState;
   issuance: ItwIssuanceState;
+  proximity: ItwProximityState;
 };
 
 export type PersistedItWalletState = ItWalletState & PersistPartial;
@@ -99,7 +101,8 @@ const reducers = combineReducers<ItWalletState, Action>({
   rpInit: itwRpInitializationReducer,
   rpPresentation: itwRpPresentationReducer,
   presentation: itwPresentationReducer,
-  issuance: itwIssuanceReducer
+  issuance: itwIssuanceReducer,
+  proximity: itwProximityReducer
 });
 
 const itwReducer = persistReducer<ItWalletState, Action>(
