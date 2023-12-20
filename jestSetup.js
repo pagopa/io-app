@@ -27,6 +27,7 @@ jest.mock("@react-native-cookies/cookies", jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 jest.mock("@react-native-camera-roll/camera-roll", () => mockRNCameraRoll);
+jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter");
 
 /**
  * adds as for documentation suggestion
