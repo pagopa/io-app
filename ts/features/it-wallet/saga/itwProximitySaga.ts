@@ -1,6 +1,6 @@
 import { ProximityManager } from "@pagopa/io-react-native-proximity";
 import { SagaIterator } from "redux-saga";
-import { call, put, takeLatest, delay } from "typed-redux-saga/macro";
+import { call, put, takeLatest } from "typed-redux-saga/macro";
 import {
   ProximityManagerStatusEnum,
   bleIsEnabled,
@@ -56,13 +56,12 @@ function* handleGenerateQrCodeSaga(): SagaIterator {
   }
 }
 
-// stop proximity manager to listen nfc tags
+// stop proximity manager
 function* handleStopProximityManagerSaga(): SagaIterator {
   try {
     // TODO: remove all listners before stopping the proximity manager
     // we need a new method in the proximity manager [SIW-775]
     yield* call(ProximityManager.stop);
-    yield* delay(1000);
     yield* put(stopProximityManager.success(true));
   } catch {
     yield* put(stopProximityManager.failure(new Error("Stop failed")));
