@@ -9,6 +9,7 @@ import {
   startProximityManager,
   stopProximityManager
 } from "../store/actions/itwProximityActions";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 
 export function* watchItwProximitySaga(): SagaIterator {
   // Trigger a saga on bleIsEnabled to check if BLE is enabled or not
@@ -37,7 +38,11 @@ function* handleStartProximityManagerSaga(): SagaIterator {
     yield* put(startProximityManager.success(true));
     yield* put(generateQrCode.request());
   } catch {
-    yield* put(startProximityManager.failure(new Error("Start failed")));
+    yield* put(
+      startProximityManager.failure({
+        code: ItWalletErrorTypes.PROXIMITY_GENERIC_ERROR
+      })
+    );
   }
 }
 
@@ -52,7 +57,11 @@ function* handleGenerateQrCodeSaga(): SagaIterator {
       })
     );
   } catch {
-    yield* put(generateQrCode.failure(new Error("QR code generation failed")));
+    yield* put(
+      generateQrCode.failure({
+        code: ItWalletErrorTypes.PROXIMITY_GENERIC_ERROR
+      })
+    );
   }
 }
 
@@ -64,7 +73,11 @@ function* handleStopProximityManagerSaga(): SagaIterator {
     yield* call(ProximityManager.stop);
     yield* put(stopProximityManager.success(true));
   } catch {
-    yield* put(stopProximityManager.failure(new Error("Stop failed")));
+    yield* put(
+      stopProximityManager.failure({
+        code: ItWalletErrorTypes.PROXIMITY_GENERIC_ERROR
+      })
+    );
   }
   yield* put(
     proximityManagerStatus({

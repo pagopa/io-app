@@ -1,5 +1,5 @@
 /**
- * A reducer for the authentication by CIE
+ * A reducer for proximity
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
@@ -13,13 +13,14 @@ import {
   proximityManagerStatus,
   ProximityManagerStatusEnum
 } from "../actions/itwProximityActions";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 
 export type ItwProximityState = {
-  hasBLEFeature: pot.Pot<boolean, Error>;
-  isBleEnabled: pot.Pot<boolean, Error>;
-  qrCode: pot.Pot<string, Error>;
-  readingEvent: pot.Pot<string, Error>;
-  status: pot.Pot<ProximityManagerStatusEnum, Error>;
+  hasBLEFeature: pot.Pot<boolean, ItWalletError>;
+  isBleEnabled: pot.Pot<boolean, ItWalletError>;
+  qrCode: pot.Pot<string, ItWalletError>;
+  readingEvent: pot.Pot<string, ItWalletError>;
+  status: pot.Pot<ProximityManagerStatusEnum, ItWalletError>;
 };
 
 const INITIAL_STATE: ItwProximityState = {
