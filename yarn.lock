@@ -3207,10 +3207,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.0.tgz#4a9b55d84c6d77622e95de4511e4c422a862b27d"
   integrity sha512-mZ0Z7SAhWhbYIK/GvaeuecIyQPikj/D7pmejOrAiLA1KxIqO3UGH6p6LC2pZhN0JPHTcXbBiNHJRQtrqTHCfew==
 
-"@pagopa/io-react-native-proximity@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-proximity/-/io-react-native-proximity-0.1.6.tgz#aa2c433852f9c9436c09619fab2abafe72566aef"
-  integrity sha512-eHJz1+pET4kTbLgIvzsgjnCOLVt5FKMVUHAR7CjVCqAcUKfKzA0ah2Q7AorVWitScuV8/RWqudCdUQe1EFHLcQ==
+"@pagopa/io-react-native-proximity@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-proximity/-/io-react-native-proximity-0.1.7.tgz#4518612565ce10cf0caacde274dcd2ac02b6dc39"
+  integrity sha512-gu55+37D1fa6F9pIVazTTuPWHJjpR2GVsaJVOVqYF/6HLI7rdJwzWb3Yomrz8TQU0muE9WBIQ0mn0zGhNBYt+g==
   dependencies:
     cbor-x "^1.5.6"
     js-crypto-hkdf "^1.0.7"
