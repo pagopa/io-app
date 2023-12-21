@@ -71,6 +71,7 @@ function* handleStopProximityManagerSaga(): SagaIterator {
     // TODO: remove all listners before stopping the proximity manager
     // we need a new method in the proximity manager [SIW-775]
     yield* call(ProximityManager.stop);
+    yield* call(ProximityManager.removeListeners);
     yield* put(stopProximityManager.success(true));
   } catch {
     yield* put(

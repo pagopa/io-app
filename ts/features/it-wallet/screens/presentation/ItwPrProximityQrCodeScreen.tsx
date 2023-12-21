@@ -108,15 +108,31 @@ const ItwPrProximityQrCodeScreen = () => {
   const mapEventToMessage = (event: EventData) => {
     switch (event.type) {
       case "ON_BLE_START":
-        return "Verifica in prossimità avviata";
+        return I18n.t(
+          "features.itWallet.presentation.qrCodeScreen.proximity.start"
+        );
       case "ON_BLE_STOP":
-        return "Verifica in prossimità terminata";
+        return I18n.t(
+          "features.itWallet.presentation.qrCodeScreen.proximity.stop"
+        );
       case "ON_PERIPHERAL_CONNECTED":
-        return "Dispositivo di verifica connesso";
+        return I18n.t(
+          "features.itWallet.presentation.qrCodeScreen.proximity.peripheralConnected"
+        );
       case "ON_SESSION_ESTABLISHMENT":
-        return "E' stata stabilita una sessione con il dispositivo di verifica";
+        return I18n.t(
+          "features.itWallet.presentation.qrCodeScreen.proximity.sessionEstablished"
+        );
       case "ON_DOCUMENT_REQUESTS_RECEIVED":
-        return "Controllo della credenziale in corso";
+        return I18n.t(
+          "features.itWallet.presentation.qrCodeScreen.proximity.documentRequestReceived"
+        );
+      case "ON_DOCUMENT_PRESENTATION_COMPLETED":
+        setIsProximityCompleted(true);
+        return I18n.t(
+          "features.itWallet.presentation.qrCodeScreen.proximity.documentPresentationCompleted"
+        );
+        break;
       default:
         return "";
     }
@@ -137,13 +153,9 @@ const ItwPrProximityQrCodeScreen = () => {
   const onDocumentsRequestReceived = (_: Array<DocumentRequest>) => {
     // TODO: maybe should be navigate to a data sharing
     // screen to get user consent
-    ProximityManager.dataPresentation(mockedmDLResponse)
-      .then(() => {
-        setIsProximityCompleted(true);
-      })
-      .catch(_ => {
-        setIsError(true);
-      });
+    ProximityManager.dataPresentation(mockedmDLResponse).catch(_ => {
+      setIsError(true);
+    });
   };
 
   const handleAndroidPermissions = async () => {
@@ -211,17 +223,15 @@ const ItwPrProximityQrCodeScreen = () => {
     dispatch(stopProximityManager.request());
     return (
       <ItwContinueView
-        title={"Verifica in prossimità conclusa"}
-        subtitle={"Credenziale correttamente verificata"}
+        title={I18n.t(
+          "features.itWallet.presentation.qrCodeScreen.proximity.documentPresentationCompleted"
+        )}
         pictogram={"success"}
         action={{
           label: I18n.t("global.buttons.confirm"),
           accessibilityLabel: I18n.t("global.buttons.confirm"),
           onPress: () =>
-            navigation.reset({
-              index: 0,
-              routes: [{ name: ROUTES.MAIN }]
-            })
+            navigation.navigate(ROUTES.MAIN, { screen: ROUTES.ITWALLET_HOME })
         }}
       />
     );
@@ -238,7 +248,9 @@ const ItwPrProximityQrCodeScreen = () => {
         >
           {qrCodeUri !== "" && (
             <>
-              <LabelSmall color={"black"}>{"Codice QR personale"}</LabelSmall>
+              <LabelSmall color={"black"}>
+                {I18n.t("features.itWallet.presentation.qrCodeScreen.title")}
+              </LabelSmall>
               <VSpacer size={16} />
               <Image
                 style={{ width: 300, height: 300 }}

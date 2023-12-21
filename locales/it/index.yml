@@ -3439,7 +3439,14 @@ features:
           title: "Fatto!"
           subtitle: "Torna sul sito di {{organizationName}} per continuare."
       qrCodeScreen:
-        loading: "Attendi qualche secondo la richiesta di verifica..."
+        title: "Codice QR personale"
+        proximity:
+          start: "Verifica in prossimità avviata"
+          stop: "Verifica in prossimità terminata"
+          peripheralConnected: "Dispositivo di verifica connesso"
+          sessionEstablished: "E' stata stabilita una sessione con il dispositivo di verifica"
+          documentRequestReceived: "Controllo della credenziale in corso"
+          documentPresentationCompleted: "Controllo della credenziale completato"
     missingFeatureScreen: 
       headerTitle: "Schermata non disponibile"
       title: "Questa schermata sarà presto disponibile"
