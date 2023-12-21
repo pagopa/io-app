@@ -9,6 +9,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 
 export enum ProximityManagerStatusEnum {
   STARTED = "STARTED",
@@ -25,31 +26,31 @@ export const startProximityManager = createAsyncAction(
   "ITW_PROXIMITY_START_REQUEST",
   "ITW_PROXIMITY_START_SUCCESS",
   "ITW_PROXIMITY_START_FAILURE"
-)<void, boolean, Error>();
+)<void, boolean, ItWalletError>();
 
 export const stopProximityManager = createAsyncAction(
   "ITW_PROXIMITY_STOP_REQUEST",
   "ITW_PROXIMITY_STOP_SUCCESS",
   "ITW_PROXIMITY_STOP_FAILURE"
-)<void, boolean, Error>();
+)<void, boolean, ItWalletError>();
 
 export const generateQrCode = createAsyncAction(
   "ITW_PROXIMITY_QRCODE_REQUEST",
   "ITW_PROXIMITY_QRCODE_SUCCESS",
   "ITW_PROXIMITY_QRCODE_FAILURE"
-)<void, string, Error>();
+)<void, string, ItWalletError>();
 
 export const hasBLEFeature = createAsyncAction(
   "ITW_PROXIMITY_HAS_BLE_FEATURE_REQUEST",
   "ITW_PROXIMITY_HAS_BLE_FEATURE_SUCCESS",
   "ITW_PROXIMITY_HAS_BLE_FEATURE_FAILURE"
-)<void, boolean, Error>();
+)<void, boolean, ItWalletError>();
 
 export const bleIsEnabled = createAsyncAction(
   "ITW_BLE_IS_ENABLED_REQUEST",
   "ITW_BLE_IS_ENABLED_SUCCESS",
   "ITW_BLE_IS_ENABLED_FAILURE"
-)<void, boolean, Error>();
+)<void, boolean, ItWalletError>();
 
 export type ProximityErrorReason = ProximityEvent["type"] | "GENERIC";
 
