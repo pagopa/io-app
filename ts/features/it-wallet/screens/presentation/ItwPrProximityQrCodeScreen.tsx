@@ -10,6 +10,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import RNQRGenerator from "rn-qr-generator";
 import {
   IOStyles,
+  IconButton,
   LabelSmall,
   LoadingSpinner,
   VSpacer
@@ -237,8 +238,20 @@ const ItwPrProximityQrCodeScreen = () => {
     );
   }
 
+  const customGoBack: React.ReactElement = (
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={"neutral"}
+      onPress={() => {
+        dispatch(stopProximityManager.request());
+        navigation.goBack();
+      }}
+      accessibilityLabel={I18n.t("global.buttons.back")}
+    />
+  );
+
   return (
-    <BaseScreenComponent goBack={true}>
+    <BaseScreenComponent goBack={true} customGoBack={customGoBack}>
       <SafeAreaView style={(IOStyles.flex, IOStyles.alignCenter)}>
         <View
           style={{
