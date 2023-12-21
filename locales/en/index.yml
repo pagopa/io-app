@@ -3438,14 +3438,14 @@ features:
           title: "Done!"
           subtitle: "Go back to the {{organizationName}} website to continue."
       qrCodeScreen:
-        title: "Codice QR personale"
+        title: "Personal QR code"
         proximity:
-          start: "Verifica in prossimità avviata"
-          stop: "Verifica in prossimità terminata"
-          peripheralConnected: "Dispositivo di verifica connesso"
-          sessionEstablished: "E' stata stabilita una sessione con il dispositivo di verifica"
-          documentRequestReceived: "Controllo della credenziale in corso"
-          documentPresentationCompleted: "Controllo della credenziale completato"
+          start: "Proximity check started"
+          stop: "Proximity check completed"
+          peripheralConnected: "Verification device connected"
+          sessionEstablished: "A session has been established with the verification device"
+          documentRequestReceived: "Credential checking in progress"
+          documentPresentationCompleted: "Credential check completed"
     missingFeatureScreen: 
       headerTitle: "Screen not available"
       title: "This screen will be available soon."
