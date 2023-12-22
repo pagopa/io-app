@@ -32,9 +32,20 @@ export function* watchItwProximitySaga(): SagaIterator {
 }
 
 // start proximity manager
-function* handleStartProximityManagerSaga(): SagaIterator {
+function* handleStartProximityManagerSaga(
+  action: ReturnType<typeof startProximityManager.request>
+): SagaIterator {
   try {
     yield* call(ProximityManager.start);
+    yield* call(ProximityManager.setListeners, {
+      onEvent: action.payload.onEvent,
+      onSuccess: action.payload.onSuccess,
+      onError: action.payload.onError
+    });
+    yield* call(
+      ProximityManager.setOnDocumentRequestHandler,
+      action.payload.onDocumentsRequestReceived
+    );
     yield* put(startProximityManager.success(true));
     yield* put(generateQrCode.request());
   } catch {
@@ -71,6 +82,7 @@ function* handleStopProximityManagerSaga(): SagaIterator {
     // TODO: remove all listners before stopping the proximity manager
     // we need a new method in the proximity manager [SIW-775]
     yield* call(ProximityManager.stop);
+    yield* call(ProximityManager.removeListeners);
     yield* put(stopProximityManager.success(true));
   } catch {
     yield* put(

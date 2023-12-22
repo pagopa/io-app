@@ -1,4 +1,7 @@
-import { EventData as ProximityEvent } from "@pagopa/io-react-native-proximity";
+import {
+  DocumentRequest,
+  EventData as ProximityEvent
+} from "@pagopa/io-react-native-proximity";
 
 /**
  * Action types and action creator related to Proximity
@@ -26,7 +29,16 @@ export const startProximityManager = createAsyncAction(
   "ITW_PROXIMITY_START_REQUEST",
   "ITW_PROXIMITY_START_SUCCESS",
   "ITW_PROXIMITY_START_FAILURE"
-)<void, boolean, ItWalletError>();
+)<
+  {
+    onEvent: (event: ProximityEvent) => void;
+    onSuccess: (event: ProximityEvent) => void;
+    onError: (event: ProximityEvent) => void;
+    onDocumentsRequestReceived: (_: Array<DocumentRequest>) => void;
+  },
+  boolean,
+  ItWalletError
+>();
 
 export const stopProximityManager = createAsyncAction(
   "ITW_PROXIMITY_STOP_REQUEST",
