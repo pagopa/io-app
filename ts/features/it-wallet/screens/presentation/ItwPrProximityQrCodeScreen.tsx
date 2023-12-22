@@ -63,11 +63,10 @@ const ItwPrProximityQrCodeScreen = () => {
       startProximityManager.request({
         onSuccess,
         onError,
-        onEvent
+        onEvent,
+        onDocumentsRequestReceived
       })
     );
-    // Set handler for document request
-    ProximityManager.setOnDocumentRequestHandler(onDocumentsRequestReceived);
   });
 
   const generateQrCode = React.useCallback(() => {

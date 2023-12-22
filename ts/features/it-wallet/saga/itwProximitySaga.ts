@@ -42,6 +42,10 @@ function* handleStartProximityManagerSaga(
       onSuccess: action.payload.onSuccess,
       onError: action.payload.onError
     });
+    yield* call(
+      ProximityManager.setOnDocumentRequestHandler,
+      action.payload.onDocumentsRequestReceived
+    );
     yield* put(startProximityManager.success(true));
     yield* put(generateQrCode.request());
   } catch {
