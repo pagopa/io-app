@@ -59,12 +59,13 @@ const ItwPrProximityQrCodeScreen = () => {
 
   useOnFirstRender(() => {
     handleAndroidPermissions().catch(_ => setIsError(true));
-    dispatch(startProximityManager.request());
-    ProximityManager.setListeners({
-      onEvent,
-      onSuccess,
-      onError
-    });
+    dispatch(
+      startProximityManager.request({
+        onSuccess,
+        onError,
+        onEvent
+      })
+    );
     // Set handler for document request
     ProximityManager.setOnDocumentRequestHandler(onDocumentsRequestReceived);
   });

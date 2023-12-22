@@ -32,9 +32,16 @@ export function* watchItwProximitySaga(): SagaIterator {
 }
 
 // start proximity manager
-function* handleStartProximityManagerSaga(): SagaIterator {
+function* handleStartProximityManagerSaga(
+  action: ReturnType<typeof startProximityManager.request>
+): SagaIterator {
   try {
     yield* call(ProximityManager.start);
+    yield* call(ProximityManager.setListeners, {
+      onEvent: action.payload.onEvent,
+      onSuccess: action.payload.onSuccess,
+      onError: action.payload.onError
+    });
     yield* put(startProximityManager.success(true));
     yield* put(generateQrCode.request());
   } catch {
