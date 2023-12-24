@@ -651,6 +651,7 @@ authentication:
     notification: "Jedes Mal, wenn du dich mit SPID oder CIE bei der App anmeldest, wirst du per E-Mail benachrichtigt."
     button-accept-lv: "Ja, Schnellzugriff einrichten"
     button-decline-lv: "Nein, ich möchte mich alle 30 Tage neu anmelden"
+  security_suggestions:
     fingerprint: "Um IO zu öffnen benötigst du deinen Entsperrcode oder deine biometrischen Daten, teile sie mit niemanden."
     io-logout: "Wenn du dieses Gerät verlierst, beende IO über"
     io-lock-access: "Wenn du glaubst, dass deine SPID- oder CIE-Anmeldedaten kompromittiert wurden, blockiere den Zugriff auf IO über"
@@ -1168,6 +1169,10 @@ wallet:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
         subtitle: "Versuche es erneut oder kontaktiere den Support"
         primaryAction: "Schließen"
+      ALREADY_ONBOARDED:
+        title: "Du hast diese Zahlungsmethode bereits hinzugefügt"
+        subtitle: ""
+        primaryAction: "Schließen"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
@@ -1298,6 +1303,7 @@ wallet:
           bottomSheetTitle: "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?"
           bottomSheetDescription: "Die Funktion “In-App-Zahlungen” ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich “Konto”;\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere “In-App-Zahlungen”."
   firstTransactionSummary:
+    loading: "Informationen werden abgerufen"
     title: "Zahlungsdetails"
     amount: "Betrag"
     total: "Insgesamt bezahlt"
@@ -1740,6 +1746,9 @@ messageDetails:
   sendEmail: "Sende eine E-Mail"
   write: "Schreibe uns"
   id: "ID:"
+  remoteContentError:
+    title: "Die Details der Mitteilung konnten nicht abgerufen werden"
+    body: "Wir haben einen Fehler in den von der Körperschaft bereitgestellten Informationen gefunden. Bitte versuche es in ein paar Minuten erneut. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
   attachments:
     loading: "Laden des Dokuments..."
     badFormat: "Das Format des Anhangs wird nicht unterstützt. Kontaktiere den Absender"
@@ -2123,20 +2132,20 @@ features:
   euCovidCertificate:
     save:
       album: "IO"
-      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfen Sie Ihre Geräteeinstellungen."
-      ok: "Das Bild wurde auf Ihrem Smartphone gespeichert"
+      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfe deine Geräteeinstellungen."
+      ok: "Das Bild wurde auf deinem Smartphone gespeichert"
       bottomSheet:
-        title: "Speichern Sie das Zertifikat"
+        title: "Speichere das Zertifikat"
         subTitle: "Auch ohne der IO-App und Internetverbindung kann das Zertifikat angezeigt werden."
         saveAsImage:
           title: "Bild in Galerie speichern"
-          subTitle: "Sie finden den QR-Code auch als Bild auf Ihrem Smartphone."
+          subTitle: "Du findest den QR-Code auch als Bild auf deinem Smartphone."
     listItem:
       cta: "Anzeigen"
     common:
       title: "Grünes COVID-19-Zertifikat"
       subtitle: "EU Digital COVID Certificate"
-      learnMore: "Erfahren Sie mehr"
+      learnMore: "Erfahre mehr"
       authorizationCode: "Autorisierungscode"
       messageIdentifier: "Identifizierung der Nachricht"
     loading:
@@ -2155,19 +2164,19 @@ features:
       title: "Dieses Zertifikat ist abgelaufen"
     ko:
       genericError:
-        title: "Ihre Zertifikatsdaten konnten nicht abgerufen werden: Bitte versuchen Sie es erneut"
+        title: "Deine Zertifikatsdaten konnten nicht abgerufen werden: Bitte versuche es erneut"
         subtitle: "Dies kann ein vorübergehendes Problem sein."
       notFound:
-        title: "Das Zertifikat existiert anscheinend nicht: Kontaktieren Sie den Support"
+        title: "Das Zertifikat existiert anscheinend nicht: Kontaktiere den Support"
         subtitle: "Nützliche Informationen für den Support:"
         cta: "Support kontaktieren"
       notOperational:
         title: "Das Grüne COVID-19-Zertifikat funktioniert derzeit nicht"
       temporarilyNotAvailable:
         title: "Der Dienst ist vorübergehend nicht verfügbar"
-        subtitle: "Bitte versuchen Sie es später erneut"
+        subtitle: "Bitte versuche es später erneut"
       wrongFormat:
-        title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktieren Sie den Support"
+        title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktiere den Support"
         subtitle: "Nützliche Informationen um Support zu erhalten:"
         cta: "Support kontaktieren"
   pn:
@@ -2341,6 +2350,11 @@ fastLogin:
         description: "Jedes Mal, wenn du dich erneut mit SPID oder CIE anmeldest, senden wir dir eine E-Mail."
 whatsNew:
   title: "Was ändert sich?"
+bonusCard:
+  validUntil: "Gültig bis {{endDate}}"
+  expiring: "Verfällt am {{endDate}}"
+  paused: "In Pause"
+  removed: "Entfernt"
 transaction:
   details:
     title: "Details zur Transaktion"
