@@ -101,7 +101,7 @@ const IOSMediaPermissionSteps = () => (
     <ListItemInfo
       label={I18n.t("permissionRequest.gallery.step", { step: 3 })}
       value={I18n.t("permissionRequest.gallery.steps.ios.3")}
-      // TODO add missing pictogram
+      icon="systemPhotosiOS"
     />
   </>
 );
