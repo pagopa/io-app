@@ -45,9 +45,6 @@ describe("Test BonusCardStatus", () => {
     describe("when the status is PAUSED", () => {
       it("should display the correct content", () => {
         const T_END_DATE = new Date(2025, 10, 12);
-        const T_VALIDITY_TEXT = I18n.t("bonusCard.validUntil", {
-          endDate: format(T_END_DATE, "DD/MM/YY")
-        });
         const T_PAUSED_TEXT = I18n.t("bonusCard.paused");
         const { queryByTestId, queryByText } = renderComponent({
           status: "PAUSED",
@@ -55,7 +52,6 @@ describe("Test BonusCardStatus", () => {
         });
         expect(queryByTestId("BonusCardStatusSkeletonTestID")).toBeNull();
         expect(queryByTestId("BonusCardStatusTestID")).not.toBeNull();
-        expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
         expect(queryByText(T_PAUSED_TEXT)).not.toBeNull();
       });
     });
@@ -63,10 +59,25 @@ describe("Test BonusCardStatus", () => {
       it("should display the correct content", () => {
         const T_END_DATE = new Date(2025, 10, 12);
         const T_VALIDITY_TEXT = I18n.t("bonusCard.expiring", {
-          endDate: format(T_END_DATE, "DD MMMM YYYY")
+          endDate: format(T_END_DATE, "DD/MM/YY")
         });
         const { queryByTestId, queryByText } = renderComponent({
           status: "EXPIRING",
+          endDate: T_END_DATE
+        });
+        expect(queryByTestId("BonusCardStatusSkeletonTestID")).toBeNull();
+        expect(queryByTestId("BonusCardStatusTestID")).not.toBeNull();
+        expect(queryByText(T_VALIDITY_TEXT)).not.toBeNull();
+      });
+    });
+    describe("when the status is EXPIRED", () => {
+      it("should display the correct content", () => {
+        const T_END_DATE = new Date(2025, 10, 12);
+        const T_VALIDITY_TEXT = I18n.t("bonusCard.expired", {
+          endDate: format(T_END_DATE, "DD/MM/YY")
+        });
+        const { queryByTestId, queryByText } = renderComponent({
+          status: "EXPIRED",
           endDate: T_END_DATE
         });
         expect(queryByTestId("BonusCardStatusSkeletonTestID")).toBeNull();
