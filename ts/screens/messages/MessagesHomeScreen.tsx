@@ -41,6 +41,7 @@ import {
 } from "../../utils/accessibility";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
+import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -68,6 +69,8 @@ const MessagesHomeScreen = ({
   latestMessageOperation
 }: Props) => {
   const needsMigration = Object.keys(messagesStatus).length > 0;
+  const { securitySuggestionBottomSheet } =
+    useSecuritySuggestionsBottomSheet(false);
 
   useOnFirstRender(() => {
     if (needsMigration) {
@@ -169,6 +172,7 @@ const MessagesHomeScreen = ({
         )}
       {!isScreenReaderEnabled && statusComponent}
       {bottomSheet}
+      {securitySuggestionBottomSheet}
     </TopScreenComponent>
   );
 };

@@ -58,7 +58,6 @@ function* loadMessageData({
   fromPushNotification
 }: RequestGetMessageDataActionType) {
   trackMessageDataLoadRequest(fromPushNotification);
-
   while (true) {
     // Make sure that the later `loadMessageById` and `setMessageReadState`
     // are called after any  update on the message list has ended, otherwise
