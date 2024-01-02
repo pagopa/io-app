@@ -22,7 +22,7 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps } from "react";
+import React, { ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
@@ -46,6 +46,7 @@ import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -105,10 +106,21 @@ const WalletPaymentDetailContent = ({
 }: WalletPaymentDetailContentProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  useHeaderSecondLevel({ title: "", goBack: undefined });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true
+    });
+  }, [navigation]);
+
+  useHeaderSecondLevel({
+    title: "",
+    goBack: undefined,
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp
+  });
 
   const navigateToMethodSelection = () => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+    navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
     });
   };
