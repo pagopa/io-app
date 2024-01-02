@@ -1,10 +1,14 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  Icon,
+  HSpacer,
+  H4,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { H4 } from "../../../components/core/typography/H4";
 import { WithTestID } from "../../../types/WithTestID";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   container: {
