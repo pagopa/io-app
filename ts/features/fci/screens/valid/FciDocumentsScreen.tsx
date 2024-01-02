@@ -13,10 +13,15 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import { IconButton, IOColors } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import {
+  BlockButtonProps,
+  ButtonSolidProps,
+  FooterWithButtons,
+  IconButton,
+  IOColors,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -128,19 +133,28 @@ const FciDocumentsScreen = () => {
 
   const onCancelPress = () => present();
 
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
+  const cancelButtonProps: ButtonSolidProps = {
     onPress: onCancelPress,
-    title: I18n.t("features.fci.documents.footer.cancel")
+    label: I18n.t("features.fci.documents.footer.cancel"),
+    accessibilityLabel: I18n.t("features.fci.documents.footer.cancel")
   };
 
-  const continueButtonProps = {
-    block: true,
-    primary: true,
+  const continueButtonProps: ButtonSolidProps = {
     onPress: onContinuePress,
-    title: I18n.t("features.fci.documents.footer.continue")
+    label: I18n.t("features.fci.documents.footer.continue"),
+    accessibilityLabel: I18n.t("features.fci.documents.footer.continue")
+  };
+
+  const keepReadingButtonProps: ButtonSolidProps = {
+    onPress: () => pointToPage(totalPages),
+    label: I18n.t("global.buttons.continue"),
+    accessibilityLabel: I18n.t("global.buttons.continue")
+  };
+
+  const cont: BlockButtonProps = {
+    type: currentPage < totalPages ? "Outline" : "Solid",
+    buttonProps:
+      currentPage < totalPages ? keepReadingButtonProps : continueButtonProps
   };
 
   const pointToPage = (page: number) =>
@@ -149,14 +163,6 @@ const FciDocumentsScreen = () => {
       O.fromNullable,
       O.map(_ => _.setPage(page))
     );
-
-  const keepReadingButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: () => pointToPage(totalPages),
-    title: I18n.t("global.buttons.continue")
-  };
 
   const renderPager = () => (
     <Pdf
@@ -214,9 +220,6 @@ const FciDocumentsScreen = () => {
     />
   );
 
-  const renderFooterButtons = () =>
-    currentPage < totalPages ? keepReadingButtonProps : continueButtonProps;
-
   return (
     <LoadingSpinnerOverlay isLoading={S.isEmpty(downloadPath)}>
       <BaseScreenComponent
@@ -247,9 +250,9 @@ const FciDocumentsScreen = () => {
             <>
               {renderPager()}
               <FooterWithButtons
-                type={"TwoButtonsInlineThird"}
-                leftButton={cancelButtonProps}
-                rightButton={renderFooterButtons()}
+                type="TwoButtonsInlineThird"
+                secondary={cont}
+                primary={{ type: "Outline", buttonProps: cancelButtonProps }}
               />
             </>
           )}
