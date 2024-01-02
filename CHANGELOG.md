@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.49.0-rc.0](https://github.com/pagopa/io-app/compare/2.48.0-rc.7...2.49.0-rc.0) (2023-12-19)
+
+
+### Bug Fixes
+
+* [[IABT-1492](https://pagopa.atlassian.net/browse/IABT-1492)] Copy update ([#5314](https://github.com/pagopa/io-app/issues/5314)) ([a95c140](https://github.com/pagopa/io-app/commit/a95c140a39aa4f8b8a59505cac30268dc7484a17))
+* [[IOPID-1267](https://pagopa.atlassian.net/browse/IOPID-1267)] Chore: fix toast ([#5351](https://github.com/pagopa/io-app/issues/5351)) ([cf76e5d](https://github.com/pagopa/io-app/commit/cf76e5d19564b613c5c47f1926beb10869242ad3))
+
+
+### Chores
+
+* [[IOBP-457](https://pagopa.atlassian.net/browse/IOBP-457)] Old wallet LV integration ([#5349](https://github.com/pagopa/io-app/issues/5349)) ([a3ad579](https://github.com/pagopa/io-app/commit/a3ad579ddce72300a1fc4bfc6e9c395f2c24e56b))
+* [[IOPID-1182](https://pagopa.atlassian.net/browse/IOPID-1182)] Chore: enable all FL related local FF in production ([#5353](https://github.com/pagopa/io-app/issues/5353)) ([c039e54](https://github.com/pagopa/io-app/commit/c039e54e46007a252bc43c6892dd273da83eb85b))
+* 🇩🇪 CGN translations ([#5293](https://github.com/pagopa/io-app/issues/5293)) ([1e969f9](https://github.com/pagopa/io-app/commit/1e969f9a12d75c6e17cf7475ba9f514a054fdb5d))
+
 ## [2.48.0-rc.7](https://github.com/pagopa/io-app/compare/2.48.0-rc.6...2.48.0-rc.7) (2023-12-15)
 
 
