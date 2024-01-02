@@ -640,7 +640,7 @@ authentication:
     headerTitle: "Du hast keinen SPID?"
     contentTitle: "Was ist SPID?"
     subtitle: "SPID ist sicher"
-  opt-in:
+  opt_in:
     contextualHelpTitle: "Authentifizierung"
     contextualHelpContent: "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps."
     news: "Neu"
