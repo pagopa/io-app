@@ -9,12 +9,13 @@ import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
+import { WalletPaymentFailure } from "../../types/failure";
 
 export const walletPaymentGetDetails = createAsyncAction(
   "WALLET_PAYMENT_GET_DETAILS_REQUEST",
   "WALLET_PAYMENT_GET_DETAILS_SUCCESS",
   "WALLET_PAYMENT_GET_DETAILS_FAILURE"
-)<RptId, PaymentRequestsGetResponse, NetworkError>();
+)<RptId, PaymentRequestsGetResponse, WalletPaymentFailure>();
 
 export const walletPaymentGetAllMethods = createAsyncAction(
   "WALLET_PAYMENT_GET_ALL_METHODS_REQUEST",
@@ -43,7 +44,7 @@ export const walletPaymentCreateTransaction = createAsyncAction(
   "WALLET_PAYMENT_CREATE_TRANSACTION_REQUEST",
   "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
   "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
-)<NewTransactionRequest, NewTransactionResponse, NetworkError>();
+)<NewTransactionRequest, NewTransactionResponse, WalletPaymentFailure>();
 
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;

@@ -22,15 +22,16 @@ import {
   walletPaymentInitState
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { WalletPaymentFailure } from "../../types/failure";
 
 export type WalletPaymentState = {
-  paymentDetails: pot.Pot<PaymentRequestsGetResponse, NetworkError>;
+  paymentDetails: pot.Pot<PaymentRequestsGetResponse, WalletPaymentFailure>;
   userWallets: pot.Pot<Wallets, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
   chosenPaymentMethod: O.Option<WalletInfo>;
   chosenPsp: O.Option<Bundle>;
-  transaction: pot.Pot<NewTransactionResponse, NetworkError>;
+  transaction: pot.Pot<NewTransactionResponse, WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
 };
 

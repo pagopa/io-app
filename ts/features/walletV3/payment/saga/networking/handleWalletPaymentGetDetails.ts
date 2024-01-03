@@ -2,9 +2,9 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import { FaultCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/FaultCategory";
+import { GatewayFaultEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFault";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { getGenericError, getNetworkError } from "../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentGetDetails } from "../../store/actions/networking";
@@ -28,23 +28,32 @@ export function* handleWalletPaymentGetDetails(
       pipe(
         getPaymentRequestInfoResult,
         E.fold(
-          error =>
+          () =>
             walletPaymentGetDetails.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
+              faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
+              faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
             }),
-
-          res => {
-            if (res.status === 200) {
-              return walletPaymentGetDetails.success(res.value);
+          ({ status, value }) => {
+            if (status === 200) {
+              return walletPaymentGetDetails.success(value);
+            } else if (status === 400) {
+              return walletPaymentGetDetails.failure({
+                faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
+                faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+              });
+            } else {
+              return walletPaymentGetDetails.failure(value);
             }
-            return walletPaymentGetDetails.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
           }
         )
       )
     );
   } catch (e) {
-    yield* put(walletPaymentGetDetails.failure({ ...getNetworkError(e) }));
+    yield* put(
+      walletPaymentGetDetails.failure({
+        faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
+        faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+      })
+    );
   }
 }

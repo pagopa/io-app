@@ -47,6 +47,7 @@ import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -71,8 +72,7 @@ const WalletPaymentDetailScreen = () => {
   );
 
   if (pot.isError(paymentDetailsPot)) {
-    // TODO: failure handling (IOBP-309)
-    return null;
+    return <WalletPaymentFailureDetail failure={paymentDetailsPot.error} />;
   }
 
   if (pot.isSome(paymentDetailsPot)) {
