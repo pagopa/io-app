@@ -18,6 +18,8 @@
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+  <!-- Required for card animation based on gyroscope values -->
+  <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
   <!-- Force removal of ACCESS_WIFI_STATE see https://pagopa.atlassian.net/browse/IA-557 -->
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" tools:node="remove" />
@@ -25,6 +27,7 @@
   <uses-permission android:name="android.permission.READ_PHONE_STATE" tools:node="remove" />
   <!-- Force removal of RECORD_AUDIO since the app doesn't need it see https://www.pivotaltracker.com/story/show/171897210 -->
   <uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />
+  
 
   <!-- Required by react-native-calendar-events -->
   <uses-permission android:name="android.permission.READ_CALENDAR" />

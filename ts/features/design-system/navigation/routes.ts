@@ -56,6 +56,10 @@ const DESIGN_SYSTEM_ROUTES = {
       route: "BONUS_CARD_SCREEN",
       title: "Bonus Card Screen"
     },
+    GYROSCOPE_CARD_SCREEN: {
+      route: "GYROSCOPE_CARD_SCREEN",
+      title: "Gyroscope Card Screen"
+    },
     NUMBERPAD: {
       route: "DS_NUMBERPAD",
       title: "NumberPad"

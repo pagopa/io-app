@@ -34,11 +34,11 @@ import { DSColors } from "../core/DSColors";
 import { DSEdgeToEdgeArea } from "../core/DSEdgeToEdgeArea";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSGradientScroll } from "../core/DSGradientScroll";
+import { DSGyroscopeCardScreen } from "../core/DSGyroscopeCardScreen";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
-import { DSNumberPad } from "../core/DSNumberPad";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
 import { DSLegacyButtons } from "../core/DSLegacyButtons";
@@ -48,6 +48,7 @@ import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
+import { DSNumberPad } from "../core/DSNumberPad";
 import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
@@ -424,6 +425,12 @@ const DesignSystemMainStack = () => {
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.SCREENS.BONUS_CARD_SCREEN.route}
         component={DSBonusCardScreen}
+        options={{ headerShown: true }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.SCREENS.GYROSCOPE_CARD_SCREEN.route}
+        component={DSGyroscopeCardScreen}
         options={{ headerShown: true }}
       />
 
