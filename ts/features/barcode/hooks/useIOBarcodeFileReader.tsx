@@ -1,4 +1,5 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -6,7 +7,7 @@ import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { Alert, Linking, View } from "react-native";
+import { Alert, Linking, Platform, View } from "react-native";
 import DocumentPicker, {
   DocumentPickerOptions,
   DocumentPickerResponse,
@@ -15,9 +16,13 @@ import DocumentPicker, {
 import * as ImagePicker from "react-native-image-picker";
 import { ImageLibraryOptions } from "react-native-image-picker";
 import I18n from "../../../i18n";
-import { AsyncAlert } from "../../../utils/asyncAlert";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import * as Platform from "../../../utils/platform";
+import { requestIOAndroidMediaPermission } from "../../../utils/permission";
 import {
   BarcodeAnalyticsFlow,
   trackBarcodeFileUpload,
@@ -110,6 +115,7 @@ const useIOBarcodeFileReader = ({
 }: IOBarcodeFileReaderConfiguration): IOBarcodeFileReader => {
   const [isFilePickerVisible, setFilePickerVisible] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const handleBarcodeSuccess = (barcodes: Array<IOBarcode>) => {
     setIsLoading(false);
@@ -167,19 +173,12 @@ const useIOBarcodeFileReader = ({
   };
 
   const showImagePicker = async () => {
-    // on Android we have to show a prominent disclosure on how we use READ_EXTERNAL_STORAGE permission
-    // see https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/444727486/2021-11-18+Android#2021-12-08
-    if (Platform.isAndroid) {
-      await AsyncAlert(
-        I18n.t("wallet.QRtoPay.readStorageDisclosure.title"),
-        I18n.t("wallet.QRtoPay.readStorageDisclosure.message"),
-        [
-          {
-            text: I18n.t("global.buttons.choose"),
-            style: "default"
-          }
-        ]
-      );
+    if (Platform.OS === "android") {
+      const permissionGranted = await requestIOAndroidMediaPermission();
+      if (!permissionGranted) {
+        navigation.navigate(ROUTES.ANDROID_MEDIA_PERMISSIONS);
+        return;
+      }
     }
 
     setIsLoading(true);
