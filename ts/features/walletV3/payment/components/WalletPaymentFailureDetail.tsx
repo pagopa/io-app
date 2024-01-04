@@ -38,15 +38,15 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
   };
 
   const contactSupportAction: OperationResultScreenContentProps["action"] = {
-    label: "Contatta l’assistenza",
-    accessibilityLabel: "Contatta l’assistenza",
+    label: I18n.t("wallet.payment.support.button"),
+    accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleContactSupport
   };
 
   const genericErrorProps: OperationResultScreenContentProps = {
     pictogram: "umbrellaNew",
-    title: "Si è verificato un errore imprevisto",
-    subtitle: "Riprova, oppure contatta l’assistenza.",
+    title: I18n.t("wallet.payment.failure.GENERIC_ERROR.title"),
+    subtitle: I18n.t("wallet.payment.failure.GENERIC_ERROR.subtitle"),
     action: closeAction
   };
 
@@ -58,64 +58,67 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
       case FaultCategoryEnum.PAYMENT_UNAVAILABLE:
         return {
           pictogram: "fatalError",
-          title: "C’è un problema tecnico con questo avviso",
+          title: I18n.t("wallet.payment.failure.PAYMENT_UNAVAILABLE.title"),
           action: contactSupportAction,
           secondaryAction: closeAction
         };
       case FaultCategoryEnum.PAYMENT_UNKNOWN:
         return {
           pictogram: "attention",
-          title: "I dati dell’avviso non sono corretti",
+          title: I18n.t("wallet.payment.failure.PAYMENT_UNKNOWN.title"),
           action: closeAction,
           secondaryAction: contactSupportAction
         };
       case FaultCategoryEnum.DOMAIN_UNKNOWN:
         return {
           pictogram: "comunicationProblem",
-          title: "L’Ente Creditore sta avendo problemi nella risposta",
+          title: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.title"),
           action: contactSupportAction,
           secondaryAction: closeAction
         };
       case FaultCategoryEnum.PAYMENT_ONGOING:
         return {
           pictogram: "timing",
-          title: "C’è già un pagamento in corso, riprova più tardi",
-          subtitle: "Se il problema persiste, puoi aprire una segnalazione.",
+          title: I18n.t("wallet.payment.failure.PAYMENT_ONGOING.title"),
+          subtitle: I18n.t("wallet.payment.failure.PAYMENT_ONGOING.subtitle"),
           action: closeAction,
           secondaryAction: contactSupportAction
         };
       case FaultCategoryEnum.PAYMENT_EXPIRED:
         return {
           pictogram: "time",
-          title: "L’avviso è scaduto e non è più possibile pagarlo",
-          subtitle: "Contatta l’Ente per maggiori informazioni.",
+          title: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.title"),
+          subtitle: I18n.t("wallet.payment.failure.PAYMENT_EXPIRED.subtitle"),
           action: closeAction
         };
       case FaultCategoryEnum.PAYMENT_CANCELED:
         return {
           pictogram: "stopSecurity",
-          title: "L’Ente Creditore ha revocato questo avviso",
-          subtitle: "Contatta l’Ente per maggiori informazioni.",
+          title: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.title"),
+          subtitle: I18n.t("wallet.payment.failure.PAYMENT_CANCELED.subtitle"),
           action: closeAction,
           secondaryAction: contactSupportAction
+        };
+      case FaultCategoryEnum.PAYMENT_DUPLICATED:
+        return {
+          pictogram: "moneyCheck",
+          title: I18n.t("wallet.payment.failure.PAYMENT_DUPLICATED.title"),
+          action: closeAction
         };
       case FaultCategoryEnum.GENERIC_ERROR:
         if (faultCodeDetail === ValidationFaultEnum.PAA_PAGAMENTO_SCONOSCIUTO) {
           return {
             pictogram: "searchLens",
-            title: "Non riusciamo a trovare l’avviso",
-            subtitle:
-              "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso.",
+            title: I18n.t(
+              "wallet.payment.failure.PAA_PAGAMENTO_SCONOSCIUTO.title"
+            ),
+            subtitle: I18n.t(
+              "wallet.payment.failure.PAA_PAGAMENTO_SCONOSCIUTO.subtitle"
+            ),
             action: closeAction
           };
         }
         return genericErrorProps;
-      case FaultCategoryEnum.PAYMENT_DUPLICATED:
-        return {
-          pictogram: "moneyCheck",
-          title: "Questo avviso è stato già pagato!",
-          action: closeAction
-        };
       default:
         return genericErrorProps;
     }

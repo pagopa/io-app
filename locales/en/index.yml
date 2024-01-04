@@ -686,7 +686,7 @@ authentication:
     notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
     button_accept_lv: Continue with quick access
     button_decline_lv: Authenticate with SPID or CIE every 30 days
-  security_suggestions: 
+  security_suggestions:
     fingerprint: Do not share your or unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
     io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
@@ -1644,6 +1644,32 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "C’è un problema tecnico con questo avviso"
+      PAYMENT_UNKNOWN:
+        title: "I dati dell’avviso non sono corretti"
+      DOMAIN_UNKNOWN:
+        title: "L’Ente Creditore sta avendo problemi nella risposta"
+      PAYMENT_ONGOING:
+        title: "C’è già un pagamento in corso, riprova più tardi"
+        subtitle: "Se il problema persiste, puoi aprire una segnalazione."
+      PAYMENT_EXPIRED:
+        title: "L’avviso è scaduto e non è più possibile pagarlo"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_CANCELED:
+        title: "L’Ente Creditore ha revocato questo avviso"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_DUPLICATED:
+        title: "Questo avviso è stato già pagato!"
+      GENERIC_ERROR:
+        title: "Si è verificato un errore imprevisto"
+        subtitle: "Riprova, oppure contatta l’assistenza."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Non riusciamo a trovare l’avviso"
+        subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    support:
+      button: "Contatta l'assistenza"
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
