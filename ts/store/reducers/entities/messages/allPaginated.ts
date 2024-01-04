@@ -6,7 +6,7 @@ import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import messageListData, {
   MessageListCategory
-} from "../../../../features/messages/types";
+} from "../../../../features/messages/types/messageListCategory";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,

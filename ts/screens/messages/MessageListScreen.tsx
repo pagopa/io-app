@@ -16,7 +16,7 @@ import { MessagesHomeTabParamsList } from "../../navigation/MessagesHomeTabNavig
 import MessagesArchive from "../../components/messages/MessagesArchive";
 import messageListData, {
   MessageListCategory
-} from "../../features/messages/types";
+} from "../../features/messages/types/messageListCategory";
 
 export type MessagesHomeTabNavigationParams = Readonly<{
   category: MessageListCategory;
