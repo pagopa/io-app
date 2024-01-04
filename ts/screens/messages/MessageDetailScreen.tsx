@@ -40,7 +40,7 @@ import {
 import { toUIService } from "../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../store/reducers/types";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { resetGetMessageDataAction } from "../../features/messages/actions";
+import { resetGetMessageDataAction } from "../../features/messages/store/actions";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {

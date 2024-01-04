@@ -3,7 +3,7 @@ import {
   SuccessGetMessageDataActionType,
   getMessageDataAction,
   resetGetMessageDataAction
-} from "../../../../features/messages/actions";
+} from "../../../../features/messages/store/actions";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 import { reloadAllMessages } from "../../../actions/messages";

@@ -11,7 +11,7 @@ import {
   RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
   getMessageDataAction
-} from "../actions";
+} from "../store/actions";
 import { getPaginatedMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import {
   UIMessage,

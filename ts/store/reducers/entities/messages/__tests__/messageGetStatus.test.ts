@@ -3,7 +3,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import {
   getMessageDataAction,
   resetGetMessageDataAction
-} from "../../../../../features/messages/actions";
+} from "../../../../../features/messages/store/actions";
 import { applicationChangeState } from "../../../../actions/application";
 import { reloadAllMessages } from "../../../../actions/messages";
 import { Action } from "../../../../actions/types";

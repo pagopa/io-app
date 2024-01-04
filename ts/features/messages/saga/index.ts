@@ -14,7 +14,7 @@ import {
   downloadAttachment,
   removeCachedAttachment
 } from "../../../store/actions/messages";
-import { getMessageDataAction } from "../actions";
+import { getMessageDataAction } from "../store/actions";
 import { retryDataAfterFastLoginSessionExpirationSelector } from "../../../store/reducers/entities/messages/messageGetStatus";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {

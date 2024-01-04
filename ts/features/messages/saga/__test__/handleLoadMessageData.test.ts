@@ -22,7 +22,7 @@ import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend
 import { thirdPartyFromIdSelector } from "../../../../store/reducers/entities/messages/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
-import { getMessageDataAction } from "../../actions";
+import { getMessageDataAction } from "../../store/actions";
 import * as config from "../../../../config";
 import { isLoadingOrUpdatingInbox } from "../../../../store/reducers/entities/messages/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";

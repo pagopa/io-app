@@ -20,7 +20,7 @@ import {
   cancelGetMessageDataAction,
   getMessageDataAction,
   SuccessGetMessageDataActionType
-} from "../../features/messages/actions";
+} from "../../features/messages/store/actions";
 import EUCOVIDCERT_ROUTES from "../../features/euCovidCert/navigation/routes";
 import PN_ROUTES from "../../features/pn/navigation/routes";
 

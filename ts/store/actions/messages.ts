@@ -29,7 +29,7 @@ import {
   cancelGetMessageDataAction,
   getMessageDataAction,
   resetGetMessageDataAction
-} from "../../features/messages/actions";
+} from "../../features/messages/store/actions";
 
 /**
  * Load a single message given its ID
