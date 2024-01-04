@@ -1,10 +1,12 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
-import { H4 } from "../../../components/core/typography/H4";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
-import { Link } from "../../../components/core/typography/Link";
+import {
+  H6,
+  IOColors,
+  IOStyles,
+  IconButton,
+  LabelLink
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 
 type Props = {
@@ -41,40 +43,26 @@ const SignatureFieldItem = (props: Props) => {
   return (
     <View style={styles.container}>
       <View style={IOStyles.row}>
-        <H4 style={styles.titleMargin} testID="SignatureFieldItemTitleTestID">
+        <H6 style={styles.titleMargin} testID="SignatureFieldItemTitleTestID">
           {props.title}
-        </H4>
-        <TouchableDefaultOpacity
-          accessibilityRole={"checkbox"}
+        </H6>
+        <IconButton
+          testID="SignatureFieldItemCheckboxTestID"
+          disabled={props.disabled}
+          onPress={() => {
+            onChange(!checked);
+          }}
           accessibilityLabel={
             checked
               ? I18n.t("features.fci.signatureFields.accessibility.selected")
               : I18n.t("features.fci.signatureFields.accessibility.unselected")
           }
-          accessibilityState={{ selected: checked }}
-          testID={"SignatureFieldItemButtonTestID"}
-          onPress={() => {
-            onChange(!checked);
-          }}
-          disabled={props.disabled}
-          style={{ alignSelf: "center" }}
-        >
-          <Icon
-            testID="SignatureFieldItemCheckboxTestID"
-            name={checked ? "legCheckOn" : "legCheckOff"}
-            color={
-              checked && !props.disabled
-                ? "blue"
-                : props.disabled
-                ? "grey"
-                : "bluegreyDark"
-            }
-            size={24}
-          />
-        </TouchableDefaultOpacity>
+          icon={checked ? "legCheckOn" : "legCheckOff"}
+          iconSize={24}
+        />
       </View>
       <View style={[IOStyles.row, styles.details]}>
-        <Link
+        <LabelLink
           accessibilityLabel={I18n.t(
             "features.fci.signatureFields.showOnDocument"
           )}
@@ -86,7 +74,7 @@ const SignatureFieldItem = (props: Props) => {
           onPress={props.onPressDetail}
         >
           {I18n.t("features.fci.signatureFields.showOnDocument")}
-        </Link>
+        </LabelLink>
       </View>
     </View>
   );

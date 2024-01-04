@@ -56,7 +56,7 @@ describe("Test SignatureFieldItem component", () => {
     expect(
       component.getByTestId("SignatureFieldItemCheckboxTestID")
     ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-on")).toBeTruthy();
+    expect(component.queryAllByText("legCheckOn")).toBeTruthy();
   });
   it("should render a SignatureFieldItem component with checkbox clickable", () => {
     const onPress = jest.fn();
@@ -68,13 +68,15 @@ describe("Test SignatureFieldItem component", () => {
     };
     const component = renderComponent({ ...props });
     expect(component).toBeTruthy();
-    const rightButton = component.getByTestId("SignatureFieldItemButtonTestID");
+    const rightButton = component.getByTestId(
+      "SignatureFieldItemCheckboxTestID"
+    );
     expect(rightButton).toBeTruthy();
     expect(rightButton).toBeEnabled();
     fireEvent.press(rightButton);
-    expect(component.queryAllByText("io-checkbox-on")).toBeTruthy();
+    expect(component.queryAllByText("legCheckOn")).toBeTruthy();
     fireEvent.press(rightButton);
-    expect(component.queryAllByText("io-checkbox-off")).toBeTruthy();
+    expect(component.queryAllByText("legCheckOff")).toBeTruthy();
     expect(onPress).toHaveBeenCalledTimes(2);
   });
   it("should render a SignatureFieldItem component with right text for details link", () => {
