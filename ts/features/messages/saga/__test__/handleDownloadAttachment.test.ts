@@ -6,7 +6,7 @@ import I18n from "../../../../i18n";
 import { downloadAttachmentWorker } from "../handleDownloadAttachment";
 import { SessionToken } from "../../../../types/SessionToken";
 import { downloadAttachment } from "../../../../store/actions/messages";
-import { mockPdfAttachment } from "../../../../__mocks__/attachment";
+import { mockPdfAttachment } from "../../__mocks__/attachment";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   lollipopKeyTagSelector,

@@ -1,7 +1,7 @@
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { UIMessageDetails } from "../store/reducers/entities/messages/types";
-import { toUIMessageDetails } from "../store/reducers/entities/messages/transformers";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
+import { UIMessageDetails } from "../../../store/reducers/entities/messages/types";
+import { toUIMessageDetails } from "../../../store/reducers/entities/messages/transformers";
 
 import { service_1 } from "./messages";
 

@@ -7,7 +7,7 @@ import { reloadAllMessages } from "../../../store/actions/messages";
 import {
   defaultRequestError,
   defaultRequestPayload
-} from "../../../__mocks__/messages";
+} from "../../../features/messages/__mocks__/messages";
 
 describe("`handleResponse` function", () => {
   describe("given a failure", () => {

@@ -5,8 +5,8 @@ import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { paymentValidInvalidAfterDueDate } from "../../../../__mocks__/message";
-import { service_1 } from "../../../../__mocks__/messages";
+import { paymentValidInvalidAfterDueDate } from "../../../../features/messages/__mocks__/message";
+import { service_1 } from "../../../../features/messages/__mocks__/messages";
 
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";

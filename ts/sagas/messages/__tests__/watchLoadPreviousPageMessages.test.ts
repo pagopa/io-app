@@ -10,7 +10,7 @@ import {
   apiPayload,
   defaultRequestPayload,
   successLoadPreviousPageMessagesPayload
-} from "../../../__mocks__/messages";
+} from "../../../features/messages/__mocks__/messages";
 import { testTryLoadPreviousPageMessages } from "../watchLoadPreviousPageMessages";
 import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 

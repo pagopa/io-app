@@ -8,7 +8,7 @@ import I18n from "../../../../i18n";
 import {
   mockOtherAttachment,
   mockPdfAttachment
-} from "../../../../__mocks__/attachment";
+} from "../../../messages/__mocks__/attachment";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Download } from "../../../../store/reducers/entities/messages/downloads";

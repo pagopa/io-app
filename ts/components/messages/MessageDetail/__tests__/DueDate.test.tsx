@@ -9,7 +9,7 @@ import I18n, { setLocale } from "../../../../i18n";
 import { toUIMessageDetails } from "../../../../store/reducers/entities/messages/transformers";
 import { getExpireStatus } from "../../../../utils/dates";
 import { MessagePaymentExpirationInfo } from "../../../../utils/messages";
-import { paymentValidInvalidAfterDueDate } from "../../../../__mocks__/message";
+import { paymentValidInvalidAfterDueDate } from "../../../../features/messages/__mocks__/message";
 
 import DueDateBar from "../DueDateBar";
 

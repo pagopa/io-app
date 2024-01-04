@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { mockPdfAttachment } from "../../../../../__mocks__/attachment";
+import { mockPdfAttachment } from "../../../../../features/messages/__mocks__/attachment";
 import {
   downloadAttachment,
   removeCachedAttachment

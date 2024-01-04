@@ -7,7 +7,7 @@ import {
   UpsertMessageStatusAttributesPayload
 } from "../../../store/actions/messages";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { successReloadMessagesPayload } from "../../../__mocks__/messages";
+import { successReloadMessagesPayload } from "../../../features/messages/__mocks__/messages";
 import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatusAttribues";
 import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 

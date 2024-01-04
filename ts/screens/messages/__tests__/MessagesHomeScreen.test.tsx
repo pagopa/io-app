@@ -17,7 +17,7 @@ import {
   baseRawBackendStatus
 } from "../../../store/reducers/__mock__/backendStatus";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import { successReloadMessagesPayload } from "../../../__mocks__/messages";
+import { successReloadMessagesPayload } from "../../../features/messages/__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
 
 const mockNavigate = jest.fn();

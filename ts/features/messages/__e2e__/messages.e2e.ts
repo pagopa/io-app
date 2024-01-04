@@ -1,7 +1,6 @@
 import { device } from "detox";
-
-import { e2eWaitRenderTimeout } from "./config";
-import { ensureLoggedIn } from "./utils";
+import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
+import { ensureLoggedIn } from "../../../__e2e__/utils";
 
 describe("Messages Screen", () => {
   beforeEach(async () => {

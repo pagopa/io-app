@@ -8,7 +8,7 @@ import {
   successLoadNextPageMessagesPayload,
   successLoadPreviousPageMessagesPayload,
   successReloadMessagesPayload
-} from "../../../../../__mocks__/messages";
+} from "../../../../../features/messages/__mocks__/messages";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,

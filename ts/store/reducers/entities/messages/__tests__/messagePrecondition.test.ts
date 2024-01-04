@@ -14,7 +14,7 @@ import {
   remoteReady,
   remoteUndefined
 } from "../../../../../features/bonus/bpd/model/RemoteValue";
-import { message_1 } from "../../../../../__mocks__/message";
+import { message_1 } from "../../../../../features/messages/__mocks__/message";
 import { toUIMessage } from "../transformers";
 import { GlobalState } from "../../../types";
 

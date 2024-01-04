@@ -14,7 +14,7 @@ import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
 import {
   defaultRequestPayload,
   successReloadMessagesPayload
-} from "../../../__mocks__/messages";
+} from "../../../features/messages/__mocks__/messages";
 import MessageList from "../MessageList";
 
 jest.useFakeTimers();

@@ -1,16 +1,16 @@
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
-import { TimeToLiveSeconds } from "../../definitions/backend/TimeToLiveSeconds";
-import { ServiceId } from "../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../definitions/backend/ServicePublic";
-import { OrganizationFiscalCode } from "../../definitions/backend/OrganizationFiscalCode";
-import { MessageCategory } from "../../definitions/backend/MessageCategory";
+import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
+import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import {
   NextPageMessagesSuccessPayload,
   PreviousPageMessagesSuccessPayload,
   ReloadMessagesPayload
-} from "../store/actions/messages";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
+} from "../../../store/actions/messages";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 
 export const defaultRequestPayload = {
   pageSize: 8,

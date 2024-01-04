@@ -6,7 +6,7 @@ import {
   service_1,
   service_2,
   successReloadMessagesPayload
-} from "../../../__mocks__/messages";
+} from "../../../features/messages/__mocks__/messages";
 import MessagesSearch from "../MessagesSearch";
 
 const messages = successReloadMessagesPayload.messages;

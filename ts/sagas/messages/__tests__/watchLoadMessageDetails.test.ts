@@ -8,7 +8,7 @@ import {
   apiPayload,
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
-} from "../../../__mocks__/message";
+} from "../../../features/messages/__mocks__/message";
 import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
 import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 

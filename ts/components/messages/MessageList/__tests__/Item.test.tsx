@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
+import { successReloadMessagesPayload } from "../../../../features/messages/__mocks__/messages";
 import Item from "../Item";
 import { GlobalState } from "../../../../store/reducers/types";
 import { applicationChangeState } from "../../../../store/actions/application";

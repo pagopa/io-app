@@ -6,8 +6,8 @@ import { applicationChangeState } from "../../../store/actions/application";
 import {
   medicalPrescription,
   paymentValidInvalidAfterDueDate
-} from "../../../__mocks__/message";
-import { service_1 } from "../../../__mocks__/messages";
+} from "../../../features/messages/__mocks__/message";
+import { service_1 } from "../../../features/messages/__mocks__/messages";
 
 import { appReducer } from "../../../store/reducers";
 import {

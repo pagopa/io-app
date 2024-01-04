@@ -9,7 +9,7 @@ import { appReducer } from "../../../store/reducers";
 import { AllPaginated } from "../../../store/reducers/entities/messages/allPaginated";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
-import { successReloadMessagesPayload } from "../../../__mocks__/messages";
+import { successReloadMessagesPayload } from "../../../features/messages/__mocks__/messages";
 
 import MessagesInbox from "../MessagesInbox";
 

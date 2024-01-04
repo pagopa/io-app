@@ -2,7 +2,7 @@ import { render } from "@testing-library/react-native";
 import React from "react";
 
 import I18n from "../../../../i18n";
-import { successReloadMessagesPayload } from "../../../../__mocks__/messages";
+import { successReloadMessagesPayload } from "../../../../features/messages/__mocks__/messages";
 import Content from "../Content";
 
 const message = successReloadMessagesPayload.messages[0];

@@ -8,7 +8,7 @@ import {
   defaultRequestError,
   defaultRequestPayload,
   successReloadMessagesPayload
-} from "../../../__mocks__/messages";
+} from "../../../features/messages/__mocks__/messages";
 import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
 import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 

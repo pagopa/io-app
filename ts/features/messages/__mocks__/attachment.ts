@@ -1,10 +1,10 @@
-import { Byte } from "../types/digitalInformationUnit";
+import { Byte } from "../../../types/digitalInformationUnit";
 import {
   UIMessageId,
   UIAttachment,
   UIAttachmentId
-} from "../store/reducers/entities/messages/types";
-import { ATTACHMENT_CATEGORY } from "../features/messages/types/attachmentCategory";
+} from "../../../store/reducers/entities/messages/types";
+import { ATTACHMENT_CATEGORY } from "../types/attachmentCategory";
 import { message_1 } from "./message";
 
 export const mockPdfAttachment: UIAttachment = {

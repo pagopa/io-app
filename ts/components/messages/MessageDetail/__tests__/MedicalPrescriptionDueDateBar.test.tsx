@@ -8,7 +8,7 @@ import { toUIMessageDetails } from "../../../../store/reducers/entities/messages
 import { GlobalState } from "../../../../store/reducers/types";
 import { MessagePaymentExpirationInfo } from "../../../../utils/messages";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { paymentValidInvalidAfterDueDate } from "../../../../__mocks__/message";
+import { paymentValidInvalidAfterDueDate } from "../../../../features/messages/__mocks__/message";
 import MedicalPrescriptionDueDateBar from "../MedicalPrescriptionDueDateBar";
 
 jest.useFakeTimers();

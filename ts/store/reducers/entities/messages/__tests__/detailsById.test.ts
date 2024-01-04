@@ -3,7 +3,7 @@ import { getType } from "typesafe-actions";
 import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
-} from "../../../../../__mocks__/message";
+} from "../../../../../features/messages/__mocks__/message";
 
 import { loadMessageDetails } from "../../../../actions/messages";
 import reducer, {
