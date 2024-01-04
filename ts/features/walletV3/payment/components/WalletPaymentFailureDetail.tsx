@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
+import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { ValidationFaultEnum } from "../../../../../definitions/pagopa/ecommerce/ValidationFault";
 import {
   OperationResultScreenContent,
@@ -13,22 +12,24 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { NetworkError } from "../../../../utils/errors";
+import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentFailure } from "../types/failure";
 
 type Props = {
-  failure: NetworkError | WalletPaymentFailure;
+  rptId: RptId;
+  failure: WalletPaymentFailure;
 };
 
-const WalletPaymentFailureDetail = ({ failure }: Props) => {
+const WalletPaymentFailureDetail = ({ rptId, failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const supportModal = usePaymentFailureSupportModal({ rptId, failure });
 
   const handleClose = () => {
     navigation.pop();
   };
 
   const handleContactSupport = () => {
-    navigation.pop();
+    supportModal.present();
   };
 
   const closeAction: OperationResultScreenContentProps["action"] = {
@@ -124,14 +125,14 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
     }
   };
 
-  const contentProps: OperationResultScreenContentProps = pipe(
-    failure,
-    WalletPaymentFailure.decode,
-    E.map(getPropsFromFailure),
-    E.getOrElse(() => genericErrorProps)
-  );
+  const contentProps = getPropsFromFailure(failure);
 
-  return <OperationResultScreenContent {...contentProps} />;
+  return (
+    <>
+      <OperationResultScreenContent {...contentProps} />
+      {supportModal.bottomSheet}
+    </>
+  );
 };
 
 export { WalletPaymentFailureDetail };
