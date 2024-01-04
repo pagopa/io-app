@@ -18,7 +18,6 @@ import {
   WithSkipMixpanelTrackingOnFailure
 } from "../reducers/entities/messages/types";
 import { MessagesStatus } from "../reducers/entities/messages/messagesStatus";
-import { loadThirdPartyMessage } from "../../features/messages/store/actions";
 import {
   Download,
   DownloadError
@@ -28,6 +27,7 @@ import { MessageCategory } from "../../../definitions/backend/MessageCategory";
 import {
   cancelGetMessageDataAction,
   getMessageDataAction,
+  loadThirdPartyMessage,
   resetGetMessageDataAction
 } from "../../features/messages/store/actions";
 

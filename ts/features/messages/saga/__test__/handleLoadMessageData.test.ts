@@ -17,12 +17,14 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { loadServiceDetail } from "../../../../store/actions/services";
 import { messageDetailsByIdSelector } from "../../../../store/reducers/entities/messages/detailsById";
-import { loadThirdPartyMessage } from "../../store/actions";
+import {
+  getMessageDataAction,
+  loadThirdPartyMessage
+} from "../../store/actions";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { thirdPartyFromIdSelector } from "../../../../store/reducers/entities/messages/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
-import { getMessageDataAction } from "../../store/actions";
 import * as config from "../../../../config";
 import { isLoadingOrUpdatingInbox } from "../../../../store/reducers/entities/messages/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";

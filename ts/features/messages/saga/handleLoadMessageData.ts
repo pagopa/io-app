@@ -10,7 +10,8 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
   RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
-  getMessageDataAction
+  getMessageDataAction,
+  loadThirdPartyMessage
 } from "../store/actions";
 import { getPaginatedMessageById } from "../../../store/reducers/entities/messages/paginatedById";
 import {
@@ -26,7 +27,6 @@ import {
 } from "../../../store/actions/messages";
 import { loadServiceDetail } from "../../../store/actions/services";
 import { messageDetailsByIdSelector } from "../../../store/reducers/entities/messages/detailsById";
-import { loadThirdPartyMessage } from "../store/actions";
 import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
 import { isLoadingOrUpdatingInbox } from "../../../store/reducers/entities/messages/allPaginated";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
