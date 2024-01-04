@@ -5,9 +5,14 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SafeAreaView, StyleSheet } from "react-native";
-import { IconButton, IOColors } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import {
+  ButtonSolidProps,
+  FooterWithButtons,
+  H5,
+  IconButton,
+  IOColors,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
@@ -15,12 +20,11 @@ import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignat
 import AppHeader from "../../../components/ui/AppHeader";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
-import { H5 } from "../../../components/core/typography/H5";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { fciDocumentSignatureFields } from "../store/actions";
 import { fciSignatureFieldDrawingSelector } from "../store/reducers/fciSignatureFieldDrawing";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import DocumentsNavigationBar from "./DocumentsNavigationBar";
+import LoadingComponent from "./LoadingComponent";
 
 export type SignatureFieldAttrType =
   | ExistingSignatureFieldAttrs
@@ -49,11 +53,12 @@ const DocumentWithSignature = (props: Props) => {
   const { attrs, currentDoc } = props;
   const dispatch = useIODispatch();
   const onContinuePress = () => props.onClose();
-  const continueButtonProps = {
-    block: true,
-    primary: true,
+  const continueButtonProps: ButtonSolidProps = {
     onPress: onContinuePress,
-    title: I18n.t("features.fci.documents.footer.backToSignFieldsList")
+    label: I18n.t("features.fci.documents.footer.backToSignFieldsList"),
+    accessibilityLabel: I18n.t(
+      "features.fci.documents.footer.backToSignFieldsList"
+    )
   };
 
   /**
@@ -140,12 +145,6 @@ const DocumentWithSignature = (props: Props) => {
   };
 
   /**
-   * Renders the loading spinner.
-   * @returns a loading spinner overlay
-   */
-  const LoadingView = () => <LoadingSpinnerOverlay isLoading={true} />;
-
-  /**
    * Callback to be used when the pdf cannot be loaded or the signature field cannot be drawn.
    * It returns an empty fragment and calls the `onError` callback.
    */
@@ -161,15 +160,15 @@ const DocumentWithSignature = (props: Props) => {
     () =>
       pot.fold(
         parsedDocuments,
-        () => <LoadingView />,
-        () => <LoadingView />,
-        () => <LoadingView />,
+        () => <LoadingComponent />,
+        () => <LoadingComponent />,
+        () => <LoadingComponent />,
         () => <ErrorView />,
         some => (
           <RenderPdf document={some.drawnBase64} page={some.signaturePage} />
         ),
-        () => <LoadingView />,
-        () => <LoadingView />,
+        () => <LoadingComponent />,
+        () => <LoadingComponent />,
         () => <ErrorView />
       ),
     [ErrorView, RenderPdf, parsedDocuments]
@@ -204,8 +203,8 @@ const DocumentWithSignature = (props: Props) => {
           currentPage,
           totalPages
         })}
-        iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
-        iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
+        iconLeftDisabled={currentPage === 1}
+        iconRightDisabled={currentPage === totalPages}
         onPrevious={onPrevious}
         onNext={onNext}
         disabled={false}
@@ -215,7 +214,7 @@ const DocumentWithSignature = (props: Props) => {
         <RenderMask />
         <FooterWithButtons
           type={"SingleButton"}
-          leftButton={continueButtonProps}
+          primary={{ type: "Solid", buttonProps: continueButtonProps }}
         />
       </SafeAreaView>
     </Container>
