@@ -11,6 +11,103 @@ import * as E from "fp-ts/lib/Either";
 import { Locales } from "../../../../locales/locales";
 import I18n from "../../../i18n";
 import { ParsedCredential } from "./types";
+import { CredentialCatalogDisplay } from "./mocks";
+
+/**
+ *
+ *
+ *
+ * CLAIMS MANIPULATION UTILS
+ *
+ *
+ *
+ */
+
+/**
+ * Retrieves the organization name from the evidence claim of the given credential.
+ * If the evidence claim is not present or cannot be decoded, a fallback value is returned.
+ * @param credential - The parsed credential object.
+ * @returns The organization name from the evidence claim or a fallback value.
+ */
+export const getEvidenceOrganizationName = (credential: ParsedCredential) =>
+  pipe(
+    credential.evidence,
+    O.fromNullable,
+    O.fold(
+      () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
+      some =>
+        pipe(
+          some.value,
+          EvidenceClaim.decode,
+          E.fold(
+            () =>
+              I18n.t("features.itWallet.generic.placeholders.organizationName"),
+            some => some[0].record.source.organization_name
+          )
+        )
+    )
+  );
+
+/**
+ * Type for each claim to be displayed.
+ */
+export type ClaimDisplayFormat = {
+  label: string;
+  value: unknown;
+};
+
+/**
+ * Parses the claims from the credential.
+ * For each Record entry it maps the key and the attribute value to a label and a value.
+ * The label is taken from the attribute name which is either a string or a record of locale and string.
+ * If the type of the attribute name is string then when take it's value because locales have not been set.
+ * If the type of the attribute name is record then we take the value of the locale that matches the current locale.
+ * If there's no locale that matches the current locale then we take the attribute key as the name.
+ * The value is taken from the attribute value.
+ * @param parsedCredential - the parsed credential.
+ * @param schema - the issuance credentialConfigurationSchema of parsedCredential.
+ * @returns the array of {@link ClaimDisplayFormat} of the credential contained in its configuration schema.
+ */
+export const parseClaims = (
+  parsedCredential: ParsedCredential
+): Array<ClaimDisplayFormat> =>
+  Object.entries(parsedCredential).map(([key, attribute]) => {
+    const attributeName =
+      typeof attribute.name === "string"
+        ? attribute.name
+        : attribute.name[getClaimsFullLocale()] || key;
+
+    return { label: attributeName, value: attribute.value };
+  });
+
+/**
+ * Sorts the parsedCredential according to the order of the displayData.
+ * If the order is not available, the schema is returned as is.
+ * @param parsedCredential - the parsed credential.
+ * @param order - the order of the displayData.
+ * @returns a new parsedCredential sorted according to the order of the displayData.
+ */
+export const sortClaims = (
+  order: CredentialCatalogDisplay["order"],
+  parsedCredential: ParsedCredential
+) =>
+  order
+    ? Object.fromEntries(
+        Object.entries(parsedCredential)
+          .slice()
+          .sort(([key1], [key2]) => order.indexOf(key1) - order.indexOf(key2))
+      )
+    : parsedCredential;
+
+/**
+ *
+ *
+ *
+ * CLAIMS LOCALE UTILS
+ *
+ *
+ *
+ */
 
 /**
  * Enum for the claims locales.
@@ -37,6 +134,16 @@ const localeToClaimsLocales = new Map<Locales, ClaimsLocales>([
  */
 export const getClaimsFullLocale = (): ClaimsLocales =>
   localeToClaimsLocales.get(I18n.currentLocale()) ?? ClaimsLocales.it;
+
+/**
+ *
+ *
+ *
+ * IO-TS DECODER FOR THE CLAIMS
+ *
+ *
+ *
+ */
 
 /**
  * Regex for the date format which is used to validate the date claim as ISO 8601:2004 YYYY-MM-DD format.
@@ -121,28 +228,3 @@ export const ClaimValue = t.union([
   // Otherwise fallback to string
   PlainTextClaim
 ]);
-
-/**
- * Retrieves the organization name from the evidence claim of the given credential.
- * If the evidence claim is not present or cannot be decoded, a fallback value is returned.
- * @param credential - The parsed credential object.
- * @returns The organization name from the evidence claim or a fallback value.
- */
-export const getEvidenceOrganizationName = (credential: ParsedCredential) =>
-  pipe(
-    credential.evidence,
-    O.fromNullable,
-    O.fold(
-      () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
-      some =>
-        pipe(
-          some.value,
-          EvidenceClaim.decode,
-          E.fold(
-            () =>
-              I18n.t("features.itWallet.generic.placeholders.organizationName"),
-            some => some[0].record.source.organization_name
-          )
-        )
-    )
-  );

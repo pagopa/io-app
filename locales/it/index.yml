@@ -3472,9 +3472,6 @@ features:
         info: "Ulteriori info su questi dati"
         issuedByNew: "Emessa da"
         releasedBy: "Rilasciata da"
-        securityLevels: 
-          high: "Alto"
-          na: "Non disponibile"
         mdl: 
           category: "Licenza {{category}}"
           issuedDate: "Valida dal"

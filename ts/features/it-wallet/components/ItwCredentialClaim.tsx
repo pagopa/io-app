@@ -5,6 +5,7 @@ import { pipe } from "fp-ts/lib/function";
 import { View, Image } from "react-native";
 import { DateFromString } from "@pagopa/ts-commons/lib/dates";
 import {
+  ClaimDisplayFormat,
   ClaimValue,
   DrivingPrivilegesClaim,
   DrivingPrivilegesClaimType,
@@ -18,7 +19,6 @@ import I18n from "../../../i18n";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { localeDateFormat } from "../../../utils/locale";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import { Claim } from "./ItwCredentialClaimsList";
 
 /**
  * Component which renders a place of birth type claim.
@@ -238,7 +238,7 @@ const DrivingPrivilegesClaimItem = ({
  * It renders a different component based on the type of the claim.
  * @param claim - the claim to render
  */
-const ItwCredentialClaim = ({ claim }: { claim: Claim }) =>
+const ItwCredentialClaim = ({ claim }: { claim: ClaimDisplayFormat }) =>
   pipe(
     claim.value,
     ClaimValue.decode,

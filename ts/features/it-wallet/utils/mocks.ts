@@ -17,20 +17,17 @@ export const pidDataMock: PidData = {
   birthDate: "1980-01-10"
 };
 
-enum AssuranceLevel {
-  HIGH = "high"
-}
-
-export const mapAssuranceLevel = (level: AssuranceLevel | string) => {
+/**
+ * Maps the assurance level string to a number, 3 for high, 0 for low.
+ * @param level - the string representation of the assurance level.
+ * @returns a number representing the assurance level.
+ */
+export const mapAssuranceLevel = (level: string) => {
   switch (level) {
-    case AssuranceLevel.HIGH:
-      return I18n.t(
-        "features.itWallet.verifiableCredentials.claims.securityLevels.high"
-      );
+    case "high":
+      return "3";
     default:
-      return I18n.t(
-        "features.itWallet.verifiableCredentials.claims.securityLevels.na"
-      );
+      return "0";
   }
 };
 /**

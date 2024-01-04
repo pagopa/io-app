@@ -3471,9 +3471,6 @@ features:
         issuedByNew: "Issued by"
         releasedBy: "Released by"
         info: "Further information about this data"
-        securityLevels: 
-          high: "High"
-          na: "Not available"
         mdl: 
           category: "License {{category}}"
           issuedDate: "Valid from"
