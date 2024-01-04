@@ -2,12 +2,12 @@ import { SagaIterator } from "redux-saga";
 import { put, select, call, takeLatest } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
 import {
-  Errors,
   Trust,
   WalletInstanceAttestation,
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import DeviceInfo from "react-native-device-info";
+import { toError } from "fp-ts/lib/Either";
 import { idpSelector } from "../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import { isCIEAuthenticationSupported } from "../utils/cie";
@@ -55,14 +55,13 @@ export function* handleWiaRequest(): SagaIterator {
         { wiaCryptoContext }
       );
       const wia = yield* call(issuingAttestation, entityConfiguration);
-
       yield* put(itwWiaRequest.success(wia));
     } catch (e) {
-      const { reason } = e as Errors.WalletInstanceAttestationIssuingError;
+      const { message } = toError(e);
       yield* put(
         itwWiaRequest.failure({
           code: ItWalletErrorTypes.WIA_ISSUING_ERROR,
-          message: reason
+          message
         })
       );
     }
