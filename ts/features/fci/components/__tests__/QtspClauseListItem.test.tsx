@@ -84,9 +84,9 @@ describe("Test QtspClauseListItem component", () => {
     const component = renderComponent({ ...props }, store);
     expect(component).toBeTruthy();
     expect(
-      component.getByTestId("QtspClauseListItemCheckboxTestID")
+      component.getByTestId("QtspClauseListItemContainerTestID")
     ).toBeTruthy();
-    expect(component.queryAllByText("io-checkbox-on")).toBeTruthy();
+    expect(component.queryAllByText("legCheckOn")).toBeTruthy();
   });
   it("should render a QtspClauseListItem component with checkbox clickable", () => {
     const mockStore = configureMockStore<GlobalState>();
