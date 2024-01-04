@@ -15,7 +15,7 @@ import {
   cleanMarkdownFromCTAs,
   getMessageCTA,
   handleCtaAction
-} from "../../../utils/messages";
+} from "../../../features/messages/utils/messages";
 import { maybeNotNullyString } from "../../../utils/strings";
 
 const styles = StyleSheet.create({

@@ -7,7 +7,6 @@ import image from "../../../../img/servicesStatus/error-detail-icon.png";
 import { H2 } from "../../../components/core/typography/H2";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import PdfViewer from "../../../components/messages/MessageDetail/PdfViewer";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
@@ -28,6 +27,7 @@ import { isStrictNone } from "../../../utils/pot";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
 import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import PdfViewer from "./MessageDetail/PdfViewer";
 
 type Props = {
   messageId: UIMessageId;

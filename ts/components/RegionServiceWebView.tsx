@@ -20,7 +20,7 @@ import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { WebviewMessage } from "../types/WebviewMessage";
-import { getRemoteLocale } from "../utils/messages";
+import { getRemoteLocale } from "../features/messages/utils/messages";
 import { showToast } from "../utils/showToast";
 import {
   APP_EVENT_HANDLER,

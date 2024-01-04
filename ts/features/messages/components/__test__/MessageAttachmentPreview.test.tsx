@@ -14,10 +14,7 @@ import { MessageAttachmentPreview } from "../MessageAttachmentPreview";
 const mockOpen = jest.fn();
 const mockPdfViewer = <View testID="pdf-viewer" />;
 
-jest.mock(
-  "../../../../components/messages/MessageDetail/PdfViewer",
-  () => () => mockPdfViewer
-);
+jest.mock("../MessageDetail/PdfViewer", () => () => mockPdfViewer);
 
 describe("MessageAttachmentPreview", () => {
   describe("when enableDownloadAttachment is false", () => {

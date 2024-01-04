@@ -14,8 +14,8 @@ import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import WorkunitGenericFailure from "../../components/error/WorkunitGenericFailure";
-import MessageDetailComponent from "../../components/messages/MessageDetail";
-import ErrorState from "../../components/messages/MessageDetail/ErrorState";
+import MessageDetailComponent from "../../features/messages/components/MessageDetail";
+import ErrorState from "../../features/messages/components/MessageDetail/ErrorState";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";

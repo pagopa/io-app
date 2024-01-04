@@ -1,4 +1,4 @@
-import { Byte } from "../../../types/digitalInformationUnit";
+import { Byte } from "../types/digitalInformationUnit";
 import {
   UIMessageId,
   UIAttachment,

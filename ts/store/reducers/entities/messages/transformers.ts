@@ -9,7 +9,7 @@ import { PublicMessage } from "../../../../../definitions/backend/PublicMessage"
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { apiUrlPrefix } from "../../../../config";
-import { ContentTypeValues } from "../../../../types/contentType";
+import { ContentTypeValues } from "../../../../features/messages/types/contentType";
 
 import {
   Attachment,

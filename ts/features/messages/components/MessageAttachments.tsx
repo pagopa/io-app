@@ -3,12 +3,9 @@ import { View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { VSpacer, WithTestID } from "@pagopa/io-app-design-system";
 import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { ContentTypeValues } from "../../../types/contentType";
+import { ContentTypeValues } from "../types/contentType";
 import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
-import {
-  ModuleAttachment,
-  ModuleAttachmentProps
-} from "../../../components/ModuleAttachment";
+import { ModuleAttachment, ModuleAttachmentProps } from "./ModuleAttachment";
 
 type PartialProps = {
   downloadAttachmentBeforePreview?: boolean;

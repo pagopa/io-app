@@ -7,7 +7,7 @@ import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import i18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { ContentTypeValues } from "../../../types/contentType";
+import { ContentTypeValues } from "../types/contentType";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 import {

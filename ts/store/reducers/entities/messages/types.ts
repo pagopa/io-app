@@ -10,9 +10,9 @@ import { PublicMessage } from "../../../../../definitions/backend/PublicMessage"
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { getExpireStatus } from "../../../../utils/dates";
-import { MessagePaymentExpirationInfo } from "../../../../utils/messages";
+import { MessagePaymentExpirationInfo } from "../../../../features/messages/utils/messages";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { Byte } from "../../../../types/digitalInformationUnit";
+import { Byte } from "../../../../features/messages/types/digitalInformationUnit";
 
 /**
  * The unique ID of a UIMessage and UIMessageDetails, used to avoid passing the wrong ID as parameters
