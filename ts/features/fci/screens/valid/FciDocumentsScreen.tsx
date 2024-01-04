@@ -151,7 +151,7 @@ const FciDocumentsScreen = () => {
     accessibilityLabel: I18n.t("global.buttons.continue")
   };
 
-  const cont: BlockButtonProps = {
+  const secondaryButtonProps: BlockButtonProps = {
     type: currentPage < totalPages ? "Outline" : "Solid",
     buttonProps:
       currentPage < totalPages ? keepReadingButtonProps : continueButtonProps
@@ -238,8 +238,8 @@ const FciDocumentsScreen = () => {
             currentPage,
             totalPages
           })}
-          iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
-          iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
+          iconLeftDisabled={currentPage === 1}
+          iconRightDisabled={currentPage === totalPages}
           onPrevious={onPrevious}
           onNext={onNext}
           disabled={false}
@@ -251,7 +251,7 @@ const FciDocumentsScreen = () => {
               {renderPager()}
               <FooterWithButtons
                 type="TwoButtonsInlineThird"
-                secondary={cont}
+                secondary={secondaryButtonProps}
                 primary={{ type: "Outline", buttonProps: cancelButtonProps }}
               />
             </>
