@@ -6,7 +6,7 @@ import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import PnMessage from "../../../../img/features/messages/pn_message_badge.svg";
+import PnMessage from "../../../../../img/features/messages/pn_message_badge.svg";
 import I18n from "../../../../i18n";
 import { UIMessage } from "../../../../store/reducers/entities/messages/types";
 import customVariables from "../../../../theme/variables";
