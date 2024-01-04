@@ -31,7 +31,6 @@ import ItwKoView from "../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../utils/itwErrorsUtils";
 import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
-// import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIssuanceReducer";
 import { itwCredentialsPidSelector } from "../../../store/reducers/itwCredentialsReducer";
 import { StoredCredential } from "../../../utils/types";
 import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIssuanceReducer";
