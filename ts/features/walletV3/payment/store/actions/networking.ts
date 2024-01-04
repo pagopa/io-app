@@ -15,7 +15,7 @@ export const walletPaymentGetDetails = createAsyncAction(
   "WALLET_PAYMENT_GET_DETAILS_REQUEST",
   "WALLET_PAYMENT_GET_DETAILS_SUCCESS",
   "WALLET_PAYMENT_GET_DETAILS_FAILURE"
-)<RptId, PaymentRequestsGetResponse, WalletPaymentFailure>();
+)<RptId, PaymentRequestsGetResponse, NetworkError | WalletPaymentFailure>();
 
 export const walletPaymentGetAllMethods = createAsyncAction(
   "WALLET_PAYMENT_GET_ALL_METHODS_REQUEST",
@@ -44,7 +44,11 @@ export const walletPaymentCreateTransaction = createAsyncAction(
   "WALLET_PAYMENT_CREATE_TRANSACTION_REQUEST",
   "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
   "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
-)<NewTransactionRequest, NewTransactionResponse, WalletPaymentFailure>();
+)<
+  NewTransactionRequest,
+  NewTransactionResponse,
+  NetworkError | WalletPaymentFailure
+>();
 
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;

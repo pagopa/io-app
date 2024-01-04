@@ -8,6 +8,8 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentGetDetails } from "../../store/actions/networking";
+import { getGenericError } from "../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfo"],
@@ -28,18 +30,16 @@ export function* handleWalletPaymentGetDetails(
       pipe(
         getPaymentRequestInfoResult,
         E.fold(
-          () =>
+          error =>
             walletPaymentGetDetails.failure({
-              faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-              faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+              ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
           ({ status, value }) => {
             if (status === 200) {
               return walletPaymentGetDetails.success(value);
             } else if (status === 400) {
               return walletPaymentGetDetails.failure({
-                faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-                faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+                ...getGenericError(new Error(`Error: ${status}`))
               });
             } else {
               return walletPaymentGetDetails.failure(value);

@@ -8,6 +8,8 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentCreateTransaction } from "../../store/actions/networking";
+import { getGenericError } from "../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 
 export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransaction"],
@@ -28,19 +30,16 @@ export function* handleWalletPaymentCreateTransaction(
       pipe(
         calculateFeesResult,
         E.fold(
-          () =>
+          error =>
             walletPaymentCreateTransaction.failure({
-              faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-              faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+              ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
-
           ({ status, value }) => {
             if (status === 200) {
               return walletPaymentCreateTransaction.success(value);
             } else if (status === 400) {
               return walletPaymentCreateTransaction.failure({
-                faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-                faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+                ...getGenericError(new Error(`Error: ${status}`))
               });
             } else {
               return walletPaymentCreateTransaction.failure(value);
