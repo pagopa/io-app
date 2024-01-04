@@ -17,6 +17,7 @@ import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { WalletPaymentFailure } from "../types/failure";
+import I18n from "../../../../i18n";
 
 type PaymentFailureSupportModalParams = {
   rptId: RptId;
@@ -56,17 +57,21 @@ const usePaymentFailureSupportModal = ({
 
   const contentComponent = (
     <>
-      <ListItemHeader label="Contatta l'assistenza" />
+      <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />
       <ListItemAction
-        label="Chiama 06.4520.2323"
-        accessibilityLabel="Chiama 06.4520.2323"
+        label={I18n.t("wallet.payment.support.phone", {
+          phoneNumber: "06.4520.2323"
+        })}
+        accessibilityLabel={I18n.t("wallet.payment.support.phone", {
+          phoneNumber: "06.4520.2323"
+        })}
         onPress={() => Linking.openURL(`tel:0645202323`)}
         variant="primary"
         icon="phone"
       />
       <ListItemAction
-        label="Chiedi aiuto in chat"
-        accessibilityLabel="Chiedi aiuto in chat"
+        label={I18n.t("wallet.payment.support.chat")}
+        accessibilityLabel={I18n.t("wallet.payment.support.chat")}
         onPress={() => {
           // TODO add chat request
         }}
@@ -76,22 +81,22 @@ const usePaymentFailureSupportModal = ({
       <VSpacer size={24} />
       <ListItemHeader label="Dati aggiuntivi" />
       <ListItemInfoCopy
-        label="Codice errore"
-        accessibilityLabel="Codice errore"
+        label={I18n.t("wallet.payment.support.errorCode")}
+        accessibilityLabel={I18n.t("wallet.payment.support.errorCode")}
         icon="ladybug"
         value={failure.faultCodeDetail}
         onPress={() => clipboardSetStringWithFeedback(failure.faultCodeDetail)}
       />
       <ListItemInfoCopy
-        label="Codice avviso"
-        accessibilityLabel="Codice avviso"
+        label={I18n.t("wallet.payment.support.noticeNumber")}
+        accessibilityLabel={I18n.t("wallet.payment.support.noticeNumber")}
         icon="docPaymentCode"
         value={formattedPaymentNoticeNumber}
         onPress={() => clipboardSetStringWithFeedback(paymentNoticeNumber)}
       />
       <ListItemInfoCopy
-        label="Codice Fiscale Ente"
-        accessibilityLabel="Codice Fiscale Ente"
+        label={I18n.t("wallet.payment.support.entityCode")}
+        accessibilityLabel={I18n.t("wallet.payment.support.entityCode")}
         icon="entityCode"
         value={organizationFiscalCode}
         onPress={() => clipboardSetStringWithFeedback(organizationFiscalCode)}

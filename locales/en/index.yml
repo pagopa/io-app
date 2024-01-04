@@ -1670,6 +1670,13 @@ wallet:
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
     support:
       button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      errorCode: Codice errore
+      noticeNumber: Codice avviso
+      entityCode: Codice Fiscale Ente
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
