@@ -1,8 +1,7 @@
 import * as React from "react";
-import { SafeAreaView, View, SectionList } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { SafeAreaView, SectionList, ScrollView } from "react-native";
+import { H2, IOStyles } from "@pagopa/io-app-design-system";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../../../components/screens/ScreenContent";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
@@ -87,11 +86,10 @@ const FciSignatureRequestsScreen = () => {
         headerTitle={I18n.t("features.fci.requests.header")}
       >
         <SafeAreaView style={IOStyles.flex}>
-          <ScreenContent title={I18n.t("features.fci.requests.title")}>
-            <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-              {renderSignatureRequests()}
-            </View>
-          </ScreenContent>
+          <ScrollView style={IOStyles.horizontalContentPadding}>
+            <H2>{I18n.t("features.fci.requests.title")}</H2>
+            {renderSignatureRequests()}
+          </ScrollView>
         </SafeAreaView>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
