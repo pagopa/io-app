@@ -290,3 +290,9 @@ export const walletPidProviderUrl: string = pipe(
   NonEmptyString.decode,
   E.getOrElse(() => "https://api.eudi-wallet-it-pid-provider.it")
 );
+
+export const walletCredentialProviderUrl: string = pipe(
+  Config.IT_WALLET_CREDENTIAL_PROVIDER_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://api.eudi-wallet-it-issuer.it/rp")
+);

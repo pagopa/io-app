@@ -3,7 +3,10 @@ import { IOIcons } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
 import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
-import { walletPidProviderUrl } from "../../../config";
+import {
+  walletCredentialProviderUrl,
+  walletPidProviderUrl
+} from "../../../config";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
@@ -92,7 +95,7 @@ export type PidCredentialCatalogItem = {
 export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   {
     type: CredentialType.EUROPEAN_DISABILITY_CARD,
-    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    issuerUrl: walletCredentialProviderUrl,
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.disabilityCard"
     ),
@@ -114,7 +117,7 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   },
   {
     type: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    issuerUrl: walletCredentialProviderUrl,
     incoming: false,
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
@@ -138,7 +141,7 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   },
   {
     type: CredentialType.DRIVING_LICENSE,
-    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    issuerUrl: walletCredentialProviderUrl,
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.drivingLicense"
     ),
