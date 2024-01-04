@@ -63,13 +63,7 @@ export const useFciCheckService = () => {
         {I18n.t("features.fci.checkService.content")}
       </Body>
     ),
-    title: (
-      <View style={IOStyles.flex}>
-        <H4 color={"bluegreyDark"} weight={"SemiBold"}>
-          {I18n.t("features.fci.checkService.title")}
-        </H4>
-      </View>
-    ),
+    title: I18n.t("features.fci.checkService.title"),
     snapPoint: [320],
     footer: (
       <FooterWithButtons
