@@ -2,14 +2,12 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { FaultCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/FaultCategory";
-import { GatewayFaultEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFault";
 import { SagaCallReturnType } from "../../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentGetDetails } from "../../store/actions/networking";
-import { getGenericError } from "../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../utils/reporters";
 
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfo"],
@@ -49,11 +47,6 @@ export function* handleWalletPaymentGetDetails(
       )
     );
   } catch (e) {
-    yield* put(
-      walletPaymentGetDetails.failure({
-        faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-        faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
-      })
-    );
+    yield* put(walletPaymentGetDetails.failure({ ...getNetworkError(e) }));
   }
 }
