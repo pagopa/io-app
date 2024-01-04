@@ -1,12 +1,9 @@
 import * as React from "react";
-import { View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Body,
   ButtonSolidProps,
-  FooterWithButtons,
-  H4,
-  IOStyles
+  FooterWithButtons
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
