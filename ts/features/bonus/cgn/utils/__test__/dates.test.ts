@@ -1,9 +1,9 @@
+import MockDate from "mockdate";
 import { getCgnUserAgeRange } from "../dates";
 
 describe("getCgnUserAgeRange", () => {
   beforeAll(() => {
-    // eslint-disable-next-line functional/immutable-data
-    Date.now = jest.fn(() => new Date(Date.UTC(2022, 1, 1)).valueOf());
+    MockDate.set("2022-01-01");
   });
 
   it.each([
