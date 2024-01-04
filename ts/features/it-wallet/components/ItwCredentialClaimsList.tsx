@@ -3,9 +3,8 @@ import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import I18n from "../../../i18n";
 import { CredentialCatalogDisplay } from "../utils/mocks";
-import { StoredCredential } from "../store/reducers/itwCredentialsReducer";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
-import { ParsedCredential } from "../utils/types";
+import { ParsedCredential, StoredCredential } from "../utils/types";
 import { getClaimsFullLocale } from "../utils/itwClaimsUtils";
 import ItwCredentialClaim from "./ItwCredentialClaim";
 

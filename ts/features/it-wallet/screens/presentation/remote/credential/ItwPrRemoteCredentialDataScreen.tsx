@@ -16,10 +16,8 @@ import {
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import interno from "../../../../../../../img/features/it-wallet/interno.png";
 import { useIOSelector } from "../../../../../../store/hooks";
-import { itwDecodedPidValueSelector } from "../../../../store/reducers/itwPidDecodeReducer";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import ROUTES from "../../../../../../navigation/routes";
@@ -36,17 +34,15 @@ import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 import ItwTextInfo from "../../../../components/ItwTextInfo";
-
-type ContentViewParams = {
-  decodedPid: PidWithToken;
-};
+import { itwCredentialsPidSelector } from "../../../../store/reducers/itwCredentialsReducer";
+import { StoredCredential } from "../../../../utils/types";
 
 /**
  * This screen displays the information about the credential that is going to be shared
  * with the issuer.
  */
 const ItwPrRemoteCredentialDataScreen = () => {
-  const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const pid = useIOSelector(itwCredentialsPidSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const rpMock = getRpMock();
   const { present, bottomSheet } = useItwInfoBottomSheet({
@@ -80,7 +76,7 @@ const ItwPrRemoteCredentialDataScreen = () => {
     });
   };
 
-  const ContentView = ({ decodedPid }: ContentViewParams) => (
+  const ContentView = ({ pid }: { pid: StoredCredential }) => (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
         <ForceScrollDownView>
@@ -138,7 +134,9 @@ const ItwPrRemoteCredentialDataScreen = () => {
               </H6>
             </View>
             <VSpacer size={24} />
-            <ItwBulletList data={rpMock.requestedClaims(decodedPid)} />
+            <ItwBulletList
+              data={rpMock.requestedClaims(pid.displayData.title)}
+            />
             <VSpacer size={24} />
             {/* OPTIONAL DATA SECTION */}
             <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -215,10 +213,10 @@ const ItwPrRemoteCredentialDataScreen = () => {
 
   const DecodedPidOrErrorView = () =>
     pipe(
-      decodedPid,
+      pid,
       O.fold(
         () => <ErrorView />,
-        some => <ContentView decodedPid={some} />
+        some => <ContentView pid={some} />
       )
     );
 

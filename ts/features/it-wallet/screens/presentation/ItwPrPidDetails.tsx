@@ -1,6 +1,5 @@
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
@@ -10,27 +9,21 @@ import {
   FooterWithButtons,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { sequenceS } from "fp-ts/lib/Apply";
 import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOSelector } from "../../../../store/hooks";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { itwDecodedPidValueSelector } from "../../store/reducers/itwPidDecodeReducer";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import ItwPidClaimsList from "../../components/ItwPidClaimsList";
-import { CredentialType, getPidDisplayData } from "../../utils/mocks";
+import { CredentialType } from "../../utils/mocks";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
-import { PidResponse } from "../../utils/types";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
-import { ItwCredentialsPidSelector } from "../../store/reducers/itwCredentialsReducer";
-
-export type ContentViewParams = {
-  decodedPid: PidWithToken;
-};
+import { itwCredentialsPidSelector } from "../../store/reducers/itwCredentialsReducer";
+import { StoredCredential } from "../../utils/types";
+import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
@@ -38,9 +31,7 @@ export type ContentViewParams = {
  */
 const ItwPrPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const decodedPid = useIOSelector(itwDecodedPidValueSelector);
-  const pid = useIOSelector(ItwCredentialsPidSelector);
-  const pidDisplayData = getPidDisplayData();
+  const pid = useIOSelector(itwCredentialsPidSelector);
   const bannerViewRef = React.createRef<View>();
   const spacerSize = 32;
 
@@ -60,30 +51,16 @@ const ItwPrPidDetails = () => {
     }
   };
 
-  const ContentView = ({
-    decodedPid,
-    entityConfiguration
-  }: {
-    decodedPid: PidWithToken;
-    entityConfiguration: PidResponse["entityConfiguration"];
-  }) => (
+  const ContentView = ({ pid }: { pid: StoredCredential }) => (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={{ ...IOStyles.flex }}>
         <ScrollView>
           <View style={IOStyles.horizontalContentPadding}>
             <ItwClaimsWrapper
-              displayData={pidDisplayData}
+              displayData={pid.displayData}
               type={CredentialType.PID}
             >
-              <ItwPidClaimsList
-                decodedPid={decodedPid}
-                entityConfiguration={entityConfiguration}
-                claims={["givenName", "familyName", "taxIdCode"]}
-                expiryDate
-                securityLevel
-                onLinkPress={() => null}
-                issuerInfo
-              />
+              <ItwCredentialClaimsList data={pid} />
             </ItwClaimsWrapper>
             <VSpacer size={spacerSize} />
             <Banner
@@ -120,15 +97,10 @@ const ItwPrPidDetails = () => {
 
   const DecodedPidOrErrorView = () =>
     pipe(
-      sequenceS(O.Applicative)({ decodedPid, pid }),
+      pid,
       O.fold(
         () => <ErrorView />,
-        some => (
-          <ContentView
-            decodedPid={some.decodedPid}
-            entityConfiguration={some.pid.entityConfiguration}
-          />
-        )
+        some => <ContentView pid={some} />
       )
     );
 

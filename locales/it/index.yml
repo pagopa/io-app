@@ -3496,8 +3496,8 @@ features:
         confirm: "Sì, interrompi"
         cancel: "No, vai indietro"
       dataSource:
-        multi: "Forniti da {{authSource}}"
-        single: "Fornito da {{authSource}}"
+        multi: "Forniti da {{credentialSource}}"
+        single: "Fornito da {{credentialSource}}"
       credential: "Credenziale"
       attribute: "Attributo"
       placeholders: 

@@ -279,7 +279,7 @@ export const defaultPin = "162534";
 /**
  * IT Wallet
  */
-export const walletProviderUrl: string = pipe(
+export const walletProviderBaseUrl: string = pipe(
   Config.IT_WALLET_WP_URL,
   NonEmptyString.decode,
   E.getOrElse(() => "https://io-d-wallet-it.azurewebsites.net")

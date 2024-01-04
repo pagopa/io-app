@@ -3,10 +3,13 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { ItWalletError } from "../../../utils/itwErrorsUtils";
-import { IssuanceData } from "../../reducers/new/itwIssuanceReducer";
-import { CredentialDefinition, StartIssuanceFlow } from "../../../utils/types";
-import { StoredCredential } from "../../reducers/itwCredentialsReducer";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
+import { IssuanceData } from "../reducers/new/itwIssuanceReducer";
+import {
+  CredentialDefinition,
+  StartIssuanceFlow,
+  StoredCredential
+} from "../../utils/types";
 
 /**
  * Actions for the issuance checks flow.

@@ -10,22 +10,22 @@ import { ActionType, isActionOf } from "typesafe-actions";
 import { toError } from "fp-ts/lib/Either";
 import { CommonActions } from "@react-navigation/native";
 import { IOToast } from "@pagopa/io-app-design-system";
-import { walletProviderUrl } from "../../../../config";
 import {
   itwConfirmStoreCredential,
   itwIssuanceChecks,
   itwIssuanceGetCredential
-} from "../../store/actions/new/itwIssuanceActions";
-import { ITW_PID_KEY_TAG } from "../../utils/pid";
+} from "../../store/actions/itwIssuanceActions";
 import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
-import { ITW_WIA_KEY_TAG } from "../../utils/wia";
-
 import { itwWiaRequest } from "../../store/actions/itwWiaActions";
 import {
-  ItwCredentialsPidSelector,
+  itwCredentialsPidSelector,
   itwCredentialsSelector
 } from "../../store/reducers/itwCredentialsReducer";
-import { getOrGenerateCyptoKey } from "../../utils/keychain";
+import {
+  ITW_PID_KEY_TAG,
+  ITW_WIA_KEY_TAG,
+  getOrGenerateCyptoKey
+} from "../../utils/itwSecureStorageUtils";
 import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
 import {
   itwIssuanceChecksDataSelector,
@@ -34,6 +34,8 @@ import {
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
+import { walletProviderBaseUrl } from "../../../../config";
+import { StoredCredential } from "../../utils/types";
 import { verifyPin } from "../itwSagaUtils";
 
 /**
@@ -133,9 +135,6 @@ export function* handleIssuanceGetCredential(): SagaIterator {
     yield* call(getOrGenerateCyptoKey, keyTag);
     const credentialCryptoContext = createCryptoContextFor(keyTag);
 
-    // from app config
-    const walletProviderBaseUrl = walletProviderUrl;
-
     // start user authz
     const { requestUri, clientId } = yield* call(
       Credential.Issuance.startUserAuthorization,
@@ -164,7 +163,10 @@ export function* handleIssuanceGetCredential(): SagaIterator {
       issuerConf,
       code,
       clientId,
-      { walletInstanceAttestation, walletProviderBaseUrl }
+      {
+        walletInstanceAttestation,
+        walletProviderBaseUrl
+      }
     );
 
     // obtain credential
@@ -276,7 +278,7 @@ function* completeUserAuthorizationWithPID(
     { wiaCryptoContext, walletInstanceAttestation }
   );
 
-  const [pidToken, pidCryptoContext] = yield* call(getPID);
+  const [pid, pidCryptoContext] = yield* call(getPID);
 
   const claims = [
     "unique_id",
@@ -293,7 +295,7 @@ function* completeUserAuthorizationWithPID(
     Credential.Presentation.sendAuthorizationResponse,
     requestObject,
     rpConf,
-    [pidToken, claims, pidCryptoContext],
+    [pid.credential, claims, pidCryptoContext],
     {
       walletInstanceAttestation
     }
@@ -324,8 +326,7 @@ function* getWalletInstanceAttestation(): Iterator<
     throw errorOrWia.payload;
   } else if (isActionOf(itwWiaRequest.success, errorOrWia)) {
     const wia = errorOrWia.payload;
-    const wiaKeytag = ITW_WIA_KEY_TAG;
-    const wiaCryptoContext = createCryptoContextFor(wiaKeytag);
+    const wiaCryptoContext = createCryptoContextFor(ITW_WIA_KEY_TAG);
     return yield* call(() => [wia, wiaCryptoContext] as const);
   } else {
     throw new Error(`Unexpected action type: ${errorOrWia.type}`);
@@ -336,14 +337,12 @@ function* getWalletInstanceAttestation(): Iterator<
  * Helper function which gets the PID from the store and creates a crypto context for it.
  * @returns the PID and the crypto context.
  */
-function* getPID(): Iterator<any, readonly [string, CryptoContext]> {
-  const maybePid = yield* select(ItwCredentialsPidSelector);
+function* getPID(): Iterator<any, readonly [StoredCredential, CryptoContext]> {
+  const maybePid = yield* select(itwCredentialsPidSelector);
   if (O.isNone(maybePid)) {
     const message = `Expecting response_code from sendAuthorizationResponse, received undefined`;
     throw new Error(message);
   }
   const pidCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
-  return yield* call(
-    () => [maybePid.value.credential, pidCryptoContext] as const
-  );
+  return yield* call(() => [maybePid.value, pidCryptoContext] as const);
 }

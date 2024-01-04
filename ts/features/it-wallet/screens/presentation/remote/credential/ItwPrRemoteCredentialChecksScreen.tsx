@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
-import { itwPresentationChecks } from "../../../../store/actions/new/itwPresentationActions";
+import { itwPresentationChecks } from "../../../../store/actions/itwPresentationActions";
 import { itwPresentationChecksSelector } from "../../../../store/reducers/new/itwPresentationReducer";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";

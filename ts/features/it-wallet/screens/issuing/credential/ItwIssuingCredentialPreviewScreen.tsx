@@ -32,13 +32,13 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   itwConfirmStoreCredential,
   itwIssuanceGetCredential
-} from "../../../store/actions/new/itwIssuanceActions";
+} from "../../../store/actions/itwIssuanceActions";
 import { itwIssuanceResultSelector } from "../../../store/reducers/new/itwIssuanceReducer";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
-import { StoredCredential } from "../../../store/reducers/itwCredentialsReducer";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
+import { StoredCredential } from "../../../utils/types";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.

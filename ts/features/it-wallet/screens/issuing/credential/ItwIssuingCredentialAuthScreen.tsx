@@ -15,12 +15,10 @@ import {
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import interno from "../../../../../../img/features/it-wallet/interno.png";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOSelector } from "../../../../../store/hooks";
-import { itwDecodedPidValueSelector } from "../../../store/reducers/itwPidDecodeReducer";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import I18n from "../../../../../i18n";
@@ -33,14 +31,18 @@ import ItwKoView from "../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../utils/itwErrorsUtils";
 import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
+// import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIssuanceReducer";
+import { itwCredentialsPidSelector } from "../../../store/reducers/itwCredentialsReducer";
+import { StoredCredential } from "../../../utils/types";
 import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIssuanceReducer";
+import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
 
 /**
  * This screen displays the information about the credential that is going to be shared
  * with the issuer.
  */
 const ItwIssuingCredentialAuthScreen = () => {
-  const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const pid = useIOSelector(itwCredentialsPidSelector);
   const checks = useIOSelector(itwIssuanceChecksDataSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const toast = useIOToast();
@@ -87,7 +89,7 @@ const ItwIssuingCredentialAuthScreen = () => {
     navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
   };
 
-  const ContentView = ({ decodedPid }: { decodedPid: PidWithToken }) => (
+  const ContentView = ({ pid }: { pid: StoredCredential }) => (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
@@ -138,9 +140,7 @@ const ItwIssuingCredentialAuthScreen = () => {
             {I18n.t(
               "features.itWallet.issuing.credentialsIssuingInfoScreen.subtitle",
               {
-                authsource:
-                  decodedPid.pid.verification.evidence[0].record.source
-                    .organization_name,
+                authsource: getEvidenceOrganizationName(pid.parsedCredential),
                 organization
               }
             )}
@@ -154,7 +154,7 @@ const ItwIssuingCredentialAuthScreen = () => {
           <VSpacer size={24} />
 
           {/* Render a list of claims that will be shared with the credential issuer */}
-          <ItwBulletList data={getRequestedClaims(decodedPid)} />
+          <ItwBulletList data={getRequestedClaims(pid.displayData.title)} />
           <VSpacer size={32} />
           <ItwTextInfo
             content={I18n.t(
@@ -195,18 +195,18 @@ const ItwIssuingCredentialAuthScreen = () => {
     return <ItwKoView {...mappedError} />;
   };
 
-  const DecodedPidOrErrorView = () =>
+  const PidOrErrorView = () =>
     pipe(
-      decodedPid,
+      pid,
       O.fold(
         () => <ErrorView />,
-        decodedPid => <ContentView {...{ decodedPid }} />
+        pid => <ContentView pid={pid} />
       )
     );
 
   return (
     <>
-      <DecodedPidOrErrorView />
+      <PidOrErrorView />
       {bottomSheet}
     </>
   );

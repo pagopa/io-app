@@ -24,7 +24,7 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { itwIssuanceChecksSelector } from "../../../store/reducers/new/itwIssuanceReducer";
-import { itwIssuanceChecks } from "../../../store/actions/new/itwIssuanceActions";
+import { itwIssuanceChecks } from "../../../store/actions/itwIssuanceActions";
 
 const NONE_LOADING = -1;
 

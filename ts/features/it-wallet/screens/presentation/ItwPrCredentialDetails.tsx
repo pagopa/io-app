@@ -14,10 +14,10 @@ import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
-import { StoredCredential } from "../../store/reducers/itwCredentialsReducer";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { StoredCredential } from "../../utils/types";
 
 export type ItwPrCredentialDetailsScreenNavigationParams = {
   credential: StoredCredential;

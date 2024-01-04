@@ -105,9 +105,6 @@ import {
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import { watchItwSaga } from "../features/it-wallet/saga";
-import { itwLifecycleIsValidSelector } from "../features/it-wallet/store/reducers/itwLifecycleReducer";
-import { itwDecodePid } from "../features/it-wallet/store/actions/itwCredentialsActions";
-import { ItwCredentialsPidSelector } from "../features/it-wallet/store/reducers/itwCredentialsReducer";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
@@ -591,12 +588,6 @@ export function* initializeApplicationSaga(
   if (itWalletEnabled) {
     // Start watching for ITWallet actions
     yield* fork(watchItwSaga);
-    // If IT-Wallet is enabled and operational, then dispatch the PID decode request.
-    const isItWalletValid = yield* select(itwLifecycleIsValidSelector);
-    if (isItWalletValid) {
-      const pid = yield* select(ItwCredentialsPidSelector);
-      yield* put(itwDecodePid.request(pid));
-    }
   }
 
   // Load the user metadata

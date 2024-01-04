@@ -3495,8 +3495,8 @@ features:
           confirm: "Yes, interrupt it."
           cancel: "No, go back"
       dataSource: 
-        multi: "Provided by {{authSource}}"
-        single: "Provided by {{authSource}}"
+        multi: "Provided by {{credentialSource}}"
+        single: "Provided by {{credentialSource}}"
       credential: "Credential"
       attribute: "Attribute"
       placeholders:

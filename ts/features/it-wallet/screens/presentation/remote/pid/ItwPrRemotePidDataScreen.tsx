@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Body,
@@ -20,7 +19,6 @@ import { Image, StyleSheet } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useIOSelector } from "../../../../../../store/hooks";
-import { itwDecodedPidValueSelector } from "../../../../store/reducers/itwPidDecodeReducer";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
@@ -37,9 +35,11 @@ import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import ROUTES from "../../../../../../navigation/routes";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
+import { itwCredentialsPidSelector } from "../../../../store/reducers/itwCredentialsReducer";
+import { StoredCredential } from "../../../../utils/types";
 
 const ItwPrRemotePidDataScreen = () => {
-  const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const pid = useIOSelector(itwCredentialsPidSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { present, bottomSheet } = useItwInfoBottomSheet({
     title: rpPidMock.organizationName,
@@ -72,7 +72,7 @@ const ItwPrRemotePidDataScreen = () => {
     });
   };
 
-  const RpPreviewView = ({ decodedPid }: { decodedPid: PidWithToken }) => (
+  const RpPreviewView = ({ pid }: { pid: StoredCredential }) => (
     <BaseScreenComponent
       goBack={true}
       headerTitle={I18n.t(
@@ -136,7 +136,9 @@ const ItwPrRemotePidDataScreen = () => {
               </H6>
             </View>
             <VSpacer size={24} />
-            <ItwBulletList data={rpPidMock.requestedClaims(decodedPid)} />
+            <ItwBulletList
+              data={rpPidMock.requestedClaims(pid.displayData.title)}
+            />
             <VSpacer size={24} />
             {/* PRIVACY SECTION */}
             <FeatureInfo
@@ -198,10 +200,10 @@ const ItwPrRemotePidDataScreen = () => {
 
   const DecodePidOrErrorView = () =>
     pipe(
-      decodedPid,
+      pid,
       O.fold(
         () => <ErrorView />,
-        some => <RpPreviewView decodedPid={some} />
+        some => <RpPreviewView pid={some} />
       )
     );
 

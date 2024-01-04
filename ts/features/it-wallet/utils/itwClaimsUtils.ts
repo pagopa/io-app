@@ -1,8 +1,16 @@
+/**
+ * Utility functions for working with credential claims.
+ */
+
 import * as t from "io-ts";
 import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { patternDateFromString } from "@pagopa/ts-commons/lib/dates";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import { Locales } from "../../../../locales/locales";
 import I18n from "../../../i18n";
+import { ParsedCredential } from "./types";
 
 /**
  * Enum for the claims locales.
@@ -113,3 +121,28 @@ export const ClaimValue = t.union([
   // Otherwise fallback to string
   PlainTextClaim
 ]);
+
+/**
+ * Retrieves the organization name from the evidence claim of the given credential.
+ * If the evidence claim is not present or cannot be decoded, a fallback value is returned.
+ * @param credential - The parsed credential object.
+ * @returns The organization name from the evidence claim or a fallback value.
+ */
+export const getEvidenceOrganizationName = (credential: ParsedCredential) =>
+  pipe(
+    credential.evidence,
+    O.fromNullable,
+    O.fold(
+      () => I18n.t("features.itWallet.generic.placeholders.organizationName"),
+      some =>
+        pipe(
+          some.value,
+          EvidenceClaim.decode,
+          E.fold(
+            () =>
+              I18n.t("features.itWallet.generic.placeholders.organizationName"),
+            some => some[0].record.source.organization_name
+          )
+        )
+    )
+  );
