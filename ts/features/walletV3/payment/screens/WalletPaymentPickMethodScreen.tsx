@@ -188,18 +188,20 @@ const WalletPaymentPickMethodScreen = () => {
         loading: isLoading
       }}
     >
-      <H2>{I18n.t("wallet.methodSelection.header")}</H2>
+      <H2>{I18n.t("wallet.payment.methodSelection.header")}</H2>
       <VSpacer size={16} />
       {shouldShowWarningBanner && (
         <Alert
-          content={I18n.t("wallet.methodSelection.alert.body")}
+          content={I18n.t("wallet.payment.methodSelection.alert.body")}
           variant="warning"
           viewRef={alertRef}
           onPress={() => null}
-          action={I18n.t("wallet.methodSelection.alert.cta")}
+          action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
-      <ListItemHeader label={I18n.t("wallet.methodSelection.yourMethods")} />
+      <ListItemHeader
+        label={I18n.t("wallet.payment.methodSelection.yourMethods")}
+      />
 
       <RadioGroup<string>
         selectedItem={selectedMethod?.walletId}
@@ -207,7 +209,9 @@ const WalletPaymentPickMethodScreen = () => {
         onPress={handleSelectSavedMethod}
       />
 
-      <ListItemHeader label={I18n.t("wallet.methodSelection.otherMethods")} />
+      <ListItemHeader
+        label={I18n.t("wallet.payment.methodSelection.otherMethods")}
+      />
 
       <RadioGroup<string>
         items={notSavedMethodsListItems}

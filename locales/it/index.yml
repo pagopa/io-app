@@ -978,13 +978,6 @@ payment:
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
 wallet:
-  methodSelection:
-      header: Seleziona un metodo
-      yourMethods: I tuoi metodi
-      otherMethods: Altri metodi
-      alert: 
-        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
-        cta: "Ok, ho capito!"
   methodDetails:
     cobadgeTitle: "Carta di debito"
     cardGeneric: "Carta"
@@ -1639,6 +1632,13 @@ wallet:
     cancel: No, continua
     success: Problemi con l'aggiunta? Contatta la tua banca.
   payment:
+    methodSelection:
+        header: Seleziona un metodo
+        yourMethods: I tuoi metodi
+        otherMethods: Altri metodi
+        alert: 
+          body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+          cta: "Ok, ho capito!"
     barcodes:
       choice:
         title: Sono stati rilevati più codici. Quale vuoi usare?
