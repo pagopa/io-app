@@ -21,7 +21,7 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
+import { isNoticePaidSelector } from "../../store/reducers/entities/payments";
 import { loadMessageDetails } from "../../store/actions/messages";
 import {
   navigateBack,
@@ -32,7 +32,6 @@ import { Dispatch, ReduxProps } from "../../store/actions/types";
 import { messageDetailsByIdSelector } from "../../store/reducers/entities/messages/detailsById";
 import { getPaginatedMessageById } from "../../store/reducers/entities/messages/paginatedById";
 import { UIMessageId } from "../../store/reducers/entities/messages/types";
-import { isNoticePaidSelector } from "../../store/reducers/entities/payments";
 import {
   serviceByIdSelector,
   serviceMetadataByIdSelector
@@ -41,6 +40,7 @@ import { toUIService } from "../../store/reducers/entities/services/transformers
 import { GlobalState } from "../../store/reducers/types";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { resetGetMessageDataAction } from "../../features/messages/store/actions";
+import { MessagesParamsList } from "../../features/messages/navigation/params";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {

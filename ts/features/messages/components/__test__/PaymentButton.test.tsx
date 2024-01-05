@@ -14,7 +14,6 @@ import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/
 import { versionInfoLoadSuccess } from "../../../../common/versionInfo/store/actions/versionInfo";
 import { mockIoVersionInfo } from "../../../../common/versionInfo/store/reducers/__mock__/ioVersionInfo";
 import { minAppVersionAppVersionTestCases } from "../../../../common/versionInfo/store/reducers/__mock__/testVersion";
-import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { profileLoadSuccess } from "../../../../store/actions/profile";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
@@ -24,6 +23,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import * as PaymentsUtils from "../../../../utils/payment";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import PaymentButton from "../MessageDetail/PaymentButton";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 describe("PaymentButton", () => {
   jest.useFakeTimers();
@@ -93,7 +93,7 @@ const testPaymentButton = (
         organizationFiscalCode={"46545" as OrganizationFiscalCode}
       />
     ),
-    ROUTES.MESSAGE_DETAIL,
+    MESSAGES_ROUTES.MESSAGE_DETAIL,
     {},
     finalStore
   );

@@ -39,8 +39,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import CtaBar from "./CtaBar";
 import { RemoteContentBanner } from "./RemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
@@ -172,8 +172,8 @@ const MessageDetailsComponent = ({
 
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
-      navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-        screen: ROUTES.MESSAGE_DETAIL_ATTACHMENT,
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
           attachmentId: attachment.id

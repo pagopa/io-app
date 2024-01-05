@@ -1,7 +1,6 @@
 import React from "react";
 import configureMockStore from "redux-mock-store";
 
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
@@ -10,6 +9,7 @@ import { MessagePaymentExpirationInfo } from "../../../utils/messages";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { paymentValidInvalidAfterDueDate } from "../../../__mocks__/message";
 import MedicalPrescriptionDueDateBar from "../MedicalPrescriptionDueDateBar";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 jest.useFakeTimers();
 
@@ -87,7 +87,7 @@ const renderComponent = (
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <MedicalPrescriptionDueDateBar {...props} />,
-      ROUTES.MESSAGE_DETAIL,
+      MESSAGES_ROUTES.MESSAGE_DETAIL,
       {},
       store
     ),

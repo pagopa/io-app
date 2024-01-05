@@ -2,7 +2,6 @@ import React from "react";
 
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
-import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { paymentValidInvalidAfterDueDate } from "../../../__mocks__/message";
@@ -14,6 +13,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 
 import CtaBar from "../CtaBar";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 jest.useFakeTimers();
 
@@ -131,7 +131,7 @@ const renderComponent = (props: React.ComponentProps<typeof CtaBar>) => {
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <CtaBar {...props} />,
-      ROUTES.MESSAGE_DETAIL,
+      MESSAGES_ROUTES.MESSAGE_DETAIL,
       {},
       store
     ),

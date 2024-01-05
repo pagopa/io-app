@@ -8,7 +8,7 @@ import {
 } from "../../store/reducers/entities/messages/types";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../features/messages/components/MessageAttachmentPreview";
-import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
+import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { showToast } from "../../utils/showToast";
 import { getServiceByMessageId } from "../../store/reducers/entities/messages/paginatedById";
 import { useIOSelector } from "../../store/hooks";

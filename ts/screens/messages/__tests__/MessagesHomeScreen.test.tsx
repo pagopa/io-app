@@ -5,7 +5,6 @@ import configureMockStore from "redux-mock-store";
 import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
 import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
-import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { AllPaginated } from "../../../store/reducers/entities/messages/allPaginated";
@@ -19,6 +18,7 @@ import {
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../../features/messages/__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
+import { MESSAGES_ROUTES } from "../../../features/messages/navigation/routes";
 
 const mockNavigate = jest.fn();
 
@@ -71,13 +71,16 @@ describe("MessagesHomeScreen", () => {
             true
           );
           fireEvent(component.getByText(message.title), "onPress");
-          expect(mockNavigate).toHaveBeenCalledWith(ROUTES.MESSAGES_NAVIGATOR, {
-            screen: ROUTES.MESSAGE_ROUTER,
-            params: {
-              messageId: message.id,
-              fromNotification: false
+          expect(mockNavigate).toHaveBeenCalledWith(
+            MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
+            {
+              screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
+              params: {
+                messageId: message.id,
+                fromNotification: false
+              }
             }
-          });
+          );
         });
       });
     });
@@ -164,7 +167,7 @@ const renderComponent = (
 
   const component = renderScreenWithNavigationStoreContext(
     MessagesHomeScreen,
-    ROUTES.MESSAGES_HOME,
+    MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store
   );

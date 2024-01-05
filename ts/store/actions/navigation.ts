@@ -27,6 +27,7 @@ import {
   BPayPaymentMethod,
   CreditCardPaymentMethod
 } from "../../types/pagopa";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 
 /**
  * @deprecated
@@ -145,8 +146,8 @@ export const navigateToEmailInsertScreen = () => {
 export const navigateToMessageDetailScreenAction = (
   params: MessageDetailScreenNavigationParams
 ) =>
-  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_DETAIL,
+  CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+    screen: MESSAGES_ROUTES.MESSAGE_DETAIL,
     params
   });
 
@@ -156,8 +157,8 @@ export const navigateToMessageDetailScreenAction = (
 export const navigateToMessageRouterAction = (
   params: MessageRouterScreenNavigationParams
 ) =>
-  CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-    screen: ROUTES.MESSAGE_ROUTER,
+  CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+    screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
     params
   });
 

@@ -5,7 +5,6 @@ import { Text } from "react-native";
 import configureMockStore from "redux-mock-store";
 
 import I18n from "../../../../i18n";
-import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
@@ -16,6 +15,7 @@ import {
   successReloadMessagesPayload
 } from "../../__mocks__/messages";
 import MessageList from "../MessageList";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 jest.useFakeTimers();
 jest.mock("../../../../utils/showToast", () => ({
@@ -133,7 +133,7 @@ const renderComponent = (
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <MessageList {...props} />,
-      ROUTES.MESSAGES_HOME,
+      MESSAGES_ROUTES.MESSAGES_HOME,
       {},
       store
     ),

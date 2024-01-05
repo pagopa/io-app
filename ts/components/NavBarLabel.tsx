@@ -10,8 +10,9 @@ import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 
-type Routes = keyof typeof ROUTES;
+type Routes = keyof typeof ROUTES | keyof typeof MESSAGES_ROUTES;
 
 type OwnProps = {
   options: {
@@ -94,7 +95,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     : "";
 
   const unreadMessagesMap: Record<string, number> = {
-    [ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length
+    [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length
   };
 
   const computedUnreadMessages = unreadMessagesMap[routeName] || undefined;

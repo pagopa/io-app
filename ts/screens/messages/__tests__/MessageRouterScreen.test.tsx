@@ -1,5 +1,4 @@
 import { AnyAction, Dispatch, createStore } from "redux";
-import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
@@ -9,6 +8,7 @@ import { getMessageDataAction } from "../../../features/messages/store/actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import * as ASD from "../../../store/hooks";
 import { MessageGetStatus } from "../../../store/reducers/entities/messages/messageGetStatus";
+import { MESSAGES_ROUTES } from "../../../features/messages/navigation/routes";
 
 describe("MessageRouterScreen", () => {
   it("should match snapshot before starting to retrieve message data", () => {
@@ -112,7 +112,7 @@ const renderScreen = (
 
   const renderedMessageRouterScreen = renderScreenWithNavigationStoreContext(
     MessageRouterScreen,
-    ROUTES.MESSAGE_ROUTER,
+    MESSAGES_ROUTES.MESSAGE_ROUTER,
     { messageId, fromNotification: fromPushNotification },
     store
   );

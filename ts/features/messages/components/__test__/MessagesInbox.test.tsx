@@ -3,7 +3,6 @@ import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import configureMockStore from "redux-mock-store";
-import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
@@ -12,6 +11,7 @@ import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
 
 import MessagesInbox from "../MessagesInbox";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 jest.useFakeTimers();
 
@@ -58,7 +58,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessagesInbox>) => {
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <MessagesInbox {...props} />,
-      ROUTES.MESSAGES_HOME,
+      MESSAGES_ROUTES.MESSAGES_HOME,
       {},
       store
     ),

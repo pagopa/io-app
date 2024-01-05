@@ -1,7 +1,6 @@
 import React from "react";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";
-import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import {
   medicalPrescription,
@@ -18,6 +17,7 @@ import { toUIService } from "../../../../store/reducers/entities/services/transf
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import MessageDetail from "../MessageDetail";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 jest.useFakeTimers();
 
@@ -132,7 +132,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessageDetail>) => {
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
       () => <MessageDetail {...props} />,
-      ROUTES.MESSAGES_HOME,
+      MESSAGES_ROUTES.MESSAGES_HOME,
       {},
       store
     ),

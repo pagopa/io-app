@@ -4,7 +4,7 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../../navigation/params/MessagesParamsList";
+import { MessagesParamsList } from "../../features/messages/navigation/params";
 import ROUTES from "../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { UIMessageId } from "../../store/reducers/entities/messages/types";
@@ -23,6 +23,7 @@ import {
 } from "../../features/messages/store/actions";
 import EUCOVIDCERT_ROUTES from "../../features/euCovidCert/navigation/routes";
 import PN_ROUTES from "../../features/pn/navigation/routes";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 
 export type MessageRouterScreenNavigationParams = {
   messageId: UIMessageId;
@@ -69,7 +70,7 @@ export const MessageRouterScreen = (
 
   const onNavigateHomeCallback = useCallback(() => {
     navigation.navigate(ROUTES.MAIN, {
-      screen: ROUTES.MESSAGES_HOME
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
     });
   }, [navigation]);
 
@@ -87,7 +88,7 @@ export const MessageRouterScreen = (
 
       if (data.euCovidCerficateAuthCode) {
         navigation.dispatch(
-          StackActions.replace(ROUTES.MESSAGES_NAVIGATOR, {
+          StackActions.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
             screen: EUCOVIDCERT_ROUTES.MAIN,
             params: {
               screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
@@ -100,7 +101,7 @@ export const MessageRouterScreen = (
         );
       } else if (data.isPNMessage) {
         navigation.dispatch(
-          StackActions.replace(ROUTES.MESSAGES_NAVIGATOR, {
+          StackActions.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
             screen: PN_ROUTES.MAIN,
             params: {
               screen: PN_ROUTES.MESSAGE_DETAILS,
@@ -114,7 +115,7 @@ export const MessageRouterScreen = (
         );
       } else {
         navigation.dispatch(
-          StackActions.replace(ROUTES.MESSAGE_DETAIL, {
+          StackActions.replace(MESSAGES_ROUTES.MESSAGE_DETAIL, {
             messageId: data.messageId,
             serviceId: data.serviceId
           })
