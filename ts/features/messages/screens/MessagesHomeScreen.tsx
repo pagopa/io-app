@@ -6,42 +6,42 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOColors } from "@pagopa/io-app-design-system";
-import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
-import MessageList from "../../features/messages/components/MessageList";
-import MessagesSearch from "../../features/messages/components/MessagesSearch";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
-import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import SectionStatusComponent from "../../components/SectionStatus";
-import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import I18n from "../../i18n";
-import MessagesHomeTabNavigator from "../../navigation/MessagesHomeTabNavigator";
+import { useMessageOpening } from "../hooks/useMessageOpening";
+import MessageList from "../components/MessageList";
+import MessagesSearch from "../components/MessagesSearch";
+import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
+import TopScreenComponent from "../../../components/screens/TopScreenComponent";
+import { MIN_CHARACTER_SEARCH_TEXT } from "../../../components/search/SearchButton";
+import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
+import SectionStatusComponent from "../../../components/SectionStatus";
+import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
+import I18n from "../../../i18n";
+import MessagesHomeTabNavigator from "../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus
-} from "../../store/actions/messages";
-import { sectionStatusSelector } from "../../store/reducers/backendStatus";
+} from "../../../store/actions/messages";
+import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import {
   allInboxAndArchivedMessagesSelector,
   allPaginatedSelector
-} from "../../store/reducers/entities/messages/allPaginated";
+} from "../../../store/reducers/entities/messages/allPaginated";
 import {
   MessagesStatus,
   messagesStatusSelector
-} from "../../store/reducers/entities/messages/messagesStatus";
+} from "../../../store/reducers/entities/messages/messagesStatus";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector
-} from "../../store/reducers/search";
-import { GlobalState } from "../../store/reducers/types";
+} from "../../../store/reducers/search";
+import { GlobalState } from "../../../store/reducers/types";
 import {
   setAccessibilityFocus,
   useScreenReaderEnabled
-} from "../../utils/accessibility";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../utils/showToast";
-import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
+} from "../../../utils/accessibility";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { showToast } from "../../../utils/showToast";
+import { useSecuritySuggestionsBottomSheet } from "../../../hooks/useSecuritySuggestionBottomSheet";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &

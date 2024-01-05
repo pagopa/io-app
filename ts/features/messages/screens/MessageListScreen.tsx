@@ -3,20 +3,20 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useMessageOpening } from "../../features/messages/hooks/useMessageOpening";
-import MessagesInbox from "../../features/messages/components/MessagesInbox";
-import { upsertMessageStatusAttributes } from "../../store/actions/messages";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useMessageOpening } from "../hooks/useMessageOpening";
+import MessagesInbox from "../components/MessagesInbox";
+import { upsertMessageStatusAttributes } from "../../../store/actions/messages";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   MessagePagePot,
   messagesByCategorySelector
-} from "../../store/reducers/entities/messages/allPaginated";
-import { UIMessage } from "../../store/reducers/entities/messages/types";
-import { MessagesHomeTabParamsList } from "../../navigation/MessagesHomeTabNavigator";
-import MessagesArchive from "../../features/messages/components/MessagesArchive";
+} from "../../../store/reducers/entities/messages/allPaginated";
+import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { MessagesHomeTabParamsList } from "../navigation/MessagesHomeTabNavigator";
+import MessagesArchive from "../components/MessagesArchive";
 import messageListData, {
   MessageListCategory
-} from "../../features/messages/types/messageListCategory";
+} from "../types/messageListCategory";
 
 export type MessagesHomeTabNavigationParams = Readonly<{
   category: MessageListCategory;

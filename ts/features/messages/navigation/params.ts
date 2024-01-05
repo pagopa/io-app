@@ -1,9 +1,9 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import PN_ROUTES from "../../pn/navigation/routes";
-import { MessageRouterScreenNavigationParams } from "../../../screens/messages/MessageRouterScreen";
-import { MessageDetailScreenNavigationParams } from "../../../screens/messages/MessageDetailScreen";
-import { MessageDetailAttachmentNavigationParams } from "../../../screens/messages/MessageAttachment";
+import { MessageRouterScreenNavigationParams } from "../screens/MessageRouterScreen";
+import { MessageDetailScreenNavigationParams } from "../screens/MessageDetailScreen";
+import { MessageDetailAttachmentNavigationParams } from "../screens/MessageAttachment";
 import { EUCovidCertParamsList } from "../../euCovidCert/navigation/params";
 import { PnParamsList } from "../../pn/navigation/params";
 import { MESSAGES_ROUTES } from "./routes";

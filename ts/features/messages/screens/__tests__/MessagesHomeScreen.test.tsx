@@ -2,23 +2,23 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
-import { TagEnum as TagEnumBase } from "../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as TagEnumPayment } from "../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import { AllPaginated } from "../../../store/reducers/entities/messages/allPaginated";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
-import { GlobalState } from "../../../store/reducers/types";
+import { TagEnum as TagEnumBase } from "../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum as TagEnumPayment } from "../../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
+import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   baseBackendConfig,
   baseBackendState,
   baseRawBackendStatus
-} from "../../../store/reducers/__mock__/backendStatus";
-import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import { successReloadMessagesPayload } from "../../../features/messages/__mocks__/messages";
+} from "../../../../store/reducers/__mock__/backendStatus";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { successReloadMessagesPayload } from "../../__mocks__/messages";
 import MessagesHomeScreen from "../MessagesHomeScreen";
-import { MESSAGES_ROUTES } from "../../../features/messages/navigation/routes";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 const mockNavigate = jest.fn();
 
@@ -39,7 +39,7 @@ jest.mock("@react-navigation/native", () => {
 
 const mockPresentBottomSheet = jest.fn();
 
-jest.mock("../../../utils/hooks/bottomSheet", () => ({
+jest.mock("../../../../utils/hooks/bottomSheet", () => ({
   useIOBottomSheetModal: () => ({ present: mockPresentBottomSheet }),
   useIOBottomSheetAutoresizableModal: () => ({
     present: mockPresentBottomSheet

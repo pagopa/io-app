@@ -2,14 +2,14 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { EUCovidCertStackNavigator } from "../../euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
-import MessageDetailScreen from "../../../screens/messages/MessageDetailScreen";
-import { MessageRouterScreen } from "../../../screens/messages/MessageRouterScreen";
+import MessageDetailScreen from "../screens/MessageDetailScreen";
+import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
-import { MessageDetailAttachment } from "../../../screens/messages/MessageAttachment";
+import { MessageDetailAttachment } from "../screens/MessageAttachment";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 

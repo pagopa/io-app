@@ -1,14 +1,14 @@
 import { AnyAction, Dispatch, createStore } from "redux";
-import { applicationChangeState } from "../../../store/actions/application";
-import { appReducer } from "../../../store/reducers";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
-import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MessageRouterScreen } from "../MessageRouterScreen";
-import { getMessageDataAction } from "../../../features/messages/store/actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import * as ASD from "../../../store/hooks";
-import { MessageGetStatus } from "../../../store/reducers/entities/messages/messageGetStatus";
-import { MESSAGES_ROUTES } from "../../../features/messages/navigation/routes";
+import { getMessageDataAction } from "../../store/actions";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import * as ASD from "../../../../store/hooks";
+import { MessageGetStatus } from "../../../../store/reducers/entities/messages/messageGetStatus";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 describe("MessageRouterScreen", () => {
   it("should match snapshot before starting to retrieve message data", () => {

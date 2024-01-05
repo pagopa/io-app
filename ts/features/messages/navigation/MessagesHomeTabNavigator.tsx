@@ -2,11 +2,11 @@ import * as React from "react";
 import { Platform } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { IOColors } from "@pagopa/io-app-design-system";
-import I18n from "../i18n";
-import { makeFontStyleObject } from "../components/core/fonts";
+import I18n from "../../../i18n";
+import { makeFontStyleObject } from "../../../components/core/fonts";
 import MessageListScreen, {
   MessagesHomeTabNavigationParams
-} from "../screens/messages/MessageListScreen";
+} from "../screens/MessageListScreen";
 
 export const MessagesHomeTabRoutes = {
   MESSAGES_INBOX: "MESSAGES_INBOX",

@@ -1,23 +1,23 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import I18n from "../../i18n";
+import I18n from "../../../i18n";
 import {
   UIAttachmentId,
   UIMessageId
-} from "../../store/reducers/entities/messages/types";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { MessageAttachmentPreview } from "../../features/messages/components/MessageAttachmentPreview";
-import { MessagesParamsList } from "../../features/messages/navigation/params";
-import { showToast } from "../../utils/showToast";
-import { getServiceByMessageId } from "../../store/reducers/entities/messages/paginatedById";
-import { useIOSelector } from "../../store/hooks";
-import { thirdPartyMessageUIAttachment } from "../../store/reducers/entities/messages/thirdPartyById";
+} from "../../../store/reducers/entities/messages/types";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { MessageAttachmentPreview } from "../components/MessageAttachmentPreview";
+import { MessagesParamsList } from "../navigation/params";
+import { showToast } from "../../../utils/showToast";
+import { getServiceByMessageId } from "../../../store/reducers/entities/messages/paginatedById";
+import { useIOSelector } from "../../../store/hooks";
+import { thirdPartyMessageUIAttachment } from "../../../store/reducers/entities/messages/thirdPartyById";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
-} from "../../features/messages/analytics";
+} from "../analytics";
 
 export type MessageDetailAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;

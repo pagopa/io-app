@@ -1,29 +1,29 @@
 import { StackActions, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../../features/messages/navigation/params";
-import ROUTES from "../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { UIMessageId } from "../../store/reducers/entities/messages/types";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { trackOpenMessage } from "../../features/messages/analytics";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../navigation/params";
+import ROUTES from "../../../navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
+import { trackOpenMessage } from "../analytics";
 import {
   blockedFromPushNotificationSelector,
   messageSuccessDataSelector,
   showSpinnerFromMessageGetStatusSelector,
   thirdPartyMessageDetailsErrorSelector
-} from "../../store/reducers/entities/messages/messageGetStatus";
+} from "../../../store/reducers/entities/messages/messageGetStatus";
 import {
   cancelGetMessageDataAction,
   getMessageDataAction,
   SuccessGetMessageDataActionType
-} from "../../features/messages/store/actions";
-import EUCOVIDCERT_ROUTES from "../../features/euCovidCert/navigation/routes";
-import PN_ROUTES from "../../features/pn/navigation/routes";
-import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
+} from "../store/actions";
+import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
+import PN_ROUTES from "../../pn/navigation/routes";
+import { MESSAGES_ROUTES } from "../navigation/routes";
 
 export type MessageRouterScreenNavigationParams = {
   messageId: UIMessageId;
