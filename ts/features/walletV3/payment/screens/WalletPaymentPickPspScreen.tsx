@@ -7,6 +7,7 @@ import {
   H2,
   ListItemHeader,
   RadioGroup,
+  RadioItemWithAmount,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -198,19 +199,24 @@ const getRadioItemsFromPspList = (
   pspList?: Array<Bundle>,
   showFeaturedPsp?: boolean
 ) =>
-  !pspList
-    ? []
-    : pspList?.map((psp, index) => ({
+  pipe(
+    pspList,
+    O.fromNullable,
+    O.map(list =>
+      list.map((psp, index) => ({
         id: psp.idBundle ?? index.toString(),
         label: psp.bundleName ?? I18n.t("wallet.payment.psp.defaultName"),
         isSuggested: psp.onUs && showFeaturedPsp,
         suggestReason: I18n.t("wallet.payment.psp.featuredReason"),
         formattedAmountString: formatNumberCentsToAmount(
-          psp.taxPayerFee || 0,
+          psp.taxPayerFee ?? 0,
           true,
           "right"
         )
-      }));
+      }))
+    ),
+    O.getOrElse(() => [] as ReadonlyArray<RadioItemWithAmount<string>>)
+  );
 
 export { WalletPaymentPickPspScreen };
 export type { WalletPaymentPickPspScreenNavigationParams };
