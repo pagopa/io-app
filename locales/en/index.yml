@@ -1648,6 +1648,10 @@ wallet:
       title: Vuoi interrompere l'operazione?
       confirm: Sì, interrompi
       cancel: No, torna indietro
+    outcome:
+      cancelled:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
