@@ -55,6 +55,15 @@ const usePaymentFailureSupportModal = ({
     O.getOrElse(() => "")
   );
 
+  const handleCopyAllToClipboard = () => {
+    const formattedData = `
+    ${I18n.t("wallet.payment.support.errorCode")}: ${failure.faultCodeDetail}\n
+    ${I18n.t("wallet.payment.support.noticeNumber")}: ${paymentNoticeNumber}\n
+    ${I18n.t("wallet.payment.support.entityCode")}: ${organizationFiscalCode}
+    `;
+    clipboardSetStringWithFeedback(formattedData);
+  };
+
   const contentComponent = (
     <>
       <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />
@@ -79,7 +88,16 @@ const usePaymentFailureSupportModal = ({
         icon="chat"
       />
       <VSpacer size={24} />
-      <ListItemHeader label="Dati aggiuntivi" />
+      <ListItemHeader
+        label={I18n.t("wallet.payment.support.additionalDataTitle")}
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: I18n.t("wallet.payment.support.copyAll"),
+            onPress: handleCopyAllToClipboard
+          }
+        }}
+      />
       <ListItemInfoCopy
         label={I18n.t("wallet.payment.support.errorCode")}
         accessibilityLabel={I18n.t("wallet.payment.support.errorCode")}

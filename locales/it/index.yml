@@ -1674,6 +1674,7 @@ wallet:
       phone: Chiama {{phoneNumber}}
       chat: Chiedi aiuto in chat
       additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
       errorCode: Codice errore
       noticeNumber: Codice avviso
       entityCode: Codice Fiscale Ente
