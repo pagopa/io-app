@@ -47,6 +47,7 @@ import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -105,6 +106,7 @@ const WalletPaymentDetailContent = ({
   payment
 }: WalletPaymentDetailContentProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const handleGoBack = useWalletPaymentGoBackHandler();
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -114,7 +116,7 @@ const WalletPaymentDetailContent = ({
 
   useHeaderSecondLevel({
     title: "",
-    goBack: undefined,
+    goBack: handleGoBack,
     supportRequest: true,
     contextualHelp: emptyContextualHelp
   });
