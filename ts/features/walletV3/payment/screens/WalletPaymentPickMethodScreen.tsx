@@ -126,43 +126,37 @@ const WalletPaymentPickMethodScreen = () => {
 
   const savedMethodsListItems = useMemo(
     () =>
-      isLoading
-        ? loadingRadios
-        : pipe(
-            userWalletsPots,
-            pot.toOption,
-            O.fold(
-              () => [],
-              // possibly void, so we coalesce to empty array
-              methods =>
-                (methods.map(mapSavedToRadioItem) ?? []) as Array<
-                  RadioItem<string>
-                >
-            )
-          ),
-    [isLoading, userWalletsPots]
+      pipe(
+        userWalletsPots,
+        pot.toOption,
+        O.fold(
+          () => [],
+          // possibly void, so we coalesce to empty array
+          methods =>
+            (methods.map(mapSavedToRadioItem) ?? []) as Array<RadioItem<string>>
+        )
+      ),
+    [userWalletsPots]
   );
 
   const notSavedMethodsListItems = useMemo(
     () =>
-      isLoading
-        ? loadingRadios
-        : pipe(
-            paymentMethodsPot,
-            pot.toOption,
-            O.fold(
-              () => [],
-              methods =>
-                methods.map(item => {
-                  const radio = mapGenericToRadioItem(item, paymentAmount);
-                  if (radio.disabled === true) {
-                    setShouldShowWarningBanner(true);
-                  }
-                  return radio;
-                })
-            )
-          ),
-    [isLoading, paymentMethodsPot, paymentAmount]
+      pipe(
+        paymentMethodsPot,
+        pot.toOption,
+        O.fold(
+          () => [],
+          methods =>
+            methods.map(item => {
+              const radio = mapGenericToRadioItem(item, paymentAmount);
+              if (radio.disabled === true) {
+                setShouldShowWarningBanner(true);
+              }
+              return radio;
+            })
+        )
+      ),
+    [paymentMethodsPot, paymentAmount]
   );
 
   useHeaderSecondLevel({
@@ -195,7 +189,7 @@ const WalletPaymentPickMethodScreen = () => {
           content={I18n.t("wallet.payment.methodSelection.alert.body")}
           variant="warning"
           viewRef={alertRef}
-          onPress={() => null}
+          onPress={() => setShouldShowWarningBanner(false)}
           action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
@@ -205,7 +199,7 @@ const WalletPaymentPickMethodScreen = () => {
 
       <RadioGroup<string>
         selectedItem={selectedMethod?.walletId}
-        items={savedMethodsListItems}
+        items={isLoading ? loadingRadios : savedMethodsListItems}
         onPress={handleSelectSavedMethod}
       />
 
@@ -214,8 +208,8 @@ const WalletPaymentPickMethodScreen = () => {
       />
 
       <RadioGroup<string>
-        items={notSavedMethodsListItems}
         selectedItem={selectedMethod?.methodId}
+        items={isLoading ? loadingRadios : notSavedMethodsListItems}
         onPress={handleSelectNotSavedMethod}
       />
     </GradientScrollView>
