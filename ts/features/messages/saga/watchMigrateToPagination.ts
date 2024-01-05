@@ -1,18 +1,18 @@
 import { ValidationError } from "io-ts";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
-import { BackendClient } from "../../api/backend";
-import migrateToPagination from "../../boot/migrateToPagination";
+import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
+import { BackendClient } from "../../../api/backend";
+import migrateToPagination from "../utils/migrateToPagination";
 import {
   migrateToPaginatedMessages,
   removeMessages
-} from "../../store/actions/messages";
-import { MessageStatus } from "../../store/reducers/entities/messages/messagesStatus";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { isTestEnv } from "../../utils/environment";
-import { readablePrivacyReport } from "../../utils/reporters";
+} from "../../../store/actions/messages";
+import { MessageStatus } from "../../../store/reducers/entities/messages/messagesStatus";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { readablePrivacyReport } from "../../../utils/reporters";
 
 type LocalActionType = ActionType<
   (typeof migrateToPaginatedMessages)["request"]

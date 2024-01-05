@@ -1,16 +1,16 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { BackendClient } from "../../api/backend";
-import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../../store/actions/messages";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
-import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
-import { isTestEnv } from "../../utils/environment";
-import { convertUnknownToError, getError } from "../../utils/errors";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
-import { errorToReason, unknownToReason } from "../../features/messages/utils";
-import { trackLoadPreviousPageMessagesFailure } from "../../features/messages/analytics";
-import { handleResponse } from "./utils";
+import { BackendClient } from "../../../api/backend";
+import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../../../store/actions/messages";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { toUIMessage } from "../../../store/reducers/entities/messages/transformers";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { isTestEnv } from "../../../utils/environment";
+import { convertUnknownToError, getError } from "../../../utils/errors";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../utils";
+import { trackLoadPreviousPageMessagesFailure } from "../analytics";
+import { handleResponse } from "../utils/responseHandling";
 
 type LocalActionType = ActionType<
   (typeof loadPreviousPageMessagesAction)["request"]

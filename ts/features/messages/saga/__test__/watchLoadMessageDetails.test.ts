@@ -2,15 +2,15 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { loadMessageDetails as action } from "../../../store/actions/messages";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { loadMessageDetails as action } from "../../../../store/actions/messages";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import {
   apiPayload,
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
-} from "../../../features/messages/__mocks__/message";
+} from "../../__mocks__/message";
 import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
-import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 const tryLoadMessageDetails = testTryLoadMessageDetails!;
 

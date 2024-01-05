@@ -2,25 +2,22 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import {
-  loadNextPageMessages as action,
-  loadNextPageMessages
-} from "../../../store/actions/messages";
+import { reloadAllMessages as action } from "../../../../store/actions/messages";
 import {
   apiPayload,
+  defaultRequestError,
   defaultRequestPayload,
-  successLoadNextPageMessagesPayload
-} from "../../../features/messages/__mocks__/messages";
-import { testTryLoadNextPageMessages } from "../watchLoadNextPageMessages";
-import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
+  successReloadMessagesPayload
+} from "../../__mocks__/messages";
+import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
-const tryLoadNextPageMessages = testTryLoadNextPageMessages!;
+const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
 
-describe("tryLoadNextPageMessages", () => {
+describe("tryReloadAllMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
     page_size: defaultRequestPayload.pageSize,
-    maximum_id: undefined,
     archived: defaultRequestPayload.filter.getArchived
   };
 
@@ -30,17 +27,17 @@ describe("tryLoadNextPageMessages", () => {
     )} with the parsed messages and pagination data`, () => {
       const getMessages = jest.fn();
       testSaga(
-        tryLoadNextPageMessages(getMessages),
+        tryReloadAllMessages(getMessages),
         action.request(defaultRequestPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
           getMessages(getMessagesPayload),
-          loadNextPageMessages.request(defaultRequestPayload)
+          action.request(defaultRequestPayload)
         )
         .next(E.right({ status: 200, value: apiPayload }))
-        .put(action.success(successLoadNextPageMessagesPayload))
+        .put(action.success(successReloadMessagesPayload))
         .next()
         .isDone();
     });
@@ -50,22 +47,22 @@ describe("tryLoadNextPageMessages", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
       const getMessages = jest.fn();
       testSaga(
-        tryLoadNextPageMessages(getMessages),
+        tryReloadAllMessages(getMessages),
         action.request(defaultRequestPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
           getMessages(getMessagesPayload),
-          loadNextPageMessages.request(defaultRequestPayload)
+          action.request(defaultRequestPayload)
         )
-        .next(E.right({ status: 500, value: { title: "Backend error" } }))
-        .put(
-          action.failure({
-            error: new Error("Backend error"),
-            filter: defaultRequestPayload.filter
+        .next(
+          E.right({
+            status: 500,
+            value: { title: defaultRequestError.error.message }
           })
         )
+        .put(action.failure(defaultRequestError))
         .next()
         .isDone();
     });
@@ -74,16 +71,16 @@ describe("tryLoadNextPageMessages", () => {
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
       const getMessages = () => {
-        throw new Error("I made a boo-boo, sir!");
+        throw new Error(defaultRequestError.error.message);
       };
       testSaga(
-        tryLoadNextPageMessages(getMessages),
+        tryReloadAllMessages(getMessages),
         action.request(defaultRequestPayload)
       )
         .next()
         .put(
           action.failure({
-            error: new Error("I made a boo-boo, sir!"),
+            error: new Error(defaultRequestError.error.message),
             filter: defaultRequestPayload.filter
           })
         )

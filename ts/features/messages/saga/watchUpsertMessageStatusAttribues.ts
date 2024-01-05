@@ -1,21 +1,21 @@
 import { put, takeEvery, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { MessageStatusArchivingChange } from "../../../definitions/backend/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../definitions/backend/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../definitions/backend/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../definitions/backend/MessageStatusReadingChange";
-import { BackendClient } from "../../api/backend";
+import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
+import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
+import { MessageStatusReadingChange } from "../../../../definitions/backend/MessageStatusReadingChange";
+import { BackendClient } from "../../../api/backend";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
-} from "../../store/actions/messages";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { isTestEnv } from "../../utils/environment";
-import { getError } from "../../utils/errors";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
-import { errorToReason, unknownToReason } from "../../features/messages/utils";
-import { trackUpsertMessageStatusAttributesFailure } from "../../features/messages/analytics";
-import { handleResponse } from "./utils";
+} from "../../../store/actions/messages";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { isTestEnv } from "../../../utils/environment";
+import { getError } from "../../../utils/errors";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../utils";
+import { trackUpsertMessageStatusAttributesFailure } from "../analytics";
+import { handleResponse } from "../utils/responseHandling";
 
 type LocalActionType = ActionType<
   (typeof upsertMessageStatusAttributes)["request"]

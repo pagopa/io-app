@@ -1,16 +1,16 @@
 import { takeEvery, put, call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaIterator } from "redux-saga";
-import { convertUnknownToError } from "../../utils/errors";
-import { BackendClient } from "../../api/backend";
-import { loadMessageById } from "../../store/actions/messages";
-import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
-import { CreatedMessageWithContentAndAttachments } from "../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../types/utils";
-import { errorToReason, unknownToReason } from "../../features/messages/utils";
-import { trackLoadMessageByIdFailure } from "../../features/messages/analytics";
-import { handleResponse } from "./utils";
+import { convertUnknownToError } from "../../../utils/errors";
+import { BackendClient } from "../../../api/backend";
+import { loadMessageById } from "../../../store/actions/messages";
+import { toUIMessage } from "../../../store/reducers/entities/messages/transformers";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../types/utils";
+import { errorToReason, unknownToReason } from "../utils";
+import { trackLoadMessageByIdFailure } from "../analytics";
+import { handleResponse } from "../utils/responseHandling";
 
 type LocalActionType = ActionType<(typeof loadMessageById)["request"]>;
 type LocalBeClient = ReturnType<typeof BackendClient>["getMessage"];

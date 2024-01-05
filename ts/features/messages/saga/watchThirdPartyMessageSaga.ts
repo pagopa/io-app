@@ -4,25 +4,25 @@ import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { put, takeLatest, call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { BackendClient } from "../../api/backend";
-import { loadThirdPartyMessage } from "../../features/messages/store/actions";
-import { toPNMessage } from "../../features/pn/store/types/transformers";
+import { BackendClient } from "../../../api/backend";
+import { loadThirdPartyMessage } from "../store/actions";
+import { toPNMessage } from "../../pn/store/types/transformers";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
-} from "../../features/pn/analytics";
+} from "../../pn/analytics";
 import {
   trackRemoteContentLoadFailure,
   trackRemoteContentLoadRequest,
   trackRemoteContentLoadSuccess,
   trackThirdPartyMessageAttachmentCount
-} from "../../features/messages/analytics";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../types/utils";
-import { unknownToReason } from "../../features/messages/utils";
-import { ThirdPartyMessageWithContent } from "../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { TagEnum } from "../../../definitions/backend/MessageCategoryPN";
+} from "../analytics";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../types/utils";
+import { unknownToReason } from "../utils";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 
 export function* watchThirdPartyMessageSaga(
   client: BackendClient

@@ -1,12 +1,12 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-import { getMessagePrecondition } from "../../../store/actions/messages";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { getMessagePrecondition } from "../../../../store/actions/messages";
+import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
 import { testWorkerMessagePrecondition } from "../watchMessagePrecondition";
-import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { TagEnum as TagEnumPN } from "../../../../definitions/backend/MessageCategoryPN";
-import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
+import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
+import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 const workerMessagePrecondition = testWorkerMessagePrecondition!;
 

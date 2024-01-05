@@ -1,16 +1,16 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { BackendClient } from "../../api/backend";
-import { reloadAllMessages as reloadAllMessagesAction } from "../../store/actions/messages";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
-import { toUIMessage } from "../../store/reducers/entities/messages/transformers";
-import { PaginatedPublicMessagesCollection } from "../../../definitions/backend/PaginatedPublicMessagesCollection";
-import { isTestEnv } from "../../utils/environment";
-import { getError } from "../../utils/errors";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
-import { errorToReason, unknownToReason } from "../../features/messages/utils";
-import { trackReloadAllMessagesFailure } from "../../features/messages/analytics";
-import { handleResponse } from "./utils";
+import { BackendClient } from "../../../api/backend";
+import { reloadAllMessages as reloadAllMessagesAction } from "../../../store/actions/messages";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { toUIMessage } from "../../../store/reducers/entities/messages/transformers";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { isTestEnv } from "../../../utils/environment";
+import { getError } from "../../../utils/errors";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../utils";
+import { trackReloadAllMessagesFailure } from "../analytics";
+import { handleResponse } from "../utils/responseHandling";
 
 type LocalActionType = ActionType<(typeof reloadAllMessagesAction)["request"]>;
 type LocalBeClient = ReturnType<typeof BackendClient>["getMessages"];

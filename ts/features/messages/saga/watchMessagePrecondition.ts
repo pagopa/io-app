@@ -3,16 +3,16 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, race, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { BackendClient } from "../../api/backend";
-import { convertUnknownToError } from "../../utils/errors";
+import { BackendClient } from "../../../api/backend";
+import { convertUnknownToError } from "../../../utils/errors";
 import {
   getMessagePrecondition,
   clearMessagePrecondition
-} from "../../store/actions/messages";
-import { isTestEnv } from "../../utils/environment";
-import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
-import { SagaCallReturnType } from "../../types/utils";
-import { trackDisclaimerLoadError } from "../../features/messages/analytics";
+} from "../../../store/actions/messages";
+import { isTestEnv } from "../../../utils/environment";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../types/utils";
+import { trackDisclaimerLoadError } from "../analytics";
 
 export const testWorkerMessagePrecondition = isTestEnv
   ? workerMessagePrecondition
