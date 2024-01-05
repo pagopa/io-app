@@ -27,12 +27,7 @@ import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import {
-  CTA,
-  CTAS,
-  MessageCTA,
-  MessageCTALocales
-} from "../../../types/MessageCTA";
+import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { getExpireStatus } from "../../../utils/dates";
 import {
   getInternalRoute,

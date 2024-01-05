@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { UIMessage } from "../types";
 import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
 import { SearchNoResultMessage } from "../../../components/search/SearchNoResultMessage";
 

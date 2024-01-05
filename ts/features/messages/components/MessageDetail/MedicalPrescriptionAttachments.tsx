@@ -6,7 +6,7 @@ import { SvgXml } from "react-native-svg";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { PrescriptionData } from "../../../../../definitions/backend/PrescriptionData";
 import I18n from "../../../../i18n";
-import { Attachment } from "../../../../store/reducers/entities/messages/types";
+import { Attachment } from "../../types";
 import { getPrescriptionDataFromName } from "../../utils/messages";
 import { Body } from "../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";

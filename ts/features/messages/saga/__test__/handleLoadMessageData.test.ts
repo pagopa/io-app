@@ -2,31 +2,25 @@ import { testSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { testable } from "../handleLoadMessageData";
+import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
+import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import {
-  UIMessage,
-  UIMessageDetails,
-  UIMessageId
-} from "../../../../store/reducers/entities/messages/types";
-import { getPaginatedMessageById } from "../../../../store/reducers/entities/messages/paginatedById";
-import {
+  getMessageDataAction,
   loadMessageById,
   loadMessageDetails,
+  loadThirdPartyMessage,
   upsertMessageStatusAttributes
-} from "../../../../store/actions/messages";
+} from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { loadServiceDetail } from "../../../../store/actions/services";
-import { messageDetailsByIdSelector } from "../../../../store/reducers/entities/messages/detailsById";
-import {
-  getMessageDataAction,
-  loadThirdPartyMessage
-} from "../../store/actions";
+import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { thirdPartyFromIdSelector } from "../../../../store/reducers/entities/messages/thirdPartyById";
+import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { isPnEnabledSelector } from "../../../../store/reducers/backendStatus";
 import * as config from "../../../../config";
-import { isLoadingOrUpdatingInbox } from "../../../../store/reducers/entities/messages/allPaginated";
+import { isLoadingOrUpdatingInbox } from "../../store/reducers/allPaginated";
 import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 

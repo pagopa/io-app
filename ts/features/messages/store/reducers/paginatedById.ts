@@ -8,11 +8,11 @@ import {
   reloadAllMessages,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
-} from "../../../actions/messages";
-import { clearCache } from "../../../actions/profile";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
-import { UIMessage } from "./types";
+} from "../actions";
+import { clearCache } from "../../../../store/actions/profile";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { UIMessage } from "../../types";
 
 // State
 

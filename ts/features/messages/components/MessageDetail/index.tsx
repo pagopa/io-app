@@ -22,14 +22,10 @@ import {
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector
-} from "../../../../store/reducers/entities/messages/thirdPartyById";
+} from "../../store/reducers/thirdPartyById";
 
-import {
-  UIAttachment,
-  UIMessage,
-  UIMessageDetails
-} from "../../../../store/reducers/entities/messages/types";
-import { attachmentsFromThirdPartyMessage } from "../../../../store/reducers/entities/messages/transformers";
+import { UIAttachment, UIMessage, UIMessageDetails } from "../../types";
+import { attachmentsFromThirdPartyMessage } from "../../store/reducers/transformers";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../utils/messages";

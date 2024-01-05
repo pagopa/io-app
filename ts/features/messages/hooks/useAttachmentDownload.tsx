@@ -13,9 +13,9 @@ import { showToast } from "../../../utils/showToast";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
-} from "../../../store/actions/messages";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
+} from "../store/actions";
+import { UIAttachment } from "../types";
+import { downloadPotForMessageAttachmentSelector } from "../store/reducers/downloads";
 import { isTestEnv } from "../../../utils/environment";
 import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";

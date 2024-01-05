@@ -2,10 +2,10 @@ import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
-import { removeMessages } from "../../../actions/messages";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
-import { differentProfileLoggedIn } from "../../../actions/crossSessions";
+import { removeMessages } from "../actions";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 
 export type MessageStatus = {
   isRead: boolean;

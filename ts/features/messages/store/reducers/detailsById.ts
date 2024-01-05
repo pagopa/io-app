@@ -3,14 +3,11 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import {
-  loadMessageDetails,
-  reloadAllMessages
-} from "../../../actions/messages";
-import { clearCache } from "../../../actions/profile";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
-import { UIMessageDetails } from "./types";
+import { loadMessageDetails, reloadAllMessages } from "../actions";
+import { clearCache } from "../../../../store/actions/profile";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { UIMessageDetails } from "../../types";
 
 /**
  * A list of messages and pagination data.

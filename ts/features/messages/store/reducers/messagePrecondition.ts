@@ -1,20 +1,17 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import {
-  getMessagePrecondition,
-  clearMessagePrecondition
-} from "../../../actions/messages";
+import { getMessagePrecondition, clearMessagePrecondition } from "../actions";
 import {
   RemoteValue,
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../../features/bonus/bpd/model/RemoteValue";
-import { UIMessageId } from "./types";
+} from "../../../bonus/bpd/model/RemoteValue";
+import { UIMessageId } from "../../types";
 
 export type MessagePrecondition = {
   messageId: O.Option<UIMessageId>;

@@ -11,24 +11,18 @@ import {
   RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
   getMessageDataAction,
-  loadThirdPartyMessage
-} from "../store/actions";
-import { getPaginatedMessageById } from "../../../store/reducers/entities/messages/paginatedById";
-import {
-  UIMessage,
-  UIMessageDetails,
-  UIMessageId
-} from "../../../store/reducers/entities/messages/types";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import {
   loadMessageById,
   loadMessageDetails,
+  loadThirdPartyMessage,
   upsertMessageStatusAttributes
-} from "../../../store/actions/messages";
+} from "../store/actions";
+import { getPaginatedMessageById } from "../store/reducers/paginatedById";
+import { UIMessage, UIMessageDetails, UIMessageId } from "../types";
+import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { loadServiceDetail } from "../../../store/actions/services";
-import { messageDetailsByIdSelector } from "../../../store/reducers/entities/messages/detailsById";
-import { thirdPartyFromIdSelector } from "../../../store/reducers/entities/messages/thirdPartyById";
-import { isLoadingOrUpdatingInbox } from "../../../store/reducers/entities/messages/allPaginated";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
+import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
+import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { euCovidCertificateEnabled } from "../../../config";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";

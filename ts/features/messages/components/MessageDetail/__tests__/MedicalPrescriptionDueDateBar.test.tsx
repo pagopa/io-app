@@ -3,7 +3,7 @@ import configureMockStore from "redux-mock-store";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
+import { toUIMessageDetails } from "../../../store/reducers/transformers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MessagePaymentExpirationInfo } from "../../../utils/messages";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";

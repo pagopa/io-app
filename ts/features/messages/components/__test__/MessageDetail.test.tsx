@@ -12,7 +12,7 @@ import { appReducer } from "../../../../store/reducers";
 import {
   toUIMessage,
   toUIMessageDetails
-} from "../../../../store/reducers/entities/messages/transformers";
+} from "../../store/reducers/transformers";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";

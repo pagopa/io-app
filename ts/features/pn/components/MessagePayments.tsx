@@ -15,7 +15,7 @@ import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings"
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { H5 } from "../../../components/core/typography/H5";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { trackPNShowAllPayments } from "../analytics";

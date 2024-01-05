@@ -10,7 +10,7 @@ import { Label } from "../../../components/core/typography/Label";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import Markdown from "../../../components/ui/Markdown";
-import { CTA } from "../../../types/MessageCTA";
+import { CTA } from "../../../features/messages/types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getMessageCTA,

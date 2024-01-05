@@ -9,7 +9,7 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H2 } from "../../../components/core/typography/H2";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import I18n from "../../../i18n";
-import { MigrationStatus } from "../../../store/reducers/entities/messages/allPaginated";
+import { MigrationStatus } from "../store/reducers/allPaginated";
 import customVariables from "../../../theme/variables";
 
 const styles = StyleSheet.create({

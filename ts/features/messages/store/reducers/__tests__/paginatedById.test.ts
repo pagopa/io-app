@@ -6,9 +6,9 @@ import {
   loadPreviousPageMessages,
   reloadAllMessages,
   upsertMessageStatusAttributes
-} from "../../../../actions/messages";
-import { successReloadMessagesPayload } from "../../../../../features/messages/__mocks__/messages";
-import { UIMessage } from "../types";
+} from "../../actions";
+import { successReloadMessagesPayload } from "../../../__mocks__/messages";
+import { UIMessage } from "../../../types";
 
 describe("paginatedById reducer", () => {
   describe("given an empty initial state", () => {

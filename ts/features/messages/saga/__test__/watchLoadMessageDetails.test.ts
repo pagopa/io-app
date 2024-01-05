@@ -2,8 +2,8 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { loadMessageDetails as action } from "../../../../store/actions/messages";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { loadMessageDetails as action } from "../../store/actions";
+import { UIMessageId } from "../../types";
 import {
   apiPayload,
   paymentValidInvalidAfterDueDate,

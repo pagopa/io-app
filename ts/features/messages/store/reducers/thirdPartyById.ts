@@ -4,14 +4,9 @@ import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { loadThirdPartyMessage } from "../../../../features/messages/store/actions";
+import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { IndexedById } from "../../../../store/helpers/indexer";
-import {
-  UIAttachmentId,
-  UIMessageDetails,
-  UIMessageId
-} from "../../../../store/reducers/entities/messages/types";
 import {
   toError,
   toLoading,
@@ -19,7 +14,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
-import { reloadAllMessages } from "../../../actions/messages";
+import { UIAttachmentId, UIMessageDetails, UIMessageId } from "../../types";
 import { attachmentFromThirdPartyMessage } from "./transformers";
 
 export type ThirdPartyById = IndexedById<

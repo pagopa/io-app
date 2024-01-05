@@ -13,13 +13,10 @@ import I18n from "../../../i18n";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
-} from "../../../store/actions/messages";
+} from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
-import {
-  UIAttachment,
-  UIMessageId
-} from "../../../store/reducers/entities/messages/types";
+import { downloadPotForMessageAttachmentSelector } from "../store/reducers/downloads";
+import { UIAttachment, UIMessageId } from "../types";
 import variables from "../../../theme/variables";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { isIos } from "../../../utils/platform";

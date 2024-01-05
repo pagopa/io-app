@@ -1,9 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { mockPdfAttachment } from "../../../../../features/messages/__mocks__/attachment";
-import {
-  downloadAttachment,
-  removeCachedAttachment
-} from "../../../../actions/messages";
+import { mockPdfAttachment } from "../../../__mocks__/attachment";
+import { downloadAttachment, removeCachedAttachment } from "../../actions";
 import { Downloads, downloadsReducer } from "../downloads";
 
 const path = "/path/attachment.pdf";

@@ -4,7 +4,7 @@
 
 import { combineReducers } from "redux";
 
-import { Action } from "../../../actions/types";
+import { Action } from "../../../../store/actions/types";
 
 import allPaginatedReducer, { AllPaginated } from "./allPaginated";
 import detailsByIdReducer, { DetailsById } from "./detailsById";

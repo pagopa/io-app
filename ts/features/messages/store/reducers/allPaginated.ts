@@ -6,7 +6,7 @@ import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
 import messageListData, {
   MessageListCategory
-} from "../../../../features/messages/types/messageListCategory";
+} from "../../types/messageListCategory";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -15,11 +15,11 @@ import {
   reloadAllMessages,
   resetMigrationStatus,
   upsertMessageStatusAttributes
-} from "../../../actions/messages";
-import { clearCache } from "../../../actions/profile";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
-import { UIMessage } from "./types";
+} from "../actions";
+import { clearCache } from "../../../../store/actions/profile";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { UIMessage } from "../../types";
 
 export type MessagePagePot = pot.Pot<
   {

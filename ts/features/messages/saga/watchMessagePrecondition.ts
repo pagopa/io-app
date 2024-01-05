@@ -8,7 +8,7 @@ import { convertUnknownToError } from "../../../utils/errors";
 import {
   getMessagePrecondition,
   clearMessagePrecondition
-} from "../../../store/actions/messages";
+} from "../store/actions";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";

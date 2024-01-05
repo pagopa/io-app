@@ -5,7 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { downloadAttachmentWorker } from "../handleDownloadAttachment";
 import { SessionToken } from "../../../../types/SessionToken";
-import { downloadAttachment } from "../../../../store/actions/messages";
+import { downloadAttachment } from "../../store/actions";
 import { mockPdfAttachment } from "../../__mocks__/attachment";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
@@ -23,7 +23,7 @@ const somePublicKey = O.some({
   y: "Tz0xNv++cOeLVapU/BhBS0FJydIcNcV25/ALb1HVu+s="
 });
 
-jest.mock("../../../../store/reducers/entities/messages/paginatedById", () => ({
+jest.mock("../../store/reducers/paginatedById", () => ({
   getServiceByMessageId: jest.fn().mockReturnValue(serviceId)
 }));
 

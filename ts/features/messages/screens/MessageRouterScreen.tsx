@@ -7,7 +7,7 @@ import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParam
 import { MessagesParamsList } from "../navigation/params";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../types";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { trackOpenMessage } from "../analytics";
 import {
@@ -15,7 +15,7 @@ import {
   messageSuccessDataSelector,
   showSpinnerFromMessageGetStatusSelector,
   thirdPartyMessageDetailsErrorSelector
-} from "../../../store/reducers/entities/messages/messageGetStatus";
+} from "../store/reducers/messageGetStatus";
 import {
   cancelGetMessageDataAction,
   getMessageDataAction,

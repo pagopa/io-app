@@ -3,8 +3,6 @@ import { CreditCardDetailScreenNavigationParams } from "../../features/wallet/cr
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
-import { MessageDetailScreenNavigationParams } from "../../features/messages/screens/MessageDetailScreen";
-import { MessageRouterScreenNavigationParams } from "../../features/messages/screens/MessageRouterScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
 import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
@@ -27,7 +25,6 @@ import {
   BPayPaymentMethod,
   CreditCardPaymentMethod
 } from "../../types/pagopa";
-import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 
 /**
  * @deprecated
@@ -135,32 +132,6 @@ export const navigateToEmailInsertScreen = () => {
     CommonActions.navigate(ROUTES.INSERT_EMAIL_SCREEN)
   );
 };
-
-/**
- * Message
- */
-
-/**
- * Open the Message Detail screen supporting the new UIMessage type.
- */
-export const navigateToMessageDetailScreenAction = (
-  params: MessageDetailScreenNavigationParams
-) =>
-  CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-    screen: MESSAGES_ROUTES.MESSAGE_DETAIL,
-    params
-  });
-
-/**
- * Open the Message Detail Router supporting the new UIMessage type.
- */
-export const navigateToMessageRouterAction = (
-  params: MessageRouterScreenNavigationParams
-) =>
-  CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-    screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
-    params
-  });
 
 /**
  * Service

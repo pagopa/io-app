@@ -1,16 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { appReducer } from "../../..";
+import { appReducer } from "../../../../../store/reducers";
 import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { loadThirdPartyMessage } from "../../../../../features/messages/store/actions";
-import { applicationChangeState } from "../../../../actions/application";
+import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import {
   isThirdPartyMessageSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector
 } from "../thirdPartyById";
-import { UIMessageDetails, UIMessageId } from "../types";
-import { loadMessageDetails } from "../../../../actions/messages";
+import { UIMessageDetails, UIMessageId } from "../../../types";
 import { ThirdPartyMessageDetails } from "../../../../../../definitions/backend/ThirdPartyMessage";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 

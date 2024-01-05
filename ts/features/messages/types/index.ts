@@ -1,18 +1,16 @@
 import { IUnitTag } from "@pagopa/ts-commons/lib/units";
 import { ValidUrl } from "@pagopa/ts-commons/lib/url";
-import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
-import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
-import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
-import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
-import { PaymentNoticeNumber } from "../../../../../definitions/backend/PaymentNoticeNumber";
-import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
-import { getExpireStatus } from "../../../../utils/dates";
-import { MessagePaymentExpirationInfo } from "../../../../features/messages/utils/messages";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { Byte } from "../../../../features/messages/types/digitalInformationUnit";
+import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
+import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
+import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
+import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
+import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
+import { PublicMessage } from "../../../../definitions/backend/PublicMessage";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
+import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { Byte } from "./digitalInformationUnit";
 
 /**
  * The unique ID of a UIMessage and UIMessageDetails, used to avoid passing the wrong ID as parameters
@@ -108,21 +106,4 @@ export type UIAttachment = {
   resourceUrl: ValidUrl;
   // This category is needed to distinguish between generic and f24 attachments
   category?: string;
-};
-
-export const getPaymentExpirationInfo = (
-  messageDetails: UIMessageDetails
-): MessagePaymentExpirationInfo => {
-  const { paymentData, dueDate } = messageDetails;
-  if (paymentData && dueDate) {
-    const expireStatus = getExpireStatus(dueDate);
-    return {
-      kind: paymentData.invalidAfterDueDate ? "EXPIRABLE" : "UNEXPIRABLE",
-      expireStatus,
-      dueDate
-    };
-  }
-  return {
-    kind: "UNEXPIRABLE"
-  };
 };

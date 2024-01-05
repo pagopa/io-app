@@ -21,7 +21,7 @@ import {
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages
-} from "../../../../store/actions/messages";
+} from "../../store/actions";
 import { Dispatch } from "../../../../store/actions/types";
 import {
   allArchiveSelector,
@@ -32,8 +32,8 @@ import {
   isLoadingInboxPreviousPage,
   isReloadingArchive,
   isReloadingInbox
-} from "../../../../store/reducers/entities/messages/allPaginated";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+} from "../../store/reducers/allPaginated";
+import { UIMessage } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import customVariables, {
   VIBRATION_LONG_PRESS_DURATION

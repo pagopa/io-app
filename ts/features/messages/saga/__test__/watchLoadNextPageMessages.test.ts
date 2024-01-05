@@ -5,7 +5,7 @@ import { getType } from "typesafe-actions";
 import {
   loadNextPageMessages as action,
   loadNextPageMessages
-} from "../../../../store/actions/messages";
+} from "../../store/actions";
 import {
   apiPayload,
   defaultRequestPayload,

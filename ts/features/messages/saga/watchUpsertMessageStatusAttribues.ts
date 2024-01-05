@@ -8,7 +8,7 @@ import { BackendClient } from "../../../api/backend";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
-} from "../../../store/actions/messages";
+} from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { isTestEnv } from "../../../utils/environment";
 import { getError } from "../../../utils/errors";

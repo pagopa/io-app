@@ -3,7 +3,7 @@ import { Dispatch } from "redux";
 import { useLinkTo } from "@react-navigation/native";
 import { HSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { CTA, CTAS } from "../../types/MessageCTA";
+import { CTA, CTAS } from "../../features/messages/types/MessageCTA";
 import {
   handleCtaAction,
   isCtaActionValid

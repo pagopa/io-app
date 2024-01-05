@@ -9,8 +9,8 @@ import {
   NextPageMessagesSuccessPayload,
   PreviousPageMessagesSuccessPayload,
   ReloadMessagesPayload
-} from "../../../store/actions/messages";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+} from "../store/actions";
+import { UIMessageId } from "../types";
 
 export const defaultRequestPayload = {
   pageSize: 8,

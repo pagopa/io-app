@@ -1,15 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+import { downloadAttachment, removeCachedAttachment } from "../actions";
+import { Action } from "../../../../store/actions/types";
+import { IndexedById } from "../../../../store/helpers/indexer";
 import {
-  downloadAttachment,
-  removeCachedAttachment
-} from "../../../actions/messages";
-import { Action } from "../../../actions/types";
-import { IndexedById } from "../../../helpers/indexer";
-import { toError, toLoading, toNone, toSome } from "../../IndexedByIdPot";
-import { GlobalState } from "../../types";
-import { UIAttachment, UIMessageId, UIAttachmentId } from "./types";
+  toError,
+  toLoading,
+  toNone,
+  toSome
+} from "../../../../store/reducers/IndexedByIdPot";
+import { GlobalState } from "../../../../store/reducers/types";
+import { UIAttachment, UIMessageId, UIAttachmentId } from "../../types";
 
 export type Download = {
   attachment: UIAttachment;

@@ -13,7 +13,7 @@ import { StandardServiceCategoryEnum } from "../../../../../definitions/backend/
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
 import { Locales } from "../../../../../locales/locales";
 import { setLocale } from "../../../../i18n";
-import { CTA, CTAS } from "../../../../types/MessageCTA";
+import { CTA, CTAS } from "../../types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getMessageCTA,

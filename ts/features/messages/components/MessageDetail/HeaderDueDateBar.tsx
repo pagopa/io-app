@@ -1,8 +1,6 @@
 import * as React from "react";
-import {
-  getPaymentExpirationInfo,
-  UIMessageDetails
-} from "../../../../store/reducers/entities/messages/types";
+import { UIMessageDetails } from "../../types";
+import { getPaymentExpirationInfo } from "../../utils";
 import DueDateBar from "./DueDateBar";
 import MedicalPrescriptionDueDateBar from "./MedicalPrescriptionDueDateBar";
 import MedicalPrescriptionIdentifiersComponent from "./MedicalPrescriptionIdentifiersComponent";

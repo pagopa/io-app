@@ -5,8 +5,8 @@ import { getType } from "typesafe-actions";
 import {
   upsertMessageStatusAttributes as action,
   UpsertMessageStatusAttributesPayload
-} from "../../../../store/actions/messages";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+} from "../../store/actions";
+import { UIMessageId } from "../../types";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
 import { testTryUpsertMessageStatusAttributes } from "../watchUpsertMessageStatusAttribues";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";

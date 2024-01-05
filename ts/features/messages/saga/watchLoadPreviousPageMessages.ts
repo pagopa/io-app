@@ -1,9 +1,9 @@
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
-import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../../../store/actions/messages";
+import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
-import { toUIMessage } from "../../../store/reducers/entities/messages/transformers";
+import { toUIMessage } from "../store/reducers/transformers";
 import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { isTestEnv } from "../../../utils/environment";
 import { convertUnknownToError, getError } from "../../../utils/errors";

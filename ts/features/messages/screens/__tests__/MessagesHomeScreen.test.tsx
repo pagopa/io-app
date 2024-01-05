@@ -7,8 +7,8 @@ import { TagEnum as TagEnumPayment } from "../../../../../definitions/backend/Me
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { AllPaginated } from "../../store/reducers/allPaginated";
+import { UIMessage } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   baseBackendConfig,

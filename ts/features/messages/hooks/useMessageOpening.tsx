@@ -5,14 +5,14 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { UIMessage } from "../types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   getMessagePrecondition,
   clearMessagePrecondition
-} from "../../../store/actions/messages";
-import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
+} from "../store/actions";
+import { messagePreconditionSelector } from "../store/reducers/messagePrecondition";
 import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
 import I18n from "../../../i18n";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";

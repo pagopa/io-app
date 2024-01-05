@@ -3,7 +3,7 @@ import { ValidationError } from "io-ts";
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 
 import { handleResponse, ResponseType } from "../../utils/responseHandling";
-import { reloadAllMessages } from "../../../../store/actions/messages";
+import { reloadAllMessages } from "../../store/actions";
 import {
   defaultRequestError,
   defaultRequestPayload

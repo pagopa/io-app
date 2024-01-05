@@ -6,7 +6,7 @@ import { ReactTestInstance } from "react-test-renderer";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { Locales } from "../../../../../../locales/locales";
 import I18n, { setLocale } from "../../../../../i18n";
-import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
+import { toUIMessageDetails } from "../../../store/reducers/transformers";
 import { getExpireStatus } from "../../../../../utils/dates";
 import { MessagePaymentExpirationInfo } from "../../../utils/messages";
 import { paymentValidInvalidAfterDueDate } from "../../../__mocks__/message";

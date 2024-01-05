@@ -8,7 +8,7 @@ import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/Message
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import PnMessage from "../../../../../img/features/messages/pn_message_badge.svg";
 import I18n from "../../../../i18n";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { UIMessage } from "../../types";
 import customVariables from "../../../../theme/variables";
 import {
   convertDateToWordDistance,

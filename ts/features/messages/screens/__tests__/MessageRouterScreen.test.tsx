@@ -1,13 +1,13 @@
 import { AnyAction, Dispatch, createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MessageRouterScreen } from "../MessageRouterScreen";
 import { getMessageDataAction } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as ASD from "../../../../store/hooks";
-import { MessageGetStatus } from "../../../../store/reducers/entities/messages/messageGetStatus";
+import { MessageGetStatus } from "../../store/reducers/messageGetStatus";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 describe("MessageRouterScreen", () => {

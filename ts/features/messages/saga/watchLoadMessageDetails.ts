@@ -3,10 +3,10 @@ import { ActionType, getType } from "typesafe-actions";
 
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { BackendClient } from "../../../api/backend";
-import { loadMessageDetails } from "../../../store/actions/messages";
+import { loadMessageDetails } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { getError } from "../../../utils/errors";
-import { toUIMessageDetails } from "../../../store/reducers/entities/messages/transformers";
+import { toUIMessageDetails } from "../store/reducers/transformers";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";

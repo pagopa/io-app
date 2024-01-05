@@ -6,7 +6,7 @@ import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { formatDateAsDay, formatDateAsMonth } from "../../../../utils/dates";
 import { isExpired, MessagePaymentExpirationInfo } from "../../utils/messages";
-import { UIMessageDetails } from "../../../../store/reducers/entities/messages/types";
+import { UIMessageDetails } from "../../types";
 import { localeDateFormat } from "../../../../utils/locale";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Label } from "../../../../components/core/typography/Label";

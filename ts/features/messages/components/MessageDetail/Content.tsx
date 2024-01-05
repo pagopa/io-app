@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { UIMessage } from "../../types";
 import customVariables from "../../../../theme/variables";
 import { convertDateTimeToWordDistance } from "../../utils/convertDateToWordDistance";
 import CopyButtonComponent from "../../../../components/CopyButtonComponent";

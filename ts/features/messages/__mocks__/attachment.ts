@@ -1,9 +1,5 @@
 import { Byte } from "../types/digitalInformationUnit";
-import {
-  UIMessageId,
-  UIAttachment,
-  UIAttachmentId
-} from "../../../store/reducers/entities/messages/types";
+import { UIMessageId, UIAttachment, UIAttachmentId } from "../types";
 import { ATTACHMENT_CATEGORY } from "../types/attachmentCategory";
 import { message_1 } from "./message";
 

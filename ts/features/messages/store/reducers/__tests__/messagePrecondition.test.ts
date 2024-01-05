@@ -3,20 +3,20 @@ import { createStore } from "redux";
 import {
   getMessagePrecondition,
   clearMessagePrecondition
-} from "../../../../actions/messages";
-import { appReducer } from "../../..";
+} from "../../actions";
+import { appReducer } from "../../../../../store/reducers";
 import { ThirdPartyMessagePrecondition } from "../../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { TagEnum as TagEnumPN } from "../../../../../../definitions/backend/MessageCategoryPN";
-import { applicationChangeState } from "../../../../actions/application";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../../../features/bonus/bpd/model/RemoteValue";
-import { message_1 } from "../../../../../features/messages/__mocks__/message";
+} from "../../../../bonus/bpd/model/RemoteValue";
+import { message_1 } from "../../../__mocks__/message";
 import { toUIMessage } from "../transformers";
-import { GlobalState } from "../../../types";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 const mockThirdPartyMessagePrecondition: ThirdPartyMessagePrecondition = {
   title: "placeholder_title",

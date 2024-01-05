@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 
 import { pipe } from "fp-ts/lib/function";
-import { MessageStatus } from "../../../store/reducers/entities/messages/messagesStatus";
+import { MessageStatus } from "../store/reducers/messagesStatus";
 import { readablePrivacyReport } from "../../../utils/reporters";
 import { BackendClient } from "../../../api/backend";
 

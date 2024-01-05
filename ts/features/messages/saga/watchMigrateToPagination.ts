@@ -5,11 +5,8 @@ import { MessageStatusArchivingChange } from "../../../../definitions/backend/Me
 import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
 import { BackendClient } from "../../../api/backend";
 import migrateToPagination from "../utils/migrateToPagination";
-import {
-  migrateToPaginatedMessages,
-  removeMessages
-} from "../../../store/actions/messages";
-import { MessageStatus } from "../../../store/reducers/entities/messages/messagesStatus";
+import { migrateToPaginatedMessages, removeMessages } from "../store/actions";
+import { MessageStatus } from "../store/reducers/messagesStatus";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { isTestEnv } from "../../../utils/environment";
 import { readablePrivacyReport } from "../../../utils/reporters";

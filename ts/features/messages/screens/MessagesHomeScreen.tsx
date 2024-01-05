@@ -20,16 +20,16 @@ import MessagesHomeTabNavigator from "../navigation/MessagesHomeTabNavigator";
 import {
   migrateToPaginatedMessages,
   resetMigrationStatus
-} from "../../../store/actions/messages";
+} from "../store/actions";
 import { sectionStatusSelector } from "../../../store/reducers/backendStatus";
 import {
   allInboxAndArchivedMessagesSelector,
   allPaginatedSelector
-} from "../../../store/reducers/entities/messages/allPaginated";
+} from "../store/reducers/allPaginated";
 import {
   MessagesStatus,
   messagesStatusSelector
-} from "../../../store/reducers/entities/messages/messagesStatus";
+} from "../store/reducers/messagesStatus";
 import {
   isSearchMessagesEnabledSelector,
   searchTextSelector

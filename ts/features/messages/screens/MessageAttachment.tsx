@@ -2,17 +2,14 @@ import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
-import {
-  UIAttachmentId,
-  UIMessageId
-} from "../../../store/reducers/entities/messages/types";
+import { UIAttachmentId, UIMessageId } from "../types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../components/MessageAttachmentPreview";
 import { MessagesParamsList } from "../navigation/params";
 import { showToast } from "../../../utils/showToast";
-import { getServiceByMessageId } from "../../../store/reducers/entities/messages/paginatedById";
+import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import { useIOSelector } from "../../../store/hooks";
-import { thirdPartyMessageUIAttachment } from "../../../store/reducers/entities/messages/thirdPartyById";
+import { thirdPartyMessageUIAttachment } from "../store/reducers/thirdPartyById";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,

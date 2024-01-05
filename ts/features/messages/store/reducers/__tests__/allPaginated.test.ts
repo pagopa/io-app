@@ -8,15 +8,15 @@ import {
   successLoadNextPageMessagesPayload,
   successLoadPreviousPageMessagesPayload,
   successReloadMessagesPayload
-} from "../../../../../features/messages/__mocks__/messages";
+} from "../../../__mocks__/messages";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
-} from "../../../../actions/messages";
-import { GlobalState } from "../../../types";
+} from "../../actions";
+import { GlobalState } from "../../../../../store/reducers/types";
 import reducer, {
   isLoadingArchivePreviousPage,
   isLoadingArchiveNextPage,

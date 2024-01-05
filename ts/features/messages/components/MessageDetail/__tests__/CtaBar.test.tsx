@@ -7,7 +7,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { paymentValidInvalidAfterDueDate } from "../../../__mocks__/message";
 import { service_1 } from "../../../__mocks__/messages";
 
-import { toUIMessageDetails } from "../../../../../store/reducers/entities/messages/transformers";
+import { toUIMessageDetails } from "../../../store/reducers/transformers";
 import { toUIService } from "../../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";

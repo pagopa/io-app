@@ -6,12 +6,7 @@ import { HSpacer } from "@pagopa/io-app-design-system";
 import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIODispatch } from "../../../../store/hooks";
-import {
-  getPaymentExpirationInfo,
-  PaymentData,
-  UIMessageDetails,
-  UIMessageId
-} from "../../../../store/reducers/entities/messages/types";
+import { PaymentData, UIMessageDetails, UIMessageId } from "../../types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 
@@ -27,6 +22,7 @@ import {
   trackPNOptInMessageCTADisplaySuccess,
   trackPNOptInMessageOpened
 } from "../../../pn/analytics";
+import { getPaymentExpirationInfo } from "../../utils";
 import CalendarEventButton from "./CalendarEventButton";
 import PaymentButton from "./PaymentButton";
 

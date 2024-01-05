@@ -5,7 +5,7 @@ import React from "react";
 import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { AllPaginated } from "../../../../store/reducers/entities/messages/allPaginated";
+import { AllPaginated } from "../../store/reducers/allPaginated";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";

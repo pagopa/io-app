@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { reloadAllMessages as action } from "../../../../store/actions/messages";
+import { reloadAllMessages as action } from "../../store/actions";
 import {
   apiPayload,
   defaultRequestError,

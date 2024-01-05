@@ -2,13 +2,13 @@ import { getType } from "typesafe-actions";
 import {
   SuccessGetMessageDataActionType,
   getMessageDataAction,
+  reloadAllMessages,
   resetGetMessageDataAction
-} from "../../../../features/messages/store/actions";
-import { Action } from "../../../actions/types";
-import { GlobalState } from "../../types";
-import { reloadAllMessages } from "../../../actions/messages";
-import { startApplicationInitialization } from "../../../actions/application";
-import { UIMessageId } from "./types";
+} from "../actions";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { UIMessageId } from "../../types";
 
 export type MessageGetStatusFailurePhaseType =
   | "none"

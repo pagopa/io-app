@@ -3,16 +3,16 @@ import { getType } from "typesafe-actions";
 import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
-} from "../../../../../features/messages/__mocks__/message";
+} from "../../../__mocks__/message";
 
-import { loadMessageDetails } from "../../../../actions/messages";
+import { loadMessageDetails } from "../../actions";
 import reducer, {
   detailedMessageHasThirdPartyDataSelector,
   messageDetailsByIdSelector
 } from "../detailsById";
-import { UIMessageDetails, UIMessageId } from "../types";
-import { applicationChangeState } from "../../../../actions/application";
-import { appReducer } from "../../..";
+import { UIMessageDetails, UIMessageId } from "../../../types";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 
 const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
 
