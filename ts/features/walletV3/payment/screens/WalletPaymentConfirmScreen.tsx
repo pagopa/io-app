@@ -47,7 +47,8 @@ const WalletPaymentConfirmScreen = () => {
   React.useEffect(() => {
     if (pot.isSome(authorizationUrlPot)) {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+        params: {}
       });
     }
   }, [authorizationUrlPot, navigation]);
