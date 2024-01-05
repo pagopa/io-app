@@ -1,7 +1,7 @@
 import { H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import MaskedView from "@react-native-masked-view/masked-view";
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   LayoutChangeEvent,
   LayoutRectangle,
@@ -31,11 +31,25 @@ type LightSize = {
 const cardAspectRatio: ViewStyle["aspectRatio"] = 7 / 4;
 
 const DSGyroscopeCardScreen = () => {
+  /* On first render, store the current device orientation
+  using quaternions */
+  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+  const [initialQx, setInitialQx] = useState<number>(0);
+  const [initialQy, setInitialQy] = useState<number>(0);
+
+  useEffect(() => {
+    const { qx, qy } = rotationSensor.sensor.value;
+    setInitialQx(qx);
+    setInitialQy(qy);
+    // eslint-disable-next-line no-console
+    console.log("Sensor values:", `qx: ${qx}, qy: ${qy}`);
+  }, [rotationSensor.sensor.value]);
+
+  // eslint-disable-next-line no-console
+
+  /* Get both card and light sizes to set the basic boundaries */
   const [cardSize, setCardSize] = useState<CardSize>();
   const [lightSize, setLightSize] = useState<LightSize>();
-
-  const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const { qx, qy } = rotationSensor.sensor.value;
 
   const getCardSize = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -47,11 +61,19 @@ const DSGyroscopeCardScreen = () => {
     setLightSize({ value: lightSize });
   };
 
-  // eslint-disable-next-line no-console
-  console.log("Sensor values:", `qx: ${qx}, qy: ${qy}`);
-
+  /* Calculate the light position using quaternions */
   const animatedStyle = useAnimatedStyle(() => {
     const { qx, qy } = rotationSensor.sensor.value;
+
+    /* We don't need to consider the whole
+    quaternion range, just the 1/10 */
+    const quaternionRange: number = 0.1;
+
+    /* Not all devices are in an initial flat position on a surface 
+    (e.g. a table) then we use relative rotation values,
+    not absolute ones  */
+    const relativeQx = qx - initialQx;
+    const relativeQy = qy - initialQy;
 
     const maxTranslateX =
       ((cardSize?.width ?? 0) - (lightSize?.value ?? 0)) / 2;
@@ -59,19 +81,15 @@ const DSGyroscopeCardScreen = () => {
       ((cardSize?.height ?? 0) - (lightSize?.value ?? 0)) / 2;
 
     const translateX = interpolate(
-      qx,
-      /* We don't need to take in account
-      the entire rotation range, just the 1/10 */
-      [-0.1, 0.1],
+      relativeQx,
+      [-quaternionRange, quaternionRange],
       [-maxTranslateX, maxTranslateX],
       Extrapolate.CLAMP
     );
 
     const translateY = interpolate(
-      qy,
-      /* We don't need to take in account
-      the entire rotation range, just the 1/10 */
-      [-0.1, 0.1],
+      relativeQy,
+      [-quaternionRange, quaternionRange],
       [-maxTranslateY, maxTranslateY],
       Extrapolate.CLAMP
     );
@@ -100,8 +118,6 @@ const DSGyroscopeCardScreen = () => {
         <VSpacer size={8} />
         <H6>Light (Circle)</H6>
         <Text>{`Size: ${lightSize?.value}`}</Text>
-        <H6>Sensor values</H6>
-        <Text>{`qx: ${qx}, qy: ${qy}`}</Text>
       </View>
     </View>
   );
