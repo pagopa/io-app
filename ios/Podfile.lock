@@ -483,7 +483,7 @@ PODS:
     - React-Core
   - RNCClipboard (1.10.0):
     - React-Core
-  - RNCMaskedView (0.3.0):
+  - RNCMaskedView (0.2.9):
     - React-Core
   - RNCPicker (2.4.1):
     - React-Core
@@ -990,7 +990,7 @@ SPEC CHECKSUMS:
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: f1736c75ab85b627a4d57587edb4b60999c4dd80
-  RNCMaskedView: f7c74478c83c4fdfc5cf4df51f80c0dd5cf125c6
+  RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
   RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140

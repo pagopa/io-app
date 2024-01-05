@@ -1,7 +1,15 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { H6, IOColors } from "@pagopa/io-app-design-system";
 import MaskedView from "@react-native-masked-view/masked-view";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { useState } from "react";
+import {
+  LayoutChangeEvent,
+  LayoutRectangle,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle
+} from "react-native";
 import Animated, {
   SensorType,
   useAnimatedSensor,
@@ -9,8 +17,21 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 
+type CardSize = {
+  width: LayoutRectangle["width"];
+  height: LayoutRectangle["height"];
+};
+
+const cardAspectRatio: ViewStyle["aspectRatio"] = 7 / 4;
+
 const DSGyroscopeCardScreen = () => {
+  const [cardSize, setCardSize] = useState<CardSize>();
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
+
+  const getCardSize = (event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setCardSize({ width, height });
+  };
 
   const animatedStyle = useAnimatedStyle(() => {
     const { qx, qy } = rotationSensor.sensor.value;
@@ -25,17 +46,20 @@ const DSGyroscopeCardScreen = () => {
   return (
     <View style={styles.container}>
       <MaskedView maskElement={<View style={styles.mask} />}>
-        <View style={styles.box}>
+        <View style={styles.box} onLayout={getCardSize}>
           <Animated.View style={[styles.circle, animatedStyle]} />
         </View>
       </MaskedView>
+      <View style={styles.debugInfo}>
+        <H6>Card</H6>
+        <Text>{`${cardSize?.width} × ${cardSize?.height}`}</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     alignItems: "center",
     paddingTop: 24,
     paddingHorizontal: 24
@@ -50,7 +74,7 @@ const styles = StyleSheet.create({
   // eslint-disable-next-line react-native/no-color-literals
   mask: {
     width: "100%",
-    aspectRatio: 4 / 3,
+    aspectRatio: cardAspectRatio,
     backgroundColor: IOColors.black,
     justifyContent: "center",
     alignItems: "center",
@@ -59,7 +83,7 @@ const styles = StyleSheet.create({
   box: {
     justifyContent: "center",
     width: "100%",
-    aspectRatio: 4 / 3,
+    aspectRatio: cardAspectRatio,
     backgroundColor: IOColors["hanPurple-250"],
     shadowColor: IOColors.black,
     shadowOffset: {
@@ -69,6 +93,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 10,
     elevation: 12
+  },
+  debugInfo: {
+    alignSelf: "flex-start",
+    position: "relative",
+    top: 16
   }
 });
 
