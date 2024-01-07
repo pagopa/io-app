@@ -26,7 +26,7 @@ import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
 /**
  * Watcher for the IT wallet Relying Party related sagas.
  */
-export function* watchItwRpSaga(): SagaIterator {
+export function* watchItwPrRemotePid(): SagaIterator {
   /**
    * Handles the PID remote presentation initialization flow to an RP.
    */

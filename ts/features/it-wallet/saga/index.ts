@@ -7,17 +7,20 @@ import { watchItwActivationSaga } from "./itwActivationSaga";
 import { watchitwPrRemoteCredentialSaga } from "./presentation/remote/itwPrRemoteCredentialSaga";
 import { watchItwIssuanceCredentialSaga } from "./issuance/itwIssuanceCredentialSaga";
 import { watchItwProximitySaga } from "./itwProximitySaga";
-import { watchItwRpSaga } from "./presentation/remote/itwPrRemotePidSaga";
+import { watchItwPrRemotePid } from "./presentation/remote/itwPrRemotePidSaga";
 
 /**
  * Watcher for any IT wallet related sagas.
  */
 export function* watchItwSaga(): SagaIterator {
-  yield* fork(watchItwActivationSaga);
+  /* GENERIC */
   yield* fork(watchItwWiaSaga);
+  yield* fork(watchItwActivationSaga);
+  /* ISSUANCE */
   yield* fork(watchItwIssuancePidSaga);
-  yield* fork(watchItwRpSaga);
-  yield* fork(watchitwPrRemoteCredentialSaga);
   yield* fork(watchItwIssuanceCredentialSaga);
+  /* PRESENTATION */
+  yield* fork(watchItwPrRemotePid);
+  yield* fork(watchitwPrRemoteCredentialSaga);
   yield* fork(watchItwProximitySaga);
 }

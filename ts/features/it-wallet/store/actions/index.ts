@@ -1,5 +1,5 @@
 import { ItwPersistedCredentialsActions } from "./itwPersistedCredentialsActions";
-import { ItwIssuanceCieActions } from "./issuing/pid/itwIssuancePidCieActions";
+import { ItwIssuancePidCieAuthActions } from "./issuing/pid/itwIssuancePidCieActions";
 import { ItwActivationActions } from "./itwActivationActions";
 import { ItwWiaActions } from "./itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
@@ -13,13 +13,17 @@ import { ItwIssuancePidActions } from "./issuing/pid/itwIssuancePidActions";
  * Action types for the IT Wallet feature
  */
 export type ItWalletActions =
+  /* GENERIC */
+  | ItwLifecycleActions
   | ItwWiaActions
   | ItwActivationActions
+  /* ISSUANCE */
+  | ItwIssuancePidCieAuthActions
   | ItwIssuancePidActions
   | ItwIssuanceCredentialActions
-  | ItwLifecycleActions
+  /* PERSISTED CREDENTIALS */
   | ItwPersistedCredentialsActions
-  | ItwIssuanceCieActions
+  /* PRESENTATION */
   | ItwRpActions
   | itwPrRemoteCredentialInit
   | ItwProximityActions;

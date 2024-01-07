@@ -62,7 +62,7 @@ export const cieAuthenticationError = createStandardAction(
   "ITW_CIE_AUTHENTICATION_ERROR"
 )<CieAuthenticationErrorPayload>();
 
-export type ItwIssuanceCieActions =
+export type ItwIssuancePidCieAuthActions =
   | ActionType<typeof hasApiLevelSupport>
   | ActionType<typeof hasNFCFeature>
   | ActionType<typeof cieIsSupported>

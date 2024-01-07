@@ -97,16 +97,16 @@ export default function itwIssuancePidAuthCieReducer(
 
 // Selectors
 export const hasNFCFeatureSelector = (state: GlobalState) =>
-  state.features.itWallet.issuancePidCie.hasNFCFeature;
+  state.features.itWallet.issuancePidCieAuth.hasNFCFeature;
 
 export const hasApiLevelSupportSelector = (state: GlobalState) =>
-  state.features.itWallet.issuancePidCie.hasApiLevelSupport;
+  state.features.itWallet.issuancePidCieAuth.hasApiLevelSupport;
 
 export const isCieSupportedSelector = (state: GlobalState) =>
-  state.features.itWallet.issuancePidCie.isCieSupported;
+  state.features.itWallet.issuancePidCieAuth.isCieSupported;
 
 export const isNfcEnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.issuancePidCie.isNfcEnabled;
+  state.features.itWallet.issuancePidCieAuth.isNfcEnabled;
 
 export const readingEventSelector = (state: GlobalState) =>
-  state.features.itWallet.issuancePidCie.readingEvent;
+  state.features.itWallet.issuancePidCieAuth.readingEvent;

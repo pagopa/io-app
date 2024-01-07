@@ -64,7 +64,7 @@ export type ItWalletState = {
   lifecycle: ItwLifecycleState;
   wia: ItwWiaState;
   /* ISSUANCE */
-  issuancePidCie: ItwIssuancePidCieAuthState;
+  issuancePidCieAuth: ItwIssuancePidCieAuthState;
   issuancePid: ItwIssuancePidState;
   issuanceCredential: ItwIssuanceCredentialState;
   /* PERSISTED CREDENTIALS */
@@ -98,7 +98,7 @@ const reducers = combineReducers<ItWalletState, Action>({
   lifecycle: itwLifeCycle,
   wia: itwWia,
   /* ISSUANCE */
-  issuancePidCie: itwIssuancePidAuthCieReducer,
+  issuancePidCieAuth: itwIssuancePidAuthCieReducer,
   issuancePid: itwPidReducer,
   issuanceCredential: itwIssuanceCredentialReducer,
   /* PERSISTED CREDENTIALS */
