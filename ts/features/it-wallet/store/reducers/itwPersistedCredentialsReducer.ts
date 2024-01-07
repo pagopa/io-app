@@ -5,9 +5,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  itwCredentialsAddCredential,
-  itwCredentialsAddPid
-} from "../actions/itwCredentialsActions";
+  itwPersistedCredentialsAdd,
+  itwPersistedCredentialsAddPid
+} from "../actions/itwPersistedCredentialsActions";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { StoredCredential } from "../../utils/types";
 import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
@@ -16,41 +16,44 @@ import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
  * The type of credentials stored in the wallet.
  * The PID is a particular credential which is stored separately.
  */
-type ItwCredentialsType = {
+type ItwPersistedCredentials = {
   pid: O.Option<StoredCredential>;
   credentials: Array<O.Option<StoredCredential>>;
 };
 
-export type ItwCredentialsState = pot.Pot<ItwCredentialsType, ItWalletError>;
+export type ItwPersistedCredentialsState = pot.Pot<
+  ItwPersistedCredentials,
+  ItWalletError
+>;
 
-const emptyState: ItwCredentialsState = pot.none;
+const emptyState: ItwPersistedCredentialsState = pot.none;
 
 /**
  * This reducer handles the credentials state.
  * Currently it only handles adding the PID to the wallet.
- * A saga is attached to the itwCredentialsAddPid action which handles the PID issuing.
+ * A saga is attached to the itwPersistedCredentialsAddPid action which handles the PID issuing.
  * @param state the current state
  * @param action the dispatched action
  * @returns the result state
  */
 const reducer = (
-  state: ItwCredentialsState = emptyState,
+  state: ItwPersistedCredentialsState = emptyState,
   action: Action
-): ItwCredentialsState => {
+): ItwPersistedCredentialsState => {
   switch (action.type) {
     /**
      * PID related actions, will be merged with generic credentials in the future.
      */
-    case getType(itwCredentialsAddPid.request):
+    case getType(itwPersistedCredentialsAddPid.request):
       return pot.toLoading(state);
-    case getType(itwCredentialsAddPid.success):
+    case getType(itwPersistedCredentialsAddPid.success):
       return pot.some({ credentials: [], pid: O.some(action.payload) }); // credentials is always empty when adding a PID
-    case getType(itwCredentialsAddPid.failure):
+    case getType(itwPersistedCredentialsAddPid.failure):
       return pot.toError(state, action.payload);
     /**
      * Credentials related actions.
      */
-    case getType(itwCredentialsAddCredential.success):
+    case getType(itwPersistedCredentialsAdd.success):
       return pot.some({
         pid: pot.getOrElse(
           pot.map(state, credentials => credentials.pid),
@@ -78,7 +81,7 @@ const reducer = (
  * @param state - the global state
  * @returns the credentials pot state of the wallet.
  */
-export const ItwCredentialsStateSelector = (state: GlobalState) =>
+export const itwPersistedCredentialsSelector = (state: GlobalState) =>
   state.features.itWallet.credentials;
 
 /**
@@ -86,7 +89,7 @@ export const ItwCredentialsStateSelector = (state: GlobalState) =>
  * @param state - the global state
  * @returns the PID from the wallet.
  */
-export const itwCredentialsPidSelector = (state: GlobalState) =>
+export const itwPersistedCredentialsValuePidSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(
       state.features.itWallet.credentials,
@@ -100,7 +103,7 @@ export const itwCredentialsPidSelector = (state: GlobalState) =>
  * @param state - the global state
  * @returns the credentials array from the wallet or an empty array if the pot is empty.
  */
-export const itwCredentialsSelector = (state: GlobalState) =>
+export const itwPersistedCredentialsValueSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(
       state.features.itWallet.credentials,

@@ -35,11 +35,11 @@ import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import ROUTES from "../../../../../../navigation/routes";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
-import { itwCredentialsPidSelector } from "../../../../store/reducers/itwCredentialsReducer";
+import { itwPersistedCredentialsValuePidSelector } from "../../../../store/reducers/itwPersistedCredentialsReducer";
 import { StoredCredential } from "../../../../utils/types";
 
 const ItwPrRemotePidDataScreen = () => {
-  const pid = useIOSelector(itwCredentialsPidSelector);
+  const pid = useIOSelector(itwPersistedCredentialsValuePidSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const { present, bottomSheet } = useItwInfoBottomSheet({
     title: rpPidMock.organizationName,

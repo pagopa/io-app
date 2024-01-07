@@ -31,7 +31,7 @@ import ItwKoView from "../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../utils/itwErrorsUtils";
 import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
-import { itwCredentialsPidSelector } from "../../../store/reducers/itwCredentialsReducer";
+import { itwPersistedCredentialsValuePidSelector } from "../../../store/reducers/itwPersistedCredentialsReducer";
 import { StoredCredential } from "../../../utils/types";
 import { itwIssuanceCredentialChecksValueSelector } from "../../../store/reducers/issuance/itwIssuanceCredentialReducer";
 import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
@@ -41,7 +41,7 @@ import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
  * with the issuer.
  */
 const ItwIssuingCredentialAuthScreen = () => {
-  const pid = useIOSelector(itwCredentialsPidSelector);
+  const pid = useIOSelector(itwPersistedCredentialsValuePidSelector);
   const checks = useIOSelector(itwIssuanceCredentialChecksValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const toast = useIOToast();

@@ -34,7 +34,7 @@ import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 import ItwTextInfo from "../../../../components/ItwTextInfo";
-import { itwCredentialsPidSelector } from "../../../../store/reducers/itwCredentialsReducer";
+import { itwPersistedCredentialsValuePidSelector } from "../../../../store/reducers/itwPersistedCredentialsReducer";
 import { StoredCredential } from "../../../../utils/types";
 
 /**
@@ -42,7 +42,7 @@ import { StoredCredential } from "../../../../utils/types";
  * with the issuer.
  */
 const ItwPrRemoteCredentialDataScreen = () => {
-  const pid = useIOSelector(itwCredentialsPidSelector);
+  const pid = useIOSelector(itwPersistedCredentialsValuePidSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const rpMock = getRpMock();
   const { present, bottomSheet } = useItwInfoBottomSheet({

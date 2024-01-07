@@ -21,7 +21,7 @@ import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
-import { itwCredentialsPidSelector } from "../../store/reducers/itwCredentialsReducer";
+import { itwPersistedCredentialsValuePidSelector } from "../../store/reducers/itwPersistedCredentialsReducer";
 import { StoredCredential } from "../../utils/types";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 
@@ -31,7 +31,7 @@ import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
  */
 const ItwPrPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const pid = useIOSelector(itwCredentialsPidSelector);
+  const pid = useIOSelector(itwPersistedCredentialsValuePidSelector);
   const bannerViewRef = React.createRef<View>();
   const spacerSize = 32;
 

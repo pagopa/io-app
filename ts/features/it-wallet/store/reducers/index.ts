@@ -15,7 +15,9 @@ import itwIssuancePidAuthCieReducer, {
   ItwIssuancePidCieAuthState
 } from "./issuance/pid/itwIssuancePidCieAuthReducer";
 import itwWia, { ItwWiaState } from "./itwWiaReducer";
-import itwCredentials, { ItwCredentialsState } from "./itwCredentialsReducer";
+import itwCredentials, {
+  ItwPersistedCredentialsState
+} from "./itwPersistedCredentialsReducer";
 import itwLifeCycle, { ItwLifecycleState } from "./itwLifecycleReducer";
 import itwPidReducer, {
   ItwIssuancePidState
@@ -23,9 +25,6 @@ import itwPidReducer, {
 import itwPrRemotePidReducer, {
   ItwPrRemotePidState
 } from "./presentation/remote/itwPrRemotePidReducer";
-import itwCredentialsChecksReducer, {
-  ItwCredentialsChecksState
-} from "./itwCredentialsChecksReducer";
 import itwPrRemoteCredentialReducer, {
   itwPrRemoteCredentialState
 } from "./presentation/remote/itwPrRemoteCredentialReducer";
@@ -69,8 +68,7 @@ export type ItWalletState = {
   issuancePid: ItwIssuancePidState;
   issuanceCredential: ItwIssuanceCredentialState;
   /* PERSISTED CREDENTIALS */
-  credentials: ItwCredentialsState & PersistPartial;
-  credentialsChecks: ItwCredentialsChecksState;
+  credentials: ItwPersistedCredentialsState & PersistPartial;
   /* PRESENTATION REMOTE */
   prRemotePid: ItwPrRemotePidState;
   prRemoteCredential: itwPrRemoteCredentialState;
@@ -105,7 +103,6 @@ const reducers = combineReducers<ItWalletState, Action>({
   issuanceCredential: itwIssuanceCredentialReducer,
   /* PERSISTED CREDENTIALS */
   credentials: persistReducer(credentialsPersistConfig, itwCredentials),
-  credentialsChecks: itwCredentialsChecksReducer,
   /* PRESENTATION REMOTE */
   prRemotePid: itwPrRemotePidReducer,
   prRemoteCredential: itwPrRemoteCredentialReducer,

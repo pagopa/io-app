@@ -12,7 +12,7 @@ import {
   itwPrRemotePidPresentation
 } from "../../../store/actions/presentation/remote/itwPrRemotePidActions";
 import { itwPrRemotePidInitValueSelector } from "../../../store/reducers/presentation/remote/itwPrRemotePidReducer";
-import { itwCredentialsPidSelector } from "../../../store/reducers/itwCredentialsReducer";
+import { itwPersistedCredentialsValuePidSelector } from "../../../store/reducers/itwPersistedCredentialsReducer";
 import {
   ITW_PID_KEY_TAG,
   ITW_WIA_KEY_TAG
@@ -123,7 +123,7 @@ export function* handleItwPrRemotePidSaga(
 
     const maybeInitValue = yield* select(itwPrRemotePidInitValueSelector);
 
-    const pidToken = yield* select(itwCredentialsPidSelector);
+    const pidToken = yield* select(itwPersistedCredentialsValuePidSelector);
 
     if (O.isNone(maybeInitValue) || O.isNone(pidToken)) {
       throw new Error("Request object is not defined");

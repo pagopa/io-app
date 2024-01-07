@@ -9,7 +9,7 @@ import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { itwWiaSelector } from "../../../store/reducers/itwWiaReducer";
 import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
-import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
+import { itwPersistedCredentialsAddPid } from "../../../store/actions/itwPersistedCredentialsActions";
 import { itwLifecycleValid } from "../../../store/actions/itwLifecycleActions";
 import { walletProviderBaseUrl } from "../../../../../config";
 import {
@@ -41,7 +41,10 @@ export function* watchItwIssuancePidSaga(): SagaIterator {
   /**
    * Handles adding a PID to the wallet.
    */
-  yield* takeLatest(itwCredentialsAddPid.request, handleCredentialsAddPid);
+  yield* takeLatest(
+    itwPersistedCredentialsAddPid.request,
+    handleCredentialsAddPid
+  );
 }
 
 /*
@@ -176,16 +179,16 @@ export function* handleItwIssuancePidSaga({
  * As a side effect, it sets the lifecycle of the wallet to valid.
  */
 export function* handleCredentialsAddPid(
-  action: ActionType<typeof itwCredentialsAddPid.request>
+  action: ActionType<typeof itwPersistedCredentialsAddPid.request>
 ): SagaIterator {
   yield* call(verifyPin);
   const pid = action.payload;
   if (O.isSome(pid)) {
-    yield* put(itwCredentialsAddPid.success(pid.value));
+    yield* put(itwPersistedCredentialsAddPid.success(pid.value));
     yield* put(itwLifecycleValid());
   } else {
     yield* put(
-      itwCredentialsAddPid.failure({
+      itwPersistedCredentialsAddPid.failure({
         code: ItWalletErrorTypes.CREDENTIAL_ADD_ERROR
       })
     );

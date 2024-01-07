@@ -7,9 +7,9 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import I18n from "../../../../../i18n";
 import { itwIssuancePidValueSelector } from "../../../store/reducers/issuance/pid/itwIssuancePidReducer";
-import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
+import { itwPersistedCredentialsAddPid } from "../../../store/actions/itwPersistedCredentialsActions";
 import { itwActivationCompleted } from "../../../store/actions/itwActivationActions";
-import { ItwCredentialsStateSelector } from "../../../store/reducers/itwCredentialsReducer";
+import { itwPersistedCredentialsSelector } from "../../../store/reducers/itwPersistedCredentialsReducer";
 import {
   ItWalletError,
   getItwGenericMappedError
@@ -24,10 +24,10 @@ const ItwIssuingPidAddingScreen = () => {
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwIssuancePidValueSelector);
   const navigation = useNavigation();
-  const credentialsState = useIOSelector(ItwCredentialsStateSelector);
+  const credentialsState = useIOSelector(itwPersistedCredentialsSelector);
 
   useOnFirstRender(() => {
-    dispatch(itwCredentialsAddPid.request(pid));
+    dispatch(itwPersistedCredentialsAddPid.request(pid));
   });
 
   const LoadingView = () => (

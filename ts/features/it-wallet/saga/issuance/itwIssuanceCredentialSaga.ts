@@ -18,15 +18,15 @@ import {
 import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
 import { itwWiaRequest } from "../../store/actions/itwWiaActions";
 import {
-  itwCredentialsPidSelector,
-  itwCredentialsSelector
-} from "../../store/reducers/itwCredentialsReducer";
+  itwPersistedCredentialsValuePidSelector,
+  itwPersistedCredentialsValueSelector
+} from "../../store/reducers/itwPersistedCredentialsReducer";
 import {
   ITW_PID_KEY_TAG,
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
 } from "../../utils/itwSecureStorageUtils";
-import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
+import { itwPersistedCredentialsAdd } from "../../store/actions/itwPersistedCredentialsActions";
 import {
   itwIssuanceCredentialChecksValueSelector,
   itwIssuanceResultDataSelector
@@ -76,7 +76,9 @@ export function* handleItwIssuanceCredentialChecks({
     }
 
     // check if credential is already in the wallet
-    const storedCredentials = yield* select(itwCredentialsSelector);
+    const storedCredentials = yield* select(
+      itwPersistedCredentialsValueSelector
+    );
     const found = storedCredentials
       .filter(O.isSome)
       .find(e => e.value.credentialType === credentialType);
@@ -227,7 +229,7 @@ function* handleAddCredentialWithPin() {
       throw new Error();
     }
     yield* call(verifyPin);
-    yield* put(itwCredentialsAddCredential.success(resultData.value));
+    yield* put(itwPersistedCredentialsAdd.success(resultData.value));
 
     yield* call(
       NavigationService.dispatchNavigationAction,
@@ -340,7 +342,7 @@ function* getWalletInstanceAttestation(): Iterator<
  * @returns the PID and the crypto context.
  */
 function* getPID(): Iterator<any, readonly [StoredCredential, CryptoContext]> {
-  const maybePid = yield* select(itwCredentialsPidSelector);
+  const maybePid = yield* select(itwPersistedCredentialsValuePidSelector);
   if (O.isNone(maybePid)) {
     const message = `Expecting response_code from sendAuthorizationResponse, received undefined`;
     throw new Error(message);

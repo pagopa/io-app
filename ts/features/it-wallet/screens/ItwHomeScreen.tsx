@@ -22,9 +22,9 @@ import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList"
 import { ItwParamsList } from "../navigation/ItwParamsList";
 import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycleReducer";
 import {
-  itwCredentialsPidSelector,
-  itwCredentialsSelector
-} from "../store/reducers/itwCredentialsReducer";
+  itwPersistedCredentialsValuePidSelector,
+  itwPersistedCredentialsValueSelector
+} from "../store/reducers/itwPersistedCredentialsReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import ItwCredentialCard from "../components/ItwCredentialCard";
 import { CredentialType } from "../utils/mocks";
@@ -46,8 +46,8 @@ const ItwHomeScreen = () => {
   const isItWalletOperational = useIOSelector(
     itwLifecycleIsOperationalSelector
   );
-  const decodedPid = useIOSelector(itwCredentialsPidSelector);
-  const credentials = useIOSelector(itwCredentialsSelector);
+  const decodedPid = useIOSelector(itwPersistedCredentialsValuePidSelector);
+  const credentials = useIOSelector(itwPersistedCredentialsValueSelector);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const badgesLabels = [
     I18n.t("features.itWallet.homeScreen.categories.any"),
