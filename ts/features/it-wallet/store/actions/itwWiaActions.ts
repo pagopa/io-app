@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { ItWalletError } from "../../../utils/itwErrorsUtils";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 
 /**
  * Start ITW wallet instance attestation request.

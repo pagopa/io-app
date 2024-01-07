@@ -11,7 +11,7 @@ import { toError } from "fp-ts/lib/Either";
 import { idpSelector } from "../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import { isCIEAuthenticationSupported } from "../utils/cie";
-import { itwWiaRequest } from "../store/actions/generic/itwWiaActions";
+import { itwWiaRequest } from "../store/actions/itwWiaActions";
 import { walletProviderBaseUrl } from "../../../config";
 import {
   ITW_WIA_KEY_TAG,

@@ -15,7 +15,7 @@ export const itwPrRemoteCredentialInit = createAsyncAction(
  */
 export const itwPrRemoteCredential = createAsyncAction(
   "ITW_PR_REMOTE_CREDENTIAL_REQUEST",
-  "ITW_PRESENTATIITW_PR_REMOTE_CREDENTIAL_SUCCESS",
+  "ITW_PR_REMOTE_CREDENTIAL_SUCCESS",
   "ITW_PR_REMOTE_CREDENTIAL_FAILURE"
 )<void, void, ItWalletError>();
 

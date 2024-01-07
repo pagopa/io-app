@@ -4,12 +4,12 @@ import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
-import { itwWiaRequest } from "../actions/generic/itwWiaActions";
+import { itwWiaRequest } from "../actions/itwWiaActions";
 import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
 
-export type ItwWIAState = pot.Pot<O.Option<string>, ItWalletError>;
+export type ItwWiaState = pot.Pot<O.Option<string>, ItWalletError>;
 
-const emptyState: ItwWIAState = pot.none;
+const emptyState: ItwWiaState = pot.none;
 
 /**
  * This reducer handles the WIA issuing state.
@@ -20,9 +20,9 @@ const emptyState: ItwWIAState = pot.none;
  * @returns the result state
  */
 const reducer = (
-  state: ItwWIAState = emptyState,
+  state: ItwWiaState = emptyState,
   action: Action
-): ItwWIAState => {
+): ItwWiaState => {
   switch (action.type) {
     case getType(itwWiaRequest.request):
       return pot.toLoading(state);

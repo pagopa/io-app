@@ -21,7 +21,7 @@ import { itwWiaSelector } from "../../../store/reducers/itwWiaReducer";
 import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
 import { verifyPin } from "../../itwSagaUtils";
 import { itwLifecycleIsValidSelector } from "../../../store/reducers/itwLifecycleReducer";
-import { itwWiaRequest } from "../../../store/actions/generic/itwWiaActions";
+import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
 
 /**
  * Watcher for the IT wallet Relying Party related sagas.

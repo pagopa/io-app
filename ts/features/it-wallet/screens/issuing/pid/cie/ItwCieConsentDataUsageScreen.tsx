@@ -22,7 +22,7 @@ import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import {
   loginFailure,
   loginSuccess
-} from "../../../../store/actions/issuing/pid/itwCieActions";
+} from "../../../../store/actions/issuing/pid/itwIssuancePidCieActions";
 
 export type ItwCieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;

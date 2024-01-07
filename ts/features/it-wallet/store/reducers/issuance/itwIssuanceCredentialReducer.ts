@@ -5,9 +5,9 @@ import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItWalletError } from "../../../utils/itwErrorsUtils";
 import {
-  itwIssuanceChecks,
-  itwIssuanceGetCredential
-} from "../../actions/itwIssuanceActions";
+  itwIssuanceCredentialChecks,
+  itwIssuanceCredential
+} from "../../actions/issuing/itwIssuanceCredentialActions";
 import { CredentialCatalogDisplay } from "../../../utils/mocks";
 import {
   CredentialConfigurationSchema,
@@ -16,7 +16,7 @@ import {
   StoredCredential
 } from "../../../utils/types";
 
-export type IssuanceData = {
+export type ItwIssuanceCredentialData = {
   credentialType: string;
   issuerUrl: string;
   displayData: CredentialCatalogDisplay;
@@ -27,44 +27,44 @@ export type IssuanceData = {
 /**
  * Type of the state managed by the reducer for the issuance flow.
  */
-export type ItwIssuanceState = {
+export type ItwIssuanceCredentialState = {
   /**
    * Preliminary checks pot.
    */
-  checks: pot.Pot<O.Option<IssuanceData>, ItWalletError>;
+  checks: pot.Pot<O.Option<ItwIssuanceCredentialData>, ItWalletError>;
   /**
    * Issuance result pot.
    */
-  issuanceResult: pot.Pot<O.Option<StoredCredential>, ItWalletError>;
+  result: pot.Pot<O.Option<StoredCredential>, ItWalletError>;
 };
 
 /**
  * Empty state constant which sets the initial state of the reducer.
  */
-const EMPTY_STATE: ItwIssuanceState = {
+const EMPTY_STATE: ItwIssuanceCredentialState = {
   checks: pot.none,
-  issuanceResult: pot.none
+  result: pot.none
 };
 
 const reducer = (
-  state: ItwIssuanceState = EMPTY_STATE,
+  state: ItwIssuanceCredentialState = EMPTY_STATE,
   action: Action
-): ItwIssuanceState => {
+): ItwIssuanceCredentialState => {
   switch (action.type) {
     /**
      * Preliminary checks section.
      */
-    case getType(itwIssuanceChecks.request):
+    case getType(itwIssuanceCredentialChecks.request):
       return {
         ...state,
         checks: pot.toLoading(state.checks)
       };
-    case getType(itwIssuanceChecks.success):
+    case getType(itwIssuanceCredentialChecks.success):
       return {
         ...state,
         checks: pot.some(O.some(action.payload))
       };
-    case getType(itwIssuanceChecks.failure):
+    case getType(itwIssuanceCredentialChecks.failure):
       return {
         ...state,
         checks: pot.toError(state.checks, action.payload)
@@ -73,20 +73,20 @@ const reducer = (
     /**
      * Obtain phase
      */
-    case getType(itwIssuanceGetCredential.request):
+    case getType(itwIssuanceCredential.request):
       return {
         ...state,
-        issuanceResult: pot.toLoading(state.issuanceResult)
+        result: pot.toLoading(state.result)
       };
-    case getType(itwIssuanceGetCredential.success):
+    case getType(itwIssuanceCredential.success):
       return {
         ...state,
-        issuanceResult: pot.some(O.some(action.payload))
+        result: pot.some(O.some(action.payload))
       };
-    case getType(itwIssuanceGetCredential.failure):
+    case getType(itwIssuanceCredential.failure):
       return {
         ...state,
-        issuanceResult: pot.toError(state.issuanceResult, action.payload)
+        result: pot.toError(state.result, action.payload)
       };
 
     default:
@@ -94,24 +94,27 @@ const reducer = (
   }
 };
 
-export const itwIssuanceResultSelector = (state: GlobalState) =>
-  state.features.itWallet.issuance.issuanceResult;
+export const itwIssuanceCredentialResultSelector = (state: GlobalState) =>
+  state.features.itWallet.issuanceCredential.result;
 
 export const itwIssuanceResultDataSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(
-      state.features.itWallet.issuance.issuanceResult,
-      issuanceResultData => issuanceResultData
+      state.features.itWallet.issuanceCredential.result,
+      result => result
     ),
     O.none
   );
 
-export const itwIssuanceChecksSelector = (state: GlobalState) =>
-  state.features.itWallet.issuance.checks;
+export const itwIssuanceCredentialChecksSelector = (state: GlobalState) =>
+  state.features.itWallet.issuanceCredential.checks;
 
-export const itwIssuanceChecksDataSelector = (state: GlobalState) =>
+export const itwIssuanceCredentialChecksValueSelector = (state: GlobalState) =>
   pot.getOrElse(
-    pot.map(state.features.itWallet.issuance.checks, checks => checks),
+    pot.map(
+      state.features.itWallet.issuanceCredential.checks,
+      checks => checks
+    ),
     O.none
   );
 

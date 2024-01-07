@@ -1,11 +1,11 @@
 import { fork } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
 
-import { watchPidSaga } from "./itwPidIssuanceSaga";
+import { watchItwIssuancePidSaga } from "./issuance/pid/itwIssuancePidSaga";
 import { watchItwWiaSaga } from "./itwWiaSaga";
 import { watchItwActivationSaga } from "./itwActivationSaga";
 import { watchitwPrRemoteCredentialSaga } from "./presentation/remote/itwPrRemoteCredentialSaga";
-import { watchItwIssuanceSaga } from "./new/itwIssuanceSaga";
+import { watchItwIssuanceCredentialSaga } from "./issuance/itwIssuanceCredentialSaga";
 import { watchItwProximitySaga } from "./itwProximitySaga";
 import { watchItwRpSaga } from "./presentation/remote/itwPrRemotePidSaga";
 
@@ -15,9 +15,9 @@ import { watchItwRpSaga } from "./presentation/remote/itwPrRemotePidSaga";
 export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwActivationSaga);
   yield* fork(watchItwWiaSaga);
-  yield* fork(watchPidSaga);
+  yield* fork(watchItwIssuancePidSaga);
   yield* fork(watchItwRpSaga);
   yield* fork(watchitwPrRemoteCredentialSaga);
-  yield* fork(watchItwIssuanceSaga);
+  yield* fork(watchItwIssuanceCredentialSaga);
   yield* fork(watchItwProximitySaga);
 }

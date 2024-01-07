@@ -31,9 +31,9 @@ import {
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   itwConfirmStoreCredential,
-  itwIssuanceGetCredential
-} from "../../../store/actions/itwIssuanceActions";
-import { itwIssuanceResultSelector } from "../../../store/reducers/new/itwIssuanceReducer";
+  itwIssuanceCredential
+} from "../../../store/actions/issuing/itwIssuanceCredentialActions";
+import { itwIssuanceCredentialResultSelector } from "../../../store/reducers/issuance/itwIssuanceCredentialReducer";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
@@ -45,7 +45,7 @@ import { StoredCredential } from "../../../utils/types";
  */
 const ItwIssuingCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const issuanceResult = useIOSelector(itwIssuanceResultSelector);
+  const issuanceResult = useIOSelector(itwIssuanceCredentialResultSelector);
   const bannerViewRef = React.createRef<View>();
   const toast = useIOToast();
   const dispatch = useIODispatch();
@@ -54,7 +54,7 @@ const ItwIssuingCredentialPreviewScreen = () => {
    * Starts the issuance process when the screen is rendered for the first time.
    */
   useOnFirstRender(() => {
-    dispatch(itwIssuanceGetCredential.request());
+    dispatch(itwIssuanceCredential.request());
   });
 
   /**

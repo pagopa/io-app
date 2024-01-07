@@ -7,20 +7,18 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
-import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
-import {
-  itwCredentialsAddPid,
-  itwPid
-} from "../store/actions/itwCredentialsActions";
-import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
-import { walletProviderBaseUrl } from "../../../config";
+import { itwWiaSelector } from "../../../store/reducers/itwWiaReducer";
+import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
+import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
+import { itwLifecycleValid } from "../../../store/actions/itwLifecycleActions";
+import { walletProviderBaseUrl } from "../../../../../config";
 import {
   ITW_PID_KEY_TAG,
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
-} from "../utils/itwSecureStorageUtils";
-import { verifyPin } from "./itwSagaUtils";
+} from "../../../utils/itwSecureStorageUtils";
+import { itwIssuancePid } from "../../../store/actions/issuing/pid/itwIssuancePidActions";
+import { verifyPin } from "../../itwSagaUtils";
 
 /**
  * A dummy implementation of CompleteUserAuthorization that uses static values.
@@ -34,11 +32,11 @@ const completeUserAuthorizationWithCIE: Credential.Issuance.CompleteUserAuthoriz
 /**
  * Watcher for the IT wallet PID related sagas.
  */
-export function* watchPidSaga(): SagaIterator {
+export function* watchItwIssuancePidSaga(): SagaIterator {
   /**
    * Handles a PID issuing request.
    */
-  yield* takeLatest(itwPid.request, handlePidRequest);
+  yield* takeLatest(itwIssuancePid.request, handleItwIssuancePidSaga);
 
   /**
    * Handles adding a PID to the wallet.
@@ -50,9 +48,9 @@ export function* watchPidSaga(): SagaIterator {
  * This saga handles the PID issuing.
  * It calls the getPid function to get an encoded PID.
  */
-export function* handlePidRequest({
+export function* handleItwIssuancePidSaga({
   payload: { type, issuerUrl, pidData, ...displayData }
-}: ActionType<typeof itwPid.request>): SagaIterator {
+}: ActionType<typeof itwIssuancePid.request>): SagaIterator {
   try {
     const wiaOption = yield* select(itwWiaSelector);
     if (isSome(wiaOption)) {
@@ -146,7 +144,7 @@ export function* handlePidRequest({
       );
 
       yield* put(
-        itwPid.success({
+        itwIssuancePid.success({
           issuerConf,
           keyTag: ITW_PID_KEY_TAG,
           credential,
@@ -159,14 +157,14 @@ export function* handlePidRequest({
       );
     } else {
       yield* put(
-        itwPid.failure({
+        itwIssuancePid.failure({
           code: ItWalletErrorTypes.PID_ISSUING_ERROR
         })
       );
     }
   } catch (err) {
     yield* put(
-      itwPid.failure({
+      itwIssuancePid.failure({
         code: ItWalletErrorTypes.PID_ISSUING_ERROR
       })
     );

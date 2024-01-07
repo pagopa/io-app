@@ -23,8 +23,8 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { itwIssuanceChecksSelector } from "../../../store/reducers/new/itwIssuanceReducer";
-import { itwIssuanceChecks } from "../../../store/actions/itwIssuanceActions";
+import { itwIssuanceCredentialChecksSelector } from "../../../store/reducers/issuance/itwIssuanceCredentialReducer";
+import { itwIssuanceCredentialChecks } from "../../../store/actions/issuing/itwIssuanceCredentialActions";
 
 const NONE_LOADING = -1;
 
@@ -34,7 +34,7 @@ const NONE_LOADING = -1;
 const ItwIssuingCredentialCatalogScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
+  const preliminaryChecks = useIOSelector(itwIssuanceCredentialChecksSelector);
   const [loadingIndex, setLoadingIndex] = React.useState<number>(NONE_LOADING);
   const catalog = getCredentialsCatalog();
 
@@ -65,7 +65,7 @@ const ItwIssuingCredentialCatalogScreen = () => {
   }: CredentialCatalogAvailableItem & { index: number }) => {
     setLoadingIndex(index);
     dispatch(
-      itwIssuanceChecks.request({
+      itwIssuanceCredentialChecks.request({
         displayData,
         issuerUrl,
         credentialType

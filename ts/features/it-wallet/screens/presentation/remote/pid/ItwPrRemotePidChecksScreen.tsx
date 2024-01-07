@@ -9,7 +9,7 @@ import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
 import {
-  itwPrRemotePidInitRequest,
+  ItwPrRemotePidInitData,
   itwPrRemotePidInit
 } from "../../../../store/actions/presentation/remote/itwPrRemotePidActions";
 import { rpPidMock } from "../../../../utils/mocks";
@@ -30,8 +30,7 @@ import { itwPrRemotePidInitSelector } from "../../../../store/reducers/presentat
  * ItwPrRemotePidChecksScreenNavigationParams's navigation params.
  * The authReqUrl is the url to use to start the RP flow.
  */
-export type ItwPrRemotePidChecksScreenNavigationParams =
-  itwPrRemotePidInitRequest;
+export type ItwPrRemotePidChecksScreenNavigationParams = ItwPrRemotePidInitData;
 
 /**
  * Type of the route props for the ItwIssuingPidRequestScreen.

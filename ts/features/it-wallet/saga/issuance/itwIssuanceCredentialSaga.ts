@@ -12,11 +12,11 @@ import { CommonActions } from "@react-navigation/native";
 import { IOToast } from "@pagopa/io-app-design-system";
 import {
   itwConfirmStoreCredential,
-  itwIssuanceChecks,
-  itwIssuanceGetCredential
-} from "../../store/actions/itwIssuanceActions";
+  itwIssuanceCredentialChecks,
+  itwIssuanceCredential
+} from "../../store/actions/issuing/itwIssuanceCredentialActions";
 import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
-import { itwWiaRequest } from "../../store/actions/generic/itwWiaActions";
+import { itwWiaRequest } from "../../store/actions/itwWiaActions";
 import {
   itwCredentialsPidSelector,
   itwCredentialsSelector
@@ -28,9 +28,9 @@ import {
 } from "../../utils/itwSecureStorageUtils";
 import { itwCredentialsAddCredential } from "../../store/actions/itwCredentialsActions";
 import {
-  itwIssuanceChecksDataSelector,
+  itwIssuanceCredentialChecksValueSelector,
   itwIssuanceResultDataSelector
-} from "../../store/reducers/new/itwIssuanceReducer";
+} from "../../store/reducers/issuance/itwIssuanceCredentialReducer";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
@@ -41,12 +41,12 @@ import { verifyPin } from "../itwSagaUtils";
 /**
  * Watcher for issuance related sagas.
  */
-export function* watchItwIssuanceSaga(): SagaIterator {
-  yield* takeLatest(itwIssuanceChecks.request, handleIssuanceChecks);
+export function* watchItwIssuanceCredentialSaga(): SagaIterator {
   yield* takeLatest(
-    itwIssuanceGetCredential.request,
-    handleIssuanceGetCredential
+    itwIssuanceCredentialChecks.request,
+    handleItwIssuanceCredentialChecks
   );
+  yield* takeLatest(itwIssuanceCredential.request, handleItwIssuanceCredential);
   yield* takeLatest(itwConfirmStoreCredential, handleAddCredentialWithPin);
 }
 
@@ -54,9 +54,9 @@ export function* watchItwIssuanceSaga(): SagaIterator {
  * Saga which handles the issuance checks before starting the issuance flow.
  * @param payload - The payload of the action which includes the credentialType, the issuerUrl and the displayData which are currently mocked.
  */
-export function* handleIssuanceChecks({
+export function* handleItwIssuanceCredentialChecks({
   payload: { credentialType, issuerUrl, displayData }
-}: ActionType<typeof itwIssuanceChecks.request>): SagaIterator {
+}: ActionType<typeof itwIssuanceCredentialChecks.request>): SagaIterator {
   try {
     // Issuer conf + trust
     const { issuerConf } = yield* call(
@@ -82,13 +82,13 @@ export function* handleIssuanceChecks({
       .find(e => e.value.credentialType === credentialType);
     if (found) {
       yield* put(
-        itwIssuanceChecks.failure({
+        itwIssuanceCredentialChecks.failure({
           code: ItWalletErrorTypes.CREDENTIAL_ALREADY_EXISTING_ERROR
         })
       );
     } else {
       yield* put(
-        itwIssuanceChecks.success({
+        itwIssuanceCredentialChecks.success({
           credentialType,
           issuerUrl,
           displayData,
@@ -100,7 +100,7 @@ export function* handleIssuanceChecks({
   } catch (e) {
     const res = toError(e);
     yield* put(
-      itwIssuanceChecks.failure({
+      itwIssuanceCredentialChecks.failure({
         code: ItWalletErrorTypes.CREDENTIAL_CHECKS_GENERIC_ERROR,
         message: res.message
       })
@@ -111,10 +111,12 @@ export function* handleIssuanceChecks({
 /**
  * Saga which handles the issuance flow.
  */
-export function* handleIssuanceGetCredential(): SagaIterator {
+export function* handleItwIssuanceCredential(): SagaIterator {
   try {
     yield* call(verifyPin);
-    const issuanceData = yield* select(itwIssuanceChecksDataSelector);
+    const issuanceData = yield* select(
+      itwIssuanceCredentialChecksValueSelector
+    );
 
     if (O.isNone(issuanceData)) {
       throw new Error("Unexpected issuanceData");
@@ -193,7 +195,7 @@ export function* handleIssuanceGetCredential(): SagaIterator {
     );
 
     yield* put(
-      itwIssuanceGetCredential.success({
+      itwIssuanceCredential.success({
         issuerConf,
         keyTag,
         credential,
@@ -207,7 +209,7 @@ export function* handleIssuanceGetCredential(): SagaIterator {
   } catch (e) {
     const res = toError(e);
     yield* put(
-      itwIssuanceGetCredential.failure({
+      itwIssuanceCredential.failure({
         code: ItWalletErrorTypes.CREDENTIAL_CHECKS_GENERIC_ERROR,
         message: res.message
       })

@@ -7,12 +7,12 @@ import {
   hasApiLevelSupport,
   hasNFCFeature,
   nfcIsEnabled
-} from "../store/actions/issuing/pid/itwCieActions";
-import { SagaCallReturnType } from "../../../types/utils";
-import { convertUnknownToError } from "../../../utils/errors";
-import { startTimer } from "../../../utils/timer";
+} from "../../../store/actions/issuing/pid/itwIssuancePidCieActions";
+import { SagaCallReturnType } from "../../../../../types/utils";
+import { convertUnknownToError } from "../../../../../utils/errors";
+import { startTimer } from "../../../../../utils/timer";
 
-export function* watchCieAuthenticationSaga(): SagaIterator {
+export function* watchPidIssuingCieAuthSaga(): SagaIterator {
   // Trigger a saga on nfcIsEnabled to check if NFC is enabled or not
   yield* takeLatest(nfcIsEnabled.request, checkNfcEnablementSaga);
   // check if the device is compliant with CIE authentication

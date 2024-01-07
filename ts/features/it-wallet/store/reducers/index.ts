@@ -11,11 +11,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../store/actions/types";
 import createCredentialsKeychain from "../storages/credentialsKeychain";
 import { isDevEnv } from "../../../../utils/environment";
-import itwCieReducer, { ItwCieState } from "./itwCieReducer";
-import itwWia, { ItwWIAState } from "./itwWiaReducer";
+import itwIssuancePidAuthCieReducer, {
+  ItwIssuancePidCieAuthState
+} from "./issuance/pid/itwIssuancePidCieAuthReducer";
+import itwWia, { ItwWiaState } from "./itwWiaReducer";
 import itwCredentials, { ItwCredentialsState } from "./itwCredentialsReducer";
 import itwLifeCycle, { ItwLifecycleState } from "./itwLifecycleReducer";
-import itwPidReducer, { ItwPidIssuanceState } from "./itwPidIssuanceReducer";
+import itwPidReducer, {
+  ItwIssuancePidState
+} from "./issuance/pid/itwIssuancePidReducer";
 import itwPrRemotePidReducer, {
   ItwPrRemotePidState
 } from "./presentation/remote/itwPrRemotePidReducer";
@@ -25,7 +29,9 @@ import itwCredentialsChecksReducer, {
 import itwPrRemoteCredentialReducer, {
   itwPrRemoteCredentialState
 } from "./presentation/remote/itwPrRemoteCredentialReducer";
-import itwIssuanceReducer, { ItwIssuanceState } from "./new/itwIssuanceReducer";
+import itwIssuanceCredentialReducer, {
+  ItwIssuanceCredentialState
+} from "./issuance/itwIssuanceCredentialReducer";
 import itwProximityReducer, { ItwProximityState } from "./itwProximityReducer";
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 3;
@@ -55,15 +61,20 @@ const itwCredentialsStoreMigration: MigrationManifest = {
 };
 
 export type ItWalletState = {
-  wia: ItwWIAState;
+  /* GENERIC */
+  lifecycle: ItwLifecycleState;
+  wia: ItwWiaState;
+  /* ISSUANCE */
+  issuancePidCie: ItwIssuancePidCieAuthState;
+  issuancePid: ItwIssuancePidState;
+  issuanceCredential: ItwIssuanceCredentialState;
+  /* PERSISTED CREDENTIALS */
   credentials: ItwCredentialsState & PersistPartial;
   credentialsChecks: ItwCredentialsChecksState;
-  activation: ItwCieState;
-  lifecycle: ItwLifecycleState;
-  pid: ItwPidIssuanceState;
+  /* PRESENTATION REMOTE */
   prRemotePid: ItwPrRemotePidState;
   prRemoteCredential: itwPrRemoteCredentialState;
-  issuance: ItwIssuanceState;
+  /* PRESENTATION PROXIMITY */
   proximity: ItwProximityState;
 };
 
@@ -85,15 +96,20 @@ const credentialsPersistConfig = {
 };
 
 const reducers = combineReducers<ItWalletState, Action>({
+  /* GENERIC */
+  lifecycle: itwLifeCycle,
   wia: itwWia,
+  /* ISSUANCE */
+  issuancePidCie: itwIssuancePidAuthCieReducer,
+  issuancePid: itwPidReducer,
+  issuanceCredential: itwIssuanceCredentialReducer,
+  /* PERSISTED CREDENTIALS */
   credentials: persistReducer(credentialsPersistConfig, itwCredentials),
   credentialsChecks: itwCredentialsChecksReducer,
-  activation: itwCieReducer,
-  lifecycle: itwLifeCycle,
-  pid: itwPidReducer,
+  /* PRESENTATION REMOTE */
   prRemotePid: itwPrRemotePidReducer,
   prRemoteCredential: itwPrRemoteCredentialReducer,
-  issuance: itwIssuanceReducer,
+  /* PRESENTATION PROXIMITY */
   proximity: itwProximityReducer
 });
 

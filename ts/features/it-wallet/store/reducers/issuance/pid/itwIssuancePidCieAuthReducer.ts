@@ -4,17 +4,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
+import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cieIsSupported,
   hasApiLevelSupport,
   hasNFCFeature,
   nfcIsEnabled,
   updateReadingState
-} from "../actions/issuing/pid/itwCieActions";
+} from "../../../actions/issuing/pid/itwIssuancePidCieActions";
 
-export type ItwCieState = {
+export type ItwIssuancePidCieAuthState = {
   hasApiLevelSupport: pot.Pot<boolean, Error>;
   hasNFCFeature: pot.Pot<boolean, Error>;
   isCieSupported: pot.Pot<boolean, Error>;
@@ -22,7 +22,7 @@ export type ItwCieState = {
   readingEvent: pot.Pot<string, Error>;
 };
 
-const INITIAL_STATE: ItwCieState = {
+const INITIAL_STATE: ItwIssuancePidCieAuthState = {
   hasApiLevelSupport: pot.none,
   hasNFCFeature: pot.none,
   isCieSupported: pot.none,
@@ -30,10 +30,10 @@ const INITIAL_STATE: ItwCieState = {
   readingEvent: pot.none
 };
 
-export default function itwCieReducer(
-  state: ItwCieState = INITIAL_STATE,
+export default function itwIssuancePidAuthCieReducer(
+  state: ItwIssuancePidCieAuthState = INITIAL_STATE,
   action: Action
-): ItwCieState {
+): ItwIssuancePidCieAuthState {
   switch (action.type) {
     case getType(cieIsSupported.success):
       return {
@@ -97,16 +97,16 @@ export default function itwCieReducer(
 
 // Selectors
 export const hasNFCFeatureSelector = (state: GlobalState) =>
-  state.features.itWallet.activation.hasNFCFeature;
+  state.features.itWallet.issuancePidCie.hasNFCFeature;
 
 export const hasApiLevelSupportSelector = (state: GlobalState) =>
-  state.features.itWallet.activation.hasApiLevelSupport;
+  state.features.itWallet.issuancePidCie.hasApiLevelSupport;
 
 export const isCieSupportedSelector = (state: GlobalState) =>
-  state.features.itWallet.activation.isCieSupported;
+  state.features.itWallet.issuancePidCie.isCieSupported;
 
 export const isNfcEnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.activation.isNfcEnabled;
+  state.features.itWallet.issuancePidCie.isNfcEnabled;
 
 export const readingEventSelector = (state: GlobalState) =>
-  state.features.itWallet.activation.readingEvent;
+  state.features.itWallet.issuancePidCie.readingEvent;

@@ -5,7 +5,7 @@ import {
   ItwPrRemotePidResult
 } from "../../../reducers/presentation/remote/itwPrRemotePidReducer";
 
-export type itwPrRemotePidInitRequest = {
+export type ItwPrRemotePidInitData = {
   authReqUrl: string;
   clientId: string;
 };
@@ -17,7 +17,7 @@ export const itwPrRemotePidInit = createAsyncAction(
   "ITW_PR_REMOTE_PID_INIT_REQUEST",
   "ITW_PR_REMOTE_PID_INIT_SUCCESS",
   "ITW_PR_REMOTE_PID_INIT_FAILURE"
-)<itwPrRemotePidInitRequest, ItwPrRemotePidInit, ItWalletError>();
+)<ItwPrRemotePidInitData, ItwPrRemotePidInit, ItWalletError>();
 
 /**
  * ITW RP presentation prepare token

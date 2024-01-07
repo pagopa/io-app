@@ -13,9 +13,9 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { useIOSelector } from "../../../../../store/hooks";
 import {
-  itwIssuanceChecksSelector,
-  IssuanceData
-} from "../../../store/reducers/new/itwIssuanceReducer";
+  itwIssuanceCredentialChecksSelector,
+  ItwIssuanceCredentialData
+} from "../../../store/reducers/issuance/itwIssuanceCredentialReducer";
 import ItwContinueScreen from "../../../components/ItwContinueView";
 import { showCancelAlert } from "../../../utils/alert";
 import {
@@ -34,7 +34,7 @@ import ROUTES from "../../../../../navigation/routes";
 const ItwIssuingCredentialsChecksScreen = () => {
   const toast = useIOToast();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const preliminaryChecks = useIOSelector(itwIssuanceChecksSelector);
+  const preliminaryChecks = useIOSelector(itwIssuanceCredentialChecksSelector);
 
   /**
    * When the user confirms the issuance, the user is redirected to the presentation screen.
@@ -68,7 +68,11 @@ const ItwIssuingCredentialsChecksScreen = () => {
    * Content view which asks the user to confirm the issuance of the credential.
    * @param issuanceData - the issuance data of the credential used to display the credential title.
    */
-  const ConfirmView = ({ issuanceData }: { issuanceData: IssuanceData }) => (
+  const ConfirmView = ({
+    issuanceData
+  }: {
+    issuanceData: ItwIssuanceCredentialData;
+  }) => (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={{ ...IOStyles.flex }}>
         <ItwContinueScreen

@@ -33,7 +33,7 @@ import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
 import { itwCredentialsPidSelector } from "../../../store/reducers/itwCredentialsReducer";
 import { StoredCredential } from "../../../utils/types";
-import { itwIssuanceChecksDataSelector } from "../../../store/reducers/new/itwIssuanceReducer";
+import { itwIssuanceCredentialChecksValueSelector } from "../../../store/reducers/issuance/itwIssuanceCredentialReducer";
 import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
 
 /**
@@ -42,7 +42,7 @@ import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
  */
 const ItwIssuingCredentialAuthScreen = () => {
   const pid = useIOSelector(itwCredentialsPidSelector);
-  const checks = useIOSelector(itwIssuanceChecksDataSelector);
+  const checks = useIOSelector(itwIssuanceCredentialChecksValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const toast = useIOToast();
   const organization = pipe(
