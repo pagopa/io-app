@@ -14,29 +14,29 @@ import {
   itwConfirmStoreCredential,
   itwIssuanceCredentialChecks,
   itwIssuanceCredential
-} from "../../store/actions/issuing/itwIssuanceCredentialActions";
-import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
-import { itwWiaRequest } from "../../store/actions/itwWiaActions";
+} from "../../../store/actions/issuing/credential/itwIssuanceCredentialActions";
+import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
+import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
 import {
   itwPersistedCredentialsValuePidSelector,
   itwPersistedCredentialsValueSelector
-} from "../../store/reducers/itwPersistedCredentialsReducer";
+} from "../../../store/reducers/itwPersistedCredentialsReducer";
 import {
   ITW_PID_KEY_TAG,
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
-} from "../../utils/itwSecureStorageUtils";
-import { itwPersistedCredentialsAdd } from "../../store/actions/itwPersistedCredentialsActions";
+} from "../../../utils/itwSecureStorageUtils";
+import { itwPersistedCredentialsAdd } from "../../../store/actions/itwPersistedCredentialsActions";
 import {
   itwIssuanceCredentialChecksValueSelector,
   itwIssuanceResultDataSelector
-} from "../../store/reducers/issuance/itwIssuanceCredentialReducer";
-import I18n from "../../../../i18n";
-import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
-import { walletProviderBaseUrl } from "../../../../config";
-import { StoredCredential } from "../../utils/types";
-import { verifyPin } from "../itwSagaUtils";
+} from "../../../store/reducers/issuance/credential/itwIssuanceCredentialReducer";
+import I18n from "../../../../../i18n";
+import NavigationService from "../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../navigation/routes";
+import { walletProviderBaseUrl } from "../../../../../config";
+import { StoredCredential } from "../../../utils/types";
+import { verifyPin } from "../../itwSagaUtils";
 
 /**
  * Watcher for issuance related sagas.

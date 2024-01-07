@@ -5,7 +5,7 @@ import { ItwWiaActions } from "./itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
 import { ItwRpActions } from "./presentation/remote/itwPrRemotePidActions";
 import { itwPrRemoteCredentialInit } from "./presentation/remote/itwPrRemoteCredentialActions";
-import { ItwIssuanceCredentialActions } from "./issuing/itwIssuanceCredentialActions";
+import { ItwIssuanceCredentialActions } from "./issuing/credential/itwIssuanceCredentialActions";
 import { ItwProximityActions } from "./presentation/proximity/itwProximityActions";
 import { ItwIssuancePidActions } from "./issuing/pid/itwIssuancePidActions";
 

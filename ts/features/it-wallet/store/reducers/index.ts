@@ -30,7 +30,7 @@ import itwPrRemoteCredentialReducer, {
 } from "./presentation/remote/itwPrRemoteCredentialReducer";
 import itwIssuanceCredentialReducer, {
   ItwIssuanceCredentialState
-} from "./issuance/itwIssuanceCredentialReducer";
+} from "./issuance/credential/itwIssuanceCredentialReducer";
 import itwPrProximityReducer, {
   ItwPrProximityState
 } from "./presentation/proximity/itwPrProximityReducer";

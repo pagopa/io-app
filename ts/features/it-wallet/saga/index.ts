@@ -5,7 +5,7 @@ import { watchItwIssuancePidSaga } from "./issuance/pid/itwIssuancePidSaga";
 import { watchItwWiaSaga } from "./itwWiaSaga";
 import { watchItwActivationSaga } from "./itwActivationSaga";
 import { watchitwPrRemoteCredentialSaga } from "./presentation/remote/itwPrRemoteCredentialSaga";
-import { watchItwIssuanceCredentialSaga } from "./issuance/itwIssuanceCredentialSaga";
+import { watchItwIssuanceCredentialSaga } from "./issuance/credential/itwIssuanceCredentialSaga";
 import { watchItwPrProximitySaga } from "./presentation/proximity/itwPrProximitySaga";
 import { watchItwPrRemotePid } from "./presentation/remote/itwPrRemotePidSaga";
 

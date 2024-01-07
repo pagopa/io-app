@@ -23,8 +23,8 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { itwIssuanceCredentialChecksSelector } from "../../../store/reducers/issuance/itwIssuanceCredentialReducer";
-import { itwIssuanceCredentialChecks } from "../../../store/actions/issuing/itwIssuanceCredentialActions";
+import { itwIssuanceCredentialChecksSelector } from "../../../store/reducers/issuance/credential/itwIssuanceCredentialReducer";
+import { itwIssuanceCredentialChecks } from "../../../store/actions/issuing/credential/itwIssuanceCredentialActions";
 
 const NONE_LOADING = -1;
 
