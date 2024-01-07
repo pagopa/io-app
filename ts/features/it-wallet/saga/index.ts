@@ -6,7 +6,7 @@ import { watchItwWiaSaga } from "./itwWiaSaga";
 import { watchItwActivationSaga } from "./itwActivationSaga";
 import { watchitwPrRemoteCredentialSaga } from "./presentation/remote/itwPrRemoteCredentialSaga";
 import { watchItwIssuanceCredentialSaga } from "./issuance/itwIssuanceCredentialSaga";
-import { watchItwProximitySaga } from "./itwProximitySaga";
+import { watchItwPrProximitySaga } from "./presentation/proximity/itwPrProximitySaga";
 import { watchItwPrRemotePid } from "./presentation/remote/itwPrRemotePidSaga";
 
 /**
@@ -22,5 +22,5 @@ export function* watchItwSaga(): SagaIterator {
   /* PRESENTATION */
   yield* fork(watchItwPrRemotePid);
   yield* fork(watchitwPrRemoteCredentialSaga);
-  yield* fork(watchItwProximitySaga);
+  yield* fork(watchItwPrProximitySaga);
 }

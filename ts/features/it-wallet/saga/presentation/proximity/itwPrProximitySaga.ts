@@ -8,21 +8,24 @@ import {
   proximityManagerStatus,
   startProximityManager,
   stopProximityManager
-} from "../store/actions/itwProximityActions";
-import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
+} from "../../../store/actions/presentation/proximity/itwProximityActions";
+import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
 
-export function* watchItwProximitySaga(): SagaIterator {
+export function* watchItwPrProximitySaga(): SagaIterator {
   // Trigger a saga on bleIsEnabled to check if BLE is enabled or not
   yield* takeLatest(bleIsEnabled.request, checkBleEnablementSaga);
 
   // Start Proximity Manager
   yield* takeLatest(
     startProximityManager.request,
-    handleStartProximityManagerSaga
+    handleItwPrProximityStartManagerSaga
   );
 
   // Get QR code request
-  yield* takeLatest(generateQrCode.request, handleGenerateQrCodeSaga);
+  yield* takeLatest(
+    generateQrCode.request,
+    handleItwPrProximityGenerateQrCodeSaga
+  );
 
   // Stop Proximity Manager
   yield* takeLatest(
@@ -32,7 +35,7 @@ export function* watchItwProximitySaga(): SagaIterator {
 }
 
 // start proximity manager
-function* handleStartProximityManagerSaga(
+function* handleItwPrProximityStartManagerSaga(
   action: ReturnType<typeof startProximityManager.request>
 ): SagaIterator {
   try {
@@ -58,7 +61,7 @@ function* handleStartProximityManagerSaga(
 }
 
 // generate qr code
-function* handleGenerateQrCodeSaga(): SagaIterator {
+function* handleItwPrProximityGenerateQrCodeSaga(): SagaIterator {
   try {
     const qrCode = yield* call(ProximityManager.generateQrCode);
     yield* put(generateQrCode.success(qrCode));

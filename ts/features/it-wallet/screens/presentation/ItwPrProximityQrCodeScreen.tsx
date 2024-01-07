@@ -36,11 +36,11 @@ import {
   ProximityManagerStatusEnum,
   startProximityManager,
   stopProximityManager
-} from "../../store/actions/itwProximityActions";
+} from "../../store/actions/presentation/proximity/itwProximityActions";
 import {
-  proximityStatusSelector,
-  qrcodeSelector
-} from "../../store/reducers/itwProximityReducer";
+  itwPrProximitySelector,
+  itwPrProximityQrCodeSelector
+} from "../../store/reducers/presentation/proximity/itwPrProximityReducer";
 
 /**
  * A screen that shows a QR code to be scanned by the other device
@@ -54,8 +54,8 @@ const ItwPrProximityQrCodeScreen = () => {
   const [isProximityCompleted, setIsProximityCompleted] = React.useState(false);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
-  const proximityStatus = useIOSelector(proximityStatusSelector);
-  const qrCode = useIOSelector(qrcodeSelector);
+  const proximityStatus = useIOSelector(itwPrProximitySelector);
+  const qrCode = useIOSelector(itwPrProximityQrCodeSelector);
 
   useOnFirstRender(() => {
     handleAndroidPermissions().catch(_ => setIsError(true));

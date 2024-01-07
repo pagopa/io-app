@@ -4,18 +4,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
+import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   hasBLEFeature,
   bleIsEnabled,
   generateQrCode,
   proximityManagerStatus,
   ProximityManagerStatusEnum
-} from "../actions/itwProximityActions";
-import { ItWalletError } from "../../utils/itwErrorsUtils";
+} from "../../../actions/presentation/proximity/itwProximityActions";
+import { ItWalletError } from "../../../../utils/itwErrorsUtils";
 
-export type ItwProximityState = {
+export type ItwPrProximityState = {
   hasBLEFeature: pot.Pot<boolean, ItWalletError>;
   isBleEnabled: pot.Pot<boolean, ItWalletError>;
   qrCode: pot.Pot<string, ItWalletError>;
@@ -23,7 +23,7 @@ export type ItwProximityState = {
   status: pot.Pot<ProximityManagerStatusEnum, ItWalletError>;
 };
 
-const INITIAL_STATE: ItwProximityState = {
+const INITIAL_STATE: ItwPrProximityState = {
   hasBLEFeature: pot.none,
   isBleEnabled: pot.none,
   qrCode: pot.none,
@@ -31,10 +31,10 @@ const INITIAL_STATE: ItwProximityState = {
   status: pot.none
 };
 
-export default function itwProximityReducer(
-  state: ItwProximityState = INITIAL_STATE,
+export default function itwPrProximityReducer(
+  state: ItwPrProximityState = INITIAL_STATE,
   action: Action
-): ItwProximityState {
+): ItwPrProximityState {
   switch (action.type) {
     case getType(proximityManagerStatus):
       return {
@@ -73,17 +73,17 @@ export default function itwProximityReducer(
 }
 
 // Selectors
-export const hasBLEFeatureSelector = (state: GlobalState) =>
-  state.features.itWallet.proximity.hasBLEFeature;
+export const itwPrProximityHasBLEFeatureSelector = (state: GlobalState) =>
+  state.features.itWallet.prProximity.hasBLEFeature;
 
-export const proximityStatusSelector = (state: GlobalState) =>
+export const itwPrProximitySelector = (state: GlobalState) =>
   pot.getOrElse(
-    pot.map(state.features.itWallet.proximity.status, status => status),
+    pot.map(state.features.itWallet.prProximity.status, status => status),
     ProximityManagerStatusEnum.STOPPED
   );
 
-export const isBleEnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.proximity.isBleEnabled;
+export const itwPrProximityIsBleEnabledSelector = (state: GlobalState) =>
+  state.features.itWallet.prProximity.isBleEnabled;
 
-export const qrcodeSelector = (state: GlobalState) =>
-  state.features.itWallet.proximity.qrCode;
+export const itwPrProximityQrCodeSelector = (state: GlobalState) =>
+  state.features.itWallet.prProximity.qrCode;
