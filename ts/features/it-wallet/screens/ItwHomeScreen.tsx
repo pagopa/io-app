@@ -74,7 +74,7 @@ const ItwHomeScreen = () => {
    */
   const onLongPressCredential = () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.CHECKS
+      screen: ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.INIT
     });
   };
 

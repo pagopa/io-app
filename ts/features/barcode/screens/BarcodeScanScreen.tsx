@@ -149,7 +149,7 @@ const BarcodeScanScreen = () => {
         };
         NavigationService.dispatchNavigationAction(
           CommonActions.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.PRESENTATION.PID.REMOTE.CHECKS,
+            screen: ITW_ROUTES.PRESENTATION.PID.REMOTE.INIT,
             params
           })
         );

@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
-import { itwWiaRequest } from "../actions/itwWiaActions";
+import { itwWiaRequest } from "../actions/generic/itwWiaActions";
 import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
 
 export type ItwWIAState = pot.Pot<O.Option<string>, ItWalletError>;

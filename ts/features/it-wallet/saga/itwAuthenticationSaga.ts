@@ -1,7 +1,7 @@
 import { call, cancel, fork, take } from "typed-redux-saga/macro";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { SessionToken } from "../../../types/SessionToken";
-import { loginSuccess } from "../store/actions/itwCieActions";
+import { loginSuccess } from "../store/actions/issuing/pid/itwCieActions";
 import { stopCieManager, watchCieAuthenticationSaga } from "./itwCieSaga";
 
 /**

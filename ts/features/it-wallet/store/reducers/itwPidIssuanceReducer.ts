@@ -7,13 +7,13 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { itwPid } from "../actions/itwCredentialsActions";
 import { StoredCredential } from "../../utils/types";
 
-export type ItwPidType = {
+export type ItwPidIssuanceType = {
   pid: O.Option<StoredCredential>;
 };
 
-export type ItwPidState = pot.Pot<ItwPidType, ItWalletError>;
+export type ItwPidIssuanceState = pot.Pot<ItwPidIssuanceType, ItWalletError>;
 
-const emptyState: ItwPidState = pot.none;
+const emptyState: ItwPidIssuanceState = pot.none;
 
 /**
  * This reducer handles the PID issuing state.
@@ -24,9 +24,9 @@ const emptyState: ItwPidState = pot.none;
  * @returns the result state
  */
 const reducer = (
-  state: ItwPidState = emptyState,
+  state: ItwPidIssuanceState = emptyState,
   action: Action
-): ItwPidState => {
+): ItwPidIssuanceState => {
   switch (action.type) {
     case getType(itwPid.request):
       return pot.toLoading(state);
@@ -45,7 +45,7 @@ const reducer = (
  * @param state - the global state
  * @returns the PID pot state.
  */
-export const itwPidSelector = (state: GlobalState) =>
+export const itwPidIssuanceSelector = (state: GlobalState) =>
   state.features.itWallet.pid;
 
 /**
@@ -53,7 +53,7 @@ export const itwPidSelector = (state: GlobalState) =>
  * @param state - the global state
  * @returns the pid value.
  */
-export const itwPidValueSelector = (state: GlobalState) =>
+export const itwPidIssuanceValueSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(state.features.itWallet.pid, pid => pid.pid),
     O.none

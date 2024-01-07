@@ -33,14 +33,14 @@ import {
 } from "../../../utils/itwErrorsUtils";
 import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList";
 import { StoredCredential } from "../../../utils/types";
-import { itwPidValueSelector } from "../../../store/reducers/itwPidReducer";
+import { itwPidIssuanceValueSelector } from "../../../store/reducers/itwPidIssuanceReducer";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
 const ItwPidPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const pid = useIOSelector(itwPidValueSelector);
+  const pid = useIOSelector(itwPidIssuanceValueSelector);
   const pidType = CredentialType.PID;
 
   /**

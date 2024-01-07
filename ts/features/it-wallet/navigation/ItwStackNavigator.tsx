@@ -18,7 +18,6 @@ import ItwIssuingPidAuthScreen from "../screens/issuing/pid/ItwIssuingPidAuthScr
 import ItwGenericNotAvailableScreen from "../screens/generic/ItwGenericNotAvailableScreen";
 import ItwIssuingCredentialPreviewScreen from "../screens/issuing/credential/ItwIssuingCredentialPreviewScreen";
 import ItwIssuingCredentialAuthScreen from "../screens/issuing/credential/ItwIssuingCredentialAuthScreen";
-import ItwPrRemoteCredentialChecksScreen from "../screens/presentation/remote/credential/ItwPrRemoteCredentialChecksScreen";
 import ItwPrRemoteCredentialDataScreen from "../screens/presentation/remote/credential/ItwPrRemoteCredentialDataScreen";
 import ItwPrRemoteCredentialResultScreen from "../screens/presentation/remote/credential/ItwPrRemoteCredentialResultScreen";
 import ItwIssuingCredentialsChecksScreen from "../screens/issuing/credential/ItwIssuingCredentialChecksScreen";
@@ -26,6 +25,7 @@ import ItwIssuingCredentialCatalogScreen from "../screens/issuing/credential/Itw
 import ItwPrCredentialDetailsScreen from "../screens/presentation/ItwPrCredentialDetails";
 import ItwPrRemotePidDataScreen from "../screens/presentation/remote/pid/ItwPrRemotePidDataScreen";
 import ItwPrProximityQrCodeScreen from "../screens/presentation/ItwPrProximityQrCodeScreen";
+import ItwPrRemoteCredentialInitScreen from "../screens/presentation/remote/credential/ItwPrRemoteCredentialChecksScreen";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./ItwRoutes";
 
@@ -108,7 +108,7 @@ export const ItwStackNavigator = () => (
       component={ItwPrPidDetails}
     />
     <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.PID.REMOTE.CHECKS}
+      name={ITW_ROUTES.PRESENTATION.PID.REMOTE.INIT}
       component={ItwPrRemotePidChecksScreen}
     />
     <Stack.Screen
@@ -126,8 +126,8 @@ export const ItwStackNavigator = () => (
       component={ItwPrCredentialDetailsScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.CHECKS}
-      component={ItwPrRemoteCredentialChecksScreen}
+      name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.INIT}
+      component={ItwPrRemoteCredentialInitScreen}
     />
     <Stack.Screen
       name={ITW_ROUTES.PRESENTATION.CREDENTIAL.REMOTE.DATA}

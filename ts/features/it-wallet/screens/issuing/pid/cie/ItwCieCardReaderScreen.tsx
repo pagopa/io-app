@@ -53,7 +53,7 @@ import {
   CieAuthenticationErrorPayload,
   CieAuthenticationErrorReason,
   cieAuthenticationError
-} from "../../../../store/actions/itwCieActions";
+} from "../../../../store/actions/issuing/pid/itwCieActions";
 import { isNfcEnabledSelector } from "../../../../store/reducers/itwCieReducer";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import CieNfcOverlay from "../../../../components/cie/CieNfcOverlay";

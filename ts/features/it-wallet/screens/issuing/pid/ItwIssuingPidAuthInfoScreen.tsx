@@ -20,7 +20,7 @@ import { pidDataMock } from "../../../utils/mocks";
 import { formatDateToYYYYMMDD } from "../../../../../utils/dates";
 import { isIos } from "../../../../../utils/platform";
 import { itwWiaStateSelector } from "../../../store/reducers/itwWiaReducer";
-import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
+import { itwWiaRequest } from "../../../store/actions/generic/itwWiaActions";
 import ItwContinueView from "../../../components/ItwContinueView";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import ItwKoView from "../../../components/ItwKoView";

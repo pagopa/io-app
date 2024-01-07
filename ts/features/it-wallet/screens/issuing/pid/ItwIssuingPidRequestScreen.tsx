@@ -14,7 +14,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import { itwPidSelector } from "../../../store/reducers/itwPidReducer";
+import { itwPidIssuanceSelector } from "../../../store/reducers/itwPidIssuanceReducer";
 import { itwPid } from "../../../store/actions/itwCredentialsActions";
 import { itwActivationStop } from "../../../store/actions/itwActivationActions";
 import ItwKoView from "../../../components/ItwKoView";
@@ -45,7 +45,7 @@ const ItwIssuingPidRequestScreen = () => {
     >();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
-  const pid = useIOSelector(itwPidSelector);
+  const pid = useIOSelector(itwPidIssuanceSelector);
   const pidCredentialCatalogItem = getPidCredentialCatalogItem();
 
   /**

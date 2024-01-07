@@ -12,7 +12,7 @@ import {
   hasNFCFeature,
   nfcIsEnabled,
   updateReadingState
-} from "../actions/itwCieActions";
+} from "../actions/issuing/pid/itwCieActions";
 
 export type ItwCieState = {
   hasApiLevelSupport: pot.Pot<boolean, Error>;

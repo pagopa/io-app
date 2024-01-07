@@ -1,10 +1,10 @@
 import { ItwCredentialsActions } from "./itwCredentialsActions";
-import { ItwCieAuthenticationActions } from "./itwCieActions";
+import { ItwCieAuthenticationActions } from "./issuing/pid/itwCieActions";
 import { ItwActivationActions } from "./itwActivationActions";
-import { ItwWiaActions } from "./itwWiaActions";
+import { ItwWiaActions } from "./generic/itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
-import { ItwRpActions } from "./itwRpActions";
-import { ItwPresentationChecks } from "./itwPresentationActions";
+import { ItwRpActions } from "./presentation/remote/itwPrRemotePidActions";
+import { itwPrRemoteCredentialInit } from "./presentation/remote/itwPrRemoteCredentialActions";
 import { itwIssuanceActions } from "./itwIssuanceActions";
 import { ItwProximityActions } from "./itwProximityActions";
 
@@ -19,5 +19,5 @@ export type ItWalletActions =
   | ItwCredentialsActions
   | ItwCieAuthenticationActions
   | ItwRpActions
-  | ItwPresentationChecks
+  | itwPrRemoteCredentialInit
   | ItwProximityActions;

@@ -7,12 +7,11 @@ import I18n from "../../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import {
-  RpData,
-  itwRpInitializationSelector
-} from "../../../../store/reducers/itwRpInitializationReducer";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
-import { itwRpInitialization } from "../../../../store/actions/itwRpActions";
+import {
+  itwPrRemotePidInitRequest,
+  itwPrRemotePidInit
+} from "../../../../store/actions/presentation/remote/itwPrRemotePidActions";
 import { rpPidMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
@@ -25,33 +24,35 @@ import {
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import ItwContinueView from "../../../../components/ItwContinueView";
 import { itwActivationStart } from "../../../../store/actions/itwActivationActions";
+import { itwPrRemotePidInitSelector } from "../../../../store/reducers/presentation/remote/itwPrRemotePidReducer";
 
 /**
  * ItwPrRemotePidChecksScreenNavigationParams's navigation params.
  * The authReqUrl is the url to use to start the RP flow.
  */
-export type ItwPrRemotePidChecksScreenNavigationParams = RpData;
+export type ItwPrRemotePidChecksScreenNavigationParams =
+  itwPrRemotePidInitRequest;
 
 /**
  * Type of the route props for the ItwIssuingPidRequestScreen.
  */
 type ItwPrRemotePidChecksScreenRouteProps = RouteProp<
   ItwParamsList,
-  "ITW_PRESENTATION_PID_REMOTE_CHECKS"
+  "ITW_PRESENTATION_PID_REMOTE_INIT"
 >;
 
 const ItwPrRemotePidChecksScreen = () => {
   const route = useRoute<ItwPrRemotePidChecksScreenRouteProps>();
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const initStatus = useIOSelector(itwRpInitializationSelector);
+  const initStatus = useIOSelector(itwPrRemotePidInitSelector);
 
   /**
    * Dispatches the action to start the RP flow on first render.
    */
   useOnFirstRender(() => {
     dispatch(
-      itwRpInitialization.request({
+      itwPrRemotePidInit.request({
         authReqUrl: route.params.authReqUrl,
         clientId: route.params.clientId
       })

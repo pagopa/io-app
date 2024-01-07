@@ -6,7 +6,7 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import I18n from "../../../../../i18n";
-import { itwPidValueSelector } from "../../../store/reducers/itwPidReducer";
+import { itwPidIssuanceValueSelector } from "../../../store/reducers/itwPidIssuanceReducer";
 import { itwCredentialsAddPid } from "../../../store/actions/itwCredentialsActions";
 import { itwActivationCompleted } from "../../../store/actions/itwActivationActions";
 import { ItwCredentialsStateSelector } from "../../../store/reducers/itwCredentialsReducer";
@@ -22,7 +22,7 @@ import ItwKoView from "../../../components/ItwKoView";
  */
 const ItwIssuingPidAddingScreen = () => {
   const dispatch = useIODispatch();
-  const pid = useIOSelector(itwPidValueSelector);
+  const pid = useIOSelector(itwPidIssuanceValueSelector);
   const navigation = useNavigation();
   const credentialsState = useIOSelector(ItwCredentialsStateSelector);
 

@@ -16,7 +16,7 @@ import {
   itwIssuanceGetCredential
 } from "../../store/actions/itwIssuanceActions";
 import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
-import { itwWiaRequest } from "../../store/actions/itwWiaActions";
+import { itwWiaRequest } from "../../store/actions/generic/itwWiaActions";
 import {
   itwCredentialsPidSelector,
   itwCredentialsSelector

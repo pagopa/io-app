@@ -15,19 +15,16 @@ import itwCieReducer, { ItwCieState } from "./itwCieReducer";
 import itwWia, { ItwWIAState } from "./itwWiaReducer";
 import itwCredentials, { ItwCredentialsState } from "./itwCredentialsReducer";
 import itwLifeCycle, { ItwLifecycleState } from "./itwLifecycleReducer";
-import itwPid, { ItwPidState } from "./itwPidReducer";
-import itwRpInitializationReducer, {
-  ItwRpInitializationState
-} from "./itwRpInitializationReducer";
-import itwRpPresentationReducer, {
-  ItwRpPresentationState
-} from "./itwRpPresentationReducer";
+import itwPidReducer, { ItwPidIssuanceState } from "./itwPidIssuanceReducer";
+import itwPrRemotePidReducer, {
+  ItwPrRemotePidState
+} from "./presentation/remote/itwPrRemotePidReducer";
 import itwCredentialsChecksReducer, {
   ItwCredentialsChecksState
 } from "./itwCredentialsChecksReducer";
-import itwPresentationReducer, {
-  ItwPresentationState
-} from "./new/itwPresentationReducer";
+import itwPrRemoteCredentialReducer, {
+  itwPrRemoteCredentialState
+} from "./presentation/remote/itwPrRemoteCredentialReducer";
 import itwIssuanceReducer, { ItwIssuanceState } from "./new/itwIssuanceReducer";
 import itwProximityReducer, { ItwProximityState } from "./itwProximityReducer";
 
@@ -63,10 +60,9 @@ export type ItWalletState = {
   credentialsChecks: ItwCredentialsChecksState;
   activation: ItwCieState;
   lifecycle: ItwLifecycleState;
-  pid: ItwPidState;
-  rpInit: ItwRpInitializationState;
-  rpPresentation: ItwRpPresentationState;
-  presentation: ItwPresentationState;
+  pid: ItwPidIssuanceState;
+  prRemotePid: ItwPrRemotePidState;
+  prRemoteCredential: itwPrRemoteCredentialState;
   issuance: ItwIssuanceState;
   proximity: ItwProximityState;
 };
@@ -94,10 +90,9 @@ const reducers = combineReducers<ItWalletState, Action>({
   credentialsChecks: itwCredentialsChecksReducer,
   activation: itwCieReducer,
   lifecycle: itwLifeCycle,
-  pid: itwPid,
-  rpInit: itwRpInitializationReducer,
-  rpPresentation: itwRpPresentationReducer,
-  presentation: itwPresentationReducer,
+  pid: itwPidReducer,
+  prRemotePid: itwPrRemotePidReducer,
+  prRemoteCredential: itwPrRemoteCredentialReducer,
   issuance: itwIssuanceReducer,
   proximity: itwProximityReducer
 });
