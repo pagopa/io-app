@@ -456,6 +456,13 @@ export function* initializeApplicationSaga(
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
+  // FIXME: find any better way to handle this
+  // We need this workaround to let the inner AppStackNavigator stack be ready,
+  // before continuing with any other navigation action to avoid:
+  // Error: The 'navigation' object hasn't been initialized yet...
+  // Here the navigationRef is ready, but because we changed the navigation inner stack
+  // based on StartupStatusEnum value, we need to wait for the new stack to be ready.
+  yield* delay(0 as Millisecond);
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
   if (hasPreviousSessionAndPin && showIdentificationModal) {
