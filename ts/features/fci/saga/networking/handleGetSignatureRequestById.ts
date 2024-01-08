@@ -59,13 +59,14 @@ export function* handleGetSignatureRequestById(
         E.getOrElse(() => EnvironmentEnum.prod)
       );
 
+      yield* put(fciEnvironmentSet(env));
+
       yield* put(
         fciSignatureRequestFromId.success(
           getSignatureDetailViewByIdResponse.right.value
         )
       );
 
-      yield* put(fciEnvironmentSet(env));
       return;
     }
 
