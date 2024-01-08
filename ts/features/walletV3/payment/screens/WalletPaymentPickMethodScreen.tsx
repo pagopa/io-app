@@ -16,7 +16,7 @@ import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { capitalize } from "lodash";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { View } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
@@ -161,7 +161,7 @@ const WalletPaymentPickMethodScreen = () => {
     }, [dispatch])
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isLoading) {
       const hasDisabledMethods =
         [...genericMethodsListItems, ...savedMethodsListItems].find(
