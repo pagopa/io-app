@@ -5,12 +5,14 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentGetAllMethods,
@@ -26,6 +28,14 @@ import {
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const handleGoBack = useWalletPaymentGoBackHandler();
+
+  useHeaderSecondLevel({
+    title: "",
+    goBack: handleGoBack,
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp
+  });
 
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
@@ -73,21 +83,19 @@ const WalletPaymentPickMethodScreen = () => {
   }, [userWalletsPots, canContinue, handleMethodSelection]);
 
   return (
-    <BaseScreenComponent goBack={true}>
-      <GradientScrollView
-        primaryActionProps={{
-          label: "Continua",
-          accessibilityLabel: "Continua",
-          onPress: handleContinue,
-          disabled: isLoading || !canContinue,
-          loading: isLoading
-        }}
-      >
-        <DebugPrettyPrint title="paymentMethodsPot" data={paymentMethodsPot} />
-        <VSpacer size={16} />
-        <DebugPrettyPrint title="userWalletsPots" data={userWalletsPots} />
-      </GradientScrollView>
-    </BaseScreenComponent>
+    <GradientScrollView
+      primaryActionProps={{
+        label: "Continua",
+        accessibilityLabel: "Continua",
+        onPress: handleContinue,
+        disabled: isLoading || !canContinue,
+        loading: isLoading
+      }}
+    >
+      <DebugPrettyPrint title="paymentMethodsPot" data={paymentMethodsPot} />
+      <VSpacer size={16} />
+      <DebugPrettyPrint title="userWalletsPots" data={userWalletsPots} />
+    </GradientScrollView>
   );
 };
 
