@@ -90,12 +90,6 @@ const WalletPaymentConfirmScreen = () => {
     O.getOrElse(() => 0)
   );
 
-  const paymentMethodDetails = pipe(
-    selectedMethodOption,
-    O.chain(method => O.fromNullable(method.details)),
-    O.toUndefined
-  );
-
   const selectedMethod = O.toUndefined(selectedMethodOption);
 
   const selectedPsp = O.toUndefined(selectedPspOption);
@@ -131,9 +125,12 @@ const WalletPaymentConfirmScreen = () => {
 
   return pipe(
     sequenceS(O.Monad)({
-      paymentMethodDetails: pipe(paymentMethodDetails, O.fromNullable),
-      selectedPsp: pipe(selectedPsp, O.fromNullable),
-      selectedMethod: pipe(selectedMethod, O.fromNullable),
+      paymentMethodDetails: pipe(
+        selectedMethodOption,
+        O.chainNullableK(method => method.details)
+      ),
+      selectedPsp: selectedPspOption,
+      selectedMethod: selectedMethodOption,
       paymentDetails: pipe(paymentDetailsPot, pot.toOption)
     }),
     O.fold(

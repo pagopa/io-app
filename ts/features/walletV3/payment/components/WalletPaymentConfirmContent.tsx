@@ -1,6 +1,4 @@
 import React from "react";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import {
   Body,
   GradientScrollView,
@@ -56,19 +54,11 @@ export const WalletPaymentConfirmContent = ({
 }: WalletPaymentConfirmContentProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const taxFee = pipe(
-    selectedPsp.taxPayerFee,
-    O.fromNullable,
-    O.getOrElse(() => 0)
-  );
+  const taxFee = selectedPsp.taxPayerFee ?? 0;
 
-  const paymentAmount = pipe(
-    paymentDetails.amount,
-    O.fromNullable,
-    O.getOrElse(() => 0)
-  );
+  const paymentAmount = paymentDetails.amount ?? 0;
 
-  const totalAmount = paymentAmount + taxFee;
+  const totalAmount = +paymentAmount + taxFee;
 
   return (
     <GradientScrollView
