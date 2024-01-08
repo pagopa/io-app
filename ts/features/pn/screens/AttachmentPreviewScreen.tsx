@@ -3,10 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
-import {
-  UIMessageId,
-  UIAttachmentId
-} from "../../../store/reducers/entities/messages/types";
+import { UIMessageId, UIAttachmentId } from "../../messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
 import { useIOSelector } from "../../../store/hooks";

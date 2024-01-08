@@ -10,12 +10,12 @@ import { Label } from "../../../components/core/typography/Label";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import Markdown from "../../../components/ui/Markdown";
-import { CTA } from "../../../types/MessageCTA";
+import { CTA } from "../../../features/messages/types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
   getMessageCTA,
   handleCtaAction
-} from "../../../utils/messages";
+} from "../../../features/messages/utils/messages";
 import { maybeNotNullyString } from "../../../utils/strings";
 
 const styles = StyleSheet.create({
