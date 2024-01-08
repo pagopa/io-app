@@ -19,6 +19,7 @@ import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import ROUTES from "../navigation/routes";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { isTestEnv } from "./environment";
 import {
   IO_FIMS_LINK_PREFIX,
@@ -37,7 +38,7 @@ import { extractPathFromURL } from "./url";
  */
 // TODO: string should be replaced with a strong type that express all the allowed routes
 const routesToNavigationLink: Record<string, string> = {
-  [ROUTES.MESSAGES_HOME]: "/main/messages",
+  [MESSAGES_ROUTES.MESSAGES_HOME]: "/main/messages",
   [ROUTES.PROFILE_PREFERENCES_HOME]: "/profile/preferences",
   [ROUTES.WALLET_HOME]: "/main/wallet",
   [ROUTES.SERVICES_HOME]: "/main/services",

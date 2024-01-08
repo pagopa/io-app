@@ -21,12 +21,12 @@ import { setMixpanelPushNotificationToken } from "../mixpanel";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
-} from "../store/actions/messages";
+} from "../features/messages/store/actions";
 import {
   updateNotificationsInstallationToken,
   updateNotificationsPendingMessage
 } from "../store/actions/notifications";
-import { getCursors } from "../store/reducers/entities/messages/allPaginated";
+import { getCursors } from "../features/messages/store/reducers/allPaginated";
 import { isDevEnv } from "../utils/environment";
 import {
   trackMessageNotificationParsingFailure,

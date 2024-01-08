@@ -9,9 +9,9 @@ import { Divider, IOColors, Icon } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { H5 } from "../../../components/core/typography/H5";
 import I18n from "../../../i18n";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { ContentTypeValues } from "../../../types/contentType";
-import { formatByte } from "../../../types/digitalInformationUnit";
+import { UIAttachment } from "../types";
+import { ContentTypeValues } from "../types/contentType";
+import { formatByte } from "../types/digitalInformationUnit";
 import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
 
 type PartialProps = {

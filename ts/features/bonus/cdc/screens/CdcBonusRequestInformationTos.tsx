@@ -23,7 +23,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import { getRemoteLocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import { H4 } from "../../../../components/core/typography/H4";
 
 const styles = StyleSheet.create({
