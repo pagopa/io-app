@@ -14,7 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { formatNumberAmount } from "../../../../utils/stringBuilder";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
@@ -36,8 +36,7 @@ const WalletPaymentOutcomeScreen = () => {
   const paymentAmount = pipe(
     paymentDetailsPot,
     pot.toOption,
-    O.map(({ amount }) => amount / 100),
-    O.map(amount => formatNumberAmount(amount, true, "right")),
+    O.map(({ amount }) => formatNumberCentsToAmount(amount, true, "right")),
     O.getOrElse(() => "--")
   );
 
