@@ -4,7 +4,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   isError,
@@ -26,7 +26,7 @@ import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblem
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../utils/rptId";
-import { reloadAllMessages } from "../../../../store/actions/messages";
+import { reloadAllMessages } from "../../../messages/store/actions";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;

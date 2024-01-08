@@ -4,9 +4,9 @@ import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { UIMessage } from "../../../../store/reducers/entities/messages/types";
+import { UIMessage } from "../../types";
 import { useIOSelector } from "../../../../store/hooks";
-import { getPaginatedMessageById } from "../../../../store/reducers/entities/messages/paginatedById";
+import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import I18n from "../../../../i18n";
 import { trackNotificationRejected, trackUxConversion } from "../../analytics";
 
