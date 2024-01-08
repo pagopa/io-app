@@ -8,7 +8,7 @@ import { makeFontStyleObject } from "../components/core/fonts";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import I18n from "../i18n";
-import MessagesHomeScreen from "../screens/messages/MessagesHomeScreen";
+import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
@@ -16,6 +16,7 @@ import { useIOSelector } from "../store/hooks";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
@@ -87,7 +88,7 @@ export const MainTabNavigator = () => {
         }}
       >
         <Tab.Screen
-          name={ROUTES.MESSAGES_HOME}
+          name={MESSAGES_ROUTES.MESSAGES_HOME}
           component={MessagesHomeScreen}
           options={{
             title: I18n.t("global.navigator.messages"),

@@ -20,7 +20,7 @@ import {
   ToastPayload,
   WebviewMessage
 } from "../../../types/WebviewMessage";
-import { getRemoteLocale } from "../../../utils/messages";
+import { getRemoteLocale } from "../../messages/utils/messages";
 import { showToast } from "../../../utils/showToast";
 import {
   APP_EVENT_HANDLER,
