@@ -12,6 +12,7 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
+import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { capitalize } from "lodash";
@@ -43,6 +44,8 @@ import {
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 
+// ----------------- TYPES -----------------
+
 type SavedMethodState = {
   kind: "saved";
   walletId: string;
@@ -70,24 +73,51 @@ const WalletPaymentPickMethodScreen = () => {
   // const getGenericMethodById = useIOSelector(
   //   walletPaymentGenericMethodByIdSelector
   // );
+  const isLoading =
+    pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
     React.useState<boolean>(false);
   const [selectedMethod, setSelectedMethod] =
     React.useState<SelectedMethodState>(undefined);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(walletPaymentGetAllMethods.request());
-      dispatch(walletPaymentGetUserWallets.request());
-    }, [dispatch])
-  );
-
-  const isLoading =
-    pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
-
   const paymentAmount = pot.getOrElse(paymentAmountPot, undefined);
   const canContinue = selectedMethod !== undefined;
+
+  // -------------------------- LISTITEMS --------------------------
+  const savedMethodsListItems = useMemo(
+    () =>
+      pipe(
+        userWalletsPots,
+        pot.toOption,
+        O.map(methods => methods.map(mapSavedToRadioItem)),
+        O.map(A.map(O.fromNullable)),
+        O.map(A.compact),
+        O.getOrElse(() => [] as Array<RadioItem<string>>)
+      ),
+    [userWalletsPots]
+  );
+  const genericMethodsListItems = useMemo(
+    () =>
+      pipe(
+        paymentMethodsPot,
+        pot.toOption,
+        O.map(methods =>
+          methods.map(item => mapGenericToRadioItem(item, paymentAmount))
+        ),
+        O.getOrElse(() => [] as Array<RadioItem<string>>)
+      ),
+    [paymentMethodsPot, paymentAmount]
+  );
+
+  useHeaderSecondLevel({
+    title: "",
+    backAccessibilityLabel: I18n.t("global.buttons.back"),
+    goBack: navigation.goBack,
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["payment"],
+    supportRequest: true
+  });
 
   // ------------------------ HANDLERS --------------------------
 
@@ -122,51 +152,24 @@ const WalletPaymentPickMethodScreen = () => {
     }
   };
 
-  // -------------------------- LISTITEMS --------------------------
+  // --------------------------- EFFECTS ------------------------------
 
-  const savedMethodsListItems = useMemo(
-    () =>
-      pipe(
-        userWalletsPots,
-        pot.toOption,
-        O.fold(
-          () => [],
-          // possibly void, so we coalesce to empty array
-          methods =>
-            (methods.map(mapSavedToRadioItem) ?? []) as Array<RadioItem<string>>
-        )
-      ),
-    [userWalletsPots]
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(walletPaymentGetAllMethods.request());
+      dispatch(walletPaymentGetUserWallets.request());
+    }, [dispatch])
   );
 
-  const notSavedMethodsListItems = useMemo(
-    () =>
-      pipe(
-        paymentMethodsPot,
-        pot.toOption,
-        O.fold(
-          () => [],
-          methods =>
-            methods.map(item => {
-              const radio = mapGenericToRadioItem(item, paymentAmount);
-              if (radio.disabled === true) {
-                setShouldShowWarningBanner(true);
-              }
-              return radio;
-            })
-        )
-      ),
-    [paymentMethodsPot, paymentAmount]
-  );
-
-  useHeaderSecondLevel({
-    title: "",
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: navigation.goBack,
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["payment"],
-    supportRequest: true
-  });
+  React.useEffect(() => {
+    if (!isLoading) {
+      const hasDisabledMethods =
+        [...genericMethodsListItems, ...savedMethodsListItems].find(
+          item => item.disabled
+        ) !== undefined;
+      setShouldShowWarningBanner(hasDisabledMethods);
+    }
+  }, [isLoading, genericMethodsListItems, savedMethodsListItems]);
 
   // -------------------------- RENDER --------------------------
 
@@ -203,15 +206,23 @@ const WalletPaymentPickMethodScreen = () => {
         onPress={handleSelectSavedMethod}
       />
 
-      <ListItemHeader
-        label={I18n.t("wallet.payment.methodSelection.otherMethods")}
-      />
+      {
+        // since there will be a transitory phase where this list is not
+        // returned, we need to not render the header if necessary
+        genericMethodsListItems.length > 0 && (
+          <>
+            <ListItemHeader
+              label={I18n.t("wallet.payment.methodSelection.otherMethods")}
+            />
 
-      <RadioGroup<string>
-        selectedItem={selectedMethod?.methodId}
-        items={isLoading ? loadingRadios : notSavedMethodsListItems}
-        onPress={handleSelectNotSavedMethod}
-      />
+            <RadioGroup<string>
+              selectedItem={selectedMethod?.methodId}
+              items={isLoading ? loadingRadios : genericMethodsListItems}
+              onPress={handleSelectNotSavedMethod}
+            />
+          </>
+        )
+      }
     </GradientScrollView>
   );
 };
@@ -240,13 +251,15 @@ const mapGenericToRadioItem = (
   transactionAmount?: number
 ): RadioItem<string> => ({
   id: method.id,
-  value: method.name,
+  value: method.description,
   disabled: isDisabled(method, transactionAmount),
   startImage: getIconWithFallback(method.asset)
 });
 
 // should never return void, but since this is a map function it's expectable
-const mapSavedToRadioItem = (method: WalletInfo): RadioItem<string> | void => {
+const mapSavedToRadioItem = (
+  method: WalletInfo
+): RadioItem<string> | undefined => {
   switch (method.details?.type) {
     case "CARDS":
       const cardDetails = method.details as WalletInfoDetails1;
@@ -268,7 +281,7 @@ const mapSavedToRadioItem = (method: WalletInfo): RadioItem<string> | void => {
         startImage: getIconWithFallback("bancomatpay")
       };
     default:
-      void null;
+      return undefined;
   }
 };
 
