@@ -1969,6 +1969,14 @@ bonus:
       body: "Hier kannst du den Bonus oder Rabatt auswählen, die du hinzufügen möchten. Sobald sie aktiviert sind, werden sie in der Rubrik “Konto” angezeigt. Du kannst die Details des Bonus oder des Rabatts jederzeit einsehen, indem du den Bereich “Konto” aufrufst und das entsprechende Element in der Liste auswählst."
   request: "Beantrage einen neuen Bonus"
   requestLabel: "Boni und Rabatte"
+  requestTitle: "Anfrage"
+  validity_interval: "vo {{from}} bis {{to}}"
+  active: "Aktiv"
+  failed: "Fehlgeschlagen"
+  redeemed: "Eingelöst"
+  termsAndConditionFooter: "Durch Drücken von {{ctaText}} erklärst du, dass du den [Leitfaden]({{regulationLink}}) und die [Datenschutzrichtlinie]({{tosUrl}}) gelesen und verstanden hast."
+  tos:
+    title: "Datenschutzbestimmungen"
   cgn:
     generic:
       linkError: "Die Website des Anbieters ist zur Zeit nicht erreichbar. Bitte versuche es später noch einmal."
