@@ -9,7 +9,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "../../../i18n";
 import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
@@ -143,7 +145,7 @@ const MessageDetailsComponent = ({
     prescriptionAttachments,
     markdown,
     prescriptionData,
-    hasThirdPartyData
+    hasRemoteContent
   } = messageDetails;
   const isPrescription = prescriptionData !== undefined;
 
@@ -151,9 +153,15 @@ const MessageDetailsComponent = ({
   const thirdPartyDataPot = useIOSelector(state =>
     thirdPartyFromIdSelector(state, messageId)
   );
-  const thirdPartyMessagePotOrUndefined = pot.toUndefined(thirdPartyDataPot);
-  const hasThirdPartyDataAttachments =
-    !!thirdPartyMessagePotOrUndefined?.third_party_message.attachments;
+  const hasThirdPartyDataAttachments = pipe(
+    thirdPartyDataPot,
+    pot.toOption,
+    O.chainNullableK(
+      thirdPartyData => thirdPartyData.third_party_message.attachments
+    ),
+    O.map(RA.isNonEmpty),
+    O.getOrElse(() => false)
+  );
 
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ??
@@ -240,7 +248,7 @@ const MessageDetailsComponent = ({
             </>
           )}
 
-        {hasThirdPartyData && isContentLoadCompleted ? (
+        {hasRemoteContent && isContentLoadCompleted ? (
           <>
             <RemoteContentBanner />
             <VSpacer size={24} />

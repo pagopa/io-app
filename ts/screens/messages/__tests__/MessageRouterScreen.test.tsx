@@ -5,10 +5,10 @@ import { appReducer } from "../../../store/reducers";
 import { UIMessageId } from "../../../store/reducers/entities/messages/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { MessageRouterScreen } from "../MessageRouterScreen";
-import { MessageGetStatusType } from "../../../store/reducers/entities/messages/messageGetStatus";
 import { getMessageDataAction } from "../../../features/messages/actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import * as ASD from "../../../store/hooks";
+import { MessageGetStatus } from "../../../store/reducers/entities/messages/messageGetStatus";
 
 describe("MessageRouterScreen", () => {
   it("should match snapshot before starting to retrieve message data", () => {
@@ -96,7 +96,7 @@ describe("MessageRouterScreen", () => {
 const renderScreen = (
   messageId: UIMessageId,
   fromPushNotification: boolean,
-  status: MessageGetStatusType
+  status: MessageGetStatus["status"]
 ) => {
   const globalState = globalStateFromStatus(
     status,
@@ -120,7 +120,7 @@ const renderScreen = (
 };
 
 const globalStateFromStatus = (
-  status: MessageGetStatusType,
+  status: MessageGetStatus["status"],
   messageId: UIMessageId,
   fromPushNotification: boolean
 ) => {

@@ -2,6 +2,78 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.50.0-rc.2](https://github.com/pagopa/io-app/compare/2.50.0-rc.1...2.50.0-rc.2) (2024-01-05)
+
+## [2.50.0-rc.1](https://github.com/pagopa/io-app/compare/2.50.0-rc.0...2.50.0-rc.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* [[IOCOM-759](https://pagopa.atlassian.net/browse/IOCOM-759)] Remove the section title if there are no attachments ([#5372](https://github.com/pagopa/io-app/issues/5372)) ([b08ac0a](https://github.com/pagopa/io-app/commit/b08ac0a193d7b4c5f0c633ca19221bf69cd71588))
+* [[IOCOM-761](https://pagopa.atlassian.net/browse/IOCOM-761)] Text wrapping for precondition's title text ([#5368](https://github.com/pagopa/io-app/issues/5368)) ([d78fe84](https://github.com/pagopa/io-app/commit/d78fe8487efae9149b44a156b6e401c20eab8d2e))
+* failing Android build ([#5376](https://github.com/pagopa/io-app/issues/5376)) ([a23dece](https://github.com/pagopa/io-app/commit/a23dece585eb9420c370a72df8ae62d22a254be0))
+
+## [2.50.0-rc.0](https://github.com/pagopa/io-app/compare/2.49.0-rc.0...2.50.0-rc.0) (2024-01-03)
+
+
+### Bug Fixes
+
+* [[IOBP-446](https://pagopa.atlassian.net/browse/IOBP-446)] Add gallery permission request in barcode scan screen for Android devices ([#5313](https://github.com/pagopa/io-app/issues/5313)) ([3aa8576](https://github.com/pagopa/io-app/commit/3aa8576a09d1859734491df42196e953297e9680)), closes [/github.com/pagopa/io-app/pull/5313/files#diff-7752f292bcc12a6ee19233df702f1e1bafc087f6261759e0a5939c6e7a883f19](https://github.com/pagopa//github.com/pagopa/io-app/pull/5313/files/issues/diff-7752f292bcc12a6ee19233df702f1e1bafc087f6261759e0a5939c6e7a883f19)
+* HeaderFirstLevel is misconfigured in services home screen ([#5358](https://github.com/pagopa/io-app/issues/5358)) ([993ae3e](https://github.com/pagopa/io-app/commit/993ae3e04900d05cc91617a3fb4e2ff573bcec0c))
+
+## [2.49.0-rc.1](https://github.com/pagopa/io-app/compare/2.48.0-rc.7...2.49.0-rc.1) (2023-12-20)
+
+
+## [2.49.0-rc.0](https://github.com/pagopa/io-app/compare/2.48.0-rc.7...2.49.0-rc.0) (2023-12-19)
+
+
+### Bug Fixes
+
+* [[IABT-1492](https://pagopa.atlassian.net/browse/IABT-1492)] Copy update ([#5314](https://github.com/pagopa/io-app/issues/5314)) ([a95c140](https://github.com/pagopa/io-app/commit/a95c140a39aa4f8b8a59505cac30268dc7484a17))
+* [[IOPID-1267](https://pagopa.atlassian.net/browse/IOPID-1267)] Chore: fix toast ([#5351](https://github.com/pagopa/io-app/issues/5351)) ([cf76e5d](https://github.com/pagopa/io-app/commit/cf76e5d19564b613c5c47f1926beb10869242ad3))
+
+
+### Chores
+
+* [[IOBP-457](https://pagopa.atlassian.net/browse/IOBP-457)] Old wallet LV integration ([#5349](https://github.com/pagopa/io-app/issues/5349)) ([a3ad579](https://github.com/pagopa/io-app/commit/a3ad579ddce72300a1fc4bfc6e9c395f2c24e56b))
+* [[IOPID-1182](https://pagopa.atlassian.net/browse/IOPID-1182)] Chore: enable all FL related local FF in production ([#5353](https://github.com/pagopa/io-app/issues/5353)) ([c039e54](https://github.com/pagopa/io-app/commit/c039e54e46007a252bc43c6892dd273da83eb85b))
+* 🇩🇪 CGN translations ([#5293](https://github.com/pagopa/io-app/issues/5293)) ([1e969f9](https://github.com/pagopa/io-app/commit/1e969f9a12d75c6e17cf7475ba9f514a054fdb5d))
+
+## [2.48.0-rc.7](https://github.com/pagopa/io-app/compare/2.48.0-rc.6...2.48.0-rc.7) (2023-12-15)
+
+
+### Features
+
+* [[IOBP-442](https://pagopa.atlassian.net/browse/IOBP-442)] New wallet payment details screen ([#5291](https://github.com/pagopa/io-app/issues/5291)) ([81ee7c3](https://github.com/pagopa/io-app/commit/81ee7c3a4bbd178480e42ef2d258dfc8e781d901))
+
+## [2.48.0-rc.6](https://github.com/pagopa/io-app/compare/2.48.0-rc.5...2.48.0-rc.6) (2023-12-15)
+
+
+### Features
+
+* [[IOCOM-740](https://pagopa.atlassian.net/browse/IOCOM-740)] Update `tosVersion` to 4.7 ([#5341](https://github.com/pagopa/io-app/issues/5341)) ([f797c19](https://github.com/pagopa/io-app/commit/f797c1968d5debdda8133aa90c3c8755a344af4d))
+
+
+### Bug Fixes
+
+* [[IOCOM-736](https://pagopa.atlassian.net/browse/IOCOM-736)] Message retrieval fix for fast login ([#5335](https://github.com/pagopa/io-app/issues/5335)) ([81bf8d5](https://github.com/pagopa/io-app/commit/81bf8d5578a87ffc116604f906a9fddfd42bda95))
+* [[IOPID-1257](https://pagopa.atlassian.net/browse/IOPID-1257)] Fix: no-mail user onboarding ([#5338](https://github.com/pagopa/io-app/issues/5338)) ([47aa4a0](https://github.com/pagopa/io-app/commit/47aa4a03be30c630c7a0d63ab4c590fc034fc106))
+* [[IOPLT-304](https://pagopa.atlassian.net/browse/IOPLT-304)] HeaderFirstLevelHandler logic on current route selector instead of local status ([#5340](https://github.com/pagopa/io-app/issues/5340)) ([41bfa5b](https://github.com/pagopa/io-app/commit/41bfa5b55143bfe5e2f304ef9087aff30fd62206))
+
+
+### Chores
+
+* **deps:** bump urllib3 from 1.26.6 to 1.26.18 in /scripts/check_cie_button_exists ([#5132](https://github.com/pagopa/io-app/issues/5132)) ([ee48c2e](https://github.com/pagopa/io-app/commit/ee48c2e59c0f9d6b53ea714cb5661d3f0c90ce67))
+* **deps:** bump urllib3 from 1.26.6 to 1.26.18 in /scripts/check_urls ([#5133](https://github.com/pagopa/io-app/issues/5133)) ([05f033b](https://github.com/pagopa/io-app/commit/05f033bd3b551b3a6357e19da8eb4245900f00b8))
+
+## [2.48.0-rc.5](https://github.com/pagopa/io-app/compare/2.48.0-rc.4...2.48.0-rc.5) (2023-12-14)
+
+
+### Bug Fixes
+
+* [[IOCOM-737](https://pagopa.atlassian.net/browse/IOCOM-737)] Update the display rule of the RemoteContentBanner component ([#5336](https://github.com/pagopa/io-app/issues/5336)) ([10cab8e](https://github.com/pagopa/io-app/commit/10cab8e5ed1126fa63d0a2ae35cf88dbee00ab85))
+* [[IOPID-1205](https://pagopa.atlassian.net/browse/IOPID-1205)] Hide error snack bar on refresh ([#5337](https://github.com/pagopa/io-app/issues/5337)) ([215172f](https://github.com/pagopa/io-app/commit/215172fde2adf48593f6637131639ac09763c63b))
+
 ## [2.48.0-rc.4](https://github.com/pagopa/io-app/compare/2.48.0-rc.3...2.48.0-rc.4) (2023-12-13)
 
 

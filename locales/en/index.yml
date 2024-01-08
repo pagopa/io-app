@@ -680,7 +680,7 @@ authentication:
     contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
     title: It is now easier to access!
-    identity_check: You’ll no longer have to authenticate with SPID or CIE not every 30 days, but only once a year or if you log out.
+    identity_check: You’ll no longer have to authenticate with SPID or CIE every 30 days, but only once a year or if you log out.
     security_suggests: Safety tips
     passcode: Any other time, you’ll just need your fingerprint, face recognition or unlock code.
     notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
@@ -689,9 +689,9 @@ authentication:
   security_suggestions: 
     fingerprint: Do not share your or unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
-    io_lock_access: If you fear that someone might use your SPID or CIE, remotely lock access to the app.
+    io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
     access_new_device: If you access IO with someone else's device, remember to log out when you are finished.
-    navigate_to_the_site: Learn more
+    navigate_to_the_site: Go to website
   idp_selection:
     headerTitle: Home
     contentTitle: Select your Identity Provider
@@ -1348,6 +1348,7 @@ wallet:
           bottomSheetTitle: "Why can't I pay with this method?"
           bottomSheetDescription: "The “In app payments“ feature may be turned off.\nBefore trying to make the payment again, please do the following:\n\n1. go to the “Wallet“ section;\n2. select the payment method you want to use;\n3. enable “In app payments“."
   firstTransactionSummary:
+    loading: Recupero delle informazioni in corso
     title: Payment information
     amount: Amount
     total: Total paid
@@ -3850,3 +3851,16 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+permissionRequest:
+  media:
+    title: Consenti a IO di accedere alle tue foto
+    subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
+    caption: "Ecco come:"
+    step: Step {{step}}
+    steps:
+      1: Vai su “Impostazioni”
+      2: Seleziona “Applicazioni”
+      3: Seleziona “IO”
+      4: Seleziona la voce relativa alle autorizzazioni
+      5: Consenti l’accesso a file e media
+    cta: Apri Impostazioni
