@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { isPNOptInMessage } from "..";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { CTAS } from "../../../../types/MessageCTA";
+import { CTAS } from "../../../messages/types/MessageCTA";
 
 const pnOptInServiceId = () => "optInServiceId";
 const navigateToServiceLink = () =>
