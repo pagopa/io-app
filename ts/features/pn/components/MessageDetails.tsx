@@ -15,10 +15,7 @@ import { H5 } from "../../../components/core/typography/H5";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
-import {
-  UIAttachment,
-  UIMessageId
-} from "../../../store/reducers/entities/messages/types";
+import { UIAttachment, UIMessageId } from "../../messages/types";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { LegacyMessageAttachments } from "../../messages/components/LegacyMessageAttachments";
 import NavigationService from "../../../navigation/NavigationService";

@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
-import { attachmentsFromThirdPartyMessage } from "../../../../store/reducers/entities/messages/transformers";
+import { attachmentsFromThirdPartyMessage } from "../../../messages/store/reducers/transformers";
 import { PNMessage } from "./types";
 
 export const toPNMessage = (

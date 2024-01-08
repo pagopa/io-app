@@ -11,7 +11,7 @@ import {
   maxVisiblePaymentCountGenerator,
   paymentsFromPNMessagePot
 } from "../../utils";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../../messages/types";
 import { profileFiscalCodeSelector } from "../../../../store/reducers/profile";
 import { pnMessageFromIdSelector } from "../reducers";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";

@@ -1,10 +1,10 @@
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
-import { reloadAllMessages } from "../../../../../store/actions/messages";
+import { reloadAllMessages } from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
-import { UIMessageId } from "../../../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../../../messages/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import {

@@ -4,12 +4,9 @@ import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
-import { thirdPartyFromIdSelector } from "../../../../store/reducers/entities/messages/thirdPartyById";
+import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../types/transformers";
-import {
-  UIAttachmentId,
-  UIMessageId
-} from "../../../../store/reducers/entities/messages/types";
+import { UIAttachmentId, UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
 import { MultiplePaymentState, paymentsReducer } from "./payments";

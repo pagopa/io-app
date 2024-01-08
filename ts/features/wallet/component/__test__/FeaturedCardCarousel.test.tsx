@@ -15,7 +15,7 @@ import {
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import ROUTES from "../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 jest.mock("react-native-share", () => jest.fn());
 describe("FeaturedCardCarousel", () => {
@@ -353,7 +353,7 @@ describe("FeaturedCardCarousel", () => {
 const getComponent = (mockStore: MockStoreEnhanced<GlobalState>) =>
   renderScreenFakeNavRedux<GlobalState>(
     () => <FeaturedCardCarousel />,
-    ROUTES.MESSAGE_DETAIL,
+    MESSAGES_ROUTES.MESSAGE_DETAIL,
     {},
     mockStore
   );
