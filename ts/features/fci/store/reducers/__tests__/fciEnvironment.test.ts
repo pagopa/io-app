@@ -3,12 +3,13 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { fciEnvironmentSet } from "../../actions";
 import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
+import { EnvironmentEnumUnknown } from "./../fciEnvironment";
 
 describe("FciEnvironmentSet", () => {
-  it("it should have an initialState equal to prod", () => {
+  it("it should have an initialState equal to unknown", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.fci.environment).toStrictEqual(
-      EnvironmentEnum.prod
+      EnvironmentEnumUnknown.unknown
     );
   });
   it("it should be test if the fciEnvironmentSet is dispatched with EnvironmentEnum.test as payload", () => {

@@ -13,13 +13,13 @@ import {
 } from "../store/actions";
 import { getNetworkErrorMessage } from "../../../utils/errors";
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { EnvironmentEnum } from "../../../../definitions/fci/Environment";
 import { buildEventProperties } from "../../../utils/analytics";
+import { FciEnvironmentState } from "../store/reducers/fciEnvironment";
 
 export const trackFciDocOpening = (
   expire_date: SignatureRequestDetailView["expires_at"],
   total_doc_count: number,
-  environment: EnvironmentEnum
+  environment: FciEnvironmentState
 ) =>
   void mixpanelTrack(
     "FCI_DOC_OPENING",
@@ -32,7 +32,7 @@ export const trackFciDocOpening = (
 
 export const trackFciUserExit = (
   screen_name: string,
-  environment: EnvironmentEnum,
+  environment: FciEnvironmentState,
   cta_id?: string
 ) =>
   void mixpanelTrack(
@@ -44,7 +44,7 @@ export const trackFciUserExit = (
     })
   );
 
-export const trackFciUxConversion = (environment: EnvironmentEnum) =>
+export const trackFciUxConversion = (environment: FciEnvironmentState) =>
   void mixpanelTrack(
     "FCI_UX_CONVERSION",
     buildEventProperties("UX", "action", {
@@ -52,7 +52,7 @@ export const trackFciUxConversion = (environment: EnvironmentEnum) =>
     })
   );
 
-export const trackFciUserDataConfirmed = (environment: EnvironmentEnum) =>
+export const trackFciUserDataConfirmed = (environment: FciEnvironmentState) =>
   void mixpanelTrack(
     "FCI_USER_DATA_CONFIRMED",
     buildEventProperties("UX", "action", { environment })
@@ -62,7 +62,7 @@ export const trackFciDocOpeningSuccess = (
   doc_count: number,
   sign_count: number,
   optional_sign_count: number,
-  environment: EnvironmentEnum
+  environment: FciEnvironmentState
 ) =>
   void mixpanelTrack(
     "FCI_DOC_OPENING_SUCCESS",
@@ -74,13 +74,13 @@ export const trackFciDocOpeningSuccess = (
     })
   );
 
-export const trackFciSigningDoc = (environment: EnvironmentEnum) =>
+export const trackFciSigningDoc = (environment: FciEnvironmentState) =>
   void mixpanelTrack(
     "FCI_SIGNING_DOC",
     buildEventProperties("UX", "action", { environment })
   );
 
-export const trackFciShowSignatureFields = (environment: EnvironmentEnum) =>
+export const trackFciShowSignatureFields = (environment: FciEnvironmentState) =>
   void mixpanelTrack(
     "FCI_SHOW_SIGNATURE_FIELDS",
     buildEventProperties("UX", "micro_action", { environment })
@@ -90,7 +90,7 @@ export const trackFciUxSuccess = (
   doc_signed_count: number,
   signed_count: number,
   optional_signed_count: number,
-  environment: EnvironmentEnum
+  environment: FciEnvironmentState
 ) =>
   void mixpanelTrack(
     "FCI_UX_SUCCESS",
@@ -102,14 +102,14 @@ export const trackFciUxSuccess = (
     })
   );
 
-export const trackFciStartSignature = (environment: EnvironmentEnum) =>
+export const trackFciStartSignature = (environment: FciEnvironmentState) =>
   void mixpanelTrack(
     "FCI_START_SIGNATURE",
     buildEventProperties("UX", "action", { environment })
   );
 
 const trackFciAction =
-  (mp: NonNullable<typeof mixpanel>, environment: EnvironmentEnum) =>
+  (mp: NonNullable<typeof mixpanel>, environment: FciEnvironmentState) =>
   (action: Action): Promise<void> => {
     switch (action.type) {
       case getType(fciStartRequest):
