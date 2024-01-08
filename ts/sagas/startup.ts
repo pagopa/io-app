@@ -547,6 +547,9 @@ export function* initializeApplicationSaga(
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
+  // FIXME: find any better way to handle this
+  // As above for StartupStatusEnum.ONBOARDING
+  yield* delay(0 as Millisecond);
   //
   // User is autenticated, session token is valid
   //
