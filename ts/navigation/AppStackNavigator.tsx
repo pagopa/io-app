@@ -36,6 +36,7 @@ import {
 } from "../utils/navigation";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import { IONavigationLightTheme } from "../theme/navigations";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
@@ -86,7 +87,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         [ROUTES.MAIN]: {
           path: "main",
           screens: {
-            [ROUTES.MESSAGES_HOME]: "messages",
+            [MESSAGES_ROUTES.MESSAGES_HOME]: "messages",
             [ROUTES.WALLET_HOME]: "wallet",
             [ROUTES.SERVICES_HOME]: "services",
             [ROUTES.PROFILE_MAIN]: "profile"

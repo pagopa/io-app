@@ -1,5 +1,5 @@
 import { ActionType, createAction, createAsyncAction } from "typesafe-actions";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../../messages/types";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 

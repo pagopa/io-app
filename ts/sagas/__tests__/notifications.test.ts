@@ -27,11 +27,9 @@ import {
 } from "../../store/reducers/notifications/pendingMessage";
 import NavigationService from "../../navigation/NavigationService";
 import { isPaymentOngoingSelector } from "../../store/reducers/wallet/payment";
-import {
-  navigateToMainNavigatorAction,
-  navigateToMessageRouterAction
-} from "../../store/actions/navigation";
-import { UIMessageId } from "../../store/reducers/entities/messages/types";
+import { navigateToMainNavigatorAction } from "../../store/actions/navigation";
+import { navigateToMessageRouterAction } from "../../features/messages/store/actions/navigation";
+import { UIMessageId } from "../../features/messages/types";
 import * as Analytics from "../../features/messages/analytics";
 
 const installationId = "installationId";
