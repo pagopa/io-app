@@ -49,7 +49,7 @@ import {
 import {
   migrateToPaginatedMessages,
   removeMessages
-} from "../actions/messages";
+} from "../../features/messages/store/actions";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure,

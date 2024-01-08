@@ -28,6 +28,7 @@ import { LollipopActions } from "../../features/lollipop/store/actions/lollipop"
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { WalletActions as WalletV3Actions } from "../../features/walletV3/common/store/actions";
 import { FastLoginActions } from "../../features/fastLogin/store/actions";
+import { MessagesActions } from "../../features/messages/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -39,7 +40,6 @@ import { CrossSessionsActions } from "./crossSessions";
 import { DebugActions } from "./debug";
 import { IdentificationActions } from "./identification";
 import { InstallationActions } from "./installation";
-import { MessagesActions } from "./messages";
 import { MixpanelActions } from "./mixpanel";
 import { NotificationsActions } from "./notifications";
 import { OnboardingActions } from "./onboarding";
