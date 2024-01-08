@@ -99,7 +99,7 @@ export function* handlePidRequest({
         }
       );
 
-      // Perform strong user authorozation to the PID Issuer
+      // Perform strong user authorization to the PID Issuer
       const { code } = yield* call(
         completeUserAuthorizationWithCIE,
         requestUri,
