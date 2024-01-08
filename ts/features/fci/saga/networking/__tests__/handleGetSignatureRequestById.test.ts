@@ -48,13 +48,13 @@ describe("handleGetSignatureRequestById", () => {
       .next()
       .call(withRefreshApiCall, getSignatureDetailByIdRequest, loadAction)
       .next(right(successResponse))
-      .put(fciSignatureRequestFromId.success(successResponse.value))
-      .next()
       .put(
         fciEnvironmentSet(
           successResponse.headers[0]["x-io-sign-environment"] as EnvironmentEnum
         )
       )
+      .next()
+      .put(fciSignatureRequestFromId.success(successResponse.value))
       .next()
       .isDone();
   });
