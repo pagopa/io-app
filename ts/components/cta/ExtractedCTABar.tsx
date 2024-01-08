@@ -3,8 +3,11 @@ import { Dispatch } from "redux";
 import { useLinkTo } from "@react-navigation/native";
 import { HSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
-import { CTA, CTAS } from "../../types/MessageCTA";
-import { handleCtaAction, isCtaActionValid } from "../../utils/messages";
+import { CTA, CTAS } from "../../features/messages/types/MessageCTA";
+import {
+  handleCtaAction,
+  isCtaActionValid
+} from "../../features/messages/utils/messages";
 import { ServiceMetadata } from "../../../definitions/backend/ServiceMetadata";
 import { trackPNOptInMessageAccepted } from "../../features/pn/analytics";
 import { PNOptInMessageInfo } from "../../features/pn/utils";
