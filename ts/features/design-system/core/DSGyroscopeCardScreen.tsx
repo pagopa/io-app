@@ -31,7 +31,26 @@ type LightSize = {
   value: LayoutRectangle["width"];
 };
 
+/* LIGHT
+   Visual parameters */
+const lightSizePercentage: ViewStyle["width"] = "50%";
+const lightScaleMultiplier: number = 1;
+/* Percentage of visible light when it's near
+card boundaries */
+const visibleLightPercentage: number = 0.5;
+
+/* CARD
+   Visual parameters */
 const cardAspectRatio: ViewStyle["aspectRatio"] = 7 / 4;
+
+/* MOVEMENT
+   Spring config for the light movement */
+const springConfig = {
+  mass: 1,
+  damping: 50,
+  stiffness: 200,
+  overshootClamping: false
+};
 
 const DSGyroscopeCardScreen = () => {
   /* On first render, store the current device orientation
@@ -49,8 +68,6 @@ const DSGyroscopeCardScreen = () => {
     },
     []
   );
-
-  const springConfig = { mass: 1, damping: 50, stiffness: 300 };
 
   // eslint-disable-next-line no-console
   console.log(
@@ -73,11 +90,7 @@ const DSGyroscopeCardScreen = () => {
   };
 
   /* Calculate the light position using quaternions */
-  const animatedStyle = useAnimatedStyle(() => {
-    /* We don't need to consider the whole
-    quaternion range, just the 1/10 */
-    const quaternionRange: number = 0.1;
-
+  const lightAnimatedStyle = useAnimatedStyle(() => {
     /* Not all devices are in an initial flat position on a surface 
     (e.g. a table) then we use relative rotation values,
     not absolute ones  */
@@ -85,9 +98,17 @@ const DSGyroscopeCardScreen = () => {
     const relativeQy = qy - initialQy.value;
 
     const maxTranslateX =
-      ((cardSize?.width ?? 0) - (lightSize?.value ?? 0)) / 2;
+      ((cardSize?.width ?? 0) -
+        (lightSize?.value ?? 0) * visibleLightPercentage) /
+      2;
     const maxTranslateY =
-      ((cardSize?.height ?? 0) - (lightSize?.value ?? 0)) / 2;
+      ((cardSize?.height ?? 0) -
+        (lightSize?.value ?? 0) * visibleLightPercentage) /
+      2;
+
+    /* We don't need to consider the whole
+    quaternion range, just the 1/10 */
+    const quaternionRange: number = 0.1;
 
     const translateX = interpolate(
       relativeQx,
@@ -105,10 +126,9 @@ const DSGyroscopeCardScreen = () => {
 
     return {
       transform: [
-        {
-          translateX: withSpring(translateX, springConfig)
-        },
-        { translateY: withSpring(translateY, springConfig) }
+        { translateX: withSpring(translateX, springConfig) },
+        { translateY: withSpring(translateY, springConfig) },
+        { scale: lightScaleMultiplier }
       ]
     };
   });
@@ -118,7 +138,7 @@ const DSGyroscopeCardScreen = () => {
       <MaskedView maskElement={<View style={styles.mask} />}>
         <View style={styles.box} onLayout={getCardSize}>
           <Animated.View
-            style={[styles.circle, animatedStyle]}
+            style={[styles.light, lightAnimatedStyle]}
             onLayout={getLightSize}
           />
         </View>
@@ -140,14 +160,13 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     paddingHorizontal: 24
   },
-  circle: {
+  light: {
     alignSelf: "center",
-    width: "50%",
+    width: lightSizePercentage,
     aspectRatio: 1,
     backgroundColor: IOColors["hanPurple-500"],
     borderRadius: 100
   },
-  // eslint-disable-next-line react-native/no-color-literals
   mask: {
     width: "100%",
     aspectRatio: cardAspectRatio,
@@ -160,15 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     aspectRatio: cardAspectRatio,
-    backgroundColor: IOColors["hanPurple-250"],
-    shadowColor: IOColors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 10,
-    elevation: 12
+    backgroundColor: IOColors["hanPurple-250"]
   },
   debugInfo: {
     alignSelf: "flex-start",
