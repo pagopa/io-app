@@ -17,9 +17,11 @@ import { currentRouteSelector } from "../../store/reducers/navigation";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes =
-  | Exclude<keyof MainTabParamsList, "MESSAGES_HOME">
+  | Exclude<keyof MainTabParamsList, "MESSAGES_HOME" | "SERVICES_HOME">
   | "MESSAGES_INBOX"
-  | "MESSAGES_ARCHIVE";
+  | "MESSAGES_ARCHIVE"
+  | "SERVICES_NATIONAL"
+  | "SERVICES_LOCAL";
 
 const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
   BARCODE_SCAN: {},
@@ -44,7 +46,14 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "profile.main.contextualHelpContent"
     }
   },
-  SERVICES_HOME: {
+  SERVICES_NATIONAL: {
+    faqCategories: ["services"],
+    contextualHelpMarkdown: {
+      title: "services.contextualHelpTitle",
+      body: "services.contextualHelpContent"
+    }
+  },
+  SERVICES_LOCAL: {
     faqCategories: ["services"],
     contextualHelpMarkdown: {
       title: "services.contextualHelpTitle",
@@ -100,7 +109,8 @@ export const HeaderFirstLevelHandler = () => {
   );
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
-      case "SERVICES_HOME":
+      case "SERVICES_NATIONAL":
+      case "SERVICES_LOCAL":
         return {
           title: I18n.t("services.title"),
           type: "twoActions",
