@@ -16,7 +16,7 @@ import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupport
 import { WalletPaymentFailure } from "../types/failure";
 
 type Props = {
-  rptId: RptId;
+  rptId?: RptId;
   failure: WalletPaymentFailure;
 };
 

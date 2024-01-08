@@ -1,31 +1,39 @@
 import { GradientScrollView, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
+import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
 import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
+import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentAuthorization,
   walletPaymentCreateTransaction
 } from "../store/actions/networking";
 import {
   walletPaymentAuthorizationUrlSelector,
+  walletPaymentDetailsSelector,
   walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { WalletPaymentFailure } from "../types/failure";
 
 const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
+  const paymentDetailPot = useIOSelector(walletPaymentDetailsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
@@ -64,6 +72,26 @@ const WalletPaymentConfirmScreen = () => {
       })
     );
   };
+
+  if (pot.isError(transactionPot)) {
+    const failure = pipe(
+      transactionPot.error,
+      WalletPaymentFailure.decode,
+      O.fromEither,
+      // NetworkError is transformed to GENERIC_ERROR only for display purposes
+      O.getOrElse<WalletPaymentFailure>(() => ({
+        faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
+        faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+      }))
+    );
+    const rptId = pipe(
+      paymentDetailPot,
+      pot.toOption,
+      O.map(({ rptId }) => rptId),
+      O.toUndefined
+    );
+    return <WalletPaymentFailureDetail rptId={rptId} failure={failure} />;
+  }
 
   return (
     <BaseScreenComponent goBack={true}>
