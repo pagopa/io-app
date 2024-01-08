@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { trackPNShowF24 } from "../analytics";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../messages/types";
 import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
 import { MessageDetailsSection } from "./MessageDetailsSection";

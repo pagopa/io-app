@@ -7,9 +7,9 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { mixpanelTrack } from "../../../mixpanel";
 import { readablePrivacyReport } from "../../../utils/reporters";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../types";
 import { booleanToYesNo, buildEventProperties } from "../../../utils/analytics";
-import { MessageGetStatusFailurePhaseType } from "../../../store/reducers/entities/messages/messageGetStatus";
+import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 
 export function trackOpenMessage(
   organizationName: string,
