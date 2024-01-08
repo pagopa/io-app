@@ -119,7 +119,7 @@ export function* handlePidRequest({
       );
 
       // Generate fresh key for PID binding
-      // ensure the key esists befor starting the issuing process
+      // ensure the key exists befor starting the issuing process
       yield* call(getOrGenerateCyptoKey, ITW_PID_KEY_TAG);
       const credentialCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
 
