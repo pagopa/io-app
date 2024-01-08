@@ -1,6 +1,6 @@
 import * as Either from "fp-ts/lib/Either";
 
-import migrateToPagination from "../migrateToPagination";
+import migrateToPagination from "../../features/messages/utils/migrateToPagination";
 
 const mockUpsert = jest.fn().mockResolvedValue(Either.right({ status: 200 }));
 
