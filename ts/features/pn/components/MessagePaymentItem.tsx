@@ -10,7 +10,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { GlobalState } from "../../../store/reducers/types";
 import {
