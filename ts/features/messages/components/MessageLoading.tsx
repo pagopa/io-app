@@ -1,7 +1,7 @@
-import I18n from "i18n-js";
-import * as React from "react";
+import React from "react";
 import { ActivityIndicator } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
+import I18n from "../../../i18n";
 import { Body } from "../../../components/core/typography/Body";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 

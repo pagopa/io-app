@@ -6,12 +6,13 @@ import { connect } from "react-redux";
 import { Locales, TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import ROUTES from "../navigation/routes";
-import { messagesUnreadAndUnarchivedSelector } from "../store/reducers/entities/messages/messagesStatus";
+import { messagesUnreadAndUnarchivedSelector } from "../features/messages/store/reducers/messagesStatus";
 import { preferredLanguageSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 
-type Routes = keyof typeof ROUTES;
+type Routes = keyof typeof ROUTES | keyof typeof MESSAGES_ROUTES;
 
 type OwnProps = {
   options: {
@@ -94,7 +95,7 @@ const NavBarLabel: React.FunctionComponent<Props> = (props: Props) => {
     : "";
 
   const unreadMessagesMap: Record<string, number> = {
-    [ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length
+    [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: messagesUnread.length
   };
 
   const computedUnreadMessages = unreadMessagesMap[routeName] || undefined;

@@ -5,7 +5,6 @@ import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";
 import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -19,6 +18,7 @@ import {
 } from "../../types/__mock__/EUCovidCertificate.mock";
 import { ValidCertificate } from "../../types/EUCovidCertificate";
 import EuCovidCertValidScreen from "../valid/EuCovidCertValidScreen";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 describe("Test EUCovidCertificateValidScreen", () => {
   jest.useFakeTimers();
@@ -81,7 +81,7 @@ describe("Test EUCovidCertificateValidScreen", () => {
       const detailsPayload: NavigationAction = {
         type: "NAVIGATE",
         payload: {
-          name: ROUTES.MESSAGES_NAVIGATOR,
+          name: MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
           params: {
             screen: EUCOVIDCERT_ROUTES.MAIN,
             params: {
@@ -101,7 +101,7 @@ describe("Test EUCovidCertificateValidScreen", () => {
       const qrCodePayload: NavigationAction = {
         type: "NAVIGATE",
         payload: {
-          name: ROUTES.MESSAGES_NAVIGATOR,
+          name: MESSAGES_ROUTES.MESSAGES_NAVIGATOR,
           params: {
             screen: EUCOVIDCERT_ROUTES.MAIN,
             params: {

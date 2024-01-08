@@ -34,7 +34,7 @@ import Markdown from "../../../../components/ui/Markdown";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useScreenReaderEnabled } from "../../../../utils/accessibility";
-import { getRemoteLocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import { maybeNotNullyString } from "../../../../utils/strings";
 import TosBonusComponent from "./TosBonusComponent";
 

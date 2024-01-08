@@ -2,7 +2,6 @@
 
 import { createStore, Store } from "redux";
 import { MockStore } from "redux-mock-store";
-import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../store/actions/backendStatus";
 import { appReducer } from "../../../../store/reducers";
@@ -11,6 +10,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { getFullLocale } from "../../../../utils/locale";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { UaDonationsBanner } from "../UaDonationsBanner";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 jest.mock("../../../../config", () => ({ uaDonationsEnabled: true }));
 
@@ -140,7 +140,7 @@ describe("UaDonationsBanner", () => {
 const renderComponent = (store: MockStore<GlobalState> | Store) => ({
   component: renderScreenWithNavigationStoreContext<GlobalState>(
     UaDonationsBanner,
-    ROUTES.MESSAGES_HOME,
+    MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store
   ),

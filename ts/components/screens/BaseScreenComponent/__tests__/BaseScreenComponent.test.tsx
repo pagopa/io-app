@@ -7,7 +7,6 @@ import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfi
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
 import { Config } from "../../../../../definitions/content/Config";
 import * as zendeskActions from "../../../../features/zendesk/store/actions";
-import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { BackendStatusState } from "../../../../store/reducers/backendStatus";
@@ -15,6 +14,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 import BaseScreenComponent, { Props } from "../index";
+import { MESSAGES_ROUTES } from "../../../../features/messages/navigation/routes";
 
 jest.useFakeTimers();
 
@@ -101,7 +101,7 @@ function renderComponent(props = defaultProps, store: Store<GlobalState>) {
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BaseScreenComponent {...props} ref={undefined} />,
-      ROUTES.MESSAGES_HOME,
+      MESSAGES_ROUTES.MESSAGES_HOME,
       {},
       store
     ),

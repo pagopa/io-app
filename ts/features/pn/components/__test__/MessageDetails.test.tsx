@@ -8,12 +8,9 @@ import { MessageDetails } from "../MessageDetails";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
-import {
-  UIAttachment,
-  UIMessageId
-} from "../../../../store/reducers/entities/messages/types";
+import { UIAttachment, UIMessageId } from "../../../messages/types";
 import { PNMessage } from "../../store/types/types";
-import { Download } from "../../../../store/reducers/entities/messages/downloads";
+import { Download } from "../../../messages/store/reducers/downloads";
 import { NotificationRecipient } from "../../../../../definitions/pn/NotificationRecipient";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
 
