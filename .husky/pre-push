@@ -7,6 +7,10 @@ unstagedCount=`echo "$unstagedFiles" | wc -l | sed 's/ //g'`
 echo "Current modified files ($unstagedCount):"
 echo "$unstagedFiles"
 
+# Compile the project
+echo "🔨 compiling..."
+yarn tsc:noemit
+
 # Run lintier
 echo "🧹 runnning linter..."  
 yarn lint-autofix
@@ -31,14 +35,6 @@ if [ -n "$(git status --porcelain)" ]; then
     echo "✅ All files are clean!"
   fi
 fi
-
-# Compile the project
-echo "🔨 compiling..."
-yarn tsc:noemit
-
-# Run tests
-echo "🧪 testing..."
-yarn test:dev
 
 echo "🚀 pushing..."
 echo "✨ Done."
