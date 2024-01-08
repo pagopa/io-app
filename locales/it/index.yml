@@ -686,7 +686,7 @@ authentication:
     notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO.
     button_accept_lv: Continua con l’accesso rapido
     button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
-  security_suggestions: 
+  security_suggestions:
     fingerprint: Non condividere il tuo o codice di sblocco o riconoscimento biometrico con nessuno
     io_logout: Se perdi il dispositivo, esci dall’app da web
     io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
@@ -1644,6 +1644,14 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    outcome:
+      success:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
