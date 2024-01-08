@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.50.0-rc.2](https://github.com/pagopa/io-app/compare/2.50.0-rc.1...2.50.0-rc.2) (2024-01-05)
+
+## [2.50.0-rc.1](https://github.com/pagopa/io-app/compare/2.50.0-rc.0...2.50.0-rc.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* [[IOCOM-759](https://pagopa.atlassian.net/browse/IOCOM-759)] Remove the section title if there are no attachments ([#5372](https://github.com/pagopa/io-app/issues/5372)) ([b08ac0a](https://github.com/pagopa/io-app/commit/b08ac0a193d7b4c5f0c633ca19221bf69cd71588))
+* [[IOCOM-761](https://pagopa.atlassian.net/browse/IOCOM-761)] Text wrapping for precondition's title text ([#5368](https://github.com/pagopa/io-app/issues/5368)) ([d78fe84](https://github.com/pagopa/io-app/commit/d78fe8487efae9149b44a156b6e401c20eab8d2e))
+* failing Android build ([#5376](https://github.com/pagopa/io-app/issues/5376)) ([a23dece](https://github.com/pagopa/io-app/commit/a23dece585eb9420c370a72df8ae62d22a254be0))
+
+## [2.50.0-rc.0](https://github.com/pagopa/io-app/compare/2.49.0-rc.0...2.50.0-rc.0) (2024-01-03)
+
+
+### Bug Fixes
+
+* [[IOBP-446](https://pagopa.atlassian.net/browse/IOBP-446)] Add gallery permission request in barcode scan screen for Android devices ([#5313](https://github.com/pagopa/io-app/issues/5313)) ([3aa8576](https://github.com/pagopa/io-app/commit/3aa8576a09d1859734491df42196e953297e9680)), closes [/github.com/pagopa/io-app/pull/5313/files#diff-7752f292bcc12a6ee19233df702f1e1bafc087f6261759e0a5939c6e7a883f19](https://github.com/pagopa//github.com/pagopa/io-app/pull/5313/files/issues/diff-7752f292bcc12a6ee19233df702f1e1bafc087f6261759e0a5939c6e7a883f19)
+* HeaderFirstLevel is misconfigured in services home screen ([#5358](https://github.com/pagopa/io-app/issues/5358)) ([993ae3e](https://github.com/pagopa/io-app/commit/993ae3e04900d05cc91617a3fb4e2ff573bcec0c))
+
+## [2.49.0-rc.1](https://github.com/pagopa/io-app/compare/2.48.0-rc.7...2.49.0-rc.1) (2023-12-20)
+
+
 ## [2.49.0-rc.0](https://github.com/pagopa/io-app/compare/2.48.0-rc.7...2.49.0-rc.0) (2023-12-19)
 
 
