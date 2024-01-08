@@ -1,6 +1,6 @@
 import React from "react";
 import { MessageAttachments } from "../../messages/components/MessageAttachments";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../messages/types";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
 

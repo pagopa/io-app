@@ -47,7 +47,7 @@ import variables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
-import { getRemoteLocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import {
   isShareEnabled,
   saveImageToGallery,
