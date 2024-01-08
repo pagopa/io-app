@@ -1,7 +1,8 @@
+/* eslint-disable functional/immutable-data */
 import { H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import MaskedView from "@react-native-masked-view/masked-view";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   LayoutChangeEvent,
   LayoutRectangle,
@@ -14,8 +15,10 @@ import Animated, {
   Extrapolate,
   SensorType,
   interpolate,
+  useAnimatedReaction,
   useAnimatedSensor,
   useAnimatedStyle,
+  useSharedValue,
   withSpring
 } from "react-native-reanimated";
 
@@ -34,18 +37,26 @@ const DSGyroscopeCardScreen = () => {
   /* On first render, store the current device orientation
   using quaternions */
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const [initialQx, setInitialQx] = useState<number>(0);
-  const [initialQy, setInitialQy] = useState<number>(0);
+  const { qx, qy } = rotationSensor.sensor.value;
+  const initialQx = useSharedValue(0);
+  const initialQy = useSharedValue(0);
 
-  useEffect(() => {
-    const { qx, qy } = rotationSensor.sensor.value;
-    setInitialQx(qx);
-    setInitialQy(qy);
-    // eslint-disable-next-line no-console
-    console.log("Sensor values:", `qx: ${qx}, qy: ${qy}`);
-  }, [rotationSensor.sensor.value]);
+  useAnimatedReaction(
+    () => rotationSensor.sensor.value,
+    s => {
+      initialQx.value = s.qx;
+      initialQy.value = s.qy;
+    },
+    []
+  );
+
+  const springConfig = { mass: 1, damping: 50, stiffness: 300 };
 
   // eslint-disable-next-line no-console
+  console.log(
+    "Sensor values:",
+    `qx: ${initialQx.value}, qy: ${initialQy.value}`
+  );
 
   /* Get both card and light sizes to set the basic boundaries */
   const [cardSize, setCardSize] = useState<CardSize>();
@@ -63,8 +74,6 @@ const DSGyroscopeCardScreen = () => {
 
   /* Calculate the light position using quaternions */
   const animatedStyle = useAnimatedStyle(() => {
-    const { qx, qy } = rotationSensor.sensor.value;
-
     /* We don't need to consider the whole
     quaternion range, just the 1/10 */
     const quaternionRange: number = 0.1;
@@ -72,8 +81,8 @@ const DSGyroscopeCardScreen = () => {
     /* Not all devices are in an initial flat position on a surface 
     (e.g. a table) then we use relative rotation values,
     not absolute ones  */
-    const relativeQx = qx - initialQx;
-    const relativeQy = qy - initialQy;
+    const relativeQx = qx - initialQx.value;
+    const relativeQy = qy - initialQy.value;
 
     const maxTranslateX =
       ((cardSize?.width ?? 0) - (lightSize?.value ?? 0)) / 2;
@@ -96,8 +105,10 @@ const DSGyroscopeCardScreen = () => {
 
     return {
       transform: [
-        { translateX: withSpring(translateX) },
-        { translateY: withSpring(translateY) }
+        {
+          translateX: withSpring(translateX, springConfig)
+        },
+        { translateY: withSpring(translateY, springConfig) }
       ]
     };
   });
