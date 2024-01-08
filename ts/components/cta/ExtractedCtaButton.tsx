@@ -1,7 +1,7 @@
 import { Text as NBButtonText } from "native-base";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { CTA } from "../../types/MessageCTA";
+import { CTA } from "../../features/messages/types/MessageCTA";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 type Props = {
