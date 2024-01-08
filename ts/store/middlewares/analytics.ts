@@ -109,7 +109,6 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../actions/wallet/wallets";
-import { store } from "../../boot/configureStoreAndPersistor";
 import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
@@ -390,7 +389,7 @@ const trackAction =
  * The middleware acts as a general hook in order to track any meaningful action
  */
 export const actionTracking =
-  (_: MiddlewareAPI) =>
+  (middleware: MiddlewareAPI) =>
   (next: Dispatch) =>
   (action: Action): Action => {
     if (mixpanel !== undefined) {
@@ -408,7 +407,7 @@ export const actionTracking =
       void trackZendesk(mixpanel)(action);
       void trackCdc(mixpanel)(action);
 
-      const fciEnvironment = fciEnvironmentSelector(store.getState());
+      const fciEnvironment = fciEnvironmentSelector(middleware.getState());
       void trackFciAction(mixpanel, fciEnvironment)(action);
     }
     return next(action);
