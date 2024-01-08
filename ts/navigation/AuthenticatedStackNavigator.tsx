@@ -74,8 +74,9 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
+import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import CheckEmailNavigator from "./CheckEmailNavigator";
-import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
@@ -124,7 +125,7 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.MESSAGES_NAVIGATOR}
+        name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />

@@ -22,13 +22,10 @@ import { getError } from "../../../utils/errors";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
-} from "../../../store/actions/messages";
-import {
-  UIAttachment,
-  UIMessageId
-} from "../../../store/reducers/entities/messages/types";
+} from "../store/actions";
+import { UIAttachment, UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { getServiceByMessageId } from "../../../store/reducers/entities/messages/paginatedById";
+import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
