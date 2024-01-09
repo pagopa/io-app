@@ -18,6 +18,7 @@ import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
+import { WALLET_PAYMENT_FEEDBACK_URL } from "../utils";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -50,10 +51,7 @@ const WalletPaymentOutcomeScreen = () => {
       screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
     });
 
-    return openAuthenticationSession(
-      "https://io.italia.it/diccilatua/ces-pagamento",
-      ""
-    );
+    return openAuthenticationSession(WALLET_PAYMENT_FEEDBACK_URL, "");
   };
 
   const bannerViewRef = React.useRef<View>(null);
