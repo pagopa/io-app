@@ -14,7 +14,7 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import { itwIssuancePidSelector } from "../../../store/reducers/issuance/pid/itwIssuancePidReducer";
+import { itwIssuancePidSelector } from "../../../store/reducers/itwIssuancePidReducer";
 import { itwActivationStop } from "../../../store/actions/itwActivationActions";
 import ItwKoView from "../../../components/ItwKoView";
 import {
@@ -22,7 +22,7 @@ import {
   getItwGenericMappedError
 } from "../../../utils/itwErrorsUtils";
 import { getPidCredentialCatalogItem } from "../../../utils/mocks";
-import { itwIssuancePid } from "../../../store/actions/issuing/pid/itwIssuancePidActions";
+import { itwIssuancePid } from "../../../store/actions/itwIssuancePidActions";
 
 /**
  * ItwIssuingPidRequestScreen's navigation params.

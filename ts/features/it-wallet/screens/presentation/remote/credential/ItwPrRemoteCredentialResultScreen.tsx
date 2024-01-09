@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
-import { itwPrRemoteCredential } from "../../../../store/actions/presentation/remote/itwPrRemoteCredentialActions";
+import { itwPrRemoteCredential } from "../../../../store/actions/itwPrRemoteCredentialActions";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
@@ -17,7 +17,7 @@ import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { getRpMock } from "../../../../utils/mocks";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
-import { itwPrRemoteCredentialResultSelector } from "../../../../store/reducers/presentation/remote/itwPrRemoteCredentialReducer";
+import { itwPrRemoteCredentialResultSelector } from "../../../../store/reducers/itwPrRemoteCredentialReducer";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.

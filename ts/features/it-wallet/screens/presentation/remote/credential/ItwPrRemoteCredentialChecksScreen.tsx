@@ -3,7 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
-import { itwPrRemoteCredentialInit } from "../../../../store/actions/presentation/remote/itwPrRemoteCredentialActions";
+import { itwPrRemoteCredentialInit } from "../../../../store/actions/itwPrRemoteCredentialActions";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
@@ -24,7 +24,7 @@ import {
   ItwErrorMapping,
   getItwGenericMappedError
 } from "../../../../utils/itwErrorsUtils";
-import { itwPrRemoteCredentialInitSelector } from "../../../../store/reducers/presentation/remote/itwPrRemoteCredentialReducer";
+import { itwPrRemoteCredentialInitSelector } from "../../../../store/reducers/itwPrRemoteCredentialReducer";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.

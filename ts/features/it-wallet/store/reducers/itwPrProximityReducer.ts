@@ -4,16 +4,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   hasBLEFeature,
   bleIsEnabled,
   generateQrCode,
   proximityManagerStatus,
   ProximityManagerStatusEnum
-} from "../../../actions/presentation/proximity/itwProximityActions";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
+} from "../actions/itwProximityActions";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 
 export type ItwPrProximityState = {
   hasBLEFeature: pot.Pot<boolean, ItWalletError>;

@@ -12,7 +12,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 
 export enum ProximityManagerStatusEnum {
   STARTED = "STARTED",

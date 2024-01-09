@@ -36,11 +36,11 @@ import {
   ProximityManagerStatusEnum,
   startProximityManager,
   stopProximityManager
-} from "../../store/actions/presentation/proximity/itwProximityActions";
+} from "../../store/actions/itwProximityActions";
 import {
   itwPrProximitySelector,
   itwPrProximityQrCodeSelector
-} from "../../store/reducers/presentation/proximity/itwPrProximityReducer";
+} from "../../store/reducers/itwPrProximityReducer";
 
 /**
  * A screen that shows a QR code to be scanned by the other device

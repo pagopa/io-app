@@ -1,13 +1,13 @@
 import { ItwPersistedCredentialsActions } from "./itwPersistedCredentialsActions";
-import { ItwIssuancePidCieAuthActions } from "./issuing/pid/itwIssuancePidCieActions";
+import { ItwIssuancePidCieAuthActions } from "./itwIssuancePidCieActions";
 import { ItwActivationActions } from "./itwActivationActions";
 import { ItwWiaActions } from "./itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
-import { ItwRpActions } from "./presentation/remote/itwPrRemotePidActions";
-import { itwPrRemoteCredentialInit } from "./presentation/remote/itwPrRemoteCredentialActions";
-import { ItwIssuanceCredentialActions } from "./issuing/credential/itwIssuanceCredentialActions";
-import { ItwProximityActions } from "./presentation/proximity/itwProximityActions";
-import { ItwIssuancePidActions } from "./issuing/pid/itwIssuancePidActions";
+import { ItwRpActions } from "./itwPrRemotePidActions";
+import { itwPrRemoteCredentialInit } from "./itwPrRemoteCredentialActions";
+import { ItwIssuanceCredentialActions } from "./itwIssuanceCredentialActions";
+import { ItwProximityActions } from "./itwProximityActions";
+import { ItwIssuancePidActions } from "./itwIssuancePidActions";
 
 /**
  * Action types for the IT Wallet feature

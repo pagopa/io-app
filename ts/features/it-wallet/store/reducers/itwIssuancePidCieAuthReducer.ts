@@ -4,15 +4,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwCieIsSupported,
   itwHasApiLevelSupport,
   itwHasNFCFeature,
   itwNfcIsEnabled,
   itwUpdateReadingState
-} from "../../../actions/issuing/pid/itwIssuancePidCieActions";
+} from "../actions/itwIssuancePidCieActions";
 
 export type ItwIssuancePidCieAuthState = {
   itwHasApiLevelSupport: pot.Pot<boolean, Error>;

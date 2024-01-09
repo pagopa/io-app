@@ -12,11 +12,11 @@ import {
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { SessionToken } from "../../../types/SessionToken";
-import { itwLoginSuccess } from "../store/actions/issuing/pid/itwIssuancePidCieActions";
+import { itwLoginSuccess } from "../store/actions/itwIssuancePidCieActions";
 import {
   itwStopCieManager,
   watchItwPidIssuingCieAuthSaga
-} from "./issuance/pid/itwIssuancePidCieAuthSaga";
+} from "./itwIssuancePidCieAuthSaga";
 
 /**
  * Watcher for the IT wallet activation related sagas.

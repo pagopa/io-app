@@ -11,8 +11,8 @@ import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender
 import {
   itwPrRemotePidInitValueSelector,
   itwPrRemotePidResultSelector
-} from "../../../../store/reducers/presentation/remote/itwPrRemotePidReducer";
-import { itwPrRemotePidPresentation } from "../../../../store/actions/presentation/remote/itwPrRemotePidActions";
+} from "../../../../store/reducers/itwPrRemotePidReducer";
+import { itwPrRemotePidPresentation } from "../../../../store/actions/itwPrRemotePidActions";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { rpPidMock } from "../../../../utils/mocks";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";

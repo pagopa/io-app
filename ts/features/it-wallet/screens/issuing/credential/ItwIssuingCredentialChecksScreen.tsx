@@ -15,7 +15,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import {
   itwIssuanceCredentialChecksSelector,
   ItwIssuanceCredentialData
-} from "../../../store/reducers/issuance/credential/itwIssuanceCredentialReducer";
+} from "../../../store/reducers/itwIssuanceCredentialReducer";
 import ItwContinueScreen from "../../../components/ItwContinueView";
 import { showCancelAlert } from "../../../utils/alert";
 import {

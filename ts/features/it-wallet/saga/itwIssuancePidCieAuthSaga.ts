@@ -7,10 +7,10 @@ import {
   itwHasApiLevelSupport,
   itwHasNFCFeature,
   itwNfcIsEnabled
-} from "../../../store/actions/issuing/pid/itwIssuancePidCieActions";
-import { SagaCallReturnType } from "../../../../../types/utils";
-import { convertUnknownToError } from "../../../../../utils/errors";
-import { startTimer } from "../../../../../utils/timer";
+} from "../store/actions/itwIssuancePidCieActions";
+import { SagaCallReturnType } from "../../../types/utils";
+import { convertUnknownToError } from "../../../utils/errors";
+import { startTimer } from "../../../utils/timer";
 
 export function* watchItwPidIssuingCieAuthSaga(): SagaIterator {
   // Trigger a saga on itwNfcIsEnabled to check if NFC is enabled or not

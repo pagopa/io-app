@@ -7,18 +7,18 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { itwWiaSelector } from "../../../store/reducers/itwWiaReducer";
-import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
-import { itwPersistedCredentialsAddPid } from "../../../store/actions/itwPersistedCredentialsActions";
-import { itwLifecycleValid } from "../../../store/actions/itwLifecycleActions";
-import { walletProviderBaseUrl } from "../../../../../config";
+import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
+import { itwPersistedCredentialsAddPid } from "../store/actions/itwPersistedCredentialsActions";
+import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
+import { walletProviderBaseUrl } from "../../../config";
 import {
   ITW_PID_KEY_TAG,
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
-} from "../../../utils/itwSecureStorageUtils";
-import { itwIssuancePid } from "../../../store/actions/issuing/pid/itwIssuancePidActions";
-import { verifyPin } from "../../itwSagaUtils";
+} from "../utils/itwSecureStorageUtils";
+import { itwIssuancePid } from "../store/actions/itwIssuancePidActions";
+import { verifyPin } from "../utils/itwSagaUtils";
 
 /**
  * A dummy implementation of CompleteUserAuthorization that uses static values.

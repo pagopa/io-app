@@ -10,18 +10,18 @@ import * as O from "fp-ts/lib/Option";
 import {
   itwPrRemotePidInit,
   itwPrRemotePidPresentation
-} from "../../../store/actions/presentation/remote/itwPrRemotePidActions";
-import { itwPrRemotePidInitValueSelector } from "../../../store/reducers/presentation/remote/itwPrRemotePidReducer";
-import { itwPersistedCredentialsValuePidSelector } from "../../../store/reducers/itwPersistedCredentialsReducer";
+} from "../store/actions/itwPrRemotePidActions";
+import { itwPrRemotePidInitValueSelector } from "../store/reducers/itwPrRemotePidReducer";
+import { itwPersistedCredentialsValuePidSelector } from "../store/reducers/itwPersistedCredentialsReducer";
 import {
   ITW_PID_KEY_TAG,
   ITW_WIA_KEY_TAG
-} from "../../../utils/itwSecureStorageUtils";
-import { itwWiaSelector } from "../../../store/reducers/itwWiaReducer";
-import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
-import { verifyPin } from "../../itwSagaUtils";
-import { itwLifecycleIsValidSelector } from "../../../store/reducers/itwLifecycleReducer";
-import { itwWiaRequest } from "../../../store/actions/itwWiaActions";
+} from "../utils/itwSecureStorageUtils";
+import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
+import { verifyPin } from "../utils/itwSagaUtils";
+import { itwLifecycleIsValidSelector } from "../store/reducers/itwLifecycleReducer";
+import { itwWiaRequest } from "../store/actions/itwWiaActions";
 
 /**
  * Watcher for the IT wallet Relying Party related sagas.

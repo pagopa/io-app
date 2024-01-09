@@ -1,11 +1,11 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Action } from "../../../../../../store/actions/types";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { StoredCredential } from "../../../../utils/types";
-import { itwIssuancePid } from "../../../actions/issuing/pid/itwIssuancePidActions";
+import { Action } from "../../../../store/actions/types";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
+import { GlobalState } from "../../../../store/reducers/types";
+import { StoredCredential } from "../../utils/types";
+import { itwIssuancePid } from "../actions/itwIssuancePidActions";
 
 type ItwPidIssuance = {
   pid: O.Option<StoredCredential>;

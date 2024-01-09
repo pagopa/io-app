@@ -6,7 +6,7 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import I18n from "../../../../../i18n";
-import { itwIssuancePidValueSelector } from "../../../store/reducers/issuance/pid/itwIssuancePidReducer";
+import { itwIssuancePidValueSelector } from "../../../store/reducers/itwIssuancePidReducer";
 import { itwPersistedCredentialsAddPid } from "../../../store/actions/itwPersistedCredentialsActions";
 import { itwActivationCompleted } from "../../../store/actions/itwActivationActions";
 import { itwPersistedCredentialsSelector } from "../../../store/reducers/itwPersistedCredentialsReducer";

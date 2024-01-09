@@ -1,9 +1,9 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import {
   ItwPrRemotePidInit,
   ItwPrRemotePidResult
-} from "../../../reducers/presentation/remote/itwPrRemotePidReducer";
+} from "../reducers/itwPrRemotePidReducer";
 
 export type ItwPrRemotePidInitData = {
   authReqUrl: string;

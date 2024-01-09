@@ -33,7 +33,7 @@ import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
 import { itwPersistedCredentialsValuePidSelector } from "../../../store/reducers/itwPersistedCredentialsReducer";
 import { StoredCredential } from "../../../utils/types";
-import { itwIssuanceCredentialChecksValueSelector } from "../../../store/reducers/issuance/credential/itwIssuanceCredentialReducer";
+import { itwIssuanceCredentialChecksValueSelector } from "../../../store/reducers/itwIssuanceCredentialReducer";
 import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
 
 /**

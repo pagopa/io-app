@@ -13,27 +13,25 @@ import createCredentialsKeychain from "../storages/credentialsKeychain";
 import { isDevEnv } from "../../../../utils/environment";
 import itwIssuancePidAuthCieReducer, {
   ItwIssuancePidCieAuthState
-} from "./issuance/pid/itwIssuancePidCieAuthReducer";
+} from "./itwIssuancePidCieAuthReducer";
 import itwWia, { ItwWiaState } from "./itwWiaReducer";
 import itwCredentials, {
   ItwPersistedCredentialsState
 } from "./itwPersistedCredentialsReducer";
 import itwLifeCycle, { ItwLifecycleState } from "./itwLifecycleReducer";
-import itwPidReducer, {
-  ItwIssuancePidState
-} from "./issuance/pid/itwIssuancePidReducer";
+import itwPidReducer, { ItwIssuancePidState } from "./itwIssuancePidReducer";
 import itwPrRemotePidReducer, {
   ItwPrRemotePidState
-} from "./presentation/remote/itwPrRemotePidReducer";
+} from "./itwPrRemotePidReducer";
 import itwPrRemoteCredentialReducer, {
   itwPrRemoteCredentialState
-} from "./presentation/remote/itwPrRemoteCredentialReducer";
+} from "./itwPrRemoteCredentialReducer";
 import itwIssuanceCredentialReducer, {
   ItwIssuanceCredentialState
-} from "./issuance/credential/itwIssuanceCredentialReducer";
+} from "./itwIssuanceCredentialReducer";
 import itwPrProximityReducer, {
   ItwPrProximityState
-} from "./presentation/proximity/itwPrProximityReducer";
+} from "./itwPrProximityReducer";
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 3;
 

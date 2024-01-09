@@ -36,7 +36,7 @@ import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { CieRequestAuthenticationOverlay } from "../../../../components/cie/CieRequestAuthenticationOverlay";
-import { itwNfcIsEnabled } from "../../../../store/actions/issuing/pid/itwIssuancePidCieActions";
+import { itwNfcIsEnabled } from "../../../../store/actions/itwIssuancePidCieActions";
 import ItwTextInfo from "../../../../components/ItwTextInfo";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import CiePinpad from "../../../../components/cie/CiePinpad";

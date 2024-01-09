@@ -1,14 +1,14 @@
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Action } from "../../../../../../store/actions/types";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { Action } from "../../../../store/actions/types";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   itwPrRemotePidInit,
   itwPrRemotePidPresentation
-} from "../../../actions/presentation/remote/itwPrRemotePidActions";
-import { RequestObject, RpEntityConfiguration } from "../../../../utils/types";
+} from "../actions/itwPrRemotePidActions";
+import { RequestObject, RpEntityConfiguration } from "../../utils/types";
 
 /**
  * Type for the result of the initialization process.

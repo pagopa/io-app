@@ -1,8 +1,8 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { PidData } from "@pagopa/io-react-native-cie-pid";
-import { PidCredentialCatalogItem } from "../../../../utils/mocks";
-import { StoredCredential } from "../../../../utils/types";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
+import { PidCredentialCatalogItem } from "../../utils/mocks";
+import { StoredCredential } from "../../utils/types";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 
 /**
  * Action which requests a PID issuing.

@@ -1,20 +1,20 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import {
   itwIssuanceCredentialChecks,
   itwIssuanceCredential
-} from "../../../actions/issuing/credential/itwIssuanceCredentialActions";
-import { CredentialCatalogDisplay } from "../../../../utils/mocks";
+} from "../actions/itwIssuanceCredentialActions";
+import { CredentialCatalogDisplay } from "../../utils/mocks";
 import {
   CredentialConfigurationSchema,
   CredentialDefinition,
   IssuerConfiguration,
   StoredCredential
-} from "../../../../utils/types";
+} from "../../utils/types";
 
 export type ItwIssuanceCredentialData = {
   credentialType: string;

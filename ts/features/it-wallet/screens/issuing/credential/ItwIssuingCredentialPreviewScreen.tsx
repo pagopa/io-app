@@ -32,8 +32,8 @@ import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
   itwConfirmStoreCredential,
   itwIssuanceCredential
-} from "../../../store/actions/issuing/credential/itwIssuanceCredentialActions";
-import { itwIssuanceCredentialResultSelector } from "../../../store/reducers/issuance/credential/itwIssuanceCredentialReducer";
+} from "../../../store/actions/itwIssuanceCredentialActions";
+import { itwIssuanceCredentialResultSelector } from "../../../store/reducers/itwIssuanceCredentialReducer";
 import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverlay";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";

@@ -3,13 +3,13 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 import {
   itwPrRemoteCredential,
   itwPrRemoteCredentialInit
-} from "../../../actions/presentation/remote/itwPrRemoteCredentialActions";
+} from "../actions/itwPrRemoteCredentialActions";
 
 /**
  * Type of the state managed by the reducer for the presentation flow.

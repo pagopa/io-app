@@ -3,10 +3,10 @@ import { put, delay, takeLatest, select, call } from "typed-redux-saga/macro";
 import {
   itwPrRemoteCredential,
   itwPrRemoteCredentialInit
-} from "../../../store/actions/presentation/remote/itwPrRemoteCredentialActions";
-import { itwLifecycleIsValidSelector } from "../../../store/reducers/itwLifecycleReducer";
-import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
-import { verifyPin } from "../../itwSagaUtils";
+} from "../store/actions/itwPrRemoteCredentialActions";
+import { itwLifecycleIsValidSelector } from "../store/reducers/itwLifecycleReducer";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
+import { verifyPin } from "../utils/itwSagaUtils";
 
 export function* watchitwPrRemoteCredentialSaga(): SagaIterator {
   yield* takeLatest(

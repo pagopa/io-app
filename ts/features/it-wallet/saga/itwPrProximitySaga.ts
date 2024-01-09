@@ -8,8 +8,8 @@ import {
   proximityManagerStatus,
   startProximityManager,
   stopProximityManager
-} from "../../../store/actions/presentation/proximity/itwProximityActions";
-import { ItWalletErrorTypes } from "../../../utils/itwErrorsUtils";
+} from "../store/actions/itwProximityActions";
+import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 
 export function* watchItwPrProximitySaga(): SagaIterator {
   // Trigger a saga on bleIsEnabled to check if BLE is enabled or not

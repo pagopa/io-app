@@ -8,8 +8,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { SessionToken } from "../../../../../../types/SessionToken";
-import { IdpData } from "../../../../../../../definitions/content/IdpData";
+import { SessionToken } from "../../../../types/SessionToken";
+import { IdpData } from "../../../../../definitions/content/IdpData";
 
 export const itwHasApiLevelSupport = createAsyncAction(
   "ITW_CIE_HAS_API_LEVEL_REQUEST",

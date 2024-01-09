@@ -1,5 +1,5 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import { ItWalletError } from "../../../../utils/itwErrorsUtils";
+import { ItWalletError } from "../../utils/itwErrorsUtils";
 
 /**
  * Async action which starts the presentation checks.

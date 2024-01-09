@@ -11,7 +11,7 @@ import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOv
 import {
   ItwPrRemotePidInitData,
   itwPrRemotePidInit
-} from "../../../../store/actions/presentation/remote/itwPrRemotePidActions";
+} from "../../../../store/actions/itwPrRemotePidActions";
 import { rpPidMock } from "../../../../utils/mocks";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
@@ -24,7 +24,7 @@ import {
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import ItwContinueView from "../../../../components/ItwContinueView";
 import { itwActivationStart } from "../../../../store/actions/itwActivationActions";
-import { itwPrRemotePidInitSelector } from "../../../../store/reducers/presentation/remote/itwPrRemotePidReducer";
+import { itwPrRemotePidInitSelector } from "../../../../store/reducers/itwPrRemotePidReducer";
 
 /**
  * ItwPrRemotePidChecksScreenNavigationParams's navigation params.

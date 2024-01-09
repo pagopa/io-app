@@ -33,7 +33,7 @@ import {
 } from "../../../utils/itwErrorsUtils";
 import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList";
 import { StoredCredential } from "../../../utils/types";
-import { itwIssuancePidValueSelector } from "../../../store/reducers/issuance/pid/itwIssuancePidReducer";
+import { itwIssuancePidValueSelector } from "../../../store/reducers/itwIssuancePidReducer";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
