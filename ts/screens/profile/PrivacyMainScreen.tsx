@@ -42,7 +42,7 @@ type PrivacyNavListItem = {
   value: string;
 } & Pick<
   ComponentProps<typeof ListItemNav>,
-  "description" | "testID" | "onPress" | "badgeProps"
+  "description" | "testID" | "onPress" | "topElement"
 >;
 
 /**
@@ -214,12 +214,14 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
         );
       },
-      badgeProps: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
-        ? {
-            text: I18n.t("profile.preferences.list.wip"),
-            variant: "info"
-          }
-        : undefined,
+      topElement: {
+        badgeProps: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
+          ? {
+              text: I18n.t("profile.preferences.list.wip"),
+              variant: "info"
+            }
+          : undefined
+      },
       testID: "profile-export-data"
     },
     {
@@ -233,25 +235,27 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
         }
       },
-      badgeProps: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
-        ? {
-            text: I18n.t("profile.preferences.list.wip"),
-            variant: "info"
-          }
-        : undefined,
+      topElement: {
+        badgeProps: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
+          ? {
+              text: I18n.t("profile.preferences.list.wip"),
+              variant: "info"
+            }
+          : undefined
+      },
       testID: "profile-delete"
     }
   ];
 
   const renderPrivacyNavItem = ({
-    item: { value, description, onPress, badgeProps, testID }
+    item: { value, description, onPress, topElement, testID }
   }: ListRenderItemInfo<PrivacyNavListItem>) => (
     <ListItemNav
       accessibilityLabel={value}
       value={value}
       description={description}
       onPress={onPress}
-      badgeProps={badgeProps}
+      topElement={topElement}
       testID={testID}
     />
   );
