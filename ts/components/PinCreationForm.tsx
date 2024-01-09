@@ -1,25 +1,25 @@
+import { ButtonOutline, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
-import { IOColors, VSpacer, ButtonOutline } from "@pagopa/io-app-design-system";
-import I18n from "../i18n";
-import { PIN_LENGTH_SIX } from "../utils/constants";
-import { PinString } from "../types/PinString";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { defaultPin } from "../config";
 import { confirmButtonProps } from "../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import { isValidPinNumber } from "../features/fastLogin/utils/pinPolicy";
-import { isDevEnv } from "../utils/environment";
-import { defaultPin } from "../config";
+import I18n from "../i18n";
 import { trackPinError } from "../screens/profile/analytics";
-import { getFlowType } from "../utils/analytics";
 import { useIOSelector } from "../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../store/reducers/profile";
-import FooterWithButtons from "./ui/FooterWithButtons";
-import { InfoBox } from "./box/InfoBox";
-import { Label } from "./core/typography/Label";
-import { H1 } from "./core/typography/H1";
-import { Body } from "./core/typography/Body";
+import { PinString } from "../types/PinString";
+import { getFlowType } from "../utils/analytics";
+import { PIN_LENGTH_SIX } from "../utils/constants";
+import { isDevEnv } from "../utils/environment";
 import { LabelledItem } from "./LabelledItem";
-import { IOStyles } from "./core/variables/IOStyles";
+import { InfoBox } from "./box/InfoBox";
+import { Body } from "./core/typography/Body";
+import { H1 } from "./core/typography/H1";
+import { Label } from "./core/typography/Label";
 import { LabelSmall } from "./core/typography/LabelSmall";
+import { IOStyles } from "./core/variables/IOStyles";
+import FooterWithButtons from "./ui/FooterWithButtons";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
@@ -219,7 +219,7 @@ export const PinCreationForm = ({ onSubmit, isOnboarding }: Props) => {
         </View>
 
         <View style={{ marginTop: 45 }}>
-          <InfoBox iconName="profileAlt" iconColor="bluegrey">
+          <InfoBox iconName="profile" iconColor="bluegrey">
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("onboarding.pin.tutorial")}
             </Label>
