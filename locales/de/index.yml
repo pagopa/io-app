@@ -1,6 +1,10 @@
 ---
 accessibility:
   doubleTapToActivateHint: "Doppeltippen zum Aktivieren"
+  buttons:
+    torch:
+      turnOn: "Taschenlampe einschalten"
+      turnOff: "Taschenlampe ausschalten"
 date:
   formats:
     default: "%d.%m.%Y"
@@ -62,6 +66,15 @@ global:
     failed: "Fehlgeschlagen"
     cancelled: "Abgebrochen"
     reversal: "Stornierung"
+  modules:
+    paymentNotice:
+      badges:
+        paid: "Bezahlt"
+        error: "Fehler"
+        expired: "Abgelaufen"
+        revoked: "Widerrufen"
+        canceled: "Annulliert"
+        inprogress: "In Bearbeitung"
   password: "Passwort"
   username: "Benutzername"
   disclaimer_beta: "Wenn du Probleme bei der Anmeldung hast, lass es uns bitte wissen!"
@@ -71,6 +84,7 @@ global:
   accessibility:
     minusSymbol: "minus"
     reload: "Neu laden"
+    search: "Suchen"
     switchLabel: "Zum Aktivieren auswählen"
     inputLabel: "{{header}}, Überschrift"
     textField: "{{inputLabel}}, Textfeld"
@@ -149,6 +163,7 @@ global:
     ok: "OK"
     ok2: "Ok"
     continue: "Weiter"
+    notNow: "Jetzt nicht"
     retry: "Wiederholen"
     back: "Zurück"
     confirm: "Bestätigen"
@@ -161,9 +176,11 @@ global:
     edit: "Ändern"
     info: "Info"
     activate: "Aktivieren"
+    activate2: "Aktivieren"
     deactivate: "Deaktivieren"
     show: "Anzeigen"
     update: "Aktualisieren"
+    updateIO: "IO aktualisieren"
     findOutMore: "Mehr erfahren"
     details: "Details"
     choose: "Auswählen"
@@ -227,6 +244,9 @@ permissionRationale:
   calendar:
     title: "Zugriff auf den Kalender gewähren"
     message: "Du kannst Fälligkeiten in deinem Kalender eintragen und eine Benachrichtigung einstellen."
+  torch:
+    title: "Zugriff auf die Kamera gewähren"
+    message: "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
 startup:
   title: "Initialisierung"
   authentication: "Benutzer authentifiziert"
@@ -541,6 +561,7 @@ authentication:
     card4-content: "Das von dir verwendete Gerät unterstützt den Zugang mit einer elektronischen Identitätskarte (CIE) nicht"
     card5-title: "Willkommen bei der ersten öffentlichen Version von IO!"
     card5-content: "In der rechten oberen Ecke findest du das Symbol '?', mit dem du einen Chat mit dem IO-Team beginnen kannst, wenn etwas nicht so funktioniert, wie es sollte."
+    card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
     expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
     expiredCardContent: "Die verwendete Karte ist nicht mehr gültig oder abgelaufen.\nWenn du dich anmelden und auf die IO zugreifen möchtest, musst du SPID verwenden."
@@ -620,6 +641,23 @@ authentication:
     headerTitle: "Du hast keinen SPID?"
     contentTitle: "Was ist SPID?"
     subtitle: "SPID ist sicher"
+  opt_in:
+    contextualHelpTitle: "Authentifizierung"
+    contextualHelpContent: "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps."
+    news: "Neu"
+    title: "Ab sofort kannst du leichter auf IO zugreifen"
+    identity_check: "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE authentifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt"
+    security_suggests: "Einige Sicherheitstipps"
+    passcode: "In allen anderen Fällen reicht dein Gesicht, dein Fingerabdruck oder dein Entsperrcode aus."
+    notification: "Du erhältst bei jedem neuen Zugang eine E-Mail. Wenn du diese nicht erkennst, kannst dz den Zugang zu IO sperren."
+    button_accept_lv: "Ja, Schnellzugriff einrichten"
+    button_decline_lv: "Nein, ich möchte mich alle 30 Tage neu anmelden"
+  security_suggestions:
+    fingerprint: "Gib deinen biometrischen Erkennungs- oder Entsperrcode nicht an Dritte weiter."
+    io_logout: "Wenn du dieses Gerät verlierst, beende IO über die Website"
+    io_lock_access: "Wenn du glaubst, dass deine SPID- oder CIE-Anmeldedaten kompromittiert wurden, blockiere den Zugriff auf IO über die Website"
+    access_new_device: "Wenn du mit einem fremden Gerät auf IO zugreifst, denk daran, dich bei der App abzumelden."
+    navigate_to_the_site: "Website besuchen"
   idp_selection:
     headerTitle: "Home"
     contentTitle: "Wähle deinen Identitätsanbieter"
@@ -653,7 +691,48 @@ authentication:
       error_1001: "Zugang verweigert: Du hast nicht das Mindestalter für die Nutzung von IO"
   expiredSessionBanner:
     title: "Sicherheitshinweis"
+    message: "Um deine privaten Daten zu schützen, melde dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
+  unlock:
+    title: "Zugang entsperren"
+    subtitlel2: "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren."
+    subtitlel3: "Um mit all deinen SPID-Anmeldedaten oder deiner CIE auf die App zugreifen zu können, musst du den Zugang entsperren."
+    learnmore: "Mehr erfahren"
+    loginIO: "Schließen"
+  unlockmodal:
+    title: "Was bedeutet das?"
+    description1_1: "Wenn du den Zugang zu IO aus Sicherheitsgründen gesperrt hast, musst du ihn zunächst entsperren, um die App wieder öffnen zu können."
+    description1_2: "Alternativ kannst du die App auch über ein Login mit der"
+    description1_3: "höchsten Sicherheitsstufe öffnen."
+    description1_4: "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE."
+    title2: "Wie man den Zugang zu IO entsperrst"
+    listitem1: "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst."
+    listitem2_1: "Greif über das Internet auf IO zu, indem du deine SPID-Anmeldedaten oder deine CIE verwendest."
+    listitem2_2: "Geh zur Website"
+    listitem3_1: "Geh zum Abschnitt"
+    listitem3_2: "IO-Zugang entsperren"
+    listitem3_3: "und folge den angegebenen Schritten. Wenn du dazu aufgefordert wirst, gib den"
+    listitem3_4: "Wiederherstellungscode"
+    listitem3_5: "ein, um den Vorgang zu bestätigen."
 email:
+  cduScreens:
+    validateMail:
+      title: "Du hast deine E-Mail-Adresse nicht bestätigt"
+      subtitle: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
+      editButton: "E-Mail-Adresse ändern"
+      validateButton: "E-Mail-Adresse bestätigen"
+      header: 
+        title: "IO konfigurieren"
+      help:
+        body: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
+    emailAlreadyTaken:
+      title: "Deine E-Mail-Adresse ändern"
+      subtitleStart: "Deine E-Mail-Adresse"
+      subtitleEnd: "wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
+      editButton: "E-Mail-Adresse ändern"
+      header: 
+        title: "IO konfigurieren"
+      help:
+        body: "Deine E-Mail-Adresse wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
   read:
     title: "Deine E-Mail-Adresse"
     info: "Das ist die E-Mail-Adresse, die mit deinem SPID-Konto verknüpft ist. Wenn du magst, kannst du in IO eine andere E-Mail-Adresse verwenden. Um die neue E-Mail-Adresse zu aktivieren, musst du sie bestätigen, indem du auf den Link klickst, den du mittels E-Mail erhalten hast."
@@ -668,6 +747,9 @@ email:
     alert: "Du verwendest bereits diese E-Mail-Adresse"
     help:
       title: "E-Mail"
+    alertTitle: "Diese E-Mail-Adresse wird bereits verwendet"
+    alertDescription: "Dies kann der Fall sein, wenn du mit einem Familienmitglied die gleiche Adresse teilst"
+    alertButton: "Andere E-Mail-Adresse verwenden"
   newinsert:
     header: "IO konfigurieren"
     title: "Wie lautet Ihre E-Mail?"
@@ -700,6 +782,16 @@ email:
     validation_ok: "Deine E-Mail-Adresse wurde bestätigt. Du kannst nun alle Funktionen von IO benutzen."
     validated: "E-Mail bestätigt!"
     validated_ok: "Danke, jetzt kannst du alle Zahlungsfunktionen, Nachrichtenweiterleitung usw. nutzen."
+  newvalidate:
+    title: "Bestätige deine E-Mail-Adresse"
+    subtitle: "Folge den Anweisungen, die an folgende Adresse gesendet wurden:"
+    link: "Ist sie nicht korrekt?"
+    buttonlabelsent: "E-Mail gesendet"
+    buttonlabelsentagain: "E-Mail erneut senden"
+    toast: "Erledigt! Prüf deinen Posteingang."
+  newvalidemail:
+    title: "E-Mail bestätigt!"
+    subtitle: "Du empfängst IO-Mitteilungen unter:"
 onboarding:
   contextualHelpTitle: "Wie funktioniert die biometrische Erkennung"
   tos:
@@ -715,7 +807,7 @@ onboarding:
   pin:
     headerTitle: "IO einrichten"
     title: "Entsperrcode"
-    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige In-App-Operationen zu bestätigen. Falls dein Gerät dies unterstützt, kannst du ihn später durch biometrische Daten ersetzen."
+    subTitle: "Es ist ein 6-stelliger Code den du benötigst, um in IO einzusteigen und einige In-App-Vorgänge zu bestätigen. Falls dein Gerät dies unterstützt, kannst du ihn später durch biometrische Daten ersetzen."
     pinLabel: "Lege einen Entsperrcode fest"
     pinConfirmationLabel: "Wiederhole den Entsperrcode"
     tutorial: "Du kannst den Code jederzeit unter Profil > Sicherheit abändern"
@@ -845,6 +937,29 @@ payment:
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
 wallet:
+  methodDetails:
+    cobadgeTitle: "Debitkarte"
+    cardGeneric: "Karte"
+    a11y:
+      credit:
+        hpan: "{{circuit}} mit der Endung {{spacedHpan}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+      paypal:
+        owner: "Konto: {{email}}"
+      bpay:
+        phone: "Mobiltelefonnummer: {{phoneNumber}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+      bancomat:
+        bank: "PagoBANCOMAT-Karte {{bankName}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+      cobadge:
+        bank: "Kreditkarte {{bankName}}"
+        owner: "lautend auf: {{fullOwnerName}}"
+    expired: "Die Zahlungsmethode ist abgelaufen und kann nicht mehr für In-App-Zahlungen verwendet werden."
+    isSupportedBanner:
+      title: "Möchtest du in der App bezahlen?"
+      content: "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst."
+      cta: "Mehr erfahren"
   wallet: "Konto"
   refreshWallet: "Konto aktualisieren"
   favourite:
@@ -905,6 +1020,10 @@ wallet:
     cardsPreview: "Vorschau der Zahlungsmethoden. Aktiviere, um die Liste deiner Zahlungsmethoden aufzurufen"
     cardHolder: "Karteninhaber"
   onboarding:
+    paymentMethodsList:
+      header:
+        title: "Zahlungsmethode hinzufügen"
+        subtitle: "Die Zahlungsmethode wird gespeichert und kann verwendet werden, um In-App-Zahlungen vorzunehmen oder kompatiblen Initiativen beizutreten."
     bancomat:
       headerTitle: "PagoBANCOMAT-Karte hinzufügen"
       koTimeout:
@@ -1029,6 +1148,32 @@ wallet:
     success:
       title: "Die Karte wurde hinzugefügt!"
       continueButton: "Weiter"
+    failure:
+      GENERIC_ERROR:
+        title: "Es ist ein unerwarteter Fehler aufgetreten"
+        subtitle: "Versuche es erneut oder kontaktiere den Support"
+        primaryAction: "Schließen"
+      AUTH_ERROR:
+        title: "Autorisierung verweigert"
+        subtitle: "Vergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast."
+        primaryAction: "Schließen"
+        secondaryAction: "Mehr erfahren"
+      TIMEOUT:
+        title: "Die Sitzung ist abgelaufen"
+        subtitle: "Zu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
+        primaryAction: "Schließen"
+      CANCELED_BY_USER:
+        title: "Der Vorgang wurde abgebrochen"
+        subtitle: ""
+        primaryAction: "Schließen"
+      INVALID_SESSION:
+        title: "Es ist ein unerwarteter Fehler aufgetreten"
+        subtitle: "Versuche es erneut oder kontaktiere den Support"
+        primaryAction: "Schließen"
+      ALREADY_ONBOARDED:
+        title: "Du hast diese Zahlungsmethode bereits hinzugefügt"
+        subtitle: ""
+        primaryAction: "Schließen"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
     msgErrorUpdateApp: "Beim Öffnen des App-Stores ist ein Fehler aufgetreten"
@@ -1159,6 +1304,7 @@ wallet:
           bottomSheetTitle: "Warum kann ich nicht mit dieser Zahlungsmethode bezahlen?"
           bottomSheetDescription: "Die Funktion “In-App-Zahlungen” ist möglicherweise deaktiviert. Bevor du versuchst, die Zahlung erneut vorzunehmen, gehe bitte wie folgt vor:\n\n1. gehe zum Bereich “Konto”;\n2. wähle die gewünschte Zahlungsmethode aus;\n3. aktiviere “In-App-Zahlungen”."
   firstTransactionSummary:
+    loading: "Informationen werden abgerufen"
     title: "Zahlungsdetails"
     amount: "Betrag"
     total: "Insgesamt bezahlt"
@@ -1240,6 +1386,8 @@ wallet:
         bottomSheetTitle: "Warum kann ich nicht in der App bezahlen?"
         bottomSheetBody: "Diese Zahlungsmethode ist nicht für Online-Zahlungen geeignet."
         bottomSheetCTA: "Entdecke die unterstützten Zahlungsmethoden"
+        operationCompleted: "Vorgang abgeschlossen!"
+        operationError: "Deaktivierung fehlgeschlagen"
     bonus:
       name: "Rabatte, Boni und andere Initiativen"
       description: "Initiativen von öffentlichen Verwaltungen zur Unterstützung von Ausgaben oder Dienstleistungen im Zusammenhang mit Zahlungen"
@@ -1337,7 +1485,7 @@ wallet:
     EC: "Die Körperschaft hat Probleme bei der Beantwortung"
     ONGOING: "Die Zahlung ist bereits im Gange, bitte versuche es in ein paar Minuten erneut."
     ONGOING_SUBTITLE: "Wenn es zu lange her ist, lasse es uns wissen!"
-    REVOKED: "Die Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
+    REVOKED: "Die Körperschaft hat diese Zahlungsmitteilung widerrufen"
     EXPIRED: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr gezahlt werden"
     GENERIC_ERROR: "Ein unerwarteter Fehler ist aufgetreten"
     GENERIC_ERROR_SUBTITLE: "Bitte versuche es erneut oder kontaktiere uns."
@@ -1426,10 +1574,23 @@ wallet:
         description1: "Wir senden eine Quittung an"
         description2: "Du kannst sie auch in deinem Konto finden."
   abortWebView:
-    title: "Möchtest du die aktuelle Operation abbrechen?"
+    title: "Möchtest du den aktuellen Vorgang abbrechen?"
     confirm: "Ja, beenden"
     cancel: "Nein, fortfahren"
     success: "Probleme beim Hinzufügen? Wende dich an deine Bank."
+  payment:
+    barcodes:
+      choice:
+        title: "Es wurden mehrere Codes entdeckt. Welchen möchtest du verwenden?"
+    manual:
+      noticeNumber:
+        title: "Gib den Zahlungskodex ein"
+        subtitle: "Er hat 18 Ziffern und ist neben dem QR-Code zu finden."
+        placeholder: "Zahlungskodex"
+      fiscalCode:
+        title: "Gib die Steuernummer der Körperschaft ein"
+        subtitle: "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden."
+        placeholder: "Steuernummer der Körperschaft"
 saveCard:
   saveCard: "Karte speichern"
   header: "Möchtest du diese Karte speichern?"
@@ -1586,6 +1747,9 @@ messageDetails:
   sendEmail: "Sende eine E-Mail"
   write: "Schreibe uns"
   id: "ID:"
+  remoteContentError:
+    title: "Die Details der Mitteilung konnten nicht abgerufen werden"
+    body: "Wir haben einen Fehler in den von der Körperschaft bereitgestellten Informationen gefunden. Bitte versuche es in ein paar Minuten erneut. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
   attachments:
     loading: "Laden des Dokuments..."
     badFormat: "Das Format des Anhangs wird nicht unterstützt. Kontaktiere den Absender"
@@ -1598,6 +1762,14 @@ messageDetails:
       thirdPart: " für weitere Informationen."
     failing:
       details: "Der Anhang konnte nicht heruntergeladen werden. Bitte versuche es erneut oder öffne eine Ticket"
+  banner:
+    content1: "Das ist eine"
+    content2: "dynamische Mitteilung:"
+    content3: "der Inhalt kann sich im Laufe der Zeit ändern, damit du aktuelle Informationen erhältst."
+    action: "Mehr erfahren"
+  bottomSheet:
+    title: "Was ist eine dynamische Mitteilung?"
+    body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anlagen.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
 messagePDFPreview:
   title: "PDF-Vorschau"
   singleBtn: "Speichern oder freigeben"
@@ -1775,16 +1947,37 @@ systemsOff:
   title: "IO kann nicht verwendet werden"
   closeApp: "Schließe die App und versuche es erneut"
 contextualHelp:
-  title: Die IO-App hilft Ihnen
+  title: "IO hilft dir"
+  sendPersonalInfo:
+    title: "Neues Ticket"
 bottomSheets:
   ciePin:
     title: "Wo finde ich meine PIN?"
     content: !include bottomsheets/ciePin.md
 bonus:
+  accessibility:
+    sectionCardLabel: "Boni und Rabatte aktualisieren"
+    sectionCardHint: "Aktualisiere die Liste der aktiven Boni"
+  state:
+    completed:
+      caption: "beendet"
+      description: "Diese Initiative ist beendet und kann nicht mehr beantragt werden."
   bonusList:
     title: "Bonus oder Rabatt hinzufügen"
-    contentTitle: "Wähle einen der verfügbaren Boni oder Rabatte"
+    contentTitle: "Wähle einen der verfügbaren Boni aus"
+    contextualHelp:
+      title: "Hinzufügen eines Bonus oder Rabatts"
+      body: "Hier kannst du den Bonus oder Rabatt auswählen, die du hinzufügen möchten. Sobald sie aktiviert sind, werden sie in der Rubrik “Konto” angezeigt. Du kannst die Details des Bonus oder des Rabatts jederzeit einsehen, indem du den Bereich “Konto” aufrufst und das entsprechende Element in der Liste auswählst."
+  request: "Beantrage einen neuen Bonus"
   requestLabel: "Boni und Rabatte"
+  requestTitle: "Anfrage"
+  validity_interval: "vom {{from}} bis {{to}}"
+  active: "Aktiv"
+  failed: "Fehlgeschlagen"
+  redeemed: "Eingelöst"
+  termsAndConditionFooter: "Durch Drücken von {{ctaText}} erklärst du, dass du den [Leitfaden]({{regulationLink}}) und die [Datenschutzrichtlinie]({{tosUrl}}) gelesen und verstanden hast."
+  tos:
+    title: "Datenschutzbestimmungen"
   cgn:
     generic:
       linkError: "Die Website des Anbieters ist zur Zeit nicht erreichbar. Bitte versuche es später noch einmal."
@@ -1938,23 +2131,30 @@ bonus:
           one: "1 Sekunde"
           other: "{{seconds}} Sekunden"
 features:
+  messages:
+    loading:
+      title: "Die Details der Mitteilung werden geladen"
+      subtitle: "Warte ein paar Sekunden"
+    updateBottomSheet:
+      title: "Aktualisiere die IO-App"
+      subtitle: "App IO Version {{value}} ist erforderlich, um diese Funktion zu nutzen. Bitte aktualisiere die App, um fortzufahren."
   euCovidCertificate:
     save:
       album: "IO"
-      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfen Sie Ihre Geräteeinstellungen."
-      ok: "Das Bild wurde auf Ihrem Smartphone gespeichert"
+      noPermission: "Die IO-App hat vermutlich keine Berechtigung zum Speichern der Bilder. Bitte überprüfe deine Geräteeinstellungen."
+      ok: "Das Bild wurde auf deinem Smartphone gespeichert"
       bottomSheet:
-        title: "Speichern Sie das Zertifikat"
+        title: "Speichere das Zertifikat"
         subTitle: "Auch ohne der IO-App und Internetverbindung kann das Zertifikat angezeigt werden."
         saveAsImage:
           title: "Bild in Galerie speichern"
-          subTitle: "Sie finden den QR-Code auch als Bild auf Ihrem Smartphone."
+          subTitle: "Du findest den QR-Code auch als Bild auf deinem Smartphone."
     listItem:
       cta: "Anzeigen"
     common:
       title: "Grünes COVID-19-Zertifikat"
       subtitle: "EU Digital COVID Certificate"
-      learnMore: "Erfahren Sie mehr"
+      learnMore: "Erfahre mehr"
       authorizationCode: "Autorisierungscode"
       messageIdentifier: "Identifizierung der Nachricht"
     loading:
@@ -1973,21 +2173,68 @@ features:
       title: "Dieses Zertifikat ist abgelaufen"
     ko:
       genericError:
-        title: "Ihre Zertifikatsdaten konnten nicht abgerufen werden: Bitte versuchen Sie es erneut"
+        title: "Deine Zertifikatsdaten konnten nicht abgerufen werden: Bitte versuche es erneut"
         subtitle: "Dies kann ein vorübergehendes Problem sein."
       notFound:
-        title: "Das Zertifikat existiert anscheinend nicht: Kontaktieren Sie den Support"
+        title: "Das Zertifikat existiert anscheinend nicht: Kontaktiere den Support"
         subtitle: "Nützliche Informationen für den Support:"
         cta: "Support kontaktieren"
       notOperational:
         title: "Das Grüne COVID-19-Zertifikat funktioniert derzeit nicht"
       temporarilyNotAvailable:
         title: "Der Dienst ist vorübergehend nicht verfügbar"
-        subtitle: "Bitte versuchen Sie es später erneut"
+        subtitle: "Bitte versuche es später erneut"
       wrongFormat:
-        title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktieren Sie den Support"
+        title: "Dieses Zertifikat kann nicht wiederhergestellt werden: Kontaktiere den Support"
         subtitle: "Nützliche Informationen um Support zu erhalten:"
         cta: "Support kontaktieren"
+  pn:
+    service:
+      activate: "Aktiviere den Dienst"
+      deactivate: "Deaktiviere den Dienst"
+      toast:
+        activated: "Vielen Dank, der Dienst ist aktiv!"
+        error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
+    details:
+      title: "Details der Mitteilung"
+      noticeCode: "Zahlungskodex"
+      loadError:
+        title: "Etwas ist schief gelaufen"
+        body: "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
+      cancelledMessage:
+        body: "Dieser Bescheid wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
+        unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
+        payments: "Zahlungen"
+      paymentSection:
+        title: "pagoPA Zahlungsaufforderungen"
+        morePayments: "Alle Zahlungsaufforderungen anzeigen"
+        bottomSheetTitle: "Welche Zahlungsaufforderung möchtest du bezahlen?"
+      attachmentsSection:
+        title: "Anhänge"
+      f24Section:
+        title: "F24-Formulare"
+        description: "Wenn du es vorziehst, kannst du diesen Bescheid über F24 bezahlen."
+        showAll: "F24-Formulare anzeigen"
+        bottomSheet:
+          title: "Beiliegende F24-Formulare"
+      infoSection:
+        title: "Informationen zum Bescheid"
+        iun: "IUN-Code"
+      timeline:
+        title: "STATUS DES BESCHEIDS"
+        status:
+          DELIVERED: "Zugestellt"
+          DELIVERING: "In Zustellung"
+          UNREACHABLE: "Empfänger nicht auffindbar"
+          PAID: "Bezahlt"
+          ACCEPTED: "Hinterlegt"
+          EFFECTIVE_DATE: "Abgeschlossen wegen Ablaufs der Hinterlegungsfrist"
+          VIEWED: "Gelesen"
+          REFUSED: "VERWEIGERT"
+          CANCELLED: "Annulliert"
+        expand: "Vorherigen Status anzeigen"
+        info: "Über die Web-Version des Dienstes kannst du die Details zu jedem Status, die Annahmebestätigung und den Zustellnachweis, die gegenüber Dritten geltend gemacht werden können, einsehen"
+        cta: "Zugang zur Webversion"
 support:
   ticketList:
     noTicket:
@@ -2023,6 +2270,8 @@ support:
     stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
     card: "Angaben zur Zahlungsmethode"
     cardValue: "Nummer (verschlüsselt), Ablaufdatum, Zahlungsnetzwerk"
+    fci: "Identifikation der Signaturanfrage"
+    fciValue: "Um die aktuelle Anfrage zu prüfen"
     prominentDisclosure: "Zugriff auf die Galerie des Geräts"
     prominentDisclosureData: "Zum Hochladen von Fotos und Screenshots"
     header: "Erstelle ein Ticket"
@@ -2044,3 +2293,104 @@ support:
       subCategory: "Kannst du uns mehr Details nennen?"
     subTitle:
       category: "Hilf uns, besser zu verstehen, wie wir dir helfen können, indem du den Bereich deines Problems auswählst: Wir werden uns so schnell wie möglich während der Geschäftszeiten bei dir melden."
+barcodeScan:
+  error: "IO kann diesen Code nicht erkennen"
+  tabs:
+    scan: "Scannen"
+    upload: "Hochladen"
+    input: "Eingeben"
+    a11y:
+      scan: "Scannen, 1 von 3"
+      upload: "Hochladen, 2 von 3"
+      input: "Eingeben, 3 von 3"
+  upload:
+    image: "Ein Bild hochladen"
+    file: "Eine Datei hochladen"
+  manual:
+    authorize: "Eine Transaktion genehmigen"
+    notice: "Eine pagoPA-Mitteilung bezahlen"
+  permissions:
+    undefined:
+      title: "Wir brauchen deine Zustimmung"
+      label: "Erlaube den Zugriff, um QR-Codes mit der Kamera deines Geräts scannen zu können."
+      action: "Zugriff gewähren"
+    denied:
+      title: "Du hast den Zugriff verweigert, die Kamera zu benutzen"
+      label: "Um den Zugriff zu gewähren, geh zu den Einstellungen deines Betriebssystems."
+      action: "Zu den Einstellungen"
+  multipleResultsAlert:
+    title: "Du hast mehrere Codes gescannt"
+    body: "Scanne nur einen Code auf einmal"
+    action: "Erneut versuchen"
+unsupportedDevice:
+  warning: "Dein Gerät könnte bald nicht mehr mit IO kompatibel sein."
+  title: "Dieses Gerät ist nicht mehr kompatibel mit IO"
+  subtitle: "Stell sicher, dass dein Betriebssystem auf die neueste Version aktualisiert ist. Wenn dies bereits der Fall ist, musst du dich von einem anderen Gerät aus anmelden, um IO weiter nutzen zu können."
+  cta:
+    faq: "Warum?"
+fastLogin:
+  userInteraction:
+    sessionExpired:
+      noPin:
+        title: "Es ist zu lange her!"
+        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE authentifizieren. Anschließend kannst du die IO-Konfiguration dort fortsetzen, wo du aufgehört hast."
+        submitButtonTitle: "Fortfahren"
+      continueNavigation:
+        title: "Deine Sitzung ist abgelaufen"
+        subtitle: "Um die App weiter zu verwenden, drück auf “Fortsetzen”."
+        submitButtonTitle: "Fortsetzen"
+        cancelButtonTitle: "Abbrechen"
+      transientError:
+        title: "Wir konnten dich nicht authentifizieren"
+        subtitle: "Schließ die App und versuche es in ein paar Minuten erneut."
+        submitButtonTitle: "Zu den FAQ"
+  whatsNew:
+    title: "Wir haben den Zugang zu IO verbessert!"
+    subtitle: "Du musst dich jetzt nur noch einmal im Jahr mit deinem SPID oder deiner CIE authentifizieren. Danach brauchst du dich nur noch mit deinem Entsperrcode oder biometrischen Merkmalen anmelden."
+    changes:
+      first:
+        title: "Einfacher"
+        description: "Zugang nur durch Eingabe des Entsperrcodes der App oder mit biometrischen Merkmalen."
+      second:
+        title: "Schneller"
+        description: "Wir werden dich nur einmal im Jahr oder wenn du dich aus der App ausloggst auffordern, dich mit SPID oder CIE zu authentifizieren."
+      third:
+        title: "Sicherer"
+        description: "Jedes Mal, wenn du dich erneut mit SPID oder CIE anmeldest, senden wir dir eine E-Mail."
+whatsNew:
+  title: "Was ändert sich?"
+bonusCard:
+  validUntil: "Gültig bis {{endDate}}"
+  expiring: "Verfällt am {{endDate}}"
+  paused: "In Pause"
+  removed: "Entfernt"
+transaction:
+  details:
+    title: "Details zur Transaktion"
+    totalAmount: "Insgesamt"
+    totalFee: "Der Gesamtbetrag umfasst "
+    totalFeePsp: "Provision, berechnet von {{pspName}}"
+    info:
+      title: "Informationen zur Transaktion"
+      pspName: "Zahlungsdienstleister (PSP)"
+      dateAndHour: "Datum und Uhrzeit"
+      transactionId: "Transaktions-ID"
+    operation:
+      amount: "Betrag"
+      creditor: "Gläubiger"
+      debtor: "Schuldner"
+      iuv: "IUV"
+      subject: "Zahlungsgrund"
+permissionRequest:
+  media:
+    title: "Erlaube  IO den Zugriff auf deine Fotos"
+    subtitle: "Dazu musst du die Rechte in den Einstellungen deines Geräts ändern."
+    caption: "So geht's:"
+    step: "Schritt {{step}}"
+    steps:
+      1: "Geh zu “Einstellungen”"
+      2: "Wähle “Apps”"
+      3: "Wähle “IO”"
+      4: "Wähle den Punkt App-Berechtigungen"
+      5: "Lass den Zugriff auf Dateien und Medien zu"
+    cta: "Öffne Einstellungen"
