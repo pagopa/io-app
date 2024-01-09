@@ -5,7 +5,7 @@ import { HSpacer } from "@pagopa/io-app-design-system";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import I18n from "../../../../i18n";
-import { getRemoteLocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { Body } from "../../../../components/core/typography/Body";

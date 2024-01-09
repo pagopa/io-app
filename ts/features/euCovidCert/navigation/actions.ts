@@ -1,9 +1,9 @@
 import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
 import { EuCovidCertificateRouterScreenNavigationParams } from "../screens/EuCovidCertificateRouterScreen";
 import { EuCovidCertMarkdownDetailsScreenNavigationParams } from "../screens/valid/EuCovidCertMarkdownDetailsScreen";
 import { EuCovidCertQrCodeFullScreenNavigationParams } from "../screens/valid/EuCovidCertQrCodeFullScreen";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import EUCOVIDCERT_ROUTES from "./routes";
 
 /**
@@ -14,7 +14,7 @@ export const navigateToEuCovidCertificateDetailScreen = (
   params: EuCovidCertificateRouterScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+    CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: EUCOVIDCERT_ROUTES.MAIN,
       params: {
         screen: EUCOVIDCERT_ROUTES.CERTIFICATE,
@@ -31,7 +31,7 @@ export const navigateToEuCovidCertificateQrCodeFullScreen = (
   params: EuCovidCertQrCodeFullScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+    CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: EUCOVIDCERT_ROUTES.MAIN,
       params: {
         screen: EUCOVIDCERT_ROUTES.QRCODE,
@@ -48,7 +48,7 @@ export const navigateToEuCovidCertificateMarkdownDetailsScreen = (
   params: EuCovidCertMarkdownDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+    CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
       screen: EUCOVIDCERT_ROUTES.MAIN,
       params: {
         screen: EUCOVIDCERT_ROUTES.MARKDOWN_DETAILS,

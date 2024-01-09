@@ -4,7 +4,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import { MessagePaymentItem } from "../MessagePaymentItem";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../../messages/types";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { updatePaymentForMessage } from "../../store/actions";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
