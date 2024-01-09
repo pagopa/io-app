@@ -67,7 +67,12 @@ const WalletPaymentPickMethodScreen = () => {
     walletPaymentSavedMethodByIdSelector
   );
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
-  const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
+  const paymentMethodsPot = pot.none as ReturnType<
+    typeof walletPaymentAllMethodsSelector
+  >;
+  // substitute line over this with the one under once
+  // generic methods are implemented
+  // useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
   // todo:: will be needed when generic method selection is implemented
   // const getGenericMethodById = useIOSelector(
@@ -127,13 +132,14 @@ const WalletPaymentPickMethodScreen = () => {
       walletId
     });
   };
-
-  const handleSelectNotSavedMethod = (methodId: string) => {
-    setSelectedMethod({
-      kind: "generic",
-      methodId
-    });
-  };
+  //
+  // will be decommented once generic methods are implemented
+  // const handleSelectNotSavedMethod = (methodId: string) => {
+  //   setSelectedMethod({
+  //     kind: "generic",
+  //     methodId
+  //   });
+  // };
 
   const handleContinue = () => {
     // todo:: should handle the case where the user
@@ -201,6 +207,7 @@ const WalletPaymentPickMethodScreen = () => {
       />
 
       <RadioGroup<string>
+        type="radioListItem"
         selectedItem={selectedMethod?.walletId}
         items={isLoading ? loadingRadios : savedMethodsListItems}
         onPress={handleSelectSavedMethod}
@@ -208,20 +215,20 @@ const WalletPaymentPickMethodScreen = () => {
 
       {
         // since there will be a transitory phase where this list is not
-        // returned, we need to not render the header if necessary
-        genericMethodsListItems.length > 0 && (
-          <>
-            <ListItemHeader
-              label={I18n.t("wallet.payment.methodSelection.otherMethods")}
-            />
-
-            <RadioGroup<string>
-              selectedItem={selectedMethod?.methodId}
-              items={isLoading ? loadingRadios : genericMethodsListItems}
-              onPress={handleSelectNotSavedMethod}
-            />
-          </>
-        )
+        // returned, this is commented until the generic methods are implemented
+        // genericMethodsListItems.length > 0 && (
+        //   <>
+        //     <ListItemHeader
+        //       label={I18n.t("wallet.payment.methodSelection.otherMethods")}
+        //     />
+        //     <RadioGroup<string>
+        //       type="radioListItem"
+        //       selectedItem={selectedMethod?.methodId}
+        //       items={isLoading ? loadingRadios : genericMethodsListItems}
+        //       onPress={handleSelectNotSavedMethod}
+        //     />
+        //   </>
+        // )
       }
     </GradientScrollView>
   );
@@ -304,27 +311,15 @@ const isDisabled = (
     )
   );
 
-const loadingRadios: Array<RadioItem<string>> = [
-  {
-    id: "1",
+const loadingRadios: Array<RadioItem<string>> = Array.from(
+  { length: 10 },
+  (_, id) => ({
+    id: id.toString(),
     disabled: true,
     loadingProps: { state: true },
-    value: "123456"
-  },
-
-  {
-    id: "2",
-    disabled: true,
-    loadingProps: { state: true },
-    value: "123456"
-  },
-  {
-    id: "3",
-    disabled: true,
-    loadingProps: { state: true },
-    value: "123456"
-  }
-];
+    value: ""
+  })
+);
 
 // ------------- EXPORTS -------------
 
