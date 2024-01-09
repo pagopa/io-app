@@ -9,7 +9,10 @@ import { ActionType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
-import { itwPersistedCredentialsAddPid } from "../store/actions/itwPersistedCredentialsActions";
+import {
+  itwCredentialsAddPid,
+  itwPid
+} from "../store/actions/itwCredentialsActions";
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
 import { walletProviderBaseUrl } from "../../../config";
 import {
@@ -17,8 +20,7 @@ import {
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
 } from "../utils/itwSecureStorageUtils";
-import { itwIssuancePid } from "../store/actions/itwIssuancePidActions";
-import { verifyPin } from "../utils/itwSagaUtils";
+import { verifyPin } from "./itwSagaUtils";
 
 /**
  * A dummy implementation of CompleteUserAuthorization that uses static values.
@@ -32,28 +34,25 @@ const completeUserAuthorizationWithCIE: Credential.Issuance.CompleteUserAuthoriz
 /**
  * Watcher for the IT wallet PID related sagas.
  */
-export function* watchItwIssuancePidSaga(): SagaIterator {
+export function* watchPidSaga(): SagaIterator {
   /**
    * Handles a PID issuing request.
    */
-  yield* takeLatest(itwIssuancePid.request, handleItwIssuancePidSaga);
+  yield* takeLatest(itwPid.request, handlePidRequest);
 
   /**
    * Handles adding a PID to the wallet.
    */
-  yield* takeLatest(
-    itwPersistedCredentialsAddPid.request,
-    handleCredentialsAddPid
-  );
+  yield* takeLatest(itwCredentialsAddPid.request, handleCredentialsAddPid);
 }
 
 /*
  * This saga handles the PID issuing.
  * It calls the getPid function to get an encoded PID.
  */
-export function* handleItwIssuancePidSaga({
+export function* handlePidRequest({
   payload: { type, issuerUrl, pidData, ...displayData }
-}: ActionType<typeof itwIssuancePid.request>): SagaIterator {
+}: ActionType<typeof itwPid.request>): SagaIterator {
   try {
     const wiaOption = yield* select(itwWiaSelector);
     if (isSome(wiaOption)) {
@@ -100,7 +99,7 @@ export function* handleItwIssuancePidSaga({
         }
       );
 
-      // Perform strong user authorozation to the PID Issuer
+      // Perform strong user authorization to the PID Issuer
       const { code } = yield* call(
         completeUserAuthorizationWithCIE,
         requestUri,
@@ -120,7 +119,7 @@ export function* handleItwIssuancePidSaga({
       );
 
       // Generate fresh key for PID binding
-      // ensure the key esists befor starting the issuing process
+      // ensure the key exists befor starting the issuing process
       yield* call(getOrGenerateCyptoKey, ITW_PID_KEY_TAG);
       const credentialCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
 
@@ -147,7 +146,7 @@ export function* handleItwIssuancePidSaga({
       );
 
       yield* put(
-        itwIssuancePid.success({
+        itwPid.success({
           issuerConf,
           keyTag: ITW_PID_KEY_TAG,
           credential,
@@ -160,14 +159,14 @@ export function* handleItwIssuancePidSaga({
       );
     } else {
       yield* put(
-        itwIssuancePid.failure({
+        itwPid.failure({
           code: ItWalletErrorTypes.PID_ISSUING_ERROR
         })
       );
     }
   } catch (err) {
     yield* put(
-      itwIssuancePid.failure({
+      itwPid.failure({
         code: ItWalletErrorTypes.PID_ISSUING_ERROR
       })
     );
@@ -179,16 +178,16 @@ export function* handleItwIssuancePidSaga({
  * As a side effect, it sets the lifecycle of the wallet to valid.
  */
 export function* handleCredentialsAddPid(
-  action: ActionType<typeof itwPersistedCredentialsAddPid.request>
+  action: ActionType<typeof itwCredentialsAddPid.request>
 ): SagaIterator {
   yield* call(verifyPin);
   const pid = action.payload;
   if (O.isSome(pid)) {
-    yield* put(itwPersistedCredentialsAddPid.success(pid.value));
+    yield* put(itwCredentialsAddPid.success(pid.value));
     yield* put(itwLifecycleValid());
   } else {
     yield* put(
-      itwPersistedCredentialsAddPid.failure({
+      itwCredentialsAddPid.failure({
         code: ItWalletErrorTypes.CREDENTIAL_ADD_ERROR
       })
     );

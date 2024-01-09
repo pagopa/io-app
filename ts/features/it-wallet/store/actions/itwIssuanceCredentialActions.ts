@@ -36,11 +36,11 @@ export const itwIssuanceCredential = createAsyncAction(
 /**
  * Action which is dispatched when the user confirms the storage of the credential.
  */
-export const itwIssuanceCredentialStore = createStandardAction(
-  "ITW_ISSUANCE_CREDENTIAL_STORE"
+export const itwConfirmStoreCredential = createStandardAction(
+  "ITW_CONFIRM_STORE_CREDENTIAL"
 )<void>();
 
 export type ItwIssuanceCredentialActions =
-  | ActionType<typeof itwIssuanceCredentialStore>
+  | ActionType<typeof itwConfirmStoreCredential>
   | ActionType<typeof itwIssuanceCredential>
   | ActionType<typeof itwIssuanceCredentialChecks>;

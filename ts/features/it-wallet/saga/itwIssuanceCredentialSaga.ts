@@ -11,7 +11,7 @@ import { toError } from "fp-ts/lib/Either";
 import { CommonActions } from "@react-navigation/native";
 import { IOToast } from "@pagopa/io-app-design-system";
 import {
-  itwIssuanceCredentialStore,
+  itwConfirmStoreCredential,
   itwIssuanceCredentialChecks,
   itwIssuanceCredential
 } from "../store/actions/itwIssuanceCredentialActions";
@@ -47,10 +47,7 @@ export function* watchItwIssuanceCredentialSaga(): SagaIterator {
     handleItwIssuanceCredentialChecks
   );
   yield* takeLatest(itwIssuanceCredential.request, handleItwIssuanceCredential);
-  yield* takeLatest(
-    itwIssuanceCredentialStore,
-    handleItwIssuanceCredentialStore
-  );
+  yield* takeLatest(itwConfirmStoreCredential, handleAddCredentialWithPin);
 }
 
 /**
@@ -225,7 +222,7 @@ export function* handleItwIssuanceCredential(): SagaIterator {
 /**
  * Saga which handles the addition of a credential to the wallet by showing the pin screen.
  */
-function* handleItwIssuanceCredentialStore() {
+function* handleAddCredentialWithPin() {
   try {
     const resultData = yield* select(itwIssuanceResultDataSelector);
     if (O.isNone(resultData)) {
