@@ -1,36 +1,37 @@
 import { ItwPrCredentialDetailsScreenNavigationParams } from "../screens/presentation/ItwPrCredentialDetails";
-import { ItwIssuingPidRequestScreenNavigationParams } from "../screens/issuing/pid/ItwIssuingPidRequestScreen";
-import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieCardReaderScreen";
-import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieConsentDataUsageScreen";
-import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
+import { ItwIssuancePidRequestScreenNavigationParams } from "../screens/issuance/pid/ItwIssuancePidRequestScreen";
+import { ItwCieCardReaderScreenNavigationParams } from "../screens/issuance/pid/cie/ItwCieCardReaderScreen";
+import { ItwCieConsentDataUsageScreenNavigationParams } from "../screens/issuance/pid/cie/ItwCieConsentDataUsageScreen";
+import { ItwCieWrongPinScreenNavigationParams } from "../screens/issuance/pid/cie/ItwCieWrongPinScreen";
 import { ItwPrRemotePidChecksScreenNavigationParams } from "../screens/presentation/remote/pid/ItwPrRemotePidChecksScreen";
 import { ITW_ROUTES } from "./ItwRoutes";
 
 export type ItwParamsList = {
-  // ISSUING PID
-  [ITW_ROUTES.ISSUING.PID.INFO]: undefined;
-  [ITW_ROUTES.ISSUING.PID.AUTH]: undefined;
-  [ITW_ROUTES.ISSUING.PID.AUTH_INFO]: undefined;
-  [ITW_ROUTES.ISSUING.PID.REQUEST]: ItwIssuingPidRequestScreenNavigationParams;
-  [ITW_ROUTES.ISSUING.PID.PREVIEW]: undefined;
-  [ITW_ROUTES.ISSUING.PID.ADDING]: undefined;
+  // ISSUANCE PID
+  [ITW_ROUTES.ISSUANCE.PID.INFO]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID.AUTH]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID.AUTH_INFO]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID
+    .REQUEST]: ItwIssuancePidRequestScreenNavigationParams;
+  [ITW_ROUTES.ISSUANCE.PID.PREVIEW]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID.ADDING]: undefined;
 
-  // ISSUING PID CIE
-  [ITW_ROUTES.ISSUING.PID.CIE.EXPIRED_SCREEN]: undefined;
-  [ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN]: undefined;
-  [ITW_ROUTES.ISSUING.PID.CIE
+  // ISSUANCE PID CIE
+  [ITW_ROUTES.ISSUANCE.PID.CIE.EXPIRED_SCREEN]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID.CIE.PIN_SCREEN]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID.CIE
     .CARD_READER_SCREEN]: ItwCieCardReaderScreenNavigationParams;
-  [ITW_ROUTES.ISSUING.PID.CIE
+  [ITW_ROUTES.ISSUANCE.PID.CIE
     .CONSENT_DATA_USAGE]: ItwCieConsentDataUsageScreenNavigationParams;
-  [ITW_ROUTES.ISSUING.PID.CIE
+  [ITW_ROUTES.ISSUANCE.PID.CIE
     .WRONG_PIN_SCREEN]: ItwCieWrongPinScreenNavigationParams;
-  [ITW_ROUTES.ISSUING.PID.CIE.PIN_TEMP_LOCKED_SCREEN]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID.CIE.PIN_TEMP_LOCKED_SCREEN]: undefined;
 
-  // ISSUING CREDENTIALS
-  [ITW_ROUTES.ISSUING.CREDENTIAL.CATALOG]: undefined;
-  [ITW_ROUTES.ISSUING.CREDENTIAL.CHECKS]: undefined;
-  [ITW_ROUTES.ISSUING.CREDENTIAL.AUTH]: undefined;
-  [ITW_ROUTES.ISSUING.CREDENTIAL.PREVIEW]: undefined;
+  // ISSUANCE CREDENTIALS
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL.CATALOG]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL.CHECKS]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL.AUTH]: undefined;
+  [ITW_ROUTES.ISSUANCE.CREDENTIAL.PREVIEW]: undefined;
 
   // PRESENTATION REMOTE PID
   [ITW_ROUTES.PRESENTATION.PID.DETAILS]: undefined;

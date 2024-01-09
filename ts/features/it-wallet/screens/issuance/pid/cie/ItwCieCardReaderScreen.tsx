@@ -65,7 +65,7 @@ export type ItwCieCardReaderScreenNavigationParams = {
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_PID_CIE_CARD_READER_SCREEN"
+  "ITW_ISSUANCE_PID_CIE_CARD_READER_SCREEN"
 >;
 
 type Props = NavigationProps & ReduxProps & ReturnType<typeof mapStateToProps>;
@@ -277,7 +277,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.PID.CIE.PIN_TEMP_LOCKED_SCREEN
+              screen: ITW_ROUTES.ISSUANCE.PID.CIE.PIN_TEMP_LOCKED_SCREEN
             })
         });
         break;
@@ -288,7 +288,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.PID.CIE.WRONG_PIN_SCREEN,
+              screen: ITW_ROUTES.ISSUANCE.PID.CIE.WRONG_PIN_SCREEN,
               params: {
                 remainingCount: event.attemptsLeft
               }
@@ -303,7 +303,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
           eventReason: event.event,
           navigation: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.PID.CIE.EXPIRED_SCREEN
+              screen: ITW_ROUTES.ISSUANCE.PID.CIE.EXPIRED_SCREEN
             })
         });
         break;
@@ -377,7 +377,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
       setTimeout(
         async () => {
           this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUING.PID.CIE.CONSENT_DATA_USAGE,
+            screen: ITW_ROUTES.ISSUANCE.PID.CIE.CONSENT_DATA_USAGE,
             params: {
               cieConsentUri,
               pidData

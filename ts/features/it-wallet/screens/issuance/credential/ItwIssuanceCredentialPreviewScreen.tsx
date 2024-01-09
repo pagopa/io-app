@@ -43,7 +43,7 @@ import { StoredCredential } from "../../../utils/itwTypesUtils";
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
  */
-const ItwIssuingCredentialPreviewScreen = () => {
+const ItwIssuanceCredentialPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const issuanceResult = useIOSelector(itwIssuanceCredentialResultSelector);
   const bannerViewRef = React.createRef<View>();
@@ -195,4 +195,4 @@ const ItwIssuingCredentialPreviewScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwIssuingCredentialPreviewScreen;
+export default ItwIssuanceCredentialPreviewScreen;

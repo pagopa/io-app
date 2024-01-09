@@ -30,7 +30,7 @@ import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
  * Renders the screen which display a list of features (or trusty providers)
  * to activate the wallet.
  */
-const ItwIssuingPidAuthScreen = () => {
+const ItwIssuancePidAuthScreen = () => {
   const navigation = useNavigation();
 
   const { present, bottomSheet } = useItwInfoBottomSheet({
@@ -51,7 +51,7 @@ const ItwIssuingPidAuthScreen = () => {
       title: I18n.t("features.itWallet.featuresInfoScreen.list.cie"),
       subTitle: I18n.t("features.itWallet.featuresInfoScreen.list.cieSubTitle"),
       icon: "fiscalCodeIndividual",
-      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID.AUTH_INFO),
+      onPress: () => navigation.navigate(ITW_ROUTES.ISSUANCE.PID.AUTH_INFO),
       accessibilityLabel: I18n.t(
         "features.itWallet.featuresInfoScreen.list.cie"
       ),
@@ -204,4 +204,4 @@ const ItwIssuingPidAuthScreen = () => {
   );
 };
 
-export default ItwIssuingPidAuthScreen;
+export default ItwIssuancePidAuthScreen;

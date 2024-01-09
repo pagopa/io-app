@@ -32,7 +32,7 @@ import {
 /**
  * Renders the screen which displays the information about the authentication process to obtain a Wallet Instance.
  */
-const ItwIssuingPidAuthInfoScreen = () => {
+const ItwIssuancePidAuthInfoScreen = () => {
   const navigation = useNavigation();
   const dispatch = useIODispatch();
   const wia = useIOSelector(itwWiaStateSelector);
@@ -50,7 +50,7 @@ const ItwIssuingPidAuthInfoScreen = () => {
    * PID data from the profile store or a mock if the data is not available.
    */
   const bypassCieLogin = () => {
-    navigation.navigate(ITW_ROUTES.ISSUING.PID.REQUEST, {
+    navigation.navigate(ITW_ROUTES.ISSUANCE.PID.REQUEST, {
       pidData: {
         name: name ?? pidDataMock.name,
         surname: surname ?? pidDataMock.surname,
@@ -91,7 +91,7 @@ const ItwIssuingPidAuthInfoScreen = () => {
             onPress: () =>
               isIos
                 ? bypassCieLogin()
-                : navigation.navigate(ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN)
+                : navigation.navigate(ITW_ROUTES.ISSUANCE.PID.CIE.PIN_SCREEN)
           }}
           onPictogramPress={() => bypassCieLogin()}
           secondaryAction={{
@@ -132,4 +132,4 @@ const ItwIssuingPidAuthInfoScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwIssuingPidAuthInfoScreen;
+export default ItwIssuancePidAuthInfoScreen;

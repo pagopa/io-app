@@ -38,7 +38,7 @@ import { itwIssuancePidValueSelector } from "../../../store/reducers/itwIssuance
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
-const ItwPidPreviewScreen = () => {
+const ItwIssuancePidPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const pid = useIOSelector(itwIssuancePidValueSelector);
   const pidType = CredentialType.PID;
@@ -75,7 +75,7 @@ const ItwPidPreviewScreen = () => {
       accessibilityLabel: I18n.t(
         "features.itWallet.issuing.pidPreviewScreen.buttons.add"
       ),
-      onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID.ADDING),
+      onPress: () => navigation.navigate(ITW_ROUTES.ISSUANCE.PID.ADDING),
       label: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
     };
 
@@ -158,4 +158,4 @@ const ItwPidPreviewScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPidPreviewScreen;
+export default ItwIssuancePidPreviewScreen;

@@ -19,7 +19,7 @@ export type ItwCieWrongPinScreenNavigationParams = {
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_PID_CIE_WRONG_PIN_SCREEN"
+  "ITW_ISSUANCE_PID_CIE_WRONG_PIN_SCREEN"
 >;
 
 type Props = NavigationProps & ReturnType<typeof mapDispatchToProps>;
@@ -28,13 +28,13 @@ class ItwCieWrongPinScreen extends React.PureComponent<Props> {
   // TODO: use redux to handle control?
   private navigateToCiePinScreen = async () => {
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID.CIE.PIN_SCREEN
+      screen: ITW_ROUTES.ISSUANCE.PID.CIE.PIN_SCREEN
     });
   };
 
   private resetAuthentication = () => {
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
+      screen: ITW_ROUTES.ISSUANCE.PID.AUTH_INFO
     });
   };
 

@@ -60,7 +60,7 @@ export function* handleWiaRequest(): SagaIterator {
       const { message } = toError(e);
       yield* put(
         itwWiaRequest.failure({
-          code: ItWalletErrorTypes.WIA_ISSUING_ERROR,
+          code: ItWalletErrorTypes.WIA_ISSUANCE_ERROR,
           message
         })
       );

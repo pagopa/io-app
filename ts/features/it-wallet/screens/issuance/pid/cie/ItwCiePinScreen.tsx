@@ -67,7 +67,7 @@ const ItwCiePinScreen: React.FC<Props> = props => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const navigation =
     useNavigation<
-      IOStackNavigationProp<ItwParamsList, "ITW_ISSUING_PID_CIE_PIN_SCREEN">
+      IOStackNavigationProp<ItwParamsList, "ITW_ISSUANCE_PID_CIE_PIN_SCREEN">
     >();
   const [pin, setPin] = useState("");
   const pinPadViewRef = useRef<View>(null);
@@ -83,7 +83,7 @@ const ItwCiePinScreen: React.FC<Props> = props => {
 
   useEffect(() => {
     if (authUrlGenerated !== undefined) {
-      navigation.navigate(ITW_ROUTES.ISSUING.PID.CIE.CARD_READER_SCREEN, {
+      navigation.navigate(ITW_ROUTES.ISSUANCE.PID.CIE.CARD_READER_SCREEN, {
         ciePin: pin,
         authorizationUri: authUrlGenerated
       });

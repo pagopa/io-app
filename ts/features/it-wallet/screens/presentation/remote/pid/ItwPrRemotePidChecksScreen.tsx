@@ -33,7 +33,7 @@ import { itwPrRemotePidInitSelector } from "../../../../store/reducers/itwPrRemo
 export type ItwPrRemotePidChecksScreenNavigationParams = ItwPrRemotePidInitData;
 
 /**
- * Type of the route props for the ItwIssuingPidRequestScreen.
+ * Type of the route props for the ItwIssuancePidRequestScreen.
  */
 type ItwPrRemotePidChecksScreenRouteProps = RouteProp<
   ItwParamsList,

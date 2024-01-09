@@ -19,7 +19,7 @@ import itwCardImage from "../../../assets/img/issuing/itw_card.png";
 import { isAndroid } from "../../../../../utils/platform";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
 
-const ItwIssuingPidInfoScreen = () => {
+const ItwIssuancePidInfoScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
 
@@ -37,7 +37,7 @@ const ItwIssuingPidInfoScreen = () => {
     color: "primary",
     fullWidth: true,
     accessibilityLabel: I18n.t("features.itWallet.activationScreen.confirm"),
-    onPress: () => navigation.navigate(ITW_ROUTES.ISSUING.PID.AUTH),
+    onPress: () => navigation.navigate(ITW_ROUTES.ISSUANCE.PID.AUTH),
     label: I18n.t("features.itWallet.activationScreen.confirm")
   };
 
@@ -98,4 +98,4 @@ const ItwIssuingPidInfoScreen = () => {
   );
 };
 
-export default ItwIssuingPidInfoScreen;
+export default ItwIssuancePidInfoScreen;

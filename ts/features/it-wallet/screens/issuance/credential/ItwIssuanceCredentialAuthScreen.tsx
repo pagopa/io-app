@@ -40,7 +40,7 @@ import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
  * This screen displays the information about the credential that is going to be shared
  * with the issuer.
  */
-const ItwIssuingCredentialAuthScreen = () => {
+const ItwIssuanceCredentialAuthScreen = () => {
   const pid = useIOSelector(itwPersistedCredentialsValuePidSelector);
   const checks = useIOSelector(itwIssuanceCredentialChecksValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
@@ -178,7 +178,7 @@ const ItwIssuingCredentialAuthScreen = () => {
               color: "primary",
               accessibilityLabel: I18n.t("global.buttons.continue"),
               onPress: () =>
-                navigation.navigate(ITW_ROUTES.ISSUING.CREDENTIAL.PREVIEW),
+                navigation.navigate(ITW_ROUTES.ISSUANCE.CREDENTIAL.PREVIEW),
               label: I18n.t("global.buttons.continue")
             }
           }}
@@ -210,4 +210,4 @@ const ItwIssuingCredentialAuthScreen = () => {
     </>
   );
 };
-export default ItwIssuingCredentialAuthScreen;
+export default ItwIssuanceCredentialAuthScreen;

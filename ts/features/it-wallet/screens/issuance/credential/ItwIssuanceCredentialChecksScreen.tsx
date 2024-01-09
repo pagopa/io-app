@@ -31,7 +31,7 @@ import ROUTES from "../../../../../navigation/routes";
  * Screen that displays the result of the credential issuance checks
  * by folding the preliminaryChecks pot.
  */
-const ItwIssuingCredentialsChecksScreen = () => {
+const ItwIssuanceCredentialChecksScreen = () => {
   const toast = useIOToast();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const preliminaryChecks = useIOSelector(itwIssuanceCredentialChecksSelector);
@@ -40,7 +40,7 @@ const ItwIssuingCredentialsChecksScreen = () => {
    * When the user confirms the issuance, the user is redirected to the presentation screen.
    */
   const onUserConfirmIssuance = () => {
-    navigation.navigate(ITW_ROUTES.ISSUING.CREDENTIAL.AUTH);
+    navigation.navigate(ITW_ROUTES.ISSUANCE.CREDENTIAL.AUTH);
   };
 
   /**
@@ -151,4 +151,4 @@ const ItwIssuingCredentialsChecksScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwIssuingCredentialsChecksScreen;
+export default ItwIssuanceCredentialChecksScreen;

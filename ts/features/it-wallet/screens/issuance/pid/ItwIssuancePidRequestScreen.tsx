@@ -25,22 +25,22 @@ import { getPidCredentialCatalogItem } from "../../../utils/itwMocksUtils";
 import { itwIssuancePid } from "../../../store/actions/itwIssuancePidActions";
 
 /**
- * ItwIssuingPidRequestScreen's navigation params.
+ * ItwIssuancePidRequestScreen's navigation params.
  * The pidData consists of the data needed to request a PID.
  */
-export type ItwIssuingPidRequestScreenNavigationParams = {
+export type ItwIssuancePidRequestScreenNavigationParams = {
   pidData: PidData;
 };
 
 /**
  * Renders a preview screen which requests a PID.
  */
-const ItwIssuingPidRequestScreen = () => {
+const ItwIssuancePidRequestScreen = () => {
   const route =
     useRoute<
       Route<
         "ITW_ACTIVATION_PID_REQUEST",
-        ItwIssuingPidRequestScreenNavigationParams
+        ItwIssuancePidRequestScreenNavigationParams
       >
     >();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
@@ -67,7 +67,7 @@ const ItwIssuingPidRequestScreen = () => {
    */
   useEffect(() => {
     if (pot.isSome(pid)) {
-      navigation.navigate(ITW_ROUTES.ISSUING.PID.PREVIEW);
+      navigation.navigate(ITW_ROUTES.ISSUANCE.PID.PREVIEW);
     }
   }, [navigation, pid]);
 
@@ -120,4 +120,4 @@ const ItwIssuingPidRequestScreen = () => {
   );
 };
 
-export default ItwIssuingPidRequestScreen;
+export default ItwIssuancePidRequestScreen;

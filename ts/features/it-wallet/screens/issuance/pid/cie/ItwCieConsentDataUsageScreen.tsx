@@ -35,7 +35,7 @@ type OwnProps = {
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_PID_CIE_CONSENT_DATA_USAGE"
+  "ITW_ISSUANCE_PID_CIE_CONSENT_DATA_USAGE"
 >;
 
 type State = {
@@ -81,7 +81,7 @@ class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
 
   private resetNavigation = () => {
     this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
+      screen: ITW_ROUTES.ISSUANCE.PID.AUTH_INFO
     });
   };
 
@@ -212,9 +212,12 @@ class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
                 "features.itWallet.issuing.infoConsent.footer.confirm"
               ),
               onPress: () =>
-                this.props.navigation.navigate(ITW_ROUTES.ISSUING.PID.REQUEST, {
-                  pidData: this.props.route.params.pidData
-                }),
+                this.props.navigation.navigate(
+                  ITW_ROUTES.ISSUANCE.PID.REQUEST,
+                  {
+                    pidData: this.props.route.params.pidData
+                  }
+                ),
               label: I18n.t(
                 "features.itWallet.issuing.infoConsent.footer.confirm"
               )

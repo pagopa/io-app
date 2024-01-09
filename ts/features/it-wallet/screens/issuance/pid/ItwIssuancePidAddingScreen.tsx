@@ -20,7 +20,7 @@ import ItwKoView from "../../../components/ItwKoView";
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
  */
-const ItwIssuingPidAddingScreen = () => {
+const ItwIssuancePidAddingScreen = () => {
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwIssuancePidValueSelector);
   const navigation = useNavigation();
@@ -93,4 +93,4 @@ const ItwIssuingPidAddingScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwIssuingPidAddingScreen;
+export default ItwIssuancePidAddingScreen;

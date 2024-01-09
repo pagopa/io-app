@@ -31,7 +31,7 @@ const NONE_LOADING = -1;
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
  */
-const ItwIssuingCredentialCatalogScreen = () => {
+const ItwIssuanceCredentialCatalogScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const preliminaryChecks = useIOSelector(itwIssuanceCredentialChecksSelector);
@@ -52,7 +52,7 @@ const ItwIssuingCredentialCatalogScreen = () => {
    */
   useEffect(() => {
     if (loadingIndex !== NONE_LOADING && !pot.isLoading(preliminaryChecks)) {
-      navigation.navigate(ITW_ROUTES.ISSUING.CREDENTIAL.CHECKS);
+      navigation.navigate(ITW_ROUTES.ISSUANCE.CREDENTIAL.CHECKS);
       setLoadingIndex(NONE_LOADING);
     }
   }, [loadingIndex, navigation, preliminaryChecks]);
@@ -146,4 +146,4 @@ const ItwIssuingCredentialCatalogScreen = () => {
   );
 };
 
-export default ItwIssuingCredentialCatalogScreen;
+export default ItwIssuanceCredentialCatalogScreen;

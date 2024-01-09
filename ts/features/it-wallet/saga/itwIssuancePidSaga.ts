@@ -161,14 +161,14 @@ export function* handleItwIssuancePidSaga({
     } else {
       yield* put(
         itwIssuancePid.failure({
-          code: ItWalletErrorTypes.PID_ISSUING_ERROR
+          code: ItWalletErrorTypes.PID_ISSUANCE_ERROR
         })
       );
     }
   } catch (err) {
     yield* put(
       itwIssuancePid.failure({
-        code: ItWalletErrorTypes.PID_ISSUING_ERROR
+        code: ItWalletErrorTypes.PID_ISSUANCE_ERROR
       })
     );
   }
