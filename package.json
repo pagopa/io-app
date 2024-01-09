@@ -6,7 +6,7 @@
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.29/definitions.yml",
   "io_bonus_vacanze_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/api_bonus.yaml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/api_cgn.yaml",
-  "io_cgn_merchants_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/api_cgn_operator_search.yaml",
+  "io_cgn_merchants_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v13.29.2-RELEASE/api_cgn_operator_search.yaml",
   "io_bpd_citizen": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.29/bonus/specs/bpd/citizen.json",
   "io_bpd_citizen_v2": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.29/bonus/specs/bpd/citizen_v2.json",
   "io_bpd_payment": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.29/bonus/specs/bpd/payment.json",
