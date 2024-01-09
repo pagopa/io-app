@@ -3,6 +3,7 @@ import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { FciClient } from "../../api/backendFci";
 import {
@@ -13,10 +14,7 @@ import { getNetworkError } from "../../../../utils/errors";
 import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-import {
-  Environment,
-  EnvironmentEnum
-} from "../../../../../definitions/fci/Environment";
+import { Environment } from "../../../../../definitions/fci/Environment";
 import { FciHeaders } from "../../utils/fciHeaders";
 
 /*
@@ -46,17 +44,12 @@ export function* handleGetSignatureRequestById(
     }
 
     if (getSignatureDetailViewByIdResponse.right.status === 200) {
-      /**
-       * Get the environment from the response header with default prod value.
-       */
       const env = pipe(
-        FciHeaders.decode(getSignatureDetailViewByIdResponse.right.headers),
-        E.fold(
-          () => EnvironmentEnum.prod,
-          headers => headers.map["x-io-sign-environment"]
-        ),
-        Environment.decode,
-        E.getOrElse(() => EnvironmentEnum.prod)
+        getSignatureDetailViewByIdResponse.right.headers,
+        FciHeaders.decode,
+        E.map(headers => headers.map["x-io-sign-environment"]),
+        E.chain(e => Environment.decode(e)),
+        O.fromEither
       );
 
       yield* put(fciEnvironmentSet(env));

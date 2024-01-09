@@ -3,6 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
+import * as O from "fp-ts/lib/Option";
 import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
 import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
@@ -136,9 +137,9 @@ export const fciDocumentSignatureFields = createAsyncAction(
 /**
  * Action to interact with the environment reducer.
  */
-export const fciEnvironmentSet = createStandardAction(
-  "FCI_ENVIRONMENT_SET"
-)<EnvironmentEnum>();
+export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
+  O.Option<EnvironmentEnum>
+>();
 
 export type FciActions =
   | ActionType<typeof fciSignatureRequestFromId>

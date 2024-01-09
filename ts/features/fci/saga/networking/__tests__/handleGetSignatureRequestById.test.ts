@@ -1,6 +1,7 @@
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { left, right } from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { getNetworkError } from "../../../../../utils/errors";
 import { handleGetSignatureRequestById } from "../handleGetSignatureRequestById";
 import {
@@ -21,7 +22,7 @@ const mockId = "mockId";
 const successResponse = {
   status: 200,
   value: mockSignatureRequestDetailView as SignatureRequestDetailView,
-  headers: [{ "x-io-sign-environment": "prod" }]
+  headers: { map: { "x-io-sign-environment": "prod" } }
 };
 
 const failureResponse = {
@@ -50,7 +51,11 @@ describe("handleGetSignatureRequestById", () => {
       .next(right(successResponse))
       .put(
         fciEnvironmentSet(
-          successResponse.headers[0]["x-io-sign-environment"] as EnvironmentEnum
+          O.some(
+            successResponse.headers.map[
+              "x-io-sign-environment"
+            ] as EnvironmentEnum
+          )
         )
       )
       .next()
