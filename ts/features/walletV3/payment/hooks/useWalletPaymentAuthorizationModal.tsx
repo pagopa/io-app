@@ -17,8 +17,6 @@ import {
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
 
-type AuthorizationStatus = "IDLE" | "PENDING" | "COMPLETED" | "DISMISSED";
-
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
 };
@@ -38,7 +36,8 @@ export const useWalletPaymentAuthorizationModal = ({
     walletPaymentAuthorizationUrlSelector
   );
 
-  const [authState, setAuthState] = React.useState<AuthorizationStatus>("IDLE");
+  const [isPendingAuthorization, setIsPendingAuthorization] =
+    React.useState<boolean>(false);
   const isLoading = pot.isLoading(authorizationUrlPot);
   const isError = pot.isError(authorizationUrlPot);
 
@@ -51,22 +50,13 @@ export const useWalletPaymentAuthorizationModal = ({
         O.fromEither,
         O.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
-      setAuthState("COMPLETED");
       onAuthorizationOutcome(outcome);
     },
-    [onAuthorizationOutcome, setAuthState]
+    [onAuthorizationOutcome]
   );
 
   React.useEffect(() => {
-    if (isLoading) {
-      return;
-    }
-
-    if (isError) {
-      return;
-    }
-
-    if (authState !== "IDLE") {
+    if (isPendingAuthorization) {
       return;
     }
 
@@ -77,13 +67,16 @@ export const useWalletPaymentAuthorizationModal = ({
       TE.chain(url =>
         TE.tryCatch(
           () => {
-            setAuthState("PENDING");
+            setIsPendingAuthorization(true);
             return openAuthenticationSession(
               url,
               WALLET_WEBVIEW_OUTCOME_SCHEMA
             );
           },
-          () => setAuthState("DISMISSED")
+          () => {
+            dispatch(walletPaymentAuthorization.cancel());
+            setIsPendingAuthorization(false);
+          }
         )
       ),
       TE.map(handleAuthorizationResult)
@@ -91,28 +84,29 @@ export const useWalletPaymentAuthorizationModal = ({
   }, [
     isError,
     isLoading,
-    authState,
+    isPendingAuthorization,
     authorizationUrlPot,
-    handleAuthorizationResult
+    handleAuthorizationResult,
+    dispatch
   ]);
 
   React.useEffect(
     () => () => {
-      setAuthState("IDLE");
+      setIsPendingAuthorization(false);
       dispatch(walletPaymentAuthorization.cancel());
     },
     [dispatch]
   );
 
   const startPaymentAuthorizaton = (payload: WalletPaymentAuthorizePayload) => {
-    setAuthState("IDLE");
+    setIsPendingAuthorization(false);
     dispatch(walletPaymentAuthorization.request(payload));
   };
 
   return {
     isLoading,
     isError,
-    isPendingAuthorization: authState === "PENDING",
+    isPendingAuthorization,
     startPaymentAuthorizaton
   };
 };
