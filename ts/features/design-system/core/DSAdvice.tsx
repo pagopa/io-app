@@ -104,7 +104,7 @@ export const DSAdvice = () => (
     />
     <VSpacer size={24} />
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <InfoBox iconName="profileAlt" iconColor="bluegrey">
+      <InfoBox iconName="profile" iconColor="bluegrey">
         <Label color={"bluegrey"} weight={"Regular"}>
           Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
           visitando la sezione Profilo
