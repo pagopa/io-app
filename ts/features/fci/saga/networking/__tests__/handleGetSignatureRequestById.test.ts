@@ -1,22 +1,28 @@
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
 import { left, right } from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { getNetworkError } from "../../../../../utils/errors";
 import { handleGetSignatureRequestById } from "../handleGetSignatureRequestById";
 import {
   mockSignatureRequestDetailView,
   mockedError
 } from "../../../types/__mocks__/SignatureRequestDetailView.mock";
-import { fciSignatureRequestFromId } from "../../../store/actions";
+import {
+  fciEnvironmentSet,
+  fciSignatureRequestFromId
+} from "../../../store/actions";
 import { SignatureRequestDetailView } from "../../../../../../definitions/fci/SignatureRequestDetailView";
 import { SessionToken } from "../../../../../types/SessionToken";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
 
 const mockId = "mockId";
 
 const successResponse = {
   status: 200,
-  value: mockSignatureRequestDetailView as SignatureRequestDetailView
+  value: mockSignatureRequestDetailView as SignatureRequestDetailView,
+  headers: { map: { "x-io-sign-environment": "prod" } }
 };
 
 const failureResponse = {
@@ -43,6 +49,16 @@ describe("handleGetSignatureRequestById", () => {
       .next()
       .call(withRefreshApiCall, getSignatureDetailByIdRequest, loadAction)
       .next(right(successResponse))
+      .put(
+        fciEnvironmentSet(
+          O.some(
+            successResponse.headers.map[
+              "x-io-sign-environment"
+            ] as EnvironmentEnum
+          )
+        )
+      )
+      .next()
       .put(fciSignatureRequestFromId.success(successResponse.value))
       .next()
       .isDone();

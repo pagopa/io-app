@@ -11,14 +11,14 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../messages/types";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
-import { cancelPreviousAttachmentDownload } from "../../../store/actions/messages";
+import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
   containsF24FromPNMessagePot,

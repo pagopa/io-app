@@ -22,7 +22,7 @@ import {
 } from "../../features/bonus/bpd/model/RemoteValue";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
-import { getRemoteLocale } from "../../utils/messages";
+import { getRemoteLocale } from "../../features/messages/utils/messages";
 import {
   contentMunicipalityLoad,
   loadContextualHelpData,

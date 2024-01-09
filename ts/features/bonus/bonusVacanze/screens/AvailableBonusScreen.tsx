@@ -38,7 +38,7 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
-import { getRemoteLocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import { showToast } from "../../../../utils/showToast";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";

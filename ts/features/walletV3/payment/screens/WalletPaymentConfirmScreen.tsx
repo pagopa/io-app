@@ -1,20 +1,24 @@
-import { GradientScrollView, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  H3,
+  IOSpacingScale,
+  LoadingSpinner,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
-import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
-import { DebugPrettyPrint } from "../../../../components/DebugPrettyPrint";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentAuthorization,
@@ -27,13 +31,18 @@ import {
   walletPaymentPickedPspSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
+import { WalletPaymentConfirmContent } from "../components/WalletPaymentConfirmContent";
 import { WalletPaymentFailure } from "../types/failure";
+import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
+import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
+import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
+import I18n from "../../../../i18n";
 
 const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const paymentDetailPot = useIOSelector(walletPaymentDetailsSelector);
+  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
@@ -45,6 +54,13 @@ const WalletPaymentConfirmScreen = () => {
 
   const isLoading =
     pot.isLoading(transactionPot) || pot.isLoading(authorizationUrlPot);
+
+  useHeaderSecondLevel({
+    title: "",
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["payment"],
+    supportRequest: true
+  });
 
   useFocusEffect(
     React.useCallback(() => {
@@ -60,17 +76,35 @@ const WalletPaymentConfirmScreen = () => {
     }
   }, [authorizationUrlPot, navigation]);
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const taxFee = pipe(
+    selectedPspOption,
+    O.chain(psp => O.fromNullable(psp.taxPayerFee)),
+    O.getOrElse(() => 0)
+  );
+
+  const paymentAmount = pipe(
+    pot.toUndefined(paymentDetailsPot),
+    O.fromNullable,
+    O.chain(paymentDetails => O.fromNullable(paymentDetails.amount)),
+    O.getOrElse(() => 0)
+  );
+
+  const selectedMethod = O.toUndefined(selectedMethodOption);
+
+  const selectedPsp = O.toUndefined(selectedPspOption);
+
   const handleStartPaymentAuthorization = () => {
-    dispatch(
-      walletPaymentAuthorization.request({
-        paymentAmount: 1000 as AmountEuroCents,
-        paymentFees: 1000 as AmountEuroCents,
-        pspId: "A",
-        transactionId: "A",
-        walletId: "A"
-      })
-    );
+    if (selectedMethod && selectedPsp && pot.isSome(transactionPot)) {
+      dispatch(
+        walletPaymentAuthorization.request({
+          paymentAmount: paymentAmount as AmountEuroCents,
+          paymentFees: taxFee as AmountEuroCents,
+          pspId: selectedPsp.idBundle ?? "",
+          transactionId: transactionPot.value.transactionId,
+          walletId: selectedMethod.walletId
+        })
+      );
+    }
   };
 
   if (pot.isError(transactionPot)) {
@@ -85,7 +119,7 @@ const WalletPaymentConfirmScreen = () => {
       }))
     );
     const rptId = pipe(
-      paymentDetailPot,
+      paymentDetailsPot,
       pot.toOption,
       O.map(({ rptId }) => rptId),
       O.toUndefined
@@ -93,38 +127,48 @@ const WalletPaymentConfirmScreen = () => {
     return <WalletPaymentFailureDetail rptId={rptId} failure={failure} />;
   }
 
-  return (
-    <BaseScreenComponent goBack={true}>
-      <GradientScrollView
-        primaryActionProps={{
-          label: "Paga xx,xx €",
-          accessibilityLabel: "Paga xx,xx €",
-          onPress: handleStartPaymentAuthorization,
-          disabled: isLoading,
-          loading: isLoading
-        }}
-      >
-        <DebugPrettyPrint
-          title="selectedMethodOption"
-          data={selectedMethodOption}
-          startCollapsed={true}
+  const LoadingContent = () => (
+    <SafeAreaView style={styles.loadingContainer}>
+      <LoadingSpinner size={48} />
+      <VSpacer size={24} />
+      <H3 style={{ textAlign: "center" }}>
+        {I18n.t("payment.confirm.loading.title")}
+      </H3>
+    </SafeAreaView>
+  );
+
+  return pipe(
+    sequenceS(O.Monad)({
+      paymentMethodDetails: pipe(
+        selectedMethodOption,
+        O.chainNullableK(method => method.details)
+      ),
+      selectedPsp: selectedPspOption,
+      selectedMethod: selectedMethodOption,
+      paymentDetails: pipe(paymentDetailsPot, pot.toOption)
+    }),
+    O.fold(
+      () => <LoadingContent />,
+      props => (
+        <WalletPaymentConfirmContent
+          isLoading={isLoading}
+          onConfirm={handleStartPaymentAuthorization}
+          {...props}
         />
-        <VSpacer size={8} />
-        <DebugPrettyPrint
-          title="selectedPspOption"
-          data={selectedPspOption}
-          startCollapsed={true}
-        />
-        <VSpacer size={8} />
-        <DebugPrettyPrint title="transactionPot" data={transactionPot} />
-        <VSpacer size={8} />
-        <DebugPrettyPrint
-          title="authorizationUrlPot"
-          data={authorizationUrlPot}
-        />
-      </GradientScrollView>
-    </BaseScreenComponent>
+      )
+    )
   );
 };
+
+const loadingContainerHorizontalMargin: IOSpacingScale = 48;
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: loadingContainerHorizontalMargin
+  }
+});
 
 export { WalletPaymentConfirmScreen };

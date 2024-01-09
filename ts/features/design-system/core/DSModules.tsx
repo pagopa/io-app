@@ -9,7 +9,7 @@ import {
   PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { ModuleAttachment } from "../../../components/ModuleAttachment";
+import { ModuleAttachment } from "../../messages/components/ModuleAttachment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
