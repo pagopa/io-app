@@ -20,8 +20,8 @@ import { originSchemasWhiteList } from "../../../../../../screens/authentication
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import {
-  loginFailure,
-  loginSuccess
+  itwLoginFailure,
+  itwLoginSuccess
 } from "../../../../store/actions/issuing/pid/itwIssuancePidCieActions";
 
 export type ItwCieConsentDataUsageScreenNavigationParams = {
@@ -230,8 +230,9 @@ class ItwCieConsentDataUsageScreen extends React.Component<Props, State> {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginSuccess: (token: SessionToken) =>
-    dispatch(loginSuccess({ token, idp: "cie" })),
-  loginFailure: (error: Error) => dispatch(loginFailure({ error, idp: "cie" }))
+    dispatch(itwLoginSuccess({ token, idp: "cie" })),
+  loginFailure: (error: Error) =>
+    dispatch(itwLoginFailure({ error, idp: "cie" }))
 });
 
 export default connect(null, mapDispatchToProps)(ItwCieConsentDataUsageScreen);

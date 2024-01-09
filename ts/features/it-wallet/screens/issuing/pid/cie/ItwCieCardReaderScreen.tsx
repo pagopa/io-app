@@ -50,11 +50,11 @@ import CieReadingCardAnimation, {
   ReadingState
 } from "../../../../components/cie/CieReadingCardAnimation";
 import {
-  CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason,
-  cieAuthenticationError
+  ItwCieAuthenticationErrorPayload,
+  ItwCieAuthenticationErrorReason,
+  itwCieAuthenticationError
 } from "../../../../store/actions/issuing/pid/itwIssuancePidCieActions";
-import { isNfcEnabledSelector } from "../../../../store/reducers/issuance/pid/itwIssuancePidCieAuthReducer";
+import { itwIsNfcEnabledSelector } from "../../../../store/reducers/issuance/pid/itwIssuancePidCieAuthReducer";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import CieNfcOverlay from "../../../../components/cie/CieNfcOverlay";
 
@@ -91,13 +91,13 @@ type State = {
 };
 
 type setErrorParameter = {
-  eventReason: CieAuthenticationErrorReason;
+  eventReason: ItwCieAuthenticationErrorReason;
   errorDescription?: string;
   navigation?: () => void;
 };
 
 // A subset of Cie Events (errors) which is of interest to analytics
-const analyticActions = new Map<CieAuthenticationErrorReason, string>([
+const analyticActions = new Map<ItwCieAuthenticationErrorReason, string>([
   // Reading interrupted before the sdk complete the reading
   ["Transmission Error", I18n.t("authentication.cie.card.error.onTagLost")],
   ["ON_TAG_LOST", I18n.t("authentication.cie.card.error.onTagLost")],
@@ -245,8 +245,8 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
     );
   };
 
-  private dispatchAnalyticEvent = (error: CieAuthenticationErrorPayload) => {
-    this.props.dispatch(cieAuthenticationError(error));
+  private dispatchAnalyticEvent = (error: ItwCieAuthenticationErrorPayload) => {
+    this.props.dispatch(itwCieAuthenticationError(error));
   };
 
   private handleCieEvent = async (event: CEvent) => {
@@ -515,7 +515,7 @@ class ItwCieCardReaderScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => {
-  const isEnabled = isNfcEnabledSelector(state);
+  const isEnabled = itwIsNfcEnabledSelector(state);
   return {
     isNfcEnabled: pot.getOrElse(isEnabled, false),
     assistanceToolConfig: assistanceToolConfigSelector(state)

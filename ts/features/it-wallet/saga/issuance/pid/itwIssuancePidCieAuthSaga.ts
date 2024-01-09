@@ -3,31 +3,31 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
 import {
-  cieIsSupported,
-  hasApiLevelSupport,
-  hasNFCFeature,
-  nfcIsEnabled
+  itwCieIsSupported,
+  itwHasApiLevelSupport,
+  itwHasNFCFeature,
+  itwNfcIsEnabled
 } from "../../../store/actions/issuing/pid/itwIssuancePidCieActions";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { convertUnknownToError } from "../../../../../utils/errors";
 import { startTimer } from "../../../../../utils/timer";
 
-export function* watchPidIssuingCieAuthSaga(): SagaIterator {
-  // Trigger a saga on nfcIsEnabled to check if NFC is enabled or not
-  yield* takeLatest(nfcIsEnabled.request, checkNfcEnablementSaga);
+export function* watchItwPidIssuingCieAuthSaga(): SagaIterator {
+  // Trigger a saga on itwNfcIsEnabled to check if NFC is enabled or not
+  yield* takeLatest(itwNfcIsEnabled.request, itwCheckNfcEnablementSaga);
   // check if the device is compliant with CIE authentication
   yield* call(
-    checkCieAvailabilitySaga,
+    itwCheckCieAvailabilitySaga,
     cieManager.isCIEAuthenticationSupported
   );
   // check if the device has the API Level compliant with CIE authentication
-  yield* call(checkHasApiLevelSupportSaga, cieManager.hasApiLevelSupport);
+  yield* call(itwCheckHasApiLevelSupportSaga, cieManager.hasApiLevelSupport);
   // check if the device has the NFC Feature to support CIE authentication
-  yield* call(checkHasNfcFeatureSaga, cieManager.hasNFCFeature);
+  yield* call(itwCheckitwHasNFCFeatureSaga, cieManager.hasNFCFeature);
 }
 
 // stop cie manager to listen nfc tags
-export function* stopCieManager(): SagaIterator {
+export function* itwStopCieManager(): SagaIterator {
   try {
     cieManager.removeAllListeners();
     yield* call(cieManager.stopListeningNFC);
@@ -40,15 +40,15 @@ export function* stopCieManager(): SagaIterator {
  * check if the device has the API Level to support CIE authentication
  * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L155
  */
-export function* checkHasApiLevelSupportSaga(
-  hasApiLevelSupported: (typeof cieManager)["hasApiLevelSupport"]
+export function* itwCheckHasApiLevelSupportSaga(
+  itwHasApiLevelSupported: (typeof cieManager)["hasApiLevelSupport"]
 ): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof hasApiLevelSupported> =
-      yield* call(hasApiLevelSupported);
-    yield* put(hasApiLevelSupport.success(response));
+    const response: SagaCallReturnType<typeof itwHasApiLevelSupported> =
+      yield* call(itwHasApiLevelSupported);
+    yield* put(itwHasApiLevelSupport.success(response));
   } catch (e) {
-    yield* put(hasApiLevelSupport.failure(convertUnknownToError(e)));
+    yield* put(itwHasApiLevelSupport.failure(convertUnknownToError(e)));
   }
 }
 
@@ -56,15 +56,15 @@ export function* checkHasApiLevelSupportSaga(
  * check if the device has the NFC Feature to support CIE authentication
  * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L169
  */
-export function* checkHasNfcFeatureSaga(
-  hasNfcFeatureSupported: (typeof cieManager)["hasNFCFeature"]
+export function* itwCheckitwHasNFCFeatureSaga(
+  itwHasNFCFeatureSupported: (typeof cieManager)["hasNFCFeature"]
 ): SagaIterator {
   try {
-    const response: SagaCallReturnType<typeof hasNfcFeatureSupported> =
-      yield* call(hasNfcFeatureSupported);
-    yield* put(hasNFCFeature.success(response));
+    const response: SagaCallReturnType<typeof itwHasNFCFeatureSupported> =
+      yield* call(itwHasNFCFeatureSupported);
+    yield* put(itwHasNFCFeature.success(response));
   } catch (e) {
-    yield* put(hasNFCFeature.failure(convertUnknownToError(e)));
+    yield* put(itwHasNFCFeature.failure(convertUnknownToError(e)));
   }
 }
 
@@ -72,27 +72,27 @@ export function* checkHasNfcFeatureSaga(
  * check if the device is compatible with CIE authentication
  * see https://github.com/pagopa/io-cie-android-sdk/blob/29cc1165bbd3d90d61239369f22ec78b2e4c8f6c/index.js#L125
  */
-export function* checkCieAvailabilitySaga(
+export function* itwCheckCieAvailabilitySaga(
   isCIEAuthenticationSupported: (typeof cieManager)["isCIEAuthenticationSupported"]
 ): SagaIterator {
   try {
     const response: SagaCallReturnType<typeof isCIEAuthenticationSupported> =
       yield* call(isCIEAuthenticationSupported);
-    yield* put(cieIsSupported.success(response));
+    yield* put(itwCieIsSupported.success(response));
   } catch (e) {
-    yield* put(cieIsSupported.failure(convertUnknownToError(e)));
+    yield* put(itwCieIsSupported.failure(convertUnknownToError(e)));
   }
 }
 const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
 /**
  * checks if the nfc is enabled. If it is NOT enbled it checks again with a delay
  */
-export function* checkNfcEnablementSaga(): SagaIterator {
+export function* itwCheckNfcEnablementSaga(): SagaIterator {
   try {
     while (true) {
       const isNfcEnabled: SagaCallReturnType<typeof cieManager.isNFCEnabled> =
         yield* call(cieManager.isNFCEnabled);
-      yield* put(nfcIsEnabled.success(isNfcEnabled));
+      yield* put(itwNfcIsEnabled.success(isNfcEnabled));
       if (isNfcEnabled) {
         return;
       }
@@ -102,6 +102,6 @@ export function* checkNfcEnablementSaga(): SagaIterator {
       yield* call(startTimer, CIE_NFC_STATUS_INTERVAL);
     }
   } catch (e) {
-    yield* put(nfcIsEnabled.failure(convertUnknownToError(e))); // TODO: check e type
+    yield* put(itwNfcIsEnabled.failure(convertUnknownToError(e))); // TODO: check e type
   }
 }

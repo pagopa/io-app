@@ -12,10 +12,10 @@ import {
 import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { SessionToken } from "../../../types/SessionToken";
-import { loginSuccess } from "../store/actions/issuing/pid/itwIssuancePidCieActions";
+import { itwLoginSuccess } from "../store/actions/issuing/pid/itwIssuancePidCieActions";
 import {
-  stopCieManager,
-  watchPidIssuingCieAuthSaga
+  itwStopCieManager,
+  watchItwPidIssuingCieAuthSaga
 } from "./issuance/pid/itwIssuancePidCieAuthSaga";
 
 /**
@@ -48,16 +48,16 @@ export function* handleStartAuthenticationSaga(): Generator<
   any
 > {
   // Watch for login by CIE
-  const watchCieAuthentication = yield* fork(watchPidIssuingCieAuthSaga);
+  const watchCieAuthentication = yield* fork(watchItwPidIssuingCieAuthSaga);
 
   // Wait until the user has successfully authenticated with CIE
   // FIXME: show an error on LOGIN_FAILED?
-  const action = yield* take(loginSuccess);
+  const action = yield* take(itwLoginSuccess);
 
   yield* cancel(watchCieAuthentication);
 
   // stop cie manager from listening nfc
-  yield* call(stopCieManager);
+  yield* call(itwStopCieManager);
 
   return action.payload.token;
 }
@@ -68,7 +68,7 @@ export function* handleStopAuthenticationSaga(): Generator<
   any
 > {
   // stop cie manager from listening nfc
-  yield* call(stopCieManager);
+  yield* call(itwStopCieManager);
 }
 
 export function* handleActivationStart(): SagaIterator {

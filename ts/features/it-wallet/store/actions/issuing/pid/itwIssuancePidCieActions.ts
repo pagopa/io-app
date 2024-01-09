@@ -11,63 +11,63 @@ import {
 import { SessionToken } from "../../../../../../types/SessionToken";
 import { IdpData } from "../../../../../../../definitions/content/IdpData";
 
-export const hasApiLevelSupport = createAsyncAction(
+export const itwHasApiLevelSupport = createAsyncAction(
   "ITW_CIE_HAS_API_LEVEL_REQUEST",
   "ITW_CIE_HAS_API_LEVEL_SUCCESS",
   "ITW_CIE_HAS_API_LEVEL_FAILURE"
 )<void, boolean, Error>();
 
-export const hasNFCFeature = createAsyncAction(
+export const itwHasNFCFeature = createAsyncAction(
   "ITW_CIE_HAS_NFC_FEATURE_REQUEST",
   "ITW_CIE_HAS_NFC_FEATURE_SUCCESS",
   "ITW_CIE_HAS_NFC_FEATURE_FAILURE"
 )<void, boolean, Error>();
 
-export const cieIsSupported = createAsyncAction(
+export const itwCieIsSupported = createAsyncAction(
   "ITW_CIE_IS_SUPPORTED_REQUEST",
   "ITW_CIE_IS_SUPPORTED_SUCCESS",
   "ITW_CIE_IS_SUPPORTED_FAILURE"
 )<void, boolean, Error>();
 
-export const nfcIsEnabled = createAsyncAction(
+export const itwNfcIsEnabled = createAsyncAction(
   "ITW_NFC_IS_ENABLED_REQUEST",
   "ITW_NFC_IS_ENABLED_SUCCESS",
   "ITW_NFC_IS_ENABLED_FAILURE"
 )<void, boolean, Error>();
 
-export const updateReadingState = createAsyncAction(
+export const itwUpdateReadingState = createAsyncAction(
   "ITW_UPDATE_READING_STATE_REQUEST",
   "ITW_UPDATE_READING_STATE_SUCCESS",
   "ITW_UPDATE_READING_STATE_FAILURE"
 )<void, string, Error>();
 
-export const loginSuccess = createStandardAction("ITW_LOGIN_SUCCESS")<{
+export const itwLoginSuccess = createStandardAction("ITW_LOGIN_SUCCESS")<{
   token: SessionToken;
   idp: keyof IdpData;
 }>();
 
-export const loginFailure = createStandardAction("ITW_LOGIN_FAILURE")<{
+export const itwLoginFailure = createStandardAction("ITW_LOGIN_FAILURE")<{
   error: Error;
   idp: keyof IdpData | undefined;
 }>();
 
-export type CieAuthenticationErrorReason = CEvent["event"] | "GENERIC";
+export type ItwCieAuthenticationErrorReason = CEvent["event"] | "GENERIC";
 
-export type CieAuthenticationErrorPayload = {
-  reason: CieAuthenticationErrorReason;
+export type ItwCieAuthenticationErrorPayload = {
+  reason: ItwCieAuthenticationErrorReason;
   cieDescription?: string;
 };
 
-export const cieAuthenticationError = createStandardAction(
+export const itwCieAuthenticationError = createStandardAction(
   "ITW_CIE_AUTHENTICATION_ERROR"
-)<CieAuthenticationErrorPayload>();
+)<ItwCieAuthenticationErrorPayload>();
 
 export type ItwIssuancePidCieAuthActions =
-  | ActionType<typeof hasApiLevelSupport>
-  | ActionType<typeof hasNFCFeature>
-  | ActionType<typeof cieIsSupported>
-  | ActionType<typeof nfcIsEnabled>
-  | ActionType<typeof updateReadingState>
-  | ActionType<typeof cieAuthenticationError>
-  | ActionType<typeof loginSuccess>
-  | ActionType<typeof loginFailure>;
+  | ActionType<typeof itwHasApiLevelSupport>
+  | ActionType<typeof itwHasNFCFeature>
+  | ActionType<typeof itwCieIsSupported>
+  | ActionType<typeof itwNfcIsEnabled>
+  | ActionType<typeof itwUpdateReadingState>
+  | ActionType<typeof itwCieAuthenticationError>
+  | ActionType<typeof itwLoginSuccess>
+  | ActionType<typeof itwLoginFailure>;
