@@ -85,13 +85,25 @@ const WalletPaymentPickPspScreen = () => {
       (wallet: WalletInfo) => wallet.walletId
     )
   );
-  const paymentAmountInCents = pot.getOrElse(paymentAmountPot, 99999999);
+
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(
-        walletPaymentCalculateFees.request({ walletId, paymentAmountInCents })
+      pipe(
+        paymentAmountPot,
+        pot.toOption,
+        O.fold(
+          () => null, // should display error alert
+          paymentAmountInCents => {
+            dispatch(
+              walletPaymentCalculateFees.request({
+                walletId,
+                paymentAmountInCents
+              })
+            );
+          }
+        )
       );
-    }, [dispatch, walletId, paymentAmountInCents])
+    }, [dispatch, walletId, paymentAmountPot])
   );
 
   React.useEffect(
