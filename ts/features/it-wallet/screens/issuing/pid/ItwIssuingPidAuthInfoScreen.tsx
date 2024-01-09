@@ -16,7 +16,7 @@ import {
   profileNameSelector,
   profileSurnameSelector
 } from "../../../../../store/reducers/profile";
-import { pidDataMock } from "../../../utils/mocks";
+import { pidDataMock } from "../../../utils/itwMocksUtils";
 import { formatDateToYYYYMMDD } from "../../../../../utils/dates";
 import { isIos } from "../../../../../utils/platform";
 import { itwWiaStateSelector } from "../../../store/reducers/itwWiaReducer";

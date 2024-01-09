@@ -1,7 +1,7 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
-import { StoredCredential } from "../../utils/types";
+import { StoredCredential } from "../../utils/itwTypesUtils";
 
 /**
  * Action which adds the PID to the wallet.

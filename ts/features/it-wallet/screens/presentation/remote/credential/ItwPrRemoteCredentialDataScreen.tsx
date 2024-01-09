@@ -28,14 +28,14 @@ import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp
 import ItwOptionalClaimsList from "../../../../components/ItwOptionalClaimsList";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
-import { getRpMock } from "../../../../utils/mocks";
-import { showCancelAlert } from "../../../../utils/alert";
+import { getRpMock } from "../../../../utils/itwMocksUtils";
+import { itwShowCancelAlert } from "../../../../utils/itwAlertsUtils";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 import ItwTextInfo from "../../../../components/ItwTextInfo";
 import { itwPersistedCredentialsValuePidSelector } from "../../../../store/reducers/itwPersistedCredentialsReducer";
-import { StoredCredential } from "../../../../utils/types";
+import { StoredCredential } from "../../../../utils/itwTypesUtils";
 
 /**
  * This screen displays the information about the credential that is going to be shared
@@ -180,7 +180,7 @@ const ItwPrRemoteCredentialDataScreen = () => {
               buttonProps: {
                 color: "primary",
                 accessibilityLabel: I18n.t("global.buttons.cancel"),
-                onPress: () => showCancelAlert(alertOnPress),
+                onPress: () => itwShowCancelAlert(alertOnPress),
                 label: I18n.t("global.buttons.cancel")
               }
             }}

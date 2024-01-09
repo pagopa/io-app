@@ -9,7 +9,7 @@ import {
   CredentialDefinition,
   StartIssuanceFlow,
   StoredCredential
-} from "../../utils/types";
+} from "../../utils/itwTypesUtils";
 
 /**
  * Actions for the issuance checks flow.

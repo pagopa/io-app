@@ -9,7 +9,7 @@ import { Storage } from "redux-persist";
  */
 const USERNAME = "CREDENTIALS_PERSIST";
 
-export default function createCredentialsKeychain(): Storage {
+export default function itwCreateCredentialsStorage(): Storage {
   return {
     getItem: async key => {
       try {

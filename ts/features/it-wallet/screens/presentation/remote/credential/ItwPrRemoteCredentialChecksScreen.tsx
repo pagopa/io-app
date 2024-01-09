@@ -14,7 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { getRpMock } from "../../../../utils/mocks";
+import { getRpMock } from "../../../../utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
 import { itwActivationStart } from "../../../../store/actions/itwActivationActions";

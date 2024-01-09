@@ -28,7 +28,7 @@ import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
-import { mockedmDLResponse } from "../../utils/mocks";
+import { mockedmDLResponse } from "../../utils/itwMocksUtils";
 import ItwContinueView from "../../components/ItwContinueView";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";

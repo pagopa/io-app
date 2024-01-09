@@ -13,7 +13,7 @@ import { ScreenContentHeader } from "../../../../components/screens/ScreenConten
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { openNFCSettings } from "../../utils/cie";
+import { itwOpenNFCSettings } from "../../utils/itwCieUtils";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
@@ -24,7 +24,7 @@ type Props = ReduxProps & NavigationProps;
 
 export default class CieNfcOverlay extends React.PureComponent<Props> {
   private handleOnPressActivateNFC = async () => {
-    await openNFCSettings();
+    await itwOpenNFCSettings();
   };
 
   // FIX ME: the same alert is displayed during all the onboarding

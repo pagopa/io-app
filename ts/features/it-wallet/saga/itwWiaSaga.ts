@@ -10,7 +10,7 @@ import DeviceInfo from "react-native-device-info";
 import { toError } from "fp-ts/lib/Either";
 import { idpSelector } from "../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
-import { isCIEAuthenticationSupported } from "../utils/cie";
+import { itwIsCIEAuthenticationSupported } from "../utils/itwCieUtils";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
 import { walletProviderBaseUrl } from "../../../config";
 import {
@@ -36,7 +36,7 @@ export function* watchItwWiaSaga(): SagaIterator {
 export function* handleWiaRequest(): SagaIterator {
   const idp = yield* select(idpSelector);
   const hasLoggedInWithCie = isSome(idp) && idp.value.name === "cie";
-  const isCieSupported = yield* call(isCIEAuthenticationSupported);
+  const isCieSupported = yield* call(itwIsCIEAuthenticationSupported);
   const isEmulator = yield* call(DeviceInfo.isEmulator);
   if (hasLoggedInWithCie || isCieSupported || isEmulator) {
     try {

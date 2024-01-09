@@ -8,7 +8,10 @@ import {
   itwPrRemotePidInit,
   itwPrRemotePidPresentation
 } from "../actions/itwPrRemotePidActions";
-import { RequestObject, RpEntityConfiguration } from "../../utils/types";
+import {
+  RequestObject,
+  RpEntityConfiguration
+} from "../../utils/itwTypesUtils";
 
 /**
  * Type for the result of the initialization process.

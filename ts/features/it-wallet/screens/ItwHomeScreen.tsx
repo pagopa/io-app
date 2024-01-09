@@ -27,9 +27,9 @@ import {
 } from "../store/reducers/itwPersistedCredentialsReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import ItwCredentialCard from "../components/ItwCredentialCard";
-import { CredentialType } from "../utils/mocks";
+import { CredentialType } from "../utils/itwMocksUtils";
 import ItwKoView from "../components/ItwKoView";
-import { StoredCredential } from "../utils/types";
+import { StoredCredential } from "../utils/itwTypesUtils";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",

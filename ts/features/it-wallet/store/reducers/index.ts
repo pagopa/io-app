@@ -9,7 +9,7 @@ import {
 } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../store/actions/types";
-import createCredentialsKeychain from "../storages/credentialsKeychain";
+import itwCreateCredentialsStorage from "../storages/itwCredentialsStorage";
 import { isDevEnv } from "../../../../utils/environment";
 import itwIssuancePidAuthCieReducer, {
   ItwIssuancePidCieAuthState
@@ -87,7 +87,7 @@ const persistConfig: PersistConfig = {
 
 const credentialsPersistConfig = {
   key: "credentials",
-  storage: createCredentialsKeychain(),
+  storage: itwCreateCredentialsStorage(),
   version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
   migrate: createMigrate(itwCredentialsStoreMigration, { debug: isDevEnv })
 };

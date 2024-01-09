@@ -14,7 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { getRpMock } from "../../../../utils/mocks";
+import { getRpMock } from "../../../../utils/itwMocksUtils";
 import ItwKoView from "../../../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import { itwPrRemoteCredentialResultSelector } from "../../../../store/reducers/itwPrRemoteCredentialReducer";

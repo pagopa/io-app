@@ -17,7 +17,7 @@ import {
   getCredentialsCatalog,
   CredentialCatalogAvailableItem,
   CredentialCatalogItem
-} from "../../../utils/mocks";
+} from "../../../utils/itwMocksUtils";
 import ListItemLoadingItw from "../../../components/ListItems/ListItemLoadingItw";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";

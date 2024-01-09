@@ -21,7 +21,7 @@ import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../../utils/itwErrorsUtils";
-import { getPidCredentialCatalogItem } from "../../../utils/mocks";
+import { getPidCredentialCatalogItem } from "../../../utils/itwMocksUtils";
 import { itwIssuancePid } from "../../../store/actions/itwIssuancePidActions";
 
 /**

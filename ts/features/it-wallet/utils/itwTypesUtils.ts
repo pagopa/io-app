@@ -1,5 +1,5 @@
 import { Credential, Trust } from "@pagopa/io-react-native-wallet";
-import { CredentialCatalogDisplay } from "./mocks";
+import { CredentialCatalogDisplay } from "./itwMocksUtils";
 
 /**
  * Alias type for the return type of the start issuance flow operation.

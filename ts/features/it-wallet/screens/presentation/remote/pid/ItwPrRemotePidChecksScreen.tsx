@@ -12,7 +12,7 @@ import {
   ItwPrRemotePidInitData,
   itwPrRemotePidInit
 } from "../../../../store/actions/itwPrRemotePidActions";
-import { rpPidMock } from "../../../../utils/mocks";
+import { rpPidMock } from "../../../../utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
 import {

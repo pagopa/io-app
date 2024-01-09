@@ -21,7 +21,7 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList";
-import { showCancelAlert } from "../../../utils/alert";
+import { itwShowCancelAlert } from "../../../utils/itwAlertsUtils";
 import ROUTES from "../../../../../navigation/routes";
 import ItwKoView from "../../../components/ItwKoView";
 import {
@@ -38,7 +38,7 @@ import ItwLoadingSpinnerOverlay from "../../../components/ItwLoadingSpinnerOverl
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
-import { StoredCredential } from "../../../utils/types";
+import { StoredCredential } from "../../../utils/itwTypesUtils";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the credential.
@@ -81,7 +81,7 @@ const ItwIssuingCredentialPreviewScreen = () => {
       color: "contrast",
       label: I18n.t("global.buttons.cancel"),
       accessibilityLabel: I18n.t("global.buttons.cancel"),
-      onPress: () => showCancelAlert(alertOnPress)
+      onPress: () => itwShowCancelAlert(alertOnPress)
     };
 
     const topButtonProps: ButtonSolidProps = {

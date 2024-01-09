@@ -8,13 +8,13 @@ import {
   itwIssuanceCredentialChecks,
   itwIssuanceCredential
 } from "../actions/itwIssuanceCredentialActions";
-import { CredentialCatalogDisplay } from "../../utils/mocks";
+import { CredentialCatalogDisplay } from "../../utils/itwMocksUtils";
 import {
   CredentialConfigurationSchema,
   CredentialDefinition,
   IssuerConfiguration,
   StoredCredential
-} from "../../utils/types";
+} from "../../utils/itwTypesUtils";
 
 export type ItwIssuanceCredentialData = {
   credentialType: string;

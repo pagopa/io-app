@@ -14,7 +14,7 @@ import {
 } from "../../../../store/reducers/itwPrRemotePidReducer";
 import { itwPrRemotePidPresentation } from "../../../../store/actions/itwPrRemotePidActions";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { rpPidMock } from "../../../../utils/mocks";
+import { rpPidMock } from "../../../../utils/itwMocksUtils";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../../navigation/routes";

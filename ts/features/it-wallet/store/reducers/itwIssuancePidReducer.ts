@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { GlobalState } from "../../../../store/reducers/types";
-import { StoredCredential } from "../../utils/types";
+import { StoredCredential } from "../../utils/itwTypesUtils";
 import { itwIssuancePid } from "../actions/itwIssuancePidActions";
 
 type ItwPidIssuance = {

@@ -9,7 +9,7 @@ import {
   itwPersistedCredentialsAddPid
 } from "../actions/itwPersistedCredentialsActions";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
-import { StoredCredential } from "../../utils/types";
+import { StoredCredential } from "../../utils/itwTypesUtils";
 import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
 
 /**

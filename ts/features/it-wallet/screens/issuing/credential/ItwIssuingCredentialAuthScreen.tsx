@@ -23,8 +23,8 @@ import { IOStackNavigationProp } from "../../../../../navigation/params/AppParam
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import I18n from "../../../../../i18n";
 import ItwBulletList from "../../../components/ItwBulletList";
-import { getRequestedClaims } from "../../../utils/mocks";
-import { showCancelAlert } from "../../../utils/alert";
+import { getRequestedClaims } from "../../../utils/itwMocksUtils";
+import { itwShowCancelAlert } from "../../../utils/itwAlertsUtils";
 import ROUTES from "../../../../../navigation/routes";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import ItwKoView from "../../../components/ItwKoView";
@@ -32,7 +32,7 @@ import { getItwGenericMappedError } from "../../../utils/itwErrorsUtils";
 import ItwTextInfo from "../../../components/ItwTextInfo";
 import { useItwInfoBottomSheet } from "../../../hooks/useItwInfoBottomSheet";
 import { itwPersistedCredentialsValuePidSelector } from "../../../store/reducers/itwPersistedCredentialsReducer";
-import { StoredCredential } from "../../../utils/types";
+import { StoredCredential } from "../../../utils/itwTypesUtils";
 import { itwIssuanceCredentialChecksValueSelector } from "../../../store/reducers/itwIssuanceCredentialReducer";
 import { getEvidenceOrganizationName } from "../../../utils/itwClaimsUtils";
 
@@ -168,7 +168,7 @@ const ItwIssuingCredentialAuthScreen = () => {
             buttonProps: {
               color: "primary",
               accessibilityLabel: I18n.t("global.buttons.cancel"),
-              onPress: () => showCancelAlert(alertOnPress),
+              onPress: () => itwShowCancelAlert(alertOnPress),
               label: I18n.t("global.buttons.cancel")
             }
           }}

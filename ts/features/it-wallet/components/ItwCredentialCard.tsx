@@ -10,8 +10,8 @@ import customVariables from "../../../theme/variables";
 import {
   CredentialCatalogDisplay,
   getImageFromCredentialType
-} from "../utils/mocks";
-import { ParsedCredential } from "../utils/types";
+} from "../utils/itwMocksUtils";
+import { ParsedCredential } from "../utils/itwTypesUtils";
 
 /**
  * Common props for the component.

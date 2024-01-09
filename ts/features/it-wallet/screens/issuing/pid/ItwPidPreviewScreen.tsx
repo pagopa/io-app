@@ -21,9 +21,9 @@ import { useIOSelector } from "../../../../../store/hooks";
 import ItwCredentialCard from "../../../components/ItwCredentialCard";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
-import { showCancelAlert } from "../../../utils/alert";
+import { itwShowCancelAlert } from "../../../utils/itwAlertsUtils";
 import ROUTES from "../../../../../navigation/routes";
-import { CredentialType } from "../../../utils/mocks";
+import { CredentialType } from "../../../utils/itwMocksUtils";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import ItwKoView from "../../../components/ItwKoView";
@@ -32,7 +32,7 @@ import {
   ItWalletError
 } from "../../../utils/itwErrorsUtils";
 import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList";
-import { StoredCredential } from "../../../utils/types";
+import { StoredCredential } from "../../../utils/itwTypesUtils";
 import { itwIssuancePidValueSelector } from "../../../store/reducers/itwIssuancePidReducer";
 
 /**
@@ -66,7 +66,7 @@ const ItwPidPreviewScreen = () => {
       accessibilityLabel: I18n.t(
         "features.itWallet.issuing.pidPreviewScreen.buttons.cancel"
       ),
-      onPress: () => showCancelAlert(alertOnPress)
+      onPress: () => itwShowCancelAlert(alertOnPress)
     };
 
     const topButtonProps: ButtonSolidProps = {

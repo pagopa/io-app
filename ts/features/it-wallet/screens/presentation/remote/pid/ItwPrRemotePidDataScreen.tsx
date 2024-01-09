@@ -24,10 +24,10 @@ import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import I18n from "../../../../../../i18n";
-import { showCancelAlert } from "../../../../utils/alert";
+import { itwShowCancelAlert } from "../../../../utils/itwAlertsUtils";
 import ItwTextInfo from "../../../../components/ItwTextInfo";
 import ItwBulletList from "../../../../components/ItwBulletList";
-import { rpPidMock } from "../../../../utils/mocks";
+import { rpPidMock } from "../../../../utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import interno from "../../../../../../../img/features/it-wallet/interno.png";
 import { useItwInfoBottomSheet } from "../../../../hooks/useItwInfoBottomSheet";
@@ -36,7 +36,7 @@ import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 import ROUTES from "../../../../../../navigation/routes";
 import { ForceScrollDownView } from "../../../../../../components/ForceScrollDownView";
 import { itwPersistedCredentialsValuePidSelector } from "../../../../store/reducers/itwPersistedCredentialsReducer";
-import { StoredCredential } from "../../../../utils/types";
+import { StoredCredential } from "../../../../utils/itwTypesUtils";
 
 const ItwPrRemotePidDataScreen = () => {
   const pid = useIOSelector(itwPersistedCredentialsValuePidSelector);
@@ -167,7 +167,7 @@ const ItwPrRemotePidDataScreen = () => {
               buttonProps: {
                 color: "primary",
                 accessibilityLabel: I18n.t("global.buttons.cancel"),
-                onPress: () => showCancelAlert(alertOnPress),
+                onPress: () => itwShowCancelAlert(alertOnPress),
                 label: I18n.t("global.buttons.cancel")
               }
             }}

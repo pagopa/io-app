@@ -35,7 +35,7 @@ import I18n from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { walletProviderBaseUrl } from "../../../config";
-import { StoredCredential } from "../utils/types";
+import { StoredCredential } from "../utils/itwTypesUtils";
 import { verifyPin } from "../utils/itwSagaUtils";
 
 /**

@@ -17,7 +17,7 @@ import {
   ItwIssuanceCredentialData
 } from "../../../store/reducers/itwIssuanceCredentialReducer";
 import ItwContinueScreen from "../../../components/ItwContinueView";
-import { showCancelAlert } from "../../../utils/alert";
+import { itwShowCancelAlert } from "../../../utils/itwAlertsUtils";
 import {
   ItWalletError,
   ItWalletErrorTypes,
@@ -47,7 +47,7 @@ const ItwIssuingCredentialsChecksScreen = () => {
    * When the user aborts the issuance, the user is redirected to the messages home screen.
    */
   const onUserAbortIssuance = () => {
-    showCancelAlert(() => {
+    itwShowCancelAlert(() => {
       navigation.navigate(ROUTES.MAIN, { screen: ROUTES.MESSAGES_HOME });
       toast.info(
         I18n.t("features.itWallet.issuing.credentialsChecksScreen.toast.cancel")
