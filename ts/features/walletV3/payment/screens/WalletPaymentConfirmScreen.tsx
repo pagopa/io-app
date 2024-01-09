@@ -59,17 +59,24 @@ const WalletPaymentConfirmScreen = () => {
     }, [dispatch])
   );
 
-  const handleStartPaymentAuthorization = () => {
-    if (selectedMethod && selectedPsp && pot.isSome(transactionPot)) {
-      startPaymentAuthorizaton({
-        paymentAmount: paymentAmount as AmountEuroCents,
-        paymentFees: taxFee as AmountEuroCents,
-        pspId: selectedPsp.idBundle ?? "",
-        transactionId: transactionPot.value.transactionId,
-        walletId: selectedMethod.walletId
-      });
-    }
-  };
+  const handleStartPaymentAuthorization = () =>
+    pipe(
+      sequenceS(O.Monad)({
+        paumentDetail: pot.toOption(paymentDetailsPot),
+        transaction: pot.toOption(transactionPot),
+        selectedPsp: selectedPspOption,
+        selectedMethod: selectedMethodOption
+      }),
+      O.map(({ paumentDetail, selectedMethod, selectedPsp, transaction }) =>
+        startPaymentAuthorizaton({
+          paymentAmount: paumentDetail.amount as AmountEuroCents,
+          paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
+          pspId: selectedPsp.idBundle ?? "",
+          transactionId: transaction.transactionId,
+          walletId: selectedMethod.walletId
+        })
+      )
+    );
 
   const handleAuthorizationOutcome = (outcome: WalletPaymentOutcome) => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
@@ -81,31 +88,17 @@ const WalletPaymentConfirmScreen = () => {
   };
 
   const {
-    isLoading: isAuthLoading,
-    isError: isAuthError,
+    isLoading: isAuthUrlLoading,
+    isError: isAuthUrlError,
+    isPendingAuthorization,
     startPaymentAuthorizaton
   } = useWalletPaymentAuthorizationModal({
     onAuthorizationOutcome: handleAuthorizationOutcome
   });
 
-  const isLoading = isTransactionLoading || isAuthLoading;
-  const isError = isTransactionError || isAuthError;
-
-  const taxFee = pipe(
-    selectedPspOption,
-    O.chain(psp => O.fromNullable(psp.taxPayerFee)),
-    O.getOrElse(() => 0)
-  );
-
-  const paymentAmount = pipe(
-    pot.toUndefined(paymentDetailsPot),
-    O.fromNullable,
-    O.chain(paymentDetails => O.fromNullable(paymentDetails.amount)),
-    O.getOrElse(() => 0)
-  );
-
-  const selectedMethod = O.toUndefined(selectedMethodOption);
-  const selectedPsp = O.toUndefined(selectedPspOption);
+  const isLoading =
+    isTransactionLoading || isAuthUrlLoading || isPendingAuthorization;
+  const isError = isTransactionError || isAuthUrlError;
 
   if (isError) {
     // TODO: Failure handling (https://pagopa.atlassian.net/browse/IOBP-471)
