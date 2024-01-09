@@ -67,8 +67,7 @@ export const WalletPaymentNavigator = () => (
       name={WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM}
       component={WalletPaymentConfirmScreen}
       options={{
-        gestureEnabled: isGestureEnabled,
-        headerShown: false
+        gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen

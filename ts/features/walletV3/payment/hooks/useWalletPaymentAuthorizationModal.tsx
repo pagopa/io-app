@@ -4,13 +4,9 @@ import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import {
-  WebViewErrorEvent,
-  WebViewHttpErrorEvent
-} from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { NetworkError } from "../../../../utils/errors";
+import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 import {
   WalletPaymentAuthorizePayload,
   walletPaymentAuthorization
@@ -20,25 +16,20 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
-  onError?: (
-    error?: WebViewErrorEvent | WebViewHttpErrorEvent | NetworkError
-  ) => void;
   onDismiss?: () => void;
 };
 
 export type WalletPaymentAuthorizationModal = {
   isLoading: boolean;
-  isPendingAuthorization: boolean;
+  isError: boolean;
   startPaymentAuthorizaton: (payload: WalletPaymentAuthorizePayload) => void;
 };
 
 export const useWalletPaymentAuthorizationModal = ({
   onAuthorizationOutcome,
-  onError,
   onDismiss
 }: Props): WalletPaymentAuthorizationModal => {
   const dispatch = useIODispatch();
@@ -47,6 +38,7 @@ export const useWalletPaymentAuthorizationModal = ({
   );
 
   const isLoading = pot.isLoading(authorizationUrlPot);
+  const isError = pot.isError(authorizationUrlPot);
 
   const handleAuthorizationResult = React.useCallback(
     (resultUrl: string) => {
@@ -63,15 +55,6 @@ export const useWalletPaymentAuthorizationModal = ({
   );
 
   React.useEffect(() => {
-    if (pot.isLoading(authorizationUrlPot)) {
-      return;
-    }
-
-    if (pot.isError(authorizationUrlPot)) {
-      onError?.(authorizationUrlPot.error);
-      return;
-    }
-
     void pipe(
       authorizationUrlPot,
       pot.toOption,
@@ -84,7 +67,7 @@ export const useWalletPaymentAuthorizationModal = ({
       ),
       TE.map(handleAuthorizationResult)
     )();
-  }, [authorizationUrlPot, handleAuthorizationResult, onError, onDismiss]);
+  }, [authorizationUrlPot, handleAuthorizationResult, onDismiss]);
 
   React.useEffect(
     () => () => {
@@ -99,7 +82,7 @@ export const useWalletPaymentAuthorizationModal = ({
 
   return {
     isLoading,
-    isPendingAuthorization: false,
+    isError,
     startPaymentAuthorizaton
   };
 };
