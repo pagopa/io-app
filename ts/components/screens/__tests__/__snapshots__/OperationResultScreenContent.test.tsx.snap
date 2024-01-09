@@ -482,7 +482,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             Array [
                                               Object {
                                                 "alignContent": "center",
-                                                "alignItems": "center",
+                                                "alignItems": "stretch",
                                                 "flex": 1,
                                                 "justifyContent": "center",
                                               },
@@ -577,119 +577,127 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             <View
                                               style={
                                                 Object {
-                                                  "height": 24,
+                                                  "alignItems": "center",
                                                 }
                                               }
-                                            />
-                                            <View>
+                                            >
                                               <View
-                                                accessibilityLabel="Action"
-                                                accessibilityRole="button"
-                                                accessibilityState={
-                                                  Object {
-                                                    "busy": false,
-                                                    "disabled": false,
-                                                  }
-                                                }
-                                                accessible={true}
-                                                collapsable={false}
-                                                focusable={true}
-                                                onBlur={[Function]}
-                                                onClick={[Function]}
-                                                onFocus={[Function]}
-                                                onResponderGrant={[Function]}
-                                                onResponderMove={[Function]}
-                                                onResponderRelease={[Function]}
-                                                onResponderTerminate={[Function]}
-                                                onResponderTerminationRequest={[Function]}
-                                                onStartShouldSetResponder={[Function]}
                                                 style={
                                                   Object {
-                                                    "alignSelf": "flex-start",
+                                                    "height": 24,
                                                   }
                                                 }
-                                              >
+                                              />
+                                              <View>
                                                 <View
+                                                  accessibilityLabel="Action"
+                                                  accessibilityRole="button"
+                                                  accessibilityState={
+                                                    Object {
+                                                      "busy": false,
+                                                      "disabled": false,
+                                                    }
+                                                  }
+                                                  accessible={true}
+                                                  collapsable={false}
+                                                  focusable={true}
+                                                  onBlur={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  onResponderGrant={[Function]}
+                                                  onResponderMove={[Function]}
+                                                  onResponderRelease={[Function]}
+                                                  onResponderTerminate={[Function]}
+                                                  onResponderTerminationRequest={[Function]}
+                                                  onStartShouldSetResponder={[Function]}
                                                   style={
-                                                    Array [
-                                                      Object {
-                                                        "alignItems": "center",
-                                                        "borderRadius": 4,
-                                                        "elevation": 0,
-                                                        "flexDirection": "row",
-                                                        "justifyContent": "center",
-                                                        "paddingHorizontal": 16,
-                                                        "textAlignVertical": "center",
-                                                      },
-                                                      Object {
-                                                        "overflow": "hidden",
-                                                      },
-                                                      false,
-                                                      Object {
-                                                        "height": 40,
-                                                      },
-                                                      Object {
-                                                        "backgroundColor": "#0073E6",
-                                                      },
-                                                      Object {
-                                                        "backgroundColor": undefined,
-                                                        "transform": Array [
-                                                          Object {
-                                                            "scale": undefined,
-                                                          },
-                                                        ],
-                                                      },
-                                                    ]
+                                                    Object {
+                                                      "alignSelf": "flex-start",
+                                                    }
                                                   }
                                                 >
                                                   <View
-                                                    entering={[Function]}
-                                                    exiting={[Function]}
                                                     style={
                                                       Array [
                                                         Object {
                                                           "alignItems": "center",
+                                                          "borderRadius": 4,
+                                                          "elevation": 0,
                                                           "flexDirection": "row",
                                                           "justifyContent": "center",
+                                                          "paddingHorizontal": 16,
+                                                          "textAlignVertical": "center",
+                                                        },
+                                                        Object {
+                                                          "overflow": "hidden",
                                                         },
                                                         false,
+                                                        Object {
+                                                          "height": 40,
+                                                        },
+                                                        Object {
+                                                          "backgroundColor": "#0073E6",
+                                                        },
+                                                        Object {
+                                                          "backgroundColor": undefined,
+                                                          "transform": Array [
+                                                            Object {
+                                                              "scale": undefined,
+                                                            },
+                                                          ],
+                                                        },
                                                       ]
                                                     }
                                                   >
-                                                    <Text
-                                                      allowFontScaling={false}
-                                                      color="white"
-                                                      defaultColor="white"
-                                                      defaultWeight="Bold"
-                                                      ellipsizeMode="tail"
-                                                      font="TitilliumWeb"
-                                                      fontStyle={
-                                                        Object {
-                                                          "fontSize": 16,
-                                                        }
-                                                      }
-                                                      maxFontSizeMultiplier={1.3}
-                                                      numberOfLines={1}
+                                                    <View
+                                                      entering={[Function]}
+                                                      exiting={[Function]}
                                                       style={
                                                         Array [
                                                           Object {
-                                                            "alignSelf": "center",
+                                                            "alignItems": "center",
+                                                            "flexDirection": "row",
+                                                            "justifyContent": "center",
                                                           },
-                                                          Object {
-                                                            "fontSize": 16,
-                                                          },
-                                                          Object {
-                                                            "color": "#FFFFFF",
-                                                            "fontFamily": "Titillium Web",
-                                                            "fontStyle": "normal",
-                                                            "fontWeight": "700",
-                                                          },
+                                                          false,
                                                         ]
                                                       }
-                                                      weight="Bold"
                                                     >
-                                                      Action
-                                                    </Text>
+                                                      <Text
+                                                        allowFontScaling={false}
+                                                        color="white"
+                                                        defaultColor="white"
+                                                        defaultWeight="Bold"
+                                                        ellipsizeMode="tail"
+                                                        font="TitilliumWeb"
+                                                        fontStyle={
+                                                          Object {
+                                                            "fontSize": 16,
+                                                          }
+                                                        }
+                                                        maxFontSizeMultiplier={1.3}
+                                                        numberOfLines={1}
+                                                        style={
+                                                          Array [
+                                                            Object {
+                                                              "alignSelf": "center",
+                                                            },
+                                                            Object {
+                                                              "fontSize": 16,
+                                                            },
+                                                            Object {
+                                                              "color": "#FFFFFF",
+                                                              "fontFamily": "Titillium Web",
+                                                              "fontStyle": "normal",
+                                                              "fontWeight": "700",
+                                                            },
+                                                          ]
+                                                        }
+                                                        weight="Bold"
+                                                      >
+                                                        Action
+                                                      </Text>
+                                                    </View>
                                                   </View>
                                                 </View>
                                               </View>
