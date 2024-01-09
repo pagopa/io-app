@@ -110,14 +110,17 @@ import {
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
+import watchLoadMessageDetails from "../features/messages/saga/watchLoadMessageDetails";
+import watchLoadNextPageMessages from "../features/messages/saga/watchLoadNextPageMessages";
+import watchLoadPreviousPageMessages from "../features/messages/saga/watchLoadPreviousPageMessages";
+import watchMigrateToPagination from "../features/messages/saga/watchMigrateToPagination";
+import watchReloadAllMessages from "../features/messages/saga/watchReloadAllMessages";
+import watchUpsertMessageStatusAttribues from "../features/messages/saga/watchUpsertMessageStatusAttribues";
+import { watchLoadMessageById } from "../features/messages/saga/watchLoadMessageById";
+import { watchThirdPartyMessageSaga } from "../features/messages/saga/watchThirdPartyMessageSaga";
+import { watchMessagePrecondition } from "../features/messages/saga/watchMessagePrecondition";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
-import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
-import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
-import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
-import watchMigrateToPagination from "./messages/watchMigrateToPagination";
-import watchReloadAllMessages from "./messages/watchReloadAllMessages";
-import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStatusAttribues";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
@@ -161,14 +164,11 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
-import { watchLoadMessageById } from "./messages/watchLoadMessageById";
-import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
-import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 import { setLanguageFromProfileIfExists } from "./preferences";
 import { checkEmailSaga } from "./startup/checkEmailSaga";
 
@@ -456,6 +456,13 @@ export function* initializeApplicationSaga(
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
+  // FIXME IOPID-1298: find any better way to handle this
+  // We need this workaround to let the inner AppStackNavigator stack be ready,
+  // before continuing with any other navigation action to avoid:
+  // Error: The 'navigation' object hasn't been initialized yet...
+  // Here the navigationRef is ready, but because we changed the navigation inner stack
+  // based on StartupStatusEnum value, we need to wait for the new stack to be ready.
+  yield* delay(0 as Millisecond);
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
   if (hasPreviousSessionAndPin && showIdentificationModal) {
@@ -540,6 +547,9 @@ export function* initializeApplicationSaga(
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
+  // FIXME IOPID-1298: find any better way to handle this
+  // As above for StartupStatusEnum.ONBOARDING
+  yield* delay(0 as Millisecond);
   //
   // User is autenticated, session token is valid
   //

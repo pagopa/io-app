@@ -6,18 +6,15 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { Downloads } from "../../../../store/reducers/entities/messages/downloads";
-import { mockPdfAttachment } from "../../../../__mocks__/attachment";
+import { Downloads } from "../../store/reducers/downloads";
+import { mockPdfAttachment } from "../../__mocks__/attachment";
 import I18n from "../../../../i18n";
 import { MessageAttachmentPreview } from "../MessageAttachmentPreview";
 
 const mockOpen = jest.fn();
 const mockPdfViewer = <View testID="pdf-viewer" />;
 
-jest.mock(
-  "../../../../components/messages/MessageDetail/PdfViewer",
-  () => () => mockPdfViewer
-);
+jest.mock("../MessageDetail/PdfViewer", () => () => mockPdfViewer);
 
 describe("MessageAttachmentPreview", () => {
   describe("when enableDownloadAttachment is false", () => {

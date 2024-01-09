@@ -23,7 +23,11 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
   )} when calculateFees is 200`, () => {
     const mockCalculateFees = jest.fn();
     const calculateFeesResponse: CalculateFeeResponse = {
-      bundles: [],
+      bundles: [
+        {
+          idBundle: "idBundle"
+        }
+      ],
       paymentMethodDescription: "paymentMethodDescription",
       paymentMethodName: "paymentMethodName",
       paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
@@ -41,6 +45,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
         walletPaymentCalculateFees.request(calculateFeesPayload)
       )
       .next(E.right({ status: 200, value: calculateFeesResponse }))
+      .next()
       .put(walletPaymentCalculateFees.success(calculateFeesResponse))
       .next()
       .isDone();

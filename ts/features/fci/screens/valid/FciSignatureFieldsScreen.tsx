@@ -49,6 +49,7 @@ import {
   trackFciStartSignature
 } from "../../analytics";
 import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -67,6 +68,7 @@ const FciSignatureFieldsScreen = (
   const documentsSignaturesSelector = useSelector(
     fciDocumentSignaturesSelector
   );
+  const fciEnvironment = useSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
   const navigation = useNavigation();
   const [isClausesChecked, setIsClausesChecked] = React.useState(false);
@@ -115,7 +117,7 @@ const FciSignatureFieldsScreen = (
     useFciSignatureFieldInfo();
 
   const onPressDetail = (signatureField: SignatureField) => {
-    trackFciShowSignatureFields();
+    trackFciShowSignatureFields(fciEnvironment);
     showModal(
       <DocumentWithSignature
         attrs={signatureField.attrs}
@@ -235,7 +237,7 @@ const FciSignatureFieldsScreen = (
           })
         );
       } else {
-        trackFciStartSignature();
+        trackFciStartSignature(fciEnvironment);
         navigation.navigate(FCI_ROUTES.MAIN, {
           screen: FCI_ROUTES.USER_DATA_SHARE
         });

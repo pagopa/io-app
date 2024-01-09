@@ -25,12 +25,10 @@ import {
   pendingMessageStateSelector
 } from "../store/reducers/notifications/pendingMessage";
 import { isPaymentOngoingSelector } from "../store/reducers/wallet/payment";
-import {
-  navigateToMainNavigatorAction,
-  navigateToMessageRouterAction
-} from "../store/actions/navigation";
+import { navigateToMainNavigatorAction } from "../store/actions/navigation";
+import { navigateToMessageRouterAction } from "../features/messages/store/actions/navigation";
 import NavigationService from "../navigation/NavigationService";
-import { UIMessageId } from "../store/reducers/entities/messages/types";
+import { UIMessageId } from "../features/messages/types";
 import { trackMessageNotificationTap } from "../features/messages/analytics";
 
 export const notificationsPlatform: PlatformEnum =
