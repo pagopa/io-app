@@ -29,7 +29,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 >;
 
 const WalletPaymentOutcomeScreen = () => {
-  const { params: _ } = useRoute<WalletPaymentOutcomeRouteProps>(); // TODO handle outcome
+  const { params: _ } = useRoute<WalletPaymentOutcomeRouteProps>(); // TODO handle outcome (IOBP-437)
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
 
