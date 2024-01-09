@@ -37,7 +37,7 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { getServiceCTA } from "../../utils/messages";
+import { getServiceCTA } from "../../features/messages/utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 

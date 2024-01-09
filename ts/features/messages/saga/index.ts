@@ -12,10 +12,10 @@ import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
 import {
   downloadAttachment,
+  getMessageDataAction,
   removeCachedAttachment
-} from "../../../store/actions/messages";
-import { getMessageDataAction } from "../actions";
-import { retryDataAfterFastLoginSessionExpirationSelector } from "../../../store/reducers/entities/messages/messageGetStatus";
+} from "../store/actions";
+import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,

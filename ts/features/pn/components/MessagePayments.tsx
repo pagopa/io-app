@@ -15,12 +15,12 @@ import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings"
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { H5 } from "../../../components/core/typography/H5";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { trackPNShowAllPayments } from "../analytics";
-import ROUTES from "../../../navigation/routes";
 import PN_ROUTES from "../navigation/routes";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
@@ -79,7 +79,7 @@ const generateNavigationToPaidPaymentScreenAction = (
       payment => payment.creditorTaxId
     ),
     maybeCreditorTaxId =>
-      CommonActions.navigate(ROUTES.MESSAGES_NAVIGATOR, {
+      CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
           screen: PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT,

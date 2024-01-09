@@ -7,15 +7,15 @@ import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import i18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { ContentTypeValues } from "../../../types/contentType";
+import { ContentTypeValues } from "../types/contentType";
 import { isAndroid } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
-} from "../../../store/actions/messages";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
-import { downloadPotForMessageAttachmentSelector } from "../../../store/reducers/entities/messages/downloads";
+} from "../store/actions";
+import { UIAttachment } from "../types";
+import { downloadPotForMessageAttachmentSelector } from "../store/reducers/downloads";
 import { isTestEnv } from "../../../utils/environment";
 import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
