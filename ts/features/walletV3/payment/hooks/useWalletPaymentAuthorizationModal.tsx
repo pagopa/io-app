@@ -1,6 +1,6 @@
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -47,8 +47,7 @@ export const useWalletPaymentAuthorizationModal = ({
         new URLParse(resultUrl, true),
         ({ query }) => query.outcome,
         WalletPaymentOutcome.decode,
-        O.fromEither,
-        O.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
+        E.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
       onAuthorizationOutcome(outcome);
     },
