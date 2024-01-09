@@ -8,7 +8,7 @@ import { itwLifecycleIsValidSelector } from "../store/reducers/itwLifecycleReduc
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
 import { verifyPin } from "../utils/itwSagaUtils";
 
-export function* watchitwPrRemoteCredentialSaga(): SagaIterator {
+export function* watchItwPrRemoteCredentialSaga(): SagaIterator {
   yield* takeLatest(
     itwPrRemoteCredentialInit.request,
     handleItwPrRemoteCredentialInitSaga

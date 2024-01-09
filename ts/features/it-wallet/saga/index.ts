@@ -4,7 +4,7 @@ import { SagaIterator } from "redux-saga";
 import { watchItwIssuancePidSaga } from "./itwIssuancePidSaga";
 import { watchItwWiaSaga } from "./itwWiaSaga";
 import { watchItwActivationSaga } from "./itwActivationSaga";
-import { watchitwPrRemoteCredentialSaga } from "./itwPrRemoteCredentialSaga";
+import { watchItwPrRemoteCredentialSaga } from "./itwPrRemoteCredentialSaga";
 import { watchItwIssuanceCredentialSaga } from "./itwIssuanceCredentialSaga";
 import { watchItwPrProximitySaga } from "./itwPrProximitySaga";
 import { watchItwPrRemotePid } from "./itwPrRemotePidSaga";
@@ -21,6 +21,6 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(watchItwIssuanceCredentialSaga);
   /* PRESENTATION */
   yield* fork(watchItwPrRemotePid);
-  yield* fork(watchitwPrRemoteCredentialSaga);
+  yield* fork(watchItwPrRemoteCredentialSaga);
   yield* fork(watchItwPrProximitySaga);
 }
