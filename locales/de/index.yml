@@ -935,6 +935,17 @@ payment:
         description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
+  confirm: 
+    totalAmount: "Zu zahlender Gesamtbetrag"
+    pay: "Zahle "
+    payWith: "Zahle mit "
+    fee: "Kommission "
+    feeAppliedBy: "Angewandt von: "
+    editButton: "Ändern"
+    termsAndConditions: "Wenn du fortfährst, erklärst du folgende Informationen gelesen und verstanden zu haben: "
+    termsAndConditionsLink: "Nutzungsbedingungen und Datenschutzrichtlinie"
+    loading:
+      title: "Die Informationen zur Zahlung werden geladen"
 wallet:
   methodDetails:
     cobadgeTitle: "Debitkarte"
