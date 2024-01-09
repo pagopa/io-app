@@ -13,6 +13,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackFciUserExit } from "../analytics";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 import Markdown from "../../../components/ui/Markdown";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
   verticalPad: {
@@ -27,6 +28,7 @@ export const useFciAbortSignatureFlow = () => {
   const dispatch = useIODispatch();
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
     <View style={styles.verticalPad}>
       <Markdown>
@@ -50,7 +52,7 @@ export const useFciAbortSignatureFlow = () => {
       }}
       rightButton={{
         ...errorButtonProps(() => {
-          trackFciUserExit(route.name);
+          trackFciUserExit(route.name, fciEnvironment);
           dispatch(fciEndRequest());
           dismiss();
         }, I18n.t("features.fci.abort.cancel")),

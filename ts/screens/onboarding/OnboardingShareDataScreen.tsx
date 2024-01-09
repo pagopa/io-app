@@ -1,8 +1,8 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SafeAreaView, ScrollView, StatusBar, Alert } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StatusBar } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { InfoBox } from "../../components/box/InfoBox";
 import { Label } from "../../components/core/typography/Label";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -14,19 +14,19 @@ import {
 } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
-import { GlobalState } from "../../store/reducers/types";
-import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
-import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import { useIOSelector } from "../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackMixpanelScreen } from "../profile/analytics";
 import {
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
 } from "../profile/analytics/mixpanel/mixpanelAnalytics";
+import { useConfirmOptOutBottomSheet } from "../profile/components/OptOutBottomSheet";
+import { ShareDataComponent } from "../profile/components/ShareDataComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -78,7 +78,7 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <ShareDataComponent />
           <VSpacer size={16} />
-          <InfoBox iconName="profileAlt" iconColor="bluegrey">
+          <InfoBox iconName="profile" iconColor="bluegrey">
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </Label>

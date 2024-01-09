@@ -686,7 +686,7 @@ authentication:
     notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
     button_accept_lv: Continue with quick access
     button_decline_lv: Authenticate with SPID or CIE every 30 days
-  security_suggestions: 
+  security_suggestions:
     fingerprint: Do not share your or unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
     io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
@@ -977,6 +977,17 @@ payment:
         description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
+  confirm: 
+    totalAmount: Totale da pagare
+    pay: Paga
+    payWith: Paga con
+    fee: Commissione
+    feeAppliedBy: Applicata da
+    editButton: Modifica
+    termsAndConditions: Proseguendo dichiari di aver letto e compreso i
+    termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
+    loading:
+      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Debit card"
@@ -1644,6 +1655,28 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    psp:
+      title: Scegli chi gestirà il pagamento
+      description: Ogni gestore propone una commissione.
+      taxDescription: In questa lista trovi tutti i gestori compatibili,
+      taxDescriptionBold: anche se non sei loro cliente.
+      defaultName: Gestore
+      pspTitle: Gestore
+      pspSortButton: Ordina
+      featuredReason: Perché sei già cliente 
+      continueButton: Continua
+      sortBottomSheet:
+        default: Default
+        amount: Per importo
+        name: Per nome
+    outcome:
+      success:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?

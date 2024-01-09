@@ -1,8 +1,8 @@
+import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { IbanDTO } from "../../../../../definitions/idpay/IbanDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
@@ -16,6 +16,7 @@ import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationS
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { IDPayConfigurationParamsList } from "../navigation/navigator";
 import { ConfigurationMode } from "../xstate/context";
 import { useConfigurationMachineService } from "../xstate/provider";
 import {
@@ -25,7 +26,6 @@ import {
   selectEnrolledIban,
   selectIsIbanOnlyMode
 } from "../xstate/selectors";
-import { IDPayConfigurationParamsList } from "../navigation/navigator";
 
 type IbanEnrollmentScreenRouteParams = {
   initiativeId?: string;
@@ -178,7 +178,7 @@ const IbanEnrollmentScreen = () => {
           <VSpacer size={16} />
           {/*  TODO:: AdviceComponent goes here once implemented @dmnplb */}
           <View style={styles.bottomSection}>
-            <Icon name="profileAlt" color="bluegrey" />
+            <Icon name="profile" color="bluegrey" />
             <HSpacer size={8} />
             <LabelSmall
               color="bluegrey"

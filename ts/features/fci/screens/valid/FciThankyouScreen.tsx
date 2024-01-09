@@ -18,10 +18,12 @@ import { trackFciUxSuccess } from "../../analytics";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { getClausesCountByTypes } from "../../utils/signatureFields";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
   const documentSignatures = useIOSelector(fciDocumentSignaturesSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
   const LoadingComponent = () => (
@@ -80,7 +82,8 @@ const FciThankyouScreen = () => {
           ClauseTypeEnum.REQUIRED,
           ClauseTypeEnum.UNFAIR
         ]),
-        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL])
+        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL]),
+        fciEnvironment
       );
       return <SuccessComponent />;
     },
