@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { StoredCredential } from "../../utils/itwTypesUtils";
 
@@ -10,7 +9,7 @@ export const itwPersistedCredentialsAddPid = createAsyncAction(
   "ITW_CREDENTIAL_ADD_PID_REQUEST",
   "ITW_CREDENTIAL_ADD_PID_SUCCESS",
   "ITW_CREDENTIAL_ADD_PID_FAILURE"
-)<O.Option<StoredCredential>, StoredCredential, ItWalletError>();
+)<StoredCredential, StoredCredential, ItWalletError>();
 
 /**
  * Action to add a credential to the wallet.

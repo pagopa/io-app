@@ -17,8 +17,12 @@ import {
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
 } from "../utils/itwSecureStorageUtils";
-import { itwIssuancePid } from "../store/actions/itwIssuancePidActions";
+import {
+  itwIssuancePid,
+  itwIssuancePidStore
+} from "../store/actions/itwIssuancePidActions";
 import { verifyPin } from "../utils/itwSagaUtils";
+import { itwIssuancePidValueSelector } from "../store/reducers/itwIssuancePidReducer";
 
 /**
  * A dummy implementation of CompleteUserAuthorization that uses static values.
@@ -41,10 +45,7 @@ export function* watchItwIssuancePidSaga(): SagaIterator {
   /**
    * Handles adding a PID to the wallet.
    */
-  yield* takeLatest(
-    itwPersistedCredentialsAddPid.request,
-    handleCredentialsAddPid
-  );
+  yield* takeLatest(itwIssuancePidStore, handleItwIssuancePidStore);
 }
 
 /*
@@ -178,12 +179,10 @@ export function* handleItwIssuancePidSaga({
  * This saga handles adding a PID to the wallet.
  * As a side effect, it sets the lifecycle of the wallet to valid.
  */
-export function* handleCredentialsAddPid(
-  action: ActionType<typeof itwPersistedCredentialsAddPid.request>
-): SagaIterator {
-  yield* call(verifyPin);
-  const pid = action.payload;
+export function* handleItwIssuancePidStore(): SagaIterator {
+  const pid = yield* select(itwIssuancePidValueSelector);
   if (O.isSome(pid)) {
+    yield* call(verifyPin);
     yield* put(itwPersistedCredentialsAddPid.success(pid.value));
     yield* put(itwLifecycleValid());
   } else {
