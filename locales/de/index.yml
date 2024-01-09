@@ -1615,6 +1615,14 @@ wallet:
         default: "Standard"
         amount: "Nach Betrag"
         name: "Nach Name"
+    outcome:
+      success:
+        title: "Du hast {{amount}} bezahlt"
+        button: "OK, schließen"
+        banner:
+          title: "Kannst du uns sagen, wie es lief?"
+          content: "Erzähl uns von deinen Erfahrungen mit der Zahlung und hilf uns, uns zu verbessern."
+          action: "Weiter zur Umfrage"
 saveCard:
   saveCard: "Karte speichern"
   header: "Möchtest du diese Karte speichern?"
