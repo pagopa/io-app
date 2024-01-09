@@ -1669,6 +1669,14 @@ wallet:
         default: Default
         amount: Per importo
         name: Per nome
+    outcome:
+      success:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
