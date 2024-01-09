@@ -9,7 +9,7 @@ import { ItWalletError } from "../../../utils/itwErrorsUtils";
 import {
   itwPresentation,
   itwPresentationChecks
-} from "../../actions/new/itwPresentationActions";
+} from "../../actions/itwPresentationActions";
 
 /**
  * Type of the state managed by the reducer for the presentation flow.

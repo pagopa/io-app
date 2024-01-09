@@ -8,9 +8,9 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { itwRpInitialization } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
-import { ITW_WIA_KEY_TAG } from "../utils/wia";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
 import { itwLifecycleIsValidSelector } from "../store/reducers/itwLifecycleReducer";
+import { ITW_WIA_KEY_TAG } from "../utils/itwSecureStorageUtils";
 
 /*
  * This saga handles the RP initialization.

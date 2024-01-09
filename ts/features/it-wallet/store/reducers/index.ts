@@ -16,7 +16,6 @@ import itwWia, { ItwWIAState } from "./itwWiaReducer";
 import itwCredentials, { ItwCredentialsState } from "./itwCredentialsReducer";
 import itwLifeCycle, { ItwLifecycleState } from "./itwLifecycleReducer";
 import itwPid, { ItwPidState } from "./itwPidReducer";
-import itwDecodedPid, { ItwDecodedPidState } from "./itwPidDecodeReducer";
 import itwRpInitializationReducer, {
   ItwRpInitializationState
 } from "./itwRpInitializationReducer";
@@ -65,7 +64,6 @@ export type ItWalletState = {
   activation: ItwCieState;
   lifecycle: ItwLifecycleState;
   pid: ItwPidState;
-  decodedPid: ItwDecodedPidState;
   rpInit: ItwRpInitializationState;
   rpPresentation: ItwRpPresentationState;
   presentation: ItwPresentationState;
@@ -97,7 +95,6 @@ const reducers = combineReducers<ItWalletState, Action>({
   activation: itwCieReducer,
   lifecycle: itwLifeCycle,
   pid: itwPid,
-  decodedPid: itwDecodedPid,
   rpInit: itwRpInitializationReducer,
   rpPresentation: itwRpPresentationReducer,
   presentation: itwPresentationReducer,

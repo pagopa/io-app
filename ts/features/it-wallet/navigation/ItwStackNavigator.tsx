@@ -8,7 +8,7 @@ import ItwCieExpiredOrInvalidScreen from "../screens/issuing/pid/cie/ItwCieExpir
 import ItwCieWrongPinScreen from "../screens/issuing/pid/cie/ItwCieWrongPinScreen";
 import ItwIssuingPidInfoScreen from "../screens/issuing/pid/ItwIssuingPidInfoScreen";
 import ItwIssuingPidAuthInfoScreen from "../screens/issuing/pid/ItwIssuingPidAuthInfoScreen";
-import ItwPidPreviewScreen from "../screens/issuing/pid/cie/ItwPidPreviewScreen";
+import ItwPidPreviewScreen from "../screens/issuing/pid/ItwPidPreviewScreen";
 import ItwIssuingPidAddingScreen from "../screens/issuing/pid/ItwIssuingPidAddingScreen";
 import ItwPrPidDetails from "../screens/presentation/ItwPrPidDetails";
 import ItwIssuingPidRequestScreen from "../screens/issuing/pid/ItwIssuingPidRequestScreen";

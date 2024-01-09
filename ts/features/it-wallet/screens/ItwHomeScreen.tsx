@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { Pressable, ScrollView, View } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import {
   ButtonLink,
   ButtonSolid,
@@ -22,20 +21,19 @@ import { ITW_ROUTES } from "../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../navigation/ItwParamsList";
 import { itwLifecycleIsOperationalSelector } from "../store/reducers/itwLifecycleReducer";
-import { itwCredentialsSelector } from "../store/reducers/itwCredentialsReducer";
-import { itwDecodedPidValueSelector } from "../store/reducers/itwPidDecodeReducer";
+import {
+  itwCredentialsPidSelector,
+  itwCredentialsSelector
+} from "../store/reducers/itwCredentialsReducer";
 import { useItwResetFlow } from "../hooks/useItwResetFlow";
 import ItwCredentialCard from "../components/ItwCredentialCard";
-import { CredentialType, getPidDisplayData } from "../utils/mocks";
+import { CredentialType } from "../utils/mocks";
 import ItwKoView from "../components/ItwKoView";
+import { StoredCredential } from "../utils/types";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.contextualHelpTitle",
   body: "wallet.contextualHelpContent"
-};
-
-export type ContentViewProps = {
-  decodedPid: PidWithToken;
 };
 
 /**
@@ -48,7 +46,7 @@ const ItwHomeScreen = () => {
   const isItWalletOperational = useIOSelector(
     itwLifecycleIsOperationalSelector
   );
-  const decodedPid = useIOSelector(itwDecodedPidValueSelector);
+  const decodedPid = useIOSelector(itwCredentialsPidSelector);
   const credentials = useIOSelector(itwCredentialsSelector);
   const [selectedBadgeIdx, setSelectedBadgeIdx] = useState(0);
   const badgesLabels = [
@@ -58,7 +56,6 @@ const ItwHomeScreen = () => {
     I18n.t("features.itWallet.homeScreen.categories.payments"),
     I18n.t("features.itWallet.homeScreen.categories.bonus")
   ];
-  const pidDisplayData = getPidDisplayData();
   const pidType = CredentialType.PID;
 
   /**
@@ -81,7 +78,7 @@ const ItwHomeScreen = () => {
     });
   };
 
-  const ContentView = ({ decodedPid }: ContentViewProps) => (
+  const ContentView = ({ pid }: { pid: StoredCredential }) => (
     <View
       style={{
         ...IOStyles.flex,
@@ -98,8 +95,8 @@ const ItwHomeScreen = () => {
           }
         >
           <ItwCredentialCard
-            pidClaims={decodedPid.pid.claims}
-            display={pidDisplayData}
+            parsedCredential={pid.parsedCredential}
+            display={pid.displayData}
             type={pidType}
           />
           <VSpacer />
@@ -183,7 +180,7 @@ const ItwHomeScreen = () => {
             }}
           />
         ),
-        some => <ContentView decodedPid={some} />
+        some => <ContentView pid={some} />
       )
     );
 

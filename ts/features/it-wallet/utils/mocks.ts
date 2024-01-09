@@ -1,9 +1,12 @@
 import { PidData } from "@pagopa/io-react-native-cie-pid";
 import { IOIcons } from "@pagopa/io-app-design-system";
-import { PidWithToken } from "@pagopa/io-react-native-wallet/lib/typescript/pid/sd-jwt";
 import I18n from "../../../i18n";
 import { BulletItem } from "../components/ItwBulletList";
 import { ItwOptionalClaimItem } from "../components/ItwOptionalClaimsList";
+import {
+  walletCredentialProviderUrl,
+  walletPidProviderUrl
+} from "../../../config";
 
 export const ISSUER_URL = "https://www.interno.gov.it/pid/";
 
@@ -14,20 +17,17 @@ export const pidDataMock: PidData = {
   birthDate: "1980-01-10"
 };
 
-enum AssuranceLevel {
-  HIGH = "high"
-}
-
-export const mapAssuranceLevel = (level: AssuranceLevel | string) => {
+/**
+ * Maps the assurance level string to a number, 3 for high, 0 for low.
+ * @param level - the string representation of the assurance level.
+ * @returns a number representing the assurance level.
+ */
+export const mapAssuranceLevel = (level: string) => {
   switch (level) {
-    case AssuranceLevel.HIGH:
-      return I18n.t(
-        "features.itWallet.verifiableCredentials.claims.securityLevels.high"
-      );
+    case "high":
+      return "3";
     default:
-      return I18n.t(
-        "features.itWallet.verifiableCredentials.claims.securityLevels.na"
-      );
+      return "0";
   }
 };
 /**
@@ -43,7 +43,7 @@ export enum CredentialType {
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "mDL",
-  PID = "PID"
+  PID = "PersonIdentificationData"
 }
 
 export type CredentialCatalogDisplay = {
@@ -71,7 +71,17 @@ export type CredentialCatalogAvailableItem = {
 
 export type CredentialCatalogItem =
   | CredentialCatalogAvailableItem
-  | CredentialCatalogIncomingItem;
+  | CredentialCatalogIncomingItem
+  | PidCredentialCatalogItem;
+
+// A credential shown in the catalog that user can request
+export type PidCredentialCatalogItem = {
+  incoming: false;
+  /* The type that defines the credential to be issued */
+  type: CredentialType.PID;
+  /* The url of the issuer */
+  issuerUrl: string;
+} & CredentialCatalogDisplay;
 
 /**
  * Hard coded catalog of credentials.
@@ -82,7 +92,7 @@ export type CredentialCatalogItem =
 export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   {
     type: CredentialType.EUROPEAN_DISABILITY_CARD,
-    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    issuerUrl: walletCredentialProviderUrl,
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.disabilityCard"
     ),
@@ -104,7 +114,7 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   },
   {
     type: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    issuerUrl: walletCredentialProviderUrl,
     incoming: false,
     title: I18n.t("features.itWallet.verifiableCredentials.type.healthCard"),
     icon: "healthCard",
@@ -128,7 +138,7 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
   },
   {
     type: CredentialType.DRIVING_LICENSE,
-    issuerUrl: "https://api.eudi-wallet-it-issuer.it/rp",
+    issuerUrl: walletCredentialProviderUrl,
     title: I18n.t(
       "features.itWallet.verifiableCredentials.type.drivingLicense"
     ),
@@ -155,6 +165,32 @@ export const getCredentialsCatalog = (): Array<CredentialCatalogItem> => [
 ];
 
 /**
+ * Hard coded display feature for PID
+ */
+export const getPidCredentialCatalogItem = (): PidCredentialCatalogItem => ({
+  type: CredentialType.PID,
+  issuerUrl: walletPidProviderUrl,
+  title: I18n.t(
+    "features.itWallet.verifiableCredentials.type.digitalCredential"
+  ),
+  icon: "archive",
+  incoming: false,
+  textColor: "white",
+  firstLine: ["given_name", "family_name"],
+  secondLine: ["tax_id_number"],
+  order: [
+    "given_name",
+    "family_name",
+    "birthdate",
+    "place_of_birth",
+    "unique_id",
+    "tax_id_number",
+    "tax_id_code",
+    "evidence"
+  ]
+});
+
+/**
  * Returns the mocked background image for the credential.
  * @param type - the credential type
  * @returns the mocked background image.
@@ -174,24 +210,12 @@ export const getImageFromCredentialType = (type: string) => {
   }
 };
 
-/**
- * Hard coded display feature for PID
- */
-export const getPidDisplayData = (): CredentialCatalogDisplay => ({
-  title: I18n.t(
-    "features.itWallet.verifiableCredentials.type.digitalCredential"
-  ),
-  icon: "archive",
-  textColor: "white"
-});
-
 export const getRequestedClaims = (
-  decodedPid: PidWithToken
+  credentialSource: string
 ): ReadonlyArray<BulletItem> => [
   {
     title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      authSource:
-        decodedPid.pid.verification.evidence[0].record.source.organization_name
+      credentialSource
     }),
     data: [
       I18n.t("features.itWallet.verifiableCredentials.claims.givenName"),
@@ -204,12 +228,11 @@ export const getRequestedClaims = (
 ];
 
 const getMultipleRequestedClaims = (
-  decodedPid: PidWithToken
+  credentialSource: string
 ): ReadonlyArray<BulletItem> => [
   {
     title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      authSource:
-        decodedPid.pid.verification.evidence[0].record.source.organization_name
+      credentialSource
     }),
     data: [
       I18n.t("features.itWallet.verifiableCredentials.claims.givenName"),
@@ -221,7 +244,7 @@ const getMultipleRequestedClaims = (
   },
   {
     title: I18n.t("features.itWallet.generic.dataSource.multi", {
-      authSource: `${I18n.t("features.itWallet.generic.credential")} 1`
+      credentialSource: `${I18n.t("features.itWallet.generic.credential")} 1`
     }),
     data: [`${I18n.t("features.itWallet.generic.attribute")} 1`]
   }
@@ -229,14 +252,14 @@ const getMultipleRequestedClaims = (
 
 export type RpMock = {
   organizationName: string;
-  requestedClaims: (decodedPid: PidWithToken) => ReadonlyArray<BulletItem>;
+  requestedClaims: (credentialSource: string) => ReadonlyArray<BulletItem>;
   optionalClaims: ReadonlyArray<ItwOptionalClaimItem>;
 };
 
 export const getRpMock = (): RpMock => ({
   organizationName: "eFarma",
-  requestedClaims: (decodedPid: PidWithToken) =>
-    getMultipleRequestedClaims(decodedPid),
+  requestedClaims: (credentialSource: string) =>
+    getMultipleRequestedClaims(credentialSource),
   optionalClaims: [
     {
       credential: `${I18n.t("features.itWallet.generic.credential")} 1`,
@@ -251,7 +274,8 @@ export const getRpMock = (): RpMock => ({
 
 export const rpPidMock: RpMock = {
   organizationName: "Comune di Milano",
-  requestedClaims: (decodedPid: PidWithToken) => getRequestedClaims(decodedPid),
+  requestedClaims: (credentialSource: string) =>
+    getRequestedClaims(credentialSource),
   optionalClaims: [
     {
       credential: `${I18n.t("features.itWallet.generic.credential")} 1`,

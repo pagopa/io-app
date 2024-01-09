@@ -5,10 +5,10 @@ import { Action } from "../../../../store/actions/types";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwPid } from "../actions/itwCredentialsActions";
-import { PidResponse } from "../../utils/types";
+import { StoredCredential } from "../../utils/types";
 
 export type ItwPidType = {
-  pid: O.Option<PidResponse>;
+  pid: O.Option<StoredCredential>;
 };
 
 export type ItwPidState = pot.Pot<ItwPidType, ItWalletError>;

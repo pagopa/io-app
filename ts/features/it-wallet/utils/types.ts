@@ -2,15 +2,6 @@ import { Credential, Trust } from "@pagopa/io-react-native-wallet";
 import { CredentialCatalogDisplay } from "./mocks";
 
 /**
- * Alias type for the return type of the PID issuance operation.
- */
-export type PidResponse = Awaited<
-  ReturnType<Credential.Issuance.ObtainCredential>
-> & {
-  entityConfiguration: Trust.CredentialIssuerEntityConfiguration["payload"]["metadata"];
-};
-
-/**
  * Alias type for the return type of the start issuance flow operation.
  */
 export type StartIssuanceFlow = Awaited<
@@ -53,3 +44,16 @@ export type IssuerConfiguration = Awaited<
 export type ParsedCredential = Awaited<
   ReturnType<typeof Credential.Issuance.verifyAndParseCredential>
 >["parsedCredential"];
+
+/**
+ * Type for a stored credential.
+ */
+export type StoredCredential = {
+  keyTag: string;
+  credential: string;
+  format: string;
+  parsedCredential: ParsedCredential;
+  credentialConfigurationSchema: CredentialConfigurationSchema;
+  credentialType: string;
+  issuerConf: IssuerConfiguration;
+} & CredentialDefinition;

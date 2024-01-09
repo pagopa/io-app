@@ -279,7 +279,7 @@ export const defaultPin = "162534";
 /**
  * IT Wallet
  */
-export const walletProviderUrl: string = pipe(
+export const walletProviderBaseUrl: string = pipe(
   Config.IT_WALLET_WP_URL,
   NonEmptyString.decode,
   E.getOrElse(() => "https://io-d-wallet-it.azurewebsites.net")
@@ -289,4 +289,10 @@ export const walletPidProviderUrl: string = pipe(
   Config.IT_WALLET_PID_PROVIDER_URL,
   NonEmptyString.decode,
   E.getOrElse(() => "https://api.eudi-wallet-it-pid-provider.it")
+);
+
+export const walletCredentialProviderUrl: string = pipe(
+  Config.IT_WALLET_CREDENTIAL_PROVIDER_URL,
+  NonEmptyString.decode,
+  E.getOrElse(() => "https://api.eudi-wallet-it-issuer.it/rp")
 );

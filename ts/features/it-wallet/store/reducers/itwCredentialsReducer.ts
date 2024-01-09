@@ -9,34 +9,15 @@ import {
   itwCredentialsAddPid
 } from "../actions/itwCredentialsActions";
 import { ItWalletError } from "../../utils/itwErrorsUtils";
-import {
-  CredentialConfigurationSchema,
-  CredentialDefinition,
-  IssuerConfiguration,
-  ParsedCredential,
-  PidResponse
-} from "../../utils/types";
+import { StoredCredential } from "../../utils/types";
 import { itwLifecycleOperational } from "../actions/itwLifecycleActions";
-
-/**
- * Type for a stored credential.
- */
-export type StoredCredential = {
-  keyTag: string;
-  credential: string;
-  format: string;
-  parsedCredential: ParsedCredential;
-  credentialConfigurationSchema: CredentialConfigurationSchema;
-  credentialType: string;
-  issuerConf: IssuerConfiguration;
-} & CredentialDefinition;
 
 /**
  * The type of credentials stored in the wallet.
  * The PID is a particular credential which is stored separately.
  */
 type ItwCredentialsType = {
-  pid: O.Option<PidResponse>;
+  pid: O.Option<StoredCredential>;
   credentials: Array<O.Option<StoredCredential>>;
 };
 
@@ -105,7 +86,7 @@ export const ItwCredentialsStateSelector = (state: GlobalState) =>
  * @param state - the global state
  * @returns the PID from the wallet.
  */
-export const ItwCredentialsPidSelector = (state: GlobalState) =>
+export const itwCredentialsPidSelector = (state: GlobalState) =>
   pot.getOrElse(
     pot.map(
       state.features.itWallet.credentials,

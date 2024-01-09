@@ -22,6 +22,7 @@ import {
   ItWalletError,
   getItwGenericMappedError
 } from "../../../utils/itwErrorsUtils";
+import { getPidCredentialCatalogItem } from "../../../utils/mocks";
 
 /**
  * ItwIssuingPidRequestScreen's navigation params.
@@ -45,12 +46,18 @@ const ItwIssuingPidRequestScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
   const pid = useIOSelector(itwPidSelector);
+  const pidCredentialCatalogItem = getPidCredentialCatalogItem();
 
   /**
    * Dispatches the PID request on first render.
    */
   useOnFirstRender(() => {
-    dispatch(itwPid.request(route.params.pidData));
+    dispatch(
+      itwPid.request({
+        ...pidCredentialCatalogItem,
+        pidData: route.params.pidData
+      })
+    );
   });
 
   /**

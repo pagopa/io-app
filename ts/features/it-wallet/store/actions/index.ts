@@ -4,8 +4,8 @@ import { ItwActivationActions } from "./itwActivationActions";
 import { ItwWiaActions } from "./itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
 import { ItwRpActions } from "./itwRpActions";
-import { ItwPresentationChecks } from "./new/itwPresentationActions";
-import { itwIssuanceActions } from "./new/itwIssuanceActions";
+import { ItwPresentationChecks } from "./itwPresentationActions";
+import { itwIssuanceActions } from "./itwIssuanceActions";
 import { ItwProximityActions } from "./itwProximityActions";
 
 /**

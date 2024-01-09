@@ -1,14 +1,22 @@
 import { SagaIterator } from "redux-saga";
 import { put, select, call, takeLatest } from "typed-redux-saga/macro";
 import { isSome } from "fp-ts/lib/Option";
-import { Errors, Trust } from "@pagopa/io-react-native-wallet";
+import {
+  Trust,
+  WalletInstanceAttestation,
+  createCryptoContextFor
+} from "@pagopa/io-react-native-wallet";
 import DeviceInfo from "react-native-device-info";
+import { toError } from "fp-ts/lib/Either";
 import { idpSelector } from "../../../store/reducers/authentication";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
-import { getWia } from "../utils/wia";
 import { isCIEAuthenticationSupported } from "../utils/cie";
 import { itwWiaRequest } from "../store/actions/itwWiaActions";
-import { walletProviderUrl } from "../../../config";
+import { walletProviderBaseUrl } from "../../../config";
+import {
+  ITW_WIA_KEY_TAG,
+  getOrGenerateCyptoKey
+} from "../utils/itwSecureStorageUtils";
 
 /**
  * Watcher for the IT wallet instance attestation related sagas.
@@ -34,16 +42,26 @@ export function* handleWiaRequest(): SagaIterator {
     try {
       const entityConfiguration = yield* call(
         Trust.getWalletProviderEntityConfiguration,
-        walletProviderUrl
+        walletProviderBaseUrl
       );
-      const wia = yield* call(getWia, entityConfiguration);
+
+      yield* call(getOrGenerateCyptoKey, ITW_WIA_KEY_TAG);
+      const wiaCryptoContext = yield* call(
+        createCryptoContextFor,
+        ITW_WIA_KEY_TAG
+      );
+      const issuingAttestation = yield* call(
+        WalletInstanceAttestation.getAttestation,
+        { wiaCryptoContext }
+      );
+      const wia = yield* call(issuingAttestation, entityConfiguration);
       yield* put(itwWiaRequest.success(wia));
     } catch (e) {
-      const { reason } = e as Errors.WalletInstanceAttestationIssuingError;
+      const { message } = toError(e);
       yield* put(
         itwWiaRequest.failure({
           code: ItWalletErrorTypes.WIA_ISSUING_ERROR,
-          message: reason
+          message
         })
       );
     }

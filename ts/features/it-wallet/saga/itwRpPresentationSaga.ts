@@ -13,9 +13,9 @@ import {
 } from "../store/reducers/itwRpInitializationReducer";
 import { itwRpPresentation } from "../store/actions/itwRpActions";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
-import { ItwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
-import { ITW_PID_KEY_TAG } from "../utils/pid";
+import { itwCredentialsPidSelector } from "../store/reducers/itwCredentialsReducer";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
+import { ITW_PID_KEY_TAG } from "../utils/itwSecureStorageUtils";
 import { verifyPin } from "./itwSagaUtils";
 
 /*
@@ -43,7 +43,7 @@ export function* handleItwRpPresentationSaga(
       itwRpInitializationRequestObjectValueSelector
     );
 
-    const pidToken = yield* select(ItwCredentialsPidSelector);
+    const pidToken = yield* select(itwCredentialsPidSelector);
 
     if (O.isNone(requestObjectValue) || O.isNone(pidToken)) {
       throw new Error("Request object is not defined");

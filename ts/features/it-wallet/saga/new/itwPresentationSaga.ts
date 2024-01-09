@@ -3,10 +3,10 @@ import { put, delay, takeLatest, select, call } from "typed-redux-saga/macro";
 import {
   itwPresentation,
   itwPresentationChecks
-} from "../../store/actions/new/itwPresentationActions";
+} from "../../store/actions/itwPresentationActions";
 import { itwLifecycleIsValidSelector } from "../../store/reducers/itwLifecycleReducer";
-import { verifyPin } from "../itwSagaUtils";
 import { ItWalletErrorTypes } from "../../utils/itwErrorsUtils";
+import { verifyPin } from "../itwSagaUtils";
 
 export function* watchItwPresentationSaga(): SagaIterator {
   yield* takeLatest(itwPresentationChecks.request, itwPresentationChecksSaga);

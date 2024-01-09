@@ -1,6 +1,16 @@
 import { generate, getPublicKey } from "@pagopa/io-react-native-crypto";
 
 /**
+ * PID Key Tag for interacting with the keychain.
+ */
+export const ITW_PID_KEY_TAG = "ITW_PID_KEY_TAG";
+
+/**
+ * The key alias used to store the WIA crypto key in the keychain.
+ */
+export const ITW_WIA_KEY_TAG = "ITW_WIA_CRYTPO";
+
+/**
  * Getter for the public key used to sign the WIA attestation.
  * This method tries to generate a new crypto key pair but if it already exists it returns the already existing one.
  * Note that at the moment the generate function rejects the promise without a CryptoError if the key already exists.

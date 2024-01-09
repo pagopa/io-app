@@ -3471,9 +3471,6 @@ features:
         issuedByNew: "Issued by"
         releasedBy: "Released by"
         info: "Further information about this data"
-        securityLevels: 
-          high: "High"
-          na: "Not available"
         mdl: 
           category: "License {{category}}"
           issuedDate: "Valid from"
@@ -3495,8 +3492,8 @@ features:
           confirm: "Yes, interrupt it."
           cancel: "No, go back"
       dataSource: 
-        multi: "Provided by {{authSource}}"
-        single: "Provided by {{authSource}}"
+        multi: "Provided by {{credentialSource}}"
+        single: "Provided by {{credentialSource}}"
       credential: "Credential"
       attribute: "Attribute"
       placeholders:

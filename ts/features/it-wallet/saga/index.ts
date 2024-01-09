@@ -1,7 +1,7 @@
 import { fork } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
 
-import { watchPidSaga } from "./itwPidSaga";
+import { watchPidSaga } from "./itwPidIssuanceSaga";
 import { watchItwWiaSaga } from "./itwWiaSaga";
 import { watchItwActivationSaga } from "./itwActivationSaga";
 import { watchItwRpSaga } from "./itwRpSaga";

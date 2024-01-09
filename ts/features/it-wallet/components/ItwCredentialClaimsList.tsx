@@ -1,65 +1,16 @@
 import React from "react";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+import { SdJwt } from "@pagopa/io-react-native-wallet";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../i18n";
-import { CredentialCatalogDisplay } from "../utils/mocks";
-import { StoredCredential } from "../store/reducers/itwCredentialsReducer";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
-import { ParsedCredential } from "../utils/types";
-import { getClaimsFullLocale } from "../utils/itwClaimsUtils";
+import { StoredCredential } from "../utils/types";
+import { parseClaims, sortClaims } from "../utils/itwClaimsUtils";
+import { CredentialType, mapAssuranceLevel } from "../utils/mocks";
+import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import { ItwParamsList } from "../navigation/ItwParamsList";
 import ItwCredentialClaim from "./ItwCredentialClaim";
-
-export type Claim = {
-  label: string;
-  value: unknown;
-};
-
-/**
- * Type of the claims list.
- * Consists of a list of claims, each claim is a couple of label and value.
- */
-export type ClaimList = Array<Claim>;
-
-/**
- * Parses the claims from the credential.
- * For each Record entry it maps the key and the attribute value to a label and a value.
- * The label is taken from the attribute name which is either a string or a record of locale and string.
- * If the type of the attribute name is string then when take it's value because locales have not been set.
- * If the type of the attribute name is record then we take the value of the locale that matches the current locale.
- * If there's no locale that matches the current locale then we take the attribute key as the name.
- * The value is taken from the attribute value.
- * @param parsedCredential - the parsed credential.
- * @param schema - the issuance credentialConfigurationSchema of parsedCredential.
- * @returns the {@link ClaimList} of the credential contained in its configuration schema.
- */
-const parseClaims = (parsedCredential: ParsedCredential): ClaimList =>
-  Object.entries(parsedCredential).map(([key, attribute]) => {
-    const attributeName =
-      typeof attribute.name === "string"
-        ? attribute.name
-        : attribute.name[getClaimsFullLocale()] || key;
-
-    return { label: attributeName, value: attribute.value };
-  });
-
-/**
- * Sorts the parsedCredential according to the order of the displayData.
- * If the order is not available, the schema is returned as is.
- * @param parsedCredential - the parsed credential.
- * @param order - the order of the displayData.
- * @returns a new parsedCredential sorted according to the order of the displayData.
- */
-const sortClaims = (
-  order: CredentialCatalogDisplay["order"],
-  parsedCredential: ParsedCredential
-) =>
-  order
-    ? Object.fromEntries(
-        Object.entries(parsedCredential)
-          .slice()
-          .sort(([key1], [key2]) => order.indexOf(key1) - order.indexOf(key2))
-      )
-    : parsedCredential;
 
 /**
  * This component renders the list of claims for a credential.
@@ -67,13 +18,18 @@ const sortClaims = (
  * @param data - the {@link StoredCredential} of the credential.
  */
 const ItwCredentialClaimsList = ({
-  data: { parsedCredential, displayData, issuerConf }
+  data: {
+    parsedCredential,
+    displayData,
+    issuerConf,
+    credential,
+    credentialType
+  }
 }: {
   data: StoredCredential;
 }) => {
   const claims = parseClaims(sortClaims(displayData.order, parsedCredential));
-
-  const releaserName = issuerConf.federation_entity.organization_name;
+  const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
 
   /**
    * Renders the releaser name with an info button that opens the bottom sheet.
@@ -82,7 +38,8 @@ const ItwCredentialClaimsList = ({
    * @param releaserName - the releaser name.
    * @returns the list item with the releaser name.
    */
-  const RenderReleaserName = ({ releaserName }: { releaserName: string }) => {
+  const RenderReleaserName = () => {
+    const releaserName = issuerConf.federation_entity.organization_name;
     const label = I18n.t(
       "features.itWallet.verifiableCredentials.claims.releasedBy"
     );
@@ -109,24 +66,63 @@ const ItwCredentialClaimsList = ({
         }
       ]
     });
+
     return (
       <>
+        {releaserName ? (
+          <>
+            <ListItemInfo
+              endElement={{
+                type: "iconButton",
+                componentProps: {
+                  icon: "info",
+                  accessibilityLabel: "test",
+                  onPress: () => releasedByBottomSheet.present()
+                }
+              }}
+              label={label}
+              value={releaserName}
+              accessibilityLabel={`${label} ${releaserName}`}
+            />
+            {releasedByBottomSheet.bottomSheet}
+          </>
+        ) : null}
+      </>
+    );
+  };
+
+  /**
+   * Renders the PID assurance level with an info button that currenlt navigates to a not available screen.
+   * If the credential is not a PID credential, it returns null.
+   * This is not part of the claims list because it's not a claim.
+   * Thus it's rendered separately.
+   * @returns the list item with the PID assurance level.
+   */
+  const RenderPidAssuranceLevel = () => {
+    if (credentialType === CredentialType.PID) {
+      const { sdJwt } = SdJwt.decode(credential, SdJwt.SdJwt4VC);
+      const assuranceLevel = mapAssuranceLevel(
+        sdJwt.payload.verified_claims.verification.assurance_level
+      );
+      return (
         <ListItemInfo
+          label={I18n.t(
+            "features.itWallet.verifiableCredentials.claims.securityLevel"
+          )}
+          value={assuranceLevel}
           endElement={{
             type: "iconButton",
             componentProps: {
               icon: "info",
-              accessibilityLabel: "test",
-              onPress: () => releasedByBottomSheet.present()
+              onPress: () => navigation.navigate("ITW_GENERIC_NOT_AVAILABLE"),
+              accessibilityLabel: ""
             }
           }}
-          label={label}
-          value={releaserName}
-          accessibilityLabel={`${label} ${releaserName}`}
         />
-        {releasedByBottomSheet.bottomSheet}
-      </>
-    );
+      );
+    } else {
+      return null;
+    }
   };
 
   return (
@@ -136,11 +132,8 @@ const ItwCredentialClaimsList = ({
           <ItwCredentialClaim claim={elem} />
         </View>
       ))}
-      {releaserName && (
-        <>
-          <RenderReleaserName releaserName={releaserName} />
-        </>
-      )}
+      <RenderReleaserName />
+      <RenderPidAssuranceLevel />
     </>
   );
 };

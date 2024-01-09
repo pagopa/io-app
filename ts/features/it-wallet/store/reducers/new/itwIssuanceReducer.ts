@@ -7,14 +7,14 @@ import { ItWalletError } from "../../../utils/itwErrorsUtils";
 import {
   itwIssuanceChecks,
   itwIssuanceGetCredential
-} from "../../actions/new/itwIssuanceActions";
+} from "../../actions/itwIssuanceActions";
 import { CredentialCatalogDisplay } from "../../../utils/mocks";
 import {
   CredentialConfigurationSchema,
   CredentialDefinition,
-  IssuerConfiguration
+  IssuerConfiguration,
+  StoredCredential
 } from "../../../utils/types";
-import { StoredCredential } from "../itwCredentialsReducer";
 
 export type IssuanceData = {
   credentialType: string;
