@@ -273,6 +273,7 @@ const RadioListItemsShowroom = () => {
     <>
       <DSComponentViewerBox name="RadioListItem">
         <RadioGroup<string>
+          type="radioListItem"
           key="check_income"
           items={mockRadioItems()}
           selectedItem={selectedItem}
@@ -281,6 +282,7 @@ const RadioListItemsShowroom = () => {
       </DSComponentViewerBox>
       <DSComponentViewerBox name="RadioListItem, loading states">
         <RadioGroup<string>
+          type="radioListItem"
           key="skeleton"
           items={mockRadioItemsSkeleton()}
           selectedItem={selectedItem}

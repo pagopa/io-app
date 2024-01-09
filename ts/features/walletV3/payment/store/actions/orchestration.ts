@@ -15,7 +15,12 @@ export const walletPaymentPickPsp = createStandardAction(
   "WALLET_PAYMENT_PICK_PSP"
 )<Bundle>();
 
+export const walletPaymentResetPickedPsp = createStandardAction(
+  "WALLET_PAYMENT_RESET_PICKED_PSP"
+)();
+
 export type WalletPaymentOrchestrationActions =
   | ActionType<typeof walletPaymentInitState>
   | ActionType<typeof walletPaymentPickPaymentMethod>
-  | ActionType<typeof walletPaymentPickPsp>;
+  | ActionType<typeof walletPaymentPickPsp>
+  | ActionType<typeof walletPaymentResetPickedPsp>;

@@ -977,6 +977,17 @@ payment:
         description: IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
+  confirm: 
+    totalAmount: Totale da pagare
+    pay: Paga
+    payWith: Paga con
+    fee: Commissione
+    feeAppliedBy: Applicata da
+    editButton: Modifica
+    termsAndConditions: Proseguendo dichiari di aver letto e compreso i
+    termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
+    loading:
+      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Carta di debito"
@@ -1651,6 +1662,20 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    psp:
+      title: Scegli chi gestirà il pagamento
+      description: Ogni gestore propone una commissione.
+      taxDescription: In questa lista trovi tutti i gestori compatibili,
+      taxDescriptionBold: anche se non sei loro cliente.
+      defaultName: Gestore
+      pspTitle: Gestore
+      pspSortButton: Ordina
+      featuredReason: Perché sei già cliente 
+      continueButton: Continua
+      sortBottomSheet:
+        default: Default
+        amount: Per importo
+        name: Per nome
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
