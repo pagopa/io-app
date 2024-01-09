@@ -1,5 +1,10 @@
+import _ from "lodash";
 import * as O from "fp-ts/lib/Option";
-import { ListItemTransactionStatusWithBadge } from "@pagopa/io-app-design-system";
+import {
+  IOLogoPaymentType,
+  IOPaymentLogos,
+  ListItemTransactionStatusWithBadge
+} from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { pipe } from "fp-ts/lib/function";
 
@@ -8,10 +13,14 @@ import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/Serv
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import {
   TypeEnum,
+  WalletInfoDetails,
   WalletInfoDetails1
 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { WalletPaymentPspSortType } from "../../payment/types";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -99,4 +108,48 @@ export const isPaymentSupported = (
     O.alt(() => notAvailableCustomRepresentation),
     O.getOrElseW(() => "notAvailable" as const)
   );
+};
+
+export const getPaymentLogo = (
+  selectedMethod: WalletInfoDetails
+): IOLogoPaymentType | undefined => {
+  switch (selectedMethod.type) {
+    case TypeEnum.CARDS:
+      const cardsType = selectedMethod as WalletInfoDetails1;
+      const { brand } = cardsType;
+      return pipe(
+        brand,
+        findFirstCaseInsensitive(IOPaymentLogos),
+        O.fold(
+          () => undefined,
+          ([logoName, _]) => logoName
+        )
+      ) as IOLogoPaymentType;
+    case TypeEnum.PAYPAL:
+      return "payPal";
+    default:
+      return undefined;
+  }
+};
+
+export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
+  "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/";
+
+/**
+ * Function that returns a sorted list of psp based on the given sortType
+ * The sortType can be: "name", "amount" or "default"
+ */
+export const getSortedPspList = (
+  pspList: ReadonlyArray<Bundle>,
+  sortType: WalletPaymentPspSortType
+) => {
+  switch (sortType) {
+    case "name":
+      return _.orderBy(pspList, psp => psp.bundleName);
+    case "amount":
+      return _.orderBy(pspList, psp => psp.taxPayerFee);
+    case "default":
+    default:
+      return _.orderBy(pspList, ["onUs", "taxPayerFee"]);
+  }
 };
