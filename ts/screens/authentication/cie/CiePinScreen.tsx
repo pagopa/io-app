@@ -31,7 +31,10 @@ import {
 } from "../../../components/ui/LightModal";
 import Markdown from "../../../components/ui/Markdown";
 import I18n from "../../../i18n";
-import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import { nfcIsEnabled } from "../../../store/actions/cie";
@@ -60,7 +63,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loginSuccess({ token, idp }))
 });
 
-type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
+type NavigationProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_PIN_SCREEN"
+>;
+
+type Props = NavigationProps &
+  ReduxProps &
+  ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   container: {
@@ -84,7 +94,7 @@ const getContextualHelp = () => ({
 });
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
 
-const CiePinScreen: React.FC<Props> = props => {
+const CiePinScreen = (props: Props) => {
   useOnFirstRender(() => {
     trackLoginCiePinScreen();
   });

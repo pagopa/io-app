@@ -11,8 +11,15 @@ import { openLink } from "../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../i18n";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 
-type Props = ReduxProps;
+type NavigationProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "CIE_EXPIRED_SCREEN"
+>;
+
+type Props = NavigationProps & ReduxProps;
 const bookingUrl = I18n.t("cie.booking_url");
 const browseToLink = () => openLink(bookingUrl);
 

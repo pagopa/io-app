@@ -32,10 +32,7 @@ import SectionStatusComponent from "../../components/SectionStatus";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
   idpSelected,
@@ -64,13 +61,17 @@ import {
 } from "../../features/fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
+import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
   trackSpidLoginSelected
 } from "./analytics";
 
-type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
+type NavigationProps = IOStackNavigationRouteProps<
+  AuthenticationParamsList,
+  "AUTHENTICATION_LANDING"
+>;
 
 type Props = NavigationProps &
   LightModalContextInterface &

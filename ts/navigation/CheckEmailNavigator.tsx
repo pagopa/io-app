@@ -12,8 +12,7 @@ const Stack = createStackNavigator();
 const navigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.CHECK_EMAIL_NOT_VERIFIED}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={ROUTES.CHECK_EMAIL_NOT_VERIFIED}

@@ -41,6 +41,7 @@ import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, { navigationRef } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import ROUTES from "./routes";
+import { AppParamsList } from "./params/AppParamsList";
 
 export const AppStackNavigator = (): React.ReactElement => {
   // This hook is used since we are in a child of the Context Provider
@@ -78,7 +79,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const isOptInPaymentMethodsEnabled =
     bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
 
-  const linking: LinkingOptions = {
+  const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
     prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
     config: {
