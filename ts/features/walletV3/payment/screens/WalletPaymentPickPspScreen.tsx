@@ -71,12 +71,6 @@ const WalletPaymentPickPspScreen = () => {
     supportRequest: true
   });
 
-  useHeaderSecondLevel({
-    title: "",
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["payment"],
-    supportRequest: true
-  });
 
   const walletId = pipe(
     selectedWalletOption as O.Option<WalletInfo>,
