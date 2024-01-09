@@ -82,20 +82,20 @@ const WalletPaymentPickPspScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      pipe(
-        paymentAmountPot,
-        pot.toOption,
-        O.fold(
-          () => null, // should display error alert
-          paymentAmountInCents => {
-            dispatch(
-              walletPaymentCalculateFees.request({
-                walletId,
-                paymentAmountInCents
-              })
-            );
-          }
-        )
+     pipe(
+        sequenceT(O.Monad)(
+          pot.toOption(paymentAmountPot),
+          selectedWalletOption
+        ),
+        O.map(([paymentAmountInCents, selectedWallet]) => {
+          dispatch(
+            walletPaymentCalculateFees.request({
+              walletId: selectedWallet.walletId,
+              paymentAmountInCents
+            })
+          );
+        })
+      );
       );
     }, [dispatch, walletId, paymentAmountPot])
   );
