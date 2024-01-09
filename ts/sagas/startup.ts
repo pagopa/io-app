@@ -456,7 +456,7 @@ export function* initializeApplicationSaga(
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
-  // FIXME: find any better way to handle this
+  // FIXME IOPID-1298: find any better way to handle this
   // We need this workaround to let the inner AppStackNavigator stack be ready,
   // before continuing with any other navigation action to avoid:
   // Error: The 'navigation' object hasn't been initialized yet...
@@ -547,7 +547,7 @@ export function* initializeApplicationSaga(
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
-  // FIXME: find any better way to handle this
+  // FIXME IOPID-1298: find any better way to handle this
   // As above for StartupStatusEnum.ONBOARDING
   yield* delay(0 as Millisecond);
   //
