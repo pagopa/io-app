@@ -35,6 +35,7 @@ type LightSize = {
    Visual parameters */
 const lightSizePercentage: ViewStyle["width"] = "50%";
 const lightScaleMultiplier: number = 1;
+const lightOpacity: ViewStyle["opacity"] = 0.3;
 /* Percentage of visible light when it's near
 card boundaries */
 const visibleLightPercentage: number = 0.5;
@@ -113,7 +114,7 @@ const DSGyroscopeCardScreen = () => {
     const translateX = interpolate(
       relativeQx,
       [-quaternionRange, quaternionRange],
-      [-maxTranslateX, maxTranslateX],
+      [maxTranslateX, -maxTranslateX],
       Extrapolate.CLAMP
     );
 
@@ -164,7 +165,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: lightSizePercentage,
     aspectRatio: 1,
-    backgroundColor: IOColors["hanPurple-500"],
+    backgroundColor: IOColors.white,
+    opacity: lightOpacity,
     borderRadius: 100
   },
   mask: {
