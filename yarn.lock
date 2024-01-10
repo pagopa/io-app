@@ -3122,10 +3122,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.18.0.tgz#7e15ab07107ab8ae411d885f26196725824ea1a2"
-  integrity sha512-AeExqeir6a/+bOZEyoeV1Ee3MrUS/Kg7vBdO6c8G7vm2yiE+5ghybSQkNTH15QNHag28lRasygrvWNbBNFsO9A==
+"@pagopa/io-app-design-system@^1.19.0":
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.19.0.tgz#e7c4c75895c427853530fc0fdc913d3411b6e8d6"
+  integrity sha512-6zgHIkGW/he7cBc1TrRX3RFbCA5IhRczQnd2iu4wN4IvbiDoeRwDBMbe1XQQVv5Po/DOtVFvZCXF7wKP7wS/8w==
   dependencies:
     "@expo/vector-icons" "^13.0.0"
     "@pagopa/ts-commons" "^12.0.0"
@@ -3159,10 +3159,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
   integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
 
-"@pagopa/io-react-native-login-utils@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.0.tgz#4a9b55d84c6d77622e95de4511e4c422a862b27d"
-  integrity sha512-mZ0Z7SAhWhbYIK/GvaeuecIyQPikj/D7pmejOrAiLA1KxIqO3UGH6p6LC2pZhN0JPHTcXbBiNHJRQtrqTHCfew==
+"@pagopa/io-react-native-login-utils@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.2.tgz#9b37787f98d94fac645e70bda926638b14e59d0d"
+  integrity sha512-rOChvrMsJ5QvfLvcsttGP6M5LZkOWhOD2YVRL4+bMCVqNRMsSDmteBNoMWzWlRcXrKyd2ZORgDEa1zPmMRMhTw==
 
 "@pagopa/openapi-codegen-ts@^12.2.1":
   version "12.2.1"

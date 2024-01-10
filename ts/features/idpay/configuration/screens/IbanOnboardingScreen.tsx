@@ -1,17 +1,17 @@
+import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { useSelector } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Iban } from "../../../../../definitions/backend/Iban";
+import { LabelledItem } from "../../../../components/LabelledItem";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { LabelSmall } from "../../../../components/core/typography/LabelSmall";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
@@ -98,7 +98,7 @@ const IbanOnboardingScreen = () => {
             }
           ]}
         >
-          <Icon name="profileAlt" size={30} color="bluegrey" />
+          <Icon name="profile" size={30} color="bluegrey" />
           <HSpacer size={16} />
           <LabelSmall color="bluegrey" weight="Regular">
             {I18n.t("idpay.configuration.iban.onboarding.bottomLabel")}

@@ -114,7 +114,6 @@ const WalletPaymentDetailContent = ({
 
   useHeaderSecondLevel({
     title: "",
-    goBack: undefined,
     supportRequest: true,
     contextualHelp: emptyContextualHelp
   });

@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.50.0-rc.3](https://github.com/pagopa/io-app/compare/2.50.0-rc.2...2.50.0-rc.3) (2024-01-09)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1892](https://pagopa.atlassian.net/browse/SFEQS-1892)] Add environment to Mixpanel events ([#5159](https://github.com/pagopa/io-app/issues/5159)) ([43d203f](https://github.com/pagopa/io-app/commit/43d203f3381591c47347bf850c0ee8c0a29fa0a2))
+* [[IOBP-313](https://pagopa.atlassian.net/browse/IOBP-313)] New wallet payment pick PSP ([#5302](https://github.com/pagopa/io-app/issues/5302)) ([77a768c](https://github.com/pagopa/io-app/commit/77a768cddff285f558f2c552b44efac409a5b789))
+* [[IOBP-314](https://pagopa.atlassian.net/browse/IOBP-314)] Wallet payment confirm screen ([#5344](https://github.com/pagopa/io-app/issues/5344)) ([9f867be](https://github.com/pagopa/io-app/commit/9f867be9de4836242a0a6b8a9a6a84ff8e5f4184))
+* [[IOCOM-382](https://pagopa.atlassian.net/browse/IOCOM-382)] Move all the message related files to `features/messages` folder ([#5375](https://github.com/pagopa/io-app/issues/5375)) ([e92e03c](https://github.com/pagopa/io-app/commit/e92e03cb0b030326d08678ee53f269c14f0c0811))
+
+
+### Bug Fixes
+
+* [[IOPID-1297](https://pagopa.atlassian.net/browse/IOPID-1297)] Fix: the navigation object hasn't been initialized yet ([#5381](https://github.com/pagopa/io-app/issues/5381)) ([5f9d702](https://github.com/pagopa/io-app/commit/5f9d702b88c79ef75228c24b1834a279cb6fd66c))
+
+
+### Chores
+
+* [[IOAPPFD0-202](https://pagopa.atlassian.net/browse/IOAPPFD0-202)] Update README.md physical devices section ([#5332](https://github.com/pagopa/io-app/issues/5332)) ([ccf5fc2](https://github.com/pagopa/io-app/commit/ccf5fc2d8f3f320dbaae9ad2b3f4fd1ff71e02bb))
+* [[IOPID-1301](https://pagopa.atlassian.net/browse/IOPID-1301)] Bump ToS version from 4.7 to 4.8 ([#5385](https://github.com/pagopa/io-app/issues/5385)) ([a7efe4e](https://github.com/pagopa/io-app/commit/a7efe4e393b26e5d0d187457ed28d7f38cfa79bd))
+* removes test step from husky pre-push ([#5380](https://github.com/pagopa/io-app/issues/5380)) ([3e9e9ee](https://github.com/pagopa/io-app/commit/3e9e9eea96c44e8c077b3152003b98728febabff))
+
+## [2.50.0-rc.2](https://github.com/pagopa/io-app/compare/2.50.0-rc.1...2.50.0-rc.2) (2024-01-05)
+
 ## [2.50.0-rc.1](https://github.com/pagopa/io-app/compare/2.50.0-rc.0...2.50.0-rc.1) (2024-01-04)
 
 

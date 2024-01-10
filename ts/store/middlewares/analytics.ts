@@ -49,7 +49,7 @@ import {
 import {
   migrateToPaginatedMessages,
   removeMessages
-} from "../actions/messages";
+} from "../../features/messages/store/actions";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure,
@@ -109,6 +109,7 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../actions/wallet/wallets";
+import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -388,7 +389,7 @@ const trackAction =
  * The middleware acts as a general hook in order to track any meaningful action
  */
 export const actionTracking =
-  (_: MiddlewareAPI) =>
+  (middleware: MiddlewareAPI) =>
   (next: Dispatch) =>
   (action: Action): Action => {
     if (mixpanel !== undefined) {
@@ -405,7 +406,9 @@ export const actionTracking =
       void trackPaypalOnboarding(mixpanel)(action);
       void trackZendesk(mixpanel)(action);
       void trackCdc(mixpanel)(action);
-      void trackFciAction(mixpanel)(action);
+
+      const fciEnvironment = fciEnvironmentSelector(middleware.getState());
+      void trackFciAction(mixpanel, fciEnvironment)(action);
     }
     return next(action);
   };

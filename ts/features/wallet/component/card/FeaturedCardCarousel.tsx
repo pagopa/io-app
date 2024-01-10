@@ -29,7 +29,7 @@ import {
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getRemoteLocale } from "../../../../utils/messages";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import { showToast } from "../../../../utils/showToast";
 import {
   availableBonusTypesSelectorFromId,

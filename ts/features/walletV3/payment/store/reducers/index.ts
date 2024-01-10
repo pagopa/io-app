@@ -1,3 +1,4 @@
+import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
@@ -20,7 +21,8 @@ import {
 import {
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
-  walletPaymentInitState
+  walletPaymentInitState,
+  walletPaymentResetPickedPsp
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 
@@ -135,6 +137,12 @@ const reducer = (
         chosenPsp: O.some(action.payload)
       };
 
+    case getType(walletPaymentResetPickedPsp):
+      return {
+        ...state,
+        chosenPsp: O.none
+      };
+
     // Create/delete transaction
     case getType(walletPaymentCreateTransaction.request):
     case getType(walletPaymentDeleteTransaction.request):
@@ -174,6 +182,11 @@ const reducer = (
       return {
         ...state,
         authorizationUrl: pot.toError(state.authorizationUrl, action.payload)
+      };
+    case getType(walletPaymentAuthorization.cancel):
+      return {
+        ...state,
+        authorizationUrl: pot.none
       };
   }
   return state;
