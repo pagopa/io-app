@@ -52,8 +52,8 @@ export const WalletPaymentNavigator = () => (
       name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD}
       component={WalletPaymentPickMethodScreen}
       options={{
-        gestureEnabled: isGestureEnabled,
-        headerShown: false
+        headerShown: true,
+        gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen
