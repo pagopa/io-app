@@ -19,10 +19,12 @@ import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentS
 import { getClausesCountByTypes } from "../../utils/signatureFields";
 import LoadingComponent from "../../components/LoadingComponent";
 import { InfoScreenComponent } from "../../components/InfoScreenComponent";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
   const documentSignatures = useIOSelector(fciDocumentSignaturesSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
   const LoadingView = () => (
@@ -77,7 +79,8 @@ const FciThankyouScreen = () => {
           ClauseTypeEnum.REQUIRED,
           ClauseTypeEnum.UNFAIR
         ]),
-        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL])
+        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL]),
+        fciEnvironment
       );
       return <SuccessComponent />;
     },

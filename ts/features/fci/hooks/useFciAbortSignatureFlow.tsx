@@ -11,6 +11,7 @@ import { trackFciUserExit } from "../analytics";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 import Markdown from "../../../components/ui/Markdown";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
@@ -27,7 +28,7 @@ export const useFciAbortSignatureFlow = () => {
   };
   const continueButtonProps: ButtonSolidProps = {
     onPress: () => {
-      trackFciUserExit(route.name);
+      trackFciUserExit(route.name, fciEnvironment);
       dispatch(fciEndRequest());
       dismiss();
     },
@@ -35,6 +36,7 @@ export const useFciAbortSignatureFlow = () => {
     label: I18n.t("features.fci.abort.cancel"),
     accessibilityLabel: I18n.t("features.fci.abort.cancel")
   };
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("features.fci.abort.title"),
     component: (

@@ -12,6 +12,7 @@ import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignat
 import { useIOSelector } from "../../../store/hooks";
 import { trackFciStartSignature } from "../analytics";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
 type Props = {
   currentDoc: number;
@@ -23,6 +24,7 @@ type Props = {
 export const useFciNoSignatureFields = (props: Props) => {
   const navigation = useNavigation();
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { currentDoc } = props;
   const readButtonProps: ButtonSolidProps = {
     onPress: () => {
@@ -42,7 +44,7 @@ export const useFciNoSignatureFields = (props: Props) => {
           })
         );
       } else {
-        trackFciStartSignature();
+        trackFciStartSignature(fciEnvironment);
         navigation.navigate(FCI_ROUTES.MAIN, {
           screen: FCI_ROUTES.USER_DATA_SHARE
         });

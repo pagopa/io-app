@@ -47,6 +47,7 @@ import {
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -67,6 +68,7 @@ const FciDocumentsScreen = () => {
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const downloadPath = useIOSelector(fciDownloadPathSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useNavigation();
   const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
   const dispatch = useIODispatch();
@@ -104,10 +106,11 @@ const FciDocumentsScreen = () => {
         ).length,
         getOptionalSignatureFields(
           documents[currentDoc]?.metadata.signature_fields
-        ).length
+        ).length,
+        fciEnvironment
       );
     }
-  }, [currentDoc, documents, isFocused]);
+  }, [currentDoc, documents, isFocused, fciEnvironment]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -119,7 +122,7 @@ const FciDocumentsScreen = () => {
 
   const onContinuePress = () => {
     if (getSignatureFieldsLength(documents[currentDoc]) > 0) {
-      trackFciSigningDoc();
+      trackFciSigningDoc(fciEnvironment);
       navigation.dispatch(
         StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
           documentId: documents[currentDoc].id,

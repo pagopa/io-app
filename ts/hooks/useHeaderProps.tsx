@@ -50,11 +50,19 @@ export type HeaderActionProps =
   | HeaderTwoActionsProps
   | HeaderThreeActionsProps;
 
+type BackProps =
+  | {
+      goBack: () => void;
+      backAccessibilityLabel: string;
+    }
+  | {
+      goBack?: never;
+      backAccessibilityLabel?: never;
+    };
+
 type HeaderProps = HeaderActionProps &
-  Pick<
-    HeaderSecondLevelProps,
-    "title" | "scrollValues" | "backAccessibilityLabel" | "goBack"
-  > &
+  BackProps &
+  Pick<HeaderSecondLevelProps, "title" | "scrollValues"> &
   SupportRequestParams;
 
 export const useHeaderProps = ({
@@ -95,7 +103,7 @@ export const useHeaderProps = ({
       return {
         ...baseHeaderProps,
         type: "base"
-      };
+      } as HeaderSecondLevelProps;
     }
     if (headerType === "twoActions") {
       return {
@@ -103,7 +111,7 @@ export const useHeaderProps = ({
         type: "twoActions",
         firstAction: baseHelpAction,
         secondAction
-      };
+      } as HeaderSecondLevelProps;
     } else if (headerType === "threeActions") {
       return {
         ...baseHeaderProps,
@@ -111,13 +119,13 @@ export const useHeaderProps = ({
         firstAction: baseHelpAction,
         secondAction,
         thirdAction
-      };
+      } as HeaderSecondLevelProps;
     }
     return {
       ...baseHeaderProps,
       type: "singleAction",
       firstAction: baseHelpAction
-    };
+    } as HeaderSecondLevelProps;
   }, [
     backAccessibilityLabel,
     goBack,

@@ -15,6 +15,7 @@ import { servicePreferenceSelector } from "../../../store/reducers/entities/serv
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../analytics";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
@@ -23,6 +24,7 @@ export const useFciCheckService = () => {
   const dispatch = useIODispatch();
   const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
   const servicePreference = useIOSelector(servicePreferenceSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
   const cancelButtonProps: ButtonSolidProps = {
     onPress: () => {
@@ -47,7 +49,7 @@ export const useFciCheckService = () => {
           })
         );
       }
-      trackFciUxConversion();
+      trackFciUxConversion(fciEnvironment);
       dispatch(fciStartSigningRequest());
       dismiss();
     },
