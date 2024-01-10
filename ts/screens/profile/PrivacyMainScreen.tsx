@@ -214,14 +214,14 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           loadUserDataProcessing.request(UserDataProcessingChoiceEnum.DOWNLOAD)
         );
       },
-      topElement: {
-        badgeProps: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
-          ? {
+      topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DOWNLOAD)
+        ? {
+            badgeProps: {
               text: I18n.t("profile.preferences.list.wip"),
               variant: "info"
             }
-          : undefined
-      },
+          }
+        : undefined,
       testID: "profile-export-data"
     },
     {
@@ -235,14 +235,14 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
           navigation.navigate(ROUTES.PROFILE_REMOVE_ACCOUNT_INFO);
         }
       },
-      topElement: {
-        badgeProps: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
-          ? {
+      topElement: isRequestProcessing(UserDataProcessingChoiceEnum.DELETE)
+        ? {
+            badgeProps: {
               text: I18n.t("profile.preferences.list.wip"),
               variant: "info"
             }
-          : undefined
-      },
+          }
+        : undefined,
       testID: "profile-delete"
     }
   ];
