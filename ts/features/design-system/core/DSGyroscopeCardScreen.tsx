@@ -21,6 +21,7 @@ import Animated, {
   useSharedValue,
   withSpring
 } from "react-native-reanimated";
+import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
 
 type CardSize = {
   width: LayoutRectangle["width"];
@@ -33,7 +34,7 @@ type LightSize = {
 
 /* LIGHT
    Visual parameters */
-const lightSizePercentage: ViewStyle["width"] = "50%";
+const lightSizePercentage: ViewStyle["width"] = "80%";
 const lightScaleMultiplier: number = 1;
 const lightOpacity: ViewStyle["opacity"] = 0.3;
 /* Percentage of visible light when it's near
@@ -141,7 +142,41 @@ const DSGyroscopeCardScreen = () => {
           <Animated.View
             style={[styles.light, lightAnimatedStyle]}
             onLayout={getLightSize}
-          />
+          >
+            <Svg height={"100%"} width={"100%"}>
+              <Defs>
+                <RadialGradient
+                  id="grad"
+                  cx="50%"
+                  cy="50%"
+                  rx="50%"
+                  ry="50%"
+                  fx="50%"
+                  fy="50%"
+                >
+                  {/* There are many stops because it's an easing gradient.
+                  To learn more: https://larsenwork.com/easing-gradients/ */}
+                  <Stop stopColor="#ffffff" offset="0%" stopOpacity={1} />
+                  <Stop stopColor="#ffffff" offset="8.1%" stopOpacity={0.987} />
+                  <Stop stopColor="#ffffff" offset="15.5%" stopOpacity={0.95} />
+                  <Stop stopColor="#ffffff" offset="22.5%" stopOpacity={0.89} />
+                  <Stop stopColor="#ffffff" offset="29%" stopOpacity={0.825} />
+                  <Stop stopColor="#ffffff" offset="35.3%" stopOpacity={0.74} />
+                  <Stop stopColor="#ffffff" offset="41.2%" stopOpacity={0.65} />
+                  <Stop stopColor="#ffffff" offset="47.1%" stopOpacity={0.55} />
+                  <Stop stopColor="#ffffff" offset="52.9%" stopOpacity={0.45} />
+                  <Stop stopColor="#ffffff" offset="58.8%" stopOpacity={0.35} />
+                  <Stop stopColor="#ffffff" offset="64.7%" stopOpacity={0.26} />
+                  <Stop stopColor="#ffffff" offset="71%" stopOpacity={0.175} />
+                  <Stop stopColor="#ffffff" offset="77.5%" stopOpacity={0.1} />
+                  <Stop stopColor="#ffffff" offset="84.5%" stopOpacity={0.05} />
+                  <Stop stopColor="#ffffff" offset="91.9%" stopOpacity={0.01} />
+                  <Stop stopColor="#ffffff" offset="100%" stopOpacity={0} />
+                </RadialGradient>
+              </Defs>
+              <Circle cx={"50%"} cy={"50%"} r={"50%"} fill="url(#grad)" />
+            </Svg>
+          </Animated.View>
         </View>
       </MaskedView>
       <View style={styles.debugInfo}>
@@ -165,7 +200,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: lightSizePercentage,
     aspectRatio: 1,
-    backgroundColor: IOColors.white,
     opacity: lightOpacity,
     borderRadius: 100
   },
