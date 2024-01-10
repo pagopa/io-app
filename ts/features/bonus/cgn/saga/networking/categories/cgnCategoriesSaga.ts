@@ -58,6 +58,10 @@ export function* cgnCategoriesSaga(
       );
     }
 
+    if (publishedCategoriesResult.right.status === 401) {
+      return;
+    }
+
     throw new Error(
       `Response in status ${publishedCategoriesResult.right.status}`
     );

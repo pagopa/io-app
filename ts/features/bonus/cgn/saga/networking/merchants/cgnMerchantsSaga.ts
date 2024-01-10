@@ -45,6 +45,9 @@ export function* cgnOnlineMerchantsSaga(
       );
       return;
     }
+    if (onlineMerchantsResult.right.status === 401) {
+      return;
+    }
 
     throw new Error(`Response in status ${onlineMerchantsResult.right.status}`);
   } catch (e) {
@@ -85,6 +88,9 @@ export function* cgnOfflineMerchantsSaga(
       );
       return;
     }
+    if (offlineMerchantsResult.right.status === 401) {
+      return;
+    }
 
     throw new Error(
       `Response in status ${offlineMerchantsResult.right.status}`
@@ -118,6 +124,10 @@ export function* cgnMerchantDetail(
 
     if (merchantDetailResult.right.status === 200) {
       yield* put(cgnSelectedMerchant.success(merchantDetailResult.right.value));
+      return;
+    }
+
+    if (merchantDetailResult.right.status === 401) {
       return;
     }
 
