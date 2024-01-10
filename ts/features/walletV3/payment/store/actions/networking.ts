@@ -61,8 +61,14 @@ export type WalletPaymentAuthorizePayload = {
 export const walletPaymentAuthorization = createAsyncAction(
   "WALLET_PAYMENT_AUTH_REQUEST",
   "WALLET_PAYMENT_AUTH_SUCCESS",
-  "WALLET_PAYMENT_AUTH_FAILURE"
-)<WalletPaymentAuthorizePayload, RequestAuthorizationResponse, NetworkError>();
+  "WALLET_PAYMENT_AUTH_FAILURE",
+  "WALLET_PAYMENT_AUTH_CANCEL"
+)<
+  WalletPaymentAuthorizePayload,
+  RequestAuthorizationResponse,
+  NetworkError,
+  undefined
+>();
 
 export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentGetDetails>

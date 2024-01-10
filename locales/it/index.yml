@@ -1655,6 +1655,13 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    methodSelection:
+      header: Seleziona un metodo
+      yourMethods: I tuoi metodi
+      otherMethods: Altri metodi
+      alert:
+        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+        cta: "Ok, ho capito!"
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -1703,6 +1710,14 @@ wallet:
       errorCode: Codice errore
       noticeNumber: Codice avviso
       entityCode: Codice Fiscale Ente
+    outcome:
+      success:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?

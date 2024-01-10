@@ -27,8 +27,8 @@ export const refreshTokenNoPinError = createStandardAction(
   "REFRESHING_TOKEN_NO_PIN_ERROR"
 )<void>();
 
-export const clearTokenTransientError = createStandardAction(
-  "CLEAR_TOKEN_TRANSIENT_ERROR"
+export const clearTokenRefreshError = createStandardAction(
+  "CLEAR_TOKEN_REFRESH_ERROR"
 )<void>();
 
 type RefreshSessionTokenRequestPayload = {
