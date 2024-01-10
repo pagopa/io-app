@@ -6,10 +6,9 @@ import {
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import { ActionType } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
+import { CommonActions } from "@react-navigation/native";
 import { itwWiaSelector } from "../store/reducers/itwWiaReducer";
 import { ItWalletErrorTypes } from "../utils/itwErrorsUtils";
-import { itwPersistedCredentialsAddPid } from "../store/actions/itwPersistedCredentialsActions";
 import { itwLifecycleValid } from "../store/actions/itwLifecycleActions";
 import { walletProviderBaseUrl } from "../../../config";
 import {
@@ -17,8 +16,14 @@ import {
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
 } from "../utils/itwSecureStorageUtils";
-import { itwIssuancePid } from "../store/actions/itwIssuancePidActions";
+import {
+  itwIssuancePid,
+  itwIssuancePidStore
+} from "../store/actions/itwIssuancePidActions";
 import { verifyPin } from "../utils/itwSagaUtils";
+import { itwPersistedCredentialsStore } from "../store/actions/itwPersistedCredentialsActions";
+import NavigationService from "../../../navigation/NavigationService";
+import { ITW_ROUTES } from "../navigation/ItwRoutes";
 
 /**
  * A dummy implementation of CompleteUserAuthorization that uses static values.
@@ -41,10 +46,7 @@ export function* watchItwIssuancePidSaga(): SagaIterator {
   /**
    * Handles adding a PID to the wallet.
    */
-  yield* takeLatest(
-    itwPersistedCredentialsAddPid.request,
-    handleCredentialsAddPid
-  );
+  yield* takeLatest(itwIssuancePidStore, handleItwIssuancePidStoreSaga);
 }
 
 /*
@@ -178,19 +180,16 @@ export function* handleItwIssuancePidSaga({
  * This saga handles adding a PID to the wallet.
  * As a side effect, it sets the lifecycle of the wallet to valid.
  */
-export function* handleCredentialsAddPid(
-  action: ActionType<typeof itwPersistedCredentialsAddPid.request>
+export function* handleItwIssuancePidStoreSaga(
+  action: ActionType<typeof itwIssuancePidStore>
 ): SagaIterator {
   yield* call(verifyPin);
-  const pid = action.payload;
-  if (O.isSome(pid)) {
-    yield* put(itwPersistedCredentialsAddPid.success(pid.value));
-    yield* put(itwLifecycleValid());
-  } else {
-    yield* put(
-      itwPersistedCredentialsAddPid.failure({
-        code: ItWalletErrorTypes.CREDENTIAL_ADD_ERROR
-      })
-    );
-  }
+  yield* put(itwPersistedCredentialsStore(action.payload));
+  yield* put(itwLifecycleValid());
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    CommonActions.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.PID.STORE
+    })
+  );
 }

@@ -33,7 +33,7 @@ import itwPrProximityReducer, {
   ItwPrProximityState
 } from "./itwPrProximityReducer";
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 4;
+const CURRENT_REDUX_ITW_STORE_VERSION = 5;
 
 const itwStoreMigration: MigrationManifest = {
   /**
@@ -45,12 +45,16 @@ const itwStoreMigration: MigrationManifest = {
    */
   "3": (): PersistedState => undefined as unknown as PersistedState,
   /**
-   * Version 3 where we reset the state due to redux state changes.
+   * Version 4 where we reset the state due to redux state changes.
    */
-  "4": (): PersistedState => undefined as unknown as PersistedState
+  "4": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 5 where we reset the state due to redux state changes.
+   */
+  "5": (): PersistedState => undefined as unknown as PersistedState
 };
 
-const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 4;
+const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 5;
 
 const itwCredentialsStoreMigration: MigrationManifest = {
   /**
@@ -64,7 +68,11 @@ const itwCredentialsStoreMigration: MigrationManifest = {
   /**
    * Version 4 where we reset the state due to redux state changes.
    */
-  "4": (): PersistedState => undefined as unknown as PersistedState
+  "4": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 5 where we reset the state due to redux state changes.
+   */
+  "5": (): PersistedState => undefined as unknown as PersistedState
 };
 
 export type ItWalletState = {

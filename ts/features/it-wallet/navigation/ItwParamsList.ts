@@ -14,7 +14,7 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.PID
     .REQUEST]: ItwIssuancePidRequestScreenNavigationParams;
   [ITW_ROUTES.ISSUANCE.PID.PREVIEW]: undefined;
-  [ITW_ROUTES.ISSUANCE.PID.ADDING]: undefined;
+  [ITW_ROUTES.ISSUANCE.PID.STORE]: undefined;
 
   // ISSUANCE PID CIE
   [ITW_ROUTES.ISSUANCE.PID.CIE.EXPIRED_SCREEN]: undefined;

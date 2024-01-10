@@ -30,7 +30,7 @@ import {
 } from "../../../utils/itwErrorsUtils";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import {
-  itwConfirmStoreCredential,
+  itwIssuanceCredentialStore,
   itwIssuanceCredential
 } from "../../../store/actions/itwIssuanceCredentialActions";
 import { itwIssuanceCredentialResultSelector } from "../../../store/reducers/itwIssuanceCredentialReducer";
@@ -73,7 +73,7 @@ const ItwIssuanceCredentialPreviewScreen = () => {
    */
   const ContentView = ({ data }: { data: StoredCredential }) => {
     const addOnPress = () => {
-      dispatch(itwConfirmStoreCredential());
+      dispatch(itwIssuanceCredentialStore());
     };
 
     const bottomButtonProps: ButtonSolidProps = {

@@ -11,7 +11,7 @@ import { toError } from "fp-ts/lib/Either";
 import { CommonActions } from "@react-navigation/native";
 import { IOToast } from "@pagopa/io-app-design-system";
 import {
-  itwConfirmStoreCredential,
+  itwIssuanceCredentialStore,
   itwIssuanceCredentialChecks,
   itwIssuanceCredential
 } from "../store/actions/itwIssuanceCredentialActions";
@@ -26,7 +26,6 @@ import {
   ITW_WIA_KEY_TAG,
   getOrGenerateCyptoKey
 } from "../utils/itwSecureStorageUtils";
-import { itwPersistedCredentialsAdd } from "../store/actions/itwPersistedCredentialsActions";
 import {
   itwIssuanceCredentialChecksValueSelector,
   itwIssuanceResultDataSelector
@@ -37,6 +36,7 @@ import ROUTES from "../../../navigation/routes";
 import { walletProviderBaseUrl } from "../../../config";
 import { StoredCredential } from "../utils/itwTypesUtils";
 import { verifyPin } from "../utils/itwSagaUtils";
+import { itwPersistedCredentialsStore } from "../store/actions/itwPersistedCredentialsActions";
 
 /**
  * Watcher for issuance related sagas.
@@ -47,7 +47,10 @@ export function* watchItwIssuanceCredentialSaga(): SagaIterator {
     handleItwIssuanceCredentialChecks
   );
   yield* takeLatest(itwIssuanceCredential.request, handleItwIssuanceCredential);
-  yield* takeLatest(itwConfirmStoreCredential, handleAddCredentialWithPin);
+  yield* takeLatest(
+    itwIssuanceCredentialStore,
+    handleItwIssuanceCredentialStore
+  );
 }
 
 /**
@@ -220,35 +223,6 @@ export function* handleItwIssuanceCredential(): SagaIterator {
 }
 
 /**
- * Saga which handles the addition of a credential to the wallet by showing the pin screen.
- */
-function* handleAddCredentialWithPin() {
-  try {
-    const resultData = yield* select(itwIssuanceResultDataSelector);
-    if (O.isNone(resultData)) {
-      throw new Error();
-    }
-    yield* call(verifyPin);
-    yield* put(itwPersistedCredentialsAdd.success(resultData.value));
-
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      CommonActions.navigate(ROUTES.MAIN, {
-        screen: ROUTES.ITWALLET_HOME
-      })
-    );
-
-    IOToast.success(
-      I18n.t("features.itWallet.issuing.credentialPreviewScreen.toast.success")
-    );
-  } catch (e) {
-    IOToast.error(
-      I18n.t("features.itWallet.issuing.credentialPreviewScreen.toast.failure")
-    );
-  }
-}
-
-/**
  * Function which handles the completion of the user authorization with the PID.
  * @param requestURI - The request URI.
  * @param rpUrl - the relying party URL (the issuer acts as a relying party in this case).
@@ -349,4 +323,33 @@ function* getPID(): Iterator<any, readonly [StoredCredential, CryptoContext]> {
   }
   const pidCryptoContext = createCryptoContextFor(ITW_PID_KEY_TAG);
   return yield* call(() => [maybePid.value, pidCryptoContext] as const);
+}
+
+/**
+ * Saga which handles the addition of a credential to the wallet by showing the pin screen.
+ */
+function* handleItwIssuanceCredentialStore() {
+  try {
+    const resultData = yield* select(itwIssuanceResultDataSelector);
+    if (O.isNone(resultData)) {
+      throw new Error();
+    }
+    yield* call(verifyPin);
+    yield* put(itwPersistedCredentialsStore(resultData.value));
+
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      CommonActions.navigate(ROUTES.MAIN, {
+        screen: ROUTES.ITWALLET_HOME
+      })
+    );
+
+    IOToast.success(
+      I18n.t("features.itWallet.issuing.credentialPreviewScreen.toast.success")
+    );
+  } catch (e) {
+    IOToast.error(
+      I18n.t("features.itWallet.issuing.credentialPreviewScreen.toast.failure")
+    );
+  }
 }

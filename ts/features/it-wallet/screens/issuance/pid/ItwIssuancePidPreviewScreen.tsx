@@ -17,13 +17,12 @@ import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { ITW_ROUTES } from "../../../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import ItwCredentialCard from "../../../components/ItwCredentialCard";
 import { ForceScrollDownView } from "../../../../../components/ForceScrollDownView";
 import ItwFooterVerticalButtons from "../../../components/ItwFooterVerticalButtons";
 import { itwShowCancelAlert } from "../../../utils/itwAlertsUtils";
 import ROUTES from "../../../../../navigation/routes";
-import { CredentialType } from "../../../utils/itwMocksUtils";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import ItwKoView from "../../../components/ItwKoView";
@@ -34,6 +33,7 @@ import {
 import ItwCredentialClaimsList from "../../../components/ItwCredentialClaimsList";
 import { StoredCredential } from "../../../utils/itwTypesUtils";
 import { itwIssuancePidValueSelector } from "../../../store/reducers/itwIssuancePidReducer";
+import { itwIssuancePidStore } from "../../../store/actions/itwIssuancePidActions";
 
 /**
  * Renders a preview screen which displays a visual representation and the claims contained in the PID.
@@ -41,7 +41,7 @@ import { itwIssuancePidValueSelector } from "../../../store/reducers/itwIssuance
 const ItwIssuancePidPreviewScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const pid = useIOSelector(itwIssuancePidValueSelector);
-  const pidType = CredentialType.PID;
+  const dispatch = useIODispatch();
 
   /**
    * Renders the content of the screen if the PID is decoded.
@@ -69,15 +69,15 @@ const ItwIssuancePidPreviewScreen = () => {
       onPress: () => itwShowCancelAlert(alertOnPress)
     };
 
-    const topButtonProps: ButtonSolidProps = {
+    const topButtonProps = (pid: StoredCredential): ButtonSolidProps => ({
       color: "primary",
       fullWidth: true,
       accessibilityLabel: I18n.t(
         "features.itWallet.issuing.pidPreviewScreen.buttons.add"
       ),
-      onPress: () => navigation.navigate(ITW_ROUTES.ISSUANCE.PID.ADDING),
+      onPress: () => dispatch(itwIssuancePidStore(pid)),
       label: I18n.t("features.itWallet.issuing.pidPreviewScreen.buttons.add")
-    };
+    });
 
     return (
       <BaseScreenComponent
@@ -102,7 +102,7 @@ const ItwIssuancePidPreviewScreen = () => {
               <ItwCredentialCard
                 parsedCredential={pid.parsedCredential}
                 display={pid.displayData}
-                type={pidType}
+                type={pid.credentialType}
               />
               <VSpacer />
               <ItwCredentialClaimsList data={pid} />
@@ -129,7 +129,7 @@ const ItwIssuancePidPreviewScreen = () => {
             </View>
             <ItwFooterVerticalButtons
               bottomButtonProps={bottomButtonProps}
-              topButtonProps={topButtonProps}
+              topButtonProps={topButtonProps(pid)}
             />
           </ForceScrollDownView>
         </SafeAreaView>
