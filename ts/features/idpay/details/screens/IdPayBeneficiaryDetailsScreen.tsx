@@ -1,4 +1,4 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
@@ -6,7 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView } from "react-native";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { BeneficiaryDetailsContent } from "../components/BeneficiaryDetailsContent";
@@ -21,18 +21,18 @@ import {
   idPayOnboardingStatusGet
 } from "../store/actions";
 
-export type BeneficiaryDetailsScreenParams = {
+export type IdPayBeneficiaryDetailsScreenParams = {
   initiativeId: string;
   initiativeName?: string;
 };
 
-type BeneficiaryDetailsScreenRouteProps = RouteProp<
+type IdPayBeneficiaryDetailsScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
   "IDPAY_DETAILS_BENEFICIARY"
 >;
 
-const BeneficiaryDetailsScreen = () => {
-  const route = useRoute<BeneficiaryDetailsScreenRouteProps>();
+const IdPayBeneficiaryDetailsScreen = () => {
+  const route = useRoute<IdPayBeneficiaryDetailsScreenRouteProps>();
 
   const { initiativeId, initiativeName } = route.params;
 
@@ -68,13 +68,14 @@ const BeneficiaryDetailsScreen = () => {
     )
   );
 
+  useHeaderSecondLevel({ title: headerTitle || "" });
+
   return (
-    <BaseScreenComponent goBack={true} headerTitle={headerTitle}>
-      <ScrollView scrollIndicatorInsets={{ right: 1 }}>
-        <ContentWrapper>{content}</ContentWrapper>
-      </ScrollView>
-    </BaseScreenComponent>
+    <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+      <VSpacer size={16} />
+      <ContentWrapper>{content}</ContentWrapper>
+    </ScrollView>
   );
 };
 
-export default BeneficiaryDetailsScreen;
+export { IdPayBeneficiaryDetailsScreen };
