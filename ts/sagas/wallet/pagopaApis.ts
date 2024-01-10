@@ -66,6 +66,7 @@ import { IOToast } from "../../components/Toast";
 import I18n from "../../i18n";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
 
 //
 // Payment Manager APIs
@@ -692,7 +693,8 @@ export function* paymentVerificaRequestHandler(
     getVerificaRpt,
     action.payload.rptId,
     paymentData => paymentVerifica.success(paymentData),
-    details => paymentVerifica.failure(details)
+    details => paymentVerifica.failure(details),
+    action
   );
 }
 
@@ -700,19 +702,22 @@ export function* commonPaymentVerificationProcedure<A extends Action>(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"],
   rptId: RptId,
   successActionProvider: (paymentData: PaymentRequestsGetResponse) => A,
-  failureActionProvider: (details: Detail_v2Enum) => A
+  failureActionProvider: (details: Detail_v2Enum) => A,
+  action?: ActionType<(typeof paymentVerifica)["request"]>
 ) {
   try {
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
       yield* select(isPagoPATestEnabledSelector);
 
-    const response: SagaCallReturnType<typeof getVerificaRpt> = yield* call(
-      getVerificaRpt,
-      {
-        rptId: RptIdFromString.encode(rptId),
-        test: isPagoPATestEnabled
-      }
-    );
+    const request = getVerificaRpt({
+      rptId: RptIdFromString.encode(rptId),
+      test: isPagoPATestEnabled
+    });
+    const response: SagaCallReturnType<typeof getVerificaRpt> = (yield* call(
+      withRefreshApiCall,
+      request,
+      action
+    )) as unknown as SagaCallReturnType<typeof getVerificaRpt>;
     if (E.isRight(response)) {
       if (response.right.status === 200) {
         // Verifica succeeded
@@ -753,19 +758,23 @@ export function* paymentAttivaRequestHandler(
     const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
       yield* select(isPagoPATestEnabledSelector);
 
-    const response: SagaCallReturnType<typeof postAttivaRpt> = yield* call(
-      postAttivaRpt,
-      {
-        body: {
-          rptId: RptIdFromString.encode(action.payload.rptId),
-          codiceContestoPagamento:
-            action.payload.verifica.codiceContestoPagamento,
-          importoSingoloVersamento:
-            action.payload.verifica.importoSingoloVersamento
-        },
-        test: isPagoPATestEnabled
-      }
-    );
+    const request = postAttivaRpt({
+      body: {
+        rptId: RptIdFromString.encode(action.payload.rptId),
+        codiceContestoPagamento:
+          action.payload.verifica.codiceContestoPagamento,
+        importoSingoloVersamento:
+          action.payload.verifica.importoSingoloVersamento
+      },
+      test: isPagoPATestEnabled
+    });
+
+    const response: SagaCallReturnType<typeof postAttivaRpt> = (yield* call(
+      withRefreshApiCall,
+      request,
+      action
+    )) as unknown as SagaCallReturnType<typeof postAttivaRpt>;
+
     if (E.isRight(response)) {
       if (response.right.status === 200) {
         // Attiva succeeded
