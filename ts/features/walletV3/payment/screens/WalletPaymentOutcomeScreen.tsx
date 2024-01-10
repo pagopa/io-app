@@ -50,21 +50,21 @@ const WalletPaymentOutcomeScreen = () => {
     navigation.pop();
   };
 
-  const closeAction: OperationResultScreenContentProps["action"] = {
-    label: I18n.t("wallet.payment.outcome.success.button"),
-    accessibilityLabel: I18n.t("wallet.payment.outcome.success.button"),
+  const closeSuccessAction: OperationResultScreenContentProps["action"] = {
+    label: I18n.t("wallet.payment.outcome.SUCCESS.button"),
+    accessibilityLabel: I18n.t("wallet.payment.outcome.SUCCESS.button"),
     onPress: handleClose
   };
 
   const closeFailureAction: OperationResultScreenContentProps["action"] = {
-    label: I18n.t("wallet.payment.outcome.success.button"),
-    accessibilityLabel: I18n.t("wallet.payment.outcome.success.button"),
+    label: I18n.t("global.buttons.close"),
+    accessibilityLabel: I18n.t("global.buttons.close"),
     onPress: handleClose
   };
 
   const contactSupportAction: OperationResultScreenContentProps["action"] = {
-    label: I18n.t("wallet.payment.outcome.success.button"),
-    accessibilityLabel: I18n.t("wallet.payment.outcome.success.button"),
+    label: I18n.t("wallet.payment.support.button"),
+    accessibilityLabel: I18n.t("wallet.payment.support.button"),
     onPress: handleClose
   };
 
@@ -73,16 +73,79 @@ const WalletPaymentOutcomeScreen = () => {
       case WalletPaymentOutcomeEnum.SUCCESS:
         return {
           pictogram: "success",
-          title: I18n.t("wallet.payment.outcome.success.title", {
+          title: I18n.t("wallet.payment.outcome.SUCCESS.title", {
             amount: paymentAmount
           }),
-          action: closeAction
+          action: closeSuccessAction
         };
+      case WalletPaymentOutcomeEnum.GENERIC_ERROR:
       default:
         return {
           pictogram: "umbrellaNew",
-          title: "ciao",
-          subtitle: "ciao",
+          title: I18n.t("wallet.payment.outcome.GENERIC_ERROR.title"),
+          subtitle: I18n.t("wallet.payment.outcome.GENERIC_ERROR.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.AUTH_ERROR:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t("wallet.payment.outcome.AUTH_ERROR.title"),
+          subtitle: I18n.t("wallet.payment.outcome.AUTH_ERROR.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.INVALID_DATA:
+        return {
+          pictogram: "cardIssue",
+          title: I18n.t("wallet.payment.outcome.INVALID_DATA.title"),
+          subtitle: I18n.t("wallet.payment.outcome.INVALID_DATA.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.TIMEOUT:
+        return {
+          pictogram: "time",
+          title: I18n.t("wallet.payment.outcome.TIMEOUT.title"),
+          subtitle: I18n.t("wallet.payment.outcome.TIMEOUT.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.CIRCUIT_ERROR:
+        return {
+          pictogram: "cardIssue",
+          title: I18n.t("wallet.payment.outcome.CIRCUIT_ERROR.title"),
+          action: contactSupportAction,
+          secondaryAction: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.MISSING_FIELDS:
+        return {
+          pictogram: "attention",
+          title: I18n.t("wallet.payment.outcome.MISSING_FIELDS.title"),
+          action: contactSupportAction,
+          secondaryAction: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.INVALID_CARD:
+        return {
+          pictogram: "cardIssue",
+          title: I18n.t("wallet.payment.outcome.INVALID_CARD.title"),
+          subtitle: I18n.t("wallet.payment.outcome.INVALID_CARD.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.CANCELED_BY_USER:
+        return {
+          pictogram: "trash",
+          title: I18n.t("wallet.payment.outcome.CANCELED_BY_USER.title"),
+          subtitle: I18n.t("wallet.payment.outcome.CANCELED_BY_USER.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.EXCESSIVE_AMOUNT:
+        return {
+          pictogram: "accessDenied",
+          title: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.title"),
+          subtitle: I18n.t("wallet.payment.outcome.EXCESSIVE_AMOUNT.subtitle"),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.INVALID_METHOD:
+        return {
+          pictogram: "cardIssue",
+          title: I18n.t("wallet.payment.outcome.INVALID_METHOD.title"),
           action: contactSupportAction,
           secondaryAction: closeFailureAction
         };

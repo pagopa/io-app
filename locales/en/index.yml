@@ -977,7 +977,7 @@ payment:
         description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
-  confirm: 
+  confirm:
     totalAmount: Totale da pagare
     pay: Paga
     payWith: Paga con
@@ -1663,20 +1663,57 @@ wallet:
       defaultName: Gestore
       pspTitle: Gestore
       pspSortButton: Ordina
-      featuredReason: Perché sei già cliente 
+      featuredReason: Perché sei già cliente
       continueButton: Continua
       sortBottomSheet:
         default: Default
         amount: Per importo
         name: Per nome
     outcome:
-      success:
+      SUCCESS:
         title: Hai pagato {{amount}}
         button: Ok, chiudi
         banner:
           title: Puoi dirci com’è andata?
           content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
           action: Vai al sondaggio
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato addebitato alcun importo.
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: "Non è stato addebitato alcun importo.\nControlla di aver seguito correttamente le istruzioni della tua banca."
+      INVALID_DATA:
+        title: I dati del metodo di pagamento non sono corretti
+        subtitle: Se hai pagato con una carta di debito o credito, assicurati di inserire i dati come riportato sul fronte.
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+      CIRCUIT_ERROR:
+        title: Il circuito della carta non è supportato
+      MISSING_FIELDS:
+        title: Mancano alcuni dati per procedere con il pagamento
+      INVALID_CARD:
+        title: Il metodo di pagamento è scaduto o non più valido
+        subtitle: Per maggiori informazioni, contatta la tua banca.
+      CANCELED_BY_USER:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
+      EXCESSIVE_AMOUNT:
+        title: Autorizzazione negata
+        subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
+      INVALID_METHOD:
+        title: Il metodo di pagamento non è supportato
+    support:
+      button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
+      errorCode: Codice errore
+      noticeNumber: Codice avviso
+      entityCode: Codice Fiscale Ente
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
