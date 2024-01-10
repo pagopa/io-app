@@ -62,14 +62,14 @@ const WalletPaymentConfirmScreen = () => {
   const handleStartPaymentAuthorization = () =>
     pipe(
       sequenceS(O.Monad)({
-        paumentDetail: pot.toOption(paymentDetailsPot),
+        paymentDetail: pot.toOption(paymentDetailsPot),
         transaction: pot.toOption(transactionPot),
         selectedPsp: selectedPspOption,
         selectedMethod: selectedMethodOption
       }),
-      O.map(({ paumentDetail, selectedMethod, selectedPsp, transaction }) =>
+      O.map(({ paymentDetail, selectedMethod, selectedPsp, transaction }) =>
         startPaymentAuthorizaton({
-          paymentAmount: paumentDetail.amount as AmountEuroCents,
+          paymentAmount: paymentDetail.amount as AmountEuroCents,
           paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
           pspId: selectedPsp.idBundle ?? "",
           transactionId: transaction.transactionId,
@@ -122,7 +122,6 @@ const WalletPaymentConfirmScreen = () => {
         O.chainNullableK(method => method.details)
       ),
       selectedPsp: selectedPspOption,
-      selectedMethod: selectedMethodOption,
       paymentDetails: pipe(paymentDetailsPot, pot.toOption)
     }),
     O.fold(
