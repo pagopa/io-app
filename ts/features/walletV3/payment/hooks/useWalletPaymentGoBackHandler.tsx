@@ -10,6 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletPaymentDeleteTransaction } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors";
 import { WalletPaymentRoutes } from "../navigation/routes";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const useWalletPaymentGoBackHandler = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -27,7 +28,7 @@ const useWalletPaymentGoBackHandler = () => {
       navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
         params: {
-          isCancelled: true
+          outcome: WalletPaymentOutcomeEnum.CANCELED_BY_USER
         }
       });
     };
