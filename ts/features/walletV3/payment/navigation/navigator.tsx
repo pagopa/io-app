@@ -44,7 +44,8 @@ export const WalletPaymentNavigator = () => (
       component={WalletPaymentDetailScreen}
       options={{
         gestureEnabled: isGestureEnabled,
-        headerShown: true
+        // Should be false by default: the headerShown is set to true once the payment details are loaded
+        headerShown: false
       }}
     />
     <Stack.Screen
