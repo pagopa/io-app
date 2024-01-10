@@ -62,8 +62,9 @@ const usePaymentFailureSupportModal = ({
     addTicketCustomField(zendeskPaymentOrgFiscalCode, organizationFiscalCode);
     addTicketCustomField(zendeskPaymentNav, paymentNoticeNumber);
     addTicketCustomField(zendeskPaymentFailure, faultCodeDetail);
-    // addTicketCustomField(zendeskPaymentStartOrigin, "n/a"); // TODO track payment start origin
-    // appendLog(getPaymentHistoryDetails(payment)); // TODO track payment details
+    // TODO Add additional info for zendesk support (IOBP-484)
+    // addTicketCustomField(zendeskPaymentStartOrigin, "n/a");
+    // appendLog(getPaymentHistoryDetails(payment));
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
