@@ -9,11 +9,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { sequenceT } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
@@ -71,18 +71,9 @@ const WalletPaymentPickPspScreen = () => {
     supportRequest: true
   });
 
-
-  const walletId = pipe(
-    selectedWalletOption as O.Option<WalletInfo>,
-    O.fold(
-      () => "",
-      (wallet: WalletInfo) => wallet.walletId
-    )
-  );
-
   useFocusEffect(
     React.useCallback(() => {
-     pipe(
+      pipe(
         sequenceT(O.Monad)(
           pot.toOption(paymentAmountPot),
           selectedWalletOption
@@ -96,8 +87,7 @@ const WalletPaymentPickPspScreen = () => {
           );
         })
       );
-      );
-    }, [dispatch, walletId, paymentAmountPot])
+    }, [dispatch, paymentAmountPot, selectedWalletOption])
   );
 
   React.useEffect(
