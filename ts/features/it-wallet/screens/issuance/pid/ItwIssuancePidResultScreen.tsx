@@ -13,7 +13,7 @@ import ItwKoView from "../../../components/ItwKoView";
 /**
  * Renders an activation screen which displays a loading screen while the PID is being added and a success screen when the PID is added.
  */
-const ItwIssuancePidStoreScreen = () => {
+const ItwIssuancePidResultScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   return (
@@ -43,4 +43,4 @@ const ItwIssuancePidStoreScreen = () => {
   );
 };
 
-export default ItwIssuancePidStoreScreen;
+export default ItwIssuancePidResultScreen;
