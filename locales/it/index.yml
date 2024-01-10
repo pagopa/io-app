@@ -1683,6 +1683,7 @@ wallet:
         title: "I dati dell’avviso non sono corretti"
       DOMAIN_UNKNOWN:
         title: "L’Ente Creditore sta avendo problemi nella risposta"
+        subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
       PAYMENT_ONGOING:
         title: "C’è già un pagamento in corso, riprova più tardi"
         subtitle: "Se il problema persiste, puoi aprire una segnalazione."

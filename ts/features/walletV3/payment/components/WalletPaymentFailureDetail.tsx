@@ -74,8 +74,9 @@ const WalletPaymentFailureDetail = ({ rptId, failure }: Props) => {
         return {
           pictogram: "comunicationProblem",
           title: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.title"),
-          action: contactSupportAction,
-          secondaryAction: closeAction
+          subtitle: I18n.t("wallet.payment.failure.DOMAIN_UNKNOWN.subtitle"),
+          action: closeAction,
+          secondaryAction: contactSupportAction
         };
       case FaultCategoryEnum.PAYMENT_ONGOING:
         return {
