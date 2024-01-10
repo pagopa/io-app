@@ -3872,6 +3872,7 @@ whatsNew:
 bonusCard:
   validUntil: Valida fino al {{endDate}}
   expiring: Scade il {{endDate}}
+  expired: Scaduta il {{endDate}}
   paused: In pausa
   removed: Rimossa
 transaction:
