@@ -22,7 +22,6 @@ import { format } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import {
   TypeEnum,
   WalletInfoDetails,
@@ -37,7 +36,6 @@ import { WalletPaymentTotalAmount } from "./WalletPaymentTotalAmount";
 
 export type WalletPaymentConfirmContentProps = {
   paymentMethodDetails: WalletInfoDetails;
-  selectedMethod: WalletInfo;
   selectedPsp: Bundle;
   paymentDetails: PaymentRequestsGetResponse;
   isLoading?: boolean;
@@ -47,7 +45,6 @@ export type WalletPaymentConfirmContentProps = {
 export const WalletPaymentConfirmContent = ({
   paymentMethodDetails,
   selectedPsp,
-  selectedMethod,
   paymentDetails,
   isLoading,
   onConfirm
@@ -106,11 +103,7 @@ export const WalletPaymentConfirmContent = ({
         }`}
         onPress={() =>
           navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-            screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP,
-            params: {
-              walletId: selectedMethod.walletId,
-              paymentAmountInCents: paymentAmount
-            }
+            screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
           })
         }
       />
@@ -138,10 +131,7 @@ const getPaymentSubtitle = (cardDetails: WalletInfoDetails) => {
   switch (cardDetails.type) {
     case TypeEnum.CARDS:
       const cardsDetail = cardDetails as WalletInfoDetails1;
-      return `${cardsDetail.holder} · ${format(
-        cardsDetail.expiryDate,
-        "MM/YY"
-      )}`;
+      return `${format(cardsDetail.expiryDate, "MM/YY")}`;
     case TypeEnum.PAYPAL:
       return I18n.t("wallet.onboarding.paypal.name");
     case TypeEnum.BANCOMATPAY:
