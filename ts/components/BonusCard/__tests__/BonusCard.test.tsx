@@ -1,5 +1,10 @@
 import { render } from "@testing-library/react-native";
 import React from "react";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+import { applicationChangeState } from "../../../store/actions/application";
+import { appReducer } from "../../../store/reducers";
+import { GlobalState } from "../../../store/reducers/types";
 import { BonusCard } from "../BonusCard";
 import { BonusCardCounter } from "../BonusCardCounter";
 
@@ -68,4 +73,17 @@ describe("Test BonusCard", () => {
   });
 });
 
-const renderComponent = (props: BonusCard) => render(<BonusCard {...props} />);
+const renderComponent = (props: BonusCard) => {
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+
+  const mockStore = configureMockStore<GlobalState>();
+  const store: ReturnType<typeof mockStore> = mockStore({
+    ...globalState
+  } as GlobalState);
+
+  return render(
+    <Provider store={store}>
+      <BonusCard {...props} />
+    </Provider>
+  );
+};

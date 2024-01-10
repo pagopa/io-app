@@ -1,5 +1,6 @@
 import {
   ButtonSolid,
+  ButtonSolidProps,
   ContentWrapper,
   Pictogram,
   VSpacer
@@ -16,8 +17,10 @@ import Animated, { Layout } from "react-native-reanimated";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
-  StatusEnum as InitiativeStatusEnum
+  StatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
+import { BonusCardScreenComponent } from "../../../../components/BonusCard";
+import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import I18n from "../../../../i18n";
@@ -26,10 +29,11 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { IdPayCodeCieBanner } from "../../code/components/IdPayCodeCieBanner";
 import { IDPayConfigurationRoutes } from "../../configuration/navigation/navigator";
-import { BonusCounter } from "../components/InitiativeBonusCounter";
-import InitiativeDetailsBaseScreenComponent from "../components/InitiativeDetailsBaseScreenComponent";
+import { IdPayInitiativeLastUpdateCounter } from "../components/IdPayInitiativeLastUpdateCounter";
 import { InitiativeDiscountSettingsComponent } from "../components/InitiativeDiscountSettingsComponent";
 import { InitiativeRefundSettingsComponent } from "../components/InitiativeRefundSettingsComponent";
 import {
@@ -37,25 +41,26 @@ import {
   InitiativeTimelineComponentSkeleton
 } from "../components/InitiativeTimelineComponent";
 import { MissingConfigurationAlert } from "../components/MissingConfigurationAlert";
+import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
 import { IDPayDetailsParamsList, IDPayDetailsRoutes } from "../navigation";
 import {
   idpayInitiativeDetailsSelector,
   initiativeNeedsConfigurationSelector
 } from "../store";
 import { idpayInitiativeGet, idpayTimelinePageGet } from "../store/actions";
-import { useIdPayDiscountDetailsBottomSheet } from "../hooks/useIdPayDiscountDetailsBottomSheet";
+import { BonusStatus } from "../../../../components/BonusCard/type";
 
-export type InitiativeDetailsScreenParams = {
+export type IdPayInitiativeDetailsScreenParams = {
   initiativeId: string;
 };
 
-type InitiativeDetailsScreenRouteProps = RouteProp<
+type IdPayInitiativeDetailsScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
   "IDPAY_DETAILS_MONITORING"
 >;
 
-const InitiativeDetailsScreen = () => {
-  const route = useRoute<InitiativeDetailsScreenRouteProps>();
+const IdPayInitiativeDetailsScreen = () => {
+  const route = useRoute<IdPayInitiativeDetailsScreenRouteProps>();
 
   const { initiativeId } = route.params;
 
@@ -64,7 +69,7 @@ const InitiativeDetailsScreen = () => {
   const initiativeDataPot = useIOSelector(idpayInitiativeDetailsSelector);
 
   const navigateToBeneficiaryDetails = () => {
-    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+    navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY,
       params: {
         initiativeId,
@@ -77,7 +82,7 @@ const InitiativeDetailsScreen = () => {
   };
 
   const navigateToConfiguration = () => {
-    navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
+    navigation.push(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
       screen: IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO,
       params: { initiativeId }
     });
@@ -97,11 +102,41 @@ const InitiativeDetailsScreen = () => {
     initiativeNeedsConfigurationSelector
   );
 
+  if (!pot.isSome(initiativeDataPot)) {
+    return (
+      <BonusCardScreenComponent isLoading={true}>
+        <ContentWrapper>
+          <VSpacer size={8} />
+          <IdPayInitiativeLastUpdateCounter isLoading={true} />
+          <VSpacer size={8} />
+          <InitiativeTimelineComponentSkeleton size={5} />
+          <VSpacer size={32} />
+        </ContentWrapper>
+      </BonusCardScreenComponent>
+    );
+  }
+
+  const getInitiativeStatus = (initiative: InitiativeDTO): BonusStatus => {
+    if (initiative.status === StatusEnum.UNSUBSCRIBED) {
+      return "REMOVED";
+    }
+
+    const now = new Date();
+    if (now > initiative.endDate) {
+      return "EXPIRED";
+    }
+
+    const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
+    if (next7Days > initiative.endDate) {
+      return "EXPIRING";
+    }
+
+    return "ACTIVE";
+  };
+
   const getInitiativeCounters = (
     initiative: InitiativeDTO
-  ): ReadonlyArray<BonusCounter> | undefined => {
-    const isRefundable = initiative.status === InitiativeStatusEnum.REFUNDABLE;
-
+  ): ReadonlyArray<BonusCardCounter> => {
     const availableAmount = initiative.amount || 0;
     const accruedAmount = initiative.accrued || 0;
 
@@ -125,39 +160,36 @@ const InitiativeDetailsScreen = () => {
       O.fromNullable,
       O.alt(() => O.some(InitiativeRewardTypeEnum.REFUND)),
       O.fold(
-        () => undefined,
-        (type): ReadonlyArray<BonusCounter> => {
+        () => [],
+        (type): ReadonlyArray<BonusCardCounter> => {
           switch (type) {
             case InitiativeRewardTypeEnum.DISCOUNT:
               return [
                 {
-                  type: "AmountWithProgress",
+                  type: "ValueWithProgress",
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  amount: availableAmount,
-                  progress: amountProgress,
-                  isDisabled: !isRefundable
+                  value: formatNumberAmount(availableAmount, true, "right"),
+                  progress: amountProgress
                 }
               ];
             case InitiativeRewardTypeEnum.REFUND:
               return [
                 {
-                  type: "AmountWithProgress",
+                  type: "ValueWithProgress",
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.availableAmount"
                   ),
-                  amount: availableAmount,
-                  progress: amountProgress,
-                  isDisabled: !isRefundable
+                  value: formatNumberAmount(availableAmount, true, "right"),
+                  progress: amountProgress
                 },
                 {
-                  type: "Amount",
+                  type: "Value",
                   label: I18n.t(
                     "idpay.initiative.details.initiativeCard.toRefund"
                   ),
-                  amount: accruedAmount,
-                  isDisabled: !isRefundable
+                  value: formatNumberAmount(accruedAmount, true, "right")
                 }
               ];
           }
@@ -182,7 +214,7 @@ const InitiativeDetailsScreen = () => {
                   <IdPayCodeCieBanner initiativeId={initiative.initiativeId} />
                   <Animated.View layout={Layout.duration(200)}>
                     <InitiativeTimelineComponent
-                      initiativeId={initiativeId}
+                      initiativeId={initiative.initiativeId}
                       size={5}
                     />
                     <VSpacer size={32} />
@@ -249,74 +281,56 @@ const InitiativeDetailsScreen = () => {
       )
     );
 
-  const getInitiativeFooter = (initiative: InitiativeDTO) =>
-    pipe(
-      initiative.initiativeRewardType,
-      O.fromNullable,
-      O.alt(() => O.some(InitiativeRewardTypeEnum.REFUND)),
-      O.fold(
-        () => undefined,
-        rewardType => {
-          switch (rewardType) {
-            case InitiativeRewardTypeEnum.DISCOUNT:
-              return (
-                <ButtonSolid
-                  label={I18n.t(
-                    "idpay.initiative.discountDetails.authorizeButton"
-                  )}
-                  accessibilityLabel={I18n.t(
-                    "idpay.initiative.discountDetails.authorizeButton"
-                  )}
-                  onPress={discountBottomSheet.present}
-                  fullWidth={true}
-                />
-              );
+  const getInitiativeFooterProps = (
+    rewardType?: InitiativeRewardTypeEnum
+  ): ButtonSolidProps | undefined => {
+    switch (rewardType) {
+      case InitiativeRewardTypeEnum.DISCOUNT:
+        return {
+          label: I18n.t("idpay.initiative.discountDetails.authorizeButton"),
+          accessibilityLabel: I18n.t(
+            "idpay.initiative.discountDetails.authorizeButton"
+          ),
+          onPress: discountBottomSheet.present
+        };
+      default:
+      case InitiativeRewardTypeEnum.REFUND:
+        return undefined;
+    }
+  };
 
-            case InitiativeRewardTypeEnum.REFUND:
-              return undefined;
-          }
-        }
-      )
-    );
+  const initiative = initiativeDataPot.value;
+  const {
+    initiativeName,
+    organizationName,
+    endDate,
+    lastCounterUpdate,
+    initiativeRewardType,
+    logoURL
+  } = initiative;
 
-  return pipe(
-    initiativeDataPot,
-    pot.toOption,
-    O.fold(
-      () => (
-        <InitiativeDetailsBaseScreenComponent
-          isLoading={true}
-          onHeaderDetailsPress={navigateToBeneficiaryDetails}
-          counters={defaultLoadingCounters}
-        >
-          <ContentWrapper>
-            <VSpacer size={8} />
-            <InitiativeTimelineComponentSkeleton size={5} />
-            <VSpacer size={32} />
-          </ContentWrapper>
-        </InitiativeDetailsBaseScreenComponent>
-      ),
-      initiative => (
-        <InitiativeDetailsBaseScreenComponent
-          initiative={initiative}
-          onHeaderDetailsPress={navigateToBeneficiaryDetails}
-          counters={getInitiativeCounters(initiative)}
-          footer={getInitiativeFooter(initiative)}
-        >
-          {getInitiativeDetailsContent(initiative)}
-          {discountBottomSheet.bottomSheet}
-        </InitiativeDetailsBaseScreenComponent>
-      )
-    )
+  return (
+    <BonusCardScreenComponent
+      headerAction={{
+        icon: "info",
+        onPress: navigateToBeneficiaryDetails,
+        accessibilityLabel: "info"
+      }}
+      logoUri={{ uri: logoURL }}
+      name={initiativeName || ""}
+      organizationName={organizationName || ""}
+      endDate={endDate}
+      status={getInitiativeStatus(initiative)}
+      contextualHelp={emptyContextualHelp}
+      counters={getInitiativeCounters(initiative)}
+      footerCta={getInitiativeFooterProps(initiativeRewardType)}
+    >
+      <IdPayInitiativeLastUpdateCounter lastUpdateDate={lastCounterUpdate} />
+      {getInitiativeDetailsContent(initiative)}
+      {discountBottomSheet.bottomSheet}
+    </BonusCardScreenComponent>
   );
 };
-
-const defaultLoadingCounters: ReadonlyArray<BonusCounter> = [
-  {
-    type: "AmountWithProgress",
-    isLoading: true
-  }
-];
 
 const styles = StyleSheet.create({
   newInitiativeMessageContainer: {
@@ -328,4 +342,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { InitiativeDetailsScreen };
+export { IdPayInitiativeDetailsScreen };
