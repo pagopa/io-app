@@ -131,10 +131,7 @@ const getPaymentSubtitle = (cardDetails: WalletInfoDetails) => {
   switch (cardDetails.type) {
     case TypeEnum.CARDS:
       const cardsDetail = cardDetails as WalletInfoDetails1;
-      return `${cardsDetail.holder} · ${format(
-        cardsDetail.expiryDate,
-        "MM/YY"
-      )}`;
+      return `${format(cardsDetail.expiryDate, "MM/YY")}`;
     case TypeEnum.PAYPAL:
       return I18n.t("wallet.onboarding.paypal.name");
     case TypeEnum.BANCOMATPAY:
