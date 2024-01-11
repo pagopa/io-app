@@ -40,6 +40,7 @@ import { WalletPaymentFailure } from "../types/failure";
 type PaymentFailureSupportModalParams = {
   rptId?: RptId;
   failure: WalletPaymentFailure;
+  withPhoneSupport: boolean;
 };
 
 type PaymentFailureSupportModal = {
@@ -49,7 +50,8 @@ type PaymentFailureSupportModal = {
 
 const usePaymentFailureSupportModal = ({
   rptId,
-  failure
+  failure,
+  withPhoneSupport = false
 }: PaymentFailureSupportModalParams): PaymentFailureSupportModal => {
   const { faultCodeDetail } = failure;
 
@@ -124,17 +126,21 @@ const usePaymentFailureSupportModal = ({
     component: (
       <>
         <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />
-        <ListItemAction
-          label={I18n.t("wallet.payment.support.phone", {
-            phoneNumber: displayPhoneNumber
-          })}
-          accessibilityLabel={I18n.t("wallet.payment.support.phone", {
-            phoneNumber: displayPhoneNumber
-          })}
-          onPress={() => Linking.openURL(`tel:${PAGOPA_SUPPORT_PHONE_NUMBER}`)}
-          variant="primary"
-          icon="phone"
-        />
+        {withPhoneSupport && (
+          <ListItemAction
+            label={I18n.t("wallet.payment.support.phone", {
+              phoneNumber: displayPhoneNumber
+            })}
+            accessibilityLabel={I18n.t("wallet.payment.support.phone", {
+              phoneNumber: displayPhoneNumber
+            })}
+            onPress={() =>
+              Linking.openURL(`tel:${PAGOPA_SUPPORT_PHONE_NUMBER}`)
+            }
+            variant="primary"
+            icon="phone"
+          />
+        )}
         <ListItemAction
           label={I18n.t("wallet.payment.support.chat")}
           accessibilityLabel={I18n.t("wallet.payment.support.chat")}
