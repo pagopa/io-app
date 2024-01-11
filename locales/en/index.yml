@@ -424,16 +424,17 @@ profile:
       description: Learn more about the IO app
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Developers
+    testEnvironmentSectionHeader: Test Environment
     pagoPaEnvironment:
-      pagoPaEnv: pagoPA Test Environment
+      pagoPaEnv: pagoPA
       pagoPAEnvAlert: This change requires app reboot
       alertConfirmTitle: Do you want to use the pagoPA test environment?
       alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
-      pnEnv: PN Test Environment
+      pnEnv: SEND (PN)
     idpay:
-      idpayTest: Test IDPay
+      idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
     appVersion: Version
@@ -447,7 +448,7 @@ profile:
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
     walletPlayground:
-      titleSection: "New Wallet Playground"
+      titleSection: "New Wallet"
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -686,7 +687,7 @@ authentication:
     notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
     button_accept_lv: Continue with quick access
     button_decline_lv: Authenticate with SPID or CIE every 30 days
-  security_suggestions: 
+  security_suggestions:
     fingerprint: Do not share your or unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
     io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
@@ -1643,6 +1644,13 @@ wallet:
     cancel: Keep adding
     success: Problems while adding your card? Please contact your bank.
   payment:
+    methodSelection:
+        header: Seleziona un metodo
+        yourMethods: I tuoi metodi
+        otherMethods: Altri metodi
+        alert: 
+          body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+          cta: "Ok, ho capito!"
     barcodes:
       choice:
         title: Sono stati rilevati più codici. Quale vuoi usare?
@@ -1669,6 +1677,14 @@ wallet:
         default: Default
         amount: Per importo
         name: Per nome
+    outcome:
+      success:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -3857,6 +3873,7 @@ whatsNew:
 bonusCard:
   validUntil: Valida fino al {{endDate}}
   expiring: Scade il {{endDate}}
+  expired: Scaduta il {{endDate}}
   paused: In pausa
   removed: Rimossa
 transaction:
