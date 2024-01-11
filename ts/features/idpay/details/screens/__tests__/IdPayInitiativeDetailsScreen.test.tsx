@@ -2,7 +2,7 @@ import * as React from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
 import { IDPayDetailsRoutes } from "../../navigation";
-import { InitiativeDetailsScreen } from "../InitiativeDetailsScreen";
+import { IdPayInitiativeDetailsScreen } from "../IdPayInitiativeDetailsScreen";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
@@ -14,7 +14,6 @@ import {
 } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { NetworkError } from "../../../../../utils/errors";
 import I18n from "../../../../../i18n";
-import { formatDateAsLocal } from "../../../../../utils/dates";
 
 jest.mock("react-native-reanimated", () => ({
   ...require("react-native-reanimated/mock"),
@@ -34,7 +33,7 @@ const mockedInitiative: InitiativeDTO = {
   lastCounterUpdate: new Date()
 };
 
-describe("Test InitiativeDetailsScreen screen", () => {
+describe("Test IdPayInitiativeDetailsScreen screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
@@ -46,10 +45,6 @@ describe("Test InitiativeDetailsScreen screen", () => {
     const { component } = renderComponent(pot.noneLoading);
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
-    expect(
-      component.getByTestId("IDPayDetailsHeroSkeletonTestID")
-    ).not.toBeNull();
-    expect(component.queryByTestId("IDPayDetailsHeroTestID")).toBeNull();
     expect(
       component.queryByTestId("IDPayTimelineSkeletonTestID")
     ).not.toBeNull();
@@ -65,20 +60,11 @@ describe("Test InitiativeDetailsScreen screen", () => {
     const { component } = renderComponent(pot.some(mockedInitiative));
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("IDPayDetailsHeroTestID")).not.toBeNull();
     expect(
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
     expect(component.queryByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
-
-    expect(
-      component.queryByText(
-        I18n.t(`idpay.initiative.details.initiativeCard.validUntil`, {
-          expiryDate: formatDateAsLocal(mockedInitiative.endDate, true)
-        })
-      )
-    ).toBeTruthy();
 
     expect(
       component.queryByText(
@@ -112,21 +98,12 @@ describe("Test InitiativeDetailsScreen screen", () => {
     );
     expect(component).toBeTruthy();
     expect(component).not.toBeNull();
-    expect(component.queryByTestId("IDPayDetailsHeroTestID")).not.toBeNull();
     expect(
       component.queryByTestId("IDPayDetailsLastUpdatedTestID")
     ).not.toBeNull();
 
     expect(component.queryByText("Fake initiative")).not.toBeNull();
     expect(component.queryByText("Fake organization")).not.toBeNull();
-
-    expect(
-      component.queryByText(
-        I18n.t(`idpay.initiative.details.initiativeCard.validUntil`, {
-          expiryDate: formatDateAsLocal(mockedInitiative.endDate, true)
-        })
-      )
-    ).toBeTruthy();
 
     expect(
       component.queryByText(
@@ -172,7 +149,7 @@ const renderComponent = (
 
   return {
     component: renderScreenFakeNavRedux<GlobalState>(
-      () => <InitiativeDetailsScreen />,
+      () => <IdPayInitiativeDetailsScreen />,
       IDPayDetailsRoutes.IDPAY_DETAILS_MAIN,
       {},
       store
