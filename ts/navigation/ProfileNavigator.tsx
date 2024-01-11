@@ -53,36 +53,18 @@ const ProfileStackNavigator = () => {
       headerMode={"screen"}
       screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={ROUTES.PROFILE_DATA}
-        component={ProfileDataScreen}
-      />
+      <Stack.Screen name={ROUTES.PROFILE_DATA} component={ProfileDataScreen} />
       <Stack.Screen
         name={ROUTES.PROFILE_PRIVACY_MAIN}
         component={PrivacyMainScreen}
       />
       <Stack.Screen name={ROUTES.PROFILE_PRIVACY} component={TosScreen} />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PRIVACY_SHARE_DATA}
         component={ShareDataScreen}
       />
+      <Stack.Screen name={ROUTES.PROFILE_SECURITY} component={SecurityScreen} />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={ROUTES.PROFILE_SECURITY}
-        component={SecurityScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_SERVICES}
         component={ServicesPreferenceScreen}
       />
@@ -94,23 +76,14 @@ const ProfileStackNavigator = () => {
         component={EmailForwardingScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_HOME}
         component={PreferencesScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_CALENDAR}
         component={CalendarsPreferencesScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_LANGUAGE}
         component={LanguagesPreferencesScreen}
       />
@@ -227,9 +200,6 @@ const ProfileStackNavigator = () => {
         component={WalletPlayground}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
         component={RemoveAccountInfo}
       />
@@ -249,9 +219,6 @@ const ProfileStackNavigator = () => {
       />
       {remindersOptInEnabled && (
         <Stack.Screen
-          options={{
-            headerShown: false
-          }}
           name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
           component={NotificationsPreferencesScreen}
         />

@@ -72,12 +72,12 @@ const OperationResultScreenContent = ({
         </View>
       )}
       {secondaryAction && (
-        <>
+        <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
           <View>
             <ButtonLink {...secondaryAction} />
           </View>
-        </>
+        </View>
       )}
       {React.isValidElement(children) && React.cloneElement(children)}
     </ScrollView>

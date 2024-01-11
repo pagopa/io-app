@@ -17,7 +17,10 @@ import { useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { walletPaymentDetailsSelector } from "../store/selectors";
-import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
+import {
+  WalletPaymentOutcome,
+  WalletPaymentOutcomeEnum
+} from "../types/PaymentOutcomeEnum";
 import { WALLET_PAYMENT_FEEDBACK_URL } from "../utils";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
@@ -30,7 +33,7 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 >;
 
 const WalletPaymentOutcomeScreen = () => {
-  const { params: _ } = useRoute<WalletPaymentOutcomeRouteProps>(); // TODO handle outcome (IOBP-437)
+  const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
 
@@ -55,6 +58,21 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const bannerViewRef = React.useRef<View>(null);
+
+  if (params.outcome === WalletPaymentOutcomeEnum.CANCELED_BY_USER) {
+    return (
+      <OperationResultScreenContent
+        pictogram="trash"
+        title={I18n.t("wallet.payment.outcome.cancelled.title")}
+        subtitle={I18n.t("wallet.payment.outcome.cancelled.subtitle")}
+        action={{
+          label: I18n.t("global.buttons.close"),
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          onPress: () => navigation.pop(2)
+        }}
+      />
+    );
+  }
 
   return (
     <OperationResultScreenContent
