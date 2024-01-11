@@ -30,6 +30,7 @@ const WalletPaymentMissingMethodsError = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="cardAdd"
       title={I18n.t("wallet.payment.methodSelection.missingMethodsError.title")}
       subtitle={I18n.t(
         "wallet.payment.methodSelection.missingMethodsError.subtitle"
