@@ -11,7 +11,6 @@ const WalletPaymentMissingMethodsError = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   React.useEffect(() => {
-    // This removes the header
     navigation.setOptions({
       header: () => undefined,
       headerTransparent: true
@@ -19,7 +18,7 @@ const WalletPaymentMissingMethodsError = () => {
   }, [navigation]);
 
   const handleAddMethod = () => {
-    navigation.replace(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
+    navigation.push(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
       screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
     });
   };
