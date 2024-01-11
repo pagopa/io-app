@@ -15,15 +15,13 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
+import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
-import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
-import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -40,13 +38,9 @@ const WalletPaymentOutcomeScreen = () => {
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
+
   const supportModal = usePaymentFailureSupportModal({
-    rptId: undefined,
-    // TODO add correct failure
-    failure: {
-      faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
-      faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
-    }
+    outcome
   });
 
   const paymentAmount = pipe(
@@ -170,9 +164,12 @@ const WalletPaymentOutcomeScreen = () => {
   const requiresFeedback = outcome === WalletPaymentOutcomeEnum.SUCCESS;
 
   return (
-    <OperationResultScreenContent {...getPropsForOutcome()}>
-      {requiresFeedback && <WalletPaymentFeebackBanner />}
-    </OperationResultScreenContent>
+    <>
+      <OperationResultScreenContent {...getPropsForOutcome()}>
+        {requiresFeedback && <WalletPaymentFeebackBanner />}
+      </OperationResultScreenContent>
+      {supportModal.bottomSheet}
+    </>
   );
 };
 
