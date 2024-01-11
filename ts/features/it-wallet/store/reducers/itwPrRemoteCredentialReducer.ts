@@ -15,7 +15,7 @@ import {
  * Type of the state managed by the reducer for the presentation flow.
  * Currently it only manages the checks required before starting the presentation.
  */
-export type itwPrRemoteCredentialState = {
+export type ItwPrRemoteCredentialState = {
   init: pot.Pot<boolean, ItWalletError>;
   result: pot.Pot<boolean, ItWalletError>;
 };
@@ -23,15 +23,15 @@ export type itwPrRemoteCredentialState = {
 /**
  * Empty state constant which sets the initial state of the reducer.
  */
-const EMPTY_STATE: itwPrRemoteCredentialState = {
+const EMPTY_STATE: ItwPrRemoteCredentialState = {
   init: pot.none,
   result: pot.none
 };
 
 const reducer = (
-  state: itwPrRemoteCredentialState = EMPTY_STATE,
+  state: ItwPrRemoteCredentialState = EMPTY_STATE,
   action: Action
-): itwPrRemoteCredentialState => {
+): ItwPrRemoteCredentialState => {
   switch (action.type) {
     /**
      * Presentation checks section.

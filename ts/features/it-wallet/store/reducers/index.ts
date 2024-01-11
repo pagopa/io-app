@@ -24,7 +24,7 @@ import itwPrRemotePidReducer, {
   ItwPrRemotePidState
 } from "./itwPrRemotePidReducer";
 import itwPrRemoteCredentialReducer, {
-  itwPrRemoteCredentialState
+  ItwPrRemoteCredentialState
 } from "./itwPrRemoteCredentialReducer";
 import itwIssuanceCredentialReducer, {
   ItwIssuanceCredentialState
@@ -87,7 +87,7 @@ export type ItWalletState = {
   credentials: ItwPersistedCredentialsState & PersistPartial;
   /* PRESENTATION REMOTE */
   prRemotePid: ItwPrRemotePidState;
-  prRemoteCredential: itwPrRemoteCredentialState;
+  prRemoteCredential: ItwPrRemoteCredentialState;
   prProximity: ItwPrProximityState;
 };
 
