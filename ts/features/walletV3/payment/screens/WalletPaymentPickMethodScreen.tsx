@@ -32,10 +32,7 @@ import { ComponentProps } from "../../../../types/react";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import {
-  walletPaymentGetAllMethods,
-  walletPaymentGetUserWallets
-} from "../store/actions/networking";
+import { walletPaymentGetUserWallets } from "../store/actions/networking";
 import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
@@ -91,7 +88,7 @@ const WalletPaymentPickMethodScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(walletPaymentGetAllMethods.request());
+      // dispatch(walletPaymentGetAllMethods.request()); // currently we do not allow onboarding new methods in payment flow
       dispatch(walletPaymentGetUserWallets.request());
     }, [dispatch])
   );
