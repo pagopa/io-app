@@ -44,13 +44,12 @@ import {
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 
-// ----------------- TYPES -----------------
-
 type SavedMethodState = {
   kind: "saved";
   walletId: string;
   methodId?: undefined;
 };
+
 type NotSavedMethodState = {
   kind: "generic";
   methodId: string;
@@ -58,26 +57,21 @@ type NotSavedMethodState = {
 };
 
 type SelectedMethodState = SavedMethodState | NotSavedMethodState | undefined;
-// ----------------- SCREEN -----------------
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
   const getSavedtMethodById = useIOSelector(
     walletPaymentSavedMethodByIdSelector
   );
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
-  const paymentMethodsPot = pot.none as ReturnType<
-    typeof walletPaymentAllMethodsSelector
-  >;
-  // substitute line over this with the one under once
-  // generic methods are implemented
-  // useIOSelector(walletPaymentAllMethodsSelector);
+  const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
-  // todo:: will be needed when generic method selection is implemented
-  // const getGenericMethodById = useIOSelector(
-  //   walletPaymentGenericMethodByIdSelector
-  // );
+  // const getGenericMethodById = useIOSelector(walletPaymentGenericMethodByIdSelector);
+
+  const alertRef = React.useRef<View>(null);
+
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
 
@@ -86,10 +80,25 @@ const WalletPaymentPickMethodScreen = () => {
   const [selectedMethod, setSelectedMethod] =
     React.useState<SelectedMethodState>(undefined);
 
+  useHeaderSecondLevel({
+    title: "",
+    backAccessibilityLabel: I18n.t("global.buttons.back"),
+    goBack: navigation.goBack,
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["payment"],
+    supportRequest: true
+  });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(walletPaymentGetAllMethods.request());
+      dispatch(walletPaymentGetUserWallets.request());
+    }, [dispatch])
+  );
+
   const paymentAmount = pot.getOrElse(paymentAmountPot, undefined);
   const canContinue = selectedMethod !== undefined;
 
-  // -------------------------- LISTITEMS --------------------------
   const savedMethodsListItems = useMemo(
     () =>
       pipe(
@@ -102,6 +111,7 @@ const WalletPaymentPickMethodScreen = () => {
       ),
     [userWalletsPots]
   );
+
   const genericMethodsListItems = useMemo(
     () =>
       pipe(
@@ -115,57 +125,38 @@ const WalletPaymentPickMethodScreen = () => {
     [paymentMethodsPot, paymentAmount]
   );
 
-  useHeaderSecondLevel({
-    title: "",
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: navigation.goBack,
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["payment"],
-    supportRequest: true
-  });
-
-  // ------------------------ HANDLERS --------------------------
-
   const handleSelectSavedMethod = (walletId: string) => {
     setSelectedMethod({
       kind: "saved",
       walletId
     });
   };
-  //
-  // will be decommented once generic methods are implemented
-  // const handleSelectNotSavedMethod = (methodId: string) => {
-  //   setSelectedMethod({
-  //     kind: "generic",
-  //     methodId
-  //   });
-  // };
+
+  /* Will be decommented once generic methods are implemented
+  const handleSelectNotSavedMethod = (methodId: string) => {
+     setSelectedMethod({
+       kind: "generic",
+       methodId
+     });
+   }; 
+   */
 
   const handleContinue = () => {
     // todo:: should handle the case where the user
     // selects a non saved method
-    if (paymentAmount && selectedMethod?.kind === "saved") {
+    if (selectedMethod?.kind === "saved") {
       pipe(
         getSavedtMethodById(selectedMethod.walletId),
-        pot.toOption,
-        O.chainNullableK(
-          method => method && dispatch(walletPaymentPickPaymentMethod(method))
+        O.map(walletPaymentPickPaymentMethod),
+        O.map(dispatch),
+        O.map(() =>
+          navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+            screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
+          })
         )
       );
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
-      });
     }
   };
-
-  // --------------------------- EFFECTS ------------------------------
-
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(walletPaymentGetAllMethods.request());
-      dispatch(walletPaymentGetUserWallets.request());
-    }, [dispatch])
-  );
 
   useEffect(() => {
     if (!isLoading) {
@@ -177,9 +168,9 @@ const WalletPaymentPickMethodScreen = () => {
     }
   }, [isLoading, genericMethodsListItems, savedMethodsListItems]);
 
-  // -------------------------- RENDER --------------------------
-
-  const alertRef = React.useRef<View>(null);
+  if (!isLoading && savedMethodsListItems.length === 0) {
+    return <></>;
+  }
 
   return (
     <GradientScrollView
@@ -205,14 +196,12 @@ const WalletPaymentPickMethodScreen = () => {
       <ListItemHeader
         label={I18n.t("wallet.payment.methodSelection.yourMethods")}
       />
-
       <RadioGroup<string>
         type="radioListItem"
         selectedItem={selectedMethod?.walletId}
         items={isLoading ? loadingRadios : savedMethodsListItems}
         onPress={handleSelectSavedMethod}
       />
-
       {
         // since there will be a transitory phase where this list is not
         // returned, this is commented until the generic methods are implemented
@@ -234,8 +223,6 @@ const WalletPaymentPickMethodScreen = () => {
   );
 };
 
-// ----------------------- UTILS -----------------------
-
 const getIconWithFallback = (
   brand?: string
 ): ComponentProps<typeof ListItemRadio>["startImage"] => {
@@ -253,17 +240,17 @@ const getIconWithFallback = (
     )
   );
 };
+
 const mapGenericToRadioItem = (
   method: PaymentMethodResponse,
   transactionAmount?: number
 ): RadioItem<string> => ({
   id: method.id,
   value: method.description,
-  disabled: isDisabled(method, transactionAmount),
+  disabled: isMethodDisabledForAmount(method, transactionAmount),
   startImage: getIconWithFallback(method.asset)
 });
 
-// should never return void, but since this is a map function it's expectable
 const mapSavedToRadioItem = (
   method: WalletInfo
 ): RadioItem<string> | undefined => {
@@ -292,10 +279,7 @@ const mapSavedToRadioItem = (
   }
 };
 
-// not sure if this ranges[0] thing is the right way, but
-// it's pretty easy to add full traversal, even though it
-// makes the code more complex
-const isDisabled = (
+const isMethodDisabledForAmount = (
   method: PaymentMethodResponse,
   transactionAmount?: number
 ): boolean =>
@@ -320,7 +304,5 @@ const loadingRadios: Array<RadioItem<string>> = Array.from(
     value: ""
   })
 );
-
-// ------------- EXPORTS -------------
 
 export { WalletPaymentPickMethodScreen };
