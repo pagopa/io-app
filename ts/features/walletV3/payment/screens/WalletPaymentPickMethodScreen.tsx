@@ -40,6 +40,7 @@ import {
   walletPaymentSavedMethodByIdSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
+import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 
 type SavedMethodState = {
   kind: "saved";
@@ -80,7 +81,6 @@ const WalletPaymentPickMethodScreen = () => {
   useHeaderSecondLevel({
     title: "",
     backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: navigation.goBack,
     contextualHelp: emptyContextualHelp,
     faqCategories: ["payment"],
     supportRequest: true
@@ -166,7 +166,7 @@ const WalletPaymentPickMethodScreen = () => {
   }, [isLoading, genericMethodsListItems, savedMethodsListItems]);
 
   if (!isLoading && savedMethodsListItems.length === 0) {
-    return <></>;
+    return <WalletPaymentMissingMethodsError />;
   }
 
   return (
