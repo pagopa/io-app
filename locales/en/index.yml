@@ -424,16 +424,17 @@ profile:
       description: Learn more about the IO app
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Developers
+    testEnvironmentSectionHeader: Test Environment
     pagoPaEnvironment:
-      pagoPaEnv: pagoPA Test Environment
+      pagoPaEnv: pagoPA
       pagoPAEnvAlert: This change requires app reboot
       alertConfirmTitle: Do you want to use the pagoPA test environment?
       alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
-      pnEnv: PN Test Environment
+      pnEnv: SEND (PN)
     idpay:
-      idpayTest: Test IDPay
+      idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
     appVersion: Version
@@ -447,7 +448,7 @@ profile:
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
     walletPlayground:
-      titleSection: "New Wallet Playground"
+      titleSection: "New Wallet"
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -1643,13 +1644,6 @@ wallet:
     cancel: Keep adding
     success: Problems while adding your card? Please contact your bank.
   payment:
-    methodSelection:
-      header: Seleziona un metodo
-      yourMethods: I tuoi metodi
-      otherMethods: Altri metodi
-      alert:
-        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
-        cta: "Ok, ho capito!"
     barcodes:
       choice:
         title: Sono stati rilevati più codici. Quale vuoi usare?
@@ -1662,6 +1656,13 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    methodSelection:
+      header: Seleziona un metodo
+      yourMethods: I tuoi metodi
+      otherMethods: Altri metodi
+      alert:
+        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+        cta: "Ok, ho capito!"
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -1676,6 +1677,41 @@ wallet:
         default: Default
         amount: Per importo
         name: Per nome
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "C’è un problema tecnico con questo avviso"
+      PAYMENT_UNKNOWN:
+        title: "I dati dell’avviso non sono corretti"
+      DOMAIN_UNKNOWN:
+        title: "L’Ente Creditore sta avendo problemi nella risposta"
+        subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
+      PAYMENT_ONGOING:
+        title: "C’è già un pagamento in corso, riprova più tardi"
+        subtitle: "Se il problema persiste, puoi aprire una segnalazione."
+      PAYMENT_EXPIRED:
+        title: "L’avviso è scaduto e non è più possibile pagarlo"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_CANCELED:
+        title: "L’Ente Creditore ha revocato questo avviso"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_DUPLICATED:
+        title: "Questo avviso è stato già pagato!"
+      GENERIC_ERROR:
+        title: "Si è verificato un errore imprevisto"
+        subtitle: "Riprova, oppure contatta l’assistenza."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Non riusciamo a trovare l’avviso"
+        subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    support:
+      button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
+      errorCode: Codice errore
+      noticeNumber: Codice avviso
+      entityCode: Codice Fiscale Ente
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
@@ -3909,6 +3945,7 @@ whatsNew:
 bonusCard:
   validUntil: Valida fino al {{endDate}}
   expiring: Scade il {{endDate}}
+  expired: Scaduta il {{endDate}}
   paused: In pausa
   removed: Rimossa
 transaction:

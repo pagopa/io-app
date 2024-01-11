@@ -417,6 +417,7 @@ profile:
       title: "Über IO"
       description: "Erfahren mehr über die IO-App"
     developersSectionHeader: "Entwickler"
+    testEnvironmentSectionHeader: "Testumgebung"
     pagoPaEnvironment:
       pagoPaEnv: "pagoPA Testumgebung"
       pagoPAEnvAlert: "Diese Änderung erfordert einen Neustart der App"
