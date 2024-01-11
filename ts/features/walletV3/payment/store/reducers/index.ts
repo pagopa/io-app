@@ -25,8 +25,10 @@ import {
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletPaymentFailure } from "../../types/failure";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
 export type WalletPaymentState = {
+  rptId?: RptId;
   paymentDetails: pot.Pot<
     PaymentRequestsGetResponse,
     NetworkError | WalletPaymentFailure
@@ -67,6 +69,7 @@ const reducer = (
     case getType(walletPaymentGetDetails.request):
       return {
         ...state,
+        rptId: action.payload,
         paymentDetails: pot.toLoading(state.paymentDetails)
       };
     case getType(walletPaymentGetDetails.success):

@@ -24,3 +24,13 @@ export const WalletPaymentOutcome = enumType<WalletPaymentOutcomeEnum>(
   WalletPaymentOutcomeEnum,
   "WalletPaymentOutcome"
 );
+
+export function getWalletPaymentOutcomeEnumByValue(
+  value: string
+): string | undefined {
+  return (
+    Object.keys(WalletPaymentOutcomeEnum) as Array<
+      keyof typeof WalletPaymentOutcomeEnum
+    >
+  ).find(key => WalletPaymentOutcomeEnum[key] === value);
+}
