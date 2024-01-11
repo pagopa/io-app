@@ -40,7 +40,7 @@ import { WalletPaymentFailure } from "../types/failure";
 type PaymentFailureSupportModalParams = {
   rptId?: RptId;
   failure: WalletPaymentFailure;
-  withPhoneSupport: boolean;
+  withPhoneSupport?: boolean;
 };
 
 type PaymentFailureSupportModal = {
