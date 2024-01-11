@@ -187,6 +187,11 @@ export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
     ? state.authentication.sessionInfo.zendeskToken
     : undefined;
 
+export const walletTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.walletToken
+    : undefined;
+
 export const tokenFromNameSelector = (
   tokenName?: TokenName
 ): ((state: GlobalState) => O.Option<string>) =>
