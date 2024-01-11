@@ -21,6 +21,7 @@ import { assistanceToolConfigSelector } from "../../../../store/reducers/backend
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import {
+  PAGOPA_SUPPORT_PHONE_NUMBER,
   addTicketCustomField,
   assistanceToolRemoteConfig,
   resetCustomFields,
@@ -114,18 +115,23 @@ const usePaymentFailureSupportModal = ({
     clipboardSetStringWithFeedback(data);
   };
 
+  const displayPhoneNumber = PAGOPA_SUPPORT_PHONE_NUMBER.replace(
+    /^(\d{2})(\d{4})(\d{4})$/,
+    "$1.$2.$3"
+  );
+
   const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal({
     component: (
       <>
         <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />
         <ListItemAction
           label={I18n.t("wallet.payment.support.phone", {
-            phoneNumber: "06.4520.2323"
+            phoneNumber: displayPhoneNumber
           })}
           accessibilityLabel={I18n.t("wallet.payment.support.phone", {
-            phoneNumber: "06.4520.2323"
+            phoneNumber: displayPhoneNumber
           })}
-          onPress={() => Linking.openURL(`tel:0645202323`)}
+          onPress={() => Linking.openURL(`tel:${PAGOPA_SUPPORT_PHONE_NUMBER}`)}
           variant="primary"
           icon="phone"
         />
