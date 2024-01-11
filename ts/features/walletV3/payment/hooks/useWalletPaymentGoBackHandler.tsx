@@ -17,6 +17,11 @@ const useWalletPaymentGoBackHandler = () => {
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const dispatch = useIODispatch();
 
+  if (pot.isLoading(transactionPot)) {
+    // If transaction is pending cancellation we block every interaction with the back button
+    return () => undefined;
+  }
+
   // If we have a transaction in the store means that the user has already locked the debt position.
   // Before leaving the payment flow we must ask to the user if he is sure he wants to proceed and
   // then unlock the debt position by deleting the transaction
