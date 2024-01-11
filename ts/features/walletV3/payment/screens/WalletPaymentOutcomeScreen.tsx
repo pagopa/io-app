@@ -21,6 +21,9 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
+import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
+import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -32,11 +35,19 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 >;
 
 const WalletPaymentOutcomeScreen = () => {
-  const {
-    params: { outcome }
-  } = useRoute<WalletPaymentOutcomeRouteProps>();
+  const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
+  const { outcome } = params;
+
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
+  const supportModal = usePaymentFailureSupportModal({
+    rptId: undefined,
+    // TODO add correct failure
+    failure: {
+      faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
+      faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+    }
+  });
 
   const paymentAmount = pipe(
     paymentDetailsPot,
@@ -44,6 +55,10 @@ const WalletPaymentOutcomeScreen = () => {
     O.map(({ amount }) => formatNumberCentsToAmount(amount, true, "right")),
     O.getOrElse(() => "-")
   );
+
+  const handleContactSupport = () => {
+    supportModal.present();
+  };
 
   const handleClose = () => {
     navigation.popToTop();
@@ -65,7 +80,7 @@ const WalletPaymentOutcomeScreen = () => {
   const contactSupportAction: OperationResultScreenContentProps["action"] = {
     label: I18n.t("wallet.payment.support.button"),
     accessibilityLabel: I18n.t("wallet.payment.support.button"),
-    onPress: handleClose
+    onPress: handleContactSupport
   };
 
   const getPropsForOutcome = (): OperationResultScreenContentProps => {
