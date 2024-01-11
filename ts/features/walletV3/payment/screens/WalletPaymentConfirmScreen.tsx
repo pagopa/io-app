@@ -122,7 +122,6 @@ const WalletPaymentConfirmScreen = () => {
         O.chainNullableK(method => method.details)
       ),
       selectedPsp: selectedPspOption,
-      selectedMethod: selectedMethodOption,
       paymentDetails: pipe(paymentDetailsPot, pot.toOption)
     }),
     O.fold(

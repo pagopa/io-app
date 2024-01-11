@@ -1,3 +1,9 @@
+import {
+  ContentWrapper,
+  Divider,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -5,28 +11,22 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
-import {
-  Divider,
-  HSpacer,
-  VSpacer,
-  ContentWrapper
-} from "@pagopa/io-app-design-system";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
+import { IOToast } from "../../../../components/Toast";
 import { Body } from "../../../../components/core/typography/Body";
-import { H1 } from "../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../../../utils/showToast";
+import { localeDateFormat } from "../../../../utils/locale";
 import { useTimelineDetailsBottomSheet } from "../../timeline/components/TimelineDetailsBottomSheet";
 import { TimelineOperationListItem } from "../components/TimelineOperationListItem";
-import { IDPayDetailsParamsList } from "../navigation";
 import { useInitiativeTimelineFetcher } from "../hooks/useInitiativeTimelineFetcher";
-import { localeDateFormat } from "../../../../utils/locale";
-export type OperationsListScreenParams = { initiativeId: string };
+import { IDPayDetailsParamsList } from "../navigation";
 
-type OperationsListScreenRouteProps = RouteProp<
+export type IdPayOperationsListScreenParams = { initiativeId: string };
+
+type IdPayOperationsListScreenRouteProps = RouteProp<
   IDPayDetailsParamsList,
   "IDPAY_DETAILS_TIMELINE"
 >;
@@ -45,12 +45,12 @@ const TimelineLoader = () => (
   />
 );
 
-export const OperationsListScreen = () => {
-  const route = useRoute<OperationsListScreenRouteProps>();
+export const IdPayOperationsListScreen = () => {
+  const route = useRoute<IdPayOperationsListScreenRouteProps>();
   const { initiativeId } = route.params;
 
   const handleOnError = () => {
-    showToast("Errore nel caricamento, riprova.");
+    IOToast.error("Errore nel caricamento, riprova.");
   };
 
   const {
@@ -129,33 +129,25 @@ export const OperationsListScreen = () => {
   );
 
   return (
-    <>
-      <BaseScreenComponent
-        headerTitle={I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.header"
-        )}
-        goBack={true}
-      >
-        <ContentWrapper>
-          <H1>
-            {I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
-            )}
-          </H1>
-          <VSpacer size={8} />
-          <Body>
-            {I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
-            )}
-            <HSpacer size={4} />
-            {lastUpdateComponent}
-          </Body>
-        </ContentWrapper>
-        <VSpacer size={16} />
-        {operationList}
-      </BaseScreenComponent>
+    <RNavScreenWithLargeHeader
+      title={I18n.t(
+        "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
+      )}
+    >
+      <ContentWrapper>
+        <VSpacer size={8} />
+        <Body>
+          {I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.lastUpdated"
+          )}
+          <HSpacer size={4} />
+          {lastUpdateComponent}
+        </Body>
+      </ContentWrapper>
+      <VSpacer size={16} />
+      {operationList}
       {detailsBottomSheet.bottomSheet}
-    </>
+    </RNavScreenWithLargeHeader>
   );
 };
 

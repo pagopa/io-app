@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.50.0-rc.4](https://github.com/pagopa/io-app/compare/2.50.0-rc.3...2.50.0-rc.4) (2024-01-11)
+
+
+### Features
+
+* [[IOBP-311](https://pagopa.atlassian.net/browse/IOBP-311),[IOBP-317](https://pagopa.atlassian.net/browse/IOBP-317)] New wallet payment method selection screen ([#5350](https://github.com/pagopa/io-app/issues/5350)) ([8bb098e](https://github.com/pagopa/io-app/commit/8bb098e9962f16d7e53e9f559a21036797ec11e1))
+* [[IOBP-432](https://pagopa.atlassian.net/browse/IOBP-432)] Add new wallet payment authorization webview ([#5276](https://github.com/pagopa/io-app/issues/5276)) ([a3bb6a4](https://github.com/pagopa/io-app/commit/a3bb6a46d3b8aff0fb0a816870085f6c03974135))
+* [[IOBP-480](https://pagopa.atlassian.net/browse/IOBP-480)] Remove holder name from wallet payment confirm screen ([#5387](https://github.com/pagopa/io-app/issues/5387)) ([4de88bc](https://github.com/pagopa/io-app/commit/4de88bcae555a253b141ffac1ddd452f3eb9049a))
+
+
+### Bug Fixes
+
+* [[IOBP-482](https://pagopa.atlassian.net/browse/IOBP-482)] Adapted actual payment transaction apis with LV ([#5388](https://github.com/pagopa/io-app/issues/5388)) ([5f4e0c3](https://github.com/pagopa/io-app/commit/5f4e0c3e7c26bfc1d99f028cf4416f7c83c84e56))
+
+
+### Chores
+
+* [[IOAPPFD0-198](https://pagopa.atlassian.net/browse/IOAPPFD0-198)] Redesign of the developer section with better organization ([#5324](https://github.com/pagopa/io-app/issues/5324)) ([0bde66a](https://github.com/pagopa/io-app/commit/0bde66afe3258485c771e563af3bf07cd6c41fcf))
+* [[IOAPPFD0-205](https://pagopa.atlassian.net/browse/IOAPPFD0-205)] Remove `profileAlt` icon reference from the codebase ([#5366](https://github.com/pagopa/io-app/issues/5366)) ([14f7cf7](https://github.com/pagopa/io-app/commit/14f7cf7e4b2eb917048eceb3216d12db042f440f))
+* [[IOBP-396](https://pagopa.atlassian.net/browse/IOBP-396)] Add new `BonusCard` component into ID Pay initiative details screen ([#5329](https://github.com/pagopa/io-app/issues/5329)) ([a5a91bc](https://github.com/pagopa/io-app/commit/a5a91bc03877479f0592d01634b0557d6fc32a2e))
+* [[IOPID-1301](https://pagopa.atlassian.net/browse/IOPID-1301)] Bump ToS version from 4.7 to 4.8" ([#5391](https://github.com/pagopa/io-app/issues/5391)) ([277c21f](https://github.com/pagopa/io-app/commit/277c21f5a940c28a82ac00c9bd99bb404307d3ff)), closes [pagopa/io-app#5385](https://github.com/pagopa/io-app/issues/5385)
+
 ## [2.50.0-rc.3](https://github.com/pagopa/io-app/compare/2.50.0-rc.2...2.50.0-rc.3) (2024-01-09)
 
 
