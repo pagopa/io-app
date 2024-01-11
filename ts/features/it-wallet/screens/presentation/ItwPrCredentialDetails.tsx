@@ -17,7 +17,7 @@ import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { StoredCredential } from "../../utils/types";
+import { StoredCredential } from "../../utils/itwTypesUtils";
 
 export type ItwPrCredentialDetailsScreenNavigationParams = {
   credential: StoredCredential;

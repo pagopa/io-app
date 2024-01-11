@@ -3,8 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStyles } from "@pagopa/io-app-design-system";
-import { itwPresentationChecks } from "../../../../store/actions/itwPresentationActions";
-import { itwPresentationChecksSelector } from "../../../../store/reducers/new/itwPresentationReducer";
+import { itwPrRemoteCredentialInit } from "../../../../store/actions/itwPrRemoteCredentialActions";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
@@ -15,7 +14,7 @@ import {
   IOStackNavigationProp
 } from "../../../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { getRpMock } from "../../../../utils/mocks";
+import { getRpMock } from "../../../../utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/ItwRoutes";
 import ItwKoView from "../../../../components/ItwKoView";
 import { itwActivationStart } from "../../../../store/actions/itwActivationActions";
@@ -25,6 +24,7 @@ import {
   ItwErrorMapping,
   getItwGenericMappedError
 } from "../../../../utils/itwErrorsUtils";
+import { itwPrRemoteCredentialInitSelector } from "../../../../store/reducers/itwPrRemoteCredentialReducer";
 
 /**
  * This screen is used to perform different checks before initiating the presentation flow.
@@ -32,15 +32,15 @@ import {
  * It shows an error screen if the checks fail.
  * The view is rendered based on the state of the checks pot.
  */
-const ItwPrRemoteCredentialChecksScreen = () => {
+const ItwPrRemoteCredentialInitScreen = () => {
   const dispatch = useIODispatch();
-  const checksPot = useIOSelector(itwPresentationChecksSelector);
+  const initPot = useIOSelector(itwPrRemoteCredentialInitSelector);
   const navigation =
     useNavigation<IOStackNavigationProp<ItwParamsList & AppParamsList>>();
   const rpMock = getRpMock();
 
   useOnFirstRender(() => {
-    dispatch(itwPresentationChecks.request());
+    dispatch(itwPrRemoteCredentialInit.request());
   });
 
   const LoadingView = () => (
@@ -114,7 +114,7 @@ const ItwPrRemoteCredentialChecksScreen = () => {
 
   const RenderMask = () =>
     pot.fold(
-      checksPot,
+      initPot,
       () => <LoadingView />,
       () => <LoadingView />,
       () => <LoadingView />,
@@ -128,4 +128,4 @@ const ItwPrRemoteCredentialChecksScreen = () => {
   return <RenderMask />;
 };
 
-export default ItwPrRemoteCredentialChecksScreen;
+export default ItwPrRemoteCredentialInitScreen;

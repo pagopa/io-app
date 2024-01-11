@@ -28,7 +28,7 @@ import I18n from "../../../../i18n";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
-import { mockedmDLResponse } from "../../utils/mocks";
+import { mockedmDLResponse } from "../../utils/itwMocksUtils";
 import ItwContinueView from "../../components/ItwContinueView";
 import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -38,9 +38,9 @@ import {
   stopProximityManager
 } from "../../store/actions/itwProximityActions";
 import {
-  proximityStatusSelector,
-  qrcodeSelector
-} from "../../store/reducers/itwProximityReducer";
+  itwPrProximitySelector,
+  itwPrProximityQrCodeSelector
+} from "../../store/reducers/itwPrProximityReducer";
 
 /**
  * A screen that shows a QR code to be scanned by the other device
@@ -54,8 +54,8 @@ const ItwPrProximityQrCodeScreen = () => {
   const [isProximityCompleted, setIsProximityCompleted] = React.useState(false);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const dispatch = useIODispatch();
-  const proximityStatus = useIOSelector(proximityStatusSelector);
-  const qrCode = useIOSelector(qrcodeSelector);
+  const proximityStatus = useIOSelector(itwPrProximitySelector);
+  const qrCode = useIOSelector(itwPrProximityQrCodeSelector);
 
   useOnFirstRender(() => {
     handleAndroidPermissions().catch(_ => setIsError(true));

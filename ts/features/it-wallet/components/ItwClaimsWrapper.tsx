@@ -4,7 +4,7 @@ import { H6, IOColors } from "@pagopa/io-app-design-system";
 import {
   CredentialCatalogDisplay,
   getImageFromCredentialType
-} from "../utils/mocks";
+} from "../utils/itwMocksUtils";
 
 /**
  * Props of the component.

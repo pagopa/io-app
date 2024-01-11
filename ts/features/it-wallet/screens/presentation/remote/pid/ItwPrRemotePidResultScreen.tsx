@@ -8,11 +8,13 @@ import I18n from "../../../../../../i18n";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../../utils/hooks/useOnFirstRender";
-import { itwRpPresentationSelector } from "../../../../store/reducers/itwRpPresentationReducer";
-import { itwRpInitializationEntityValueSelector } from "../../../../store/reducers/itwRpInitializationReducer";
-import { itwRpPresentation } from "../../../../store/actions/itwRpActions";
+import {
+  itwPrRemotePidInitValueSelector,
+  itwPrRemotePidResultSelector
+} from "../../../../store/reducers/itwPrRemotePidReducer";
+import { itwPrRemotePidPresentation } from "../../../../store/actions/itwPrRemotePidActions";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
-import { rpPidMock } from "../../../../utils/mocks";
+import { rpPidMock } from "../../../../utils/itwMocksUtils";
 import ItwLoadingSpinnerOverlay from "../../../../components/ItwLoadingSpinnerOverlay";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../../navigation/routes";
@@ -21,15 +23,15 @@ import { getItwGenericMappedError } from "../../../../utils/itwErrorsUtils";
 
 const ItwPrRemotePidResultScreen = () => {
   const dispatch = useIODispatch();
-  const presentationResult = useIOSelector(itwRpPresentationSelector);
-  const rpEntity = useIOSelector(itwRpInitializationEntityValueSelector);
+  const prResult = useIOSelector(itwPrRemotePidResultSelector);
+  const initValue = useIOSelector(itwPrRemotePidInitValueSelector);
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
 
   /**
    * Dispatches the action to start the RP presentation flow after the user confirms.
    */
   useOnFirstRender(() => {
-    dispatch(itwRpPresentation.request());
+    dispatch(itwPrRemotePidPresentation.request());
   });
 
   /**
@@ -88,14 +90,14 @@ const ItwPrRemotePidResultScreen = () => {
    */
   const RenderMask = () =>
     pipe(
-      rpEntity,
+      initValue,
       O.fold(
         () => <ErrorView />,
         (
           _ // some equals to the RP federation entity
         ) =>
           pot.fold(
-            presentationResult,
+            prResult,
             () => <LoadingView />,
             () => <LoadingView />,
             () => <LoadingView />,

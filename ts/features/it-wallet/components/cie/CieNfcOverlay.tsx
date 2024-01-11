@@ -13,18 +13,18 @@ import { ScreenContentHeader } from "../../../../components/screens/ScreenConten
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { openNFCSettings } from "../../utils/cie";
+import { itwOpenNFCSettings } from "../../utils/itwCieUtils";
 
 type NavigationProps = IOStackNavigationRouteProps<
   ItwParamsList,
-  "ITW_ISSUING_PID_CIE_CARD_READER_SCREEN"
+  "ITW_ISSUANCE_PID_CIE_CARD_READER_SCREEN"
 >;
 
 type Props = ReduxProps & NavigationProps;
 
 export default class CieNfcOverlay extends React.PureComponent<Props> {
   private handleOnPressActivateNFC = async () => {
-    await openNFCSettings();
+    await itwOpenNFCSettings();
   };
 
   // FIX ME: the same alert is displayed during all the onboarding
@@ -42,7 +42,7 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
           style: "default",
           onPress: () =>
             this.props.navigation.navigate(ITW_ROUTES.MAIN, {
-              screen: ITW_ROUTES.ISSUING.PID.AUTH_INFO
+              screen: ITW_ROUTES.ISSUANCE.PID.AUTH_INFO
             })
         }
       ]

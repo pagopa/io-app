@@ -16,13 +16,13 @@ import { useIOSelector } from "../../../../store/hooks";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { CredentialType } from "../../utils/mocks";
+import { CredentialType } from "../../utils/itwMocksUtils";
 import ItwClaimsWrapper from "../../components/ItwClaimsWrapper";
 import { ITW_ROUTES } from "../../navigation/ItwRoutes";
 import ItwKoView from "../../components/ItwKoView";
 import { getItwGenericMappedError } from "../../utils/itwErrorsUtils";
-import { itwCredentialsPidSelector } from "../../store/reducers/itwCredentialsReducer";
-import { StoredCredential } from "../../utils/types";
+import { itwPersistedCredentialsValuePidSelector } from "../../store/reducers/itwPersistedCredentialsReducer";
+import { StoredCredential } from "../../utils/itwTypesUtils";
 import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
 
 /**
@@ -31,7 +31,7 @@ import ItwCredentialClaimsList from "../../components/ItwCredentialClaimsList";
  */
 const ItwPrPidDetails = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const pid = useIOSelector(itwCredentialsPidSelector);
+  const pid = useIOSelector(itwPersistedCredentialsValuePidSelector);
   const bannerViewRef = React.createRef<View>();
   const spacerSize = 32;
 

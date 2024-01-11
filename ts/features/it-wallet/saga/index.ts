@@ -1,23 +1,26 @@
 import { fork } from "typed-redux-saga/macro";
 import { SagaIterator } from "redux-saga";
 
-import { watchPidSaga } from "./itwPidIssuanceSaga";
+import { watchItwIssuancePidSaga } from "./itwIssuancePidSaga";
 import { watchItwWiaSaga } from "./itwWiaSaga";
 import { watchItwActivationSaga } from "./itwActivationSaga";
-import { watchItwRpSaga } from "./itwRpSaga";
-import { watchItwPresentationSaga } from "./new/itwPresentationSaga";
-import { watchItwIssuanceSaga } from "./new/itwIssuanceSaga";
-import { watchItwProximitySaga } from "./itwProximitySaga";
+import { watchItwPrRemoteCredentialSaga } from "./itwPrRemoteCredentialSaga";
+import { watchItwIssuanceCredentialSaga } from "./itwIssuanceCredentialSaga";
+import { watchItwPrProximitySaga } from "./itwPrProximitySaga";
+import { watchItwPrRemotePid } from "./itwPrRemotePidSaga";
 
 /**
  * Watcher for any IT wallet related sagas.
  */
 export function* watchItwSaga(): SagaIterator {
-  yield* fork(watchItwActivationSaga);
+  /* GENERIC */
   yield* fork(watchItwWiaSaga);
-  yield* fork(watchPidSaga);
-  yield* fork(watchItwRpSaga);
-  yield* fork(watchItwPresentationSaga);
-  yield* fork(watchItwIssuanceSaga);
-  yield* fork(watchItwProximitySaga);
+  yield* fork(watchItwActivationSaga);
+  /* ISSUANCE */
+  yield* fork(watchItwIssuancePidSaga);
+  yield* fork(watchItwIssuanceCredentialSaga);
+  /* PRESENTATION */
+  yield* fork(watchItwPrRemotePid);
+  yield* fork(watchItwPrRemoteCredentialSaga);
+  yield* fork(watchItwPrProximitySaga);
 }

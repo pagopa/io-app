@@ -1,23 +1,29 @@
-import { ItwCredentialsActions } from "./itwCredentialsActions";
-import { ItwCieAuthenticationActions } from "./itwCieActions";
+import { ItwPersistedCredentialsActions } from "./itwPersistedCredentialsActions";
+import { ItwIssuancePidCieAuthActions } from "./itwIssuancePidCieActions";
 import { ItwActivationActions } from "./itwActivationActions";
 import { ItwWiaActions } from "./itwWiaActions";
 import { ItwLifecycleActions } from "./itwLifecycleActions";
-import { ItwRpActions } from "./itwRpActions";
-import { ItwPresentationChecks } from "./itwPresentationActions";
-import { itwIssuanceActions } from "./itwIssuanceActions";
+import { ItwRpActions } from "./itwPrRemotePidActions";
+import { itwPrRemoteCredentialInit } from "./itwPrRemoteCredentialActions";
+import { ItwIssuanceCredentialActions } from "./itwIssuanceCredentialActions";
 import { ItwProximityActions } from "./itwProximityActions";
+import { ItwIssuancePidActions } from "./itwIssuancePidActions";
 
 /**
  * Action types for the IT Wallet feature
  */
 export type ItWalletActions =
-  | itwIssuanceActions
-  | ItwActivationActions
-  | ItwWiaActions
+  /* GENERIC */
   | ItwLifecycleActions
-  | ItwCredentialsActions
-  | ItwCieAuthenticationActions
+  | ItwWiaActions
+  | ItwActivationActions
+  /* ISSUANCE */
+  | ItwIssuancePidCieAuthActions
+  | ItwIssuancePidActions
+  | ItwIssuanceCredentialActions
+  /* PERSISTED CREDENTIALS */
+  | ItwPersistedCredentialsActions
+  /* PRESENTATION */
   | ItwRpActions
-  | ItwPresentationChecks
+  | itwPrRemoteCredentialInit
   | ItwProximityActions;

@@ -10,8 +10,8 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { Locales } from "../../../../locales/locales";
 import I18n from "../../../i18n";
-import { ParsedCredential } from "./types";
-import { CredentialCatalogDisplay } from "./mocks";
+import { ParsedCredential } from "./itwTypesUtils";
+import { CredentialCatalogDisplay } from "./itwMocksUtils";
 
 /**
  *

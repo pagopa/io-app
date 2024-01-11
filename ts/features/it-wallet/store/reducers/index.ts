@@ -9,29 +9,31 @@ import {
 } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Action } from "../../../../store/actions/types";
-import createCredentialsKeychain from "../storages/credentialsKeychain";
+import itwCreateCredentialsStorage from "../storages/itwCredentialsStorage";
 import { isDevEnv } from "../../../../utils/environment";
-import itwCieReducer, { ItwCieState } from "./itwCieReducer";
-import itwWia, { ItwWIAState } from "./itwWiaReducer";
-import itwCredentials, { ItwCredentialsState } from "./itwCredentialsReducer";
+import itwIssuancePidAuthCieReducer, {
+  ItwIssuancePidCieAuthState
+} from "./itwIssuancePidCieAuthReducer";
+import itwWia, { ItwWiaState } from "./itwWiaReducer";
+import itwCredentials, {
+  ItwPersistedCredentialsState
+} from "./itwPersistedCredentialsReducer";
 import itwLifeCycle, { ItwLifecycleState } from "./itwLifecycleReducer";
-import itwPid, { ItwPidState } from "./itwPidReducer";
-import itwRpInitializationReducer, {
-  ItwRpInitializationState
-} from "./itwRpInitializationReducer";
-import itwRpPresentationReducer, {
-  ItwRpPresentationState
-} from "./itwRpPresentationReducer";
-import itwCredentialsChecksReducer, {
-  ItwCredentialsChecksState
-} from "./itwCredentialsChecksReducer";
-import itwPresentationReducer, {
-  ItwPresentationState
-} from "./new/itwPresentationReducer";
-import itwIssuanceReducer, { ItwIssuanceState } from "./new/itwIssuanceReducer";
-import itwProximityReducer, { ItwProximityState } from "./itwProximityReducer";
+import itwPidReducer, { ItwIssuancePidState } from "./itwIssuancePidReducer";
+import itwPrRemotePidReducer, {
+  ItwPrRemotePidState
+} from "./itwPrRemotePidReducer";
+import itwPrRemoteCredentialReducer, {
+  ItwPrRemoteCredentialState
+} from "./itwPrRemoteCredentialReducer";
+import itwIssuanceCredentialReducer, {
+  ItwIssuanceCredentialState
+} from "./itwIssuanceCredentialReducer";
+import itwPrProximityReducer, {
+  ItwPrProximityState
+} from "./itwPrProximityReducer";
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 3;
+const CURRENT_REDUX_ITW_STORE_VERSION = 5;
 
 const itwStoreMigration: MigrationManifest = {
   /**
@@ -41,10 +43,18 @@ const itwStoreMigration: MigrationManifest = {
   /**
    * Version 3 where we reset the state due to redux state changes.
    */
-  "3": (): PersistedState => undefined as unknown as PersistedState
+  "3": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 4 where we reset the state due to redux state changes.
+   */
+  "4": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 5 where we reset the state due to redux state changes.
+   */
+  "5": (): PersistedState => undefined as unknown as PersistedState
 };
 
-const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 2;
+const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 5;
 
 const itwCredentialsStoreMigration: MigrationManifest = {
   /**
@@ -52,23 +62,33 @@ const itwCredentialsStoreMigration: MigrationManifest = {
    */
   "2": (): PersistedState => undefined as unknown as PersistedState,
   /**
-   * Version 2 where we reset the state due to redux state changes.
+   * Version 3 where we reset the state due to redux state changes.
    */
-  "3": (): PersistedState => undefined as unknown as PersistedState
+  "3": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 4 where we reset the state due to redux state changes.
+   */
+  "4": (): PersistedState => undefined as unknown as PersistedState,
+  /**
+   * Version 5 where we reset the state due to redux state changes.
+   */
+  "5": (): PersistedState => undefined as unknown as PersistedState
 };
 
 export type ItWalletState = {
-  wia: ItwWIAState;
-  credentials: ItwCredentialsState & PersistPartial;
-  credentialsChecks: ItwCredentialsChecksState;
-  activation: ItwCieState;
+  /* GENERIC */
   lifecycle: ItwLifecycleState;
-  pid: ItwPidState;
-  rpInit: ItwRpInitializationState;
-  rpPresentation: ItwRpPresentationState;
-  presentation: ItwPresentationState;
-  issuance: ItwIssuanceState;
-  proximity: ItwProximityState;
+  wia: ItwWiaState;
+  /* ISSUANCE */
+  issuancePidCieAuth: ItwIssuancePidCieAuthState;
+  issuancePid: ItwIssuancePidState;
+  issuanceCredential: ItwIssuanceCredentialState;
+  /* PERSISTED CREDENTIALS */
+  credentials: ItwPersistedCredentialsState & PersistPartial;
+  /* PRESENTATION REMOTE */
+  prRemotePid: ItwPrRemotePidState;
+  prRemoteCredential: ItwPrRemoteCredentialState;
+  prProximity: ItwPrProximityState;
 };
 
 export type PersistedItWalletState = ItWalletState & PersistPartial;
@@ -83,23 +103,25 @@ const persistConfig: PersistConfig = {
 
 const credentialsPersistConfig = {
   key: "credentials",
-  storage: createCredentialsKeychain(),
+  storage: itwCreateCredentialsStorage(),
   version: CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
   migrate: createMigrate(itwCredentialsStoreMigration, { debug: isDevEnv })
 };
 
 const reducers = combineReducers<ItWalletState, Action>({
-  wia: itwWia,
-  credentials: persistReducer(credentialsPersistConfig, itwCredentials),
-  credentialsChecks: itwCredentialsChecksReducer,
-  activation: itwCieReducer,
+  /* GENERIC */
   lifecycle: itwLifeCycle,
-  pid: itwPid,
-  rpInit: itwRpInitializationReducer,
-  rpPresentation: itwRpPresentationReducer,
-  presentation: itwPresentationReducer,
-  issuance: itwIssuanceReducer,
-  proximity: itwProximityReducer
+  wia: itwWia,
+  /* ISSUANCE */
+  issuancePidCieAuth: itwIssuancePidAuthCieReducer,
+  issuancePid: itwPidReducer,
+  issuanceCredential: itwIssuanceCredentialReducer,
+  /* PERSISTED CREDENTIALS */
+  credentials: persistReducer(credentialsPersistConfig, itwCredentials),
+  /* PRESENTATION REMOTE */
+  prRemotePid: itwPrRemotePidReducer,
+  prRemoteCredential: itwPrRemoteCredentialReducer,
+  prProximity: itwPrProximityReducer
 });
 
 const itwReducer = persistReducer<ItWalletState, Action>(
