@@ -167,3 +167,5 @@ export const handleSendAssistanceLog = (
       appendLog(log);
   }
 };
+
+export const PAGOPA_SUPPORT_PHONE_NUMBER = "0645202323";

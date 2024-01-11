@@ -705,92 +705,100 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             <View
                                               style={
                                                 Object {
-                                                  "height": 24,
+                                                  "alignItems": "center",
                                                 }
                                               }
-                                            />
-                                            <View>
+                                            >
                                               <View
-                                                accessibilityLabel="Secondary Action"
-                                                accessibilityRole="button"
-                                                accessibilityState={
-                                                  Object {
-                                                    "disabled": false,
-                                                  }
-                                                }
-                                                accessible={true}
-                                                collapsable={false}
-                                                focusable={true}
-                                                hitSlop={
-                                                  Object {
-                                                    "bottom": 14,
-                                                    "left": 24,
-                                                    "right": 24,
-                                                    "top": 14,
-                                                  }
-                                                }
-                                                onBlur={[Function]}
-                                                onClick={[Function]}
-                                                onFocus={[Function]}
-                                                onResponderGrant={[Function]}
-                                                onResponderMove={[Function]}
-                                                onResponderRelease={[Function]}
-                                                onResponderTerminate={[Function]}
-                                                onResponderTerminationRequest={[Function]}
-                                                onStartShouldSetResponder={[Function]}
-                                                onTouchEnd={[Function]}
                                                 style={
                                                   Object {
-                                                    "alignSelf": "flex-start",
+                                                    "height": 24,
                                                   }
                                                 }
-                                              >
+                                              />
+                                              <View>
                                                 <View
+                                                  accessibilityLabel="Secondary Action"
+                                                  accessibilityRole="button"
+                                                  accessibilityState={
+                                                    Object {
+                                                      "disabled": false,
+                                                    }
+                                                  }
+                                                  accessible={true}
+                                                  collapsable={false}
+                                                  focusable={true}
+                                                  hitSlop={
+                                                    Object {
+                                                      "bottom": 14,
+                                                      "left": 24,
+                                                      "right": 24,
+                                                      "top": 14,
+                                                    }
+                                                  }
+                                                  onBlur={[Function]}
+                                                  onClick={[Function]}
+                                                  onFocus={[Function]}
+                                                  onResponderGrant={[Function]}
+                                                  onResponderMove={[Function]}
+                                                  onResponderRelease={[Function]}
+                                                  onResponderTerminate={[Function]}
+                                                  onResponderTerminationRequest={[Function]}
+                                                  onStartShouldSetResponder={[Function]}
+                                                  onTouchEnd={[Function]}
                                                   style={
-                                                    Array [
-                                                      Object {
-                                                        "alignItems": "center",
-                                                        "elevation": 0,
-                                                        "flexDirection": "row",
-                                                        "justifyContent": "center",
-                                                        "textAlignVertical": "center",
-                                                      },
-                                                      false,
-                                                      Object {},
-                                                      Object {
-                                                        "transform": Array [
-                                                          Object {
-                                                            "scale": undefined,
-                                                          },
-                                                        ],
-                                                      },
-                                                    ]
+                                                    Object {
+                                                      "alignSelf": "flex-start",
+                                                    }
                                                   }
                                                 >
-                                                  <Text
-                                                    allowFontScaling={false}
-                                                    ellipsizeMode="tail"
-                                                    maxFontSizeMultiplier={1.3}
-                                                    numberOfLines={1}
+                                                  <View
                                                     style={
                                                       Array [
                                                         Object {
-                                                          "fontFamily": "Titillium Web",
-                                                          "fontSize": 16,
-                                                          "fontStyle": "normal",
-                                                          "fontWeight": "700",
+                                                          "alignItems": "center",
+                                                          "elevation": 0,
+                                                          "flexDirection": "row",
+                                                          "justifyContent": "center",
+                                                          "textAlignVertical": "center",
                                                         },
+                                                        false,
+                                                        Object {},
                                                         Object {
-                                                          "color": "#0073E6",
-                                                        },
-                                                        Object {
-                                                          "color": undefined,
+                                                          "transform": Array [
+                                                            Object {
+                                                              "scale": undefined,
+                                                            },
+                                                          ],
                                                         },
                                                       ]
                                                     }
                                                   >
-                                                    Secondary Action
-                                                  </Text>
+                                                    <Text
+                                                      allowFontScaling={false}
+                                                      ellipsizeMode="tail"
+                                                      maxFontSizeMultiplier={1.3}
+                                                      numberOfLines={1}
+                                                      style={
+                                                        Array [
+                                                          Object {
+                                                            "fontFamily": "Titillium Web",
+                                                            "fontSize": 16,
+                                                            "fontStyle": "normal",
+                                                            "fontWeight": "700",
+                                                          },
+                                                          Object {
+                                                            "color": "#0073E6",
+                                                          },
+                                                          Object {
+                                                            "color": undefined,
+                                                          },
+                                                        ]
+                                                      }
+                                                    >
+                                                      Secondary Action
+                                                    </Text>
+                                                  </View>
                                                 </View>
                                               </View>
                                             </View>
