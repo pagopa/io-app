@@ -50,6 +50,12 @@ export const walletPaymentCreateTransaction = createAsyncAction(
   NetworkError | WalletPaymentFailure
 >();
 
+export const walletPaymentDeleteTransaction = createAsyncAction(
+  "WALLET_PAYMENT_DELETE_TRANSACTION_REQUEST",
+  "WALLET_PAYMENT_DELETE_TRANSACTION_SUCCESS",
+  "WALLET_PAYMENT_DELETE_TRANSACTION_FAILURE"
+)<string, undefined, NetworkError>();
+
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;
   walletId: string;
@@ -76,4 +82,5 @@ export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentGetUserWallets>
   | ActionType<typeof walletPaymentCalculateFees>
   | ActionType<typeof walletPaymentCreateTransaction>
+  | ActionType<typeof walletPaymentDeleteTransaction>
   | ActionType<typeof walletPaymentAuthorization>;

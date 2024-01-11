@@ -13,6 +13,7 @@ import {
   walletPaymentAuthorization,
   walletPaymentCalculateFees,
   walletPaymentCreateTransaction,
+  walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
   walletPaymentGetUserWallets
@@ -152,8 +153,9 @@ const reducer = (
         chosenPsp: O.none
       };
 
-    // Created transaction data
+    // Create/delete transaction
     case getType(walletPaymentCreateTransaction.request):
+    case getType(walletPaymentDeleteTransaction.request):
       return {
         ...state,
         transaction: pot.toLoading(state.transaction)
@@ -163,7 +165,13 @@ const reducer = (
         ...state,
         transaction: pot.some(action.payload)
       };
+    case getType(walletPaymentDeleteTransaction.success):
+      return {
+        ...state,
+        transaction: pot.none
+      };
     case getType(walletPaymentCreateTransaction.failure):
+    case getType(walletPaymentDeleteTransaction.failure):
       return {
         ...state,
         transaction: pot.toError(state.transaction, action.payload)
