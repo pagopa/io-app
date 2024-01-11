@@ -62,7 +62,7 @@ const WalletTransactionDetailsScreen = () => {
   });
 
   React.useEffect(() => {
-    if (transactionDetails && transactionDetails.idPsp) {
+    if (transactionDetails?.idPsp !== undefined) {
       dispatch(
         fetchPsp.request({
           idPsp: transactionDetails.idPsp,

@@ -52,7 +52,7 @@ export const WalletTransactionHeadingSection = ({
         </View>
       );
     }
-    if (psp && transaction?.fee) {
+    if (transaction?.fee !== undefined) {
       const formattedFee = formatNumberCentsToAmount(
         transaction.fee.amount,
         true,
@@ -62,7 +62,7 @@ export const WalletTransactionHeadingSection = ({
         <Body>
           {I18n.t("transaction.details.totalFee")}{" "}
           <Body weight="Medium">{formattedFee}</Body>{" "}
-          {psp.businessName
+          {psp?.businessName
             ? // we want to make sure no empty string is passed either
               I18n.t("transaction.details.totalFeePsp", {
                 pspName: psp.businessName
