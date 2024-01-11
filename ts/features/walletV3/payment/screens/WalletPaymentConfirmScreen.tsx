@@ -21,7 +21,6 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { WalletPaymentConfirmContent } from "../components/WalletPaymentConfirmContent";
-import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentCreateTransaction } from "../store/actions/networking";
 import {
@@ -31,6 +30,7 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors";
 import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
+import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 
 const WalletPaymentConfirmScreen = () => {
   const dispatch = useIODispatch();
