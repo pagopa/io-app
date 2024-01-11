@@ -38,7 +38,6 @@ import {
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
 import {
   getOptionalSignatureFields,
@@ -48,6 +47,7 @@ import {
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -238,8 +238,12 @@ const FciDocumentsScreen = () => {
     });
   }, [currentDoc, dispatch, navigation, startSupportRequest]);
 
+  if (S.isEmpty(downloadPath)) {
+    return <LoadingComponent />;
+  }
+
   return (
-    <LoadingSpinnerOverlay isLoading={S.isEmpty(downloadPath)}>
+    <>
       <DocumentsNavigationBar
         indicatorPosition={"right"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
@@ -271,7 +275,7 @@ const FciDocumentsScreen = () => {
       </SafeAreaView>
       {fciAbortSignature}
       {fciNoSignatureFields}
-    </LoadingSpinnerOverlay>
+    </>
   );
 };
 export default FciDocumentsScreen;

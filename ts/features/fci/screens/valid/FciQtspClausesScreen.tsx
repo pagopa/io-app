@@ -95,7 +95,7 @@ const FciQtspClausesScreen = () => {
       header: () => (
         <HeaderSecondLevel
           goBack={navigation.goBack}
-          title={I18n.t("features.fci.signatureFields.title")}
+          title={I18n.t("features.fci.title")}
           type={"singleAction"}
           backAccessibilityLabel={I18n.t("global.buttons.back")}
           firstAction={{

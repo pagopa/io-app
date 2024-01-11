@@ -31,7 +31,13 @@ export const FciStackNavigator = () => (
     headerMode={"screen"}
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
-    <Stack.Screen name={FCI_ROUTES.ROUTER} component={FciRouterScreen} />
+    <Stack.Screen
+      name={FCI_ROUTES.ROUTER}
+      component={FciRouterScreen}
+      options={{
+        headerShown: false
+      }}
+    />
     <Stack.Screen name={FCI_ROUTES.DOCUMENTS} component={FciDocumentsScreen} />
     <Stack.Screen
       name={FCI_ROUTES.SIGNATURE_FIELDS}
