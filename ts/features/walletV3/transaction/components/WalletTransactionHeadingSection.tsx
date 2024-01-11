@@ -18,13 +18,13 @@ import { WalletTransactionDetailsList } from "./WalletTransactionDetailsList";
 type Props = {
   transaction?: Transaction;
   psp?: Psp;
-  loading: boolean;
+  isLoading: boolean;
 };
 
 export const WalletTransactionHeadingSection = ({
   transaction,
   psp,
-  loading
+  isLoading
 }: Props) => {
   const navigation = useNavigation<WalletTransactionStackNavigation>();
 
@@ -42,7 +42,17 @@ export const WalletTransactionHeadingSection = ({
   };
 
   const FeeAmountSection = () => {
-    if (psp && transaction?.fee && !loading) {
+    if (isLoading) {
+      return (
+        <View style={IOStyles.flex}>
+          <VSpacer size={4} />
+          <Placeholder.Line width="100%" animate="fade" />
+          <VSpacer size={8} />
+          <Placeholder.Line width="50%" animate="fade" />
+        </View>
+      );
+    }
+    if (psp && transaction?.fee) {
       const formattedFee = formatNumberCentsToAmount(
         transaction.fee.amount,
         true,
@@ -52,21 +62,14 @@ export const WalletTransactionHeadingSection = ({
         <Body>
           {I18n.t("transaction.details.totalFee")}{" "}
           <Body weight="Medium">{formattedFee}</Body>{" "}
-          {I18n.t("transaction.details.totalFeePsp", {
-            pspName: psp.businessName || ""
-          })}
+          {psp.businessName
+            ? // we want to make sure no empty string is passed either
+              I18n.t("transaction.details.totalFeePsp", {
+                pspName: psp.businessName
+              })
+            : I18n.t("transaction.details.totalFeeNoPsp")}
           .
         </Body>
-      );
-    }
-    if (loading) {
-      return (
-        <View style={IOStyles.flex}>
-          <VSpacer size={4} />
-          <Placeholder.Line width="100%" animate="fade" />
-          <VSpacer size={8} />
-          <Placeholder.Line width="50%" animate="fade" />
-        </View>
       );
     }
     return <></>;
@@ -77,12 +80,12 @@ export const WalletTransactionHeadingSection = ({
       <VSpacer size={16} />
       <WalletTransactionDetailsList
         transaction={transaction}
-        loading={loading}
+        loading={isLoading}
         onPress={handlePressTransactionDetails}
       />
       <VSpacer size={8} />
       <WalletTransactionTotalAmount
-        loading={loading}
+        loading={isLoading}
         totalAmount={transaction?.grandTotal.amount}
       />
       <VSpacer size={8} />
