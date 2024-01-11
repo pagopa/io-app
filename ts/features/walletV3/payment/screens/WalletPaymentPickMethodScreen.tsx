@@ -41,6 +41,7 @@ import {
   walletPaymentAllMethodsSelector,
   walletPaymentAmountSelector,
   walletPaymentSavedMethodByIdSelector,
+  walletPaymentTransactionSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
@@ -75,6 +76,7 @@ const WalletPaymentPickMethodScreen = () => {
     supportRequest: true
   });
 
+  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const getSavedtMethodById = useIOSelector(
     walletPaymentSavedMethodByIdSelector
   );
@@ -91,7 +93,9 @@ const WalletPaymentPickMethodScreen = () => {
   //   walletPaymentGenericMethodByIdSelector
   // );
   const isLoading =
-    pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
+    pot.isLoading(paymentMethodsPot) ||
+    pot.isLoading(userWalletsPots) ||
+    pot.isLoading(transactionPot);
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
     React.useState<boolean>(false);
