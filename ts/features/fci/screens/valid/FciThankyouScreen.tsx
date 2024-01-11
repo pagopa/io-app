@@ -7,7 +7,6 @@ import {
   IOStyles,
   Pictogram
 } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
@@ -50,7 +49,7 @@ const FciThankyouScreen = () => {
       testID: "FciTypCloseButton"
     };
     return (
-      <BaseScreenComponent goBack={false}>
+      <>
         <SafeAreaView style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
           <InfoScreenComponent
             image={<Pictogram name={"success"} />}
@@ -62,7 +61,7 @@ const FciThankyouScreen = () => {
             primary={{ type: "Solid", buttonProps: continueButtonProps }}
           />
         </SafeAreaView>
-      </BaseScreenComponent>
+      </>
     );
   };
 

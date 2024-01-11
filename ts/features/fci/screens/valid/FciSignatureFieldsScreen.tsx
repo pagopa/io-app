@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  View,
-  SafeAreaView,
-  SectionList,
-  Platform,
-  ScrollView
-} from "react-native";
+import { View, SafeAreaView, SectionList, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -16,12 +10,12 @@ import {
   FooterWithButtons,
   H2,
   H4,
+  HeaderSecondLevel,
   IconButton,
   IOColors,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch } from "../../../../store/hooks";
@@ -61,6 +55,7 @@ import {
 } from "../../analytics";
 import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -259,14 +254,29 @@ const FciSignatureFieldsScreen = (
         : "Firma"
   };
 
-  const customGoBack: React.ReactElement = (
-    <IconButton
-      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
-      color={"neutral"}
-      onPress={navigation.goBack}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-    />
-  );
+  const startSupportRequest = useStartSupportRequest({
+    contextualHelp: emptyContextualHelp
+  });
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          goBack={navigation.goBack}
+          title={I18n.t("features.fci.title")}
+          type={"singleAction"}
+          backAccessibilityLabel={I18n.t("global.buttons.back")}
+          firstAction={{
+            icon: "help",
+            onPress: startSupportRequest,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )
+          }}
+        />
+      )
+    });
+  }, [navigation, startSupportRequest]);
 
   if (isError) {
     return (
@@ -280,12 +290,7 @@ const FciSignatureFieldsScreen = (
   }
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      customGoBack={customGoBack}
-      headerTitle={I18n.t("features.fci.signatureFields.title")}
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
@@ -299,7 +304,7 @@ const FciSignatureFieldsScreen = (
         />
       </SafeAreaView>
       {fciAbortSignature}
-    </BaseScreenComponent>
+    </>
   );
 };
 export default FciSignatureFieldsScreen;

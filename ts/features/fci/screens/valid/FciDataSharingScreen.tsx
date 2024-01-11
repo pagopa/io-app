@@ -10,13 +10,13 @@ import {
   H2,
   H6,
   HSpacer,
+  HeaderSecondLevel,
   IOStyles,
   IconButton,
   LabelLink,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -33,6 +33,7 @@ import { withValidatedEmail } from "../../../../components/helpers/withValidated
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { localeDateFormat } from "../../../../utils/locale";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 
 const styles = StyleSheet.create({
   alertTextContainer: {
@@ -59,6 +60,30 @@ const FciDataSharingScreen = (): React.ReactElement => {
     undefined
   );
   const email = useIOSelector(profileEmailSelector);
+
+  const startSupportRequest = useStartSupportRequest({
+    contextualHelp: emptyContextualHelp
+  });
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          goBack={navigation.goBack}
+          title={I18n.t("features.fci.title")}
+          type={"singleAction"}
+          backAccessibilityLabel={I18n.t("global.buttons.back")}
+          firstAction={{
+            icon: "help",
+            onPress: startSupportRequest,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )
+          }}
+        />
+      )
+    });
+  }, [navigation, startSupportRequest]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -112,11 +137,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   );
 
   return (
-    <BaseScreenComponent
-      headerTitle={I18n.t("features.fci.title")}
-      contextualHelp={emptyContextualHelp}
-      goBack
-    >
+    <>
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView
           style={IOStyles.horizontalContentPadding}
@@ -196,7 +217,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
       </SafeAreaView>
 
       {fciAbortSignature}
-    </BaseScreenComponent>
+    </>
   );
 };
 

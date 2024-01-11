@@ -1,8 +1,8 @@
 import React from "react";
-import { Platform, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import * as S from "fp-ts/lib/string";
-import { IconButton } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -12,6 +12,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPreviewClear, fciEndRequest } from "../../store/actions";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
+import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -33,6 +34,33 @@ export const FciDocumentPreviewScreen = (
     props.route.params.enableAnnotationRendering;
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
   const dispatch = useIODispatch();
+  const navigation = useNavigation();
+
+  const startSupportRequest = useStartSupportRequest({
+    contextualHelp: emptyContextualHelp
+  });
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          goBack={() =>
+            dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
+          }
+          title={I18n.t("messagePDFPreview.title")}
+          type={"singleAction"}
+          backAccessibilityLabel={I18n.t("global.buttons.back")}
+          firstAction={{
+            icon: "help",
+            onPress: startSupportRequest,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )
+          }}
+        />
+      )
+    });
+  }, [dispatch, fciDownloadPath, navigation, startSupportRequest]);
 
   if (isError) {
     return (
@@ -45,24 +73,8 @@ export const FciDocumentPreviewScreen = (
     );
   }
 
-  const customGoBack: React.ReactElement = (
-    <IconButton
-      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
-      color={"neutral"}
-      onPress={() => {
-        dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }));
-      }}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-    />
-  );
-
   return (
-    <BaseScreenComponent
-      goBack={true}
-      customGoBack={customGoBack}
-      contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("messagePDFPreview.title")}
-    >
+    <>
       <SafeAreaView
         style={styles.container}
         testID={"FciDocumentPreviewScreenTestID"}
@@ -75,6 +87,6 @@ export const FciDocumentPreviewScreen = (
           />
         )}
       </SafeAreaView>
-    </BaseScreenComponent>
+    </>
   );
 };

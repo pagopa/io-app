@@ -9,10 +9,10 @@ import {
   Divider,
   FooterWithButtons,
   H2,
+  HeaderSecondLevel,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -41,6 +41,7 @@ import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../../analytics";
 import LoadingComponent from "../../components/LoadingComponent";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -84,6 +85,30 @@ const FciQtspClausesScreen = () => {
       enableAnnotationRendering: true
     });
   };
+
+  const startSupportRequest = useStartSupportRequest({
+    contextualHelp: emptyContextualHelp
+  });
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          goBack={navigation.goBack}
+          title={I18n.t("features.fci.signatureFields.title")}
+          type={"singleAction"}
+          backAccessibilityLabel={I18n.t("global.buttons.back")}
+          firstAction={{
+            icon: "help",
+            onPress: startSupportRequest,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )
+          }}
+        />
+      )
+    });
+  }, [navigation, startSupportRequest]);
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
@@ -161,11 +186,7 @@ const FciQtspClausesScreen = () => {
   };
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("features.fci.signatureFields.title")}
-      contextualHelp={emptyContextualHelp}
-    >
+    <>
       <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H2>{I18n.t("features.fci.qtspTos.title")}</H2>
@@ -181,7 +202,7 @@ const FciQtspClausesScreen = () => {
       </SafeAreaView>
       {fciAbortSignature}
       {fciCheckService}
-    </BaseScreenComponent>
+    </>
   );
 };
 export default FciQtspClausesScreen;

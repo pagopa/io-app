@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { Platform, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import {
   RouteProp,
@@ -17,11 +17,10 @@ import {
   BlockButtonProps,
   ButtonSolidProps,
   FooterWithButtons,
-  IconButton,
+  HeaderSecondLevel,
   IOColors,
   IOStyles
 } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -48,6 +47,7 @@ import {
 } from "../../utils/signatureFields";
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -209,60 +209,68 @@ const FciDocumentsScreen = () => {
     );
   };
 
-  const customGoBack: React.ReactElement = (
-    <IconButton
-      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
-      color={"neutral"}
-      onPress={() => {
-        if (currentDoc <= 0) {
-          dispatch(fciClearStateRequest());
-        }
-        navigation.goBack();
-      }}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-    />
-  );
+  const startSupportRequest = useStartSupportRequest({
+    contextualHelp: emptyContextualHelp
+  });
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          goBack={() => {
+            if (currentDoc <= 0) {
+              dispatch(fciClearStateRequest());
+            }
+            navigation.goBack();
+          }}
+          title={I18n.t("features.fci.title")}
+          type={"singleAction"}
+          backAccessibilityLabel={I18n.t("global.buttons.back")}
+          firstAction={{
+            icon: "help",
+            onPress: startSupportRequest,
+            accessibilityLabel: I18n.t(
+              "global.accessibility.contextualHelp.open.label"
+            )
+          }}
+        />
+      )
+    });
+  }, [currentDoc, dispatch, navigation, startSupportRequest]);
 
   return (
     <LoadingSpinnerOverlay isLoading={S.isEmpty(downloadPath)}>
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={I18n.t("features.fci.title")}
-        customGoBack={customGoBack}
-        contextualHelp={emptyContextualHelp}
-      >
-        <DocumentsNavigationBar
-          indicatorPosition={"right"}
-          titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
-            currentDoc: currentDoc + 1,
-            totalDocs: documents.length
-          })}
-          titleRight={I18n.t("features.fci.documentsBar.titleRight", {
-            currentPage,
-            totalPages
-          })}
-          iconLeftDisabled={currentPage === 1}
-          iconRightDisabled={currentPage === totalPages}
-          onPrevious={onPrevious}
-          onNext={onNext}
-          disabled={false}
-          testID={"FciDocumentsNavBarTestID"}
-        />
-        <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-          {documents.length > 0 && (
-            <>
-              {renderPager()}
-              <FooterWithButtons
-                type="TwoButtonsInlineThird"
-                secondary={secondaryButtonProps}
-                primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-              />
-            </>
-          )}
-        </SafeAreaView>
-        {fciAbortSignature}
-        {fciNoSignatureFields}
-      </BaseScreenComponent>
+      <DocumentsNavigationBar
+        indicatorPosition={"right"}
+        titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
+          currentDoc: currentDoc + 1,
+          totalDocs: documents.length
+        })}
+        titleRight={I18n.t("features.fci.documentsBar.titleRight", {
+          currentPage,
+          totalPages
+        })}
+        iconLeftDisabled={currentPage === 1}
+        iconRightDisabled={currentPage === totalPages}
+        onPrevious={onPrevious}
+        onNext={onNext}
+        disabled={false}
+        testID={"FciDocumentsNavBarTestID"}
+      />
+      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+        {documents.length > 0 && (
+          <>
+            {renderPager()}
+            <FooterWithButtons
+              type="TwoButtonsInlineThird"
+              secondary={secondaryButtonProps}
+              primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+            />
+          </>
+        )}
+      </SafeAreaView>
+      {fciAbortSignature}
+      {fciNoSignatureFields}
     </LoadingSpinnerOverlay>
   );
 };
