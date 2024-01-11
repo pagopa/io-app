@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.50.0-rc.5](https://github.com/pagopa/io-app/compare/2.50.0-rc.4...2.50.0-rc.5) (2024-01-11)
+
+
+### Bug Fixes
+
+* [[IABT-1520](https://pagopa.atlassian.net/browse/IABT-1520)] HeaderFirstLevel showing messages case when opening the support flow ([#5371](https://github.com/pagopa/io-app/issues/5371)) ([7df95ce](https://github.com/pagopa/io-app/commit/7df95ceb8406509c10a0ffb362c7623b33ebef8d))
+
 ## [2.50.0-rc.4](https://github.com/pagopa/io-app/compare/2.50.0-rc.3...2.50.0-rc.4) (2024-01-11)
 
 
