@@ -36,6 +36,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
@@ -46,7 +47,6 @@ import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
