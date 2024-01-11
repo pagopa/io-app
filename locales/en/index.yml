@@ -1702,16 +1702,6 @@ wallet:
       PAA_PAGAMENTO_SCONOSCIUTO:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
-    support:
-      button: "Contatta l'assistenza"
-      supportTitle: Contatta l'assistenza
-      phone: Chiama {{phoneNumber}}
-      chat: Chiedi aiuto in chat
-      additionalDataTitle: "Dati aggiuntivi"
-      copyAll: Copia tutti
-      errorCode: Codice errore
-      noticeNumber: Codice avviso
-      entityCode: Codice Fiscale Ente
     outcome:
       SUCCESS:
         title: Hai pagato {{amount}}
