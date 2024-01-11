@@ -6,6 +6,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { WalletOnboardingRoutes } from "../../onboarding/navigation/navigator";
+import I18n from "../../../../i18n";
 
 const WalletPaymentMissingMethodsError = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -29,16 +30,26 @@ const WalletPaymentMissingMethodsError = () => {
 
   return (
     <OperationResultScreenContent
-      title="Aggiungi un metodo per effettuare pagamenti in app"
-      subtitle="Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente."
+      title={I18n.t("wallet.payment.methodSelection.missingMethodsError.title")}
+      subtitle={I18n.t(
+        "wallet.payment.methodSelection.missingMethodsError.subtitle"
+      )}
       action={{
-        label: "Aggiungi metodo",
-        accessibilityLabel: "Aggiungi metodo",
+        label: I18n.t(
+          "wallet.payment.methodSelection.missingMethodsError.addMethod"
+        ),
+        accessibilityLabel: I18n.t(
+          "wallet.payment.methodSelection.missingMethodsError.addMethod"
+        ),
         onPress: handleAddMethod
       }}
       secondaryAction={{
-        label: "Non ora",
-        accessibilityLabel: "Non ora",
+        label: I18n.t(
+          "wallet.payment.methodSelection.missingMethodsError.notNow"
+        ),
+        accessibilityLabel: I18n.t(
+          "wallet.payment.methodSelection.missingMethodsError.notNow"
+        ),
         onPress: handleNotNow
       }}
     />
