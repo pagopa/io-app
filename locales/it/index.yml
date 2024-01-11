@@ -1656,6 +1656,10 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    abortDialog:
+      title: Vuoi interrompere l'operazione?
+      confirm: Sì, interrompi
+      cancel: No, torna indietro
     methodSelection:
       header: Seleziona un metodo
       yourMethods: I tuoi metodi
@@ -1713,6 +1717,9 @@ wallet:
       noticeNumber: Codice avviso
       entityCode: Codice Fiscale Ente
     outcome:
+      cancelled:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
       success:
         title: Hai pagato {{amount}}
         button: Ok, chiudi
