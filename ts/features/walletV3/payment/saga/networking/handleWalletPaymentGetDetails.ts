@@ -32,14 +32,16 @@ export function* handleWalletPaymentGetDetails(
             walletPaymentGetDetails.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
-
-          res => {
-            if (res.status === 200) {
-              return walletPaymentGetDetails.success(res.value);
+          ({ status, value }) => {
+            if (status === 200) {
+              return walletPaymentGetDetails.success(value);
+            } else if (status === 400) {
+              return walletPaymentGetDetails.failure({
+                ...getGenericError(new Error(`Error: ${status}`))
+              });
+            } else {
+              return walletPaymentGetDetails.failure(value);
             }
-            return walletPaymentGetDetails.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
           }
         )
       )

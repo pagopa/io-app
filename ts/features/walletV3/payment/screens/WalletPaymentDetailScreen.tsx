@@ -25,6 +25,8 @@ import { pipe } from "fp-ts/lib/function";
 import React, { ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
+import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
+import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -43,10 +45,12 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
+import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
+import { WalletPaymentFailure } from "../types/failure";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -71,8 +75,17 @@ const WalletPaymentDetailScreen = () => {
   );
 
   if (pot.isError(paymentDetailsPot)) {
-    // TODO: failure handling (IOBP-309)
-    return null;
+    const failure = pipe(
+      paymentDetailsPot.error,
+      WalletPaymentFailure.decode,
+      O.fromEither,
+      // NetworkError is transformed to GENERIC_ERROR only for display purposes
+      O.getOrElse<WalletPaymentFailure>(() => ({
+        faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
+        faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+      }))
+    );
+    return <WalletPaymentFailureDetail rptId={rptId} failure={failure} />;
   }
 
   if (pot.isSome(paymentDetailsPot)) {
@@ -228,7 +241,6 @@ const WalletPaymentDetailContent = ({
           clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
         }
       />
-
       <Divider />
       <ListItemInfoCopy
         icon="entityCode"
