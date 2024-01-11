@@ -10,7 +10,6 @@ import {
   FooterWithButtons,
   H2,
   H4,
-  HeaderSecondLevel,
   IconButton,
   IOColors,
   IOStyles,
@@ -55,7 +54,7 @@ import {
 } from "../../analytics";
 import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -254,29 +253,11 @@ const FciSignatureFieldsScreen = (
         : "Firma"
   };
 
-  const startSupportRequest = useStartSupportRequest({
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    supportRequest: true,
     contextualHelp: emptyContextualHelp
   });
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          goBack={navigation.goBack}
-          title={I18n.t("features.fci.title")}
-          type={"singleAction"}
-          backAccessibilityLabel={I18n.t("global.buttons.back")}
-          firstAction={{
-            icon: "help",
-            onPress: startSupportRequest,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )
-          }}
-        />
-      )
-    });
-  }, [navigation, startSupportRequest]);
 
   if (isError) {
     return (

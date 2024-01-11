@@ -17,7 +17,6 @@ import {
   BlockButtonProps,
   ButtonSolidProps,
   FooterWithButtons,
-  HeaderSecondLevel,
   IOColors,
   IOStyles
 } from "@pagopa/io-app-design-system";
@@ -46,8 +45,8 @@ import {
 } from "../../utils/signatureFields";
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import LoadingComponent from "../../components/LoadingComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -209,34 +208,17 @@ const FciDocumentsScreen = () => {
     );
   };
 
-  const startSupportRequest = useStartSupportRequest({
-    contextualHelp: emptyContextualHelp
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp,
+    goBack: () => {
+      if (currentDoc <= 0) {
+        dispatch(fciClearStateRequest());
+      }
+      navigation.goBack();
+    }
   });
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          goBack={() => {
-            if (currentDoc <= 0) {
-              dispatch(fciClearStateRequest());
-            }
-            navigation.goBack();
-          }}
-          title={I18n.t("features.fci.title")}
-          type={"singleAction"}
-          backAccessibilityLabel={I18n.t("global.buttons.back")}
-          firstAction={{
-            icon: "help",
-            onPress: startSupportRequest,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )
-          }}
-        />
-      )
-    });
-  }, [currentDoc, dispatch, navigation, startSupportRequest]);
 
   if (S.isEmpty(downloadPath)) {
     return <LoadingComponent />;

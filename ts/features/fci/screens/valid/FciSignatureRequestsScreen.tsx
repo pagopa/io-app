@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SafeAreaView, SectionList, ScrollView } from "react-native";
-import { H2, HeaderSecondLevel, IOStyles } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
+import { H2, IOStyles } from "@pagopa/io-app-design-system";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
@@ -23,15 +22,14 @@ import {
 } from "../../../zendesk/store/actions";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
-import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciSignatureRequestsScreen = () => {
   const dispatch = useIODispatch();
   const dataItems = useIOSelector(fciSignaturesListSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-  const navigation = useNavigation();
 
   const zendeskAssistanceLogAndStart = (
     signatureRequestId: SignatureRequestListView["id"]
@@ -64,29 +62,11 @@ const FciSignatureRequestsScreen = () => {
     dispatch(fciSignaturesListRequest.request());
   }, [dispatch]);
 
-  const startSupportRequest = useStartSupportRequest({
-    contextualHelp: emptyContextualHelp
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.requests.header"),
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
   });
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          goBack={navigation.goBack}
-          title={I18n.t("features.fci.requests.header")}
-          type={"singleAction"}
-          backAccessibilityLabel={I18n.t("global.buttons.back")}
-          firstAction={{
-            icon: "help",
-            onPress: startSupportRequest,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )
-          }}
-        />
-      )
-    });
-  }, [navigation, startSupportRequest]);
 
   const renderSignatureRequests = () => (
     <SectionList

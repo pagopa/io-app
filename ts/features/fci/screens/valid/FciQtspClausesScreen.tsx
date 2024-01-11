@@ -9,7 +9,6 @@ import {
   Divider,
   FooterWithButtons,
   H2,
-  HeaderSecondLevel,
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -41,7 +40,7 @@ import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../../analytics";
 import LoadingComponent from "../../components/LoadingComponent";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
-import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -86,29 +85,11 @@ const FciQtspClausesScreen = () => {
     });
   };
 
-  const startSupportRequest = useStartSupportRequest({
-    contextualHelp: emptyContextualHelp
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
   });
-
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => (
-        <HeaderSecondLevel
-          goBack={navigation.goBack}
-          title={I18n.t("features.fci.title")}
-          type={"singleAction"}
-          backAccessibilityLabel={I18n.t("global.buttons.back")}
-          firstAction={{
-            icon: "help",
-            onPress: startSupportRequest,
-            accessibilityLabel: I18n.t(
-              "global.accessibility.contextualHelp.open.label"
-            )
-          }}
-        />
-      )
-    });
-  }, [navigation, startSupportRequest]);
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
