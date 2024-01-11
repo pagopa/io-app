@@ -936,6 +936,17 @@ payment:
         description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
+  confirm: 
+    totalAmount: "Zu zahlender Gesamtbetrag"
+    pay: "Zahle "
+    payWith: "Zahle mit "
+    fee: "Kommission "
+    feeAppliedBy: "Angewandt von: "
+    editButton: "Ändern"
+    termsAndConditions: "Wenn du fortfährst, erklärst du folgende Informationen gelesen und verstanden zu haben: "
+    termsAndConditionsLink: "Nutzungsbedingungen und Datenschutzrichtlinie"
+    loading:
+      title: "Die Informationen zur Zahlung werden geladen"
 wallet:
   methodDetails:
     cobadgeTitle: "Debitkarte"
@@ -1591,6 +1602,28 @@ wallet:
         title: "Gib die Steuernummer der Körperschaft ein"
         subtitle: "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden."
         placeholder: "Steuernummer der Körperschaft"
+    psp:
+      title: "Wähle, von wem die Zahlung abgewickelt werden soll"
+      description: "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor."
+      taxDescription: "In dieser Liste findest du alle kompatiblen Anbieter,"
+      taxDescriptionBold: "auch wenn du nicht deren Kunde bist."
+      defaultName: "Anbieter (PSP)"
+      pspTitle: "Anbieter (PSP)"
+      pspSortButton: "Sortieren"
+      featuredReason: "Weil du bereits Kunde bist"
+      continueButton: "Weiter"
+      sortBottomSheet:
+        default: "Standard"
+        amount: "Nach Betrag"
+        name: "Nach Name"
+    outcome:
+      success:
+        title: "Du hast {{amount}} bezahlt"
+        button: "OK, schließen"
+        banner:
+          title: "Kannst du uns sagen, wie es lief?"
+          content: "Erzähl uns von deinen Erfahrungen mit der Zahlung und hilf uns, uns zu verbessern."
+          action: "Weiter zur Umfrage"
 saveCard:
   saveCard: "Karte speichern"
   header: "Möchtest du diese Karte speichern?"
