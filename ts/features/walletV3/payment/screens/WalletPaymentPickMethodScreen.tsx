@@ -95,7 +95,6 @@ const WalletPaymentPickMethodScreen = () => {
 
   useHeaderSecondLevel({
     title: "",
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
     contextualHelp: emptyContextualHelp,
     faqCategories: ["payment"],
     supportRequest: true
