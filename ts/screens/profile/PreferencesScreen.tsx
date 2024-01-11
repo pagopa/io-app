@@ -21,6 +21,7 @@ import {
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { remindersOptInEnabled } from "../../config";
@@ -104,6 +105,11 @@ const getServicesPreferenceModeLabel = (
       "services.optIn.preferences.unavailable"
     )
   }[mode]);
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
+};
 
 class PreferencesScreen extends React.Component<Props> {
   constructor(props: Props) {
@@ -255,6 +261,7 @@ class PreferencesScreen extends React.Component<Props> {
       <RNavScreenWithLargeHeader
         title={I18n.t("profile.preferences.title")}
         description={I18n.t("profile.preferences.subtitle")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerActionsProp={{ showHelp: true }}
         faqCategories={["profile", "privacy", "authentication_SPID"]}
       >

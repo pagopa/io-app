@@ -10,6 +10,7 @@ import { Locales, TranslationKeys } from "../../../locales/locales";
 import SectionStatusComponent from "../../components/SectionStatus";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
@@ -34,6 +35,11 @@ type Props = LightModalContextInterface &
 type State = { isLoading: boolean; selectedLocale?: Locales };
 
 const iconSize: IOIconSizeScale = 12;
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.language.contextualHelpTitle",
+  body: "profile.preferences.language.contextualHelpContent"
+};
 
 /**
  * Allows the user to select one of the available Languages as preferred
@@ -125,6 +131,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
             <SectionStatusComponent sectionKey={"favourite_language"} />
           </SafeAreaView>
         }
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerActionsProp={{ showHelp: true }}
       >
         <View style={{ justifyContent: "space-between", flexGrow: 1 }}>

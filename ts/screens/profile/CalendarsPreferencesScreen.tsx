@@ -3,6 +3,7 @@ import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import CalendarsListContainer from "../../components/CalendarsListContainer";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
@@ -26,6 +27,11 @@ type State = {
   isLoading: boolean;
 };
 
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.calendar.contextualHelpTitle",
+  body: "profile.preferences.calendar.contextualHelpContent"
+};
+
 /**
  * Allows the user to select one of the device available Calendars
  */
@@ -47,6 +53,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
       <RNavScreenWithLargeHeader
         title={I18n.t("profile.preferences.list.preferred_calendar.title")}
         description={I18n.t("messages.cta.reminderCalendarSelect")}
+        contextualHelpMarkdown={contextualHelpMarkdown}
         headerActionsProp={{ showHelp: true }}
       >
         <LoadingSpinnerOverlay isLoading={isLoading}>

@@ -4,6 +4,7 @@ import { List } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -22,6 +23,11 @@ import { GlobalState } from "../../store/reducers/types";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
+};
 
 const ProfileDataScreen: React.FC<Props> = ({
   profileEmail,
@@ -48,6 +54,7 @@ const ProfileDataScreen: React.FC<Props> = ({
       title={I18n.t("profile.data.title")}
       description={I18n.t("profile.data.subtitle")}
       headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
     >
       <List withContentLateralPadding>

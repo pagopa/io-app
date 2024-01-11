@@ -7,6 +7,7 @@ import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus"
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
 import { RemoteSwitch } from "../../components/core/selection/RemoteSwitch";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
@@ -21,6 +22,11 @@ import {
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
 } from "./analytics";
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.notifications.contextualHelpTitle",
+  body: "profile.preferences.notifications.contextualHelpContent"
+};
 
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
@@ -56,6 +62,7 @@ export const NotificationsPreferencesScreen = () => {
     <RNavScreenWithLargeHeader
       title={I18n.t("profile.preferences.notifications.header")}
       description={I18n.t("profile.preferences.notifications.subtitle")}
+      contextualHelpMarkdown={contextualHelpMarkdown}
       headerActionsProp={{ showHelp: true }}
     >
       <List withContentLateralPadding={true}>

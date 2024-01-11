@@ -2,6 +2,7 @@ import { Divider, ListItemNav } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../config";
@@ -28,6 +29,11 @@ import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
 } from "../onboarding/biometric&securityChecks/analytics";
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
+};
 
 const SecurityScreen = (): React.ReactElement => {
   const dispatch = useIODispatch();
@@ -119,6 +125,7 @@ const SecurityScreen = (): React.ReactElement => {
       title={I18n.t("profile.security.title")}
       description={I18n.t("profile.security.subtitle")}
       headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
     >
       <List withContentLateralPadding>
