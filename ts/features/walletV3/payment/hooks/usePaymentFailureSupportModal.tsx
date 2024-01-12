@@ -14,7 +14,6 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Linking } from "react-native";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus";
@@ -35,12 +34,17 @@ import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
+import { walletPaymentRptIdSelector } from "../store/selectors";
+import {
+  WalletPaymentOutcome,
+  getWalletPaymentOutcomeEnumByValue
+} from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/failure";
 
 type PaymentFailureSupportModalParams = {
-  rptId?: RptId;
-  failure: WalletPaymentFailure;
-  withPhoneSupport?: boolean;
+  failure?: WalletPaymentFailure;
+  outcome?: WalletPaymentOutcome;
+  withPhoneAssistance?: boolean;
 };
 
 type PaymentFailureSupportModal = {
@@ -49,15 +53,19 @@ type PaymentFailureSupportModal = {
 };
 
 const usePaymentFailureSupportModal = ({
-  rptId,
   failure,
-  withPhoneSupport = false
+  outcome,
+  withPhoneAssistance = false
 }: PaymentFailureSupportModalParams): PaymentFailureSupportModal => {
-  const { faultCodeDetail } = failure;
-
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+  const rptId = useIOSelector(walletPaymentRptIdSelector);
   const dispatch = useIODispatch();
+
+  const faultCodeDetail =
+    failure?.faultCodeDetail ||
+    (outcome && getWalletPaymentOutcomeEnumByValue(outcome)) ||
+    "";
 
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
@@ -126,7 +134,7 @@ const usePaymentFailureSupportModal = ({
     component: (
       <>
         <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />
-        {withPhoneSupport && (
+        {withPhoneAssistance && (
           <ListItemAction
             label={I18n.t("wallet.payment.support.phone", {
               phoneNumber: displayPhoneNumber
