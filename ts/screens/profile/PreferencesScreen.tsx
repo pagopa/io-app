@@ -12,11 +12,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { ComponentProps } from "react";
-import {
-  Alert,
-  FlatList,
-  ListRenderItemInfo
-} from "react-native";
+import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
