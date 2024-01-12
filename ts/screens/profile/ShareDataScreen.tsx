@@ -1,10 +1,10 @@
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import {
   cancelButtonProps,
   confirmButtonProps
@@ -13,16 +13,16 @@ import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { showToast } from "../../utils/showToast";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
-import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
-import { ShareDataComponent } from "./components/ShareDataComponent";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { showToast } from "../../utils/showToast";
 import { trackMixpanelScreen } from "./analytics";
 import {
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
 } from "./analytics/mixpanel/mixpanelAnalytics";
+import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
+import { ShareDataComponent } from "./components/ShareDataComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -64,18 +64,23 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
       );
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.privacy.shareData.title")}
+    <RNavScreenWithLargeHeader
+      title={I18n.t("profile.main.privacy.shareData.screen.title")}
+      description={I18n.t("profile.main.privacy.shareData.screen.description")}
+      fixedBottomSlot={
+        <SafeAreaView>
+          <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
+        </SafeAreaView>
+      }
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={IOStyles.horizontalContentPadding}>
+        <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
           <ShareDataComponent />
-        </ScrollView>
-        <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
+        </View>
+
         {bottomSheet}
       </SafeAreaView>
-    </BaseScreenComponent>
+    </RNavScreenWithLargeHeader>
   );
 };
 

@@ -2,20 +2,28 @@
  * Implements the preferences screen where the user can see and update his
  * email, mobile number, preferred language, biometric recognition usage and digital address.
  */
+import {
+  Divider,
+  IOVisualCostants,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { List } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { ComponentProps } from "react";
+import {
+  Alert,
+  FlatList,
+  ListRenderItemInfo,
+  PermissionsAndroid
+} from "react-native";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { remindersOptInEnabled } from "../../config";
 import I18n from "../../i18n";
 import {
@@ -59,10 +67,13 @@ type Props = OwnProps &
   ReduxProps &
   LightModalContextInterface;
 
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "profile.preferences.contextualHelpTitle",
-  body: "profile.preferences.contextualHelpContent"
-};
+type PreferencesNavListItem = {
+  value: string;
+  condition?: boolean;
+} & Pick<
+  ComponentProps<typeof ListItemNav>,
+  "description" | "testID" | "onPress"
+>;
 
 /**
  * Translates the primary languages of the provided locales.
@@ -93,6 +104,11 @@ const getServicesPreferenceModeLabel = (
       "services.optIn.preferences.unavailable"
     )
   }[mode]);
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "profile.preferences.contextualHelpTitle",
+  body: "profile.preferences.contextualHelpContent"
+};
 
 class PreferencesScreen extends React.Component<Props> {
   constructor(props: Props) {
@@ -153,6 +169,8 @@ class PreferencesScreen extends React.Component<Props> {
   };
 
   public render() {
+    const { navigation, preferredCalendar } = this.props;
+
     const language = pipe(
       this.props.preferredLanguage,
       O.fold(
@@ -161,67 +179,94 @@ class PreferencesScreen extends React.Component<Props> {
       )
     );
 
+    const preferencesNavListItems: ReadonlyArray<PreferencesNavListItem> = [
+      {
+        // Notifications
+        condition: remindersOptInEnabled,
+        value: I18n.t("profile.preferences.list.notifications.title"),
+        description: I18n.t("profile.preferences.list.notifications.subtitle"),
+        onPress: () => {
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
+          });
+        }
+      },
+      {
+        // Calendar
+        value: I18n.t("profile.preferences.list.preferred_calendar.title"),
+        description: preferredCalendar
+          ? convertLocalCalendarName(preferredCalendar.title)
+          : I18n.t("profile.preferences.list.preferred_calendar.not_selected"),
+        onPress: this.checkPermissionThenGoCalendar
+      },
+      {
+        // Service Contacts
+        value: I18n.t("profile.preferences.list.service_contact"),
+        description: getServicesPreferenceModeLabel(
+          this.props.profileServicePreferenceMode ??
+            ServicesPreferencesModeEnum.LEGACY
+        ),
+        onPress: this.props.navigateToServiceContactPreferenceScreen
+      },
+      {
+        // Email forwarding
+        value: I18n.t("send_email_messages.title"),
+        description: this.getEmailForwardPreferencesSubtitle(),
+        onPress: this.props.navigateToEmailForwardingPreferenceScreen
+      },
+      {
+        // Language
+        value: I18n.t("profile.preferences.list.language"),
+        description: language,
+        onPress: this.props.navigateToLanguagePreferenceScreen
+      }
+    ];
+
+    const renderPreferencesNavItem = ({
+      item: { value, description, onPress, testID, condition }
+    }: ListRenderItemInfo<PreferencesNavListItem>) => {
+      // If condition is either true or undefined, render the item
+      if (condition !== false) {
+        return (
+          <ListItemNav
+            accessibilityLabel={value}
+            value={value}
+            description={description}
+            onPress={onPress}
+            testID={testID}
+          />
+        );
+      } else {
+        return null;
+      }
+    };
+
+    // Don't render the separator, even if the item is null
+    const filteredPreferencesNavListItems = preferencesNavListItems.filter(
+      item => item.condition !== false
+    );
+
     return (
-      <TopScreenComponent
+      <RNavScreenWithLargeHeader
+        title={I18n.t("profile.preferences.title")}
+        description={I18n.t("profile.preferences.subtitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
+        headerActionsProp={{ showHelp: true }}
         faqCategories={["profile", "privacy", "authentication_SPID"]}
-        goBack={true}
       >
-        <ScreenContent
-          title={I18n.t("profile.preferences.title")}
-          subtitle={I18n.t("profile.preferences.subtitle")}
-        >
-          <List withContentLateralPadding={true}>
-            {remindersOptInEnabled && (
-              <ListItemComponent
-                onPress={() => {
-                  this.props.navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                    screen: ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS
-                  });
-                }}
-                title={I18n.t("profile.preferences.list.notifications.title")}
-                subTitle={I18n.t(
-                  "profile.preferences.list.notifications.subtitle"
-                )}
-              />
-            )}
-
-            <ListItemComponent
-              onPress={this.checkPermissionThenGoCalendar}
-              title={I18n.t(
-                "profile.preferences.list.preferred_calendar.title"
-              )}
-              subTitle={
-                this.props.preferredCalendar
-                  ? convertLocalCalendarName(this.props.preferredCalendar.title)
-                  : I18n.t(
-                      "profile.preferences.list.preferred_calendar.not_selected"
-                    )
-              }
-            />
-
-            <ListItemComponent
-              title={I18n.t("profile.preferences.list.service_contact")}
-              subTitle={getServicesPreferenceModeLabel(
-                this.props.profileServicePreferenceMode ??
-                  ServicesPreferencesModeEnum.LEGACY
-              )}
-              onPress={this.props.navigateToServiceContactPreferenceScreen}
-            />
-
-            <ListItemComponent
-              title={I18n.t("send_email_messages.title")}
-              subTitle={this.getEmailForwardPreferencesSubtitle()}
-              onPress={this.props.navigateToEmailForwardingPreferenceScreen}
-            />
-            <ListItemComponent
-              title={I18n.t("profile.preferences.list.language")}
-              subTitle={language}
-              onPress={this.props.navigateToLanguagePreferenceScreen}
-            />
-          </List>
-        </ScreenContent>
-      </TopScreenComponent>
+        <FlatList
+          scrollEnabled={false}
+          keyExtractor={(item: PreferencesNavListItem, index: number) =>
+            `${item.value}-${index}`
+          }
+          contentContainerStyle={{
+            paddingHorizontal: IOVisualCostants.appMarginDefault
+          }}
+          data={filteredPreferencesNavListItems}
+          renderItem={renderPreferencesNavItem}
+          ItemSeparatorComponent={() => <Divider />}
+        />
+      </RNavScreenWithLargeHeader>
     );
   }
 }
