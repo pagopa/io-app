@@ -1,11 +1,10 @@
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
 import { Dispatch } from "../../store/actions/types";
@@ -14,16 +13,15 @@ import {
   profileServicePreferencesModeSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { showToast } from "../../utils/showToast";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
-import ServicesContactComponent from "./components/services/ServicesContactComponent";
-import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { showToast } from "../../utils/showToast";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
 } from "./analytics";
+import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
+import ServicesContactComponent from "./components/services/ServicesContactComponent";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -71,19 +69,20 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
   };
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      contextualHelp={emptyContextualHelp}
-      headerTitle={I18n.t("profile.preferences.list.service_contact")}
+    <RNavScreenWithLargeHeader
+      title={I18n.t("services.optIn.preferences.title")}
+      description={I18n.t("services.optIn.preferences.body")}
+      headerActionsProp={{ showHelp: true }}
     >
-      <ScrollView style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
+      <VSpacer size={16} />
+      <ContentWrapper>
         <ServicesContactComponent
           onSelectMode={handleOnSelectMode}
           mode={props.profileServicePreferenceMode}
         />
-      </ScrollView>
+      </ContentWrapper>
       {manualConfigBottomSheet}
-    </BaseScreenComponent>
+    </RNavScreenWithLargeHeader>
   );
 };
 

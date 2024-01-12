@@ -688,7 +688,7 @@ authentication:
     button_accept_lv: Continue with quick access
     button_decline_lv: Authenticate with SPID or CIE every 30 days
   security_suggestions:
-    fingerprint: Do not share your or unlock code or biometric recognition with anyone.
+    fingerprint: Do not share your unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
     io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
     access_new_device: If you access IO with someone else's device, remember to log out when you are finished.
@@ -1667,6 +1667,11 @@ wallet:
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
+      missingMethodsError:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        addMethod: Aggiungi metodo
+        notNow: Non ora
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
