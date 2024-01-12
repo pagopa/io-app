@@ -15,7 +15,8 @@ export enum WalletPaymentOutcomeEnum {
   EXCESSIVE_AMOUNT = "10", // Excess of availability
   ORDER_NOT_PRESENT = "11", // (should never happen)
   INVALID_METHOD = "12", // (should never happen)
-  KO_RETRIABLE = "13" // transaction failed
+  KO_RETRIABLE = "13", // transaction failed
+  INVALID_SESSION = "14" // transaction failed
 }
 
 export type WalletPaymentOutcome = t.TypeOf<typeof WalletPaymentOutcome>;
@@ -23,3 +24,13 @@ export const WalletPaymentOutcome = enumType<WalletPaymentOutcomeEnum>(
   WalletPaymentOutcomeEnum,
   "WalletPaymentOutcome"
 );
+
+export function getWalletPaymentOutcomeEnumByValue(
+  value: string
+): string | undefined {
+  return (
+    Object.keys(WalletPaymentOutcomeEnum) as Array<
+      keyof typeof WalletPaymentOutcomeEnum
+    >
+  ).find(key => WalletPaymentOutcomeEnum[key] === value);
+}
