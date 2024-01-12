@@ -6,6 +6,7 @@ import {
   FeatureInfo,
   GradientScrollView,
   H3,
+  H6,
   IOColors,
   IOStyles,
   LabelSmall,
@@ -38,7 +39,7 @@ const UnlockAccessScreen = (props: Props) => {
         {I18n.t("authentication.unlockmodal.description1_4")}{" "}
       </Body>
       <VSpacer size={24} />
-      <H3 weight="SemiBold">{I18n.t("authentication.unlockmodal.title2")}</H3>
+      <H6 weight="SemiBold">{I18n.t("authentication.unlockmodal.title2")}</H6>
       <VSpacer size={24} />
       <FeatureInfo
         iconName="security"
@@ -46,14 +47,14 @@ const UnlockAccessScreen = (props: Props) => {
       />
       <VSpacer size={16} />
       <FeatureInfo
-        iconName="security"
+        iconName="login"
         body={I18n.t("authentication.unlockmodal.listitem2_1")}
         actionLabel={I18n.t("authentication.unlockmodal.listitem2_2")}
         actionOnPress={() => openWebUrl("https://ioapp.it/")}
       />
       <VSpacer size={16} />
       <FeatureInfo
-        iconName="security"
+        iconName="locked"
         body={
           <LabelSmall weight="Regular" color="grey-700">
             {I18n.t("authentication.unlockmodal.listitem3_1")}{" "}

@@ -741,7 +741,7 @@ authentication:
     description1_2: Otherwise, you can access it in the app by logging in with the
     description1_3: maximum level of safety.
     description1_4: This type of authentication requires a username, password, and physical device, such as CIE.
-    title2: How to unlock IO access
+    title2: Do you want to unlock access to IO?
     listitem1: Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.
     listitem2_1: Access IO from the web, using your SPID or CIE credentials.
     listitem2_2: Go to the site

@@ -741,12 +741,12 @@ authentication:
     description1_2: In alternativa, è possibile entrare in app utilizzando un accesso con il
     description1_3: livello massimo di sicurezza.
     description1_4: Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.
-    title2: Come sbloccare l’accesso a IO
+    title2: Vuoi sbloccare l’accesso a IO?
     listitem1: Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
     listitem2_1: Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.
     listitem2_2: Vai al sito
     listitem3_1: Vai alla sezione
-    listitem3_2: Sblocca accesso a IO
+    listitem3_2: Sblocca l'accesso a IO
     listitem3_3: e segui i passaggi indicati. Quando richiesto inserisci il
     listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
