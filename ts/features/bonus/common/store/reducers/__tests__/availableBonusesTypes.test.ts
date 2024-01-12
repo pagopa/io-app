@@ -1,24 +1,25 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  AvailableBonusTypesState,
-  isAvailableBonusErrorSelector,
-  isAvailableBonusLoadingSelector,
-  isAvailableBonusNoneErrorSelector,
-  supportedAvailableBonusSelector
-} from "../availableBonusesTypes";
+
 import {
   availableBonuses,
   contentBonusVacanzeIT
-} from "../../../__mock__/availableBonuses";
+} from "../../../../bonusVacanze/__mock__/availableBonuses";
 import { BonusesAvailable } from "../../../../../../../definitions/content/BonusesAvailable";
 import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,
   ID_CGN_TYPE
-} from "../../../utils/bonus";
+} from "../../../../bonusVacanze/utils/bonus";
 import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
-import * as bonus from "../../../utils/bonus";
+import * as bonus from "../../../../bonusVacanze/utils/bonus";
+import {
+  isAvailableBonusErrorSelector,
+  isAvailableBonusLoadingSelector,
+  isAvailableBonusNoneErrorSelector,
+  supportedAvailableBonusSelector
+} from "../../selectors";
+import { AvailableBonusTypesState } from "../availableBonusesTypes";
 
 const bonusMockContent = {
   name: "Bonus Vacanze",

@@ -10,7 +10,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { completeBonusVacanzeActivation } from "../../store/actions/bonusVacanze";
-import { bonusVacanzeLogo } from "../../store/reducers/availableBonusesTypes";
+import { bonusVacanzeLogo } from "../../../common/store/selectors";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

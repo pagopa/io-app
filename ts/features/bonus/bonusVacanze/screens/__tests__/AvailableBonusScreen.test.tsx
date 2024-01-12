@@ -13,9 +13,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { availableBonuses, bpdBonus } from "../../__mock__/availableBonuses";
 import BONUSVACANZE_ROUTES from "../../navigation/routes";
-import { loadAvailableBonuses } from "../../store/actions/bonusVacanze";
 import { ID_BPD_TYPE } from "../../utils/bonus";
 import AvailableBonusScreen from "../AvailableBonusScreen";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 
 jest.mock("../../../../../config", () => ({ bpdEnabled: true }));
 

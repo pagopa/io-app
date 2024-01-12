@@ -30,7 +30,6 @@ import customVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
 import { isLoading } from "../../bpd/model/RemoteValue";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
@@ -55,6 +54,7 @@ import {
 import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { canEycaCardBeShown } from "../utils/eyca";
+import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

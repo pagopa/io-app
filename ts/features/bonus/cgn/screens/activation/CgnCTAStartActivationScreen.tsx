@@ -10,13 +10,13 @@ import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatu
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
+import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
-} from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+} from "../../../common/store/selectors";
 import { cgnActivationStart } from "../../store/actions/activation";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
