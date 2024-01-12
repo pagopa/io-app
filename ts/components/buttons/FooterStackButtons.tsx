@@ -6,7 +6,7 @@ import { View, StyleSheet } from "react-native";
 import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { BlockButtonProps } from "../ui/BlockButtons";
-import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
+import { FooterTopShadow } from "../FooterTopShadow";
 
 const styles = StyleSheet.create({
   button: {
