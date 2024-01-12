@@ -5,7 +5,7 @@ import { appReducer } from "../../../../store/reducers";
 import { bpdLoadActivationStatus } from "../../../bonus/bpd/store/actions/details";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableBonuses } from "../../../bonus/bonusVacanze/__mock__/availableBonuses";
-import * as bonus from "../../../bonus/bonusVacanze/utils/bonus";
+import * as bonus from "../../../bonus/common/utils";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,

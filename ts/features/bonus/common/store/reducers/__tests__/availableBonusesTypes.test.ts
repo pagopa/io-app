@@ -12,7 +12,7 @@ import {
   ID_CGN_TYPE
 } from "../../../../bonusVacanze/utils/bonus";
 import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
-import * as bonus from "../../../../bonusVacanze/utils/bonus";
+import * as bonus from "../../../utils";
 import {
   isAvailableBonusErrorSelector,
   isAvailableBonusLoadingSelector,

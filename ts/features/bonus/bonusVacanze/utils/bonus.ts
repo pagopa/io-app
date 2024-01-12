@@ -78,16 +78,3 @@ const allowedActivationStatus = new Set([
 export const isActivationResponseTrackable = (
   eligibility: BonusVacanzeActivationPayload
 ) => allowedActivationStatus.has(eligibility.status);
-
-/**
- * Return a Map with the bonus ID as a key and
- * a bool representing the relative feature flag
- * status as a value.
- */
-export const mapBonusIdFeatureFlag = () =>
-  new Map<number, boolean>([
-    [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
-    [ID_BPD_TYPE, bpdEnabled],
-    [ID_CGN_TYPE, true],
-    [ID_CDC_TYPE, cdcEnabled]
-  ]);
