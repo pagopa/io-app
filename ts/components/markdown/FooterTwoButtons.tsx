@@ -1,10 +1,10 @@
 import * as React from "react";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
+import FooterWithButtons from "../ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps,
   disablePrimaryButtonProps
-} from "../../../../../components/buttons/ButtonConfigurations";
+} from "../buttons/ButtonConfigurations";
 import { OnCancelProps } from "./FooterSingleButton";
 
 type OnRightProps = {

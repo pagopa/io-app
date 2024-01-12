@@ -15,7 +15,7 @@ import {
 } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { FooterTwoButtons } from "../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { FooterTwoButtons } from "../../../../../components/markdown/FooterTwoButtons";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
