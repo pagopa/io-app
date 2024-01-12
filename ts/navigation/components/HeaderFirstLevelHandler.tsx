@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import React, { ComponentProps, useEffect, useMemo } from "react";
 import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
@@ -78,7 +79,6 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
 export const HeaderFirstLevelHandler = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-
   const currentRouteName = useIOSelector(currentRouteSelector);
   // console.log("currentRouteName", currentRouteName);
   const requestParams = useMemo(
@@ -90,12 +90,6 @@ export const HeaderFirstLevelHandler = () => {
       ),
     [currentRouteName]
   );
-
-  const {
-    bottomSheet: WalletHomeHeaderBottomSheet,
-    present: presentWalletHomeHeaderBottomsheet
-  } = useWalletHomeHeaderBottomSheet();
-
   const startSupportRequest = useStartSupportRequest(requestParams);
   const helpAction: ActionProp = useMemo(
     () => ({
@@ -107,11 +101,29 @@ export const HeaderFirstLevelHandler = () => {
     }),
     [startSupportRequest]
   );
-  const headerProps: HeaderFirstLevelProps = useMemo(() => {
+  const headerPropsRef = React.useRef<HeaderFirstLevelProps>({
+    title: I18n.t("messages.contentTitle"),
+    type: "twoActions",
+    firstAction: helpAction,
+    secondAction: {
+      icon: "search",
+      accessibilityLabel: I18n.t("global.accessibility.search"),
+      onPress: () => {
+        dispatch(searchMessagesEnabled(true));
+      }
+    }
+  });
+
+  const {
+    bottomSheet: WalletHomeHeaderBottomSheet,
+    present: presentWalletHomeHeaderBottomsheet
+  } = useWalletHomeHeaderBottomSheet();
+
+  useEffect(() => {
     switch (currentRouteName) {
       case "SERVICES_NATIONAL":
       case "SERVICES_LOCAL":
-        return {
+        headerPropsRef.current = {
           title: I18n.t("services.title"),
           type: "twoActions",
           firstAction: helpAction,
@@ -123,17 +135,18 @@ export const HeaderFirstLevelHandler = () => {
             }
           }
         };
+        break;
       case "PROFILE_MAIN":
-        return {
+        headerPropsRef.current = {
           title: I18n.t("profile.main.title"),
           backgroundColor: "dark",
           type: "singleAction",
           firstAction: helpAction
         };
+        break;
       case "MESSAGES_INBOX":
       case "MESSAGES_ARCHIVE":
-      default:
-        return {
+        headerPropsRef.current = {
           title: I18n.t("messages.contentTitle"),
           type: "twoActions",
           firstAction: helpAction,
@@ -145,9 +158,10 @@ export const HeaderFirstLevelHandler = () => {
             }
           }
         };
+        break;
       case "BARCODE_SCAN":
       case "WALLET_HOME":
-        return {
+        headerPropsRef.current = {
           title: I18n.t("wallet.wallet"),
           type: "twoActions",
           firstAction: helpAction,
@@ -158,19 +172,20 @@ export const HeaderFirstLevelHandler = () => {
             onPress: presentWalletHomeHeaderBottomsheet
           }
         };
+        break;
+      default:
+        break;
     }
+    navigation.setOptions({
+      header: () => <HeaderFirstLevel {...headerPropsRef.current} />
+    });
   }, [
+    navigation,
     currentRouteName,
     helpAction,
     presentWalletHomeHeaderBottomsheet,
     dispatch
   ]);
-
-  useEffect(() => {
-    navigation.setOptions({
-      header: () => <HeaderFirstLevel {...headerProps} />
-    });
-  }, [headerProps, navigation, currentRouteName]);
 
   return <>{WalletHomeHeaderBottomSheet}</>;
 };

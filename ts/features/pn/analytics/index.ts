@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
 import { PNMessage } from "../../pn/store/types/types";
 import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../messages/types";
 import {
   booleanToYesNo,
   buildEventProperties,

@@ -24,7 +24,7 @@ const SecuritySuggestions = () => {
   return (
     <View>
       <FeatureInfo
-        iconName="biomFingerprint"
+        iconName="fingerprint"
         body={I18n.t("authentication.security_suggestions.fingerprint")}
       />
       <VSpacer size={24} />

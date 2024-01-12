@@ -22,9 +22,11 @@ import {
 } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import React, { ComponentProps } from "react";
+import React, { ComponentProps, useLayoutEffect } from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
+import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
+import { GatewayFaultEnum } from "../../../../../definitions/pagopa/ecommerce/GatewayFault";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -36,16 +38,19 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { format } from "../../../../utils/dates";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { cleanTransactionDescription } from "../../../../utils/payment";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
+import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
+import { WalletPaymentFailure } from "../types/failure";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -70,8 +75,17 @@ const WalletPaymentDetailScreen = () => {
   );
 
   if (pot.isError(paymentDetailsPot)) {
-    // TODO: failure handling (IOBP-309)
-    return null;
+    const failure = pipe(
+      paymentDetailsPot.error,
+      WalletPaymentFailure.decode,
+      O.fromEither,
+      // NetworkError is transformed to GENERIC_ERROR only for display purposes
+      O.getOrElse<WalletPaymentFailure>(() => ({
+        faultCodeCategory: FaultCategoryEnum.GENERIC_ERROR,
+        faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
+      }))
+    );
+    return <WalletPaymentFailureDetail rptId={rptId} failure={failure} />;
   }
 
   if (pot.isSome(paymentDetailsPot)) {
@@ -105,10 +119,20 @@ const WalletPaymentDetailContent = ({
 }: WalletPaymentDetailContentProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  useHeaderSecondLevel({ title: "", goBack: undefined });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true
+    });
+  }, [navigation]);
+
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp
+  });
 
   const navigateToMethodSelection = () => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+    navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
     });
   };
@@ -217,7 +241,6 @@ const WalletPaymentDetailContent = ({
           clipboardSetStringWithFeedback(formattedPaymentNoticeNumber)
         }
       />
-
       <Divider />
       <ListItemInfoCopy
         icon="entityCode"

@@ -1,21 +1,20 @@
+import { IOIconSizeScale } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { List } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView } from "react-native";
+import { Alert, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Locales, TranslationKeys } from "../../../locales/locales";
-import { IOStyles } from "../../components/core/variables/IOStyles";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import SectionStatusComponent from "../../components/SectionStatus";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n, { availableTranslations } from "../../i18n";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
 import { profileUpsert } from "../../store/actions/profile";
@@ -35,12 +34,12 @@ type Props = LightModalContextInterface &
 
 type State = { isLoading: boolean; selectedLocale?: Locales };
 
+const iconSize: IOIconSizeScale = 12;
+
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.language.contextualHelpTitle",
   body: "profile.preferences.language.contextualHelpContent"
 };
-
-const iconSize = 12;
 
 /**
  * Allows the user to select one of the available Languages as preferred
@@ -122,47 +121,47 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
 
   public render() {
     const ContainerComponent = withLoadingSpinner(() => (
-      <TopScreenComponent
+      <RNavScreenWithLargeHeader
+        title={I18n.t("profile.preferences.list.preferred_language.title")}
+        description={I18n.t(
+          "profile.preferences.list.preferred_language.subtitle"
+        )}
+        fixedBottomSlot={
+          <SafeAreaView>
+            <SectionStatusComponent sectionKey={"favourite_language"} />
+          </SafeAreaView>
+        }
         contextualHelpMarkdown={contextualHelpMarkdown}
-        headerTitle={I18n.t("profile.preferences.title")}
-        goBack={true}
+        headerActionsProp={{ showHelp: true }}
       >
-        <SafeAreaView style={IOStyles.flex}>
-          <ScreenContent
-            title={I18n.t("profile.preferences.list.preferred_language.title")}
-            subtitle={I18n.t(
-              "profile.preferences.list.preferred_language.subtitle"
-            )}
-          >
-            <List withContentLateralPadding={true}>
-              {availableTranslations.map((lang, index) => {
-                const isSelectedLanguage = this.isAlreadyPreferred(lang);
-                const languageTitle = I18n.t(`locales.${lang}`, {
-                  defaultValue: lang
-                });
-                return (
-                  <ListItemComponent
-                    key={index}
-                    title={languageTitle}
-                    hideIcon={!isSelectedLanguage}
-                    iconSize={iconSize}
-                    iconName={isSelectedLanguage ? "checkTickBig" : undefined}
-                    onPress={() => this.onLanguageSelected(lang)}
-                    accessible={true}
-                    accessibilityRole={"radio"}
-                    accessibilityLabel={`${languageTitle}, ${
-                      isSelectedLanguage
-                        ? I18n.t("global.accessibility.active")
-                        : I18n.t("global.accessibility.inactive")
-                    }`}
-                  />
-                );
-              })}
-            </List>
-          </ScreenContent>
-          <SectionStatusComponent sectionKey={"favourite_language"} />
-        </SafeAreaView>
-      </TopScreenComponent>
+        <View style={{ justifyContent: "space-between", flexGrow: 1 }}>
+          <List withContentLateralPadding={true}>
+            {availableTranslations.map((lang, index) => {
+              const isSelectedLanguage = this.isAlreadyPreferred(lang);
+              const languageTitle = I18n.t(`locales.${lang}`, {
+                defaultValue: lang
+              });
+              return (
+                <ListItemComponent
+                  key={index}
+                  title={languageTitle}
+                  hideIcon={!isSelectedLanguage}
+                  iconSize={iconSize}
+                  iconName={isSelectedLanguage ? "checkTickBig" : undefined}
+                  onPress={() => this.onLanguageSelected(lang)}
+                  accessible={true}
+                  accessibilityRole={"radio"}
+                  accessibilityLabel={`${languageTitle}, ${
+                    isSelectedLanguage
+                      ? I18n.t("global.accessibility.active")
+                      : I18n.t("global.accessibility.inactive")
+                  }`}
+                />
+              );
+            })}
+          </List>
+        </View>
+      </RNavScreenWithLargeHeader>
     ));
     return <ContainerComponent isLoading={this.state.isLoading} />;
   }

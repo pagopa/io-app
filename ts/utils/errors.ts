@@ -1,5 +1,5 @@
 import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
-import { MessagesFailurePayload } from "../store/actions/messages";
+import { MessagesFailurePayload } from "../features/messages/store/actions";
 
 export type TimeoutError = { readonly kind: "timeout" };
 export type GenericError = { readonly kind: "generic"; value: Error };

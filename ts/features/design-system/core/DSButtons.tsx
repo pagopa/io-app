@@ -19,7 +19,7 @@ import {
 import { useState } from "react";
 import { H2 } from "../../../components/core/typography/H2";
 import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import PaymentButton from "../../../components/messages/MessageDetail/common/PaymentButton";
+import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";

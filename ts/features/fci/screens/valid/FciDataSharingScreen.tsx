@@ -32,6 +32,7 @@ import { withValidatedEmail } from "../../../../components/helpers/withValidated
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
   padded: {
@@ -62,6 +63,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const profile = useIOSelector(profileSelector);
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useNavigation();
   const route = useRoute();
   const familyName = pot.getOrElse(
@@ -88,7 +90,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
         <View style={styles.paddingText} />
         <Link
           onPress={() => {
-            trackFciUserExit(route.name, "modifica_email");
+            trackFciUserExit(route.name, fciEnvironment, "modifica_email");
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.INSERT_EMAIL_SCREEN
             });
@@ -165,7 +167,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
               I18n.t("features.fci.shareDataScreen.cancel")
             )}
             rightButton={confirmButtonProps(() => {
-              trackFciUserDataConfirmed();
+              trackFciUserDataConfirmed(fciEnvironment);
               navigation.navigate("FCI_QTSP_TOS");
             }, `${I18n.t("features.fci.shareDataScreen.confirm")}`)}
           />
