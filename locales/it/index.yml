@@ -688,7 +688,7 @@ authentication:
     button_accept_lv: Continua con l’accesso rapido
     button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
   security_suggestions:
-    fingerprint: Non condividere il tuo o codice di sblocco o riconoscimento biometrico con nessuno
+    fingerprint: Non condividere il tuo codice di sblocco o riconoscimento biometrico con nessuno
     io_logout: Se perdi il dispositivo, esci dall’app da web
     io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
     access_new_device: Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito
@@ -1667,6 +1667,11 @@ wallet:
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
+      missingMethodsError:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        addMethod: Aggiungi metodo
+        notNow: Non ora
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -1706,6 +1711,41 @@ wallet:
       PAA_PAGAMENTO_SCONOSCIUTO:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    outcome:
+      SUCCESS:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato addebitato alcun importo.
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: "Non è stato addebitato alcun importo.\nControlla di aver seguito correttamente le istruzioni della tua banca."
+      INVALID_DATA:
+        title: I dati del metodo di pagamento non sono corretti
+        subtitle: Se hai pagato con una carta di debito o credito, assicurati di inserire i dati come riportato sul fronte.
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+      CIRCUIT_ERROR:
+        title: Il circuito della carta non è supportato
+      MISSING_FIELDS:
+        title: Mancano alcuni dati per procedere con il pagamento
+      INVALID_CARD:
+        title: Il metodo di pagamento è scaduto o non più valido
+        subtitle: Per maggiori informazioni, contatta la tua banca.
+      CANCELED_BY_USER:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
+      EXCESSIVE_AMOUNT:
+        title: Autorizzazione negata
+        subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
+      INVALID_METHOD:
+        title: Il metodo di pagamento non è supportato
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1716,17 +1756,6 @@ wallet:
       errorCode: Codice errore
       noticeNumber: Codice avviso
       entityCode: Codice Fiscale Ente
-    outcome:
-      cancelled:
-        title: L’operazione è stata annullata
-        subtitle: Non è stato addebitato alcun importo.
-      success:
-        title: Hai pagato {{amount}}
-        button: Ok, chiudi
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
