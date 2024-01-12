@@ -15,8 +15,7 @@ import { ComponentProps } from "react";
 import {
   Alert,
   FlatList,
-  ListRenderItemInfo,
-  PermissionsAndroid
+  ListRenderItemInfo
 } from "react-native";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
