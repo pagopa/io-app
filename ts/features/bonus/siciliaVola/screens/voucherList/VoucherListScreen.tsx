@@ -31,7 +31,7 @@ import {
   isLoading,
   isReady,
   isUndefined
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import SvVoucherListFilters from "../../components/SvVoucherListFilters";
 import SV_ROUTES from "../../navigation/routes";
 import { svGenerateVoucherStart } from "../../store/actions/voucherGeneration";

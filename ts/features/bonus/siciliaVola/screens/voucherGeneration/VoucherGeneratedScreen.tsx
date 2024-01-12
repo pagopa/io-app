@@ -17,7 +17,11 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
+import {
+  fold,
+  isLoading,
+  isReady
+} from "../../../../../common/model/RemoteValue";
 import VoucherInformationComponent from "../../components/VoucherInformationComponent";
 import {
   svGenerateVoucherBack,

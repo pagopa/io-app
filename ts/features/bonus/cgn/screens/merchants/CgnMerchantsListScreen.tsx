@@ -20,7 +20,7 @@ import {
   getValueOrElse,
   isLoading,
   isReady
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import {

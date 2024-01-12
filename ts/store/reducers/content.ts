@@ -19,7 +19,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../features/bonus/bpd/model/RemoteValue";
+} from "../../common/model/RemoteValue";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { getRemoteLocale } from "../../features/messages/utils/messages";

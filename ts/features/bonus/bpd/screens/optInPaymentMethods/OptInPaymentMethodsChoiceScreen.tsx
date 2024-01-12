@@ -26,7 +26,11 @@ import {
   errorBorderedButtonProps
 } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
-import { isError, isReady, isUndefined } from "../../model/RemoteValue";
+import {
+  isError,
+  isReady,
+  isUndefined
+} from "../../../../../common/model/RemoteValue";
 import {
   navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen,
   navigateToOptInPaymentMethodsThankYouKeepMethodsScreen

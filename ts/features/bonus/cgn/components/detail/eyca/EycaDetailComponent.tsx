@@ -8,7 +8,7 @@ import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { Dispatch } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { isLoading } from "../../../../bpd/model/RemoteValue";
+import { isLoading } from "../../../../../../common/model/RemoteValue";
 import {
   cgnEycaActivation,
   cgnEycaActivationStatusRequest

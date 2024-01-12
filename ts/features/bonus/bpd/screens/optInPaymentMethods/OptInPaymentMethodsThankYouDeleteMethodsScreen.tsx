@@ -15,7 +15,7 @@ import {
   isLoading,
   isReady,
   isUndefined
-} from "../../model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { optInPaymentMethodsDeletionChoice } from "../../store/actions/optInPaymentMethods";
 import { optInStatusSelector } from "../../store/reducers/details/activation";
 

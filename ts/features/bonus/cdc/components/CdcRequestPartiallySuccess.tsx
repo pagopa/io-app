@@ -14,7 +14,7 @@ import {
 import { cancelButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
 import { cdcEnrollUserToBonusSelector } from "../store/reducers/cdcBonusRequest";
 import { useIOSelector } from "../../../../store/hooks";
-import { isReady } from "../../bpd/model/RemoteValue";
+import { isReady } from "../../../../common/model/RemoteValue";
 import {
   CdcBonusEnrollmentOutcomeList,
   RequestOutcomeEnum

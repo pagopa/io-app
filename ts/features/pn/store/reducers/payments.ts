@@ -16,7 +16,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../bonus/bpd/model/RemoteValue";
+} from "../../../../common/model/RemoteValue";
 import {
   clearSelectedPayment,
   setSelectedPayment,

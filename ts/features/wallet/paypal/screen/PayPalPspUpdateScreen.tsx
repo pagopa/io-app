@@ -34,7 +34,7 @@ import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
+import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,

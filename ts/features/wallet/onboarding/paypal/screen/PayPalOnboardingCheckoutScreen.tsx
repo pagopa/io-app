@@ -19,7 +19,7 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
 import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { fold } from "../../../../bonus/bpd/model/RemoteValue";
+import { fold } from "../../../../../common/model/RemoteValue";
 import {
   walletAddPaypalBack,
   walletAddPaypalOutcome,

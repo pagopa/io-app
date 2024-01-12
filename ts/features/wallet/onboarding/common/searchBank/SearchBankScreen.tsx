@@ -19,7 +19,7 @@ import {
   isError,
   isLoading,
   isUndefined
-} from "../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { loadAbi } from "../../bancomat/store/actions";
 import { abiListSelector, abiSelector } from "../../store/abi";
 import { SearchBankComponent } from "./SearchBankComponent";

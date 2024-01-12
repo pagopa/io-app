@@ -24,7 +24,7 @@ import {
   getValueOrElse,
   isError,
   isReady
-} from "../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { PspRadioItem } from "../components/PspRadioItem";
 import {
   searchPaypalPsp as searchPaypalPspAction,

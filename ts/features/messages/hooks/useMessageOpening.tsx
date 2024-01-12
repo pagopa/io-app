@@ -13,7 +13,7 @@ import {
   clearMessagePrecondition
 } from "../store/actions";
 import { messagePreconditionSelector } from "../store/reducers/messagePrecondition";
-import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
+import { RemoteValue, fold } from "../../../common/model/RemoteValue";
 import I18n from "../../../i18n";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { trackDisclaimerOpened } from "../analytics";

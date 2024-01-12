@@ -12,7 +12,7 @@ import { isServicePreferenceResponseSuccess } from "../../../../types/services/S
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
-import { fold, isLoading } from "../../bpd/model/RemoteValue";
+import { fold, isLoading } from "../../../../common/model/RemoteValue";
 import { showToast } from "../../../../utils/showToast";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { loadServicePreference } from "../../../../store/actions/services/servicePreference";

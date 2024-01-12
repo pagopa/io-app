@@ -15,7 +15,7 @@ import I18n from "../../../../i18n";
 import { CDC_ROUTES } from "../navigation/routes";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
 import { useIOSelector } from "../../../../store/hooks";
-import { isReady } from "../../bpd/model/RemoteValue";
+import { isReady } from "../../../../common/model/RemoteValue";
 import ROUTES from "../../../../navigation/routes";
 import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
 import { H4 } from "../../../../components/core/typography/H4";

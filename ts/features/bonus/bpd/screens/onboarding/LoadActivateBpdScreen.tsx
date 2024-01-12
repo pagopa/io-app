@@ -5,7 +5,7 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isError } from "../../model/RemoteValue";
+import { isError } from "../../../../../common/model/RemoteValue";
 import {
   bpdOnboardingAcceptDeclaration,
   bpdOnboardingCancel

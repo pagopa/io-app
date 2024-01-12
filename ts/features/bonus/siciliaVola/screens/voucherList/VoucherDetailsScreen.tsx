@@ -32,7 +32,7 @@ import {
   isError,
   isLoading,
   isReady
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import VoucherDetailBottomSheet from "../../components/VoucherDetailBottomsheet";
 import { svGetPdfVoucher } from "../../store/actions/voucherGeneration";
 import {

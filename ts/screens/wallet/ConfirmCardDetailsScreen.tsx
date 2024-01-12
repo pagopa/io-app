@@ -39,7 +39,7 @@ import {
   isError,
   isLoading as isRemoteLoading,
   isReady
-} from "../../features/bonus/bpd/model/RemoteValue";
+} from "../../common/model/RemoteValue";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";

@@ -9,7 +9,7 @@ import {
   cgnEycaActivation,
   cgnEycaActivationCancel
 } from "../../../store/actions/eyca/activation";
-import { isError, isLoading } from "../../../../bpd/model/RemoteValue";
+import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

@@ -31,7 +31,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
-import { isLoading } from "../../bpd/model/RemoteValue";
+import { isLoading } from "../../../../common/model/RemoteValue";
 import CgnCardComponent from "../components/detail/CgnCardComponent";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
 import CgnStatusDetail from "../components/detail/CgnStatusDetail";

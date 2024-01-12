@@ -14,7 +14,7 @@ import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
-import { fold } from "../../bpd/model/RemoteValue";
+import { fold } from "../../../../common/model/RemoteValue";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import {
   allAvailableBonusTypesSelector,

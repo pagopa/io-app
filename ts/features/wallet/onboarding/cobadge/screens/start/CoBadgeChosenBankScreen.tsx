@@ -14,7 +14,7 @@ import {
   walletAddCoBadgeCancel,
   walletAddCoBadgeFailure
 } from "../../store/actions";
-import { fold, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
+import { fold, isReady } from "../../../../../../common/model/RemoteValue";
 import { loadAbi } from "../../../bancomat/store/actions";
 import I18n from "../../../../../../i18n";
 import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";

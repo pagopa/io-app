@@ -5,7 +5,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { cgnUnsubscribe } from "../actions/unsubscribe";

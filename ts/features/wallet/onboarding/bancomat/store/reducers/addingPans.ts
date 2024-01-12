@@ -9,7 +9,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { addBancomatToWallet, walletAddBancomatStart } from "../actions";
 
 export type AddingPansState = {
