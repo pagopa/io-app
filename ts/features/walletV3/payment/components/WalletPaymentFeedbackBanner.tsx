@@ -4,6 +4,7 @@ import { default as React } from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
+import { WALLET_PAYMENT_FEEDBACK_URL } from "../utils";
 
 const WalletPaymentFeebackBanner = () => {
   const bannerViewRef = React.useRef<View>(null);
@@ -13,10 +14,7 @@ const WalletPaymentFeebackBanner = () => {
       screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
     });
 
-    return openAuthenticationSession(
-      "https://io.italia.it/diccilatua/ces-pagamento",
-      ""
-    );
+    return openAuthenticationSession(WALLET_PAYMENT_FEEDBACK_URL, "");
   };
 
   return (
