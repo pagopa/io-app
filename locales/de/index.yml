@@ -936,7 +936,7 @@ payment:
         description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
-  confirm: 
+  confirm:
     totalAmount: "Zu zahlender Gesamtbetrag"
     pay: "Zahle "
     payWith: "Zahle mit "
@@ -1617,7 +1617,7 @@ wallet:
         amount: "Nach Betrag"
         name: "Nach Name"
     outcome:
-      success:
+      SUCCESS:
         title: "Du hast {{amount}} bezahlt"
         button: "OK, schließen"
         banner:

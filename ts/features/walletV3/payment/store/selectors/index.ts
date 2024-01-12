@@ -7,10 +7,16 @@ import { GlobalState } from "../../../../../store/reducers/types";
 const selectWalletPayment = (state: GlobalState) =>
   state.features.wallet.payment;
 
+export const walletPaymentRptIdSelector = createSelector(
+  selectWalletPayment,
+  state => state.rptId
+);
+
 export const walletPaymentDetailsSelector = createSelector(
   selectWalletPayment,
   state => state.paymentDetails
 );
+
 export const walletPaymentAmountSelector = createSelector(
   walletPaymentDetailsSelector,
   state => pot.map(state, payment => payment.amount)
@@ -20,6 +26,7 @@ export const walletPaymentAllMethodsSelector = createSelector(
   selectWalletPayment,
   state => pot.map(state.allPaymentMethods, _ => _.paymentMethods ?? [])
 );
+
 export const walletPaymentGenericMethodByIdSelector = createSelector(
   walletPaymentAllMethodsSelector,
   methodsPot => (id: string) =>
