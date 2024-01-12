@@ -1,5 +1,7 @@
-import { createSelector } from "reselect";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 
 const selectWalletPayment = (state: GlobalState) =>
@@ -20,17 +22,27 @@ export const walletPaymentAllMethodsSelector = createSelector(
 );
 export const walletPaymentGenericMethodByIdSelector = createSelector(
   walletPaymentAllMethodsSelector,
-  state => (id: string) =>
-    pot.map(state, methods => methods.find(_ => _.id === id))
+  methodsPot => (id: string) =>
+    pipe(
+      methodsPot,
+      pot.toOption,
+      O.chainNullableK(methods => methods.find(_ => _.id === id))
+    )
 );
+
 export const walletPaymentUserWalletsSelector = createSelector(
   selectWalletPayment,
   state => pot.map(state.userWallets, _ => _.wallets ?? [])
 );
+
 export const walletPaymentSavedMethodByIdSelector = createSelector(
   walletPaymentUserWalletsSelector,
-  state => (id: string) =>
-    pot.map(state, methods => methods.find(_ => _.walletId === id))
+  methodsPot => (id: string) =>
+    pipe(
+      methodsPot,
+      pot.toOption,
+      O.chainNullableK(methods => methods.find(_ => _.walletId === id))
+    )
 );
 
 export const walletPaymentPickedPaymentMethodSelector = createSelector(
