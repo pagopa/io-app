@@ -9,7 +9,7 @@ import I18n from "../../../../../i18n";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   isAvailableBonusErrorSelector,

@@ -2,7 +2,7 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../../store/actions/types";
-import { LoadingErrorComponent } from "../../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../../components/LoadingErrorComponent";
 import I18n from "../../../../../../i18n";
 import { eycaActivationStatusSelector } from "../../../store/reducers/eyca/activation";
 import {

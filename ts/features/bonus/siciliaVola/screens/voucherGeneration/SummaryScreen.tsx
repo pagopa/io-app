@@ -18,7 +18,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../../utils/url";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import SV_ROUTES from "../../navigation/routes";
 import {

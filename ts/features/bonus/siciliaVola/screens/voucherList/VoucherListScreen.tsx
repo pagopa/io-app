@@ -25,7 +25,7 @@ import { formatDateAsLocal } from "../../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
 import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   isError,
   isLoading,

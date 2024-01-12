@@ -19,7 +19,7 @@ import {
   fciDownloadPathSelector,
   fciDownloadPreviewSelector
 } from "../store/reducers/fciDownloadPreview";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 
 const styles = StyleSheet.create({
   pdf: {

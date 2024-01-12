@@ -17,7 +17,7 @@ import {
 import { fold, isReady } from "../../../../../../common/model/RemoteValue";
 import { loadAbi } from "../../../bancomat/store/actions";
 import I18n from "../../../../../../i18n";
-import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../../components/LoadingErrorComponent";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 
 type OwnProps = {

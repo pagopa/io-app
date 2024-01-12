@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import { isError } from "../../../../../common/model/RemoteValue";
 import {
   bpdOnboardingAcceptDeclaration,

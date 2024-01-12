@@ -26,7 +26,7 @@ import { formatDateAsLocal } from "../../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useLegacyIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { showToast } from "../../../../../utils/showToast";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   fold,
   isError,

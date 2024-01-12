@@ -34,7 +34,7 @@ import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
 import {
   isError,
   isLoading as isRemoteLoading,

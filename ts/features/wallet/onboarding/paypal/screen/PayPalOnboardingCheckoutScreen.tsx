@@ -18,7 +18,7 @@ import { pmSessionTokenSelector } from "../../../../../store/reducers/wallet/pay
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import { fold } from "../../../../../common/model/RemoteValue";
 import {
   walletAddPaypalBack,

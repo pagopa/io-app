@@ -20,7 +20,7 @@ import {
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import AcceptTosComponent from "../../components/AcceptTosComponent";
 import CheckResidenceComponent from "../../components/CheckResidenceComponent";
 import I18n from "../../../../../i18n";
