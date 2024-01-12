@@ -6,7 +6,7 @@ import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { actionWithAlert } from "../../../common/components/alert/ActionWithAlert";
-import { ID_BPD_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { ID_BPD_TYPE } from "../../../common/utils";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
 import {
   bpdOnboardingCancel,

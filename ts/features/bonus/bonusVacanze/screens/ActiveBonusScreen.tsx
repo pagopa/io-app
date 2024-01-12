@@ -64,6 +64,7 @@ import {
   availableBonusTypesSelectorFromId,
   bonusVacanzeLogo
 } from "../../common/store/selectors";
+import { ID_BONUS_VACANZE_TYPE } from "../../common/utils";
 import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
 import { BonusCompositionDetails } from "../components/keyValueTable/BonusCompositionDetails";
@@ -77,7 +78,6 @@ import {
   ownedActiveOrRedeemedBonus
 } from "../store/reducers/allActive";
 import {
-  ID_BONUS_VACANZE_TYPE,
   getBonusCodeFormatted,
   isBonusActive,
   validityInterval

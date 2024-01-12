@@ -4,13 +4,13 @@ import FeaturedCardCarousel from "../card/FeaturedCardCarousel";
 import { appReducer } from "../../../../store/reducers";
 import { bpdLoadActivationStatus } from "../../../bonus/bpd/store/actions/details";
 import { GlobalState } from "../../../../store/reducers/types";
-import { availableBonuses } from "../../../bonus/bonusVacanze/__mock__/availableBonuses";
+import { availableBonuses } from "../../../bonus/__mock__/availableBonuses";
 import * as bonus from "../../../bonus/common/utils";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,
   ID_CGN_TYPE
-} from "../../../bonus/bonusVacanze/utils/bonus";
+} from "../../../bonus/common/utils";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";

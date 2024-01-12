@@ -30,10 +30,7 @@ import {
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { showToast } from "../../../../utils/showToast";
-import {
-  ID_CDC_TYPE,
-  ID_CGN_TYPE
-} from "../../../bonus/bonusVacanze/utils/bonus";
+import { ID_CDC_TYPE, ID_CGN_TYPE } from "../../../bonus/common/utils";
 import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding";
 import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";

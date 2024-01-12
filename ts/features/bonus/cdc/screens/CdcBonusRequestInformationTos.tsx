@@ -21,7 +21,7 @@ import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsLi
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { getRemoteLocale } from "../../../messages/utils/messages";
-import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
+import { ID_CDC_TYPE } from "../../common/utils";
 import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
 import { CdcBonusRequestParamsList } from "../navigation/params";
 import { CDC_ROUTES } from "../navigation/routes";

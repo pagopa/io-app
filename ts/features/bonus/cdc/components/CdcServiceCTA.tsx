@@ -13,7 +13,7 @@ import { Label } from "../../../../components/core/typography/Label";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
+import { ID_CDC_TYPE } from "../../common/utils";
 import { fold } from "../../../../common/model/RemoteValue";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import {

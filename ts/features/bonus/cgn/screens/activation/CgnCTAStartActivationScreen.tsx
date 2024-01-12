@@ -10,7 +10,7 @@ import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatu
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { ID_CGN_TYPE } from "../../../common/utils";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   availableBonusTypesSelectorFromId,

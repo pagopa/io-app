@@ -53,7 +53,7 @@ import {
   ID_BPD_TYPE,
   ID_CDC_TYPE,
   ID_CGN_TYPE
-} from "../utils/bonus";
+} from "../../common/utils";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
