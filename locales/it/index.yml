@@ -978,7 +978,7 @@ payment:
         description: IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
-  confirm: 
+  confirm:
     totalAmount: Totale da pagare
     pay: Paga
     payWith: Paga con
@@ -1644,13 +1644,6 @@ wallet:
     cancel: No, continua
     success: Problemi con l'aggiunta? Contatta la tua banca.
   payment:
-    methodSelection:
-        header: Seleziona un metodo
-        yourMethods: I tuoi metodi
-        otherMethods: Altri metodi
-        alert: 
-          body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
-          cta: "Ok, ho capito!"
     barcodes:
       choice:
         title: Sono stati rilevati più codici. Quale vuoi usare?
@@ -1663,6 +1656,17 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    abortDialog:
+      title: Vuoi interrompere l'operazione?
+      confirm: Sì, interrompi
+      cancel: No, torna indietro
+    methodSelection:
+      header: Seleziona un metodo
+      yourMethods: I tuoi metodi
+      otherMethods: Altri metodi
+      alert:
+        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+        cta: "Ok, ho capito!"
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -1671,13 +1675,51 @@ wallet:
       defaultName: Gestore
       pspTitle: Gestore
       pspSortButton: Ordina
-      featuredReason: Perché sei già cliente 
+      featuredReason: Perché sei già cliente
       continueButton: Continua
       sortBottomSheet:
         default: Default
         amount: Per importo
         name: Per nome
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "C’è un problema tecnico con questo avviso"
+      PAYMENT_UNKNOWN:
+        title: "I dati dell’avviso non sono corretti"
+      DOMAIN_UNKNOWN:
+        title: "L’Ente Creditore sta avendo problemi nella risposta"
+        subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
+      PAYMENT_ONGOING:
+        title: "C’è già un pagamento in corso, riprova più tardi"
+        subtitle: "Se il problema persiste, puoi aprire una segnalazione."
+      PAYMENT_EXPIRED:
+        title: "L’avviso è scaduto e non è più possibile pagarlo"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_CANCELED:
+        title: "L’Ente Creditore ha revocato questo avviso"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_DUPLICATED:
+        title: "Questo avviso è stato già pagato!"
+      GENERIC_ERROR:
+        title: "Si è verificato un errore imprevisto"
+        subtitle: "Riprova, oppure contatta l’assistenza."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Non riusciamo a trovare l’avviso"
+        subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    support:
+      button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
+      errorCode: Codice errore
+      noticeNumber: Codice avviso
+      entityCode: Codice Fiscale Ente
     outcome:
+      cancelled:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
       success:
         title: Hai pagato {{amount}}
         button: Ok, chiudi

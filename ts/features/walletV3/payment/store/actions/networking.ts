@@ -9,12 +9,13 @@ import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
+import { WalletPaymentFailure } from "../../types/failure";
 
 export const walletPaymentGetDetails = createAsyncAction(
   "WALLET_PAYMENT_GET_DETAILS_REQUEST",
   "WALLET_PAYMENT_GET_DETAILS_SUCCESS",
   "WALLET_PAYMENT_GET_DETAILS_FAILURE"
-)<RptId, PaymentRequestsGetResponse, NetworkError>();
+)<RptId, PaymentRequestsGetResponse, NetworkError | WalletPaymentFailure>();
 
 export const walletPaymentGetAllMethods = createAsyncAction(
   "WALLET_PAYMENT_GET_ALL_METHODS_REQUEST",
@@ -43,7 +44,17 @@ export const walletPaymentCreateTransaction = createAsyncAction(
   "WALLET_PAYMENT_CREATE_TRANSACTION_REQUEST",
   "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
   "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
-)<NewTransactionRequest, NewTransactionResponse, NetworkError>();
+)<
+  NewTransactionRequest,
+  NewTransactionResponse,
+  NetworkError | WalletPaymentFailure
+>();
+
+export const walletPaymentDeleteTransaction = createAsyncAction(
+  "WALLET_PAYMENT_DELETE_TRANSACTION_REQUEST",
+  "WALLET_PAYMENT_DELETE_TRANSACTION_SUCCESS",
+  "WALLET_PAYMENT_DELETE_TRANSACTION_FAILURE"
+)<string, undefined, NetworkError>();
 
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;
@@ -71,4 +82,5 @@ export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentGetUserWallets>
   | ActionType<typeof walletPaymentCalculateFees>
   | ActionType<typeof walletPaymentCreateTransaction>
+  | ActionType<typeof walletPaymentDeleteTransaction>
   | ActionType<typeof walletPaymentAuthorization>;

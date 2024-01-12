@@ -41,8 +41,10 @@ import {
   walletPaymentAllMethodsSelector,
   walletPaymentAmountSelector,
   walletPaymentSavedMethodByIdSelector,
+  walletPaymentTransactionSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
+import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 
 // ----------------- TYPES -----------------
 
@@ -63,6 +65,18 @@ type SelectedMethodState = SavedMethodState | NotSavedMethodState | undefined;
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const handleGoBack = useWalletPaymentGoBackHandler();
+
+  useHeaderSecondLevel({
+    title: "",
+    backAccessibilityLabel: I18n.t("global.buttons.back"),
+    goBack: handleGoBack,
+    contextualHelp: emptyContextualHelp,
+    faqCategories: ["payment"],
+    supportRequest: true
+  });
+
+  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const getSavedtMethodById = useIOSelector(
     walletPaymentSavedMethodByIdSelector
   );
@@ -79,7 +93,9 @@ const WalletPaymentPickMethodScreen = () => {
   //   walletPaymentGenericMethodByIdSelector
   // );
   const isLoading =
-    pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
+    pot.isLoading(paymentMethodsPot) ||
+    pot.isLoading(userWalletsPots) ||
+    pot.isLoading(transactionPot);
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
     React.useState<boolean>(false);
@@ -114,15 +130,6 @@ const WalletPaymentPickMethodScreen = () => {
       ),
     [paymentMethodsPot, paymentAmount]
   );
-
-  useHeaderSecondLevel({
-    title: "",
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: navigation.goBack,
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["payment"],
-    supportRequest: true
-  });
 
   // ------------------------ HANDLERS --------------------------
 
