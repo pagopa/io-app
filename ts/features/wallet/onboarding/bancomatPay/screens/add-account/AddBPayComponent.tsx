@@ -14,7 +14,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../../components/buttons/ButtonConfigurations";
 import { abiListSelector } from "../../../store/abi";
 import { BPay } from "../../../../../../../definitions/pagopa/BPay";
 import BPayCard from "../../../../bancomatpay/component/BPayCard";

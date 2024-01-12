@@ -11,7 +11,7 @@ import I18n from "../../../i18n";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
-import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { FciDownloadPreviewDirectoryPath } from "../saga/networking/handleDownloadDocument";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { fciDownloadPreview } from "../store/actions";

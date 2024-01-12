@@ -8,7 +8,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch } from "../../../../../store/hooks";
-import { cancelButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import {
   optInPaymentMethodsCompleted,
   optInPaymentMethodsShowChoice

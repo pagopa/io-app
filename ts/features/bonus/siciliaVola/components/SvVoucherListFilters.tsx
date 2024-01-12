@@ -16,7 +16,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import DateTimePicker from "../../../../components/ui/DateTimePicker";
 import { GlobalState } from "../../../../store/reducers/types";

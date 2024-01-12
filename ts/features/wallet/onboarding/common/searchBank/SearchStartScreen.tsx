@@ -14,7 +14,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";

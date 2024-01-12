@@ -25,7 +25,7 @@ import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/pa
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../components/buttons/ButtonConfigurations";
 import {
   isLoading as isLoadingRemote,
   isLoading as isRemoteLoading

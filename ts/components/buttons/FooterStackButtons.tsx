@@ -4,9 +4,9 @@ import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
-import { FooterTopShadow } from "../FooterTopShadow";
+import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
+import { BlockButtonProps } from "../ui/BlockButtons";
+import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
 
 const styles = StyleSheet.create({
   button: {

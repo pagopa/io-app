@@ -25,7 +25,7 @@ import { cdcSelectedBonus } from "../store/actions/cdcBonusRequest";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
 
 const CdcBonusRequestSelectYear = () => {

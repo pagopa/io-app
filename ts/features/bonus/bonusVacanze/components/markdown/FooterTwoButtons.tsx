@@ -4,7 +4,7 @@ import {
   cancelButtonProps,
   confirmButtonProps,
   disablePrimaryButtonProps
-} from "../buttons/ButtonConfigurations";
+} from "../../../../../components/buttons/ButtonConfigurations";
 import { OnCancelProps } from "./FooterSingleButton";
 
 type OnRightProps = {

@@ -7,8 +7,8 @@ import { renderInfoRasterImage } from "../../../../../components/infoScreen/imag
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../../../components/buttons/FooterStackButtons";
 import { completeBonusVacanzeActivation } from "../../store/actions/bonusVacanze";
 import { bonusVacanzeLogo } from "../../../common/store/selectors";
 

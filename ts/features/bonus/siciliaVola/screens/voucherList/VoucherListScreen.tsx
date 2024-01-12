@@ -24,7 +24,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
 import {
   isError,

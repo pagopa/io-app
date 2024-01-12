@@ -11,7 +11,7 @@ import { useLegacyIOBottomSheetModal } from "../../../../../../utils/hooks/botto
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../../components/buttons/ButtonConfigurations";
 import { PaymentMethodRepresentationComponent } from "../base/PaymentMethodRepresentationComponent";
 
 export type ConfirmationType = "Activation" | "Deactivation";

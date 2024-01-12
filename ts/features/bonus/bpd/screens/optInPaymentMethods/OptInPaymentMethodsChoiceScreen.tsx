@@ -24,7 +24,7 @@ import {
   confirmButtonProps,
   disablePrimaryButtonProps,
   errorBorderedButtonProps
-} from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../components/buttons/ButtonConfigurations";
 import { useBottomSheetMethodsToDelete } from "../../components/optInStatus/BottomSheetMethodsToDelete";
 import {
   isError,

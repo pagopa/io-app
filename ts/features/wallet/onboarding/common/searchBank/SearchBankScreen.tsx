@@ -14,7 +14,7 @@ import { navigateBack } from "../../../../../store/actions/navigation";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import {
   isError,
   isLoading,
