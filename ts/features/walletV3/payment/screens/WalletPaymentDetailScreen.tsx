@@ -85,7 +85,7 @@ const WalletPaymentDetailScreen = () => {
         faultCodeDetail: GatewayFaultEnum.GENERIC_ERROR
       }))
     );
-    return <WalletPaymentFailureDetail rptId={rptId} failure={failure} />;
+    return <WalletPaymentFailureDetail failure={failure} />;
   }
 
   if (pot.isSome(paymentDetailsPot)) {
