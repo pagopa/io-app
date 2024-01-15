@@ -1,11 +1,10 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import {
-  H6,
   IOColors,
   IOStyles,
-  IconButton,
-  LabelLink
+  LabelLink,
+  ListItemCheckbox
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 
@@ -22,15 +21,13 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
     marginBottom: 16,
-    flexDirection: "column",
     borderBottomColor: IOColors.greyLight,
     borderBottomWidth: 1
   },
   details: {
     paddingTop: 16,
     paddingBottom: 8
-  },
-  titleMargin: { marginRight: 22, flex: 1 }
+  }
 });
 
 const SignatureFieldItem = (props: Props) => {
@@ -42,25 +39,19 @@ const SignatureFieldItem = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={IOStyles.row}>
-        <H6 style={styles.titleMargin} testID="SignatureFieldItemTitleTestID">
-          {props.title}
-        </H6>
-        <IconButton
-          testID="SignatureFieldItemCheckboxTestID"
-          disabled={props.disabled}
-          onPress={() => {
-            onChange(!checked);
-          }}
-          accessibilityLabel={
-            checked
-              ? I18n.t("features.fci.signatureFields.accessibility.selected")
-              : I18n.t("features.fci.signatureFields.accessibility.unselected")
-          }
-          icon={checked ? "legCheckOn" : "legCheckOff"}
-          iconSize={24}
-        />
-      </View>
+      <ListItemCheckbox
+        value={props.title}
+        disabled={props.disabled}
+        selected={checked}
+        onValueChange={() => {
+          onChange(!checked);
+        }}
+        accessibilityLabel={
+          checked
+            ? I18n.t("features.fci.signatureFields.accessibility.selected")
+            : I18n.t("features.fci.signatureFields.accessibility.unselected")
+        }
+      />
       <View style={[IOStyles.row, styles.details]}>
         <LabelLink
           accessibilityLabel={I18n.t(
