@@ -6,7 +6,7 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { profileUpsert } from "../../../../../store/actions/profile";
 import { profileSelector } from "../../../../../store/reducers/profile";
 import { getBlockedChannels } from "../../../../../utils/profile";
-import { availableBonusTypesSelectorFromId } from "../reducers/availableBonusesTypes";
+import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 
 // handle a profile update if the service related to the bonus is in its blocked channel
 export function* handleForceBonusServiceActivation(

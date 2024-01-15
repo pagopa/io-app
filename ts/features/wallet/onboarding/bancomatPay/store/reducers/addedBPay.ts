@@ -6,7 +6,7 @@ import {
   RawBPayPaymentMethod
 } from "../../../../../../types/pagopa";
 import { enhanceBPay } from "../../../../../../utils/paymentMethod";
-import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../../../../../../common/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
 import { addBPayToWallet, walletAddBPayStart } from "../actions";
 

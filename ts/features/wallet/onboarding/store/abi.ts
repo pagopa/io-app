@@ -11,7 +11,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../bonus/bpd/model/RemoteValue";
+} from "../../../../common/model/RemoteValue";
 import { Action } from "../../../../store/actions/types";
 import { loadAbi } from "../bancomat/store/actions";
 import { GlobalState } from "../../../../store/reducers/types";

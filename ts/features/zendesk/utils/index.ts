@@ -3,7 +3,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { isPanicModeActive } from "../../../utils/supportAssistance";
-import { isReady } from "../../bonus/bpd/model/RemoteValue";
+import { isReady } from "../../../common/model/RemoteValue";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { ZendeskConfig } from "../store/reducers";
 

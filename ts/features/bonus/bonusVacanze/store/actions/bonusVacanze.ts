@@ -7,7 +7,6 @@ import { BonusActivationCollection } from "../../../../../../definitions/bonus_v
 import { BonusActivationWithQrCode } from "../../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { EligibilityCheck } from "../../../../../../definitions/bonus_vacanze/EligibilityCheck";
 import { InstanceId } from "../../../../../../definitions/bonus_vacanze/InstanceId";
-import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
 import { BonusActivationProgressEnum } from "../reducers/activation";
 import { EligibilityRequestProgressEnum } from "../reducers/eligibility";
 
@@ -19,15 +18,6 @@ export const loadAllBonusActivations = createAsyncAction(
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_SUCCESS",
   "BONUS_VACANZE_LOAD_ALL_ACTIVATION_FAILURE"
 )<void, BonusActivationCollection["items"], Error>();
-
-/**
- * Request the list of all the types of bonus
- */
-export const loadAvailableBonuses = createAsyncAction(
-  "BONUSES_AVAILABLE_REQUEST",
-  "BONUSES_AVAILABLE_SUCCESS",
-  "BONUSES_AVAILABLE_FAILURE"
-)<void, BonusesAvailable, Error>();
 
 export type EligibilityCheckPayload = {
   status: EligibilityRequestProgressEnum;
@@ -88,8 +78,7 @@ export type BonusVacanzeActivationPayload = {
   activation?: BonusActivationWithQrCode;
 };
 
-export type BonusActions =
-  | ActionType<typeof loadAvailableBonuses>
+export type BonusVacanzeActions =
   | ActionType<typeof storeEligibilityRequestId>
   | ActionType<typeof activateBonusVacanze>
   | ActionType<typeof checkBonusVacanzeEligibility>

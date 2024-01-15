@@ -6,7 +6,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 import ZendeskSupportHelpCenter from "../ZendeskSupportHelpCenter";
-import { isLoading } from "../../../bonus/bpd/model/RemoteValue";
+import { isLoading } from "../../../../common/model/RemoteValue";
 
 jest.useFakeTimers();
 

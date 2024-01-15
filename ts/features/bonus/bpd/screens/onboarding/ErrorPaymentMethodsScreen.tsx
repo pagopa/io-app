@@ -12,7 +12,7 @@ import I18n from "../../../../../i18n";
 import { navigateToWalletHome } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

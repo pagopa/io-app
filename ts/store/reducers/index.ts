@@ -6,7 +6,7 @@ import { combineReducers, Reducer } from "redux";
 import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
-import bonusReducer from "../../features/bonus/bonusVacanze/store/reducers";
+import bonusReducer from "../../features/bonus/common/store/reducers";
 import { featuresPersistor } from "../../features/common/store/reducers";
 import { lollipopPersistor } from "../../features/lollipop/store";
 import { initialLollipopState } from "../../features/lollipop/store/reducers/lollipop";

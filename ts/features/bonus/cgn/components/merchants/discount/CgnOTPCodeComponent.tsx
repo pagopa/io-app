@@ -6,7 +6,11 @@ import I18n from "../../../../../../i18n";
 import { BaseTypography } from "../../../../../../components/core/typography/BaseTypography";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { cgnOtpDataSelector } from "../../../store/reducers/otp";
-import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../../../../common/model/RemoteValue";
 import { cgnGenerateOtp, resetOtpState } from "../../../store/actions/otp";
 import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";

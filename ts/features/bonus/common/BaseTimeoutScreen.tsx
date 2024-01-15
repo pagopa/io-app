@@ -5,8 +5,8 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
-import { cancelButtonProps } from "../bonusVacanze/components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../bonusVacanze/components/buttons/FooterStackButtons";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 
 type Props = {
   title: string;

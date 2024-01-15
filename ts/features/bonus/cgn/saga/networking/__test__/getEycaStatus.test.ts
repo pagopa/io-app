@@ -14,7 +14,10 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
-import { remoteError, remoteReady } from "../../../../bpd/model/RemoteValue";
+import {
+  remoteError,
+  remoteReady
+} from "../../../../../../common/model/RemoteValue";
 import { cgnEycaStatus } from "../../../store/actions/eyca/details";
 import { handleGetEycaStatus } from "../eyca/details/getEycaStatus";
 

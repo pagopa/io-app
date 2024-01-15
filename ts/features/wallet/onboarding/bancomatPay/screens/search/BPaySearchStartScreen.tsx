@@ -5,7 +5,7 @@ import { withLightModalContext } from "../../../../../../components/helpers/with
 import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import TosBonusComponent from "../../../../../bonus/common/components/TosBonusComponent";
-import { isError, isLoading } from "../../../../../bonus/bpd/model/RemoteValue";
+import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";
 import {
