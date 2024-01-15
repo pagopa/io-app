@@ -15,7 +15,7 @@ import {
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
 import OptInPaymentMethodsThankYouDeleteMethodsScreen from "../OptInPaymentMethodsThankYouDeleteMethodsScreen";
 

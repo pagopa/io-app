@@ -11,7 +11,7 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { abortOnboarding } from "../../store/actions/onboarding";

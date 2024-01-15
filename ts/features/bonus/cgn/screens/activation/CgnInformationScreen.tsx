@@ -4,8 +4,7 @@ import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { availableBonusTypesSelectorFromId } from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+import { ID_CGN_TYPE } from "../../../common/utils";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
 import {
   cgnActivationBack,
@@ -13,6 +12,7 @@ import {
   cgnRequestActivation
 } from "../../store/actions/activation";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
+import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;

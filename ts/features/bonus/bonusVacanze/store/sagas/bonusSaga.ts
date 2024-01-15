@@ -3,7 +3,7 @@ import { put, takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../../config";
 import { BackendBonusVacanze } from "../../api/backendBonusVacanze";
-import { ID_BONUS_VACANZE_TYPE } from "../../utils/bonus";
+import { ID_BONUS_VACANZE_TYPE } from "../../../common/utils";
 import {
   activateBonusVacanze,
   checkBonusVacanzeEligibility,

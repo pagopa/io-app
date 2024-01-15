@@ -10,7 +10,7 @@ import SectionCardComponent, {
   SectionCardStatus
 } from "../../../../components/wallet/card/SectionCardComponent";
 import I18n from "../../../../i18n";
-import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
+import { ID_BONUS_VACANZE_TYPE } from "../../common/utils";
 import BonusCardComponent from "./BonusCardComponent";
 
 type OwnProps = {

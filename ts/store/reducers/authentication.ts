@@ -23,7 +23,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../features/bonus/bpd/model/RemoteValue";
+} from "../../common/model/RemoteValue";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";

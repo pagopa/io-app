@@ -8,7 +8,7 @@ import {
   isError,
   isLoading,
   isReady
-} from "../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { onboardingBPayFoundAccountsSelector } from "../../store/reducers/foundBpay";
 import { useAvoidHardwareBackButton } from "../../../../../../utils/useAvoidHardwareBackButton";
 import AddBPayScreen from "../add-account/AddBPayScreen";

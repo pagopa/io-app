@@ -1,15 +1,15 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../../store/reducers/types";
+import { bonusVacanzeLogo } from "../../../../common/store/selectors";
 import { abortBonusRequest } from "../../../components/alert/AbortBonusRequest";
 import {
   activateBonusVacanze,
   cancelBonusVacanzeRequest
 } from "../../../store/actions/bonusVacanze";
-import { bonusVacanzeLogo } from "../../../store/reducers/availableBonusesTypes";
 import { eligibilityEligibleSelector } from "../../../store/reducers/eligibility";
 import { ActivateBonusRequestComponent } from "./ActivateBonusRequestComponent";
 

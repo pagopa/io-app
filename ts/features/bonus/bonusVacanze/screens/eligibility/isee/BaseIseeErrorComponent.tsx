@@ -9,7 +9,7 @@ import I18n from "../../../../../../i18n";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../components/buttons/ButtonConfigurations";
+} from "../../../../../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../../hooks/useHardwareBackButton";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 

@@ -1,7 +1,7 @@
+import { IOStyles } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import variables from "../../../../theme/variables";
+import { StyleSheet, View } from "react-native";
+import variables from "../theme/variables";
 
 // TODO: after bonus vacanze,create a common style for footer, atm duplicated in FooterWithButtons
 const styles = StyleSheet.create({

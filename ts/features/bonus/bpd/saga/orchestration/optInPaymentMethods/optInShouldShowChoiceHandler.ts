@@ -12,7 +12,11 @@ import {
   pagoPaCreditCardWalletV1Selector
 } from "../../../../../../store/reducers/wallet/wallets";
 import { ReduxSagaEffect } from "../../../../../../types/utils";
-import { isLoading, isReady, RemoteValue } from "../../../model/RemoteValue";
+import {
+  isLoading,
+  isReady,
+  RemoteValue
+} from "../../../../../../common/model/RemoteValue";
 import {
   ActivationStatus,
   bpdLoadActivationStatus
