@@ -46,7 +46,7 @@ export type WalletPaymentState = {
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
   startRoute?: {
-    routName: string;
+    routeName: string;
     routeKey: string;
   };
 };
@@ -74,7 +74,7 @@ const reducer = (
       const startRoute =
         currentRouteKey && currentRouteName
           ? {
-              routName: currentRouteName,
+              routeName: currentRouteName,
               routeKey: currentRouteKey
             }
           : undefined;
