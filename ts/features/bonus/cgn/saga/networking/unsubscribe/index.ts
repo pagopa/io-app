@@ -1,3 +1,4 @@
+import { ActionType } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { SagaCallReturnType } from "../../../../../../types/utils";
@@ -8,17 +9,22 @@ import {
 import { readablePrivacyReport } from "../../../../../../utils/reporters"; // handle the request for CGN unsubscription
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnUnsubscribe } from "../../../store/actions/unsubscribe";
+import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 
 // handle the request for CGN unsubscription
 export function* cgnUnsubscriptionHandler(
   startCgnUnsubscription: ReturnType<
     typeof BackendCGN
-  >["startCgnUnsubscription"]
+  >["startCgnUnsubscription"],
+  action: ActionType<(typeof cgnUnsubscribe)["request"]>
 ) {
   try {
-    const unsubscriptionResult: SagaCallReturnType<
-      typeof startCgnUnsubscription
-    > = yield* call(startCgnUnsubscription, {});
+    const unsubscriptionRequest = startCgnUnsubscription({});
+    const unsubscriptionResult = (yield* call(
+      withRefreshApiCall,
+      unsubscriptionRequest,
+      action
+    )) as unknown as SagaCallReturnType<typeof startCgnUnsubscription>;
     if (E.isRight(unsubscriptionResult)) {
       if (
         unsubscriptionResult.right.status === 201 ||
