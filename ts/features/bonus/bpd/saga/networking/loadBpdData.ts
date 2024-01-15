@@ -5,7 +5,7 @@ import { getBackoffTime } from "../../../../../utils/backoffError";
 import { isTestEnv } from "../../../../../utils/environment";
 import { loadAbi } from "../../../../wallet/onboarding/bancomat/store/actions";
 import { abiSelector } from "../../../../wallet/onboarding/store/abi";
-import { isReady } from "../../model/RemoteValue";
+import { isReady } from "../../../../../common/model/RemoteValue";
 import {
   bpdAllData,
   bpdLoadActivationStatus

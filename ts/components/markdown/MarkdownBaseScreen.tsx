@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
-import ScreenContent from "../../../../../components/screens/ScreenContent";
-import Markdown from "../../../../../components/ui/Markdown";
-import themeVariables from "../../../../../theme/variables";
+import BaseScreenComponent from "../screens/BaseScreenComponent";
+import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
+import ScreenContent from "../screens/ScreenContent";
+import Markdown from "../ui/Markdown";
+import themeVariables from "../../theme/variables";
 
 /**
  * TODO Rename the title prop in the BaseScreenComponent to navigationTitle

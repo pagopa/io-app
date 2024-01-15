@@ -7,7 +7,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnUnsubscribeSelector } from "../../store/reducers/unsubscribe";
 import I18n from "../../../../../i18n";
 import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
-import { isError, isReady } from "../../../bpd/model/RemoteValue";
+import { isError, isReady } from "../../../../../common/model/RemoteValue";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { cgnDetails } from "../../store/actions/details";
 import { IOToast } from "../../../../../components/Toast";

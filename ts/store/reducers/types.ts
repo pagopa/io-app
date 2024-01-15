@@ -1,7 +1,7 @@
 import { PersistPartial } from "redux-persist";
 import { VersionInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
 
-import { BonusState } from "../../features/bonus/bonusVacanze/store/reducers";
+import { BonusState } from "../../features/bonus/common/store/reducers";
 import { PersistedFeaturesState } from "../../features/common/store/reducers";
 import { PersistedLollipopState } from "../../features/lollipop/store";
 import { AppState } from "./appState";

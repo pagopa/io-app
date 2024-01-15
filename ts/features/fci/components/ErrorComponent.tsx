@@ -6,7 +6,7 @@ import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { WithTestID } from "../../../types/WithTestID";
-import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,

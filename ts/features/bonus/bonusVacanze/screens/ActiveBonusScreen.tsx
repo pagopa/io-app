@@ -1,41 +1,45 @@
+import {
+  HSpacer,
+  IOColors,
+  IOIcons,
+  Icon,
+  VSpacer,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Toast as NBToast } from "native-base";
 import * as React from "react";
 import { useCallback } from "react";
 import {
-  View,
   Animated,
   Easing,
+  Platform,
   SafeAreaView,
   StyleSheet,
-  ViewStyle,
-  Platform
+  View,
+  ViewStyle
 } from "react-native";
 import ViewShot, { CaptureOptions } from "react-native-view-shot";
 import { connect } from "react-redux";
-import {
-  IOColors,
-  IOIcons,
-  Icon,
-  hexToRgba,
-  HSpacer,
-  VSpacer
-} from "@pagopa/io-app-design-system";
 import { BonusActivationStatusEnum } from "../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusActivationWithQrCode } from "../../../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
+import { IOBadge } from "../../../../components/core/IOBadge";
+import { Body } from "../../../../components/core/typography/Body";
+import { H3 } from "../../../../components/core/typography/H3";
 import { Label } from "../../../../components/core/typography/Label";
 import { Link } from "../../../../components/core/typography/Link";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../../../components/screens/DarkLayout";
 import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -47,7 +51,6 @@ import variables from "../../../../theme/variables";
 import { formatDateAsLocal } from "../../../../utils/dates";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
-import { getRemoteLocale } from "../../../messages/utils/messages";
 import {
   isShareEnabled,
   saveImageToGallery,
@@ -55,11 +58,17 @@ import {
 } from "../../../../utils/share";
 import { showToast } from "../../../../utils/showToast";
 import { maybeNotNullyString } from "../../../../utils/strings";
+import { getRemoteLocale } from "../../../messages/utils/messages";
+import TosBonusComponent from "../../common/components/TosBonusComponent";
+import {
+  availableBonusTypesSelectorFromId,
+  bonusVacanzeLogo
+} from "../../common/store/selectors";
+import { ID_BONUS_VACANZE_TYPE } from "../../common/utils";
 import BonusCardComponent from "../components/BonusCardComponent";
+import QrModalBox from "../components/QrModalBox";
 import { BonusCompositionDetails } from "../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../components/keyValueTable/FamilyComposition";
-import QrModalBox from "../components/QrModalBox";
-import TosBonusComponent from "../../common/components/TosBonusComponent";
 import {
   cancelLoadBonusFromIdPolling,
   startLoadBonusFromIdPolling
@@ -69,19 +78,10 @@ import {
   ownedActiveOrRedeemedBonus
 } from "../store/reducers/allActive";
 import {
-  availableBonusTypesSelectorFromId,
-  bonusVacanzeLogo
-} from "../store/reducers/availableBonusesTypes";
-import {
   getBonusCodeFormatted,
-  ID_BONUS_VACANZE_TYPE,
   isBonusActive,
   validityInterval
 } from "../utils/bonus";
-import { H3 } from "../../../../components/core/typography/H3";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { Body } from "../../../../components/core/typography/Body";
-import { IOBadge } from "../../../../components/core/IOBadge";
 import { ActivateBonusDiscrepancies } from "./activation/request/ActivateBonusDiscrepancies";
 
 type QRCodeContents = {

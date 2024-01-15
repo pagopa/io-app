@@ -20,7 +20,7 @@ import { CDC_ROUTES } from "../navigation/routes";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
 import { useIOSelector } from "../../../../store/hooks";
 import { H3 } from "../../../../components/core/typography/H3";

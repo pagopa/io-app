@@ -7,7 +7,7 @@ import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRe
 import image from "../../../../../img/pictograms/payment-completed.png";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import {
   AppParamsList,
   IOStackNavigationProp

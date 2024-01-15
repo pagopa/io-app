@@ -2,7 +2,7 @@ import React from "react";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import successImage from "../../../../../../img/pictograms/payment-completed.png";
-import { confirmButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../../../i18n";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { walletAddPaypalCompleted } from "../store/actions";

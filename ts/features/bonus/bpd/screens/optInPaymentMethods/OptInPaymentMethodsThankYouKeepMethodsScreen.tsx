@@ -7,7 +7,7 @@ import I18n from "../../../../../i18n";
 import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
 import { showToast } from "../../../../../utils/showToast";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import ThankYouSuccessComponent from "../../components/optInPaymentMethods/ThankYouSuccessComponent";
 import { bpdUpdateOptInStatusMethod } from "../../store/actions/onboarding";
 import { optInStatusSelector } from "../../store/reducers/details/activation";

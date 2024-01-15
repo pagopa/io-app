@@ -11,7 +11,7 @@ import I18n from "../../../../../../i18n";
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
-import { FooterTwoButtons } from "../../../../../bonus/bonusVacanze/components/markdown/FooterTwoButtons";
+import { FooterTwoButtons } from "../../../../../../components/markdown/FooterTwoButtons";
 import { bpdOnboardingStart } from "../../../../../bonus/bpd/store/actions/onboarding";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &

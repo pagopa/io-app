@@ -6,7 +6,7 @@ import BaseScreenComponent from "../../../../components/screens/BaseScreenCompon
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { LoadingErrorComponent } from "../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 
 type Props = {
   onCancel: () => void;

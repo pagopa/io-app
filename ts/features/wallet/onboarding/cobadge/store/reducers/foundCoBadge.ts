@@ -9,7 +9,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { searchUserCoBadge } from "../actions";
 import { CobadgeResponse } from "../../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 

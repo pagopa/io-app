@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../img/servicesStatus/error-detail-icon.png";
-import { cancelButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import { navigateBack } from "../../store/actions/navigation";
 import { IOStyles } from "../core/variables/IOStyles";
