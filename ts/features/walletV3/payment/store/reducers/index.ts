@@ -22,12 +22,12 @@ import {
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
   walletPaymentInitState,
-  walletPaymentResetPickedPsp,
-  WalletPaymentCompletionRedirectPayload
+  walletPaymentResetPickedPsp
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletPaymentFailure } from "../../types/failure";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import NavigationService from "../../../../../navigation/NavigationService";
 
 export type WalletPaymentState = {
   rptId?: RptId;
@@ -45,7 +45,10 @@ export type WalletPaymentState = {
     NetworkError | WalletPaymentFailure
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  startRoute?: WalletPaymentCompletionRedirectPayload;
+  startRoute?: {
+    routName: string;
+    routeKey: string;
+  };
 };
 
 const INITIAL_STATE: WalletPaymentState = {
@@ -66,9 +69,18 @@ const reducer = (
 ): WalletPaymentState => {
   switch (action.type) {
     case getType(walletPaymentInitState):
+      const currentRouteName = NavigationService.getCurrentRouteName();
+      const currentRouteKey = NavigationService.getCurrentRouteKey();
+      const startRoute =
+        currentRouteKey && currentRouteName
+          ? {
+              routName: currentRouteName,
+              routeKey: currentRouteKey
+            }
+          : undefined;
       return {
         ...INITIAL_STATE,
-        startRoute: action.payload
+        startRoute
       };
 
     // Payment verification and details

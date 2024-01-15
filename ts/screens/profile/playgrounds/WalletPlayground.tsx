@@ -16,7 +16,6 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../store/hooks";
-import ROUTES from "../../../navigation/routes";
 
 const WalletPlayground = () => {
   const dispatch = useIODispatch();
@@ -29,11 +28,7 @@ const WalletPlayground = () => {
   };
 
   const navigateToWalletPayment = () => {
-    dispatch(
-      walletPaymentInitState({
-        root: ROUTES.WALLET_PLAYGROUND
-      })
-    );
+    dispatch(walletPaymentInitState());
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
       params: {

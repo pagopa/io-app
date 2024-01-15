@@ -65,9 +65,9 @@ const WalletPaymentOutcomeScreen = () => {
 
   const handleClose = () => {
     if (paymentStartRoute) {
-      navigation.navigate(paymentStartRoute.root as keyof AppParamsList, {
+      navigation.navigate(paymentStartRoute.routName as keyof AppParamsList, {
         screen:
-          paymentStartRoute.screen as keyof NavigatorScreenParams<AppParamsList>["screen"]
+          paymentStartRoute.routeKey as keyof NavigatorScreenParams<AppParamsList>["screen"]
       });
       return;
     }
