@@ -22,12 +22,12 @@ import {
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
   walletPaymentInitState,
-  walletPaymentResetPickedPsp
+  walletPaymentResetPickedPsp,
+  WalletPaymentCompletionRedirectPayload
 } from "../actions/orchestration";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletPaymentFailure } from "../../types/failure";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 
 export type WalletPaymentState = {
   rptId?: RptId;
@@ -45,7 +45,7 @@ export type WalletPaymentState = {
     NetworkError | WalletPaymentFailure
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  startRoute?: keyof AppParamsList;
+  startRoute?: WalletPaymentCompletionRedirectPayload;
 };
 
 const INITIAL_STATE: WalletPaymentState = {

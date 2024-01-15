@@ -1,6 +1,6 @@
 /* eslint-disable sonarjs/no-identical-functions */
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
 import { RptId } from "../../../../definitions/pagopa/ecommerce/RptId";
@@ -16,11 +16,11 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../store/hooks";
+import ROUTES from "../../../navigation/routes";
 
 const WalletPlayground = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const route = useRoute();
 
   const navigateToWalletOnboarding = () => {
     navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
@@ -29,7 +29,11 @@ const WalletPlayground = () => {
   };
 
   const navigateToWalletPayment = () => {
-    dispatch(walletPaymentInitState(route.name as keyof AppParamsList));
+    dispatch(
+      walletPaymentInitState({
+        root: ROUTES.WALLET_PLAYGROUND
+      })
+    );
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
       params: {

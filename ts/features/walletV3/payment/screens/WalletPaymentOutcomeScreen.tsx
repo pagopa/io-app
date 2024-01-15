@@ -1,5 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import {
+  NavigatorScreenParams,
+  RouteProp,
+  useNavigation,
+  useRoute
+} from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -59,11 +64,14 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
-    navigation.popToTop();
     if (paymentStartRoute) {
-      navigation.navigate(paymentStartRoute);
+      navigation.navigate(paymentStartRoute.root as keyof AppParamsList, {
+        screen:
+          paymentStartRoute.screen as keyof NavigatorScreenParams<AppParamsList>["screen"]
+      });
       return;
     }
+    navigation.popToTop();
     navigation.pop();
   };
 
