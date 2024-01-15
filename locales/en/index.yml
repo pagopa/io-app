@@ -688,7 +688,7 @@ authentication:
     button_accept_lv: Continue with quick access
     button_decline_lv: Authenticate with SPID or CIE every 30 days
   security_suggestions:
-    fingerprint: Do not share your or unlock code or biometric recognition with anyone.
+    fingerprint: Do not share your unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
     io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
     access_new_device: If you access IO with someone else's device, remember to log out when you are finished.
@@ -741,7 +741,7 @@ authentication:
     description1_2: Otherwise, you can access it in the app by logging in with the
     description1_3: maximum level of safety.
     description1_4: This type of authentication requires a username, password, and physical device, such as CIE.
-    title2: How to unlock IO access
+    title2: Do you want to unlock access to IO?
     listitem1: Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.
     listitem2_1: Access IO from the web, using your SPID or CIE credentials.
     listitem2_2: Go to the site
@@ -1711,6 +1711,41 @@ wallet:
       PAA_PAGAMENTO_SCONOSCIUTO:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    outcome:
+      SUCCESS:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato addebitato alcun importo.
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: "Non è stato addebitato alcun importo.\nControlla di aver seguito correttamente le istruzioni della tua banca."
+      INVALID_DATA:
+        title: I dati del metodo di pagamento non sono corretti
+        subtitle: Se hai pagato con una carta di debito o credito, assicurati di inserire i dati come riportato sul fronte.
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+      CIRCUIT_ERROR:
+        title: Il circuito della carta non è supportato
+      MISSING_FIELDS:
+        title: Mancano alcuni dati per procedere con il pagamento
+      INVALID_CARD:
+        title: Il metodo di pagamento è scaduto o non più valido
+        subtitle: Per maggiori informazioni, contatta la tua banca.
+      CANCELED_BY_USER:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
+      EXCESSIVE_AMOUNT:
+        title: Autorizzazione negata
+        subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
+      INVALID_METHOD:
+        title: Il metodo di pagamento non è supportato
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1721,17 +1756,6 @@ wallet:
       errorCode: Codice errore
       noticeNumber: Codice avviso
       entityCode: Codice Fiscale Ente
-    outcome:
-      cancelled:
-        title: L’operazione è stata annullata
-        subtitle: Non è stato addebitato alcun importo.
-      success:
-        title: Hai pagato {{amount}}
-        button: Ok, chiudi
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -3929,6 +3953,7 @@ transaction:
     totalAmount: Totale
     totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
+    totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)

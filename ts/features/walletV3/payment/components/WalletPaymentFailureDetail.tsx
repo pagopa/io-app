@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { FaultCategoryEnum } from "../../../../../definitions/pagopa/ecommerce/FaultCategory";
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 import { ValidationFaultEnum } from "../../../../../definitions/pagopa/ecommerce/ValidationFault";
 import {
   OperationResultScreenContent,
@@ -16,13 +15,12 @@ import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupport
 import { WalletPaymentFailure } from "../types/failure";
 
 type Props = {
-  rptId?: RptId;
   failure: WalletPaymentFailure;
 };
 
-const WalletPaymentFailureDetail = ({ rptId, failure }: Props) => {
+const WalletPaymentFailureDetail = ({ failure }: Props) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const supportModal = usePaymentFailureSupportModal({ rptId, failure });
+  const supportModal = usePaymentFailureSupportModal({ failure });
 
   const handleClose = () => {
     navigation.pop();
