@@ -17,7 +17,10 @@ import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentParamsList } from "../navigation/params";
-import { walletPaymentDetailsSelector } from "../store/selectors";
+import {
+  walletPaymentDetailsSelector,
+  walletPaymentStartRouteSelector
+} from "../store/selectors";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
@@ -38,6 +41,7 @@ const WalletPaymentOutcomeScreen = () => {
 
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
+  const paymentStartRoute = useIOSelector(walletPaymentStartRouteSelector);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -55,6 +59,10 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
+    if (paymentStartRoute) {
+      navigation.navigate(paymentStartRoute);
+      return;
+    }
     navigation.popToTop();
     navigation.pop();
   };

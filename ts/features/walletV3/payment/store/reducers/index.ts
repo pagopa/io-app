@@ -27,6 +27,7 @@ import {
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletPaymentFailure } from "../../types/failure";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 
 export type WalletPaymentState = {
   rptId?: RptId;
@@ -44,6 +45,7 @@ export type WalletPaymentState = {
     NetworkError | WalletPaymentFailure
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
+  startRoute?: keyof AppParamsList;
 };
 
 const INITIAL_STATE: WalletPaymentState = {
@@ -64,7 +66,10 @@ const reducer = (
 ): WalletPaymentState => {
   switch (action.type) {
     case getType(walletPaymentInitState):
-      return INITIAL_STATE;
+      return {
+        ...INITIAL_STATE,
+        startRoute: action.payload
+      };
 
     // Payment verification and details
     case getType(walletPaymentGetDetails.request):
