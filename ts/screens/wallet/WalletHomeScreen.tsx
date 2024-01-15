@@ -40,12 +40,8 @@ import {
   navigateToAvailableBonusScreen,
   navigateToBonusActiveDetailScreen
 } from "../../features/bonus/bonusVacanze/navigation/action";
-import {
-  loadAllBonusActivations,
-  loadAvailableBonuses
-} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { loadAllBonusActivations } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
@@ -57,6 +53,8 @@ import {
   cgnDetailSelector,
   isCgnInformationAvailableSelector
 } from "../../features/bonus/cgn/store/reducers/details";
+import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
+import { supportedAvailableBonusSelector } from "../../features/bonus/common/store/selectors";
 import IDPayCardsInWalletContainer from "../../features/idpay/wallet/components/IDPayCardsInWalletContainer";
 import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";

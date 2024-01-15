@@ -55,14 +55,4 @@ export const walletTransactionDetailsPotSelector = createSelector(
   transaction => transaction.details
 );
 
-export const walletTransactionDetailsSelector = createSelector(
-  walletTransactionDetailsPotSelector,
-  details => pot.toUndefined(pot.map(details, el => el))
-);
-
-export const isLoadingTransactionDetailsSelector = createSelector(
-  walletTransactionDetailsPotSelector,
-  details => pot.isLoading(details)
-);
-
 export default walletTransactionReducer;

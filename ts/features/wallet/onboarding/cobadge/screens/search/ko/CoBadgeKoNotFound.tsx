@@ -15,8 +15,8 @@ import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualH
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../../../../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
+} from "../../../../../../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../../../../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import TosBonusComponent from "../../../../../../bonus/common/components/TosBonusComponent";
 import { walletAddCoBadgeCancel } from "../../../store/actions";

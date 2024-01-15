@@ -6,7 +6,7 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../types/WithTestID";
-import { isError, isLoading } from "../../../../bonus/bpd/model/RemoteValue";
+import { isError, isLoading } from "../../../../../common/model/RemoteValue";
 import { abiSelector } from "../../store/abi";
 import { loadAbi } from "../../bancomat/store/actions";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
@@ -14,7 +14,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../components/buttons/ButtonConfigurations";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";

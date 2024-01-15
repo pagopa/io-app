@@ -6,7 +6,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../model/RemoteValue";
+} from "../../../../../../../common/model/RemoteValue";
 import { Action } from "../../../../../../../store/actions/types";
 import { bpdDeleteUserFromProgram } from "../../../actions/onboarding";
 import { bpdLoadActivationStatus } from "../../../actions/details";

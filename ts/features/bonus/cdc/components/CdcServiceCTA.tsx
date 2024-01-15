@@ -1,25 +1,25 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback } from "react";
 import { View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../components/core/typography/Label";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
+import { Label } from "../../../../components/core/typography/Label";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { loadAvailableBonuses } from "../../bonusVacanze/store/actions/bonusVacanze";
+import { ID_CDC_TYPE } from "../../common/utils";
+import { fold } from "../../../../common/model/RemoteValue";
+import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import {
   allAvailableBonusTypesSelector,
   availableBonusTypesSelectorFromId
-} from "../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
-import { fold } from "../../bpd/model/RemoteValue";
+} from "../../common/store/selectors";
 import { CDC_ROUTES } from "../navigation/routes";
 import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";

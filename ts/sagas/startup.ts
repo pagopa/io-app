@@ -608,7 +608,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for Wallet V3 actions
-  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.bpdToken);
+  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.walletToken);
 
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);

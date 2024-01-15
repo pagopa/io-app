@@ -14,7 +14,11 @@ import ActivityIndicator from "../../../../../../components/ui/ActivityIndicator
 import I18n from "../../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboard";
-import { isError, isLoading, isReady } from "../../../../bpd/model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../../../../common/model/RemoteValue";
 import {
   cgnCodeFromBucket,
   cgnCodeFromBucketReset

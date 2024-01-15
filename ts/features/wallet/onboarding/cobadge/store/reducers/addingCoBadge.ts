@@ -10,7 +10,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { addCoBadgeToWallet, walletAddCoBadgeStart } from "../actions";
 
 export type AddingCoBadgeState = {

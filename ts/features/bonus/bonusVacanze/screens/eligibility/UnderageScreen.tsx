@@ -6,7 +6,7 @@ import { renderInfoRasterImage } from "../../../../../components/infoScreen/imag
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
-import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { cancelBonusVacanzeRequest } from "../../store/actions/bonusVacanze";
 

@@ -11,7 +11,7 @@ import FooterWithButtons from "../../../../../../../components/ui/FooterWithButt
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 

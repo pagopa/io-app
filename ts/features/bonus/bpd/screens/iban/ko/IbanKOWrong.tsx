@@ -9,7 +9,7 @@ import { InfoScreenComponent } from "../../../../../../components/infoScreen/Inf
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { FooterTwoButtons } from "../../../../../../components/markdown/FooterTwoButtons";
 import {
   bpdIbanInsertionCancel,
   bpdIbanInsertionResetScreen
