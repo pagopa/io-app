@@ -3,7 +3,7 @@ import {
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
+} from "../../../common/model/RemoteValue";
 import { idpsSelector } from "../content";
 import { SpidIdp } from "../../../../definitions/content/SpidIdp";
 import { idps as mockedIdps } from "../__mock__/idps";

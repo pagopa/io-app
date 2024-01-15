@@ -6,7 +6,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { bpdEnrollUserToProgram } from "../../actions/onboarding";
 import { Action } from "../../../../../../store/actions/types";
 

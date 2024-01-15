@@ -1,5 +1,5 @@
 import { Action, combineReducers } from "redux";
-import { RemoteValue } from "../../../model/RemoteValue";
+import { RemoteValue } from "../../../../../../common/model/RemoteValue";
 import bpdEnrollUserReducer from "./enroll";
 import ongoingOnboardingReducer from "./ongoing";
 

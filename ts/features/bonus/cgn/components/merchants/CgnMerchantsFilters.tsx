@@ -24,7 +24,7 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../components/buttons/ButtonConfigurations";
 import { LabelledItem } from "../../../../../components/LabelledItem";
 import CategoryCheckbox from "./search/CategoryCheckbox";
 import OrderOption from "./search/OrderOption";

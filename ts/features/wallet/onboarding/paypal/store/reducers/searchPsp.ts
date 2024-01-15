@@ -5,7 +5,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { NetworkError } from "../../../../../../utils/errors";
 import { IOPayPalPsp } from "../../types";
 import { Action } from "../../../../../../store/actions/types";

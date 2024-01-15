@@ -1,6 +1,6 @@
 import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
-import { BlockButtonProps } from "../../../../../components/ui/BlockButtons";
-import I18n from "../../../../../i18n";
+import { BlockButtonProps } from "../ui/BlockButtons";
+import I18n from "../../i18n";
 
 /**
  * A common configuration for all the buttons that represent a cancel/abort action

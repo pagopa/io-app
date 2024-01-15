@@ -14,7 +14,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../features/bonus/bpd/model/RemoteValue";
+} from "../../../common/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 import {
   BancomatPaymentMethod,

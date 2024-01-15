@@ -11,7 +11,7 @@ import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScree
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { euCovidCertificateGet } from "../../store/actions";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";

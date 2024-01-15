@@ -19,7 +19,7 @@ import {
 } from "../store/reducers/payments";
 import { useIOSelector } from "../../../store/hooks";
 import { updatePaymentForMessage } from "../store/actions";
-import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
+import { RemoteValue, fold } from "../../../common/model/RemoteValue";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import {

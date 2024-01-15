@@ -7,7 +7,7 @@ import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenCo
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { useIODispatch } from "../../../store/hooks";
-import { cancelButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { zendeskSupportCompleted } from "../store/actions";
 
 /**

@@ -16,7 +16,7 @@ import { LabelledItem } from "../../../../../../components/LabelledItem";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { maybeNotNullyString } from "../../../../../../utils/strings";
-import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { FooterTwoButtons } from "../../../../../../components/markdown/FooterTwoButtons";
 
 type OwnProps = {
   onBack: () => void;

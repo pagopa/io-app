@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
-import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
 
 export type ZendeskAppConfig = {

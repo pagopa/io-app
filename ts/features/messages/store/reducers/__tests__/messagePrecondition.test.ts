@@ -13,7 +13,7 @@ import {
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { message_1 } from "../../../__mocks__/message";
 import { toUIMessage } from "../transformers";
 import { GlobalState } from "../../../../../store/reducers/types";

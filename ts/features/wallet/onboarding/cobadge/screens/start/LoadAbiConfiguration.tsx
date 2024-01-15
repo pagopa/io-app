@@ -6,7 +6,7 @@ import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../../types/WithTestID";
 import { useHardwareBackButton } from "../../../../../../hooks/useHardwareBackButton";
-import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../../components/LoadingErrorComponent";
 import {
   loadCoBadgeAbiConfiguration,
   walletAddCoBadgeCancel

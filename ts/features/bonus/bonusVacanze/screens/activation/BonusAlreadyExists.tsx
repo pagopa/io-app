@@ -5,8 +5,8 @@ import { Dispatch } from "redux";
 import { renderInfoRasterImage } from "../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../../../i18n";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../../../components/buttons/FooterStackButtons";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import {
   cancelBonusVacanzeRequest,
