@@ -59,11 +59,11 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
+    navigation.popToTop();
     if (paymentStartRoute) {
       navigation.navigate(paymentStartRoute);
       return;
     }
-    navigation.popToTop();
     navigation.pop();
   };
 
