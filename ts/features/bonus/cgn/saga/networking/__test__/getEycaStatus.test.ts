@@ -54,7 +54,7 @@ describe("handleGetEycaStatus", () => {
       E.right({ status: 200, value: eycaCard })
     );
     it("With 200 should be FOUND and have an eyca card", () =>
-      expectSaga(handleGetEycaStatus, getEycaStatus)
+      expectSaga(handleGetEycaStatus, getEycaStatus, cgnEycaStatus.request())
         .withReducer(appReducer)
         .put(cgnEycaStatus.success({ status: "FOUND", card: eycaCard }))
         .run()
@@ -70,7 +70,11 @@ describe("handleGetEycaStatus", () => {
   it("With 404 should be NOT_FOUND", () => {
     const getEycaStatus = jest.fn();
     getEycaStatus.mockImplementation(() => E.right({ status: 404 }));
-    return expectSaga(handleGetEycaStatus, getEycaStatus)
+    return expectSaga(
+      handleGetEycaStatus,
+      getEycaStatus,
+      cgnEycaStatus.request()
+    )
       .withReducer(appReducer)
       .put(cgnEycaStatus.success({ status: "NOT_FOUND" }))
       .run()
@@ -86,7 +90,11 @@ describe("handleGetEycaStatus", () => {
   it("With 403 should be INELIGIBLE", () => {
     const getEycaStatus = jest.fn();
     getEycaStatus.mockImplementation(() => E.right({ status: 403 }));
-    return expectSaga(handleGetEycaStatus, getEycaStatus)
+    return expectSaga(
+      handleGetEycaStatus,
+      getEycaStatus,
+      cgnEycaStatus.request()
+    )
       .withReducer(appReducer)
       .put(cgnEycaStatus.success({ status: "INELIGIBLE" }))
       .run()
@@ -102,7 +110,11 @@ describe("handleGetEycaStatus", () => {
   it(`With 409 status should be ERROR`, () => {
     const getEycaStatus = jest.fn();
     getEycaStatus.mockImplementation(() => E.right({ status: 409 }));
-    return expectSaga(handleGetEycaStatus, getEycaStatus)
+    return expectSaga(
+      handleGetEycaStatus,
+      getEycaStatus,
+      cgnEycaStatus.request()
+    )
       .withReducer(appReducer)
       .put(cgnEycaStatus.success({ status: "ERROR" }))
       .run()
@@ -120,7 +132,11 @@ describe("handleGetEycaStatus", () => {
       const error = getGenericError(new Error(`response status ${status}`));
       const getEycaStatus = jest.fn();
       getEycaStatus.mockImplementation(() => E.right({ status }));
-      return expectSaga(handleGetEycaStatus, getEycaStatus)
+      return expectSaga(
+        handleGetEycaStatus,
+        getEycaStatus,
+        cgnEycaStatus.request()
+      )
         .withReducer(appReducer)
         .put(cgnEycaStatus.failure(error))
         .run()
@@ -144,7 +160,11 @@ describe("handleGetEycaStatus", () => {
         )
       );
       getEycaStatus.mockImplementation(() => error);
-      return expectSaga(handleGetEycaStatus, getEycaStatus)
+      return expectSaga(
+        handleGetEycaStatus,
+        getEycaStatus,
+        cgnEycaStatus.request()
+      )
         .withReducer(appReducer)
         .put(cgnEycaStatus.failure(genericError))
         .run()
