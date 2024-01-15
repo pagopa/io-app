@@ -12,6 +12,7 @@ import {
   cgnOnlineMerchants,
   cgnSelectedMerchant
 } from "../../../store/actions/merchants";
+import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 
 export function* cgnOnlineMerchantsSaga(
   getOnlineMerchants: ReturnType<
@@ -20,10 +21,14 @@ export function* cgnOnlineMerchantsSaga(
   cgnOnlineMerchantRequest: ReturnType<typeof cgnOnlineMerchants.request>
 ) {
   try {
-    const onlineMerchantsResult: SagaCallReturnType<typeof getOnlineMerchants> =
-      yield* call(getOnlineMerchants, {
-        body: cgnOnlineMerchantRequest.payload
-      });
+    const onlineMerchantsRequest = getOnlineMerchants({
+      body: cgnOnlineMerchantRequest.payload
+    });
+    const onlineMerchantsResult = (yield* call(
+      withRefreshApiCall,
+      onlineMerchantsRequest,
+      cgnOnlineMerchantRequest
+    )) as unknown as SagaCallReturnType<typeof getOnlineMerchants>;
 
     if (E.isLeft(onlineMerchantsResult)) {
       yield* put(
@@ -40,6 +45,9 @@ export function* cgnOnlineMerchantsSaga(
       );
       return;
     }
+    if (onlineMerchantsResult.right.status === 401) {
+      return;
+    }
 
     throw new Error(`Response in status ${onlineMerchantsResult.right.status}`);
   } catch (e) {
@@ -54,11 +62,14 @@ export function* cgnOfflineMerchantsSaga(
   cgnOfflineMerchantRequest: ReturnType<typeof cgnOfflineMerchants.request>
 ) {
   try {
-    const offlineMerchantsResult: SagaCallReturnType<
-      typeof getOfflineMerchants
-    > = yield* call(getOfflineMerchants, {
+    const offlineMerchantRequest = getOfflineMerchants({
       body: cgnOfflineMerchantRequest.payload
     });
+    const offlineMerchantsResult = (yield* call(
+      withRefreshApiCall,
+      offlineMerchantRequest,
+      cgnOfflineMerchantRequest
+    )) as unknown as SagaCallReturnType<typeof getOfflineMerchants>;
 
     if (E.isLeft(offlineMerchantsResult)) {
       yield* put(
@@ -77,6 +88,9 @@ export function* cgnOfflineMerchantsSaga(
       );
       return;
     }
+    if (offlineMerchantsResult.right.status === 401) {
+      return;
+    }
 
     throw new Error(
       `Response in status ${offlineMerchantsResult.right.status}`
@@ -91,8 +105,14 @@ export function* cgnMerchantDetail(
   merchantSelected: ReturnType<(typeof cgnSelectedMerchant)["request"]>
 ) {
   try {
-    const merchantDetailResult: SagaCallReturnType<typeof getMerchant> =
-      yield* call(getMerchant, { merchantId: merchantSelected.payload });
+    const merchantDetailRequest = getMerchant({
+      merchantId: merchantSelected.payload
+    });
+    const merchantDetailResult = (yield* call(
+      withRefreshApiCall,
+      merchantDetailRequest,
+      merchantSelected
+    )) as unknown as SagaCallReturnType<typeof getMerchant>;
     if (E.isLeft(merchantDetailResult)) {
       yield* put(
         cgnSelectedMerchant.failure(
@@ -104,6 +124,10 @@ export function* cgnMerchantDetail(
 
     if (merchantDetailResult.right.status === 200) {
       yield* put(cgnSelectedMerchant.success(merchantDetailResult.right.value));
+      return;
+    }
+
+    if (merchantDetailResult.right.status === 401) {
       return;
     }
 
