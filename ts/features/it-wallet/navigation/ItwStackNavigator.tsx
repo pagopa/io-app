@@ -9,7 +9,7 @@ import ItwCieWrongPinScreen from "../screens/issuance/pid/cie/ItwCieWrongPinScre
 import ItwIssuancePidInfoScreen from "../screens/issuance/pid/ItwIssuancePidInfoScreen";
 import ItwIssuingPidAuthInfoScreen from "../screens/issuance/pid/ItwIssuancePidAuthInfoScreen";
 import ItwIssuancePidPreviewScreen from "../screens/issuance/pid/ItwIssuancePidPreviewScreen";
-import ItwIssuingPidResultScreen from "../screens/issuance/pid/ItwIssuancePidResultScreen";
+import ItwIssuingPidStoreScreen from "../screens/issuance/pid/ItwIssuancePidStoreScreen";
 import ItwPrPidDetails from "../screens/presentation/ItwPrPidDetails";
 import ItwIssuancePidRequestScreen from "../screens/issuance/pid/ItwIssuancePidRequestScreen";
 import ItwPrRemotePidChecksScreen from "../screens/presentation/remote/pid/ItwPrRemotePidChecksScreen";
@@ -80,8 +80,8 @@ export const ItwStackNavigator = () => (
       component={ItwIssuancePidPreviewScreen}
     />
     <Stack.Screen
-      name={ITW_ROUTES.ISSUANCE.PID.RESULT}
-      component={ItwIssuingPidResultScreen}
+      name={ITW_ROUTES.ISSUANCE.PID.STORE}
+      component={ItwIssuingPidStoreScreen}
     />
 
     {/* ISSUANCE CREDENTIAL */}

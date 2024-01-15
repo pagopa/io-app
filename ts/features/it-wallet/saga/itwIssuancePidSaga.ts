@@ -189,7 +189,7 @@ export function* handleItwIssuancePidStoreSaga(
   yield* call(
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.PID.RESULT
+      screen: ITW_ROUTES.ISSUANCE.PID.STORE
     })
   );
 }
