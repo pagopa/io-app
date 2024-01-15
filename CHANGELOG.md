@@ -2,6 +2,79 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.50.0-rc.5](https://github.com/pagopa/io-app/compare/2.50.0-rc.4...2.50.0-rc.5) (2024-01-11)
+
+
+### Bug Fixes
+
+* [[IABT-1520](https://pagopa.atlassian.net/browse/IABT-1520)] HeaderFirstLevel showing messages case when opening the support flow ([#5371](https://github.com/pagopa/io-app/issues/5371)) ([7df95ce](https://github.com/pagopa/io-app/commit/7df95ceb8406509c10a0ffb362c7623b33ebef8d))
+
+## [2.50.0-rc.4](https://github.com/pagopa/io-app/compare/2.50.0-rc.3...2.50.0-rc.4) (2024-01-11)
+
+
+### Features
+
+* [[IOBP-311](https://pagopa.atlassian.net/browse/IOBP-311),[IOBP-317](https://pagopa.atlassian.net/browse/IOBP-317)] New wallet payment method selection screen ([#5350](https://github.com/pagopa/io-app/issues/5350)) ([8bb098e](https://github.com/pagopa/io-app/commit/8bb098e9962f16d7e53e9f559a21036797ec11e1))
+* [[IOBP-432](https://pagopa.atlassian.net/browse/IOBP-432)] Add new wallet payment authorization webview ([#5276](https://github.com/pagopa/io-app/issues/5276)) ([a3bb6a4](https://github.com/pagopa/io-app/commit/a3bb6a46d3b8aff0fb0a816870085f6c03974135))
+* [[IOBP-480](https://pagopa.atlassian.net/browse/IOBP-480)] Remove holder name from wallet payment confirm screen ([#5387](https://github.com/pagopa/io-app/issues/5387)) ([4de88bc](https://github.com/pagopa/io-app/commit/4de88bcae555a253b141ffac1ddd452f3eb9049a))
+
+
+### Bug Fixes
+
+* [[IOBP-482](https://pagopa.atlassian.net/browse/IOBP-482)] Adapted actual payment transaction apis with LV ([#5388](https://github.com/pagopa/io-app/issues/5388)) ([5f4e0c3](https://github.com/pagopa/io-app/commit/5f4e0c3e7c26bfc1d99f028cf4416f7c83c84e56))
+
+
+### Chores
+
+* [[IOAPPFD0-198](https://pagopa.atlassian.net/browse/IOAPPFD0-198)] Redesign of the developer section with better organization ([#5324](https://github.com/pagopa/io-app/issues/5324)) ([0bde66a](https://github.com/pagopa/io-app/commit/0bde66afe3258485c771e563af3bf07cd6c41fcf))
+* [[IOAPPFD0-205](https://pagopa.atlassian.net/browse/IOAPPFD0-205)] Remove `profileAlt` icon reference from the codebase ([#5366](https://github.com/pagopa/io-app/issues/5366)) ([14f7cf7](https://github.com/pagopa/io-app/commit/14f7cf7e4b2eb917048eceb3216d12db042f440f))
+* [[IOBP-396](https://pagopa.atlassian.net/browse/IOBP-396)] Add new `BonusCard` component into ID Pay initiative details screen ([#5329](https://github.com/pagopa/io-app/issues/5329)) ([a5a91bc](https://github.com/pagopa/io-app/commit/a5a91bc03877479f0592d01634b0557d6fc32a2e))
+* [[IOPID-1301](https://pagopa.atlassian.net/browse/IOPID-1301)] Bump ToS version from 4.7 to 4.8" ([#5391](https://github.com/pagopa/io-app/issues/5391)) ([277c21f](https://github.com/pagopa/io-app/commit/277c21f5a940c28a82ac00c9bd99bb404307d3ff)), closes [pagopa/io-app#5385](https://github.com/pagopa/io-app/issues/5385)
+
+## [2.50.0-rc.3](https://github.com/pagopa/io-app/compare/2.50.0-rc.2...2.50.0-rc.3) (2024-01-09)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-1892](https://pagopa.atlassian.net/browse/SFEQS-1892)] Add environment to Mixpanel events ([#5159](https://github.com/pagopa/io-app/issues/5159)) ([43d203f](https://github.com/pagopa/io-app/commit/43d203f3381591c47347bf850c0ee8c0a29fa0a2))
+* [[IOBP-313](https://pagopa.atlassian.net/browse/IOBP-313)] New wallet payment pick PSP ([#5302](https://github.com/pagopa/io-app/issues/5302)) ([77a768c](https://github.com/pagopa/io-app/commit/77a768cddff285f558f2c552b44efac409a5b789))
+* [[IOBP-314](https://pagopa.atlassian.net/browse/IOBP-314)] Wallet payment confirm screen ([#5344](https://github.com/pagopa/io-app/issues/5344)) ([9f867be](https://github.com/pagopa/io-app/commit/9f867be9de4836242a0a6b8a9a6a84ff8e5f4184))
+* [[IOCOM-382](https://pagopa.atlassian.net/browse/IOCOM-382)] Move all the message related files to `features/messages` folder ([#5375](https://github.com/pagopa/io-app/issues/5375)) ([e92e03c](https://github.com/pagopa/io-app/commit/e92e03cb0b030326d08678ee53f269c14f0c0811))
+
+
+### Bug Fixes
+
+* [[IOPID-1297](https://pagopa.atlassian.net/browse/IOPID-1297)] Fix: the navigation object hasn't been initialized yet ([#5381](https://github.com/pagopa/io-app/issues/5381)) ([5f9d702](https://github.com/pagopa/io-app/commit/5f9d702b88c79ef75228c24b1834a279cb6fd66c))
+
+
+### Chores
+
+* [[IOAPPFD0-202](https://pagopa.atlassian.net/browse/IOAPPFD0-202)] Update README.md physical devices section ([#5332](https://github.com/pagopa/io-app/issues/5332)) ([ccf5fc2](https://github.com/pagopa/io-app/commit/ccf5fc2d8f3f320dbaae9ad2b3f4fd1ff71e02bb))
+* [[IOPID-1301](https://pagopa.atlassian.net/browse/IOPID-1301)] Bump ToS version from 4.7 to 4.8 ([#5385](https://github.com/pagopa/io-app/issues/5385)) ([a7efe4e](https://github.com/pagopa/io-app/commit/a7efe4e393b26e5d0d187457ed28d7f38cfa79bd))
+* removes test step from husky pre-push ([#5380](https://github.com/pagopa/io-app/issues/5380)) ([3e9e9ee](https://github.com/pagopa/io-app/commit/3e9e9eea96c44e8c077b3152003b98728febabff))
+
+## [2.50.0-rc.2](https://github.com/pagopa/io-app/compare/2.50.0-rc.1...2.50.0-rc.2) (2024-01-05)
+
+## [2.50.0-rc.1](https://github.com/pagopa/io-app/compare/2.50.0-rc.0...2.50.0-rc.1) (2024-01-04)
+
+
+### Bug Fixes
+
+* [[IOCOM-759](https://pagopa.atlassian.net/browse/IOCOM-759)] Remove the section title if there are no attachments ([#5372](https://github.com/pagopa/io-app/issues/5372)) ([b08ac0a](https://github.com/pagopa/io-app/commit/b08ac0a193d7b4c5f0c633ca19221bf69cd71588))
+* [[IOCOM-761](https://pagopa.atlassian.net/browse/IOCOM-761)] Text wrapping for precondition's title text ([#5368](https://github.com/pagopa/io-app/issues/5368)) ([d78fe84](https://github.com/pagopa/io-app/commit/d78fe8487efae9149b44a156b6e401c20eab8d2e))
+* failing Android build ([#5376](https://github.com/pagopa/io-app/issues/5376)) ([a23dece](https://github.com/pagopa/io-app/commit/a23dece585eb9420c370a72df8ae62d22a254be0))
+
+## [2.50.0-rc.0](https://github.com/pagopa/io-app/compare/2.49.0-rc.0...2.50.0-rc.0) (2024-01-03)
+
+
+### Bug Fixes
+
+* [[IOBP-446](https://pagopa.atlassian.net/browse/IOBP-446)] Add gallery permission request in barcode scan screen for Android devices ([#5313](https://github.com/pagopa/io-app/issues/5313)) ([3aa8576](https://github.com/pagopa/io-app/commit/3aa8576a09d1859734491df42196e953297e9680)), closes [/github.com/pagopa/io-app/pull/5313/files#diff-7752f292bcc12a6ee19233df702f1e1bafc087f6261759e0a5939c6e7a883f19](https://github.com/pagopa//github.com/pagopa/io-app/pull/5313/files/issues/diff-7752f292bcc12a6ee19233df702f1e1bafc087f6261759e0a5939c6e7a883f19)
+* HeaderFirstLevel is misconfigured in services home screen ([#5358](https://github.com/pagopa/io-app/issues/5358)) ([993ae3e](https://github.com/pagopa/io-app/commit/993ae3e04900d05cc91617a3fb4e2ff573bcec0c))
+
+## [2.49.0-rc.1](https://github.com/pagopa/io-app/compare/2.48.0-rc.7...2.49.0-rc.1) (2023-12-20)
+
+
 ## [2.49.0-rc.0](https://github.com/pagopa/io-app/compare/2.48.0-rc.7...2.49.0-rc.0) (2023-12-19)
 
 

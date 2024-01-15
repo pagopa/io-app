@@ -5,6 +5,7 @@ import {
   ButtonSolidProps,
   H3,
   IOPictograms,
+  IOStyles,
   IOVisualCostants,
   Pictogram,
   VSpacer,
@@ -35,8 +36,9 @@ const OperationResultScreenContent = ({
   subtitle,
   action,
   secondaryAction,
+  children,
   testID
-}: OperationResultScreenContentProps) => (
+}: React.PropsWithChildren<OperationResultScreenContentProps>) => (
   <SafeAreaView style={styles.container} testID={testID}>
     <ScrollView
       centerContent={true}
@@ -47,10 +49,10 @@ const OperationResultScreenContent = ({
       ]}
     >
       {pictogram && (
-        <>
+        <View style={IOStyles.alignCenter}>
           <Pictogram name={pictogram} size={120} />
           <VSpacer size={24} />
-        </>
+        </View>
       )}
       <H3 style={styles.text}>{title}</H3>
       {subtitle && (
@@ -62,21 +64,22 @@ const OperationResultScreenContent = ({
         </>
       )}
       {action && (
-        <>
+        <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
           <View>
             <ButtonSolid {...action} />
           </View>
-        </>
+        </View>
       )}
       {secondaryAction && (
-        <>
+        <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
           <View>
             <ButtonLink {...secondaryAction} />
           </View>
-        </>
+        </View>
       )}
+      {React.isValidElement(children) && React.cloneElement(children)}
     </ScrollView>
   </SafeAreaView>
 );
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
     alignContent: "center"
   },

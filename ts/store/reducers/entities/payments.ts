@@ -12,7 +12,7 @@ import { Action } from "../../actions/types";
 import { paymentCompletedSuccess } from "../../actions/wallet/payment";
 import { GlobalState } from "../types";
 import { differentProfileLoggedIn } from "../../actions/crossSessions";
-import { UIMessage } from "./messages/types";
+import { UIMessage } from "../../../features/messages/types";
 
 export type PaidReason = Readonly<
   | {

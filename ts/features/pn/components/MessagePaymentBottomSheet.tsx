@@ -3,7 +3,7 @@ import { Dimensions, View } from "react-native";
 import I18n from "i18n-js";
 import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { UIMessageId } from "../../../store/reducers/entities/messages/types";
+import { UIMessageId } from "../../messages/types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { cancelQueuedPaymentUpdates } from "../store/actions";
 import { MessagePaymentItem } from "./MessagePaymentItem";

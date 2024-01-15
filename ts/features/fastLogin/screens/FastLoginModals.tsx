@@ -4,7 +4,10 @@ import { useDispatch } from "react-redux";
 import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
 import { logoutRequest } from "../../../store/actions/authentication";
 import { openWebUrl } from "../../../utils/url";
-import { askUserToRefreshSessionToken } from "../store/actions/tokenRefreshActions";
+import {
+  askUserToRefreshSessionToken,
+  clearTokenRefreshError
+} from "../store/actions/tokenRefreshActions";
 import AskUserInteractionScreen from "./AskUserInterarctionScreen";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
 
@@ -23,6 +26,7 @@ const FastLoginModals = (
           "fastLogin.userInteraction.sessionExpired.noPin.subtitle"
         )}
         onSubmit={() => {
+          dispatch(clearTokenRefreshError());
           dispatch(logoutRequest());
         }}
         buttonStylesProps={{

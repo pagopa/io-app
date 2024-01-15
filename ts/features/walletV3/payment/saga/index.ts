@@ -6,6 +6,7 @@ import {
   walletPaymentAuthorization,
   walletPaymentCalculateFees,
   walletPaymentCreateTransaction,
+  walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
   walletPaymentGetUserWallets
@@ -16,6 +17,7 @@ import { handleWalletPaymentGetAllMethods } from "./networking/handleWalletPayme
 import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentGetDetails";
 import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
 import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
+import { handleWalletPaymentDeleteTransaction } from "./networking/handleWalletPaymentDeleteTransaction";
 
 /**
  * Handle the pagoPA payments requests
@@ -53,6 +55,12 @@ export function* watchWalletPaymentSaga(
     walletPaymentCreateTransaction.request,
     handleWalletPaymentCreateTransaction,
     paymentClient.newTransaction
+  );
+
+  yield* takeLatest(
+    walletPaymentDeleteTransaction.request,
+    handleWalletPaymentDeleteTransaction,
+    paymentClient.requestTransactionUserCancellation
   );
 
   yield* takeLatest(

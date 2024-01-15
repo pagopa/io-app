@@ -424,16 +424,17 @@ profile:
       description: Learn more about the IO app
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Developers
+    testEnvironmentSectionHeader: Test Environment
     pagoPaEnvironment:
-      pagoPaEnv: pagoPA Test Environment
+      pagoPaEnv: pagoPA
       pagoPAEnvAlert: This change requires app reboot
       alertConfirmTitle: Do you want to use the pagoPA test environment?
       alertConfirmMessage: If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.
       alertMessage: The application must be restarted for the changes to take effect.
     pnEnvironment:
-      pnEnv: PN Test Environment
+      pnEnv: SEND (PN)
     idpay:
-      idpayTest: Test IDPay
+      idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
     appVersion: Version
@@ -447,7 +448,7 @@ profile:
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
     walletPlayground:
-      titleSection: "New Wallet Playground"
+      titleSection: "New Wallet"
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -686,8 +687,8 @@ authentication:
     notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
     button_accept_lv: Continue with quick access
     button_decline_lv: Authenticate with SPID or CIE every 30 days
-  security_suggestions: 
-    fingerprint: Do not share your or unlock code or biometric recognition with anyone.
+  security_suggestions:
+    fingerprint: Do not share your unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
     io_lock_access: If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.
     access_new_device: If you access IO with someone else's device, remember to log out when you are finished.
@@ -740,7 +741,7 @@ authentication:
     description1_2: Otherwise, you can access it in the app by logging in with the
     description1_3: maximum level of safety.
     description1_4: This type of authentication requires a username, password, and physical device, such as CIE.
-    title2: How to unlock IO access
+    title2: Do you want to unlock access to IO?
     listitem1: Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.
     listitem2_1: Access IO from the web, using your SPID or CIE credentials.
     listitem2_2: Go to the site
@@ -977,6 +978,17 @@ payment:
         description: IO didn't store any payment attempts. Here you can find last payment attempts
       title: Payment attempts
       iuv: IUV payment {{iuv}}
+  confirm:
+    totalAmount: Totale da pagare
+    pay: Paga
+    payWith: Paga con
+    fee: Commissione
+    feeAppliedBy: Applicata da
+    editButton: Modifica
+    termsAndConditions: Proseguendo dichiari di aver letto e compreso i
+    termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
+    loading:
+      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Debit card"
@@ -1644,6 +1656,106 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    abortDialog:
+      title: Vuoi interrompere l'operazione?
+      confirm: Sì, interrompi
+      cancel: No, torna indietro
+    methodSelection:
+      header: Seleziona un metodo
+      yourMethods: I tuoi metodi
+      otherMethods: Altri metodi
+      alert:
+        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+        cta: "Ok, ho capito!"
+      missingMethodsError:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        addMethod: Aggiungi metodo
+        notNow: Non ora
+    psp:
+      title: Scegli chi gestirà il pagamento
+      description: Ogni gestore propone una commissione.
+      taxDescription: In questa lista trovi tutti i gestori compatibili,
+      taxDescriptionBold: anche se non sei loro cliente.
+      defaultName: Gestore
+      pspTitle: Gestore
+      pspSortButton: Ordina
+      featuredReason: Perché sei già cliente
+      continueButton: Continua
+      sortBottomSheet:
+        default: Default
+        amount: Per importo
+        name: Per nome
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "C’è un problema tecnico con questo avviso"
+      PAYMENT_UNKNOWN:
+        title: "I dati dell’avviso non sono corretti"
+      DOMAIN_UNKNOWN:
+        title: "L’Ente Creditore sta avendo problemi nella risposta"
+        subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
+      PAYMENT_ONGOING:
+        title: "C’è già un pagamento in corso, riprova più tardi"
+        subtitle: "Se il problema persiste, puoi aprire una segnalazione."
+      PAYMENT_EXPIRED:
+        title: "L’avviso è scaduto e non è più possibile pagarlo"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_CANCELED:
+        title: "L’Ente Creditore ha revocato questo avviso"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_DUPLICATED:
+        title: "Questo avviso è stato già pagato!"
+      GENERIC_ERROR:
+        title: "Si è verificato un errore imprevisto"
+        subtitle: "Riprova, oppure contatta l’assistenza."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Non riusciamo a trovare l’avviso"
+        subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    outcome:
+      SUCCESS:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato addebitato alcun importo.
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: "Non è stato addebitato alcun importo.\nControlla di aver seguito correttamente le istruzioni della tua banca."
+      INVALID_DATA:
+        title: I dati del metodo di pagamento non sono corretti
+        subtitle: Se hai pagato con una carta di debito o credito, assicurati di inserire i dati come riportato sul fronte.
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+      CIRCUIT_ERROR:
+        title: Il circuito della carta non è supportato
+      MISSING_FIELDS:
+        title: Mancano alcuni dati per procedere con il pagamento
+      INVALID_CARD:
+        title: Il metodo di pagamento è scaduto o non più valido
+        subtitle: Per maggiori informazioni, contatta la tua banca.
+      CANCELED_BY_USER:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
+      EXCESSIVE_AMOUNT:
+        title: Autorizzazione negata
+        subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
+      INVALID_METHOD:
+        title: Il metodo di pagamento non è supportato
+    support:
+      button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
+      errorCode: Codice errore
+      noticeNumber: Codice avviso
+      entityCode: Codice Fiscale Ente
 saveCard:
   saveCard: Save the card
   header: Do you want to save this card?
@@ -3832,6 +3944,7 @@ whatsNew:
 bonusCard:
   validUntil: Valida fino al {{endDate}}
   expiring: Scade il {{endDate}}
+  expired: Scaduta il {{endDate}}
   paused: In pausa
   removed: Rimossa
 transaction:
@@ -3840,6 +3953,7 @@ transaction:
     totalAmount: Totale
     totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
+    totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)

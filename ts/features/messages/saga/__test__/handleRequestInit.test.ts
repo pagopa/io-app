@@ -5,7 +5,7 @@ import {
   handleRequestInit,
   testableHandleRequestInitFactory
 } from "../handleRequestInit";
-import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../types";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector

@@ -15,11 +15,13 @@ import { isDevEnv } from "../../../utils/environment";
 import { Action } from "../../actions/types";
 import { DateISO8601Transform } from "../../transforms/dateISO8601Tranform";
 import { PotTransform } from "../../transforms/potTransform";
-import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
-import messagesReducer, { MessagesState } from "./messages";
+import messagesReducer, {
+  MessagesState
+} from "../../../features/messages/store/reducers";
 import messagesStatusReducer, {
   MessagesStatus
-} from "./messages/messagesStatus";
+} from "../../../features/messages/store/reducers/messagesStatus";
+import calendarEventsReducer, { CalendarEventsState } from "./calendarEvents";
 import organizationsReducer, { OrganizationsState } from "./organizations";
 import { paymentByRptIdReducer, PaymentByRptIdState } from "./payments";
 import servicesReducer, { ServicesState } from "./services";
