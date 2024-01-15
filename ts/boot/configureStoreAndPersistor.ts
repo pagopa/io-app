@@ -22,7 +22,7 @@ import {
   persistStore
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
-import { remoteUndefined } from "../features/bonus/bpd/model/RemoteValue";
+import { remoteUndefined } from "../common/model/RemoteValue";
 import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
 import {
   initialLollipopState,

@@ -1,11 +1,11 @@
-import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BonusesAvailable } from "../../../../../definitions/content/BonusesAvailable";
+import { BonusAvailable } from "../../../../definitions/content/BonusAvailable";
+import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,
   ID_CGN_TYPE
-} from "../utils/bonus";
-import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
+} from "../common/utils";
+import { BonusVisibilityEnum } from "../../../../definitions/content/BonusVisibility";
 
 export const contentBonusVacanzeIT = `#### Chi può richiederlo?
 

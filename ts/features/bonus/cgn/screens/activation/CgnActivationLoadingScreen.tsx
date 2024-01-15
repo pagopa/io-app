@@ -7,7 +7,7 @@ import {
   cgnActivationCancel,
   cgnRequestActivation
 } from "../../store/actions/activation";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import I18n from "../../../../../i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &

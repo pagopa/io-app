@@ -12,7 +12,7 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../utils/showToast";
-import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import {
   FlashAnimatedComponent,
   FlashAnimationState

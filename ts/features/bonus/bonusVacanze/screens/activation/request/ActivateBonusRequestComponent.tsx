@@ -11,7 +11,7 @@ import { EdgeBorderComponent } from "../../../../../../components/screens/EdgeBo
 import I18n from "../../../../../../i18n";
 import { BonusCompositionDetails } from "../../../components/keyValueTable/BonusCompositionDetails";
 import { FamilyComposition } from "../../../components/keyValueTable/FamilyComposition";
-import { FooterTwoButtons } from "../../../components/markdown/FooterTwoButtons";
+import { FooterTwoButtons } from "../../../../../../components/markdown/FooterTwoButtons";
 import { ActivateBonusDiscrepancies } from "./ActivateBonusDiscrepancies";
 import { ActivateBonusReminder } from "./ActivateBonusReminder";
 import { ActivateBonusTitle } from "./ActivateBonusTitle";

@@ -10,7 +10,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../model/RemoteValue";
+} from "../../../../../../../common/model/RemoteValue";
 import { IbanStatus } from "../../../../saga/networking/patchCitizenIban";
 import { bpdLoadActivationStatus } from "../../../actions/details";
 import {

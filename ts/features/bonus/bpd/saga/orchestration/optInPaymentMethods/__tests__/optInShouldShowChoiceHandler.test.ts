@@ -11,7 +11,10 @@ import {
   getBPDMethodsVisibleInWalletSelector,
   pagoPaCreditCardWalletV1Selector
 } from "../../../../../../../store/reducers/wallet/wallets";
-import { remoteReady, remoteUndefined } from "../../../../model/RemoteValue";
+import {
+  remoteReady,
+  remoteUndefined
+} from "../../../../../../../common/model/RemoteValue";
 import {
   BpdActivationPayload,
   bpdLoadActivationStatus

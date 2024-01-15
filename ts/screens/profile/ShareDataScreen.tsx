@@ -8,7 +8,7 @@ import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLar
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";

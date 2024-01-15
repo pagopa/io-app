@@ -1,7 +1,7 @@
 import { StackActions, useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../navigation/params";

@@ -14,12 +14,12 @@ import { navigateBack } from "../../../../../store/actions/navigation";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import {
   isError,
   isLoading,
   isUndefined
-} from "../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { loadAbi } from "../../bancomat/store/actions";
 import { abiListSelector, abiSelector } from "../../store/abi";
 import { SearchBankComponent } from "./SearchBankComponent";

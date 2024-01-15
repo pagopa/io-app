@@ -11,7 +11,7 @@ import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../../i18n";
 import { openWebUrl } from "../../../../../../utils/url";
-import { FooterTwoButtons } from "../../../../bonusVacanze/components/markdown/FooterTwoButtons";
+import { FooterTwoButtons } from "../../../../../../components/markdown/FooterTwoButtons";
 import { dpr28Dec2000Url } from "../../../../../../urls";
 import { DeclarationEntry } from "./DeclarationEntry";
 

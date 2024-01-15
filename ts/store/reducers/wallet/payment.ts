@@ -10,7 +10,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../features/bonus/bpd/model/RemoteValue";
+} from "../../../common/model/RemoteValue";
 import { walletAddPaypalRefreshPMToken } from "../../../features/wallet/onboarding/paypal/store/actions";
 import { PaymentManagerToken } from "../../../types/pagopa";
 import { PotFromActions } from "../../../types/utils";

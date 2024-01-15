@@ -6,7 +6,7 @@ import { HSpacer } from "@pagopa/io-app-design-system";
 import { Dispatch } from "../../store/actions/types";
 import { logoutRequest } from "../../store/actions/authentication";
 import I18n from "../../i18n";
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../LoadingErrorComponent";
 import BaseScreenComponent from "./BaseScreenComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps>;

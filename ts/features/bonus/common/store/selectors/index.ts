@@ -1,45 +1,20 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
-import { getType } from "typesafe-actions";
 import { BonusAvailable } from "../../../../../../definitions/content/BonusAvailable";
 import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
-import { clearCache } from "../../../../../store/actions/profile";
-import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+
+import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
+import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
+import { servicesByIdSelector } from "../../../../../store/reducers/entities/services/servicesById";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,
   mapBonusIdFeatureFlag
-} from "../../utils/bonus";
-import { loadAvailableBonuses } from "../actions/bonusVacanze";
-
-import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
-import { servicesByIdSelector } from "../../../../../store/reducers/entities/services/servicesById";
-import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
-
-export type AvailableBonusTypesState = pot.Pot<BonusesAvailable, Error>;
-
-const INITIAL_STATE: AvailableBonusTypesState = pot.none;
-
-const reducer = (
-  state: AvailableBonusTypesState = INITIAL_STATE,
-  action: Action
-): AvailableBonusTypesState => {
-  switch (action.type) {
-    // available bonuses
-    case getType(loadAvailableBonuses.request):
-      return pot.toLoading(state);
-    case getType(loadAvailableBonuses.success):
-      return pot.some(action.payload);
-    case getType(loadAvailableBonuses.failure):
-      return pot.toError(state, action.payload);
-    case getType(clearCache):
-      return INITIAL_STATE;
-  }
-  return state;
-};
+} from "../../utils";
+import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 
 /**
  * return all available bonus: visibile, hidden or experimental
@@ -144,5 +119,3 @@ export const bonusVacanzeLogo = createSelector(
       )
     )
 );
-
-export default reducer;

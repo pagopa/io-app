@@ -14,7 +14,7 @@ import { useLegacyIOBottomSheetModal } from "../../../../../../../utils/hooks/bo
 import {
   cancelButtonProps,
   errorButtonProps
-} from "../../../../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../../../components/buttons/ButtonConfigurations";
 import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
 import { UnsubscribeComponent } from "./UnsubscribeComponent";
 

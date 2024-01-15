@@ -29,13 +29,13 @@ import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { SelectionBox } from "../../../components/wallet/SelectionBox";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
-import { confirmButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import {
   getValueOrElse,
   isError,
   isLoading,
   isReady
-} from "../../../features/bonus/bpd/model/RemoteValue";
+} from "../../../common/model/RemoteValue";
 import { BrandImage } from "../../../features/wallet/component/card/BrandImage";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";

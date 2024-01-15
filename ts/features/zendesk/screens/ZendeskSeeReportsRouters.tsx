@@ -12,7 +12,7 @@ import {
   getZendeskIdentity,
   getZendeskConfig
 } from "../../../utils/supportAssistance";
-import { LoadingErrorComponent } from "../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import ZendeskEmptyTicketsComponent from "../components/ZendeskEmptyTicketsComponent";
 import { ZendeskParamsList } from "../navigation/params";
 import {

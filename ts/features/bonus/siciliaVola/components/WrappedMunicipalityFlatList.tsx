@@ -7,7 +7,11 @@ import { useContext } from "react";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableMunicipalitiesSelector } from "../store/reducers/voucherGeneration/availableMunicipalities";
-import { isError, isLoading, isReady } from "../../bpd/model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../../common/model/RemoteValue";
 import { toArray } from "../../../../store/helpers/indexer";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Municipality } from "../types/SvVoucherRequest";

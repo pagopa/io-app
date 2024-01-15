@@ -9,14 +9,14 @@ import I18n from "../../../../../i18n";
 import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
+import { ID_CGN_TYPE } from "../../../common/utils";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
-} from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CGN_TYPE } from "../../../bonusVacanze/utils/bonus";
+} from "../../../common/store/selectors";
 import { cgnActivationStart } from "../../store/actions/activation";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &

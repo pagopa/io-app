@@ -7,7 +7,7 @@ import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
 import { deleteAllPaymentMethodsByFunctionSelector } from "../../../../../store/reducers/wallet/wallets";
 import { showToast } from "../../../../../utils/showToast";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import RetryAfterDeletionFailsComponent from "../../components/optInPaymentMethods/RetryAfterDeletionFailsComponent";
 import ThankYouSuccessComponent from "../../components/optInPaymentMethods/ThankYouSuccessComponent";
 import {
@@ -15,7 +15,7 @@ import {
   isLoading,
   isReady,
   isUndefined
-} from "../../model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { optInPaymentMethodsDeletionChoice } from "../../store/actions/optInPaymentMethods";
 import { optInStatusSelector } from "../../store/reducers/details/activation";
 

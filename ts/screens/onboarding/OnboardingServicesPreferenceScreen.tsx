@@ -10,7 +10,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";

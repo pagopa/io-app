@@ -8,7 +8,7 @@ import { H3 } from "../../../components/core/typography/H3";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import customVariables from "../../../theme/variables";
-import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { H4 } from "../../../components/core/typography/H4";
 import { FCI_ROUTES } from "../navigation/routes";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
