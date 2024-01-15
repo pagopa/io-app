@@ -1,14 +1,18 @@
-import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import { AsyncStorage } from "react-native";
+import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
+import { WalletPaymentFailure } from "../../types/failure";
 import {
   walletPaymentAuthorization,
   walletPaymentCalculateFees,
@@ -19,14 +23,11 @@ import {
   walletPaymentGetUserWallets
 } from "../actions/networking";
 import {
+  walletPaymentInitState,
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
-  walletPaymentInitState,
   walletPaymentResetPickedPsp
 } from "../actions/orchestration";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletPaymentFailure } from "../../types/failure";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
 export type WalletPaymentState = {
   rptId?: RptId;
@@ -44,6 +45,7 @@ export type WalletPaymentState = {
     NetworkError | WalletPaymentFailure
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
+  tentativeByRptId: Record<RptId, number>;
 };
 
 const INITIAL_STATE: WalletPaymentState = {
@@ -54,7 +56,8 @@ const INITIAL_STATE: WalletPaymentState = {
   chosenPaymentMethod: O.none,
   chosenPsp: O.none,
   transaction: pot.none,
-  authorizationUrl: pot.none
+  authorizationUrl: pot.none,
+  tentativeByRptId: {}
 };
 
 // eslint-disable-next-line complexity
@@ -64,14 +67,21 @@ const reducer = (
 ): WalletPaymentState => {
   switch (action.type) {
     case getType(walletPaymentInitState):
-      return INITIAL_STATE;
+      return {
+        ...INITIAL_STATE,
+        tentativeByRptId: state.tentativeByRptId
+      };
 
     // Payment verification and details
     case getType(walletPaymentGetDetails.request):
       return {
         ...state,
         rptId: action.payload,
-        paymentDetails: pot.toLoading(state.paymentDetails)
+        paymentDetails: pot.toLoading(state.paymentDetails),
+        tentativeByRptId: {
+          ...state.tentativeByRptId,
+          [action.payload]: (state.tentativeByRptId[action.payload] || 0) + 1
+        }
       };
     case getType(walletPaymentGetDetails.success):
       return {
@@ -202,4 +212,18 @@ const reducer = (
   return state;
 };
 
-export default reducer;
+const CURRENT_REDUX_PAYMENT_STORE_VERSION = -1;
+
+const persistConfig: PersistConfig = {
+  key: "payment",
+  storage: AsyncStorage,
+  version: CURRENT_REDUX_PAYMENT_STORE_VERSION,
+  whitelist: ["tentativeByRptId"]
+};
+
+const persistedReducer = persistReducer<WalletPaymentState, Action>(
+  persistConfig,
+  reducer
+);
+
+export default persistedReducer;
