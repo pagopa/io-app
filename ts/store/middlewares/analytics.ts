@@ -2,16 +2,19 @@
 // disabled in order to allows comments between the switch
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import {
-  loadAllBonusActivations,
-  loadAvailableBonuses
-} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { loadAllBonusActivations } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
 import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
+import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
 import trackEuCovidCertificateActions from "../../features/euCovidCert/analytics/index";
 import trackFciAction from "../../features/fci/analytics";
+import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
+import {
+  migrateToPaginatedMessages,
+  removeMessages
+} from "../../features/messages/store/actions";
 import { trackBPayAction } from "../../features/wallet/onboarding/bancomatPay/analytics";
 import { trackCoBadgeAction } from "../../features/wallet/onboarding/cobadge/analytics";
 import trackPaypalOnboarding from "../../features/wallet/onboarding/paypal/analytics/index";
@@ -46,10 +49,6 @@ import {
   identificationStart,
   identificationSuccess
 } from "../actions/identification";
-import {
-  migrateToPaginatedMessages,
-  removeMessages
-} from "../../features/messages/store/actions";
 import {
   notificationsInstallationTokenRegistered,
   updateNotificationInstallationFailure,
@@ -109,7 +108,6 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../actions/wallet/wallets";
-import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 

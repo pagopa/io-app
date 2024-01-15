@@ -19,13 +19,13 @@ import BaseScreenComponent, {
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { LightModalContextInterface } from "../../../components/ui/LightModal";
 import { PspComponent } from "../../../components/wallet/payment/PspComponent";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
+import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
   isError,
   isLoading
-} from "../../../features/bonus/bpd/model/RemoteValue";
+} from "../../../common/model/RemoteValue";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";

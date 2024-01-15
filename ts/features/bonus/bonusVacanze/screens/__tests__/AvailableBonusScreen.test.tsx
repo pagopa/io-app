@@ -11,11 +11,11 @@ import { appReducer } from "../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { availableBonuses, bpdBonus } from "../../__mock__/availableBonuses";
+import { availableBonuses, bpdBonus } from "../../../__mock__/availableBonuses";
 import BONUSVACANZE_ROUTES from "../../navigation/routes";
-import { loadAvailableBonuses } from "../../store/actions/bonusVacanze";
-import { ID_BPD_TYPE } from "../../utils/bonus";
+import { ID_BPD_TYPE } from "../../../common/utils";
 import AvailableBonusScreen from "../AvailableBonusScreen";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 
 jest.mock("../../../../../config", () => ({ bpdEnabled: true }));
 

@@ -29,7 +29,7 @@ import {
 } from "../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { walletAddCoBadgeStart } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &

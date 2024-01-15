@@ -6,7 +6,7 @@ import {
   RawBancomatPaymentMethod
 } from "../../../../../../types/pagopa";
 import { enhanceBancomat } from "../../../../../../utils/paymentMethod";
-import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../../../../../../common/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
 import { addBancomatToWallet, walletAddBancomatStart } from "../actions";
 

@@ -10,7 +10,7 @@ import {
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../bonus/bpd/model/RemoteValue";
+} from "../../../../common/model/RemoteValue";
 import { UIMessageId } from "../../types";
 
 export type MessagePrecondition = {

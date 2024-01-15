@@ -14,7 +14,7 @@ import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenCo
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";

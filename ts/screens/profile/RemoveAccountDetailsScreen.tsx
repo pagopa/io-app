@@ -16,7 +16,7 @@ import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { shufflePinPadOnPayment } from "../../config";
-import { LoadingErrorComponent } from "../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
 import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";

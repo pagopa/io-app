@@ -10,7 +10,7 @@ import FooterWithButtons from "../ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../buttons/ButtonConfigurations";
 import { OutcomeCode } from "../../types/outcomeCode";
 import { getFullLocale } from "../../utils/locale";
 

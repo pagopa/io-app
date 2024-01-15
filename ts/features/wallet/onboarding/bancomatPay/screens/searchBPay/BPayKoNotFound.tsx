@@ -10,7 +10,7 @@ import BaseScreenComponent from "../../../../../../components/screens/BaseScreen
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { cancelButtonProps } from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../../components/buttons/ButtonConfigurations";
 import { walletAddBPayCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &

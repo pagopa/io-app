@@ -48,20 +48,12 @@ import {
   AvailableBonusItemState
 } from "../components/AvailableBonusItem";
 import { navigateToBonusRequestInformation } from "../navigation/action";
-import { loadAvailableBonuses } from "../store/actions/bonusVacanze";
-import {
-  experimentalAndVisibleBonus,
-  isAvailableBonusLoadingSelector,
-  isAvailableBonusNoneErrorSelector,
-  serviceFromAvailableBonusSelector,
-  supportedAvailableBonusSelector
-} from "../store/reducers/availableBonusesTypes";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,
   ID_CDC_TYPE,
   ID_CGN_TYPE
-} from "../utils/bonus";
+} from "../../common/utils";
 
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
@@ -71,6 +63,14 @@ import {
   showServiceDetails
 } from "../../../../store/actions/services";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import {
+  experimentalAndVisibleBonus,
+  isAvailableBonusLoadingSelector,
+  isAvailableBonusNoneErrorSelector,
+  serviceFromAvailableBonusSelector,
+  supportedAvailableBonusSelector
+} from "../../common/store/selectors";
+import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

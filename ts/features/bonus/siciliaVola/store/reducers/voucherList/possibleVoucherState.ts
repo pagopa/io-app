@@ -8,7 +8,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { StatoVoucherBeanList } from "../../../../../../../definitions/api_sicilia_vola/StatoVoucherBeanList";
 import { NetworkError } from "../../../../../../utils/errors";

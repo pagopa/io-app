@@ -4,18 +4,18 @@ import FeaturedCardCarousel from "../card/FeaturedCardCarousel";
 import { appReducer } from "../../../../store/reducers";
 import { bpdLoadActivationStatus } from "../../../bonus/bpd/store/actions/details";
 import { GlobalState } from "../../../../store/reducers/types";
-import { loadAvailableBonuses } from "../../../bonus/bonusVacanze/store/actions/bonusVacanze";
-import { availableBonuses } from "../../../bonus/bonusVacanze/__mock__/availableBonuses";
-import * as bonus from "../../../bonus/bonusVacanze/utils/bonus";
+import { availableBonuses } from "../../../bonus/__mock__/availableBonuses";
+import * as bonus from "../../../bonus/common/utils";
 import {
   ID_BONUS_VACANZE_TYPE,
   ID_BPD_TYPE,
   ID_CGN_TYPE
-} from "../../../bonus/bonusVacanze/utils/bonus";
+} from "../../../bonus/common/utils";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 
 jest.mock("react-native-share", () => jest.fn());
 describe("FeaturedCardCarousel", () => {

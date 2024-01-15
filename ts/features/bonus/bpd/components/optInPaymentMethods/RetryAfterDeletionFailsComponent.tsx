@@ -7,7 +7,7 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../components/buttons/ButtonConfigurations";
 import {
   optInPaymentMethodsCompleted,
   optInPaymentMethodsDeletionChoice
