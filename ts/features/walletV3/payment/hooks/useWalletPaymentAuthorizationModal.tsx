@@ -7,7 +7,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletAnalyticsResetPaymentTentative } from "../../analytics/store/actions";
+import { walletAnalyticsStorePaymentAttempt } from "../../analytics/store/actions";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 import {
   WalletPaymentAuthorizePayload,
@@ -56,7 +56,7 @@ export const useWalletPaymentAuthorizationModal = ({
           paymentDetailsPot,
           pot.toOption,
           O.map(({ rptId }) => rptId),
-          O.map(walletAnalyticsResetPaymentTentative),
+          O.map(walletAnalyticsStorePaymentAttempt),
           O.map(dispatch)
         );
       }

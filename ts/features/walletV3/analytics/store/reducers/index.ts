@@ -4,16 +4,16 @@ import { getType } from "typesafe-actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { Action } from "../../../../../store/actions/types";
 import {
-  walletAnalyticsStorePaymentTentative,
-  walletAnalyticsResetPaymentTentative
+  walletAnalyticsStorePaymentAttempt,
+  walletAnalyticsResetPaymentAttempt
 } from "../actions";
 
 export type WalletAnalyticsState = {
-  paymentTentativeByRptId: Record<RptId, number>;
+  paymentAttemptsByRptId: Record<RptId, number>;
 };
 
 const INITIAL_STATE: WalletAnalyticsState = {
-  paymentTentativeByRptId: {}
+  paymentAttemptsByRptId: {}
 };
 
 // eslint-disable-next-line complexity
@@ -24,24 +24,22 @@ const reducer = (
 ): WalletAnalyticsState => {
   switch (action.type) {
     // Payment tentative
-    case getType(walletAnalyticsStorePaymentTentative):
-      const currentTentative =
-        state.paymentTentativeByRptId[action.payload] || 0;
+    case getType(walletAnalyticsStorePaymentAttempt):
+      const currentAttempts = state.paymentAttemptsByRptId[action.payload] || 0;
 
       return {
         ...state,
-        paymentTentativeByRptId: {
-          ...state.paymentTentativeByRptId,
-          [action.payload]: currentTentative + 1
+        paymentAttemptsByRptId: {
+          ...state.paymentAttemptsByRptId,
+          [action.payload]: currentAttempts + 1
         }
       };
-    case getType(walletAnalyticsResetPaymentTentative):
-      const { [action.payload]: _, ...tentatives } =
-        state.paymentTentativeByRptId;
+    case getType(walletAnalyticsResetPaymentAttempt):
+      const { [action.payload]: _, ...attempts } = state.paymentAttemptsByRptId;
 
       return {
         ...state,
-        paymentTentativeByRptId: tentatives
+        paymentAttemptsByRptId: attempts
       };
   }
   return state;
@@ -53,7 +51,7 @@ const persistConfig: PersistConfig = {
   key: "wallet_analytics",
   storage: AsyncStorage,
   version: CURRENT_REDUX_PAYMENT_ANALYTICS_STORE_VERSION,
-  whitelist: ["paymentTentativeByRptId"]
+  whitelist: ["paymentAttemptsByRptId"]
 };
 
 const persistedReducer = persistReducer<WalletAnalyticsState, Action>(

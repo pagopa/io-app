@@ -8,18 +8,18 @@ import { walletPaymentDetailsSelector } from "../../../payment/store/selectors";
 const selectWalletAnalytics = (state: GlobalState) =>
   state.features.wallet.analytics;
 
-export const walletPaymentTentativeByRptIdSelector = createSelector(
+export const walletPaymentAttemptsByRptIdSelector = createSelector(
   selectWalletAnalytics,
-  state => state.paymentTentativeByRptId
+  state => state.paymentAttemptsByRptId
 );
 
 export const walletPaymentTentativeSelector = createSelector(
-  [walletPaymentTentativeByRptIdSelector, walletPaymentDetailsSelector],
-  (tentativeByRptId, paymentDetailsPot) =>
+  [walletPaymentAttemptsByRptIdSelector, walletPaymentDetailsSelector],
+  (attemptsByRptId, paymentDetailsPot) =>
     pipe(
       paymentDetailsPot,
       pot.toOption,
-      O.map(({ rptId }) => tentativeByRptId[rptId]),
+      O.map(({ rptId }) => attemptsByRptId[rptId]),
       O.toUndefined
     )
 );

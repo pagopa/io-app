@@ -51,7 +51,7 @@ import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/failure";
-import { walletAnalyticsStorePaymentTentative } from "../../analytics/store/actions";
+import { walletAnalyticsStorePaymentAttempt } from "../../analytics/store/actions";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -134,7 +134,7 @@ const WalletPaymentDetailContent = ({
   });
 
   const handleGoToPayment = () => {
-    dispatch(walletAnalyticsStorePaymentTentative(rptId));
+    dispatch(walletAnalyticsStorePaymentAttempt(rptId));
     navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
     });

@@ -1,14 +1,14 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
-export const walletAnalyticsStorePaymentTentative = createStandardAction(
-  "WALLET_ANALYTICS_STORE_PAYMENT_TENTATIVE"
+export const walletAnalyticsStorePaymentAttempt = createStandardAction(
+  "WALLET_ANALYTICS_STORE_PAYMENT_ATTEMPT"
 )<RptId>();
 
-export const walletAnalyticsResetPaymentTentative = createStandardAction(
-  "WALLET_ANALYTICS_RESET_PAYMENT_TENTATIVE"
+export const walletAnalyticsResetPaymentAttempt = createStandardAction(
+  "WALLET_ANALYTICS_RESET_PAYMENT_ATTEMPT"
 )<RptId>();
 
 export type WalletAnalyticsActions =
-  | ActionType<typeof walletAnalyticsStorePaymentTentative>
-  | ActionType<typeof walletAnalyticsResetPaymentTentative>;
+  | ActionType<typeof walletAnalyticsStorePaymentAttempt>
+  | ActionType<typeof walletAnalyticsResetPaymentAttempt>;
