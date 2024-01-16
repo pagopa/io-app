@@ -108,11 +108,6 @@ export function* watchMessagesSaga(
   yield* fork(watchLoadMessageData);
 
   yield* takeLatest(
-    getType(getMessageDataAction.request),
-    handleLoadMessageData
-  );
-
-  yield* takeLatest(
     migrateToPaginatedMessages.request,
     handleMigrateToPagination,
     backendClient.upsertMessageStatusAttributes
