@@ -47,7 +47,7 @@ function validatePayload(
 
 export function* handleUpsertMessageStatusAttribues(
   putMessage: BackendClient["upsertMessageStatusAttributes"],
-  action: ActionType<(typeof upsertMessageStatusAttributes)["request"]>
+  action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
   try {
     const body = validatePayload(action.payload);
