@@ -6,7 +6,6 @@ import {
   takeEvery,
   takeLatest
 } from "typed-redux-saga/macro";
-import { getType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
@@ -52,19 +51,19 @@ export function* watchMessagesSaga(
   bearerToken: SessionToken
 ): SagaIterator {
   yield* takeLatest(
-    getType(loadNextPageMessages.request),
+    loadNextPageMessages.request,
     handleLoadNextPageMessages,
     backendClient.getMessages
   );
 
   yield* takeLatest(
-    getType(loadPreviousPageMessages.request),
+    loadPreviousPageMessages.request,
     handleLoadPreviousPageMessages,
     backendClient.getMessages
   );
 
   yield* takeLatest(
-    getType(reloadAllMessages.request),
+    reloadAllMessages.request,
     handleReloadAllMessages,
     backendClient.getMessages
   );
@@ -125,10 +124,7 @@ export function* watchMessagesSaga(
 }
 
 function* watchLoadMessageData() {
-  yield* takeLatest(
-    getType(getMessageDataAction.request),
-    handleLoadMessageData
-  );
+  yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
 
   const retryDataOrUndefined = yield* select(
     retryDataAfterFastLoginSessionExpirationSelector
