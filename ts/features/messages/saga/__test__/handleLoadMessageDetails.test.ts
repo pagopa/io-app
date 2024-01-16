@@ -9,26 +9,28 @@ import {
   paymentValidInvalidAfterDueDate,
   successLoadMessageDetails
 } from "../../__mocks__/message";
-import { testTryLoadMessageDetails } from "../watchLoadMessageDetails";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
-
-const tryLoadMessageDetails = testTryLoadMessageDetails!;
+import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
+import { BackendClient } from "../../../../api/__mocks__/backend";
 
 const id = paymentValidInvalidAfterDueDate.id as UIMessageId;
 
-describe("tryReloadAllMessages", () => {
+describe("handleLoadMessageDetails", () => {
   const getMessagesPayload = { id };
 
   describe("when the response is successful", () => {
     it(`should put ${getType(
       action.success
     )} with the parsed messages and pagination data`, () => {
-      const getMessage = jest.fn();
-      testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
+      testSaga(
+        handleLoadMessageDetails,
+        BackendClient.getMessage,
+        action.request({ id })
+      )
         .next()
         .call(
           withRefreshApiCall,
-          getMessage(getMessagesPayload),
+          BackendClient.getMessages(getMessagesPayload),
           action.request({ id })
         )
         // .call(getMessage, getMessagesPayload)
@@ -41,12 +43,15 @@ describe("tryReloadAllMessages", () => {
 
   describe("when the response is an Error", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
-      const getMessage = jest.fn();
-      testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
+      testSaga(
+        handleLoadMessageDetails,
+        BackendClient.getMessage,
+        action.request({ id })
+      )
         .next()
         .call(
           withRefreshApiCall,
-          getMessage(getMessagesPayload),
+          BackendClient.getMessages(getMessagesPayload),
           action.request({ id })
         )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
@@ -58,12 +63,13 @@ describe("tryReloadAllMessages", () => {
 
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
-      const getMessage = jest.fn().mockImplementation(() => {
-        throw new Error("I made a boo-boo, sir!");
-      });
-
-      testSaga(tryLoadMessageDetails(getMessage), action.request({ id }))
+      testSaga(
+        handleLoadMessageDetails,
+        BackendClient.getMessage,
+        action.request({ id })
+      )
         .next()
+        .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({
             id,
