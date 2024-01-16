@@ -11,8 +11,12 @@ import walletDetailsReducer, {
 import walletTransactionReducer, {
   WalletTransactionState
 } from "../../../transaction/store";
+import walletAnalyticsReducer, {
+  WalletAnalyticsState
+} from "../../../analytics/store/reducers";
 
 export type WalletState = {
+  analytics: WalletAnalyticsState;
   onboarding: WalletOnboardingState;
   details: WalletDetailsState;
   payment: WalletPaymentState;
@@ -20,6 +24,7 @@ export type WalletState = {
 };
 
 const walletReducer = combineReducers({
+  analytics: walletAnalyticsReducer,
   onboarding: walletOnboardingReducer,
   details: walletDetailsReducer,
   payment: walletPaymentReducer,
