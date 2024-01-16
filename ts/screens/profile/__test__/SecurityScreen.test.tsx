@@ -24,7 +24,10 @@ describe("Test SecurityScreen", () => {
 
     expect(component).not.toBeNull();
     expect(
-      component.queryByText(I18n.t("profile.security.title"))
+      // With the new navbar we have two titles.
+      // The second one is the larger one.
+      // The first one is the smaller one that is shown when scrolling.
+      component.queryAllByText(I18n.t("profile.security.title"))[1]
     ).not.toBeNull();
     expect(
       component.queryByText(I18n.t("profile.security.subtitle"))
@@ -36,7 +39,10 @@ describe("Test SecurityScreen", () => {
     expect(component).not.toBeNull();
     expect(component.queryByTestId("reset-unlock-code")).not.toBeNull();
     expect(
-      component.queryByText(I18n.t("profile.security.title"))
+      // With the new navbar we have two titles.
+      // The second one is the larger one.
+      // The first one is the smaller one that is shown when scrolling.
+      component.queryAllByText(I18n.t("profile.security.title"))[1]
     ).not.toBeNull();
     expect(
       component.queryByText(I18n.t("profile.security.subtitle"))
