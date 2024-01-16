@@ -1,22 +1,23 @@
 import { combineReducers } from "redux";
+import { PersistPartial } from "redux-persist";
+import walletAnalyticsReducer, {
+  WalletAnalyticsState
+} from "../../../analytics/store/reducers";
+import walletDetailsReducer, {
+  WalletDetailsState
+} from "../../../details/store";
 import walletOnboardingReducer, {
   WalletOnboardingState
 } from "../../../onboarding/store";
 import walletPaymentReducer, {
   WalletPaymentState
 } from "../../../payment/store/reducers";
-import walletDetailsReducer, {
-  WalletDetailsState
-} from "../../../details/store";
 import walletTransactionReducer, {
   WalletTransactionState
 } from "../../../transaction/store";
-import walletAnalyticsReducer, {
-  WalletAnalyticsState
-} from "../../../analytics/store/reducers";
 
 export type WalletState = {
-  analytics: WalletAnalyticsState;
+  analytics: WalletAnalyticsState & PersistPartial;
   onboarding: WalletOnboardingState;
   details: WalletDetailsState;
   payment: WalletPaymentState;
