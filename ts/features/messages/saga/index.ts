@@ -64,12 +64,6 @@ export function* watchMessagesSaga(
   );
 
   yield* takeLatest(
-    getType(loadPreviousPageMessages.request),
-    handleLoadPreviousPageMessages,
-    backendClient.getMessages
-  );
-
-  yield* takeLatest(
     getType(reloadAllMessages.request),
     handleReloadAllMessages,
     backendClient.getMessages
