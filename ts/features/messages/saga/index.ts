@@ -42,6 +42,11 @@ import { handleMigrateToPagination } from "./handleMigrateToPagination";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
 
+/**
+ * Handle messages requests
+ * @param backendClient
+ * @param bearerToken
+ */
 export function* watchMessagesSaga(
   backendClient: BackendClient,
   bearerToken: SessionToken
