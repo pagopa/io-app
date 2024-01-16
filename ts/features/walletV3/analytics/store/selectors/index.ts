@@ -13,7 +13,7 @@ export const walletPaymentAttemptsByRptIdSelector = createSelector(
   state => state.paymentAttemptsByRptId
 );
 
-export const walletPaymentTentativeSelector = createSelector(
+export const walletPaymentAttemptSelector = createSelector(
   [walletPaymentAttemptsByRptIdSelector, walletPaymentDetailsSelector],
   (attemptsByRptId, paymentDetailsPot) =>
     pipe(
