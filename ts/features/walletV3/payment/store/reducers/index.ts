@@ -1,7 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { AsyncStorage } from "react-native";
-import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
@@ -45,7 +43,6 @@ export type WalletPaymentState = {
     NetworkError | WalletPaymentFailure
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  tentativeByRptId: Record<RptId, number>;
 };
 
 const INITIAL_STATE: WalletPaymentState = {
@@ -56,8 +53,7 @@ const INITIAL_STATE: WalletPaymentState = {
   chosenPaymentMethod: O.none,
   chosenPsp: O.none,
   transaction: pot.none,
-  authorizationUrl: pot.none,
-  tentativeByRptId: {}
+  authorizationUrl: pot.none
 };
 
 // eslint-disable-next-line complexity
@@ -68,8 +64,7 @@ const reducer = (
   switch (action.type) {
     case getType(walletPaymentInitState):
       return {
-        ...INITIAL_STATE,
-        tentativeByRptId: state.tentativeByRptId
+        ...INITIAL_STATE
       };
 
     // Payment verification and details
@@ -77,11 +72,13 @@ const reducer = (
       return {
         ...state,
         rptId: action.payload,
-        paymentDetails: pot.toLoading(state.paymentDetails),
+        paymentDetails: pot.toLoading(state.paymentDetails)
+        /*
         tentativeByRptId: {
           ...state.tentativeByRptId,
           [action.payload]: (state.tentativeByRptId[action.payload] || 0) + 1
         }
+        */
       };
     case getType(walletPaymentGetDetails.success):
       return {
@@ -212,18 +209,4 @@ const reducer = (
   return state;
 };
 
-const CURRENT_REDUX_PAYMENT_STORE_VERSION = -1;
-
-const persistConfig: PersistConfig = {
-  key: "payment",
-  storage: AsyncStorage,
-  version: CURRENT_REDUX_PAYMENT_STORE_VERSION,
-  whitelist: ["tentativeByRptId"]
-};
-
-const persistedReducer = persistReducer<WalletPaymentState, Action>(
-  persistConfig,
-  reducer
-);
-
-export default persistedReducer;
+export default reducer;
