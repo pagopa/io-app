@@ -64,7 +64,7 @@ import {
 } from "../features/walletV3/transaction/navigation/navigator";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import { AndroidMediaPermissionRequestScreen } from "../screens/misc/AndroidMediaPermissionRequestScreen";
+import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -156,8 +156,8 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.ANDROID_MEDIA_PERMISSIONS}
-        component={AndroidMediaPermissionRequestScreen}
+        name={ROUTES.GALLERY_PERMISSION_INSTRUCTIONS}
+        component={GalleryPermissionInstructionsScreen}
         options={{
           gestureEnabled: isGestureEnabled
         }}

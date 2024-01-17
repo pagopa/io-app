@@ -3,12 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Text as NBButtonText } from "native-base";
 import React from "react";
-import {
-  Alert,
-  Dimensions,
-  PermissionsAndroid,
-  StyleSheet
-} from "react-native";
+import { Alert, Dimensions, StyleSheet } from "react-native";
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -36,7 +31,7 @@ import {
   saveCalendarEvent,
   searchEventInCalendar
 } from "../../../../utils/calendar";
-import { requestIOAndroidPermission } from "../../../../utils/permission";
+import { requestWriteCalendarPermission } from "../../../../utils/permission";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import SelectCalendarModal from "../../../../components/SelectCalendarModal";
@@ -248,14 +243,11 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       return;
     }
 
-    await requestIOAndroidPermission(
-      PermissionsAndroid.PERMISSIONS.WRITE_CALENDAR,
-      {
-        title: I18n.t("permissionRationale.calendar.title"),
-        message: I18n.t("permissionRationale.calendar.message"),
-        buttonPositive: I18n.t("global.buttons.choose")
-      }
-    );
+    await requestWriteCalendarPermission({
+      title: I18n.t("permissionRationale.calendar.title"),
+      message: I18n.t("permissionRationale.calendar.message"),
+      buttonPositive: I18n.t("global.buttons.choose")
+    });
 
     // Check the authorization status
     void checkAndRequestPermission()

@@ -3966,15 +3966,20 @@ transaction:
       iuv: IUV
       subject: Oggetto del pagamento
 permissionRequest:
-  media:
+  gallery:
     title: Consenti a IO di accedere alle tue foto
     subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
     caption: "Ecco come:"
     step: Step {{step}}
     steps:
-      1: Vai su “Impostazioni”
-      2: Seleziona “Applicazioni”
-      3: Seleziona “IO”
-      4: Seleziona la voce relativa alle autorizzazioni
-      5: Consenti l’accesso a file e media
+      android:
+        1: Vai su “Impostazioni”
+        2: Seleziona “Applicazioni”
+        3: Seleziona “IO”
+        4: Seleziona la voce relativa alle autorizzazioni
+        5: Consenti l’accesso a file e media
+      ios:
+        1: Vai su “Impostazioni”
+        2: Seleziona “IO”
+        3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni
