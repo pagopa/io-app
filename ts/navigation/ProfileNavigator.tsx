@@ -33,6 +33,7 @@ import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlaygroun
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { useIOSelector } from "../store/hooks";
 import { isGestureEnabled } from "../utils/navigation";
+import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPaymentPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -193,6 +194,10 @@ const ProfileStackNavigator = () => {
         }}
         name={ROUTES.WALLET_PLAYGROUND}
         component={WalletPlayground}
+      />
+      <Stack.Screen
+        name={ROUTES.WALLET_PAYMENT_PLAYGROUND}
+        component={WalletPaymentPlayground}
       />
       <Stack.Screen
         name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
