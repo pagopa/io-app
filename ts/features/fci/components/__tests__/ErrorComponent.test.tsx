@@ -7,7 +7,7 @@ import ErrorComponent from "../ErrorComponent";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { Props } from "../../../fci/components/ErrorComponent";
 
@@ -104,7 +104,7 @@ const renderComponent = (props: Props) => {
     </Provider>
   );
 
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => Component,
     FCI_ROUTES.ROUTER,
     {},

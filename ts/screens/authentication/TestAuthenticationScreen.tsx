@@ -5,13 +5,13 @@ import * as React from "react";
 import { SafeAreaView, View, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { NavigationEvents } from "@react-navigation/compat";
 import {
   IOColors,
   VSpacer,
   ContentWrapper,
   Alert
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { LabelledItem } from "../../components/LabelledItem";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
@@ -128,9 +128,12 @@ const TestAuthenticationScreen = (props: Props) => {
     testID: "confirmButton"
   };
 
+  useFocusEffect(
+    React.useCallback(() => props.cleanUpLogin, [props.cleanUpLogin])
+  );
+
   return (
     <BaseScreenComponent goBack={true} headerTitle={"Test login"}>
-      <NavigationEvents onWillBlur={props.cleanUpLogin} />
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView>
           <ContentWrapper>

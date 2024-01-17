@@ -9,12 +9,11 @@ import {
   defaultRequestPayload,
   successReloadMessagesPayload
 } from "../../__mocks__/messages";
-import { testTryLoadPreviousPageMessages } from "../watchReloadAllMessages";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { handleReloadAllMessages } from "../handleReloadAllMessages";
+import { BackendClient } from "../../../../api/__mocks__/backend";
 
-const tryReloadAllMessages = testTryLoadPreviousPageMessages!;
-
-describe("tryReloadAllMessages", () => {
+describe("handleReloadAllMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
     page_size: defaultRequestPayload.pageSize,
@@ -25,15 +24,15 @@ describe("tryReloadAllMessages", () => {
     it(`should put ${getType(
       action.success
     )} with the parsed messages and pagination data`, () => {
-      const getMessages = jest.fn();
       testSaga(
-        tryReloadAllMessages(getMessages),
+        handleReloadAllMessages,
+        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
-          getMessages(getMessagesPayload),
+          BackendClient.getMessages(getMessagesPayload),
           action.request(defaultRequestPayload)
         )
         .next(E.right({ status: 200, value: apiPayload }))
@@ -45,15 +44,15 @@ describe("tryReloadAllMessages", () => {
 
   describe("when the response is an Error", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
-      const getMessages = jest.fn();
       testSaga(
-        tryReloadAllMessages(getMessages),
+        handleReloadAllMessages,
+        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
-          getMessages(getMessagesPayload),
+          BackendClient.getMessages(getMessagesPayload),
           action.request(defaultRequestPayload)
         )
         .next(
@@ -70,14 +69,13 @@ describe("tryReloadAllMessages", () => {
 
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
-      const getMessages = () => {
-        throw new Error(defaultRequestError.error.message);
-      };
       testSaga(
-        tryReloadAllMessages(getMessages),
+        handleReloadAllMessages,
+        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
+        .throw(new Error(defaultRequestError.error.message))
         .put(
           action.failure({
             error: new Error(defaultRequestError.error.message),

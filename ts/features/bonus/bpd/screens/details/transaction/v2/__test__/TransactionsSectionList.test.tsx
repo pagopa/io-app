@@ -5,7 +5,7 @@ import { createStore, Store } from "redux";
 import { applicationChangeState } from "../../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../../../navigation/routes";
 import {
   BpdTransactionId,
@@ -157,7 +157,7 @@ const getStateWithBpdInitialized = (): Store => {
 };
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <TransactionsSectionList />,
     BPD_ROUTES.TRANSACTIONS,
     {},

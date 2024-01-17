@@ -21,7 +21,7 @@ import {
   getGenericError,
   getTimeoutError
 } from "../../../../../../../utils/errors";
-import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../../utils/testWrapper";
 import { FOUR_UNICODE_CIRCLES } from "../../../../../../../utils/wallet";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../../../navigation/routes";
 import {
@@ -261,7 +261,7 @@ const getSearchAvailableCoBadgeScreen = (abi?: string) => {
 const renderSearchAvailableCoBadgeScreen = (
   store: Store<GlobalState, Action>
 ) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <SearchAvailableCoBadgeScreen />,
     WALLET_ONBOARDING_COBADGE_ROUTES.SEARCH_AVAILABLE,
     {},

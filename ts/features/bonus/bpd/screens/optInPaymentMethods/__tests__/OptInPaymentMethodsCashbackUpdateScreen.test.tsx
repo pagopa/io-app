@@ -16,7 +16,7 @@ import {
   RawBancomatPaymentMethod,
   Wallet
 } from "../../../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as navigationAction from "../../../navigation/actions";
 import * as optInPaymentMethodsActions from "../../../store/actions/optInPaymentMethods";
 import OptInPaymentMethodsCashbackUpdateScreen from "../OptInPaymentMethodsCashbackUpdateScreen";
@@ -140,7 +140,7 @@ describe("the OptInPaymentMethodsCashbackUpdateScreen screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     OptInPaymentMethodsCashbackUpdateScreen,
     ROUTES.MAIN,
     {},

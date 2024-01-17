@@ -3,7 +3,7 @@ import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import ROUTES from "../../../../../navigation/routes";
 import CdcGenericError from "../CdcGenericError";
 import I18n from "../../../../../i18n";
@@ -55,7 +55,7 @@ describe("CdcGenericError", () => {
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store: Store<GlobalState> = createStore(appReducer, globalState as any);
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     CdcGenericError,
     ROUTES.MAIN,
     {},

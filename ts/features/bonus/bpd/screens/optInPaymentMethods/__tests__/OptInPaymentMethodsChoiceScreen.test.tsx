@@ -5,7 +5,7 @@ import { createStore } from "redux";
 import I18n from "../../../../../../i18n";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../navigation/routes";
 import OptInPaymentMethodsChoiceScreen from "../OptInPaymentMethodsChoiceScreen";
 
@@ -35,7 +35,7 @@ describe("the OptInPaymentMethodsChoiceScreen screen", () => {
 });
 
 const renderComponent = () =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <OptInPaymentMethodsChoiceScreen />,
     BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE,
     {},

@@ -8,7 +8,7 @@ import { appReducer } from "../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { getFullLocale } from "../../../../utils/locale";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { UaDonationsBanner } from "../UaDonationsBanner";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
@@ -138,7 +138,7 @@ describe("UaDonationsBanner", () => {
 });
 
 const renderComponent = (store: MockStore<GlobalState> | Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenWithNavigationStoreContext<GlobalState>(
     UaDonationsBanner,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},

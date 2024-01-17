@@ -7,7 +7,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../store/reducers/allPaginated";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { successReloadMessagesPayload } from "../../__mocks__/messages";
 
 import MessagesInbox from "../MessagesInbox";
@@ -56,7 +56,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessagesInbox>) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessagesInbox {...props} />,
       MESSAGES_ROUTES.MESSAGES_HOME,
       {},
