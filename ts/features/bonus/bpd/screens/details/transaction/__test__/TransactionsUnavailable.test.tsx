@@ -9,7 +9,7 @@ import { BackendStatus } from "../../../../../../../../definitions/content/Backe
 import { Config } from "../../../../../../../../definitions/content/Config";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../../navigation/routes";
 import TransactionsUnavailable from "../TransactionsUnavailable";
 
@@ -73,7 +73,7 @@ describe("TransactionsUnavailable component", () => {
   });
 });
 const getComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <TransactionsUnavailable />,
     BPD_ROUTES.TRANSACTIONS,
     {},

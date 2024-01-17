@@ -5,7 +5,7 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { Downloads } from "../../store/reducers/downloads";
 import { mockPdfAttachment } from "../../__mocks__/attachment";
 import I18n from "../../../../i18n";
@@ -83,7 +83,7 @@ const renderComponent = (
   } as any);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageAttachmentPreview {...props} />,
       "DUMMY",
       {},

@@ -8,7 +8,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import * as CustomNavigationActions from "../../../../../../store/actions/navigation";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../../navigation/routes";
 import CoBadgeChooseType from "../CoBadgeChooseType";
 
@@ -77,7 +77,7 @@ const getComponent = (abi?: string, legacyAddCreditCardBack?: number) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       CoBadgeChooseType,
       ROUTES.WALLET_BPAY_DETAIL,
       { abi, legacyAddCreditCardBack },
