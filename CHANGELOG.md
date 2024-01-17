@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.51.0-rc.1](https://github.com/pagopa/io-app/compare/2.51.0-rc.0...2.51.0-rc.1) (2024-01-17)
+
+
+### Features
+
+* [[IOCOM-793](https://pagopa.atlassian.net/browse/IOCOM-793)] Rename the sagas in the `features/messages/saga` folder ([#5403](https://github.com/pagopa/io-app/issues/5403)) ([b33bafb](https://github.com/pagopa/io-app/commit/b33bafb1b0b0aca84e6fd5064eac7efd867b6a17))
+
+
+### Bug Fixes
+
+* [[IABT-1515](https://pagopa.atlassian.net/browse/IABT-1515)] Fix date format in FCI data sharing screen ([#5365](https://github.com/pagopa/io-app/issues/5365)) ([a1d2b04](https://github.com/pagopa/io-app/commit/a1d2b0420b4acb579a2f478a25c1124c9107cddb))
+* [[IOCOM-645](https://pagopa.atlassian.net/browse/IOCOM-645),[IABT-1485](https://pagopa.atlassian.net/browse/IABT-1485)] Fix an Android crash when dealing with calendar events ([#5404](https://github.com/pagopa/io-app/issues/5404)) ([a320053](https://github.com/pagopa/io-app/commit/a3200538ff839ef89b0a9c9c5965f11d611eb968))
+
+
+### Chores
+
+* [[IOBP-466](https://pagopa.atlassian.net/browse/IOBP-466)] Add gallery permission request in barcode scan screen for iOS devices ([#5334](https://github.com/pagopa/io-app/issues/5334)) ([12c22e8](https://github.com/pagopa/io-app/commit/12c22e8f2fc760b34545ecc92131be78bfbd0331))
+* [[IOBP-511](https://pagopa.atlassian.net/browse/IOBP-511)] New Wallet payment playground refinement ([#5406](https://github.com/pagopa/io-app/issues/5406)) ([599a037](https://github.com/pagopa/io-app/commit/599a03758251b735b71b92386d165e05978fcb2d))
+* removes compatibility layer for react-navigation ([#5284](https://github.com/pagopa/io-app/issues/5284)) ([a09a4e5](https://github.com/pagopa/io-app/commit/a09a4e56105d804afb1b95b5fe445f89f0fd32da))
+
 ## [2.51.0-rc.0](https://github.com/pagopa/io-app/compare/2.50.0-rc.5...2.51.0-rc.0) (2024-01-16)
 
 
