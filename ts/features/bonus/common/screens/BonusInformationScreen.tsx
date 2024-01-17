@@ -45,4 +45,4 @@ const mapDispatchToProps = (_: Dispatch) => ({
   navigateBack: () => navigateBack()
 });
 
-export default connect(mapDispatchToProps)(BonusInformationScreen);
+export default connect(null, mapDispatchToProps)(BonusInformationScreen);
