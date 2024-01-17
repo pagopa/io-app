@@ -22,6 +22,7 @@ type Props = {
   children: React.ReactNode;
   fixedBottomSlot?: React.ReactNode;
   title: string;
+  titleTestID?: string;
   description?: string;
   headerActionsProp?: HeaderActionProps;
 } & SupportRequestParams;
@@ -33,6 +34,7 @@ type Props = {
  * @param children
  * @param fixedBottomSlot An optional React node that is fixed to the bottom of the screen. Useful for buttons or other actions. It will be positioned outside the main `ScrollView`.
  * @param title
+ * @param titleTestID
  * @param contextualHelp
  * @param contextualHelpMarkdown
  * @param faqCategories
@@ -42,6 +44,7 @@ export const RNavScreenWithLargeHeader = ({
   children,
   fixedBottomSlot,
   title,
+  titleTestID,
   description,
   contextualHelp,
   contextualHelpMarkdown,
@@ -100,7 +103,7 @@ export const RNavScreenWithLargeHeader = ({
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
-          <H2>{title}</H2>
+          <H2 testID={titleTestID}>{title}</H2>
         </View>
 
         {description && (
