@@ -9,7 +9,7 @@ import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import WalletHomeScreen from "../WalletHomeScreen";
 
 describe("WalletHomeScreen", () => {
@@ -48,7 +48,7 @@ const testWalletHomeScreen = (
     android: minVersion
   });
 
-  const testComponent = renderScreenFakeNavRedux<GlobalState>(
+  const testComponent = renderScreenWithNavigationStoreContext<GlobalState>(
     WalletHomeScreen,
     ROUTES.WALLET_HOME,
     {},

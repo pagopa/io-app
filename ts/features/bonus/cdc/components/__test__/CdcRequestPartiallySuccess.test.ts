@@ -3,7 +3,7 @@ import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import ROUTES from "../../../../../navigation/routes";
 import I18n from "../../../../../i18n";
 import CdcRequestPartiallySuccess from "../CdcRequestPartiallySuccess";
@@ -212,7 +212,7 @@ describe("CdcRequestPartiallySuccess", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     CdcRequestPartiallySuccess,
     ROUTES.MAIN,
     {},

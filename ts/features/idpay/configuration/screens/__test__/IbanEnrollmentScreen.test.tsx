@@ -4,7 +4,7 @@ import { interpret } from "xstate";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IDPayConfigurationRoutes } from "../../navigation/navigator";
 import { createIDPayInitiativeConfigurationMachine } from "../../xstate/machine";
 import { ConfigurationMachineContext } from "../../xstate/provider";
@@ -129,7 +129,7 @@ const renderComponent = (context?: Partial<Context>) => {
   const mockService = interpret(mockMachine);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => (
         <ConfigurationMachineContext.Provider value={mockService}>
           <IbanEnrollmentScreen />

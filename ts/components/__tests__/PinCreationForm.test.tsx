@@ -4,7 +4,7 @@ import { createStore } from "redux";
 import I18n from "../../i18n";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
-import { renderScreenFakeNavRedux } from "../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import { PinCreationForm, Props } from "../PinCreationForm";
 
 describe("PinCreationForm component", () => {
@@ -93,7 +93,7 @@ describe("PinCreationForm component", () => {
 const renderComponent = (props: Props) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
-  return renderScreenFakeNavRedux(
+  return renderScreenWithNavigationStoreContext(
     () => <PinCreationForm {...props} />,
     "DUMMY",
     {},

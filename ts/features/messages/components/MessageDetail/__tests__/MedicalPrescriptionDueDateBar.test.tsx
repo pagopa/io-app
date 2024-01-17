@@ -6,7 +6,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { toUIMessageDetails } from "../../../store/reducers/transformers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MessagePaymentExpirationInfo } from "../../../utils/messages";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { paymentValidInvalidAfterDueDate } from "../../../__mocks__/message";
 import MedicalPrescriptionDueDateBar from "../MedicalPrescriptionDueDateBar";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
@@ -85,7 +85,7 @@ const renderComponent = (
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MedicalPrescriptionDueDateBar {...props} />,
       MESSAGES_ROUTES.MESSAGE_DETAIL,
       {},

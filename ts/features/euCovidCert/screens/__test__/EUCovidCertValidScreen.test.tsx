@@ -8,7 +8,7 @@ import NavigationService from "../../../../navigation/NavigationService";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import {
   baseValidCertificate,
@@ -140,7 +140,7 @@ describe("Test EUCovidCertificateValidScreen", () => {
 });
 
 const renderComponent = (store: Store, validCertificate: ValidCertificate) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <EuCovidCertValidScreen
         validCertificate={validCertificate}
