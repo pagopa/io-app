@@ -1,8 +1,7 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import { SagaIterator } from "redux-saga";
-import { call, put, race, take, takeLatest } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
+import { call, put, race, take } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import { convertUnknownToError } from "../../../utils/errors";
 import {
@@ -14,11 +13,11 @@ import { withRefreshApiCall } from "../../fastLogin/saga/utils";
 import { SagaCallReturnType } from "../../../types/utils";
 import { trackDisclaimerLoadError } from "../analytics";
 
-export const testWorkerMessagePrecondition = isTestEnv
-  ? workerMessagePrecondition
+export const testMessagePreconditionWorker = isTestEnv
+  ? messagePreconditionWorker
   : undefined;
 
-function* workerMessagePrecondition(
+function* messagePreconditionWorker(
   getThirdPartyMessagePrecondition: ReturnType<
     BackendClient["getThirdPartyMessagePrecondition"]
   >,
@@ -50,20 +49,16 @@ function* workerMessagePrecondition(
   }
 }
 
-export function* watchMessagePrecondition(
-  getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"]
-): SagaIterator {
-  yield* takeLatest(
-    getType(getMessagePrecondition.request),
-    function* (action: ActionType<typeof getMessagePrecondition.request>) {
-      yield* race({
-        response: call(
-          workerMessagePrecondition,
-          getThirdPartyMessagePrecondition(),
-          action
-        ),
-        cancel: take(clearMessagePrecondition)
-      });
-    }
-  );
+export function* handleMessagePrecondition(
+  getThirdPartyMessagePrecondition: BackendClient["getThirdPartyMessagePrecondition"],
+  action: ActionType<typeof getMessagePrecondition.request>
+) {
+  yield* race({
+    response: call(
+      messagePreconditionWorker,
+      getThirdPartyMessagePrecondition(),
+      action
+    ),
+    cancel: take(clearMessagePrecondition)
+  });
 }

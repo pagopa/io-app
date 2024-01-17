@@ -1,6 +1,5 @@
-import { takeEvery, put, call } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { SagaIterator } from "redux-saga";
 import { convertUnknownToError } from "../../../utils/errors";
 import { BackendClient } from "../../../api/backend";
 import { loadMessageById } from "../store/actions";
@@ -12,17 +11,10 @@ import { errorToReason, unknownToReason } from "../utils";
 import { trackLoadMessageByIdFailure } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 
-type LocalActionType = ActionType<(typeof loadMessageById)["request"]>;
-type LocalBeClient = ReturnType<typeof BackendClient>["getMessage"];
-
-export function* watchLoadMessageById(getMessage: LocalBeClient): SagaIterator {
-  yield* takeEvery(loadMessageById.request, handleLoadMessageById, getMessage);
-}
-
-function* handleLoadMessageById(
-  getMessage: LocalBeClient,
-  action: LocalActionType
-): SagaIterator {
+export function* handleLoadMessageById(
+  getMessage: BackendClient["getMessage"],
+  action: ActionType<typeof loadMessageById.request>
+) {
   const id = action.payload.id;
 
   try {
