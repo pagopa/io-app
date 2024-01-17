@@ -1,4 +1,3 @@
-import { CompatNavigationProp } from "@react-navigation/compat";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import {
@@ -15,6 +14,7 @@ import {
   PressableListItemBase,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H3 } from "../../../../../components/core/typography/H3";
 import { H4 } from "../../../../../components/core/typography/H4";
@@ -23,7 +23,6 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
-import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import {
   navigateBack as legacyNavigateBack,
   navigateToWalletAddCreditCard
@@ -31,18 +30,10 @@ import {
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
-import { PaymentMethodOnboardingCoBadgeParamsList } from "../navigation/params";
 import { walletAddCoBadgeStart } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & {
-    navigation: CompatNavigationProp<
-      IOStackNavigationProp<
-        PaymentMethodOnboardingCoBadgeParamsList,
-        "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE"
-      >
-    >;
-  };
+  ReturnType<typeof mapStateToProps>;
 
 export type CoBadgeChooseTypeNavigationProps = {
   abi?: string;
@@ -103,10 +94,15 @@ const renderListItem = (cardPathItem: ListRenderItemInfo<IAddCardPath>) => (
  * @constructor
  */
 const CoBadgeChooseType = (props: Props): React.ReactElement => {
-  const abi = props.navigation.getParam("abi");
-  const legacyAddCreditCardBack = props.navigation.getParam(
-    "legacyAddCreditCardBack"
-  );
+  const route =
+    useRoute<
+      Route<
+        "WALLET_ONBOARDING_COBADGE_CHOOSE_TYPE",
+        CoBadgeChooseTypeNavigationProps
+      >
+    >();
+  const abi = route.params.abi;
+  const legacyAddCreditCardBack = route.params.legacyAddCreditCardBack;
   const addCardPath: ReadonlyArray<IAddCardPath> = [
     {
       path: "enabled",

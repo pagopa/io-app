@@ -10,7 +10,7 @@ import { Config } from "../../../../../../definitions/content/Config";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { BPayPaymentMethod } from "../../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/hooks/useImageResize";
 import BPayWalletPreview from "../BPayWalletPreview";
 
@@ -71,7 +71,7 @@ describe("BPayWalletPreview component", () => {
 });
 
 const getComponent = (bPay: BPayPaymentMethod, store: Store<unknown>) =>
-  renderScreenFakeNavRedux(
+  renderScreenWithNavigationStoreContext(
     () => <BPayWalletPreview bPay={bPay} />,
     "WALLET_HOME",
     {},

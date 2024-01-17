@@ -15,7 +15,7 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
-import { navigateToPaypalSearchPsp } from "../store/actions/navigation";
+import PAYPAL_ROUTES from "../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -51,8 +51,11 @@ const PayPalStartOnboardingScreen = (
   props: Props
 ): React.ReactElement | null => {
   const navigationContext = useNavigation();
+
   const navigateToSearchPsp = () =>
-    navigationContext.dispatch(navigateToPaypalSearchPsp());
+    navigationContext.navigate(PAYPAL_ROUTES.ONBOARDING.MAIN, {
+      screen: PAYPAL_ROUTES.ONBOARDING.SEARCH_PSP
+    });
 
   const cancelButtonProps = {
     testID: "cancelButtonId",
