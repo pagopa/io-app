@@ -88,10 +88,7 @@ import {
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
-import {
-  watchLoadMessageData,
-  watchMessageAttachmentsSaga
-} from "../features/messages/saga";
+import { watchMessagesSaga } from "../features/messages/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
@@ -110,15 +107,6 @@ import {
 } from "../store/reducers/backendStatus";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
-import watchLoadMessageDetails from "../features/messages/saga/watchLoadMessageDetails";
-import watchLoadNextPageMessages from "../features/messages/saga/watchLoadNextPageMessages";
-import watchLoadPreviousPageMessages from "../features/messages/saga/watchLoadPreviousPageMessages";
-import watchMigrateToPagination from "../features/messages/saga/watchMigrateToPagination";
-import watchReloadAllMessages from "../features/messages/saga/watchReloadAllMessages";
-import watchUpsertMessageStatusAttribues from "../features/messages/saga/watchUpsertMessageStatusAttribues";
-import { watchLoadMessageById } from "../features/messages/saga/watchLoadMessageById";
-import { watchThirdPartyMessageSaga } from "../features/messages/saga/watchThirdPartyMessageSaga";
-import { watchMessagePrecondition } from "../features/messages/saga/watchMessagePrecondition";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -330,25 +318,8 @@ export function* initializeApplicationSaga(
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
 
-  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-  yield* fork(watchReloadAllMessages, backendClient.getMessages);
-  yield* fork(watchLoadMessageById, backendClient.getMessage);
-  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-  yield* fork(
-    watchMessagePrecondition,
-    backendClient.getThirdPartyMessagePrecondition
-  );
-  yield* fork(watchThirdPartyMessageSaga, backendClient);
-  yield* fork(
-    watchUpsertMessageStatusAttribues,
-    backendClient.upsertMessageStatusAttributes
-  );
-  yield* fork(watchLoadMessageData);
-  yield* fork(
-    watchMigrateToPagination,
-    backendClient.upsertMessageStatusAttributes
-  );
+  // Start watching for Messages actions
+  yield* fork(watchMessagesSaga, backendClient, sessionToken);
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
@@ -594,10 +565,6 @@ export function* initializeApplicationSaga(
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
   }
-
-  // Start watching for message attachments actions (general
-  // third-party message attachments and PN attachments)
-  yield* fork(watchMessageAttachmentsSaga, sessionToken);
 
   const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
     yield* select(isIdPayTestEnabledSelector);

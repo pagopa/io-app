@@ -1,9 +1,8 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import { SagaIterator } from "redux-saga";
-import { put, takeLatest, call } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
+import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import { loadThirdPartyMessage } from "../store/actions";
 import { toPNMessage } from "../../pn/store/types/transformers";
@@ -23,53 +22,6 @@ import { unknownToReason } from "../utils";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-
-export function* watchThirdPartyMessageSaga(
-  client: BackendClient
-): SagaIterator {
-  yield* takeLatest(
-    getType(loadThirdPartyMessage.request),
-    getThirdPartyMessage,
-    client
-  );
-}
-
-function* getThirdPartyMessage(
-  client: BackendClient,
-  action: ActionType<typeof loadThirdPartyMessage.request>
-) {
-  const { id, serviceId, tag } = action.payload;
-  trackRemoteContentLoadRequest(tag);
-
-  const getThirdPartyMessage = client.getThirdPartyMessage();
-
-  try {
-    const result = (yield* call(
-      withRefreshApiCall,
-      getThirdPartyMessage({ id }),
-      action
-    )) as unknown as SagaCallReturnType<typeof getThirdPartyMessage>;
-    if (E.isLeft(result)) {
-      const reason = readableReport(result.left);
-      throw new Error(reason);
-    } else if (result.right.status === 200) {
-      const thirdPartyMessage = result.right.value;
-      yield* call(trackSuccess, thirdPartyMessage, tag);
-      yield* put(
-        loadThirdPartyMessage.success({ id, content: thirdPartyMessage })
-      );
-    } else {
-      const reason = `Response status ${result.right.status} - ${
-        result.right.value?.detail || "no detail field provided"
-      }`;
-      throw new Error(reason);
-    }
-  } catch (error) {
-    const reason = unknownToReason(error);
-    yield* call(trackFailure, reason, serviceId, tag);
-    yield* put(loadThirdPartyMessage.failure({ id, error: new Error(reason) }));
-  }
-}
 
 const trackSuccess = (
   messageFromApi: ThirdPartyMessageWithContent,
@@ -99,3 +51,40 @@ const trackFailure = (reason: string, serviceId: ServiceId, tag: string) => {
     trackPNNotificationLoadError(reason);
   }
 };
+
+export function* handleThirdPartyMessage(
+  getThirdPartyMessage: BackendClient["getThirdPartyMessage"],
+  action: ActionType<typeof loadThirdPartyMessage.request>
+) {
+  const { id, serviceId, tag } = action.payload;
+  trackRemoteContentLoadRequest(tag);
+
+  const getThirdPartyMessageRequest = getThirdPartyMessage();
+
+  try {
+    const result = (yield* call(
+      withRefreshApiCall,
+      getThirdPartyMessageRequest({ id }),
+      action
+    )) as unknown as SagaCallReturnType<typeof getThirdPartyMessageRequest>;
+    if (E.isLeft(result)) {
+      const reason = readableReport(result.left);
+      throw new Error(reason);
+    } else if (result.right.status === 200) {
+      const thirdPartyMessage = result.right.value;
+      yield* call(trackSuccess, thirdPartyMessage, tag);
+      yield* put(
+        loadThirdPartyMessage.success({ id, content: thirdPartyMessage })
+      );
+    } else {
+      const reason = `Response status ${result.right.status} - ${
+        result.right.value?.detail || "no detail field provided"
+      }`;
+      throw new Error(reason);
+    }
+  } catch (error) {
+    const reason = unknownToReason(error);
+    yield* call(trackFailure, reason, serviceId, tag);
+    yield* put(loadThirdPartyMessage.failure({ id, error: new Error(reason) }));
+  }
+}

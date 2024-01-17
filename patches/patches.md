@@ -164,3 +164,14 @@ Updated on **13/07/2023**
 #### Reason:
 
 - This patch applies security fixes to avoid access on camera and microphone without user permission.
+
+### react-native-calendar-events+2.2.0.patch
+
+Created on **16/01/2023**
+
+#### Reason:
+
+- This patch fixes a crash on Android devices when trying to find/create/remove calendar events.
+  An Event has an Id property which type may be a long but the library deals only with Java's signed int32.
+  This was fine as long as each event was originally created and handled using this library only but 
+  initially another library was used, react-native-add-calendar-event, which treated event's Id as long
