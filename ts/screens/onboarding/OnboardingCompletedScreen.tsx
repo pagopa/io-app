@@ -18,7 +18,6 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import { idpSelector } from "../../store/reducers/authentication";
 import { trackLoginEnded } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
-import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
 
 const OnboardingCompletedScreen = () => {
   const dispatch = useDispatch();
