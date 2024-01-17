@@ -4,7 +4,7 @@ import { ReactTestInstance } from "react-test-renderer";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ZendeskAskPermissions from "../ZendeskAskPermissions";
 import ROUTES from "../../../../navigation/routes";
 import * as device from "../../../../utils/device";
@@ -235,7 +235,7 @@ function renderComponent(
   store: Store<GlobalState>,
   assistanceForPayment: boolean
 ) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     ZendeskAskPermissions,
     ROUTES.MAIN,
     { assistanceForPayment },

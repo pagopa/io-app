@@ -3,7 +3,7 @@ import { Errors } from "io-ts";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { pipe } from "fp-ts/lib/function";
-import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
+import { remoteUndefined } from "../../../../common/model/RemoteValue";
 import {
   CreditCard,
   isRawCreditCard,

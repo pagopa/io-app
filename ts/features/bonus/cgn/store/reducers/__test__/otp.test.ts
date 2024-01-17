@@ -5,7 +5,7 @@ import {
   remoteError,
   remoteLoading,
   remoteReady
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { cgnGenerateOtp } from "../../actions/otp";
 import { cgnOtpDataSelector } from "../otp";
 import { OtpCode } from "../../../../../../../definitions/cgn/OtpCode";

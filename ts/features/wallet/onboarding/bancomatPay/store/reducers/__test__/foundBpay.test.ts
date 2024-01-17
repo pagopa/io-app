@@ -7,7 +7,7 @@ import {
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../../common/model/RemoteValue";
 import { searchUserBPay } from "../../actions";
 import { onboardingBPayFoundAccountsSelector } from "../foundBpay";
 import { bPayAttMock, bPayDisMock } from "../__mock__/bpay.mock";

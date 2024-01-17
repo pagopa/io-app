@@ -1,7 +1,7 @@
 import { createStore, DeepPartial, Store } from "redux";
 import { PspData } from "../../../../../definitions/pagopa/PspData";
 import { PayWebViewModal } from "../../../../components/wallet/PayWebViewModal";
-import { remoteReady } from "../../../../features/bonus/bpd/model/RemoteValue";
+import { remoteReady } from "../../../../common/model/RemoteValue";
 import I18n from "../../../../i18n";
 import ROUTES from "../../../../navigation/routes";
 import { appReducer } from "../../../../store/reducers/";

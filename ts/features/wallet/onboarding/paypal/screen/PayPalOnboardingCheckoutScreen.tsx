@@ -18,15 +18,15 @@ import { pmSessionTokenSelector } from "../../../../../store/reducers/wallet/pay
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { fold } from "../../../../bonus/bpd/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
+import { fold } from "../../../../../common/model/RemoteValue";
 import {
   walletAddPaypalBack,
   walletAddPaypalOutcome,
   walletAddPaypalRefreshPMToken
 } from "../store/actions";
-import { navigateToPayPalCheckoutCompleted } from "../store/actions/navigation";
 import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
+import PAYPAL_ROUTES from "../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -113,7 +113,9 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 
   const handleCheckoutCompleted = (outcomeCode: O.Option<string>) => {
     props.setOutcomeCode(outcomeCode);
-    navigation.dispatch(navigateToPayPalCheckoutCompleted());
+    navigation.navigate(PAYPAL_ROUTES.ONBOARDING.MAIN, {
+      screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_COMPLETED
+    });
   };
 
   // notify the user that the current onboarding operation will be interrupted

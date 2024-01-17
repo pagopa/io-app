@@ -5,7 +5,7 @@ import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { svGenerateVoucherCancel } from "../../store/actions/voucherGeneration";
 
 import CheckResidenceComponent from "../CheckResidenceComponent";
@@ -58,7 +58,7 @@ function renderComponent() {
   const mockStore = configureMockStore<GlobalState>();
   const store = mockStore(globalState);
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       CheckResidenceComponent,
       ROUTES.MAIN,
       {},

@@ -741,12 +741,12 @@ authentication:
     description1_2: In alternativa, è possibile entrare in app utilizzando un accesso con il
     description1_3: livello massimo di sicurezza.
     description1_4: Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.
-    title2: Come sbloccare l’accesso a IO
+    title2: Vuoi sbloccare l’accesso a IO?
     listitem1: Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
     listitem2_1: Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.
     listitem2_2: Vai al sito
     listitem3_1: Vai alla sezione
-    listitem3_2: Sblocca accesso a IO
+    listitem3_2: Sblocca l'accesso a IO
     listitem3_3: e segui i passaggi indicati. Quando richiesto inserisci il
     listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
@@ -1711,6 +1711,41 @@ wallet:
       PAA_PAGAMENTO_SCONOSCIUTO:
         title: "Non riusciamo a trovare l’avviso"
         subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    outcome:
+      SUCCESS:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato addebitato alcun importo.
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: "Non è stato addebitato alcun importo.\nControlla di aver seguito correttamente le istruzioni della tua banca."
+      INVALID_DATA:
+        title: I dati del metodo di pagamento non sono corretti
+        subtitle: Se hai pagato con una carta di debito o credito, assicurati di inserire i dati come riportato sul fronte.
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+      CIRCUIT_ERROR:
+        title: Il circuito della carta non è supportato
+      MISSING_FIELDS:
+        title: Mancano alcuni dati per procedere con il pagamento
+      INVALID_CARD:
+        title: Il metodo di pagamento è scaduto o non più valido
+        subtitle: Per maggiori informazioni, contatta la tua banca.
+      CANCELED_BY_USER:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
+      EXCESSIVE_AMOUNT:
+        title: Autorizzazione negata
+        subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
+      INVALID_METHOD:
+        title: Il metodo di pagamento non è supportato
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1721,17 +1756,6 @@ wallet:
       errorCode: Codice errore
       noticeNumber: Codice avviso
       entityCode: Codice Fiscale Ente
-    outcome:
-      cancelled:
-        title: L’operazione è stata annullata
-        subtitle: Non è stato addebitato alcun importo.
-      success:
-        title: Hai pagato {{amount}}
-        button: Ok, chiudi
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -3929,6 +3953,7 @@ transaction:
     totalAmount: Totale
     totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
+    totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)
@@ -3941,15 +3966,20 @@ transaction:
       iuv: IUV
       subject: Oggetto del pagamento
 permissionRequest:
-  media:
+  gallery:
     title: Consenti a IO di accedere alle tue foto
     subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
     caption: "Ecco come:"
     step: Step {{step}}
     steps:
-      1: Vai su “Impostazioni”
-      2: Seleziona “Applicazioni”
-      3: Seleziona “IO”
-      4: Seleziona la voce relativa alle autorizzazioni
-      5: Consenti l’accesso a file e media
+      android:
+        1: Vai su “Impostazioni”
+        2: Seleziona “Applicazioni”
+        3: Seleziona “IO”
+        4: Seleziona la voce relativa alle autorizzazioni
+        5: Consenti l’accesso a file e media
+      ios:
+        1: Vai su “Impostazioni”
+        2: Seleziona “IO”
+        3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni

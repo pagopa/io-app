@@ -24,7 +24,7 @@ import { capitalize } from "../../../../utils/strings";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";

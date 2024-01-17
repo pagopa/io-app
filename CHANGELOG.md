@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.51.0-rc.0](https://github.com/pagopa/io-app/compare/2.50.0-rc.5...2.51.0-rc.0) (2024-01-16)
+
+
+### Features
+
+* [IOBP-309, IOBP-312] Add error handling for payment verification and activation requests ([#5378](https://github.com/pagopa/io-app/issues/5378)) ([a29e57f](https://github.com/pagopa/io-app/commit/a29e57f1f007b77dbcb6027b4e3cd1d1196c4443))
+* [[IOBP-437](https://pagopa.atlassian.net/browse/IOBP-437)] Add new wallet payment outcome error handling ([#5390](https://github.com/pagopa/io-app/issues/5390)) ([dff6e61](https://github.com/pagopa/io-app/commit/dff6e615a7d8e2674c3ffceff485546044734aef))
+
+
+### Bug Fixes
+
+* [[IOBP-462](https://pagopa.atlassian.net/browse/IOBP-462)] Missing transaction details data ([#5393](https://github.com/pagopa/io-app/issues/5393)) ([09eab9b](https://github.com/pagopa/io-app/commit/09eab9b10d05969413d2556f07ff151e045f9918))
+* [[IOBP-501](https://pagopa.atlassian.net/browse/IOBP-501)] Wallet token into new wallet flows ([#5398](https://github.com/pagopa/io-app/issues/5398)) ([02cfc98](https://github.com/pagopa/io-app/commit/02cfc98520188d0455b9dc11f526ec549ac44de5))
+* [[IOPID-1287](https://pagopa.atlassian.net/browse/IOPID-1287)] Change fingerprint icon and fix typo ([#5392](https://github.com/pagopa/io-app/issues/5392)) ([d6d2dc0](https://github.com/pagopa/io-app/commit/d6d2dc06cd1b133d3832be0cc060a236265a84e2))
+
+
+### Chores
+
+* [[IOAPPFD0-201](https://pagopa.atlassian.net/browse/IOAPPFD0-201)] Update some Profile screens with the new DS components ([#5333](https://github.com/pagopa/io-app/issues/5333)) ([978c689](https://github.com/pagopa/io-app/commit/978c689d41b38b9e09b8951479369a1ea614a0b0))
+* [[IOBP-438](https://pagopa.atlassian.net/browse/IOBP-438)] Add abort dialog for payment flow ([#5379](https://github.com/pagopa/io-app/issues/5379)) ([2986e5c](https://github.com/pagopa/io-app/commit/2986e5c849673b88ae1a6f368d85af8a3fed0a52))
+* [[IOBP-478](https://pagopa.atlassian.net/browse/IOBP-478)] Update ID Pay definitions for IBAN and onboarding exceptions ([#5369](https://github.com/pagopa/io-app/issues/5369)) ([6b76845](https://github.com/pagopa/io-app/commit/6b768454214b6291c5f6f3115f6fe6b68fb461dc))
+* [[IOBP-479](https://pagopa.atlassian.net/browse/IOBP-479)] Add temporary missing methods error in method selection screen ([#5394](https://github.com/pagopa/io-app/issues/5394)) ([36e378f](https://github.com/pagopa/io-app/commit/36e378f63e619da086551af1d770e7c0ecc207b5))
+* [[IOBP-486](https://pagopa.atlassian.net/browse/IOBP-486)] Add hardware button back navigation in Barcode scan screen for Android devices ([#5395](https://github.com/pagopa/io-app/issues/5395)) ([1e73ed6](https://github.com/pagopa/io-app/commit/1e73ed600f6e697ebf05fae55b639a11b7cb38ca))
+* [[IOBP-488](https://pagopa.atlassian.net/browse/IOBP-488)] Refactor bonus features to remove cross feature dependencies ([#5397](https://github.com/pagopa/io-app/issues/5397)) ([dfc75ab](https://github.com/pagopa/io-app/commit/dfc75ab372ccd58d09ae0a17a24eccba7318a234))
+* [[IOPID-1227](https://pagopa.atlassian.net/browse/IOPID-1227)] Fix bottomsheet error 1002 ([#5396](https://github.com/pagopa/io-app/issues/5396)) ([6260b35](https://github.com/pagopa/io-app/commit/6260b35d92f7ab42fb57e5965c1f1d89b2a41ee5))
+* [[PE-510](https://pagopa.atlassian.net/browse/PE-510)] Integration of LV for CGN flows ([#5363](https://github.com/pagopa/io-app/issues/5363)) ([febfc01](https://github.com/pagopa/io-app/commit/febfc0194871a0759c685b9d8c6a50b1c731e8ca))
+
 ## [2.50.0-rc.5](https://github.com/pagopa/io-app/compare/2.50.0-rc.4...2.50.0-rc.5) (2024-01-11)
 
 

@@ -8,7 +8,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { cgnCodeFromBucket, cgnCodeFromBucketReset } from "../actions/bucket";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 

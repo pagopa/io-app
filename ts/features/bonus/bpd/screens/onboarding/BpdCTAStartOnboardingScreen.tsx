@@ -9,12 +9,12 @@ import I18n from "../../../../../i18n";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
-} from "../../../bonusVacanze/store/reducers/availableBonusesTypes";
+} from "../../../common/store/selectors";
 import { bpdOnboardingStart } from "../../store/actions/onboarding";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &

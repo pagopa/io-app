@@ -720,7 +720,7 @@ email:
       subtitle: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
       editButton: "E-Mail-Adresse ändern"
       validateButton: "E-Mail-Adresse bestätigen"
-      header: 
+      header:
         title: "IO konfigurieren"
       help:
         body: "Um die App weiter nutzen zu können, musst du deine E-Mail-Adresse bestätigen"
@@ -729,7 +729,7 @@ email:
       subtitleStart: "Deine E-Mail-Adresse"
       subtitleEnd: "wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
       editButton: "E-Mail-Adresse ändern"
-      header: 
+      header:
         title: "IO konfigurieren"
       help:
         body: "Deine E-Mail-Adresse wird bereits auf IO verwendet; du musst eine andere eingeben, um die App weiter benutzen zu können."
@@ -936,7 +936,7 @@ payment:
         description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
-  confirm: 
+  confirm:
     totalAmount: "Zu zahlender Gesamtbetrag"
     pay: "Zahle "
     payWith: "Zahle mit "
@@ -1617,7 +1617,7 @@ wallet:
         amount: "Nach Betrag"
         name: "Nach Name"
     outcome:
-      success:
+      SUCCESS:
         title: "Du hast {{amount}} bezahlt"
         button: "OK, schließen"
         banner:
@@ -2415,15 +2415,16 @@ transaction:
       iuv: "IUV"
       subject: "Zahlungsgrund"
 permissionRequest:
-  media:
+  gallery:
     title: "Erlaube  IO den Zugriff auf deine Fotos"
     subtitle: "Dazu musst du die Rechte in den Einstellungen deines Geräts ändern."
     caption: "So geht's:"
     step: "Schritt {{step}}"
     steps:
-      1: "Geh zu “Einstellungen”"
-      2: "Wähle “Apps”"
-      3: "Wähle “IO”"
-      4: "Wähle den Punkt App-Berechtigungen"
-      5: "Lass den Zugriff auf Dateien und Medien zu"
+      android:
+        1: "Geh zu “Einstellungen”"
+        2: "Wähle “Apps”"
+        3: "Wähle “IO”"
+        4: "Wähle den Punkt App-Berechtigungen"
+        5: "Lass den Zugriff auf Dateien und Medien zu"
     cta: "Öffne Einstellungen"

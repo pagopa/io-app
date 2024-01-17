@@ -22,7 +22,7 @@ import QtspClauseListItem from "../../components/QtspClauseListItem";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import {
   fciPollFilledDocumentErrorSelector,
   fciPollFilledDocumentReadySelector

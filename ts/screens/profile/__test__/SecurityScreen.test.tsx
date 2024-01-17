@@ -7,7 +7,7 @@ import I18n from "../../../i18n";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
 import { identificationRequest } from "../../../store/actions/identification";
 import { shufflePinPadOnPayment } from "../../../config";
@@ -24,7 +24,10 @@ describe("Test SecurityScreen", () => {
 
     expect(component).not.toBeNull();
     expect(
-      component.queryByText(I18n.t("profile.security.title"))
+      // With the new navbar we have two titles.
+      // The second one is the larger one.
+      // The first one is the smaller one that is shown when scrolling.
+      component.queryAllByText(I18n.t("profile.security.title"))[1]
     ).not.toBeNull();
     expect(
       component.queryByText(I18n.t("profile.security.subtitle"))
@@ -36,7 +39,10 @@ describe("Test SecurityScreen", () => {
     expect(component).not.toBeNull();
     expect(component.queryByTestId("reset-unlock-code")).not.toBeNull();
     expect(
-      component.queryByText(I18n.t("profile.security.title"))
+      // With the new navbar we have two titles.
+      // The second one is the larger one.
+      // The first one is the smaller one that is shown when scrolling.
+      component.queryAllByText(I18n.t("profile.security.title"))[1]
     ).not.toBeNull();
     expect(
       component.queryByText(I18n.t("profile.security.subtitle"))
@@ -73,7 +79,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <SecurityScreen />,
       ROUTES.PROFILE_SECURITY,
       {},

@@ -15,7 +15,7 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { GlobalState } from "../../../../store/reducers/types";
 import { euCovidCertificateUrl } from "../../../../urls";
 import { openWebUrl } from "../../../../utils/url";
-import { confirmButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
