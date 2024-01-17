@@ -110,10 +110,6 @@ const CtaBar = ({
     }
   }, [isPNOptIn, shoulCheckForPNOptInMessage]);
 
-  // in case of medical prescription, we shouldn't render the CtaBar
-  if (messageDetails.prescriptionData !== undefined) {
-    return null;
-  }
   const expirationInfo = getPaymentExpirationInfo(messageDetails);
 
   const paymentButton = renderPaymentButton(paymentData, messageDetails.id);
