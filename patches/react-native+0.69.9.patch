@@ -1,21 +1,19 @@
 diff --git a/node_modules/react-native/Libraries/.DS_Store b/node_modules/react-native/Libraries/.DS_Store
 new file mode 100644
-index 0000000..26ba7a3
-Binary files /dev/null and b/node_modules/react-native/Libraries/.DS_Store differ
+index 0000000..e69de29
 diff --git a/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js b/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js
-index 227af12..7a1abc4 100644
+index 227af12..2c59500 100644
 --- a/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js
 +++ b/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js
-@@ -68,6 +68,8 @@ const PERMISSIONS = Object.freeze({
+@@ -68,6 +68,7 @@ const PERMISSIONS = Object.freeze({
    ANSWER_PHONE_CALLS: 'android.permission.ANSWER_PHONE_CALLS',
    READ_PHONE_NUMBERS: 'android.permission.READ_PHONE_NUMBERS',
    UWB_RANGING: 'android.permission.UWB_RANGING',
-+  POST_NOTIFICATIONS: 'android.permission.POST_NOTIFICATIONS',
-+  READ_MEDIA_IMAGES: 'android.permission.READ_MEDIA_IMAGES'
++  POST_NOTIFICATIONS: 'android.permission.POST_NOTIFICATIONS'
  });
  
  /**
-@@ -93,11 +95,13 @@ class PermissionsAndroid {
+@@ -93,6 +94,7 @@ class PermissionsAndroid {
      CALL_PHONE: string,
      CAMERA: string,
      GET_ACCOUNTS: string,
@@ -23,12 +21,6 @@ index 227af12..7a1abc4 100644
      PROCESS_OUTGOING_CALLS: string,
      READ_CALENDAR: string,
      READ_CALL_LOG: string,
-     READ_CONTACTS: string,
-     READ_EXTERNAL_STORAGE: string,
-+    READ_MEDIA_IMAGES: string,
-     READ_PHONE_NUMBERS: string,
-     READ_PHONE_STATE: string,
-     READ_SMS: string,
 diff --git a/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings b/node_modules/react-native/React/AccessibilityResources/it.lproj/Localizable.strings
 new file mode 100644
 index 0000000..00a9a38

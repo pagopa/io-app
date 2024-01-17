@@ -30,7 +30,7 @@ import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
-import { localeDateFormat } from "../../../../utils/locale";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
@@ -153,10 +153,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
             <ListItemNav
               testID="FciDataSharingScreenBirthDateTestID"
               value={I18n.t("features.fci.shareDataScreen.birthDate")}
-              description={localeDateFormat(
-                birthDate,
-                I18n.t("global.dateFormats.shortFormat")
-              )}
+              description={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
               hideChevron
               accessibilityLabel={I18n.t(
                 "features.fci.shareDataScreen.birthDate"

@@ -88,7 +88,7 @@ export type AppParamsList = {
 
   [ROUTES.BARCODE_SCAN]: undefined;
 
-  [ROUTES.ANDROID_MEDIA_PERMISSIONS]: undefined;
+  [ROUTES.GALLERY_PERMISSION_INSTRUCTIONS]: undefined;
 
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;

@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { MessageDetails } from "../MessageDetails";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
 import { UIAttachment, UIMessageId } from "../../../messages/types";
 import { PNMessage } from "../../store/types/types";
@@ -176,7 +176,7 @@ const renderComponent = (
   const store = createStore(appReducer, globalState as any);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageDetails {...props} />,
       PN_ROUTES.MESSAGE_DETAILS,
       {},

@@ -1,8 +1,8 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import * as React from "react";
 import { Linking, StyleSheet, Text, View } from "react-native";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { Body, H2, LabelLink, VSpacer } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import themeVariables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 
@@ -53,10 +53,11 @@ const renderNode = (body: string | React.ReactNode, email?: EmailString) => {
  */
 export const InfoScreenComponent: React.FunctionComponent<Props> = props => {
   const elementRef = React.createRef<Text>();
-
+  useFocusEffect(
+    React.useCallback(() => setAccessibilityFocus(elementRef), [elementRef])
+  );
   return (
     <View style={styles.main} testID="InfoScreenComponent">
-      <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
       {props.image}
       <VSpacer size={24} />
       <H2

@@ -6,11 +6,11 @@ import { GlobalState } from "../../../../store/reducers/types";
 import FciDocumentsScreen from "../valid/FciDocumentsScreen";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
 import {
   fciDownloadPreview,
   fciSignatureRequestFromId
 } from "../../store/actions";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 describe("Test FciDocuments screen", () => {
   beforeEach(() => {
@@ -55,7 +55,7 @@ describe("Test FciDocuments screen", () => {
 });
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FciDocumentsScreen />,
     FCI_ROUTES.DOCUMENTS,
     {},

@@ -1,7 +1,7 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import * as React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { VSpacer, IOPictograms, Pictogram } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import themeVariables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { Body } from "../core/typography/Body";
@@ -48,9 +48,12 @@ const renderNode = (body: string | React.ReactNode) => {
 export const InfoAltScreenComponent = ({ image, title, body }: Props) => {
   const elementRef = React.createRef<Text>();
 
+  useFocusEffect(
+    React.useCallback(() => setAccessibilityFocus(elementRef), [elementRef])
+  );
+
   return (
     <View style={styles.main} testID="InfoAltScreenComponent">
-      <NavigationEvents onWillFocus={() => setAccessibilityFocus(elementRef)} />
       <Pictogram name={image} />
       <VSpacer size={24} />
       <H2
