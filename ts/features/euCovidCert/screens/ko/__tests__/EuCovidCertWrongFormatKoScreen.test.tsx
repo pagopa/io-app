@@ -7,7 +7,7 @@ import * as mixpanelTrack from "../../../../../mixpanel";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as openWebUrl from "../../../../../utils/url";
 import EUCOVIDCERT_ROUTES from "../../../navigation/routes";
 import { EUCovidCertificateAuthCode } from "../../../types/EUCovidCertificate";
@@ -80,7 +80,7 @@ const renderComponent = (state: GlobalState, withContext: boolean = true) => {
     <EuCovidCertWrongFormatKoScreen />
   );
 
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => Component,
     EUCOVIDCERT_ROUTES.CERTIFICATE,
     {},

@@ -15,7 +15,7 @@ import {
 } from "../../store/reducers/transformers";
 import { toUIService } from "../../../../store/reducers/entities/services/transformers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import MessageDetail from "../MessageDetail";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
@@ -130,7 +130,7 @@ const renderComponent = (props: React.ComponentProps<typeof MessageDetail>) => {
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageDetail {...props} />,
       MESSAGES_ROUTES.MESSAGES_HOME,
       {},

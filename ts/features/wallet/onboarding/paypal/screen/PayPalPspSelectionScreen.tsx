@@ -32,9 +32,9 @@ import {
   walletAddPaypalCancel,
   walletAddPaypalPspSelected
 } from "../store/actions";
-import { navigateToPayPalCheckout } from "../store/actions/navigation";
 import { payPalPspSelector } from "../store/reducers/searchPsp";
 import { IOPayPalPsp } from "../types";
+import PAYPAL_ROUTES from "../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -136,7 +136,9 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
       onPress: () => {
         if (selectedPsp) {
           props.setPspSelected(selectedPsp);
-          navigation.dispatch(navigateToPayPalCheckout());
+          navigation.navigate(PAYPAL_ROUTES.ONBOARDING.MAIN, {
+            screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT
+          });
         }
       },
       title: I18n.t("global.buttons.continue")

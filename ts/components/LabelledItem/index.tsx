@@ -9,7 +9,6 @@
  * icon  |
  *       input
  */
-import { NavigationEvents } from "@react-navigation/compat";
 import color from "color";
 import { Input as InputNativeBase, Item } from "native-base";
 import * as React from "react";
@@ -25,6 +24,7 @@ import {
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
 import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 
@@ -120,13 +120,19 @@ function getColorsByProps({
     labelColor: "bluegreyDark"
   };
 }
+
+const NavigationEventHandler = ({ onPress }: { onPress: () => void }) => {
+  useFocusEffect(React.useCallback(() => onPress, [onPress]));
+
+  return <></>;
+};
+
 export const LabelledItem: React.FC<Props> = ({
   iconPosition = "left",
   ...props
 }: Props) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [hasFocus, setHasFocus] = useState(false);
-
   const accessibilityLabel = props.accessibilityLabel ?? "";
 
   const {
@@ -184,7 +190,7 @@ export const LabelledItem: React.FC<Props> = ({
           testID="Item"
         >
           {props.hasNavigationEvents && props.onPress && (
-            <NavigationEvents onWillBlur={props.onPress} />
+            <NavigationEventHandler onPress={props.onPress} />
           )}
 
           {/* Icon OR Image. They can't be managed separately because

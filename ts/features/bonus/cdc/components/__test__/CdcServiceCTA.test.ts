@@ -7,7 +7,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getTimeoutError } from "../../../../../utils/errors";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
 import { CdcBonusRequest } from "../../types/CdcBonusRequest";
@@ -171,7 +171,7 @@ describe("CdcServiceCTA", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     CdcServiceCTA,
     ROUTES.MAIN,
     {},
