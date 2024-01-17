@@ -2,25 +2,21 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import {
-  loadPreviousPageMessages as action,
-  loadPreviousPageMessages
-} from "../../store/actions";
+import { loadNextPageMessages as action } from "../../store/actions";
 import {
   apiPayload,
   defaultRequestPayload,
-  successLoadPreviousPageMessagesPayload
+  successLoadNextPageMessagesPayload
 } from "../../__mocks__/messages";
-import { testTryLoadPreviousPageMessages } from "../watchLoadPreviousPageMessages";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { handleLoadNextPageMessages } from "../handleLoadNextPageMessages";
+import { BackendClient } from "../../../../api/__mocks__/backend";
 
-const tryLoadPreviousPageMessages = testTryLoadPreviousPageMessages!;
-
-describe("tryLoadPreviousPageMessages", () => {
+describe("handleLoadNextPageMessages", () => {
   const getMessagesPayload = {
     enrich_result_data: true,
-    page_size: 8,
-    minimum_id: undefined,
+    page_size: defaultRequestPayload.pageSize,
+    maximum_id: undefined,
     archived: defaultRequestPayload.filter.getArchived
   };
 
@@ -28,19 +24,19 @@ describe("tryLoadPreviousPageMessages", () => {
     it(`should put ${getType(
       action.success
     )} with the parsed messages and pagination data`, () => {
-      const getMessages = jest.fn();
       testSaga(
-        tryLoadPreviousPageMessages(getMessages),
+        handleLoadNextPageMessages,
+        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
-          getMessages(getMessagesPayload),
-          loadPreviousPageMessages.request(defaultRequestPayload)
+          BackendClient.getMessages(getMessagesPayload),
+          action.request(defaultRequestPayload)
         )
         .next(E.right({ status: 200, value: apiPayload }))
-        .put(action.success(successLoadPreviousPageMessagesPayload))
+        .put(action.success(successLoadNextPageMessagesPayload))
         .next()
         .isDone();
     });
@@ -48,16 +44,16 @@ describe("tryLoadPreviousPageMessages", () => {
 
   describe("when the response is an Error", () => {
     it(`should put ${getType(action.failure)} with the error message`, () => {
-      const getMessages = jest.fn();
       testSaga(
-        tryLoadPreviousPageMessages(getMessages),
+        handleLoadNextPageMessages,
+        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
         .call(
           withRefreshApiCall,
-          getMessages(getMessagesPayload),
-          loadPreviousPageMessages.request(defaultRequestPayload)
+          BackendClient.getMessages(getMessagesPayload),
+          action.request(defaultRequestPayload)
         )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
         .put(
@@ -73,14 +69,13 @@ describe("tryLoadPreviousPageMessages", () => {
 
   describe("when the handler throws", () => {
     it(`should catch it and put ${getType(action.failure)}`, () => {
-      const getMessages = () => {
-        throw new Error("I made a boo-boo, sir!");
-      };
       testSaga(
-        tryLoadPreviousPageMessages(getMessages),
+        handleLoadNextPageMessages,
+        BackendClient.getMessages,
         action.request(defaultRequestPayload)
       )
         .next()
+        .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({
             error: new Error("I made a boo-boo, sir!"),
