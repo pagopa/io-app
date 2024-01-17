@@ -4,21 +4,18 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
-  PaymentNoticeNumber,
+  RptId as PagoPaRptId,
   PaymentNoticeNumberFromString,
-  RptIdFromString
+  RptIdFromString as PagoPaRptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import { flow, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { RptId } from "../../../../definitions/pagopa/ecommerce/RptId";
 import {
-  decodeOrganizationFiscalCode,
-  decodePaymentNoticeNumber,
   validateOrganizationFiscalCode,
   validatePaymentNoticeNumber
 } from "../../../features/walletV3/common/utils/validation";
@@ -32,73 +29,52 @@ import {
 } from "../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../store/hooks";
 
-type RptIdInputState = { input: string; value: O.Option<RptId> };
-type PaymentNoticeNumberInputState = {
-  input: string;
-  value: O.Option<PaymentNoticeNumber>;
-};
-type OrganizationFiscalCodeInputState = {
-  input: string;
-  value: O.Option<OrganizationFiscalCode>;
-};
-
-const INITIAL_INPUT_STATE = {
-  input: "",
-  value: O.none
-};
-
 const WalletPaymentPlayground = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
-  const [rptId, setRptId] =
-    React.useState<RptIdInputState>(INITIAL_INPUT_STATE);
+  const [rptId, setRptId] = React.useState<PagoPaRptId>();
   const [paymentNoticeNumber, setPaymentNoticeNumber] =
-    React.useState<PaymentNoticeNumberInputState>(INITIAL_INPUT_STATE);
+    React.useState<string>("");
   const [organizationFiscalCode, setOrganizationFiscalCode] =
-    React.useState<OrganizationFiscalCodeInputState>(INITIAL_INPUT_STATE);
+    React.useState<string>("");
 
   React.useEffect(() => {
     pipe(
-      rptId.input,
-      RptIdFromString.decode,
+      rptId,
+      PagoPaRptIdFromString.decode,
       E.map(rptId => {
-        setPaymentNoticeNumber({
-          input: PaymentNoticeNumberFromString.encode(
-            rptId.paymentNoticeNumber
-          ),
-          value: O.some(rptId.paymentNoticeNumber)
-        });
-        setOrganizationFiscalCode({
-          input: rptId.organizationFiscalCode,
-          value: O.some(rptId.organizationFiscalCode)
-        });
+        setPaymentNoticeNumber(
+          PaymentNoticeNumberFromString.encode(rptId.paymentNoticeNumber)
+        );
+        setOrganizationFiscalCode(rptId.organizationFiscalCode);
       })
     );
   }, [rptId]);
 
   React.useEffect(() => {
     pipe(
-      sequenceS(O.Monad)({
-        paymentNoticeNumber: paymentNoticeNumber.value,
-        organizationFiscalCode: organizationFiscalCode.value
+      sequenceS(E.Monad)({
+        paymentNoticeNumber: E.right(paymentNoticeNumber),
+        organizationFiscalCode: E.right(organizationFiscalCode)
       }),
-      O.chain(flow(RptId.decode, O.fromEither)),
-      O.map(rptId => {
-        setRptId({ input: rptId, value: O.some(rptId) });
-      })
+      E.chain(PagoPaRptId.decode),
+      E.map(setRptId),
+      E.getOrElse(() => setRptId(undefined))
     );
   }, [paymentNoticeNumber, organizationFiscalCode]);
 
   const navigateToWalletPayment = () => {
     pipe(
-      rptId.value,
+      rptId,
+      O.fromNullable,
+      O.map(PagoPaRptIdFromString.encode),
       O.map(rptId => {
         dispatch(walletPaymentInitState());
         navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
           screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
           params: {
-            rptId
+            rptId: rptId as RptId
           }
         });
       })
@@ -106,10 +82,11 @@ const WalletPaymentPlayground = () => {
   };
 
   const generateValidRandomRptId = () => {
-    setRptId({
-      input: "00000123456002160020399398578",
-      value: O.some("00000123456002160020399398578" as RptId)
-    });
+    pipe(
+      "00000123456002160020399398578",
+      PagoPaRptIdFromString.decode,
+      E.map(setRptId)
+    );
   };
 
   useHeaderSecondLevel({ title: "Payment playground" });
@@ -120,7 +97,7 @@ const WalletPaymentPlayground = () => {
         label: "Continua",
         accessibilityLabel: "Continue",
         onPress: navigateToWalletPayment,
-        disabled: O.isNone(rptId.value)
+        disabled: rptId === undefined
       }}
       secondaryActionProps={{
         label: "RptId casuale",
@@ -134,14 +111,9 @@ const WalletPaymentPlayground = () => {
         accessibilityLabel={I18n.t(
           "wallet.payment.manual.noticeNumber.placeholder"
         )}
-        value={paymentNoticeNumber.input}
+        value={paymentNoticeNumber}
         icon="docPaymentCode"
-        onChangeText={value =>
-          setPaymentNoticeNumber({
-            input: value,
-            value: decodePaymentNoticeNumber(value)
-          })
-        }
+        onChangeText={setPaymentNoticeNumber}
         onValidate={validatePaymentNoticeNumber}
         counterLimit={18}
         textInputProps={{
@@ -156,14 +128,9 @@ const WalletPaymentPlayground = () => {
         accessibilityLabel={I18n.t(
           "wallet.payment.manual.fiscalCode.placeholder"
         )}
-        value={organizationFiscalCode.input}
+        value={organizationFiscalCode}
         icon="fiscalCodeIndividual"
-        onChangeText={value =>
-          setOrganizationFiscalCode({
-            input: value,
-            value: decodeOrganizationFiscalCode(value)
-          })
-        }
+        onChangeText={setOrganizationFiscalCode}
         onValidate={validateOrganizationFiscalCode}
         counterLimit={11}
         textInputProps={{
