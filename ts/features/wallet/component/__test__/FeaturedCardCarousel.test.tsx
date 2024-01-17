@@ -13,7 +13,7 @@ import {
 } from "../../../bonus/common/utils";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import { loadAvailableBonuses } from "../../../bonus/common/store/actions/availableBonusesTypes";
 
@@ -351,7 +351,7 @@ describe("FeaturedCardCarousel", () => {
 });
 
 const getComponent = (mockStore: MockStoreEnhanced<GlobalState>) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FeaturedCardCarousel />,
     MESSAGES_ROUTES.MESSAGE_DETAIL,
     {},

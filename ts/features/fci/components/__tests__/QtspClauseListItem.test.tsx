@@ -9,7 +9,7 @@ import QtspClauseListItem from "../QtspClauseListItem";
 import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciLoadQtspFilledDocument } from "../../store/actions";
 import { qtspFilledDocument } from "../../types/__mocks__/CreateFilledDocumentBody.mock";
@@ -133,7 +133,7 @@ function renderComponent(props: Props, store: Store<GlobalState>) {
       <QtspClauseListItem {...props} />
     </Provider>
   );
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => Component,
     FCI_ROUTES.QTSP_TOS,
     { ...props },

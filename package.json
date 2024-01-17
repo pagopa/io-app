@@ -129,7 +129,6 @@
     "@react-native-cookies/cookies": "^6.2.1",
     "@react-native-picker/picker": "^2.4.1",
     "@react-navigation/bottom-tabs": "^5.11.15",
-    "@react-navigation/compat": "^5.3.20",
     "@react-navigation/material-top-tabs": "^5.x",
     "@react-navigation/native": "^5.9.8",
     "@react-navigation/stack": "^5.14.9",

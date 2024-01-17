@@ -7,7 +7,7 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { OutcomeCode } from "../../../types/outcomeCode";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import OutcomeCodeMessageComponent from "../OutcomeCodeMessageComponent";
 
 const ASuccessComponent = () => <View testID="a-success-component" />;
@@ -89,7 +89,7 @@ const renderComponent = (
     ...globalState
   } as GlobalState);
 
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <OutcomeCodeMessageComponent
         outcomeCode={outcomeCode}

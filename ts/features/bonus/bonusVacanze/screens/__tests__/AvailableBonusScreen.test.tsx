@@ -10,7 +10,7 @@ import { backendStatusLoadSuccess } from "../../../../../store/actions/backendSt
 import { appReducer } from "../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { availableBonuses, bpdBonus } from "../../../__mock__/availableBonuses";
 import BONUSVACANZE_ROUTES from "../../navigation/routes";
 import { ID_BPD_TYPE } from "../../../common/utils";
@@ -76,7 +76,7 @@ describe("Test AvailableBonusScreen behaviour", () => {
 });
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <AvailableBonusScreen />,
     BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST,
     {},

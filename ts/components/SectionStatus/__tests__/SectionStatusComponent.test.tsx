@@ -12,7 +12,7 @@ import {
 } from "../../../../definitions/content/SectionStatus";
 import I18n, { setLocale } from "../../../i18n";
 import { SectionStatusKey } from "../../../store/reducers/backendStatus";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { openWebUrl } from "../../../utils/url";
 import SectionStatusComponent from "../index";
 
@@ -198,7 +198,7 @@ const getComponent = (
   sectionKey: SectionStatusKey,
   store?: ReturnType<typeof mockStore>
 ) =>
-  renderScreenFakeNavRedux(
+  renderScreenWithNavigationStoreContext(
     () => <SectionStatusComponent sectionKey={sectionKey} />,
     "DUMMY",
     {},

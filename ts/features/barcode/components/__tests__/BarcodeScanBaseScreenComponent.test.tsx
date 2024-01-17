@@ -12,7 +12,7 @@ jest.mock("../../hooks/useIOBarcodeCameraScanner", () => ({
 }));
 
 import ROUTES from "../../../../navigation/routes";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import {
   IOBarcodeCameraScanner,
   useIOBarcodeCameraScanner
@@ -140,7 +140,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => (
         <BarcodeScanBaseScreenComponent
           onBarcodeSuccess={() => null}

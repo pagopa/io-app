@@ -12,7 +12,7 @@ import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
 import { appReducer } from "../../../store/reducers";
 import { isProfileFirstOnBoarding } from "../../../store/reducers/profile";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
@@ -52,7 +52,7 @@ describe("checkAcceptedTosSaga", () => {
   beforeEach(() => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
-    renderScreenFakeNavRedux(View, "DUMMY", {}, store);
+    renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
     jest.useRealTimers();
   });
 
