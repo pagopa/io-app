@@ -23,7 +23,6 @@ import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserData
 import { BackendClient } from "../api/backend";
 import {
   apiUrlPrefix,
-  bonusVacanzeEnabled,
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
@@ -32,7 +31,7 @@ import {
   svEnabled,
   zendeskEnabled
 } from "../config";
-import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
+import { watchBonusSaga } from "../features/bonus/common/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
@@ -558,11 +557,6 @@ export function* initializeApplicationSaga(
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
   }
 
-  if (bonusVacanzeEnabled) {
-    // Start watching for requests about bonus
-    yield* fork(watchBonusSaga, sessionToken);
-  }
-
   if (bpdEnabled) {
     // Start watching for bpd actions
     yield* fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
@@ -574,6 +568,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for cgn actions
+  yield* fork(watchBonusSaga, sessionToken);
   yield* fork(watchBonusCgnSaga, sessionToken);
 
   if (svEnabled) {

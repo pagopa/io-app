@@ -8,9 +8,9 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { GlobalState } from "../../../../store/reducers/types";
-import BonusInformationComponent from "../../common/components/BonusInformationComponent";
-import { BonusVacanzeParamsList } from "../navigation/params";
-import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
+import BonusInformationComponent from "../components/BonusInformationComponent";
+import { ownedActiveOrRedeemedBonus } from "../../bonusVacanze/store/reducers/allActive";
+import { BonusParamsList } from "../navigation/navigator";
 
 export type BonusInformationScreenNavigationParams = Readonly<{
   bonusItem: BonusAvailable;
@@ -18,7 +18,7 @@ export type BonusInformationScreenNavigationParams = Readonly<{
 
 type OwnProps = {
   navigation: CompatNavigationProp<
-    IOStackNavigationProp<BonusVacanzeParamsList, "BONUS_REQUEST_INFORMATION">
+    IOStackNavigationProp<BonusParamsList, "BONUS_REQUEST_INFORMATION">
   >;
 };
 

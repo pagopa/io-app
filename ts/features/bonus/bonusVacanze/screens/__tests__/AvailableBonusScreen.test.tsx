@@ -12,10 +12,10 @@ import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/bac
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
 import { availableBonuses, bpdBonus } from "../../../__mock__/availableBonuses";
-import BONUSVACANZE_ROUTES from "../../navigation/routes";
 import { ID_BPD_TYPE } from "../../../common/utils";
-import AvailableBonusScreen from "../AvailableBonusScreen";
+import AvailableBonusScreen from "../../../common/screens/AvailableBonusScreen";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
+import { BONUS_ROUTES } from "../../../common/navigation/navigator";
 
 jest.mock("../../../../../config", () => ({ bpdEnabled: true }));
 
@@ -78,7 +78,7 @@ describe("Test AvailableBonusScreen behaviour", () => {
 const renderComponent = (store: Store) =>
   renderScreenFakeNavRedux<GlobalState>(
     () => <AvailableBonusScreen />,
-    BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST,
+    BONUS_ROUTES.BONUS_AVAILABLE_LIST,
     {},
     store
   );
