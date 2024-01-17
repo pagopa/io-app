@@ -1,4 +1,4 @@
-import { StackActions } from "@react-navigation/compat";
+import { StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { call, put, select, take, race } from "typed-redux-saga/macro";

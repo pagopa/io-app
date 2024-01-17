@@ -2,7 +2,7 @@ import React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MessagePaymentItem } from "../MessagePaymentItem";
 import { UIMessageId } from "../../../messages/types";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
@@ -81,7 +81,7 @@ const renderComponent = (
       : globalState;
   const store = createStore(appReducer, modifiedState as any);
 
-  return renderScreenFakeNavRedux(
+  return renderScreenWithNavigationStoreContext(
     () => (
       <MessagePaymentItem index={0} messageId={messageId} payment={payment} />
     ),

@@ -1,8 +1,8 @@
-import { NavigationActions } from "@react-navigation/compat";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
+import { CommonActions } from "@react-navigation/native";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
 import NavigationService from "../../../../../navigation/NavigationService";
 import {
@@ -28,9 +28,7 @@ import { isBpdOnboardingOngoing } from "../../store/reducers/onboarding/ongoing"
 // TODO: if isOnboarding===true, change with an action that triggers a saga that choose
 //  which screen to display, (the user already have payment methods or not)
 export const chooseContinueAction = (isOnboarding: boolean) =>
-  isOnboarding
-    ? navigateToBpdOnboardingNoPaymentMethods
-    : NavigationActions.back;
+  isOnboarding ? navigateToBpdOnboardingNoPaymentMethods : CommonActions.goBack;
 
 export const isMainScreen = (screenName: string) =>
   screenName === BPD_ROUTES.IBAN;

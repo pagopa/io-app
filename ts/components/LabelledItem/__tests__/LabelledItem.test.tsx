@@ -4,7 +4,7 @@ import React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { LabelledItem, Props } from "../index";
 
 const textInputProps = {
@@ -168,7 +168,7 @@ describe("Test LabelledItem", () => {
 const renderComponent = (props: Props) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
-  return renderScreenFakeNavRedux(
+  return renderScreenWithNavigationStoreContext(
     () => <LabelledItem {...props} />,
     "DUMMY",
     {},

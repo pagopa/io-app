@@ -5,7 +5,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IDPayDetailsRoutes } from "../../navigation";
 import { PaginatedTimelineDTO } from "../../store";
 import { InitiativeTimelineComponent } from "../InitiativeTimelineComponent";
@@ -77,7 +77,7 @@ const renderComponent = (
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <InitiativeTimelineComponent initiativeId="ABC" />,
       IDPayDetailsRoutes.IDPAY_DETAILS_MAIN,
       {},
