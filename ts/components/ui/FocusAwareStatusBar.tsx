@@ -1,6 +1,5 @@
-import { NavigationEvents } from "@react-navigation/compat";
+import { useIsFocused } from "@react-navigation/native";
 import * as React from "react";
-import { useState } from "react";
 import { StatusBar, StatusBarProps } from "react-native";
 
 /**
@@ -14,16 +13,8 @@ import { StatusBar, StatusBarProps } from "react-native";
  */
 
 const FocusAwareStatusBar = (props: StatusBarProps) => {
-  const [isFocused, setIsFocused] = useState<boolean>(false);
-  return (
-    <>
-      <NavigationEvents
-        onWillFocus={() => setIsFocused(true)}
-        onWillBlur={() => setIsFocused(false)}
-      />
-      {isFocused && <StatusBar {...props} />}
-    </>
-  );
+  const isFocused = useIsFocused();
+  return <>{isFocused && <StatusBar {...props} />}</>;
 };
 
 export default FocusAwareStatusBar;

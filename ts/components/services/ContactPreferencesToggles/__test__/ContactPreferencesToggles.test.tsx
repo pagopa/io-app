@@ -9,7 +9,7 @@ import { loadServicePreference } from "../../../../store/actions/services/servic
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ServicePreferenceResponse } from "../../../../types/services/ServicePreferenceResponse";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ContactPreferencesToggles from "../index";
 
 jest.useFakeTimers();
@@ -214,7 +214,7 @@ const renderComponent = (
     channels?: ReadonlyArray<NotificationChannelEnum>;
   }
 ) =>
-  renderScreenFakeNavRedux(
+  renderScreenWithNavigationStoreContext(
     () => (
       <ContactPreferencesToggles
         {...options}

@@ -7,7 +7,7 @@ import I18n from "../../../../../../../../i18n";
 import { applicationChangeState } from "../../../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../../../utils/testWrapper";
 import BPD_ROUTES from "../../../../../navigation/routes";
 import { AwardPeriodId } from "../../../../../store/actions/periods";
 import { bpdTransactionsLoadRequiredData } from "../../../../../store/actions/transactions";
@@ -105,7 +105,7 @@ const getStateWithBpdInitialized = (): Store => {
 };
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <BpdTransactionsRouterScreen />,
     BPD_ROUTES.TRANSACTIONS,
     {},
