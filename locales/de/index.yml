@@ -2085,13 +2085,13 @@ bonus:
       goToDetail: "Die Karte anzeigen"
     detail:
       cta:
-        buyers: "CGN Rabatte und Ermäßigungen anzeigen"
+        buyers: "CGN Ermäßigungen anzeigen"
         otp: "Code generieren"
         eyca:
           copy: "EYCA Kartennummer kopieren"
-          pending: "EYCA Rabatte und Ermäßigungen anzeigen"
+          pending: "EYCA Ermäßigungen anzeigen"
           bottomSheet: "Besuche die EYCA Website"
-          showEycaDiscounts: "EYCA Rabatte und Ermäßigungen anzeigen"
+          showEycaDiscounts: "EYCA Ermäßigungen anzeigen"
       information:
         active: "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden."
         warning: "Achtung! "
