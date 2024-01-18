@@ -728,7 +728,6 @@ authentication:
       error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
-    message: To keep your private information safe, please login again with your SPID credentials, thanks!
   unlock:
     title: Unlock access
     subtitlel2: In order to use the app, you must first unlock access to IO.
@@ -1715,10 +1714,6 @@ wallet:
       SUCCESS:
         title: Hai pagato {{amount}}
         button: Ok, chiudi
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Non è stato addebitato alcun importo.
@@ -2376,12 +2371,7 @@ bonus:
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
-      preview: Bonus Vacanze, worth up to {{value}} euro, {{status}}
       card: Your Bonus Vacanze with code {{code}} worth up to {{value}} euro is {{status}}
-    statusInfo:
-      validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
-      bonusRejected: Attention! This Bonus Vacanze has been rejected
-      redeemed: This Bonus Vacanze has been consumed on {{date}}
     multipleBonus: Two or more bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
@@ -2400,89 +2390,20 @@ bonus:
     shareMessage: "This is the code of your Bonus Vacanze:"
     saveScreenShotOk: "Bonus saved in your gallery!"
     savedOn: "Saved on "
-    detail:
-      contextualHelp:
-        title: Bonus Vacanze
-        body: Here you can see the details of the Bonus Vacanze and the information needed to spend the bonus.
-    checkBonusEligibility:
-      loading: Checking bonus eligibility
-    cta:
-      requestBonus: Request Bonus
-      cancelRequest: Cancel the request
-      qrCode: QR code
-      copyCode: Code copy
-      openQRCode: View QR code
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
-      iseeNotAvailable:
-        title: "We're sorry.\n You don't have a valid ISEE \"ordinario or corrente\"."
-        text:
-          first: "It is necessary to submit a DSU for the calculation of the ISEE \"ordinario or corrente\", before requesting the \"Bonus Vacanze\".\n You can do an "
-          secondo: "online simulation"
-          third: " on the INPS website to check your eligibility, or request your ISEE through the channels provided by INPS."
-        goToDSU: Request ISEE
-      iseeNotEligible:
-        title: "We're sorry.\n Your ISEE exceeds the required threshold."
-        text: If the financial position of your household has changed since the last DSU published, you can file a new through the channels provided by INPS.
-        goToNewDSU: Request new DSU
       activateBonus:
-        contextualHelp:
-          title: The Bonus Vacanze of your family
-          body: !include bonus/bonusVacanze/eligible_ch.md
         headerTitle: Bonus Vacanze request
         title: Good news!
         description: "Your family is entitled to the following Bonus Vacanze:"
-        reminder:
-          text: "Each member of your family helps determine the amount and can spend the bonus. If the data is incorrect or updated, to avoid problems following the use of the Bonus, we invite you to submit a new DSU before proceeding with the request."
         discrepancies:
           attention: "Warning!"
           text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
         activateCTA: "Activate the Bonus"
-      timeout:
-        title: We are verifying your ISEE.
-        description:
-          first: "We will send you a message when the verification is complete.\n\nIf the outcome is positive, when you receive it, remember to complete your application "
-          second: "within 24 hours"
-          third: ", otherwise you will have to start a new one."
-      activationPending:
-        title: The bonus for your family has already been requested and is being activated.
-        description: You will receive a message when it is activated.
-      underage:
-        title: "We're sorry. Only citizens of legal age can apply for the Bonus Vacanze"
     activation:
       loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
-      goToDetails: Show Bonus Vacanze
       timeout:
         title: We are processing your request.
-        description: We will send you a message in the app when your bonus is ready.
-      alreadyRedeemed:
-        title: The bonus for your family is already active!
-        body: You can view the details in the Wallet section.
-        cta: Show available Bonuses
-      eligibilityExpired:
-        title: Time expired.
-        body: The 24 hours needed to continue your request have expired. Please, start a new request.
-        cta: Request Bonus
-      completed:
-        title: Congratulation!
-        description: Bonus activated
-      confirm:
-        title: Attention
-        body: If you continue, you will no longer be able to cancel the request.
-        cancel: Back to the request
-        confirm: Continue
-    abort:
-      title: Cancel
-      body: Do you really want to quit? To request the "Bonus Vacanze" you will have to repeat the process from the beginning.
-      cancel: Continue
-      confirm: Abort the request
-      completed: Request aborted
-    composition:
-      amount: "Maximum amount"
-      expendable: "Spendable amount"
-      taxBenefit: "Tax deductible"
-    family:
-      title: "Who can claim the bonus?"
   bonusList:
     title: Add bonus or discount
     contentTitle: Select one of the available bonus
@@ -2493,8 +2414,6 @@ bonus:
     contextualHelp:
       title: The Bonus Vacanze
       body: Here you can see all the information related to the Bonus Vacanze, the measure established by the Decreto Rilancio to encourage tourism after the lockdown due to the Coronavirus emergency.
-    requestAlert:
-      title: Attention
   request: Request a new bonus
   requestLabel: Bonuses and discounts
   requestTitle: Request
@@ -3929,16 +3848,6 @@ fastLogin:
   whatsNew:
     title: Logging into IO just got easier!
     subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face.
-    changes:
-      first:
-        title: Easier
-        description: log in with just your unlock code, fingerprint or face.
-      second:
-        title: Faster
-        description: use your SPID or CIE only once a year or in case you log out.
-      third:
-        title: Safer
-        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
 bonusCard:
