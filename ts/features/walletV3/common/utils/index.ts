@@ -45,9 +45,11 @@ export const getBadgeTextByTransactionStatus = (
  * left if expiring date can't be evaluated
  * @param paymentMethod
  */
-export const isPaymentMethodExpired = (details: UIWalletInfoDetails): boolean =>
+export const isPaymentMethodExpired = (
+  details?: UIWalletInfoDetails
+): boolean =>
   pipe(
-    details.expiryDate,
+    details?.expiryDate,
     O.fromNullable,
     O.map(isExpiredDate),
     O.getOrElse(() => false)
