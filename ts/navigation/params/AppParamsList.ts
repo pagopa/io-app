@@ -140,5 +140,6 @@ export type IOStackNavigationProp<
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<AppParamsList & ParamList, RouteName>;
 
-export const useIONavigation = () =>
-  useNavigation<IOStackNavigationProp<AppParamsList, keyof AppParamsList>>();
+export const useIONavigation = useNavigation<
+  IOStackNavigationProp<AppParamsList, keyof AppParamsList>
+>;
