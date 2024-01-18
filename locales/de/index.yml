@@ -2483,6 +2483,7 @@ transaction:
     totalAmount: "Insgesamt"
     totalFee: "Der Gesamtbetrag umfasst "
     totalFeePsp: "Provision, berechnet von {{pspName}}"
+    totalFeeNoPsp: "Provision, die vom Transaktionsdienstleister (PSP) erhoben wird."
     info:
       title: "Informationen zur Transaktion"
       pspName: "Zahlungsdienstleister (PSP)"
