@@ -30,6 +30,7 @@ import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../utils/messages";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
+import { H1 } from "../../../../components/core/typography/H1";
 import { H2 } from "../../../../components/core/typography/H2";
 import {
   AppParamsList,
@@ -40,7 +41,6 @@ import { MESSAGES_ROUTES } from "../../navigation/routes";
 import CtaBar from "./CtaBar";
 import { RemoteContentBanner } from "./RemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
-import { MessageTitle } from "./MessageTitle";
 import MessageContent from "./Content";
 import MessageMarkdown from "./MessageMarkdown";
 
@@ -201,7 +201,7 @@ const MessageDetailsComponent = ({
 
           <VSpacer size={24} />
 
-          <MessageTitle title={messageTitle} />
+          <H1>{messageTitle}</H1>
 
           <VSpacer size={24} />
         </View>
