@@ -1614,6 +1614,11 @@ wallet:
       alert:
         body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
         cta: "OK, habe verstanden!"
+      missingMethodsError:
+        title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
+        subtitle: "Die Zahlungsmethode wird in deinem Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
+        addMethod: "Zahlungsmethode hinzufügen"
+        notNow: "Jetzt nicht"
     psp:
       title: "Wähle, von wem die Zahlung abgewickelt werden soll"
       description: "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor."
