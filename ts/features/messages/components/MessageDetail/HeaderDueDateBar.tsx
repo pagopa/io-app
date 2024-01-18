@@ -12,17 +12,15 @@ export const HeaderDueDateBar = ({
   hasPaidBadge,
   messageDetails
 }: HeaderDueDateBarProps) => {
-  const paymentExpirationInfo = getPaymentExpirationInfo(messageDetails);
+  if (messageDetails.dueDate === undefined) {
+    return null;
+  }
 
   return (
-    <>
-      {messageDetails.dueDate !== undefined ? (
-        <DueDateBar
-          dueDate={messageDetails.dueDate}
-          expirationInfo={paymentExpirationInfo}
-          isPaid={hasPaidBadge}
-        />
-      ) : null}
-    </>
+    <DueDateBar
+      dueDate={messageDetails.dueDate}
+      expirationInfo={getPaymentExpirationInfo(messageDetails)}
+      isPaid={hasPaidBadge}
+    />
   );
 };
