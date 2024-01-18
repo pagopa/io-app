@@ -392,6 +392,8 @@ PODS:
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
     - React
+  - react-native-pager-view (6.2.3):
+    - React-Core
   - react-native-pdf (6.4.0):
     - React-Core
   - react-native-pdf-thumbnail (1.2.1):
@@ -648,6 +650,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
@@ -812,6 +815,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
   react-native-pdf-thumbnail:
@@ -969,6 +974,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
+  react-native-pager-view: c29d484f19c49ff19525a94105e4ab2c4d4ae273
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
