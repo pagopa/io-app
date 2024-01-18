@@ -1628,6 +1628,41 @@ wallet:
         default: "Standard"
         amount: "Nach Betrag"
         name: "Nach Name"
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung."
+      PAYMENT_UNKNOWN:
+        title: "Die Daten der Zahlungsmitteilung sind falsch"
+      DOMAIN_UNKNOWN:
+        title: "Die ausstellende Körperschaft hat Probleme bei der Bearbeitung"
+        subtitle: "Bitte versuche es später noch einmal. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
+      PAYMENT_ONGOING:
+        title: "Es ist bereits eine Zahlung im Gange, bitte versuche es später noch einmal"
+        subtitle: "Wenn das Problem weiterhin besteht, kannst du ein Ticket erstellen."
+      PAYMENT_EXPIRED:
+        title: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr bezahlt werden"
+        subtitle: "Wende dich für weitere Informationen an die Körperschaft."
+      PAYMENT_CANCELED:
+        title: "Die ausstellende Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
+        subtitle: "Wende dich für weitere Informationen an die Körperschaft."
+      PAYMENT_DUPLICATED:
+        title: "Diese Zahlungsmitteilung wurde bereits bezahlt!"
+      GENERIC_ERROR:
+        title: "Ein unerwarteter Fehler ist aufgetreten"
+        subtitle: "Versuche es erneut oder wende dich an den Support."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Wir können die Zahlungsmitteilung nicht finden"
+        subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
+    support:
+      button: "Support kontaktieren"
+      supportTitle: "Support kontaktieren"
+      phone: "{{phoneNumber}} anrufen"
+      chat: "Im Chat um Hilfe fragen"
+      additionalDataTitle: "Zusätzliche Daten"
+      copyAll: "Alles kopieren"
+      errorCode: "Fehlercode"
+      noticeNumber: "Zahlungskodex"
+      entityCode: "Steuernummer Körperschaft"
     outcome:
       cancelled:
         title: "Der Vorgang wurde abgebrochen"
