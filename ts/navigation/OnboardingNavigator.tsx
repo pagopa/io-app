@@ -31,8 +31,7 @@ const OnboardingNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.ONBOARDING_SHARE_DATA}
-      headerMode={"none"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
     >
       <Stack.Screen
         name={ROUTES.ONBOARDING_SHARE_DATA}

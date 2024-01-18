@@ -50,8 +50,7 @@ const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.PROFILE_DATA}
-      headerMode={"screen"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen name={ROUTES.PROFILE_DATA} component={ProfileDataScreen} />
       <Stack.Screen
