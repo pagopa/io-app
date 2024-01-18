@@ -704,7 +704,7 @@ authentication:
     description1_2: "Alternativ kannst du die App auch über ein Login mit der"
     description1_3: "höchsten Sicherheitsstufe öffnen."
     description1_4: "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE."
-    title2: "Möchtest du den Zugang auf IO entsperren?"
+    title2: "Möchtest du den Zugang zu IO entsperren?"
     listitem1: "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst."
     listitem2_1: "Greif über das Internet auf IO zu, indem du deine SPID-Anmeldedaten oder deine CIE verwendest."
     listitem2_2: "Geh zur Website"
