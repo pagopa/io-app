@@ -16,8 +16,7 @@ const Stack = createStackNavigator();
 const ServicesNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.SERVICE_DETAIL}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={ROUTES.SERVICE_DETAIL}

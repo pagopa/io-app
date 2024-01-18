@@ -5,14 +5,13 @@ import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import TypedI18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";
 import { IdPayInstrumentInitiativesList } from "../components/IdPayInstrumentInitiativesList";
@@ -26,13 +25,14 @@ export type IdPayInstrumentInitiativesScreenRouteParams = {
   idWallet: string;
 };
 
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_IDPAY_INITIATIVE_LIST"
->;
-
-export const IdPayInstrumentInitiativesScreen = (props: Props) => {
-  const { idWallet } = props.route.params;
+export const IdPayInstrumentInitiativesScreen = () => {
+  const { idWallet } =
+    useRoute<
+      Route<
+        "WALLET_IDPAY_INITIATIVE_LIST",
+        IdPayInstrumentInitiativesScreenRouteParams
+      >
+    >().params;
   const dispatch = useIODispatch();
   const initiatives = useIOSelector(idPayInitiativesFromInstrumentSelector);
 

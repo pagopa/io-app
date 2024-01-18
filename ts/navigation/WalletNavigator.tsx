@@ -93,8 +93,7 @@ const WalletNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.PAYMENT_SCAN_QR_CODE}
-      headerMode={"none"}
-      screenOptions={{ gestureEnabled: true }}
+      screenOptions={{ gestureEnabled: true, headerShown: false }}
     >
       <Stack.Screen
         name={ROUTES.WALLET_IDPAY_INITIATIVE_LIST}

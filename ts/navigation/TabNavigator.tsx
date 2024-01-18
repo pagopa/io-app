@@ -65,8 +65,8 @@ export const MainTabNavigator = () => {
     >
       <HeaderFirstLevelHandler />
       <Tab.Navigator
-        tabBarOptions={{
-          labelStyle: {
+        screenOptions={{
+          tabBarLabelStyle: {
             fontSize: isDesignSystemEnabled ? 10 : 12,
             ...makeFontStyleObject(
               "Regular",
@@ -74,13 +74,13 @@ export const MainTabNavigator = () => {
               isDesignSystemEnabled ? "ReadexPro" : "TitilliumWeb"
             )
           },
-          keyboardHidesTabBar: true,
-          allowFontScaling: false,
-          activeTintColor: isDesignSystemEnabled
+          tabBarHideOnKeyboard: true,
+          tabBarAllowFontScaling: false,
+          tabBarActiveTintColor: isDesignSystemEnabled
             ? IOColors["blueIO-500"]
             : IOColors.blue,
-          inactiveTintColor: IOColors["grey-850"],
-          style: [
+          tabBarInactiveTintColor: IOColors["grey-850"],
+          tabBarStyle: [
             styles.tabBarStyle,
             { height: tabBarHeight + bottomInset },
             insets.bottom === 0 ? { paddingBottom: additionalPadding } : {}
