@@ -1658,6 +1658,41 @@ wallet:
       PAA_PAGAMENTO_SCONOSCIUTO:
         title: "Wir können die Zahlungsmitteilung nicht finden"
         subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
+    outcome:
+      SUCCESS:
+        title: "Du hast {{amount}} bezahlt"
+        button: "OK, schließen"
+        banner:
+          title: "Kannst du uns sagen, wie es lief?"
+          content: "Erzähl uns von deinen Erfahrungen mit der Zahlung und hilf uns, uns zu verbessern."
+          action: "Zur Umfrage"
+      GENERIC_ERROR:
+        title: "Es ist ein unerwarteter Fehler aufgetreten"
+        subtitle: "Es wurde kein Betrag abgebucht."
+      AUTH_ERROR:
+        title: "Autorisierung verweigert""
+        subtitle: "Es wurde kein Betrag abgebucht.\nVergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast.""
+      INVALID_DATA:
+        title: "Die Daten der Zahlungsmethode sind falsch"
+        subtitle: "Wenn du mit einer Debit- oder Kreditkarte bezahlt hast, musst du die Daten wie auf der Karte angegeben eingeben."
+      TIMEOUT:
+        title: "Die Sitzung ist abgelaufen"
+        subtitle: "Es wurde kein Betrag abgebucht.\nZu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
+      CIRCUIT_ERROR:
+        title: "Das Kartennetzwerk deiner Karte wird nicht unterstützt"
+      MISSING_FIELDS:
+        title: "Es fehlen einige Daten, um mit der Zahlung fortzufahren"
+      INVALID_CARD:
+        title: "Die Zahlungsmethode ist abgelaufen oder nicht mehr gültig"
+        subtitle: "Weitere Informationen erhältst du bei deiner Bank."
+      CANCELED_BY_USER:
+        title: "Der Vorgang wurde abgebrochen"
+        subtitle: "Es wurde kein Betrag abgebucht."
+      EXCESSIVE_AMOUNT:
+        title: "Autorisierung verweigert"
+        subtitle: "Es wurde kein Betrag abgebucht.\nDu hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten."
+      INVALID_METHOD:
+        title: "Die Zahlungsmethode wird nicht unterstützt"
     support:
       button: "Support kontaktieren"
       supportTitle: "Support kontaktieren"
@@ -1668,17 +1703,6 @@ wallet:
       errorCode: "Fehlercode"
       noticeNumber: "Zahlungskodex"
       entityCode: "Steuernummer Körperschaft"
-    outcome:
-      cancelled:
-        title: "Der Vorgang wurde abgebrochen"
-        subtitle: "Es wurde kein Betrag abgebucht."
-      success:
-        title: "Du hast {{amount}} bezahlt"
-        button: "OK, schließen"
-        banner:
-          title: "Kannst du uns sagen, wie es lief?"
-          content: "Erzähl uns von deinen Erfahrungen mit der Zahlung und hilf uns, uns zu verbessern."
-          action: "Weiter zur Umfrage"
 saveCard:
   saveCard: "Karte speichern"
   header: "Möchtest du diese Karte speichern?"
