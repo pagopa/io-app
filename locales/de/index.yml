@@ -902,13 +902,6 @@ payment:
     cancel: "Mit der Zahlung fortfahren"
     success: "Die Zahlung wurde ordnungsgemäß abgebrochen"
    payment:
-    methodSelection:
-        header: "Zahlungsmethode auswählen"
-        yourMethods: "Deine Zahlungsmethoden"
-        otherMethods: "Andere Zahlungsmethoden"
-        alert: 
-          body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
-          cta: "OK, habe verstanden!"
   errorDetails: "Details"
   currentPsp: "Die Zahlung wird durgeführt von"
   noPsp: "Du hast noch keinen Zahlungsdienstleister ausgewählt"
@@ -944,7 +937,7 @@ payment:
         description: "IO hat keine Zahlungsversuche gespeichert. Hier findest du deine letzten Zahlungsversuche"
       title: "Zahlungsversuche"
       iuv: "Einheitlicher Zahlungskodex (IUV) {{iuv}}"
-  confirm: 
+  confirm:
     totalAmount: "Zu zahlender Gesamtbetrag"
     pay: "Zahle "
     payWith: "Zahle mit "
@@ -1610,6 +1603,17 @@ wallet:
         title: "Gib die Steuernummer der Körperschaft ein"
         subtitle: "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden."
         placeholder: "Steuernummer der Körperschaft"
+    abortDialog:
+      title: "Möchtest du den Vorgang abbrechen?"
+      confirm: "Ja, abbrechen"
+      cancel: "Nein, zurück"
+    methodSelection:
+      header: "Zahlungsmethode auswählen"
+      yourMethods: "Deine Zahlungsmethoden"
+      otherMethods: "Andere Zahlungsmethoden"
+      alert:
+        body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
+        cta: "OK, habe verstanden!"
     psp:
       title: "Wähle, von wem die Zahlung abgewickelt werden soll"
       description: "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor."
@@ -1625,6 +1629,9 @@ wallet:
         amount: "Nach Betrag"
         name: "Nach Name"
     outcome:
+      cancelled:
+        title: "Der Vorgang wurde abgebrochen"
+        subtitle: "Es wurde kein Betrag abgebucht."
       success:
         title: "Du hast {{amount}} bezahlt"
         button: "OK, schließen"
