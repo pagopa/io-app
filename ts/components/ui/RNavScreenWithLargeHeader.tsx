@@ -14,7 +14,11 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { HeaderActionProps, useHeaderProps } from "../../hooks/useHeaderProps";
+import {
+  BackProps,
+  HeaderActionProps,
+  useHeaderProps
+} from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 
@@ -24,6 +28,7 @@ type Props = {
   title: string;
   titleTestID?: string;
   description?: string;
+  goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
 } & SupportRequestParams;
 
@@ -45,6 +50,7 @@ export const RNavScreenWithLargeHeader = ({
   fixedBottomSlot,
   title,
   titleTestID,
+  goBack,
   description,
   contextualHelp,
   contextualHelpMarkdown,
@@ -68,7 +74,7 @@ export const RNavScreenWithLargeHeader = ({
 
   const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps({
     backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: navigation.goBack,
+    goBack: goBack ?? navigation.goBack,
     title,
     scrollValues: {
       contentOffsetY: translationY,
