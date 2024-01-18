@@ -901,6 +901,14 @@ payment:
     confirm: "Zahlung abbrechen"
     cancel: "Mit der Zahlung fortfahren"
     success: "Die Zahlung wurde ordnungsgemäß abgebrochen"
+   payment:
+    methodSelection:
+        header: "Zahlungsmethode auswählen"
+        yourMethods: "Deine Zahlungsmethoden"
+        otherMethods: "Andere Zahlungsmethoden"
+        alert: 
+          body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
+          cta: "OK, habe verstanden!"
   errorDetails: "Details"
   currentPsp: "Die Zahlung wird durgeführt von"
   noPsp: "Du hast noch keinen Zahlungsdienstleister ausgewählt"
