@@ -19,7 +19,6 @@ import ContextualInfo from "../../components/ContextualInfo";
 import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { DevScreenButton } from "../../components/DevScreenButton";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
@@ -38,7 +37,6 @@ import { mixpanelTrack } from "../../mixpanel";
 import {
   AppParamsList,
   IOStackNavigationProp,
-  IOStackNavigationRouteProps,
   useIONavigation
 } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";

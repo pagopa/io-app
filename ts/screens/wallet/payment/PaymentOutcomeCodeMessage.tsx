@@ -7,6 +7,7 @@ import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
 import { Label } from "../../../components/core/typography/Label";
@@ -16,8 +17,6 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
@@ -36,14 +35,8 @@ export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_OUTCOMECODE_MESSAGE"
->;
-
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
+  ReturnType<typeof mapDispatchToProps>;
 
 const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
   const handleBannerPress = () => {
@@ -129,6 +122,13 @@ const successFooter = (onClose: () => void) => (
  * If the outcome code is of type success the render a single buttons footer that allow the user to go to the wallet home.
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
+  const { fee } =
+    useRoute<
+      Route<
+        "PAYMENT_OUTCOMECODE_MESSAGE",
+        PaymentOutcomeCodeMessageNavigationParams
+      >
+    >().params;
   const outcomeCode = O.toNullable(props.outcomeCode.outcomeCode);
   const learnMoreLink = "https://io.italia.it/faq/#pagamenti";
   const onLearnMore = () => openWebUrl(learnMoreLink);
@@ -142,7 +142,7 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
     if (pot.isSome(props.verifica)) {
       const totalAmount =
         (props.verifica.value.importoSingoloVersamento as number) +
-        (props.route.params.fee as number);
+        (fee as number);
 
       return successComponent(
         O.getOrElse(() => "")(props.profileEmail),
