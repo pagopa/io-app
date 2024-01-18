@@ -2403,6 +2403,7 @@ whatsNew:
 bonusCard:
   validUntil: "Gültig bis {{endDate}}"
   expiring: "Verfällt am {{endDate}}"
+  expired: "Abgelaufen am {{endDate}}"
   paused: "In Pause"
   removed: "Entfernt"
 transaction:
