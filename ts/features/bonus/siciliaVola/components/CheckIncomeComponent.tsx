@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
@@ -21,6 +20,8 @@ import {
   svGenerateVoucherCancel,
   svGenerateVoucherUnderThresholdIncome
 } from "../store/actions/voucherGeneration";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 
 type OwnProps = {
   onContinuePress: () => void;
@@ -51,7 +52,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
   const [incomeUnderThreshold, setIncomeUnderThreshold] = React.useState<
     boolean | undefined
   >();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const handleContinue = () => {
     if (incomeUnderThreshold === undefined) {
@@ -64,7 +65,9 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
       return;
     }
 
-    navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD);
+    navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD
+    });
   };
 
   const cancelButtonProps = {

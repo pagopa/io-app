@@ -10,12 +10,13 @@ import FciQtspClausesScreen from "../screens/valid/FciQtspClausesScreen";
 import FciThankyouScreen from "../screens/valid/FciThankyouScreen";
 import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScreen";
 import FciSignatureRequestsScreen from "../screens/valid/FciSignatureRequestsScreen";
+import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { FCI_ROUTES } from "./routes";
 import { FciParamsList } from "./params";
 
 const Stack = createStackNavigator<FciParamsList>();
 
-export const fciLinkingOptions: PathConfigMap = {
+export const fciLinkingOptions: PathConfigMap<AppParamsList> = {
   [FCI_ROUTES.MAIN]: {
     path: "fci",
     screens: {
@@ -28,8 +29,7 @@ export const fciLinkingOptions: PathConfigMap = {
 export const FciStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={FCI_ROUTES.ROUTER}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen name={FCI_ROUTES.ROUTER} component={FciRouterScreen} />
     <Stack.Screen name={FCI_ROUTES.DOCUMENTS} component={FciDocumentsScreen} />

@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -24,6 +23,8 @@ import {
 } from "../../store/actions/voucherGeneration";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
+import ROUTES from "../../../../../navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 type BeneficiaryCategory = SvBeneficiaryCategory | "other";
 
@@ -72,38 +73,38 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
     BeneficiaryCategory | undefined
   >(undefined);
 
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const routeNextScreen = () => {
     switch (categoryBeneficiary) {
       case "student":
         props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.STUDENT_SELECT_DESTINATION
-        );
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.STUDENT_SELECT_DESTINATION
+        });
         return;
       case "disabled":
         props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.DISABLED_ADDITIONAL_INFO
-        );
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.DISABLED_ADDITIONAL_INFO
+        });
         return;
       case "worker":
         props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD
-        );
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD
+        });
         return;
       case "sick":
         props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD
-        );
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD
+        });
         return;
       case "other":
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY
-        );
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY
+        });
         return;
     }
   };

@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { CitizenOptInStatusEnum } from "../../../../../../definitions/bpd/citizen_v2/CitizenOptInStatus";
@@ -11,10 +10,11 @@ import { LoadingErrorComponent } from "../../../../../components/LoadingErrorCom
 import ThankYouSuccessComponent from "../../components/optInPaymentMethods/ThankYouSuccessComponent";
 import { bpdUpdateOptInStatusMethod } from "../../store/actions/onboarding";
 import { optInStatusSelector } from "../../store/reducers/details/activation";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const optInStatus = useIOSelector(optInStatusSelector);
 
   useEffect(() => {
@@ -28,7 +28,9 @@ const OptInPaymentMethodsThankYouKeepMethodsScreen = () => {
     // if the opt-in choice fails complete the workunit and show an error toast to the user
     if (pot.isError(optInStatus)) {
       showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
-      navigation.navigate(ROUTES.WALLET_HOME);
+      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.WALLET_HOME
+      });
     }
   }, [optInStatus, dispatch, navigation]);
 

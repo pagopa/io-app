@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
@@ -53,13 +52,15 @@ import {
 } from "../../store/reducers/voucherList/ui";
 import { svVouchersSelector } from "../../store/reducers/voucherList/vouchers";
 import { VoucherPreview } from "../../types/SvVoucherResponse";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   return (
     <ListItemComponent
@@ -67,7 +68,9 @@ const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
       subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
       onPress={() => {
         dispatch(svSelectVoucher(voucher.idVoucher));
-        navigation.navigate(SV_ROUTES.VOUCHER_LIST.DETAILS);
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_LIST.DETAILS
+        });
       }}
     />
   );

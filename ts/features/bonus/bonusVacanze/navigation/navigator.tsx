@@ -24,8 +24,7 @@ const Stack = createStackNavigator<BonusVacanzeParamsList>();
 const BonusVacanzeNavigator = () => (
   <Stack.Navigator
     initialRouteName={BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST}

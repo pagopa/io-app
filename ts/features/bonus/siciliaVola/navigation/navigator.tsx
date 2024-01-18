@@ -21,7 +21,8 @@ import VoucherDetailsScreen from "../screens/voucherList/VoucherDetailsScreen";
 import VoucherListScreen from "../screens/voucherList/VoucherListScreen";
 import SV_ROUTES from "./routes";
 
-export const svLinkingOptions: PathConfigMap = {
+// TO BE REMOVED
+export const svLinkingOptions: PathConfigMap<any> = {
   [SV_ROUTES.VOUCHER_GENERATION.MAIN]: {
     path: "sv-generation",
     screens: {
@@ -41,8 +42,7 @@ const ListStack = createStackNavigator();
 export const SvVoucherListNavigator = () => (
   <ListStack.Navigator
     initialRouteName={SV_ROUTES.VOUCHER_LIST.LIST}
-    headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <ListStack.Screen
       name={SV_ROUTES.VOUCHER_LIST.LIST}
@@ -60,8 +60,7 @@ const GenerationStack = createStackNavigator();
 export const SvVoucherGenerationNavigator = () => (
   <GenerationStack.Navigator
     initialRouteName={SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS}
-    headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <GenerationStack.Screen
       name={SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS}

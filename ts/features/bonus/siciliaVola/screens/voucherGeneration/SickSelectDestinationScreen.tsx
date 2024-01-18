@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useRef } from "react";
@@ -21,6 +20,8 @@ import {
 } from "../../store/actions/voucherGeneration";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { Hospital } from "../../types/SvVoucherRequest";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -29,7 +30,7 @@ const SickSelectDestinationScreen = (
   props: Props
 ): React.ReactElement | null => {
   const elementRef = useRef(null);
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const backButtonProps = {
     primary: false,
@@ -41,7 +42,9 @@ const SickSelectDestinationScreen = (
     primary: false,
     bordered: true,
     onPress: () =>
-      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA),
+      navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+        screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA
+      }),
     title: "Continue"
   };
 

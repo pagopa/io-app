@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -14,10 +13,11 @@ import BPD_ROUTES from "../../navigation/routes";
 import { optInPaymentMethodsShowChoice } from "../../store/actions/optInPaymentMethods";
 import { showOptInChoiceSelector } from "../../store/reducers/details/activation/ui";
 import { bpdLastUpdateSelector } from "../../store/reducers/details/lastUpdate";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 const BpdOptInPaymentMethodsContainer = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const { showModal, hideModal } = useContext(LightModalContext);
   const [showOptInChecked, setShowOptInChecked] = useState<boolean>(false);
   const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);

@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect } from "react";
@@ -35,6 +34,8 @@ import {
   isVoucherRequest
 } from "../../utils";
 import { dpr28Dec2000Url } from "../../../../../urls";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
 // TODO: update with the correct disclaimer: https://pagopa.atlassian.net/browse/IASV-40
 
 const SummaryScreen = (props: Props): React.ReactElement | null => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const {
     maybeVoucherRequest,
@@ -128,7 +129,9 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
   const continueButtonProps = {
     primary: true,
     onPress: () =>
-      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED),
+      navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+        screen: SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED
+      }),
     title: I18n.t("global.buttons.continue")
   };
 

@@ -37,6 +37,7 @@ import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/p
 import ROUTES from "../routes";
 
 export type WalletParamsList = {
+  [ROUTES.WALLET_HOME]: undefined;
   [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: AddPaymentMethodScreenNavigationParams;
   [ROUTES.WALLET_TRANSACTION_DETAILS]: TransactionDetailsScreenNavigationParams;

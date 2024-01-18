@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -22,6 +21,8 @@ import {
   svGenerateVoucherCancel
 } from "../../store/actions/voucherGeneration";
 import { dpr28Dec2000Url } from "../../../../../urls";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -43,7 +44,7 @@ const loadLocales = () => ({
 
 const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
   const [acceptedDisclaimer, setAcceptedDisclaimer] = useState<boolean>(false);
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const cancelButtonProps = {
     primary: false,
@@ -54,7 +55,9 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
   const continueButtonProps = {
     bordered: false,
     onPress: () =>
-      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA),
+      navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+        screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA
+      }),
     title: I18n.t("global.buttons.continue"),
     disabled: !acceptedDisclaimer
   };

@@ -27,8 +27,7 @@ const BpdOnboardingStack = createStackNavigator<BpdOnboardingParamsList>();
 export const BpdOnboardingNavigator = () => (
   <BpdOnboardingStack.Navigator
     initialRouteName={BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <BpdOnboardingStack.Screen
       name={BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS}
@@ -68,8 +67,7 @@ const BpdDetailsStack = createStackNavigator<BpdDetailsParamsList>();
 export const BpdDetailsNavigator = () => (
   <BpdDetailsStack.Navigator
     initialRouteName={BPD_ROUTES.DETAILS}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <BpdDetailsStack.Screen
       name={BPD_ROUTES.DETAILS}
@@ -87,8 +85,7 @@ const OptInPaymentMethodStack = createStackNavigator<BpdOptInParamsList>();
 export const OptInPaymentMethodNavigator = () => (
   <OptInPaymentMethodStack.Navigator
     initialRouteName={BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <OptInPaymentMethodStack.Screen
       name={BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CASHBACK_UPDATE}

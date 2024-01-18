@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import I18n from "../../../../../i18n";
@@ -18,10 +17,11 @@ import {
 } from "../../../../../common/model/RemoteValue";
 import { optInPaymentMethodsDeletionChoice } from "../../store/actions/optInPaymentMethods";
 import { optInStatusSelector } from "../../store/reducers/details/activation";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const deleteAllPaymentMethodsByFunctionStatus = useIOSelector(
     deleteAllPaymentMethodsByFunctionSelector
   );
@@ -39,7 +39,9 @@ const OptInPaymentMethodsThankYouDeleteMethodsScreen = () => {
       isReady(deleteAllPaymentMethodsByFunctionStatus)
     ) {
       showToast(I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.toast"));
-      navigation.navigate(ROUTES.WALLET_HOME);
+      navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+        screen: ROUTES.WALLET_HOME
+      });
     }
   }, [
     optInStatus,

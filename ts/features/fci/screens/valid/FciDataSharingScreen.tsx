@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { List } from "native-base";
 import * as React from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
@@ -33,6 +33,8 @@ import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { FCI_ROUTES } from "../../navigation/routes";
 
 const styles = StyleSheet.create({
   padded: {
@@ -64,7 +66,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const route = useRoute();
   const familyName = pot.getOrElse(
     pot.map(profile, p => capitalize(p.family_name)),
@@ -92,7 +94,8 @@ const FciDataSharingScreen = (): React.ReactElement => {
           onPress={() => {
             trackFciUserExit(route.name, fciEnvironment, "modifica_email");
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-              screen: ROUTES.INSERT_EMAIL_SCREEN
+              screen: ROUTES.INSERT_EMAIL_SCREEN,
+              params: { isOnboarding: false }
             });
           }}
         >
@@ -168,7 +171,9 @@ const FciDataSharingScreen = (): React.ReactElement => {
             )}
             rightButton={confirmButtonProps(() => {
               trackFciUserDataConfirmed(fciEnvironment);
-              navigation.navigate("FCI_QTSP_TOS");
+              navigation.navigate(FCI_ROUTES.MAIN, {
+                screen: FCI_ROUTES.QTSP_TOS
+              });
             }, `${I18n.t("features.fci.shareDataScreen.confirm")}`)}
           />
         </View>

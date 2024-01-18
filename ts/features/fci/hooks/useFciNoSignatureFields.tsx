@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -15,6 +15,7 @@ import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignat
 import { useIOSelector } from "../../../store/hooks";
 import { trackFciStartSignature } from "../analytics";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 type Props = {
   currentDoc: number;
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
  * A hook that returns a function to present the abort signature flow bottom sheet
  */
 export const useFciNoSignatureFields = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { currentDoc } = props;

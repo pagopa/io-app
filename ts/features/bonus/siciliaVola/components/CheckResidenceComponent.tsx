@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
@@ -18,6 +17,8 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import SV_ROUTES from "../navigation/routes";
 import { svGenerateVoucherCancel } from "../store/actions/voucherGeneration";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -37,7 +38,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     boolean | undefined
   >();
 
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const cancelButtonProps = {
     primary: false,
@@ -49,10 +50,12 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     bordered: false,
     onPress: () =>
       isResidentInSicily === true
-        ? navigation.navigate(
-            SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
-          )
-        : navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE),
+        ? navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+            screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
+          })
+        : navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+            screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
+          }),
     title: I18n.t("global.buttons.continue"),
     disabled: isResidentInSicily === undefined
   };

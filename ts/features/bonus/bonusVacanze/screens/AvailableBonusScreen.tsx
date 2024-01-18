@@ -16,7 +16,6 @@ import { connect } from "react-redux";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
-import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -71,6 +70,7 @@ import {
   supportedAvailableBonusSelector
 } from "../../common/store/selectors";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -315,7 +315,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(showServiceDetails(service))
 });
 
+const AvailableBonusScreenFC: React.FunctionComponent<Props> = (
+  props: Props
+) => (
+  <LoadingSpinnerOverlay isLoading={props.isLoading}>
+    <AvailableBonusScreen {...props} />
+  </LoadingSpinnerOverlay>
+);
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(AvailableBonusScreen));
+)(AvailableBonusScreenFC);

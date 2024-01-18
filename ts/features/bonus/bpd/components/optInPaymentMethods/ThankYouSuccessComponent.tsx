@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import Completed from "../../../../../../img/pictograms/payment-completed.svg";
@@ -13,9 +12,10 @@ import {
   optInPaymentMethodsCompleted,
   optInPaymentMethodsShowChoice
 } from "../../store/actions/optInPaymentMethods";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 const ThankYouSuccessComponent = () => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   return (
     <SafeAreaView style={IOStyles.flex} testID={"ThankYouSuccessComponent"}>
@@ -32,7 +32,9 @@ const ThankYouSuccessComponent = () => {
           () => {
             dispatch(optInPaymentMethodsCompleted());
             dispatch(optInPaymentMethodsShowChoice.success(false));
-            navigation.navigate(ROUTES.WALLET_HOME);
+            navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+              screen: ROUTES.WALLET_HOME
+            });
           },
           I18n.t("bonus.bpd.optInPaymentMethods.thankYouPage.cta.goToWallet"),
           undefined,

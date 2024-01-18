@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
@@ -25,6 +24,8 @@ import {
   svGenerateVoucherCancel,
   svGenerateVoucherSelectFlightsDate
 } from "../../store/actions/voucherGeneration";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -53,7 +54,7 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
 
   const [showReturn, setShowReturn] = useState<boolean | undefined>(false);
 
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const handleDisableContinue = (): boolean => {
     if (showReturn === true) {
@@ -69,7 +70,9 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
         returnDate
       });
     }
-    navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SUMMARY);
+    navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+      screen: SV_ROUTES.VOUCHER_GENERATION.SUMMARY
+    });
   };
 
   const cancelButtonProps = {

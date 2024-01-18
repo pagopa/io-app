@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SafeAreaView, FlatList, View } from "react-native";
 import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import { VSpacer } from "@pagopa/io-app-design-system";
@@ -38,10 +37,11 @@ import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUxConversion } from "../../analytics";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const [clausesChecked, setClausesChecked] = React.useState(0);
   const servicePreference = useSelector(servicePreferenceSelector);
   const qtspClausesSelector = useSelector(fciQtspClausesSelector);
@@ -76,9 +76,12 @@ const FciQtspClausesScreen = () => {
     useFciAbortSignatureFlow();
 
   const openUrl = (url: string) => {
-    navigation.navigate(FCI_ROUTES.DOC_PREVIEW, {
-      documentUrl: url,
-      enableAnnotationRendering: true
+    navigation.navigate(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.DOC_PREVIEW,
+      params: {
+        documentUrl: url,
+        enableAnnotationRendering: true
+      }
     });
   };
 

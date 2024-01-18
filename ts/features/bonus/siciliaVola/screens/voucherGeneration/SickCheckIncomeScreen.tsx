@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -12,12 +11,14 @@ import {
 } from "../../store/actions/voucherGeneration";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   if (
     O.isSome(props.selectedBeneficiaryCategory) &&
@@ -30,9 +31,9 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
   return (
     <CheckIncomeComponent
       onContinuePress={() =>
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
-        )
+        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
+          screen: SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
+        })
       }
     />
   );
