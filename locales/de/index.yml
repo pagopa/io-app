@@ -901,7 +901,6 @@ payment:
     confirm: "Zahlung abbrechen"
     cancel: "Mit der Zahlung fortfahren"
     success: "Die Zahlung wurde ordnungsgemäß abgebrochen"
-   payment:
   errorDetails: "Details"
   currentPsp: "Die Zahlung wird durgeführt von"
   noPsp: "Du hast noch keinen Zahlungsdienstleister ausgewählt"
