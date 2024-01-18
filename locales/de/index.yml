@@ -1683,13 +1683,6 @@ messages:
       expiredAlert:
         block1: "Abgelaufen am "
         block2: "um "
-    prescription:
-      expiringOrValidAlert:
-        block1: "Verfällt am "
-        block2: "um "
-      expiredAlert:
-        block1: "Abgelaufen am "
-        block2: "um "
     pay: "Bezahle {{amount}} €"
     onlyPay: "Bezahlen"
     paid: "Bezahlt"
@@ -1735,17 +1728,6 @@ messages:
     emptyMessage:
       title: "Du hast keine Fälligkeiten."
       subtitle: "Über die Schaltfläche oben kannst du die bereits abgelaufenen Fristen einsehen."
-  medical:
-    not_available: "N/A"
-    prescription: "Elektronische Verschreibung"
-    memo: "Erinnerung für die betreute Person"
-    nre: "Elektronische Verschreibungsnummer"
-    iup: "Eindeutige Buchungsnummer"
-    patient_fiscal_code: "Steuernummer der betreuten Person"
-    prescriber_fiscal_code: "Steuernummer des Arztes"
-    barcodes: "Barcodes"
-    nationalService: "Nationaler Gesundheitsdienst"
-    note: "ausgestellt im Sinne des Art. 11, Abs. 16 des Gesetzesdekretes vom 31. Mai 2010, Nr. 78 und des Art. 1, Abs. 4 des Ministerialdekretes vom 2 November 2011"
   pagination:
     migration:
       started: "Bitte warte, wir aktualisieren den Mitteilungsbereich"

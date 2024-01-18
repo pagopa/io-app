@@ -1816,13 +1816,6 @@ messages:
       expiredAlert:
         block1: Scaduto il
         block2: alle ore
-    prescription:
-      expiringOrValidAlert:
-        block1: Scade il
-        block2: alle
-      expiredAlert:
-        block1: Scaduta il
-        block2: alle
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
@@ -1868,17 +1861,6 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
-  medical:
-    not_available: "n/a"
-    prescription: Ricetta elettronica
-    memo: Promemoria per l'assistito
-    nre: Numero Ricetta Elettronica
-    iup: Identificativo Unico Prenotazione
-    patient_fiscal_code: Codice Fiscale dell'assistito
-    prescriber_fiscal_code: Codice fiscale del medico
-    barcodes: Codici a barre
-    nationalService: Servizio Sanitario Nazionale
-    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
