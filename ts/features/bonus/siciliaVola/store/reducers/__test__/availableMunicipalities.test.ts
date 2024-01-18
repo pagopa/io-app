@@ -13,7 +13,7 @@ import {
   remoteError,
   remoteReady,
   remoteUndefined
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 
 const genericError = getTimeoutError();
 

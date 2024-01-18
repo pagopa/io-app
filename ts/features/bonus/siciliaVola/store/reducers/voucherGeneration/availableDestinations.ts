@@ -14,7 +14,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 
 export type AvailableDestinationsState = RemoteValue<
   AvailableDestinations,

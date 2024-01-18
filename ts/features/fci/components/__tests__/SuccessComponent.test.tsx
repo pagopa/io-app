@@ -2,7 +2,7 @@ import React from "react";
 import { createStore, Store } from "redux";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import SuccessComponent from "../SuccessComponent";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
@@ -138,7 +138,7 @@ function renderComponent(props: Props, store: Store<GlobalState>) {
       <SuccessComponent signatureRequest={props.signatureRequest} />
     </Provider>
   );
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => Component,
     FCI_ROUTES.MAIN,
     { ...props },

@@ -23,7 +23,7 @@ import { isIos } from "../../../utils/platform";
 import { isStrictNone } from "../../../utils/pot";
 import { share } from "../../../utils/share";
 import { showToast } from "../../../utils/showToast";
-import { confirmButtonProps } from "../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import PdfViewer from "./MessageDetail/PdfViewer";
 
 type Props = {

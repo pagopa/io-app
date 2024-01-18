@@ -2,7 +2,7 @@ import {
   EycaDetailsState,
   EycaDetailStatus
 } from "../store/reducers/eyca/details";
-import { isLoading, isReady } from "../../bpd/model/RemoteValue";
+import { isLoading, isReady } from "../../../../common/model/RemoteValue";
 
 // return true if the EYCA details component can be shown
 export const canEycaCardBeShown = (card: EycaDetailsState): boolean => {

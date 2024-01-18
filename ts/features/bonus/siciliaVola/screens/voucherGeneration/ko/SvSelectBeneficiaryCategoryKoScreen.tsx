@@ -8,7 +8,7 @@ import image from "../../../../../../../img/servicesStatus/error-detail-icon.png
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { cancelButtonProps } from "../../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../../components/buttons/ButtonConfigurations";
 import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import { svGenerateVoucherCancel } from "../../../store/actions/voucherGeneration";
 

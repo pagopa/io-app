@@ -9,7 +9,7 @@ import I18n from "../../../../../i18n";
 import ROUTES from "../../../../../navigation/routes";
 import { useIOSelector } from "../../../../../store/hooks";
 import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
-import { isError, isReady } from "../../model/RemoteValue";
+import { isError, isReady } from "../../../../../common/model/RemoteValue";
 import BPD_ROUTES from "../../navigation/routes";
 import { optInPaymentMethodsShowChoice } from "../../store/actions/optInPaymentMethods";
 import { showOptInChoiceSelector } from "../../store/reducers/details/activation/ui";

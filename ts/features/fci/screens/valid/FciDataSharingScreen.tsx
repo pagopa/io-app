@@ -24,14 +24,14 @@ import { capitalize } from "../../../../utils/strings";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
-import { localeDateFormat } from "../../../../utils/locale";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
@@ -135,10 +135,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
                 <ListItemComponent
                   testID="FciDataSharingScreenBirthDateTestID"
                   title={I18n.t("features.fci.shareDataScreen.birthDate")}
-                  subTitle={localeDateFormat(
-                    birthDate,
-                    I18n.t("global.dateFormats.shortFormat")
-                  )}
+                  subTitle={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
                   hideIcon
                 />
               )}

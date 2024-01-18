@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
-import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
 
 export type ZendeskAppConfig = {
@@ -167,3 +167,5 @@ export const handleSendAssistanceLog = (
       appendLog(log);
   }
 };
+
+export const PAGOPA_SUPPORT_PHONE_NUMBER = "0645202323";

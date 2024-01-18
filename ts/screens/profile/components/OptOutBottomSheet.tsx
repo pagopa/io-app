@@ -7,7 +7,7 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   errorButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 

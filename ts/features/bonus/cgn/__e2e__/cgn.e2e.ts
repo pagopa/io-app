@@ -1,7 +1,7 @@
 import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
-import { ID_CGN_TYPE } from "../../bonusVacanze/utils/bonus";
+import { ID_CGN_TYPE } from "../../common/utils";
 
 const CGN_TITLE = "Carta Giovani Nazionale";
 const SERVICES_LIST = "services-list";

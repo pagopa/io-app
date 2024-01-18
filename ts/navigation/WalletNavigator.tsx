@@ -1,9 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { bonusVacanzeEnabled, bpdOptInPaymentMethodsEnabled } from "../config";
-import BonusVacanzeNavigator from "../features/bonus/bonusVacanze/navigation/navigator";
-import BONUSVACANZE_ROUTES from "../features/bonus/bonusVacanze/navigation/routes";
-import ActiveBonusScreen from "../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
+import { bpdOptInPaymentMethodsEnabled } from "../config";
 import {
   BpdDetailsNavigator,
   BpdOnboardingNavigator,
@@ -12,6 +9,10 @@ import {
 import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import IbanCTAEditScreen from "../features/bonus/bpd/screens/iban/IbanCTAEditScreen";
 import MainIbanScreen from "../features/bonus/bpd/screens/iban/MainIbanScreen";
+import {
+  BONUS_ROUTES,
+  BonusNavigator
+} from "../features/bonus/common/navigation/navigator";
 import { IdPayInstrumentInitiativesScreen } from "../features/idpay/wallet/screens/IdPayInstrumentInitiativesScreen";
 import BancomatDetailScreen from "../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreen } from "../features/wallet/bancomatpay/screen/BPayDetailScreen";
@@ -38,12 +39,12 @@ import CreditCardOnboardingAttemptDetailScreen from "../screens/wallet/creditCar
 import CreditCardOnboardingAttemptsScreen from "../screens/wallet/creditCardOnboardingAttempts/CreditCardOnboardingAttemptsScreen";
 import ConfirmPaymentMethodScreen from "../screens/wallet/payment/ConfirmPaymentMethodScreen";
 import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInsertionScreen";
-import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import PaymentOutcomeCodeMessage from "../screens/wallet/payment/PaymentOutcomeCodeMessage";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
 import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
+import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import { useIOSelector } from "../store/hooks";
 import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
 import ROUTES from "./routes";
@@ -191,20 +192,8 @@ const WalletNavigator = () => {
         name={PAYPAL_ROUTES.ONBOARDING.MAIN}
         component={PaymentMethodOnboardingPayPalOnboardingNavigator}
       />
-
-      {/* Bonus Vacanze */}
-      {bonusVacanzeEnabled && (
-        <>
-          <Stack.Screen
-            name={BONUSVACANZE_ROUTES.MAIN}
-            component={BonusVacanzeNavigator}
-          />
-          <Stack.Screen
-            name={BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN}
-            component={ActiveBonusScreen}
-          />
-        </>
-      )}
+      {/* Bonus */}
+      <Stack.Screen name={BONUS_ROUTES.MAIN} component={BonusNavigator} />
 
       {/* BPD */}
       {bptRoutes()}

@@ -1,9 +1,9 @@
-import { NavigationEvents } from "@react-navigation/compat";
 import * as React from "react";
 import { useRef } from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
@@ -14,12 +14,12 @@ import { navigateBack } from "../../../../../store/actions/navigation";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import {
   isError,
   isLoading,
   isUndefined
-} from "../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { loadAbi } from "../../bancomat/store/actions";
 import { abiListSelector, abiSelector } from "../../store/abi";
 import { SearchBankComponent } from "./SearchBankComponent";
@@ -66,6 +66,8 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
     }
   }, [bankRemoteValue, loadAbis]);
 
+  useFocusEffect(React.useCallback(() => clearTimeout(errorRetry.current), []));
+
   return (
     <BaseScreenComponent
       goBack={true}
@@ -77,7 +79,6 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
       })}
       contextualHelp={emptyContextualHelp}
     >
-      <NavigationEvents onDidBlur={() => clearTimeout(errorRetry.current)} />
       <SafeAreaView style={IOStyles.flex}>
         <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
           <SearchBankComponent

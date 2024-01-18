@@ -12,7 +12,7 @@ import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import RootModal from "../RootModal";
 
 describe("RootModal", () => {
@@ -27,7 +27,7 @@ describe("RootModal", () => {
       const store = createStore(appReducer, globalState as any);
       expect(store.getState().versionInfo).toStrictEqual(null);
 
-      const testComponent = renderScreenFakeNavRedux<GlobalState>(
+      const testComponent = renderScreenWithNavigationStoreContext<GlobalState>(
         RootModal,
         ROUTES.INGRESS,
         {},
@@ -50,7 +50,7 @@ describe("RootModal", () => {
       expect(store.getState().versionInfo).toStrictEqual(null);
       store.dispatch(versionInfoLoadFailure(new Error()));
 
-      const testComponent = renderScreenFakeNavRedux<GlobalState>(
+      const testComponent = renderScreenWithNavigationStoreContext<GlobalState>(
         RootModal,
         ROUTES.INGRESS,
         {},
@@ -72,12 +72,13 @@ describe("RootModal", () => {
         expect(store.getState().versionInfo).toStrictEqual(null);
         store.dispatch(versionInfoLoadFailure(new Error()));
 
-        const testComponent = renderScreenFakeNavRedux<GlobalState>(
-          RootModal,
-          ROUTES.INGRESS,
-          {},
-          store
-        );
+        const testComponent =
+          renderScreenWithNavigationStoreContext<GlobalState>(
+            RootModal,
+            ROUTES.INGRESS,
+            {},
+            store
+          );
         expect(testComponent).not.toBeNull();
 
         expect(testComponent.queryByText(I18n.t("titleUpdateApp"))).toBeNull();
@@ -131,7 +132,7 @@ const testRootModal = (
     android: minVersion
   });
 
-  const testComponent = renderScreenFakeNavRedux<GlobalState>(
+  const testComponent = renderScreenWithNavigationStoreContext<GlobalState>(
     RootModal,
     ROUTES.INGRESS,
     {},

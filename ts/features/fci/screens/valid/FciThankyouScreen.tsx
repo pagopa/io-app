@@ -4,7 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import paymentCompleted from "../../../../../img/pictograms/payment-completed.png";

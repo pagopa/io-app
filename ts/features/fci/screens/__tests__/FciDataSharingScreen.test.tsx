@@ -6,7 +6,7 @@ import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import FciDataSharingScreen from "../valid/FciDataSharingScreen";
 import I18n from "../../../../i18n";
 import {
@@ -171,7 +171,7 @@ const renderComponent = (state: GlobalState) => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <FciDataSharingScreen />,
       FCI_ROUTES.USER_DATA_SHARE,
       {},

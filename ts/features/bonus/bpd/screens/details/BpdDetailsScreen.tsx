@@ -15,7 +15,11 @@ import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import BpdLastUpdateComponent from "../../components/BpdLastUpdateComponent";
-import { isError, isLoading, isReady } from "../../model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../../../common/model/RemoteValue";
 import { navigateToBpdTransactions } from "../../navigation/actions";
 import { bpdAllData } from "../../store/actions/details";
 import {

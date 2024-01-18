@@ -13,7 +13,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export type VoucherGeneratedState = RemoteValue<

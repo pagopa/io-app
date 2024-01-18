@@ -15,7 +15,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../utils/emptyContextualHelp";
 import { isTimeoutError } from "../../../../../../utils/errors";
 import { useAvoidHardwareBackButton } from "../../../../../../utils/useAvoidHardwareBackButton";
-import { isError, isReady } from "../../../../../bonus/bpd/model/RemoteValue";
+import { isError, isReady } from "../../../../../../common/model/RemoteValue";
 import { searchUserCoBadge } from "../../store/actions";
 import { onboardingCoBadgeAbiSelectedSelector } from "../../store/reducers/abiSelected";
 import { onboardingCoBadgeFoundSelector } from "../../store/reducers/foundCoBadge";

@@ -39,12 +39,18 @@ import {
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 import { WalletBarcodeRoutes } from "../../walletV3/barcode/navigation/routes";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 const BarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const openDeepLink = useOpenDeepLink();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+
+  useHardwareBackButton(() => {
+    navigation.goBack();
+    return true;
+  });
 
   const { dataMatrixPosteEnabled } = useIOSelector(
     barcodesScannerConfigSelector
