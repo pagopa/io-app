@@ -141,5 +141,5 @@ export type IOStackNavigationProp<
 > = StackNavigationProp<AppParamsList & ParamList, RouteName>;
 
 export const useIONavigation = useNavigation<
-  IOStackNavigationProp<AppParamsList>
+  IOStackNavigationProp<AppParamsList, keyof AppParamsList>
 >;

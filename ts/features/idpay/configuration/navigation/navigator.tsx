@@ -47,8 +47,7 @@ export const IDPayConfigurationNavigator = () => (
   <IDPayConfigurationMachineProvider>
     <Stack.Navigator
       initialRouteName={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}
-      headerMode={"none"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
     >
       <Stack.Screen
         name={IDPayConfigurationRoutes.IDPAY_CONFIGURATION_INTRO}

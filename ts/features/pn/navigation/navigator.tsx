@@ -12,8 +12,7 @@ const Stack = createStackNavigator<PnParamsList>();
 export const PnStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={PN_ROUTES.MESSAGE_DETAILS}

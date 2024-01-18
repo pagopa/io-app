@@ -23,8 +23,7 @@ const BonusStack = createStackNavigator<BonusParamsList>();
 export const BonusNavigator = () => (
   <BonusStack.Navigator
     initialRouteName={BONUS_ROUTES.MAIN}
-    headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <BonusStack.Screen
       name={BONUS_ROUTES.BONUS_AVAILABLE_LIST}

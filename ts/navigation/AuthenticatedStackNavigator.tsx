@@ -101,8 +101,7 @@ const AuthenticatedStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.MAIN}
-      headerMode={"screen"}
-      screenOptions={{ gestureEnabled: false }}
+      screenOptions={{ gestureEnabled: false, headerShown: false }}
     >
       <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
 

@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Dimensions, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
@@ -16,6 +15,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
 import PAYPAL_ROUTES from "../navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -50,11 +51,14 @@ const PayPalLogo = () => (
 const PayPalStartOnboardingScreen = (
   props: Props
 ): React.ReactElement | null => {
-  const navigationContext = useNavigation();
+  const navigationContext = useIONavigation();
 
   const navigateToSearchPsp = () =>
-    navigationContext.navigate(PAYPAL_ROUTES.ONBOARDING.MAIN, {
-      screen: PAYPAL_ROUTES.ONBOARDING.SEARCH_PSP
+    navigationContext.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: PAYPAL_ROUTES.ONBOARDING.SEARCH_PSP
+      }
     });
 
   const cancelButtonProps = {

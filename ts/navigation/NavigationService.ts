@@ -5,8 +5,10 @@ import {
 import { Route } from "@react-navigation/routers";
 import React from "react";
 import { mixpanelTrack } from "../mixpanel";
+import { AppParamsList } from "./params/AppParamsList";
 
-export const navigationRef = React.createRef<NavigationContainerRef>();
+export const navigationRef =
+  React.createRef<NavigationContainerRef<AppParamsList>>();
 // eslint-disable-next-line functional/no-let
 let isNavigationReady: boolean = false;
 
@@ -30,13 +32,18 @@ const withLogging =
   };
 
 // NavigationContainerComponent
-const getNavigator = (): React.RefObject<NavigationContainerRef> =>
-  navigationRef;
+const getNavigator = (): React.RefObject<
+  NavigationContainerRef<AppParamsList>
+> => navigationRef;
 
 // NavigationParams
-const navigate = (routeName: string, params?: any) => {
+type NavigationParamsInternal = Parameters<
+  NavigationContainerRef<AppParamsList>["navigate"]
+>;
+
+const navigate = (...args: NavigationParamsInternal) => {
   if (isNavigationReady) {
-    navigationRef.current?.navigate(routeName, params);
+    navigationRef.current?.navigate(...args);
   }
 };
 

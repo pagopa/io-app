@@ -29,12 +29,17 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import {
+  LightModalContext,
+  LightModalContextInterface
+} from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
 import {
   AppParamsList,
-  IOStackNavigationRouteProps
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps,
+  useIONavigation
 } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
@@ -70,11 +75,11 @@ import {
   trackSpidLoginSelected
 } from "./analytics";
 
-type NavigationProps = IOStackNavigationRouteProps<AppParamsList, "INGRESS">;
+type NavigationProps = {
+  navigation: IOStackNavigationProp<AppParamsList, keyof AppParamsList>;
+};
 
-type Props = NavigationProps &
-  LightModalContextInterface &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type State = {
@@ -179,8 +184,10 @@ export const IdpCIE: SpidIdp = {
   profileUrl: ""
 };
 
-class LandingScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
+type LandingScreenProps = LightModalContextInterface & Props & NavigationProps;
+
+class LandingScreen extends React.PureComponent<LandingScreenProps, State> {
+  constructor(props: LandingScreenProps) {
     super(props);
     this.state = { isRootedOrJailbroken: O.none, isSessionExpired: false };
   }
@@ -472,7 +479,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(continueWithRootOrJailbreak(continueWith))
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withLightModalContext(LandingScreen));
+const LandingScreenFC = (props: Props) => {
+  const navigation = useIONavigation();
+  const { ...modalContext } = React.useContext(LightModalContext);
+  return <LandingScreen {...props} navigation={navigation} {...modalContext} />;
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingScreenFC);
