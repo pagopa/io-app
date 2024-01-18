@@ -2479,7 +2479,7 @@ transaction:
       subject: "Zahlungsgrund"
 permissionRequest:
   gallery:
-    title: "Erlaube  IO den Zugriff auf deine Fotos"
+    title: "Erlaube IO den Zugriff auf deine Fotos"
     subtitle: "Dazu musst du die Rechte in den Einstellungen deines Geräts ändern."
     caption: "So geht's:"
     step: "Schritt {{step}}"
@@ -2490,4 +2490,8 @@ permissionRequest:
         3: "Wähle “IO”"
         4: "Wähle den Punkt App-Berechtigungen"
         5: "Lass den Zugriff auf Dateien und Medien zu"
+      ios:
+        1: "Geh zu “Einstellungen”"
+        2: "Wähle “IO”"
+        3: "Wähle “Fotos” und erlaube den Zugriff"
     cta: "Öffne Einstellungen"
