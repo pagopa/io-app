@@ -1669,7 +1669,7 @@ wallet:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
         subtitle: "Es wurde kein Betrag abgebucht."
       AUTH_ERROR:
-        title: "Autorisierung verweigert""
+        title: "Autorisierung verweigert"
         subtitle: "Es wurde kein Betrag abgebucht.\nVergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast.""
       INVALID_DATA:
         title: "Die Daten der Zahlungsmethode sind falsch"
