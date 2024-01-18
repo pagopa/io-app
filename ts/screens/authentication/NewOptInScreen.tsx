@@ -10,14 +10,13 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import { useStore } from "react-redux";
+import { Route, useRoute } from "@react-navigation/native";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import ROUTES from "../../navigation/routes";
-import { AuthenticationParamsList } from "../../navigation/params/AuthenticationParamsList";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import I18n from "../../i18n";
 import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
 import { useIODispatch } from "../../store/hooks";
@@ -39,19 +38,15 @@ export type ChosenIdentifier = {
   identifier: "SPID" | "CIE";
 };
 
-type Props = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "AUTHENTICATION_OPT_IN"
->;
-
-const NewOptInScreen = (props: Props) => {
+const NewOptInScreen = () => {
   const dispatch = useIODispatch();
   const {
     securitySuggestionBottomSheet,
     presentSecuritySuggestionBottomSheet
   } = useSecuritySuggestionsBottomSheet();
-
-  const navigation = useNavigation();
+  const { identifier } =
+    useRoute<Route<"AUTHENTICATION_OPT_IN", ChosenIdentifier>>().params;
+  const navigation = useIONavigation();
   const store = useStore();
 
   useOnFirstRender(() => {
@@ -70,7 +65,7 @@ const NewOptInScreen = (props: Props) => {
     }
     navigation.navigate(ROUTES.AUTHENTICATION, {
       screen:
-        props.route.params.identifier === "CIE"
+        identifier === "CIE"
           ? ROUTES.CIE_PIN_SCREEN
           : ROUTES.AUTHENTICATION_IDP_SELECTION
     });

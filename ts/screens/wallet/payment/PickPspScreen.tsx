@@ -206,7 +206,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
-const PickPspScreenFC = (props: Props) => {
+const ConnectedPickPspScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PickPspScreen);
+
+const PickPspScreenFC = () => {
   const { ...modalContext } = React.useContext(LightModalContext);
   const navigation =
     useNavigation<
@@ -215,8 +220,7 @@ const PickPspScreenFC = (props: Props) => {
   const route =
     useRoute<Route<"PAYMENT_PICK_PSP", PickPspScreenNavigationParams>>();
   return (
-    <PickPspScreen
-      {...props}
+    <ConnectedPickPspScreen
       {...modalContext}
       navigation={navigation}
       route={route}
@@ -224,4 +228,4 @@ const PickPspScreenFC = (props: Props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PickPspScreenFC);
+export default PickPspScreenFC;

@@ -1,7 +1,7 @@
 import { Divider, ListItemNav } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
@@ -29,6 +29,11 @@ import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined
 } from "../onboarding/biometric&securityChecks/analytics";
+import {
+  IOStackNavigationProp,
+  useIONavigation
+} from "../../navigation/params/AppParamsList";
+import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -38,24 +43,36 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const SecurityScreen = (): React.ReactElement => {
   const dispatch = useIODispatch();
   const isFingerprintEnabled = useIOSelector(isFingerprintEnabledSelector);
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<IOStackNavigationProp<IdPayCodeParamsList>>();
+  const commonNavigation = useIONavigation();
   const isScreenReaderEnabled = useScreenReaderEnabled();
   const [isFingerprintAvailable, setIsFingerprintAvailable] = useState(false);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isIdPayCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
 
   const idPayCodeHandler = () => {
-    navigation.navigate(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
-      screen: isIdPayCodeOnboarded
-        ? IdPayCodeRoutes.IDPAY_CODE_RENEW
-        : IdPayCodeRoutes.IDPAY_CODE_ONBOARDING
-    });
+    navigation.navigate(
+      IdPayCodeRoutes.IDPAY_CODE_MAIN,
+      isIdPayCodeOnboarded
+        ? {
+            screen: IdPayCodeRoutes.IDPAY_CODE_RENEW
+          }
+        : {
+            screen: IdPayCodeRoutes.IDPAY_CODE_ONBOARDING,
+            params: {
+              initiativeId: undefined
+            }
+          }
+    );
   };
 
   const requestIdentificationAndResetPin = useCallback(() => {
     const onSuccess = () => {
       void mixpanelTrack("UPDATE_PIN");
-      navigation.navigate(ROUTES.PIN_SCREEN);
+      commonNavigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.PIN_SCREEN
+      });
     };
 
     dispatch(
@@ -70,7 +87,7 @@ const SecurityScreen = (): React.ReactElement => {
         shufflePinPadOnPayment
       )
     );
-  }, [dispatch, navigation]);
+  }, [commonNavigation, dispatch]);
 
   const setFingerprintPreference = useCallback(
     (fingerprintPreference: boolean) =>
