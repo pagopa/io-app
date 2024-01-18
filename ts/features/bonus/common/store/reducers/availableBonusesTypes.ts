@@ -14,7 +14,6 @@ const reducer = (
   action: Action
 ): AvailableBonusTypesState => {
   switch (action.type) {
-    // available bonuses
     case getType(loadAvailableBonuses.request):
       return pot.toLoading(state);
     case getType(loadAvailableBonuses.success):

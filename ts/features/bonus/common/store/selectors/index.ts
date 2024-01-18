@@ -9,11 +9,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 import { servicesByIdSelector } from "../../../../../store/reducers/entities/services/servicesById";
-import {
-  ID_BONUS_VACANZE_TYPE,
-  ID_BPD_TYPE,
-  mapBonusIdFeatureFlag
-} from "../../utils";
+import { ID_BPD_TYPE, mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 
 /**
@@ -108,7 +104,7 @@ export const serviceFromAvailableBonusSelector = (idBonusType: number) =>
  * Return the uri of the bonus vacanze image logo
  */
 export const bonusVacanzeLogo = createSelector(
-  availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE),
+  availableBonusTypesSelectorFromId(1), // BV ID
   bonus =>
     pipe(
       bonus,
