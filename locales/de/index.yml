@@ -1577,10 +1577,6 @@ wallet:
         title: "Deine Karte wurde erfolgreich hinzugefügt!"
     payment:
       success:
-        banner:
-          title: "Kannst du uns sagen, wie es gelaufen ist?"
-          content: "Erzähle uns von deinen Erfahrungen mit der Bezahlung und hilf uns, uns zu verbessern."
-          action: "Weiter zur Umfrage"
         title: "Danke, die Transaktion war erfolgreich!"
         description1: "Wir senden eine Quittung an"
         description2: "Du kannst sie auch in deinem Konto finden."
