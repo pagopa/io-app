@@ -28,7 +28,7 @@
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/openapi/generated/api_fast_login.yaml",
   "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/bc466a042352613669f3e9f3f0512a4ffa3ac00d/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
-  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/65878f9913fcc0eaff499ba8a1a20427a412c010/src/domains/ecommerce-app/api/ecommerce-io/v1/_openapi.json.tpl",
+  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/bc466a042352613669f3e9f3f0512a4ffa3ac00d/src/domains/ecommerce-app/api/ecommerce-io/v1/_openapi.json.tpl",
   "private": true,
   "scripts": {
     "start": "react-native start",
