@@ -50,7 +50,7 @@ export type HeaderActionProps =
   | HeaderTwoActionsProps
   | HeaderThreeActionsProps;
 
-type BackProps =
+export type BackProps =
   | {
       goBack: () => void;
       backAccessibilityLabel: string;
