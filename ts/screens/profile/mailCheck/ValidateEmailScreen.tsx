@@ -14,6 +14,8 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch } from "../../../store/hooks";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { CheckEmailParamsList } from "../../../navigation/params/CheckEmailParamsList";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -27,12 +29,19 @@ const styles = StyleSheet.create({
   }
 });
 
-export type Props = {
+export type EmailNotVerifiedScreenParamList = {
   email: string;
 };
 
+export type Props = IOStackNavigationRouteProps<
+  CheckEmailParamsList,
+  "CHECK_EMAIL_NOT_VERIFIED"
+>;
+
 const ValidateEmailScreen = (props: Props) => {
   const dispatch = useIODispatch();
+
+  const { email } = props.route.params;
 
   const navigateToInsertEmailScreen = () => {
     NavigationService.navigate(ROUTES.ONBOARDING, {
@@ -79,7 +88,7 @@ const ValidateEmailScreen = (props: Props) => {
           <Body style={{ textAlign: "center" }}>
             {I18n.t("email.cduScreens.validateMail.subtitle")}
           </Body>
-          <Body weight="SemiBold">{props.email}</Body>
+          <Body weight="SemiBold">{email}</Body>
           <VSpacer size={16} />
           <Link onPress={modifyEmailButtonOnPress}>
             {I18n.t("email.cduScreens.validateMail.editButton")}
