@@ -18,14 +18,14 @@ describe("Credit Card onboarding", () => {
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
 
       await waitFor(
-        element(by.text(I18n.t("wallet.newPaymentMethod.add").toUpperCase()))
+        element(by.id("walletAddNewPaymentMethodTestId"))
       )
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
 
       // Button "+ Add"
       await element(
-        by.text(I18n.t("wallet.newPaymentMethod.add").toUpperCase())
+        by.id("walletAddNewPaymentMethodTestId")
       ).tap();
 
       await waitFor(element(by.text(I18n.t("wallet.paymentMethod"))))
