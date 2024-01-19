@@ -17,16 +17,12 @@ describe("Credit Card onboarding", () => {
       // Footer, Wallet icon
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
 
-      await waitFor(
-        element(by.id("walletAddNewPaymentMethodTestId"))
-      )
+      await waitFor(element(by.id("walletAddNewPaymentMethodTestId")))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
 
       // Button "+ Add"
-      await element(
-        by.id("walletAddNewPaymentMethodTestId")
-      ).tap();
+      await element(by.id("walletAddNewPaymentMethodTestId")).tap();
 
       await waitFor(element(by.text(I18n.t("wallet.paymentMethod"))))
         .toBeVisible()
