@@ -30,6 +30,7 @@ import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../utils/messages";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
+import { H1 } from "../../../../components/core/typography/H1";
 import { H2 } from "../../../../components/core/typography/H2";
 import {
   AppParamsList,
@@ -40,9 +41,7 @@ import { MESSAGES_ROUTES } from "../../navigation/routes";
 import CtaBar from "./CtaBar";
 import { RemoteContentBanner } from "./RemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
-import { MessageTitle } from "./MessageTitle";
 import MessageContent from "./Content";
-import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
 
 const styles = StyleSheet.create({
@@ -133,17 +132,7 @@ const MessageDetailsComponent = ({
   // This is used to make sure that no attachments are shown before the
   // markdown content has rendered
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
-  // Note that it is not possibile for a message to have both medical
-  // prescription attachments and third party data. That is why, later in the
-  // code, the UI rendering is guarded by opposite checks on prescription and
-  // third party attachments
-  const {
-    prescriptionAttachments,
-    markdown,
-    prescriptionData,
-    hasRemoteContent
-  } = messageDetails;
-  const isPrescription = prescriptionData !== undefined;
+  const { markdown, hasRemoteContent } = messageDetails;
 
   const { id: messageId, title } = message;
   const thirdPartyDataPot = useIOSelector(state =>
@@ -212,7 +201,7 @@ const MessageDetailsComponent = ({
 
           <VSpacer size={24} />
 
-          <MessageTitle title={messageTitle} isPrescription={isPrescription} />
+          <H1>{messageTitle}</H1>
 
           <VSpacer size={24} />
         </View>
@@ -230,19 +219,6 @@ const MessageDetailsComponent = ({
           {cleanMarkdownFromCTAs(messageMarkdown)}
         </MessageMarkdown>
         <VSpacer size={24} />
-
-        {prescriptionAttachments &&
-          !hasThirdPartyDataAttachments &&
-          isContentLoadCompleted && (
-            <>
-              <MedicalPrescriptionAttachments
-                prescriptionData={prescriptionData}
-                prescriptionAttachments={prescriptionAttachments}
-                organizationName={message.organizationName}
-              />
-              <VSpacer size={24} />
-            </>
-          )}
 
         {hasRemoteContent && isContentLoadCompleted ? (
           <>

@@ -14,7 +14,11 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { HeaderActionProps, useHeaderProps } from "../../hooks/useHeaderProps";
+import {
+  BackProps,
+  HeaderActionProps,
+  useHeaderProps
+} from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 
@@ -22,7 +26,9 @@ type Props = {
   children: React.ReactNode;
   fixedBottomSlot?: React.ReactNode;
   title: string;
+  titleTestID?: string;
   description?: string;
+  goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
 } & SupportRequestParams;
 
@@ -33,6 +39,7 @@ type Props = {
  * @param children
  * @param fixedBottomSlot An optional React node that is fixed to the bottom of the screen. Useful for buttons or other actions. It will be positioned outside the main `ScrollView`.
  * @param title
+ * @param titleTestID
  * @param contextualHelp
  * @param contextualHelpMarkdown
  * @param faqCategories
@@ -42,6 +49,8 @@ export const RNavScreenWithLargeHeader = ({
   children,
   fixedBottomSlot,
   title,
+  titleTestID,
+  goBack,
   description,
   contextualHelp,
   contextualHelpMarkdown,
@@ -65,7 +74,7 @@ export const RNavScreenWithLargeHeader = ({
 
   const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps({
     backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: navigation.goBack,
+    goBack: goBack ?? navigation.goBack,
     title,
     scrollValues: {
       contentOffsetY: translationY,
@@ -100,7 +109,7 @@ export const RNavScreenWithLargeHeader = ({
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
-          <H2>{title}</H2>
+          <H2 testID={titleTestID}>{title}</H2>
         </View>
 
         {description && (

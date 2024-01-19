@@ -47,8 +47,6 @@ export type UIMessage = WithUIMessageId<{
 export type UIMessageDetails = WithUIMessageId<{
   subject: string;
   serviceId: ServiceId;
-  prescriptionData?: PrescriptionData;
-  prescriptionAttachments?: ReadonlyArray<Attachment>;
   markdown: MessageBodyMarkdown;
   dueDate?: Date;
   paymentData?: PaymentData;
@@ -58,12 +56,6 @@ export type UIMessageDetails = WithUIMessageId<{
   // @deprecated please use it only for backward compatibility
   raw: CreatedMessageWithContentAndAttachments;
 }>;
-
-export type PrescriptionData = {
-  nre: string;
-  iup?: string;
-  prescriberFiscalCode?: FiscalCode;
-};
 
 export type EUCovidCertificate = { authCode: string };
 
