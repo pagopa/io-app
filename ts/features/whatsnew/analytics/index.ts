@@ -1,9 +1,9 @@
 import { mixpanelTrack } from "../../../mixpanel";
-import { FlowType, buildEventProperties } from "../../../utils/analytics";
+import { buildEventProperties } from "../../../utils/analytics";
 
-export function trackWhatsNewScreen(flow: FlowType) {
+export function trackWhatsNewScreen() {
   void mixpanelTrack(
     "WHATS_NEW",
-    buildEventProperties("UX", "screen_view", undefined, flow)
+    buildEventProperties("UX", "screen_view", undefined)
   );
 }
