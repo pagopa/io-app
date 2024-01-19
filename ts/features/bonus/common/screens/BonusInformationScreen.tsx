@@ -1,21 +1,18 @@
+import { Route, useRoute } from "@react-navigation/native";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { useRoute, Route } from "@react-navigation/native";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { navigateBack } from "../../../../store/actions/navigation";
-import { GlobalState } from "../../../../store/reducers/types";
 import BonusInformationComponent from "../../common/components/BonusInformationComponent";
-import { ownedActiveOrRedeemedBonus } from "../store/reducers/allActive";
 
 export type BonusInformationScreenNavigationParams = Readonly<{
   bonusItem: BonusAvailable;
 }>;
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapDispatchToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "bonus.bonusInformation.contextualHelp.title",
@@ -44,15 +41,8 @@ const BonusInformationScreen: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  hasOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 0
-});
-
 const mapDispatchToProps = (_: Dispatch) => ({
   navigateBack: () => navigateBack()
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BonusInformationScreen);
+export default connect(null, mapDispatchToProps)(BonusInformationScreen);

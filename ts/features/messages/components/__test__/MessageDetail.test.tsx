@@ -3,7 +3,7 @@ import configureMockStore from "redux-mock-store";
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import {
-  medicalPrescription,
+  message_1,
   paymentValidInvalidAfterDueDate
 } from "../../__mocks__/message";
 import { service_1 } from "../../__mocks__/messages";
@@ -26,8 +26,8 @@ const add8Days = (dueDate: Date) =>
 
 const defaultProps: React.ComponentProps<typeof MessageDetail> = {
   hasPaidBadge: false,
-  message: toUIMessage(medicalPrescription),
-  messageDetails: toUIMessageDetails(medicalPrescription),
+  message: toUIMessage(message_1),
+  messageDetails: toUIMessageDetails(message_1),
   onServiceLinkPress: jest.fn(),
   service: toUIService(service_1),
   serviceMetadata: { phone: "+123333", email: "hola@vpn.com" } as any
@@ -42,7 +42,7 @@ describe("MessageDetail component", () => {
     });
   });
 
-  describe("when a message doesn't contain prescription data but has a due date", () => {
+  describe("when a message has a due date", () => {
     const props = {
       ...defaultProps,
       messageDetails: toUIMessageDetails({
@@ -67,58 +67,6 @@ describe("MessageDetail component", () => {
         expect(
           component.queryByText(I18n.t("wallet.errors.DUPLICATED"))
         ).toBeNull();
-      });
-    });
-  });
-
-  describe("when a message contains prescription data", () => {
-    it("should render the medical prescription identifiers", () => {
-      const { component } = renderComponent(defaultProps);
-      expect(
-        component.queryByText(I18n.t("messages.medical.nre"))
-      ).not.toBeNull();
-      expect(
-        component.queryByText(I18n.t("messages.medical.iup"))
-      ).not.toBeNull();
-      expect(
-        component.queryByText(I18n.t("messages.medical.patient_fiscal_code"))
-      ).not.toBeNull();
-    });
-
-    it("should not render the CTA bar", () => {
-      const { component } = renderComponent(defaultProps);
-      expect(component.queryByTestId("CtaBar_withCTA")).toBeNull();
-      expect(component.queryByTestId("CtaBar_withFooter")).toBeNull();
-    });
-
-    it("should render the custom title", () => {
-      const { component } = renderComponent(defaultProps);
-      expect(
-        component.queryByText(I18n.t("messages.medical.prescription"))
-      ).not.toBeNull();
-      expect(
-        component.queryByText(I18n.t("messages.medical.memo"))
-      ).not.toBeNull();
-    });
-
-    describe("and has a due date more than 7 days in the future with payment data", () => {
-      // Please note that medical data can also carry a payment
-      const props = {
-        ...defaultProps,
-        messageDetails: toUIMessageDetails({
-          ...medicalPrescription,
-          content: {
-            ...medicalPrescription.content,
-            payment_data: paymentValidInvalidAfterDueDate.content.payment_data,
-            due_date: add8Days(new Date())
-          }
-        })
-      };
-      it("should render the medical prescription due date", () => {
-        const { component } = renderComponent(props);
-        expect(
-          component.queryByTestId("MedicalPrescriptionDueDate_valid")
-        ).not.toBeNull();
       });
     });
   });

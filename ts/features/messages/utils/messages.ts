@@ -8,10 +8,8 @@ import { Predicate } from "fp-ts/lib/Predicate";
 import { identity, pipe } from "fp-ts/lib/function";
 import FM from "front-matter";
 import { Linking } from "react-native";
-import { CreatedMessageWithContent } from "../../../../definitions/backend/CreatedMessageWithContent";
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
-import { PrescriptionData } from "../../../../definitions/backend/PrescriptionData";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
@@ -104,10 +102,6 @@ export const handleCtaAction = (
   }
 };
 
-export const hasPrescriptionData = (
-  message: CreatedMessageWithContent
-): boolean => pipe(message.content.prescription_data, O.fromNullable, O.isSome);
-
 type MessagePaymentUnexpirable = {
   kind: "UNEXPIRABLE";
   expireStatus?: ExpireStatus;
@@ -194,34 +188,6 @@ export const isExpiring = (
 export const isExpired = (
   messagePaymentExpirationInfo: MessagePaymentExpirationInfo
 ) => messagePaymentExpirationInfo.expireStatus === "EXPIRED";
-
-/**
- * given a name, return the relative prescription data value if it corresponds to a field
- * @param prescriptionData
- * @param name it should be a string nre | iup | prescriber_fiscal_code
- */
-export const getPrescriptionDataFromName = (
-  prescriptionData: PrescriptionData | undefined,
-  name: string
-): O.Option<string> =>
-  pipe(
-    prescriptionData,
-    O.fromNullable,
-    O.fold(
-      () => O.none,
-      pd => {
-        switch (name.toLowerCase()) {
-          case "nre":
-            return O.some(pd.nre);
-          case "iup":
-            return O.fromNullable(pd.iup);
-          case "prescriber_fiscal_code":
-            return O.fromNullable(pd.prescriber_fiscal_code);
-        }
-        return O.none;
-      }
-    )
-  );
 
 const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
   metadata?.token_name !== undefined;

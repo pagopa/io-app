@@ -6,11 +6,7 @@ import { bpdLoadActivationStatus } from "../../../bonus/bpd/store/actions/detail
 import { GlobalState } from "../../../../store/reducers/types";
 import { availableBonuses } from "../../../bonus/__mock__/availableBonuses";
 import * as bonus from "../../../bonus/common/utils";
-import {
-  ID_BONUS_VACANZE_TYPE,
-  ID_BPD_TYPE,
-  ID_CGN_TYPE
-} from "../../../bonus/common/utils";
+import { ID_BPD_TYPE, ID_CGN_TYPE } from "../../../bonus/common/utils";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
 import * as cgnDetailSelectors from "../../../bonus/cgn/store/reducers/details";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
@@ -23,7 +19,6 @@ describe("FeaturedCardCarousel", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, false]
         ])
@@ -57,7 +52,6 @@ describe("FeaturedCardCarousel", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, false],
           [ID_CGN_TYPE, false]
         ])
@@ -91,7 +85,6 @@ describe("FeaturedCardCarousel", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, false],
           [ID_CGN_TYPE, false]
         ])
@@ -125,7 +118,6 @@ describe("FeaturedCardCarousel", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, false]
         ])
@@ -162,7 +154,6 @@ describe("FeaturedCardCarousel", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, false],
           [ID_CGN_TYPE, false]
         ])
@@ -211,7 +202,6 @@ describe("FeaturedCardCarousel", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, true]
         ])
@@ -260,7 +250,6 @@ describe("FeaturedCardCarousel", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, true]
         ])
@@ -305,7 +294,6 @@ describe("FeaturedCardCarousel", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BONUS_VACANZE_TYPE, false],
           [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, true]
         ])
