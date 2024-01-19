@@ -1631,10 +1631,6 @@ wallet:
         title: "La tua carta è stata aggiunta con successo!"
     payment:
       success:
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
         title: "Grazie, l’operazione è stata eseguita con successo!"
         description1: "Abbiamo inviato una ricevuta a"
         description2: "Puoi trovarla anche nel tuo Portafoglio."
@@ -1821,13 +1817,6 @@ messages:
       expiredAlert:
         block1: Scaduto il
         block2: alle ore
-    prescription:
-      expiringOrValidAlert:
-        block1: Scade il
-        block2: alle
-      expiredAlert:
-        block1: Scaduta il
-        block2: alle
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
@@ -1873,17 +1862,6 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
-  medical:
-    not_available: "n/a"
-    prescription: Ricetta elettronica
-    memo: Promemoria per l'assistito
-    nre: Numero Ricetta Elettronica
-    iup: Identificativo Unico Prenotazione
-    patient_fiscal_code: Codice Fiscale dell'assistito
-    prescriber_fiscal_code: Codice fiscale del medico
-    barcodes: Codici a barre
-    nationalService: Servizio Sanitario Nazionale
-    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
@@ -2376,12 +2354,7 @@ bonus:
       description: "Questa iniziativa è terminata e non è più possibile richiederla"
   bonusVacanze:
     accessibility:
-      preview: Bonus Vacanze, importo massimo {{value}} euro, {{status}}
       card: Il tuo Bonus Vacanze con codice {{code}}, del valore massimo di {{value}} euro è {{status}}
-    statusInfo:
-      validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
-      bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
-      redeemed: Questo Bonus Vacanze è stato utilizzato il {{date}}
     multipleBonus: Risultano due o più bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
@@ -2400,89 +2373,20 @@ bonus:
     shareMessage: "Questo è il codice del tuo Bonus Vacanze:"
     saveScreenShotOk: "Bonus salvato nella tua galleria!"
     savedOn: "Salvato il "
-    detail:
-      contextualHelp:
-        title: Bonus Vacanze
-        body: Qui sono visualizzati i dettagli del Bonus Vacanze e le informazioni necessarie per spendere il bonus.
-    checkBonusEligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus
-    cta:
-      requestBonus: Richiedi Bonus
-      cancelRequest: Annulla la richiesta
-      qrCode: QR code
-      copyCode: Copia codice
-      openQRCode: Visualizza QR code
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
-      iseeNotAvailable:
-        title: "Siamo spiacenti.\n Non hai un ISEE ordinario o corrente in corso di validità."
-        text:
-          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE ordinario o corrente, prima di richiedere nuovamente il Bonus Vacanze.\n\n Puoi fare subito una "
-          secondo: "simulazione online"
-          third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
-        goToDSU: Richiedi ISEE
-      iseeNotEligible:
-        title: "Siamo spiacenti.\n Il tuo ISEE supera la soglia richiesta."
-        text: Se la situazione patrimoniale del tuo nucleo familiare è cambiata rispetto all'ultima Dichiarazioni Sostitutiva Unica (DSU) presentata, puoi presentarne una nuova attraverso i canali previsti da INPS.
-        goToNewDSU: Richiedi nuovo ISEE
       activateBonus:
-        contextualHelp:
-          title: Il Bonus Vacanze del tuo nucleo familiare
-          body: !include bonus/bonusVacanze/eligible_ch.md
         headerTitle: Richiesta Bonus Vacanze
         title: Buone notizie!
         description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
-        reminder:
-          text: "Ciascun componente del tuo nucleo familiare concorre a determinare l'importo e potrà spendere il bonus. Se i dati non sono corretti o aggiornati, per evitare problemi in seguito all'utilizzo del Bonus, ti invitiamo a presentare una nuova DSU prima di procedere con la richiesta."
         discrepancies:
           attention: "Attenzione!"
           text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
         activateCTA: "Attiva il Bonus"
-      timeout:
-        title: Stiamo procedendo alla verifica del tuo ISEE.
-        description:
-          first: "Ti invieremo un messaggio in app non appena sarà completata.\n\nQuando lo riceverai, se l'esito sarà positivo, ricordati di completare la tua richiesta "
-          second: "entro 24 ore"
-          third: ", altrimenti dovrai iniziarne una nuova."
-      activationPending:
-        title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
-        description: Riceverai un messaggio quando sarà attivato.
-      underage:
-        title: "Siamo spiacenti. Solo i cittadini maggiorenni possono richiedere il Bonus Vacanze"
     activation:
       loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
-      goToDetails: Visualizza Bonus Vacanze
       timeout:
         title: Stiamo processando la tua richiesta.
-        description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
-      alreadyRedeemed:
-        title: Il bonus per il tuo nucleo familiare è già attivo!
-        body: Puoi visualizzarne i dettagli nella sezione Portafoglio.
-        cta: Visualizza Bonus disponibili
-      eligibilityExpired:
-        title: Tempo scaduto.
-        body: Le 24 ore utili a proseguire la tua richiesta sono scadute. Ti chiediamo di ricominciare una nuova richiesta.
-        cta: "Richiedi Bonus"
-      confirm:
-        title: Attenzione
-        body: Continuando nel processo, non sarà più possibile annullare la richiesta.
-        cancel: Torna alla richiesta
-        confirm: Continua
-      completed:
-        title: Congratulazioni!
-        description: Il tuo bonus è attivo
-    abort:
-      title: Annulla
-      body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
-      cancel: Continua
-      confirm: Annulla la richiesta
-      completed: Richiesta annullata
-    composition:
-      amount: "Importo massimo"
-      expendable: "Spendibile presso la struttura ricettiva"
-      taxBenefit: "Detraibile in dichiarazione dei redditi"
-    family:
-      title: "Chi può riscuotere il bonus?"
   bonusList:
     title: Aggiungi bonus o sconto
     contentTitle: Seleziona uno dei bonus disponibili
@@ -2493,8 +2397,6 @@ bonus:
     contextualHelp:
       title: Il bonus vacanze
       body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
-    requestAlert:
-      title: Attenzione
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta

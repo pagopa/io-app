@@ -11,10 +11,8 @@ import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend
 import { apiUrlPrefix } from "../../../../config";
 import { ContentTypeValues } from "../../types/contentType";
 import {
-  Attachment,
   EUCovidCertificate,
   PaymentData,
-  PrescriptionData,
   UIAttachment,
   UIAttachmentId,
   UIMessage,
@@ -53,17 +51,6 @@ export const toUIMessage = (
   };
 };
 
-const getPrescriptionAttachments = ({
-  attachments
-}: CreatedMessageWithContentAndAttachments["content"]):
-  | ReadonlyArray<Attachment>
-  | undefined =>
-  attachments?.map(({ name, content, mime_type }) => ({
-    name,
-    content,
-    mimeType: mime_type
-  }));
-
 const getPaymentData = ({
   payment_data
 }: CreatedMessageWithContentAndAttachments["content"]):
@@ -76,21 +63,6 @@ const getPaymentData = ({
       },
       amount: payment_data.amount,
       noticeNumber: payment_data.notice_number
-    };
-  }
-  return undefined;
-};
-
-const getPrescriptionData = ({
-  prescription_data
-}: CreatedMessageWithContentAndAttachments["content"]):
-  | PrescriptionData
-  | undefined => {
-  if (prescription_data) {
-    return {
-      nre: prescription_data.nre,
-      iup: prescription_data.iup,
-      prescriberFiscalCode: prescription_data.prescriber_fiscal_code
     };
   }
   return undefined;
@@ -122,8 +94,6 @@ export const toUIMessageDetails = (
 
   return {
     id: id as UIMessageId,
-    prescriptionData: getPrescriptionData(content),
-    prescriptionAttachments: getPrescriptionAttachments(content),
     markdown: content.markdown,
     dueDate,
 

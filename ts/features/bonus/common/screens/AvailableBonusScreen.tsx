@@ -1,23 +1,26 @@
-import { pipe } from "fp-ts/lib/function";
+import { IOColors } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Content } from "native-base";
 import * as React from "react";
 import {
-  View,
   Alert,
   FlatList,
   Linking,
   ListRenderItemInfo,
   Platform,
   SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
-import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
@@ -25,52 +28,42 @@ import GenericErrorComponent from "../../../../components/screens/GenericErrorCo
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
+import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   navigateBack,
   navigateToServiceDetailsScreen
 } from "../../../../store/actions/navigation";
-import { Dispatch } from "../../../../store/actions/types";
-import {
-  bpdRemoteConfigSelector,
-  isCdcEnabledSelector,
-  isCGNEnabledSelector
-} from "../../../../store/reducers/backendStatus";
-import { GlobalState } from "../../../../store/reducers/types";
-import variables from "../../../../theme/variables";
-import { storeUrl } from "../../../../utils/appVersion";
-import { getRemoteLocale } from "../../../messages/utils/messages";
-import { showToast } from "../../../../utils/showToast";
-import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
-import { cgnActivationStart } from "../../cgn/store/actions/activation";
-import { actionWithAlert } from "../../common/components/alert/ActionWithAlert";
-import {
-  AvailableBonusItem,
-  AvailableBonusItemState
-} from "../components/AvailableBonusItem";
-import { navigateToBonusRequestInformation } from "../navigation/action";
-import {
-  ID_BONUS_VACANZE_TYPE,
-  ID_BPD_TYPE,
-  ID_CDC_TYPE,
-  ID_CGN_TYPE
-} from "../../common/utils";
-
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   loadServiceDetail,
   showServiceDetails
 } from "../../../../store/actions/services";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import { Dispatch } from "../../../../store/actions/types";
+import {
+  bpdRemoteConfigSelector,
+  isCGNEnabledSelector,
+  isCdcEnabledSelector
+} from "../../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../../store/reducers/types";
+import variables from "../../../../theme/variables";
+import { storeUrl } from "../../../../utils/appVersion";
+import { showToast } from "../../../../utils/showToast";
+import { getRemoteLocale } from "../../../messages/utils/messages";
+import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
+import { cgnActivationStart } from "../../cgn/store/actions/activation";
+import {
+  AvailableBonusItem,
+  AvailableBonusItemState
+} from "../components/AvailableBonusItem";
+import { actionWithAlert } from "../components/alert/ActionWithAlert";
+import { loadAvailableBonuses } from "../store/actions/availableBonusesTypes";
 import {
   experimentalAndVisibleBonus,
   isAvailableBonusLoadingSelector,
   isAvailableBonusNoneErrorSelector,
   serviceFromAvailableBonusSelector,
   supportedAvailableBonusSelector
-} from "../../common/store/selectors";
-import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+} from "../store/selectors";
+import { ID_BPD_TYPE, ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -131,13 +124,10 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   ) => {
     const item = info.item;
 
-    // only bonus vacanze tap is handled
     const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
       number,
       (bonus: BonusAvailable) => void
-    >([
-      [ID_BONUS_VACANZE_TYPE, bonus => this.props.navigateToBonusRequest(bonus)]
-    ]);
+    >();
 
     if (bpdEnabled) {
       const bpdHandler = () =>
@@ -299,10 +289,6 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => navigateBack(),
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
-  // TODO: Add the param to navigate to proper bonus by name (?)
-  navigateToBonusRequest: (bonusItem: BonusAvailable) => {
-    navigateToBonusRequestInformation({ bonusItem });
-  },
   startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
   startCgnActivation: () => dispatch(cgnActivationStart()),
   navigateToServiceDetailsScreen: (

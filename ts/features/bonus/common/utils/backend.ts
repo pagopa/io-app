@@ -1,18 +1,12 @@
-import {
-  createFetchRequestForApi,
-  RequestHeaderProducer,
-  RequestHeaders
-} from "@pagopa/ts-commons/lib/requests";
-import { Omit } from "@pagopa/ts-commons/lib/types";
-import {
-  getAllBonusActivationsDefaultDecoder,
-  GetAllBonusActivationsT,
-  getLatestBonusActivationByIdDefaultDecoder,
-  GetLatestBonusActivationByIdT
-} from "../../../../../definitions/bonus_vacanze/requestTypes";
+import { createFetchRequestForApi } from "@pagopa/ts-commons/lib/requests";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
-
-const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
+import {
+  GetAllBonusActivationsT,
+  GetLatestBonusActivationByIdT,
+  getAllBonusActivationsDefaultDecoder,
+  getLatestBonusActivationByIdDefaultDecoder
+} from "../../../../../definitions/bonus_vacanze/requestTypes";
+import { tokenHeaderProducer } from "../../../../utils/api";
 
 const getAllBonusActivations: GetAllBonusActivationsT = {
   method: "get",
@@ -30,18 +24,7 @@ const getLatestBonusFromIdT: GetLatestBonusActivationByIdT = {
   response_decoder: getLatestBonusActivationByIdDefaultDecoder()
 };
 
-function ParamAuthorizationBearerHeaderProducer<
-  P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> {
-  return (p: P): RequestHeaders<"Authorization"> => ({
-    Authorization: `Bearer ${p.Bearer}`
-  });
-}
-
-//
-// A specific backend client to handle bonus vacanze requests
-//
-export function BackendBonusVacanze(
+export function BackendBonusGeneric(
   baseUrl: string,
   token: string,
   fetchApi: typeof fetch = defaultRetryingFetch()
