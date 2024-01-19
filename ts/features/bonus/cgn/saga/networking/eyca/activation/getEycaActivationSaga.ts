@@ -15,6 +15,7 @@ import {
 } from "../../../../../../../utils/errors";
 import { StatusEnum } from "../../../../../../../../definitions/cgn/EycaActivationDetail";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
+import { withRefreshApiCall } from "../../../../../../fastLogin/saga/utils";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;
@@ -37,9 +38,12 @@ export function* handleStartActivation(
   startEycaActivation: ReturnType<typeof BackendCGN>["startEycaActivation"]
 ): Generator<ReduxSagaEffect, E.Either<NetworkError, StartEycaStatus>, any> {
   try {
-    const startEycaActivationResult: SagaCallReturnType<
-      typeof startEycaActivation
-    > = yield* call(startEycaActivation, {});
+    const startEycaActivationRequest = startEycaActivation({});
+    const startEycaActivationResult = (yield* call(
+      withRefreshApiCall,
+      startEycaActivationRequest,
+      cgnEycaActivation.request()
+    )) as unknown as SagaCallReturnType<typeof startEycaActivation>;
     if (E.isRight(startEycaActivationResult)) {
       const status = startEycaActivationResult.right.status;
       const activationStatus = mapStatus.get(status);
@@ -66,9 +70,12 @@ export function* getActivation(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]
 ): Generator<ReduxSagaEffect, E.Either<NetworkError, GetEycaStatus>, any> {
   try {
-    const getEycaActivationResult: SagaCallReturnType<
-      typeof getEycaActivation
-    > = yield* call(getEycaActivation, {});
+    const getEycaActivationRequest = getEycaActivation({});
+    const getEycaActivationResult = (yield* call(
+      withRefreshApiCall,
+      getEycaActivationRequest,
+      cgnEycaActivation.request()
+    )) as unknown as SagaCallReturnType<typeof getEycaActivation>;
     if (E.isRight(getEycaActivationResult)) {
       if (getEycaActivationResult.right.status === 200) {
         const result = getEycaActivationResult.right.value;

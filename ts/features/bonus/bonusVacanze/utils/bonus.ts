@@ -11,16 +11,6 @@ import {
 } from "../store/actions/bonusVacanze";
 import { BonusActivationProgressEnum } from "../store/reducers/activation";
 import { EligibilityRequestProgressEnum } from "../store/reducers/eligibility";
-import {
-  bonusVacanzeEnabled,
-  bpdEnabled,
-  cdcEnabled
-} from "../../../../config";
-
-export const ID_BONUS_VACANZE_TYPE = 1;
-export const ID_BPD_TYPE = 2;
-export const ID_CGN_TYPE = 3;
-export const ID_CDC_TYPE = 4;
 
 // return true if the bonus is active
 export const isBonusActive = (bonus: BonusActivationWithQrCode) =>
@@ -78,16 +68,3 @@ const allowedActivationStatus = new Set([
 export const isActivationResponseTrackable = (
   eligibility: BonusVacanzeActivationPayload
 ) => allowedActivationStatus.has(eligibility.status);
-
-/**
- * Return a Map with the bonus ID as a key and
- * a bool representing the relative feature flag
- * status as a value.
- */
-export const mapBonusIdFeatureFlag = () =>
-  new Map<number, boolean>([
-    [ID_BONUS_VACANZE_TYPE, bonusVacanzeEnabled],
-    [ID_BPD_TYPE, bpdEnabled],
-    [ID_CGN_TYPE, true],
-    [ID_CDC_TYPE, cdcEnabled]
-  ]);

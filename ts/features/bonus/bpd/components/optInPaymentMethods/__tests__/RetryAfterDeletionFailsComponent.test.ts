@@ -2,7 +2,7 @@ import { createStore, Store } from "redux";
 
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import ROUTES from "../../../../../../navigation/routes";
 import RetryAfterDeletionFailsComponent from "../RetryAfterDeletionFailsComponent";
 import { appReducer } from "../../../../../../store/reducers";
@@ -43,7 +43,7 @@ describe("the RetryAfterDeletionFailsComponent screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     RetryAfterDeletionFailsComponent,
     ROUTES.MAIN,
     {},

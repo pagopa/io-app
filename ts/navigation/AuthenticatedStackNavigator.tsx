@@ -49,17 +49,22 @@ import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen
 import { WalletBarcodeNavigator } from "../features/walletV3/barcode/navigation/navigator";
 import { WalletBarcodeRoutes } from "../features/walletV3/barcode/navigation/routes";
 import {
+  WalletDetailsNavigator,
+  WalletDetailsRoutes
+} from "../features/walletV3/details/navigation/navigator";
+import {
   WalletOnboardingNavigator,
   WalletOnboardingRoutes
 } from "../features/walletV3/onboarding/navigation/navigator";
 import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
 import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
-import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
-import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import {
   WalletTransactionNavigator,
   WalletTransactionRoutes
 } from "../features/walletV3/transaction/navigation/navigator";
+import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
+import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
+import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -68,12 +73,10 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
-import {
-  WalletDetailsNavigator,
-  WalletDetailsRoutes
-} from "../features/walletV3/details/navigation/navigator";
 import { isGestureEnabled } from "../utils/navigation";
-import { MessagesStackNavigator } from "./MessagesNavigator";
+import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
@@ -81,7 +84,6 @@ import ROUTES from "./routes";
 import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
-import CheckEmailNavigator from "./CheckEmailNavigator";
 
 const Stack = createStackNavigator<AppParamsList>();
 
@@ -123,7 +125,7 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.MESSAGES_NAVIGATOR}
+        name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
@@ -150,6 +152,14 @@ const AuthenticatedStackNavigator = () => {
           headerShown: false,
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: false
+        }}
+      />
+
+      <Stack.Screen
+        name={ROUTES.GALLERY_PERMISSION_INSTRUCTIONS}
+        component={GalleryPermissionInstructionsScreen}
+        options={{
+          gestureEnabled: isGestureEnabled
         }}
       />
 

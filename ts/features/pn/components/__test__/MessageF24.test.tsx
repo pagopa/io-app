@@ -2,17 +2,17 @@ import React from "react";
 import { createStore } from "redux";
 import { act, fireEvent, within } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
+import { UIAttachment } from "../../../messages/types";
 import { MessageF24 } from "../MessageF24";
 import I18n from "../../../../i18n";
 import {
   mockOtherAttachment,
   mockPdfAttachment
-} from "../../../../__mocks__/attachment";
+} from "../../../messages/__mocks__/attachment";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { Download } from "../../../../store/reducers/entities/messages/downloads";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { Download } from "../../../messages/store/reducers/downloads";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 const mockOpenPreview = jest.fn();
 
@@ -116,7 +116,7 @@ const renderComponent = (
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
 
-  return renderScreenFakeNavRedux(
+  return renderScreenWithNavigationStoreContext(
     () => <MessageF24 attachments={attachments} openPreview={openPreview} />,
     "DUMMY",
     {},

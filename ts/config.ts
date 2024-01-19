@@ -52,9 +52,6 @@ export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
-export const bonusVacanzeEnabled: boolean =
-  Config.BONUS_VACANZE_ENABLED === "YES";
-
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
 export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
@@ -125,7 +122,7 @@ export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
 
 // version of ToS
-export const tosVersion: NonNegativeNumber = 4.5 as NonNegativeNumber;
+export const tosVersion: NonNegativeNumber = 4.7 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),

@@ -14,7 +14,7 @@ import { GlobalState } from "../../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../../../components/buttons/ButtonConfigurations";
 import { AwardPeriodId } from "../../../../store/actions/periods";
 import { bpdTransactionsLoadRequiredData } from "../../../../store/actions/transactions";
 import { bpdSelectedPeriodSelector } from "../../../../store/reducers/details/selectedPeriod";

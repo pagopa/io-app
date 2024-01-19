@@ -21,7 +21,7 @@ import {
 } from "../../../../../components/ui/LightModal";
 import CgnMerchantsFilters from "../../components/merchants/CgnMerchantsFilters";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 
 type Props = ReturnType<typeof mapStateToProps> &

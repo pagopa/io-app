@@ -2,8 +2,8 @@ import React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
-import { UIMessageId } from "../../../../store/reducers/entities/messages/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { UIMessageId } from "../../../messages/types";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { updatePaymentForMessage } from "../../store/actions";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -229,7 +229,7 @@ const renderComponent = (
     current: () => undefined
   };
 
-  return renderScreenFakeNavRedux(
+  return renderScreenWithNavigationStoreContext(
     () => (
       <MessagePayments
         messageId={messageId}

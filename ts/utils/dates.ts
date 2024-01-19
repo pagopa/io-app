@@ -9,9 +9,9 @@ import * as t from "io-ts";
 import { Errors } from "io-ts";
 import { Locales, TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
+import { ExpireStatus } from "../features/messages/utils/messages";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary, localeDateFormat } from "./locale";
-import { ExpireStatus } from "./messages";
 import { NumberFromString } from "./number";
 
 type DateFnsLocale = typeof import("date-fns/locale/it");

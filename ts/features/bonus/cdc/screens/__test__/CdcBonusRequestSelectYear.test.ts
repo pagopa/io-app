@@ -3,7 +3,7 @@ import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import ROUTES from "../../../../../navigation/routes";
 import CdcBonusRequestSelectYear from "../CdcBonusRequestSelectYear";
 import * as cdcActions from "../../store/actions/cdcBonusRequest";
@@ -99,7 +99,7 @@ describe("CdcBonusRequestSelectYear", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     CdcBonusRequestSelectYear,
     ROUTES.MAIN,
     {},

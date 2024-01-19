@@ -11,7 +11,7 @@ import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendSt
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../../../utils/pot";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdAllData } from "../../store/actions/details";
 import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";

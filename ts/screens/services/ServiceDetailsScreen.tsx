@@ -21,7 +21,7 @@ import ServiceMetadataComponent from "../../components/services/ServiceMetadata"
 import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
-import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
+import { FooterTopShadow } from "../../components/FooterTopShadow";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ServicesParamsList } from "../../navigation/params/ServicesParamsList";
@@ -37,7 +37,7 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { getServiceCTA } from "../../utils/messages";
+import { getServiceCTA } from "../../features/messages/utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 

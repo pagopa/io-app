@@ -1,8 +1,7 @@
-import * as React from "react";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import * as React from "react";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
-import { H1 } from "../../../components/core/typography/H1";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
 import Markdown from "../../../components/ui/Markdown";
@@ -36,11 +35,6 @@ export const ShareDataComponent = (): React.ReactElement => {
 
   return (
     <>
-      <H1 testID="share-data-component-title">
-        {I18n.t("profile.main.privacy.shareData.screen.title")}
-      </H1>
-      <VSpacer size={16} />
-      <Body>{I18n.t("profile.main.privacy.shareData.screen.description")}</Body>
       <VSpacer size={16} />
       <InfoBox iconName="analytics">
         <Body>

@@ -1,24 +1,20 @@
 /* eslint-disable sonarjs/no-identical-functions */
+import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/navigation/navigator";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
-import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/navigation/navigator";
-import { WalletPaymentRoutes } from "../../../features/walletV3/payment/navigation/routes";
-import { RptId } from "../../../../definitions/pagopa/ecommerce/RptId";
-import { useIODispatch } from "../../../store/hooks";
-import { walletPaymentInitState } from "../../../features/walletV3/payment/store/actions/orchestration";
+import ROUTES from "../../../navigation/routes";
 
 const WalletPlayground = () => {
-  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const navigateToWalletOnboarding = () => {
@@ -27,25 +23,21 @@ const WalletPlayground = () => {
     });
   };
 
-  const navigateToWalletPayment = () => {
-    dispatch(walletPaymentInitState());
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
-      params: {
-        rptId: "1234567890" as RptId
-      }
+  const navigateToWalletPaymentPlayground = () => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.WALLET_PAYMENT_PLAYGROUND
     });
   };
 
   return (
     <BaseScreenComponent goBack>
       <ScrollView style={IOStyles.horizontalContentPadding}>
-        <H2>Playground new wallet</H2>
+        <H2>New wallet playground</H2>
         <Body>Choose the playground flow for the new wallet</Body>
         <VSpacer size={24} />
         {/* Onboarding Playground */}
         <ListItemNav
-          value="Onboarding Playground"
+          value="Onboarding"
           accessibilityLabel={"Onboarding Playground"}
           description="Start the onboarding flow to add a new method of payment"
           onPress={navigateToWalletOnboarding}
@@ -53,10 +45,10 @@ const WalletPlayground = () => {
         <Divider />
         {/* Payment Playground */}
         <ListItemNav
-          value="Payment Playground"
+          value="Payment"
           accessibilityLabel={"Onboarding Playground"}
           description="Start the payment flow to pay with a method of payment"
-          onPress={navigateToWalletPayment}
+          onPress={navigateToWalletPaymentPlayground}
         />
       </ScrollView>
     </BaseScreenComponent>

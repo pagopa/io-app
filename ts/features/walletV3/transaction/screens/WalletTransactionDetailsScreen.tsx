@@ -10,10 +10,7 @@ import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { walletTransactionDetailsGet } from "../store/actions";
-import {
-  walletTransactionDetailsPotSelector,
-  walletTransactionDetailsSelector
-} from "../store";
+import { walletTransactionDetailsPotSelector } from "../store";
 import { fetchPsp } from "../../../../store/actions/wallet/transactions";
 import { Psp } from "../../../../types/pagopa";
 import WalletTransactionInfoSection from "../components/WalletTransactionInfoSection";
@@ -49,6 +46,7 @@ const styles = StyleSheet.create({
 });
 
 const WalletTransactionDetailsScreen = () => {
+  const [transactionPsp, setTransactionPsp] = React.useState<Psp | undefined>();
   const dispatch = useIODispatch();
   const route = useRoute<WalletTransactionDetailsScreenProps>();
   const { transactionId } = route.params;
@@ -57,17 +55,14 @@ const WalletTransactionDetailsScreen = () => {
   );
 
   const isLoading = pot.isLoading(transactionDetailsPot);
-
-  const [transactionPsp, setTransactionPsp] = React.useState<Psp | undefined>();
-
-  const transactionDetails = useIOSelector(walletTransactionDetailsSelector);
+  const transactionDetails = pot.toUndefined(transactionDetailsPot);
 
   useOnFirstRender(() => {
     dispatch(walletTransactionDetailsGet.request({ transactionId }));
   });
 
   React.useEffect(() => {
-    if (transactionDetails && transactionDetails.idPsp) {
+    if (transactionDetails?.idPsp !== undefined) {
       dispatch(
         fetchPsp.request({
           idPsp: transactionDetails.idPsp,
@@ -93,7 +88,7 @@ const WalletTransactionDetailsScreen = () => {
         <WalletTransactionHeadingSection
           transaction={transactionDetails}
           psp={transactionPsp}
-          loading={isLoading}
+          isLoading={isLoading}
         />
         <WalletTransactionInfoSection
           transaction={transactionDetails}

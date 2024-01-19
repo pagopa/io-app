@@ -14,7 +14,7 @@ import {
   getBPDMethodsSelector,
   paymentMethodsSelector
 } from "../../../../../store/reducers/wallet/wallets";
-import { confirmButtonProps } from "../../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { navigateToOptInPaymentMethodsChoiceScreen } from "../../navigation/actions";
 import {
   optInPaymentMethodsCompleted,

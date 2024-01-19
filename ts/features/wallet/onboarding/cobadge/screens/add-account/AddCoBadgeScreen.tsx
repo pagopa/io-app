@@ -14,7 +14,7 @@ import {
   isError,
   isLoading,
   isReady
-} from "../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import {
   addCoBadgeToWallet,
   walletAddCoBadgeCancel,

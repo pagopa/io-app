@@ -13,7 +13,7 @@ import {
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ProfileDataScreen from "../ProfileDataScreen";
 
 describe("Test ProfileDataScreen", () => {
@@ -27,7 +27,12 @@ describe("Test ProfileDataScreen", () => {
     const { component } = renderComponent();
 
     expect(component).not.toBeNull();
-    expect(component.queryByText(I18n.t("profile.data.title"))).not.toBeNull();
+    expect(
+      // With the new navbar we have two titles.
+      // The second one is the larger one.
+      // The first one is the smaller one that is shown when scrolling.
+      component.queryAllByText(I18n.t("profile.data.title"))[1]
+    ).not.toBeNull();
     expect(
       component.queryByText(I18n.t("profile.data.subtitle"))
     ).not.toBeNull();
@@ -37,7 +42,12 @@ describe("Test ProfileDataScreen", () => {
 
     expect(component).not.toBeNull();
     expect(component.queryByTestId("insert-or-edit-email")).not.toBeNull();
-    expect(component.queryByText(I18n.t("profile.data.title"))).not.toBeNull();
+    expect(
+      // With the new navbar we have two titles.
+      // The second one is the larger one.
+      // The first one is the smaller one that is shown when scrolling.
+      component.queryAllByText(I18n.t("profile.data.title"))[1]
+    ).not.toBeNull();
     expect(
       component.queryByText(
         pipe(
@@ -94,7 +104,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <ProfileDataScreen />,
       ROUTES.PROFILE_DATA,
       {},

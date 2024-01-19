@@ -2,7 +2,7 @@ import { Action, getType } from "typesafe-actions";
 import {
   askUserToRefreshSessionToken,
   clearPendingAction,
-  clearTokenTransientError,
+  clearTokenRefreshError,
   refreshSessionToken,
   refreshTokenNoPinError,
   refreshTokenTransientError,
@@ -121,7 +121,7 @@ export const FastLoginTokenRefreshReducer = (
         ...state,
         tokenRefresh: { kind: "no-pin-error" }
       };
-    case getType(clearTokenTransientError):
+    case getType(clearTokenRefreshError):
       return {
         ...state,
         tokenRefresh: { kind: "idle" }

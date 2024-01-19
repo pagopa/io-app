@@ -24,14 +24,15 @@ import { capitalize } from "../../../../utils/strings";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
-import { localeDateFormat } from "../../../../utils/locale";
+import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const styles = StyleSheet.create({
   padded: {
@@ -62,6 +63,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
   const profile = useIOSelector(profileSelector);
   const name = useIOSelector(profileNameSelector);
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useNavigation();
   const route = useRoute();
   const familyName = pot.getOrElse(
@@ -88,7 +90,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
         <View style={styles.paddingText} />
         <Link
           onPress={() => {
-            trackFciUserExit(route.name, "modifica_email");
+            trackFciUserExit(route.name, fciEnvironment, "modifica_email");
             navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
               screen: ROUTES.INSERT_EMAIL_SCREEN
             });
@@ -133,10 +135,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
                 <ListItemComponent
                   testID="FciDataSharingScreenBirthDateTestID"
                   title={I18n.t("features.fci.shareDataScreen.birthDate")}
-                  subTitle={localeDateFormat(
-                    birthDate,
-                    I18n.t("global.dateFormats.shortFormat")
-                  )}
+                  subTitle={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
                   hideIcon
                 />
               )}
@@ -168,7 +167,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
               I18n.t("features.fci.shareDataScreen.cancel")
             )}
             rightButton={confirmButtonProps(() => {
-              trackFciUserDataConfirmed();
+              trackFciUserDataConfirmed(fciEnvironment);
               navigation.navigate("FCI_QTSP_TOS");
             }, `${I18n.t("features.fci.shareDataScreen.confirm")}`)}
           />
