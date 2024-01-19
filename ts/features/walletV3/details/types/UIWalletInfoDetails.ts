@@ -1,29 +1,37 @@
-import {
-  PatternString,
-  WithinRangeString
-} from "@pagopa/ts-commons/lib/strings";
-import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
-import { BrandEnum } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
+import {
+  WalletInfoDetails1,
+  WalletInfoDetails2,
+  WalletInfoDetails3
+} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 
-const UIWalletInfoDetails = t.partial({
-  maskedPan: t.string,
+/**
+ * Transforms all required props from WalletInfoDetails1 to partial
+ */
+export const UIWalletInfoDetails1 = t.partial(
+  WalletInfoDetails1.types[0].props
+);
 
-  expiryDate: PatternString("^d{6}$"),
+/**
+ * Transforms all required props from WalletInfoDetails2 to partial
+ */
+export const UIWalletInfoDetails2 = t.partial(
+  WalletInfoDetails2.types[0].props
+);
 
-  holder: t.string,
+/**
+ * Transforms all required props from WalletInfoDetails3 to partial
+ */
+export const UIWalletInfoDetails3 = t.partial(
+  WalletInfoDetails3.types[0].props
+);
 
-  brand: enumType<BrandEnum>(BrandEnum, "brand"),
-
-  abi: WithinRangeString(1, 6),
-
-  maskedEmail: t.string,
-
-  maskedNumber: WithinRangeString(1, 21),
-
-  instituteCode: WithinRangeString(1, 6),
-
-  bankName: t.string
-});
+/**
+ * This type is used to bypass the `type` props of {@see WalletInfoDetails}
+ */
+export const UIWalletInfoDetails = t.intersection(
+  [UIWalletInfoDetails1, UIWalletInfoDetails2, UIWalletInfoDetails3],
+  "UIWalletInfoDetails"
+);
 
 export type UIWalletInfoDetails = t.TypeOf<typeof UIWalletInfoDetails>;
