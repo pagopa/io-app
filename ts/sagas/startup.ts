@@ -23,7 +23,6 @@ import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserData
 import { BackendClient } from "../api/backend";
 import {
   apiUrlPrefix,
-  bonusVacanzeEnabled,
   bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
@@ -32,7 +31,7 @@ import {
   svEnabled,
   zendeskEnabled
 } from "../config";
-import { watchBonusSaga } from "../features/bonus/bonusVacanze/store/sagas/bonusSaga";
+import { watchBonusSaga } from "../features/bonus/common/store/sagas/bonusSaga";
 import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
@@ -88,10 +87,7 @@ import {
   setProfileHashedFiscalCode
 } from "../store/actions/crossSessions";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
-import {
-  watchLoadMessageData,
-  watchMessageAttachmentsSaga
-} from "../features/messages/saga";
+import { watchMessagesSaga } from "../features/messages/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { watchIDPaySaga } from "../features/idpay/common/saga";
@@ -112,12 +108,6 @@ import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRe
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
-import watchLoadMessageDetails from "./messages/watchLoadMessageDetails";
-import watchLoadNextPageMessages from "./messages/watchLoadNextPageMessages";
-import watchLoadPreviousPageMessages from "./messages/watchLoadPreviousPageMessages";
-import watchMigrateToPagination from "./messages/watchMigrateToPagination";
-import watchReloadAllMessages from "./messages/watchReloadAllMessages";
-import watchUpsertMessageStatusAttribues from "./messages/watchUpsertMessageStatusAttribues";
 import {
   askMixpanelOptIn,
   handleSetMixpanelEnabled,
@@ -161,14 +151,11 @@ import {
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
 import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
-import { watchLoadMessageById } from "./messages/watchLoadMessageById";
-import { watchThirdPartyMessageSaga } from "./messages/watchThirdPartyMessageSaga";
 import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import {
   clearKeychainError,
   keychainError
 } from "./../store/storages/keychain";
-import { watchMessagePrecondition } from "./messages/watchMessagePrecondition";
 import { setLanguageFromProfileIfExists } from "./preferences";
 import { checkEmailSaga } from "./startup/checkEmailSaga";
 
@@ -330,25 +317,8 @@ export function* initializeApplicationSaga(
   // Load visible services and service details from backend when requested
   yield* fork(watchLoadServicesSaga, backendClient);
 
-  yield* fork(watchLoadNextPageMessages, backendClient.getMessages);
-  yield* fork(watchLoadPreviousPageMessages, backendClient.getMessages);
-  yield* fork(watchReloadAllMessages, backendClient.getMessages);
-  yield* fork(watchLoadMessageById, backendClient.getMessage);
-  yield* fork(watchLoadMessageDetails, backendClient.getMessage);
-  yield* fork(
-    watchMessagePrecondition,
-    backendClient.getThirdPartyMessagePrecondition
-  );
-  yield* fork(watchThirdPartyMessageSaga, backendClient);
-  yield* fork(
-    watchUpsertMessageStatusAttribues,
-    backendClient.upsertMessageStatusAttributes
-  );
-  yield* fork(watchLoadMessageData);
-  yield* fork(
-    watchMigrateToPagination,
-    backendClient.upsertMessageStatusAttributes
-  );
+  // Start watching for Messages actions
+  yield* fork(watchMessagesSaga, backendClient, sessionToken);
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
@@ -456,6 +426,13 @@ export function* initializeApplicationSaga(
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.ONBOARDING));
+  // FIXME IOPID-1298: find any better way to handle this
+  // We need this workaround to let the inner AppStackNavigator stack be ready,
+  // before continuing with any other navigation action to avoid:
+  // Error: The 'navigation' object hasn't been initialized yet...
+  // Here the navigationRef is ready, but because we changed the navigation inner stack
+  // based on StartupStatusEnum value, we need to wait for the new stack to be ready.
+  yield* delay(0 as Millisecond);
   const hasPreviousSessionAndPin =
     previousSessionToken && O.isSome(maybeStoredPin);
   if (hasPreviousSessionAndPin && showIdentificationModal) {
@@ -540,17 +517,15 @@ export function* initializeApplicationSaga(
   yield* call(updateInstallationSaga, backendClient.createOrUpdateInstallation);
 
   yield* put(startupLoadSuccess(StartupStatusEnum.AUTHENTICATED));
+  // FIXME IOPID-1298: find any better way to handle this
+  // As above for StartupStatusEnum.ONBOARDING
+  yield* delay(0 as Millisecond);
   //
   // User is autenticated, session token is valid
   //
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
-  }
-
-  if (bonusVacanzeEnabled) {
-    // Start watching for requests about bonus
-    yield* fork(watchBonusSaga, sessionToken);
   }
 
   if (bpdEnabled) {
@@ -564,6 +539,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for cgn actions
+  yield* fork(watchBonusSaga, sessionToken);
   yield* fork(watchBonusCgnSaga, sessionToken);
 
   if (svEnabled) {
@@ -585,10 +561,6 @@ export function* initializeApplicationSaga(
     yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
   }
 
-  // Start watching for message attachments actions (general
-  // third-party message attachments and PN attachments)
-  yield* fork(watchMessageAttachmentsSaga, sessionToken);
-
   const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
     yield* select(isIdPayTestEnabledSelector);
 
@@ -598,7 +570,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for Wallet V3 actions
-  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.bpdToken);
+  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.walletToken);
 
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);

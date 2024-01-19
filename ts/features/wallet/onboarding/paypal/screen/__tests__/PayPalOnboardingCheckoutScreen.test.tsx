@@ -4,7 +4,7 @@ import { Alert } from "react-native";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
 import { setLocale } from "../../../../../../i18n";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import PayPalOnboardingCheckoutScreen from "../PayPalOnboardingCheckoutScreen";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -150,7 +150,7 @@ describe("PayPalOnboardingCheckoutScreen", () => {
 });
 
 const renderComponent = (store: Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenWithNavigationStoreContext<GlobalState>(
     PayPalOnboardingCheckoutScreen,
     PAYPAL_ROUTES.ONBOARDING.CHECKOUT,
     {},

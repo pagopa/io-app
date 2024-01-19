@@ -3,7 +3,7 @@ import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { BonusActivationStatusEnum } from "../../../../../../../definitions/bonus_vacanze/BonusActivationStatus";
 import { BonusCode } from "../../../../../../../definitions/bonus_vacanze/BonusCode";
 import mockedProfile from "../../../../../../__mocks__/initializedProfile";
-import { mockedBonus } from "../../../__mock__/mockData";
+import { mockedBonus } from "../../../../__mock__/mockData";
 import { ownedActiveOrRedeemedBonus } from "../allActive";
 
 const fiscalCode = "ABCDEF83A12L719R" as FiscalCode;

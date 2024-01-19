@@ -7,7 +7,7 @@ import { applicationChangeState } from "../../../../../../../store/actions/appli
 import { appReducer } from "../../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../../../utils/tests";
-import { renderScreenFakeNavRedux } from "../../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../../utils/testWrapper";
 import { bpdAllData } from "../../../../store/actions/details";
 import { AwardPeriodId } from "../../../../store/actions/periods";
 import {
@@ -27,7 +27,7 @@ describe("BpdTransactionsScreen", () => {
   it("should show the TransactionUnavailable screen if bpdLastUpdate is pot.none", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
 
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -49,7 +49,7 @@ describe("BpdTransactionsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -78,7 +78,7 @@ describe("BpdTransactionsScreen", () => {
         }
       }
     };
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -108,7 +108,7 @@ describe("BpdTransactionsScreen", () => {
       sequenceOfActions
     );
 
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -136,7 +136,7 @@ describe("BpdTransactionsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -166,7 +166,7 @@ describe("BpdTransactionsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -196,7 +196,7 @@ describe("BpdTransactionsScreen", () => {
         }
       }
     };
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -221,7 +221,7 @@ describe("BpdTransactionsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -256,7 +256,7 @@ describe("BpdTransactionsScreen", () => {
         }
       }
     };
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -293,7 +293,7 @@ describe("BpdTransactionsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -330,7 +330,7 @@ describe("BpdTransactionsScreen", () => {
         }
       }
     };
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},
@@ -369,7 +369,7 @@ describe("BpdTransactionsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <BpdTransactionsScreen />,
       ROUTES.WALLET_BPAY_DETAIL,
       {},

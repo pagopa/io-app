@@ -12,7 +12,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { svGenerateVoucherCompleted } from "../../actions/voucherGeneration";
 import { NetworkError } from "../../../../../../utils/errors";
 import { GlobalState } from "../../../../../../store/reducers/types";

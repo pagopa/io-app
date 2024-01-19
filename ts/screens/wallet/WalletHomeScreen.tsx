@@ -11,7 +11,6 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -34,18 +33,10 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import SectionCardComponent, {
   SectionCardStatus
 } from "../../components/wallet/card/SectionCardComponent";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
+import { bpdEnabled } from "../../config";
 import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
-import {
-  navigateToAvailableBonusScreen,
-  navigateToBonusActiveDetailScreen
-} from "../../features/bonus/bonusVacanze/navigation/action";
-import {
-  loadAllBonusActivations,
-  loadAvailableBonuses
-} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
+import { loadAllBonusActivations } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
 import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
 import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
 import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
@@ -57,6 +48,10 @@ import {
   cgnDetailSelector,
   isCgnInformationAvailableSelector
 } from "../../features/bonus/cgn/store/reducers/details";
+import { navigateToBonusRequestInformation } from "../../features/bonus/common/navigation/actions";
+import { BonusInformationScreenNavigationParams } from "../../features/bonus/common/screens/BonusInformationScreen";
+import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
+import { supportedAvailableBonusSelector } from "../../features/bonus/common/store/selectors";
 import IDPayCardsInWalletContainer from "../../features/idpay/wallet/components/IDPayCardsInWalletContainer";
 import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
@@ -175,7 +170,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   private onFocus = () => {
-    this.loadBonusVacanze();
+    this.loadAllAvailableBonuses();
     this.loadBonusIDPay();
     this.setState({ hasFocus: true });
   };
@@ -184,11 +179,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.setState({ hasFocus: false });
   };
 
-  private loadBonusVacanze = () => {
-    if (bonusVacanzeEnabled) {
-      this.props.loadAvailableBonuses();
-      this.props.loadAllBonusActivations();
-    }
+  private loadAllAvailableBonuses = () => {
+    this.props.loadAvailableBonuses();
+    this.props.loadAllBonusActivations();
   };
 
   private loadBonusBpd = () => {
@@ -210,18 +203,16 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
-    if (bonusVacanzeEnabled) {
-      // eslint-disable-next-line functional/immutable-data
-      this.blurUnsubscribe = this.props.navigation.addListener(
-        "blur",
-        this.onLostFocus
-      );
-      // eslint-disable-next-line functional/immutable-data
-      this.focusUnsubscribe = this.props.navigation.addListener(
-        "focus",
-        this.onFocus
-      );
-    }
+    // eslint-disable-next-line functional/immutable-data
+    this.blurUnsubscribe = this.props.navigation.addListener(
+      "blur",
+      this.onLostFocus
+    );
+    // eslint-disable-next-line functional/immutable-data
+    this.focusUnsubscribe = this.props.navigation.addListener(
+      "focus",
+      this.onFocus
+    );
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
@@ -246,10 +237,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
-    if (bonusVacanzeEnabled) {
-      this.focusUnsubscribe();
-      this.blurUnsubscribe();
-    }
+    this.focusUnsubscribe();
+    this.blurUnsubscribe();
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>) {
@@ -365,12 +354,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         <WalletV2PreviewCards />
 
         {/* Display this item only if the flag is enabled */}
-        {(bonusVacanzeEnabled || bpdEnabled) && (
+        {bpdEnabled && (
           <RequestBonus
             status={bonusLoadingStatus}
             onButtonPress={() => {
               if (bonusLoadingStatus !== "loading") {
-                this.loadBonusVacanze();
+                this.loadAllAvailableBonuses();
                 this.loadBonusBpd();
                 this.loadBonusCgn();
                 this.loadBonusIDPay();
@@ -378,6 +367,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
             }}
             activeBonuses={this.props.allActiveBonus}
             availableBonusesList={this.props.availableBonusesList}
+            // this applies to BonusVacanze, cashback and other dead/legacy bonuses
             onBonusPress={this.props.navigateToBonusDetail}
           />
         )}
@@ -552,7 +542,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private getHeaderHeight() {
     return (
       250 +
-      (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0) +
       (bpdEnabled
         ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
         : 0) +
@@ -602,12 +591,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
   loadAllBonusActivations: () => dispatch(loadAllBonusActivations.request()),
-  navigateToBonusDetail: (
-    bonus: BonusActivationWithQrCode,
-    validFrom?: Date,
-    validTo?: Date
-  ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
-  navigateToBonusList: () => navigateToAvailableBonusScreen(),
+  navigateToBonusDetail: (bonus: any, validFrom?: Date, validTo?: Date) =>
+    navigateToBonusRequestInformation({
+      // this is very much useless, since it is to navigate to bpd/cashback screens
+      bonus,
+      validFrom,
+      validTo
+    } as unknown as BonusInformationScreenNavigationParams),
+
   navigateBack: () => navigateBack(),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),

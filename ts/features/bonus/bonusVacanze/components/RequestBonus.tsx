@@ -10,7 +10,6 @@ import SectionCardComponent, {
   SectionCardStatus
 } from "../../../../components/wallet/card/SectionCardComponent";
 import I18n from "../../../../i18n";
-import { ID_BONUS_VACANZE_TYPE } from "../utils/bonus";
 import BonusCardComponent from "./BonusCardComponent";
 
 type OwnProps = {
@@ -49,9 +48,7 @@ const RequestBonus: React.FunctionComponent<OwnProps> = (props: OwnProps) => {
   const { onButtonPress, activeBonuses, onBonusPress, availableBonusesList } =
     props;
   const maybeBonusVacanzeCategory = pipe(
-    O.fromNullable(
-      availableBonusesList.find(bi => bi.id_type === ID_BONUS_VACANZE_TYPE)
-    )
+    O.fromNullable(availableBonusesList.find(bi => bi.id_type === undefined))
   );
 
   const validFrom = pipe(

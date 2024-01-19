@@ -22,7 +22,7 @@ import QtspClauseListItem from "../../components/QtspClauseListItem";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import {
   fciPollFilledDocumentErrorSelector,
   fciPollFilledDocumentReadySelector
@@ -37,6 +37,7 @@ import { isServicePreferenceResponseSuccess } from "../../../../types/services/S
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUxConversion } from "../../analytics";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -53,6 +54,7 @@ const FciQtspClausesScreen = () => {
     fciPollFilledDocumentErrorSelector
   );
   const fciServiceId = useSelector(fciMetadataServiceIdSelector);
+  const fciEnvironment = useSelector(fciEnvironmentSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
 
@@ -160,7 +162,7 @@ const FciQtspClausesScreen = () => {
     disabled: clausesChecked !== qtspClausesSelector.length,
     onPress: () => {
       if (isServiceActive) {
-        trackFciUxConversion();
+        trackFciUxConversion(fciEnvironment);
         dispatch(fciStartSigningRequest());
       } else {
         showCheckService();

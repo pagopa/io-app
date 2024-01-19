@@ -8,7 +8,7 @@ import { fetchWalletsRequestWithExpBackoff } from "../../../../../store/actions/
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { extractOutcomeCode } from "../../../../../store/reducers/wallet/outcomeCode";
 import { paypalSelector } from "../../../../../store/reducers/wallet/wallets";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import { walletAddPaypalFailure } from "../store/actions";
 import { paypalOnboardingOutcomeCodeSelector } from "../store/reducers/onOboardingCompleted";
 import PayPalOnboardingCompletedSuccessComponent from "./PayPalOnboardingCompletedSuccessComponent";

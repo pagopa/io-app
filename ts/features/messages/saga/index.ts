@@ -1,35 +1,111 @@
 import { SagaIterator } from "redux-saga";
 import {
-  call,
+  fork,
   put,
   select,
   takeEvery,
   takeLatest
 } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
 import { SessionToken } from "../../../types/SessionToken";
 import { clearCache } from "../../../store/actions/profile";
 import { logoutSuccess } from "../../../store/actions/authentication";
 import {
   downloadAttachment,
-  removeCachedAttachment
-} from "../../../store/actions/messages";
-import { getMessageDataAction } from "../actions";
-import { retryDataAfterFastLoginSessionExpirationSelector } from "../../../store/reducers/entities/messages/messageGetStatus";
+  getMessageDataAction,
+  getMessagePrecondition,
+  loadMessageById,
+  loadMessageDetails,
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  loadThirdPartyMessage,
+  migrateToPaginatedMessages,
+  reloadAllMessages,
+  removeCachedAttachment,
+  upsertMessageStatusAttributes
+} from "../store/actions";
+import { retryDataAfterFastLoginSessionExpirationSelector } from "../store/reducers/messageGetStatus";
+import { BackendClient } from "../../../api/backend";
 import { handleDownloadAttachment } from "./handleDownloadAttachment";
 import {
   handleClearAllAttachments,
   handleClearAttachment
 } from "./handleClearAttachments";
 import { handleLoadMessageData } from "./handleLoadMessageData";
+import { handleLoadNextPageMessages } from "./handleLoadNextPageMessages";
+import { handleLoadPreviousPageMessages } from "./handleLoadPreviousPageMessages";
+import { handleReloadAllMessages } from "./handleReloadAllMessages";
+import { handleLoadMessageById } from "./handleLoadMessageById";
+import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
+import { handleUpsertMessageStatusAttribues } from "./handleUpsertMessageStatusAttribues";
+import { handleMigrateToPagination } from "./handleMigrateToPagination";
+import { handleMessagePrecondition } from "./handleMessagePrecondition";
+import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
 
 /**
- * Handle the message attachment requests
+ * Handle messages requests
+ * @param backendClient
  * @param bearerToken
  */
-export function* watchMessageAttachmentsSaga(
+export function* watchMessagesSaga(
+  backendClient: BackendClient,
   bearerToken: SessionToken
 ): SagaIterator {
+  yield* takeLatest(
+    loadNextPageMessages.request,
+    handleLoadNextPageMessages,
+    backendClient.getMessages
+  );
+
+  yield* takeLatest(
+    loadPreviousPageMessages.request,
+    handleLoadPreviousPageMessages,
+    backendClient.getMessages
+  );
+
+  yield* takeLatest(
+    reloadAllMessages.request,
+    handleReloadAllMessages,
+    backendClient.getMessages
+  );
+
+  yield* takeEvery(
+    loadMessageById.request,
+    handleLoadMessageById,
+    backendClient.getMessage
+  );
+
+  yield* takeLatest(
+    loadMessageDetails.request,
+    handleLoadMessageDetails,
+    backendClient.getMessage
+  );
+
+  yield* takeLatest(
+    getMessagePrecondition.request,
+    handleMessagePrecondition,
+    backendClient.getThirdPartyMessagePrecondition
+  );
+
+  yield* takeLatest(
+    loadThirdPartyMessage.request,
+    handleThirdPartyMessage,
+    backendClient.getThirdPartyMessage
+  );
+
+  yield* takeEvery(
+    upsertMessageStatusAttributes.request,
+    handleUpsertMessageStatusAttribues,
+    backendClient.upsertMessageStatusAttributes
+  );
+
+  yield* fork(watchLoadMessageData);
+
+  yield* takeLatest(
+    migrateToPaginatedMessages.request,
+    handleMigrateToPagination,
+    backendClient.upsertMessageStatusAttributes
+  );
+
   // handle the request for a new downloadAttachment
   yield* takeLatest(
     downloadAttachment.request,
@@ -38,32 +114,17 @@ export function* watchMessageAttachmentsSaga(
   );
 
   // handle the request for removing a downloaded attachment
-  yield* takeEvery(
-    removeCachedAttachment,
-    function* (action: ActionType<typeof removeCachedAttachment>) {
-      yield* call(handleClearAttachment, action);
-    }
-  );
+  yield* takeEvery(removeCachedAttachment, handleClearAttachment);
 
   // handle the request for clearing user profile cache
-  yield* takeEvery(clearCache, function* () {
-    yield* call(handleClearAllAttachments);
-  });
+  yield* takeEvery(clearCache, handleClearAllAttachments);
 
   // clear cache when user explicitly logs out
-  yield* takeEvery(
-    logoutSuccess,
-    function* (_: ActionType<typeof logoutSuccess>) {
-      yield* call(handleClearAllAttachments);
-    }
-  );
+  yield* takeEvery(logoutSuccess, handleClearAllAttachments);
 }
 
-export function* watchLoadMessageData() {
-  yield* takeLatest(
-    getType(getMessageDataAction.request),
-    handleLoadMessageData
-  );
+function* watchLoadMessageData() {
+  yield* takeLatest(getMessageDataAction.request, handleLoadMessageData);
 
   const retryDataOrUndefined = yield* select(
     retryDataAfterFastLoginSessionExpirationSelector

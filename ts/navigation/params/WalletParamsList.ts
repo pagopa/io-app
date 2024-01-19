@@ -1,7 +1,4 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
-import { BonusVacanzeParamsList } from "../../features/bonus/bonusVacanze/navigation/params";
-import BONUSVACANZE_ROUTES from "../../features/bonus/bonusVacanze/navigation/routes";
-import { ActiveBonusScreenNavigationParams } from "../../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
 import {
   BpdDetailsParamsList,
   BpdOnboardingParamsList,
@@ -35,6 +32,7 @@ import { PickPspScreenNavigationParams } from "../../screens/wallet/payment/Pick
 import { TransactionErrorScreenNavigationParams } from "../../screens/wallet/payment/TransactionErrorScreen";
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import ROUTES from "../routes";
+import { BONUS_ROUTES } from "../../features/bonus/common/navigation/navigator";
 
 export type WalletParamsList = {
   [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
@@ -62,8 +60,7 @@ export type WalletParamsList = {
   [ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE]: AddCreditCardOutcomeCodeMessageNavigationParams;
   [ROUTES.PAYMENT_OUTCOMECODE_MESSAGE]: PaymentOutcomeCodeMessageNavigationParams;
 
-  [BONUSVACANZE_ROUTES.MAIN]: NavigatorScreenParams<BonusVacanzeParamsList>;
-  [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: ActiveBonusScreenNavigationParams;
+  [BONUS_ROUTES.MAIN]: undefined;
 
   [BPD_ROUTES.ONBOARDING.MAIN]: NavigatorScreenParams<BpdOnboardingParamsList>;
   [BPD_ROUTES.DETAILS_MAIN]: NavigatorScreenParams<BpdDetailsParamsList>;

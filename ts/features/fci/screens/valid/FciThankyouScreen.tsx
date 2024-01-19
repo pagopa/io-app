@@ -4,7 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import paymentCompleted from "../../../../../img/pictograms/payment-completed.png";
@@ -18,10 +18,12 @@ import { trackFciUxSuccess } from "../../analytics";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { getClausesCountByTypes } from "../../utils/signatureFields";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
   const documentSignatures = useIOSelector(fciDocumentSignaturesSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
   const LoadingComponent = () => (
@@ -80,7 +82,8 @@ const FciThankyouScreen = () => {
           ClauseTypeEnum.REQUIRED,
           ClauseTypeEnum.UNFAIR
         ]),
-        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL])
+        getClausesCountByTypes(documentSignatures, [ClauseTypeEnum.OPTIONAL]),
+        fciEnvironment
       );
       return <SuccessComponent />;
     },

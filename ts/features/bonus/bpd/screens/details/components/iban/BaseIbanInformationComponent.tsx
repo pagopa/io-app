@@ -11,7 +11,10 @@ import { Monospace } from "../../../../../../../components/core/typography/Monos
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../i18n";
 import { isStringNullyOrEmpty } from "../../../../../../../utils/strings";
-import { isReady, RemoteValue } from "../../../../model/RemoteValue";
+import {
+  isReady,
+  RemoteValue
+} from "../../../../../../../common/model/RemoteValue";
 
 export type BaseIbanProps = {
   iban: string | undefined;

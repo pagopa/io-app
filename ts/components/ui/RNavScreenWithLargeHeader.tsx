@@ -1,4 +1,11 @@
-import { H2, HeaderSecondLevel, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ContentWrapper,
+  H2,
+  HeaderSecondLevel,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React, { ComponentProps, useLayoutEffect, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
@@ -7,13 +14,21 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { HeaderActionProps, useHeaderProps } from "../../hooks/useHeaderProps";
+import {
+  BackProps,
+  HeaderActionProps,
+  useHeaderProps
+} from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 
 type Props = {
   children: React.ReactNode;
+  fixedBottomSlot?: React.ReactNode;
   title: string;
+  titleTestID?: string;
+  description?: string;
+  goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
 } & SupportRequestParams;
 
@@ -22,7 +37,9 @@ type Props = {
  * It also handles the contextual help and the faq. The usage of LargeHeader naming is due to a similar behaviour
  * offered by react-navigation/native-stack, referencing the native API from iOS platform.
  * @param children
+ * @param fixedBottomSlot An optional React node that is fixed to the bottom of the screen. Useful for buttons or other actions. It will be positioned outside the main `ScrollView`.
  * @param title
+ * @param titleTestID
  * @param contextualHelp
  * @param contextualHelpMarkdown
  * @param faqCategories
@@ -30,7 +47,11 @@ type Props = {
  */
 export const RNavScreenWithLargeHeader = ({
   children,
+  fixedBottomSlot,
   title,
+  titleTestID,
+  goBack,
+  description,
   contextualHelp,
   contextualHelpMarkdown,
   faqCategories,
@@ -53,7 +74,7 @@ export const RNavScreenWithLargeHeader = ({
 
   const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps({
     backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: navigation.goBack,
+    goBack: goBack ?? navigation.goBack,
     title,
     scrollValues: {
       contentOffsetY: translationY,
@@ -72,21 +93,37 @@ export const RNavScreenWithLargeHeader = ({
   }, [headerProps, navigation]);
 
   return (
-    <Animated.ScrollView
-      contentContainerStyle={{
-        paddingBottom: insets.bottom,
-        flexGrow: 1
-      }}
-      onScroll={scrollHandler}
-      scrollEventThrottle={8}
-      snapToOffsets={[0, titleHeight]}
-      snapToEnd={false}
-      decelerationRate="normal"
-    >
-      <View style={IOStyles.horizontalContentPadding} onLayout={getTitleHeight}>
-        <H2>{title}</H2>
-      </View>
-      {children}
-    </Animated.ScrollView>
+    <>
+      <Animated.ScrollView
+        contentContainerStyle={{
+          paddingBottom: insets.bottom,
+          flexGrow: 1
+        }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={8}
+        snapToOffsets={[0, titleHeight]}
+        snapToEnd={false}
+        decelerationRate="normal"
+      >
+        <View
+          style={IOStyles.horizontalContentPadding}
+          onLayout={getTitleHeight}
+        >
+          <H2 testID={titleTestID}>{title}</H2>
+        </View>
+
+        {description && (
+          <ContentWrapper>
+            <VSpacer size={4} />
+            <Body color="grey-700">{description}</Body>
+          </ContentWrapper>
+        )}
+
+        <VSpacer size={16} />
+
+        {children}
+      </Animated.ScrollView>
+      {fixedBottomSlot}
+    </>
   );
 };

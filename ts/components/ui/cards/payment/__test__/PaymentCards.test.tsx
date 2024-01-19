@@ -4,7 +4,7 @@ import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentCardSmall, PaymentCardSmallProps } from "../PaymentCardSmall";
 import { PaymentCardBig, PaymentCardBigProps } from "../PaymentCardBig";
 
@@ -94,7 +94,7 @@ describe("PaymentCardBig component", () => {
 
 function renderCardBig(props: PaymentCardBigProps) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <PaymentCardBig {...props} />,
     ROUTES.WALLET_HOME,
     {},
@@ -104,7 +104,7 @@ function renderCardBig(props: PaymentCardBigProps) {
 
 function renderCardSmall(props: PaymentCardSmallProps) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <PaymentCardSmall {...props} />,
     ROUTES.WALLET_HOME,
     {},

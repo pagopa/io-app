@@ -351,9 +351,11 @@ const renderListItemNav = () => (
             alert("Action triggered");
           }}
           accessibilityLabel="Empty just for testing purposes"
-          badgeProps={{
-            text: "Novità",
-            variant: "blue"
+          topElement={{
+            badgeProps: {
+              text: "Novità",
+              variant: "blue"
+            }
           }}
         />
       </View>
@@ -376,9 +378,11 @@ const renderListItemNav = () => (
           alert("Action triggered");
         }}
         accessibilityLabel="Empty just for testing purposes"
-        badgeProps={{
-          text: "Novità",
-          variant: "blue"
+        topElement={{
+          badgeProps: {
+            text: "Novità",
+            variant: "blue"
+          }
         }}
         hideChevron
       />

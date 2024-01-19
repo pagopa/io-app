@@ -15,8 +15,12 @@ import {
 } from "../../store/reducers/activation";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import { svServiceAlive, svTosAccepted } from "../../store/actions/activation";
-import { fold, isLoading, isReady } from "../../../bpd/model/RemoteValue";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import {
+  fold,
+  isLoading,
+  isReady
+} from "../../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import AcceptTosComponent from "../../components/AcceptTosComponent";
 import CheckResidenceComponent from "../../components/CheckResidenceComponent";
 import I18n from "../../../../../i18n";

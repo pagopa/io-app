@@ -424,16 +424,17 @@ profile:
       description: Per saperne di più sull'app IO
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Sviluppatori
+    testEnvironmentSectionHeader: Ambiente di test
     pagoPaEnvironment:
-      pagoPaEnv: Ambiente pagoPA di Test
+      pagoPaEnv: pagoPA
       pagoPAEnvAlert: La modifica richiede il riavvio dell'app
       alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
       alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
       alertMessage: È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto.
     pnEnvironment:
-      pnEnv: Ambiente PN di Test
+      pnEnv: SEND (PN)
     idpay:
-      idpayTest: Test IDPay
+      idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
     designSystemEnvironment: Design System sperimentale
     appVersion: Versione
@@ -447,7 +448,7 @@ profile:
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
     walletPlayground:
-      titleSection: "New Wallet Playground"
+      titleSection: "New Wallet"
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -686,8 +687,8 @@ authentication:
     notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO.
     button_accept_lv: Continua con l’accesso rapido
     button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
-  security_suggestions: 
-    fingerprint: Non condividere il tuo o codice di sblocco o riconoscimento biometrico con nessuno
+  security_suggestions:
+    fingerprint: Non condividere il tuo codice di sblocco o riconoscimento biometrico con nessuno
     io_logout: Se perdi il dispositivo, esci dall’app da web
     io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
     access_new_device: Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito
@@ -740,12 +741,12 @@ authentication:
     description1_2: In alternativa, è possibile entrare in app utilizzando un accesso con il
     description1_3: livello massimo di sicurezza.
     description1_4: Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.
-    title2: Come sbloccare l’accesso a IO
+    title2: Vuoi sbloccare l’accesso a IO?
     listitem1: Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
     listitem2_1: Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.
     listitem2_2: Vai al sito
     listitem3_1: Vai alla sezione
-    listitem3_2: Sblocca accesso a IO
+    listitem3_2: Sblocca l'accesso a IO
     listitem3_3: e segui i passaggi indicati. Quando richiesto inserisci il
     listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
@@ -977,6 +978,17 @@ payment:
         description: IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
+  confirm:
+    totalAmount: Totale da pagare
+    pay: Paga
+    payWith: Paga con
+    fee: Commissione
+    feeAppliedBy: Applicata da
+    editButton: Modifica
+    termsAndConditions: Proseguendo dichiari di aver letto e compreso i
+    termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
+    loading:
+      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Carta di debito"
@@ -1644,6 +1656,106 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    abortDialog:
+      title: Vuoi interrompere l'operazione?
+      confirm: Sì, interrompi
+      cancel: No, torna indietro
+    methodSelection:
+      header: Seleziona un metodo
+      yourMethods: I tuoi metodi
+      otherMethods: Altri metodi
+      alert:
+        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+        cta: "Ok, ho capito!"
+      missingMethodsError:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        addMethod: Aggiungi metodo
+        notNow: Non ora
+    psp:
+      title: Scegli chi gestirà il pagamento
+      description: Ogni gestore propone una commissione.
+      taxDescription: In questa lista trovi tutti i gestori compatibili,
+      taxDescriptionBold: anche se non sei loro cliente.
+      defaultName: Gestore
+      pspTitle: Gestore
+      pspSortButton: Ordina
+      featuredReason: Perché sei già cliente
+      continueButton: Continua
+      sortBottomSheet:
+        default: Default
+        amount: Per importo
+        name: Per nome
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "C’è un problema tecnico con questo avviso"
+      PAYMENT_UNKNOWN:
+        title: "I dati dell’avviso non sono corretti"
+      DOMAIN_UNKNOWN:
+        title: "L’Ente Creditore sta avendo problemi nella risposta"
+        subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
+      PAYMENT_ONGOING:
+        title: "C’è già un pagamento in corso, riprova più tardi"
+        subtitle: "Se il problema persiste, puoi aprire una segnalazione."
+      PAYMENT_EXPIRED:
+        title: "L’avviso è scaduto e non è più possibile pagarlo"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_CANCELED:
+        title: "L’Ente Creditore ha revocato questo avviso"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_DUPLICATED:
+        title: "Questo avviso è stato già pagato!"
+      GENERIC_ERROR:
+        title: "Si è verificato un errore imprevisto"
+        subtitle: "Riprova, oppure contatta l’assistenza."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Non riusciamo a trovare l’avviso"
+        subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    outcome:
+      SUCCESS:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato addebitato alcun importo.
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: "Non è stato addebitato alcun importo.\nControlla di aver seguito correttamente le istruzioni della tua banca."
+      INVALID_DATA:
+        title: I dati del metodo di pagamento non sono corretti
+        subtitle: Se hai pagato con una carta di debito o credito, assicurati di inserire i dati come riportato sul fronte.
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+      CIRCUIT_ERROR:
+        title: Il circuito della carta non è supportato
+      MISSING_FIELDS:
+        title: Mancano alcuni dati per procedere con il pagamento
+      INVALID_CARD:
+        title: Il metodo di pagamento è scaduto o non più valido
+        subtitle: Per maggiori informazioni, contatta la tua banca.
+      CANCELED_BY_USER:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
+      EXCESSIVE_AMOUNT:
+        title: Autorizzazione negata
+        subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
+      INVALID_METHOD:
+        title: Il metodo di pagamento non è supportato
+    support:
+      button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
+      errorCode: Codice errore
+      noticeNumber: Codice avviso
+      entityCode: Codice Fiscale Ente
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -1709,13 +1821,6 @@ messages:
       expiredAlert:
         block1: Scaduto il
         block2: alle ore
-    prescription:
-      expiringOrValidAlert:
-        block1: Scade il
-        block2: alle
-      expiredAlert:
-        block1: Scaduta il
-        block2: alle
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
@@ -1761,17 +1866,6 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
-  medical:
-    not_available: "n/a"
-    prescription: Ricetta elettronica
-    memo: Promemoria per l'assistito
-    nre: Numero Ricetta Elettronica
-    iup: Identificativo Unico Prenotazione
-    patient_fiscal_code: Codice Fiscale dell'assistito
-    prescriber_fiscal_code: Codice fiscale del medico
-    barcodes: Codici a barre
-    nationalService: Servizio Sanitario Nazionale
-    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
@@ -3832,6 +3926,7 @@ whatsNew:
 bonusCard:
   validUntil: Valida fino al {{endDate}}
   expiring: Scade il {{endDate}}
+  expired: Scaduta il {{endDate}}
   paused: In pausa
   removed: Rimossa
 transaction:
@@ -3840,6 +3935,7 @@ transaction:
     totalAmount: Totale
     totalFee: Il totale comprende
     totalFeePsp: di commissione, applicata da {{pspName}}
+    totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)
@@ -3852,15 +3948,20 @@ transaction:
       iuv: IUV
       subject: Oggetto del pagamento
 permissionRequest:
-  media:
+  gallery:
     title: Consenti a IO di accedere alle tue foto
     subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
     caption: "Ecco come:"
     step: Step {{step}}
     steps:
-      1: Vai su “Impostazioni”
-      2: Seleziona “Applicazioni”
-      3: Seleziona “IO”
-      4: Seleziona la voce relativa alle autorizzazioni
-      5: Consenti l’accesso a file e media
+      android:
+        1: Vai su “Impostazioni”
+        2: Seleziona “Applicazioni”
+        3: Seleziona “IO”
+        4: Seleziona la voce relativa alle autorizzazioni
+        5: Consenti l’accesso a file e media
+      ios:
+        1: Vai su “Impostazioni”
+        2: Seleziona “IO”
+        3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni

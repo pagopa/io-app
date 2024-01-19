@@ -11,7 +11,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { FooterStackButton } from "../../bonus/bonusVacanze/components/buttons/FooterStackButtons";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import { zendeskConfigSelector } from "../store/reducers";
 import { handleContactSupport } from "../utils";
 

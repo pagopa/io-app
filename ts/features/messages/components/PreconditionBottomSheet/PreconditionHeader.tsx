@@ -1,11 +1,18 @@
 import * as React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { IOColors } from "@pagopa/io-app-design-system";
-import HeaderImage from "../../../../../img/features/pn/pn_alert_header.svg";
+import HeaderImage from "../../../../../img/features/messages/alert_header.svg";
 import customVariables from "../../../../theme/variables";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { H3 } from "../../../../components/core/typography/H3";
+
+const styles = StyleSheet.create({
+  preconditionTitle: {
+    flex: 1,
+    flexWrap: "wrap"
+  }
+});
 
 type Props = {
   title: string;
@@ -19,7 +26,7 @@ export const PreconditionHeader = ({ title }: Props) => (
       fill={IOColors.blue}
       style={{ marginRight: customVariables.spacerWidth }}
     />
-    <H3>{title}</H3>
+    <H3 style={styles.preconditionTitle}>{title}</H3>
   </View>
 );
 

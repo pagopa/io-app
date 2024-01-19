@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Placeholder from "rn-placeholder";
 import { GlobalState } from "../../../../../../../store/reducers/types";
-import { fold, RemoteValue } from "../../../../model/RemoteValue";
+import {
+  fold,
+  RemoteValue
+} from "../../../../../../../common/model/RemoteValue";
 import { bpdIbanInsertionStart } from "../../../../store/actions/iban";
 import { bpdIbanSelector } from "../../../../store/reducers/details/activation";
 import { bpdTechnicalAccountSelector } from "../../../../store/reducers/details/activation/technicalAccount";

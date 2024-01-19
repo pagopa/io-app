@@ -5,18 +5,17 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { IOColors } from "@pagopa/io-app-design-system";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { UIMessage } from "../../../store/reducers/entities/messages/types";
+import { UIMessage } from "../types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   getMessagePrecondition,
   clearMessagePrecondition
-} from "../../../store/actions/messages";
-import { messagePreconditionSelector } from "../../../store/reducers/entities/messages/messagePrecondition";
-import { RemoteValue, fold } from "../../bonus/bpd/model/RemoteValue";
+} from "../store/actions";
+import { messagePreconditionSelector } from "../store/reducers/messagePrecondition";
+import { RemoteValue, fold } from "../../../common/model/RemoteValue";
 import I18n from "../../../i18n";
 import { ThirdPartyMessagePrecondition } from "../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import ROUTES from "../../../navigation/routes";
 import { trackDisclaimerOpened } from "../analytics";
 import {
   isPnSupportedSelector,
@@ -33,6 +32,7 @@ import {
   PreconditionContentSkeleton
 } from "../components/PreconditionBottomSheet/PreconditionContent";
 import { PreconditionFooter } from "../components/PreconditionBottomSheet/PreconditionFooter";
+import { MESSAGES_ROUTES } from "../navigation/routes";
 
 const renderPreconditionHeader = (
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>
@@ -104,8 +104,8 @@ export const useMessageOpening = () => {
 
   const navigate = React.useCallback(
     (message: UIMessage) => {
-      navigation.navigate(ROUTES.MESSAGES_NAVIGATOR, {
-        screen: ROUTES.MESSAGE_ROUTER,
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: MESSAGES_ROUTES.MESSAGE_ROUTER,
         params: {
           messageId: message.id,
           fromNotification: false

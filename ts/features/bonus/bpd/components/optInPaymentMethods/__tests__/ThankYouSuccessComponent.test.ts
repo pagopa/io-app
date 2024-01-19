@@ -2,7 +2,7 @@ import { createStore, Store } from "redux";
 
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import ROUTES from "../../../../../../navigation/routes";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -30,7 +30,7 @@ describe("the ThankYouSuccessComponent screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     ThankYouSuccessComponent,
     ROUTES.MAIN,
     {},

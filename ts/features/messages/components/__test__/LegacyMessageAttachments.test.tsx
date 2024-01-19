@@ -5,12 +5,12 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
-import { Downloads } from "../../../../store/reducers/entities/messages/downloads";
-import { mockPdfAttachment } from "../../../../__mocks__/attachment";
-import { downloadAttachment } from "../../../../store/actions/messages";
-import ROUTES from "../../../../navigation/routes";
+import { Downloads } from "../../store/reducers/downloads";
+import { mockPdfAttachment } from "../../__mocks__/attachment";
+import { downloadAttachment } from "../../store/actions";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 const mockOpenPreview = jest.fn();
 const mockShowToast = jest.fn();
@@ -150,9 +150,9 @@ const renderComponent = (
   } as any);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <LegacyMessageAttachments {...props} />,
-      ROUTES.MESSAGE_DETAIL_ATTACHMENT,
+      MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
       {},
       store
     ),

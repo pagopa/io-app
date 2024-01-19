@@ -1,30 +1,30 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import {
-  View,
   Image,
   ImageSourcePropType,
   SafeAreaView,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
+import { IORenderHtml } from "../../../../components/core/IORenderHtml";
+import { H2 } from "../../../../components/core/typography/H2";
+import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { CDC_ROUTES } from "../navigation/routes";
+import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { CdcBonusRequestParamsList } from "../navigation/params";
-import { H2 } from "../../../../components/core/typography/H2";
-import { IORenderHtml } from "../../../../components/core/IORenderHtml";
 import { useIOSelector } from "../../../../store/hooks";
-import { availableBonusTypesSelectorFromId } from "../../bonusVacanze/store/reducers/availableBonusesTypes";
-import { ID_CDC_TYPE } from "../../bonusVacanze/utils/bonus";
-import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
-import { getRemoteLocale } from "../../../../utils/messages";
-import { H4 } from "../../../../components/core/typography/H4";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { getRemoteLocale } from "../../../messages/utils/messages";
+import { ID_CDC_TYPE } from "../../common/utils";
+import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
+import { CdcBonusRequestParamsList } from "../navigation/params";
+import { CDC_ROUTES } from "../navigation/routes";
 
 const styles = StyleSheet.create({
   logo: {

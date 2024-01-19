@@ -64,7 +64,7 @@ import {
 } from "../features/walletV3/transaction/navigation/navigator";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
-import { AndroidMediaPermissionRequestScreen } from "../screens/misc/AndroidMediaPermissionRequestScreen";
+import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isCdcEnabledSelector,
@@ -74,8 +74,9 @@ import {
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
 import { isGestureEnabled } from "../utils/navigation";
+import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import CheckEmailNavigator from "./CheckEmailNavigator";
-import { MessagesStackNavigator } from "./MessagesNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
@@ -124,7 +125,7 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.MESSAGES_NAVIGATOR}
+        name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
@@ -155,8 +156,8 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
-        name={ROUTES.ANDROID_MEDIA_PERMISSIONS}
-        component={AndroidMediaPermissionRequestScreen}
+        name={ROUTES.GALLERY_PERMISSION_INSTRUCTIONS}
+        component={GalleryPermissionInstructionsScreen}
         options={{
           gestureEnabled: isGestureEnabled
         }}

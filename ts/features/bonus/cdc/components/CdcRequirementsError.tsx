@@ -7,7 +7,7 @@ import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRe
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
 import I18n from "../../../../i18n";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { cancelButtonProps } from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import {
   AppParamsList,
   IOStackNavigationProp

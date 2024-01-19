@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { showToast } from "../../../../../utils/showToast";
-import { isError, isLoading, isReady } from "../../model/RemoteValue";
+import {
+  isError,
+  isLoading,
+  isReady
+} from "../../../../../common/model/RemoteValue";
 import { IbanStatus } from "../../saga/networking/patchCitizenIban";
 import {
   bpdIbanInsertionContinue,
