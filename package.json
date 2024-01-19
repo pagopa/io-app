@@ -239,7 +239,7 @@
     "xstate": "^4.33.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.7",
+    "@babel/core": "^7.20.5",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.15.3",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
@@ -299,7 +299,7 @@
     "js-yaml": "^3.13.1",
     "jsdoc-to-markdown": "^6.0.1",
     "lint-staged": "^13.2.0",
-    "metro-react-native-babel-preset": "^0.77.0",
+    "metro-react-native-babel-preset": "^0.70.3",
     "mockdate": "^3.0.2",
     "mockttp": "2.4.0",
     "node-fetch": "^2.6.7",
