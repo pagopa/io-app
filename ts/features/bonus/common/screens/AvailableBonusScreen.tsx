@@ -47,12 +47,12 @@ import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
 import { showToast } from "../../../../utils/showToast";
 import { getRemoteLocale } from "../../../messages/utils/messages";
+import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
+import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
   AvailableBonusItem,
   AvailableBonusItemState
-} from "../../bonusVacanze/components/AvailableBonusItem";
-import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
-import { cgnActivationStart } from "../../cgn/store/actions/activation";
+} from "../components/AvailableBonusItem";
 import { actionWithAlert } from "../components/alert/ActionWithAlert";
 import { loadAvailableBonuses } from "../store/actions/availableBonusesTypes";
 import {
