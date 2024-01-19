@@ -3,6 +3,7 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { useDispatch } from "react-redux";
 import { Pictogram } from "@pagopa/io-app-design-system";
+import { useRoute } from "@react-navigation/native";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
@@ -17,16 +18,15 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import { idpSelector } from "../../store/reducers/authentication";
 import { trackLoginEnded } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
-import { isProfileFirstOnBoardingSelector } from "../../store/reducers/profile";
 
 const OnboardingCompletedScreen = () => {
   const dispatch = useDispatch();
 
   const isFastLoginEnabled = useIOSelector(isFastLoginEnabledSelector);
   const idpSelected = useIOSelector(idpSelector);
-  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
 
   const idp = O.isSome(idpSelected) ? idpSelected.value.name : "";
+  const route = useRoute();
 
   const continueButtonProps: BlockButtonProps = {
     bordered: false,
@@ -35,7 +35,8 @@ const OnboardingCompletedScreen = () => {
       trackLoginEnded(
         isFastLoginEnabled,
         idp,
-        getFlowType(true, isFirstOnBoarding)
+        getFlowType(false, true),
+        route.name
       );
       dispatch(completeOnboarding());
     }
