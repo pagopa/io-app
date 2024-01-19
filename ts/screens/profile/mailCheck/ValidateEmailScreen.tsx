@@ -16,7 +16,6 @@ import ROUTES from "../../../navigation/routes";
 import { useIODispatch } from "../../../store/hooks";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { EmailAlreadyUsedScreenParamList } from "./EmailAlreadyTakenScreen";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -30,12 +29,17 @@ const styles = StyleSheet.create({
   }
 });
 
+
+export type EmailNotVerifiedScreenParamList = {
+  email: string;
+};
+  
 const ValidateEmailScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const { email } =
     useRoute<
-      Route<"CHECK_EMAIL_NOT_VERIFIED", EmailAlreadyUsedScreenParamList>
+      Route<"CHECK_EMAIL_NOT_VERIFIED", EmailNotVerifiedScreenParamList>
     >().params;
   const navigateToInsertEmailScreen = useCallback(() => {
     navigation.navigate(ROUTES.ONBOARDING, {
