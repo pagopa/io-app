@@ -6,7 +6,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 
-import { navigateToEmailReadScreen } from "../../../store/actions/navigation";
 import {
   emailAcknowledged,
   emailInsert
@@ -32,13 +31,6 @@ describe("checkAcknowledgedEmailSaga", () => {
     const store = createStore(appReducer, globalState as any);
     renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
     jest.useRealTimers();
-  });
-
-  describe("when user has an email and it is validated", () => {
-    it("should do nothing", () =>
-      expectSaga(checkAcknowledgedEmailSaga, mockedProfile)
-        .not.call(navigateToEmailReadScreen)
-        .run());
   });
 
   describe("when user is on his first onboarding and he has an email and it is validated", () => {

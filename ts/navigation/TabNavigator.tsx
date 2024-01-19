@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -17,7 +16,7 @@ import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPrefer
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
+import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
@@ -52,7 +51,7 @@ export const MainTabNavigator = () => {
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -66,6 +65,7 @@ export const MainTabNavigator = () => {
       <HeaderFirstLevelHandler />
       <Tab.Navigator
         screenOptions={{
+          headerShown: false,
           tabBarLabelStyle: {
             fontSize: isDesignSystemEnabled ? 10 : 12,
             ...makeFontStyleObject(

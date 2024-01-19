@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 /**
  * The onboarding related stack of screens of the application.
  */
-const navigator = () => (
+const CheckEmailNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.CHECK_EMAIL_NOT_VERIFIED}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
@@ -25,4 +25,4 @@ const navigator = () => (
   </Stack.Navigator>
 );
 
-export default navigator;
+export default CheckEmailNavigator;
