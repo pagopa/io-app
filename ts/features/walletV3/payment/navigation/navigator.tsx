@@ -20,7 +20,7 @@ const Stack = createStackNavigator<WalletPaymentParamsList>();
 export const WalletPaymentNavigator = () => (
   <Stack.Navigator
     initialRouteName={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: true }}
   >
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER}
@@ -51,7 +51,6 @@ export const WalletPaymentNavigator = () => (
       name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD}
       component={WalletPaymentPickMethodScreen}
       options={{
-        headerShown: true,
         gestureEnabled: isGestureEnabled
       }}
     />
