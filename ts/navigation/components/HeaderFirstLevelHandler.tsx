@@ -169,7 +169,8 @@ export const HeaderFirstLevelHandler = () => {
           secondAction: {
             icon: "add",
             accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-            onPress: presentWalletHomeHeaderBottomsheet
+            onPress: presentWalletHomeHeaderBottomsheet,
+            testID: "walletAddNewPaymentMethodTestId"
           }
         };
         break;
