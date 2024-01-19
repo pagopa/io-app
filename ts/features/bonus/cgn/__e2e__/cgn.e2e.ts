@@ -42,7 +42,7 @@ const activateBonusSuccess = async () => {
 
 describe("CGN", () => {
   beforeEach(async () => {
-    await device.launchApp({ newInstance: true });
+    await device.reloadReactNative();
     await ensureLoggedIn();
   });
 

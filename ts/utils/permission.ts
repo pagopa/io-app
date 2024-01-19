@@ -11,7 +11,7 @@ export const requestIOPermission = async (
   permission: RNPermissions.Permission,
   rationale?: RNPermissions.Rationale
 ): Promise<boolean> => {
-  // TODO Be aware that some permissions may return "unavailable" event if the library
+  // Be aware that some permissions may return "unavailable" event if the library
   // documents them as supported. One notorious case is the iOS PHOTO_LIBRARY_ADD_ONLY
   // permission. If such permission is automatically handled by the system upon request
   // (such as PHOTO_LIBRARY_ADD_ONLY is), then you should not use this function to
