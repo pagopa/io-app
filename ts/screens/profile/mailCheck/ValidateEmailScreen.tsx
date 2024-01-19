@@ -29,11 +29,10 @@ const styles = StyleSheet.create({
   }
 });
 
-
 export type EmailNotVerifiedScreenParamList = {
   email: string;
 };
-  
+
 const ValidateEmailScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
