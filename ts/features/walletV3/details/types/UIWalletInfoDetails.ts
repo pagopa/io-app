@@ -8,23 +8,26 @@ import {
 /**
  * Transforms all required props from WalletInfoDetails1 to partial
  */
-export const UIWalletInfoDetails1 = t.partial(
-  WalletInfoDetails1.types[0].props
-);
+export const UIWalletInfoDetails1 = t.partial({
+  ...WalletInfoDetails1.types[0].props,
+  ...WalletInfoDetails1.types[0].props
+});
 
 /**
  * Transforms all required props from WalletInfoDetails2 to partial
  */
-export const UIWalletInfoDetails2 = t.partial(
-  WalletInfoDetails2.types[0].props
-);
+export const UIWalletInfoDetails2 = t.partial({
+  ...WalletInfoDetails2.types[0].props,
+  ...WalletInfoDetails2.types[1].props
+});
 
 /**
  * Transforms all required props from WalletInfoDetails3 to partial
  */
-export const UIWalletInfoDetails3 = t.partial(
-  WalletInfoDetails3.types[0].props
-);
+export const UIWalletInfoDetails3 = t.partial({
+  ...WalletInfoDetails3.types[0].props,
+  ...WalletInfoDetails3.types[1].props
+});
 
 /**
  * This type is used to bypass the `type` props of {@see WalletInfoDetails}
