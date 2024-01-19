@@ -166,10 +166,12 @@ export const HeaderFirstLevelHandler = () => {
           type: "twoActions",
           firstAction: helpAction,
           backgroundColor: "dark",
+          testID: "wallet-home-header-title",
           secondAction: {
             icon: "add",
             accessibilityLabel: I18n.t("wallet.accessibility.addElement"),
-            onPress: presentWalletHomeHeaderBottomsheet
+            onPress: presentWalletHomeHeaderBottomsheet,
+            testID: "walletAddNewPaymentMethodTestId"
           }
         };
         break;
