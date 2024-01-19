@@ -240,6 +240,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/runtime": "^7.15.3",
     "@jambit/eslint-plugin-typed-redux-saga": "^0.4.0",
