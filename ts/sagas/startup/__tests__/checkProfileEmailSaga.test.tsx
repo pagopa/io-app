@@ -46,7 +46,8 @@ describe("checkAcknowledgedEmailSaga", () => {
         profileEmailValidatedFirstOnboarding
       )
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+          params: { isOnboarding: true }
         })
         .run();
     });
@@ -62,7 +63,8 @@ describe("checkAcknowledgedEmailSaga", () => {
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+          params: { isOnboarding: true }
         })
         .dispatch(emailAcknowledged())
         .run());
