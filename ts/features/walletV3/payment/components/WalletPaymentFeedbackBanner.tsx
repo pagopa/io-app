@@ -25,9 +25,9 @@ const WalletPaymentFeebackBanner = () => {
         pictogramName="feedback"
         size="big"
         viewRef={bannerViewRef}
-        title={I18n.t("wallet.outcomeMessage.payment.success.banner.title")}
-        content={I18n.t("wallet.outcomeMessage.payment.success.banner.content")}
-        action={I18n.t("wallet.outcomeMessage.payment.success.banner.action")}
+        title={I18n.t("wallet.payment.outcome.SUCCESS.banner.title")}
+        content={I18n.t("wallet.payment.outcome.SUCCESS.banner.content")}
+        action={I18n.t("wallet.payment.outcome.SUCCESS.banner.action")}
         onPress={handleBannerPress}
       />
     </>

@@ -728,6 +728,7 @@ authentication:
       error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
+    message: To keep your private information safe, please login again with your SPID credentials, thanks!
   unlock:
     title: Unlock access
     subtitlel2: In order to use the app, you must first unlock access to IO.
@@ -1630,10 +1631,6 @@ wallet:
         title: "Your card has been successfully added!"
     payment:
       success:
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
         title: "Thank you for your payment!"
         description1: "We sent a receipt to"
         description2: "You can also find it in your Wallet."
@@ -1714,6 +1711,10 @@ wallet:
       SUCCESS:
         title: Hai pagato {{amount}}
         button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Non è stato addebitato alcun importo.
@@ -3848,6 +3849,16 @@ fastLogin:
   whatsNew:
     title: Logging into IO just got easier!
     subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face.
+    changes:
+      first:
+        title: Easier
+        description: log in with just your unlock code, fingerprint or face.
+      second:
+        title: Faster
+        description: use your SPID or CIE only once a year or in case you log out.
+      third:
+        title: Safer
+        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
 bonusCard:
