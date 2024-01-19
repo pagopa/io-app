@@ -149,14 +149,6 @@ Created on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### @react-navigation/material-top-tabs+5.3.1
-
-Created on **01/12/2022**
-
-#### Reason:
-
-- This patch is going to add a missing prop to component definition, it can be removed once updating the library.
-
 ### react-native-webview+11.26.1
 
 Updated on **13/07/2023**
