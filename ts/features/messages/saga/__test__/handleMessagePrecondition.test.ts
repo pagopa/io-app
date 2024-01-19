@@ -3,12 +3,13 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { getMessagePrecondition } from "../../store/actions";
 import { UIMessageId } from "../../types";
-import { testWorkerMessagePrecondition } from "../watchMessagePrecondition";
+import { testMessagePreconditionWorker } from "../handleMessagePrecondition";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { TagEnum as TagEnumPN } from "../../../../../definitions/backend/MessageCategoryPN";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { BackendClient } from "../../../../api/__mocks__/backend";
 
-const workerMessagePrecondition = testWorkerMessagePrecondition!;
+const messagePreconditionWorker = testMessagePreconditionWorker!;
 
 const action = {
   id: "MSG001" as UIMessageId,
@@ -19,21 +20,19 @@ const mockResponseSuccess: ThirdPartyMessagePrecondition = {
   markdown: "-"
 };
 
-describe("workerMessagePrecondition", () => {
+describe("messagePreconditionWorker", () => {
   it(`should put ${getType(
     getMessagePrecondition.success
   )} when the response is successful`, () => {
-    const getThirdPartyMessagePrecondition = jest.fn();
-
     testSaga(
-      workerMessagePrecondition,
-      getThirdPartyMessagePrecondition,
+      messagePreconditionWorker,
+      BackendClient.getThirdPartyMessagePrecondition,
       getMessagePrecondition.request(action)
     )
       .next()
       .call(
         withRefreshApiCall,
-        getThirdPartyMessagePrecondition(action),
+        BackendClient.getThirdPartyMessagePrecondition(action),
         getMessagePrecondition.request(action)
       )
       .next(E.right({ status: 200, value: mockResponseSuccess }))
@@ -45,17 +44,15 @@ describe("workerMessagePrecondition", () => {
   it(`should put ${getType(
     getMessagePrecondition.failure
   )} when the response is an error`, () => {
-    const getThirdPartyMessagePrecondition = jest.fn();
-
     testSaga(
-      workerMessagePrecondition,
-      getThirdPartyMessagePrecondition,
+      messagePreconditionWorker,
+      BackendClient.getThirdPartyMessagePrecondition,
       getMessagePrecondition.request(action)
     )
       .next()
       .call(
         withRefreshApiCall,
-        getThirdPartyMessagePrecondition(action),
+        BackendClient.getThirdPartyMessagePrecondition(action),
         getMessagePrecondition.request(action)
       )
       .next(E.right({ status: 500, value: `response status ${500}` }))
@@ -67,11 +64,9 @@ describe("workerMessagePrecondition", () => {
   it(`should put ${getType(
     getMessagePrecondition.failure
   )} when the handler throws an exception`, () => {
-    const getThirdPartyMessagePrecondition = jest.fn();
-
     testSaga(
-      workerMessagePrecondition,
-      getThirdPartyMessagePrecondition,
+      messagePreconditionWorker,
+      BackendClient.getThirdPartyMessagePrecondition,
       getMessagePrecondition.request(action)
     )
       .next()

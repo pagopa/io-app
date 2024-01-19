@@ -42,8 +42,6 @@ import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderCo
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
 import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../../store/actions/navigation";
 import { Dispatch } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -64,7 +62,6 @@ import {
   availableBonusTypesSelectorFromId,
   bonusVacanzeLogo
 } from "../../common/store/selectors";
-import { ID_BONUS_VACANZE_TYPE } from "../../common/utils";
 import BonusCardComponent from "../components/BonusCardComponent";
 import QrModalBox from "../components/QrModalBox";
 import { BonusCompositionDetails } from "../components/keyValueTable/BonusCompositionDetails";
@@ -99,11 +96,7 @@ const PNG_IMAGE_TYPE = "image/png";
 const whiteBgTransparent = hexToRgba(IOColors.white, 0);
 const whiteBg = hexToRgba(IOColors.white, 1);
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "BONUS_ACTIVE_DETAIL_SCREEN"
->;
-
+type OwnProps = any;
 type Props = OwnProps &
   ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
@@ -674,7 +667,7 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
 
   return {
     hasMoreOwnedActiveBonus: ownedActiveOrRedeemedBonus(state).length > 1,
-    bonusInfo: availableBonusTypesSelectorFromId(ID_BONUS_VACANZE_TYPE)(state),
+    bonusInfo: availableBonusTypesSelectorFromId(1)(state),
     bonus,
     isError: pot.isNone(bonus) && pot.isError(bonus), // error and no bonus data, user should retry to load
     logo: bonusVacanzeLogo(state)

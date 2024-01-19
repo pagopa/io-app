@@ -31,4 +31,5 @@ export type ProfileParamsList = {
   [ROUTES.IDPAY_ONBOARDING_PLAYGROUND]: undefined;
   [ROUTES.IDPAY_CODE_PLAYGROUND]: undefined;
   [ROUTES.WALLET_PLAYGROUND]: undefined;
+  [ROUTES.WALLET_PAYMENT_PLAYGROUND]: undefined;
 };
