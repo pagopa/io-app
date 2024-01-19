@@ -36,7 +36,8 @@ export function* checkEmailSaga() {
         });
       } else {
         yield* call(NavigationService.navigate, ROUTES.CHECK_EMAIL, {
-          screen: ROUTES.CHECK_EMAIL_NOT_VERIFIED
+          screen: ROUTES.CHECK_EMAIL_NOT_VERIFIED,
+          params: { email: userProfile.email }
         });
       }
       // Wait for the user to press "Continue" button after having checked out
