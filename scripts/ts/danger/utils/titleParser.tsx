@@ -1,7 +1,3 @@
-import {
-  getPivotalStories,
-  getPivotalStoryIDs
-} from "danger-plugin-digitalcitizenship/dist/utils";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -9,7 +5,6 @@ import { Errors } from "io-ts";
 import { getJiraTickets } from "../../common/ticket/jira";
 import {
   fromJiraToGenericTicket,
-  fromPivotalToGenericTicket,
   GenericTicket
 } from "../../common/ticket/types";
 
@@ -49,15 +44,7 @@ export const getTicketsFromTitle = async (
 
   if (maybeJiraId) {
     return maybeJiraId.map(E.map(fromJiraToGenericTicket));
+  } else {
+    return [E.left(new Error("No Pivotal stories found"))];
   }
-
-  const maybePivotalId = await getPivotalStories(getPivotalStoryIDs(title));
-  return maybePivotalId
-    ? pipe(
-        maybePivotalId
-          .filter(s => s.story_type !== undefined)
-          .map<GenericTicket>(fromPivotalToGenericTicket)
-          .map(E.right)
-      )
-    : [E.left(new Error("No Pivotal stories found"))];
 };
