@@ -20,12 +20,7 @@ import {
   walletDetailsInstrumentSelector
 } from "../store";
 import { walletDetailsGetInstrument } from "../store/actions";
-import {
-  TypeEnum,
-  WalletInfoDetails,
-  WalletInfoDetails1,
-  WalletInfoDetails2
-} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
+import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 
 export type WalletDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -36,44 +31,38 @@ export type WalletDetailsScreenRouteProps = RouteProp<
   "WALLET_DETAILS_SCREEN"
 >;
 
-const generateCardComponent = (walletDetails: WalletInfoDetails) => {
-  switch (walletDetails.type) {
-    case TypeEnum.PAYPAL:
-      const paypalDetails = walletDetails as WalletInfoDetails2;
-      return (
-        <PaymentCardBig
-          testID="CreditCardComponent"
-          cardType="PAYPAL"
-          holderEmail={paypalDetails.maskedEmail}
-        />
-      );
-    case TypeEnum.CARDS:
-    default:
-      const cardDetails = walletDetails as WalletInfoDetails1;
-      return (
-        <PaymentCardBig
-          testID="CreditCardComponent"
-          cardType="CREDIT"
-          expirationDate={cardDetails.expiryDate}
-          holderName={cardDetails.holder}
-          hpan={cardDetails.maskedPan}
-          cardIcon={cardDetails.brand.toLowerCase() as IOLogoPaymentExtType}
-        />
-      );
+const generateCardComponent = (details: UIWalletInfoDetails) => {
+  if (details.maskedEmail !== undefined) {
+    return (
+      <PaymentCardBig
+        testID="CreditCardComponent"
+        cardType="PAYPAL"
+        holderEmail={details.maskedEmail}
+      />
+    );
   }
+
+  return (
+    <PaymentCardBig
+      testID="CreditCardComponent"
+      cardType="CREDIT"
+      expirationDate={details.expiryDate}
+      holderName={details.holder || ""}
+      hpan={details.maskedPan || ""}
+      cardIcon={details.brand?.toLowerCase() as IOLogoPaymentExtType}
+    />
+  );
 };
 
-const generateCardHeaderTitle = (walletDetails?: WalletInfoDetails) => {
-  switch (walletDetails?.type) {
-    case TypeEnum.CARDS:
-      const cardDetails = walletDetails as WalletInfoDetails1;
-      const capitalizedCardCircuit = capitalize(
-        cardDetails.brand.toLowerCase() ?? ""
-      );
-      return `${capitalizedCardCircuit} ••${cardDetails.maskedPan}`;
-    default:
-      return "";
+const generateCardHeaderTitle = (details?: UIWalletInfoDetails) => {
+  if (details?.maskedPan !== undefined) {
+    const capitalizedCardCircuit = capitalize(
+      details.brand?.toLowerCase() ?? ""
+    );
+    return `${capitalizedCardCircuit} ••${details.maskedPan}`;
   }
+
+  return "";
 };
 
 /**
