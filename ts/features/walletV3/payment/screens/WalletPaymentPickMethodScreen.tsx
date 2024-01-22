@@ -20,7 +20,6 @@ import React, { useEffect, useMemo } from "react";
 import { View } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletInfoDetails1 } from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
@@ -43,6 +42,7 @@ import {
 } from "../store/selectors";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
+import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 
 type SavedMethodState = {
   kind: "saved";
@@ -265,29 +265,29 @@ const mapGenericToRadioItem = (
 const mapSavedToRadioItem = (
   method: WalletInfo
 ): RadioItem<string> | undefined => {
-  switch (method.details?.type) {
-    case "CARDS":
-      const cardDetails = method.details as WalletInfoDetails1;
-      return {
-        id: method.walletId,
-        value: `${capitalize(cardDetails.brand)} ••${cardDetails.maskedPan}`,
-        startImage: getIconWithFallback(cardDetails.brand)
-      };
-    case "PAYPAL":
-      return {
-        id: method.walletId,
-        value: "PayPal",
-        startImage: getIconWithFallback("paypal")
-      };
-    case "BANCOMATPAY":
-      return {
-        id: method.walletId,
-        value: "BANCOMAT Pay",
-        startImage: getIconWithFallback("bancomatpay")
-      };
-    default:
-      return undefined;
+  const details = method.details as UIWalletInfoDetails;
+
+  if (details.maskedPan !== undefined) {
+    return {
+      id: method.walletId,
+      value: `${capitalize(details.brand)} ••${details.maskedPan}`,
+      startImage: getIconWithFallback(details.brand)
+    };
+  } else if (details.maskedEmail !== undefined) {
+    return {
+      id: method.walletId,
+      value: "PayPal",
+      startImage: getIconWithFallback("paypal")
+    };
+  } else if (details.maskedNumber !== undefined) {
+    return {
+      id: method.walletId,
+      value: "BANCOMAT Pay",
+      startImage: getIconWithFallback("bancomatpay")
+    };
   }
+
+  return undefined;
 };
 
 const isMethodDisabledForAmount = (
