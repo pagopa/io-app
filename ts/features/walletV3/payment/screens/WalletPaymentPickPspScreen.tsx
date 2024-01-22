@@ -36,7 +36,8 @@ import {
   walletPaymentAmountSelector,
   walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
-  walletPaymentPspListSelector
+  walletPaymentPspListSelector,
+  walletPaymentTransactionTransferListSelector
 } from "../store/selectors";
 import { WalletPaymentPspSortType } from "../types";
 
@@ -51,18 +52,20 @@ const WalletPaymentPickPspScreen = () => {
   const [sortType, setSortType] =
     React.useState<WalletPaymentPspSortType>("default");
 
+  const transactionTransferListPot = useIOSelector(
+    walletPaymentTransactionTransferListSelector
+  );
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
+
   const isLoading = pot.isLoading(pspListPot);
+  const canContinue = O.isSome(selectedPspOption);
 
   const sortedPspList = pipe(
     pot.toOption(pspListPot),
     O.map(_ => getSortedPspList(_, sortType)),
     O.toUndefined
   );
-
-  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
-
-  const canContinue = O.isSome(selectedPspOption);
 
   useHeaderSecondLevel({
     title: "",
@@ -76,18 +79,25 @@ const WalletPaymentPickPspScreen = () => {
       pipe(
         sequenceT(O.Monad)(
           pot.toOption(paymentAmountPot),
+          pot.toOption(transactionTransferListPot),
           selectedWalletOption
         ),
-        O.map(([paymentAmountInCents, selectedWallet]) => {
+        O.map(([paymentAmountInCents, transferList, selectedWallet]) => {
           dispatch(
             walletPaymentCalculateFees.request({
               walletId: selectedWallet.walletId,
-              paymentAmountInCents
+              paymentAmount: paymentAmountInCents,
+              transferList
             })
           );
         })
       );
-    }, [dispatch, paymentAmountPot, selectedWalletOption])
+    }, [
+      dispatch,
+      paymentAmountPot,
+      selectedWalletOption,
+      transactionTransferListPot
+    ])
   );
 
   React.useEffect(

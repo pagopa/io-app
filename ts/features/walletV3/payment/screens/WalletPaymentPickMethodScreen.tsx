@@ -90,7 +90,6 @@ const WalletPaymentPickMethodScreen = () => {
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
-
   const isLoadingTransaction = pot.isLoading(transactionPot);
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
