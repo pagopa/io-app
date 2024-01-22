@@ -188,7 +188,7 @@ const WalletPaymentPickPspScreen = () => {
               label: I18n.t("wallet.payment.psp.continueButton"),
               accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
               onPress: handleContinue,
-              disabled: isLoading || !canContinue,
+              disabled: isLoading,
               loading: isLoading
             }
           : undefined
