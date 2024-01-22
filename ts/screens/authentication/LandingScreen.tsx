@@ -167,6 +167,10 @@ export const LandingScreen = () => {
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = React.useState<
     O.Option<boolean>
   >(O.none);
+  const [
+    hasTabletCompatibilityAlertAlreadyShown,
+    setHasTabletCompatibilityAlertAlreadyShown
+  ] = React.useState<boolean>(false);
 
   const store = useStore();
 
@@ -206,18 +210,22 @@ export const LandingScreen = () => {
 
   const { hideModal, showAnimatedModal } = React.useContext(LightModalContext);
 
-  const displayTabletAlert = () =>
-    Alert.alert(
-      "",
-      I18n.t("tablet.message"),
-      [
-        {
-          text: I18n.t("global.buttons.continue"),
-          style: "cancel"
-        }
-      ],
-      { cancelable: true }
-    );
+  const displayTabletAlert = () => {
+    if (!hasTabletCompatibilityAlertAlreadyShown) {
+      setHasTabletCompatibilityAlertAlreadyShown(true);
+      Alert.alert(
+        "",
+        I18n.t("tablet.message"),
+        [
+          {
+            text: I18n.t("global.buttons.continue"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: true }
+      );
+    }
+  };
 
   const navigateToMarkdown = React.useCallback(
     () =>
