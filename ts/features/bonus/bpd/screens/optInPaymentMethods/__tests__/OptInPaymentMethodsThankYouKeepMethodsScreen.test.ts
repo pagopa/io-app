@@ -8,7 +8,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import * as showToast from "../../../../../../utils/showToast";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
 import OptInPaymentMethodsThankYouKeepMethodsScreen from "../OptInPaymentMethodsThankYouKeepMethodsScreen";
 
@@ -85,7 +85,7 @@ describe("the OptInPaymentMethodsThankYouKeepMethodsScreen screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     OptInPaymentMethodsThankYouKeepMethodsScreen,
     ROUTES.MAIN,
     {},

@@ -14,7 +14,6 @@
     "paymentInvalidAfterDueDateWithExpiredDueDateCount": 1,
     "paymentWithValidDueDateCount": 1,
     "paymentWithExpiredDueDateCount": 1,
-    "medicalCount": 1,
     "withCTA": true,
     "withEUCovidCert": true,
     "withValidDueDateCount": 1,

@@ -1631,10 +1631,6 @@ wallet:
         title: "Your card has been successfully added!"
     payment:
       success:
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
         title: "Thank you for your payment!"
         description1: "We sent a receipt to"
         description2: "You can also find it in your Wallet."
@@ -1821,13 +1817,6 @@ messages:
       expiredAlert:
         block1: Expired on
         block2: at
-    prescription:
-      expiringOrValidAlert:
-        block1: Expiring on
-        block2: at
-      expiredAlert:
-        block1: Expired on
-        block2: at
     pay: Pay € {{amount}}
     onlyPay: Pay
     paid: Paid
@@ -1873,17 +1862,6 @@ messages:
     emptyMessage:
       title: You haven't any scheduled deadline.
       subtitle: Use the button above to check out past deadlines.
-  medical:
-    not_available: "n/a"
-    prescription: Electronic prescription
-    memo: Reminder for the recipient
-    nre: Electronic prescription number
-    iup: Unique booking identifier
-    patient_fiscal_code: Patient's fiscal code
-    prescriber_fiscal_code: Doctor's fiscal code
-    barcodes: Barcodes
-    nationalService: National Health Service
-    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
       started: Please wait, we are updating the Messages section.
@@ -2376,12 +2354,7 @@ bonus:
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
     accessibility:
-      preview: Bonus Vacanze, worth up to {{value}} euro, {{status}}
       card: Your Bonus Vacanze with code {{code}} worth up to {{value}} euro is {{status}}
-    statusInfo:
-      validBetween: You will be able to use the Bonus Vacanze starting from {{from}} until {{to}}
-      bonusRejected: Attention! This Bonus Vacanze has been rejected
-      redeemed: This Bonus Vacanze has been consumed on {{date}}
     multipleBonus: Two or more bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
@@ -2400,89 +2373,20 @@ bonus:
     shareMessage: "This is the code of your Bonus Vacanze:"
     saveScreenShotOk: "Bonus saved in your gallery!"
     savedOn: "Saved on "
-    detail:
-      contextualHelp:
-        title: Bonus Vacanze
-        body: Here you can see the details of the Bonus Vacanze and the information needed to spend the bonus.
-    checkBonusEligibility:
-      loading: Checking bonus eligibility
-    cta:
-      requestBonus: Request Bonus
-      cancelRequest: Cancel the request
-      qrCode: QR code
-      copyCode: Code copy
-      openQRCode: View QR code
     eligibility:
       loading: "We are verifying your family's ISEE with INPS\nPlease wait."
-      iseeNotAvailable:
-        title: "We're sorry.\n You don't have a valid ISEE \"ordinario or corrente\"."
-        text:
-          first: "It is necessary to submit a DSU for the calculation of the ISEE \"ordinario or corrente\", before requesting the \"Bonus Vacanze\".\n You can do an "
-          secondo: "online simulation"
-          third: " on the INPS website to check your eligibility, or request your ISEE through the channels provided by INPS."
-        goToDSU: Request ISEE
-      iseeNotEligible:
-        title: "We're sorry.\n Your ISEE exceeds the required threshold."
-        text: If the financial position of your household has changed since the last DSU published, you can file a new through the channels provided by INPS.
-        goToNewDSU: Request new DSU
       activateBonus:
-        contextualHelp:
-          title: The Bonus Vacanze of your family
-          body: !include bonus/bonusVacanze/eligible_ch.md
         headerTitle: Bonus Vacanze request
         title: Good news!
         description: "Your family is entitled to the following Bonus Vacanze:"
-        reminder:
-          text: "Each member of your family helps determine the amount and can spend the bonus. If the data is incorrect or updated, to avoid problems following the use of the Bonus, we invite you to submit a new DSU before proceeding with the request."
         discrepancies:
           attention: "Warning!"
           text: "INPS has reported some omissions or discrepancies in your ISEE. Check that everything is correct before continuing. If you decide to continue, you may be called to provide documentation to prove the completeness and truthfulness of the data indicated in the DSU. Otherwise, you can present a new DSU and check the bonus at a later time."
         activateCTA: "Activate the Bonus"
-      timeout:
-        title: We are verifying your ISEE.
-        description:
-          first: "We will send you a message when the verification is complete.\n\nIf the outcome is positive, when you receive it, remember to complete your application "
-          second: "within 24 hours"
-          third: ", otherwise you will have to start a new one."
-      activationPending:
-        title: The bonus for your family has already been requested and is being activated.
-        description: You will receive a message when it is activated.
-      underage:
-        title: "We're sorry. Only citizens of legal age can apply for the Bonus Vacanze"
     activation:
       loading: "We have forwarded your request to the Revenue Agency\nPlease wait."
-      goToDetails: Show Bonus Vacanze
       timeout:
         title: We are processing your request.
-        description: We will send you a message in the app when your bonus is ready.
-      alreadyRedeemed:
-        title: The bonus for your family is already active!
-        body: You can view the details in the Wallet section.
-        cta: Show available Bonuses
-      eligibilityExpired:
-        title: Time expired.
-        body: The 24 hours needed to continue your request have expired. Please, start a new request.
-        cta: Request Bonus
-      completed:
-        title: Congratulation!
-        description: Bonus activated
-      confirm:
-        title: Attention
-        body: If you continue, you will no longer be able to cancel the request.
-        cancel: Back to the request
-        confirm: Continue
-    abort:
-      title: Cancel
-      body: Do you really want to quit? To request the "Bonus Vacanze" you will have to repeat the process from the beginning.
-      cancel: Continue
-      confirm: Abort the request
-      completed: Request aborted
-    composition:
-      amount: "Maximum amount"
-      expendable: "Spendable amount"
-      taxBenefit: "Tax deductible"
-    family:
-      title: "Who can claim the bonus?"
   bonusList:
     title: Add bonus or discount
     contentTitle: Select one of the available bonus
@@ -2493,8 +2397,6 @@ bonus:
     contextualHelp:
       title: The Bonus Vacanze
       body: Here you can see all the information related to the Bonus Vacanze, the measure established by the Decreto Rilancio to encourage tourism after the lockdown due to the Coronavirus emergency.
-    requestAlert:
-      title: Attention
   request: Request a new bonus
   requestLabel: Bonuses and discounts
   requestTitle: Request
@@ -3966,15 +3868,20 @@ transaction:
       iuv: IUV
       subject: Oggetto del pagamento
 permissionRequest:
-  media:
+  gallery:
     title: Consenti a IO di accedere alle tue foto
     subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
     caption: "Ecco come:"
     step: Step {{step}}
     steps:
-      1: Vai su “Impostazioni”
-      2: Seleziona “Applicazioni”
-      3: Seleziona “IO”
-      4: Seleziona la voce relativa alle autorizzazioni
-      5: Consenti l’accesso a file e media
+      android:
+        1: Vai su “Impostazioni”
+        2: Seleziona “Applicazioni”
+        3: Seleziona “IO”
+        4: Seleziona la voce relativa alle autorizzazioni
+        5: Consenti l’accesso a file e media
+      ios:
+        1: Vai su “Impostazioni”
+        2: Seleziona “IO”
+        3: Seleziona “Foto” e consenti l’accesso
     cta: Apri Impostazioni

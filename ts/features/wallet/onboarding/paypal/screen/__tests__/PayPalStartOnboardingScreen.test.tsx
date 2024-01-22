@@ -1,7 +1,7 @@
 import { createStore, Store } from "redux";
 
 import PayPalStartOnboardingScreen from "../PayPalStartOnboardingScreen";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
@@ -30,7 +30,7 @@ describe("PayPalStartOnboardingScreen", () => {
 });
 
 const renderComponent = (store: Store) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenWithNavigationStoreContext<GlobalState>(
     PayPalStartOnboardingScreen,
     "N/A",
     {},

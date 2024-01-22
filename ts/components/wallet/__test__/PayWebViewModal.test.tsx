@@ -7,7 +7,7 @@ import {
 } from "../PayWebViewModal";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { appReducer } from "../../../store/reducers";
 import ROUTES from "../../../navigation/routes";
 import I18n from "../../../i18n";
@@ -96,7 +96,7 @@ describe("PayWebViewModal component", () => {
 
 function renderComponent() {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <PayWebViewModal
         postUri={"where.to.post"}

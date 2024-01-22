@@ -77,7 +77,8 @@ export function trackLoginUserExit() {
 export function trackLoginEnded(
   fastLogin: boolean,
   idp: string,
-  flow: FlowType
+  flow: FlowType,
+  screenName: string
 ) {
   void mixpanelTrack(
     "LOGIN_ENDED",
@@ -85,6 +86,7 @@ export function trackLoginEnded(
       "UX",
       "action",
       {
+        screen_name: screenName,
         login_veloce: fastLogin,
         idp
       },

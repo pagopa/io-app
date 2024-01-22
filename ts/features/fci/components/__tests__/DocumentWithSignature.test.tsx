@@ -9,7 +9,7 @@ import I18n from "../../../../i18n";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
 import DocumentWithSignature, {
   SignatureFieldAttrType
@@ -98,7 +98,7 @@ const renderComponent = (props: Props, store: Store<GlobalState>) => {
     </Provider>
   );
 
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => Component,
     FCI_ROUTES.ROUTER,
     {},

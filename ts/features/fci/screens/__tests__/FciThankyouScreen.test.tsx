@@ -7,7 +7,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { getNetworkError } from "../../../../utils/errors";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { fciSigningRequest } from "../../store/actions";
 import { mockCreateSignatureBody } from "../../types/__mocks__/CreateSignatureBody.mock";
 import FciThankyouScreen from "../valid/FciThankyouScreen";
@@ -96,7 +96,7 @@ describe("Test FciThankyouScreen screen", () => {
 });
 
 const renderComponent = (store: Store) =>
-  renderScreenFakeNavRedux<GlobalState>(
+  renderScreenWithNavigationStoreContext<GlobalState>(
     () => <FciThankyouScreen />,
     FCI_ROUTES.TYP,
     {},

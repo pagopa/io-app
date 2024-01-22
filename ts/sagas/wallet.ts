@@ -6,7 +6,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { NavigationActions, StackActions } from "@react-navigation/compat";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -329,9 +329,7 @@ function* startOrResumeAddCreditCardSaga(
                       // beware this is very dangerous if the screen number changes, but is the only way with this legacy flow
                       yield* call(
                         NavigationService.dispatchNavigationAction,
-                        StackActions.pop({
-                          n: 5
-                        })
+                        StackActions.pop(5)
                       );
                     }
                   }
@@ -941,8 +939,7 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
     if (entrypointRoute !== undefined) {
       yield* call(
         NavigationService.dispatchNavigationAction,
-        NavigationActions.navigate({
-          routeName: entrypointRoute.name,
+        CommonActions.navigate(entrypointRoute.name, {
           key: entrypointRoute.key
         })
       );

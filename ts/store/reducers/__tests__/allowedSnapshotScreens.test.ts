@@ -1,5 +1,3 @@
-import { bonusVacanzeEnabled } from "../../../config";
-import BONUSVACANZE_ROUTES from "../../../features/bonus/bonusVacanze/navigation/routes";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../actions/application";
 import { setDebugModeEnabled } from "../../actions/debug";
@@ -31,20 +29,6 @@ describe("allowed Snapshot Screens Selector test", () => {
         true
       )
     ).toBeTruthy();
-    if (bonusVacanzeEnabled) {
-      expect(
-        isAllowedSnapshotCurrentScreen.resultFunc(
-          BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN,
-          false
-        )
-      ).toBeTruthy();
-      expect(
-        isAllowedSnapshotCurrentScreen.resultFunc(
-          BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN,
-          true
-        )
-      ).toBeTruthy();
-    }
   });
   it("Test all blacklisted screens", () => {
     screenBlackList.forEach(screen => {
