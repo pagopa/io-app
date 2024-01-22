@@ -18,17 +18,11 @@ const StoryEmoji: Record<GenericTicketType, string> = {
 };
 
 /**
- * Display how should be used the Jira / Pivotal id in the pr title
+ * Display how should be used the Jira id in the pr title
  */
 const warningNoTicket = () => {
-  warn(
-    "Please include a Pivotal story or Jira ticket at the beginning of the PR title"
-  );
-  markdown(`
-  Example of PR titles that include pivotal stories:
-  * single story: \`[#123456] my PR title\`
-  * multiple stories: \`[#123456,#123457,#123458] my PR title\`
-  
+  warn("Please include a Jira ticket at the beginning of the PR title");
+  markdown(` 
   Example of PR titles that include Jira tickets:
   * single story: \`[PROJID-123] my PR title\`
   * multiple stories: \`[PROJID-1,PROJID-2,PROJID-3] my PR title\`

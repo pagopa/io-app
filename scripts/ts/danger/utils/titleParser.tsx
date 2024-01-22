@@ -28,9 +28,8 @@ export const getJiraIdFromPrTitle = (
   );
 
 /**
- * Try to retrieve Jira tickets (or Pivotal stories as fallback) from pr title
+ * Try to retrieve Jira tickets from pr title
  * and transforms them into {@link GenericTicket}
- * ⚠️ Mixed Jira and Pivotal id in the pr title are not supported ⚠️
  * @param title
  */
 export const getTicketsFromTitle = async (
@@ -45,6 +44,6 @@ export const getTicketsFromTitle = async (
   if (maybeJiraId) {
     return maybeJiraId.map(E.map(fromJiraToGenericTicket));
   } else {
-    return [E.left(new Error("No Pivotal stories found"))];
+    return [E.left(new Error("No Jira ticket found"))];
   }
 };

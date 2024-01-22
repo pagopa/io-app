@@ -1,42 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require("fs-extra");
-const Pivotal = require("pivotaljs");
-const pivotal = new Pivotal();
 
 const jiraTicketBaseUrl = "https://pagopa.atlassian.net/browse/";
-
-/**
- * Skip the use of API to find the story url if the url is already retrieved (contains pivotaltracker.com)
- * or the id length is < 9 (not a pivotal id)
- * @param id
- * @param url
- * @return {*|boolean}
- */
-function skipStoryCheck(id, url) {
-  return url.includes("pivotaltracker.com") || id.length < 9;
-}
-
-async function replacePivotalUrl(match, storyId, url) {
-  const sameUrl = `[${storyId}](${url})`;
-  try {
-    // avoid to use the api if story is already linked to pivotal
-    if (skipStoryCheck(storyId, url)) {
-      return sameUrl;
-    }
-    // try to get the story with the specified id
-    const story = await getStory(storyId.substr(1));
-
-    // if the story doesn't exists (eg: story deleted) remove the markdown link
-    return story.url !== undefined
-      ? `[${storyId}](${story.url})`
-      : `${storyId}`;
-  } catch (err) {
-    return sameUrl;
-  }
-}
 
 async function addJiraUrl(match, ticketKeys) {
   return `[${ticketKeys
     .split(",")
+    // eslint-disable-next-line sonarjs/no-nested-template-literals
     .map(x => `[${x}](${new URL(x, jiraTicketBaseUrl).toString()})`)}]`;
 }
 
@@ -61,8 +31,6 @@ async function addTasksUrls() {
   const rawChangelog = fs.readFileSync("CHANGELOG.md").toString("utf8");
 
   const updatedChangelog = await [
-    // Add pivotal stories url
-    replacePivotalStories,
     // Add jira ticket url
     replaceJiraStories,
     // clean closes
@@ -73,14 +41,6 @@ async function addTasksUrls() {
   );
   // write the new modified changelog
   fs.writeFileSync("CHANGELOG.md", updatedChangelog);
-}
-
-async function replacePivotalStories(content) {
-  // identify the pattern [#XXXXX](url) for markdown link
-  const pivotalTagRegex = /\[(#\d+)\]\(([a-zA-z/\d\-@:%._+~#=]+)\)/g;
-
-  // check for all the matches if is a pivotal story and update the url
-  return await replaceAsync(content, pivotalTagRegex, replacePivotalUrl);
 }
 
 /**
@@ -94,29 +54,18 @@ async function replaceAsync(str, regex, asyncFn) {
   const promises = [];
   str.replace(regex, (match, ...args) => {
     const promise = asyncFn(match, ...args);
+    // eslint-disable-next-line functional/immutable-data
     promises.push(promise);
   });
   const data = await Promise.all(promises);
+  // eslint-disable-next-line functional/immutable-data
   return str.replace(regex, () => data.shift());
 }
-
-/**
- * Wrap the getStory callback with a promise
- * @param storyId
- * @return {Promise<Pivotal.Story>}
- */
-getStory = storyId =>
-  new Promise((resolve, reject) => {
-    pivotal.getStory(storyId, (err, story) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(story);
-    });
-  });
 
 // Execute the script to find the pivotal stories and jira ticket id in order to associate
 // the right url in the changelog
 addTasksUrls()
+  // eslint-disable-next-line no-console
   .then(() => console.log("done"))
+  // eslint-disable-next-line no-console
   .catch(ex => console.log(ex));
