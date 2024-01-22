@@ -3,7 +3,6 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
@@ -386,7 +385,6 @@ export const actionTracking =
       // call mixpanel tracking only after we have initialized mixpanel with the
       // API token
       void trackAction(mixpanel)(action);
-      void trackBpdAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
       void trackCoBadgeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);
