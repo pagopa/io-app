@@ -45,7 +45,7 @@ export const walletPaymentCreateTransaction = createAsyncAction(
   "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
   "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
 )<
-  NewTransactionRequest,
+  NewTransactionRequest & { onSucces?: () => void },
   NewTransactionResponse,
   NetworkError | WalletPaymentFailure
 >();

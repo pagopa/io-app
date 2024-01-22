@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -18,11 +18,11 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { WalletPaymentConfirmContent } from "../components/WalletPaymentConfirmContent";
+import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentCreateTransaction } from "../store/actions/networking";
 import {
   walletPaymentDetailsSelector,
   walletPaymentPickedPaymentMethodSelector,
@@ -30,10 +30,8 @@ import {
   walletPaymentTransactionSelector
 } from "../store/selectors";
 import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
-import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 
 const WalletPaymentConfirmScreen = () => {
-  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
@@ -43,21 +41,12 @@ const WalletPaymentConfirmScreen = () => {
   );
   const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
-  const isTransactionLoading = pot.isLoading(transactionPot);
-  const isTransactionError = pot.isError(transactionPot);
-
   useHeaderSecondLevel({
     title: "",
     contextualHelp: emptyContextualHelp,
     faqCategories: ["payment"],
     supportRequest: true
   });
-
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(walletPaymentCreateTransaction.request({ paymentNotices: [] }));
-    }, [dispatch])
-  );
 
   const handleStartPaymentAuthorization = () =>
     pipe(
@@ -96,9 +85,8 @@ const WalletPaymentConfirmScreen = () => {
     onAuthorizationOutcome: handleAuthorizationOutcome
   });
 
-  const isLoading =
-    isTransactionLoading || isAuthUrlLoading || isPendingAuthorization;
-  const isError = isTransactionError || isAuthUrlError;
+  const isLoading = isAuthUrlLoading || isPendingAuthorization;
+  const isError = isAuthUrlError;
 
   if (isError) {
     // TODO: Failure handling (https://pagopa.atlassian.net/browse/IOBP-471)
