@@ -182,13 +182,17 @@ const WalletPaymentPickPspScreen = () => {
 
   return (
     <GradientScrollView
-      primaryActionProps={{
-        label: I18n.t("wallet.payment.psp.continueButton"),
-        accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-        onPress: handleContinue,
-        disabled: isLoading || !canContinue,
-        loading: isLoading
-      }}
+      primaryActionProps={
+        canContinue
+          ? {
+              label: I18n.t("wallet.payment.psp.continueButton"),
+              accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+              onPress: handleContinue,
+              disabled: isLoading || !canContinue,
+              loading: isLoading
+            }
+          : undefined
+      }
     >
       <SelectPspHeadingContent />
       {!isLoading && (

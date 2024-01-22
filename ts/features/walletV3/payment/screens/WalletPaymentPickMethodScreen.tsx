@@ -195,13 +195,17 @@ const WalletPaymentPickMethodScreen = () => {
 
   return (
     <GradientScrollView
-      primaryActionProps={{
-        label: I18n.t("global.buttons.continue"),
-        accessibilityLabel: I18n.t("global.buttons.continue"),
-        onPress: handleContinue,
-        disabled: isLoading || isLoadingTransaction || !canContinue,
-        loading: isLoading || isLoadingTransaction
-      }}
+      primaryActionProps={
+        canContinue
+          ? {
+              label: I18n.t("global.buttons.continue"),
+              accessibilityLabel: I18n.t("global.buttons.continue"),
+              onPress: handleContinue,
+              disabled: isLoading || isLoadingTransaction,
+              loading: isLoading || isLoadingTransaction
+            }
+          : undefined
+      }
     >
       <H2>{I18n.t("wallet.payment.methodSelection.header")}</H2>
       <VSpacer size={16} />
