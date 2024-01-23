@@ -19,7 +19,7 @@ type Props = { paymentMethod: WalletInfo };
  * - global settings (payment capability, favourite, etc.)
  */
 const WalletDetailsPaymentMethodFeatures = ({ paymentMethod }: Props) => {
-  const isMethodExpired = isPaymentMethodExpired(paymentMethod);
+  const isMethodExpired = isPaymentMethodExpired(paymentMethod.details);
   const isIdpayEnabled = useIOSelector(isIdPayEnabledSelector);
 
   if (isMethodExpired) {
