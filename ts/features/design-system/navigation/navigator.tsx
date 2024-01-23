@@ -1,5 +1,6 @@
 import {
   HeaderSecondLevel,
+  IOColors,
   IOThemeContext,
   IOThemes,
   IconButton,
@@ -103,10 +104,20 @@ export const DesignSystemNavigator = () => {
   const { isExperimental } = useIOExperimentalDesign();
   const colorScheme = useColorScheme();
 
+  const IODSNavigationLightTheme = {
+    ...IONavigationLightTheme,
+    colors: {
+      ...IONavigationLightTheme.colors,
+      primary: isExperimental ? IOColors["blueIO-500"] : IOColors.blue
+    }
+  };
+
   return (
     <ThemeProvider
       value={
-        colorScheme === "dark" ? IONavigationDarkTheme : IONavigationLightTheme
+        colorScheme === "dark"
+          ? IONavigationDarkTheme
+          : IODSNavigationLightTheme
       }
     >
       <IOThemeContext.Provider
