@@ -178,6 +178,7 @@ const CduEmailInsertScreen = (props: Props) => {
       ),
     [areSameEmails, email]
   );
+  const isButtonDisabled = !isValidEmail() && !isLoading;
 
   const continueOnPress = () => {
     Keyboard.dismiss();
@@ -191,7 +192,7 @@ const CduEmailInsertScreen = (props: Props) => {
 
   const renderFooterButtons = () => {
     const continueButtonProps = {
-      disabled: !isValidEmail() && !isLoading,
+      disabled: isButtonDisabled,
       onPress: continueOnPress,
       label: I18n.t("global.buttons.continue"),
       accessibilityLabel: I18n.t("global.buttons.continue"),
@@ -211,7 +212,15 @@ const CduEmailInsertScreen = (props: Props) => {
   };
 
   const handleOnChangeEmailText = (value: string) => {
-    setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+    if (isFirstOnBoarding) {
+      setAreSameEmails(
+        isProfileEmailAlreadyTaken
+          ? areStringsEqual(O.some(value), optionEmail, true)
+          : false
+      );
+    } else {
+      setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+    }
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
   };
 
@@ -220,10 +229,12 @@ const CduEmailInsertScreen = (props: Props) => {
     props.navigation.goBack();
   }, [props.navigation]);
 
-  useEffect(() => {
-    setAreSameEmails(false);
-    setEmail(O.some(EMPTY_EMAIL));
-  }, []);
+  useOnFirstRender(() => {
+    if (!isFirstOnBoarding) {
+      setEmail(O.some(EMPTY_EMAIL));
+      setAreSameEmails(false);
+    }
+  });
 
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // we show the modal to remind the user to validate the email.
@@ -367,7 +378,9 @@ const CduEmailInsertScreen = (props: Props) => {
                     }
                     inputProps={{
                       returnKeyType: "done",
-                      onSubmitEditing: continueOnPress,
+                      onSubmitEditing: isButtonDisabled
+                        ? undefined
+                        : continueOnPress,
                       autoCapitalize: "none",
                       keyboardType: "email-address",
                       defaultValue: pipe(
