@@ -8,8 +8,8 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
 import paymentCompleted from "../../../img/pictograms/payment-completed.png";
 import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
-import { FooterStackButton } from "../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
-import { cancelButtonProps } from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
+import { cancelButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 
 type Props = ReturnType<typeof mapStateToProps> &

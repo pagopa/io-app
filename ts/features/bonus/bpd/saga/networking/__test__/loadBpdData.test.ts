@@ -1,6 +1,6 @@
 import { testSaga } from "redux-saga-test-plan";
 import { abiSelector } from "../../../../../wallet/onboarding/store/abi";
-import { remoteReady } from "../../../model/RemoteValue";
+import { remoteReady } from "../../../../../../common/model/RemoteValue";
 import {
   bpdAllData,
   bpdLoadActivationStatus

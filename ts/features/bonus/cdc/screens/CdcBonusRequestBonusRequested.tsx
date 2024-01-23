@@ -8,9 +8,9 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import CdcRequirementsError from "../components/CdcRequirementsError";
 import { cdcEnrollUserToBonus } from "../store/actions/cdcBonusRequest";
-import { fold } from "../../bpd/model/RemoteValue";
+import { fold } from "../../../../common/model/RemoteValue";
 import CdcRequestCompleted from "../components/CdcRequestCompleted";
-import { LoadingErrorComponent } from "../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import I18n from "../../../../i18n";
 import {
   CdcBonusRequestResponse,

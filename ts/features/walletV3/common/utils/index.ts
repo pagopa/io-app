@@ -1,25 +1,20 @@
-import _ from "lodash";
-import * as O from "fp-ts/lib/Option";
 import {
   IOLogoPaymentType,
   IOPaymentLogos,
   ListItemTransactionStatusWithBadge
 } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
+import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-
-import { isExpiredDate } from "../../../../utils/dates";
+import I18n from "i18n-js";
+import _ from "lodash";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
-import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
-import {
-  TypeEnum,
-  WalletInfoDetails,
-  WalletInfoDetails1
-} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
+import { isExpiredDate } from "../../../../utils/dates";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentPspSortType } from "../../payment/types";
 
 /**
@@ -50,16 +45,15 @@ export const getBadgeTextByTransactionStatus = (
  * left if expiring date can't be evaluated
  * @param paymentMethod
  */
-export const isPaymentMethodExpired = (paymentMethod: WalletInfo): boolean => {
-  switch (paymentMethod.details?.type) {
-    case TypeEnum.PAYPAL:
-      return false;
-    case TypeEnum.CARDS:
-      const cardDetails = paymentMethod.details as WalletInfoDetails1;
-      return isExpiredDate(cardDetails.expiryDate);
-  }
-  return false;
-};
+export const isPaymentMethodExpired = (
+  details?: UIWalletInfoDetails
+): boolean =>
+  pipe(
+    details?.expiryDate,
+    O.fromNullable,
+    O.map(isExpiredDate),
+    O.getOrElse(() => false)
+  );
 
 /**
  * true if the given paymentMethod supports the given walletFunction
@@ -111,25 +105,25 @@ export const isPaymentSupported = (
 };
 
 export const getPaymentLogo = (
-  selectedMethod: WalletInfoDetails
+  details: UIWalletInfoDetails
 ): IOLogoPaymentType | undefined => {
-  switch (selectedMethod.type) {
-    case TypeEnum.CARDS:
-      const cardsType = selectedMethod as WalletInfoDetails1;
-      const { brand } = cardsType;
-      return pipe(
-        brand,
-        findFirstCaseInsensitive(IOPaymentLogos),
-        O.fold(
-          () => undefined,
-          ([logoName, _]) => logoName
-        )
-      ) as IOLogoPaymentType;
-    case TypeEnum.PAYPAL:
-      return "payPal";
-    default:
-      return undefined;
+  if (details.maskedEmail !== undefined) {
+    return "payPal";
+  } else if (details.maskedNumber !== undefined) {
+    return "bancomatPay";
+  } else if (details.maskedPan !== undefined) {
+    return pipe(
+      details.brand,
+      O.fromNullable,
+      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
+      O.fold(
+        () => undefined,
+        ([logoName, _]) => logoName
+      )
+    ) as IOLogoPaymentType;
   }
+
+  return undefined;
 };
 
 export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =

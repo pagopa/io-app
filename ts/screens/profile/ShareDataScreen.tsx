@@ -2,13 +2,13 @@ import * as React from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../components/buttons/ButtonConfigurations";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
@@ -66,6 +66,7 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
   return (
     <RNavScreenWithLargeHeader
       title={I18n.t("profile.main.privacy.shareData.screen.title")}
+      titleTestID={"share-data-component-title"}
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       fixedBottomSlot={
         <SafeAreaView>

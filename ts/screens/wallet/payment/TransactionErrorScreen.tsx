@@ -22,8 +22,8 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../../features/bonus/bonusVacanze/components/buttons/FooterStackButtons";
+} from "../../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../../components/buttons/FooterStackButtons";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart

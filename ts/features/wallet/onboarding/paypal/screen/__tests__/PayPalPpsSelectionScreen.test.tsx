@@ -2,7 +2,7 @@ import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import PayPalPpsSelectionScreen from "../PayPalPspSelectionScreen";
 import I18n from "../../../../../../i18n";
@@ -89,7 +89,7 @@ const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       PayPalPpsSelectionScreen,
       "N/A",
       {},

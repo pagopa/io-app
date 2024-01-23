@@ -14,7 +14,7 @@ import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { withBase64Uri } from "../../../../utils/image";
-import { cancelButtonProps } from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { EUCovidCertParamsList } from "../../navigation/params";
 
 export type EuCovidCertQrCodeFullScreenNavigationParams = Readonly<{

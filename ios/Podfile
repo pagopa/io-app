@@ -1,7 +1,15 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+require_relative '../node_modules/react-native-permissions/scripts/setup'
+
 platform :ios, '12.4'
 install! 'cocoapods', :deterministic_uuids => false
+
+# Required by react-native-permissions
+# https://github.com/zoontek/react-native-permissions?tab=readme-ov-file#ios
+setup_permissions([
+  'PhotoLibrary', # Required for Gallery read permission
+])
 
 production = ENV["PRODUCTION"] == "1"
 # This env is used to check whether

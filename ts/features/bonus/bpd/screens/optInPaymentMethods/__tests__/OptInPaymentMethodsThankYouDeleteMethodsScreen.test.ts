@@ -10,12 +10,12 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { WalletsState } from "../../../../../../store/reducers/wallet/wallets";
 import * as showToast from "../../../../../../utils/showToast";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import {
   remoteLoading,
   remoteReady,
   remoteUndefined
-} from "../../../model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import { bpdUpdateOptInStatusMethod } from "../../../store/actions/onboarding";
 import OptInPaymentMethodsThankYouDeleteMethodsScreen from "../OptInPaymentMethodsThankYouDeleteMethodsScreen";
 
@@ -163,7 +163,7 @@ describe("the OptInPaymentMethodsThankYouDeleteMethodsScreen screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     OptInPaymentMethodsThankYouDeleteMethodsScreen,
     ROUTES.MAIN,
     {},

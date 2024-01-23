@@ -4,7 +4,7 @@ import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import { WizardScreen, WizardScreenProps } from "../WizardScreen";
 
 const defaultProps: WizardScreenProps = {
@@ -39,7 +39,7 @@ describe("WizardScreen", () => {
 
 function renderComponent(props: React.ComponentProps<typeof WizardScreen>) {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => <WizardScreen {...props} />,
     ROUTES.WALLET_HOME,
     {},

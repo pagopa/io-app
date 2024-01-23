@@ -16,7 +16,7 @@ import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualH
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../../../components/buttons/ButtonConfigurations";
 import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import {
   searchUserCoBadge,

@@ -3,7 +3,7 @@ import { createStore, Store } from "redux";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import ROUTES from "../../../../../navigation/routes";
 import CdcBonusRequestSelectResidence from "../CdcBonusRequestSelectResidence";
 import I18n from "../../../../../i18n";
@@ -110,7 +110,7 @@ describe("the CdcBonusRequestSelectResidence screen", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     CdcBonusRequestSelectResidence,
     ROUTES.MAIN,
     {},

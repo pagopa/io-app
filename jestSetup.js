@@ -99,3 +99,7 @@ jest.mock("@gorhom/bottom-sheet", () => {
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 jest.mock("react-native-pdf", () => jest.fn());
+
+jest.mock("react-native-permissions", () =>
+  require("react-native-permissions/mock")
+);

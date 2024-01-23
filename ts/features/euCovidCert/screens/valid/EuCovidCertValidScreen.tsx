@@ -27,7 +27,7 @@ import { showToast } from "../../../../utils/showToast";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import {
   FlashAnimatedComponent,
   FlashAnimationState

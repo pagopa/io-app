@@ -16,12 +16,12 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../components/buttons/ButtonConfigurations";
 import { LabelledItem } from "../../../../components/LabelledItem";
 import DateTimePicker from "../../../../components/ui/DateTimePicker";
 import { GlobalState } from "../../../../store/reducers/types";
 import { possibleVoucherStateSelector } from "../store/reducers/voucherList/possibleVoucherState";
-import { isReady } from "../../bpd/model/RemoteValue";
+import { isReady } from "../../../../common/model/RemoteValue";
 import { StatoVoucherBean } from "../../../../../definitions/api_sicilia_vola/StatoVoucherBean";
 import { H4 } from "../../../../components/core/typography/H4";
 import { svSetFilter } from "../store/actions/voucherList";

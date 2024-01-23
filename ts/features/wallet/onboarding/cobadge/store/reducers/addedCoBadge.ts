@@ -6,7 +6,7 @@ import {
   RawCreditCardPaymentMethod
 } from "../../../../../../types/pagopa";
 import { enhanceCreditCard } from "../../../../../../utils/paymentMethod";
-import { getValueOrElse } from "../../../../../bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../../../../../../common/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
 import { addCoBadgeToWallet, walletAddCoBadgeStart } from "../actions";
 

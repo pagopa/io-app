@@ -17,7 +17,7 @@ import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LocalIdpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { isLoading } from "../../features/bonus/bpd/model/RemoteValue";
+import { isLoading } from "../../common/model/RemoteValue";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
   assistanceToolRemoteConfig,

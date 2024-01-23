@@ -8,7 +8,7 @@ import I18n from "../../../i18n";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
 import { GlobalState } from "../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
 import ROUTES from "../../../navigation/routes";
 import { completeOnboarding } from "../../../store/actions/onboarding";
 import NavigationService from "../../../navigation/NavigationService";
@@ -62,7 +62,7 @@ const renderComponent = () => {
   } as GlobalState);
 
   return {
-    screen: renderScreenFakeNavRedux<GlobalState>(
+    screen: renderScreenWithNavigationStoreContext<GlobalState>(
       OnboardingCompletedScreen,
       ROUTES.ONBOARDING_COMPLETED,
       {},

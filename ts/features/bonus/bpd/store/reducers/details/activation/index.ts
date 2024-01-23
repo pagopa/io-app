@@ -13,7 +13,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../../../model/RemoteValue";
+} from "../../../../../../../common/model/RemoteValue";
 import {
   ActivationStatus,
   bpdLoadActivationStatus

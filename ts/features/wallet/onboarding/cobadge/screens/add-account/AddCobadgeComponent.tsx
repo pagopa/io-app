@@ -18,7 +18,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   cancelButtonProps,
   confirmButtonProps
-} from "../../../../../bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+} from "../../../../../../components/buttons/ButtonConfigurations";
 import { abiListSelector } from "../../../store/abi";
 import { Abi } from "../../../../../../../definitions/pagopa/walletv2/Abi";
 import PreviewCoBadgeCard from "../../../../cobadge/component/PreviewCoBadgeCard";

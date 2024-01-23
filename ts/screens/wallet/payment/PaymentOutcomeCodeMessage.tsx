@@ -1,4 +1,4 @@
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
@@ -6,19 +6,21 @@ import { View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { Label } from "../../../components/core/typography/Label";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { WalletPaymentFeebackBanner } from "../../../features/walletV3/payment/components/WalletPaymentFeedbackBanner";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
+import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
 import { profileEmailSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../../../store/reducers/wallet/outcomeCode";
@@ -28,9 +30,6 @@ import {
 } from "../../../store/reducers/wallet/payment";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
-import { mixpanelTrack } from "../../../mixpanel";
-import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
@@ -45,58 +44,31 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   OwnProps;
 
-const SuccessBody = ({ emailAddress }: { emailAddress: string }) => {
-  const handleBannerPress = () => {
-    void mixpanelTrack("VOC_USER_EXIT", {
-      screen_name: "PAYMENT_OUTCOMECODE_MESSAGE"
-    });
-
-    return openAuthenticationSession(
-      "https://io.italia.it/diccilatua/ces-pagamento",
-      ""
-    );
-  };
-  const viewRef = React.useRef<View>(null);
-  return (
-    <View>
-      <Label
-        weight={"Regular"}
-        color={"bluegrey"}
-        style={{ textAlign: "center" }}
-      >
-        {I18n.t("wallet.outcomeMessage.payment.success.description1")}
-        <Label
-          weight={"Bold"}
-          color={"bluegrey"}
-        >{`\n${emailAddress}\n`}</Label>
-        {I18n.t("wallet.outcomeMessage.payment.success.description2")}
-      </Label>
-      <VSpacer size={16} />
-      <View
-        style={{
-          // required to make the banner the correct width
-          // since the InfoScreen component is reused in a lot of screens,
-          // updating that would be a breaking change
-          width: widthPercentageToDP("100%"),
-          paddingHorizontal: 32
-        }}
-      >
-        <Banner
-          color="neutral"
-          pictogramName="feedback"
-          size="big"
-          viewRef={viewRef}
-          title={I18n.t("wallet.outcomeMessage.payment.success.banner.title")}
-          content={I18n.t(
-            "wallet.outcomeMessage.payment.success.banner.content"
-          )}
-          action={I18n.t("wallet.outcomeMessage.payment.success.banner.action")}
-          onPress={handleBannerPress}
-        />
-      </View>
+const SuccessBody = ({ emailAddress }: { emailAddress: string }) => (
+  <View>
+    <Label
+      weight={"Regular"}
+      color={"bluegrey"}
+      style={{ textAlign: "center" }}
+    >
+      {I18n.t("wallet.outcomeMessage.payment.success.description1")}
+      <Label weight={"Bold"} color={"bluegrey"}>{`\n${emailAddress}\n`}</Label>
+      {I18n.t("wallet.outcomeMessage.payment.success.description2")}
+    </Label>
+    <VSpacer size={16} />
+    <View
+      style={{
+        // required to make the banner the correct width
+        // since the InfoScreen component is reused in a lot of screens,
+        // updating that would be a breaking change
+        width: widthPercentageToDP("100%"),
+        paddingHorizontal: 32
+      }}
+    >
+      <WalletPaymentFeebackBanner />
     </View>
-  );
-};
+  </View>
+);
 
 const successComponent = (emailAddress: string, amount?: string) => (
   <InfoScreenComponent
