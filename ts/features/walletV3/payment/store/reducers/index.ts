@@ -1,7 +1,10 @@
 import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import { NavigatorScreenParams } from "@react-navigation/native";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
+import { sequenceS } from "fp-ts/lib/Apply";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
@@ -28,6 +31,7 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/Wallet
 import { WalletPaymentFailure } from "../../types/failure";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import NavigationService from "../../../../../navigation/NavigationService";
+import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 
 export type WalletPaymentState = {
   rptId?: RptId;
@@ -46,8 +50,8 @@ export type WalletPaymentState = {
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
   startRoute?: {
-    routeName: string;
-    routeKey: string;
+    routeName: keyof AppParamsList;
+    routeKey: keyof NavigatorScreenParams<AppParamsList>["screen"];
   };
 };
 
@@ -69,15 +73,17 @@ const reducer = (
 ): WalletPaymentState => {
   switch (action.type) {
     case getType(walletPaymentInitState):
-      const currentRouteName = NavigationService.getCurrentRouteName();
-      const currentRouteKey = NavigationService.getCurrentRouteKey();
-      const startRoute =
-        currentRouteKey && currentRouteName
-          ? {
-              routeName: currentRouteName,
-              routeKey: currentRouteKey
-            }
-          : undefined;
+      const startRoute = pipe(
+        sequenceS(O.Monad)({
+          routeName: O.fromNullable(
+            NavigationService.getCurrentRouteName() as keyof AppParamsList
+          ),
+          routeKey: O.fromNullable(
+            NavigationService.getCurrentRouteKey() as keyof NavigatorScreenParams<AppParamsList>["screen"]
+          )
+        }),
+        O.toUndefined
+      );
       return {
         ...INITIAL_STATE,
         startRoute
