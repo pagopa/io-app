@@ -24,12 +24,12 @@ describe("Credit Card onboarding", () => {
       // Button "+ Add"
       await element(by.id("walletAddNewPaymentMethodTestId")).tap();
 
-      await waitFor(element(by.text(I18n.t("wallet.paymentMethod"))))
+      await waitFor(element(by.id("wallet.paymentMethod")))
         .toBeVisible()
         .withTimeout(e2eWaitRenderTimeout);
 
       // Add payment method listItem in bottomSheet
-      await element(by.text(I18n.t("wallet.paymentMethod"))).tap();
+      await element(by.id("wallet.paymentMethod")).tap();
 
       await waitFor(element(by.text(I18n.t("wallet.methods.card.name"))))
         .toBeVisible()
