@@ -1,10 +1,10 @@
 import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
-import { ensureLoggedIn } from "../../../../__e2e__/utils";
+import { closeKeyboard, ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
 
 describe("Credit Card onboarding", () => {
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
     await ensureLoggedIn();
   });
 
@@ -51,7 +51,7 @@ describe("Credit Card onboarding", () => {
       await element(by.id("securityCodeInputMask")).typeText("123");
 
       // Close the keyboard
-      await element(by.label("Fine")).atIndex(0).tap();
+      await closeKeyboard();
       await element(by.text(I18n.t("global.buttons.continue"))).tap();
 
       await waitFor(element(by.id("saveOrContinueButton")))
