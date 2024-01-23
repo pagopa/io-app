@@ -93,7 +93,7 @@ export const useFciAbortSignatureFlow = () => {
   };
 
   /**
-   * Overrides the present function of the bottom to show an alert instead if the experimental design is enabled.
+   * Overrides the present function of the bottom sheet to show an alert instead if the experimental design is enabled.
    * This allows us to use an alert without changing single components which use the hook.
    * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
    */
