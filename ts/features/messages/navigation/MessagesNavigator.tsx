@@ -10,42 +10,65 @@ import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { MessageDetailAttachment } from "../screens/MessageAttachment";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { DSMessageAttachment } from "../screens/DSMessageAttachment";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
 const Stack = createStackNavigator<MessagesParamsList>();
 
 export const MessagesStackNavigator = () => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
 
   return (
     <Stack.Navigator
       initialRouteName={MESSAGES_ROUTES.MESSAGE_ROUTER}
-      headerMode={"none"}
+      headerMode={"screen"}
       screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGE_ROUTER}
         component={MessageRouterScreen}
+        options={{
+          headerShown: false
+        }}
       />
 
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGE_DETAIL}
         component={MessageDetailScreen}
+        options={{
+          headerShown: false
+        }}
       />
 
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
-        component={MessageDetailAttachment}
+        component={
+          isDesignSystemEnabled ? DSMessageAttachment : MessageDetailAttachment
+        }
+        options={{
+          headerShown: isDesignSystemEnabled
+        }}
       />
 
       <Stack.Screen
         name={EUCOVIDCERT_ROUTES.MAIN}
         component={EUCovidCertStackNavigator}
+        options={{
+          headerShown: false
+        }}
       />
 
       {isPnEnabled && (
-        <Stack.Screen name={PN_ROUTES.MAIN} component={PnStackNavigator} />
+        <Stack.Screen
+          name={PN_ROUTES.MAIN}
+          component={PnStackNavigator}
+          options={{
+            headerShown: false
+          }}
+        />
       )}
     </Stack.Navigator>
   );

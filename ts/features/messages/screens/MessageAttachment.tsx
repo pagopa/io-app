@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "../../../i18n";
-import { UIAttachmentId, UIMessageId } from "../types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessageAttachmentPreview } from "../components/MessageAttachmentPreview";
 import { MessagesParamsList } from "../navigation/params";
@@ -15,11 +14,6 @@ import {
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
 } from "../analytics";
-
-export type MessageDetailAttachmentNavigationParams = Readonly<{
-  messageId: UIMessageId;
-  attachmentId: UIAttachmentId;
-}>;
 
 export const MessageDetailAttachment = (
   props: IOStackNavigationRouteProps<
