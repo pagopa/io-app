@@ -1,6 +1,7 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { H3 } from "../../../components/core/typography/H3";
@@ -29,7 +30,22 @@ export const useFciAbortSignatureFlow = () => {
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
-  const { present, bottomSheet, dismiss } = useLegacyIOBottomSheetModal(
+  const { isExperimental } = useIOExperimentalDesign();
+
+  /**
+   * Callback function to abort the signature flow.
+   */
+  const abortSignatureFlow = () => {
+    trackFciUserExit(route.name, fciEnvironment);
+    dispatch(fciEndRequest());
+    dismiss();
+  };
+
+  const {
+    present: presentBs,
+    bottomSheet,
+    dismiss
+  } = useLegacyIOBottomSheetModal(
     <View style={styles.verticalPad}>
       <Markdown>
         {I18n.t("features.fci.abort.content", { dossierTitle })}
@@ -51,15 +67,37 @@ export const useFciAbortSignatureFlow = () => {
         title: I18n.t("features.fci.abort.confirm")
       }}
       rightButton={{
-        ...errorButtonProps(() => {
-          trackFciUserExit(route.name, fciEnvironment);
-          dispatch(fciEndRequest());
-          dismiss();
-        }, I18n.t("features.fci.abort.cancel")),
+        ...errorButtonProps(
+          () => abortSignatureFlow(),
+          I18n.t("features.fci.abort.cancel")
+        ),
         onPressWithGestureHandler: true
       }}
     />
   );
+
+  /**
+   * Show an alert to confirm the abort signature flow.
+   */
+  const showAlert = () => {
+    Alert.alert("Vuoi interrompere l’operazione?", undefined, [
+      {
+        text: "Sì, interrompi",
+        onPress: () => abortSignatureFlow(),
+        style: "cancel"
+      },
+      {
+        text: "No, torna indietro"
+      }
+    ]);
+  };
+
+  /**
+   * Overrides the present function of the bottom to show an alert instead if the experimental design is enabled.
+   * This allows us to use an alert without changing single components which use the hook.
+   * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
+   */
+  const present = () => (isExperimental ? showAlert() : presentBs());
 
   return {
     dismiss,
