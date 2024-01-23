@@ -10,7 +10,7 @@ import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
 import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
-import LandingScreen from "../screens/authentication/LandingScreen";
+import { LandingScreen } from "../screens/authentication/LandingScreen";
 import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import MarkdownScreen from "../screens/development/MarkdownScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
