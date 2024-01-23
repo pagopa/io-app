@@ -80,14 +80,14 @@ export const useFciAbortSignatureFlow = () => {
    * Show an alert to confirm the abort signature flow.
    */
   const showAlert = () => {
-    Alert.alert("Vuoi interrompere l’operazione?", undefined, [
+    Alert.alert(I18n.t("features.fci.abort.alert.title"), undefined, [
       {
-        text: "Sì, interrompi",
+        text: I18n.t("features.fci.abort.alert.confirm"),
         onPress: () => abortSignatureFlow(),
         style: "cancel"
       },
       {
-        text: "No, torna indietro"
+        text: I18n.t("features.fci.abort.alert.cancel")
       }
     ]);
   };

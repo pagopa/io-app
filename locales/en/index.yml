@@ -3196,6 +3196,10 @@ features:
       content: "Do you want to quit signing **{{dossierTitle}}**?"
       cancel: "Quit signing"
       confirm: "Keep signing"
+      alert:
+        title: "Do you want to interrupt the operation?"
+        confirm: "Yes, interrupt"
+        cancel: "No, go back"
     checkService:
       title: "Turn on messages"
       content: "To receive the signed documents, you must turn on the setting that allows the service to send you messages. If you don't turn it on, you can complete the signature but you won't receive the signed documents."
