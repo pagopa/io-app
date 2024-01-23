@@ -21,6 +21,7 @@ import {
 } from "../store";
 import { walletDetailsGetInstrument } from "../store/actions";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { getDateFromExpiryDate } from "../../../../utils/dates";
 
 export type WalletDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -46,7 +47,7 @@ const generateCardComponent = (details: UIWalletInfoDetails) => {
     <PaymentCardBig
       testID="CreditCardComponent"
       cardType="CREDIT"
-      expirationDate={details.expiryDate}
+      expirationDate={getDateFromExpiryDate(details.expiryDate)}
       holderName={details.holder || ""}
       hpan={details.maskedPan || ""}
       cardIcon={details.brand?.toLowerCase() as IOLogoPaymentExtType}

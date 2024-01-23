@@ -231,8 +231,8 @@ export const isExpired = (
  * @param expiryDate
  */
 export const isExpiredDate = (expiryDate: string): boolean => {
-  const year = +expiryDate.slice(3, 5);
-  const month = +expiryDate.slice(0, 3);
+  const year = +expiryDate.slice(0, 4);
+  const month = +expiryDate.slice(4, 6);
   const now = new Date();
   const nowYearMonth = new Date(now.getFullYear(), now.getMonth() + 1);
   const cardExpirationDate = new Date(year, month);
@@ -320,3 +320,13 @@ export const toAndroidCacheTimestamp = () =>
     new Date(),
     I18n.t("global.dateFormats.shortFormat").replace(/\//g, "")
   );
+
+/**
+ * This function returns a Date object from a string in format "YYYYMM"
+ * @param expiryDate
+ */
+export const getDateFromExpiryDate = (expiryDate: string): Date => {
+  const year = +expiryDate.slice(0, 4);
+  const month = +expiryDate.slice(4, 6);
+  return new Date(year, month - 1);
+};
