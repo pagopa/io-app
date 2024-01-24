@@ -1013,6 +1013,11 @@ wallet:
       title: Vuoi pagare in app?
       content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
       cta: Scopri di più
+    error:
+      title: Si è verificato un errore
+      subtitle: Riprova o contatta l'assistenza
+      primaryButton: Chiudi
+      secondaryButton: Riprova
   wallet: Portafoglio
   refreshWallet: Aggiorna il Portafoglio
   favourite:
