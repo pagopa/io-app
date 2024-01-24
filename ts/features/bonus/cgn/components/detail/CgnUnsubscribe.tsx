@@ -11,7 +11,6 @@ import { isError, isReady } from "../../../../../common/model/RemoteValue";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { cgnDetails } from "../../store/actions/details";
 import { IOToast } from "../../../../../components/Toast";
-import { skipToastShowingDueToE2ECrash } from "./ToastPatch";
 
 const CgnUnsubscribe = () => {
   const dispatch = useIODispatch();
@@ -39,11 +38,7 @@ const CgnUnsubscribe = () => {
     if (isReady(unsubscriptionStatus)) {
       navigateBack();
       dispatch(cgnDetails.request());
-      // This is needed to prevent a crash while running E2E tests. Showing
-      // the toast causes random crashes upon calling device.reloadReactNative
-      if (!skipToastShowingDueToE2ECrash) {
-        IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
-      }
+      IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
     }
     if (isError(unsubscriptionStatus) && !isFirstRender.current) {
       IOToast.error(I18n.t("global.genericError"));
