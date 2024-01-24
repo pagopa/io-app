@@ -10,6 +10,13 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/wal
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/failure";
+import { NewSessionTokenResponse } from "../../../../../../definitions/pagopa/ecommerce/NewSessionTokenResponse";
+
+export const walletPaymentNewSessionToken = createAsyncAction(
+  "WALLET_PAYMENT_NEW_SESSION_TOKEN_REQUEST",
+  "WALLET_PAYMENT_NEW_SESSION_TOKEN_SUCCESS",
+  "WALLET_PAYMENT_NEW_SESSION_TOKEN_FAILURE"
+)<undefined, NewSessionTokenResponse, NetworkError>();
 
 export const walletPaymentGetDetails = createAsyncAction(
   "WALLET_PAYMENT_GET_DETAILS_REQUEST",
@@ -77,6 +84,7 @@ export const walletPaymentAuthorization = createAsyncAction(
 >();
 
 export type WalletPaymentNetworkingActions =
+  | ActionType<typeof walletPaymentNewSessionToken>
   | ActionType<typeof walletPaymentGetDetails>
   | ActionType<typeof walletPaymentGetAllMethods>
   | ActionType<typeof walletPaymentGetUserWallets>
