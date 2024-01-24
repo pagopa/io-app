@@ -4,7 +4,7 @@ import { ensureLoggedIn } from "../../../__e2e__/utils";
 
 describe("Messages Screen", () => {
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
     await ensureLoggedIn();
   });
 

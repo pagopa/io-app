@@ -2,16 +2,17 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+import {
+  LanguageEnum,
+  RequestAuthorizationRequest
+} from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
+import { WalletDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletDetailType";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentAuthorization } from "../../store/actions/networking";
-import {
-  LanguageEnum,
-  RequestAuthorizationRequest
-} from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorization"],
@@ -23,7 +24,10 @@ export function* handleWalletPaymentAuthorization(
     isAllCCP: true,
     language: LanguageEnum.IT,
     pspId: action.payload.pspId,
-    walletId: action.payload.walletId
+    details: {
+      detailType: WalletDetailTypeEnum.wallet,
+      walletId: action.payload.walletId
+    }
   };
   const requestTransactionAuthorizationRequest =
     requestTransactionAuthorization({
