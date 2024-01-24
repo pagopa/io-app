@@ -1,7 +1,10 @@
 import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import { NavigatorScreenParams } from "@react-navigation/native";
 import { getType } from "typesafe-actions";
+import { pipe } from "fp-ts/lib/function";
+import { sequenceS } from "fp-ts/lib/Apply";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
@@ -27,6 +30,8 @@ import {
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletPaymentFailure } from "../../types/failure";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import NavigationService from "../../../../../navigation/NavigationService";
+import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 
 export type WalletPaymentState = {
   rptId?: RptId;
@@ -44,6 +49,10 @@ export type WalletPaymentState = {
     NetworkError | WalletPaymentFailure
   >;
   authorizationUrl: pot.Pot<string, NetworkError>;
+  startRoute?: {
+    routeName: keyof AppParamsList;
+    routeKey: keyof NavigatorScreenParams<AppParamsList>["screen"];
+  };
 };
 
 const INITIAL_STATE: WalletPaymentState = {
@@ -64,7 +73,21 @@ const reducer = (
 ): WalletPaymentState => {
   switch (action.type) {
     case getType(walletPaymentInitState):
-      return INITIAL_STATE;
+      const startRoute = pipe(
+        sequenceS(O.Monad)({
+          routeName: O.fromNullable(
+            NavigationService.getCurrentRouteName() as keyof AppParamsList
+          ),
+          routeKey: O.fromNullable(
+            NavigationService.getCurrentRouteKey() as keyof NavigatorScreenParams<AppParamsList>["screen"]
+          )
+        }),
+        O.toUndefined
+      );
+      return {
+        ...INITIAL_STATE,
+        startRoute
+      };
 
     // Payment verification and details
     case getType(walletPaymentGetDetails.request):
