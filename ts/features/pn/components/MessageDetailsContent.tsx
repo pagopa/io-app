@@ -15,7 +15,7 @@ export const MessageDetailsContent = ({
   return (
     <ContentWrapper>
       <VSpacer size={16} />
-      <Body>{abstract}</Body>
+      <Body color="grey-850">{abstract}</Body>
     </ContentWrapper>
   );
 };
