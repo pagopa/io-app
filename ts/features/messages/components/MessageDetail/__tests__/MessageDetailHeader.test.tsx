@@ -4,7 +4,7 @@ import { MessageDetailHeader } from "../MessageDetailHeader";
 
 const defaultProps: ComponentProps<typeof MessageDetailHeader> = {
   subject: "Subject",
-  createdAt: new Date()
+  createdAt: new Date("2021-10-18T16:00:30.541Z")
 };
 
 describe("MessageDetailHeader component", () => {
