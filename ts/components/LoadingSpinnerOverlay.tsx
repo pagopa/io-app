@@ -35,7 +35,7 @@ const LoadingSpinnerOverlay = ({
   children,
   isLoading,
   loadingCaption,
-  loadingOpacity,
+  loadingOpacity = 0.7,
   onCancel
 }: Props) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
