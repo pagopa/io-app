@@ -11,7 +11,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { WithTestID } from "../../../types/WithTestID";
 import {
   addTicketCustomField,
@@ -136,17 +135,15 @@ const ErrorComponent = (props: Props) => {
   };
 
   return (
-    <BaseScreenComponent goBack={false}>
-      <SafeAreaView style={IOStyles.flex} testID={props.testID}>
-        <InfoScreenComponent
-          image={<Pictogram name={props.pictogram} />}
-          title={props.title}
-          body={props.subTitle}
-          email={props.email}
-        />
-        <View style={IOStyles.horizontalContentPadding}>{footerButtons()}</View>
-      </SafeAreaView>
-    </BaseScreenComponent>
+    <SafeAreaView style={IOStyles.flex} testID={props.testID}>
+      <InfoScreenComponent
+        image={<Pictogram name={props.pictogram} />}
+        title={props.title}
+        body={props.subTitle}
+        email={props.email}
+      />
+      <View style={IOStyles.horizontalContentPadding}>{footerButtons()}</View>
+    </SafeAreaView>
   );
 };
 
