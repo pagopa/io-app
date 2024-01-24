@@ -70,6 +70,9 @@ export const requestMediaPermission = async () => {
           : RNPermissions.PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
       );
     case "ios":
+      if (parseInt(Platform.Version, 10) >= 17) {
+        return true;
+      }
       return requestIOPermission(RNPermissions.PERMISSIONS.IOS.PHOTO_LIBRARY);
     default:
       return false;
