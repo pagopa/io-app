@@ -212,6 +212,15 @@ const CduEmailInsertScreen = (props: Props) => {
   };
 
   const handleOnChangeEmailText = (value: string) => {
+    /**
+     * SCENARIOS:
+     * 1. first onboarding and email already taken => if the CIT write
+     *    the same email as the one he has to modify, he is blocked
+     * 2. first onboarding and NOT email already taken => the email
+     *    with which he/she is logged in is valid and the CIT is not blocked
+     * 3. Not first onboarding => if the CIT write the same email as the one
+     *    he already send, he is blocked.
+     */
     if (isFirstOnBoarding) {
       setAreSameEmails(
         isProfileEmailAlreadyTaken
@@ -378,6 +387,8 @@ const CduEmailInsertScreen = (props: Props) => {
                     }
                     inputProps={{
                       returnKeyType: "done",
+                      // continueOnPress is called by pressing the
+                      // button on the keyboard only if the mail is valid
                       onSubmitEditing: isButtonDisabled
                         ? undefined
                         : continueOnPress,
