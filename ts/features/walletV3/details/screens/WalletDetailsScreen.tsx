@@ -1,12 +1,11 @@
 import * as React from "react";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
 
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import { useIOSelector } from "../../../../store/hooks";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
@@ -22,6 +21,12 @@ import {
 import { walletDetailsGetInstrument } from "../store/actions";
 import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { getDateFromExpiryDate } from "../../../../utils/dates";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../../i18n";
+import {
+  AppParamsList,
+  IOStackNavigationProp
+} from "../../../../navigation/params/AppParamsList";
 
 export type WalletDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -71,6 +76,7 @@ const generateCardHeaderTitle = (details?: UIWalletInfoDetails) => {
  */
 const WalletDetailsScreen = () => {
   const route = useRoute<WalletDetailsScreenRouteProps>();
+  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useDispatch();
   const { walletId } = route.params;
   const walletDetails = useIOSelector(walletDetailsInstrumentSelector);
@@ -81,6 +87,30 @@ const WalletDetailsScreen = () => {
   const areIdpayInitiativesLoading = useIOSelector(
     idPayAreInitiativesFromInstrumentLoadingSelector
   );
+
+  const WalletDetailsGenericFailure = () => (
+    <OperationResultScreenContent
+      title={I18n.t("wallet.methodDetails.error.title")}
+      subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
+      pictogram="umbrellaNew"
+      action={{
+        label: I18n.t("wallet.methodDetails.error.primaryButton"),
+        accessibilityLabel: I18n.t("wallet.methodDetails.error.primaryButton"),
+        onPress: () => navigation.pop()
+      }}
+      secondaryAction={{
+        label: I18n.t("wallet.methodDetails.error.secondaryButton"),
+        accessibilityLabel: I18n.t(
+          "wallet.methodDetails.error.secondaryButton"
+        ),
+        onPress: handleOnRetry
+      }}
+    />
+  );
+
+  const handleOnRetry = () => {
+    dispatch(walletDetailsGetInstrument.request({ walletId }));
+  };
 
   React.useEffect(() => {
     dispatch(walletDetailsGetInstrument.request({ walletId }));
@@ -122,7 +152,7 @@ const WalletDetailsScreen = () => {
       </LoadingSpinnerOverlay>
     );
   } else if (isErrorWalletDetails) {
-    return <WorkunitGenericFailure />;
+    return <WalletDetailsGenericFailure />;
   }
   return null;
 };
