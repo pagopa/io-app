@@ -1,24 +1,37 @@
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
+import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { getSortedPspList } from "../../../common/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentCalculateFees } from "../../store/actions/networking";
-import { getSortedPspList } from "../../../common/utils";
-import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { walletPaymentPickPsp } from "../../store/actions/orchestration";
-import { walletPaymentPickedPspSelector } from "../../store/selectors";
+import {
+  selectWalletPaymentSessionToken,
+  walletPaymentPickedPspSelector
+} from "../../store/selectors";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
   action: ActionType<(typeof walletPaymentCalculateFees)["request"]>
 ) {
+  const sessionToken = yield* select(selectWalletPaymentSessionToken);
+
+  if (sessionToken === undefined) {
+    yield* put(
+      walletPaymentCalculateFees.failure({
+        ...getGenericError(new Error(`Missing session token`))
+      })
+    );
+    return;
+  }
+
   const requestBody: CalculateFeeRequest = {
     paymentAmount: action.payload.paymentAmountInCents,
     walletId: action.payload.walletId
@@ -26,7 +39,8 @@ export function* handleWalletPaymentCalculateFees(
 
   const calculateFeesRequest = calculateFees({
     id: action.payload.walletId,
-    body: requestBody
+    body: requestBody,
+    eCommerceSessionToken: sessionToken
   });
 
   try {
