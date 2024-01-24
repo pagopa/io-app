@@ -25,6 +25,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -36,6 +37,8 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 >;
 
 const WalletPaymentOutcomeScreen = () => {
+  useAvoidHardwareBackButton();
+
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
 
@@ -46,6 +49,18 @@ const WalletPaymentOutcomeScreen = () => {
   const supportModal = usePaymentFailureSupportModal({
     outcome
   });
+
+  // This is a workaround to disable swipe back gesture on this screen
+  // .. it should be removed as soon as the migration to react-navigation v6 is completed
+  React.useEffect(() => {
+    // Disable swipe
+    navigation.setOptions({ gestureEnabled: false });
+    navigation.getParent()?.setOptions({ gestureEnabled: false });
+    // Re-enable swipe after going back
+    return () => {
+      navigation.getParent()?.setOptions({ gestureEnabled: true });
+    };
+  }, [navigation]);
 
   const paymentAmount = pipe(
     paymentDetailsPot,
