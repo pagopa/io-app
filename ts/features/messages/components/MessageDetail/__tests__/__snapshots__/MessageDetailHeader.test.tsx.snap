@@ -75,7 +75,7 @@ exports[`MessageDetailHeader component should match the snapshot with default pr
     }
     weight="Bold"
   >
-    24 Jan 2024, 10:51
+    24 Jan 2024, 11:01
   </Text>
   <View
     style={

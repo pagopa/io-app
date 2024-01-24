@@ -17,7 +17,7 @@ exports[`MessageDetailsContent component should match the snapshot when abstract
   />
   <Text
     allowFontScaling={false}
-    color="bluegrey"
+    color="grey-850"
     defaultColor="bluegrey"
     defaultWeight="Regular"
     font="TitilliumWeb"
@@ -34,7 +34,7 @@ exports[`MessageDetailsContent component should match the snapshot when abstract
           "lineHeight": 24,
         },
         Object {
-          "color": "#475A6D",
+          "color": "#2B2E38",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
           "fontWeight": "400",
