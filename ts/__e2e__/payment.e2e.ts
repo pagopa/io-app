@@ -1,11 +1,11 @@
 import I18n from "../i18n";
 import { formatNumberCentsToAmount } from "../utils/stringBuilder";
 import { e2eWaitRenderTimeout } from "./config";
-import { ensureLoggedIn } from "./utils";
+import { closeKeyboard, ensureLoggedIn } from "./utils";
 
 describe("Payment", () => {
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
     await ensureLoggedIn();
   });
 
@@ -106,8 +106,9 @@ describe("Payment", () => {
 
       await element(matchNoticeCodeInput).typeText("123123123123123123");
       await element(by.id("EntityCodeInputMask")).typeText("12345678901");
+
       // Close the keyboard
-      await element(by.label("Fine")).atIndex(0).tap();
+      await closeKeyboard();
 
       await element(by.text(I18n.t("global.buttons.continue"))).tap();
 

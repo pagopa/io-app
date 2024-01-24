@@ -48,6 +48,7 @@ export const useWalletHomeHeaderBottomSheet = (): IOBottomSheetModal => {
   const navigationListItems: ReadonlyArray<NavigationListItem> = [
     {
       title: I18n.t("wallet.paymentMethod"),
+      testId: "wallet.paymentMethod",
       subtitle: I18n.t("wallet.paymentMethodDesc"),
       onPress: () =>
         navigateToWalletAddPaymentMethod({

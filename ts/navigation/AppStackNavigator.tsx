@@ -1,5 +1,9 @@
 /* eslint-disable functional/immutable-data */
-import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
+import {
+  LinkingOptions,
+  NavigationContainer,
+  NavigationContainerProps
+} from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
@@ -30,9 +34,21 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
-import NavigationService, { navigationRef } from "./NavigationService";
+import NavigationService, {
+  navigationRef,
+  setMainNavigatorReady
+} from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import ROUTES from "./routes";
+
+type OnStateChangeStateType = Parameters<
+  NonNullable<NavigationContainerProps["onStateChange"]>
+>[0];
+const isMainNavigatorReady = (state: OnStateChangeStateType) =>
+  state &&
+  state.routes &&
+  state.routes.length > 0 &&
+  state.routes[0].name === ROUTES.MAIN;
 
 export const AppStackNavigator = (): React.ReactElement => {
   // This hook is used since we are in a child of the Context Provider
@@ -130,7 +146,10 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
-      onStateChange={async () => {
+      onStateChange={async state => {
+        if (isMainNavigatorReady(state)) {
+          setMainNavigatorReady();
+        }
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
         if (currentRouteName !== undefined) {
