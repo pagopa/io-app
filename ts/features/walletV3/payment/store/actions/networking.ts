@@ -35,7 +35,7 @@ export const walletPaymentCalculateFees = createAsyncAction(
   "WALLET_PAYMET_CALCULATE_FEES_SUCCESS",
   "WALLET_PAYMET_CALCULATE_FEES_FAILURE"
 )<
-  CalculateFeeRequest & { walletId: string },
+  CalculateFeeRequest & { paymentMethodId: string },
   CalculateFeeResponse,
   NetworkError
 >();

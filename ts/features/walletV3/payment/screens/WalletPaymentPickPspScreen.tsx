@@ -99,7 +99,7 @@ const WalletPaymentPickPspScreen = () => {
         O.map(([paymentAmountInCents, transferList, selectedWallet]) => {
           dispatch(
             walletPaymentCalculateFees.request({
-              walletId: selectedWallet.walletId,
+              paymentMethodId: selectedWallet.paymentMethodId,
               paymentAmount: paymentAmountInCents,
               transferList
             })

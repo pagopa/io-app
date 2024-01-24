@@ -18,9 +18,9 @@ export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
   action: ActionType<(typeof walletPaymentCalculateFees)["request"]>
 ) {
-  const { walletId, ...body } = action.payload;
+  const { paymentMethodId, ...body } = action.payload;
   const calculateFeesRequest = calculateFees({
-    id: walletId,
+    id: paymentMethodId,
     body
   });
 
