@@ -117,3 +117,13 @@ export const ensureLoggedIn = async () => {
     await loginWithSPID();
   }
 };
+
+export const closeKeyboard = async () => {
+  // Sometimes the device ignores the locale set by the detox setup
+  // In such case we can try to close the keyboard using the english translation
+  try {
+    await element(by.label("Fine")).atIndex(0).tap();
+  } catch (e) {
+    await element(by.label("Done")).atIndex(0).tap();
+  }
+};
