@@ -2,8 +2,7 @@ import React, { useCallback, useState } from "react";
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { FooterWithButtons, Pictogram } from "@pagopa/io-app-design-system";
-import { DSInfoScreenComponent } from "../designsystem/DSInfoScreenComponent";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { downloadedMessageAttachmentSelector } from "../store/reducers/downloads";
@@ -28,6 +27,7 @@ import {
   trackPNAttachmentSaveShare,
   trackPNAttachmentShare
 } from "../../pn/analytics";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
 export type DSMessageAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -208,10 +208,10 @@ export const DSMessageAttachment = (
 
   if (!attachmentOpt || !downloadPathOpt) {
     return (
-      <DSInfoScreenComponent
-        image={<Pictogram name="umbrellaNew" />}
+      <OperationResultScreenContent
+        pictogram={"umbrellaNew"}
         title={I18n.t("global.genericError")}
-        body={I18n.t("messageDetails.submitBugText")}
+        subtitle={I18n.t("messageDetails.submitBugText")}
       />
     );
   }
@@ -220,10 +220,10 @@ export const DSMessageAttachment = (
   return (
     <>
       {isPDFRenderingError ? (
-        <DSInfoScreenComponent
-          image={<Pictogram name="umbrellaNew" />}
+        <OperationResultScreenContent
+          pictogram={"umbrellaNew"}
           title={I18n.t("messagePDFPreview.errors.previewing.title")}
-          body={I18n.t("messagePDFPreview.errors.previewing.body")}
+          subtitle={I18n.t("messagePDFPreview.errors.previewing.body")}
         />
       ) : (
         <DSPdfViewer

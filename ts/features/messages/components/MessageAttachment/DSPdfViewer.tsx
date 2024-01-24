@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import { IOColors } from "@pagopa/io-app-design-system";
-import { DSLoadingSpinnerOverlay } from "../../designsystem/DSLoadingSpinnerOverlay";
 import I18n from "../../../../i18n";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -27,7 +27,7 @@ export const DSPdfViewer = ({
 }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   return (
-    <DSLoadingSpinnerOverlay
+    <LoadingSpinnerOverlay
       isLoading={isLoading}
       loadingCaption={I18n.t("messageDetails.attachments.loading")}
     >
@@ -44,6 +44,6 @@ export const DSPdfViewer = ({
           onError?.(...args);
         }}
       />
-    </DSLoadingSpinnerOverlay>
+    </LoadingSpinnerOverlay>
   );
 };
