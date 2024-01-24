@@ -1,31 +1,21 @@
 import React from "react";
-import { View, ViewProps, StyleSheet } from "react-native";
-import { Body } from "../../../components/core/typography/Body";
-import { H1 } from "../../../components/core/typography/H1";
-import { H2 } from "../../../components/core/typography/H2";
-import { PNMessage } from "../store/types/types";
-import customVariables from "../../../theme/variables";
-import { isStringNullyOrEmpty } from "../../../utils/strings";
+import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 
-const styles = StyleSheet.create({
-  subject: {
-    marginTop: customVariables.spacerExtrasmallHeight
-  },
-  abstract: {
-    marginTop: customVariables.spacerExtrasmallHeight
+type MessageDetailsContentProps = {
+  abstract: string | undefined;
+};
+
+export const MessageDetailsContent = ({
+  abstract
+}: MessageDetailsContentProps) => {
+  if (abstract === undefined) {
+    return null;
   }
-});
 
-type Props = Readonly<{ message: PNMessage }> & ViewProps;
-
-export const MessageDetailsContent = (props: Props) => (
-  <View style={props.style}>
-    {!isStringNullyOrEmpty(props.message.senderDenomination) && (
-      <H2>{props.message.senderDenomination}</H2>
-    )}
-    <H1 style={styles.subject}>{props.message.subject}</H1>
-    {!isStringNullyOrEmpty(props.message.abstract) && (
-      <Body style={styles.abstract}>{props.message.abstract}</Body>
-    )}
-  </View>
-);
+  return (
+    <ContentWrapper>
+      <VSpacer size={16} />
+      <Body>{abstract}</Body>
+    </ContentWrapper>
+  );
+};
