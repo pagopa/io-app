@@ -32,7 +32,6 @@ import {
 } from "../config";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { watchBonusSaga } from "../features/bonus/common/store/sagas/bonusSaga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
@@ -527,7 +526,6 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for cgn actions
-  yield* fork(watchBonusSaga, sessionToken);
   yield* fork(watchBonusCgnSaga, sessionToken);
 
   if (svEnabled) {
