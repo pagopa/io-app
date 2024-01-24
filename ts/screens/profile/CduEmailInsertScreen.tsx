@@ -214,10 +214,11 @@ const CduEmailInsertScreen = (props: Props) => {
   const handleOnChangeEmailText = (value: string) => {
     /**
      * SCENARIOS:
-     * 1. first onboarding and email already taken => if the CIT write
-     *    the same email as the one he has to modify, he is blocked
-     * 2. first onboarding and NOT email already taken => the email
-     *    with which he/she is logged in is valid and the CIT is not blocked
+     * 1. first onboarding and email already taken => if the CIT writes
+     *    the same email as the one he has to modify, he is blocked.
+     * 2. first onboarding and NOT email already taken => in this case,
+     *    the CIT does not need his email to be compared with another one,
+     *    so the areSameEmails will always be false.
      * 3. Not first onboarding => if the CIT write the same email as the one
      *    he already send, he is blocked.
      */
