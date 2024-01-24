@@ -220,7 +220,7 @@ const CduEmailInsertScreen = (props: Props) => {
      *    the CIT does not need his email to be compared with another one,
      *    so the areSameEmails will always be false.
      * 3. Not first onboarding => if the CIT write the same email as the one
-     *    he already send, he is blocked.
+     *    he already has, he is blocked.
      */
     if (isFirstOnBoarding) {
       setAreSameEmails(
