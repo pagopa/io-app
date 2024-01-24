@@ -11,7 +11,8 @@ export const requestIOPermission = async (
   permission: RNPermissions.Permission,
   rationale?: RNPermissions.Rationale
 ): Promise<boolean> => {
-  if (await checkIOPermission(permission)) {
+  const checkResult = await checkIOPermission(permission);
+  if (checkResult) {
     return true;
   }
 
