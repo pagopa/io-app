@@ -11,8 +11,10 @@ import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculat
 import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 
 describe("Test handleWalletPaymentCalculateFees saga", () => {
-  const calculateFeesPayload: CalculateFeeRequest & { walletId: string } = {
-    walletId: "1234",
+  const calculateFeesPayload: CalculateFeeRequest & {
+    paymentMethodId: string;
+  } = {
+    paymentMethodId: "1234",
     paymentAmount: 1234
   };
 
