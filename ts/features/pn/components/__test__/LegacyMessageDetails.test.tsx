@@ -127,6 +127,7 @@ describe("LegacyMessageDetails component", () => {
 const generateTestMessageId = () => "00000000000000000000000004" as UIMessageId;
 const generateTestFiscalCode = () => "AAABBB00A00A000A";
 const generatePnMessage = (): PNMessage => ({
+  created_at: new Date(),
   iun: "731143-7-0317-8200-0",
   subject: "This is the message subject",
   senderDenomination: "Sender denomination",

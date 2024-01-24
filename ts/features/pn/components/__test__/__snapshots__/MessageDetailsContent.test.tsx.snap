@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageDetailsContent component should match the snapshot when abstract is defined 1`] = `
+<View
+  style={
+    Object {
+      "paddingHorizontal": 24,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "height": 16,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    weight="Regular"
+  >
+    abstract
+  </Text>
+</View>
+`;
