@@ -30,6 +30,9 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ComponentProps } from "../../../../types/react";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
+import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentCreateTransaction,
@@ -44,9 +47,7 @@ import {
   walletPaymentTransactionSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
-import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
-import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 type SavedMethodState = {
   kind: "saved";
@@ -92,6 +93,11 @@ const WalletPaymentPickMethodScreen = () => {
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
   const isLoadingTransaction = pot.isLoading(transactionPot);
 
+  const isError =
+    pot.isError(transactionPot) ||
+    pot.isError(paymentMethodsPot) ||
+    pot.isError(userWalletsPots);
+
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
     React.useState<boolean>(false);
   const [selectedMethod, setSelectedMethod] =
@@ -103,6 +109,17 @@ const WalletPaymentPickMethodScreen = () => {
       dispatch(walletPaymentGetUserWallets.request());
     }, [dispatch])
   );
+
+  React.useEffect(() => {
+    if (isError) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+        params: {
+          outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
+        }
+      });
+    }
+  }, [isError, navigation]);
 
   const paymentAmount = pot.getOrElse(paymentAmountPot, undefined);
   const canContinue = selectedMethod !== undefined;
