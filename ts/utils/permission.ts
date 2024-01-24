@@ -16,7 +16,7 @@ export const requestIOPermission = async (
   }
 
   const requestStatus = await RNPermissions.request(permission, rationale);
-  return requestStatus === "granted" || requestStatus === "limited";
+  return requestStatus === "granted";
 };
 
 /**
@@ -33,7 +33,7 @@ export const checkIOPermission = async (
   // (such as PHOTO_LIBRARY_ADD_ONLY is), then you should not use this function to
   // check nor to request such permission
   const checkResult = await RNPermissions.check(permission);
-  return checkResult === "granted" || checkResult === "limited";
+  return checkResult === "granted";
 };
 
 /**
@@ -68,11 +68,6 @@ export const requestMediaPermission = async () => {
           ? RNPermissions.PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
           : RNPermissions.PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
       );
-    case "ios":
-      if (parseInt(Platform.Version, 10) >= 17) {
-        return true;
-      }
-      return requestIOPermission(RNPermissions.PERMISSIONS.IOS.PHOTO_LIBRARY);
     default:
       return false;
   }
