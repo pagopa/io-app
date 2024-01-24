@@ -178,7 +178,7 @@ const CduEmailInsertScreen = (props: Props) => {
       ),
     [areSameEmails, email]
   );
-  const isButtonDisabled = !isValidEmail() && !isLoading;
+  const isContinueButtonDisabled = !isValidEmail() && !isLoading;
 
   const continueOnPress = () => {
     Keyboard.dismiss();
@@ -192,7 +192,7 @@ const CduEmailInsertScreen = (props: Props) => {
 
   const renderFooterButtons = () => {
     const continueButtonProps = {
-      disabled: isButtonDisabled,
+      disabled: isContinueButtonDisabled,
       onPress: continueOnPress,
       label: I18n.t("global.buttons.continue"),
       accessibilityLabel: I18n.t("global.buttons.continue"),
@@ -390,7 +390,7 @@ const CduEmailInsertScreen = (props: Props) => {
                       returnKeyType: "done",
                       // continueOnPress is called by pressing the
                       // button on the keyboard only if the mail is valid
-                      onSubmitEditing: isButtonDisabled
+                      onSubmitEditing: isContinueButtonDisabled
                         ? undefined
                         : continueOnPress,
                       autoCapitalize: "none",
