@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.51.0-rc.1",
+  "version": "2.51.0-rc.3",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.29/definitions.yml",
@@ -28,7 +28,7 @@
   "lollipop_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/api_lollipop_first_consumer.yaml",
   "fast_login_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.25.1-RELEASE/openapi/generated/api_fast_login.yaml",
   "pagopa_api_walletv3": "https://raw.githubusercontent.com/pagopa/pagopa-infra/740e7dcc5ea2ea19639316fea6797bbd504dd0ae/src/domains/wallet-app/api/payment-wallet/v1/_openapi.json.tpl",
-  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/5190135ac34791cf66c1986735d4134bcaf4096f/src/domains/ecommerce-app/api/ecommerce-io/v1/_openapi.json.tpl",
+  "pagopa_api_ecommerce": "https://raw.githubusercontent.com/pagopa/pagopa-infra/a5299db39de86a951d353fdc2bfed48188c0c125/src/domains/ecommerce-app/api/ecommerce-io/v1/_openapi.json.tpl",
   "private": true,
   "scripts": {
     "start": "react-native start",

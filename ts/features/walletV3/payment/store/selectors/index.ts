@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { Transfer } from "../../../../../../definitions/pagopa/ecommerce/Transfer";
 
 const selectWalletPayment = (state: GlobalState) =>
   state.features.wallet.payment;
@@ -72,7 +73,23 @@ export const walletPaymentTransactionSelector = createSelector(
   state => state.transaction
 );
 
+export const walletPaymentTransactionTransferListSelector = createSelector(
+  walletPaymentTransactionSelector,
+  transaction =>
+    pot.map(transaction, t =>
+      t.payments.reduce(
+        (a, p) => [...a, ...(p.transferList ?? [])],
+        [] as ReadonlyArray<Transfer>
+      )
+    )
+);
+
 export const walletPaymentAuthorizationUrlSelector = createSelector(
   selectWalletPayment,
   state => state.authorizationUrl
+);
+
+export const walletPaymentStartRouteSelector = createSelector(
+  selectWalletPayment,
+  state => state.startRoute
 );
