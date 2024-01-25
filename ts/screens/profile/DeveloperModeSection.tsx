@@ -32,6 +32,7 @@ import {
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   sessionTokenSelector,
   walletTokenSelector
@@ -48,6 +49,7 @@ import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
+
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -137,7 +139,7 @@ const DeveloperActionsSection = () => {
           <VSpacer size={8} />
           <ButtonSolid
             fullWidth
-            color="danger"
+            color="primary"
             label={I18n.t("profile.main.dumpAsyncStorage")}
             onPress={() => {
               /* eslint-disable no-console */
