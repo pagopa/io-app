@@ -178,6 +178,7 @@ const CduEmailInsertScreen = (props: Props) => {
       ),
     [areSameEmails, email]
   );
+  const isContinueButtonDisabled = !isValidEmail() && !isLoading;
 
   const continueOnPress = () => {
     Keyboard.dismiss();
@@ -191,7 +192,7 @@ const CduEmailInsertScreen = (props: Props) => {
 
   const renderFooterButtons = () => {
     const continueButtonProps = {
-      disabled: !isValidEmail() && !isLoading,
+      disabled: isContinueButtonDisabled,
       onPress: continueOnPress,
       label: I18n.t("global.buttons.continue"),
       accessibilityLabel: I18n.t("global.buttons.continue"),
@@ -211,7 +212,25 @@ const CduEmailInsertScreen = (props: Props) => {
   };
 
   const handleOnChangeEmailText = (value: string) => {
-    setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+    /**
+     * SCENARIOS:
+     * 1. first onboarding and email already taken => if the CIT writes
+     *    the same email as the one he has to modify, he is blocked.
+     * 2. first onboarding and NOT email already taken => in this case,
+     *    the CIT does not need his email to be compared with another one,
+     *    so the areSameEmails will always be false.
+     * 3. Not first onboarding => if the CIT write the same email as the one
+     *    he already has, he is blocked.
+     */
+    if (isFirstOnBoarding) {
+      setAreSameEmails(
+        isProfileEmailAlreadyTaken
+          ? areStringsEqual(O.some(value), optionEmail, true)
+          : false
+      );
+    } else {
+      setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+    }
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
   };
 
@@ -220,10 +239,12 @@ const CduEmailInsertScreen = (props: Props) => {
     props.navigation.goBack();
   }, [props.navigation]);
 
-  useEffect(() => {
-    setAreSameEmails(false);
-    setEmail(O.some(EMPTY_EMAIL));
-  }, []);
+  useOnFirstRender(() => {
+    if (!isFirstOnBoarding) {
+      setEmail(O.some(EMPTY_EMAIL));
+      setAreSameEmails(false);
+    }
+  });
 
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // we show the modal to remind the user to validate the email.
@@ -367,7 +388,11 @@ const CduEmailInsertScreen = (props: Props) => {
                     }
                     inputProps={{
                       returnKeyType: "done",
-                      onSubmitEditing: continueOnPress,
+                      // continueOnPress is called by pressing the
+                      // button on the keyboard only if the mail is valid
+                      onSubmitEditing: isContinueButtonDisabled
+                        ? undefined
+                        : continueOnPress,
                       autoCapitalize: "none",
                       keyboardType: "email-address",
                       defaultValue: pipe(
