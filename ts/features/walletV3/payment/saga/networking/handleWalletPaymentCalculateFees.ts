@@ -12,16 +12,14 @@ import { getSortedPspList } from "../../../common/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentCalculateFees } from "../../store/actions/networking";
 import { walletPaymentPickPsp } from "../../store/actions/orchestration";
-import {
-  selectWalletPaymentSessionToken,
-  walletPaymentPickedPspSelector
-} from "../../store/selectors";
+import { walletPaymentPickedPspSelector } from "../../store/selectors";
+import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
   action: ActionType<(typeof walletPaymentCalculateFees)["request"]>
 ) {
-  const sessionToken = yield* select(selectWalletPaymentSessionToken);
+  const sessionToken = yield* getOrFetchWalletSessionToken();
 
   if (sessionToken === undefined) {
     yield* put(

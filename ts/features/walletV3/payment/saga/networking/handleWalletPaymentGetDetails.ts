@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
@@ -8,19 +8,19 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentGetDetails } from "../../store/actions/networking";
-import { selectWalletPaymentSessionToken } from "../../store/selectors";
+import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfo"],
   action: ActionType<(typeof walletPaymentGetDetails)["request"]>
 ) {
-  const sessionToken = yield* select(selectWalletPaymentSessionToken);
+  const sessionToken = yield* getOrFetchWalletSessionToken();
 
   if (sessionToken === undefined) {
     yield* put(
-      walletPaymentGetDetails.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
+      walletPaymentGetDetails.failure(
+        getGenericError(new Error(`Missing session token`))
+      )
     );
     return;
   }

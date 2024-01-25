@@ -19,7 +19,7 @@ import {
   walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
-  walletPaymentGetSessionToken,
+  walletPaymentNewSessionToken,
   walletPaymentGetUserWallets
 } from "../actions/networking";
 import {
@@ -92,18 +92,18 @@ const reducer = (
         startRoute
       };
 
-    // Session token
-    case getType(walletPaymentGetSessionToken.request):
+    // eCommerce Session token
+    case getType(walletPaymentNewSessionToken.request):
       return {
         ...state,
         sessionToken: pot.toLoading(state.sessionToken)
       };
-    case getType(walletPaymentGetSessionToken.success):
+    case getType(walletPaymentNewSessionToken.success):
       return {
         ...state,
         sessionToken: pot.some(action.payload.sessionToken)
       };
-    case getType(walletPaymentGetSessionToken.failure):
+    case getType(walletPaymentNewSessionToken.failure):
       return {
         ...state,
         sessionToken: pot.toError(state.sessionToken, action.payload)
