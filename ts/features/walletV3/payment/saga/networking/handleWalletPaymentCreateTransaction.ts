@@ -34,6 +34,7 @@ export function* handleWalletPaymentCreateTransaction(
             }),
           ({ status, value }) => {
             if (status === 200) {
+              action.payload.onSucces?.();
               return walletPaymentCreateTransaction.success(value);
             } else if (status === 400) {
               return walletPaymentCreateTransaction.failure({
