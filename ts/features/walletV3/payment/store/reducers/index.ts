@@ -23,6 +23,7 @@ import {
   walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
+  walletPaymentGetTransactionInfo,
   walletPaymentGetUserWallets,
   walletPaymentNewSessionToken
 } from "../actions/networking";
@@ -192,14 +193,16 @@ const reducer = (
         chosenPsp: O.none
       };
 
-    // Create/delete transaction
+    // Transaction
     case getType(walletPaymentCreateTransaction.request):
+    case getType(walletPaymentGetTransactionInfo.request):
     case getType(walletPaymentDeleteTransaction.request):
       return {
         ...state,
         transaction: pot.toLoading(state.transaction)
       };
     case getType(walletPaymentCreateTransaction.success):
+    case getType(walletPaymentGetTransactionInfo.success):
       return {
         ...state,
         transaction: pot.some(action.payload)
@@ -210,6 +213,7 @@ const reducer = (
         transaction: pot.none
       };
     case getType(walletPaymentCreateTransaction.failure):
+    case getType(walletPaymentGetTransactionInfo.failure):
     case getType(walletPaymentDeleteTransaction.failure):
       return {
         ...state,
