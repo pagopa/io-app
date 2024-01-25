@@ -24,15 +24,14 @@ const activateBonusSuccess = async () => {
   await element(by.id("cgnConfirmButtonTestId")).tap();
 
   // wait for unsubscribe cta
-  // make sure to scroll to bottom, otherwise in small devices the element will not be visible nor tappable
   const scrollView = element(by.id("CGNCardDetailsScrollView"));
-  try {
-    await scrollView.scroll(100, "down", NaN, 0.3);
-  } catch (e) {
-    // Unfortunately, sometimes the scroll fails with the testing reporting
-    // 'this view is not scrollable'. In such cases, the 'deactive button'
-    // is visible so we catch and ignore the scroll error
-  }
+
+  // The section has a loading spinner on top of
+  // everything so we must wait for it to disappear
+  await waitFor(scrollView).toBeVisible().withTimeout(e2eWaitRenderTimeout);
+
+  // make sure to scroll to bottom, otherwise in small devices the element will not be visible nor tappable
+  await scrollView.scrollTo("bottom");
 
   const unsubscribeCgnCta = element(by.id("cgnDeactivateBonusTestId"));
   await waitFor(unsubscribeCgnCta)
