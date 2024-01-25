@@ -1,23 +1,23 @@
 import * as React from "react";
 import Pdf from "react-native-pdf";
-import { Body, Container, Left, Right } from "native-base";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
   ButtonSolidProps,
   FooterWithButtons,
   H5,
+  HSpacer,
   IconButton,
   IOColors,
-  IOStyles
+  IOStyles,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignatureRequest";
-import AppHeader from "../../../components/ui/AppHeader";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { WithTestID } from "../../../types/WithTestID";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -41,6 +41,14 @@ const styles = StyleSheet.create({
   pdf: {
     flex: 1,
     backgroundColor: IOColors.bluegrey
+  },
+  header: {
+    alignItems: "center",
+    flexDirection: "row"
+  },
+  headerTitle: {
+    flex: 1,
+    textAlign: "center"
   }
 });
 
@@ -175,24 +183,23 @@ const DocumentWithSignature = (props: Props) => {
   );
 
   return (
-    <Container>
-      <AppHeader>
-        <Left />
-        <Body style={{ alignItems: "center" }}>
-          <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {I18n.t("messagePDFPreview.title")}
-          </H5>
-        </Body>
-        <Right>
-          <IconButton
-            icon="closeLarge"
-            onPress={props.onClose}
-            color="neutral"
-            testID="FciDocumentWithSignatureTopRightButtonTestID"
-            accessibilityLabel={I18n.t("global.buttons.close")}
-          />
-        </Right>
-      </AppHeader>
+    <SafeAreaView
+      style={[IOStyles.flex, IOStyles.bgWhite]}
+      testID={"FciDocumentsScreenTestID"}
+    >
+      <View style={[IOStyles.horizontalContentPadding, styles.header]}>
+        <HSpacer />
+        <H5 weight={"SemiBold"} color={"bluegrey"} style={styles.headerTitle}>
+          {I18n.t("messagePDFPreview.title")}
+        </H5>
+        <IconButton
+          color="neutral"
+          accessibilityLabel={I18n.t("global.buttons.close")}
+          icon="closeLarge"
+          onPress={props.onClose}
+        />
+      </View>
+      <VSpacer />
       <DocumentsNavigationBar
         indicatorPosition={"right"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
@@ -210,14 +217,12 @@ const DocumentWithSignature = (props: Props) => {
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
-      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-        <RenderMask />
-        <FooterWithButtons
-          type={"SingleButton"}
-          primary={{ type: "Solid", buttonProps: continueButtonProps }}
-        />
-      </SafeAreaView>
-    </Container>
+      <RenderMask />
+      <FooterWithButtons
+        type={"SingleButton"}
+        primary={{ type: "Solid", buttonProps: continueButtonProps }}
+      />
+    </SafeAreaView>
   );
 };
 export default DocumentWithSignature;
