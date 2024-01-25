@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
@@ -30,15 +29,11 @@ export function* handleWalletPaymentCalculateFees(
     return;
   }
 
-  const requestBody: CalculateFeeRequest = {
-    paymentAmount: action.payload.paymentAmountInCents,
-    walletId: action.payload.walletId
-  };
-
+  const { paymentMethodId, ...body } = action.payload;
   const calculateFeesRequest = calculateFees({
-    id: action.payload.walletId,
-    body: requestBody,
-    eCommerceSessionToken: sessionToken
+    eCommerceSessionToken: sessionToken,
+    id: paymentMethodId,
+    body
   });
 
   try {
