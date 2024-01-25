@@ -10,6 +10,7 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/wal
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/failure";
+import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 
 export const walletPaymentGetDetails = createAsyncAction(
   "WALLET_PAYMENT_GET_DETAILS_REQUEST",
@@ -29,23 +30,22 @@ export const walletPaymentGetUserWallets = createAsyncAction(
   "WALLET_PAYMENT_GET_USER_WALLETS_FAILURE"
 )<undefined, Wallets, NetworkError>();
 
-export type WalletPaymentCalculateFeesPayload = {
-  walletId: string;
-  paymentAmountInCents: number;
-};
-
 export const walletPaymentCalculateFees = createAsyncAction(
   "WALLET_PAYMET_CALCULATE_FEES_REQUEST",
   "WALLET_PAYMET_CALCULATE_FEES_SUCCESS",
   "WALLET_PAYMET_CALCULATE_FEES_FAILURE"
-)<WalletPaymentCalculateFeesPayload, CalculateFeeResponse, NetworkError>();
+)<
+  CalculateFeeRequest & { paymentMethodId: string },
+  CalculateFeeResponse,
+  NetworkError
+>();
 
 export const walletPaymentCreateTransaction = createAsyncAction(
   "WALLET_PAYMENT_CREATE_TRANSACTION_REQUEST",
   "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
   "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
 )<
-  NewTransactionRequest,
+  NewTransactionRequest & { onSucces?: () => void },
   NewTransactionResponse,
   NetworkError | WalletPaymentFailure
 >();

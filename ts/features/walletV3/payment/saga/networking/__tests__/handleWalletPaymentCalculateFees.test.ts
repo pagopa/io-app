@@ -6,16 +6,16 @@ import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import {
-  WalletPaymentCalculateFeesPayload,
-  walletPaymentCalculateFees
-} from "../../../store/actions/networking";
+import { walletPaymentCalculateFees } from "../../../store/actions/networking";
 import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculateFees";
+import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 
 describe("Test handleWalletPaymentCalculateFees saga", () => {
-  const calculateFeesPayload: WalletPaymentCalculateFeesPayload = {
-    walletId: "1234",
-    paymentAmountInCents: 1234
+  const calculateFeesPayload: CalculateFeeRequest & {
+    paymentMethodId: string;
+  } = {
+    paymentMethodId: "1234",
+    paymentAmount: 1234
   };
 
   it(`should put ${getType(
