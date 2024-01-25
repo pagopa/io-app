@@ -24,8 +24,13 @@ const activateBonusSuccess = async () => {
   await element(by.id("cgnConfirmButtonTestId")).tap();
 
   // wait for unsubscribe cta
-  // make sure to scroll to bottom, otherwise in small devices the element will not be visible nor tappable
   const scrollView = element(by.id("CGNCardDetailsScrollView"));
+
+  // The section has a loading spinner on top of
+  // everything so we must wait for it to disappear
+  await waitFor(scrollView).toBeVisible().withTimeout(e2eWaitRenderTimeout);
+
+  // make sure to scroll to bottom, otherwise in small devices the element will not be visible nor tappable
   await scrollView.scrollTo("bottom");
 
   const unsubscribeCgnCta = element(by.id("cgnDeactivateBonusTestId"));
