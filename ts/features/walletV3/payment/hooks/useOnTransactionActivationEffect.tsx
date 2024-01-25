@@ -5,8 +5,10 @@ import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommer
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletPaymentGetTransactionInfo } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors";
+import { getGenericError } from "../../../../utils/errors";
 
-const POLLING_DELAY = 1000;
+const INITIAL_DELAY = 250;
+const MAX_TRIES = 3;
 
 /**
  * Custom hook that initiates polling for transaction status and triggers the provided
@@ -14,23 +16,41 @@ const POLLING_DELAY = 1000;
  * @param effect Function to be executed upon transaction activation
  */
 const useOnTransactionActivationEffect = (
-  effect: (transaction: TransactionInfo) => void
+  effect: ((transaction: TransactionInfo) => void) | (() => void)
 ) => {
   const dispatch = useIODispatch();
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
 
+  const delayRef = React.useRef(INITIAL_DELAY);
+  const countRef = React.useRef(0);
+
+  /* eslint-disable functional/immutable-data */
   React.useEffect(() => {
+    const isMaxTriesExceeded =
+      !pot.isError(transactionPot) && countRef.current > MAX_TRIES;
+
     if (pot.isSome(transactionPot) && !pot.isLoading(transactionPot)) {
       const { transactionId, status } = transactionPot.value;
 
       if (status === TransactionStatusEnum.ACTIVATED) {
         // Execute the effect function when the transaction is activated
-        effect(transactionPot.value);
+        delayRef.current = INITIAL_DELAY;
+        countRef.current = 0;
+        return effect(transactionPot.value);
+      } else if (isMaxTriesExceeded) {
+        dispatch(
+          walletPaymentGetTransactionInfo.failure(
+            getGenericError(new Error("Max try reached"))
+          )
+        );
+        return;
       } else {
         // Continue polling for transaction status with a timeout
         const timeout = setTimeout(() => {
+          delayRef.current *= 2;
+          countRef.current += 1;
           dispatch(walletPaymentGetTransactionInfo.request({ transactionId }));
-        }, POLLING_DELAY);
+        }, delayRef.current);
         // Clean up the timeout to avoid memory leaks
         return () => {
           clearTimeout(timeout);
