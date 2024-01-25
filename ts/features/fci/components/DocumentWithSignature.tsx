@@ -197,6 +197,7 @@ const DocumentWithSignature = (props: Props) => {
           accessibilityLabel={I18n.t("global.buttons.close")}
           icon="closeLarge"
           onPress={props.onClose}
+          testID="FciDocumentWithSignatureTopRightButtonTestID"
         />
       </View>
       <VSpacer />
