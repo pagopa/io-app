@@ -1754,14 +1754,14 @@ messages:
       expired: "Überfällige Zahlung"
       paid: "Diese Zahlungsmitteilung ist bereits bezahlt. Überprüfe die Quittung in deinem"
       addMemo:
-        block1: "Erstelle eine Erinnerung am "
-        block2: "um "
+        block1: "Erstelle eine Erinnerung am"
+        block2: "um"
       expiringOrValidAlert:
-        block1: "Verfällt am "
-        block2: "um "
+        block1: "Verfällt am"
+        block2: "um"
       expiredAlert:
-        block1: "Abgelaufen am "
-        block2: "um "
+        block1: "Abgelaufen am"
+        block2: "um"
     pay: "Bezahle {{amount}} €"
     onlyPay: "Bezahlen"
     paid: "Bezahlt"
