@@ -1,13 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
-import { NewTransactionRequest } from "../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { TransactionInfo } from "../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  walletPaymentCreateTransaction,
-  walletPaymentGetTransactionInfo
-} from "../store/actions/networking";
+import { walletPaymentGetTransactionInfo } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors";
 
 const POLLING_DELAY = 1000;
@@ -27,21 +23,17 @@ const useTransactionActivationPolling = ({ onTransactionActivated }: Props) => {
       if (status === TransactionStatusEnum.ACTIVATED) {
         onTransactionActivated?.(transactionPot.value);
       } else {
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
           dispatch(walletPaymentGetTransactionInfo.request({ transactionId }));
         }, POLLING_DELAY);
+        return () => {
+          clearTimeout(timeout);
+        };
       }
     }
+
+    return undefined;
   }, [dispatch, transactionPot, onTransactionActivated]);
-
-  const createTransaction = (request: NewTransactionRequest) => {
-    dispatch(walletPaymentCreateTransaction.request(request));
-  };
-
-  return {
-    transactionPot,
-    createTransaction
-  };
 };
 
 export { useTransactionActivationPolling };

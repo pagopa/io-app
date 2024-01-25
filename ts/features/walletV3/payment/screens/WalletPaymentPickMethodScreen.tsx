@@ -35,13 +35,17 @@ import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMis
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { useTransactionActivationPolling } from "../hooks/useTransactionActivationPolling";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentGetUserWallets } from "../store/actions/networking";
+import {
+  walletPaymentCreateTransaction,
+  walletPaymentGetUserWallets
+} from "../store/actions/networking";
 import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
   walletPaymentAmountSelector,
   walletPaymentDetailsSelector,
   walletPaymentSavedMethodByIdSelector,
+  walletPaymentTransactionSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
@@ -81,25 +85,29 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
+  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   // const getGenericMethodById = useIOSelector(walletPaymentGenericMethodByIdSelector);
+
+  const [waitingTransactionActivation, setWaitingTransactionActivation] =
+    React.useState(false);
 
   const navigateToPspSelectionScreen = React.useCallback(() => {
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
     });
+    setWaitingTransactionActivation(false);
   }, [navigation]);
 
-  const { transactionPot, createTransaction } = useTransactionActivationPolling(
-    {
-      onTransactionActivated: navigateToPspSelectionScreen
-    }
-  );
+  useTransactionActivationPolling({
+    onTransactionActivated: navigateToPspSelectionScreen
+  });
 
   const alertRef = React.useRef<View>(null);
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
-  const isLoadingTransaction = pot.isLoading(transactionPot);
+  const isLoadingTransaction =
+    pot.isLoading(transactionPot) || waitingTransactionActivation;
 
   const isError =
     pot.isError(transactionPot) ||
@@ -177,11 +185,14 @@ const WalletPaymentPickMethodScreen = () => {
         ),
         O.map(([method, paymentDetails]) => {
           dispatch(walletPaymentPickPaymentMethod(method));
-          createTransaction({
-            paymentNotices: [
-              { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-            ]
-          });
+          dispatch(
+            walletPaymentCreateTransaction.request({
+              paymentNotices: [
+                { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
+              ]
+            })
+          );
+          setWaitingTransactionActivation(true);
         })
       );
     }
