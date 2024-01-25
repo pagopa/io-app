@@ -215,8 +215,6 @@ export const DSMessageAttachment = (
       />
     );
   }
-
-  // Safe area view testId message-attachment-preview
   return (
     <>
       {isPDFRenderingError ? (

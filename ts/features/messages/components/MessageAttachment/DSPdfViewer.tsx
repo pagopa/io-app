@@ -33,7 +33,7 @@ export const DSPdfViewer = ({
     >
       <Pdf
         {...rest}
-        source={{ uri: downloadPath, cache: false }}
+        source={{ uri: downloadPath, cache: true }}
         style={[styles.pdf, style]}
         onLoadComplete={(...args) => {
           setIsLoading(false);
