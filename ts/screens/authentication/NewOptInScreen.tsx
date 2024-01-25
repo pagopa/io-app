@@ -98,7 +98,7 @@ const NewOptInScreen = (props: Props) => {
         }}
       >
         <ContentWrapper>
-          {Dimensions.get("screen").height > 780 && (
+          {Dimensions.get("screen").height > 820 && (
             <View style={IOStyles.selfCenter} testID="pictogram-test">
               <Pictogram name="passcode" size={120} />
             </View>

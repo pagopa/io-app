@@ -684,7 +684,7 @@ authentication:
     identity_check: Non dovrai più autenticarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
     security_suggests: Alcuni consigli di sicurezza
     passcode: Per tutte le altre volte basterà il tuo volto, impronta o codice di sblocco
-    notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO.
+    notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO
     button_accept_lv: Continua con l’accesso rapido
     button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
   security_suggestions:
