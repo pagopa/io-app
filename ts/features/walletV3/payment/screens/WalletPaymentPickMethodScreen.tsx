@@ -33,18 +33,15 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
+import { useTransactionActivationPolling } from "../hooks/useTransactionActivationPolling";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import {
-  walletPaymentCreateTransaction,
-  walletPaymentGetUserWallets
-} from "../store/actions/networking";
+import { walletPaymentGetUserWallets } from "../store/actions/networking";
 import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
   walletPaymentAmountSelector,
   walletPaymentDetailsSelector,
   walletPaymentSavedMethodByIdSelector,
-  walletPaymentTransactionSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
@@ -78,7 +75,6 @@ const WalletPaymentPickMethodScreen = () => {
   });
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
-  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const getSavedtMethodById = useIOSelector(
     walletPaymentSavedMethodByIdSelector
   );
@@ -86,6 +82,18 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
   // const getGenericMethodById = useIOSelector(walletPaymentGenericMethodByIdSelector);
+
+  const navigateToPspSelectionScreen = React.useCallback(() => {
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
+    });
+  }, [navigation]);
+
+  const { transactionPot, createTransaction } = useTransactionActivationPolling(
+    {
+      onTransactionActivated: navigateToPspSelectionScreen
+    }
+  );
 
   const alertRef = React.useRef<View>(null);
 
@@ -105,7 +113,8 @@ const WalletPaymentPickMethodScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      // dispatch(walletPaymentGetAllMethods.request()); // currently we do not allow onboarding new methods in payment flow
+      // currently we do not allow onboarding new methods in payment flow
+      // dispatch(walletPaymentGetAllMethods.request());
       dispatch(walletPaymentGetUserWallets.request());
     }, [dispatch])
   );
@@ -157,21 +166,6 @@ const WalletPaymentPickMethodScreen = () => {
     });
   };
 
-  /* Will be decommented once generic methods are implemented
-  const handleSelectNotSavedMethod = (methodId: string) => {
-     setSelectedMethod({
-       kind: "generic",
-       methodId
-     });
-   }; 
-   */
-
-  const navigateToPspSelectionScreen = () => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
-    });
-  };
-
   const handleContinue = () => {
     // todo:: should handle the case where the user
     // selects a non saved method
@@ -183,14 +177,11 @@ const WalletPaymentPickMethodScreen = () => {
         ),
         O.map(([method, paymentDetails]) => {
           dispatch(walletPaymentPickPaymentMethod(method));
-          dispatch(
-            walletPaymentCreateTransaction.request({
-              paymentNotices: [
-                { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-              ],
-              onSucces: navigateToPspSelectionScreen
-            })
-          );
+          createTransaction({
+            paymentNotices: [
+              { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
+            ]
+          });
         })
       );
     }
