@@ -100,6 +100,7 @@ const WalletPaymentPickPspScreen = () => {
           dispatch(
             walletPaymentCalculateFees.request({
               paymentMethodId: selectedWallet.paymentMethodId,
+              walletId: selectedWallet.walletId,
               paymentAmount: paymentAmountInCents,
               transferList
             })
