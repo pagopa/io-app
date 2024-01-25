@@ -104,7 +104,10 @@ describe("CGN", () => {
 const deactivateCGNCardIfNeeded = async () => {
   // This is needed since an E2E can fail at any moment. If it does so
   // after the card has been activated, all subsequent retries and tests
-  // will fail, since the card is already activated.
+  // will fail, since the card is already activated. Be aware that this
+  // endpoint is not authenticated (or, better said, when the authorization
+  // header is not set, the fastLoginMiddleware, in the dev-server, skips
+  // any authentication check)
   const cgnDeactivationEndpoint = "http://127.0.0.1:3000/api/v1/cgn/delete";
   // eslint-disable-next-line functional/no-let
   let responseCode = -1;
