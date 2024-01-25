@@ -8,11 +8,14 @@ import { walletPaymentTransactionSelector } from "../store/selectors";
 
 const POLLING_DELAY = 1000;
 
-type Props = {
-  onTransactionActivated?: (transaction: TransactionInfo) => void;
-};
-
-const useTransactionActivationPolling = ({ onTransactionActivated }: Props) => {
+/**
+ * Custom hook that initiates polling for transaction status and triggers the provided
+ * effect function when the transaction reaches the ACTIVATED status.
+ * @param effect Function to be executed upon transaction activation
+ */
+const useOnTransactionActivationEffect = (
+  effect: (transaction: TransactionInfo) => void
+) => {
   const dispatch = useIODispatch();
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
 
@@ -21,11 +24,14 @@ const useTransactionActivationPolling = ({ onTransactionActivated }: Props) => {
       const { transactionId, status } = transactionPot.value;
 
       if (status === TransactionStatusEnum.ACTIVATED) {
-        onTransactionActivated?.(transactionPot.value);
+        // Execute the effect function when the transaction is activated
+        effect(transactionPot.value);
       } else {
+        // Continue polling for transaction status with a timeout
         const timeout = setTimeout(() => {
           dispatch(walletPaymentGetTransactionInfo.request({ transactionId }));
         }, POLLING_DELAY);
+        // Clean up the timeout to avoid memory leaks
         return () => {
           clearTimeout(timeout);
         };
@@ -33,7 +39,7 @@ const useTransactionActivationPolling = ({ onTransactionActivated }: Props) => {
     }
 
     return undefined;
-  }, [dispatch, transactionPot, onTransactionActivated]);
+  }, [dispatch, transactionPot, effect]);
 };
 
-export { useTransactionActivationPolling };
+export { useOnTransactionActivationEffect };

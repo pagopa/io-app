@@ -33,7 +33,7 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
-import { useTransactionActivationPolling } from "../hooks/useTransactionActivationPolling";
+import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentCreateTransaction,
@@ -91,16 +91,14 @@ const WalletPaymentPickMethodScreen = () => {
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
     React.useState(false);
 
-  const navigateToPspSelectionScreen = React.useCallback(() => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
-    });
-    setWaitingTransactionActivation(false);
-  }, [navigation]);
-
-  useTransactionActivationPolling({
-    onTransactionActivated: navigateToPspSelectionScreen
-  });
+  useOnTransactionActivationEffect(
+    React.useCallback(() => {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
+      });
+      setWaitingTransactionActivation(false);
+    }, [navigation])
+  );
 
   const alertRef = React.useRef<View>(null);
 
