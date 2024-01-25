@@ -88,3 +88,8 @@ export const walletPaymentAuthorizationUrlSelector = createSelector(
   selectWalletPayment,
   state => state.authorizationUrl
 );
+
+export const walletPaymentStartRouteSelector = createSelector(
+  selectWalletPayment,
+  state => state.startRoute
+);

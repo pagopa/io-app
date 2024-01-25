@@ -2,6 +2,10 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 
+/**
+ * Action to initialize the state of a payment, optionally you can specify the route to go back to
+ * after the payment is completed or cancelled (default is the popToTop route)
+ */
 export const walletPaymentInitState = createStandardAction(
   "WALLET_PAYMENT_INIT_STATE"
 )();

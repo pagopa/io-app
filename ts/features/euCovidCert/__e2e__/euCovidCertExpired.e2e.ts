@@ -11,7 +11,7 @@ const learnMoreLinkTestId = "euCovidCertLearnMoreLink";
 
 describe("EuCovidCert Expired", () => {
   beforeAll(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
     await ensureLoggedIn();
   });
 
