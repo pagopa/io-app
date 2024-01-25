@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.51.0-rc.3](https://github.com/pagopa/io-app/compare/2.51.0-rc.2...2.51.0-rc.3) (2024-01-25)
+
+
+### Chores
+
+* [[IOBP-517](https://pagopa.atlassian.net/browse/IOBP-517)] Removes unnecessary gallery permission on iOS  ([#5433](https://github.com/pagopa/io-app/issues/5433)) ([229906d](https://github.com/pagopa/io-app/commit/229906d6ee7860c4a357cd4f1a557d6ea2c9dc1f))
+* bump fastlane from 2.212.1 to 2.212.2 ([651f4a6](https://github.com/pagopa/io-app/commit/651f4a6effe571701aa44e557669becbc870244a))
+
 ## [2.51.0-rc.2](https://github.com/pagopa/io-app/compare/2.51.0-rc.1...2.51.0-rc.2) (2024-01-24)
 
 
