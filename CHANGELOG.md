@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.51.0-rc.3](https://github.com/pagopa/io-app/compare/2.51.0-rc.2...2.51.0-rc.3) (2024-01-25)
+
+
+### Chores
+
+* [[IOBP-517](https://pagopa.atlassian.net/browse/IOBP-517)] Removes unnecessary gallery permission on iOS  ([#5433](https://github.com/pagopa/io-app/issues/5433)) ([229906d](https://github.com/pagopa/io-app/commit/229906d6ee7860c4a357cd4f1a557d6ea2c9dc1f))
+* bump fastlane from 2.212.1 to 2.212.2 ([651f4a6](https://github.com/pagopa/io-app/commit/651f4a6effe571701aa44e557669becbc870244a))
+
+## [2.51.0-rc.2](https://github.com/pagopa/io-app/compare/2.51.0-rc.1...2.51.0-rc.2) (2024-01-24)
+
+
+### Features
+
+* [[IOCOM-922](https://pagopa.atlassian.net/browse/IOCOM-922)] Remove medical prescription ([#5407](https://github.com/pagopa/io-app/issues/5407)) ([b68ed9d](https://github.com/pagopa/io-app/commit/b68ed9d9d820bd6224b24c1703f31fb2aabe9639))
+* [[IOPID-1391](https://pagopa.atlassian.net/browse/IOPID-1391)] Fix tablet compatibility alert displaying ([#5417](https://github.com/pagopa/io-app/issues/5417)) ([9fc529f](https://github.com/pagopa/io-app/commit/9fc529f943ab7854f84980655e0064c77c699f33))
+
+
+### Bug Fixes
+
+* [[IOBP-512](https://pagopa.atlassian.net/browse/IOBP-512)] Wallet details with new generic error screen ([#5427](https://github.com/pagopa/io-app/issues/5427)) ([893d6e4](https://github.com/pagopa/io-app/commit/893d6e4ffeef697316c8811fbca3382a1e7b4223))
+* [[IOBP-515](https://pagopa.atlassian.net/browse/IOBP-515)] Expiry date into new wallet details screen ([#5418](https://github.com/pagopa/io-app/issues/5418)) ([3431429](https://github.com/pagopa/io-app/commit/3431429fa9d6f7ee5d92fd814af4e9d365c71647))
+* [[IOPID-1359](https://pagopa.atlassian.net/browse/IOPID-1359)] Fix missing email on validation blocking screen ([#5414](https://github.com/pagopa/io-app/issues/5414)) ([20a931d](https://github.com/pagopa/io-app/commit/20a931d48d44721689c874b6dbb55ffb335b398f))
+* [[IOPID-1408](https://pagopa.atlassian.net/browse/IOPID-1408)] Fix cdu email insert screen logic  ([#5430](https://github.com/pagopa/io-app/issues/5430)) ([3eb1b82](https://github.com/pagopa/io-app/commit/3eb1b82159343d4daa7a8a16f04e9dfed582ba41))
+
+
+### Chores
+
+* [[IOAPPCROSS-209](https://pagopa.atlassian.net/browse/IOAPPCROSS-209)] Fix onboarding screens + Fix E2E test ([#5410](https://github.com/pagopa/io-app/issues/5410)) ([30fe477](https://github.com/pagopa/io-app/commit/30fe4773491fe6bfeb12f9a24a7e9bd1c2afbd6f))
+* [[IOBP-316](https://pagopa.atlassian.net/browse/IOBP-316)] Add return to origin page after payment flow completion ([#5399](https://github.com/pagopa/io-app/issues/5399)) ([3e0f184](https://github.com/pagopa/io-app/commit/3e0f184820d5a0667984207f53863b5cfb044c07))
+* [[IOBP-455](https://pagopa.atlassian.net/browse/IOBP-455)] Removal of BonusVacanze references across the app ([#5408](https://github.com/pagopa/io-app/issues/5408)) ([3a476ba](https://github.com/pagopa/io-app/commit/3a476bae0900a003de45b41ae10cd762bb03526f))
+* [[IOBP-492](https://pagopa.atlassian.net/browse/IOBP-492)] BonusVacanze removal ([#5411](https://github.com/pagopa/io-app/issues/5411)) ([d461ab0](https://github.com/pagopa/io-app/commit/d461ab012ef8d54afdc321bb95744f022b056d3d))
+* [[IOBP-510](https://pagopa.atlassian.net/browse/IOBP-510)] Add `UIWalletDetailsInfo` to bypass `WalletDetailsInfo`'s `type` enum. ([#5412](https://github.com/pagopa/io-app/issues/5412)) ([6e56bac](https://github.com/pagopa/io-app/commit/6e56bac02ad2b04cbe92adbf9c91ab251124210e))
+* [[IOPID-1298](https://pagopa.atlassian.net/browse/IOPID-1298),[IOPID-1396](https://pagopa.atlassian.net/browse/IOPID-1396)] `Main` stack navigator - `startup` saga synch ([#5420](https://github.com/pagopa/io-app/issues/5420)) ([71d6507](https://github.com/pagopa/io-app/commit/71d6507f19950c4bd4c05ce00ef2ccab2e664211))
+* [[IOPID-1301](https://pagopa.atlassian.net/browse/IOPID-1301)] Bump ToS version from 4.7 to 4.8"" ([#5402](https://github.com/pagopa/io-app/issues/5402)) ([46af866](https://github.com/pagopa/io-app/commit/46af86615b881d57a9f785092eca3baf0cc89ada)), closes [pagopa/io-app#5391](https://github.com/pagopa/io-app/issues/5391)
+* [[IOPID-1318](https://pagopa.atlassian.net/browse/IOPID-1318)] Fix MP events ([#5405](https://github.com/pagopa/io-app/issues/5405)) ([4b957a0](https://github.com/pagopa/io-app/commit/4b957a0cd659e42f8d55e0c7f5df1cf62fc3064d))
+* e2e fix ([#5416](https://github.com/pagopa/io-app/issues/5416)) ([0a08463](https://github.com/pagopa/io-app/commit/0a0846343a02745d652f4555b41770358178845d))
+* fix E2E tests after main stack navigator and startup saga sync ([#5429](https://github.com/pagopa/io-app/issues/5429)) ([d34be63](https://github.com/pagopa/io-app/commit/d34be635f123b5141b88fb2df2c4963811af3ead))
+* Language 🇩🇪 adjustments  ([#5413](https://github.com/pagopa/io-app/issues/5413)) ([9634f37](https://github.com/pagopa/io-app/commit/9634f3728e0ecea14f137e4c730af7339ed7d014))
+* **deps:** bump aiohttp from 3.8.6 to 3.9.0 in /scripts/check_urls ([#5339](https://github.com/pagopa/io-app/issues/5339)) ([d5d9499](https://github.com/pagopa/io-app/commit/d5d9499c5742cf7a40e9d3e4f874245599c1e9dc))
+
 ## [2.51.0-rc.1](https://github.com/pagopa/io-app/compare/2.51.0-rc.0...2.51.0-rc.1) (2024-01-17)
 
 
