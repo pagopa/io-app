@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
@@ -42,6 +43,7 @@ const activateBonusSuccess = async () => {
 
 describe("CGN", () => {
   beforeEach(async () => {
+    await deactivateCGNCardIfNeeded();
     await device.launchApp({ newInstance: true });
     await ensureLoggedIn();
   });
@@ -98,3 +100,35 @@ describe("CGN", () => {
     });
   });
 });
+
+const deactivateCGNCardIfNeeded = async () => {
+  // This is needed since an E2E can fail at any moment. If it does so
+  // after the card has been activated, all subsequent retries and tests
+  // will fail, since the card is already activated. Be aware that this
+  // endpoint is not authenticated (or, better said, when the authorization
+  // header is not set, the fastLoginMiddleware, in the dev-server, skips
+  // any authentication check)
+  const cgnDeactivationEndpoint = "http://127.0.0.1:3000/api/v1/cgn/delete";
+  // eslint-disable-next-line functional/no-let
+  let responseCode = -1;
+  try {
+    const response = await fetch(cgnDeactivationEndpoint, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    });
+    responseCode = response.status;
+  } catch (error) {
+    // We are not really interested about the error
+    // eslint-disable-next-line no-console
+    console.log(`deactivateCGNCardIfNeeded: ${error}`);
+  }
+
+  if (responseCode !== 201 && responseCode !== 403) {
+    throw new Error(
+      `Invalid response code from CGN deactivateion (${responseCode}), check the CGN deactivation endpoint (${cgnDeactivationEndpoint}) and the dev-server configuration for CGN deactivation`
+    );
+  }
+};
