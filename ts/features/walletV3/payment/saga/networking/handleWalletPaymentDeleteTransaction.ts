@@ -36,9 +36,7 @@ export function* handleWalletPaymentDeleteTransaction(
       withRefreshApiCall,
       requestTransactionUserCancellationRequest,
       action
-    )) as unknown as SagaCallReturnType<
-      typeof requestTransactionUserCancellation
-    >;
+    )) as SagaCallReturnType<typeof requestTransactionUserCancellation>;
 
     yield* put(
       pipe(

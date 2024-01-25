@@ -53,7 +53,7 @@ export function* handleWalletPaymentAuthorization(
       withRefreshApiCall,
       requestTransactionAuthorizationRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof requestTransactionAuthorization>;
+    )) as SagaCallReturnType<typeof requestTransactionAuthorization>;
 
     yield* put(
       pipe(

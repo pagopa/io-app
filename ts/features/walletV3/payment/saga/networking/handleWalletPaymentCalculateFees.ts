@@ -41,7 +41,7 @@ export function* handleWalletPaymentCalculateFees(
       withRefreshApiCall,
       calculateFeesRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof calculateFees>;
+    )) as SagaCallReturnType<typeof calculateFees>;
 
     if (E.isLeft(calculateFeesResult)) {
       yield* put(

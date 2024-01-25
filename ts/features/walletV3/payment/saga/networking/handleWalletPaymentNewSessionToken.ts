@@ -53,7 +53,7 @@ export function* handleWalletPaymentNewSessionToken(
       withRefreshApiCall,
       newSessionTokenRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof newSessionToken>;
+    )) as SagaCallReturnType<typeof newSessionToken>;
 
     yield* put(
       pipe(
