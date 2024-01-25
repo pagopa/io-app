@@ -1,12 +1,13 @@
 import { createStore } from "redux";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { UIAttachmentId, UIMessageId } from "../../types";
+import { UIAttachment, UIAttachmentId, UIMessageId } from "../../types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { DSMessageAttachment } from "../DSMessageAttachment";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { downloadAttachment } from "../../store/actions";
+import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 
 describe("DSMessageAttachment", () => {
   it("Should match the snapshot when there is an error", () => {
@@ -31,37 +32,22 @@ const renderScreen = (
   serviceId: ServiceId,
   configuration: "failure" | "success"
 ) => {
-  const globalState = appReducer(undefined, applicationChangeState("active"));
-  const enrichedState = {
-    ...globalState,
-    persistedPreferences: {
-      ...globalState.persistedPreferences,
-      isDesignSystemEnabled: true
-    },
-    entities: {
-      ...globalState.entities,
-      messages: {
-        ...globalState.entities.messages,
-        downloads: {
-          ...globalState.entities.messages.downloads,
-          messageId:
-            configuration === "success"
-              ? {
-                  attachmentId: pot.some({
-                    attachment: {
-                      messageId,
-                      id: attachmentId,
-                      cagegory: "default"
-                    },
-                    path: "file:///fileName.pdf"
-                  })
-                }
-              : undefined
-        }
-      }
-    }
-  };
-  const store = createStore(appReducer, enrichedState as any);
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const designSystemState = appReducer(
+    initialState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const withDownloadState = appReducer(
+    designSystemState,
+    downloadAttachment.success({
+      attachment: { id: attachmentId, messageId } as UIAttachment,
+      path: "file:///fileName.pdf"
+    })
+  );
+  const store = createStore(
+    appReducer,
+    (configuration === "success" ? withDownloadState : designSystemState) as any
+  );
 
   return renderScreenWithNavigationStoreContext(
     DSMessageAttachment,

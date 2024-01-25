@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
   }
 });
 
-interface Props {
+type Props = {
+  action?: React.ReactNode;
   caption?: React.ReactNode;
   white?: boolean;
-  action?: React.ReactNode;
-}
+};
 
 const BoxedRefreshIndicator = ({ action, caption, white }: Props) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
