@@ -50,8 +50,8 @@ const WalletPaymentOutcomeScreen = () => {
     outcome
   });
 
-  // This is a workaround to disable swipe back gesture on this screen
-  // .. it should be removed as soon as the migration to react-navigation v6 is completed
+  // TODO: This is a workaround to disable swipe back gesture on this screen
+  // .. it should be removed as soon as the migration to react-navigation v6 is completed (https://pagopa.atlassian.net/browse/IOBP-522)
   React.useEffect(() => {
     // Disable swipe
     navigation.setOptions({ gestureEnabled: false });
