@@ -7,53 +7,51 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentCreateTransaction } from "../../store/actions/networking";
+import { walletPaymentGetTransactionInfo } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
-export function* handleWalletPaymentCreateTransaction(
-  newTransaction: PaymentClient["newTransaction"],
-  action: ActionType<(typeof walletPaymentCreateTransaction)["request"]>
+export function* handleWalletPaymentGetTransactionInfo(
+  getTransactionInfo: PaymentClient["getTransactionInfo"],
+  action: ActionType<(typeof walletPaymentGetTransactionInfo)["request"]>
 ) {
   const sessionToken = yield* getOrFetchWalletSessionToken();
 
   if (sessionToken === undefined) {
     yield* put(
-      walletPaymentCreateTransaction.failure({
+      walletPaymentGetTransactionInfo.failure({
         ...getGenericError(new Error(`Missing session token`))
       })
     );
     return;
   }
 
-  const newTransactionRequest = newTransaction({
-    body: action.payload,
-    eCommerceSessionToken: sessionToken
+  const getTransactionInfoRequest = getTransactionInfo({
+    eCommerceSessionToken: sessionToken,
+    transactionId: action.payload.transactionId
   });
 
   try {
-    const newTransactionResult = (yield* call(
+    const getTransactionInfoResult = (yield* call(
       withRefreshApiCall,
-      newTransactionRequest,
+      getTransactionInfoRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof newTransaction>;
+    )) as unknown as SagaCallReturnType<typeof getTransactionInfo>;
 
     yield* put(
       pipe(
-        newTransactionResult,
+        getTransactionInfoResult,
         E.fold(
           error =>
-            walletPaymentCreateTransaction.failure({
+            walletPaymentGetTransactionInfo.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
           ({ status, value }) => {
             if (status === 200) {
-              return walletPaymentCreateTransaction.success(value);
-            } else if (status === 400) {
-              return walletPaymentCreateTransaction.failure({
-                ...getGenericError(new Error(`Error: ${status}`))
-              });
+              return walletPaymentGetTransactionInfo.success(value);
             } else {
-              return walletPaymentCreateTransaction.failure(value);
+              return walletPaymentGetTransactionInfo.failure({
+                ...getGenericError(new Error(JSON.stringify(value)))
+              });
             }
           }
         )
@@ -61,7 +59,7 @@ export function* handleWalletPaymentCreateTransaction(
     );
   } catch (e) {
     yield* put(
-      walletPaymentCreateTransaction.failure({ ...getNetworkError(e) })
+      walletPaymentGetTransactionInfo.failure({ ...getNetworkError(e) })
     );
   }
 }
