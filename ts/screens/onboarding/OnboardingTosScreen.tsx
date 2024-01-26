@@ -74,8 +74,9 @@ const OnboardingTosScreen = () => {
     trackTosScreen(getFlowType(true, isFirstOnBoarding));
   });
 
-  const tosVersion = useIOSelector(tosConfigSelector).tos_version;
-  const privacyUrl = useIOSelector(tosConfigSelector).tos_url;
+  const tosConfig = useIOSelector(tosConfigSelector);
+  const tosVersion = tosConfig.tos_version;
+  const privacyUrl = tosConfig.tos_url;
 
   const hasAcceptedCurrentTos = pot.getOrElse(
     pot.map(potProfile, p => p.accepted_tos_version === tosVersion),
