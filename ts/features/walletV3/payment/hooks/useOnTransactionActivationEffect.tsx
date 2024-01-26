@@ -1,11 +1,10 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import React from "react";
 import { TransactionInfo } from "../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { getGenericError } from "../../../../utils/errors";
 import { walletPaymentGetTransactionInfo } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors";
-import { getGenericError } from "../../../../utils/errors";
 
 const INITIAL_DELAY = 250;
 const MAX_TRIES = 3;
@@ -29,10 +28,7 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
 
   /* eslint-disable functional/immutable-data */
   React.useEffect(() => {
-    const isMaxTriesExceeded =
-      !pot.isError(transactionPot) && countRef.current > MAX_TRIES;
-
-    if (pot.isSome(transactionPot) && !pot.isLoading(transactionPot)) {
+    if (transactionPot.kind === "PotSome") {
       const { transactionId, status } = transactionPot.value;
 
       if (status === TransactionStatusEnum.ACTIVATED) {
@@ -40,7 +36,8 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
         delayRef.current = INITIAL_DELAY;
         countRef.current = 0;
         return effect(transactionPot.value);
-      } else if (isMaxTriesExceeded) {
+      } else if (countRef.current > MAX_TRIES) {
+        // The transaction is not yet ACTIVATED, and we exceeded the max retries
         dispatch(
           walletPaymentGetTransactionInfo.failure(
             getGenericError(new Error("Max try reached"))
@@ -48,7 +45,7 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
         );
         return;
       } else {
-        // Continue polling for transaction status with a timeout
+        // The transaction is not yet ACTIVATED, continue polling for transaction status with a timeout
         const timeout = setTimeout(() => {
           delayRef.current *= 2;
           countRef.current += 1;
