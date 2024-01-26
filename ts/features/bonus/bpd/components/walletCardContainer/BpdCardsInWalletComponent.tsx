@@ -5,7 +5,6 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
 import { bpdPeriodsAmountWalletVisibleSelector } from "../../store/reducers/details/combiner";
 import { BpdPeriodWithInfo } from "../../store/reducers/details/periods";
@@ -51,7 +50,6 @@ const BpdCardsInWalletContainer = (props: Props) => (
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateToCashbackDetails: (period: BpdPeriodWithInfo) => {
     dispatch(bpdSelectPeriod(period));
-    navigateToBpdDetails(period);
   }
 });
 

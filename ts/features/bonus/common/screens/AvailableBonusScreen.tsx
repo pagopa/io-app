@@ -4,7 +4,6 @@ import { pipe } from "fp-ts/lib/function";
 import { Content } from "native-base";
 import * as React from "react";
 import {
-  Alert,
   FlatList,
   Linking,
   ListRenderItemInfo,
@@ -17,7 +16,6 @@ import { connect } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import { BpdConfig } from "../../../../../definitions/content/BpdConfig";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
@@ -26,7 +24,6 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { bpdEnabled } from "../../../../config";
 import I18n from "../../../../i18n";
 import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
@@ -39,7 +36,6 @@ import {
 } from "../../../../store/actions/services";
 import { Dispatch } from "../../../../store/actions/types";
 import {
-  bpdRemoteConfigSelector,
   isCGNEnabledSelector,
   isCdcEnabledSelector
 } from "../../../../store/reducers/backendStatus";
@@ -47,7 +43,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
 import { showToast } from "../../../../utils/showToast";
-import { getRemoteLocale } from "../../../messages/utils/messages";
 import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
@@ -63,7 +58,7 @@ import {
   serviceFromAvailableBonusSelector,
   supportedAvailableBonusSelector
 } from "../store/selectors";
-import { ID_BPD_TYPE, ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
+import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -114,27 +109,13 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     });
   };
 
-  private completedAlert = (title: string) => {
-    Alert.alert(title, I18n.t("bonus.state.completed.description"));
-  };
-
-  private renderListItem = (
-    info: ListRenderItemInfo<BonusAvailable>,
-    bpdConfig: BpdConfig | undefined
-  ) => {
+  private renderListItem = (info: ListRenderItemInfo<BonusAvailable>) => {
     const item = info.item;
 
     const handlersMap: Map<number, (bonus: BonusAvailable) => void> = new Map<
       number,
       (bonus: BonusAvailable) => void
     >();
-
-    if (bpdEnabled) {
-      const bpdHandler = () =>
-        this.completedAlert(info.item[getRemoteLocale()].name);
-
-      handlersMap.set(ID_BPD_TYPE, _ => bpdHandler());
-    }
 
     if (this.props.isCgnEnabled) {
       handlersMap.set(ID_CGN_TYPE, _ => this.props.startCgnActivation());
@@ -202,16 +183,8 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
     const maybeIncoming: O.Option<AvailableBonusItemState> =
       item.visibility === "visible" && !handled ? O.some("incoming") : O.none;
 
-    // TODO: Atm only a custom case for the cashback, using the remote bpdConfiguration to choose if is finished
-    // see https://pagopa.atlassian.net/browse/IAI-22 for the complete bonus refactoring
-    const maybeFinished: O.Option<AvailableBonusItemState> =
-      info.item.id_type === ID_BPD_TYPE && !bpdConfig?.program_active
-        ? O.some("completed")
-        : O.none;
-
     const state: AvailableBonusItemState = pipe(
       maybeIncoming,
-      O.alt(() => maybeFinished),
       O.getOrElseW(() => "active" as const)
     );
 
@@ -257,7 +230,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
               <FlatList
                 scrollEnabled={false}
                 data={availableBonusesList.filter(experimentalAndVisibleBonus)}
-                renderItem={b => this.renderListItem(b, this.props.bpdConfig)}
+                renderItem={b => this.renderListItem(b)}
                 keyExtractor={item => item.id_type.toString()}
                 ItemSeparatorComponent={() => (
                   <ItemSeparatorComponent noPadded={true} />
@@ -280,7 +253,6 @@ const mapStateToProps = (state: GlobalState) => ({
   isLoading: isAvailableBonusLoadingSelector(state),
   // show error only when we have an error and no data to show
   isError: isAvailableBonusNoneErrorSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state),
   isCgnEnabled: isCGNEnabledSelector(state),
   isCdcEnabled: isCdcEnabledSelector(state),
   cdcService: () => serviceFromAvailableBonusSelector(ID_CDC_TYPE)(state)
