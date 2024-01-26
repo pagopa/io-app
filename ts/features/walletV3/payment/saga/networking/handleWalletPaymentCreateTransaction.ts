@@ -26,20 +26,20 @@ export function* handleWalletPaymentCreateTransaction(
       return;
     }
 
-    const calculateFeesRequest = newTransaction({
+    const newTransactionRequest = newTransaction({
       body: action.payload,
       eCommerceSessionToken: sessionToken
     });
 
-    const calculateFeesResult = (yield* call(
+    const newTransactionResult = (yield* call(
       withRefreshApiCall,
-      calculateFeesRequest,
+      newTransactionRequest,
       action
     )) as SagaCallReturnType<typeof newTransaction>;
 
     yield* put(
       pipe(
-        calculateFeesResult,
+        newTransactionResult,
         E.fold(
           error =>
             walletPaymentCreateTransaction.failure({
@@ -47,7 +47,6 @@ export function* handleWalletPaymentCreateTransaction(
             }),
           ({ status, value }) => {
             if (status === 200) {
-              action.payload.onSucces?.();
               return walletPaymentCreateTransaction.success(value);
             } else if (status === 400) {
               return walletPaymentCreateTransaction.failure({
