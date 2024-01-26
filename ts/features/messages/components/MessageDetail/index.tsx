@@ -155,17 +155,20 @@ const MessageDetailsComponent = ({
   const messageTitle =
     useIOSelector(state => messageTitleSelector(state, messageId)) ?? title;
 
+  const serviceIdOpt = service?.id;
   const openAttachment = useCallback(
     (attachment: UIAttachment) => {
       navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
-          attachmentId: attachment.id
+          serviceId: serviceIdOpt,
+          attachmentId: attachment.id,
+          isPN: false
         }
       });
     },
-    [messageId, navigation]
+    [messageId, navigation, serviceIdOpt]
   );
 
   const renderThirdPartyAttachments = useCallback(
