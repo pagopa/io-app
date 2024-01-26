@@ -8,24 +8,35 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentDeleteTransaction } from "../../store/actions/networking";
+import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentDeleteTransaction(
   requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellation"],
   action: ActionType<(typeof walletPaymentDeleteTransaction)["request"]>
 ) {
-  const requestTransactionUserCancellationRequest =
-    requestTransactionUserCancellation({
-      transactionId: action.payload
-    });
-
   try {
+    const sessionToken = yield* getOrFetchWalletSessionToken();
+
+    if (sessionToken === undefined) {
+      yield* put(
+        walletPaymentDeleteTransaction.failure({
+          ...getGenericError(new Error(`Missing session token`))
+        })
+      );
+      return;
+    }
+
+    const requestTransactionUserCancellationRequest =
+      requestTransactionUserCancellation({
+        transactionId: action.payload,
+        eCommerceSessionToken: sessionToken
+      });
+
     const requestTransactionUserCancellationResult = (yield* call(
       withRefreshApiCall,
       requestTransactionUserCancellationRequest,
       action
-    )) as unknown as SagaCallReturnType<
-      typeof requestTransactionUserCancellation
-    >;
+    )) as SagaCallReturnType<typeof requestTransactionUserCancellation>;
 
     yield* put(
       pipe(
