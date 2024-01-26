@@ -10,7 +10,6 @@ import I18n from "i18n-js";
 //   WebViewErrorEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import * as config from "../../../config";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -27,7 +26,6 @@ const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
 
 const zendeskEnabledDefaultValue = config.zendeskEnabled;
-const tosVersionOriginalValue = 3.2 as NonNegativeNumber;
 
 // Restore defineProperty
 beforeAll(() => {
@@ -38,8 +36,6 @@ beforeAll(() => {
   Object.defineProperty(config, "zendeskEnabled", {
     value: CurrentTestZendeskEnabled
   });
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "tosVersion", { value: CurrentTestToSVersion });
 });
 
 afterAll(() => {
@@ -48,10 +44,6 @@ afterAll(() => {
   // eslint-disable-next-line functional/immutable-data
   Object.defineProperty(config, "zendeskEnabled", {
     value: zendeskEnabledDefaultValue
-  });
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "tosVersion", {
-    value: tosVersionOriginalValue
   });
 });
 
@@ -406,6 +398,10 @@ const commonSetup = ({
           },
           fims: {
             enabled: false
+          },
+          tos: {
+            tos_version: CurrentTestToSVersion,
+            tos_url: "https://www.example.com"
           }
         }
       })
