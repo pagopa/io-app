@@ -2,7 +2,7 @@ import React from "react";
 import { Body, ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 
 type MessageDetailsContentProps = {
-  abstract: string | undefined;
+  abstract?: string;
 };
 
 export const MessageDetailsContent = ({
