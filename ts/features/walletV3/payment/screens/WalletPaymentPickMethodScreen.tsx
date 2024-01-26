@@ -91,6 +91,8 @@ const WalletPaymentPickMethodScreen = () => {
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
     React.useState(false);
 
+  // When a new transaction is created it comes with ACTIVATION_REQUESTED status, we can continue the payment flow
+  // only when the transaction status becomes ACTIVATED.
   useOnTransactionActivationEffect(
     React.useCallback(() => {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {

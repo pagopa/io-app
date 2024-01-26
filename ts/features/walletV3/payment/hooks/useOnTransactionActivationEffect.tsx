@@ -10,14 +10,17 @@ import { getGenericError } from "../../../../utils/errors";
 const INITIAL_DELAY = 250;
 const MAX_TRIES = 3;
 
+type EffectCallback = (
+  transaction: TransactionInfo
+) => void | (() => void | undefined);
+
 /**
- * Custom hook that initiates polling for transaction status and triggers the provided
- * effect function when the transaction reaches the ACTIVATED status.
+ * This custom hook manages the transition of a transaction's status from ACTIVATION_REQUESTED to ACTIVATED.
+ * It employs a polling mechanism to continuously check the status, and once the status becomes ACTIVATED,
+ * the specified effect is triggered.
  * @param effect Function to be executed upon transaction activation
  */
-const useOnTransactionActivationEffect = (
-  effect: ((transaction: TransactionInfo) => void) | (() => void)
-) => {
+const useOnTransactionActivationEffect = (effect: EffectCallback) => {
   const dispatch = useIODispatch();
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
 
