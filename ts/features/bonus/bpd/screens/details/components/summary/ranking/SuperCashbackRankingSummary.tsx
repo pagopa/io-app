@@ -1,13 +1,12 @@
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { H2 } from "../../../../../../../../components/core/typography/H2";
 import { H5 } from "../../../../../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../../../../i18n";
-import { bpdRankingEnabledSelector } from "../../../../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../../../../store/reducers/types";
 import { formatIntegerNumber } from "../../../../../../../../utils/stringBuilder";
 import { useSuperCashbackRankingBottomSheet } from "../../../../../components/superCashbackRanking/SuperCashbackRanking";
@@ -136,10 +135,7 @@ const shouldDisplayRankingReady = (
  * @constructor
  */
 const SuperCashbackRankingSummary = (props: Props): React.ReactElement =>
-  shouldDisplayRankingReady(
-    props.period.ranking,
-    props.rankingRemoteEnabled
-  ) ? (
+  shouldDisplayRankingReady(props.period.ranking, undefined) ? (
     <SuperCashbackRankingReady
       ranking={props.period.ranking.ranking}
       minRanking={props.period.minPosition}
@@ -150,9 +146,7 @@ const SuperCashbackRankingSummary = (props: Props): React.ReactElement =>
 
 const mapDispatchToProps = (_: Dispatch) => ({});
 
-const mapStateToProps = (state: GlobalState) => ({
-  rankingRemoteEnabled: bpdRankingEnabledSelector(state)
-});
+const mapStateToProps = (_: GlobalState) => ({});
 
 export default connect(
   mapStateToProps,

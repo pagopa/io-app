@@ -54,8 +54,6 @@ export const isDebugBiometricIdentificationEnabled =
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
-export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
-
 export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
 
 export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;
@@ -76,10 +74,6 @@ export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
 // CGN new merchants features
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
-
-// Opt-in payments method
-export const bpdOptInPaymentMethodsEnabled =
-  Config.BPD_OPT_IN_PAYMENT_METHODS === "YES";
 
 // Ukraine donation
 export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
