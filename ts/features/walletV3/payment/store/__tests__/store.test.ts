@@ -5,6 +5,7 @@ import { appReducer } from "../../../../../store/reducers";
 import { WalletPaymentState } from "../reducers";
 
 const INITIAL_STATE: WalletPaymentState = {
+  sessionToken: pot.none,
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,

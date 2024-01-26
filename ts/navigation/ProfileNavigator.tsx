@@ -18,6 +18,7 @@ import { NotificationsPreferencesScreen } from "../screens/profile/Notifications
 import PinScreen from "../screens/profile/PinScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
+import ProfileAboutApp from "../screens/profile/ProfileAboutApp";
 import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
@@ -86,6 +87,10 @@ const ProfileStackNavigator = () => {
       <Stack.Screen
         name={ROUTES.PROFILE_PREFERENCES_LANGUAGE}
         component={LanguagesPreferencesScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PROFILE_ABOUT_APP}
+        component={ProfileAboutApp}
       />
       <Stack.Screen
         options={{
