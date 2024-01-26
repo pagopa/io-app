@@ -6,14 +6,12 @@ import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { actionWithAlert } from "../../../common/components/alert/ActionWithAlert";
-import { ID_BPD_TYPE } from "../../../common/utils";
 import BonusInformationComponent from "../../../common/components/BonusInformationComponent";
 import {
   bpdOnboardingCancel,
   bpdUserActivate
 } from "../../store/actions/onboarding";
 import { bpdEnabledSelector } from "../../store/reducers/details/activation";
-import { availableBonusTypesSelectorFromId } from "../../../common/store/selectors";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -50,7 +48,7 @@ const BpdInformationScreen: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  bonus: availableBonusTypesSelectorFromId(ID_BPD_TYPE)(state),
+  bonus: undefined,
   bpdActiveBonus: bpdEnabledSelector(state)
 });
 

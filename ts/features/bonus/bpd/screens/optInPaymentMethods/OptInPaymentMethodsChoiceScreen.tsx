@@ -31,10 +31,6 @@ import {
   isReady,
   isUndefined
 } from "../../../../../common/model/RemoteValue";
-import {
-  navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen,
-  navigateToOptInPaymentMethodsThankYouKeepMethodsScreen
-} from "../../navigation/actions";
 import { optInPaymentMethodsShowChoice } from "../../store/actions/optInPaymentMethods";
 import { showOptInChoiceSelector } from "../../store/reducers/details/activation/ui";
 
@@ -102,10 +98,9 @@ const OptInPaymentMethodsChoiceScreen = () => {
   const renderingRef = useRef(false);
 
   const { presentBottomSheet, bottomSheet } = useBottomSheetMethodsToDelete({
-    onDeletePress: () =>
-      navigation.dispatch(
-        navigateToOptInPaymentMethodsThankYouDeleteMethodsScreen()
-      )
+    onDeletePress: () => {
+      throw new Error();
+    }
   });
 
   const bottomButtons: {
@@ -113,10 +108,9 @@ const OptInPaymentMethodsChoiceScreen = () => {
   } = useMemo(
     () => ({
       keepPaymentMethods: confirmButtonProps(
-        () =>
-          navigation.dispatch(
-            navigateToOptInPaymentMethodsThankYouKeepMethodsScreen()
-          ),
+        () => {
+          throw new Error();
+        },
         I18n.t("global.buttons.continue"),
         undefined,
         "continueButton"
@@ -128,7 +122,7 @@ const OptInPaymentMethodsChoiceScreen = () => {
         undefined
       )
     }),
-    [navigation, presentBottomSheet]
+    [presentBottomSheet]
   );
 
   const computedBottomButtonProps = useMemo(
