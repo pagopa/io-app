@@ -14,28 +14,28 @@ export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransaction"],
   action: ActionType<(typeof walletPaymentCreateTransaction)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
-
-  if (sessionToken === undefined) {
-    yield* put(
-      walletPaymentCreateTransaction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
-    return;
-  }
-
-  const newTransactionRequest = newTransaction({
-    body: action.payload,
-    eCommerceSessionToken: sessionToken
-  });
-
   try {
+    const sessionToken = yield* getOrFetchWalletSessionToken();
+
+    if (sessionToken === undefined) {
+      yield* put(
+        walletPaymentCreateTransaction.failure({
+          ...getGenericError(new Error(`Missing session token`))
+        })
+      );
+      return;
+    }
+
+    const newTransactionRequest = newTransaction({
+      body: action.payload,
+      eCommerceSessionToken: sessionToken
+    });
+
     const newTransactionResult = (yield* call(
       withRefreshApiCall,
       newTransactionRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof newTransaction>;
+    )) as SagaCallReturnType<typeof newTransaction>;
 
     yield* put(
       pipe(
