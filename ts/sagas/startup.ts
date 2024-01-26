@@ -1,7 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Alert } from "react-native";
+import PushNotification from "react-native-push-notification";
 import { channel } from "redux-saga";
 import {
   call,
@@ -16,14 +18,11 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
-import PushNotification from "react-native-push-notification";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import {
   apiUrlPrefix,
-  bpdEnabled,
   cdcEnabled,
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
@@ -31,17 +30,34 @@ import {
   svEnabled,
   zendeskEnabled
 } from "../config";
-import { watchBonusSaga } from "../features/bonus/common/store/sagas/bonusSaga";
-import { watchBonusBpdSaga } from "../features/bonus/bpd/saga";
+import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
+import { watchBonusSaga } from "../features/bonus/common/store/sagas/bonusSaga";
 import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
+import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
+import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
+import {
+  isFastLoginEnabledSelector,
+  tokenRefreshSelector
+} from "../features/fastLogin/store/selectors";
+import { watchFciSaga } from "../features/fci/saga";
+import { watchIDPaySaga } from "../features/idpay/common/saga";
+import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
+import {
+  checkLollipopSessionAssertionAndInvalidateIfNeeded,
+  generateLollipopKeySaga,
+  getKeyInfo
+} from "../features/lollipop/saga";
+import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
+import { watchMessagesSaga } from "../features/messages/saga";
+import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
+import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
+import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
 import {
   watchZendeskGetSessionSaga,
   watchZendeskSupportSaga
 } from "../features/zendesk/saga";
-import { watchFciSaga } from "../features/fci/saga";
-import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
 import NavigationService from "../navigation/NavigationService";
@@ -50,6 +66,11 @@ import {
   startApplicationInitialization
 } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
+import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
+import {
+  differentProfileLoggedIn,
+  setProfileHashedFiscalCode
+} from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
@@ -59,16 +80,16 @@ import {
   profileLoadSuccess,
   resetProfileState
 } from "../store/actions/profile";
+import { startupLoadSuccess } from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../store/reducers/authentication";
 import {
-  checkLollipopSessionAssertionAndInvalidateIfNeeded,
-  generateLollipopKeySaga,
-  getKeyInfo
-} from "../features/lollipop/saga";
+  backendStatusSelector,
+  isPnEnabledSelector
+} from "../store/reducers/backendStatus";
 import { IdentificationResult } from "../store/reducers/identification";
 import {
   isIdPayTestEnabledSelector,
@@ -78,34 +99,15 @@ import {
   isProfileFirstOnBoarding,
   profileSelector
 } from "../store/reducers/profile";
+import { StartupStatusEnum } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
+import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
-import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../store/actions/crossSessions";
-import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
-import { watchMessagesSaga } from "../features/messages/saga";
-import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { startupLoadSuccess } from "../store/actions/startup";
-import { watchIDPaySaga } from "../features/idpay/common/saga";
-import { StartupStatusEnum } from "../store/reducers/startup";
-import { trackKeychainGetFailure } from "../utils/analytics";
-import { checkPublicKeyAndBlockIfNeeded } from "../features/lollipop/navigation";
-import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/lollipop";
-import {
-  isFastLoginEnabledSelector,
-  tokenRefreshSelector
-} from "../features/fastLogin/store/selectors";
-import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import {
-  backendStatusSelector,
-  isPnEnabledSelector
-} from "../store/reducers/backendStatus";
-import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
-import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
+  clearKeychainError,
+  keychainError
+} from "./../store/storages/keychain";
 import { startAndReturnIdentificationResult } from "./identification";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -118,6 +120,7 @@ import {
   handlePendingMessageStateIfAllowedSaga,
   updateInstallationSaga
 } from "./notifications";
+import { setLanguageFromProfileIfExists } from "./preferences";
 import {
   loadProfile,
   watchProfile,
@@ -130,11 +133,14 @@ import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { authenticationSaga } from "./startup/authenticationSaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
 import { checkAcknowledgedEmailSaga } from "./startup/checkAcknowledgedEmailSaga";
-import { checkAcknowledgedFingerprintSaga } from "./startup/onboarding/biometric/checkAcknowledgedFingerprintSaga";
 import { checkConfiguredPinSaga } from "./startup/checkConfiguredPinSaga";
 import { watchEmailNotificationPreferencesSaga } from "./startup/checkEmailNotificationPreferencesSaga";
+import { checkEmailSaga } from "./startup/checkEmailSaga";
+import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
 import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
+import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
 import { loadSessionInformationSaga } from "./startup/loadSessionInformationSaga";
+import { checkAcknowledgedFingerprintSaga } from "./startup/onboarding/biometric/checkAcknowledgedFingerprintSaga";
 import { watchAbortOnboardingSaga } from "./startup/watchAbortOnboardingSaga";
 import {
   checkSession,
@@ -150,14 +156,6 @@ import {
 } from "./user/userMetadata";
 import { watchWalletSaga } from "./wallet";
 import { watchProfileEmailValidationChangedSaga } from "./watchProfileEmailValidationChangedSaga";
-import { completeOnboardingSaga } from "./startup/completeOnboardingSaga";
-import { checkNotificationsPreferencesSaga } from "./startup/checkNotificationsPreferencesSaga";
-import {
-  clearKeychainError,
-  keychainError
-} from "./../store/storages/keychain";
-import { setLanguageFromProfileIfExists } from "./preferences";
-import { checkEmailSaga } from "./startup/checkEmailSaga";
 
 const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 const navigatorPollingTime = 125 as Millisecond;
@@ -521,11 +519,6 @@ export function* initializeApplicationSaga(
 
   if (zendeskEnabled) {
     yield* fork(watchZendeskGetSessionSaga, backendClient.getSession);
-  }
-
-  if (bpdEnabled) {
-    // Start watching for bpd actions
-    yield* fork(watchBonusBpdSaga, maybeSessionInformation.value.bpdToken);
   }
 
   if (cdcEnabled) {

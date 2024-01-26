@@ -20,7 +20,6 @@ import {
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
-import { navigateToBpdTransactions } from "../../navigation/actions";
 import { bpdAllData } from "../../store/actions/details";
 import {
   bpdUnsubscribeCompleted,
@@ -154,7 +153,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(bpdUnsubscribeCompleted());
     navigateBack();
   },
-  goToTransactions: () => navigateToBpdTransactions(),
+  goToTransactions: () => null,
   goBack: () => navigateBack(),
   completeUnsubscriptionFailure: () => dispatch(bpdUnsubscribeFailure())
 });
