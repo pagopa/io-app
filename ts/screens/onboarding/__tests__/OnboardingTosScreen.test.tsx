@@ -10,6 +10,7 @@ import I18n from "i18n-js";
 //   WebViewErrorEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
+import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import * as config from "../../../config";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -26,7 +27,7 @@ const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
 
 const zendeskEnabledDefaultValue = config.zendeskEnabled;
-const tosVersionOriginalValue = config.tosVersion;
+const tosVersionOriginalValue = 3.2 as NonNegativeNumber;
 
 // Restore defineProperty
 beforeAll(() => {

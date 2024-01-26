@@ -6,7 +6,6 @@ import {
   NonNegativeNumber
 } from "@pagopa/ts-commons/lib/numbers";
 import { View } from "react-native";
-import { tosVersion } from "../../../config";
 import { applicationChangeState } from "../../../store/actions/application";
 import { navigateToTosScreen } from "../../../store/actions/navigation";
 import { tosAccepted } from "../../../store/actions/onboarding";
@@ -16,6 +15,8 @@ import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapp
 import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkAcceptedTosSaga } from "../checkAcceptedTosSaga";
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
+
+const tosVersion = 3.2 as NonNegativeNumber;
 
 describe("checkAcceptedTosSaga", () => {
   const firstOnboardingProfile = {

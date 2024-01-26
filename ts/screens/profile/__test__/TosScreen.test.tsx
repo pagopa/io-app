@@ -2,6 +2,7 @@ import * as React from "react";
 import { pot } from "@pagopa/ts-commons";
 import * as O from "fp-ts/lib/Option";
 import configureMockStore from "redux-mock-store";
+import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import I18n from "../../../i18n";
 // import WebView from "react-native-webview";
 // import {
@@ -22,7 +23,7 @@ const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
 
 const zendeskEnabledDefaultValue = config.zendeskEnabled;
-const tosVersionOriginalValue = config.tosVersion;
+const tosVersionOriginalValue = 3.2 as NonNegativeNumber;
 
 // Restore defineProperty
 beforeAll(() => {
