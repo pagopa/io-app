@@ -20,7 +20,7 @@ export function* handleWalletPaymentGetUserWallets(
       withRefreshApiCall,
       getWalletsByIdUserRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof getWalletsByIdUser>;
+    )) as SagaCallReturnType<typeof getWalletsByIdUser>;
 
     yield* put(
       pipe(

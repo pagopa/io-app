@@ -6,10 +6,8 @@ import {
   areSystemsDeadReducer,
   BackendStatusState,
   barcodesScannerConfigSelector,
-  bpdRankingEnabledSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   isUaDonationsEnabledSelector,
-  sectionStatusSelector,
   uaDonationsBannerConfigSelector
 } from "../backendStatus";
 import { GlobalState } from "../types";
@@ -220,53 +218,11 @@ describe("test selectors", () => {
     }
   };
 
-  const someStore = {
-    backendStatus: {
-      status: O.some(status)
-    }
-  } as any as GlobalState;
-
   const noneStore = {
     backendStatus: {
       status: O.none
     }
   } as any as GlobalState;
-
-  it("should return the cashback status", () => {
-    const section = sectionStatusSelector("cashback")(someStore);
-    expect(section).not.toBeNull();
-    expect(section).toEqual(status.sections.cashback);
-  });
-
-  it("should return undefined - sectionStatusSelector", () => {
-    const section = sectionStatusSelector("cashback")(noneStore);
-    expect(section).toBeUndefined();
-  });
-
-  it("should return undefined - configSelector", () => {
-    const config = bpdRankingEnabledSelector(noneStore);
-    expect(config).toBeUndefined();
-  });
-
-  it("should return true - someStoreConfig", () => {
-    const someStoreConfig = {
-      backendStatus: {
-        status: O.some({ ...status, config: { bpd_ranking_v2: true } })
-      }
-    } as any as GlobalState;
-    const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
-    expect(bpd_ranking).toBeTruthy();
-  });
-
-  it("should return false - someStoreConfig", () => {
-    const someStoreConfig = {
-      backendStatus: {
-        status: O.some({ ...status, config: { bpd_ranking_v2: false } })
-      }
-    } as any as GlobalState;
-    const bpd_ranking = bpdRankingEnabledSelector(someStoreConfig);
-    expect(bpd_ranking).toBeFalsy();
-  });
 
   describe("donation selectors", () => {
     it("isUaDonationsEnabledSelector should return false if bs.config.donation.enabled is undefined", () => {
