@@ -19,6 +19,7 @@ import {
   walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
+  walletPaymentNewSessionToken,
   walletPaymentGetUserWallets
 } from "../actions/networking";
 import {
@@ -35,6 +36,7 @@ import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 
 export type WalletPaymentState = {
   rptId?: RptId;
+  sessionToken: pot.Pot<string, NetworkError>;
   paymentDetails: pot.Pot<
     PaymentRequestsGetResponse,
     NetworkError | WalletPaymentFailure
@@ -56,6 +58,7 @@ export type WalletPaymentState = {
 };
 
 const INITIAL_STATE: WalletPaymentState = {
+  sessionToken: pot.none,
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,
@@ -87,6 +90,23 @@ const reducer = (
       return {
         ...INITIAL_STATE,
         startRoute
+      };
+
+    // eCommerce Session token
+    case getType(walletPaymentNewSessionToken.request):
+      return {
+        ...state,
+        sessionToken: pot.toLoading(state.sessionToken)
+      };
+    case getType(walletPaymentNewSessionToken.success):
+      return {
+        ...state,
+        sessionToken: pot.some(action.payload.sessionToken)
+      };
+    case getType(walletPaymentNewSessionToken.failure):
+      return {
+        ...state,
+        sessionToken: pot.toError(state.sessionToken, action.payload)
       };
 
     // Payment verification and details

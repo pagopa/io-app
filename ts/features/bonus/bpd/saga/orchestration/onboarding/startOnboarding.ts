@@ -12,12 +12,6 @@ import {
   SagaCallReturnType
 } from "../../../../../../types/utils";
 import { getAsyncResult } from "../../../../../../utils/saga";
-import {
-  navigateToBpdOnboardingDeclaration,
-  navigateToBpdOnboardingInformationTos,
-  navigateToBpdOnboardingLoadActivationStatus
-} from "../../../navigation/actions";
-import BPD_ROUTES from "../../../navigation/routes";
 import { bpdLoadActivationStatus } from "../../../store/actions/details";
 import {
   bpdOnboardingAcceptDeclaration,
@@ -26,8 +20,7 @@ import {
 } from "../../../store/actions/onboarding";
 import { bpdEnabledSelector } from "../../../store/reducers/details/activation";
 
-export const isLoadingScreen = (screenName: string) =>
-  screenName === BPD_ROUTES.ONBOARDING.LOAD_CHECK_ACTIVATION_STATUS;
+export const isLoadingScreen = () => true;
 
 export function* getActivationStatus() {
   return yield* call(() => getAsyncResult(bpdLoadActivationStatus, undefined));
@@ -61,8 +54,8 @@ export function* bpdStartOnboardingWorker() {
     yield* call(NavigationService.getCurrentRouteName);
 
   // go to the loading page (if I'm not on that screen)
-  if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
-    yield* call(navigateToBpdOnboardingLoadActivationStatus);
+  if (currentRoute !== undefined && !isLoadingScreen()) {
+    throw new Error("Not in the loading screen");
   }
 
   // read if the bpd is active for the user
@@ -74,13 +67,10 @@ export function* bpdStartOnboardingWorker() {
     // Refresh the wallets to prevent that added cards are not visible
     yield* put(fetchWalletsRequest());
 
-    yield* call(navigateToBpdOnboardingInformationTos);
-
     // wait for the user that choose to continue
     yield* take(bpdUserActivate);
 
     // Navigate to the Onboarding Declaration and wait for the action that complete the saga
-    yield* call(navigateToBpdOnboardingDeclaration);
   }
 
   // The saga ends when the user accepts the declaration

@@ -9,7 +9,8 @@ import {
   walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
-  walletPaymentGetUserWallets
+  walletPaymentGetUserWallets,
+  walletPaymentNewSessionToken
 } from "../store/actions/networking";
 import { handleWalletPaymentCalculateFees } from "./networking/handleWalletPaymentCalculateFees";
 import { handleWalletPaymentCreateTransaction } from "./networking/handleWalletPaymentCreateTransaction";
@@ -18,6 +19,7 @@ import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentG
 import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
 import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
 import { handleWalletPaymentDeleteTransaction } from "./networking/handleWalletPaymentDeleteTransaction";
+import { handleWalletPaymentNewSessionToken } from "./networking/handleWalletPaymentNewSessionToken";
 
 /**
  * Handle the pagoPA payments requests
@@ -27,6 +29,12 @@ export function* watchWalletPaymentSaga(
   walletClient: WalletClient,
   paymentClient: PaymentClient
 ): SagaIterator {
+  yield* takeLatest(
+    walletPaymentNewSessionToken.request,
+    handleWalletPaymentNewSessionToken,
+    paymentClient.newSessionToken
+  );
+
   yield* takeLatest(
     walletPaymentGetDetails.request,
     handleWalletPaymentGetDetails,

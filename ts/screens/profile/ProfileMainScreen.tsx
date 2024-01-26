@@ -18,9 +18,7 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { TranslationKeys } from "../../../locales/locales";
 import AppVersion from "../../components/AppVersion";
-import ContextualInfo from "../../components/ContextualInfo";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
 import { IOToast } from "../../components/Toast";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
@@ -34,7 +32,6 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import DarkLayout from "../../components/screens/DarkLayout";
 import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -145,19 +142,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
   public render() {
     const { navigation, isDebugModeEnabled } = this.props;
 
-    const showInformationModal = (
-      title: TranslationKeys,
-      body: TranslationKeys
-    ) => {
-      this.props.showModal(
-        <ContextualInfo
-          onClose={this.props.hideModal}
-          title={I18n.t(title)}
-          body={() => <Markdown>{I18n.t(body)}</Markdown>}
-        />
-      );
-    };
-
     const profileNavListItems: ReadonlyArray<ProfileNavListItem> = [
       {
         // Data
@@ -200,11 +184,9 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         value: I18n.t("profile.main.appInfo.title"),
         description: I18n.t("profile.main.appInfo.description"),
         onPress: () =>
-          showInformationModal(
-            "profile.main.appInfo.title",
-            "profile.main.appInfo.contextualHelpContent"
-          ),
-        hideChevron: true
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.PROFILE_ABOUT_APP
+          })
       },
       {
         // Logout/Exit

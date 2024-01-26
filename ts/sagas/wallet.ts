@@ -6,7 +6,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { CommonActions, StackActions } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -21,18 +21,15 @@ import {
   takeLatest
 } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
-import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { BackendClient } from "../api/backend";
 import { ContentClient } from "../api/content";
 import { PaymentManagerClient } from "../api/pagopa";
 import {
   apiUrlPrefix,
-  bpdEnabled,
   fetchPagoPaTimeout,
   fetchPaymentManagerLongTimeout
 } from "../config";
-import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import {
   handleAddPan,
   handleLoadAbi,
@@ -118,18 +115,14 @@ import {
   setWalletSessionEnabled,
   updatePaymentStatus
 } from "../store/actions/wallet/wallets";
-import { bpdRemoteConfigSelector } from "../store/reducers/backendStatus";
+
 import { isProfileEmailValidatedSelector } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import { lastPaymentOutcomeCodeSelector } from "../store/reducers/wallet/outcomeCode";
 import { paymentIdSelector } from "../store/reducers/wallet/payment";
 import { getAllWallets } from "../store/reducers/wallet/wallets";
 import { SessionToken } from "../types/SessionToken";
-import {
-  NullableWallet,
-  PaymentManagerToken,
-  isRawCreditCard
-} from "../types/pagopa";
+import { NullableWallet, PaymentManagerToken } from "../types/pagopa";
 import { ReduxSagaEffect } from "../types/utils";
 import { SessionManager } from "../utils/SessionManager";
 import { waitBackoffError } from "../utils/backoffError";
@@ -137,7 +130,6 @@ import { isTestEnv } from "../utils/environment";
 import { convertUnknownToError } from "../utils/errors";
 import { defaultRetryingFetch } from "../utils/fetch";
 import { newLookUpId, resetLookUpId } from "../utils/pmLookUpId";
-import { hasFunctionEnabled } from "../utils/walletv2";
 import { paymentsDeleteUncompletedSaga } from "./payments";
 import { sendAddCobadgeMessageSaga } from "./wallet/cobadgeReminder";
 import {
@@ -305,35 +297,6 @@ function* startOrResumeAddCreditCardSaga(
               if (maybeAddedWallet !== undefined) {
                 // Add a delay to allow the user to see the thank you page
                 yield* delay(successScreenDelay);
-                // check if the new method is compliant with bpd
-                if (bpdEnabled) {
-                  const bpdEnroll: ReturnType<typeof bpdEnabledSelector> =
-                    yield* select(bpdEnabledSelector);
-                  const hasBpdFeature = hasFunctionEnabled(
-                    maybeAddedWallet.paymentMethod,
-                    EnableableFunctionsEnum.BPD
-                  );
-                  // if the method is bpd compliant check if we have info about bpd activation
-                  if (hasBpdFeature && pot.isSome(bpdEnroll)) {
-                    const bpdRemoteConfig: ReturnType<
-                      typeof bpdRemoteConfigSelector
-                    > = yield* select(bpdRemoteConfigSelector);
-                    // if bdp is active navigate to a screen where it asked to enroll that method in bpd
-                    // otherwise navigate to a screen where is asked to join bpd
-                    if (
-                      bpdEnroll.value &&
-                      isRawCreditCard(maybeAddedWallet.paymentMethod) &&
-                      bpdRemoteConfig?.program_active
-                    ) {
-                      // remove all the screens from the add credit card screen
-                      // beware this is very dangerous if the screen number changes, but is the only way with this legacy flow
-                      yield* call(
-                        NavigationService.dispatchNavigationAction,
-                        StackActions.pop(5)
-                      );
-                    }
-                  }
-                }
                 // signal the completion
                 if (action.payload.onSuccess) {
                   action.payload.onSuccess(maybeAddedWallet);
@@ -785,77 +748,77 @@ export function* watchWalletSaga(
     getPspV2WithCallbacks
   );
 
-  if (bpdEnabled) {
-    const contentClient = ContentClient();
+  // here it used to check for BPD enabled
+  const contentClient = ContentClient();
 
-    // watch for load abi request
-    yield* takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
+  // watch for load abi request
+  yield* takeLatest(loadAbi.request, handleLoadAbi, contentClient.getAbiList);
 
-    // watch for load pans request
-    yield* takeLatest(
-      searchUserPans.request,
-      handleLoadPans,
-      paymentManagerClient.getPans,
-      pmSessionManager
-    );
+  // watch for load pans request
+  yield* takeLatest(
+    searchUserPans.request,
+    handleLoadPans,
+    paymentManagerClient.getPans,
+    pmSessionManager
+  );
 
-    // watch for add pan request
-    yield* takeLatest(
-      addBancomatToWallet.request,
-      handleAddPan,
-      paymentManagerClient.addPans,
-      pmSessionManager
-    );
+  // watch for add pan request
+  yield* takeLatest(
+    addBancomatToWallet.request,
+    handleAddPan,
+    paymentManagerClient.addPans,
+    pmSessionManager
+  );
 
-    // watch for add BPay to Wallet workflow
-    yield* takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
+  // watch for add BPay to Wallet workflow
+  yield* takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
 
-    // watch for BancomatPay search request
-    yield* takeLatest(
-      searchUserBPay.request,
-      handleSearchUserBPay,
-      paymentManagerClient.searchBPay,
-      pmSessionManager
-    );
-    // watch for add BancomatPay to the user's wallet
-    yield* takeLatest(
-      addBPayToWallet.request,
-      handleAddpayToWallet,
-      paymentManagerClient.addBPayToWallet,
-      pmSessionManager
-    );
+  // watch for BancomatPay search request
+  yield* takeLatest(
+    searchUserBPay.request,
+    handleSearchUserBPay,
+    paymentManagerClient.searchBPay,
+    pmSessionManager
+  );
+  // watch for add BancomatPay to the user's wallet
+  yield* takeLatest(
+    addBPayToWallet.request,
+    handleAddpayToWallet,
+    paymentManagerClient.addBPayToWallet,
+    pmSessionManager
+  );
 
-    // watch for CoBadge search request
-    yield* takeLatest(
-      searchUserCoBadge.request,
-      handleSearchUserCoBadge,
-      paymentManagerClient.getCobadgePans,
-      paymentManagerClient.searchCobadgePans,
-      pmSessionManager
-    );
-    // watch for add CoBadge to the user's wallet
-    yield* takeLatest(
-      addCoBadgeToWallet.request,
-      handleAddCoBadgeToWallet,
-      paymentManagerClient.addCobadgeToWallet,
-      pmSessionManager
-    );
-    // watch for CoBadge configuration request
-    yield* takeLatest(
-      loadCoBadgeAbiConfiguration.request,
-      handleLoadCoBadgeConfiguration,
-      contentClient.getCobadgeServices
-    );
+  // watch for CoBadge search request
+  yield* takeLatest(
+    searchUserCoBadge.request,
+    handleSearchUserCoBadge,
+    paymentManagerClient.getCobadgePans,
+    paymentManagerClient.searchCobadgePans,
+    pmSessionManager
+  );
+  // watch for add CoBadge to the user's wallet
+  yield* takeLatest(
+    addCoBadgeToWallet.request,
+    handleAddCoBadgeToWallet,
+    paymentManagerClient.addCobadgeToWallet,
+    pmSessionManager
+  );
+  // watch for CoBadge configuration request
+  yield* takeLatest(
+    loadCoBadgeAbiConfiguration.request,
+    handleLoadCoBadgeConfiguration,
+    contentClient.getCobadgeServices
+  );
 
-    // watch for add co-badge to Wallet workflow
-    yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
+  // watch for add co-badge to Wallet workflow
+  yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
 
-    yield* fork(
-      watchPaypalOnboardingSaga,
-      paymentManagerClient,
-      pmSessionManager
-    );
-  }
+  yield* fork(
+    watchPaypalOnboardingSaga,
+    paymentManagerClient,
+    pmSessionManager
+  );
+  // end of BPDEnabled check
 
   // Check if a user has a bancomat and has not requested a cobadge yet and send
   // the information to mixpanel

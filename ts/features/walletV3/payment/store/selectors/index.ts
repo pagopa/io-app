@@ -8,6 +8,12 @@ import { Transfer } from "../../../../../../definitions/pagopa/ecommerce/Transfe
 const selectWalletPayment = (state: GlobalState) =>
   state.features.wallet.payment;
 
+export const selectWalletPaymentSessionTokenPot = (state: GlobalState) =>
+  selectWalletPayment(state).sessionToken;
+
+export const selectWalletPaymentSessionToken = (state: GlobalState) =>
+  pot.toUndefined(selectWalletPaymentSessionTokenPot(state));
+
 export const walletPaymentRptIdSelector = createSelector(
   selectWalletPayment,
   state => state.rptId
