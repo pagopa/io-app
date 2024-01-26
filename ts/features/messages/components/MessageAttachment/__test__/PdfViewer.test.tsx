@@ -1,29 +1,29 @@
+import * as React from "react";
 import { render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-import React from "react";
-import WebviewComponent from "../WebviewComponent";
-import { appReducer } from "../../store/reducers";
-import { applicationChangeState } from "../../store/actions/application";
-import { GlobalState } from "../../store/reducers/types";
+import { Provider } from "react-redux";
+import { PdfViewer } from "../PdfViewer";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { GlobalState } from "../../../../../store/reducers/types";
 
-describe("WebviewComponent tests", () => {
-  it("snapshot for component", () => {
+describe("PdfViewer", () => {
+  it("should match the snapshot", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const enrichedState = {
       ...globalState,
       persistedPreferences: {
         ...globalState.persistedPreferences,
-        isDesignSystemEnabled: false
+        isDesignSystemEnabled: true
       }
     };
     const mockStore = configureMockStore<GlobalState>();
     const store: ReturnType<typeof mockStore> = mockStore(enrichedState);
     const component = render(
       <Provider store={store}>
-        <WebviewComponent source={{ uri: "https://google.com" }} />
+        <PdfViewer downloadPath={"file:///randomFile.pdf"} />
       </Provider>
     );
-    expect(component).toMatchSnapshot();
+    expect(component.toJSON()).toMatchSnapshot();
   });
 });
