@@ -9,7 +9,6 @@ import I18n from "../../../../../../../i18n";
 import { Dispatch } from "../../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { formatIntegerNumber } from "../../../../../../../utils/stringBuilder";
-import { navigateToBpdTransactions } from "../../../../navigation/actions";
 import { BpdPeriod } from "../../../../store/actions/periods";
 import { BpdBaseShadowBoxLayout } from "./base/BpdBaseShadowBoxLayout";
 import { ProgressBar } from "./base/ProgressBar";
@@ -113,7 +112,7 @@ const TransactionsGraphicalSummary = (props: Props) => (
 const mapStateToProps = (_: GlobalState) => ({});
 
 const mapDispatchToProps = (_: Dispatch) => ({
-  goToTransactions: () => navigateToBpdTransactions()
+  goToTransactions: () => null
 });
 
 export default connect(

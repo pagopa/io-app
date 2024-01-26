@@ -1,10 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-import {
-  bpdApiUrlPrefix,
-  bpdOptInPaymentMethodsEnabled
-} from "../../../../config";
+import { bpdApiUrlPrefix } from "../../../../config";
 import { BackendBpdClient } from "../api/backendBpdClient";
 import { bpdAllData, bpdLoadActivationStatus } from "../store/actions/details";
 import { bpdIbanInsertionStart, bpdUpsertIban } from "../store/actions/iban";
@@ -12,13 +9,8 @@ import {
   bpdDeleteUserFromProgram,
   bpdEnrollUserToProgram,
   bpdOnboardingAcceptDeclaration,
-  bpdOnboardingStart,
-  bpdUpdateOptInStatusMethod
+  bpdOnboardingStart
 } from "../store/actions/onboarding";
-import {
-  optInPaymentMethodsDeletionChoice,
-  optInPaymentMethodsShowChoice
-} from "../store/actions/optInPaymentMethods";
 import {
   bpdPaymentMethodActivation,
   bpdUpdatePaymentMethodActivation
@@ -30,12 +22,7 @@ import {
   bpdTransactionsLoadPage,
   bpdTransactionsLoadRequiredData
 } from "../store/actions/transactions";
-import {
-  deleteCitizen,
-  getCitizenV2,
-  putEnrollCitizenV2,
-  putOptInStatusCitizenV2
-} from "./networking";
+import { deleteCitizen, getCitizenV2, putEnrollCitizenV2 } from "./networking";
 import { loadBpdData } from "./networking/loadBpdData";
 import { loadPeriodsWithInfo } from "./networking/loadPeriodsWithInfo";
 import { patchCitizenIban } from "./networking/patchCitizenIban";
@@ -50,8 +37,6 @@ import { handleTransactionsPage } from "./networking/winning-transactions/transa
 import { handleBpdIbanInsertion } from "./orchestration/insertIban";
 import { handleBpdEnroll } from "./orchestration/onboarding/enrollToBpd";
 import { handleBpdStartOnboardingSaga } from "./orchestration/onboarding/startOnboarding";
-import { optInDeletionChoiceHandler } from "./orchestration/optInPaymentMethods/optInDeletionChoiceHandler";
-import { optInShouldShowChoiceHandler } from "./orchestration/optInPaymentMethods/optInShouldShowChoiceHandler";
 
 // watch all events about bpd
 export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
@@ -83,15 +68,6 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
     patchCitizenIban,
     bpdBackendClient.updatePaymentMethod
   );
-
-  if (bpdOptInPaymentMethodsEnabled) {
-    // update citizen optInStatus
-    yield* takeLatest(
-      bpdUpdateOptInStatusMethod.request,
-      putOptInStatusCitizenV2,
-      bpdBackendClient.enrollCitizenV2IO
-    );
-  }
 
   // load bpd activation status for a specific payment method
   yield* takeEvery(
@@ -153,18 +129,4 @@ export function* watchBonusBpdSaga(bpdBearerToken: string): SagaIterator {
 
   // The user start the insertion / modification of the IBAN associated with bpd program
   yield* takeLatest(getType(bpdIbanInsertionStart), handleBpdIbanInsertion);
-
-  if (bpdOptInPaymentMethodsEnabled) {
-    // The user choice to delete all the payment method with the BPD capability during the opt-in flow
-    yield* takeLatest(
-      optInPaymentMethodsDeletionChoice,
-      optInDeletionChoiceHandler
-    );
-
-    // Checks if the user has already see the opt-in payment method choice screens, and if not run the workunit
-    yield* takeLatest(
-      optInPaymentMethodsShowChoice.request,
-      optInShouldShowChoiceHandler
-    );
-  }
 }

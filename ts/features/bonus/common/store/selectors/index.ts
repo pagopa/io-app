@@ -9,7 +9,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 import { servicesByIdSelector } from "../../../../../store/reducers/entities/services/servicesById";
-import { ID_BPD_TYPE, mapBonusIdFeatureFlag } from "../../utils";
+import { mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 
 /**
@@ -38,11 +38,7 @@ export const supportedAvailableBonusSelector = createSelector(
             O.fromNullable,
             O.getOrElse(() => false)
           );
-          return (
-            b.id_type !== ID_BPD_TYPE &&
-            isFeatureFlagEnabled &&
-            experimentalAndVisibleBonus(b)
-          );
+          return isFeatureFlagEnabled && experimentalAndVisibleBonus(b);
         })
       ),
       []
@@ -99,19 +95,3 @@ export const serviceFromAvailableBonusSelector = (idBonusType: number) =>
         O.chainNullableK(pot.toUndefined)
       )
   );
-
-/**
- * Return the uri of the bonus vacanze image logo
- */
-export const bonusVacanzeLogo = createSelector(
-  availableBonusTypesSelectorFromId(1), // BV ID
-  bonus =>
-    pipe(
-      bonus,
-      O.fromNullable,
-      O.fold(
-        () => undefined,
-        b => b.cover
-      )
-    )
-);

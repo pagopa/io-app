@@ -1,8 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { IORenderHtml } from "../../../../../components/core/IORenderHtml";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -14,8 +14,6 @@ import {
   getBPDMethodsSelector,
   paymentMethodsSelector
 } from "../../../../../store/reducers/wallet/wallets";
-import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
-import { navigateToOptInPaymentMethodsChoiceScreen } from "../../navigation/actions";
 import {
   optInPaymentMethodsCompleted,
   optInPaymentMethodsFailure
@@ -28,7 +26,6 @@ const styles = StyleSheet.create({
   }
 });
 const OptInPaymentMethodsCashbackUpdateScreen = () => {
-  const navigation = useNavigation();
   const dispatch = useIODispatch();
   const bpdPaymentMethods = useIOSelector(getBPDMethodsSelector);
   const paymentMethods = useIOSelector(paymentMethodsSelector);
@@ -40,7 +37,7 @@ const OptInPaymentMethodsCashbackUpdateScreen = () => {
 
   const handleOnContinuePress = () => {
     if (bpdPaymentMethods.length > 0) {
-      navigation.dispatch(navigateToOptInPaymentMethodsChoiceScreen());
+      throw new Error("bpdPaymentMethods should be empty");
     } else {
       dispatch(optInPaymentMethodsCompleted());
     }
