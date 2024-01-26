@@ -18,7 +18,7 @@ type OwnProps = {
 
 type Props = OwnProps & Omit<React.ComponentProps<typeof Pdf>, "source">;
 
-export const DSPdfViewer = ({
+export const PdfViewer = ({
   style,
   downloadPath,
   onError,

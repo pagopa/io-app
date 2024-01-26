@@ -18,7 +18,7 @@ type OwnProps = {
 
 type Props = OwnProps & Omit<React.ComponentProps<typeof Pdf>, "source">;
 
-const PdfViewer = ({
+const LegacyPdfViewer = ({
   style,
   downloadPath,
   onError,
@@ -50,4 +50,4 @@ const PdfViewer = ({
   );
 };
 
-export default PdfViewer;
+export default LegacyPdfViewer;

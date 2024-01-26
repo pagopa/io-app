@@ -5,13 +5,13 @@ import { MessageRouterScreenNavigationParams } from "../screens/MessageRouterScr
 import { MessageDetailScreenNavigationParams } from "../screens/MessageDetailScreen";
 import { EUCovidCertParamsList } from "../../euCovidCert/navigation/params";
 import { PnParamsList } from "../../pn/navigation/params";
-import { DSMessageAttachmentNavigationParams } from "../screens/DSMessageAttachment";
+import { MessageAttachmentNavigationParams } from "../screens/MessageAttachment";
 import { MESSAGES_ROUTES } from "./routes";
 
 export type MessagesParamsList = {
   [MESSAGES_ROUTES.MESSAGE_ROUTER]: MessageRouterScreenNavigationParams;
   [MESSAGES_ROUTES.MESSAGE_DETAIL]: MessageDetailScreenNavigationParams;
-  [MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT]: DSMessageAttachmentNavigationParams;
+  [MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT]: MessageAttachmentNavigationParams;
   [EUCOVIDCERT_ROUTES.MAIN]: NavigatorScreenParams<EUCovidCertParamsList>;
   [PN_ROUTES.MAIN]: NavigatorScreenParams<PnParamsList>;
 };

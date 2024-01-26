@@ -4,12 +4,12 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { DSMessageAttachment } from "../DSMessageAttachment";
+import { MessageAttachment } from "../MessageAttachment";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { downloadAttachment } from "../../store/actions";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 
-describe("DSMessageAttachment", () => {
+describe("MessageAttachment", () => {
   it("Should match the snapshot when there is an error", () => {
     const messageId = "01HMZWRG7549N76017YR8YBSG2" as UIMessageId;
     const attachmentId = "1" as UIAttachmentId;
@@ -50,7 +50,7 @@ const renderScreen = (
   );
 
   return renderScreenWithNavigationStoreContext(
-    DSMessageAttachment,
+    MessageAttachment,
     MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
     { messageId, attachmentId, isPN: false, serviceId },
     store

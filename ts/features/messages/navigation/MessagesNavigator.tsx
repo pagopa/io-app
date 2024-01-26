@@ -9,9 +9,9 @@ import PN_ROUTES from "../../pn/navigation/routes";
 import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
-import { MessageDetailAttachment } from "../screens/MessageAttachment";
+import { LegacyMessageDetailAttachment } from "../screens/LegacyMessageAttachment";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { DSMessageAttachment } from "../screens/DSMessageAttachment";
+import { MessageAttachment } from "../screens/MessageAttachment";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
@@ -46,7 +46,9 @@ export const MessagesStackNavigator = () => {
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
         component={
-          isDesignSystemEnabled ? DSMessageAttachment : MessageDetailAttachment
+          isDesignSystemEnabled
+            ? MessageAttachment
+            : LegacyMessageDetailAttachment
         }
         options={{
           headerShown: isDesignSystemEnabled
