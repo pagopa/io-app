@@ -18,25 +18,25 @@ export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
   action: ActionType<(typeof walletPaymentCalculateFees)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
-
-  if (sessionToken === undefined) {
-    yield* put(
-      walletPaymentCalculateFees.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
-    return;
-  }
-
-  const { paymentMethodId, ...body } = action.payload;
-  const calculateFeesRequest = calculateFees({
-    eCommerceSessionToken: sessionToken,
-    id: paymentMethodId,
-    body
-  });
-
   try {
+    const sessionToken = yield* getOrFetchWalletSessionToken();
+
+    if (sessionToken === undefined) {
+      yield* put(
+        walletPaymentCalculateFees.failure({
+          ...getGenericError(new Error(`Missing session token`))
+        })
+      );
+      return;
+    }
+
+    const { paymentMethodId, ...body } = action.payload;
+    const calculateFeesRequest = calculateFees({
+      eCommerceSessionToken: sessionToken,
+      id: paymentMethodId,
+      body
+    });
+
     const calculateFeesResult = (yield* call(
       withRefreshApiCall,
       calculateFeesRequest,

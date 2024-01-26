@@ -14,23 +14,23 @@ export function* handleWalletPaymentCreateTransaction(
   newTransaction: PaymentClient["newTransaction"],
   action: ActionType<(typeof walletPaymentCreateTransaction)["request"]>
 ) {
-  const sessionToken = yield* getOrFetchWalletSessionToken();
-
-  if (sessionToken === undefined) {
-    yield* put(
-      walletPaymentCreateTransaction.failure({
-        ...getGenericError(new Error(`Missing session token`))
-      })
-    );
-    return;
-  }
-
-  const calculateFeesRequest = newTransaction({
-    body: action.payload,
-    eCommerceSessionToken: sessionToken
-  });
-
   try {
+    const sessionToken = yield* getOrFetchWalletSessionToken();
+
+    if (sessionToken === undefined) {
+      yield* put(
+        walletPaymentCreateTransaction.failure({
+          ...getGenericError(new Error(`Missing session token`))
+        })
+      );
+      return;
+    }
+
+    const calculateFeesRequest = newTransaction({
+      body: action.payload,
+      eCommerceSessionToken: sessionToken
+    });
+
     const calculateFeesResult = (yield* call(
       withRefreshApiCall,
       calculateFeesRequest,
