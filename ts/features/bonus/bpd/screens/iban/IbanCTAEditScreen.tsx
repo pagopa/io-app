@@ -1,18 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { navigateBack } from "../../../../../store/actions/navigation";
-import { bpdRemoteConfigSelector } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { isStrictSome } from "../../../../../utils/pot";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import { navigateToBpdDetails } from "../../navigation/actions";
 import { bpdAllData } from "../../store/actions/details";
 import { bpdSelectPeriod } from "../../store/actions/selectedPeriod";
 import { bpdEnabledSelector } from "../../store/reducers/details/activation";
@@ -114,18 +111,9 @@ const InnerIbanCTAEditScreen = (props: Props) => {
 /**
  * Landing screen from the CTA message that asks to review user's IBAN insertion
  */
-const IbanCTAEditScreen: React.FC<Props> = (props: Props) => {
-  const navigation = useNavigation();
-  if (!props.bpdRemoteConfig?.program_active) {
-    Alert.alert(
-      I18n.t("bonus.bpd.title"),
-      I18n.t("bonus.bpd.iban.bpdCompletedMessage")
-    );
-    navigation.goBack();
-    return null;
-  }
-  return <InnerIbanCTAEditScreen {...props} />;
-};
+const IbanCTAEditScreen: React.FC<Props> = (props: Props) => (
+  <InnerIbanCTAEditScreen {...props} />
+);
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   load: () => {
@@ -134,7 +122,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   goBack: () => navigateBack(),
   navigateToBPDPeriodDetails: (bpdPeriod: BpdPeriodWithInfo) => {
     dispatch(bpdSelectPeriod(bpdPeriod));
-    navigateToBpdDetails(bpdPeriod);
   }
 });
 
@@ -142,7 +129,7 @@ const mapStateToProps = (state: GlobalState) => ({
   bpdLoadState: bpdLastUpdateSelector(state),
   bpdPeriods: bpdPeriodsSelector(state),
   bpdEnabled: bpdEnabledSelector(state),
-  bpdRemoteConfig: bpdRemoteConfigSelector(state)
+  bpdRemoteConfig: {}
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IbanCTAEditScreen);
