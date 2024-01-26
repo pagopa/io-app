@@ -1,9 +1,6 @@
-import { IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-
-const DEFAULT_OVERLAY_OPACITY = 1;
-const DEFAULT_BACKGROUND_COLOR = IOColors.white;
+import { IOColors } from "@pagopa/io-app-design-system";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +13,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: DEFAULT_BACKGROUND_COLOR,
+    backgroundColor: IOColors.white,
     zIndex: 1,
     justifyContent: "center"
   },
@@ -26,9 +23,10 @@ const styles = StyleSheet.create({
 });
 
 type Props = Readonly<{
+  backgroundColor?: string;
+  children?: React.ReactNode;
   foreground?: React.ReactNode;
   opacity?: number;
-  backgroundColor?: string;
 }>;
 
 /**
@@ -36,28 +34,26 @@ type Props = Readonly<{
  *
  * Used for loading spinners and error screens.
  */
-export const Overlay: React.SFC<Props> = props => {
-  const {
-    opacity = DEFAULT_OVERLAY_OPACITY,
-    backgroundColor = DEFAULT_BACKGROUND_COLOR
-  } = props;
-  return (
-    <View style={styles.container} testID={"overlayComponent"}>
-      {props.foreground && (
-        <View
-          style={[
-            styles.overlay,
-            {
-              opacity,
-              backgroundColor
-            }
-          ]}
-        >
-          {props.foreground}
-        </View>
-      )}
-
-      <View style={[styles.container, styles.back]}>{props.children}</View>
-    </View>
-  );
-};
+export const Overlay = ({
+  backgroundColor = IOColors.white,
+  children,
+  foreground,
+  opacity = 1
+}: Props) => (
+  <View style={styles.container} testID={"overlayComponent"}>
+    {foreground && (
+      <View
+        style={[
+          styles.overlay,
+          {
+            opacity,
+            backgroundColor
+          }
+        ]}
+      >
+        {foreground}
+      </View>
+    )}
+    <View style={[styles.container, styles.back]}>{children}</View>
+  </View>
+);
