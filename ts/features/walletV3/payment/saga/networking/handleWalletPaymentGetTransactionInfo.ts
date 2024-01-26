@@ -35,7 +35,7 @@ export function* handleWalletPaymentGetTransactionInfo(
       withRefreshApiCall,
       getTransactionInfoRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof getTransactionInfo>;
+    )) as SagaCallReturnType<typeof getTransactionInfo>;
 
     yield* put(
       pipe(
