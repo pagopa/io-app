@@ -809,6 +809,27 @@ export function* watchWalletSaga(
     handleLoadCoBadgeConfiguration,
     contentClient.getCobadgeServices
   );
+  // watch for CoBadge search request
+  yield* takeLatest(
+    searchUserCoBadge.request,
+    handleSearchUserCoBadge,
+    paymentManagerClient.getCobadgePans,
+    paymentManagerClient.searchCobadgePans,
+    pmSessionManager
+  );
+  // watch for add CoBadge to the user's wallet
+  yield* takeLatest(
+    addCoBadgeToWallet.request,
+    handleAddCoBadgeToWallet,
+    paymentManagerClient.addCobadgeToWallet,
+    pmSessionManager
+  );
+  // watch for CoBadge configuration request
+  yield* takeLatest(
+    loadCoBadgeAbiConfiguration.request,
+    handleLoadCoBadgeConfiguration,
+    contentClient.getCobadgeServices
+  );
 
   // watch for add co-badge to Wallet workflow
   yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletSaga);

@@ -36,9 +36,11 @@ import {
   walletPaymentAmountSelector,
   walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
-  walletPaymentPspListSelector
+  walletPaymentPspListSelector,
+  walletPaymentTransactionTransferListSelector
 } from "../store/selectors";
 import { WalletPaymentPspSortType } from "../types";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentPickPspScreen = () => {
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
@@ -51,8 +53,16 @@ const WalletPaymentPickPspScreen = () => {
   const [sortType, setSortType] =
     React.useState<WalletPaymentPspSortType>("default");
 
+  const transactionTransferListPot = useIOSelector(
+    walletPaymentTransactionTransferListSelector
+  );
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
+
   const isLoading = pot.isLoading(pspListPot);
+  const isError = pot.isError(pspListPot);
+
+  const canContinue = O.isSome(selectedPspOption);
 
   const sortedPspList = pipe(
     pot.toOption(pspListPot),
@@ -60,9 +70,16 @@ const WalletPaymentPickPspScreen = () => {
     O.toUndefined
   );
 
-  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
-
-  const canContinue = O.isSome(selectedPspOption);
+  React.useEffect(() => {
+    if (isError) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+        params: {
+          outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
+        }
+      });
+    }
+  }, [isError, navigation]);
 
   useHeaderSecondLevel({
     title: "",
@@ -76,18 +93,26 @@ const WalletPaymentPickPspScreen = () => {
       pipe(
         sequenceT(O.Monad)(
           pot.toOption(paymentAmountPot),
+          pot.toOption(transactionTransferListPot),
           selectedWalletOption
         ),
-        O.map(([paymentAmountInCents, selectedWallet]) => {
+        O.map(([paymentAmountInCents, transferList, selectedWallet]) => {
           dispatch(
             walletPaymentCalculateFees.request({
+              paymentMethodId: selectedWallet.paymentMethodId,
               walletId: selectedWallet.walletId,
-              paymentAmountInCents
+              paymentAmount: paymentAmountInCents,
+              transferList
             })
           );
         })
       );
-    }, [dispatch, paymentAmountPot, selectedWalletOption])
+    }, [
+      dispatch,
+      paymentAmountPot,
+      selectedWalletOption,
+      transactionTransferListPot
+    ])
   );
 
   React.useEffect(
@@ -172,13 +197,17 @@ const WalletPaymentPickPspScreen = () => {
 
   return (
     <GradientScrollView
-      primaryActionProps={{
-        label: I18n.t("wallet.payment.psp.continueButton"),
-        accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-        onPress: handleContinue,
-        disabled: isLoading || !canContinue,
-        loading: isLoading
-      }}
+      primaryActionProps={
+        canContinue
+          ? {
+              label: I18n.t("wallet.payment.psp.continueButton"),
+              accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+              onPress: handleContinue,
+              disabled: isLoading,
+              loading: isLoading
+            }
+          : undefined
+      }
     >
       <SelectPspHeadingContent />
       {!isLoading && (
