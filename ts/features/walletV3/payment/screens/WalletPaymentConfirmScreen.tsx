@@ -29,7 +29,10 @@ import {
   walletPaymentPickedPspSelector,
   walletPaymentTransactionSelector
 } from "../store/selectors";
-import { WalletPaymentOutcome } from "../types/PaymentOutcomeEnum";
+import {
+  WalletPaymentOutcome,
+  WalletPaymentOutcomeEnum
+} from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentConfirmScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -67,14 +70,17 @@ const WalletPaymentConfirmScreen = () => {
       )
     );
 
-  const handleAuthorizationOutcome = (outcome: WalletPaymentOutcome) => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
-      params: {
-        outcome
-      }
-    });
-  };
+  const handleAuthorizationOutcome = React.useCallback(
+    (outcome: WalletPaymentOutcome) => {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+        params: {
+          outcome
+        }
+      });
+    },
+    [navigation]
+  );
 
   const {
     isLoading: isAuthUrlLoading,
@@ -82,16 +88,19 @@ const WalletPaymentConfirmScreen = () => {
     isPendingAuthorization,
     startPaymentAuthorizaton
   } = useWalletPaymentAuthorizationModal({
-    onAuthorizationOutcome: handleAuthorizationOutcome
+    onAuthorizationOutcome: handleAuthorizationOutcome,
+    onDismiss: () =>
+      handleAuthorizationOutcome(WalletPaymentOutcomeEnum.CANCELED_BY_USER)
   });
 
   const isLoading = isAuthUrlLoading || isPendingAuthorization;
   const isError = isAuthUrlError;
 
-  if (isError) {
-    // TODO: Failure handling (https://pagopa.atlassian.net/browse/IOBP-471)
-    return <></>;
-  }
+  React.useEffect(() => {
+    if (isError) {
+      handleAuthorizationOutcome(WalletPaymentOutcomeEnum.GENERIC_ERROR);
+    }
+  }, [isError, handleAuthorizationOutcome]);
 
   const LoadingContent = () => (
     <SafeAreaView style={styles.loadingContainer}>
