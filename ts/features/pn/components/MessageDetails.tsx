@@ -10,8 +10,8 @@ import { MessageDetailsContent } from "./MessageDetailsContent";
 type MessageDetailsProps = {
   message: PNMessage;
   messageId: UIMessageId;
-  service: ServicePublic | undefined;
-  payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
+  service?: ServicePublic;
+  payments?: ReadonlyArray<NotificationPaymentInfo>;
 };
 
 export const MessageDetails = ({ message, service }: MessageDetailsProps) => (
