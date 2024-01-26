@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { UIMessageId } from "../../messages/types";
 import { PNMessage } from "../store/types/types";
