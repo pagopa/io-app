@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Timeline component should match the snapshot 1`] = `
+exports[`Timeline component should match the snapshot with default props 1`] = `
 Array [
   <View
     accessible={true}
@@ -840,3 +840,5 @@ Array [
   </View>,
 ]
 `;
+
+exports[`Timeline component should match the snapshot with empty data 1`] = `null`;
