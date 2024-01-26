@@ -7,11 +7,9 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useStore } from "react-redux";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../messages/types";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -39,12 +37,6 @@ import { selectedPaymentIdSelector } from "../store/reducers/payments";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import genericErrorIcon from "../../../../img/wallet/errors/generic-error-icon.png";
-
-export type MessageDetailsScreenNavigationParams = Readonly<{
-  messageId: UIMessageId;
-  serviceId: ServiceId;
-  firstTimeOpening: boolean;
-}>;
 
 export const LegacyMessageDetailsScreen = (
   props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
