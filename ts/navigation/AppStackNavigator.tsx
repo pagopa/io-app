@@ -7,20 +7,15 @@ import {
 import * as React from "react";
 import { useRef } from "react";
 import { View } from "react-native";
+import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import {
-  bpdEnabled,
-  bpdOptInPaymentMethodsEnabled,
-  fimsEnabled,
-  myPortalEnabled,
-  svEnabled
-} from "../config";
-import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
+import { fimsEnabled, myPortalEnabled, svEnabled } from "../config";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { fimsLinkingOptions } from "../features/fims/navigation/navigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import IngressScreen from "../screens/ingress/IngressScreen";
 import { startApplicationInitialization } from "../store/actions/application";
@@ -28,19 +23,16 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import {
-  bpdRemoteConfigSelector,
   isCGNEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
+import { IONavigationLightTheme } from "../theme/navigations";
 import { isTestEnv } from "../utils/environment";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
-import { IONavigationLightTheme } from "../theme/navigations";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -90,10 +82,6 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
 
-  const bpdRemoteConfig = useIOSelector(bpdRemoteConfigSelector);
-  const isOptInPaymentMethodsEnabled =
-    bpdRemoteConfig?.opt_in_payment_methods_v2 && bpdOptInPaymentMethodsEnabled;
-
   const linking: LinkingOptions = {
     enabled: !isTestEnv, // disable linking in test env
     prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
@@ -122,18 +110,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
           screens: {
             [ROUTES.PAYMENTS_HISTORY_SCREEN]: "payments-history",
             [ROUTES.CREDIT_CARD_ONBOARDING_ATTEMPTS_SCREEN]:
-              "card-onboarding-attempts",
-            ...(bpdEnabled && {
-              [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "bpd-iban-update"
-            }),
-            ...(isOptInPaymentMethodsEnabled && {
-              [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.MAIN]: {
-                path: "bpd-opt-in",
-                screens: {
-                  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS.CHOICE]: "choice"
-                }
-              }
-            })
+              "card-onboarding-attempts"
           }
         },
         [ROUTES.SERVICES_NAVIGATOR]: {

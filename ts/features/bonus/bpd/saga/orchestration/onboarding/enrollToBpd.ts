@@ -2,8 +2,6 @@ import { CommonActions } from "@react-navigation/native";
 import { call, put, race, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
-import { navigateToBpdOnboardingLoadActivate } from "../../../navigation/actions";
-import BPD_ROUTES from "../../../navigation/routes";
 import { bpdAllData } from "../../../store/actions/details";
 import { bpdIbanInsertionStart } from "../../../store/actions/iban";
 import {
@@ -11,8 +9,7 @@ import {
   bpdOnboardingCancel
 } from "../../../store/actions/onboarding";
 
-export const isLoadingScreen = (screenName: string) =>
-  screenName === BPD_ROUTES.ONBOARDING.LOAD_ACTIVATE_BPD;
+export const isLoadingScreen = () => true;
 
 /**
  * Old style orchestrator, please don't use this as reference for future development
@@ -22,9 +19,9 @@ function* enrollToBpdWorker() {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
     yield* call(NavigationService.getCurrentRouteName);
 
-  if (currentRoute !== undefined && !isLoadingScreen(currentRoute)) {
+  if (currentRoute !== undefined && !isLoadingScreen()) {
     // show the loading page while communicate with the server for the activation
-    yield* call(navigateToBpdOnboardingLoadActivate);
+    throw new Error("Not in the loading screen");
   }
 
   // enroll the user and wait for the result

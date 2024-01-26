@@ -2,9 +2,9 @@
  * Implements the reducers for BackendServicesState.
  */
 
-import { Platform } from "react-native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { Platform } from "react-native";
 
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -13,9 +13,8 @@ import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { BancomatPayConfig } from "../../../definitions/content/BancomatPayConfig";
 import { BarcodesScannerConfig } from "../../../definitions/content/BarcodesScannerConfig";
-import { BpdConfig } from "../../../definitions/content/BpdConfig";
-import { Sections } from "../../../definitions/content/Sections";
 import { SectionStatus } from "../../../definitions/content/SectionStatus";
+import { Sections } from "../../../definitions/content/Sections";
 import { UaDonationsBanner } from "../../../definitions/content/UaDonationsBanner";
 import { UaDonationsConfig } from "../../../definitions/content/UaDonationsConfig";
 import {
@@ -27,13 +26,13 @@ import {
   uaDonationsEnabled
 } from "../../config";
 import { LocalizedMessageKeys } from "../../i18n";
-import { isStringNullyOrEmpty } from "../../utils/strings";
 import { getAppVersion, isVersionSupported } from "../../utils/appVersion";
+import { isStringNullyOrEmpty } from "../../utils/strings";
 import { backendStatusLoadSuccess } from "../actions/backendStatus";
 import { Action } from "../actions/types";
 
-import { GlobalState } from "./types";
 import { isIdPayTestEnabledSelector } from "./persistedPreferences";
+import { GlobalState } from "./types";
 
 export type SectionStatusKey = keyof Sections;
 /** note that this state is not persisted so Option type is accepted
@@ -70,26 +69,6 @@ export const sectionStatusSelector = (sectionStatusKey: SectionStatusKey) =>
         O.toUndefined
       )
   );
-
-export const bpdRankingEnabledSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): boolean | undefined =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.bpd_ranking_v2),
-      O.toUndefined
-    )
-);
-
-export const bpdRemoteConfigSelector = createSelector(
-  backendStatusSelector,
-  (backendStatus): BpdConfig | undefined =>
-    pipe(
-      backendStatus,
-      O.map(bs => bs.config.bpd),
-      O.toUndefined
-    )
-);
 
 export const cgnMerchantVersionSelector = createSelector(
   backendStatusSelector,
