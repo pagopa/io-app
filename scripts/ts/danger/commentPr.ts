@@ -2,19 +2,27 @@ import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
 import * as E from "fp-ts/lib/Either";
 import { Errors } from "io-ts";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { GenericTicket, GenericTicketType } from "../common/ticket/types";
-import { GenericTicketRetrievalResults } from "./utils/titleParser";
+import {
+  JiraTicketRetrievalResults,
+  JiraIssueType,
+  RemoteJiraTicket,
+  RemoteJiraTicketParent
+} from "../common/jiraTicket/types";
+import { jiraTicketBaseUrl } from "../common/jiraTicket";
 
 declare const danger: DangerDSLType;
 
 export declare function warn(message: string): void;
 export declare function markdown(message: string): void;
 
-const StoryEmoji: Record<GenericTicketType, string> = {
-  feat: "🌟",
-  fix: "🐞",
-  chore: "⚙️",
-  epic: "⚡"
+const StoryEmoji: Record<JiraIssueType, string> = {
+  Epic: "⚡",
+  Story: "🌟",
+  Task: "⚙️",
+  Subtask: "⚙️",
+  "Sub-task": "⚙️",
+  Sottotask: "⚙️",
+  Bug: "🐞"
 };
 
 /**
@@ -32,16 +40,17 @@ const warningNoTicket = () => {
  * Comments with the ticket type, id and title
  * @param ticket
  */
-const renderTicket = (ticket: GenericTicket) =>
-  `${StoryEmoji[ticket.type]} [${ticket.idPrefix ? ticket.idPrefix : ""}${
-    ticket.id
-  }](${ticket.url}): ${ticket.title}`;
+const renderTicket = (ticket: RemoteJiraTicket | RemoteJiraTicketParent) => {
+  const ticketType = StoryEmoji[ticket.fields.issuetype.name];
+  const ticketUrl = new URL(ticket.key, jiraTicketBaseUrl).toString();
+  return `${ticketType} [${ticket.key}](${ticketUrl}): ${ticket.fields.summary}`;
+};
 
-const renderTickets = (ticketList: ReadonlyArray<GenericTicket>) => {
+const renderTickets = (ticketList: ReadonlyArray<RemoteJiraTicket>) => {
   const ticketListToString = ticketList
     .map(s => {
-      const subtask = s.parent
-        ? ` \n _subtask of_\n     * ${renderTicket(s.parent)}`
+      const subtask = s.fields.parent
+        ? ` \n _subtask of_\n     * ${renderTicket(s.fields.parent)}`
         : "";
       return `  * ${renderTicket(s)}${subtask}`;
     })
@@ -70,7 +79,7 @@ const renderFailure = (errors: ReadonlyArray<Error | Errors>) => {
  * @param foundTicket
  */
 export const commentPrWithTicketsInfo = (
-  foundTicket: GenericTicketRetrievalResults
+  foundTicket: JiraTicketRetrievalResults
 ) => {
   if (foundTicket.length === 0) {
     warningNoTicket();
