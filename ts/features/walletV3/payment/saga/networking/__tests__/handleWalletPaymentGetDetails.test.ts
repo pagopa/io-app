@@ -7,10 +7,12 @@ import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { walletPaymentGetDetails } from "../../../store/actions/networking";
+import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 import { handleWalletPaymentGetDetails } from "../handleWalletPaymentGetDetails";
 
 describe("Test handleWalletPaymentGetDetails saga", () => {
   const rptId = "12345" as RptId;
+  const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
     walletPaymentGetDetails.success
@@ -26,6 +28,8 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       walletPaymentGetDetails.request(rptId)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetPaymentRequestInfo(),
@@ -48,6 +52,8 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       walletPaymentGetDetails.request(rptId)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetPaymentRequestInfo(),
@@ -74,6 +80,8 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       walletPaymentGetDetails.request(rptId)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetPaymentRequestInfo(),

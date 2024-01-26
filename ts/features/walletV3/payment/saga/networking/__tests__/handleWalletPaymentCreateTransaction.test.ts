@@ -11,6 +11,7 @@ import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { walletPaymentCreateTransaction } from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
+import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
 describe("Test handleWalletPaymentCreateTransaction saga", () => {
   const newTransactionPayload: NewTransactionRequest = {
@@ -21,6 +22,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       }
     ]
   };
+  const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
     walletPaymentCreateTransaction.success
@@ -43,6 +45,8 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       walletPaymentCreateTransaction.request(newTransactionPayload)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockNewTransaction(),
@@ -65,6 +69,8 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       walletPaymentCreateTransaction.request(newTransactionPayload)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockNewTransaction(),
@@ -91,6 +97,8 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       walletPaymentCreateTransaction.request(newTransactionPayload)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockNewTransaction(),
