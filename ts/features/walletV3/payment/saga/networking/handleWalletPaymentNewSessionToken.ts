@@ -11,34 +11,35 @@ import { walletPaymentNewSessionToken } from "../../store/actions/networking";
 import { selectWalletPaymentSessionToken } from "../../store/selectors";
 
 /**
- * Retrieves the eCommerceSessionToken from the Redux store.
+ * Retrieves the eCommerce session token from the Redux store.
  * If the token is not present, this function dispatches a request action
  * and waits for the data to be available. If successful, it returns the token.
  * In case of failure or timeout, the function returns undefined.
- * @param timeoutMs
- * @returns
+ *
+ * @param timeoutMs - The timeout duration in milliseconds for waiting on the session token request.
+ * @returns The eCommerce session token if available, otherwise undefined.
  */
 export function* getOrFetchWalletSessionToken(timeoutMs: number = 3000) {
+  // Attempt to retrieve the session token from the Redux store
   const sessionToken: ReturnType<typeof selectWalletPaymentSessionToken> =
     yield* select(selectWalletPaymentSessionToken);
 
+  // If the session token is already present in the store, return it
   if (sessionToken) {
-    // If the session token is already present in the store just return it
     return sessionToken;
   }
 
-  // Otherwise a new request of the session token is dispatches
+  // If the session token is not present, dispatch a new request action
   yield* put(walletPaymentNewSessionToken.request());
 
-  // We wait for the request to end, either is success or is failure
-  // We set a timeout of timeoutMs milliseconds
+  // Wait for the request to end, either in success or failure, with a timeout
   const { data } = yield* race({
     data: take(walletPaymentNewSessionToken.success),
     failure: take(walletPaymentNewSessionToken.failure),
     timeout: delay(timeoutMs)
   });
 
-  // If the success action is the first dispatches we have de new session token
+  // If the success action is dispatched, retrieve the new session token
   return data?.payload.sessionToken;
 }
 
