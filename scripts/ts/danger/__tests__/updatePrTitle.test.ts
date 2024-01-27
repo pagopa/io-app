@@ -14,7 +14,7 @@ describe("changelog", () => {
   const storyTicket = getJiraTicketExample("Story");
   const subTaskTicket = getJiraTicketExample("Sub-task");
   const bugTicket = getJiraTicketExample("Bug");
-  const storyCrossTicket = getJiraTicketExample("Story", "IACROSS");
+  const storyCrossTicket = getJiraTicketExample("Story", "IOAPPX");
   const storyFciTicket = getJiraTicketExample("Story", "SFEQS");
 
   describe("allStoriesSameType", () => {
