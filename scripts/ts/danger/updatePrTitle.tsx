@@ -41,7 +41,7 @@ const storyOrder = new Map<JiraIssueType, number>([
 
 // a list of project ids associated with a specific scope
 const projectToScope = new Map<string, string>([
-  ["IACROSS", "Cross"],
+  ["IOAPPX", "Cross"],
   ["SFEQS", "Firma con IO"],
   ["IODPAY", "IDPay"]
 ]);
