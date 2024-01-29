@@ -26,6 +26,7 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
 import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView";
 import { OnboardingOutcomeEnum, OnboardingResult } from "../types";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 const WalletOnboardingSelectPaymentMethodScreen = () => {
   const navigation = useNavigation<WalletOnboardingStackNavigation>();
@@ -46,7 +47,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
     O.getOrElseW(() => [])
   );
 
-  const { startOnboarding } = useWalletOnboardingWebView({
+  const { startOnboarding, isLoading } = useWalletOnboardingWebView({
     onSuccess: (outcome, walletId) =>
       navigateToFeedbackPage({ status: "SUCCESS", outcome, walletId }),
     onFailure: outcome =>
@@ -78,29 +79,31 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
   };
 
   return (
-    <TopScreenComponent goBack>
-      {pot.isError(paymentMethodsPot) ? (
-        <OperationResultScreenContent
-          pictogram="umbrellaNew"
-          title={I18n.t("genericError")}
-          subtitle={I18n.t("global.genericError")}
-          action={{
-            label: I18n.t("global.genericRetry"),
-            accessibilityLabel: I18n.t("global.genericRetry"),
-            onPress: () => dispatch(walletGetPaymentMethods.request())
-          }}
-        />
-      ) : (
-        <SafeAreaView style={IOStyles.flex}>
-          <WalletOnboardingPaymentMethodsList
-            header={<PaymentMethodsHeading />}
-            isLoading={isLoadingPaymentMethods}
-            onSelectPaymentMethod={handleSelectedPaymentMethod}
-            paymentMethods={availablePaymentMethods}
+    <LoadingSpinnerOverlay isLoading={isLoading}>
+      <TopScreenComponent goBack>
+        {pot.isError(paymentMethodsPot) ? (
+          <OperationResultScreenContent
+            pictogram="umbrellaNew"
+            title={I18n.t("genericError")}
+            subtitle={I18n.t("global.genericError")}
+            action={{
+              label: I18n.t("global.genericRetry"),
+              accessibilityLabel: I18n.t("global.genericRetry"),
+              onPress: () => dispatch(walletGetPaymentMethods.request())
+            }}
           />
-        </SafeAreaView>
-      )}
-    </TopScreenComponent>
+        ) : (
+          <SafeAreaView style={IOStyles.flex}>
+            <WalletOnboardingPaymentMethodsList
+              header={<PaymentMethodsHeading />}
+              isLoading={isLoadingPaymentMethods}
+              onSelectPaymentMethod={handleSelectedPaymentMethod}
+              paymentMethods={availablePaymentMethods}
+            />
+          </SafeAreaView>
+        )}
+      </TopScreenComponent>
+    </LoadingSpinnerOverlay>
   );
 };
 
