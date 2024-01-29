@@ -3,28 +3,28 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import image from "../../../../img/servicesStatus/error-detail-icon.png";
-import { H2 } from "../../../components/core/typography/H2";
-import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import I18n from "../../../i18n";
+import image from "../../../../../img/servicesStatus/error-detail-icon.png";
+import { H2 } from "../../../../components/core/typography/H2";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
-} from "../store/actions";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { downloadPotForMessageAttachmentSelector } from "../store/reducers/downloads";
-import { UIAttachment, UIMessageId } from "../types";
-import variables from "../../../theme/variables";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { isIos } from "../../../utils/platform";
-import { isStrictNone } from "../../../utils/pot";
-import { share } from "../../../utils/share";
-import { showToast } from "../../../utils/showToast";
-import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
-import PdfViewer from "./MessageDetail/PdfViewer";
+} from "../../store/actions";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { downloadPotForMessageAttachmentSelector } from "../../store/reducers/downloads";
+import { UIAttachment, UIMessageId } from "../../types";
+import variables from "../../../../theme/variables";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { isIos } from "../../../../utils/platform";
+import { isStrictNone } from "../../../../utils/pot";
+import { share } from "../../../../utils/share";
+import { showToast } from "../../../../utils/showToast";
+import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
+import LegacyPdfViewer from "./LegacyPdfViewer";
 
 type Props = {
   messageId: UIMessageId;
@@ -86,7 +86,7 @@ const renderPDF = (
         I18n.t("messagePDFPreview.errors.previewing.body")
       )
     ) : (
-      <PdfViewer
+      <LegacyPdfViewer
         downloadPath={downloadPath}
         onError={onPDFLoadingError}
         onLoadComplete={props.onLoadComplete}
@@ -179,7 +179,7 @@ const renderFooter = (
     />
   );
 
-export const MessageAttachmentPreview = ({
+export const LegacyMessageAttachmentPreview = ({
   enableDownloadAttachment = true,
   ...props
 }: Props): React.ReactElement => {
