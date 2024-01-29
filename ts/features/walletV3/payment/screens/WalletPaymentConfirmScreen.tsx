@@ -63,7 +63,7 @@ const WalletPaymentConfirmScreen = () => {
         startPaymentAuthorizaton({
           paymentAmount: paymentDetail.amount as AmountEuroCents,
           paymentFees: (selectedPsp.taxPayerFee ?? 0) as AmountEuroCents,
-          pspId: selectedPsp.idBundle ?? "",
+          pspId: selectedPsp.idPsp ?? "",
           transactionId: transaction.transactionId,
           walletId: selectedMethod.walletId
         })
