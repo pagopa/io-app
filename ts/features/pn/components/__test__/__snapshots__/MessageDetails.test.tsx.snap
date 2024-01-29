@@ -333,7 +333,7 @@ exports[`MessageDetails component should match the snapshot 1`] = `
                             testID="message-header-subject"
                             weight="SemiBold"
                           >
-                            This is the message subject
+                            ######## subject ########
                           </Text>
                           <View
                             style={
@@ -431,7 +431,7 @@ exports[`MessageDetails component should match the snapshot 1`] = `
                             }
                             weight="Regular"
                           >
-                            Message abstract
+                            ######## abstract ########
                           </Text>
                         </View>
                       </View>
