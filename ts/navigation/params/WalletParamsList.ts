@@ -60,7 +60,4 @@ export type WalletParamsList = {
   [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingCoBadgeParamsList>;
   [PAYPAL_ROUTES.ONBOARDING
     .MAIN]: NavigatorScreenParams<PaymentMethodOnboardingPayPalParamsList>;
-
-  [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: undefined;
-  [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: undefined;
 };

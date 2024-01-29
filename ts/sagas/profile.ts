@@ -16,8 +16,6 @@ import { UpdateProfile412ErrorTypesEnum } from "../../definitions/backend/Update
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { BackendClient } from "../api/backend";
 import { tosVersion } from "../config";
-import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
-import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
 import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
@@ -326,21 +324,6 @@ function* startEmailValidationProcessSaga(
 }
 
 function* handleLoadBonusBeforeRemoveAccount() {
-  const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield* select(
-    bpdEnabledSelector
-  );
-
-  // check if there are some bpd
-  if (pot.isNone(bpdActive)) {
-    // Load the bpd data and wait for a response
-    yield* put(bpdLoadActivationStatus.request());
-
-    yield* take([
-      bpdLoadActivationStatus.success,
-      bpdLoadActivationStatus.failure
-    ]);
-  }
-
   const cgnActive: ReturnType<typeof cgnDetailSelector> = yield* select(
     cgnDetailSelector
   );

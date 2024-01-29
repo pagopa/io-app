@@ -1,19 +1,15 @@
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import {
+  WorkUnitHandler,
   executeWorkUnit,
-  withResetNavigationStack,
-  WorkUnitHandler
+  withResetNavigationStack
 } from "../../../../../../sagas/workUnit";
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
-import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
 
-import {
-  navigateToActivateBpdOnNewBPay,
-  navigateToOnboardingBPaySearchStartScreen
-} from "../../navigation/action";
+import { navigateToOnboardingBPaySearchStartScreen } from "../../navigation/action";
 import WALLET_ONBOARDING_BPAY_ROUTES from "../../navigation/routes";
 import {
   walletAddBPayBack,
@@ -21,7 +17,6 @@ import {
   walletAddBPayCompleted,
   walletAddBPayFailure
 } from "../../store/actions";
-import { onboardingBPayAddedAccountSelector } from "../../store/reducers/addedBPay";
 
 /**
  * Define the workflow that allows the user to add BPay accounts to the wallet.
@@ -42,9 +37,9 @@ function* bPayWorkUnit() {
 }
 
 /**
- * Chain the add BPay to wallet with "activate bpd on the new BPay accounts"
+ * add Bpay to wallet saga
  */
-export function* addBPayToWalletAndActivateBpd() {
+export function* addBPayToWalletSaga() {
   const initialScreenName: ReturnType<
     typeof NavigationService.getCurrentRouteName
   > = yield* call(NavigationService.getCurrentRouteName);
@@ -67,14 +62,5 @@ export function* addBPayToWalletAndActivateBpd() {
   if (res === "completed") {
     // refresh wallets list
     yield* put(fetchWalletsRequest());
-    // read the new added BPay
-    const bPayAdded: ReturnType<typeof onboardingBPayAddedAccountSelector> =
-      yield* select(onboardingBPayAddedAccountSelector);
-
-    yield* call(
-      activateBpdOnNewPaymentMethods,
-      bPayAdded,
-      navigateToActivateBpdOnNewBPay
-    );
   }
 }
