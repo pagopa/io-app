@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -31,8 +30,6 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { showToast } from "../../../../utils/showToast";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../../../bonus/common/utils";
-import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding";
-import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import {
@@ -47,7 +44,7 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type BonusUtils = {
-  logo?: typeof cashbackLogo;
+  logo?: typeof cgnLogo;
   handler: (bonus: BonusAvailable) => void;
 };
 
@@ -193,13 +190,11 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  bpdActiveBonus: bpdEnabledSelector(state),
   cgnActiveBonus: isCgnEnrolledSelector(state),
   availableBonusesList: supportedAvailableBonusSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
   startCgnActivation: () => dispatch(cgnActivationStart())
 });
 

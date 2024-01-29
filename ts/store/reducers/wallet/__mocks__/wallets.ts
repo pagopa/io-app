@@ -11,8 +11,7 @@ export const walletsV2_1 = {
       createDate: "2021-08-28",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 23190,
@@ -39,8 +38,7 @@ export const walletsV2_1 = {
       createDate: "2021-07-22",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 29371,
@@ -67,8 +65,7 @@ export const walletsV2_1 = {
       createDate: "2020-12-28",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 23216,
@@ -100,8 +97,7 @@ export const walletsV2_2 = {
       createDate: "2021-08-28",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 23190,
@@ -128,8 +124,7 @@ export const walletsV2_2 = {
       createDate: "2020-12-28",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 23216,
@@ -162,8 +157,7 @@ export const walletsV2_3 = {
       createDate: "2021-10-22",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 20341,
@@ -190,8 +184,7 @@ export const walletsV2_3 = {
       createDate: "2021-04-15",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 21750,
@@ -218,8 +211,7 @@ export const walletsV2_3 = {
       createDate: "2021-07-08",
       enableableFunctions: [
         EnableableFunctionsEnum.FA,
-        EnableableFunctionsEnum.pagoPA,
-        EnableableFunctionsEnum.BPD
+        EnableableFunctionsEnum.pagoPA
       ],
       favourite: false,
       idWallet: 25572,
@@ -243,8 +235,7 @@ export const rawBPay: RawBPayPaymentMethod = {
   createDate: "2021-07-08",
   enableableFunctions: [
     EnableableFunctionsEnum.FA,
-    EnableableFunctionsEnum.pagoPA,
-    EnableableFunctionsEnum.BPD
+    EnableableFunctionsEnum.pagoPA
   ],
   favourite: false,
   idWallet: 1,
@@ -267,8 +258,7 @@ export const mockCreditCardPaymentMethod: PaymentMethod = {
   createDate: "2021-07-08",
   enableableFunctions: [
     EnableableFunctionsEnum.FA,
-    EnableableFunctionsEnum.pagoPA,
-    EnableableFunctionsEnum.BPD
+    EnableableFunctionsEnum.pagoPA
   ],
   favourite: false,
   idWallet: 25572,
