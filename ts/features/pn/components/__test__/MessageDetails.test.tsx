@@ -11,18 +11,41 @@ import { PNMessage } from "../../store/types/types";
 import { thirdPartyMessage } from "../../__mocks__/message";
 import { toPNMessage } from "../../store/types/transformers";
 import { UIMessageId } from "../../../messages/types";
+import I18n from "../../../../i18n";
 
-const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined);
+const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
 describe("MessageDetails component", () => {
-  it("should match the snapshot", () => {
+  it("should match the snapshot with default props", () => {
     const { component } = renderComponent(
       generateComponentProperties(
         thirdPartyMessage.id as UIMessageId,
-        pnMessage!
+        pnMessage
       )
     );
     expect(component).toMatchSnapshot();
+  });
+
+  it("should display the legalMessage tag", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(
+        thirdPartyMessage.id as UIMessageId,
+        pnMessage
+      )
+    );
+    expect(
+      component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
+    ).not.toBeNull();
+  });
+
+  it("should display the attachment tag if there are attachments", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(
+        thirdPartyMessage.id as UIMessageId,
+        pnMessage
+      )
+    );
+    expect(component.queryByTestId("attachment-tag")).not.toBeNull();
   });
 });
 
