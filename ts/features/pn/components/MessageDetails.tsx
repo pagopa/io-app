@@ -44,12 +44,12 @@ export const MessageDetails = ({ message, service }: MessageDetailsProps) => {
             text={I18n.t("features.pn.details.badge.legalValue")}
             variant="legalMessage"
           />
-          {attachmentList.length > 0 ? (
+          {attachmentList.length > 0 && (
             <>
               <HSpacer size={8} />
               <Tag variant="attachment" testID="attachment-tag" />
             </>
-          ) : null}
+          )}
         </View>
         <VSpacer size={8} />
       </MessageDetailHeader>
