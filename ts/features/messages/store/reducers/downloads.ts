@@ -1,3 +1,5 @@
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
@@ -107,3 +109,17 @@ export const downloadPotForMessageAttachmentSelector = createSelector(
     return pot.none;
   }
 );
+
+export const downloadedMessageAttachmentSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  attachmentId: UIAttachmentId
+) =>
+  pipe(
+    state.entities.messages.downloads[messageId],
+    O.fromNullable,
+    O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
+    O.map(pot.toOption),
+    O.flatten,
+    O.toUndefined
+  );

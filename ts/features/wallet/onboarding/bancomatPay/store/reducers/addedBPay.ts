@@ -8,7 +8,7 @@ import {
 import { enhanceBPay } from "../../../../../../utils/paymentMethod";
 import { getValueOrElse } from "../../../../../../common/model/RemoteValue";
 import { abiSelector } from "../../../store/abi";
-import { addBPayToWallet, walletAddBPayStart } from "../actions";
+import { addBPayToWalletAction, walletAddBPayStart } from "../actions";
 
 const addedBPayReducer = (
   state: ReadonlyArray<RawBPayPaymentMethod> = [],
@@ -16,7 +16,7 @@ const addedBPayReducer = (
 ): ReadonlyArray<RawBPayPaymentMethod> => {
   switch (action.type) {
     // Register a new BPay account added in the current onboarding session
-    case getType(addBPayToWallet.success):
+    case getType(addBPayToWalletAction.success):
       return [...state, action.payload];
     // Reset the state when starting a new BPay onboarding workflow
     case getType(walletAddBPayStart):

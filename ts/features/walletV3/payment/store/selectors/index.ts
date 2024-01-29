@@ -7,6 +7,12 @@ import { GlobalState } from "../../../../../store/reducers/types";
 const selectWalletPayment = (state: GlobalState) =>
   state.features.wallet.payment;
 
+export const selectWalletPaymentSessionTokenPot = (state: GlobalState) =>
+  selectWalletPayment(state).sessionToken;
+
+export const selectWalletPaymentSessionToken = (state: GlobalState) =>
+  pot.toUndefined(selectWalletPaymentSessionTokenPot(state));
+
 export const walletPaymentRptIdSelector = createSelector(
   selectWalletPayment,
   state => state.rptId
@@ -75,4 +81,9 @@ export const walletPaymentTransactionSelector = createSelector(
 export const walletPaymentAuthorizationUrlSelector = createSelector(
   selectWalletPayment,
   state => state.authorizationUrl
+);
+
+export const walletPaymentStartRouteSelector = createSelector(
+  selectWalletPayment,
+  state => state.startRoute
 );

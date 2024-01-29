@@ -2,9 +2,7 @@
 // disabled in order to allows comments between the switch
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { loadAllBonusActivations } from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
 
-import trackBpdAction from "../../features/bonus/bpd/analytics/index";
 import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
@@ -270,7 +268,6 @@ const trackAction =
       case getType(paymentExecuteStart.failure):
       case getType(updateNotificationInstallationFailure):
       //  Bonus vacanze
-      case getType(loadAllBonusActivations.failure):
       case getType(loadAvailableBonuses.failure):
         return mp.track(action.type, {
           reason: action.payload.message
@@ -359,15 +356,9 @@ const trackAction =
       // other
       case getType(updateNotificationsInstallationToken):
       case getType(notificationsInstallationTokenRegistered):
-      case getType(loadAllBonusActivations.request):
       case getType(loadAvailableBonuses.success):
       case getType(loadAvailableBonuses.request):
         return mp.track(action.type);
-
-      case getType(loadAllBonusActivations.success):
-        return mp.track(action.type, {
-          count: action.payload.length
-        });
 
       case getType(deleteUserDataProcessing.request):
         return mp.track(action.type, { choice: action.payload });
@@ -394,7 +385,6 @@ export const actionTracking =
       // call mixpanel tracking only after we have initialized mixpanel with the
       // API token
       void trackAction(mixpanel)(action);
-      void trackBpdAction(mixpanel)(action);
       void trackBPayAction(mixpanel)(action);
       void trackCoBadgeAction(mixpanel)(action);
       void trackCgnAction(mixpanel)(action);

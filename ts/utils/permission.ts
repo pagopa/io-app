@@ -11,8 +11,8 @@ export const requestIOPermission = async (
   permission: RNPermissions.Permission,
   rationale?: RNPermissions.Rationale
 ): Promise<boolean> => {
-  const checkResult = await RNPermissions.check(permission);
-  if (checkResult === "granted") {
+  const checkResult = await checkIOPermission(permission);
+  if (checkResult) {
     return true;
   }
 
@@ -28,6 +28,11 @@ export const requestIOPermission = async (
 export const checkIOPermission = async (
   permission: RNPermissions.Permission
 ): Promise<boolean> => {
+  // Be aware that some permissions may return "unavailable" event if the library
+  // documents them as supported. One notorious case is the iOS PHOTO_LIBRARY_ADD_ONLY
+  // permission. If such permission is automatically handled by the system upon request
+  // (such as PHOTO_LIBRARY_ADD_ONLY is), then you should not use this function to
+  // check nor to request such permission
   const checkResult = await RNPermissions.check(permission);
   return checkResult === "granted";
 };
@@ -65,7 +70,10 @@ export const requestMediaPermission = async () => {
           : RNPermissions.PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
       );
     case "ios":
-      return requestIOPermission(RNPermissions.PERMISSIONS.IOS.PHOTO_LIBRARY);
+      // On iOS, photo selection from the gallery is implicitly handled by the image picker.
+      // The picker itself prompts the user for permission to access photos, allowing them to
+      // select a photo that is then seamlessly passed back to the app.
+      return true;
     default:
       return false;
   }
@@ -83,8 +91,10 @@ export const requestSaveToGalleryPermission = async (
       RNPermissions.PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
       rationale
     ),
-    ios: requestIOPermission(
-      RNPermissions.PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY
-    ),
+    // on iOS the permission is handled by adding NSPhotoLibraryAddUsageDescription and NSPhotoLibraryUsageDescription
+    // into the Info.plist file and the permission request is automatically handled by the system when using the
+    // Cameraroll.save method. Asking for the PHOTO_LIBRARY_ADD_ONLY permission results in an "unavailable" response
+    // from the react-native-permissions library (even if the library documentation declares that it is supported) so
+    // it cannot be used to determine the permission status.
     default: Promise.resolve(true)
   });

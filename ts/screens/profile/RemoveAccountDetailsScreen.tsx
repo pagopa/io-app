@@ -17,8 +17,6 @@ import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { shufflePinPadOnPayment } from "../../config";
 import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
-import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
@@ -72,10 +70,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
   const handleContinuePress = () => {
-    const hasActiveBonus =
-      props.bvActiveBonus ||
-      pot.getOrElse(props.bpdActiveBonus, false) ||
-      props.cgnActiveBonus;
+    const hasActiveBonus = props.cgnActiveBonus;
 
     if (hasActiveBonus) {
       Alert.alert(
@@ -229,8 +224,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 
 const mapStateToProps = (state: GlobalState) => {
-  const bpdActiveBonus = bpdEnabledSelector(state);
-  const bvActiveBonus = allBonusActiveSelector(state).length > 0;
   const cgnActiveBonus = isCgnEnrolledSelector(state);
   const userDataProcessing = userDataProcessingSelector(state);
   const isLoading =
@@ -238,8 +231,6 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isUpdating(userDataProcessing.DELETE);
   const isError = pot.isError(userDataProcessing.DELETE);
   return {
-    bvActiveBonus,
-    bpdActiveBonus,
     cgnActiveBonus,
     userDataProcessing,
     isLoading,

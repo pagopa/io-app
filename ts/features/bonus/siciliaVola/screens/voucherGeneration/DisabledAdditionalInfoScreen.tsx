@@ -15,7 +15,7 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../../utils/url";
-import { DeclarationEntry } from "../../../bpd/screens/onboarding/declaration/DeclarationEntry";
+import { DeclarationEntry } from "../../../common/components/DeclarationEntry";
 import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,

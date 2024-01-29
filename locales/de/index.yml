@@ -704,7 +704,7 @@ authentication:
     description1_2: "Alternativ kannst du die App auch über ein Login mit der"
     description1_3: "höchsten Sicherheitsstufe öffnen."
     description1_4: "Diese Art der Authentifizierung erfordert einen Benutzernamen, ein Passwort und ein physisches Medium, wie z.B. eine CIE."
-    title2: "Wie man den Zugang zu IO entsperrst"
+    title2: "Möchtest du den Zugang zu IO entsperren?"
     listitem1: "Stell sicher, dass du deine digitale Identität abgesichert hast, indem du deine Anmeldedaten bei deinem Identitätsanbieter änderst."
     listitem2_1: "Greif über das Internet auf IO zu, indem du deine SPID-Anmeldedaten oder deine CIE verwendest."
     listitem2_2: "Geh zur Website"
@@ -1577,10 +1577,6 @@ wallet:
         title: "Deine Karte wurde erfolgreich hinzugefügt!"
     payment:
       success:
-        banner:
-          title: "Kannst du uns sagen, wie es gelaufen ist?"
-          content: "Erzähle uns von deinen Erfahrungen mit der Bezahlung und hilf uns, uns zu verbessern."
-          action: "Weiter zur Umfrage"
         title: "Danke, die Transaktion war erfolgreich!"
         description1: "Wir senden eine Quittung an"
         description2: "Du kannst sie auch in deinem Konto finden."
@@ -1602,6 +1598,22 @@ wallet:
         title: "Gib die Steuernummer der Körperschaft ein"
         subtitle: "Sie hat 11 Ziffern und ist neben dem QR-Code zu finden."
         placeholder: "Steuernummer der Körperschaft"
+    abortDialog:
+      title: "Möchtest du den Vorgang abbrechen?"
+      confirm: "Ja, abbrechen"
+      cancel: "Nein, zurück"
+    methodSelection:
+      header: "Zahlungsmethode auswählen"
+      yourMethods: "Deine Zahlungsmethoden"
+      otherMethods: "Andere Zahlungsmethoden"
+      alert:
+        body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
+        cta: "OK, habe verstanden!"
+      missingMethodsError:
+        title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
+        subtitle: "Die Zahlungsmethode wird in deinem Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
+        addMethod: "Zahlungsmethode hinzufügen"
+        notNow: "Jetzt nicht"
     psp:
       title: "Wähle, von wem die Zahlung abgewickelt werden soll"
       description: "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor."
@@ -1616,6 +1628,31 @@ wallet:
         default: "Standard"
         amount: "Nach Betrag"
         name: "Nach Name"
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "Es gibt ein technisches Problem mit dieser Zahlungsmitteilung."
+      PAYMENT_UNKNOWN:
+        title: "Die Daten der Zahlungsmitteilung sind falsch"
+      DOMAIN_UNKNOWN:
+        title: "Die ausstellende Körperschaft hat Probleme bei der Bearbeitung"
+        subtitle: "Bitte versuche es später noch einmal. Wenn das Problem weiterhin besteht, wende dich bitte an den Support."
+      PAYMENT_ONGOING:
+        title: "Es ist bereits eine Zahlung im Gange, bitte versuche es später noch einmal"
+        subtitle: "Wenn das Problem weiterhin besteht, kannst du ein Ticket erstellen."
+      PAYMENT_EXPIRED:
+        title: "Die Zahlungsmitteilung ist abgelaufen und kann nicht mehr bezahlt werden"
+        subtitle: "Wende dich für weitere Informationen an die Körperschaft."
+      PAYMENT_CANCELED:
+        title: "Die ausstellende Körperschaft hat diese Zahlungsmitteilung zurückgezogen"
+        subtitle: "Wende dich für weitere Informationen an die Körperschaft."
+      PAYMENT_DUPLICATED:
+        title: "Diese Zahlungsmitteilung wurde bereits bezahlt!"
+      GENERIC_ERROR:
+        title: "Ein unerwarteter Fehler ist aufgetreten"
+        subtitle: "Versuche es erneut oder wende dich an den Support."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Wir können die Zahlungsmitteilung nicht finden"
+        subtitle: "Die Zahlungsmitteilung kann bereits bezahlt worden sein. Wende dich bitte an den ausstellende Körperschaft."
     outcome:
       SUCCESS:
         title: "Du hast {{amount}} bezahlt"
@@ -1623,7 +1660,44 @@ wallet:
         banner:
           title: "Kannst du uns sagen, wie es lief?"
           content: "Erzähl uns von deinen Erfahrungen mit der Zahlung und hilf uns, uns zu verbessern."
-          action: "Weiter zur Umfrage"
+          action: "Zur Umfrage"
+      GENERIC_ERROR:
+        title: "Es ist ein unerwarteter Fehler aufgetreten"
+        subtitle: "Es wurde kein Betrag abgebucht."
+      AUTH_ERROR:
+        title: "Autorisierung verweigert"
+        subtitle: "Es wurde kein Betrag abgebucht.\nVergewissere dich, dass du die Anweisungen deiner Bank oder Zahlungsapp korrekt befolgt hast."
+      INVALID_DATA:
+        title: "Die Daten der Zahlungsmethode sind falsch"
+        subtitle: "Wenn du mit einer Debit- oder Kreditkarte bezahlt hast, musst du die Daten wie auf der Karte angegeben eingeben."
+      TIMEOUT:
+        title: "Die Sitzung ist abgelaufen"
+        subtitle: "Es wurde kein Betrag abgebucht.\nZu deiner Sicherheit hast du nur eine begrenzte Zeit, um den Vorgang abzuschließen."
+      CIRCUIT_ERROR:
+        title: "Das Kartennetzwerk deiner Karte wird nicht unterstützt"
+      MISSING_FIELDS:
+        title: "Es fehlen einige Daten, um mit der Zahlung fortzufahren"
+      INVALID_CARD:
+        title: "Die Zahlungsmethode ist abgelaufen oder nicht mehr gültig"
+        subtitle: "Weitere Informationen erhältst du bei deiner Bank."
+      CANCELED_BY_USER:
+        title: "Der Vorgang wurde abgebrochen"
+        subtitle: "Es wurde kein Betrag abgebucht."
+      EXCESSIVE_AMOUNT:
+        title: "Autorisierung verweigert"
+        subtitle: "Es wurde kein Betrag abgebucht.\nDu hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten."
+      INVALID_METHOD:
+        title: "Die Zahlungsmethode wird nicht unterstützt"
+    support:
+      button: "Support kontaktieren"
+      supportTitle: "Support kontaktieren"
+      phone: "{{phoneNumber}} anrufen"
+      chat: "Im Chat um Hilfe fragen"
+      additionalDataTitle: "Zusätzliche Daten"
+      copyAll: "Alles kopieren"
+      errorCode: "Fehlercode"
+      noticeNumber: "Zahlungskodex"
+      entityCode: "Steuernummer Körperschaft"
 saveCard:
   saveCard: "Karte speichern"
   header: "Möchtest du diese Karte speichern?"
@@ -1680,14 +1754,14 @@ messages:
       expired: "Überfällige Zahlung"
       paid: "Diese Zahlungsmitteilung ist bereits bezahlt. Überprüfe die Quittung in deinem"
       addMemo:
-        block1: "Erstelle eine Erinnerung am "
-        block2: "um "
+        block1: "Erstelle eine Erinnerung am"
+        block2: "um"
       expiringOrValidAlert:
-        block1: "Verfällt am "
-        block2: "um "
+        block1: "Verfällt am"
+        block2: "um"
       expiredAlert:
-        block1: "Abgelaufen am "
-        block2: "um "
+        block1: "Abgelaufen am"
+        block2: "um"
     pay: "Bezahle {{amount}} €"
     onlyPay: "Bezahlen"
     paid: "Bezahlt"
@@ -2067,13 +2141,13 @@ bonus:
       goToDetail: "Die Karte anzeigen"
     detail:
       cta:
-        buyers: "CGN Rabatte und Ermäßigungen anzeigen"
+        buyers: "CGN Ermäßigungen anzeigen"
         otp: "Code generieren"
         eyca:
           copy: "EYCA Kartennummer kopieren"
-          pending: "EYCA Rabatte und Ermäßigungen anzeigen"
+          pending: "EYCA Ermäßigungen anzeigen"
           bottomSheet: "Besuche die EYCA Website"
-          showEycaDiscounts: "EYCA Rabatte und Ermäßigungen anzeigen"
+          showEycaDiscounts: "EYCA Ermäßigungen anzeigen"
       information:
         active: "Die Karte ist aktiv und kann bis zum {{date}} verwendet werden."
         warning: "Achtung! "
@@ -2377,6 +2451,7 @@ whatsNew:
 bonusCard:
   validUntil: "Gültig bis {{endDate}}"
   expiring: "Verfällt am {{endDate}}"
+  expired: "Abgelaufen am {{endDate}}"
   paused: "In Pause"
   removed: "Entfernt"
 transaction:
@@ -2384,7 +2459,8 @@ transaction:
     title: "Details zur Transaktion"
     totalAmount: "Insgesamt"
     totalFee: "Der Gesamtbetrag umfasst "
-    totalFeePsp: "Provision, berechnet von {{pspName}}"
+    totalFeePsp: "Provision, berechnet von {{pspName}}."
+    totalFeeNoPsp: "Provision, die vom Transaktionsdienstleister (PSP) erhoben wird."
     info:
       title: "Informationen zur Transaktion"
       pspName: "Zahlungsdienstleister (PSP)"
@@ -2398,7 +2474,7 @@ transaction:
       subject: "Zahlungsgrund"
 permissionRequest:
   gallery:
-    title: "Erlaube  IO den Zugriff auf deine Fotos"
+    title: "Erlaube IO den Zugriff auf deine Fotos"
     subtitle: "Dazu musst du die Rechte in den Einstellungen deines Geräts ändern."
     caption: "So geht's:"
     step: "Schritt {{step}}"
@@ -2409,4 +2485,8 @@ permissionRequest:
         3: "Wähle “IO”"
         4: "Wähle den Punkt App-Berechtigungen"
         5: "Lass den Zugriff auf Dateien und Medien zu"
+      ios:
+        1: "Geh zu “Einstellungen”"
+        2: "Wähle “IO”"
+        3: "Wähle “Fotos” und erlaube den Zugriff"
     cta: "Öffne Einstellungen"
