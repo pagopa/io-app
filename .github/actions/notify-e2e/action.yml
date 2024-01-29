@@ -9,6 +9,7 @@ runs:
         python-version: '3.8'
     - name: install pipenv
       run: pip install pipenv
+      shell: bash
     - name: report E2E tests failure
       run: |
         cd scripts/e2e_message
@@ -16,3 +17,4 @@ runs:
         pipenv run python3 e2e_notifier.py
       env: 
         BUILD_ID: ${{ github.run_id }}
+      shell: bash
