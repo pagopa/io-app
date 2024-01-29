@@ -1,0 +1,18 @@
+name: Actions to notify E2E tests failure through Slack message
+description: 'This action collects the steps to setup python env and run job'
+runs:
+  using: "composite"
+  steps:
+    - name: setup python
+      uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
+      with:
+        python-version: '3.8'
+    - name: install pipenv
+      run: pip install pipenv
+    - name: report E2E tests failure
+      run: |
+        cd scripts/e2e_message
+        pipenv install
+        pipenv run python3 e2e_notifier.py
+      env: 
+        BUILD_ID: ${{ github.run_id }}
