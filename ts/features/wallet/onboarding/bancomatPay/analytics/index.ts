@@ -6,7 +6,7 @@ import {
   isTimeoutError
 } from "../../../../../utils/errors";
 import {
-  addBPayToWallet,
+  addBPayToWalletAction,
   searchUserBPay,
   walletAddBPayBack,
   walletAddBPayCancel,
@@ -23,8 +23,8 @@ export const trackBPayAction =
       case getType(walletAddBPayCompleted):
       case getType(walletAddBPayCancel):
       case getType(walletAddBPayBack):
-      case getType(addBPayToWallet.request):
-      case getType(addBPayToWallet.success):
+      case getType(addBPayToWalletAction.request):
+      case getType(addBPayToWalletAction.success):
         return mp.track(action.type);
       case getType(searchUserBPay.request):
         return mp.track(action.type, { abi: action.payload ?? "all" });
@@ -36,7 +36,7 @@ export const trackBPayAction =
           )
         });
 
-      case getType(addBPayToWallet.failure):
+      case getType(addBPayToWalletAction.failure):
         return mp.track(action.type, {
           reason: getNetworkErrorMessage(action.payload)
         });
