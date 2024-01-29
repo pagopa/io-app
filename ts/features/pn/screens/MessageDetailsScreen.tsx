@@ -14,7 +14,6 @@ import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -67,16 +66,17 @@ export const MessageDetailsScreen = () => {
   );
   const payments = paymentsFromPNMessagePot(currentFiscalCode, messagePot);
 
+  const goBack = useCallback(() => {
+    dispatch(cancelPreviousAttachmentDownload());
+    dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelPaymentStatusTracking());
+    navigation.goBack();
+  }, []);
+
   useHeaderSecondLevel({
     title: "",
-    goBack: () => {
-      dispatch(cancelPreviousAttachmentDownload());
-      dispatch(cancelQueuedPaymentUpdates());
-      dispatch(cancelPaymentStatusTracking());
-      navigation.goBack();
-    },
-    supportRequest: true,
-    contextualHelp: emptyContextualHelp
+    goBack,
+    supportRequest: true
   });
 
   useOnFirstRender(() => {
