@@ -1,10 +1,4 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
-import {
-  BpdDetailsParamsList,
-  BpdOnboardingParamsList,
-  BpdOptInParamsList
-} from "../../features/bonus/bpd/navigation/params";
-import BPD_ROUTES from "../../features/bonus/bpd/navigation/routes";
 import { IdPayInstrumentInitiativesScreenRouteParams } from "../../features/idpay/wallet/screens/IdPayInstrumentInitiativesScreen";
 import { BancomatDetailScreenNavigationParams } from "../../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreenNavigationParams } from "../../features/wallet/bancomatpay/screen/BPayDetailScreen";
@@ -61,14 +55,6 @@ export type WalletParamsList = {
   [ROUTES.PAYMENT_OUTCOMECODE_MESSAGE]: PaymentOutcomeCodeMessageNavigationParams;
 
   [BONUS_ROUTES.MAIN]: undefined;
-
-  [BPD_ROUTES.ONBOARDING.MAIN]: NavigatorScreenParams<BpdOnboardingParamsList>;
-  [BPD_ROUTES.DETAILS_MAIN]: NavigatorScreenParams<BpdDetailsParamsList>;
-  [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: undefined;
-  [BPD_ROUTES.IBAN]: undefined;
-
-  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS
-    .MAIN]: NavigatorScreenParams<BpdOptInParamsList>;
 
   [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingBPayParamsList>;
   [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingCoBadgeParamsList>;

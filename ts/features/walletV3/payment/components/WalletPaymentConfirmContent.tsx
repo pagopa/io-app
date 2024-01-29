@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Body,
   GradientScrollView,
@@ -7,35 +6,29 @@ import {
   ModuleCheckout,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { format } from "../../../../utils/dates";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { capitalize } from "../../../../utils/strings";
 import {
   WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
   getPaymentLogo
 } from "../../common/utils";
-import { format } from "../../../../utils/dates";
-import { capitalize } from "../../../../utils/strings";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
-import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import {
-  TypeEnum,
-  WalletInfoDetails,
-  WalletInfoDetails1,
-  WalletInfoDetails2,
-  WalletInfoDetails3
-} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
-import I18n from "../../../../i18n";
-
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { WalletPaymentRoutes } from "../navigation/routes";
 import { WalletPaymentTotalAmount } from "./WalletPaymentTotalAmount";
 
 export type WalletPaymentConfirmContentProps = {
-  paymentMethodDetails: WalletInfoDetails;
+  paymentMethodDetails: UIWalletInfoDetails;
   selectedPsp: Bundle;
   paymentDetails: PaymentRequestsGetResponse;
   isLoading?: boolean;
@@ -127,33 +120,26 @@ export const WalletPaymentConfirmContent = ({
   );
 };
 
-const getPaymentSubtitle = (cardDetails: WalletInfoDetails) => {
-  switch (cardDetails.type) {
-    case TypeEnum.CARDS:
-      const cardsDetail = cardDetails as WalletInfoDetails1;
-      return `${format(cardsDetail.expiryDate, "MM/YY")}`;
-    case TypeEnum.PAYPAL:
-      return I18n.t("wallet.onboarding.paypal.name");
-    case TypeEnum.BANCOMATPAY:
-      const bancomatpayDetail = cardDetails as WalletInfoDetails3;
-      return `${bancomatpayDetail.bankName}`;
-    default:
-      return "";
+const getPaymentSubtitle = (details: UIWalletInfoDetails): string => {
+  if (details.maskedPan !== undefined) {
+    return `${format(details.expiryDate, "MM/YY")}`;
+  } else if (details.maskedEmail !== undefined) {
+    return I18n.t("wallet.onboarding.paypal.name");
+  } else if (details.maskedNumber !== undefined) {
+    return `${details.bankName}`;
   }
+
+  return "";
 };
 
-const getPaymentTitle = (cardDetails: WalletInfoDetails) => {
-  switch (cardDetails.type) {
-    case TypeEnum.CARDS:
-      const cardsDetail = cardDetails as WalletInfoDetails1;
-      return `${capitalize(cardsDetail.brand)} ••${cardsDetail.maskedPan}`;
-    case TypeEnum.PAYPAL:
-      const paypalDetail = cardDetails as WalletInfoDetails2;
-      return `${paypalDetail.maskedEmail}`;
-    case TypeEnum.BANCOMATPAY:
-      const bancomatpayDetail = cardDetails as WalletInfoDetails3;
-      return `${bancomatpayDetail.maskedNumber}`;
-    default:
-      return "";
+const getPaymentTitle = (details: UIWalletInfoDetails): string => {
+  if (details.maskedPan !== undefined) {
+    return `${capitalize(details.brand || "")} ••${details.maskedPan}`;
+  } else if (details.maskedEmail !== undefined) {
+    return `${details.maskedEmail}`;
+  } else if (details.maskedNumber !== undefined) {
+    return `${details.maskedNumber}`;
   }
+
+  return "";
 };

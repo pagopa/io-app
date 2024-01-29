@@ -1,40 +1,47 @@
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
+import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
+import { getSortedPspList } from "../../../common/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentCalculateFees } from "../../store/actions/networking";
-import { getSortedPspList } from "../../../common/utils";
-import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
 import { walletPaymentPickPsp } from "../../store/actions/orchestration";
 import { walletPaymentPickedPspSelector } from "../../store/selectors";
+import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
   action: ActionType<(typeof walletPaymentCalculateFees)["request"]>
 ) {
-  const requestBody: CalculateFeeRequest = {
-    paymentAmount: action.payload.paymentAmountInCents,
-    walletId: action.payload.walletId
-  };
-
-  const calculateFeesRequest = calculateFees({
-    id: action.payload.walletId,
-    body: requestBody
-  });
-
   try {
+    const sessionToken = yield* getOrFetchWalletSessionToken();
+
+    if (sessionToken === undefined) {
+      yield* put(
+        walletPaymentCalculateFees.failure({
+          ...getGenericError(new Error(`Missing session token`))
+        })
+      );
+      return;
+    }
+
+    const { paymentMethodId, ...body } = action.payload;
+    const calculateFeesRequest = calculateFees({
+      eCommerceSessionToken: sessionToken,
+      id: paymentMethodId,
+      body
+    });
+
     const calculateFeesResult = (yield* call(
       withRefreshApiCall,
       calculateFeesRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof calculateFees>;
+    )) as SagaCallReturnType<typeof calculateFees>;
 
     if (E.isLeft(calculateFeesResult)) {
       yield* put(

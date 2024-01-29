@@ -8,21 +8,34 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
 import { walletPaymentGetDetails } from "../../store/actions/networking";
+import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfo"],
   action: ActionType<(typeof walletPaymentGetDetails)["request"]>
 ) {
-  const getPaymentRequestInfoRequest = getPaymentRequestInfo({
-    rpt_id: action.payload
-  });
-
   try {
+    const sessionToken = yield* getOrFetchWalletSessionToken();
+
+    if (sessionToken === undefined) {
+      yield* put(
+        walletPaymentGetDetails.failure(
+          getGenericError(new Error(`Missing session token`))
+        )
+      );
+      return;
+    }
+
+    const getPaymentRequestInfoRequest = getPaymentRequestInfo({
+      rpt_id: action.payload,
+      eCommerceSessionToken: sessionToken
+    });
+
     const getPaymentRequestInfoResult = (yield* call(
       withRefreshApiCall,
       getPaymentRequestInfoRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof getPaymentRequestInfo>;
+    )) as SagaCallReturnType<typeof getPaymentRequestInfo>;
 
     yield* put(
       pipe(
