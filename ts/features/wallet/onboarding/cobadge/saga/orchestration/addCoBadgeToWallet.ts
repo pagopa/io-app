@@ -1,4 +1,4 @@
-import { call, put, select } from "typed-redux-saga/macro";
+import { call, put } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import {
@@ -9,11 +9,7 @@ import {
 import { navigateToWalletHome } from "../../../../../../store/actions/navigation";
 import { fetchWalletsRequest } from "../../../../../../store/actions/wallet/wallets";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import { activateBpdOnNewPaymentMethods } from "../../../../../bonus/bpd/saga/orchestration/activateBpdOnNewAddedPaymentMethods";
-import {
-  navigateToActivateBpdOnNewCoBadge,
-  navigateToOnboardingCoBadgeSearchStartScreen
-} from "../../navigation/action";
+import { navigateToOnboardingCoBadgeSearchStartScreen } from "../../navigation/action";
 import WALLET_ONBOARDING_COBADGE_ROUTES from "../../navigation/routes";
 import {
   walletAddCoBadgeBack,
@@ -21,7 +17,6 @@ import {
   walletAddCoBadgeCompleted,
   walletAddCoBadgeFailure
 } from "../../store/actions";
-import { onboardingCoBadgeAddedSelector } from "../../store/reducers/addedCoBadge";
 
 /**
  * Define the workflow that allows the user to add a co-badge card to the wallet.
@@ -50,9 +45,9 @@ const returnToWalletRoutes = new Set<string>([
 ]);
 
 /**
- * Chain the add co-badge to wallet with "activate bpd on the new co-badge cards"
+ * add co-badge to wallet saga
  */
-export function* addCoBadgeToWalletAndActivateBpd() {
+export function* addCoBadgeToWalletSaga() {
   const initialScreenName: ReturnType<
     typeof NavigationService.getCurrentRouteName
   > = yield* call(NavigationService.getCurrentRouteName);
@@ -78,14 +73,5 @@ export function* addCoBadgeToWalletAndActivateBpd() {
   if (res === "completed") {
     // refresh wallets list
     yield* put(fetchWalletsRequest());
-    // read the new added co-badge cards
-    const coBadgeAdded: ReturnType<typeof onboardingCoBadgeAddedSelector> =
-      yield* select(onboardingCoBadgeAddedSelector);
-
-    yield* call(
-      activateBpdOnNewPaymentMethods,
-      coBadgeAdded,
-      navigateToActivateBpdOnNewCoBadge
-    );
   }
 }

@@ -8,39 +8,36 @@ import { createSelector } from "reselect";
 import { getType, isOfType } from "typesafe-actions";
 import { WalletTypeEnum } from "../../../../definitions/pagopa/WalletV2";
 import {
+  RemoteValue,
   getValueOrElse,
   remoteError,
   remoteLoading,
   remoteReady,
-  remoteUndefined,
-  RemoteValue
+  remoteUndefined
 } from "../../../common/model/RemoteValue";
 import { abiSelector } from "../../../features/wallet/onboarding/store/abi";
 import {
-  BancomatPaymentMethod,
   BPayPaymentMethod,
+  BancomatPaymentMethod,
   CreditCardPaymentMethod,
-  isBancomat,
-  isBPay,
-  isCreditCard,
-  isPayPal,
-  isRawCreditCard,
-  PaymentMethod,
   PayPalPaymentMethod,
+  PaymentMethod,
   RawCreditCardPaymentMethod,
   RawPaymentMethod,
-  Wallet
+  Wallet,
+  isBPay,
+  isBancomat,
+  isCreditCard,
+  isPayPal,
+  isRawCreditCard
 } from "../../../types/pagopa";
 
-import { EnableableFunctionsEnum } from "../../../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../../../definitions/pagopa/walletv2/CardInfo";
-import { optInPaymentMethodsStart } from "../../../features/bonus/bpd/store/actions/optInPaymentMethods";
 import { PotFromActions } from "../../../types/utils";
 import { getErrorFromNetworkError } from "../../../utils/errors";
 import { isDefined } from "../../../utils/guards";
 import { enhancePaymentMethod } from "../../../utils/paymentMethod";
 import { hasPaymentFeature } from "../../../utils/paymentMethodCapabilities";
-import { hasFunctionEnabled } from "../../../utils/walletv2";
 import { sessionExpired, sessionInvalid } from "../../actions/authentication";
 import { clearCache } from "../../actions/profile";
 import { Action } from "../../actions/types";
@@ -210,20 +207,6 @@ export const withPaymentFeatureSelector = createSelector(
     )
 );
 
-// return those payment methods that have BPD as enabled function
-export const getBPDMethodsSelector = createSelector(
-  paymentMethodsSelector,
-  (
-    potPm: ReturnType<typeof paymentMethodsSelector>
-  ): ReadonlyArray<PaymentMethod> =>
-    pot.getOrElse(
-      pot.map(potPm, pms =>
-        pms.filter(pm => hasFunctionEnabled(pm, EnableableFunctionsEnum.BPD))
-      ),
-      []
-    )
-);
-
 /**
  * return true if the payment method is visible in the wallet (the onboardingChannel
  * is IO or WISP) or if the onboardingChannel is undefined.
@@ -241,12 +224,6 @@ export const isVisibleInWallet = (pm: PaymentMethod): boolean =>
   );
 
 // return those payment methods that have BPD as enabled function and are visible in Wallet
-export const getBPDMethodsVisibleInWalletSelector = createSelector(
-  getBPDMethodsSelector,
-  (
-    pms: ReturnType<typeof getBPDMethodsSelector>
-  ): ReadonlyArray<PaymentMethod> => pms.filter(isVisibleInWallet)
-);
 
 export const rawCreditCardListSelector = createSelector(
   [paymentMethodsSelector],
@@ -439,12 +416,6 @@ const reducer = (
     //
     // delete all payments method by function
     //
-    case getType(optInPaymentMethodsStart):
-      // Reset the state when the opt-in payment methods workunit starts
-      return {
-        ...state,
-        deleteAllByFunction: WALLETS_INITIAL_STATE.deleteAllByFunction
-      };
     case getType(deleteAllPaymentMethodsByFunction.request):
       return { ...state, deleteAllByFunction: remoteLoading };
     case getType(deleteAllPaymentMethodsByFunction.success):
