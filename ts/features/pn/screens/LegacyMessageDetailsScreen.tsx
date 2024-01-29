@@ -1,21 +1,19 @@
-import React, { useCallback } from "react";
-import {
-  RouteProp,
-  useFocusEffect,
-  useNavigation,
-  useRoute
-} from "@react-navigation/native";
-import { useStore } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import React from "react";
+import { SafeAreaView } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useStore } from "react-redux";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../messages/types";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { MessageDetails } from "../components/MessageDetails";
+import { LegacyMessageDetails } from "../components/LegacyMessageDetails";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
@@ -36,48 +34,34 @@ import {
 } from "../store/actions";
 import { GlobalState } from "../../../store/reducers/types";
 import { selectedPaymentIdSelector } from "../store/reducers/payments";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
+import genericErrorIcon from "../../../../img/wallet/errors/generic-error-icon.png";
 
-export type MessageDetailsScreenNavigationParams = {
-  messageId: UIMessageId;
-  serviceId: ServiceId;
-  firstTimeOpening: boolean;
-};
+export const LegacyMessageDetailsScreen = (
+  props: IOStackNavigationRouteProps<PnParamsList, "PN_ROUTES_MESSAGE_DETAILS">
+): React.ReactElement => {
+  const { messageId, serviceId, firstTimeOpening } = props.route.params;
 
-type MessageDetailsRouteProps = RouteProp<
-  PnParamsList,
-  "PN_ROUTES_MESSAGE_DETAILS"
->;
-
-export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const route = useRoute<MessageDetailsRouteProps>();
-
-  const { messageId, serviceId, firstTimeOpening } = route.params;
 
   const service = pot.toUndefined(
     useIOSelector(state => serviceByIdSelector(state, serviceId))
   );
+
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
   );
   const payments = paymentsFromPNMessagePot(currentFiscalCode, messagePot);
 
-  const goBack = useCallback(() => {
+  const customGoBack = React.useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
     dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
-  }, []);
-
-  useHeaderSecondLevel({
-    title: "",
-    goBack,
-    supportRequest: true
-  });
+  }, [dispatch, navigation]);
 
   useOnFirstRender(() => {
     dispatch(startPaymentStatusTracking(messageId));
@@ -98,7 +82,7 @@ export const MessageDetailsScreen = () => {
 
   const store = useStore();
   useFocusEffect(
-    useCallback(() => {
+    React.useCallback(() => {
       const globalState = store.getState() as GlobalState;
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
@@ -114,29 +98,35 @@ export const MessageDetailsScreen = () => {
   );
 
   return (
-    <>
-      {pipe(
-        messagePot,
-        pot.toOption,
-        O.flatten,
-        O.fold(
-          () => (
-            <OperationResultScreenContent
-              pictogram="umbrellaNew"
-              title={I18n.t("features.pn.details.loadError.title")}
-              subtitle={I18n.t("features.pn.details.loadError.body")}
-            />
-          ),
-          message => (
-            <MessageDetails
-              messageId={messageId}
-              message={message}
-              service={service}
-              payments={payments}
-            />
+    <BaseScreenComponent
+      goBack={customGoBack}
+      headerTitle={I18n.t("features.pn.details.title")}
+      contextualHelp={emptyContextualHelp}
+    >
+      <SafeAreaView style={IOStyles.flex}>
+        {pipe(
+          messagePot,
+          pot.toOption,
+          O.flatten,
+          O.fold(
+            () => (
+              <InfoScreenComponent
+                image={renderInfoRasterImage(genericErrorIcon)}
+                title={I18n.t("features.pn.details.loadError.title")}
+                body={I18n.t("features.pn.details.loadError.body")}
+              />
+            ),
+            message => (
+              <LegacyMessageDetails
+                messageId={messageId}
+                message={message}
+                service={service}
+                payments={payments}
+              />
+            )
           )
-        )
-      )}
-    </>
+        )}
+      </SafeAreaView>
+    </BaseScreenComponent>
   );
 };
