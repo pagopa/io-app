@@ -7,4 +7,9 @@ describe("MessageDetailsContent component", () => {
     const component = render(<MessageDetailsContent abstract="abstract" />);
     expect(component.toJSON()).toMatchSnapshot();
   });
+
+  it("should match the snapshot when abstract is not defined", () => {
+    const component = render(<MessageDetailsContent />);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
 });

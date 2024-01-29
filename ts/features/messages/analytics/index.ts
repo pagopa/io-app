@@ -109,7 +109,7 @@ export function trackThirdPartyMessageAttachmentBadFormat(
 
 export function trackThirdPartyMessageAttachmentCorruptedFile(
   messageId: UIMessageId,
-  serviceId: ServiceId | undefined
+  serviceId?: ServiceId
 ) {
   void mixpanelTrack(
     "THIRD_PARTY_MESSAGE_ATTACHMENT_CORRUPTED_FILE",

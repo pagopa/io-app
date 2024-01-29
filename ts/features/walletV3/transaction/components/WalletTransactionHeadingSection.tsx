@@ -68,7 +68,6 @@ export const WalletTransactionHeadingSection = ({
                 pspName: psp.businessName
               })
             : I18n.t("transaction.details.totalFeeNoPsp")}
-          .
         </Body>
       );
     }

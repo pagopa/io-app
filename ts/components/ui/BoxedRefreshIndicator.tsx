@@ -1,6 +1,8 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, LoadingSpinner } from "@pagopa/io-app-design-system";
+import { useIOSelector } from "../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { RefreshIndicator } from "./RefreshIndicator";
 
 const styles = StyleSheet.create({
@@ -16,18 +18,21 @@ const styles = StyleSheet.create({
   }
 });
 
-interface Props {
+type Props = {
+  action?: React.ReactNode;
   caption?: React.ReactNode;
   white?: boolean;
-  action?: React.ReactNode;
-}
+};
 
-const BoxedRefreshIndicator: React.SFC<Props> = props => (
-  <View style={[styles.refreshBox, props.white && styles.whiteBg]}>
-    <RefreshIndicator />
-    {props.caption ? props.caption : null}
-    {props.action ? props.action : null}
-  </View>
-);
+const BoxedRefreshIndicator = ({ action, caption, white }: Props) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  return (
+    <View style={[styles.refreshBox, white && styles.whiteBg]}>
+      {isDesignSystemEnabled ? <LoadingSpinner /> : <RefreshIndicator />}
+      {caption ? caption : null}
+      {action ? action : null}
+    </View>
+  );
+};
 
 export default BoxedRefreshIndicator;

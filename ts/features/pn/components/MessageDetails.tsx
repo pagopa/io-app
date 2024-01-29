@@ -1,6 +1,5 @@
 import React from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, View } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -18,8 +17,8 @@ import { MessageDetailsContent } from "./MessageDetailsContent";
 type MessageDetailsProps = {
   message: PNMessage;
   messageId: UIMessageId;
-  service: ServicePublic | undefined;
-  payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
+  service?: ServicePublic;
+  payments?: ReadonlyArray<NotificationPaymentInfo>;
 };
 
 export const MessageDetails = ({ message, service }: MessageDetailsProps) => {

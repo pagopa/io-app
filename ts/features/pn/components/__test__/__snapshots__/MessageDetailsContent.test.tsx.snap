@@ -47,3 +47,5 @@ exports[`MessageDetailsContent component should match the snapshot when abstract
   </Text>
 </View>
 `;
+
+exports[`MessageDetailsContent component should match the snapshot when abstract is not defined 1`] = `null`;

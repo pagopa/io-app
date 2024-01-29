@@ -18,7 +18,7 @@ export const PnStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
-      headerMode={"none"}
+      headerMode="screen"
       screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
@@ -28,14 +28,23 @@ export const PnStackNavigator = () => {
             ? MessageDetailsScreen
             : LegacyMessageDetailsScreen
         }
+        options={{
+          headerShown: isDesignSystemEnabled
+        }}
       />
       <Stack.Screen
         name={PN_ROUTES.MESSAGE_ATTACHMENT}
         component={AttachmentPreviewScreen}
+        options={{
+          headerShown: false
+        }}
       />
       <Stack.Screen
         name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
         component={PaidPaymentScreen}
+        options={{
+          headerShown: false
+        }}
       />
     </Stack.Navigator>
   );
