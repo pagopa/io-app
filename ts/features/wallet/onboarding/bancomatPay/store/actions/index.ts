@@ -19,7 +19,7 @@ export const searchUserBPay = createAsyncAction(
 /**
  * The user add a specific BPay account to the wallet
  */
-export const addBPayToWallet = createAsyncAction(
+export const addBPayToWalletAction = createAsyncAction(
   "WALLET_ONBOARDING_BPAY_ADD_REQUEST",
   "WALLET_ONBOARDING_BPAY_ADD_SUCCESS",
   "WALLET_ONBOARDING_BPAY_ADD_FAILURE"
@@ -63,7 +63,7 @@ export const walletAddBPayBack = createStandardAction(
 
 export type BPayActions =
   | ActionType<typeof searchUserBPay>
-  | ActionType<typeof addBPayToWallet>
+  | ActionType<typeof addBPayToWalletAction>
   | ActionType<typeof walletAddBPayStart>
   | ActionType<typeof walletAddBPayCompleted>
   | ActionType<typeof walletAddBPayCancel>
