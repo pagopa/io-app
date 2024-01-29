@@ -15,6 +15,7 @@ export const toPNMessage = (
     O.chainNullableK(message => message.details),
     O.map(details => ({
       ...details,
+      created_at: messageFromApi.created_at,
       attachments: pipe(
         attachmentsFromThirdPartyMessage(messageFromApi),
         O.toUndefined
