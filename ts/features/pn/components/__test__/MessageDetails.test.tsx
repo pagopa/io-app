@@ -47,6 +47,16 @@ describe("MessageDetails component", () => {
     );
     expect(component.queryByTestId("attachment-tag")).not.toBeNull();
   });
+
+  it("should NOT display the attachment tag if there are no attachments", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(thirdPartyMessage.id as UIMessageId, {
+        ...pnMessage,
+        attachments: []
+      })
+    );
+    expect(component.queryByTestId("attachment-tag")).toBeNull();
+  });
 });
 
 const generateComponentProperties = (
