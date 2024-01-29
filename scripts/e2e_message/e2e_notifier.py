@@ -11,7 +11,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 SLACK_TOKEN = os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None)
 tagged_people = ["<!here>"]
-SLACK_CHANNEL = "#io_dev_app_status"
+SLACK_CHANNEL = "#io_dev_app_feed"
 BUILD_ID = os.environ.get("BUILD_ID", None)
 BASE_ACTION_URI = "https://github.com/pagopa/io-app/actions/runs/"
 
@@ -27,7 +27,7 @@ def send_slack_message():
             token=SLACK_TOKEN, ssl=ssl_context
         )
         tags = " ".join(tagged_people)
-        message = "[E2E Tests] :warning: %s e2e tests have failed ([here](%s%s))" % (
+        message = "[E2E Tests] :warning: %s e2e tests have failed (<%s%s|here>)" % (
             tags, BASE_ACTION_URI, BUILD_ID)
         message_blocks = []
         message_blocks.append({
