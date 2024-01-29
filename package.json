@@ -123,7 +123,6 @@
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-camera-roll/camera-roll": "5.6.1",
     "@react-native-clipboard/clipboard": "^1.10.0",
-    "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-community/slider": "^3.0.3",
     "@react-native-cookies/cookies": "^6.2.1",
