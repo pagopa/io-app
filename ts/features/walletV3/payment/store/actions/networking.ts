@@ -10,7 +10,15 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/wal
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/failure";
+import { NewSessionTokenResponse } from "../../../../../../definitions/pagopa/ecommerce/NewSessionTokenResponse";
+import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
+
+export const walletPaymentNewSessionToken = createAsyncAction(
+  "WALLET_PAYMENT_NEW_SESSION_TOKEN_REQUEST",
+  "WALLET_PAYMENT_NEW_SESSION_TOKEN_SUCCESS",
+  "WALLET_PAYMENT_NEW_SESSION_TOKEN_FAILURE"
+)<undefined, NewSessionTokenResponse, NetworkError>();
 
 export const walletPaymentGetDetails = createAsyncAction(
   "WALLET_PAYMENT_GET_DETAILS_REQUEST",
@@ -45,10 +53,16 @@ export const walletPaymentCreateTransaction = createAsyncAction(
   "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
   "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
 )<
-  NewTransactionRequest & { onSucces?: () => void },
+  NewTransactionRequest,
   NewTransactionResponse,
   NetworkError | WalletPaymentFailure
 >();
+
+export const walletPaymentGetTransactionInfo = createAsyncAction(
+  "WALLET_PAYMENT_GET_TRANSACTION_INFO_REQUEST",
+  "WALLET_PAYMENT_GET_TRANSACTION_INFO_SUCCESS",
+  "WALLET_PAYMENT_GET_TRANSACTION_INFO_FAILURE"
+)<{ transactionId: string }, TransactionInfo, NetworkError>();
 
 export const walletPaymentDeleteTransaction = createAsyncAction(
   "WALLET_PAYMENT_DELETE_TRANSACTION_REQUEST",
@@ -77,10 +91,12 @@ export const walletPaymentAuthorization = createAsyncAction(
 >();
 
 export type WalletPaymentNetworkingActions =
+  | ActionType<typeof walletPaymentNewSessionToken>
   | ActionType<typeof walletPaymentGetDetails>
   | ActionType<typeof walletPaymentGetAllMethods>
   | ActionType<typeof walletPaymentGetUserWallets>
   | ActionType<typeof walletPaymentCalculateFees>
   | ActionType<typeof walletPaymentCreateTransaction>
+  | ActionType<typeof walletPaymentGetTransactionInfo>
   | ActionType<typeof walletPaymentDeleteTransaction>
   | ActionType<typeof walletPaymentAuthorization>;

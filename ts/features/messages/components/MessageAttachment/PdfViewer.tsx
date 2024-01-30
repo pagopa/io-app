@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import Pdf from "react-native-pdf";
 import { IOColors } from "@pagopa/io-app-design-system";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import I18n from "../../../../i18n";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -18,7 +18,7 @@ type OwnProps = {
 
 type Props = OwnProps & Omit<React.ComponentProps<typeof Pdf>, "source">;
 
-const PdfViewer = ({
+export const PdfViewer = ({
   style,
   downloadPath,
   onError,
@@ -26,11 +26,9 @@ const PdfViewer = ({
   ...rest
 }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-
   return (
     <LoadingSpinnerOverlay
       isLoading={isLoading}
-      loadingOpacity={1}
       loadingCaption={I18n.t("messageDetails.attachments.loading")}
     >
       <Pdf
@@ -49,5 +47,3 @@ const PdfViewer = ({
     </LoadingSpinnerOverlay>
   );
 };
-
-export default PdfViewer;
