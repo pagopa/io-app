@@ -1,22 +1,27 @@
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  IOColors,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
-import variables from "../theme/variables";
+import { useIOSelector } from "../store/hooks";
+import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 import { Overlay } from "./ui/Overlay";
 import { IOStyles } from "./core/variables/IOStyles";
 import { Body } from "./core/typography/Body";
+import BoxedRefreshIndicator from "./ui/BoxedRefreshIndicator";
 
 const styles = StyleSheet.create({
   textCaption: {
-    padding: variables.contentPadding
+    padding: 24
   }
 });
 
 type Props = Readonly<{
+  children?: React.ReactNode;
   isLoading: boolean;
   loadingCaption?: string;
   loadingOpacity?: number;
@@ -26,51 +31,56 @@ type Props = Readonly<{
 /**
  * A Component to display and overlay spinner conditionally
  */
-class LoadingSpinnerOverlay extends React.Component<Props> {
-  public render() {
-    const {
-      children,
-      isLoading,
-      loadingCaption,
-      loadingOpacity = 0.7,
-      onCancel
-    } = this.props;
-    return (
-      <Overlay
-        backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
-        foreground={
-          isLoading && (
-            <BoxedRefreshIndicator
-              caption={
-                <View style={styles.textCaption}>
-                  <Body accessible={true} style={{ textAlign: "center" }}>
-                    {loadingCaption || I18n.t("global.remoteStates.wait")}
-                  </Body>
-                </View>
-              }
-              action={
-                onCancel && (
-                  <View style={IOStyles.selfCenter}>
+const LoadingSpinnerOverlay = ({
+  children,
+  isLoading,
+  loadingCaption,
+  loadingOpacity = 0.7,
+  onCancel
+}: Props) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  return (
+    <Overlay
+      backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
+      foreground={
+        isLoading && (
+          <BoxedRefreshIndicator
+            caption={
+              <View style={styles.textCaption}>
+                <Body accessible={true} style={{ textAlign: "center" }}>
+                  {loadingCaption || I18n.t("global.remoteStates.wait")}
+                </Body>
+              </View>
+            }
+            action={
+              onCancel && (
+                <View style={IOStyles.selfCenter}>
+                  {isDesignSystemEnabled ? (
+                    <ButtonOutline
+                      accessibilityLabel={I18n.t("global.buttons.cancel")}
+                      onPress={onCancel}
+                      testID="loadingSpinnerOverlayCancelButton"
+                      label={I18n.t("global.buttons.cancel")}
+                    />
+                  ) : (
                     <ButtonDefaultOpacity
                       onPress={onCancel}
                       cancel={true}
                       testID={"loadingSpinnerOverlayCancelButton"}
                     >
-                      <NBButtonText>
-                        {I18n.t("global.buttons.cancel")}
-                      </NBButtonText>
+                      <Body>{I18n.t("global.buttons.cancel")}</Body>
                     </ButtonDefaultOpacity>
-                  </View>
-                )
-              }
-            />
-          )
-        }
-      >
-        {children}
-      </Overlay>
-    );
-  }
-}
+                  )}
+                </View>
+              )
+            }
+          />
+        )
+      }
+    >
+      {children}
+    </Overlay>
+  );
+};
 
 export default LoadingSpinnerOverlay;

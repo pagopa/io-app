@@ -35,10 +35,7 @@ const aCreditCard = {
     brand: "VISA",
     type: undefined
   },
-  enableableFunctions: [
-    EnableableFunctionsEnum.pagoPA,
-    EnableableFunctionsEnum.BPD
-  ],
+  enableableFunctions: [EnableableFunctionsEnum.pagoPA],
   caption: "",
   icon: "",
   pagoPA: true,

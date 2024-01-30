@@ -9,12 +9,12 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { Downloads } from "../../store/reducers/downloads";
 import { mockPdfAttachment } from "../../__mocks__/attachment";
 import I18n from "../../../../i18n";
-import { MessageAttachmentPreview } from "../MessageAttachmentPreview";
+import { LegacyMessageAttachmentPreview } from "../MessageAttachment/LegacyMessageAttachmentPreview";
 
 const mockOpen = jest.fn();
 const mockPdfViewer = <View testID="pdf-viewer" />;
 
-jest.mock("../MessageDetail/PdfViewer", () => () => mockPdfViewer);
+jest.mock("../MessageAttachment/LegacyPdfViewer", () => () => mockPdfViewer);
 
 describe("MessageAttachmentPreview", () => {
   describe("when enableDownloadAttachment is false", () => {
@@ -67,7 +67,7 @@ describe("MessageAttachmentPreview", () => {
 });
 
 const renderComponent = (
-  props: React.ComponentProps<typeof MessageAttachmentPreview>,
+  props: React.ComponentProps<typeof LegacyMessageAttachmentPreview>,
   downloads: Downloads = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -84,7 +84,7 @@ const renderComponent = (
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <MessageAttachmentPreview {...props} />,
+      () => <LegacyMessageAttachmentPreview {...props} />,
       "DUMMY",
       {},
       store

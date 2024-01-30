@@ -1,6 +1,5 @@
-import { bpdEnabled, cdcEnabled } from "../../../../config";
+import { cdcEnabled } from "../../../../config";
 
-export const ID_BPD_TYPE = 2;
 export const ID_CGN_TYPE = 3;
 export const ID_CDC_TYPE = 4;
 
@@ -11,7 +10,6 @@ export const ID_CDC_TYPE = 4;
  */
 export const mapBonusIdFeatureFlag = () =>
   new Map<number, boolean>([
-    [ID_BPD_TYPE, bpdEnabled],
     [ID_CGN_TYPE, true],
     [ID_CDC_TYPE, cdcEnabled]
   ]);

@@ -33,6 +33,7 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
+import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentCreateTransaction,
@@ -78,20 +79,35 @@ const WalletPaymentPickMethodScreen = () => {
   });
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
-  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const getSavedtMethodById = useIOSelector(
     walletPaymentSavedMethodByIdSelector
   );
   const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
+  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   // const getGenericMethodById = useIOSelector(walletPaymentGenericMethodByIdSelector);
+
+  const [waitingTransactionActivation, setWaitingTransactionActivation] =
+    React.useState(false);
+
+  // When a new transaction is created it comes with ACTIVATION_REQUESTED status, we can continue the payment flow
+  // only when the transaction status becomes ACTIVATED.
+  useOnTransactionActivationEffect(
+    React.useCallback(() => {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
+      });
+      setWaitingTransactionActivation(false);
+    }, [navigation])
+  );
 
   const alertRef = React.useRef<View>(null);
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
-  const isLoadingTransaction = pot.isLoading(transactionPot);
+  const isLoadingTransaction =
+    pot.isLoading(transactionPot) || waitingTransactionActivation;
 
   const isError =
     pot.isError(transactionPot) ||
@@ -105,7 +121,8 @@ const WalletPaymentPickMethodScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      // dispatch(walletPaymentGetAllMethods.request()); // currently we do not allow onboarding new methods in payment flow
+      // currently we do not allow onboarding new methods in payment flow
+      // dispatch(walletPaymentGetAllMethods.request());
       dispatch(walletPaymentGetUserWallets.request());
     }, [dispatch])
   );
@@ -157,21 +174,6 @@ const WalletPaymentPickMethodScreen = () => {
     });
   };
 
-  /* Will be decommented once generic methods are implemented
-  const handleSelectNotSavedMethod = (methodId: string) => {
-     setSelectedMethod({
-       kind: "generic",
-       methodId
-     });
-   }; 
-   */
-
-  const navigateToPspSelectionScreen = () => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
-    });
-  };
-
   const handleContinue = () => {
     // todo:: should handle the case where the user
     // selects a non saved method
@@ -187,10 +189,10 @@ const WalletPaymentPickMethodScreen = () => {
             walletPaymentCreateTransaction.request({
               paymentNotices: [
                 { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
-              ],
-              onSucces: navigateToPspSelectionScreen
+              ]
             })
           );
+          setWaitingTransactionActivation(true);
         })
       );
     }

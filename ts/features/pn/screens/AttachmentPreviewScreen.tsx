@@ -5,7 +5,6 @@ import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
 import { UIMessageId, UIAttachmentId } from "../../messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { MessageAttachmentPreview } from "../../messages/components/MessageAttachmentPreview";
 import { useIOSelector } from "../../../store/hooks";
 import { pnMessageAttachmentSelector } from "../store/reducers";
 import {
@@ -16,6 +15,7 @@ import {
   trackPNAttachmentShare
 } from "../analytics";
 import { isIos } from "../../../utils/platform";
+import { LegacyMessageAttachmentPreview } from "../../messages/components/MessageAttachment/LegacyMessageAttachmentPreview";
 
 export type AttachmentPreviewScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
@@ -51,7 +51,7 @@ export const AttachmentPreviewScreen = ({
   }, [maybePnMessageAttachment, navigation]);
 
   return O.isSome(maybePnMessageAttachment) ? (
-    <MessageAttachmentPreview
+    <LegacyMessageAttachmentPreview
       messageId={messageId}
       enableDownloadAttachment={false}
       attachment={maybePnMessageAttachment.value}

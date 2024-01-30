@@ -1,82 +1,236 @@
-import React, { useEffect, useRef } from "react";
-import { useNavigation } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
+import React, { useCallback, useState } from "react";
+import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
+import ReactNativeBlobUtil from "react-native-blob-util";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import { UIAttachmentId, UIMessageId } from "../types";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { MessageAttachmentPreview } from "../components/MessageAttachmentPreview";
-import { MessagesParamsList } from "../navigation/params";
-import { showToast } from "../../../utils/showToast";
-import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import { useIOSelector } from "../../../store/hooks";
-import { thirdPartyMessageUIAttachment } from "../store/reducers/thirdPartyById";
+import { downloadedMessageAttachmentSelector } from "../store/reducers/downloads";
+import { UIAttachment, UIAttachmentId, UIMessageId } from "../types";
+import { isIos } from "../../../utils/platform";
+import { share } from "../../../utils/share";
+import { IOToast } from "../../../components/Toast";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { PdfViewer } from "../components/MessageAttachment/PdfViewer";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { MessagesParamsList } from "../navigation/params";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
 } from "../analytics";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import {
+  trackPNAttachmentOpen,
+  trackPNAttachmentOpeningSuccess,
+  trackPNAttachmentSave,
+  trackPNAttachmentSaveShare,
+  trackPNAttachmentShare
+} from "../../pn/analytics";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
-export type MessageDetailAttachmentNavigationParams = Readonly<{
+export type MessageAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;
   attachmentId: UIAttachmentId;
+  isPN: boolean;
+  serviceId?: ServiceId;
 }>;
 
-export const MessageDetailAttachment = (
+const renderFooter = (
+  attachment: UIAttachment,
+  downloadPath: string,
+  isPN: boolean,
+  attachmentCategory?: string
+) =>
+  isIos ? (
+    <FooterWithButtons
+      type={"SingleButton"}
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          accessibilityLabel: I18n.t("messagePDFPreview.singleBtn"),
+          onPress: () => {
+            onShare(isPN, attachmentCategory);
+            ReactNativeBlobUtil.ios.presentOptionsMenu(downloadPath);
+          },
+          label: I18n.t("messagePDFPreview.singleBtn")
+        }
+      }}
+    />
+  ) : (
+    <FooterWithButtons
+      type={"ThreeButtonsInLine"}
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          accessibilityLabel: I18n.t("global.buttons.share"),
+          onPress: () => {
+            onShare(isPN, attachmentCategory);
+            share(`file://${downloadPath}`, undefined, false)().catch(_ => {
+              IOToast.show(I18n.t("messagePDFPreview.errors.sharing"));
+            });
+          },
+          label: I18n.t("global.buttons.share")
+        }
+      }}
+      third={{
+        type: "Outline",
+        buttonProps: {
+          accessibilityLabel: I18n.t("messagePDFPreview.save"),
+          onPress: () => {
+            onDownload(isPN, attachmentCategory);
+            ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
+              {
+                name: attachment.displayName,
+                parentFolder: "",
+                mimeType: attachment.contentType
+              },
+              "Download",
+              downloadPath
+            )
+              .then(_ => {
+                IOToast.show(
+                  I18n.t("messagePDFPreview.savedAtLocation", {
+                    name: attachment.displayName
+                  })
+                );
+              })
+              .catch(_ => {
+                IOToast.error(I18n.t("messagePDFPreview.errors.saving"));
+              });
+          },
+          label: I18n.t("messagePDFPreview.save")
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          accessibilityLabel: I18n.t("messagePDFPreview.open"),
+          onPress: () => {
+            onOpen(isPN, attachmentCategory);
+            ReactNativeBlobUtil.android
+              .actionViewIntent(downloadPath, attachment.contentType)
+              .catch(_ => {
+                IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
+              });
+          },
+          label: I18n.t("messagePDFPreview.open")
+        }
+      }}
+    />
+  );
+
+const onPDFError = (
+  messageId: UIMessageId,
+  isPN: boolean,
+  serviceId?: ServiceId,
+  attachmentCategory?: string
+) =>
+  pipe(
+    isPN,
+    B.fold(
+      () => {
+        trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
+        IOToast.error(I18n.t("messageDetails.attachments.corruptedFile"));
+      },
+      () => trackPNAttachmentOpeningSuccess("error", attachmentCategory)
+    )
+  );
+
+const onLoadComplete = (isPN: boolean, attachmentCategory?: string) =>
+  pipe(
+    isPN,
+    B.fold(
+      () => trackThirdPartyMessageAttachmentPreviewSuccess(),
+      () => trackPNAttachmentOpeningSuccess("displayer", attachmentCategory)
+    )
+  );
+
+const onShare = (isPN: boolean, attachmentCategory?: string) =>
+  pipe(
+    isPN,
+    B.fold(
+      () => trackThirdPartyMessageAttachmentUserAction("share"),
+      () =>
+        pipe(
+          isIos,
+          B.fold(
+            () => trackPNAttachmentShare(attachmentCategory),
+            () => trackPNAttachmentSaveShare(attachmentCategory)
+          )
+        )
+    )
+  );
+
+const onOpen = (isPN: boolean, attachmentCategory?: string) =>
+  pipe(
+    isPN,
+    B.fold(
+      () => trackThirdPartyMessageAttachmentUserAction("open"),
+      () => trackPNAttachmentOpen(attachmentCategory)
+    )
+  );
+
+const onDownload = (isPN: boolean, attachmentCategory?: string) =>
+  pipe(
+    isPN,
+    B.fold(
+      () => trackThirdPartyMessageAttachmentUserAction("download"),
+      () => trackPNAttachmentSave(attachmentCategory)
+    )
+  );
+
+export const MessageAttachment = (
   props: IOStackNavigationRouteProps<
     MessagesParamsList,
     "MESSAGE_DETAIL_ATTACHMENT"
   >
 ): React.ReactElement => {
-  const navigation = useNavigation();
-  const messageId = props.route.params.messageId;
-  const attachmentId = props.route.params.attachmentId;
-  // This ref is needed otherwise the auto back on the useEffect will fire multiple
-  // times, since its dependencies change during the back navigation
-  const autoBackOnErrorHandled = useRef(false);
-  const serviceId = useIOSelector(state =>
-    getServiceByMessageId(state, messageId)
+  const { messageId, attachmentId, isPN, serviceId } = props.route.params;
+  const [isPDFRenderingError, setIsPDFRenderingError] = useState(false);
+
+  const downloadedAttachment = useIOSelector(state =>
+    downloadedMessageAttachmentSelector(state, messageId, attachmentId)
   );
+  const attachmentOpt = downloadedAttachment?.attachment;
+  const attachmentCategory = attachmentOpt?.category;
+  const downloadPathOpt = downloadedAttachment?.path;
 
-  const maybeThirdPartyMessageUIAttachment = useIOSelector(state =>
-    thirdPartyMessageUIAttachment(state)(messageId)(attachmentId)
-  );
+  const onPDFRenderingError = useCallback(() => {
+    setIsPDFRenderingError(true);
+    onPDFError(messageId, isPN, serviceId, attachmentCategory);
+  }, [attachmentCategory, messageId, isPN, serviceId]);
 
-  useEffect(() => {
-    // This condition happens only if this screen is shown without having
-    // first retrieved the third party message (so it should never happen)
-    if (
-      !autoBackOnErrorHandled.current &&
-      O.isNone(maybeThirdPartyMessageUIAttachment)
-    ) {
-      // eslint-disable-next-line functional/immutable-data
-      autoBackOnErrorHandled.current = true;
-      showToast(I18n.t("messageDetails.attachments.downloadFailed"));
-      navigation.goBack();
-    }
-  }, [navigation, maybeThirdPartyMessageUIAttachment]);
+  useHeaderSecondLevel({
+    title: I18n.t("messagePDFPreview.title"),
+    supportRequest: true
+  });
 
-  return O.isSome(maybeThirdPartyMessageUIAttachment) ? (
-    <MessageAttachmentPreview
-      messageId={messageId}
-      attachment={maybeThirdPartyMessageUIAttachment.value}
-      onPDFError={() => {
-        trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
-        showToast(I18n.t("messageDetails.attachments.corruptedFile"));
-      }}
-      onLoadComplete={() => {
-        trackThirdPartyMessageAttachmentPreviewSuccess();
-      }}
-      onDownload={() => {
-        trackThirdPartyMessageAttachmentUserAction("download");
-      }}
-      onOpen={() => {
-        trackThirdPartyMessageAttachmentUserAction("open");
-      }}
-      onShare={() => {
-        trackThirdPartyMessageAttachmentUserAction("share");
-      }}
-    />
-  ) : (
-    <></>
+  if (!attachmentOpt || !downloadPathOpt) {
+    return (
+      <OperationResultScreenContent
+        pictogram={"umbrellaNew"}
+        title={I18n.t("global.genericError")}
+        subtitle={I18n.t("messageDetails.submitBugText")}
+      />
+    );
+  }
+  return (
+    <>
+      {isPDFRenderingError ? (
+        <OperationResultScreenContent
+          pictogram={"umbrellaNew"}
+          title={I18n.t("messagePDFPreview.errors.previewing.title")}
+          subtitle={I18n.t("messagePDFPreview.errors.previewing.body")}
+        />
+      ) : (
+        <PdfViewer
+          downloadPath={downloadPathOpt}
+          onError={onPDFRenderingError}
+          onLoadComplete={() => onLoadComplete(isPN, attachmentCategory)}
+        />
+      )}
+      {renderFooter(attachmentOpt, downloadPathOpt, isPN, attachmentCategory)}
+    </>
   );
 };

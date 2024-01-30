@@ -18,7 +18,7 @@ import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { SessionManager } from "../../../../../../utils/SessionManager";
 import { fromPatchedWalletV2ToRawBPay } from "../../../../../../utils/walletv2";
 import {
-  addBPayToWallet as addBpayToWalletAction,
+  addBPayToWalletAction as addBpayToWalletAction,
   searchUserBPay
 } from "../../store/actions";
 

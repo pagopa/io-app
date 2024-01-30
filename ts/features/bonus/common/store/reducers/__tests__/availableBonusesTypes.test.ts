@@ -6,7 +6,7 @@ import {
 } from "../../../../__mock__/availableBonuses";
 import { BonusesAvailable } from "../../../../../../../definitions/content/BonusesAvailable";
 import { BonusVisibilityEnum } from "../../../../../../../definitions/content/BonusVisibility";
-import { ID_BPD_TYPE, ID_CGN_TYPE } from "../../../../common/utils";
+import { ID_CGN_TYPE } from "../../../../common/utils";
 import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
 import * as bonus from "../../../utils";
 import {
@@ -40,11 +40,7 @@ describe("availableBonusesTypes with FF enabled", () => {
   it("should return 1 bonus available", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
       // eslint-disable-next-line sonarjs/no-identical-functions
-      () =>
-        new Map<number, boolean>([
-          [ID_BPD_TYPE, true],
-          [ID_CGN_TYPE, true]
-        ])
+      () => new Map<number, boolean>([[ID_CGN_TYPE, true]])
     );
     expect(
       supportedAvailableBonusSelector.resultFunc(
@@ -58,7 +54,6 @@ describe("availableBonusesTypes with FF enabled", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, true],
           [4, true]
         ])
@@ -80,7 +75,6 @@ describe("availableBonusesTypes with FF enabled", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, true],
           [4, true]
         ])
@@ -115,15 +109,11 @@ describe("availableBonusesTypes with FF enabled", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, true],
           [4, true]
         ])
     );
-    const visibility = BonusVisibilityEnum.experimental;
-    const bonuses: BonusesAvailable = [
-      { ...mockBonus, id_type: ID_BPD_TYPE, visibility }
-    ];
+    const bonuses: BonusesAvailable = [];
     const result = supportedAvailableBonusSelector.resultFunc(
       pot.some(bonuses)
     );
@@ -135,18 +125,12 @@ describe("availableBonusesTypes with FF enabled", () => {
       // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
-          [ID_BPD_TYPE, true],
           [ID_CGN_TYPE, true],
           [4, true]
         ])
     );
     const visibility = BonusVisibilityEnum.experimental;
     const bonuses: BonusesAvailable = [
-      {
-        ...mockBonus,
-        id_type: ID_BPD_TYPE,
-        visibility
-      },
       {
         ...mockBonus,
         id_type: ID_CGN_TYPE,
@@ -162,7 +146,7 @@ describe("availableBonusesTypes with FF enabled", () => {
       pot.some(bonuses)
     );
     expect(result.length).toBe(1);
-    expect(result).toEqual([bonuses[1]]);
+    expect(result).toEqual([bonuses[0]]);
   });
 });
 

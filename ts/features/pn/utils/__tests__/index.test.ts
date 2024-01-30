@@ -3,6 +3,7 @@ import { isPNOptInMessage } from "..";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../messages/types/MessageCTA";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 const pnOptInServiceId = () => "optInServiceId";
 const navigateToServiceLink = () =>
@@ -188,7 +189,7 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
       CTAs: getMaybeCTAs(),
       service: {
         ...getMockService(),
-        id: "NotTheOptInOne"
+        id: "NotTheOptInOne" as ServiceId
       },
       state: getMockState()
     },
