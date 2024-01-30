@@ -300,7 +300,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     ]
                                   }
                                 >
-                                  [missing "en.features.pn.details.badge.legalValue" translation]
+                                  Legal value
                                 </Text>
                               </View>
                               <View

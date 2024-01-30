@@ -441,7 +441,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                     ]
                                   }
                                 >
-                                  [missing "en.features.pn.details.badge.legalValue" translation]
+                                  Legal value
                                 </Text>
                               </View>
                               <View
