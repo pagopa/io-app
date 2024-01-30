@@ -10,6 +10,7 @@ import { walletPaymentCalculateFees } from "../../../store/actions/networking";
 import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculateFees";
 import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
+import { preferredLanguageSelector } from "../../../../../../store/reducers/persistedPreferences";
 
 describe("Test handleWalletPaymentCalculateFees saga", () => {
   const calculateFeesPayload: CalculateFeeRequest & {
@@ -41,6 +42,8 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       walletPaymentCalculateFees.request(calculateFeesPayload)
     )
       .next()
+      .select(preferredLanguageSelector)
+      .next("IT")
       .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
@@ -66,6 +69,8 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       walletPaymentCalculateFees.request(calculateFeesPayload)
     )
       .next()
+      .select(preferredLanguageSelector)
+      .next("IT")
       .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
       .call(
@@ -94,6 +99,8 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       walletPaymentCalculateFees.request(calculateFeesPayload)
     )
       .next()
+      .select(preferredLanguageSelector)
+      .next("IT")
       .select(selectWalletPaymentSessionToken)
       .next(T_SESSION_TOKEN)
       .call(

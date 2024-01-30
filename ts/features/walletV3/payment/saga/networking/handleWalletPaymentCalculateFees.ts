@@ -1,8 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { toUpper } from "lodash";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
+import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
@@ -19,6 +22,13 @@ export function* handleWalletPaymentCalculateFees(
   action: ActionType<(typeof walletPaymentCalculateFees)["request"]>
 ) {
   try {
+    const preferredLanguageOption = yield* select(preferredLanguageSelector);
+    const language = pipe(
+      preferredLanguageOption,
+      O.map(toUpper),
+      O.getOrElse(() => "IT")
+    );
+
     const sessionToken = yield* getOrFetchWalletSessionToken();
 
     if (sessionToken === undefined) {
@@ -30,7 +40,7 @@ export function* handleWalletPaymentCalculateFees(
       return;
     }
 
-    const { paymentMethodId, ...body } = action.payload;
+    const { paymentMethodId, ...body } = { ...action.payload, language };
     const calculateFeesRequest = calculateFees({
       eCommerceSessionToken: sessionToken,
       id: paymentMethodId,
