@@ -92,6 +92,138 @@ exports[`MessageDetailHeader component should match the snapshot with all props 
       }
     }
   />
+  <View
+    accessible={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 6,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontSize="regular"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+            "lineHeight": 21,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+              "lineHeight": 21,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        Organization foo
+      </Text>
+      <Text
+        allowFontScaling={false}
+        color="blueIO-500"
+        defaultColor="blue"
+        defaultWeight="Bold"
+        font="TitilliumWeb"
+        fontSize="regular"
+        fontStyle={
+          Object {
+            "fontSize": 14,
+            "lineHeight": 21,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 14,
+              "lineHeight": 21,
+            },
+            Object {
+              "color": "#0B3EE3",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+            },
+          ]
+        }
+        weight="Bold"
+      >
+        health
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "marginLeft": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "borderColor": "rgba(14,15,19,0.1)",
+              "borderWidth": 1,
+              "overflow": "hidden",
+              "resizeMode": "contain",
+            },
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderRadius": 22,
+              "height": 44,
+              "padding": 6,
+              "width": 44,
+            },
+          ]
+        }
+      >
+        <Image
+          onError={[Function]}
+          source={
+            Object {
+              "uri": "https://assets.cdn.io.italia.it/logos/services/serviceid.png",
+            }
+          }
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#D2D6E3",
+        "height": 0.5,
+      }
+    }
+  />
 </View>
 `;
 

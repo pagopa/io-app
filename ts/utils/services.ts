@@ -10,6 +10,19 @@ import { VisibleServicesState } from "../store/reducers/entities/services/visibl
 import { isTextIncludedCaseInsensitive } from "./strings";
 
 /**
+ * Returns the uri for the logo of a given service
+ * @param service
+ * @param logosRepoUrl
+ * @returns
+ */
+export const logoForService = (
+  service: ServicePublic,
+  logosRepoUrl: string = `${contentRepoUrl}/logos`
+): ImageURISource => ({
+  uri: `${logosRepoUrl}/services/${service.service_id.toLowerCase()}.png`
+});
+
+/**
  * Returns an array of ImageURISource pointing to possible logos for the
  * provided service.
  *
