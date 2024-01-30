@@ -686,7 +686,7 @@ authentication:
     passcode: Any other time, you’ll just need your fingerprint, face recognition or unlock code.
     notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app
     button_accept_lv: Continue with quick access
-    button_decline_lv: Authenticate with SPID or CIE every 30 days
+    button_decline_lv: Log in with SPID or CIE every 30 days
   security_suggestions:
     fingerprint: Do not share your unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.

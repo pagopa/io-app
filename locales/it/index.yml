@@ -686,7 +686,7 @@ authentication:
     passcode: Per tutte le altre volte basterà il tuo volto, impronta o codice di sblocco
     notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO
     button_accept_lv: Continua con l’accesso rapido
-    button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
+    button_decline_lv: Entra con SPID o CIE ogni 30 giorni
   security_suggestions:
     fingerprint: Non condividere il tuo codice di sblocco o riconoscimento biometrico con nessuno
     io_logout: Se perdi il dispositivo, esci dall’app da web
