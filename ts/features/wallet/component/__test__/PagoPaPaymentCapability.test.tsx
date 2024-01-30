@@ -61,7 +61,7 @@ describe("PagoPaPaymentCapability", () => {
     const aPaymentMethod = {
       ...aBancomat,
       kind: "Bancomat",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
+      enableableFunctions: []
     } as PaymentMethod;
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -88,7 +88,7 @@ describe("PagoPaPaymentCapability", () => {
       ...aNonMaestroCreditCard,
       kind: "CreditCard",
       pagoPA: false,
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
+      enableableFunctions: []
     } as PaymentMethod;
 
     const globalState = appReducer(undefined, applicationChangeState("active"));

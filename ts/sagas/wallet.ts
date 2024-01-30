@@ -44,9 +44,9 @@ import {
   handleAddpayToWallet,
   handleSearchUserBPay
 } from "../features/wallet/onboarding/bancomatPay/saga/networking";
-import { addBPayToWalletAndActivateBpd } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
+import { addBPayToWalletSaga } from "../features/wallet/onboarding/bancomatPay/saga/orchestration/addBPayToWallet";
 import {
-  addBPayToWallet,
+  addBPayToWalletAction,
   searchUserBPay,
   walletAddBPayStart
 } from "../features/wallet/onboarding/bancomatPay/store/actions";
@@ -55,7 +55,7 @@ import {
   handleLoadCoBadgeConfiguration,
   handleSearchUserCoBadge
 } from "../features/wallet/onboarding/cobadge/saga/networking";
-import { addCoBadgeToWalletAndActivateBpd } from "../features/wallet/onboarding/cobadge/saga/orchestration/addCoBadgeToWallet";
+import { addCoBadgeToWalletSaga } from "../features/wallet/onboarding/cobadge/saga/orchestration/addCoBadgeToWallet";
 import {
   addCoBadgeToWallet,
   loadCoBadgeAbiConfiguration,
@@ -771,7 +771,7 @@ export function* watchWalletSaga(
   );
 
   // watch for add BPay to Wallet workflow
-  yield* takeLatest(walletAddBPayStart, addBPayToWalletAndActivateBpd);
+  yield* takeLatest(walletAddBPayStart, addBPayToWalletSaga);
 
   // watch for BancomatPay search request
   yield* takeLatest(
@@ -782,7 +782,7 @@ export function* watchWalletSaga(
   );
   // watch for add BancomatPay to the user's wallet
   yield* takeLatest(
-    addBPayToWallet.request,
+    addBPayToWalletAction.request,
     handleAddpayToWallet,
     paymentManagerClient.addBPayToWallet,
     pmSessionManager
@@ -809,9 +809,30 @@ export function* watchWalletSaga(
     handleLoadCoBadgeConfiguration,
     contentClient.getCobadgeServices
   );
+  // watch for CoBadge search request
+  yield* takeLatest(
+    searchUserCoBadge.request,
+    handleSearchUserCoBadge,
+    paymentManagerClient.getCobadgePans,
+    paymentManagerClient.searchCobadgePans,
+    pmSessionManager
+  );
+  // watch for add CoBadge to the user's wallet
+  yield* takeLatest(
+    addCoBadgeToWallet.request,
+    handleAddCoBadgeToWallet,
+    paymentManagerClient.addCobadgeToWallet,
+    pmSessionManager
+  );
+  // watch for CoBadge configuration request
+  yield* takeLatest(
+    loadCoBadgeAbiConfiguration.request,
+    handleLoadCoBadgeConfiguration,
+    contentClient.getCobadgeServices
+  );
 
   // watch for add co-badge to Wallet workflow
-  yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletAndActivateBpd);
+  yield* takeLatest(walletAddCoBadgeStart, addCoBadgeToWalletSaga);
 
   yield* fork(
     watchPaypalOnboardingSaga,
