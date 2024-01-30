@@ -47,7 +47,6 @@ import {
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 import DSEnableSwitch from "./components/DSEnableSwitch";
