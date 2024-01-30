@@ -3116,6 +3116,8 @@ features:
         activated: "Grazie, il servizio è attivo!"
         error: "Si è verificato un errore con la tua richiesta"
     details:
+      badge:
+        legalValue: "Valore legale"
       title: Dettaglio del messaggio
       noticeCode: "Codice avviso"
       loadError:
@@ -3859,7 +3861,7 @@ transaction:
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
-    totalFeePsp: di commissione, applicata da {{pspName}}
+    totalFeePsp: "di commissione, applicata da {{pspName}}."
     totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
     info:
       title: Informazioni sulla transazione

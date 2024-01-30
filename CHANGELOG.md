@@ -2,6 +2,49 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.52.0-rc.0](https://github.com/pagopa/io-app/compare/2.51.0-rc.2...2.52.0-rc.0) (2024-01-30)
+
+
+### Features
+
+* [[IOBP-502](https://pagopa.atlassian.net/browse/IOBP-502)] Disable swipe back while payment outcome showed ([#5434](https://github.com/pagopa/io-app/issues/5434)) ([660d955](https://github.com/pagopa/io-app/commit/660d955f6f0bab025a4701594a5a1796dbd59efa))
+* [[IOBP-514](https://pagopa.atlassian.net/browse/IOBP-514)] Move authorization creation request upon payment method selection ([#5419](https://github.com/pagopa/io-app/issues/5419)) ([dffbbc0](https://github.com/pagopa/io-app/commit/dffbbc0e9944585108ea5ae7d6c93c9d0b925012))
+* [[IOCOM-864](https://pagopa.atlassian.net/browse/IOCOM-864),[IOCOM-865](https://pagopa.atlassian.net/browse/IOCOM-865)] Update message attachment's preview with the new DS ([#5428](https://github.com/pagopa/io-app/issues/5428)) ([18f8cb3](https://github.com/pagopa/io-app/commit/18f8cb3dc890f621256904eb07c1f4d30947bea1))
+* [[IOCOM-866](https://pagopa.atlassian.net/browse/IOCOM-866)] Display tags in the header of a SEND message ([#5440](https://github.com/pagopa/io-app/issues/5440)) ([d51761c](https://github.com/pagopa/io-app/commit/d51761c92a67ef1246b10e33005df68b0fa44032))
+* [[IOCOM-868](https://pagopa.atlassian.net/browse/IOCOM-868)] Update SEND message header and content to the new design system ([#5431](https://github.com/pagopa/io-app/issues/5431)) ([5f5f644](https://github.com/pagopa/io-app/commit/5f5f644b32faa6737af480aa119fa94f22f760b8))
+* [[IOCOM-980](https://pagopa.atlassian.net/browse/IOCOM-980)] Add `Timeline` component ([#5426](https://github.com/pagopa/io-app/issues/5426)) ([4b708e4](https://github.com/pagopa/io-app/commit/4b708e4f93ed666b459e9b984285211553336593))
+
+
+### Bug Fixes
+
+* [[IOBP-506](https://pagopa.atlassian.net/browse/IOBP-506)] I18n fix in transaction details ([#5450](https://github.com/pagopa/io-app/issues/5450)) ([6b690c7](https://github.com/pagopa/io-app/commit/6b690c72e87a6ce0c4512902f7b9fe4e48955c8c))
+
+
+### Chores
+
+* **deps:** bump aiohttp from 3.9.0 to 3.9.2 in /scripts/e2e_message ([#5457](https://github.com/pagopa/io-app/issues/5457)) ([52a3d1e](https://github.com/pagopa/io-app/commit/52a3d1e761bb915c75f610f230bc288f5eacb073))
+* [[IACROSS-220](https://pagopa.atlassian.net/browse/IACROSS-220)] Bump `fastlane` from `2.212.1` to `2.212.2` ([#5438](https://github.com/pagopa/io-app/issues/5438)) ([e300141](https://github.com/pagopa/io-app/commit/e300141f90645b00b8b6336358d7f7c5e22e5f9f))
+* [[IOAPPFD0-200](https://pagopa.atlassian.net/browse/IOAPPFD0-200)] Add the new Profile `About IO App` screen, remove the contextual modal ([#5326](https://github.com/pagopa/io-app/issues/5326)) ([debbef3](https://github.com/pagopa/io-app/commit/debbef3ef994bdb22a002ad1f9acd680df6de83c))
+* [[IOBP-489](https://pagopa.atlassian.net/browse/IOBP-489)] Removal of BPD references around the app ([#5421](https://github.com/pagopa/io-app/issues/5421)) ([1dfe18c](https://github.com/pagopa/io-app/commit/1dfe18c9f3b1c506342bd6db2f7007373e603e4a))
+* [[IOBP-490](https://pagopa.atlassian.net/browse/IOBP-490)] Removal of BPD folder ([#5432](https://github.com/pagopa/io-app/issues/5432)) ([f47f87a](https://github.com/pagopa/io-app/commit/f47f87a30ecae7abf1e394d503aad743bcea99c8))
+* [[IOBP-517](https://pagopa.atlassian.net/browse/IOBP-517)] Remove unnecessary gallery permission on iOS ([#5444](https://github.com/pagopa/io-app/issues/5444)) ([942e98b](https://github.com/pagopa/io-app/commit/942e98b0eada778880ad343ce753d81892ed996d))
+* [[IOBP-517](https://pagopa.atlassian.net/browse/IOBP-517)] Removes unnecessary gallery permission on iOS  ([#5433](https://github.com/pagopa/io-app/issues/5433)) ([229906d](https://github.com/pagopa/io-app/commit/229906d6ee7860c4a357cd4f1a557d6ea2c9dc1f))
+* [[IOBP-520](https://pagopa.atlassian.net/browse/IOBP-520)] Add session token request in wallet payment flow ([#5439](https://github.com/pagopa/io-app/issues/5439)) ([973f8e7](https://github.com/pagopa/io-app/commit/973f8e7a5adbe523e67edf61c437ee4b1ff8886f))
+* [[IOBP-521](https://pagopa.atlassian.net/browse/IOBP-521)] Add transaction status polling before PSP selection screen ([#5443](https://github.com/pagopa/io-app/issues/5443)) ([0a7da49](https://github.com/pagopa/io-app/commit/0a7da49d23fece95b919e7d12d87b41c016fa2cb))
+* [[IOBP-523](https://pagopa.atlassian.net/browse/IOBP-523)] Add missing `language` parameter in `calculateFees` request ([#5453](https://github.com/pagopa/io-app/issues/5453)) ([644157f](https://github.com/pagopa/io-app/commit/644157f50889d8594ee18b02c8b4776e51639ed5))
+* CGN card deactivation on E2E tests ([#5435](https://github.com/pagopa/io-app/issues/5435)) ([295b838](https://github.com/pagopa/io-app/commit/295b838f3d1a76e50c4512c7f00c01bd46488463))
+* E2E tests failure reporter ([#5452](https://github.com/pagopa/io-app/issues/5452)) ([e517229](https://github.com/pagopa/io-app/commit/e517229f28bb25e38443862485197be73442fe03))
+* fix CGN e2e test scroll ([#5441](https://github.com/pagopa/io-app/issues/5441)) ([51caedd](https://github.com/pagopa/io-app/commit/51caeddab3023a7fea956115b5b5d19fbf3fab04))
+* Language 🇩🇪 remove spaces ([#5437](https://github.com/pagopa/io-app/issues/5437)) ([71ca2a2](https://github.com/pagopa/io-app/commit/71ca2a2bcbe4eba3b044a870779ad0b120320ec4))
+
+## [2.51.0-rc.3](https://github.com/pagopa/io-app/compare/2.51.0-rc.2...2.51.0-rc.3) (2024-01-25)
+
+
+### Chores
+
+* [[IOBP-517](https://pagopa.atlassian.net/browse/IOBP-517)] Removes unnecessary gallery permission on iOS  ([#5433](https://github.com/pagopa/io-app/issues/5433)) ([229906d](https://github.com/pagopa/io-app/commit/229906d6ee7860c4a357cd4f1a557d6ea2c9dc1f))
+* bump fastlane from 2.212.1 to 2.212.2 ([651f4a6](https://github.com/pagopa/io-app/commit/651f4a6effe571701aa44e557669becbc870244a))
+
 ## [2.51.0-rc.2](https://github.com/pagopa/io-app/compare/2.51.0-rc.1...2.51.0-rc.2) (2024-01-24)
 
 
