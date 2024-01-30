@@ -9,7 +9,6 @@ import { ImportoEuroCents } from "../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../definitions/backend/PaymentRequestsGetResponse";
 import { SpidLevelEnum } from "../../definitions/backend/SpidLevel";
 import { SpidIdp } from "../../definitions/content/SpidIdp";
-import { EnableableFunctionsEnum } from "../../definitions/pagopa/EnableableFunctions";
 import { TypeEnum } from "../../definitions/pagopa/Wallet";
 import { WalletTypeEnum } from "../../definitions/pagopa/WalletV2";
 import {
@@ -202,7 +201,7 @@ export const myWalletNoCreditCard: { [key: string]: any } = {
 export const bancomat = {
   walletType: WalletTypeEnum.Bancomat,
   createDate: "2021-04-05",
-  enableableFunctions: [EnableableFunctionsEnum.BPD],
+  enableableFunctions: [],
   favourite: false,
   idWallet: 24415,
   info: {

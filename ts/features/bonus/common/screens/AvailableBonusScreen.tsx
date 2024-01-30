@@ -43,7 +43,6 @@ import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
 import { showToast } from "../../../../utils/showToast";
-import { bpdOnboardingStart } from "../../bpd/store/actions/onboarding";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
   AvailableBonusItem,
@@ -261,7 +260,6 @@ const mapStateToProps = (state: GlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   navigateBack: () => navigateBack(),
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
-  startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
   startCgnActivation: () => dispatch(cgnActivationStart()),
   navigateToServiceDetailsScreen: (
     params: ServiceDetailsScreenNavigationParams

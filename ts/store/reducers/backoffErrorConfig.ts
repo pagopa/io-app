@@ -2,10 +2,6 @@ import { getType } from "typesafe-actions";
 import _ from "lodash";
 import { PayloadAC } from "typesafe-actions/dist/type-helpers";
 import {
-  bpdTransactionsLoadPage,
-  bpdTransactionsLoadRequiredData
-} from "../../features/bonus/bpd/store/actions/transactions";
-import {
   fetchTransactionsFailure,
   fetchTransactionsSuccess
 } from "../actions/wallet/transactions";
@@ -15,8 +11,6 @@ import {
   fetchWalletsFailure,
   fetchWalletsSuccess
 } from "../actions/wallet/wallets";
-import { bpdLoadActivationStatus } from "../../features/bonus/bpd/store/actions/details";
-import { bpdPeriodsAmountLoad } from "../../features/bonus/bpd/store/actions/periods";
 import { euCovidCertificateGet } from "../../features/euCovidCert/store/actions";
 import {
   svPossibleVoucherStateGet,
@@ -36,13 +30,6 @@ const monitoredActions: ReadonlyArray<
   [addWalletCreditCardFailure, addWalletCreditCardSuccess],
   [fetchTransactionsFailure, fetchTransactionsSuccess],
   [fetchWalletsFailure, fetchWalletsSuccess],
-  [bpdLoadActivationStatus.failure, bpdLoadActivationStatus.success],
-  [bpdPeriodsAmountLoad.failure, bpdPeriodsAmountLoad.success],
-  [bpdTransactionsLoadPage.failure, bpdTransactionsLoadPage.success],
-  [
-    bpdTransactionsLoadRequiredData.failure,
-    bpdTransactionsLoadRequiredData.success
-  ],
   [euCovidCertificateGet.failure, euCovidCertificateGet.success],
   [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success],
   [svVoucherListGet.failure, svVoucherListGet.success],

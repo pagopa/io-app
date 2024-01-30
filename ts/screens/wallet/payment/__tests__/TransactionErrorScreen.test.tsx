@@ -17,6 +17,10 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { PayloadForAction } from "../../../../types/utils";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import TransactionErrorScreen from "../TransactionErrorScreen";
+// this is required for TSC, since apparently
+// it does not update the typedef unless it is actually
+// imported in a test (or a global.d) and not in the jest global config
+import "@testing-library/jest-native/extend-expect";
 
 const rptId = {
   organizationFiscalCode: "00000000005",

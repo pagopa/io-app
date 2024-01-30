@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
-import { ProgressBar } from "../../../bonus/bpd/screens/details/components/summary/base/ProgressBar";
+import { ProgressBar } from "../../../bonus/common/components/ProgressBar";
 
 type Props = {
   secondsToExpiration: number;

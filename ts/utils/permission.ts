@@ -69,6 +69,11 @@ export const requestMediaPermission = async () => {
           ? RNPermissions.PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
           : RNPermissions.PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE
       );
+    case "ios":
+      // On iOS, photo selection from the gallery is implicitly handled by the image picker.
+      // The picker itself prompts the user for permission to access photos, allowing them to
+      // select a photo that is then seamlessly passed back to the app.
+      return true;
     default:
       return false;
   }

@@ -14,6 +14,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { Transfer } from "../../../../../definitions/pagopa/ecommerce/Transfer";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
@@ -37,7 +38,7 @@ import {
   walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
   walletPaymentPspListSelector,
-  walletPaymentTransactionTransferListSelector
+  walletPaymentTransactionSelector
 } from "../store/selectors";
 import { WalletPaymentPspSortType } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
@@ -53,9 +54,7 @@ const WalletPaymentPickPspScreen = () => {
   const [sortType, setSortType] =
     React.useState<WalletPaymentPspSortType>("default");
 
-  const transactionTransferListPot = useIOSelector(
-    walletPaymentTransactionTransferListSelector
-  );
+  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
@@ -93,12 +92,19 @@ const WalletPaymentPickPspScreen = () => {
       pipe(
         sequenceT(O.Monad)(
           pot.toOption(paymentAmountPot),
-          pot.toOption(transactionTransferListPot),
+          pot.toOption(transactionPot),
           selectedWalletOption
         ),
-        O.map(([paymentAmountInCents, transferList, selectedWallet]) => {
+        O.map(([paymentAmountInCents, transaction, selectedWallet]) => {
+          const transferList = transaction.payments.reduce(
+            (a, p) => [...a, ...(p.transferList ?? [])],
+            [] as ReadonlyArray<Transfer>
+          );
+          const paymentToken = transaction.payments[0]?.paymentToken;
+
           dispatch(
             walletPaymentCalculateFees.request({
+              paymentToken,
               paymentMethodId: selectedWallet.paymentMethodId,
               walletId: selectedWallet.walletId,
               paymentAmount: paymentAmountInCents,
@@ -107,12 +113,7 @@ const WalletPaymentPickPspScreen = () => {
           );
         })
       );
-    }, [
-      dispatch,
-      paymentAmountPot,
-      selectedWalletOption,
-      transactionTransferListPot
-    ])
+    }, [dispatch, paymentAmountPot, selectedWalletOption, transactionPot])
   );
 
   React.useEffect(

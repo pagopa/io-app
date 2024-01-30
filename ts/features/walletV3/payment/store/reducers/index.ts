@@ -1,17 +1,21 @@
-import _ from "lodash";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { NavigatorScreenParams } from "@react-navigation/native";
-import { getType } from "typesafe-actions";
-import { pipe } from "fp-ts/lib/function";
 import { sequenceS } from "fp-ts/lib/Apply";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
+import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
+import NavigationService from "../../../../../navigation/NavigationService";
+import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
+import { WalletPaymentFailure } from "../../types/failure";
 import {
   walletPaymentAuthorization,
   walletPaymentCalculateFees,
@@ -19,22 +23,20 @@ import {
   walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
-  walletPaymentGetUserWallets
+  walletPaymentGetTransactionInfo,
+  walletPaymentGetUserWallets,
+  walletPaymentNewSessionToken
 } from "../actions/networking";
 import {
+  walletPaymentInitState,
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
-  walletPaymentInitState,
   walletPaymentResetPickedPsp
 } from "../actions/orchestration";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { WalletPaymentFailure } from "../../types/failure";
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import NavigationService from "../../../../../navigation/NavigationService";
-import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 
 export type WalletPaymentState = {
   rptId?: RptId;
+  sessionToken: pot.Pot<string, NetworkError>;
   paymentDetails: pot.Pot<
     PaymentRequestsGetResponse,
     NetworkError | WalletPaymentFailure
@@ -44,10 +46,7 @@ export type WalletPaymentState = {
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
   chosenPaymentMethod: O.Option<WalletInfo>;
   chosenPsp: O.Option<Bundle>;
-  transaction: pot.Pot<
-    NewTransactionResponse,
-    NetworkError | WalletPaymentFailure
-  >;
+  transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
   startRoute?: {
     routeName: keyof AppParamsList;
@@ -56,6 +55,7 @@ export type WalletPaymentState = {
 };
 
 const INITIAL_STATE: WalletPaymentState = {
+  sessionToken: pot.none,
   paymentDetails: pot.none,
   userWallets: pot.none,
   allPaymentMethods: pot.none,
@@ -87,6 +87,23 @@ const reducer = (
       return {
         ...INITIAL_STATE,
         startRoute
+      };
+
+    // eCommerce Session token
+    case getType(walletPaymentNewSessionToken.request):
+      return {
+        ...state,
+        sessionToken: pot.toLoading(state.sessionToken)
+      };
+    case getType(walletPaymentNewSessionToken.success):
+      return {
+        ...state,
+        sessionToken: pot.some(action.payload.sessionToken)
+      };
+    case getType(walletPaymentNewSessionToken.failure):
+      return {
+        ...state,
+        sessionToken: pot.toError(state.sessionToken, action.payload)
       };
 
     // Payment verification and details
@@ -176,14 +193,16 @@ const reducer = (
         chosenPsp: O.none
       };
 
-    // Create/delete transaction
+    // Transaction
     case getType(walletPaymentCreateTransaction.request):
+    case getType(walletPaymentGetTransactionInfo.request):
     case getType(walletPaymentDeleteTransaction.request):
       return {
         ...state,
         transaction: pot.toLoading(state.transaction)
       };
     case getType(walletPaymentCreateTransaction.success):
+    case getType(walletPaymentGetTransactionInfo.success):
       return {
         ...state,
         transaction: pot.some(action.payload)
@@ -194,6 +213,7 @@ const reducer = (
         transaction: pot.none
       };
     case getType(walletPaymentCreateTransaction.failure):
+    case getType(walletPaymentGetTransactionInfo.failure):
     case getType(walletPaymentDeleteTransaction.failure):
       return {
         ...state,
