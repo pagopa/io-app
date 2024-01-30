@@ -3,7 +3,7 @@ import Pdf from "react-native-pdf";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   ButtonSolidProps,
   FooterWithButtons,
@@ -14,6 +14,7 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
@@ -186,6 +187,7 @@ const DocumentWithSignature = (props: Props) => {
     <SafeAreaView
       style={[IOStyles.flex, IOStyles.bgWhite]}
       testID={"FciDocumentsScreenTestID"}
+      edges={["bottom", "left", "right"]}
     >
       <View style={[IOStyles.horizontalContentPadding, styles.header]}>
         <HSpacer />

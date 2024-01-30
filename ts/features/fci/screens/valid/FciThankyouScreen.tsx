@@ -1,5 +1,4 @@
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   ButtonSolidProps,
@@ -7,6 +6,7 @@ import {
   IOStyles,
   Pictogram
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
@@ -50,7 +50,11 @@ const FciThankyouScreen = () => {
     };
     return (
       <>
-        <SafeAreaView style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
+        <SafeAreaView
+          style={IOStyles.flex}
+          testID={"FciTypSuccessTestID"}
+          edges={["bottom", "left", "right"]}
+        >
           <InfoScreenComponent
             image={<Pictogram name={"success"} />}
             title={I18n.t("features.fci.thankYouPage.title")}

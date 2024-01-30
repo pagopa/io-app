@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import * as React from "react";
-import { SafeAreaView, StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import {
   Body,
@@ -16,6 +16,7 @@ import {
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -119,7 +120,7 @@ const FciDataSharingScreen = (): React.ReactElement => {
 
   return (
     <>
-      <SafeAreaView style={IOStyles.flex}>
+      <SafeAreaView style={IOStyles.flex} edges={["bottom", "left", "right"]}>
         <ScrollView
           style={IOStyles.horizontalContentPadding}
           testID={"FciDataSharingScreenListTestID"}

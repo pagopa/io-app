@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SafeAreaView, FlatList, View, ScrollView } from "react-native";
+import { FlatList, View, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -12,6 +12,7 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -168,7 +169,11 @@ const FciQtspClausesScreen = () => {
 
   return (
     <>
-      <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        edges={["bottom", "left", "right"]}
+        testID={"FciQtspClausesTestID"}
+      >
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H2>{I18n.t("features.fci.qtspTos.title")}</H2>
           <VSpacer size={16} />

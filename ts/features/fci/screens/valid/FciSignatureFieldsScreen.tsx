@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, SafeAreaView, SectionList, ScrollView } from "react-native";
+import { View, SectionList, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import { StackActions, useNavigation } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
@@ -15,6 +15,7 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch } from "../../../../store/hooks";
@@ -272,7 +273,11 @@ const FciSignatureFieldsScreen = (
 
   return (
     <>
-      <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"FciSignatureFieldsTestID"}
+        edges={["bottom", "left", "right"]}
+      >
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
           <VSpacer size={32} />

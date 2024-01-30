@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import {
   RouteProp,
@@ -20,6 +20,7 @@ import {
   IOColors,
   IOStyles
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -243,7 +244,11 @@ const FciDocumentsScreen = () => {
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
-      <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"FciDocumentsScreenTestID"}
+        edges={["bottom", "left", "right"]}
+      >
         {documents.length > 0 && (
           <>
             {renderPager()}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import {
   ButtonOutline,
@@ -10,6 +10,7 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
 import {
@@ -135,7 +136,11 @@ const ErrorComponent = (props: Props) => {
   };
 
   return (
-    <SafeAreaView style={IOStyles.flex} testID={props.testID}>
+    <SafeAreaView
+      style={IOStyles.flex}
+      testID={props.testID}
+      edges={["bottom", "left", "right"]}
+    >
       <InfoScreenComponent
         image={<Pictogram name={props.pictogram} />}
         title={props.title}

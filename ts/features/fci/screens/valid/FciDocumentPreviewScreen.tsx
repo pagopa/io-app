@@ -1,6 +1,7 @@
 import React from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import * as S from "fp-ts/lib/string";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -56,6 +57,7 @@ export const FciDocumentPreviewScreen = (
       <SafeAreaView
         style={styles.container}
         testID={"FciDocumentPreviewScreenTestID"}
+        edges={["bottom", "left", "right"]}
       >
         {S.isEmpty(documentUrl) === false && (
           <DocumentViewer
