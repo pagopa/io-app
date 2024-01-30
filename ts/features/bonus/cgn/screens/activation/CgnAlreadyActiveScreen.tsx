@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
@@ -20,27 +20,25 @@ type Props = ReturnType<typeof mapStateToProps> &
  * but it is yet active
  */
 const CgnAlreadyActiveScreen = (props: Props): React.ReactElement => (
-  <SafeAreaView style={IOStyles.flex}>
+  <View style={IOStyles.flex}>
     <InfoScreenComponent
       image={renderInfoRasterImage(image)}
       title={I18n.t("bonus.cgn.activation.alreadyActive.title")}
       body={I18n.t("bonus.cgn.activation.alreadyActive.body")}
     />
-    <View>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
-            onPress: props.navigateToDetail,
-            label: I18n.t("bonus.cgn.cta.goToDetail"),
-            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail"),
-            testID: "cgnConfirmButtonTestId"
-          }
-        }}
-      />
-    </View>
-  </SafeAreaView>
+    <FooterWithButtons
+      type="SingleButton"
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          onPress: props.navigateToDetail,
+          label: I18n.t("bonus.cgn.cta.goToDetail"),
+          accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail"),
+          testID: "cgnConfirmButtonTestId"
+        }
+      }}
+    />
+  </View>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});

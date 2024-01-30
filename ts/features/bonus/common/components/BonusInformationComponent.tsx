@@ -3,13 +3,7 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { ComponentProps } from "react";
-import {
-  View,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView
-} from "react-native";
+import { View, Image, StyleSheet, ScrollView } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   Body,
@@ -234,50 +228,45 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
       contextualHelp={props.contextualHelp}
       faqCategories={props.faqCategories}
     >
-      <SafeAreaView style={IOStyles.flex}>
-        {isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
-        <ScrollView style={IOStyles.horizontalContentPadding}>
-          <View style={styles.row}>
-            <View style={styles.flexStart}>
-              {O.isSome(maybeSponsorshipDescription) && (
-                <H3>{maybeSponsorshipDescription.value}</H3>
-              )}
+      {isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
+      <ScrollView style={IOStyles.horizontalContentPadding}>
+        <View style={styles.row}>
+          <View style={styles.flexStart}>
+            {O.isSome(maybeSponsorshipDescription) && (
+              <H3>{maybeSponsorshipDescription.value}</H3>
+            )}
 
-              <H1>{bonusTypeLocalizedContent.title}</H1>
-            </View>
-            <View style={styles.flexEnd}>
-              {O.isSome(maybeCover) && (
-                <Image
-                  source={{ uri: maybeCover.value }}
-                  style={styles.cover}
-                />
-              )}
-            </View>
+            <H1>{bonusTypeLocalizedContent.title}</H1>
           </View>
-          <VSpacer size={24} />
-          <Body color="bluegreyDark">{bonusTypeLocalizedContent.subtitle}</Body>
+          <View style={styles.flexEnd}>
+            {O.isSome(maybeCover) && (
+              <Image source={{ uri: maybeCover.value }} style={styles.cover} />
+            )}
+          </View>
+        </View>
+        <VSpacer size={24} />
+        <Body color="bluegreyDark">{bonusTypeLocalizedContent.subtitle}</Body>
 
-          <VSpacer size={16} />
-          <ItemSeparatorComponent noPadded={true} />
-          <Markdown
-            cssStyle={CSS_STYLE}
-            extraBodyHeight={extraMarkdownBodyHeight}
-            onLoadEnd={onMarkdownLoaded}
-          >
-            {bonusTypeLocalizedContent.content}
-          </Markdown>
-          <VSpacer size={40} />
-          {isMarkdownLoaded && renderUrls()}
-          {getTosFooter(
-            maybeBonusTos,
-            maybeRegulationUrl,
-            handleModalPress,
-            props.primaryCtaText
-          )}
-          {isMarkdownLoaded && <EdgeBorderComponent />}
-        </ScrollView>
-        {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
-      </SafeAreaView>
+        <VSpacer size={16} />
+        <ItemSeparatorComponent noPadded={true} />
+        <Markdown
+          cssStyle={CSS_STYLE}
+          extraBodyHeight={extraMarkdownBodyHeight}
+          onLoadEnd={onMarkdownLoaded}
+        >
+          {bonusTypeLocalizedContent.content}
+        </Markdown>
+        <VSpacer size={40} />
+        {isMarkdownLoaded && renderUrls()}
+        {getTosFooter(
+          maybeBonusTos,
+          maybeRegulationUrl,
+          handleModalPress,
+          props.primaryCtaText
+        )}
+        {isMarkdownLoaded && <EdgeBorderComponent />}
+      </ScrollView>
+      {!isScreenReaderEnabled && isMarkdownLoaded && footerComponent}
     </BaseScreenComponent>
   ));
   return (

@@ -114,91 +114,85 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
         titleColor={"white"}
         contextualHelp={emptyContextualHelp}
       >
-        <SafeAreaView style={IOStyles.flex}>
-          <FocusAwareStatusBar
-            backgroundColor={HEADER_BACKGROUND_COLOR}
-            barStyle={"light-content"}
+        <FocusAwareStatusBar
+          backgroundColor={HEADER_BACKGROUND_COLOR}
+          barStyle={"light-content"}
+        />
+        {pot.isError(props.potCgnDetails) ? ( // subText is a blank space to avoid default value when it is undefined
+          <GenericErrorComponent
+            subText={" "}
+            onRetry={loadCGN}
+            onCancel={props.goBack}
           />
-          {pot.isError(props.potCgnDetails) ? ( // subText is a blank space to avoid default value when it is undefined
-            <GenericErrorComponent
-              subText={" "}
-              onRetry={loadCGN}
-              onCancel={props.goBack}
-            />
-          ) : (
-            <>
-              <ScrollView
-                style={IOStyles.flex}
-                bounces={false}
-                testID={"CGNCardDetailsScrollView"}
+        ) : (
+          <>
+            <ScrollView
+              style={IOStyles.flex}
+              bounces={false}
+              testID={"CGNCardDetailsScrollView"}
+            >
+              {/* cgn gradient */}
+              <LinearGradient
+                colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
               >
-                {/* cgn gradient */}
-                <LinearGradient
-                  colors={[HEADER_BACKGROUND_COLOR, GRADIENT_END_COLOR]}
-                >
-                  <View
-                    style={[IOStyles.horizontalContentPadding, { height: 149 }]}
-                  />
-                </LinearGradient>
-                {props.cgnDetails && (
-                  <CgnCardComponent
-                    cgnDetails={props.cgnDetails}
-                    onCardLoadEnd={onCardLoadEnd}
-                  />
-                )}
                 <View
-                  style={[
-                    IOStyles.flex,
-                    IOStyles.horizontalContentPadding,
-                    { paddingTop: customVariables.contentPadding }
-                  ]}
-                >
-                  <VSpacer size={48} />
+                  style={[IOStyles.horizontalContentPadding, { height: 149 }]}
+                />
+              </LinearGradient>
+              {props.cgnDetails && (
+                <CgnCardComponent
+                  cgnDetails={props.cgnDetails}
+                  onCardLoadEnd={onCardLoadEnd}
+                />
+              )}
+              <View
+                style={[
+                  IOStyles.flex,
+                  IOStyles.horizontalContentPadding,
+                  { paddingTop: customVariables.contentPadding }
+                ]}
+              >
+                <VSpacer size={48} />
 
-                  {/* Ownership block rendering owner's fiscal code */}
-                  <CgnOwnershipInformation />
-                  <ItemSeparatorComponent noPadded />
-                  <VSpacer size={16} />
-                  {props.cgnDetails && (
-                    // Renders status information including activation and expiring date and a badge that represents the CGN status
-                    // ACTIVATED - EXPIRED - REVOKED
-                    <CgnStatusDetail cgnDetail={props.cgnDetails} />
-                  )}
-                  {canDisplayEycaDetails && (
-                    <>
-                      <ItemSeparatorComponent noPadded />
-                      <VSpacer size={16} />
-                      <EycaDetailComponent />
-                    </>
-                  )}
-                  <VSpacer size={24} />
-                  <ItemSeparatorComponent noPadded />
-                  <CgnUnsubscribe />
-                  <VSpacer size={40} />
-                </View>
-              </ScrollView>
-              <SectionStatusComponent sectionKey={"cgn"} />
-              {props.isCgnEnabled &&
-                props.cgnDetails?.status === StatusEnum.ACTIVATED && (
-                  <View>
-                    <FooterWithButtons
-                      type="SingleButton"
-                      primary={{
-                        type: "Solid",
-                        buttonProps: {
-                          label: I18n.t("bonus.cgn.detail.cta.buyers"),
-                          accessibilityLabel: I18n.t(
-                            "bonus.cgn.detail.cta.buyers"
-                          ),
-                          onPress: onPressShowCgnDiscounts
-                        }
-                      }}
-                    />
-                  </View>
+                {/* Ownership block rendering owner's fiscal code */}
+                <CgnOwnershipInformation />
+                <ItemSeparatorComponent noPadded />
+                <VSpacer size={16} />
+                {props.cgnDetails && (
+                  // Renders status information including activation and expiring date and a badge that represents the CGN status
+                  // ACTIVATED - EXPIRED - REVOKED
+                  <CgnStatusDetail cgnDetail={props.cgnDetails} />
                 )}
-            </>
-          )}
-        </SafeAreaView>
+                {canDisplayEycaDetails && (
+                  <>
+                    <ItemSeparatorComponent noPadded />
+                    <VSpacer size={16} />
+                    <EycaDetailComponent />
+                  </>
+                )}
+                <VSpacer size={24} />
+                <ItemSeparatorComponent noPadded />
+                <CgnUnsubscribe />
+                <VSpacer size={40} />
+              </View>
+            </ScrollView>
+            <SectionStatusComponent sectionKey={"cgn"} />
+            {props.isCgnEnabled &&
+              props.cgnDetails?.status === StatusEnum.ACTIVATED && (
+                <FooterWithButtons
+                  type="SingleButton"
+                  primary={{
+                    type: "Solid",
+                    buttonProps: {
+                      label: I18n.t("bonus.cgn.detail.cta.buyers"),
+                      accessibilityLabel: I18n.t("bonus.cgn.detail.cta.buyers"),
+                      onPress: onPressShowCgnDiscounts
+                    }
+                  }}
+                />
+              )}
+          </>
+        )}
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );

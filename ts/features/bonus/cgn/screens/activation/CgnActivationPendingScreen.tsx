@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 import { FooterWithButtons } from "@pagopa/io-app-design-system";
 
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -20,26 +20,24 @@ type Props = ReturnType<typeof mapStateToProps> &
  * and the server has already another request pending for the user
  */
 const CgnActivationPendingScreen = (props: Props): React.ReactElement => (
-  <SafeAreaView style={IOStyles.flex}>
+  <View style={IOStyles.flex}>
     <InfoScreenComponent
       image={renderInfoRasterImage(image)}
       title={I18n.t("bonus.cgn.activation.pending.title")}
       body={I18n.t("bonus.cgn.activation.pending.body")}
     />
-    <View>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Outline",
-          buttonProps: {
-            onPress: props.onExit,
-            label: I18n.t("global.buttons.exit"),
-            accessibilityLabel: I18n.t("global.buttons.exit")
-          }
-        }}
-      />
-    </View>
-  </SafeAreaView>
+    <FooterWithButtons
+      type="SingleButton"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          onPress: props.onExit,
+          label: I18n.t("global.buttons.exit"),
+          accessibilityLabel: I18n.t("global.buttons.exit")
+        }
+      }}
+    />
+  </View>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});

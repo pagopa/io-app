@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { SafeAreaView, View } from "react-native";
+import { View } from "react-native";
 import { FooterWithButtons } from "@pagopa/io-app-design-system";
 
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -20,27 +20,25 @@ type Props = ReturnType<typeof mapStateToProps> &
  * and it has been correctly activated
  */
 const CgnActivationCompletedScreen = (props: Props): React.ReactElement => (
-  <SafeAreaView style={IOStyles.flex}>
+  <View style={IOStyles.flex}>
     <InfoScreenComponent
       image={renderInfoRasterImage(paymentCompleted)}
       title={I18n.t("bonus.cgn.activation.success.title")}
       body={I18n.t("bonus.cgn.activation.success.body")}
     />
-    <View>
-      <FooterWithButtons
-        type="SingleButton"
-        primary={{
-          type: "Solid",
-          buttonProps: {
-            label: I18n.t("bonus.cgn.cta.goToDetail"),
-            onPress: props.onConfirm,
-            accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail"),
-            testID: "cgnConfirmButtonTestId"
-          }
-        }}
-      />
-    </View>
-  </SafeAreaView>
+    <FooterWithButtons
+      type="SingleButton"
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          label: I18n.t("bonus.cgn.cta.goToDetail"),
+          onPress: props.onConfirm,
+          accessibilityLabel: I18n.t("bonus.cgn.cta.goToDetail"),
+          testID: "cgnConfirmButtonTestId"
+        }
+      }}
+    />
+  </View>
 );
 
 const mapStateToProps = (_: GlobalState) => ({});
