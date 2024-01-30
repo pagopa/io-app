@@ -7,7 +7,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { CommonActions } from "@react-navigation/native";
-import { CommonActions } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -749,8 +748,6 @@ export function* watchWalletSaga(
     getPspV2WithCallbacks
   );
 
-  // here it used to check for BPD enabled
-  const contentClient = ContentClient();
   // here it used to check for BPD enabled
   const contentClient = ContentClient();
 
