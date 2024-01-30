@@ -17,7 +17,7 @@ async function replaceJiraStories(content) {
 }
 
 /**
- * replace the changelog content by removing the repetition of "closes [#idPivotalorJiraStory](url)"
+ * replace the changelog content by removing the repetition of "closes [#idJiraStory](url)"
  * @param content
  * @return {Promise<string>}
  */
@@ -62,7 +62,7 @@ async function replaceAsync(str, regex, asyncFn) {
   return str.replace(regex, () => data.shift());
 }
 
-// Execute the script to find the pivotal stories and jira ticket id in order to associate
+// Execute the script to find jira ticket id in order to associate
 // the right url in the changelog
 addTasksUrls()
   // eslint-disable-next-line no-console
