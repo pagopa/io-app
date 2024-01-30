@@ -130,9 +130,14 @@ export const IdPayOperationsListScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t(
-        "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
-      )}
+      title={{
+        label: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
+        ),
+        accessibilityLabel: I18n.t(
+          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
+        )
+      }}
     >
       <ContentWrapper>
         <VSpacer size={8} />

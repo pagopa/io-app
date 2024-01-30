@@ -60,7 +60,10 @@ export const NotificationsPreferencesScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.preferences.notifications.header")}
+      title={{
+        label: I18n.t("profile.preferences.notifications.header"),
+        accessibilityLabel: I18n.t("profile.preferences.notifications.header")
+      }}
       description={I18n.t("profile.preferences.notifications.subtitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       headerActionsProp={{ showHelp: true }}

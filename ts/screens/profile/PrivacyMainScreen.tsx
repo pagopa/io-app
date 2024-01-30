@@ -262,7 +262,10 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.main.privacy.title")}
+      title={{
+        label: I18n.t("profile.main.privacy.title"),
+        accessibilityLabel: I18n.t("profile.main.privacy.title")
+      }}
       description={I18n.t("profile.main.privacy.subtitle")}
       headerActionsProp={{ showHelp: true }}
     >

@@ -76,7 +76,12 @@ const WalletTransactionDetailsScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("transaction.details.title")}
+      title={{
+        label: I18n.t("transaction.details.title"),
+        accessibilityLabel: `${I18n.t("global.accessibility.inputLabel", {
+          header: I18n.t("transaction.details.title")
+        })}`
+      }}
       contextualHelp={emptyContextualHelp}
       faqCategories={["wallet_transaction"]}
       headerActionsProp={{ showHelp: true }}
