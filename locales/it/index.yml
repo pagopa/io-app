@@ -3116,6 +3116,8 @@ features:
         activated: "Grazie, il servizio è attivo!"
         error: "Si è verificato un errore con la tua richiesta"
     details:
+      badge:
+        legalValue: "Valore legale"
       title: Dettaglio del messaggio
       noticeCode: "Codice avviso"
       loadError:
