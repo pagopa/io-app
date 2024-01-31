@@ -1,11 +1,13 @@
+import { HSpacer, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { AeroportiAmmessiInputBean } from "../../../../../../definitions/api_sicilia_vola/AeroportiAmmessiInputBean";
+import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -14,12 +16,10 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { dpr28Dec2000Url } from "../../../../../urls";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../../utils/url";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherAvailableDestination,
   svGenerateVoucherBack,
@@ -33,9 +33,6 @@ import {
   destinationsInfoFromVoucherRequest,
   isVoucherRequest
 } from "../../utils";
-import { dpr28Dec2000Url } from "../../../../../urls";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -68,8 +65,6 @@ const styles = StyleSheet.create({
 // TODO: update with the correct disclaimer: https://pagopa.atlassian.net/browse/IASV-40
 
 const SummaryScreen = (props: Props): React.ReactElement | null => {
-  const navigation = useIONavigation();
-
   const {
     maybeVoucherRequest,
     requestAvailableDestinations,
@@ -128,10 +123,7 @@ const SummaryScreen = (props: Props): React.ReactElement | null => {
   };
   const continueButtonProps = {
     primary: true,
-    onPress: () =>
-      navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-        screen: SV_ROUTES.VOUCHER_GENERATION.VOUCHER_GENERATED
-      }),
+    onPress: () => null,
     title: I18n.t("global.buttons.continue")
   };
 

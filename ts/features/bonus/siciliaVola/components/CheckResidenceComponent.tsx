@@ -1,8 +1,8 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   RadioButtonList,
   RadioItem
@@ -15,10 +15,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import SV_ROUTES from "../navigation/routes";
 import { svGenerateVoucherCancel } from "../store/actions/voucherGeneration";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -38,8 +35,6 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
     boolean | undefined
   >();
 
-  const navigation = useIONavigation();
-
   const cancelButtonProps = {
     primary: false,
     bordered: true,
@@ -48,14 +43,7 @@ const CheckResidenceComponent = (props: Props): React.ReactElement => {
   };
   const continueButtonProps = {
     bordered: false,
-    onPress: () =>
-      isResidentInSicily === true
-        ? navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-            screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_BENEFICIARY_CATEGORY
-          })
-        : navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-            screen: SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_RESIDENCE
-          }),
+    onPress: () => isResidentInSicily === true,
     title: I18n.t("global.buttons.continue"),
     disabled: isResidentInSicily === undefined
   };

@@ -4,18 +4,13 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import CheckIncomeComponent from "../../components/CheckIncomeComponent";
-import SV_ROUTES from "../../navigation/routes";
 import { svGenerateVoucherFailure } from "../../store/actions/voucherGeneration";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
-  const navigation = useIONavigation();
-
   if (
     O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "worker"
@@ -24,15 +19,7 @@ const WorkerCheckIncomeScreen = (props: Props): React.ReactElement | null => {
     return null;
   }
 
-  return (
-    <CheckIncomeComponent
-      onContinuePress={() =>
-        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-          screen: SV_ROUTES.VOUCHER_GENERATION.WORKER_SELECT_DESTINATION
-        })
-      }
-    />
-  );
+  return <CheckIncomeComponent onContinuePress={() => null} />;
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason))

@@ -1,14 +1,22 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import EmptyListImage from "../../../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
+import {
+  isError,
+  isLoading,
+  isReady,
+  isUndefined
+} from "../../../../../common/model/RemoteValue";
+import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
+import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
-import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../../components/screens/ListItemComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
@@ -23,16 +31,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { formatDateAsLocal } from "../../../../../utils/dates";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
-import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import {
-  isError,
-  isLoading,
-  isReady,
-  isUndefined
-} from "../../../../../common/model/RemoteValue";
 import SvVoucherListFilters from "../../components/SvVoucherListFilters";
-import SV_ROUTES from "../../navigation/routes";
 import { svGenerateVoucherStart } from "../../store/actions/voucherGeneration";
 import {
   svPossibleVoucherStateGet,
@@ -52,15 +51,12 @@ import {
 } from "../../store/reducers/voucherList/ui";
 import { svVouchersSelector } from "../../store/reducers/voucherList/vouchers";
 import { VoucherPreview } from "../../types/SvVoucherResponse";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
 
   return (
     <ListItemComponent
@@ -68,9 +64,6 @@ const RenderItemBase = (voucher: VoucherPreview): React.ReactElement => {
       subTitle={formatDateAsLocal(voucher.departureDate, true, true)}
       onPress={() => {
         dispatch(svSelectVoucher(voucher.idVoucher));
-        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-          screen: SV_ROUTES.VOUCHER_LIST.DETAILS
-        });
       }}
     />
   );

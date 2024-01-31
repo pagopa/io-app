@@ -4,22 +4,17 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import CheckIncomeComponent from "../../components/CheckIncomeComponent";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherFailure,
   svGenerateVoucherSelectCategory
 } from "../../store/actions/voucherGeneration";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { SvBeneficiaryCategory } from "../../types/SvVoucherRequest";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
-  const navigation = useIONavigation();
-
   if (
     O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "sick"
@@ -28,15 +23,7 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
     return null;
   }
 
-  return (
-    <CheckIncomeComponent
-      onContinuePress={() =>
-        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-          screen: SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
-        })
-      }
-    />
-  );
+  return <CheckIncomeComponent onContinuePress={() => null} />;
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),

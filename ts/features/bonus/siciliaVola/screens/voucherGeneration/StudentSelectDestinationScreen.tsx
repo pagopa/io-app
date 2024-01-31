@@ -11,7 +11,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
@@ -20,8 +19,6 @@ import {
 } from "../../store/actions/voucherGeneration";
 import { selectedBeneficiaryCategorySelector } from "../../store/reducers/voucherGeneration/voucherRequest";
 import { University } from "../../types/SvVoucherRequest";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -30,7 +27,6 @@ const StudentSelectDestinationScreen = (
   props: Props
 ): React.ReactElement | null => {
   const elementRef = useRef(null);
-  const navigation = useIONavigation();
 
   const backButtonProps = {
     primary: false,
@@ -41,10 +37,7 @@ const StudentSelectDestinationScreen = (
   const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: () =>
-      navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-        screen: SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA
-      }),
+    onPress: () => null,
     title: "Continue"
   };
 
