@@ -10,13 +10,10 @@ import {
   navigateToWorkunitGenericFailureScreen
 } from "../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../types/utils";
-import { navigateToSvCheckStatusRouterScreen } from "../../navigation/actions";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
-  svGenerateVoucherCompleted,
-  svGenerateVoucherFailure
+  svGenerateVoucherCompleted
 } from "../../store/actions/voucherGeneration";
 
 /**
@@ -26,15 +23,9 @@ import {
  * - The user aborts the voucher generation {@link svGenerateVoucherCancel}
  * - The user chooses back from the first screen {@link svGenerateVoucherBack}
  */
+// eslint-disable-next-line require-yield
 function* svVoucherGenerationWorkUnit() {
-  return yield* call(executeWorkUnit, {
-    startScreenNavigation: navigateToSvCheckStatusRouterScreen,
-    startScreenName: SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS,
-    complete: svGenerateVoucherCompleted,
-    back: svGenerateVoucherBack,
-    cancel: svGenerateVoucherCancel,
-    failure: svGenerateVoucherFailure
-  });
+  return null;
 }
 
 /**
@@ -47,13 +38,13 @@ export function* handleSvVoucherGenerationStartActivationSaga(): SagaIterator {
   const sagaExecution = () =>
     withResetNavigationStack(svVoucherGenerationWorkUnit);
 
-  const res: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
+  const res: SagaCallReturnType<typeof executeWorkUnit> | null = yield* call(
     sagaExecution
   );
 
   if (
     // if the activation started from the CTA -> go back
-    initialRoute === SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS
+    initialRoute === null
   ) {
     yield* call(navigateBack);
   }
