@@ -34,12 +34,12 @@ export const WalletTransactionNavigator = () => (
     <Stack.Screen
       name={WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS}
       component={WalletTransactionDetailsScreen}
-      options={{ gestureEnabled: false }}
+      options={{ gestureEnabled: isGestureEnabled }}
     />
     <Stack.Screen
       name={WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS}
       component={WalletTransactionOperationDetailsScreen}
-      options={{ gestureEnabled: false }}
+      options={{ gestureEnabled: isGestureEnabled }}
     />
   </Stack.Navigator>
 );
