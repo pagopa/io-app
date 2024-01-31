@@ -681,12 +681,12 @@ authentication:
     contextualHelpContent: Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.
     news: novità
     title: Ora è più facile accedere!
-    identity_check: Non dovrai più autenticarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
+    identity_check: Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
     security_suggests: Alcuni consigli di sicurezza
     passcode: Per tutte le altre volte basterà il tuo volto, impronta o codice di sblocco
-    notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO.
+    notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO
     button_accept_lv: Continua con l’accesso rapido
-    button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
+    button_decline_lv: Entra con SPID o CIE ogni 30 giorni
   security_suggestions:
     fingerprint: Non condividere il tuo codice di sblocco o riconoscimento biometrico con nessuno
     io_logout: Se perdi il dispositivo, esci dall’app da web
@@ -3116,6 +3116,8 @@ features:
         activated: "Grazie, il servizio è attivo!"
         error: "Si è verificato un errore con la tua richiesta"
     details:
+      badge:
+        legalValue: "Valore legale"
       title: Dettaglio del messaggio
       noticeCode: "Codice avviso"
       loadError:
@@ -3859,7 +3861,7 @@ transaction:
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
-    totalFeePsp: di commissione, applicata da {{pspName}}
+    totalFeePsp: "di commissione, applicata da {{pspName}}."
     totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
     info:
       title: Informazioni sulla transazione
