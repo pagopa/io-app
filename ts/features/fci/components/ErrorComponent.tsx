@@ -6,6 +6,7 @@ import {
   ButtonSolid,
   ButtonSolidProps,
   IOPictograms,
+  IOSpacingScale,
   IOStyles,
   Pictogram,
   VSpacer
@@ -43,6 +44,8 @@ export type Props = WithTestID<{
   assistance?: boolean;
   onPress: () => void;
 }>;
+
+const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 16;
 
 const ErrorComponent = (props: Props) => {
   const dispatch = useIODispatch();
@@ -154,7 +157,7 @@ const ErrorComponent = (props: Props) => {
       <View
         style={[
           IOStyles.horizontalContentPadding,
-          { paddingBottom: Math.max(insets.bottom, 16) }
+          { paddingBottom: Math.max(insets.bottom, DEFAULT_BOTTOM_PADDING) }
         ]}
       >
         {footerButtons()}
