@@ -1,10 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   RadioButtonList,
   RadioItem
@@ -18,7 +17,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import SV_ROUTES from "../../navigation/routes";
 import {
   FlightsDate,
   svGenerateVoucherBack,
@@ -53,8 +51,6 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
 
   const [showReturn, setShowReturn] = useState<boolean | undefined>(false);
 
-  const navigation = useNavigation();
-
   const handleDisableContinue = (): boolean => {
     if (showReturn === true) {
       return departureDate === undefined || returnDate === undefined;
@@ -69,7 +65,6 @@ const SelectFlightsDateScreen = (props: Props): React.ReactElement => {
         returnDate
       });
     }
-    navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SUMMARY);
   };
 
   const cancelButtonProps = {
