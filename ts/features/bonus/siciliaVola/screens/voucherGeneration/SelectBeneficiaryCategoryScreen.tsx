@@ -1,10 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useRef, useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   RadioButtonList,
   RadioItem
@@ -16,7 +15,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
@@ -72,41 +70,7 @@ const SelectBeneficiaryCategoryScreen = (props: Props): React.ReactElement => {
     BeneficiaryCategory | undefined
   >(undefined);
 
-  const navigation = useNavigation();
-
-  const routeNextScreen = () => {
-    switch (categoryBeneficiary) {
-      case "student":
-        props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.STUDENT_SELECT_DESTINATION
-        );
-        return;
-      case "disabled":
-        props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.DISABLED_ADDITIONAL_INFO
-        );
-        return;
-      case "worker":
-        props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.WORKER_CHECK_INCOME_THRESHOLD
-        );
-        return;
-      case "sick":
-        props.selectCategory(categoryBeneficiary);
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.SICK_CHECK_INCOME_THRESHOLD
-        );
-        return;
-      case "other":
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.KO_SELECT_BENEFICIARY_CATEGORY
-        );
-        return;
-    }
-  };
+  const routeNextScreen = () => null;
 
   const backButtonProps = {
     primary: false,
