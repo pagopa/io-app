@@ -3084,10 +3084,9 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
   integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
 
-"@pagopa/io-react-native-login-utils@^0.2.2":
+"@pagopa/io-react-native-login-utils@https://github.com/pagopa/io-react-native-login-utils.git#iowallet-test":
   version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.2.tgz#9b37787f98d94fac645e70bda926638b14e59d0d"
-  integrity sha512-rOChvrMsJ5QvfLvcsttGP6M5LZkOWhOD2YVRL4+bMCVqNRMsSDmteBNoMWzWlRcXrKyd2ZORgDEa1zPmMRMhTw==
+  resolved "https://github.com/pagopa/io-react-native-login-utils.git#6836e4887e40d968ddb8486ff51df3ab6ae0b010"
 
 "@pagopa/openapi-codegen-ts@^12.2.1":
   version "12.2.1"
