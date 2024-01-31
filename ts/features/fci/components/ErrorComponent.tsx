@@ -10,7 +10,10 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import { WithTestID } from "../../../types/WithTestID";
 import {
@@ -46,6 +49,7 @@ const ErrorComponent = (props: Props) => {
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
+  const insets = useSafeAreaInsets();
 
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
@@ -139,7 +143,7 @@ const ErrorComponent = (props: Props) => {
     <SafeAreaView
       style={IOStyles.flex}
       testID={props.testID}
-      edges={["bottom", "left", "right"]}
+      edges={["left", "right"]}
     >
       <InfoScreenComponent
         image={<Pictogram name={props.pictogram} />}
@@ -147,7 +151,14 @@ const ErrorComponent = (props: Props) => {
         body={props.subTitle}
         email={props.email}
       />
-      <View style={IOStyles.horizontalContentPadding}>{footerButtons()}</View>
+      <View
+        style={[
+          IOStyles.horizontalContentPadding,
+          { paddingBottom: Math.max(insets.bottom, 16) }
+        ]}
+      >
+        {footerButtons()}
+      </View>
     </SafeAreaView>
   );
 };
