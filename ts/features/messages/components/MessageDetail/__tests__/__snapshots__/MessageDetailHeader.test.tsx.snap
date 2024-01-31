@@ -93,7 +93,6 @@ exports[`MessageDetailHeader component should match the snapshot with all props 
     }
   />
   <View
-    accessible={true}
     style={
       Object {
         "alignItems": "center",
