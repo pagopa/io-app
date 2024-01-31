@@ -2,7 +2,6 @@
 
 exports[`OrganizationHeader component should match the snapshot 1`] = `
 <View
-  accessible={true}
   style={
     Object {
       "alignItems": "center",

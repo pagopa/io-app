@@ -11,7 +11,6 @@ export type OrganizationHeaderProps = {
   organizationName: string;
   serviceName: string;
   logoUri: ImageURISource;
-  accessibilityLabel?: string;
 };
 
 const ITEM_PADDING_VERTICAL: IOSpacingScale = 6;
@@ -32,10 +31,9 @@ const styles = StyleSheet.create({
 export const OrganizationHeader = ({
   logoUri,
   organizationName,
-  serviceName,
-  ...rest
+  serviceName
 }: OrganizationHeaderProps) => (
-  <View {...rest} accessible={true} style={styles.item}>
+  <View style={styles.item}>
     <View style={IOStyles.flex}>
       <LabelSmall fontSize="regular" color="grey-700">
         {organizationName}
