@@ -681,12 +681,12 @@ authentication:
     contextualHelpContent: Here you can find information on how to authenticate on IO and some security tips.
     news: News
     title: It is now easier to access!
-    identity_check: You’ll no longer have to authenticate with SPID or CIE every 30 days, but only once a year or if you log out.
+    identity_check: You’ll no longer have to identify yourself with SPID or CIE every 30 days, but only once a year or if you log out.
     security_suggests: Safety tips
     passcode: Any other time, you’ll just need your fingerprint, face recognition or unlock code.
-    notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app.
+    notification: Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app
     button_accept_lv: Continue with quick access
-    button_decline_lv: Authenticate with SPID or CIE every 30 days
+    button_decline_lv: Log in with SPID or CIE every 30 days
   security_suggestions:
     fingerprint: Do not share your unlock code or biometric recognition with anyone.
     io_logout: If you lose your device, log out from the web.
@@ -2358,8 +2358,6 @@ bonus:
       caption: "concluded"
       description: "This initiative has ended and can no longer be requested"
   bonusVacanze:
-    accessibility:
-      card: Your Bonus Vacanze with code {{code}} worth up to {{value}} euro is {{status}}
     multipleBonus: Two or more bonuses requested and activated by you. Make sure you use the correct DSU to prevent the bonus user from incurring subsequent recovery actions.
     usableAmount: Expendable at the accommodation facility
     taxBenefit: Deductible in tax return
@@ -2414,265 +2412,11 @@ bonus:
     title: Information on the processing of personal data
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
-    accessibility:
-      card:
-        preview: "Cashback, period from {{startDate}} to {{endDate}}. Earned amount € {{amount}}"
     title: Cashback
     name: Cashback
     description: "Get a refund on in-store purchases when paying with this method"
     cta:
       activeBonus: Request cashback
-    unsubscribe:
-      cta: "Quit cashback"
-      title: "Cashback opt-out"
-      body1: "Are you sure you want to quit Cashback?"
-      body2: "By continuing you will no longer be able to collect transactions or compete for the Super Cashback, and **you will not be able to collect any refund**, if you had the right to claim one. This opt-out will affect **also the other channels** you used to activate it (e.g.: Home Banking, app, etc.)  nIf you activate Cashback again later **you will restart from zero transactions**."
-      confirmCta: "Quit"
-      loading: "We are processing your request"
-      success: "Cashback has been removed"
-      failure: "We were unable to remove, please try again"
-    earned: Total Collected
-    onboarding:
-      alert:
-        title: Cashback is already active
-        body: You can find more details in your Wallet.
-        cancel: Close
-        confirm: Go back
-      loadingActivationStatus:
-        title: Loading activation status
-      declaration:
-        header: In order to activate the cashback you must declare
-        cta: "I declare"
-        conditions:
-          age: to be of legal age
-          resident: to reside in Italy
-          owner:
-            normal: "to activate for Cashback "
-            bold: "only payment methods of which you are the owner"
-          personal_use:
-            normal: "that you will use the payment instruments on which the cashback is active only for purchases made for personal purposes, "
-            bold: "made outside the exercise of business, art or profession"
-        disclaimer:
-          normal1: "This self-declaration is made pursuant to "
-          link: "dpr 28 December 2000 n. 445 art 46 and 47"
-          normal2: " is aware of the penal sanctions and the loss of the right to reimbursement in the event of a false declaration"
-      loadingActivateBpd:
-        title: "We are activating the cashback"
-        body: "Please wait."
-      noPaymentMethod:
-        title: "Add at least one payment method"
-        body: "To start collecting valid transactions, add your favorite payment methods in your Wallet: we currently support the main payment cards and several mobile payment apps.\n\n In the future, we'll support other methods: you can add new payment methods into your wallet anytime and start collecting cashback!"
-      enrollPaymentMethod:
-        title: "Choose which payment methods to activate"
-        body1: "Enable Cashback on your saved methods and start collecting valid transactions."
-        body2: "You can later add other payment methods to your wallet and activate Cashback on them."
-      errorPaymentMethod:
-        title: "Almost there, activate Cashback on your payment methods!"
-        body: "Enable Cashback on methods already in your wallet or add new ones."
-        cta: "Activate payment methods"
-    suggestActivation:
-      title: "Do you want to activate Cashback?"
-      body: "You have added payment methods compatible with Cashback, the initiative promoted by the Presidency of the Council of Ministers and the Ministry of Economy and Finance, to promote the use of electronic money in Italy.\n\n You can get a money refund when you shop using your cards and apps."
-      skip: "No, thanks"
-      confirm: "Info and activation"
-    activateOnNewMethods:
-      title: "Do you want to activate Cashback?"
-      body1: "Turn on your methods saved into your wallet and start collecting cashback on your valid transactions."
-      body2: "If you prefer, you can activate cashback on these methods later as well."
-      skip: "Maybe later"
-    iban:
-      bpdCompletedMessage: "This initiative has ended and it is no longer possible to change the IBAN"
-      cta:
-        bpdNotActiveTitle: "attention"
-        bpdNotActiveMessage: "you are not registered for cashback, sign up and try again."
-        noActivePeriodTitle: "attention"
-        noActivePeriodMessage: "there is no active cashback at this time."
-      iban: "IBAN"
-      edit: "Change IBAN"
-      verify: "Check IBAN"
-      insertion:
-        title: "IBAN for transfer"
-        body1: "To receive any refunds, enter your "
-        body1Bold: "IBAN code without spaces"
-        body2: "The IBAN will be checked to make sure it's registered to you. You can also add your IBAN later."
-      koWrong:
-        title: "Incorrect IBAN"
-        text1: "The IBAN you entered"
-        text2: "is not correct: please check it!"
-      koCannotVerify:
-        title: "Your IBAN could not be verified"
-        text1: "If you are sure the IBAN"
-        text2: "identify the account on which you want to receive credit, you can proceed."
-      koNotOwned:
-        title: "Check the IBAN entered"
-        text1: "IBAN"
-        text2: "is not registered to"
-      loading: "We are verifying your IBAN\n\nPlease wait."
-      success: "IBAN successfully entered"
-    details:
-      howItWorks:
-        title: "Christmas Extra Cashback"
-        body: "1. The Cashback program is divided into several phases. The current one begins on **{{startDate}} and ends on {{endDate}}**. **Collect valid transactions** within each phase using the **payment methods you enrolled**.\n\n2. During this phase, if you reach **{{minTransactionNumber}} transactions**, you will receive a {{cashbackPercentage}}% cashback, up to a maximum of **€{{maxTransactionCashback}}** per transaction and a maximum refund of **€{{maxPeriodCashback}}** in the whole phase.\n\n3. At the end of the phase, you'll get your refund on the IBAN chosen by you.\n\n‎"
-      components:
-        iban:
-          title: "IBAN for transfer"
-          noIbanBody: "Set your IBAN in order to receive the collected cashback"
-          button: "Set IBAN"
-        transactionsCountOverview:
-          title: "Your transactions"
-          of: "out of"
-          closedPeriodKOBody: "You have not reached the {{transactions}} transactions necessary to get a refund: you would have received € {{amount}}. Try again during the next phase!"
-          currentPeriodKOBody:
-            one: "You must have reached at least"
-            two: " {{transactions}} transactions"
-            three: " to unlock the cashback collected so far!"
-          currentPeriodUnlockBody: "Congratulations {{name}}! You have reached the threshold of {{transactions}} transactions and unlocked your Cashback!"
-          currentPeriodMaxAmount: "Congratulations {{name}}! You have reached the maximum amount expected!"
-          currentPeriodSuperCashback: "Right now you would be eligible for {{superCashbackAmount}} € Super Cashback! Keep up the good work to stay on the leaderboard."
-          gracePeriodBody: "This Cashback period ended on {{date}}. We are waiting to receive the latest transactions to calculate refunds. You will receive a message when the operation is completed."
-          closedPeriodOKBody: "Congratulations {{name}}! \nYou are entitled to a refund of € {{amount}}"
-          closedPeriodMaxAmount: ", the highest refund possible"
-          closedPeriodSuperCashback: ", including € {{amount}} of Super Cashback"
-          moneyTransfer: "You will receive a message when the transfer will be performed on the IBAN you entered."
-          inactivePeriodBody: "You will be able to start collecting valid transactions starting from {{date}}"
-          label:
-            one: "1 valid transaction"
-            other: "{{transactions}} valid transactions"
-        ranking:
-          title: "Your position"
-          notReady:
-            title: "When will you see the Super Cashback ranking?"
-            body: "The ranking is based on the **number of transactions** made with the payment methods on which you have Cashback enabled.\n\n We will show your ranking **when the distribution of participants will be more meaningful**. Currently, many users collected the same number of transactions.\n\n Once published, the ranking will **continue to change** depending on the number of transactions among all participants, until the end of the 6 months."
-      transaction:
-        label:
-          one: "1 transaction"
-          other: "{{transactions}} transactions"
-        title: "Your transactions"
-        goToButton: "Transactions detail"
-        loading: "We're retrieving your transactions\n\nPlease hold on..."
-        error:
-          title: "Systems are taking longer than expected"
-          body: "We're currently unable to retrieve your transactions. Don't worry! The list will be available again soon."
-          pageLoading: "We're unable to retrieve your transactions, please try again."
-        noPaymentMethod:
-          text1: "You must activate "
-          text2: "at least one payment method "
-          text3: "at Cashback to start collecting necessary transactions"
-        detail:
-          empty:
-            text1: "There are no valid transactions yet."
-            text2: "Check back in the next few days!"
-          summary:
-            bottomSheet:
-              title: "When will you find your transactions?"
-              body: "**Still not seeing your transaction?**\n\n- Check if your bank has already **recorded** the transaction: data are sent to IO app within 5 working days from the recording.\n\n- Payments made using Google Pay, Apple Pay, and Samsung Pay are not supported yet. We are working with your bank to support these transactions as well.\n\n- The transaction may have been handled with the POS of a company (acquirer) **not affiliated yet.**"
-              readMore: "Read more"
-            calendarBlock:
-              text1: "Please note that before you'll see the transaction on IO,"
-              text2: "it usually takes up to 3 working days"
-              text3: "."
-            lastUpdated: "Latest update: "
-            link: Anything missing?
-            body:
-              text1: "During the phase "
-              text2: "you have totalized "
-              text3:
-                one: "1 valid transaction "
-                other: "{{transactions}} valid transactions "
-              text4: "and collected "
-              text5: "a refund of "
-            milestone:
-              title: "Congratulation, you reached {{cashbackValue}}"
-              body: "You have reached the maximum amount for this phase. Keep collecting valid transactions to climb the ranking!"
-          title: "Transaction details"
-          paymentCircuit: "Payment circuit"
-          transactionAmount: "Transaction amount"
-          cashbackAmount: "Cashback amount"
-          acquirerId: "Acquirer transaction ID"
-          issuerId: "Issuer transaction ID"
-          maxCashbackWarning: "For each transaction you can get a maximum cashback of € {{amount}}."
-          maxCashbackForPeriodWarning: "You have already reached the maximum refund for this phase."
-          canceledOperationWarning: "This transaction is a write-off, meaning it cancels a transaction that was previously made."
-          canceled: "Write-off"
-      paymentMethods:
-        add:
-          cta: "Add a method to Cashback"
-          alertBody: "The payment method you are adding will be saved in the IO app wallet and, if compatible, can also be used for any payments within the app."
-        noPaymentMethods: "You must add at least one payment method to start collecting valid transactions"
-        noActiveMethod: "You must have activated at least one payment method to collect valid transactions"
-        error: "We’re experiencing issues loading your methods, but we’ll collect all the valid transactions done with your methods already enrolled on Cashback."
-        activateOnOthersChannel:
-          text1: "Enrolled on "
-          text2: "other channels"
-          title: "Methods added by other channels"
-          body: "You have added these payment methods to the cashback directly from the channels made available by your bank or payments app. You can activate or deactivate the collection of transactions of these methods also from IO. \n If you want to use some of these methods to pay via IO as well, add them to your wallet! "
-          addWallet: "Add to wallet"
-          whyOtherCards:
-            title: "Why am I seeing cards that I don't recognize?"
-            body: "Don't worry, these are virtual versions of your cards that Apple, Google and Samsung use to protect your purchases made through their 'wallets'. We are working with those involved in the initiative to improve the display on the app IO of this type of cards. "
-            cta: "Find out more"
-        notActivable:
-          header: "Not available or incompatible"
-          title: "Method not available"
-          body: "Someone else already has cashback on this payment method active at this time: cashback can only be activated by one user at a time for each payment method."
-        notCompatible:
-          title: "Method not compatible"
-          body: "The payment method is not compatible with Cashback because the bank has not activated support for these features yet. Please contact your bank for more details."
-        activate:
-          title: "Enable cashback on this payment method?"
-          body: "This will start **tomorrow**, so any transaction occurred today will not be collected. "
-          disclaimer: "Choosing {{activate}}, you declare that you are the owner of this payment method."
-        deactivate:
-          title: "Disable cashback on this method?"
-          body: "By continuing, transactions made using this payment method will be no longer collected. This will be effective **from tomorrow**, so any transaction occurred today with this method may still be considered. "
-      card:
-        status:
-          active: Active
-          closed: Closed
-          inactive: Upcoming
-      superCashback:
-        rankLabel: "{{position}}º user in rank"
-        rankTitle: "Super Cashback ranking"
-        howItWorks:
-          title: "How does it work?"
-          body: "The **{{citizens}} citizens** with the highest number of transactions **receive the Super Cashback, a prize of €{{amount}}.**"
-          status:
-            active: "**The ranking changes every day.** You will receive a message when it will be published."
-            closed: "Ranking for this period is closed."
-      lastUpdate: Updated at {{hour}} on {{date}}
-    optInPaymentMethods:
-      cashbackUpdate:
-        header: "News and updates"
-        title: "Choose to keep or delete your payment methods"
-        body: !include bonus/bpd/optInPaymentMethods.md
-      choice:
-        header: "Configura IO"
-        title: "Vuoi mantenere i tuoi metodi di pagamento?"
-        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
-        suggestedOption: Consigliato
-        toast: "You've already made your choice"
-        options:
-          keepAll:
-            title: Mantieni tutti i metodi nel Portafoglio
-            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
-          deleteAll:
-            title: Elimina tutti i metodi dal Portafoglio
-            body: Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
-        deleteAllButton: Elimina tutti i metodi
-      deletePaymentMethodsBottomSheet:
-        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
-        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
-      thankYouPage:
-        cta:
-          goToWallet: "Vai al Portafoglio"
-          retry: "Riprova"
-        success:
-          title: "Done!"
-          body: "We’ve saved your choice."
-        retryAfterDeletion:
-          title: "An unexpected error has occurred"
-          body: "Your methods have not been deleted. Try again, or go to Wallet and delete them one by one."
-        toast: "Your choice was not saved. Try again later."
   cgn:
     generic:
       linkError: "The site can't be reached at the moment. Please, try again later."
