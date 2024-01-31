@@ -9,7 +9,6 @@ import {
   H6,
   IOColors,
   IOStyles,
-  LabelSmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -56,7 +55,7 @@ const UnlockAccessScreen = (props: Props) => {
       <FeatureInfo
         iconName="locked"
         body={
-          <LabelSmall weight="Regular" color="grey-700">
+          <Body weight="Regular" color="grey-700">
             {I18n.t("authentication.unlockmodal.listitem3_1")}{" "}
             <Text style={{ fontStyle: "italic" }}>
               {I18n.t("authentication.unlockmodal.listitem3_2")}{" "}
@@ -66,7 +65,7 @@ const UnlockAccessScreen = (props: Props) => {
               {I18n.t("authentication.unlockmodal.listitem3_4")}{" "}
             </Text>
             {I18n.t("authentication.unlockmodal.listitem3_5")}
-          </LabelSmall>
+          </Body>
         }
       />
     </View>
