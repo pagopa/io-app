@@ -9,8 +9,8 @@ import {
 } from "../components/DSAssetViewerBox";
 
 /* PICTOGRAMS */
-import AirBaloon from "../../../../img/bonus/siciliaVola/emptyVoucherList.svg";
-import Timeout from "../../../../img/bonus/siciliaVola/generateVoucherTimeout.svg";
+import AirBaloon from "../../../../img/bonus/common/emptyVoucherList.svg";
+import Timeout from "../../../../img/bonus/common/generateVoucherTimeout.svg";
 import BrokenLink from "../../../../img/broken-link.png";
 import AirBaloonRaster from "../../../../img/landing/session_expired.png";
 import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
