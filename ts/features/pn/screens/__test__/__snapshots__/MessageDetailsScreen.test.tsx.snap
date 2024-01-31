@@ -783,7 +783,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                             }
                           />
                           <View
-                            accessible={true}
                             style={
                               Object {
                                 "alignItems": "center",
