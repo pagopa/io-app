@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useRef } from "react";
@@ -12,7 +11,6 @@ import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel,
@@ -29,7 +27,6 @@ const WorkerSelectDestinationScreen = (
   props: Props
 ): React.ReactElement | null => {
   const elementRef = useRef(null);
-  const navigation = useNavigation();
 
   const backButtonProps = {
     primary: false,
@@ -40,8 +37,7 @@ const WorkerSelectDestinationScreen = (
   const continueButtonProps = {
     primary: false,
     bordered: true,
-    onPress: () =>
-      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA),
+    onPress: () => null,
     title: "Continue"
   };
 
