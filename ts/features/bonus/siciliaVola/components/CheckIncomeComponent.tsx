@@ -1,9 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import {
   RadioButtonList,
   RadioItem
@@ -16,7 +15,6 @@ import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
-import SV_ROUTES from "../navigation/routes";
 import {
   svGenerateVoucherCancel,
   svGenerateVoucherUnderThresholdIncome
@@ -51,7 +49,6 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
   const [incomeUnderThreshold, setIncomeUnderThreshold] = React.useState<
     boolean | undefined
   >();
-  const navigation = useNavigation();
 
   const handleContinue = () => {
     if (incomeUnderThreshold === undefined) {
@@ -61,10 +58,7 @@ const CheckIncomeComponent = (props: Props): React.ReactElement => {
 
     if (incomeUnderThreshold) {
       props.onContinuePress();
-      return;
     }
-
-    navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.KO_CHECK_INCOME_THRESHOLD);
   };
 
   const cancelButtonProps = {

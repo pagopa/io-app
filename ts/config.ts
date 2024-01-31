@@ -66,9 +66,6 @@ export const isPlaygroundsEnabled: boolean =
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
 
-// SiciliaVola Feature Flag
-export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
-
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 

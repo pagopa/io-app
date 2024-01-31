@@ -3051,10 +3051,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.20.0":
-  version "1.20.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.20.0.tgz#d72025055360f7e8640c7a4c540835274108b626"
-  integrity sha512-sXe43yVbCpNrSivHgNiGis6qB4PGmP9z3ecY8A+s6jM9HowaAzgWdHb66FQwNqrxbGoJr/KbtFiSiNC3AwHAZA==
+"@pagopa/io-app-design-system@1.20.1":
+  version "1.20.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.20.1.tgz#e439ad96e5dc73eeece2172f5141abfbcb30558e"
+  integrity sha512-ClSiEj5BrJpTMfR95wrhLz9FkFmitbZivPdEj2VRgi3Xusoclv8lb2RBUQetpPsVTK0cEV4uWPlthSJG/iNbiA==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3996,25 +3996,10 @@
   dependencies:
     "@types/i18n-js" "*"
 
-"@types/react-native-loading-spinner-overlay@^0.5.1":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@types/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.5.2.tgz#e1ba291b48257fa171ebf34adfb6aefa030f50c1"
-  integrity sha512-bVO1B+92l40T1AtfEiuxeN+8RPLD46aQgs72AcrU15JPeAV1F9F8f1V7QHclU+tDh6MtZuFQ2kUe9BoM+NIwRA==
-  dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
-
 "@types/react-native-push-notification@^8.1.1":
   version "8.1.1"
   resolved "https://registry.yarnpkg.com/@types/react-native-push-notification/-/react-native-push-notification-8.1.1.tgz#0c9a181d7823cfad215d040bc5596c2d83e1a3cd"
   integrity sha512-ZN4UbU4EM3C7XGt4zI6RqHEZS2+35EwOz9DPAD1lTTY3IpWMHAKYjryykvP35hFkSwrGMpT8nYuMFPEJRwDEJA==
-
-"@types/react-native@*":
-  version "0.63.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.4.tgz#4610b0df0e5f0db4c68d495754ad9f8bc3b8893f"
-  integrity sha512-IkQax0q5z5P4ttScELhrfrXtnFuADs/SP9kNwx2rfEuVjwF5xqhGjcY/YkiH2mSx+9QjI5S4zhxXOi3+kcnOkw==
-  dependencies:
-    "@types/react" "*"
 
 "@types/react-native@0.69.6":
   version "0.69.6"
@@ -4093,11 +4078,6 @@
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
-
-"@types/stacktrace-js@^0.0.32":
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/@types/stacktrace-js/-/stacktrace-js-0.0.32.tgz#d23e4a36a5073d39487fbea8234cc6186862d389"
-  integrity sha512-SdxmlrHfO0BxgbBP9HZWMUo2rima8lwMjPiWm6S0dyKkDa5CseamktFhXg8umu3TPVBkSlX6ZoB5uUDJK89yvg==
 
 "@types/unist@*", "@types/unist@^2.0.0":
   version "2.0.3"
@@ -4367,13 +4347,6 @@ abab@^2.0.3, abab@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.5.tgz#c0b678fb32d60fc1219c784d6a826fe385aeb79a"
   integrity sha512-9IK9EadsbHo6jLWIpxpR6pL0sazTXV6+SQv25ZB+F7Bj9mJNaOc4nCRabwd5M/JwmUa8idz6Eci6eKfJryPs6Q==
-
-abort-controller@^1.0.2:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-1.1.0.tgz#89b6dbb47a2efcc3101bcd5c7868f87709528130"
-  integrity sha512-W7tP1xDfZFz1b7N59UBPwg/d9fIle1XZBuHU3BL2DDl38mHQz2bCKHyH+un5C/SN8a4u2GbutFCOVk7QmgL/fg==
-  dependencies:
-    event-target-shim "^3.0.0"
 
 abort-controller@^3.0.0:
   version "3.0.0"
@@ -8167,11 +8140,6 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==
-
-event-target-shim@^3.0.0:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-3.0.2.tgz#af25bb55a97c670bbeba985c82647fb64d892153"
-  integrity sha512-HK5GhnEAkm7fLy249GtF7DIuYmjLm85Ft6ssj7DhVl8Tx/z9+v0W6aiIVUdT4AXWGYy5Fc+s6gqBI49Bf0LejQ==
 
 event-target-shim@^5.0.0, event-target-shim@^5.0.1:
   version "5.0.1"
