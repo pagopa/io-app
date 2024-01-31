@@ -54,10 +54,7 @@ export const isDebugBiometricIdentificationEnabled =
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
-export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
-
-export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;
-export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
+export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
@@ -65,9 +62,6 @@ export const isPlaygroundsEnabled: boolean =
 // EU Covid Certificate feature flag
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
-
-// SiciliaVola Feature Flag
-export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
 
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";

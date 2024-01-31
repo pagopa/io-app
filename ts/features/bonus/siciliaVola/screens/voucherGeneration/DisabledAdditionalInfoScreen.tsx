@@ -1,10 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../../../components/core/typography/Body";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { Link } from "../../../../../components/core/typography/Link";
@@ -13,15 +12,14 @@ import BaseScreenComponent from "../../../../../components/screens/BaseScreenCom
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { dpr28Dec2000Url } from "../../../../../urls";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { openWebUrl } from "../../../../../utils/url";
 import { DeclarationEntry } from "../../../common/components/DeclarationEntry";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherBack,
   svGenerateVoucherCancel
 } from "../../store/actions/voucherGeneration";
-import { dpr28Dec2000Url } from "../../../../../urls";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -43,7 +41,6 @@ const loadLocales = () => ({
 
 const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
   const [acceptedDisclaimer, setAcceptedDisclaimer] = useState<boolean>(false);
-  const navigation = useNavigation();
 
   const cancelButtonProps = {
     primary: false,
@@ -53,8 +50,7 @@ const DisabledAdditionalInfoScreen = (props: Props): React.ReactElement => {
   };
   const continueButtonProps = {
     bordered: false,
-    onPress: () =>
-      navigation.navigate(SV_ROUTES.VOUCHER_GENERATION.SELECT_FLIGHTS_DATA),
+    onPress: () => null,
     title: I18n.t("global.buttons.continue"),
     disabled: !acceptedDisclaimer
   };
