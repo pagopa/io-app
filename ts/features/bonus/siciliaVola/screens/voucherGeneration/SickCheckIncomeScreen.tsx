@@ -1,11 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { GlobalState } from "../../../../../store/reducers/types";
 import CheckIncomeComponent from "../../components/CheckIncomeComponent";
-import SV_ROUTES from "../../navigation/routes";
 import {
   svGenerateVoucherFailure,
   svGenerateVoucherSelectCategory
@@ -17,8 +15,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
-  const navigation = useNavigation();
-
   if (
     O.isSome(props.selectedBeneficiaryCategory) &&
     props.selectedBeneficiaryCategory.value !== "sick"
@@ -27,15 +23,7 @@ const SickCheckIncomeScreen = (props: Props): React.ReactElement | null => {
     return null;
   }
 
-  return (
-    <CheckIncomeComponent
-      onContinuePress={() =>
-        navigation.navigate(
-          SV_ROUTES.VOUCHER_GENERATION.SICK_SELECT_DESTINATION
-        )
-      }
-    />
-  );
+  return <CheckIncomeComponent onContinuePress={() => null} />;
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   failure: (reason: string) => dispatch(svGenerateVoucherFailure(reason)),
