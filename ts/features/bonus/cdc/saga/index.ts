@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
 import { BackendCdcClient } from "../api/backendCdc";
-import { bpdApiUrlPrefix } from "../../../../config";
+import { bonusApiUrlPrefix } from "../../../../config";
 import {
   cdcEnrollUserToBonus,
   cdcRequestBonusList
@@ -19,7 +19,7 @@ import { handlePostRegistraBeneficiario } from "./networking/handlePostRegistraB
 export function* watchBonusCdcSaga(bpdBearerToken: string): SagaIterator {
   // Client for the Cdc
   const cdcClient: BackendCdcClient = BackendCdcClient(
-    bpdApiUrlPrefix,
+    bonusApiUrlPrefix,
     bpdBearerToken
   );
 

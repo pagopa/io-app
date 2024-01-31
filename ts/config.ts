@@ -53,10 +53,7 @@ export const isDebugBiometricIdentificationEnabled =
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
-export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
-
-export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;
-export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
+export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
