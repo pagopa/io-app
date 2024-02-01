@@ -9,8 +9,8 @@ import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 import { Action } from "../../../../../store/actions/types";
