@@ -97,7 +97,7 @@ describe("Payment", () => {
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
       await element(by.text(I18n.t("wallet.payNotice"))).tap();
 
-      await element(by.text(I18n.t("barcodeScan.tabs.input"))).tap();
+      await element(by.id("barcodeScanBaseScreenTabInput")).tap();
 
       const matchNoticeCodeInput = by.id("NoticeCodeInputMask");
       await waitFor(element(matchNoticeCodeInput))
