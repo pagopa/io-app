@@ -12,11 +12,6 @@ import {
   fetchWalletsSuccess
 } from "../actions/wallet/wallets";
 import { euCovidCertificateGet } from "../../features/euCovidCert/store/actions";
-import {
-  svPossibleVoucherStateGet,
-  svVoucherListGet
-} from "../../features/bonus/siciliaVola/store/actions/voucherList";
-import { svGetPdfVoucher } from "../../features/bonus/siciliaVola/store/actions/voucherGeneration";
 
 /**
  * list of monitored actions
@@ -30,10 +25,7 @@ const monitoredActions: ReadonlyArray<
   [addWalletCreditCardFailure, addWalletCreditCardSuccess],
   [fetchTransactionsFailure, fetchTransactionsSuccess],
   [fetchWalletsFailure, fetchWalletsSuccess],
-  [euCovidCertificateGet.failure, euCovidCertificateGet.success],
-  [svPossibleVoucherStateGet.failure, svPossibleVoucherStateGet.success],
-  [svVoucherListGet.failure, svVoucherListGet.success],
-  [svGetPdfVoucher.failure, svGetPdfVoucher.success]
+  [euCovidCertificateGet.failure, euCovidCertificateGet.success]
 ];
 
 const failureActions = monitoredActions.map(ma => ma[0]);
