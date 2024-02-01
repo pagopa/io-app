@@ -244,8 +244,7 @@ class PreferencesScreen extends React.Component<Props> {
     return (
       <RNavScreenWithLargeHeader
         title={{
-          label: I18n.t("profile.preferences.title"),
-          accessibilityLabel: I18n.t("profile.preferences.title")
+          label: I18n.t("profile.preferences.title")
         }}
         description={I18n.t("profile.preferences.subtitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}

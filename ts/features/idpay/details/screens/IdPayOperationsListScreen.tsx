@@ -133,9 +133,6 @@ export const IdPayOperationsListScreen = () => {
       title={{
         label: I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
-        ),
-        accessibilityLabel: I18n.t(
-          "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"
         )
       }}
     >

@@ -59,10 +59,7 @@ const WalletTransactionOperationDetailsScreen = () => {
   return (
     <RNavScreenWithLargeHeader
       title={{
-        label: cleanTransactionDescription(operationName),
-        accessibilityLabel: `${I18n.t("global.accessibility.inputLabel", {
-          header: cleanTransactionDescription(operationName)
-        })}`
+        label: cleanTransactionDescription(operationName)
       }}
     >
       <ScrollView style={styles.scrollViewContainer}>

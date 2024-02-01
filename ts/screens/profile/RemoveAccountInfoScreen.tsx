@@ -37,8 +37,7 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
   return (
     <RNavScreenWithLargeHeader
       title={{
-        label: I18n.t("profile.main.privacy.removeAccount.title"),
-        accessibilityLabel: I18n.t("profile.main.privacy.removeAccount.title")
+        label: I18n.t("profile.main.privacy.removeAccount.title")
       }}
       fixedBottomSlot={footerComponent}
     >

@@ -5,9 +5,7 @@ import { RNavScreenWithLargeHeader } from "../../../components/ui/RNavScreenWith
 export const DSHeaderSecondLevel = () => (
   <RNavScreenWithLargeHeader
     title={{
-      label: "Questo è un titolo lungo, ma lungo lungo davvero, eh!",
-      accessibilityLabel:
-        "Questo è un titolo lungo, ma lungo lungo davvero, eh!"
+      label: "Questo è un titolo lungo, ma lungo lungo davvero, eh!"
     }}
   >
     <VSpacer />

@@ -52,10 +52,7 @@ class CalendarsPreferencesScreen extends React.PureComponent<Props, State> {
     return (
       <RNavScreenWithLargeHeader
         title={{
-          label: I18n.t("profile.preferences.list.preferred_calendar.title"),
-          accessibilityLabel: I18n.t(
-            "profile.preferences.list.preferred_calendar.title"
-          )
+          label: I18n.t("profile.preferences.list.preferred_calendar.title")
         }}
         description={I18n.t("messages.cta.reminderCalendarSelect")}
         contextualHelpMarkdown={contextualHelpMarkdown}

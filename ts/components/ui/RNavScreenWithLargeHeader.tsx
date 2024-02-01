@@ -24,7 +24,7 @@ import I18n from "../../i18n";
 
 export type LargeHeaderTitleProps = {
   label: string;
-  accessibilityLabel: string;
+  accessibilityLabel?: string;
   testID?: string;
 };
 
@@ -115,7 +115,8 @@ export const RNavScreenWithLargeHeader = ({
         >
           <H2
             testID={title.testID}
-            accessibilityLabel={title.accessibilityLabel}
+            accessibilityLabel={title.accessibilityLabel ?? title.label}
+            accessibilityRole="header"
           >
             {title.label}
           </H2>

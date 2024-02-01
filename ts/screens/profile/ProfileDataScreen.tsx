@@ -52,8 +52,7 @@ const ProfileDataScreen: React.FC<Props> = ({
   return (
     <RNavScreenWithLargeHeader
       title={{
-        label: I18n.t("profile.data.title"),
-        accessibilityLabel: I18n.t("profile.data.title")
+        label: I18n.t("profile.data.title")
       }}
       description={I18n.t("profile.data.subtitle")}
       headerActionsProp={{ showHelp: true }}
