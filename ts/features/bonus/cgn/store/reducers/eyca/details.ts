@@ -14,7 +14,6 @@ import {
 import { NetworkError } from "../../../../../../utils/errors";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
 import { EycaDetail } from "../../actions/utils";
-
 export type EycaDetailsState = RemoteValue<EycaDetail, NetworkError>;
 
 const INITIAL_STATE: EycaDetailsState = remoteUndefined;

@@ -10,7 +10,6 @@ import {
   CgnDetailsParamsList,
   CgnMerchantLandingWebviewNavigationParams
 } from "../../navigation/params";
-
 type Props = {
   navigation: IOStackNavigationProp<
     CgnDetailsParamsList,

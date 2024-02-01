@@ -9,7 +9,6 @@ import {
   cgnRequestActivation
 } from "../actions/activation";
 import { CgnActivationProgressEnum } from "../actions/utils";
-
 export type ActivationState = {
   status: CgnActivationProgressEnum;
   value?: CgnActivationDetail;
