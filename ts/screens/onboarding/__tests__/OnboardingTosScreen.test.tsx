@@ -26,7 +26,6 @@ const CurrentTestZendeskEnabled = true;
 const CurrentTestToSVersion = 2.0;
 
 const zendeskEnabledDefaultValue = config.zendeskEnabled;
-const tosVersionOriginalValue = config.tosVersion;
 
 // Restore defineProperty
 beforeAll(() => {
@@ -37,8 +36,6 @@ beforeAll(() => {
   Object.defineProperty(config, "zendeskEnabled", {
     value: CurrentTestZendeskEnabled
   });
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "tosVersion", { value: CurrentTestToSVersion });
 });
 
 afterAll(() => {
@@ -47,10 +44,6 @@ afterAll(() => {
   // eslint-disable-next-line functional/immutable-data
   Object.defineProperty(config, "zendeskEnabled", {
     value: zendeskEnabledDefaultValue
-  });
-  // eslint-disable-next-line functional/immutable-data
-  Object.defineProperty(config, "tosVersion", {
-    value: tosVersionOriginalValue
   });
 });
 
@@ -405,6 +398,10 @@ const commonSetup = ({
           },
           fims: {
             enabled: false
+          },
+          tos: {
+            tos_version: CurrentTestToSVersion,
+            tos_url: "https://www.example.com"
           }
         }
       })
