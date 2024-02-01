@@ -691,7 +691,6 @@ authentication:
       error_1001: "Zugang verweigert: Du hast nicht das Mindestalter für die Nutzung von IO"
   expiredSessionBanner:
     title: "Sicherheitshinweis"
-    message: "Um deine privaten Daten zu schützen, melde dich bitte erneut mit deinen SPID-Anmeldedaten an, danke!"
   unlock:
     title: "Zugang entsperren"
     subtitlel2: "Um die App nutzen zu können, müsst du zunächst den Zugang zu IO entsperren."
@@ -2436,16 +2435,6 @@ fastLogin:
   whatsNew:
     title: "Wir haben den Zugang zu IO verbessert!"
     subtitle: "Du musst dich jetzt nur noch einmal im Jahr mit deinem SPID oder deiner CIE authentifizieren. Danach brauchst du dich nur noch mit deinem Entsperrcode oder biometrischen Merkmalen anmelden."
-    changes:
-      first:
-        title: "Einfacher"
-        description: "Zugang nur durch Eingabe des Entsperrcodes der App oder mit biometrischen Merkmalen."
-      second:
-        title: "Schneller"
-        description: "Wir werden dich nur einmal im Jahr oder wenn du dich aus der App ausloggst auffordern, dich mit SPID oder CIE zu authentifizieren."
-      third:
-        title: "Sicherer"
-        description: "Jedes Mal, wenn du dich erneut mit SPID oder CIE anmeldest, senden wir dir eine E-Mail."
 whatsNew:
   title: "Was ändert sich?"
 bonusCard:

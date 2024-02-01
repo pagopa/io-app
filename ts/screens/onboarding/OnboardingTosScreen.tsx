@@ -15,7 +15,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import TosWebviewComponent from "../../components/TosWebviewComponent";
-import { privacyUrl, tosVersion } from "../../config";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
@@ -31,6 +30,7 @@ import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 
 const styles = StyleSheet.create({
   titlePadding: {
@@ -73,6 +73,10 @@ const OnboardingTosScreen = () => {
   useOnFirstRender(() => {
     trackTosScreen(getFlowType(true, isFirstOnBoarding));
   });
+
+  const tosConfig = useIOSelector(tosConfigSelector);
+  const tosVersion = tosConfig.tos_version;
+  const privacyUrl = tosConfig.tos_url;
 
   const hasAcceptedCurrentTos = pot.getOrElse(
     pot.map(potProfile, p => p.accepted_tos_version === tosVersion),

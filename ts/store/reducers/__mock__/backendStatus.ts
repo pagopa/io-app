@@ -297,7 +297,11 @@ export const baseRawBackendStatus: BackendStatus = {
       frontend_url: "",
       optInServiceId: ""
     },
-    payments: {}
+    payments: {},
+    tos: {
+      tos_url: "https://www.example.com",
+      tos_version: 3.2
+    }
   }
 };
 
@@ -385,7 +389,11 @@ export const baseBackendConfig: Config = {
     frontend_url: "",
     optInServiceId: ""
   },
-  payments: {}
+  payments: {},
+  tos: {
+    tos_url: "https://www.example.com",
+    tos_version: 3.2
+  }
 };
 
 export const withBpdRankingConfig = (
