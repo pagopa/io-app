@@ -3,7 +3,8 @@ import { flow, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
 import { Errors } from "io-ts";
 import fetch from "node-fetch";
-import { RemoteJiraTicket } from "./types";
+import * as O from "fp-ts/lib/Option";
+import { JiraTicketRetrievalResults, RemoteJiraTicket } from "./types";
 
 const jiraOrgBaseUrl = "https://pagopa.atlassian.net/rest/api/3/issue/";
 export const jiraTicketBaseUrl = "https://pagopa.atlassian.net/browse/";
@@ -58,3 +59,39 @@ export const getJiraTickets = async (
   jiraIds: ReadonlyArray<string>
 ): Promise<ReadonlyArray<E.Either<Errors | Error, RemoteJiraTicket>>> =>
   await Promise.all(jiraIds.map(getJiraTicket));
+
+const jiraRegex = /\[([A-Z0-9]+-\d+(,[A-Z0-9]+-\d+)*)]\s.+/;
+
+/**
+ * Extracts Jira ticket ids from the pr title (if any)
+ * @param title
+ */
+export const getJiraIdFromPrTitle = (
+  title: string
+): O.Option<ReadonlyArray<string>> =>
+  pipe(
+    title.match(jiraRegex),
+    O.fromNullable,
+    O.map(a => a[1].split(","))
+  );
+
+/**
+ * Try to retrieve Jira tickets from pr title
+ * and transforms them into {@link GenericTicket}
+ * @param title
+ */
+export const getTicketsFromTitle = async (
+  title: string
+): Promise<JiraTicketRetrievalResults> => {
+  const maybeJiraId = await pipe(
+    getJiraIdFromPrTitle(title),
+    O.map(getJiraTickets),
+    O.toUndefined
+  );
+
+  if (maybeJiraId) {
+    return maybeJiraId;
+  } else {
+    return [E.left(new Error("No Jira ticket found"))];
+  }
+};

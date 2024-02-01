@@ -1,9 +1,9 @@
 // Import custom DangerJS rules.
 // See http://danger.systems/js
 import { DangerDSLType } from "danger/distribution/dsl/DangerDSL";
-import { commentPrWithTicketsInfo } from "./scripts/ts/danger/commentPrWithTicketsInfo";
-import { updatePrTitleForChangelog } from "./scripts/ts/danger/updatePrTitleForChangelog";
-import { getTicketsFromTitle } from "./scripts/ts/danger/utils/titleParser";
+import { commentPrWithTicketsInfo } from "./scripts/ts/danger/commentPr";
+import { updatePrTitleForChangelog } from "./scripts/ts/danger/updatePrTitle";
+import { getTicketsFromTitle } from "./scripts/ts/common/jiraTicket";
 
 declare const danger: DangerDSLType;
 

@@ -8,11 +8,9 @@ import {
   fciEnabled,
   fimsEnabled,
   myPortalEnabled,
-  svEnabled,
   uaDonationsEnabled
 } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
-import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
@@ -66,12 +64,6 @@ const uaDonationsRoutesToNavigationLink: Record<string, string> = {
   [UADONATION_ROUTES.WEBVIEW]: "/uadonations-webview"
 };
 
-const svRoutesToNavigationLink: Record<string, string> = {
-  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]:
-    "/services/sv-generation/check-status",
-  [SV_ROUTES.VOUCHER_LIST.LIST]: "/services/sv-vouchers/list"
-};
-
 const fimsRoutesToNavigationLink: Record<string, string> = {
   [FIMS_ROUTES.WEBVIEW]: "/fims/webview"
 };
@@ -85,7 +77,6 @@ const allowedRoutes = {
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
   ...(myPortalEnabled ? myPortalRoutesToNavigationLink : {}),
-  ...(svEnabled ? svRoutesToNavigationLink : {}),
   ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationLink : {}),
   ...(fimsEnabled ? fimsRoutesToNavigationLink : {}),
   ...(fciEnabled ? fciRoutesToNavigationLink : {})
