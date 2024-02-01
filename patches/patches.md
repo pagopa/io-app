@@ -77,12 +77,6 @@ Updated on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### danger-plugin-digitalcitizenship+0.3.1
-Created on **06/08/2020**
-
-#### Reason:
-- Recognizes the ids of pivotal stories even if they are not at the beginning of the line
-
 ### react-native-push-notification+7.3.1
 Created on **10/05/2021**
 
