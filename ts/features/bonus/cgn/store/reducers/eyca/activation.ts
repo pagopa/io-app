@@ -1,7 +1,5 @@
-import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { getType } from "typesafe-actions";
 import {
   getValueOrElse,
   isLoading,
@@ -11,21 +9,14 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../../common/model/RemoteValue";
+import { Action } from "../../../../../../store/actions/types";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../../utils/errors";
 import {
   cgnEycaActivation,
   cgnEycaActivationStatusRequest
 } from "../../actions/eyca/activation";
-
-export type CgnEycaActivationStatus =
-  | "POLLING"
-  | "POLLING_TIMEOUT"
-  | "PROCESSING"
-  | "NOT_FOUND"
-  | "COMPLETED"
-  | "INELIGIBLE"
-  | "ALREADY_ACTIVE"
-  | "ERROR";
+import { CgnEycaActivationStatus } from "../../actions/utils";
 
 export type EycaActivationState = RemoteValue<
   CgnEycaActivationStatus,

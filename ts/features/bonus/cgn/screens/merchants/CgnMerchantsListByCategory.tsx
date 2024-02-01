@@ -1,12 +1,17 @@
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { useMemo } from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import {
+  getValueOrElse,
+  isError,
+  isLoading
+} from "../../../../../common/model/RemoteValue";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
@@ -15,13 +20,11 @@ import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import {
-  getValueOrElse,
-  isError,
-  isLoading
-} from "../../../../../common/model/RemoteValue";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
-import { CgnDetailsParamsList } from "../../navigation/params";
+import {
+  CgnDetailsParamsList,
+  CgnMerchantListByCategoryScreenNavigationParams
+} from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
@@ -33,11 +36,6 @@ import {
 } from "../../store/reducers/merchants";
 import { CATEGORY_GRADIENT_ANGLE, getCategorySpecs } from "../../utils/filters";
 import { mixAndSortMerchants } from "../../utils/merchants";
-import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-
-export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
-  category: ProductCategoryEnum;
-}>;
 
 const styles = StyleSheet.create({
   listContainer: {

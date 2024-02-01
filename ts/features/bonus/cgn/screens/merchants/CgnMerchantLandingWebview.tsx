@@ -1,17 +1,15 @@
 import { Route, useRoute } from "@react-navigation/core";
+import I18n from "i18n-js";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
-import I18n from "i18n-js";
+import WebviewComponent from "../../../../../components/WebviewComponent";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import WebviewComponent from "../../../../../components/WebviewComponent";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
-import { CgnDetailsParamsList } from "../../navigation/params";
-
-export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
-  landingPageUrl: string;
-  landingPageReferrer: string;
-}>;
+import {
+  CgnDetailsParamsList,
+  CgnMerchantLandingWebviewNavigationParams
+} from "../../navigation/params";
 
 type Props = {
   navigation: IOStackNavigationProp<

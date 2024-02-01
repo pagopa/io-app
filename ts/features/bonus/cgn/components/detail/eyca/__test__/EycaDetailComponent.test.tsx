@@ -7,7 +7,6 @@ import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
 import { StatusEnum as PendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
 import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
-import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
 import I18n from "../../../../../../../i18n";
 import * as urlUtils from "../../../../../../../utils/url";
 import { appReducer } from "../../../../../../../store/reducers";
@@ -15,6 +14,7 @@ import { applicationChangeState } from "../../../../../../../store/actions/appli
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
+import { CgnEycaActivationStatus } from "../../../../store/actions/utils";
 
 const eycaCardActive: EycaCard = {
   status: AcivatedStatus.ACTIVATED,

@@ -2,25 +2,23 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { debounce } from "lodash";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { View, Keyboard, SafeAreaView } from "react-native";
+import { Keyboard, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
-import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { H1 } from "../../../../../components/core/typography/H1";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../../../../components/LabelledItem";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../../i18n";
-import { Dispatch } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
   isLoading,
   isReady
 } from "../../../../../common/model/RemoteValue";
+import { LabelledItem } from "../../../../../components/LabelledItem";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
+import { H1 } from "../../../../../components/core/typography/H1";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../../i18n";
+import { Dispatch } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import {
@@ -31,14 +29,13 @@ import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
-import { mixAndSortMerchants } from "../../utils/merchants";
+import { MerchantsAll, mixAndSortMerchants } from "../../utils/merchants";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const DEBOUNCE_SEARCH: Millisecond = 300 as Millisecond;
 
-export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
  * @param props

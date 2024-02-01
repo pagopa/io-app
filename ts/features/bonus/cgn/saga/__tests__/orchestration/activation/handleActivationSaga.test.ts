@@ -7,8 +7,8 @@ import {
 } from "../../../../navigation/actions";
 import CGN_ROUTES from "../../../../navigation/routes";
 import { cgnActivationStatus } from "../../../../store/actions/activation";
-import { CgnActivationProgressEnum } from "../../../../store/reducers/activation";
 import { cgnActivationWorker } from "../../../orchestration/activation/handleActivationSaga";
+import { CgnActivationProgressEnum } from "../../../../store/actions/utils";
 
 jest.mock("react-native-share", () => ({
   open: jest.fn()

@@ -1,6 +1,5 @@
-import { CgnMerchantDetailScreenNavigationParams } from "../screens/merchants/CgnMerchantDetailScreen";
-import { CgnMerchantLandingWebviewNavigationParams } from "../screens/merchants/CgnMerchantLandingWebview";
-import { CgnMerchantListByCategoryScreenNavigationParams } from "../screens/merchants/CgnMerchantsListByCategory";
+import { Merchant } from "../../../../../definitions/cgn/merchants/Merchant";
+import { ProductCategoryEnum } from "../../../../../definitions/cgn/merchants/ProductCategory";
 import CGN_ROUTES from "./routes";
 
 export type CgnActivationParamsList = {
@@ -27,6 +26,21 @@ export type CgnDetailsParamsList = {
     .LANDING_WEBVIEW]: CgnMerchantLandingWebviewNavigationParams;
 };
 
+// ------------ SCREEN NAVIGATION PARAMS
+
 export type CgnEYCAActivationParamsList = {
   [CGN_ROUTES.EYCA.ACTIVATION.LOADING]: undefined;
 };
+
+export type CgnMerchantLandingWebviewNavigationParams = Readonly<{
+  landingPageUrl: string;
+  landingPageReferrer: string;
+}>;
+
+export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
+  category: ProductCategoryEnum;
+}>;
+
+export type CgnMerchantDetailScreenNavigationParams = Readonly<{
+  merchantID: Merchant["id"];
+}>;

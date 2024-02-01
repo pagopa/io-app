@@ -3,13 +3,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { CgnActivationProgressEnum } from "../reducers/activation";
-import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
-
-type ActivationStatus = {
-  status: CgnActivationProgressEnum;
-  activation?: CgnActivationDetail;
-};
+import { CgnActivationStatusActionT } from "./utils";
 
 export const cgnActivationStart = createStandardAction(
   "CGN_ACTIVATION_START"
@@ -50,7 +44,7 @@ export const cgnActivationStatus = createAsyncAction(
   "CGN_ACTIVATION_STATUS_REQUEST",
   "CGN_ACTIVATION_STATUS_SUCCESS",
   "CGN_ACTIVATION_STATUS_FAILURE"
-)<void, ActivationStatus, Error>();
+)<void, CgnActivationStatusActionT, Error>();
 
 /**
  * get and handle activation request of a CGN

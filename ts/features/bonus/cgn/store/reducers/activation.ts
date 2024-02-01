@@ -1,24 +1,14 @@
 // bonus reducer
-import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 import { Action } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   cgnActivationStatus,
   cgnRequestActivation
 } from "../actions/activation";
-import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
-import { GlobalState } from "../../../../../store/reducers/types";
-
-export enum CgnActivationProgressEnum {
-  "UNDEFINED" = "UNDEFINED",
-  "TIMEOUT" = "TIMEOUT", // number of polling exceeded
-  "PROGRESS" = "PROGRESS", // The request is started
-  "PENDING" = "PENDING", // Polling time exceeded
-  "ERROR" = "ERROR", // There's an error
-  "EXISTS" = "EXISTS", // Another bonus related to this user was found
-  "INELIGIBLE" = "INELIGIBLE", // Another bonus related to this user was found
-  "SUCCESS" = "SUCCESS" // Activation has been completed
-}
+import { CgnActivationProgressEnum } from "../actions/utils";
 
 export type ActivationState = {
   status: CgnActivationProgressEnum;

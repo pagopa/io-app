@@ -4,7 +4,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { NetworkError } from "../../../../../../utils/errors";
-import { CgnEycaActivationStatus } from "../../reducers/eyca/activation";
+import { CgnEycaActivationStatus } from "../utils";
 
 /**
  * Cancel the activation workflow
