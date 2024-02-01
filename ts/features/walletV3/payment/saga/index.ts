@@ -52,7 +52,7 @@ export function* watchWalletPaymentSaga(
   yield* takeLatest(
     walletPaymentGetUserWallets.request,
     handleWalletPaymentGetUserWallets,
-    walletClient.getWalletsByIdUser
+    paymentClient.getWalletsByIdUser
   );
 
   yield* takeLatest(
