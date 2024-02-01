@@ -83,6 +83,13 @@ Created on **10/05/2021**
 #### Reason:
 - Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
 
+Updated on **31/01/2024**
+
+#### Reason:
+- Adds a guard to prevent a crash on Android SDK 34 (Android 14) when using Exact Alarms without having requested user's permission first.
+  This works since we are not using local notifications anymore (and the library has to be replaced - since it is deprecated) and the
+  remote notifications do not trigger the Exact Alarms API.
+
 ### react-native-screen-brightness+2.0.0-alpha
 Created on **16/08/2021**
 
