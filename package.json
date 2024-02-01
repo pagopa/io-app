@@ -3,7 +3,7 @@
   "version": "2.52.0-rc.1",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_public.yaml",
-  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.29/definitions.yml",
+  "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.30/definitions.yml",
   "io_cgn_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_cgn.yaml",
   "io_cgn_merchants_specs": "https://raw.githubusercontent.com/pagopa/io-backend/v13.29.2-RELEASE/api_cgn_operator_search.yaml",
   "api_fci": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_io_sign.yaml",
