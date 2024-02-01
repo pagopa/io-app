@@ -6,7 +6,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MessageRouterScreen } from "../MessageRouterScreen";
 import { getMessageDataAction } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import * as ASD from "../../../../store/hooks";
+import * as IOHooks from "../../../../store/hooks";
 import { MessageGetStatus } from "../../store/reducers/messageGetStatus";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
@@ -107,7 +107,7 @@ const renderScreen = (
 
   const mockedDispatch = jest.fn();
   jest
-    .spyOn(ASD, "useIODispatch")
+    .spyOn(IOHooks, "useIODispatch")
     .mockImplementation(() => mockedDispatch as Dispatch<AnyAction>);
 
   const renderedMessageRouterScreen = renderScreenWithNavigationStoreContext(

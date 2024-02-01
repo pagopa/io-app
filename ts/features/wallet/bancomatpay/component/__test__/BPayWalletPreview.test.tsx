@@ -22,7 +22,7 @@ describe("BPayWalletPreview component", () => {
   const aBPay: BPayPaymentMethod = {
     walletType: "BPay",
     createDate: "2021-07-08",
-    enableableFunctions: ["FA", "pagoPA", "BPD"],
+    enableableFunctions: ["FA", "pagoPA"],
     favourite: false,
     idWallet: 25572,
     info: {
