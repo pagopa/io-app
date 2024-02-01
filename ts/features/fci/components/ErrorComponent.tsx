@@ -45,7 +45,7 @@ export type Props = WithTestID<{
   onPress: () => void;
 }>;
 
-const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 16;
+const DEFAULT_BOTTOM_PADDING: IOSpacingScale = 20;
 
 const ErrorComponent = (props: Props) => {
   const dispatch = useIODispatch();
@@ -146,7 +146,7 @@ const ErrorComponent = (props: Props) => {
     <SafeAreaView
       style={IOStyles.flex}
       testID={props.testID}
-      edges={["left", "right"]}
+      edges={["bottom", "left", "right"]}
     >
       <InfoScreenComponent
         image={<Pictogram name={props.pictogram} />}
