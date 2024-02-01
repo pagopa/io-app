@@ -34,6 +34,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.opt_in.contextualHelpContent"
 };
 
+export const MIN_HEIGHT_TO_SHOW_FULL_RENDER = 820;
+
 export type ChosenIdentifier = {
   identifier: "SPID" | "CIE";
 };
@@ -93,7 +95,11 @@ const NewOptInScreen = () => {
         }}
       >
         <ContentWrapper>
-          {Dimensions.get("screen").height > 780 && (
+          {/* 
+          if the device height is > 820 then the pictogram will be visible, 
+          otherwise it will not be visible
+          */}
+          {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
             <View style={IOStyles.selfCenter} testID="pictogram-test">
               <Pictogram name="passcode" size={120} />
             </View>
