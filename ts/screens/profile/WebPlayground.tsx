@@ -3,6 +3,7 @@ import {
   ButtonSolid,
   Divider,
   HSpacer,
+  IOColors,
   IOStyles,
   IOVisualCostants,
   IconButtonContained,
@@ -20,11 +21,9 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import { LabelledItem } from "../../components/LabelledItem";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import { IOToast } from "../../components/Toast";
-import { Label } from "../../components/core/typography/Label";
 import { Monospace } from "../../components/core/typography/Monospace";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { navigateBack } from "../../store/actions/navigation";
@@ -34,8 +33,14 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  textInput: { flex: 1, padding: 1, borderWidth: 1, height: 30 },
-  contentCenter: { justifyContent: "center" },
+  textInput: {
+    flex: 1,
+    padding: 1,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: IOColors["grey-450"],
+    height: 30
+  },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -156,12 +161,12 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
                 }}
               />
               <VSpacer size={8} />
-              <ButtonDefaultOpacity
-                style={styles.contentCenter}
+              <ButtonSolid
                 onPress={() => setCookieOnDomain()}
-              >
-                <Label color={"white"}>Save</Label>
-              </ButtonDefaultOpacity>
+                label="Save"
+                accessibilityLabel={"Save"}
+              />
+              <VSpacer size={8} />
             </>
           )}
           {showDebug && <Monospace>{webMessage}</Monospace>}
