@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.52.0-rc.1](https://github.com/pagopa/io-app/compare/2.51.0-rc.3...2.52.0-rc.1) (2024-01-31)
+
+
+### Bug Fixes
+
+* fci specs ([9f90056](https://github.com/pagopa/io-app/commit/9f900562635a8ed4050b79c19193153c68bb580e))
+
+
+### Chores
+
+* **release:** 2.52.0-rc.0 ([818b333](https://github.com/pagopa/io-app/commit/818b333bb8f437b1af521eea824069e2879598a6))
+
 ## [2.52.0-rc.0](https://github.com/pagopa/io-app/compare/2.51.0-rc.2...2.52.0-rc.0) (2024-01-30)
 
 
