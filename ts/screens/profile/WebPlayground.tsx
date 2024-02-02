@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   textInput: {
     flex: 1,
-    padding: 1,
+    padding: 8,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: IOColors["grey-450"],
-    height: 30
+    height: 40
   },
   row: {
     flexDirection: "row",

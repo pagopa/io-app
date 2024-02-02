@@ -145,9 +145,6 @@ const ProfileStackNavigator = () => {
         component={DownloadProfileDataScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.MARKDOWN_PLAYGROUND}
         component={MarkdownPlayground}
       />
