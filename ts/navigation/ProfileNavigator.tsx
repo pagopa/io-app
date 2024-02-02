@@ -161,9 +161,6 @@ const ProfileStackNavigator = () => {
         component={LollipopPlayground}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.CGN_LANDING_PLAYGROUND}
         component={CgnLandingPlayground}
       />
