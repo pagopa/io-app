@@ -157,9 +157,6 @@ const ProfileStackNavigator = () => {
       />
       <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.LOLLIPOP_PLAYGROUND}
         component={LollipopPlayground}
       />
