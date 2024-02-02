@@ -6,11 +6,9 @@ describe("OrganizationHeader component", () => {
   it("should match the snapshot", () => {
     const component = render(
       <OrganizationHeader
-        logoUri={{
-          uri: "https://eo.wikipedia.org/wiki/Universala_Esperanto-Asocio#/media/Dosiero:Universala_Esperanto-Asocio.png"
-        }}
-        organizationName={"Universala Esperanto-Asocio"}
-        serviceName={"Avviso"}
+        logoUri={require("../../../../../../img/test/logo.png")}
+        organizationName={"#### organization_name ####"}
+        serviceName={"#### service name ####"}
       />
     );
     expect(component.toJSON()).toMatchSnapshot();

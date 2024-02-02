@@ -47,7 +47,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
       }
       weight="Bold"
     >
-      Universala Esperanto-Asocio
+      #### organization_name ####
     </Text>
     <Text
       allowFontScaling={false}
@@ -78,7 +78,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
       }
       weight="Bold"
     >
-      Avviso
+      #### service name ####
     </Text>
   </View>
   <View
@@ -111,7 +111,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
         onError={[Function]}
         source={
           Object {
-            "uri": "https://eo.wikipedia.org/wiki/Universala_Esperanto-Asocio#/media/Dosiero:Universala_Esperanto-Asocio.png",
+            "testUri": "../../../img/test/logo.png",
           }
         }
         style={
