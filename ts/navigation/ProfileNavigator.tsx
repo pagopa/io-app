@@ -179,9 +179,6 @@ const ProfileStackNavigator = () => {
         component={IdPayCodePlayGround}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.WALLET_PLAYGROUND}
         component={WalletPlayground}
       />
