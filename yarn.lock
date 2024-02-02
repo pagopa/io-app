@@ -3315,6 +3315,11 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.2.tgz#9b37787f98d94fac645e70bda926638b14e59d0d"
   integrity sha512-rOChvrMsJ5QvfLvcsttGP6M5LZkOWhOD2YVRL4+bMCVqNRMsSDmteBNoMWzWlRcXrKyd2ZORgDEa1zPmMRMhTw==
 
+"@pagopa/io-react-native-zendesk@^0.3.28":
+  version "0.3.28"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.28.tgz#eaef19df577bee000b615f6813d52546a1f2513f"
+  integrity sha512-U6avcojN+lbQgus1aYiggJ19wsqoHcVCm1EN4Dc7E+f32aCCfvsclFSisKd5FpubGsUdEd/x3De/+5At5c+K9w==
+
 "@pagopa/openapi-codegen-ts@^12.2.1":
   version "12.2.1"
   resolved "https://registry.yarnpkg.com/@pagopa/openapi-codegen-ts/-/openapi-codegen-ts-12.2.1.tgz#e2cc9cedcbb23077b4f3f80e970ebd9c55e71afe"
@@ -9884,10 +9889,6 @@ invariant@*, invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
   dependencies:
     loose-envify "^1.0.0"
-
-"io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#0.3.25":
-  version "0.3.23"
-  resolved "https://github.com/pagopa/io-react-native-zendesk.git#66492028f52d3c64392ac4174d80d6fbf65d0e92"
 
 io-ts@2.2.20:
   version "2.2.20"

@@ -728,7 +728,6 @@ authentication:
       error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
   expiredSessionBanner:
     title: Avviso di sicurezza
-    message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
   unlock:
     title: Sblocca l’accesso
     subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO.
@@ -2571,174 +2570,6 @@ bonus:
           other: "{{seconds}} secondi"
   sv:
     headerTitle: "Sicilia Vola"
-    voucherGeneration:
-      acceptTos:
-        alert:
-          title: "Attenzione"
-          message: "Ti informiamo che le informazioni che inserirai costituiscono a tutti gli effetti una autocertificazione. Eventuali dichiarazioni mendaci saranno perseguibili ai sensi del d.P.R. n.445/2000"
-          buttons:
-            ok: "Continua"
-            ko: "Annulla richiesta"
-        buttons:
-          requestBonus: "Richiedi un codice sconto"
-      checkResidence:
-        title: "Regione di residenza"
-        items:
-          inSicily: "Risiedo in Sicilia"
-          notInSicily: "Risiedo in un'altra regione"
-        info: "Ricorda che gli sconti sono diponibili solo per i cittadini residenti in Sicilia."
-      selectBeneficiaryCategory:
-        title: "Dichiaro di essere"
-        categories:
-          student: "Studente fuori sede"
-          disabled: "Disabile grave"
-          worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
-          sick: "Paziente con necessità di cure al di fuori della Sicilia"
-          other: "Nessuno dei precedenti"
-      student:
-        selectDestination:
-          title: "StudentSelectDestinationScreen"
-      disabled:
-        additionalInfo:
-          title: "Informazioni aggiuntive"
-          disclaimer:
-            normal: "Dichiaro di possedere i requisiti di cui all’"
-            link: "articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
-      worker:
-        selectDestination:
-          title: "WorkerSelectDestinationScreen"
-      sick:
-        selectDestination:
-          title: "SickSelectDestinationScreen"
-      checkIncome:
-        title: "Dichiaro inoltre"
-        threshold:
-          under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
-          over: "di avere un reddito lordo annuo superiore a {{amount}}"
-      selectFlightsDate:
-        title: "Data del volo"
-        subtitle: "Indica il tipo di volo e la/le data/e in cui viaggerai"
-        flights_choice:
-          departure: "Volo di sola andata"
-          return: "Andata e ritorno"
-        labels:
-          departure: "Data di partenza"
-          return: "Data di ritorno"
-      summary:
-        title: "Riepilogo"
-        subtitle1:
-          normal1: "Proseguendo dichiari sotto la tua responsabilità e consapevole delle sanzioni penali in caso di dichiarazioni non veritiere e di falsità negli atti ("
-          link: "art. 76 del d.P.R. 28 Dicembre 2000, n.445"
-          normal2: ") di possedere i seguenti requisiti"
-        subtitle2: "E di richiedere un codice sconto per un volo con le seguenti caratteristiche:"
-        fields:
-          residence:
-            label: "Residenza:"
-            value: "Sicilia"
-          category:
-            label: "Categoria:"
-            value:
-              disabled: "Disabile grave ai sensi dell’articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
-              student: "Studente fuori sede"
-              worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
-              sick: "Paziente con necessità di cure al di fuori della regione Sicilia"
-          flightDate:
-            label: "Data del volo:"
-            disabled: "Tutte"
-          availableDestination: "Possibili destinazioni:"
-      voucherGenerated:
-        title: "Ecco il tuo codice sconto"
-        subtitle: "Inseriscilo sul portale o comunicalo alla biglietteria della compagnia in fase di acquisto del biglietto. Ti ricordiamo che il codice è nominativo e non può essere usato da altri."
-      ko:
-        checkIncome:
-          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
-          body: "Gli sconti Sicilia Vola sono dedicati solo a chi ha un reddito personale lordo inferiore a 25.000€."
-        selectBeneficiaryCategory:
-          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
-          body: "Gli sconti Sicilia Vola sono dedicati solo alle categorie presentate nella schermata precedente."
-        checkResidence:
-          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
-          body: "Gli sconti Sicilia Vola sono dedicati solo ai residenti in Sicilia."
-        timeout:
-          title: "Il tuo codice sconto Sicilia Vola è in fase di generazione."
-          body: "Riceverai un messaggio in app IO quando sarà pronto."
-    voucherList:
-      title: "I tuoi codici sconto disponibili"
-      loading: "Caricamento in corso"
-      filter:
-        title: "Filtra voucher"
-        searchValuePlaceholder: "Cerca codice buono"
-        stateSection:
-          title: "Stato"
-        dateSection:
-          title: "Data"
-          departure: "Data di partenza"
-          return: "Data di ritorno"
-        cta:
-          removeFilter: "Rimuovi"
-          applyFilter:
-            zero: "Applica filtri"
-            other: "Applica filtri ({{count}})"
-      emptyList:
-        title: "Non ci sono codici sconto disponibili"
-        subtitle: "Fai una ricerca per vedere i tuoi codici utilizzati o scaduti oppure richiedi un nuovo codice"
-        cta: "Genera un nuovo codice"
-      error: "Non riusciamo a recuperare i tuoi voucher, riprova per piacere."
-      details:
-        title: "Il tuo codice sconto"
-        fields:
-          uniqueCode: "Codice univoco"
-          beneficiary: "Beneficiario"
-          residence:
-            label: "Residenza"
-            value: "Sicilia"
-          category: "Categoria"
-          flightDate: "Data del volo"
-          possibleDestination: "Possibili destinazioni"
-        cta:
-          voucherRevocation: "Revoca voucher"
-          openQr: "Apri QR code"
-        voucherRevocation:
-          alert:
-            title: "Attenzione"
-            message: "Sei sicuro di voler procedere? Il codice sconto sarà eliminato."
-            cta:
-              ok: "Continua"
-              ko: "Annulla la richiesta"
-          toast:
-            ok: "Voucher eliminato correttamente"
-            ko: "Errore durante l'eliminazione del voucher. Riprova"
-    components:
-      voucherVisualDetails:
-        uniqueCode: "Codice univoco"
-        qrCode: "QR Code"
-        barCode: "Bar Code"
-      destinationLabels:
-        universityName: "Nome ateneo"
-        companyName: "Ragione sociale azienda"
-        hospitalName: "Nome struttura o professionista"
-        municipality: "Comune"
-      voucherBottomsheet:
-        title: "Codice sconto Sicilia Vola"
-        cta:
-          exit: "Esci"
-          voucherRevocation: "Revoca voucher"
-      destinationSelector:
-        state:
-          title: "Seleziona uno stato"
-          label: "Stato"
-          placeholder: "Seleziona uno stato"
-        municipality:
-          title: "Seleziona un comune"
-          label: "Comune"
-          placeholder: "Seleziona un comune"
-          ko:
-            label1: "Errore durante il caricamento dei comuni. "
-            label2: "Riprova"
-    pdfVoucher:
-      toast:
-        ok: "Voucher salvato con successo"
-        ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
     serviceCta:
@@ -3582,16 +3413,6 @@ fastLogin:
   whatsNew:
     title: Abbiamo migliorato l’accesso a IO!
     subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
-    changes:
-      first:
-        title: Più semplice
-        description: accedi inserendo solo il codice di sblocco dell’app o con il biometrico.
-      second:
-        title: Più veloce
-        description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
-      third:
-        title: Più sicura
-        description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
 whatsNew:
   title: Cosa cambia?
 bonusCard:
