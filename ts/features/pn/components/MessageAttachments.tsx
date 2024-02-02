@@ -2,10 +2,13 @@ import React from "react";
 import { View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { VSpacer, WithTestID } from "@pagopa/io-app-design-system";
-import { UIAttachment } from "../types";
-import { ContentTypeValues } from "../types/contentType";
-import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
-import { ModuleAttachment, ModuleAttachmentProps } from "./ModuleAttachment";
+import { UIAttachment } from "../../messages/types";
+import { ContentTypeValues } from "../../messages/types/contentType";
+import { useAttachmentDownload } from "../../messages/hooks/useAttachmentDownload";
+import {
+  LegacyModuleAttachment,
+  LegacyModuleAttachmentProps
+} from "../../messages/components/MessageDetail/LegacyModuleAttachment";
 
 type PartialProps = {
   downloadAttachmentBeforePreview?: boolean;
@@ -24,7 +27,7 @@ type MessageAttachmentsProps = WithTestID<
 
 const getFormatByContentType = (
   contentType: UIAttachment["contentType"]
-): ModuleAttachmentProps["format"] => {
+): LegacyModuleAttachmentProps["format"] => {
   switch (contentType) {
     case ContentTypeValues.applicationPdf:
       return "pdf";
@@ -45,7 +48,7 @@ const AttachmentItem = ({
   );
 
   return (
-    <ModuleAttachment
+    <LegacyModuleAttachment
       testID="message-attachment"
       format={getFormatByContentType(attachment.contentType)}
       title={attachment.displayName}

@@ -10,7 +10,7 @@ import I18n from "../../../i18n";
 import { trackPNShowF24 } from "../analytics";
 import { UIAttachment } from "../../messages/types";
 import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
-import { MessageAttachments } from "../../messages/components/MessageAttachments";
+import { MessageAttachments } from "./MessageAttachments";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 
 type Props = {

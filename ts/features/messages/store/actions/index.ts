@@ -238,6 +238,10 @@ export const cancelPreviousAttachmentDownload = createAction(
   "CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD"
 );
 
+export const clearRequestedAttachmentDownload = createAction(
+  "CLEAR_REQUESTED_ATTACHMNET_DOWNLOAD"
+);
+
 /**
  * This action removes any cached data in order to perform another download.
  */
@@ -258,6 +262,7 @@ export type MessagesActions = ActionType<
   | typeof loadThirdPartyMessage
   | typeof downloadAttachment
   | typeof cancelPreviousAttachmentDownload
+  | typeof clearRequestedAttachmentDownload
   | typeof removeCachedAttachment
   | typeof getMessagePrecondition
   | typeof clearMessagePrecondition

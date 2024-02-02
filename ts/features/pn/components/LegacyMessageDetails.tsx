@@ -17,7 +17,7 @@ import { useIOSelector } from "../../../store/hooks";
 import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
 import { UIAttachment, UIMessageId } from "../../messages/types";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { LegacyMessageAttachments } from "../../messages/components/LegacyMessageAttachments";
+import { LegacyMessageAttachments } from "../../messages/components/MessageDetail/LegacyMessageAttachments";
 import NavigationService from "../../../navigation/NavigationService";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";

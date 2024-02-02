@@ -16,7 +16,6 @@ import I18n from "../../../../i18n";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   messageMarkdownSelector,
@@ -38,6 +37,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
 import CtaBar from "./CtaBar";
 import { RemoteContentBanner } from "./RemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";

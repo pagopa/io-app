@@ -9,11 +9,11 @@ import {
   PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { ModuleAttachment } from "../../messages/components/ModuleAttachment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { LegacyModuleAttachment } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -96,7 +96,7 @@ export const DSModules = () => (
 const renderModuleAttachment = () => (
   <DSComponentViewerBox name="ModuleAttachment">
     <View>
-      <ModuleAttachment
+      <LegacyModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
         format="pdf"
@@ -104,27 +104,27 @@ const renderModuleAttachment = () => (
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
-      <ModuleAttachment
+      <LegacyModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
         format="pdf"
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
-      <ModuleAttachment
+      <LegacyModuleAttachment
         title="Nome del documento.pdf"
         format="pdf"
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
-      <ModuleAttachment
+      <LegacyModuleAttachment
         title={"This is a very loooooooooooooooooooooong title"}
         subtitle={"This is a very loooooooooooong subtitle"}
         format="pdf"
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
-      <ModuleAttachment
+      <LegacyModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
         format="pdf"
@@ -132,7 +132,7 @@ const renderModuleAttachment = () => (
         onPress={onButtonPress}
       />
       <VSpacer size={16} />
-      <ModuleAttachment
+      <LegacyModuleAttachment
         title="Nome del documento.pdf"
         subtitle="123 Kb"
         format="pdf"

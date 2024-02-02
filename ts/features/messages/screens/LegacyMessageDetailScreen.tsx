@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
@@ -52,11 +51,6 @@ const styles = StyleSheet.create({
   }
 });
 
-export type MessageDetailScreenNavigationParams = {
-  messageId: UIMessageId;
-  serviceId: ServiceId;
-};
-
 type OwnProps = IOStackNavigationRouteProps<
   MessagesParamsList,
   "MESSAGE_DETAIL"
@@ -80,7 +74,7 @@ const renderLoadingState = () => (
   </View>
 );
 
-const MessageDetailScreen = ({
+const LegacyMessageDetailScreen = ({
   goBack,
   hasPaidBadge,
   loadMessageDetails,
@@ -200,4 +194,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MessageDetailScreen);
+)(LegacyMessageDetailScreen);

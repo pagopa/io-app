@@ -7,12 +7,12 @@ import {
 } from "react-native";
 import { Divider, IOColors, Icon } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { H5 } from "../../../components/core/typography/H5";
-import I18n from "../../../i18n";
-import { UIAttachment } from "../types";
-import { ContentTypeValues } from "../types/contentType";
-import { formatByte } from "../types/digitalInformationUnit";
-import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
+import { H5 } from "../../../../components/core/typography/H5";
+import I18n from "../../../../i18n";
+import { UIAttachment } from "../../types";
+import { ContentTypeValues } from "../../types/contentType";
+import { formatByte } from "../../types/digitalInformationUnit";
+import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
 
 type PartialProps = {
   disabled?: boolean;
@@ -20,7 +20,7 @@ type PartialProps = {
   openPreview: (attachment: UIAttachment) => void;
 };
 
-type MessageAttachmentProps = {
+type LegacyMessageAttachmentProps = {
   attachment: UIAttachment;
 } & PartialProps;
 
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-const AttachmentIcon = (props: {
+const LegacyAttachmentIcon = (props: {
   contentType: UIAttachment["contentType"];
 }) => {
   switch (props.contentType) {
@@ -77,7 +77,7 @@ const AttachmentIcon = (props: {
  * @param props
  * @constructor
  */
-const AttachmentItem = (props: MessageAttachmentProps) => {
+const LegacyAttachmentItem = (props: LegacyMessageAttachmentProps) => {
   const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
     props.attachment,
     props.downloadAttachmentBeforePreview,
@@ -98,7 +98,7 @@ const AttachmentItem = (props: MessageAttachmentProps) => {
     >
       <View style={styles.row}>
         <View style={styles.icon}>
-          <AttachmentIcon contentType={props.attachment.contentType} />
+          <LegacyAttachmentIcon contentType={props.attachment.contentType} />
         </View>
         <View style={styles.middleSection}>
           <H5
@@ -142,7 +142,7 @@ export const LegacyMessageAttachments = ({
   <>
     {attachments.map((attachment, index) => (
       <View key={index} testID="MessageAttachmentContainer">
-        <AttachmentItem {...rest} attachment={attachment} />
+        <LegacyAttachmentItem {...rest} attachment={attachment} />
         {index < attachments.length - 1 && <Divider />}
       </View>
     ))}

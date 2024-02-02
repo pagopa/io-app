@@ -248,7 +248,7 @@ describe("downloadsReducer", () => {
       it("then it returns pot.loading", () => {
         expect(
           pot.isLoading(
-            afterRequestState[attachment.messageId][attachment.id] ?? pot.none
+            afterRequestState[attachment.messageId]?.[attachment.id] ?? pot.none
           )
         ).toBeTruthy();
       });
@@ -263,7 +263,7 @@ describe("downloadsReducer", () => {
                   attachment,
                   path
                 })
-              )[attachment.messageId][attachment.id] ?? pot.none
+              )[attachment.messageId]?.[attachment.id] ?? pot.none
             )
           ).toBeTruthy();
         });
@@ -279,7 +279,7 @@ describe("downloadsReducer", () => {
                   attachment,
                   error: new Error()
                 })
-              )[attachment.messageId][attachment.id] ?? pot.none
+              )[attachment.messageId]?.[attachment.id] ?? pot.none
             )
           ).toBeTruthy();
         });
@@ -302,7 +302,7 @@ describe("downloadsReducer", () => {
             downloadsReducer(
               initialState,
               removeCachedAttachment({ attachment, path })
-            )[attachment.messageId][attachment.id] ?? pot.none
+            )[attachment.messageId]?.[attachment.id] ?? pot.none
           )
         ).toBeTruthy();
       });
