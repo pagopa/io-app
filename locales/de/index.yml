@@ -1830,10 +1830,10 @@ messageDetails:
   sender: "Absender:"
   service: "Dienst:"
   question: "Ist etwas unklar?"
-  answer: "Wenn du dich über den Inhalt der Mitteilung im Unklaren bist, einen Fehler melden musst oder weitere Einzelheiten benötigst, kannst du dich direkt an die Ansprechpartner des Dienstes wenden und dabei die folgende Nachrichten-ID angeben."
+  answer: "Wenn du dich über den Inhalt der Mitteilung im Unklaren bist, einen Fehler melden möchtest oder weitere Einzelheiten benötigst, kannst du dich direkt an die Ansprechpartner des Dienstes wenden und dabei die folgende Nachrichten-ID angeben."
   call: "Anrufen"
   sendEmail: "Sende eine E-Mail"
-  write: "Schreibe uns"
+  write: "Schreib uns"
   id: "ID:"
   remoteContentError:
     title: "Die Details der Mitteilung konnten nicht abgerufen werden"
@@ -2336,7 +2336,7 @@ support:
     supportComponent:
       title: "Benötigst du Hilfe?"
       subtitle: "Wirf einen Blick in die FAQ: Wenn du die gesuchte Antwort nicht findest, erstelle ein Ticket. Wenn du bereits eine Ticket eröffnet hast und dessen Status überprüfen oder Details hinzufügen möchtest, wähle bitte “Offene Tickets”."
-      adviceMessage: "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontakte in der Nachricht oder in den Details des Dienstes."
+      adviceMessage: "Wenn dein Problem den Inhalt einer Nachricht oder den Dienst einer Körperschaft betrifft, wende dich bitte an die Körperschaft: du findest die entsprechenden Kontaktdaten in der Nachricht oder in den Details des Dienstes."
   panicMode:
     title: "Leider können wir dir zur Zeit nicht helfen"
     body: "Wir wissen, dass es ein Problem gibt, und wir arbeiten daran, es zu lösen. Wenn das Problem weiterhin besteht oder wenn du in einer anderen Angelegenheit Hilfe benötigst, versuche bitte, uns später erneut zu kontaktieren."
