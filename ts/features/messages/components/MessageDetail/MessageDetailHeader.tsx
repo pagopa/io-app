@@ -9,7 +9,7 @@ import {
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
-import { logoForService } from "../../../../utils/services";
+import { logosForService } from "../../../../utils/services";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 export type MessageDetailHeaderProps = PropsWithChildren<{
@@ -47,8 +47,9 @@ export const MessageDetailHeader = ({
     <Divider />
     {service && (
       <>
+        {/* TODO: update logoUri when MultiImage component will be available in DS */}
         <OrganizationHeader
-          logoUri={logoForService(service)}
+          logoUri={logosForService(service)[0]}
           organizationName={service.organization_name}
           serviceName={service.service_name}
         />
