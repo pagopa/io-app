@@ -1,13 +1,23 @@
-import { Content } from "native-base";
+import {
+  IOColors,
+  IOVisualCostants,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, SafeAreaView, StyleSheet, TextInput } from "react-native";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
-import { Label } from "../../components/core/typography/Label";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View
+} from "react-native";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { H5 } from "../../components/core/typography/H5";
 import WebviewComponent from "../../components/WebviewComponent";
+import { H5 } from "../../components/core/typography/H5";
+import { Label } from "../../components/core/typography/Label";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 
 const styles = StyleSheet.create({
   textInput: { padding: 1, borderWidth: 1, height: 30, color: IOColors.black },
@@ -28,7 +38,12 @@ const CgnLandingPlayground = () => {
   return (
     <BaseScreenComponent goBack={true}>
       <SafeAreaView style={IOStyles.flex}>
-        <Content contentContainerStyle={IOStyles.flex}>
+        <ScrollView
+          contentContainerStyle={[
+            { paddingHorizontal: IOVisualCostants.appMarginDefault },
+            IOStyles.flex
+          ]}
+        >
           <View>
             <H5>{"Link alla landing"}</H5>
             <TextInput
@@ -79,7 +94,7 @@ const CgnLandingPlayground = () => {
               />
             )}
           </View>
-        </Content>
+        </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
   );
