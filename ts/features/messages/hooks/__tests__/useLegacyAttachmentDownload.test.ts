@@ -1,5 +1,5 @@
 import { mockOtherAttachment } from "../../__mocks__/attachment";
-import { testableFunctions } from "../useAttachmentDownload";
+import { testableFunctions } from "../useLegacyAttachmentDownload";
 
 const path = "/tmp/path.pdf";
 

@@ -16,8 +16,8 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 
 const mockOpenPreview = jest.fn();
 
-jest.mock("../../../messages/hooks/useAttachmentDownload", () => ({
-  useAttachmentDownload: (
+jest.mock("../../../messages/hooks/useLegacyAttachmentDownload", () => ({
+  useLegacyAttachmentDownload: (
     _attachment: UIAttachment,
     _openPreview: (attachment: UIAttachment) => void
   ) => ({

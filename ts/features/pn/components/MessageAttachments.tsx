@@ -4,11 +4,11 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { VSpacer, WithTestID } from "@pagopa/io-app-design-system";
 import { UIAttachment } from "../../messages/types";
 import { ContentTypeValues } from "../../messages/types/contentType";
-import { useAttachmentDownload } from "../../messages/hooks/useAttachmentDownload";
 import {
   LegacyModuleAttachment,
   LegacyModuleAttachmentProps
 } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
+import { useLegacyAttachmentDownload } from "../../messages/hooks/useLegacyAttachmentDownload";
 
 type PartialProps = {
   downloadAttachmentBeforePreview?: boolean;
@@ -41,7 +41,7 @@ const AttachmentItem = ({
   openPreview,
   downloadAttachmentBeforePreview
 }: MessageAttachmentProps) => {
-  const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
+  const { downloadPot, onAttachmentSelect } = useLegacyAttachmentDownload(
     attachment,
     downloadAttachmentBeforePreview,
     openPreview

@@ -16,8 +16,8 @@ import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory"
 
 const mockedOnAttachmentSelect = jest.fn();
 
-jest.mock("../../../messages/hooks/useAttachmentDownload", () => ({
-  useAttachmentDownload: (
+jest.mock("../../../messages/hooks/useLegacyAttachmentDownload", () => ({
+  useLegacyAttachmentDownload: (
     _attachment: UIAttachment,
     _openPreview: (attachment: UIAttachment) => void
   ) => ({

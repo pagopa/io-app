@@ -12,7 +12,7 @@ import I18n from "../../../../i18n";
 import { UIAttachment } from "../../types";
 import { ContentTypeValues } from "../../types/contentType";
 import { formatByte } from "../../types/digitalInformationUnit";
-import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
+import { useLegacyAttachmentDownload } from "../../hooks/useLegacyAttachmentDownload";
 
 type PartialProps = {
   disabled?: boolean;
@@ -78,7 +78,7 @@ const LegacyAttachmentIcon = (props: {
  * @constructor
  */
 const LegacyAttachmentItem = (props: LegacyMessageAttachmentProps) => {
-  const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
+  const { downloadPot, onAttachmentSelect } = useLegacyAttachmentDownload(
     props.attachment,
     props.downloadAttachmentBeforePreview,
     props.openPreview

@@ -1,7 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import {
   clearRequestedAttachmentDownload,
@@ -115,22 +114,11 @@ export const downloadsReducer = (
 /**
  * From attachment to the download pot
  */
-export const downloadPotForMessageAttachmentSelector = createSelector(
-  [
-    (state: GlobalState) => state.entities.messages.downloads,
-    (
-      _: GlobalState,
-      attachment: { messageId: UIMessageId; id: UIAttachmentId }
-    ) => attachment
-  ],
-  (downloads, attachment): pot.Pot<Download, Error> => {
-    const download = downloads[attachment.messageId];
-    if (download) {
-      return download[attachment.id] ?? pot.none;
-    }
-    return pot.none;
-  }
-);
+export const downloadPotForMessageAttachmentSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  attachmentId: UIAttachmentId
+) => state.entities.messages.downloads[messageId]?.[attachmentId] ?? pot.none;
 
 export const isRequestedAttachmentDownloadSelector = (
   state: GlobalState,

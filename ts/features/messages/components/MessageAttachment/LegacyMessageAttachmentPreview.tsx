@@ -194,10 +194,7 @@ export const LegacyMessageAttachmentPreview = ({
   const attachment = props.attachment;
   const attachmentId = attachment.id;
   const downloadPot = useIOSelector(state =>
-    downloadPotForMessageAttachmentSelector(state, {
-      messageId,
-      id: attachmentId
-    })
+    downloadPotForMessageAttachmentSelector(state, messageId, attachmentId)
   );
   // This component handles the attachment blob download only if
   // it is a generic attachment (not a PN one, since that flow

@@ -107,6 +107,8 @@ export const toUIMessageDetails = (
   };
 };
 
+export const attachmentDisplayName = (attachment: ThirdPartyAttachment) =>
+  attachment.name ?? attachment.id;
 const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
   `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachmentUrl.replace(
     /^\//g, // note that attachmentUrl might contains a / at the beginning, so let's strip it

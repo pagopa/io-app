@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import { ScrollView } from "react-native";
 import { ContentWrapper } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { UIMessageId } from "../types";
@@ -31,8 +32,10 @@ export const MessageDetailsScreen = (
     supportRequest: true
   });
   return (
-    <ContentWrapper>
-      <MessageDetailsAttachments messageId={messageId} />
-    </ContentWrapper>
+    <ScrollView>
+      <ContentWrapper>
+        <MessageDetailsAttachments messageId={messageId} />
+      </ContentWrapper>
+    </ScrollView>
   );
 };
