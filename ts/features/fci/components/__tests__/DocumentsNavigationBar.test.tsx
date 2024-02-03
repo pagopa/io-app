@@ -1,6 +1,5 @@
 import * as React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
-import type { IOColors } from "@pagopa/io-app-design-system";
 import DocumentsNavigationBar, {
   IndicatorPositionEnum
 } from "../DocumentsNavigationBar";
@@ -8,8 +7,8 @@ import DocumentsNavigationBar, {
 type Props = {
   titleRight: string;
   titleLeft: string;
-  iconRightColor?: IOColors;
-  iconLeftColor?: IOColors;
+  iconRightDisabled?: boolean;
+  iconLeftDisabled?: boolean;
   disabled?: boolean;
   indicatorPosition: IndicatorPositionEnum;
   onPrevious: () => void;
@@ -21,8 +20,6 @@ describe("Test DocumentsNavigationBar component", () => {
     const props: Props = {
       titleRight: "Pagina 1 di 2",
       titleLeft: "Documento 1 di 2",
-      iconRightColor: "blue",
-      iconLeftColor: "blue",
       indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: jest.fn()
@@ -100,7 +97,7 @@ describe("Test DocumentsNavigationBar component", () => {
     const props: Props = {
       titleRight: "",
       titleLeft: "",
-      disabled: true,
+      iconRightDisabled: true,
       indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: onPress
@@ -121,7 +118,7 @@ describe("Test DocumentsNavigationBar component", () => {
     const props: Props = {
       titleRight: "",
       titleLeft: "",
-      disabled: true,
+      iconLeftDisabled: true,
       indicatorPosition: "left",
       onPrevious: jest.fn(),
       onNext: onPress
