@@ -2620,6 +2620,7 @@ bonus:
         conjunction: " and "
 features:
   messages:
+    attachmentDownloadFeedback: "Download in progress"
     attachments: "Attachments"
     loading:
       title: "Loading message details"

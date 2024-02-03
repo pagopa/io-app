@@ -4,6 +4,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessageId } from "../../types";
 import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
+import I18n from "../../../../i18n";
 import { ModuleAttachment } from "./ModuleAttachment";
 
 type MessageDetailsAttachmentItemProps = {
@@ -28,6 +29,9 @@ export const MessageDetailsAttachmentItem = ({
       <ModuleAttachment
         title={displayName}
         isFetching={isFetching}
+        fetchingAccessibilityLabel={I18n.t(
+          "features.messages.attachmentDownloadFeedback"
+        )}
         format={"pdf"}
         onPress={() => void onModuleAttachmentPress()}
       />

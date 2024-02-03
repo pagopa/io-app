@@ -206,7 +206,9 @@ export const ModuleAttachment = ({
   }
 
   const pressableAccessibilityLabel =
-    (isFetching ? fetchingAccessibilityLabel : accessibilityLabel) ?? title;
+    (isFetching && !!fetchingAccessibilityLabel
+      ? fetchingAccessibilityLabel
+      : accessibilityLabel) ?? title;
   return (
     <Pressable
       testID={testID}
