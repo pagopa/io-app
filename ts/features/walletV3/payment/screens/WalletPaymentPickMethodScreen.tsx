@@ -36,19 +36,24 @@ import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHa
 import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
+  walletPaymentCalculateFees,
   walletPaymentCreateTransaction,
-  walletPaymentGetUserWallets
+  walletPaymentGetUserWallets,
+  walletPaymentResetPspList
 } from "../store/actions/networking";
 import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
   walletPaymentAmountSelector,
   walletPaymentDetailsSelector,
+  walletPaymentPickedPaymentMethodSelector,
+  walletPaymentPspListSelector,
   walletPaymentSavedMethodByIdSelector,
   walletPaymentTransactionSelector,
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { Transfer } from "../../../../../definitions/pagopa/ecommerce/Transfer";
 
 type SavedMethodState = {
   kind: "saved";
@@ -86,6 +91,10 @@ const WalletPaymentPickMethodScreen = () => {
   const paymentMethodsPot = useIOSelector(walletPaymentAllMethodsSelector);
   const userWalletsPots = useIOSelector(walletPaymentUserWalletsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
+  const selectedWalletOption = useIOSelector(
+    walletPaymentPickedPaymentMethodSelector
+  );
+  const pspListPot = useIOSelector(walletPaymentPspListSelector);
   // const getGenericMethodById = useIOSelector(walletPaymentGenericMethodByIdSelector);
 
   const [waitingTransactionActivation, setWaitingTransactionActivation] =
@@ -95,24 +104,61 @@ const WalletPaymentPickMethodScreen = () => {
   // only when the transaction status becomes ACTIVATED.
   useOnTransactionActivationEffect(
     React.useCallback(() => {
+      pipe(
+        sequenceT(O.Monad)(
+          pot.toOption(paymentAmountPot),
+          pot.toOption(transactionPot),
+          selectedWalletOption
+        ),
+        O.map(([paymentAmountInCents, transaction, selectedWallet]) => {
+          const transferList = transaction.payments.reduce(
+            (a, p) => [...a, ...(p.transferList ?? [])],
+            [] as ReadonlyArray<Transfer>
+          );
+          const paymentToken = transaction.payments[0]?.paymentToken;
+
+          dispatch(
+            walletPaymentCalculateFees.request({
+              paymentToken,
+              paymentMethodId: selectedWallet.paymentMethodId,
+              walletId: selectedWallet.walletId,
+              paymentAmount: paymentAmountInCents,
+              transferList
+            })
+          );
+        })
+      );
+      setWaitingTransactionActivation(false);
+    }, [dispatch, paymentAmountPot, selectedWalletOption, transactionPot])
+  );
+
+  React.useEffect(() => {
+    const pspList = pot.getOrElse(pspListPot, []);
+    if (pspList.length > 1) {
       navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
         screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
       });
-      setWaitingTransactionActivation(false);
-    }, [navigation])
-  );
+    } else if (pspList.length >= 1) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM
+      });
+    }
+  }, [navigation, pspListPot]);
 
   const alertRef = React.useRef<View>(null);
 
   const isLoading =
     pot.isLoading(paymentMethodsPot) || pot.isLoading(userWalletsPots);
   const isLoadingTransaction =
-    pot.isLoading(transactionPot) || waitingTransactionActivation;
+    pot.isLoading(transactionPot) ||
+    waitingTransactionActivation ||
+    pot.isLoading(pspListPot);
 
   const isError =
     pot.isError(transactionPot) ||
     pot.isError(paymentMethodsPot) ||
-    pot.isError(userWalletsPots);
+    pot.isError(userWalletsPots) ||
+    pot.isError(pspListPot);
 
   const [shouldShowWarningBanner, setShouldShowWarningBanner] =
     React.useState<boolean>(false);
@@ -124,6 +170,7 @@ const WalletPaymentPickMethodScreen = () => {
       // currently we do not allow onboarding new methods in payment flow
       // dispatch(walletPaymentGetAllMethods.request());
       dispatch(walletPaymentGetUserWallets.request());
+      dispatch(walletPaymentResetPspList());
     }, [dispatch])
   );
 
