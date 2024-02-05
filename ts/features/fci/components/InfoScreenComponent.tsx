@@ -1,13 +1,10 @@
 import * as React from "react";
 import { Linking, StyleSheet, Text, View } from "react-native";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Body, H2, LabelLink, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import themeVariables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
-import { Body } from "../../../components/core/typography/Body";
-import { H2 } from "../../../components/core/typography/H2";
-import { Link } from "../../../components/core/typography/Link";
 
 type Props = {
   image: React.ReactNode;
@@ -38,9 +35,9 @@ const renderNode = (body: string | React.ReactNode, email?: EmailString) => {
           {email && <> </>}
         </Body>
         {email && (
-          <Link onPress={() => Linking.openURL(`mailto:${email}`)}>
+          <LabelLink onPress={() => Linking.openURL(`mailto:${email}`)}>
             {email}
-          </Link>
+          </LabelLink>
         )}
       </>
     );
