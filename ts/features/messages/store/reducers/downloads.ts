@@ -153,10 +153,15 @@ export const hasErrorOccourredOnRequestedDownloadSelector = (
     state.entities.messages.downloads[messageId],
     O.fromNullable,
     O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
-    O.filter(() => isRequestedDownloadMatch(state.entities.messages.downloads.requestedDownload, messageId, attachmentId)),
+    O.filter(() =>
+      isRequestedDownloadMatch(
+        state.entities.messages.downloads.requestedDownload,
+        messageId,
+        attachmentId
+      )
+    ),
     O.getOrElseW(() => pot.none),
-    downloadPot => pot.isError(downloadPot) && !pot.isSome(downloadPot),
-
+    downloadPot => pot.isError(downloadPot) && !pot.isSome(downloadPot)
   );
 
 export const downloadedMessageAttachmentSelector = (

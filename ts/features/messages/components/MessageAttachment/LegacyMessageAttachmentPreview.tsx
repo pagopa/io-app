@@ -237,7 +237,7 @@ export const LegacyMessageAttachmentPreview = ({
       dispatch(
         downloadAttachment.request({
           ...attachment,
-          skipMixpanelTrackingOnFailure: true
+          skipMixpanelTrackingOnFailure: false
         })
       );
     } else if (

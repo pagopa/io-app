@@ -153,7 +153,7 @@ export const useLegacyAttachmentDownload = (
         dispatch(
           downloadAttachment.request({
             ...attachment,
-            skipMixpanelTrackingOnFailure: false
+            skipMixpanelTrackingOnFailure: true
           })
         );
       }),

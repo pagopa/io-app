@@ -90,7 +90,7 @@ export const useAttachmentDownload = (
         downloadAttachment.request({
           ...uiAttachment,
           messageId,
-          skipMixpanelTrackingOnFailure: false
+          skipMixpanelTrackingOnFailure: isPN
         })
       );
     }
