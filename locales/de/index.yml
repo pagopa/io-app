@@ -2332,7 +2332,7 @@ support:
   helpCenter:
     header: "Hilfe"
     cta:
-      contactSupport: "Erstelle ein Ticket"
+      contactSupport: "Ticket erstellen"
       seeReports: "Offene Tickets"
     supportComponent:
       title: "Benötigst du Hilfe?"
