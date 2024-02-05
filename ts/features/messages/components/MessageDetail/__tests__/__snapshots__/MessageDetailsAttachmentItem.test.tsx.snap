@@ -318,6 +318,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                       onStartShouldSetResponder={[Function]}
                     >
                       <View
+                        accessibilityElementsHidden={true}
+                        importantForAccessibility="no-hide-descendants"
                         style={
                           Array [
                             Object {
@@ -786,6 +788,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                       onStartShouldSetResponder={[Function]}
                     >
                       <View
+                        accessibilityElementsHidden={true}
+                        importantForAccessibility="no-hide-descendants"
                         style={
                           Array [
                             Object {
@@ -1305,6 +1309,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                       onStartShouldSetResponder={[Function]}
                     >
                       <View
+                        accessibilityElementsHidden={true}
+                        importantForAccessibility="no-hide-descendants"
                         style={
                           Array [
                             Object {
@@ -1831,6 +1837,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                       onStartShouldSetResponder={[Function]}
                     >
                       <View
+                        accessibilityElementsHidden={true}
+                        importantForAccessibility="no-hide-descendants"
                         style={
                           Array [
                             Object {
