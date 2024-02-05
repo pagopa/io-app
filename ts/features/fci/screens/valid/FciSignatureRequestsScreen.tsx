@@ -1,8 +1,7 @@
 import * as React from "react";
-import { SafeAreaView, View, SectionList } from "react-native";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import ScreenContent from "../../../../components/screens/ScreenContent";
+import { SectionList, ScrollView } from "react-native";
+import { H2, IOStyles } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
@@ -24,6 +23,8 @@ import {
 } from "../../../zendesk/store/actions";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
 import { SignatureRequestListView } from "../../../../../definitions/fci/SignatureRequestListView";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciSignatureRequestsScreen = () => {
   const dispatch = useIODispatch();
@@ -62,6 +63,12 @@ const FciSignatureRequestsScreen = () => {
     dispatch(fciSignaturesListRequest.request());
   }, [dispatch]);
 
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.requests.header"),
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   const renderSignatureRequests = () => (
     <SectionList
       sections={dataItems.map(item => ({
@@ -82,18 +89,14 @@ const FciSignatureRequestsScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={dataItems === undefined}>
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={I18n.t("features.fci.requests.header")}
-      >
-        <SafeAreaView style={IOStyles.flex}>
-          <ScreenContent title={I18n.t("features.fci.requests.title")}>
-            <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-              {renderSignatureRequests()}
-            </View>
-          </ScreenContent>
+      <>
+        <SafeAreaView style={IOStyles.flex} edges={["bottom", "left", "right"]}>
+          <ScrollView style={IOStyles.horizontalContentPadding}>
+            <H2>{I18n.t("features.fci.requests.title")}</H2>
+            {renderSignatureRequests()}
+          </ScrollView>
         </SafeAreaView>
-      </BaseScreenComponent>
+      </>
     </LoadingSpinnerOverlay>
   );
 };

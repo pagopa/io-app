@@ -542,7 +542,7 @@ PODS:
     - React-Core
   - RNSVG (12.3.0):
     - React-Core
-  - RNZendeskChat (0.3.23):
+  - RNZendeskChat (0.3.28):
     - React
     - ZendeskAnswerBotSDK (~> 3.0.0)
     - ZendeskChatSDK (~> 3.0.0)
@@ -687,7 +687,7 @@ DEPENDENCIES:
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
+  - "RNZendeskChat (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -892,7 +892,7 @@ EXTERNAL SOURCES:
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNZendeskChat:
-    :path: "../node_modules/io-react-native-zendesk"
+    :path: "../node_modules/@pagopa/io-react-native-zendesk"
   vision-camera-code-scanner:
     :path: "../node_modules/vision-camera-code-scanner"
   VisionCamera:
@@ -1005,7 +1005,7 @@ SPEC CHECKSUMS:
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
-  RNZendeskChat: 338c369def4e1552a533d9d34155b4b491aaf3d7
+  RNZendeskChat: 10c0a1f6a97665eab8319b4d543535a8ac199944
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: 5fc30ecebdfd0335d11123ec9511dcbc27ee4046
