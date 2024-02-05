@@ -1,6 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 
 /**
  * Action to initialize the state of a payment, optionally you can specify the route to go back to
