@@ -153,13 +153,7 @@ export const hasErrorOccourredOnRequestedDownloadSelector = (
     state.entities.messages.downloads[messageId],
     O.fromNullable,
     O.chainNullableK(messageDownloads => messageDownloads[attachmentId]),
-    O.filter(() =>
-      isRequestedDownloadMatch(
-        state.entities.messages.downloads.requestedDownload,
-        messageId,
-        attachmentId
-      )
-    ),
+    O.filter(() => isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)),
     O.getOrElseW(() => pot.none),
     downloadPot => pot.isError(downloadPot) && !pot.isSome(downloadPot)
   );
