@@ -1,4 +1,5 @@
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { CalculateFeeResponse } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
@@ -196,6 +197,8 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
         walletPaymentCalculateFees.request(calculateFeesPayload)
       )
       .next(E.right({ status: 200, value: calculateFeesResponse }))
+      .next()
+      .select(() => O.none)
       .next()
       .put(walletPaymentPickPsp(calculateFeesResponse.bundles[1]))
       .next()
