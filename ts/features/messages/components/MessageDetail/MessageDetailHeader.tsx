@@ -1,9 +1,16 @@
-import { Divider, H3, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
 import React, { PropsWithChildren } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  ContentWrapper,
+  Divider,
+  H3,
+  LabelSmall,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { localeDateFormat } from "../../../../utils/locale";
 import I18n from "../../../../i18n";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { logosForService } from "../../../../utils/services";
+import { OrganizationHeader } from "./OrganizationHeader";
 
 export type MessageDetailHeaderProps = PropsWithChildren<{
   createdAt: Date;
@@ -11,12 +18,6 @@ export type MessageDetailHeaderProps = PropsWithChildren<{
   sender?: string;
   service?: ServicePublic;
 }>;
-
-const styles = StyleSheet.create({
-  header: {
-    paddingHorizontal: 24
-  }
-});
 
 const MessageHeaderContent = ({
   subject,
@@ -36,13 +37,24 @@ const MessageHeaderContent = ({
 
 export const MessageDetailHeader = ({
   children,
+  service,
   ...rest
 }: MessageDetailHeaderProps) => (
-  <View style={styles.header}>
+  <ContentWrapper>
     {children}
     <MessageHeaderContent {...rest} />
     <VSpacer size={8} />
     <Divider />
-    {/* TODO: Add MessageHeaderService */}
-  </View>
+    {service && (
+      <>
+        {/* TODO: update logoUri when MultiImage component will be available in DS */}
+        <OrganizationHeader
+          logoUri={logosForService(service)[0]}
+          organizationName={service.organization_name}
+          serviceName={service.service_name}
+        />
+        <Divider />
+      </>
+    )}
+  </ContentWrapper>
 );

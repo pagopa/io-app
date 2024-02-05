@@ -1,10 +1,13 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { IOColors, Icon, HSpacer } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { H4 } from "../../../components/core/typography/H4";
-import { WithTestID } from "../../../types/WithTestID";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
+import {
+  IOColors,
+  HSpacer,
+  H6,
+  IOStyles,
+  IconButton,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,13 +16,7 @@ const styles = StyleSheet.create({
     borderColor: IOColors.bluegreyLight,
     alignItems: "center",
     paddingTop: 12,
-    paddingBottom: 12
-  },
-  button: {
-    paddingLeft: 8,
-    paddingRight: 8,
-    paddingBottom: 0,
-    paddingTop: 0
+    paddingBottom: 14
   },
   shadow: {
     // iOS
@@ -43,8 +40,8 @@ export type IndicatorPositionEnum = "left" | "right";
 type Props = WithTestID<{
   titleRight: string;
   titleLeft: string;
-  iconRightColor?: IOColors;
-  iconLeftColor?: IOColors;
+  iconRightDisabled?: boolean;
+  iconLeftDisabled?: boolean;
   disabled?: boolean;
   indicatorPosition: IndicatorPositionEnum;
   onPrevious: () => void;
@@ -52,41 +49,29 @@ type Props = WithTestID<{
 }>;
 
 const renderNavigationComponent = (
-  { onPrevious, onNext, disabled, iconLeftColor, iconRightColor }: Props,
+  { onPrevious, onNext, iconLeftDisabled, iconRightDisabled }: Props,
   title: string
 ) => (
   <>
     {/* button left */}
-    <ButtonDefaultOpacity
+    <IconButton
       onPress={onPrevious}
-      transparent={true}
-      style={styles.button}
-      disabled={disabled}
+      disabled={iconLeftDisabled}
       testID={"DocumentsNavigationBarLeftButtonTestID"}
-    >
-      <Icon
-        name="chevronLeft"
-        size={24}
-        color={iconLeftColor ?? "blue"}
-        accessible={true}
-      />
-    </ButtonDefaultOpacity>
-    <H4>{title}</H4>
+      icon="chevronLeft"
+      iconSize={24}
+      accessibilityLabel="previous"
+    />
+    <H6>{title}</H6>
     {/* button right */}
-    <ButtonDefaultOpacity
+    <IconButton
       onPress={onNext}
-      transparent={true}
-      style={styles.button}
-      disabled={disabled}
+      disabled={iconRightDisabled}
       testID={"DocumentsNavigationBarRightButtonTestID"}
-    >
-      <Icon
-        name="chevronRight"
-        size={24}
-        color={iconRightColor ?? "blue"}
-        accessible={true}
-      />
-    </ButtonDefaultOpacity>
+      icon="chevronRight"
+      iconSize={24}
+      accessibilityLabel="next"
+    />
   </>
 );
 
@@ -101,13 +86,13 @@ const DocumentsNavigationBar = (props: Props) => (
       <>
         {renderNavigationComponent(props, props.titleLeft)}
         <View style={{ flex: 1 }} />
-        <H4 style={IOStyles.horizontalContentPadding}>{props.titleRight}</H4>
+        <H6 style={IOStyles.horizontalContentPadding}>{props.titleRight}</H6>
       </>
     )}
     {props.indicatorPosition === "right" && (
       <>
         <HSpacer />
-        <H4>{props.titleLeft}</H4>
+        <H6>{props.titleLeft}</H6>
         <View style={{ flex: 1 }} />
         {renderNavigationComponent(props, props.titleRight)}
         <HSpacer />
