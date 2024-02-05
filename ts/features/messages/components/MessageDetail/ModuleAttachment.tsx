@@ -227,6 +227,8 @@ export const ModuleAttachment = ({
           animatedStyle,
           { opacity: disabled ? DISABLED_OPACITY : 1 }
         ]}
+        accessibilityElementsHidden={true}
+        importantForAccessibility="no-hide-descendants"
       >
         <ModuleAttachmentContent
           isFetching={isFetching}
