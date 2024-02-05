@@ -2285,14 +2285,14 @@ features:
         activated: "Vielen Dank, der Dienst ist aktiv!"
         error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
     details:
-      title: "Details der Mitteilung"
+      title: "Details der Zustellung"
       noticeCode: "Zahlungskodex"
       loadError:
         title: "Etwas ist schief gelaufen"
         body: "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
       cancelledMessage:
-        body: "Dieser Bescheid wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
-        unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
+        body: "Diese Zustellung wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
+        unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit dieser Zustellung wende dich bitte an den Absender."
         payments: "Zahlungen"
       paymentSection:
         title: "pagoPA Zahlungsaufforderungen"
@@ -2302,15 +2302,15 @@ features:
         title: "Anhänge"
       f24Section:
         title: "F24-Formulare"
-        description: "Wenn du es vorziehst, kannst du diesen Bescheid über F24 bezahlen."
+        description: "Wenn du es vorziehst, kannst du diese Zustellung über F24 bezahlen."
         showAll: "F24-Formulare anzeigen"
         bottomSheet:
           title: "Beiliegende F24-Formulare"
       infoSection:
-        title: "Informationen zum Bescheid"
+        title: "Informationen zur Zustellung"
         iun: "IUN-Code"
       timeline:
-        title: "STATUS DES BESCHEIDS"
+        title: "STATUS DER ZUSTELLUNG"
         status:
           DELIVERED: "Zugestellt"
           DELIVERING: "In Zustellung"
