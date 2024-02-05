@@ -9,6 +9,7 @@ import nodeFetch from "node-fetch";
 import { NativeModules } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockRNCameraRoll from "@react-native-camera-roll/camera-roll/src/__mocks__/nativeInterface";
+import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 
 // eslint-disable-next-line functional/immutable-data
 NativeModules.RNGestureHandlerModule = {
@@ -21,6 +22,7 @@ NativeModules.RNGestureHandlerModule = {
   Directions: {}
 };
 
+jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", jest.fn());
 jest.mock("@react-native-cookies/cookies", jest.fn());

@@ -213,11 +213,6 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     <BaseScreenComponent
       goBack={false}
       accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-      contextualHelpMarkdown={{
-        title: "email.validate.title",
-        body: "email.validate.help"
-      }}
-      headerTitle={I18n.t("email.newinsert.header")}
     >
       <SafeAreaView style={IOStyles.flex}>
         <VSpacer size={40} />
