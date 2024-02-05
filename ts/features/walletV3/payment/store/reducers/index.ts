@@ -8,7 +8,7 @@ import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import NavigationService from "../../../../../navigation/NavigationService";

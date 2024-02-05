@@ -10,7 +10,7 @@ import { RequestAuthorizationResponse } from "../../../../../../definitions/pago
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/failure";
 
