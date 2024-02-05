@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Body,
   GradientScrollView,
@@ -26,6 +27,8 @@ import {
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { WalletPaymentTotalAmount } from "./WalletPaymentTotalAmount";
+import { useIOSelector } from "../../../../store/hooks";
+import { walletPaymentPspListSelector } from "../store/selectors";
 
 export type WalletPaymentConfirmContentProps = {
   paymentMethodDetails: UIWalletInfoDetails;
@@ -43,6 +46,10 @@ export const WalletPaymentConfirmContent = ({
   onConfirm
 }: WalletPaymentConfirmContentProps) => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+
+  const pspListPot = useIOSelector(walletPaymentPspListSelector);
+
+  const pspList = pot.getOrElse(pspListPot, []);
 
   const taxFee = selectedPsp.taxPayerFee ?? 0;
 
@@ -89,7 +96,9 @@ export const WalletPaymentConfirmContent = ({
         iconName="psp"
       />
       <ModuleCheckout
-        ctaText={I18n.t("payment.confirm.editButton")}
+        ctaText={
+          pspList.length > 1 ? I18n.t("payment.confirm.editButton") : undefined
+        }
         title={formatNumberCentsToAmount(taxFee, true, "right")}
         subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${
           selectedPsp.bundleName
