@@ -19,7 +19,7 @@ import { capitalize } from "lodash";
 import React, { useEffect, useMemo } from "react";
 import { View } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {

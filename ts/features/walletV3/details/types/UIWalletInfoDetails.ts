@@ -3,7 +3,7 @@ import {
   WalletInfoDetails1,
   WalletInfoDetails2,
   WalletInfoDetails3
-} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
+} from "../../../../../definitions/pagopa/ecommerce/WalletInfoDetails";
 
 /**
  * Transforms all required props from WalletInfoDetails1 to partial
