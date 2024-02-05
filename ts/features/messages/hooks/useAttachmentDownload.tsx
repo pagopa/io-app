@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   downloadedMessageAttachmentSelector,
+  hasErrorOccourredOnRequestedDownloadSelector,
   isDownloadingMessageAttachmentSelector,
   isRequestedAttachmentDownloadSelector
 } from "../store/reducers/downloads";
@@ -20,10 +21,15 @@ import {
   attachmentDisplayName,
   attachmentFromThirdPartyMessage
 } from "../store/reducers/transformers";
+import I18n from "../../../i18n";
+import { IOToast } from "../../../components/Toast";
+import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
+import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 
 export const useAttachmentDownload = (
   messageId: UIMessageId,
   attachment: ThirdPartyAttachment,
+  isPN: boolean,
   serviceId?: ServiceId
 ) => {
   const attachmentId = attachment.id;
@@ -66,6 +72,10 @@ export const useAttachmentDownload = (
       return;
     }
 
+    if (!isPN) {
+      trackThirdPartyMessageAttachmentShowPreview();
+    }
+
     // Make sure to cancel whatever download may already be running
     dispatch(cancelPreviousAttachmentDownload());
 
@@ -84,7 +94,7 @@ export const useAttachmentDownload = (
         })
       );
     }
-  }, [attachment, dispatch, isFetching, download, doNavigate, messageId]);
+  }, [attachment, dispatch, download, doNavigate, isFetching, isPN, messageId]);
 
   useEffect(() => {
     const state = store.getState();
@@ -93,13 +103,31 @@ export const useAttachmentDownload = (
       isRequestedAttachmentDownloadSelector(state, messageId, attachmentId)
     ) {
       void checkPathAndNavigate(download.path);
+    } else if (
+      hasErrorOccourredOnRequestedDownloadSelector(
+        state,
+        messageId,
+        attachmentId
+      )
+    ) {
+      dispatch(clearRequestedAttachmentDownload());
+      if (isPN) {
+        const uiAttachment = attachmentFromThirdPartyMessage(
+          messageId,
+          attachment
+        );
+        trackPNAttachmentDownloadFailure(uiAttachment.category);
+      }
+      IOToast.error(I18n.t("messageDetails.attachments.failing.details"));
     }
   }, [
+    attachment,
     attachmentId,
     checkPathAndNavigate,
     dispatch,
     doNavigate,
     download,
+    isPN,
     messageId,
     store
   ]);

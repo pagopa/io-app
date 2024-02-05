@@ -21,9 +21,7 @@ export const MessageDetailsAttachmentItem = ({
   serviceId
 }: MessageDetailsAttachmentItemProps) => {
   const { displayName, isFetching, onModuleAttachmentPress } =
-    useAttachmentDownload(messageId, attachment, serviceId);
-
-  // TODO fetching accessibility label
+    useAttachmentDownload(messageId, attachment, false, serviceId);
   return (
     <>
       <ModuleAttachment
