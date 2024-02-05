@@ -28,10 +28,16 @@ export const fciLinkingOptions: PathConfigMap = {
 export const FciStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={FCI_ROUTES.ROUTER}
-    headerMode={"none"}
+    headerMode={"screen"}
     screenOptions={{ gestureEnabled: isGestureEnabled }}
   >
-    <Stack.Screen name={FCI_ROUTES.ROUTER} component={FciRouterScreen} />
+    <Stack.Screen
+      name={FCI_ROUTES.ROUTER}
+      component={FciRouterScreen}
+      options={{
+        headerShown: false
+      }}
+    />
     <Stack.Screen name={FCI_ROUTES.DOCUMENTS} component={FciDocumentsScreen} />
     <Stack.Screen
       name={FCI_ROUTES.SIGNATURE_FIELDS}
@@ -42,7 +48,13 @@ export const FciStackNavigator = () => (
       component={FciDataSharingScreen}
     />
     <Stack.Screen name={FCI_ROUTES.QTSP_TOS} component={FciQtspClausesScreen} />
-    <Stack.Screen name={FCI_ROUTES.TYP} component={FciThankyouScreen} />
+    <Stack.Screen
+      name={FCI_ROUTES.TYP}
+      component={FciThankyouScreen}
+      options={{
+        headerShown: false
+      }}
+    />
     <Stack.Screen
       name={FCI_ROUTES.DOC_PREVIEW}
       component={FciDocumentPreviewScreen}

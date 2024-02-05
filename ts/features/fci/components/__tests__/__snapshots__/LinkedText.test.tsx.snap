@@ -2,45 +2,50 @@
 
 exports[`Test LinkedText component should render a LinkedText component with props correctly 1`] = `
 <Text
+  allowFontScaling={false}
   color="bluegreyDark"
+  defaultColor="bluegreyDark"
+  defaultWeight="SemiBold"
   font="TitilliumWeb"
   fontStyle={
     Object {
-      "fontSize": 16,
-      "lineHeight": 22,
+      "fontSize": 22,
+      "lineHeight": 30,
     }
   }
   style={
     Array [
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 22,
+        "lineHeight": 30,
       },
       Object {
         "color": "#17324D",
         "fontFamily": "Titillium Web",
         "fontStyle": "normal",
-        "fontWeight": "700",
+        "fontWeight": "600",
       },
     ]
   }
-  weight="Bold"
-  weightColorFactory={[Function]}
+  weight="SemiBold"
 >
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -51,22 +56,24 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   />
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -77,24 +84,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     C
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -105,24 +114,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     l
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -133,24 +144,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     a
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -161,24 +174,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     u
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -189,24 +204,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     s
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -217,24 +234,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     e
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -245,24 +264,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
      
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -273,24 +294,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     t
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -301,24 +324,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     i
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -329,24 +354,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     t
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -357,24 +384,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     l
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -385,24 +414,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     e
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -413,24 +444,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
      
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -441,24 +474,26 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   >
     1
   </Text>
   <Text
+    allowFontScaling={false}
     color="bluegreyDark"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
           "color": "#17324D",
@@ -469,7 +504,6 @@ exports[`Test LinkedText component should render a LinkedText component with pro
       ]
     }
     weight="Regular"
-    weightColorFactory={[Function]}
   />
 </Text>
 `;
