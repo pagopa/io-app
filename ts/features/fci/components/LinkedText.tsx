@@ -1,8 +1,6 @@
 import * as React from "react";
 import * as O from "fp-ts/lib/Option";
-import { H4 } from "../../../components/core/typography/H4";
-import { Link } from "../../../components/core/typography/Link";
-import { WithTestID } from "../../../types/WithTestID";
+import { H4, H6, LabelLink, WithTestID } from "@pagopa/io-app-design-system";
 
 type Props = WithTestID<{
   text: string;
@@ -65,14 +63,14 @@ const LinkedText = (props: Props) => {
       const textToBeLinked = splitted[1];
       const url = splitted[2];
       return (
-        <Link
+        <LabelLink
           key={index}
           onPress={() =>
             onPress(getOrReplaceTagWithLink(url, props.replacementUrl))
           }
         >
           {textToBeLinked}
-        </Link>
+        </LabelLink>
       );
     };
 
@@ -91,15 +89,15 @@ const LinkedText = (props: Props) => {
       {textWithSeparator.split("$@").map((text, index) =>
         O.isSome(O.fromNullable(arrayOfLinkedText[index])) ? (
           <>
-            <H4 weight={"Regular"} color={"bluegreyDark"}>
+            <H6 weight={"Regular"} color={"bluegreyDark"}>
               {text}
-            </H4>
+            </H6>
             {arrayOfLinkedText[index]}
           </>
         ) : (
-          <H4 weight={"Regular"} color={"bluegreyDark"}>
+          <H6 weight={"Regular"} color={"bluegreyDark"}>
             {text}
-          </H4>
+          </H6>
         )
       )}
     </H4>
