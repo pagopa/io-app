@@ -1,11 +1,17 @@
 import * as React from "react";
-import { SafeAreaView, FlatList, View } from "react-native";
+import { FlatList, View, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constNull } from "fp-ts/lib/function";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import {
+  Body,
+  ButtonSolidProps,
+  Divider,
+  FooterWithButtons,
+  H2,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -13,15 +19,12 @@ import {
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import customVariables from "../../../../theme/variables";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
-import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import {
   fciPollFilledDocumentErrorSelector,
   fciPollFilledDocumentReadySelector
@@ -34,10 +37,11 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
-import ScreenContent from "../../../../components/screens/ScreenContent";
 import { trackFciUxConversion } from "../../analytics";
+import LoadingComponent from "../../components/LoadingComponent";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -85,14 +89,11 @@ const FciQtspClausesScreen = () => {
     });
   };
 
-  const LoadingComponent = () => (
-    <LoadingErrorComponent
-      isLoading={true}
-      loadingCaption={""}
-      onRetry={constNull}
-      testID={"FciLoadingScreenTestID"}
-    />
-  );
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
 
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
@@ -105,7 +106,7 @@ const FciQtspClausesScreen = () => {
       />
     );
   } else if (!isPollFilledDocumentReady) {
-    return <LoadingComponent />;
+    return <LoadingComponent testID={"FciLoadingScreenTestID"} />;
   }
 
   const renderClausesFields = () => (
@@ -119,9 +120,7 @@ const FciQtspClausesScreen = () => {
         <FlatList
           data={qtspClausesSelector}
           keyExtractor={(_, index) => `${index}`}
-          ItemSeparatorComponent={() => (
-            <ItemSeparatorComponent noPadded={true} />
-          )}
+          ItemSeparatorComponent={() => <Divider />}
           renderItem={({ item }) => (
             <QtspClauseListItem
               clause={item}
@@ -135,7 +134,7 @@ const FciQtspClausesScreen = () => {
           )}
           ListFooterComponent={
             <>
-              <ItemSeparatorComponent noPadded={true} />
+              <Divider />
               <VSpacer size={24} />
               <LinkedText
                 text={qtspPrivacyTextSelector}
@@ -151,17 +150,13 @@ const FciQtspClausesScreen = () => {
     </View>
   );
 
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
+  const cancelButtonProps: ButtonSolidProps = {
     onPress: showAbort,
-    title: I18n.t("global.buttons.cancel")
+    label: I18n.t("global.buttons.cancel"),
+    accessibilityLabel: I18n.t("global.buttons.cancel")
   };
 
-  const continueButtonProps = {
-    block: true,
-    primary: true,
+  const continueButtonProps: ButtonSolidProps = {
     disabled: clausesChecked !== qtspClausesSelector.length,
     onPress: () => {
       if (isServiceActive) {
@@ -171,33 +166,32 @@ const FciQtspClausesScreen = () => {
         showCheckService();
       }
     },
-    title: I18n.t("global.buttons.continue")
+    label: I18n.t("global.buttons.continue"),
+    accessibilityLabel: I18n.t("global.buttons.continue")
   };
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("features.fci.signatureFields.title")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
-        <ScreenContent
-          title={I18n.t("features.fci.qtspTos.title")}
-          subtitle={I18n.t("features.fci.qtspTos.subTitle")}
-        >
-          <View style={[IOStyles.flex, IOStyles.horizontalContentPadding]}>
-            {renderClausesFields()}
-          </View>
-        </ScreenContent>
+    <>
+      <SafeAreaView
+        style={IOStyles.flex}
+        edges={["bottom", "left", "right"]}
+        testID={"FciQtspClausesTestID"}
+      >
+        <ScrollView style={IOStyles.horizontalContentPadding}>
+          <H2>{I18n.t("features.fci.qtspTos.title")}</H2>
+          <VSpacer size={16} />
+          <Body>{I18n.t("features.fci.qtspTos.subTitle")}</Body>
+          {renderClausesFields()}
+        </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
+          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+          secondary={{ type: "Solid", buttonProps: continueButtonProps }}
         />
       </SafeAreaView>
       {fciAbortSignature}
       {fciCheckService}
-    </BaseScreenComponent>
+    </>
   );
 };
 export default FciQtspClausesScreen;

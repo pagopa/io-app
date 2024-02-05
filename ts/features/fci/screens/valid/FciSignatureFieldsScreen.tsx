@@ -1,13 +1,21 @@
 import * as React from "react";
-import { View, SafeAreaView, SectionList, Platform } from "react-native";
+import { View, SectionList, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
-import { IconButton, IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import {
+  ButtonSolidProps,
+  FooterWithButtons,
+  H2,
+  H4,
+  IconButton,
+  IOColors,
+  IOStyles,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch } from "../../../../store/hooks";
@@ -18,9 +26,7 @@ import {
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import SignatureFieldItem from "../../components/SignatureFieldItem";
-import { H3 } from "../../../../components/core/typography/H3";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import {
@@ -39,7 +45,6 @@ import {
   getSectionListData,
   orderSignatureFields
 } from "../../utils/signatureFields";
-import ScreenContent from "../../../../components/screens/ScreenContent";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
@@ -49,6 +54,7 @@ import {
 } from "../../analytics";
 import { useFciSignatureFieldInfo } from "../../hooks/useFciSignatureFieldInfo";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -165,9 +171,9 @@ const FciSignatureFieldsScreen = () => {
           flexDirection: "row"
         }}
       >
-        <H3 color="bluegrey" style={IOStyles.flex}>
+        <H4 color="bluegrey" style={IOStyles.flex}>
           {clauseLabel}
-        </H3>
+        </H4>
 
         {/* 
           Show info icon and signature field info only for unfair clauses
@@ -190,7 +196,6 @@ const FciSignatureFieldsScreen = () => {
 
   const renderSignatureFields = () => (
     <SectionList
-      style={IOStyles.horizontalContentPadding}
       sections={getSectionListData(
         orderSignatureFields(signatureFieldsSelector)
       )}
@@ -216,17 +221,13 @@ const FciSignatureFieldsScreen = () => {
     />
   );
 
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
+  const cancelButtonProps: ButtonSolidProps = {
     onPress: present,
-    title: I18n.t("global.buttons.cancel")
+    label: I18n.t("global.buttons.cancel"),
+    accessibilityLabel: I18n.t("global.buttons.cancel")
   };
 
-  const continueButtonProps = {
-    block: true,
-    primary: true,
+  const continueButtonProps: ButtonSolidProps = {
     disabled: !isClausesChecked,
     onPress: () => {
       if (currentDoc < documentsSelector.length - 1) {
@@ -243,20 +244,21 @@ const FciSignatureFieldsScreen = () => {
         });
       }
     },
-    title:
+    accessibilityLabel:
+      currentDoc < documentsSelector.length - 1
+        ? I18n.t("global.buttons.continue")
+        : "Firma",
+    label:
       currentDoc < documentsSelector.length - 1
         ? I18n.t("global.buttons.continue")
         : "Firma"
   };
 
-  const customGoBack: React.ReactElement = (
-    <IconButton
-      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
-      color={"neutral"}
-      onPress={navigation.goBack}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-    />
-  );
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp
+  });
 
   if (isError) {
     return (
@@ -270,25 +272,25 @@ const FciSignatureFieldsScreen = () => {
   }
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      customGoBack={customGoBack}
-      headerTitle={I18n.t("features.fci.signatureFields.title")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
-        <ScreenContent title={I18n.t("features.fci.signatureFields.title")}>
+    <>
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"FciSignatureFieldsTestID"}
+        edges={["bottom", "left", "right"]}
+      >
+        <ScrollView style={IOStyles.horizontalContentPadding}>
+          <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
           <VSpacer size={32} />
           {renderSignatureFields()}
-        </ScreenContent>
+        </ScrollView>
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
+          secondary={{ type: "Solid", buttonProps: continueButtonProps }}
+          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
         />
       </SafeAreaView>
       {fciAbortSignature}
-    </BaseScreenComponent>
+    </>
   );
 };
 export default FciSignatureFieldsScreen;
