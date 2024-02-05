@@ -144,13 +144,10 @@ export const resetAssistanceData = () => {
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
 // help can be shown only when remote FF is  zendesk + local FF + emailValidated
-export const canShowHelp = (
-  assistanceTool: ToolEnum,
-  isEmailValidated: boolean
-): boolean => {
+export const canShowHelp = (assistanceTool: ToolEnum): boolean => {
   switch (assistanceTool) {
     case ToolEnum.zendesk:
-      return zendeskEnabled && isEmailValidated;
+      return zendeskEnabled;
     case ToolEnum.instabug:
     case ToolEnum.web:
     case ToolEnum.none:

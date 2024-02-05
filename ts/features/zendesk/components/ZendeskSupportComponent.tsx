@@ -18,7 +18,10 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import { profileSelector } from "../../../store/reducers/profile";
+import {
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../../store/reducers/profile";
 import { showToast } from "../../../utils/showToast";
 import { openWebUrl } from "../../../utils/url";
 import ZENDESK_ROUTES from "../navigation/routes";
@@ -48,6 +51,7 @@ const ZendeskSupportComponent = ({
   const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
 
   const handleContactSupportPress = React.useCallback(
     () =>
@@ -66,6 +70,8 @@ const ZendeskSupportComponent = ({
       zendeskRemoteConfig
     ]
   );
+
+  const showRequestSupportButtons = isEmailValidated || !pot.isSome(profile);
 
   return (
     <>
@@ -91,52 +97,56 @@ const ZendeskSupportComponent = ({
       </InfoBox>
       <VSpacer size={16} />
 
-      <ButtonDefaultOpacity
-        onPress={() => {
-          void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
-          if (O.isNone(maybeProfile)) {
-            navigation.navigate(ZENDESK_ROUTES.MAIN, {
-              screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-              params: {
-                assistanceForPayment,
-                assistanceForCard,
-                assistanceForFci
+      {showRequestSupportButtons && (
+        <>
+          <ButtonDefaultOpacity
+            onPress={() => {
+              void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
+              if (O.isNone(maybeProfile)) {
+                navigation.navigate(ZENDESK_ROUTES.MAIN, {
+                  screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
+                  params: {
+                    assistanceForPayment,
+                    assistanceForCard,
+                    assistanceForFci
+                  }
+                });
+              } else {
+                navigation.navigate(ZENDESK_ROUTES.MAIN, {
+                  screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
+                  params: {
+                    assistanceForPayment,
+                    assistanceForCard,
+                    assistanceForFci
+                  }
+                });
               }
-            });
-          } else {
-            navigation.navigate(ZENDESK_ROUTES.MAIN, {
-              screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-              params: {
-                assistanceForPayment,
-                assistanceForCard,
-                assistanceForFci
-              }
-            });
-          }
-        }}
-        style={{
-          alignSelf: "stretch"
-        }}
-        disabled={false}
-        bordered={true}
-        testID={"showTicketsButton"}
-      >
-        <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
-      </ButtonDefaultOpacity>
-      <VSpacer size={16} />
+            }}
+            style={{
+              alignSelf: "stretch"
+            }}
+            disabled={false}
+            bordered={true}
+            testID={"showTicketsButton"}
+          >
+            <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
+          </ButtonDefaultOpacity>
+          <VSpacer size={16} />
 
-      <ButtonDefaultOpacity
-        style={{
-          alignSelf: "stretch"
-        }}
-        onPress={handleContactSupportPress}
-        disabled={false}
-        testID={"contactSupportButton"}
-      >
-        <Label color={"white"}>
-          {I18n.t("support.helpCenter.cta.contactSupport")}
-        </Label>
-      </ButtonDefaultOpacity>
+          <ButtonDefaultOpacity
+            style={{
+              alignSelf: "stretch"
+            }}
+            onPress={handleContactSupportPress}
+            disabled={false}
+            testID={"contactSupportButton"}
+          >
+            <Label color={"white"}>
+              {I18n.t("support.helpCenter.cta.contactSupport")}
+            </Label>
+          </ButtonDefaultOpacity>
+        </>
+      )}
     </>
   );
 };
