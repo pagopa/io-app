@@ -2292,7 +2292,7 @@ features:
         body: "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
       cancelledMessage:
         body: "Diese Zustellung wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
-        unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit dieser Zustellung wende dich bitte an den Absender."
+        unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
         payments: "Zahlungen"
       paymentSection:
         title: "pagoPA Zahlungsaufforderungen"
@@ -2302,7 +2302,7 @@ features:
         title: "Anhänge"
       f24Section:
         title: "F24-Formulare"
-        description: "Wenn du es vorziehst, kannst du diese Zustellung über F24 bezahlen."
+        description: "Wenn du es vorziehst, kannst du diesen Bescheid über F24 bezahlen."
         showAll: "F24-Formulare anzeigen"
         bottomSheet:
           title: "Beiliegende F24-Formulare"
