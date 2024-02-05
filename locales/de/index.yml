@@ -2285,7 +2285,7 @@ features:
         activated: "Vielen Dank, der Dienst ist aktiv!"
         error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
     details:
-      title: "Details der Zustellung"
+      title: "Details der Mitteilung"
       noticeCode: "Zahlungskodex"
       loadError:
         title: "Etwas ist schief gelaufen"
