@@ -1,13 +1,21 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { mockPdfAttachment } from "../../../__mocks__/attachment";
-import { downloadAttachment, removeCachedAttachment } from "../../actions";
+import {
+  clearRequestedAttachmentDownload,
+  downloadAttachment,
+  removeCachedAttachment
+} from "../../actions";
 import {
   Download,
   DownloadError,
   Downloads,
   INITIAL_STATE,
+  downloadPotForMessageAttachmentSelector,
   downloadedMessageAttachmentSelector,
-  downloadsReducer
+  downloadsReducer,
+  hasErrorOccourredOnRequestedDownloadSelector,
+  isDownloadingMessageAttachmentSelector,
+  isRequestedAttachmentDownloadSelector
 } from "../downloads";
 import {
   UIAttachment,
@@ -16,6 +24,8 @@ import {
   WithSkipMixpanelTrackingOnFailure
 } from "../../../types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
 
 const path = "/path/attachment.pdf";
 
@@ -251,6 +261,13 @@ describe("downloadsReducer", () => {
             afterRequestState[attachment.messageId]?.[attachment.id] ?? pot.none
           )
         ).toBeTruthy();
+        expect(afterRequestState.requestedDownload).toBeDefined();
+        expect(afterRequestState.requestedDownload?.messageId).toBe(
+          attachment.messageId
+        );
+        expect(afterRequestState.requestedDownload?.attachmentId).toBe(
+          attachment.id
+        );
       });
 
       describe("and the request succeeds", () => {
@@ -266,6 +283,13 @@ describe("downloadsReducer", () => {
               )[attachment.messageId]?.[attachment.id] ?? pot.none
             )
           ).toBeTruthy();
+          expect(afterRequestState.requestedDownload).toBeDefined();
+          expect(afterRequestState.requestedDownload?.messageId).toBe(
+            attachment.messageId
+          );
+          expect(afterRequestState.requestedDownload?.attachmentId).toBe(
+            attachment.id
+          );
         });
       });
 
@@ -282,6 +306,13 @@ describe("downloadsReducer", () => {
               )[attachment.messageId]?.[attachment.id] ?? pot.none
             )
           ).toBeTruthy();
+          expect(afterRequestState.requestedDownload).toBeDefined();
+          expect(afterRequestState.requestedDownload?.messageId).toBe(
+            attachment.messageId
+          );
+          expect(afterRequestState.requestedDownload?.attachmentId).toBe(
+            attachment.id
+          );
         });
       });
     });
@@ -305,7 +336,660 @@ describe("downloadsReducer", () => {
             )[attachment.messageId]?.[attachment.id] ?? pot.none
           )
         ).toBeTruthy();
+        expect(initialState.requestedDownload).toBeUndefined();
       });
+    });
+  });
+
+  describe("given a downloading attachment", () => {
+    const attachment = mockPdfAttachment;
+    const initialState = downloadsReducer(
+      undefined,
+      downloadAttachment.request({
+        ...attachment,
+        skipMixpanelTrackingOnFailure: false
+      })
+    );
+
+    expect(initialState.requestedDownload).toBeDefined();
+    expect(initialState.requestedDownload?.messageId).toBe(
+      attachment.messageId
+    );
+    expect(initialState.requestedDownload?.attachmentId).toBe(attachment.id);
+
+    it("Should return pot.none and clear the requestedDownload after a downloadAttachment.cancel action", () => {
+      const cancelState = downloadsReducer(
+        initialState,
+        downloadAttachment.cancel({
+          ...attachment
+        })
+      );
+      const potNone = cancelState[attachment.messageId]?.[attachment.id];
+      expect(potNone).toBeDefined();
+      expect(pot.isNone(potNone!)).toBeTruthy();
+      expect(cancelState.requestedDownload).toBeUndefined();
+    });
+    it("Should clear the requestedDownload after a clearRequestedAttachmentDownload action", () => {
+      const cancelState = downloadsReducer(
+        initialState,
+        clearRequestedAttachmentDownload()
+      );
+      expect(cancelState.requestedDownload).toBeUndefined();
+    });
+  });
+
+  describe("isDownloadingMessageAttachmentSelector", () => {
+    it("should return false on initial state", () => {
+      const initialState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        initialState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isDownloadingMessage).toBeFalsy();
+    });
+    it("should return true on a matching download", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        initialState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isDownloadingMessage).toBeTruthy();
+    });
+    it("should return false on a messageId-unmatching download", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        initialState,
+        "01HNWPGF3TY9WQYGX5JYAW816W" as UIMessageId,
+        mockPdfAttachment.id
+      );
+      expect(isDownloadingMessage).toBeFalsy();
+    });
+    it("should return false on an attachmentId-unmatching download", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        initialState,
+        mockPdfAttachment.messageId,
+        "potato"
+      );
+      expect(isDownloadingMessage).toBeFalsy();
+    });
+    it("should return false on a successful downloaded attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const successState = appReducer(
+        initialState,
+        downloadAttachment.success({
+          attachment: mockPdfAttachment,
+          path: `file:///${mockPdfAttachment.id}.pdf`
+        })
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        successState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isDownloadingMessage).toBeFalsy();
+    });
+    it("should return false on a failed downloaded attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          error: new Error("")
+        })
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        failureState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isDownloadingMessage).toBeFalsy();
+    });
+    it("should return false on a cancelled downloaded attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const cancelledState = appReducer(
+        initialState,
+        downloadAttachment.cancel({
+          ...mockPdfAttachment
+        })
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        cancelledState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isDownloadingMessage).toBeFalsy();
+    });
+    it("should return true on a cleared stated", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const clearedState = appReducer(
+        initialState,
+        clearRequestedAttachmentDownload()
+      );
+      const isDownloadingMessage = isDownloadingMessageAttachmentSelector(
+        clearedState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isDownloadingMessage).toBeTruthy();
+    });
+  });
+
+  describe("hasErrorOccourredOnMessageAttachmentDownloadSelector", () => {
+    it("should return false on initial state", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+        initialState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isError).toBeFalsy();
+    });
+    it("should return false on a messageId-unmatching attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          error: new Error("")
+        })
+      );
+      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+        failureState,
+        "01HNWQ5YDG02JFGFH9523AC04Z" as UIMessageId,
+        mockPdfAttachment.id
+      );
+      expect(isError).toBeFalsy();
+    });
+    it("should return false on an attachmentId-unmatching attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          error: new Error("")
+        })
+      );
+      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+        failureState,
+        mockPdfAttachment.messageId,
+        "potato"
+      );
+      expect(isError).toBeFalsy();
+    });
+    it("should return true on a failed attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          error: new Error("")
+        })
+      );
+      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+        failureState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isError).toBeTruthy();
+    });
+    it("should return false on a successful attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.success({
+          attachment: mockPdfAttachment,
+          path: `file:///${mockPdfAttachment.id}.pdf`
+        })
+      );
+      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+        failureState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isError).toBeFalsy();
+    });
+    it("should return false on a cancelled attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.cancel({
+          ...mockPdfAttachment
+        })
+      );
+      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+        failureState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isError).toBeFalsy();
+    });
+    it("should return false on a failed attachment after clear state", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          error: new Error("")
+        })
+      );
+      const clearState = appReducer(
+        failureState,
+        clearRequestedAttachmentDownload()
+      );
+      const isError = hasErrorOccourredOnRequestedDownloadSelector(
+        clearState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(isError).toBeFalsy();
+    });
+  });
+
+  describe("downloadPotForMessageAttachmentSelector", () => {
+    it("should return pot.none on initial state", () => {
+      const initialState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        initialState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isNone(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.none on unmatching-messageId attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        initialState,
+        "01HNWR6BGZ3M8FN9Y61XS37K8C" as UIMessageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isNone(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.none on unmatching-attachmentId attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        initialState,
+        mockPdfAttachment.messageId,
+        "potato" as UIAttachmentId
+      );
+      expect(pot.isNone(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.loading on a requested attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        initialState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isLoading(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.some on a successful attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const successfulState = appReducer(
+        initialState,
+        downloadAttachment.success({
+          attachment: mockPdfAttachment,
+          path: `file:///${mockPdfAttachment.id}.pdf`
+        })
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        successfulState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isSome(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.error on a failed attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failureState = appReducer(
+        initialState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          error: new Error("")
+        })
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        failureState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isError(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.error on a cancelled attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const cancelledState = appReducer(
+        initialState,
+        downloadAttachment.cancel({
+          ...mockPdfAttachment
+        })
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        cancelledState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isNone(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.error on a removed cached attachment", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const cachedState = appReducer(
+        initialState,
+        removeCachedAttachment({
+          attachment: mockPdfAttachment,
+          path: `file:///${mockPdfAttachment.id}.pdf`
+        })
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        cachedState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isNone(downloadPot)).toBeTruthy();
+    });
+    it("should return pot.some on a downloading attachment after clear requested download", () => {
+      const initialState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const clearRequestedState = appReducer(
+        initialState,
+        clearRequestedAttachmentDownload()
+      );
+      const downloadPot = downloadPotForMessageAttachmentSelector(
+        clearRequestedState,
+        mockPdfAttachment.messageId,
+        mockPdfAttachment.id
+      );
+      expect(pot.isLoading(downloadPot)).toBeTruthy();
+    });
+  });
+
+  describe("isRequestedAttachmentDownloadSelector", () => {
+    it("should return false on initial state", () => {
+      const initialState = appReducer(
+        undefined,
+        applicationChangeState("active")
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          initialState,
+          mockPdfAttachment.messageId,
+          mockPdfAttachment.id
+        );
+      expect(isRequestedAttachmentDownload).toBeFalsy();
+    });
+    it("should return true on matching downloading attachment", () => {
+      const downloadingAttachmentState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          downloadingAttachmentState,
+          mockPdfAttachment.messageId,
+          mockPdfAttachment.id
+        );
+      expect(isRequestedAttachmentDownload).toBeTruthy();
+    });
+    it("should return false on an messageId-unmatching downloading attachment", () => {
+      const downloadingAttachmentState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          downloadingAttachmentState,
+          "01HNWNXS6G2Y86HEFQ3AYSQA1Q" as UIMessageId,
+          mockPdfAttachment.id
+        );
+      expect(isRequestedAttachmentDownload).toBeFalsy();
+    });
+    it("should return false on an attachmentId-unmatching downloading attachment", () => {
+      const downloadingAttachmentState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          downloadingAttachmentState,
+          mockPdfAttachment.messageId,
+          "potato"
+        );
+      expect(isRequestedAttachmentDownload).toBeFalsy();
+    });
+    it("should return true on successful downloaded attachment", () => {
+      const downloadingAttachmentState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const successfulDownloadState = appReducer(
+        downloadingAttachmentState,
+        downloadAttachment.success({
+          attachment: mockPdfAttachment,
+          path: `file:///${mockPdfAttachment.id}.pdf`
+        })
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          successfulDownloadState,
+          mockPdfAttachment.messageId,
+          mockPdfAttachment.id
+        );
+      expect(isRequestedAttachmentDownload).toBeTruthy();
+    });
+    it("should return true on failed downloaded attachment", () => {
+      const downloadingAttachmentState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const failedDownloadState = appReducer(
+        downloadingAttachmentState,
+        downloadAttachment.failure({
+          attachment: mockPdfAttachment,
+          error: new Error("")
+        })
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          failedDownloadState,
+          mockPdfAttachment.messageId,
+          mockPdfAttachment.id
+        );
+      expect(isRequestedAttachmentDownload).toBeTruthy();
+    });
+    it("should return false on matching cancelled attachment download", () => {
+      const downloadingAttachmentState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const cancelledDownloadState = appReducer(
+        downloadingAttachmentState,
+        downloadAttachment.cancel({
+          ...mockPdfAttachment
+        })
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          cancelledDownloadState,
+          mockPdfAttachment.messageId,
+          mockPdfAttachment.id
+        );
+      expect(isRequestedAttachmentDownload).toBeFalsy();
+    });
+    it("should return false on clear requested download", () => {
+      const downloadingAttachmentState = appReducer(
+        undefined,
+        downloadAttachment.request({
+          ...mockPdfAttachment,
+          skipMixpanelTrackingOnFailure: false
+        })
+      );
+      const clearRequestedDownloadState = appReducer(
+        downloadingAttachmentState,
+        clearRequestedAttachmentDownload()
+      );
+      const isRequestedAttachmentDownload =
+        isRequestedAttachmentDownloadSelector(
+          clearRequestedDownloadState,
+          mockPdfAttachment.messageId,
+          mockPdfAttachment.id
+        );
+      expect(isRequestedAttachmentDownload).toBeFalsy();
     });
   });
 });
