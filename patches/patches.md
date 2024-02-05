@@ -77,17 +77,18 @@ Updated on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### danger-plugin-digitalcitizenship+0.3.1
-Created on **06/08/2020**
-
-#### Reason:
-- Recognizes the ids of pivotal stories even if they are not at the beginning of the line
-
 ### react-native-push-notification+7.3.1
 Created on **10/05/2021**
 
 #### Reason:
 - Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
+
+Updated on **31/01/2024**
+
+#### Reason:
+- Adds a guard to prevent a crash on Android SDK 34 (Android 14) when using Exact Alarms without having requested user's permission first.
+  This works since we are not using local notifications anymore (and the library has to be replaced - since it is deprecated) and the
+  remote notifications do not trigger the Exact Alarms API.
 
 ### react-native-screen-brightness+2.0.0-alpha
 Created on **16/08/2021**
