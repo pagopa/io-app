@@ -16,7 +16,6 @@ import {
   ThirdPartyMessageDetails
 } from "../../../../../../definitions/backend/ThirdPartyMessage";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { intersection } from "lodash";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 
 describe("thirdPartyFromIdSelector", () => {
