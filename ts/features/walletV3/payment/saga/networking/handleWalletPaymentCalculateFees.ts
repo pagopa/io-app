@@ -77,6 +77,14 @@ export function* handleWalletPaymentCalculateFees(
         ) {
           yield* put(walletPaymentPickPsp(bundlesSortedByDefault[0]));
         }
+        if (bundlesSortedByDefault.length === 0) {
+          yield* put(
+            walletPaymentCalculateFees.failure({
+              ...getGenericError(new Error(`Error: The bundles list is empty`))
+            })
+          );
+          return;
+        }
         const sortedResponse: CalculateFeeResponse = {
           ...res.value,
           bundles: res.value.bundles

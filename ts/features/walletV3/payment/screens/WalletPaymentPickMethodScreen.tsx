@@ -133,15 +133,22 @@ const WalletPaymentPickMethodScreen = () => {
   );
 
   React.useEffect(() => {
-    const pspList = pot.getOrElse(pspListPot, []);
-    if (pspList.length > 1) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
-      });
-    } else if (pspList.length >= 1) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM
-      });
+    if (!pot.isLoading(pspListPot) && !pot.isError(pspListPot)) {
+      pipe(
+        pspListPot,
+        pot.toOption,
+        O.map(pspList => {
+          if (pspList.length > 1) {
+            navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+              screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
+            });
+          } else if (pspList.length >= 1) {
+            navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+              screen: WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM
+            });
+          }
+        })
+      );
     }
   }, [navigation, pspListPot]);
 
