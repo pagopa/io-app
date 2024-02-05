@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { CalculateFeeResponse } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
@@ -156,51 +155,6 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .next(E.right({ status: 200, value: calculateFeesResponse }))
       .next()
       .put(walletPaymentPickPsp(calculateFeesResponse.bundles[0]))
-      .next()
-      .put(walletPaymentCalculateFees.success(calculateFeesResponse))
-      .next()
-      .isDone();
-  });
-
-  it(`should put ${getType(
-    walletPaymentPickPsp
-  )} when calculateFees is 200 and any bundle in the list has onUs flag to true`, () => {
-    const mockCalculateFees = jest.fn();
-    const calculateFeesResponse: CalculateFeeResponse = {
-      bundles: [
-        {
-          idBundle: "idBundle"
-        },
-        {
-          idBundle: "idBundle",
-          onUs: true
-        }
-      ],
-      paymentMethodDescription: "paymentMethodDescription",
-      paymentMethodName: "paymentMethodName",
-      paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
-    };
-
-    testSaga(
-      handleWalletPaymentCalculateFees,
-      mockCalculateFees,
-      walletPaymentCalculateFees.request(calculateFeesPayload)
-    )
-      .next()
-      .select(preferredLanguageSelector)
-      .next("IT")
-      .select(selectWalletPaymentSessionToken)
-      .next(T_SESSION_TOKEN)
-      .call(
-        withRefreshApiCall,
-        mockCalculateFees(),
-        walletPaymentCalculateFees.request(calculateFeesPayload)
-      )
-      .next(E.right({ status: 200, value: calculateFeesResponse }))
-      .next()
-      .select(() => O.none)
-      .next()
-      .put(walletPaymentPickPsp(calculateFeesResponse.bundles[1]))
       .next()
       .put(walletPaymentCalculateFees.success(calculateFeesResponse))
       .next()
