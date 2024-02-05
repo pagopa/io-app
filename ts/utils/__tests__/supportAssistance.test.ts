@@ -30,13 +30,9 @@ describe("anonymousAssistanceAddress", () => {
 describe("canShowHelp", () => {
   it("if assistanceTool is Zendesk, should return true if the email is validated", () => {
     expect(canShowHelp(ToolEnum.zendesk)).toBeTruthy();
-    expect(canShowHelp(ToolEnum.zendesk)).toBeFalsy();
   });
   it("if assistanceTool is instabug, web or none, should return false", () => {
     expect(canShowHelp(ToolEnum.instabug)).toBeFalsy();
-    expect(canShowHelp(ToolEnum.instabug)).toBeFalsy();
-    expect(canShowHelp(ToolEnum.web)).toBeFalsy();
-    expect(canShowHelp(ToolEnum.none)).toBeFalsy();
     expect(canShowHelp(ToolEnum.web)).toBeFalsy();
     expect(canShowHelp(ToolEnum.none)).toBeFalsy();
   });
