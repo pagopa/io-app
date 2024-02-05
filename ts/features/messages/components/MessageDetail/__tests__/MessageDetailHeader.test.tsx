@@ -26,10 +26,22 @@ describe("MessageDetailHeader component", () => {
     const component = render(
       <MessageDetailHeader
         {...defaultProps}
-        sender="Sender"
+        sender="#### Sender ####"
         service={service}
       />
     );
     expect(component.toJSON()).toMatchSnapshot();
+  });
+
+  it("should render the organization info when the service is defined", () => {
+    const component = render(
+      <MessageDetailHeader
+        {...defaultProps}
+        sender="#### Sender ####"
+        service={service}
+      />
+    );
+    expect(component.queryByText(service.organization_name)).not.toBeNull();
+    expect(component.queryByText(service.service_name)).not.toBeNull();
   });
 });

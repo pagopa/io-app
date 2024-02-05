@@ -728,7 +728,6 @@ authentication:
       error_1001: "Access Denied: You are not of the minimum age required to use IO"
   expiredSessionBanner:
     title: Security notice
-    message: To keep your private information safe, please login again with your SPID credentials, thanks!
   unlock:
     title: Unlock access
     subtitlel2: In order to use the app, you must first unlock access to IO.
@@ -2571,174 +2570,6 @@ bonus:
           other: "{{seconds}} seconds"
   sv:
     headerTitle: "Sicilia Vola"
-    voucherGeneration:
-      acceptTos:
-        alert:
-          title: "Attention"
-          message: "We inform you that the information you enter constitutes in effect a self-certification. Any false declarations will be punishable under the d.P.R. 445/2000"
-          buttons:
-            ok: "Continue"
-            ko: "Abort"
-        buttons:
-          requestBonus: "Request a discount code"
-      checkResidence:
-        title: "Residency's region"
-        items:
-          inSicily: "I reside in Sicily"
-          notInSicily: "I reside in a different region"
-        info: "Please remember that the discount is available only to residents of Sicily"
-      selectBeneficiaryCategory:
-        title: "I declare to be"
-        categories:
-          student: "Off-site student"
-          disabled: "Severely disabled"
-          worker: "Employee with a workplace outside Sicily"
-          sick: "Patient in need of treatment outside the Sicily region"
-          other: "None of the above"
-      student:
-        selectDestination:
-          title: "StudentSelectDestinationScreen"
-      disabled:
-        additionalInfo:
-          title: "Additional informations"
-          disclaimer:
-            normal: "I declare that I meet the requirements referred to in "
-            link: "Article 3, paragraph 3, of the law of February 5, 1992, no. 104"
-      worker:
-        selectDestination:
-          title: "WorkerSelectDestinationScreen"
-      sick:
-        selectDestination:
-          title: "SickSelectDestinationScreen"
-      checkIncome:
-        title: "I also declare"
-        threshold:
-          under: "to have a gross annual income of less than or equal to {{amount}}"
-          over: "to have a gross annual income exceeding {{amount}}"
-      selectFlightsDate:
-        title: "Flight date"
-        subtitle: "Please indicate the type of flight and the date (s) you will travel on"
-        flights_choice:
-          departure: "One way flight"
-          return: "Round trip"
-        labels:
-          departure: "Departure date"
-          return: "Return date"
-      summary:
-        title: "Summary"
-        subtitle1:
-          normal1: "By continuing, you declare under your responsibility and aware of the penal sanctions in case of untruthful declarations and false acts ("
-          link: "art.76 of the Presidential Decree of 28 December 2000, n.445"
-          normal2: ") that you meet the following requirements:"
-        subtitle2: "And to request a discount code for a flight with the following characteristics:"
-        fields:
-          residence:
-            label: "Residence:"
-            value: "Sicily"
-          category:
-            label: "Category:"
-            value:
-              disabled: "Severely disabled pursuant to article 3, paragraph 3, of law no. 104"
-              student: "Off-site student"
-              worker: "Employee with a workplace outside Sicily"
-              sick: "Patient in need of treatment outside the Sicily region"
-          flightDate:
-            label: "Flight date:"
-            disabled: "All"
-          availableDestination: "Possible destinations:"
-      voucherGenerated:
-        title: "Here is your discount code"
-        subtitle: "Enter it on the portal or communicate it at the ticket office of the company when purchasing the ticket. We remind you that the code is nominative and cannot be used by others."
-      ko:
-        checkIncome:
-          title: "You do not have the features to access the discounts."
-          body: "Sicilia Vola discounts are dedicated only to those with a gross personal income of less than € 25,000."
-        selectBeneficiaryCategory:
-          title: "You do not have the features to access the discounts."
-          body: "Sicilia Vola discounts are dedicated only to the categories presented in the previous screen."
-        checkResidence:
-          title: "You do not have the features to access the discounts."
-          body: "Sicilia Vola discounts are dedicated only to residents of Sicily."
-        timeout:
-          title: "Your Sicilia Vola discount code is being generated."
-          body: "You will receive a message in the IO app when it is ready."
-    voucherList:
-      title: "Your discount codes available"
-      loading: "Loading"
-      filter:
-        title: "Filter vouchers"
-        searchValuePlaceholder: "Search coupon code"
-        stateSection:
-          title: "State"
-        dateSection:
-          title: "Date"
-          departure: "Departure date"
-          return: "Return date"
-        cta:
-          removeFilter: "Remove"
-          applyFilter:
-            zero: "Apply filters"
-            other: "Apply filters ({{count}})"
-      emptyList:
-        title: "There are no discount codes available"
-        subtitle: "Search to see your used or expired codes or request a new code"
-        cta: "Generate a new code"
-      error: "We are unable to recover your vouchers, please try again."
-      details:
-        title: "Your discount code"
-        fields:
-          uniqueCode: "Unique code"
-          beneficiary: "Beneficiary"
-          residence:
-            label: "Residence"
-            value: "Sicily"
-          category: "Category"
-          flightDate: "Flight date"
-          possibleDestination: "Possible destinations"
-        cta:
-          voucherRevocation: "Voucher revocation"
-          openQr: "Open QR code"
-        voucherRevocation:
-          alert:
-            title: "Attention"
-            message: "Are you sure you want to proceed? The discount code will be deleted."
-            cta:
-              ok: "Continue"
-              ko: "Cancel the request"
-          toast:
-            ok: "Voucher successfully deleted"
-            ko: "Error while deleting the voucher. Try again"
-    components:
-      voucherVisualDetails:
-        uniqueCode: "Unique code"
-        qrCode: "QR Code"
-        barCode: "Bar Code"
-      destinationLabels:
-        universityName: "University name"
-        companyName: "Company name"
-        hospitalName: "Hospital or professional name"
-        municipality: "Municipality"
-      voucherBottomsheet:
-        title: "Sicilia Vola discount code"
-        cta:
-          exit: "Exit"
-          voucherRevocation: "Voucher revocation"
-      destinationSelector:
-        state:
-          title: "Select a state"
-          label: "State"
-          placeholder: "Select a state"
-        municipality:
-          title: "Select a municipality"
-          label: "Municipality"
-          placeholder: "Select a municipality"
-          ko:
-            label1: "Error loading municipalities. "
-            label2: "Try again"
-    pdfVoucher:
-      toast:
-        ok: "Voucher saved successfully"
-        ko: "Problems saving the voucher"
   cdc:
     title: "Carta della cultura"
     serviceCta:
@@ -3582,16 +3413,6 @@ fastLogin:
   whatsNew:
     title: Logging into IO just got easier!
     subtitle: From now on, to log into the app you'll have to use your SPID or CIE only once a year. After that you can just use your unlock code, fingerprint or face.
-    changes:
-      first:
-        title: Easier
-        description: log in with just your unlock code, fingerprint or face.
-      second:
-        title: Faster
-        description: use your SPID or CIE only once a year or in case you log out.
-      third:
-        title: Safer
-        description: every time a login with SPID or CIE is performed, we'll send you an e-mail to let you know.
 whatsNew:
   title: What's changed?
 bonusCard:

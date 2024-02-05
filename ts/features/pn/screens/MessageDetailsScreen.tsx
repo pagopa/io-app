@@ -71,7 +71,7 @@ export const MessageDetailsScreen = () => {
     dispatch(cancelQueuedPaymentUpdates());
     dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
-  }, []);
+  }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
     title: "",
