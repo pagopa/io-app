@@ -9,7 +9,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { attachmentFromThirdPartyMessage } from "../../../store/reducers/transformers";
 
 describe("MessageDetailsAttachmentItem", () => {
   it("Should match snapshot with required parameters", () => {
@@ -92,11 +91,13 @@ const renderScreen = (
     designSystemState,
     isFetching
       ? downloadAttachment.request({
-          ...attachmentFromThirdPartyMessage(messageId, attachment),
+          attachment,
+          messageId,
           skipMixpanelTrackingOnFailure: false
         })
       : downloadAttachment.success({
-          attachment: attachmentFromThirdPartyMessage(messageId, attachment),
+          messageId,
+          attachment,
           path: "file:///fileName.pdf"
         })
   );

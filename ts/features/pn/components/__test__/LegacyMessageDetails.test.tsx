@@ -8,18 +8,19 @@ import { LegacyMessageDetails } from "../LegacyMessageDetails";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
-import { UIAttachment, UIMessageId } from "../../../messages/types";
+import { UIMessageId } from "../../../messages/types";
 import { PNMessage } from "../../store/types/types";
 import { Download } from "../../../messages/store/reducers/downloads";
 import { NotificationRecipient } from "../../../../../definitions/pn/NotificationRecipient";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
 const mockedOnAttachmentSelect = jest.fn();
 
 jest.mock("../../../messages/hooks/useLegacyAttachmentDownload", () => ({
   useLegacyAttachmentDownload: (
-    _attachment: UIAttachment,
-    _openPreview: (attachment: UIAttachment) => void
+    _attachment: ThirdPartyAttachment,
+    _openPreview: (attachment: ThirdPartyAttachment) => void
   ) => ({
     onAttachmentSelect: mockedOnAttachmentSelect,
     downloadPot: { kind: "PotNone" } as pot.Pot<Download, Error>
@@ -146,22 +147,20 @@ const generatePnMessage = (): PNMessage => ({
   ] as Array<NotificationRecipient>,
   attachments: [
     {
-      messageId: generateTestMessageId(),
       id: "1",
-      displayName: "A First Attachment",
-      contentType: "application/pdf",
+      name: "A First Attachment",
+      content_type: "application/pdf",
       category: ATTACHMENT_CATEGORY.DOCUMENT,
-      resourceUrl: { href: "/resource/attachment1.pdf" }
+      url: "/resource/attachment1.pdf"
     },
     {
-      messageId: generateTestMessageId(),
       id: "2",
-      displayName: "A Second Attachment",
-      contentType: "application/pdf",
+      name: "A Second Attachment",
+      content_type: "application/pdf",
       category: ATTACHMENT_CATEGORY.DOCUMENT,
-      resourceUrl: { href: "/resource/attachment2.pdf" }
+      url: "/resource/attachment2.pdf"
     }
-  ] as Array<UIAttachment>
+  ] as Array<ThirdPartyAttachment>
 });
 const generateComponentProperties = (pnMessage: PNMessage) => ({
   payments: undefined,

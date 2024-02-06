@@ -20,7 +20,7 @@ import ROUTES from "../../../navigation/routes";
 import { setSelectedPayment } from "../store/actions";
 import { trackPNPaymentStart } from "../analytics";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { UIAttachment } from "../../messages/types";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -125,7 +125,7 @@ export const containsF24FromPNMessagePot = (
   pipe(
     pot.getOrElse(potMessage, O.none),
     O.chainNullableK(message => message.attachments),
-    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
 

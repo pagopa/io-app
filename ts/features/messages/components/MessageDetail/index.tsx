@@ -22,9 +22,7 @@ import {
   messageTitleSelector,
   thirdPartyFromIdSelector
 } from "../../store/reducers/thirdPartyById";
-
-import { UIAttachment, UIMessage, UIMessageDetails } from "../../types";
-import { attachmentsFromThirdPartyMessage } from "../../store/reducers/transformers";
+import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../utils/messages";
@@ -37,6 +35,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
 import CtaBar from "./CtaBar";
 import { RemoteContentBanner } from "./RemoteContentBanner";
@@ -157,7 +156,7 @@ const MessageDetailsComponent = ({
 
   const serviceIdOpt = service?.id;
   const openAttachment = useCallback(
-    (attachment: UIAttachment) => {
+    (attachment: ThirdPartyAttachment) => {
       navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
@@ -172,18 +171,21 @@ const MessageDetailsComponent = ({
   );
 
   const renderThirdPartyAttachments = useCallback(
-    (thirdPartyMessage: ThirdPartyMessageWithContent): React.ReactNode => {
+    (
+      messageId: UIMessageId,
+      thirdPartyMessage: ThirdPartyMessageWithContent
+    ): React.ReactNode => {
       // In order not to break or refactor existing PN code, the backend
       // model for third party attachments is converted into in-app
       // model for attachments when the user generates the request. This
       // is not a speed intensive operation nor a memory consuming task,
       // since the attachment count should be negligible
-      const maybeThirdPartyMessageAttachments =
-        attachmentsFromThirdPartyMessage(thirdPartyMessage);
-      return O.isSome(maybeThirdPartyMessageAttachments) ? (
+      const attachmentsOpt = thirdPartyMessage.third_party_message.attachments;
+      return attachmentsOpt ? (
         <View style={IOStyles.horizontalContentPadding}>
           <LegacyMessageAttachments
-            attachments={maybeThirdPartyMessageAttachments.value}
+            attachments={attachmentsOpt}
+            messageId={messageId}
             openPreview={openAttachment}
           />
         </View>
@@ -244,7 +246,7 @@ const MessageDetailsComponent = ({
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsError(),
               thirdPartyMessage =>
-                renderThirdPartyAttachments(thirdPartyMessage),
+                renderThirdPartyAttachments(messageId, thirdPartyMessage),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsError()

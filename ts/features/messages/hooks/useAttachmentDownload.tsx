@@ -17,10 +17,7 @@ import {
 import { MESSAGES_ROUTES } from "../navigation/routes";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import {
-  attachmentDisplayName,
-  attachmentFromThirdPartyMessage
-} from "../store/reducers/transformers";
+import { attachmentDisplayName } from "../store/reducers/transformers";
 import I18n from "../../../i18n";
 import { IOToast } from "../../../components/Toast";
 import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
@@ -82,13 +79,9 @@ export const useAttachmentDownload = (
     if (download && (await RNFS.exists(download.path))) {
       doNavigate();
     } else {
-      const uiAttachment = attachmentFromThirdPartyMessage(
-        messageId,
-        attachment
-      );
       dispatch(
         downloadAttachment.request({
-          ...uiAttachment,
+          attachment,
           messageId,
           skipMixpanelTrackingOnFailure: isPN
         })
@@ -96,6 +89,7 @@ export const useAttachmentDownload = (
     }
   }, [attachment, dispatch, download, doNavigate, isFetching, isPN, messageId]);
 
+  const attachmentCategory = attachment.category;
   useEffect(() => {
     const state = store.getState();
     if (
@@ -112,16 +106,12 @@ export const useAttachmentDownload = (
     ) {
       dispatch(clearRequestedAttachmentDownload());
       if (isPN) {
-        const uiAttachment = attachmentFromThirdPartyMessage(
-          messageId,
-          attachment
-        );
-        trackPNAttachmentDownloadFailure(uiAttachment.category);
+        trackPNAttachmentDownloadFailure(attachmentCategory);
       }
       IOToast.error(I18n.t("messageDetails.attachments.failing.details"));
     }
   }, [
-    attachment,
+    attachmentCategory,
     attachmentId,
     checkPathAndNavigate,
     dispatch,

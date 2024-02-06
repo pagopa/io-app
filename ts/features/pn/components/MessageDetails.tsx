@@ -6,12 +6,13 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as SEP from "fp-ts/lib/Separated";
 import { HSpacer, IOStyles, Tag, VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { UIAttachment, UIMessageId } from "../../messages/types";
+import { UIMessageId } from "../../messages/types";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { MessageDetailHeader } from "../../messages/components/MessageDetail/MessageDetailHeader";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import I18n from "../../../i18n";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 
 type MessageDetailsProps = {
@@ -25,7 +26,7 @@ export const MessageDetails = ({ message, service }: MessageDetailsProps) => {
   const partitionedAttachments = pipe(
     message.attachments,
     O.fromNullable,
-    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.partition(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
 

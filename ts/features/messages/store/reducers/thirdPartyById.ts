@@ -16,8 +16,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
-import { UIAttachmentId, UIMessageDetails, UIMessageId } from "../../types";
-import { attachmentFromThirdPartyMessage } from "./transformers";
+import { UIMessageDetails, UIMessageId } from "../../types";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -101,10 +100,10 @@ export const thirdPartyMessageAttachments = (
     )
   );
 
-export const thirdPartyMessageUIAttachment =
+export const thirdPartyMessageAttachment =
   (state: GlobalState) =>
   (ioMessageId: UIMessageId) =>
-  (thirdPartyMessageAttachmentId: UIAttachmentId) =>
+  (thirdPartyMessageAttachmentId: string): O.Option<ThirdPartyAttachment> =>
     pipe(
       thirdPartyFromIdSelector(state, ioMessageId),
       pot.toOption,
@@ -116,12 +115,6 @@ export const thirdPartyMessageUIAttachment =
           thirdPartyMessageAttachment =>
             thirdPartyMessageAttachment.id ===
             (thirdPartyMessageAttachmentId as string as NonEmptyString)
-        )
-      ),
-      O.map(thirdPartyMessageAttachment =>
-        attachmentFromThirdPartyMessage(
-          ioMessageId,
-          thirdPartyMessageAttachment
         )
       )
     );

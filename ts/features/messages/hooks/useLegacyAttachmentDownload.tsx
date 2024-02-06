@@ -14,20 +14,25 @@ import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
 } from "../store/actions";
-import { UIAttachment } from "../types";
 import { downloadPotForMessageAttachmentSelector } from "../store/reducers/downloads";
 import { isTestEnv } from "../../../utils/environment";
 import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { UIMessageId } from "../types";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../store/reducers/transformers";
 
-const taskCopyToMediaStore = (attachment: UIAttachment, path: string) =>
+const taskCopyToMediaStore = (name: string, mimeType: string, path: string) =>
   TE.tryCatch(
     () =>
       ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
         {
-          name: attachment.displayName,
+          name,
           parentFolder: "",
-          mimeType: attachment.contentType
+          mimeType
         },
         "Download",
         path
@@ -35,21 +40,22 @@ const taskCopyToMediaStore = (attachment: UIAttachment, path: string) =>
     E.toError
   );
 
-const taskAddCompleteDownload = (attachment: UIAttachment, path: string) =>
+const taskAddCompleteDownload = (name: string, mime: string, path: string) =>
   TE.tryCatch(
     () =>
       ReactNativeBlobUtil.android.addCompleteDownload({
-        mime: attachment.contentType,
-        title: attachment.displayName,
+        mime,
+        title: name,
         showNotification: true,
-        description: attachment.displayName,
+        description: name,
         path
       }),
     E.toError
   );
 
 const taskDownloadFileIntoAndroidPublicFolder = (
-  attachment: UIAttachment,
+  name: string,
+  mimeType: string,
   path: string
 ) =>
   pipe(
@@ -58,9 +64,9 @@ const taskDownloadFileIntoAndroidPublicFolder = (
     TE.mapLeft(() => ReactNativeBlobUtil.ios.presentOptionsMenu(path)),
     TE.chain(_ =>
       pipe(
-        taskCopyToMediaStore(attachment, path),
+        taskCopyToMediaStore(name, mimeType, path),
         TE.chain(downloadFilePath =>
-          taskAddCompleteDownload(attachment, downloadFilePath)
+          taskAddCompleteDownload(name, mimeType, downloadFilePath)
         ),
         TE.mapLeft(_ =>
           showToast(i18n.t("messageDetails.attachments.failing.details"))
@@ -84,19 +90,16 @@ export const testableFunctions = isTestEnv
 // If the attachment is from a third-party message (generic attachment)
 // then the download is delegated to another part of the application
 export const useLegacyAttachmentDownload = (
-  attachment: UIAttachment,
+  attachment: ThirdPartyAttachment,
+  messageId: UIMessageId,
   downloadAttachmentBeforePreview: boolean = false,
-  openPreview: (attachment: UIAttachment) => void
+  openPreview: (attachment: ThirdPartyAttachment) => void
 ) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useIODispatch();
 
   const downloadPot = useIOSelector(state =>
-    downloadPotForMessageAttachmentSelector(
-      state,
-      attachment.messageId,
-      attachment.id
-    )
+    downloadPotForMessageAttachmentSelector(state, messageId, attachment.id)
   );
 
   const openAttachment = useCallback(async () => {
@@ -108,10 +111,16 @@ export const useLegacyAttachmentDownload = (
     } else if (download) {
       const { path, attachment } = download;
 
-      if (attachment.contentType === ContentTypeValues.applicationPdf) {
+      const contentType = attachmentContentType(attachment);
+      if (contentType === ContentTypeValues.applicationPdf) {
         openPreview(attachment);
       } else {
-        await taskDownloadFileIntoAndroidPublicFolder(attachment, path)();
+        const name = attachmentDisplayName(attachment);
+        await taskDownloadFileIntoAndroidPublicFolder(
+          name,
+          contentType,
+          path
+        )();
       }
     }
   }, [downloadPot, openPreview, attachment.category]);
@@ -152,7 +161,8 @@ export const useLegacyAttachmentDownload = (
       TE.mapLeft(() => {
         dispatch(
           downloadAttachment.request({
-            ...attachment,
+            attachment,
+            messageId,
             skipMixpanelTrackingOnFailure: true
           })
         );

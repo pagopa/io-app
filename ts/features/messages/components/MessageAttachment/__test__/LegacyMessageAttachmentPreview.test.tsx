@@ -10,6 +10,7 @@ import { Downloads } from "../../../store/reducers/downloads";
 import { mockPdfAttachment } from "../../../__mocks__/attachment";
 import I18n from "../../../../../i18n";
 import { LegacyMessageAttachmentPreview } from "../LegacyMessageAttachmentPreview";
+import { messageId_1 } from "../../../__mocks__/messages";
 
 const mockOpen = jest.fn();
 const mockPdfViewer = <View testID="pdf-viewer" />;
@@ -22,12 +23,12 @@ describe("MessageAttachmentPreview", () => {
       const { component } = renderComponent(
         {
           enableDownloadAttachment: false,
-          messageId: mockPdfAttachment.messageId,
+          messageId: messageId_1,
           attachment: mockPdfAttachment,
           onOpen: mockOpen
         },
         {
-          [mockPdfAttachment.messageId]: {
+          [messageId_1]: {
             [mockPdfAttachment.id]: pot.some({
               path: "path",
               attachment: mockPdfAttachment
@@ -43,12 +44,12 @@ describe("MessageAttachmentPreview", () => {
       const { component } = renderComponent(
         {
           enableDownloadAttachment: false,
-          messageId: mockPdfAttachment.messageId,
+          messageId: messageId_1,
           attachment: mockPdfAttachment,
           onOpen: mockOpen
         },
         {
-          [mockPdfAttachment.messageId]: {
+          [messageId_1]: {
             [mockPdfAttachment.id]: pot.some({
               path: "path",
               attachment: mockPdfAttachment

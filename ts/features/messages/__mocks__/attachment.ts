@@ -1,24 +1,19 @@
-import { Byte } from "../types/digitalInformationUnit";
-import { UIMessageId, UIAttachment, UIAttachmentId } from "../types";
+import { INonEmptyStringTag } from "@pagopa/ts-commons/lib/strings";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../types/attachmentCategory";
-import { message_1 } from "./message";
 
-export const mockPdfAttachment: UIAttachment = {
-  messageId: message_1.id as UIMessageId,
-  id: "1" as UIAttachmentId,
-  displayName: "invoice.pdf",
-  contentType: "application/pdf",
-  size: 1959520 as Byte,
-  resourceUrl: { href: "https://www.invoicepdf.com/invoice.pdf" },
+export const mockPdfAttachment: ThirdPartyAttachment = {
+  id: "1" as string & INonEmptyStringTag,
+  name: "invoice.pdf" as string & INonEmptyStringTag,
+  content_type: "application/pdf" as string & INonEmptyStringTag,
+  url: "https://www.invoicepdf.com/invoice.pdf" as string & INonEmptyStringTag,
   category: ATTACHMENT_CATEGORY.DOCUMENT
 };
 
-export const mockOtherAttachment: UIAttachment = {
-  messageId: message_1.id as UIMessageId,
-  id: "2" as UIAttachmentId,
-  displayName: "image.png",
-  contentType: "other",
-  size: 125952 as Byte,
-  resourceUrl: { href: "htts://www.randomImage.com/image.png" },
+export const mockOtherAttachment: ThirdPartyAttachment = {
+  id: "2" as string & INonEmptyStringTag,
+  name: "image.png" as string & INonEmptyStringTag,
+  content_type: "other" as string & INonEmptyStringTag,
+  url: "htts://www.randomImage.com/image.png" as string & INonEmptyStringTag,
   category: ATTACHMENT_CATEGORY.F24
 };
