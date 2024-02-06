@@ -122,7 +122,9 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
   public render() {
     const ContainerComponent = withLoadingSpinner(() => (
       <RNavScreenWithLargeHeader
-        title={I18n.t("profile.preferences.list.preferred_language.title")}
+        title={{
+          label: I18n.t("profile.preferences.list.preferred_language.title")
+        }}
         description={I18n.t(
           "profile.preferences.list.preferred_language.subtitle"
         )}
