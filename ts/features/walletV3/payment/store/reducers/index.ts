@@ -51,7 +51,7 @@ export type WalletPaymentState = {
   authorizationUrl: pot.Pot<string, NetworkError>;
   startRoute?: {
     routeName: keyof AppParamsList;
-    routeKey: keyof NavigatorScreenParams<AppParamsList>["screen"];
+    routeKey: NavigatorScreenParams<AppParamsList>["screen"];
   };
 };
 

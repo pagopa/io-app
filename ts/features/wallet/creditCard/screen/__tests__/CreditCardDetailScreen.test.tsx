@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { waitFor } from "@testing-library/react-native";
-import * as React from "react";
 import { Store, createStore } from "redux";
 import { StatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
@@ -166,16 +165,12 @@ describe("Test CreditCardDetailScreen", () => {
   );
 });
 
-const CreditCardWrapper = (
-  props: React.ComponentProps<typeof CreditCardDetailScreen>
-) => <CreditCardDetailScreen {...props} />;
-
 const renderDetailScreen = (
   store: Store,
   creditCard: CreditCardPaymentMethod
 ) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
-    CreditCardWrapper,
+    CreditCardDetailScreen,
     ROUTES.WALLET_CREDIT_CARD_DETAIL,
     { creditCard },
     store
