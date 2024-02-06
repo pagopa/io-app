@@ -58,7 +58,9 @@ const WalletTransactionOperationDetailsScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={cleanTransactionDescription(operationName)}
+      title={{
+        label: cleanTransactionDescription(operationName)
+      }}
     >
       <ScrollView style={styles.scrollViewContainer}>
         {operationDetails.importo && (

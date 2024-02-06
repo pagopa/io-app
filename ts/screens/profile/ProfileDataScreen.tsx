@@ -51,7 +51,9 @@ const ProfileDataScreen: React.FC<Props> = ({
   };
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.data.title")}
+      title={{
+        label: I18n.t("profile.data.title")
+      }}
       description={I18n.t("profile.data.subtitle")}
       headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}
