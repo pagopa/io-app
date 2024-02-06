@@ -1,2 +1,2 @@
-"ALERT_DEVICE_ROOTED_TITLE" = "Device jailbroken";
-"ALERT_DEVICE_ROOTED_DESC" = "This device is jailbroken, you can't use this app for security reasons";
+"ALERT_DEVICE_ROOTED_TITLE" = "Gerät mit Jailbreak";
+"ALERT_DEVICE_ROOTED_DESC" = "Dieses Gerät ist gejailbreakt, du kannst diese App aus Sicherheitsgründen nicht verwenden";
