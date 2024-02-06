@@ -334,7 +334,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                   });
                 } else {
                   NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                    screen: ROUTES.INSERT_EMAIL_SCREEN
+                    screen: ROUTES.INSERT_EMAIL_SCREEN,
+                    params: { isOnboarding: false }
                   });
                 }
               },

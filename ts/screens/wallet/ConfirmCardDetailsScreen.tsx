@@ -12,6 +12,7 @@ import { View, Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { useNavigation, useRoute, Route } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
@@ -41,7 +42,10 @@ import {
   isReady
 } from "../../common/model/RemoteValue";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import {
   navigateToAddCreditCardOutcomeCode,
@@ -67,6 +71,7 @@ import { CreditCard, Wallet } from "../../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
 import { showToast } from "../../utils/showToast";
+import { LightModalContext } from "../../components/ui/LightModal";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type ConfirmCardDetailsScreenNavigationParams = Readonly<{
@@ -504,8 +509,32 @@ const mergeProps = (
   };
 };
 
-export default connect(
+const ConnectedConfirmCardDetailsScreen = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
 )(withLoadingSpinner(ConfirmCardDetailsScreen));
+
+const ConfirmCardDetailsScreenFC = () => {
+  const { ...modalContext } = React.useContext(LightModalContext);
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<WalletParamsList, "WALLET_CONFIRM_CARD_DETAILS">
+    >();
+  const route =
+    useRoute<
+      Route<
+        "WALLET_CONFIRM_CARD_DETAILS",
+        ConfirmCardDetailsScreenNavigationParams
+      >
+    >();
+  return (
+    <ConnectedConfirmCardDetailsScreen
+      {...modalContext}
+      navigation={navigation}
+      route={route}
+    />
+  );
+};
+
+export default ConfirmCardDetailsScreenFC;

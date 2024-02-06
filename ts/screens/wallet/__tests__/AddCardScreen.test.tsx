@@ -141,19 +141,22 @@ describe("getPaymentMethods", () => {
     startBPayOnboarding: jest.fn(),
     startPaypalOnboarding: jest.fn(),
     startAddBancomat: jest.fn(),
-    navigateToAddCreditCard: jest.fn(),
     isPaypalAlreadyAdded: true,
     isPaypalEnabled: true,
     canOnboardBPay: false,
     canPayWithBPay: false
   };
   // TODO: ⚠️ cast to any only to complete the merge, should be removed!
-  const methods = testableFunctions.getPaymentMethods!(props as any, {
-    onlyPaymentMethodCanPay: true,
-    isPaymentOnGoing: true,
-    isPaypalEnabled: true,
-    canOnboardBPay: true
-  });
+  const methods = testableFunctions.getPaymentMethods!(
+    props as any,
+    {
+      onlyPaymentMethodCanPay: true,
+      isPaymentOnGoing: true,
+      isPaypalEnabled: true,
+      canOnboardBPay: true
+    },
+    jest.fn()
+  );
 
   const getMethodStatus = (
     methods: ReadonlyArray<IPaymentMethod>,
@@ -174,12 +177,16 @@ describe("getPaymentMethods", () => {
 
   it("paypal should be always notImplemented when the FF is OFF", () => {
     // TODO: ⚠️ cast to any only to complete the merge, should be removed!
-    const methods = testableFunctions.getPaymentMethods!(props as any, {
-      onlyPaymentMethodCanPay: true,
-      isPaymentOnGoing: true,
-      isPaypalEnabled: false,
-      canOnboardBPay: true
-    });
+    const methods = testableFunctions.getPaymentMethods!(
+      props as any,
+      {
+        onlyPaymentMethodCanPay: true,
+        isPaymentOnGoing: true,
+        isPaypalEnabled: false,
+        canOnboardBPay: true
+      },
+      jest.fn()
+    );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.paypal.name"))
     ).toEqual("notImplemented");
@@ -187,12 +194,16 @@ describe("getPaymentMethods", () => {
 
   it("bpay should be always notImplemented if Bpay onboarding FF is OFF", () => {
     // TODO: ⚠️ cast to any only to complete the merge, should be removed!
-    const methods = testableFunctions.getPaymentMethods!(props as any, {
-      onlyPaymentMethodCanPay: true,
-      isPaymentOnGoing: true,
-      isPaypalEnabled: true,
-      canOnboardBPay: false
-    });
+    const methods = testableFunctions.getPaymentMethods!(
+      props as any,
+      {
+        onlyPaymentMethodCanPay: true,
+        isPaymentOnGoing: true,
+        isPaypalEnabled: true,
+        canOnboardBPay: false
+      },
+      jest.fn()
+    );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))
     ).toEqual("notImplemented");
@@ -200,12 +211,16 @@ describe("getPaymentMethods", () => {
 
   it("bpay should be always implemented if Bpay onboarding FF is ON and onlyPaymentMethodCanPay flag is OFF", () => {
     // TODO: ⚠️ cast to any only to complete the merge, should be removed!
-    const methods = testableFunctions.getPaymentMethods!(props as any, {
-      onlyPaymentMethodCanPay: false,
-      isPaymentOnGoing: true,
-      isPaypalEnabled: true,
-      canOnboardBPay: true
-    });
+    const methods = testableFunctions.getPaymentMethods!(
+      props as any,
+      {
+        onlyPaymentMethodCanPay: false,
+        isPaymentOnGoing: true,
+        isPaypalEnabled: true,
+        canOnboardBPay: true
+      },
+      jest.fn()
+    );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))
     ).toEqual("implemented");
@@ -222,7 +237,8 @@ describe("getPaymentMethods", () => {
         isPaymentOnGoing: true,
         isPaypalEnabled: true,
         canOnboardBPay: canPayWithBPay && canOnboardBPay
-      }
+      },
+      jest.fn()
     );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))
@@ -240,7 +256,8 @@ describe("getPaymentMethods", () => {
         isPaymentOnGoing: false,
         isPaypalEnabled: true,
         canOnboardBPay: canPayWithBPay && canOnboardBPay
-      }
+      },
+      jest.fn()
     );
     expect(
       getMethodStatus(methods, I18n.t("wallet.methods.bancomatPay.name"))

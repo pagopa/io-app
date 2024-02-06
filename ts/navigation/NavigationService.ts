@@ -5,8 +5,10 @@ import {
 import { Route } from "@react-navigation/routers";
 import React from "react";
 import { mixpanelTrack } from "../mixpanel";
+import { AppParamsList } from "./params/AppParamsList";
 
-export const navigationRef = React.createRef<NavigationContainerRef>();
+export const navigationRef =
+  React.createRef<NavigationContainerRef<AppParamsList>>();
 // eslint-disable-next-line functional/no-let
 let isNavigationReady: boolean = false;
 
@@ -37,13 +39,27 @@ const withLogging =
   };
 
 // NavigationContainerComponent
-const getNavigator = (): React.RefObject<NavigationContainerRef> =>
-  navigationRef;
+const getNavigator = (): React.RefObject<
+  NavigationContainerRef<AppParamsList>
+> => navigationRef;
 
 // NavigationParams
-const navigate = (routeName: string, params?: any) => {
+// This definition comes from react-navigation navigate definition.
+type NavigationParams<T extends keyof AppParamsList> = T extends unknown
+  ? // This condition checks if the params are optional,
+    // which means it's either undefined or a union with undefined
+    undefined extends AppParamsList[T]
+    ?
+        | [screen: T] // if the params are optional, we don't have to provide it
+        | [screen: T, params: AppParamsList[T]]
+    : [screen: T, params: AppParamsList[T]]
+  : never;
+
+const navigate = <T extends keyof AppParamsList>(
+  ...args: NavigationParams<T>
+) => {
   if (isNavigationReady) {
-    navigationRef.current?.navigate(routeName, params);
+    navigationRef.current?.navigate(...args);
   }
 };
 
