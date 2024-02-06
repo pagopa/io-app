@@ -6,7 +6,9 @@ import I18n from "../../i18n";
 
 const ProfileAboutApp = () => (
   <RNavScreenWithLargeHeader
-    title={I18n.t("profile.main.appInfo.title")}
+    title={{
+      label: I18n.t("profile.main.appInfo.title")
+    }}
     headerActionsProp={{ showHelp: false }}
   >
     <ContentWrapper>
