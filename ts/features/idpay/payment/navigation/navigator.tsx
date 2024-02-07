@@ -32,8 +32,7 @@ export const IDPayPaymentNavigator = () => (
   <IDPayPaymentMachineProvider>
     <Stack.Navigator
       initialRouteName={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}
-      headerMode={"none"}
-      screenOptions={{ gestureEnabled: false }}
+      screenOptions={{ gestureEnabled: false, headerShown: false }}
     >
       <Stack.Screen
         name={IDPayPaymentRoutes.IDPAY_PAYMENT_CODE_INPUT}

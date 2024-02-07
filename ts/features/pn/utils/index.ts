@@ -3,7 +3,10 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  RptIdFromString
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { UIService } from "../../../store/reducers/entities/services/types";
@@ -150,6 +153,10 @@ export const initializeAndNavigateToWalletForPayment = (
 
   NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params: { rptId: eitherRptId.right, startOrigin: "message" }
+    params: {
+      rptId: eitherRptId.right,
+      paymentStartOrigin: "message",
+      initialAmount: "00000" as AmountInEuroCents
+    }
   });
 };

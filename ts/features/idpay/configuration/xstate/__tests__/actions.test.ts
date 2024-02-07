@@ -45,7 +45,7 @@ const T_FAILURE = InitiativeFailureType.GENERIC;
 
 describe("IDPay Configuration machine actions", () => {
   const actions = createActionsImplementation(
-    navigation as IOStackNavigationProp<AppParamsList>,
+    navigation as IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
     dispatch
   );
 
