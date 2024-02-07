@@ -8,13 +8,11 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { sequenceT } from "fp-ts/lib/Apply";
+import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { Transfer } from "../../../../../definitions/pagopa/ecommerce/Transfer";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
@@ -28,33 +26,24 @@ import { getSortedPspList } from "../../common/utils";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentCalculateFees } from "../store/actions/networking";
 import {
   walletPaymentPickPsp,
   walletPaymentResetPickedPsp
 } from "../store/actions/orchestration";
 import {
-  walletPaymentAmountSelector,
-  walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
-  walletPaymentPspListSelector,
-  walletPaymentTransactionSelector
+  walletPaymentPspListSelector
 } from "../store/selectors";
 import { WalletPaymentPspSortType } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentPickPspScreen = () => {
-  const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
-  const selectedWalletOption = useIOSelector(
-    walletPaymentPickedPaymentMethodSelector
-  );
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
   const [sortType, setSortType] =
     React.useState<WalletPaymentPspSortType>("default");
 
-  const transactionPot = useIOSelector(walletPaymentTransactionSelector);
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
   const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
 
@@ -86,35 +75,6 @@ const WalletPaymentPickPspScreen = () => {
     faqCategories: ["payment"],
     supportRequest: true
   });
-
-  useFocusEffect(
-    React.useCallback(() => {
-      pipe(
-        sequenceT(O.Monad)(
-          pot.toOption(paymentAmountPot),
-          pot.toOption(transactionPot),
-          selectedWalletOption
-        ),
-        O.map(([paymentAmountInCents, transaction, selectedWallet]) => {
-          const transferList = transaction.payments.reduce(
-            (a, p) => [...a, ...(p.transferList ?? [])],
-            [] as ReadonlyArray<Transfer>
-          );
-          const paymentToken = transaction.payments[0]?.paymentToken;
-
-          dispatch(
-            walletPaymentCalculateFees.request({
-              paymentToken,
-              paymentMethodId: selectedWallet.paymentMethodId,
-              walletId: selectedWallet.walletId,
-              paymentAmount: paymentAmountInCents,
-              transferList
-            })
-          );
-        })
-      );
-    }, [dispatch, paymentAmountPot, selectedWalletOption, transactionPot])
-  );
 
   React.useEffect(
     () => () => {
