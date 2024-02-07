@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
 import {
   Body,
@@ -13,6 +13,7 @@ import { useIOSelector } from "../../../store/hooks";
 import { trackFciStartSignature } from "../analytics";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 type Props = {
   currentDoc: number;
@@ -22,7 +23,7 @@ type Props = {
  * A hook that returns a function to present the abort signature flow bottom sheet
  */
 export const useFciNoSignatureFields = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { currentDoc } = props;

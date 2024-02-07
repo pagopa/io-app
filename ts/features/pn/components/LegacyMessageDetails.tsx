@@ -18,7 +18,6 @@ import { pnFrontendUrlSelector } from "../../../store/reducers/backendStatus";
 import { UIMessageId } from "../../messages/types";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { LegacyMessageAttachments } from "../../messages/components/MessageDetail/LegacyMessageAttachments";
-import NavigationService from "../../../navigation/NavigationService";
 import PN_ROUTES from "../navigation/routes";
 import { PNMessage } from "../store/types/types";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -34,6 +33,8 @@ import { LevelEnum } from "../../../../definitions/content/SectionStatus";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { maxVisiblePaymentCountGenerator } from "../utils";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { LegacyMessageDetailsContent } from "./LegacyMessageDetailsContent";
 import { MessageDetailsHeader } from "./MessageDetailsHeader";
 import { MessageDetailsSection } from "./MessageDetailsSection";
@@ -60,6 +61,7 @@ export const LegacyMessageDetails = ({
   const viewRef = createRef<View>();
   const presentPaymentsBottomSheetRef = useRef<() => void>();
   const frontendUrl = useIOSelector(pnFrontendUrlSelector);
+  const navigation = useIONavigation();
 
   const partitionedAttachments = pipe(
     message.attachments,
@@ -79,13 +81,19 @@ export const LegacyMessageDetails = ({
   const openAttachment = useCallback(
     (attachment: ThirdPartyAttachment) => {
       trackPNAttachmentOpening(attachment.category);
-      NavigationService.navigate(PN_ROUTES.MESSAGE_ATTACHMENT, {
-        messageId,
-        attachmentId: attachment.id,
-        category: attachment.category
+      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        screen: PN_ROUTES.MAIN,
+        params: {
+          screen: PN_ROUTES.MESSAGE_ATTACHMENT,
+          params: {
+            messageId,
+            attachmentId: attachment.id,
+            category: attachment.category
+          }
+        }
       });
     },
-    [messageId]
+    [messageId, navigation]
   );
 
   const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();

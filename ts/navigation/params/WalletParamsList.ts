@@ -29,6 +29,7 @@ import ROUTES from "../routes";
 import { BONUS_ROUTES } from "../../features/bonus/common/navigation/navigator";
 
 export type WalletParamsList = {
+  [ROUTES.WALLET_HOME]: undefined;
   [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: AddPaymentMethodScreenNavigationParams;
   [ROUTES.WALLET_TRANSACTION_DETAILS]: TransactionDetailsScreenNavigationParams;
