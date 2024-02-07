@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import {
-  ActivityIndicator,
   GestureResponderEvent,
   Pressable,
   PressableProps,
@@ -15,8 +14,10 @@ import {
   IOSpringValues,
   Icon,
   LabelSmall,
+  LoadingSpinner,
   VSpacer,
-  WithTestID
+  WithTestID,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import Animated, {
   Extrapolate,
@@ -81,23 +82,19 @@ const ModuleAttachmentContent = ({
   ModuleAttachmentProps,
   "isFetching" | "format" | "title" | "testID"
 >) => {
+  const theme = useIOTheme();
   const IconOrActivityIndicatorComponent = () => {
     if (isFetching) {
       const activityIndicatorTestId = testID
         ? `${testID}_activityIndicator`
         : undefined;
-      return (
-        <ActivityIndicator
-          color={IOColors.blue}
-          testID={activityIndicatorTestId}
-        />
-      );
+      return <LoadingSpinner testID={activityIndicatorTestId} />;
     }
 
     return (
       <Icon
         name="chevronRightListItem"
-        color="blue"
+        color={theme["interactiveElem-default"]}
         size={IOListItemVisualParams.chevronSize}
       />
     );

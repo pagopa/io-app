@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as t from "io-ts";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
@@ -88,16 +87,14 @@ export const messageMarkdownSelector = (
 export const thirdPartyMessageAttachments = (
   state: GlobalState,
   ioMessageId: UIMessageId
-) =>
+): ReadonlyArray<ThirdPartyAttachment> =>
   pipe(
     thirdPartyFromIdSelector(state, ioMessageId),
     pot.toOption,
     O.chainNullableK(
       thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
     ),
-    O.getOrElse(
-      () => [] as ReadonlyArray<t.TypeOf<typeof ThirdPartyAttachment>>
-    )
+    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => [])
   );
 
 export const thirdPartyMessageAttachment =

@@ -476,9 +476,154 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                               }
                             }
                           >
-                            <ActivityIndicator
-                              color="#0073E6"
-                            />
+                            <View
+                              accessibilityRole="progressbar"
+                              accessible={true}
+                              importantForAccessibility="no-hide-descendants"
+                              style={
+                                Object {
+                                  "height": 24,
+                                  "width": 24,
+                                }
+                              }
+                              testID="LoadingSpinnerTestID"
+                            >
+                              <View
+                                collapsable={false}
+                                style={
+                                  Object {
+                                    "transform": Array [
+                                      Object {
+                                        "rotateZ": "0deg",
+                                      },
+                                    ],
+                                  }
+                                }
+                                testID="LoadingSpinnerAnimatedTestID"
+                              >
+                                <RNSVGSvgView
+                                  align="xMidYMid"
+                                  bbHeight={24}
+                                  bbWidth={24}
+                                  fill="none"
+                                  focusable={false}
+                                  height={24}
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    Array [
+                                      Object {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      Object {
+                                        "flex": 0,
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={24}
+                                >
+                                  <RNSVGGroup
+                                    fill={null}
+                                    propList={
+                                      Array [
+                                        "fill",
+                                      ]
+                                    }
+                                  >
+                                    <RNSVGDefs>
+                                      <RNSVGLinearGradient
+                                        gradient={
+                                          Array [
+                                            0,
+                                            736995,
+                                            1,
+                                            -16040221,
+                                          ]
+                                        }
+                                        gradientTransform={null}
+                                        gradientUnits={0}
+                                        name="spinner-secondHalf"
+                                        x1="0%"
+                                        x2="100%"
+                                        y1="0%"
+                                        y2="0%"
+                                      />
+                                      <RNSVGLinearGradient
+                                        gradient={
+                                          Array [
+                                            0,
+                                            -16040221,
+                                            1,
+                                            -16040221,
+                                          ]
+                                        }
+                                        gradientTransform={null}
+                                        gradientUnits={0}
+                                        name="spinner-firstHalf"
+                                        x1="0%"
+                                        x2="100%"
+                                        y1="0%"
+                                        y2="0%"
+                                      />
+                                    </RNSVGDefs>
+                                    <RNSVGGroup
+                                      propList={
+                                        Array [
+                                          "strokeWidth",
+                                        ]
+                                      }
+                                      strokeWidth={3}
+                                    >
+                                      <RNSVGPath
+                                        d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                        propList={
+                                          Array [
+                                            "stroke",
+                                          ]
+                                        }
+                                        stroke={
+                                          Array [
+                                            1,
+                                            "spinner-secondHalf",
+                                          ]
+                                        }
+                                      />
+                                      <RNSVGPath
+                                        d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                        propList={
+                                          Array [
+                                            "stroke",
+                                          ]
+                                        }
+                                        stroke={
+                                          Array [
+                                            1,
+                                            "spinner-firstHalf",
+                                          ]
+                                        }
+                                      />
+                                      <RNSVGPath
+                                        d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                        propList={
+                                          Array [
+                                            "stroke",
+                                            "strokeLinecap",
+                                          ]
+                                        }
+                                        stroke={4278927075}
+                                        strokeLinecap={1}
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -978,7 +1123,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
-                              color={4278219750}
+                              color={4278927075}
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -992,7 +1137,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                     "borderWidth": 0,
                                   },
                                   Object {
-                                    "color": "#0073E6",
+                                    "color": "#0B3EE3",
                                   },
                                   Object {
                                     "flex": 0,
@@ -1001,7 +1146,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   },
                                 ]
                               }
-                              tintColor={4278219750}
+                              tintColor={4278927075}
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
@@ -1524,7 +1669,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
-                              color={4278219750}
+                              color={4278927075}
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -1538,7 +1683,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                     "borderWidth": 0,
                                   },
                                   Object {
-                                    "color": "#0073E6",
+                                    "color": "#0B3EE3",
                                   },
                                   Object {
                                     "flex": 0,
@@ -1547,7 +1692,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   },
                                 ]
                               }
-                              tintColor={4278219750}
+                              tintColor={4278927075}
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
@@ -2077,7 +2222,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
-                              color={4278219750}
+                              color={4278927075}
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -2091,7 +2236,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                     "borderWidth": 0,
                                   },
                                   Object {
-                                    "color": "#0073E6",
+                                    "color": "#0B3EE3",
                                   },
                                   Object {
                                     "flex": 0,
@@ -2100,7 +2245,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   },
                                 ]
                               }
-                              tintColor={4278219750}
+                              tintColor={4278927075}
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
