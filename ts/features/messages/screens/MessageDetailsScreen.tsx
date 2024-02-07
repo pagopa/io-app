@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import { ScrollView } from "react-native";
 import { ContentWrapper } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
@@ -32,10 +33,12 @@ export const MessageDetailsScreen = (
     supportRequest: true
   });
   return (
-    <ScrollView>
-      <ContentWrapper>
-        <MessageDetailsAttachments messageId={messageId} />
-      </ContentWrapper>
-    </ScrollView>
+    <SafeAreaView edges={["bottom"]}>
+      <ScrollView>
+        <ContentWrapper>
+          <MessageDetailsAttachments messageId={messageId} />
+        </ContentWrapper>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
