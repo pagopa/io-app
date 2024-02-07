@@ -23,7 +23,7 @@ import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
 } from "../store/actions";
-import { UIAttachment, UIMessageId } from "../types";
+import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import {
@@ -32,6 +32,7 @@ import {
   trackThirdPartyMessageAttachmentUnavailable
 } from "../analytics";
 import { getHeaderByKey } from "../utils/strings";
+import { attachmentDisplayName } from "../store/reducers/transformers";
 import { handleRequestInit } from "./handleRequestInit";
 
 export const AttachmentsDirectoryPath =
@@ -41,14 +42,8 @@ export const AttachmentsDirectoryPath =
  * Builds the save path for the given attachment
  * @param attachment
  */
-const savePath = (attachment: UIAttachment) =>
-  AttachmentsDirectoryPath +
-  "/" +
-  attachment.messageId +
-  "/" +
-  attachment.id +
-  "/" +
-  attachment.displayName;
+const savePath = (messageId: UIMessageId, attachmentId: string, name: string) =>
+  `${AttachmentsDirectoryPath}/${messageId}/${attachmentId}/${name}`;
 
 const getDelayMilliseconds = (headers: Record<string, string>) =>
   pipe(
@@ -80,20 +75,23 @@ export function* downloadAttachmentWorker(
   bearerToken: SessionToken,
   action: ActionType<typeof downloadAttachment.request>
 ): SagaIterator {
-  const { skipMixpanelTrackingOnFailure, ...attachment } = action.payload;
-  const messageId = attachment.messageId;
+  const { attachment, messageId, skipMixpanelTrackingOnFailure } =
+    action.payload;
   const serviceId = yield* select(getServiceByMessageId, messageId);
+
+  const name = attachmentDisplayName(attachment);
 
   while (true) {
     try {
       const config = yield* call(ReactNativeBlobUtil.config, {
-        path: savePath(attachment),
+        path: savePath(messageId, attachment.id, name),
         timeout: fetchTimeout
       });
 
       const { method, attachmentFullUrl, headers } = yield* call(
         handleRequestInit,
         attachment,
+        messageId,
         bearerToken,
         uuid()
       );
@@ -109,7 +107,7 @@ export function* downloadAttachmentWorker(
 
       if (status === 200) {
         const path = result.path();
-        yield* put(downloadAttachment.success({ attachment, path }));
+        yield* put(downloadAttachment.success({ attachment, messageId, path }));
       } else if (status === 503) {
         const waitingMs = getDelayMilliseconds(rest.headers);
         if (waitingMs >= 0) {
@@ -121,7 +119,7 @@ export function* downloadAttachmentWorker(
         trackFailureEvent(
           skipMixpanelTrackingOnFailure,
           status,
-          attachment.messageId,
+          messageId,
           serviceId
         );
         // In this case we produce a taking error that can be
@@ -131,18 +129,16 @@ export function* downloadAttachmentWorker(
             ? "messageDetails.attachments.badFormat"
             : "messageDetails.attachments.downloadFailed";
         const error = new Error(I18n.t(errorKey));
-        yield* put(downloadAttachment.failure({ attachment, error }));
+        yield* put(
+          downloadAttachment.failure({ attachment, messageId, error })
+        );
       }
     } catch (error) {
-      trackFailureEvent(
-        skipMixpanelTrackingOnFailure,
-        0,
-        attachment.messageId,
-        serviceId
-      );
+      trackFailureEvent(skipMixpanelTrackingOnFailure, 0, messageId, serviceId);
       yield* put(
         downloadAttachment.failure({
           attachment,
+          messageId,
           error: getError(error)
         })
       );
@@ -150,7 +146,7 @@ export function* downloadAttachmentWorker(
       // In this way, the download pot's status
       // in the reducer will be properly updated.
       if (yield* cancelled()) {
-        yield* put(downloadAttachment.cancel(attachment));
+        yield* put(downloadAttachment.cancel({ attachment, messageId }));
       }
     }
     break;
