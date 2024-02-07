@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import { useNavigation } from "@react-navigation/native";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   downloadedMessageAttachmentSelector,
@@ -32,7 +32,7 @@ export const useAttachmentDownload = (
   const attachmentId = attachment.id;
 
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const store = useIOStore();
 
   const download = useIOSelector(state =>
