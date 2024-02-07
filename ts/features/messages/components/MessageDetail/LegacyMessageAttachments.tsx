@@ -7,25 +7,31 @@ import {
 } from "react-native";
 import { Divider, IOColors, Icon } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { H5 } from "../../../components/core/typography/H5";
-import I18n from "../../../i18n";
-import { UIAttachment } from "../types";
-import { ContentTypeValues } from "../types/contentType";
-import { formatByte } from "../types/digitalInformationUnit";
-import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
+import { H5 } from "../../../../components/core/typography/H5";
+import I18n from "../../../../i18n";
+import { ContentTypeValues } from "../../types/contentType";
+import { useLegacyAttachmentDownload } from "../../hooks/useLegacyAttachmentDownload";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { UIMessageId } from "../../types";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../../store/reducers/transformers";
 
 type PartialProps = {
   disabled?: boolean;
   downloadAttachmentBeforePreview?: boolean;
-  openPreview: (attachment: UIAttachment) => void;
+  openPreview: (attachment: ThirdPartyAttachment) => void;
 };
 
-type MessageAttachmentProps = {
-  attachment: UIAttachment;
+type LegacyMessageAttachmentProps = {
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
 } & PartialProps;
 
 type LegacyMessageAttachmentsProps = {
-  attachments: ReadonlyArray<UIAttachment>;
+  attachments: ReadonlyArray<ThirdPartyAttachment>;
+  messageId: UIMessageId;
 } & PartialProps;
 
 const styles = StyleSheet.create({
@@ -60,9 +66,7 @@ const styles = StyleSheet.create({
  * @param props
  * @constructor
  */
-const AttachmentIcon = (props: {
-  contentType: UIAttachment["contentType"];
-}) => {
+const LegacyAttachmentIcon = (props: { contentType: string }) => {
   switch (props.contentType) {
     case ContentTypeValues.applicationPdf:
       return <Icon name="docAttachPDF" color="blue" size={32} />;
@@ -77,12 +81,15 @@ const AttachmentIcon = (props: {
  * @param props
  * @constructor
  */
-const AttachmentItem = (props: MessageAttachmentProps) => {
-  const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
+const LegacyAttachmentItem = (props: LegacyMessageAttachmentProps) => {
+  const { downloadPot, onAttachmentSelect } = useLegacyAttachmentDownload(
     props.attachment,
+    props.messageId,
     props.downloadAttachmentBeforePreview,
     props.openPreview
   );
+  const name = attachmentDisplayName(props.attachment);
+  const mimeType = attachmentContentType(props.attachment);
   return (
     <TouchableOpacity
       style={[
@@ -92,13 +99,13 @@ const AttachmentItem = (props: MessageAttachmentProps) => {
       onPress={onAttachmentSelect}
       disabled={!!props.disabled || pot.isLoading(downloadPot)}
       accessible={true}
-      accessibilityLabel={props.attachment.displayName}
+      accessibilityLabel={name}
       accessibilityRole="button"
       testID="MessageAttachmentTouchable"
     >
       <View style={styles.row}>
         <View style={styles.icon}>
-          <AttachmentIcon contentType={props.attachment.contentType} />
+          <LegacyAttachmentIcon contentType={mimeType} />
         </View>
         <View style={styles.middleSection}>
           <H5
@@ -107,13 +114,8 @@ const AttachmentItem = (props: MessageAttachmentProps) => {
             ellipsizeMode={"middle"}
             numberOfLines={2}
           >
-            {props.attachment.displayName}
+            {name}
           </H5>
-          {typeof props.attachment.size !== "undefined" && (
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {formatByte(props.attachment.size)}
-            </H5>
-          )}
         </View>
         {pot.isLoading(downloadPot) ? (
           <ActivityIndicator
@@ -142,7 +144,7 @@ export const LegacyMessageAttachments = ({
   <>
     {attachments.map((attachment, index) => (
       <View key={index} testID="MessageAttachmentContainer">
-        <AttachmentItem {...rest} attachment={attachment} />
+        <LegacyAttachmentItem {...rest} attachment={attachment} />
         {index < attachments.length - 1 && <Divider />}
       </View>
     ))}
