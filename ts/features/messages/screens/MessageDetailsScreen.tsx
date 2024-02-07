@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { ScrollView } from "react-native";
-import { ContentWrapper } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOStyles } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { UIMessageId } from "../types";
@@ -33,7 +33,7 @@ export const MessageDetailsScreen = (
     supportRequest: true
   });
   return (
-    <SafeAreaView edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
       <ScrollView>
         <ContentWrapper>
           <MessageDetailsAttachments messageId={messageId} />
