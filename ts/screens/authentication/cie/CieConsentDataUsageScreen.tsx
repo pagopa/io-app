@@ -11,12 +11,11 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import { connect } from "react-redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import {
   loginFailure,
   loginSuccess
@@ -39,24 +38,13 @@ export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
 };
 
-type OwnProps = {
-  isLoading: boolean;
-};
-
-type NavigationProps = IOStackNavigationRouteProps<
-  AuthenticationParamsList,
-  "CIE_CONSENT_DATA_USAGE"
->;
-
 type State = {
   hasError: boolean;
   errorCode?: string;
   isLoginSuccess?: boolean;
 };
 
-type Props = OwnProps &
-  NavigationProps &
-  ReturnType<typeof mapDispatchToProps> &
+type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const loaderComponent = (
@@ -65,9 +53,14 @@ const loaderComponent = (
   </LoadingSpinnerOverlay>
 );
 
-class CieConsentDataUsageScreen extends React.Component<Props, State> {
+type CieConsentDataUsageScreenProps = Props &
+  CieConsentDataUsageScreenNavigationParams;
+class CieConsentDataUsageScreen extends React.Component<
+  CieConsentDataUsageScreenProps,
+  State
+> {
   private subscription: NativeEventSubscription | undefined;
-  constructor(props: Props) {
+  constructor(props: CieConsentDataUsageScreenProps) {
     super(props);
     trackLoginCieConsentDataUsageScreen();
     this.state = {
@@ -113,7 +106,7 @@ class CieConsentDataUsageScreen extends React.Component<Props, State> {
   }
 
   get cieAuthorizationUri(): string {
-    return this.props.route.params.cieConsentUri;
+    return this.props.cieConsentUri;
   }
 
   private handleWebViewError = () => {
@@ -224,7 +217,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginFailure: (error: Error) => dispatch(loginFailure({ error, idp: "cie" }))
 });
 
+const CieConsentDataUsageScreenFC = (props: Props) => {
+  const { cieConsentUri } =
+    useRoute<
+      Route<"CIE_CONSENT_DATA_USAGE", CieConsentDataUsageScreenNavigationParams>
+    >().params;
+  return <CieConsentDataUsageScreen {...props} cieConsentUri={cieConsentUri} />;
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CieConsentDataUsageScreen);
+)(CieConsentDataUsageScreenFC);

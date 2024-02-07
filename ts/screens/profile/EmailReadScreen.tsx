@@ -5,13 +5,15 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import EmailReadComponent from "../../components/EmailReadComponent";
 import { SingleButton } from "../../components/ui/BlockButtons";
 import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
 import ROUTES from "../../navigation/routes";
 
@@ -22,7 +24,7 @@ type Props = IOStackNavigationRouteProps<
 
 const EmailReadScreen = (props: Props) => {
   useValidatedEmailModal();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const handleGoBack = () => {
     props.navigation.goBack();
@@ -35,7 +37,10 @@ const EmailReadScreen = (props: Props) => {
       title: I18n.t("email.edit.cta"),
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.INSERT_EMAIL_SCREEN
+          screen: ROUTES.INSERT_EMAIL_SCREEN,
+          params: {
+            isOnboarding: false
+          }
         })
     }
   };

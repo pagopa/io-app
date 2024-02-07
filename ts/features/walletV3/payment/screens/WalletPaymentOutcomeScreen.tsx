@@ -75,7 +75,8 @@ const WalletPaymentOutcomeScreen = () => {
 
   const handleClose = () => {
     if (paymentStartRoute) {
-      navigation.navigate(paymentStartRoute.routeName, {
+      // TODO: this is a workaround to solve type errors need to investigate deeply
+      navigation.navigate(paymentStartRoute.routeName as any, {
         screen: paymentStartRoute.routeKey
       });
       return;

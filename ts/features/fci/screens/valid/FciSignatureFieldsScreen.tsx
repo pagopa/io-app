@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View, SectionList, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { constFalse, increment, pipe } from "fp-ts/lib/function";
@@ -24,8 +24,7 @@ import {
   fciSignatureDetailDocumentsSelector
 } from "../../store/reducers/fciSignatureRequest";
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { FciParamsList } from "../../navigation/params";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import SignatureFieldItem from "../../components/SignatureFieldItem";
 import { SignatureField } from "../../../../../definitions/fci/SignatureField";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -62,11 +61,12 @@ export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   currentDoc: number;
 }>;
 
-const FciSignatureFieldsScreen = (
-  props: IOStackNavigationRouteProps<FciParamsList, "FCI_SIGNATURE_FIELDS">
-) => {
-  const currentDoc = props.route.params.currentDoc;
-  const docId = props.route.params.documentId;
+const FciSignatureFieldsScreen = () => {
+  const { currentDoc, documentId: docId } =
+    useRoute<
+      Route<"FCI_SIGNATURE_FIELDS", FciSignatureFieldsScreenNavigationParams>
+    >().params;
+
   const documentsSelector = useSelector(fciSignatureDetailDocumentsSelector);
   const signatureFieldsSelector = useSelector(
     fciDocumentSignatureFieldsSelector(docId)
@@ -76,7 +76,7 @@ const FciSignatureFieldsScreen = (
   );
   const fciEnvironment = useSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const [isClausesChecked, setIsClausesChecked] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const { showModal, hideModal } = React.useContext(LightModalContext);
