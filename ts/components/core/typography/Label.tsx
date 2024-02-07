@@ -1,8 +1,8 @@
 import {
   FontSize,
   fontSizeMapping,
-  type IOColors,
-  type IOColorsStatusForeground
+  IOColors,
+  IOColorsStatusForeground
 } from "@pagopa/io-app-design-system";
 import { IOFontFamily, IOFontWeight } from "../fonts";
 import { ExternalTypographyProps, TypographyProps } from "./common";

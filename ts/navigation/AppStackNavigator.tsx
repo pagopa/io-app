@@ -39,6 +39,7 @@ import NavigationService, {
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import ROUTES from "./routes";
+import { AppParamsList } from "./params/AppParamsList";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -81,7 +82,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
 
-  const linking: LinkingOptions = {
+  const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
     prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
     config: {

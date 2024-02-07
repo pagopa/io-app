@@ -28,8 +28,7 @@ const Stack = createStackNavigator<WalletOnboardingParamsList>();
 export const WalletOnboardingNavigator = () => (
   <Stack.Navigator
     initialRouteName={WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK}
