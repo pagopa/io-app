@@ -16,8 +16,7 @@ const Stack = createStackNavigator<IdPayCodeParamsList>();
 export const IdPayCodeNavigator = () => (
   <Stack.Navigator
     initialRouteName={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: false }}
+    screenOptions={{ gestureEnabled: false, headerShown: false }}
   >
     <Stack.Screen
       name={IdPayCodeRoutes.IDPAY_CODE_ONBOARDING}
