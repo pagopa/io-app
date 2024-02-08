@@ -16,9 +16,8 @@ import I18n from "../../../../i18n";
 import { logosForService } from "../../../../utils/services";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
+import { gap } from "../../utils";
 import { OrganizationHeader } from "./OrganizationHeader";
-
-export const gap = 8;
 
 const styles = StyleSheet.create({
   tagsWrapper: {

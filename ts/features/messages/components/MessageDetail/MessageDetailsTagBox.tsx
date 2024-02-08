@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { gap } from "./MessageDetailsHeader";
+import { gap } from "../../utils";
 
 const styles = StyleSheet.create({
   tagWrapper: {
