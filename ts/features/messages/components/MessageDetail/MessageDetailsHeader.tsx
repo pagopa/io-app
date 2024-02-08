@@ -16,7 +16,7 @@ import I18n from "../../../../i18n";
 import { logosForService } from "../../../../utils/services";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
-import { gap } from "../../utils";
+import { gapBetweenItemsInAGrid } from "../../utils";
 import { OrganizationHeader } from "./OrganizationHeader";
 
 const styles = StyleSheet.create({
@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "flex-start",
-    marginHorizontal: -(gap / 2),
-    marginVertical: -(gap / 2)
+    marginHorizontal: -(gapBetweenItemsInAGrid / 2),
+    marginVertical: -(gapBetweenItemsInAGrid / 2)
   }
 });
 

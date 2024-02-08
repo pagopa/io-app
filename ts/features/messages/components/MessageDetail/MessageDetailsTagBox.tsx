@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { gap } from "../../utils";
+import { gapBetweenItemsInAGrid } from "../../utils";
 
 const styles = StyleSheet.create({
   tagWrapper: {
-    marginHorizontal: gap / 2,
-    marginVertical: gap / 2
+    marginHorizontal: gapBetweenItemsInAGrid / 2,
+    marginVertical: gapBetweenItemsInAGrid / 2
   }
 });
 

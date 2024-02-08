@@ -4,7 +4,7 @@ import { UIMessageDetails } from "../types";
 import { getExpireStatus } from "../../../utils/dates";
 import { MessagePaymentExpirationInfo } from "./messages";
 
-export const gap = 8;
+export const gapBetweenItemsInAGrid = 8;
 
 const networkErrorToError = (networkError: NetworkError) =>
   networkError.kind === "timeout" ? new Error("timeout") : networkError.value;
