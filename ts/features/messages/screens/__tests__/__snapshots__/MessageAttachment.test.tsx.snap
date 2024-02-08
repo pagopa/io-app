@@ -422,7 +422,17 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               },
                             ]
                           }
-                        />
+                        >
+                          <View
+                            accessibilityLabel="TODO"
+                            accessible={true}
+                            style={
+                              Object {
+                                "flex": 1,
+                              }
+                            }
+                          />
+                        </View>
                       </View>
                       <View
                         pointerEvents="box-none"
