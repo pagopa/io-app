@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import {
-  ActivityIndicator,
   GestureResponderEvent,
   Pressable,
   PressableProps,
@@ -8,18 +7,17 @@ import {
   View
 } from "react-native";
 import {
+  Badge,
   IOColors,
-  IOIconSizeScale,
-  IOIcons,
   IOListItemVisualParams,
   IOScaleValues,
-  IOSpacingScale,
   IOSpringValues,
-  IOStyles,
   Icon,
   LabelSmall,
+  LoadingSpinner,
   VSpacer,
-  WithTestID
+  WithTestID,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import Animated, {
   Extrapolate,
@@ -30,34 +28,31 @@ import Animated, {
   withSpring
 } from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import I18n from "../../../i18n";
 
 type PartialProps = WithTestID<{
   title: string;
   format: "doc" | "pdf";
-  subtitle?: string;
   isLoading?: boolean;
+  loadingAccessibilityLabel?: string;
   isFetching?: boolean;
+  fetchingAccessibilityLabel?: string;
   onPress: (event: GestureResponderEvent) => void;
 }>;
 
 export type ModuleAttachmentProps = PartialProps &
-  Pick<PressableProps, "onPress" | "accessibilityLabel" | "disabled">;
+  Pick<
+    PressableProps,
+    "onPress" | "accessibilityLabel" | "disabled" | "testID"
+  >;
 
-const formatMap: Record<
-  NonNullable<ModuleAttachmentProps["format"]>,
-  IOIcons
-> = {
-  doc: "docAttach",
-  pdf: "docAttachPDF"
+type SkeletonComponentProps = {
+  loadingAccessibilityLabel?: string;
 };
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 16,
     borderRadius: 8,
@@ -66,49 +61,40 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 1
   },
+  innerContent: {
+    flex: 1,
+    flexDirection: "column"
+  },
   rightSection: {
     marginLeft: IOListItemVisualParams.iconMargin,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end"
+    alignItems: "center"
   }
 });
 
 const DISABLED_OPACITY = 0.5;
-const ICON_SIZE: IOIconSizeScale = 32;
-const MARGIN_SIZE: IOSpacingScale = 16;
 
 const ModuleAttachmentContent = ({
   isFetching,
   format,
   title,
-  subtitle
+  testID
 }: Pick<
   ModuleAttachmentProps,
-  "isFetching" | "format" | "title" | "subtitle"
+  "isFetching" | "format" | "title" | "testID"
 >) => {
+  const theme = useIOTheme();
   const IconOrActivityIndicatorComponent = () => {
     if (isFetching) {
-      return (
-        <ActivityIndicator
-          color={IOColors.blue}
-          accessible={true}
-          accessibilityHint={I18n.t(
-            "global.accessibility.activityIndicator.hint"
-          )}
-          accessibilityLabel={I18n.t(
-            "global.accessibility.activityIndicator.label"
-          )}
-          importantForAccessibility={"no-hide-descendants"}
-          testID={"activityIndicator"}
-        />
-      );
+      const activityIndicatorTestId = testID
+        ? `${testID}_activityIndicator`
+        : undefined;
+      return <LoadingSpinner testID={activityIndicatorTestId} />;
     }
 
     return (
       <Icon
         name="chevronRightListItem"
-        color="blue"
+        color={theme["interactiveElem-default"]}
         size={IOListItemVisualParams.chevronSize}
       />
     );
@@ -116,18 +102,19 @@ const ModuleAttachmentContent = ({
 
   return (
     <>
-      <View style={{ marginRight: MARGIN_SIZE }}>
-        <Icon name={formatMap[format]} size={ICON_SIZE} color="blue" />
-      </View>
-      <View style={IOStyles.flex}>
-        <LabelSmall numberOfLines={1} weight="SemiBold" color="bluegrey">
+      <View style={styles.innerContent}>
+        <LabelSmall
+          numberOfLines={1}
+          weight="SemiBold"
+          font="ReadexPro"
+          color="blueIO-500"
+        >
           {title}
         </LabelSmall>
-        {subtitle && (
-          <LabelSmall weight="Regular" color="bluegrey">
-            {subtitle}
-          </LabelSmall>
-        )}
+        <VSpacer size={4} />
+        <View style={{ width: 44 }}>
+          <Badge text={format.toUpperCase()} variant="default" />
+        </View>
       </View>
       <View style={styles.rightSection}>
         <IconOrActivityIndicatorComponent />
@@ -140,23 +127,29 @@ const ModuleAttachmentContent = ({
  * The `ModuleAttachment` component is a custom button component with an extended outline style.
  * It provides an animated scaling effect when pressed.
  *
- * @param {boolean} isLoading - If true, displays a skeleton loading component.
- * @param {boolean} isFetching - If true, displays an activity indicator.
- * @param {boolean} disabled - If true, the button is disabled.
- * @param {string} testID - The test ID for testing purposes.
- * @param {string} title - The title text to display.
- * @param {string} subtitle - The subtitle text to display.
- * @param {string} iconName - The icon name to display.
+ * @param {string}   accessibilityLabel - Optional accessibility label.
+ * @param {boolean}  disabled - If true, the button is disabled.
+ * @param {string}   fetchingAccessibilityLabel - Optional accessibility label to use during fetching.
+ * @param {string}   format - Badge content. PDF or DOC.
+ * @param {boolean}  isLoading - If true, displays a skeleton loading component.
+ * @param {boolean}  isFetching - If true, displays an activity indicator.
+ * @param {string}   loadingAccessibilityLabel - Optional accessibility label to use during loading.
  * @param {function} onPress - The function to be executed when the item is pressed.
+ * @param {string}   testID - The test ID for testing purposes.
+ * @param {string}   title - The title text to display.
+ *
  */
 export const ModuleAttachment = ({
+  accessibilityLabel,
+  disabled = false,
+  fetchingAccessibilityLabel,
+  format,
   isLoading = false,
   isFetching = false,
-  disabled = false,
-  testID,
-  accessibilityLabel,
+  loadingAccessibilityLabel,
   onPress,
-  ...rest
+  testID,
+  title
 }: ModuleAttachmentProps) => {
   const isPressed: Animated.SharedValue<number> = useSharedValue(0);
 
@@ -202,9 +195,17 @@ export const ModuleAttachment = ({
   );
 
   if (isLoading) {
-    return <SkeletonComponent />;
+    return (
+      <SkeletonComponent
+        loadingAccessibilityLabel={loadingAccessibilityLabel}
+      />
+    );
   }
 
+  const pressableAccessibilityLabel =
+    (isFetching && !!fetchingAccessibilityLabel
+      ? fetchingAccessibilityLabel
+      : accessibilityLabel) ?? title;
   return (
     <Pressable
       testID={testID}
@@ -213,7 +214,8 @@ export const ModuleAttachment = ({
       onPressOut={onPressOut}
       accessible={true}
       accessibilityRole={"button"}
-      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={format}
+      accessibilityLabel={pressableAccessibilityLabel}
       disabled={disabled || isFetching}
     >
       <Animated.View
@@ -222,27 +224,31 @@ export const ModuleAttachment = ({
           animatedStyle,
           { opacity: disabled ? DISABLED_OPACITY : 1 }
         ]}
+        accessibilityElementsHidden={true}
+        importantForAccessibility="no-hide-descendants"
       >
-        <ModuleAttachmentContent isFetching={isFetching} {...rest} />
+        <ModuleAttachmentContent
+          isFetching={isFetching}
+          title={title}
+          format={format}
+        />
       </Animated.View>
     </Pressable>
   );
 };
 
-const SkeletonComponent = () => (
-  <View style={styles.button} accessible={false}>
-    <View style={{ marginRight: MARGIN_SIZE }}>
-      <Placeholder.Box
-        animate="fade"
-        height={ICON_SIZE}
-        width={ICON_SIZE}
-        radius={100}
-      />
-    </View>
-    <View style={IOStyles.flex}>
-      <Placeholder.Box animate="fade" radius={8} width={107} height={16} />
+const SkeletonComponent = ({
+  loadingAccessibilityLabel
+}: SkeletonComponentProps) => (
+  <View
+    style={styles.button}
+    accessible={true}
+    accessibilityLabel={loadingAccessibilityLabel}
+  >
+    <View style={styles.innerContent}>
+      <Placeholder.Box animate="fade" radius={8} width={107} height={22} />
       <VSpacer size={4} />
-      <Placeholder.Box animate="fade" radius={8} width={62} height={16} />
+      <Placeholder.Box animate="fade" radius={8} width={44} height={22} />
     </View>
   </View>
 );
