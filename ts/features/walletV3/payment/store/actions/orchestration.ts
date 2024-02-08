@@ -1,6 +1,12 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { PaymentStartOrigin, PaymentStartRoute } from "../../types";
+
+type PaymentInitStateParams = {
+  startRoute: PaymentStartRoute;
+  startOrigin?: PaymentStartOrigin;
+};
 
 /**
  * Action to initialize the state of a payment, optionally you can specify the route to go back to
@@ -8,7 +14,7 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/Walle
  */
 export const walletPaymentInitState = createStandardAction(
   "WALLET_PAYMENT_INIT_STATE"
-)();
+)<PaymentInitStateParams>();
 
 export const walletPaymentPickPaymentMethod = createStandardAction(
   "WALLET_PAYMENT_PICK_PAYMENT_METHOD"
