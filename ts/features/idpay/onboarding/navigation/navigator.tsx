@@ -43,8 +43,7 @@ export const IDPayOnboardingNavigator = () => (
       initialRouteName={
         IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS
       }
-      headerMode={"none"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
     >
       <Stack.Screen
         name={IDPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS}

@@ -12,6 +12,7 @@ import { ComponentProps } from "react";
 import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { VSpacer, IOPictograms } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
@@ -30,8 +31,6 @@ import {
 } from "../../../features/zendesk/store/actions";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToPaymentManualDataInsertion } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
 import {
@@ -80,13 +79,7 @@ export type TransactionErrorScreenNavigationParams = {
   onCancel: () => void;
 };
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_TRANSACTION_ERROR"
->;
-
-type Props = OwnProps &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const imageTimeout: IOPictograms = "inProgress";
@@ -357,9 +350,11 @@ export const errorTransactionUIElements = (
 };
 
 const TransactionErrorScreen = (props: Props) => {
-  const rptId = props.route.params.rptId;
-  const error = props.route.params.error;
-  const onCancel = props.route.params.onCancel;
+  const { rptId, error, onCancel } =
+    useRoute<
+      Route<"PAYMENT_TRANSACTION_ERROR", TransactionErrorScreenNavigationParams>
+    >().params;
+
   const { paymentsHistory } = props;
 
   const codiceAvviso = getCodiceAvviso(rptId);

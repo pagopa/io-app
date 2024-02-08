@@ -1,14 +1,14 @@
-import { call, put, take } from "typed-redux-saga/macro";
+import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
 import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
-import { tosVersion } from "../../config";
 import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { isProfileFirstOnBoarding } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
 import NavigationService from "../../navigation/NavigationService";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
@@ -18,6 +18,7 @@ export function* checkAcceptedTosSaga(
   | ActionType<(typeof profileUpsert)["success"]>
   | ActionType<(typeof profileUpsert)["failure"]>
 > {
+  const tosVersion = (yield* select(tosConfigSelector)).tos_version;
   // The user has to explicitly accept the new version of ToS if:
   // - this is the first access
   // - the user profile stores the user accepted an old version of ToS

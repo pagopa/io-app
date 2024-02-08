@@ -35,7 +35,7 @@ import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList"
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import { nfcIsEnabled } from "../../../store/actions/cie";
-import { Dispatch, ReduxProps } from "../../../store/actions/types";
+import { Dispatch } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loginSuccess({ token, idp }))
 });
 
-type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   container: {

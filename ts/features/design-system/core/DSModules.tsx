@@ -9,11 +9,14 @@ import {
   PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { ModuleAttachment } from "../../messages/components/ModuleAttachment";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { H2 } from "../../../components/core/typography/H2";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { LegacyModuleAttachment } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
+import { useIOSelector } from "../../../store/hooks";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { ModuleAttachment } from "../../messages/components/MessageDetail/ModuleAttachment";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -32,113 +35,161 @@ const noticeStatusArray: Array<PaymentNoticeStatusWithoutDefault> = [
   "canceled"
 ];
 
-export const DSModules = () => (
-  <IOThemeContext.Consumer>
-    {theme => (
-      <DesignSystemScreen title="Modules">
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16 }}
-        >
-          ModuleAttachment
-        </H2>
-        {renderModuleAttachment()}
+export const DSModules = () => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  return (
+    <IOThemeContext.Consumer>
+      {theme => (
+        <DesignSystemScreen title="Modules">
+          <H2
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16 }}
+          >
+            ModuleAttachment
+          </H2>
+          {renderModuleAttachment(isDesignSystemEnabled)}
 
-        <VSpacer size={40} />
+          <VSpacer size={40} />
 
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16 }}
-        >
-          ModulePaymentNotice
-        </H2>
-        {renderModulePaymentNotice()}
+          <H2
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16 }}
+          >
+            ModulePaymentNotice
+          </H2>
+          {renderModulePaymentNotice()}
 
-        <VSpacer size={40} />
+          <VSpacer size={40} />
 
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16 }}
-        >
-          ModuleCheckout
-        </H2>
-        {renderModuleCheckout()}
+          <H2
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16 }}
+          >
+            ModuleCheckout
+          </H2>
+          {renderModuleCheckout()}
 
-        <VSpacer size={40} />
+          <VSpacer size={40} />
 
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16 }}
-        >
-          ButtonExtendedOutline
-        </H2>
-        {renderButtonExtendedOutline()}
+          <H2
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16 }}
+          >
+            ButtonExtendedOutline
+          </H2>
+          {renderButtonExtendedOutline()}
 
-        <VSpacer size={40} />
+          <VSpacer size={40} />
 
-        <H2
-          color={theme["textHeading-default"]}
-          weight={"SemiBold"}
-          style={{ marginBottom: 16 }}
-        >
-          ModuleIDP
-        </H2>
-        {renderModuleIDP()}
-      </DesignSystemScreen>
-    )}
-  </IOThemeContext.Consumer>
-);
+          <H2
+            color={theme["textHeading-default"]}
+            weight={"SemiBold"}
+            style={{ marginBottom: 16 }}
+          >
+            ModuleIDP
+          </H2>
+          {renderModuleIDP()}
+        </DesignSystemScreen>
+      )}
+    </IOThemeContext.Consumer>
+  );
+};
 
-const renderModuleAttachment = () => (
+const renderModuleAttachment = (isDesignSystemEnabled: boolean) => (
   <DSComponentViewerBox name="ModuleAttachment">
     <View>
-      <ModuleAttachment
-        title="Nome del documento.pdf"
-        subtitle="123 Kb"
-        format="pdf"
-        isLoading={true}
-        onPress={onButtonPress}
-      />
+      {isDesignSystemEnabled ? (
+        <ModuleAttachment
+          title="Nome del documento.pdf"
+          format="pdf"
+          isLoading={true}
+          onPress={onButtonPress}
+        />
+      ) : (
+        <LegacyModuleAttachment
+          title="Nome del documento.pdf"
+          subtitle="123 Kb"
+          format="pdf"
+          isLoading={true}
+          onPress={onButtonPress}
+        />
+      )}
       <VSpacer size={16} />
-      <ModuleAttachment
-        title="Nome del documento.pdf"
-        subtitle="123 Kb"
-        format="pdf"
-        onPress={onButtonPress}
-      />
+      {isDesignSystemEnabled ? (
+        <ModuleAttachment
+          title="Nome del documento.pdf"
+          format="pdf"
+          onPress={onButtonPress}
+        />
+      ) : (
+        <LegacyModuleAttachment
+          title="Nome del documento.pdf"
+          subtitle="123 Kb"
+          format="pdf"
+          onPress={onButtonPress}
+        />
+      )}
       <VSpacer size={16} />
-      <ModuleAttachment
-        title="Nome del documento.pdf"
-        format="pdf"
-        onPress={onButtonPress}
-      />
+      {isDesignSystemEnabled ? null : (
+        <LegacyModuleAttachment
+          title="Nome del documento.pdf"
+          format="pdf"
+          onPress={onButtonPress}
+        />
+      )}
       <VSpacer size={16} />
-      <ModuleAttachment
-        title={"This is a very loooooooooooooooooooooong title"}
-        subtitle={"This is a very loooooooooooong subtitle"}
-        format="pdf"
-        onPress={onButtonPress}
-      />
+      {isDesignSystemEnabled ? (
+        <ModuleAttachment
+          title="This is a very loooooooooooooooooooooong title"
+          format="pdf"
+          onPress={onButtonPress}
+        />
+      ) : (
+        <LegacyModuleAttachment
+          title={"This is a very loooooooooooooooooooooong title"}
+          subtitle={"This is a very loooooooooooong subtitle"}
+          format="pdf"
+          onPress={onButtonPress}
+        />
+      )}
       <VSpacer size={16} />
-      <ModuleAttachment
-        title="Nome del documento.pdf"
-        subtitle="123 Kb"
-        format="pdf"
-        isFetching={true}
-        onPress={onButtonPress}
-      />
+      {isDesignSystemEnabled ? (
+        <ModuleAttachment
+          title="Nome del documento.pdf"
+          format="pdf"
+          isFetching={true}
+          onPress={onButtonPress}
+        />
+      ) : (
+        <LegacyModuleAttachment
+          title="Nome del documento.pdf"
+          subtitle="123 Kb"
+          format="pdf"
+          isFetching={true}
+          onPress={onButtonPress}
+        />
+      )}
       <VSpacer size={16} />
-      <ModuleAttachment
-        title="Nome del documento.pdf"
-        subtitle="123 Kb"
-        format="pdf"
-        disabled={true}
-        onPress={onButtonPress}
-      />
+      {isDesignSystemEnabled ? (
+        <ModuleAttachment
+          title="Nome del documento.pdf"
+          format="pdf"
+          disabled={true}
+          onPress={onButtonPress}
+        />
+      ) : (
+        <LegacyModuleAttachment
+          title="Nome del documento.pdf"
+          subtitle="123 Kb"
+          format="pdf"
+          disabled={true}
+          onPress={onButtonPress}
+        />
+      )}
     </View>
   </DSComponentViewerBox>
 );

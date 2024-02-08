@@ -24,8 +24,7 @@ const Stack = createStackNavigator<AuthenticationParamsList>();
 const AuthenticationStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.AUTHENTICATION_LANDING}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: true }}
+    screenOptions={{ gestureEnabled: true, headerShown: false }}
   >
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}

@@ -9,9 +9,8 @@ import { useRef } from "react";
 import { View } from "react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
-import { fimsEnabled, myPortalEnabled, svEnabled } from "../config";
+import { fimsEnabled, myPortalEnabled } from "../config";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
-import { svLinkingOptions } from "../features/bonus/siciliaVola/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { fimsLinkingOptions } from "../features/fims/navigation/navigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
@@ -40,6 +39,7 @@ import NavigationService, {
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import ROUTES from "./routes";
+import { AppParamsList } from "./params/AppParamsList";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -82,7 +82,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
 
-  const linking: LinkingOptions = {
+  const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
     prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
     config: {
@@ -122,8 +122,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
                 activate: activate => activate === "true"
               }
             },
-            ...(myPortalEnabled && { [ROUTES.SERVICE_WEBVIEW]: "webview" }),
-            ...(svEnabled && svLinkingOptions)
+            ...(myPortalEnabled && { [ROUTES.SERVICE_WEBVIEW]: "webview" })
           }
         },
         ...fciLinkingOptions,

@@ -1,4 +1,4 @@
-import ZendDesk from "io-react-native-zendesk";
+import ZendDesk from "@pagopa/io-react-native-zendesk";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
@@ -144,13 +144,10 @@ export const resetAssistanceData = () => {
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
 // help can be shown only when remote FF is  zendesk + local FF + emailValidated
-export const canShowHelp = (
-  assistanceTool: ToolEnum,
-  isEmailValidated: boolean
-): boolean => {
+export const canShowHelp = (assistanceTool: ToolEnum): boolean => {
   switch (assistanceTool) {
     case ToolEnum.zendesk:
-      return zendeskEnabled && isEmailValidated;
+      return zendeskEnabled;
     case ToolEnum.instabug:
     case ToolEnum.web:
     case ToolEnum.none:
