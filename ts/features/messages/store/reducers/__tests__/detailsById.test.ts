@@ -8,7 +8,8 @@ import {
 import { loadMessageDetails } from "../../actions";
 import reducer, {
   detailedMessageHasThirdPartyDataSelector,
-  messageDetailsByIdSelector
+  messageDetailsByIdSelector,
+  messageDetailsExpiringInfoSelector
 } from "../detailsById";
 import { UIMessageDetails, UIMessageId } from "../../../types";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -119,5 +120,90 @@ describe("detailedMessageHasThirdPartyDataSelector", () => {
       messageId
     );
     expect(hasThirdPartyData).toBe(true);
+  });
+});
+
+describe("messageDetailsExpiringInfoSelector", () => {
+  it("should return `does_not_expire` when `paymentData` is not defined", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/05/2023").getTime()
+    );
+    expect(expiringInfo).toBe("does_not_expire");
+  });
+
+  it("should return `does_not_expire` when `paymentData` is defined and `dueDate` is not", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      paymentData: {
+        amount: 99,
+        noticeNumber: "123",
+        payee: {
+          fiscalCode: "123"
+        }
+      }
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/05/2023").getTime()
+    );
+    expect(expiringInfo).toBe("does_not_expire");
+  });
+
+  it("should return `expired` when there is a `paymentData` is defined and `dueDate` has passed", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      dueDate: new Date("01/01/2023"),
+      paymentData: {
+        amount: 99,
+        noticeNumber: "123",
+        payee: {
+          fiscalCode: "123"
+        }
+      }
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/05/2023").getTime()
+    );
+    expect(expiringInfo).toBe("expired");
+  });
+
+  it("should return `expiring` when there is a `paymentData` is defined and `dueDate` has not passed", () => {
+    const messageId = "m1" as UIMessageId;
+    const action = loadMessageDetails.success({
+      id: messageId,
+      dueDate: new Date("01/05/2023"),
+      paymentData: {
+        amount: 99,
+        noticeNumber: "123",
+        payee: {
+          fiscalCode: "123"
+        }
+      }
+    } as UIMessageDetails);
+    const state = appReducer(undefined, action);
+
+    const expiringInfo = messageDetailsExpiringInfoSelector(
+      state,
+      messageId,
+      new Date("01/01/2023").getTime()
+    );
+    expect(expiringInfo).toBe("expiring");
   });
 });
