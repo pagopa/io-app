@@ -769,7 +769,6 @@ export function* watchWalletSaga(
     paymentManagerClient.addPans,
     pmSessionManager
   );
-
   // watch for add BPay to Wallet workflow
   yield* takeLatest(walletAddBPayStart, addBPayToWalletSaga);
 
@@ -788,27 +787,6 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
-  // watch for CoBadge search request
-  yield* takeLatest(
-    searchUserCoBadge.request,
-    handleSearchUserCoBadge,
-    paymentManagerClient.getCobadgePans,
-    paymentManagerClient.searchCobadgePans,
-    pmSessionManager
-  );
-  // watch for add CoBadge to the user's wallet
-  yield* takeLatest(
-    addCoBadgeToWallet.request,
-    handleAddCoBadgeToWallet,
-    paymentManagerClient.addCobadgeToWallet,
-    pmSessionManager
-  );
-  // watch for CoBadge configuration request
-  yield* takeLatest(
-    loadCoBadgeAbiConfiguration.request,
-    handleLoadCoBadgeConfiguration,
-    contentClient.getCobadgeServices
-  );
   // watch for CoBadge search request
   yield* takeLatest(
     searchUserCoBadge.request,
@@ -923,8 +901,9 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
     if (entrypointRoute !== undefined) {
       yield* call(
         NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(entrypointRoute.name, {
-          key: entrypointRoute.key
+        CommonActions.navigate({
+          name: entrypointRoute.name,
+          merge: true
         })
       );
       yield* put(paymentInitializeState());

@@ -15,15 +15,18 @@ import { ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import {
+  LightModalContext,
+  LightModalContextInterface
+} from "../../components/ui/LightModal";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { remindersOptInEnabled } from "../../config";
 import I18n from "../../i18n";
 import {
   AppParamsList,
-  IOStackNavigationRouteProps
+  IOStackNavigationProp,
+  useIONavigation
 } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
@@ -32,7 +35,7 @@ import {
   navigateToLanguagePreferenceScreen,
   navigateToServicePreferenceScreen
 } from "../../store/actions/navigation";
-import { Dispatch, ReduxProps } from "../../store/actions/types";
+import { Dispatch } from "../../store/actions/types";
 import {
   isCustomEmailChannelEnabledSelector,
   preferredLanguageSelector
@@ -54,13 +57,8 @@ import {
 } from "../../utils/locale";
 import { requestWriteCalendarPermission } from "../../utils/permission";
 
-type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
-
-type Props = OwnProps &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  ReduxProps &
-  LightModalContextInterface;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 type PreferencesNavListItem = {
   value: string;
@@ -69,6 +67,9 @@ type PreferencesNavListItem = {
   ComponentProps<typeof ListItemNav>,
   "description" | "testID" | "onPress"
 >;
+
+type PreferencesScreenProps = LightModalContextInterface &
+  Props & { navigation: IOStackNavigationProp<AppParamsList> };
 
 /**
  * Translates the primary languages of the provided locales.
@@ -105,8 +106,8 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.preferences.contextualHelpContent"
 };
 
-class PreferencesScreen extends React.Component<Props> {
-  constructor(props: Props) {
+class PreferencesScreen extends React.Component<PreferencesScreenProps> {
+  constructor(props: PreferencesScreenProps) {
     super(props);
   }
 
@@ -243,7 +244,9 @@ class PreferencesScreen extends React.Component<Props> {
 
     return (
       <RNavScreenWithLargeHeader
-        title={I18n.t("profile.preferences.title")}
+        title={{
+          label: I18n.t("profile.preferences.title")
+        }}
         description={I18n.t("profile.preferences.subtitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         headerActionsProp={{ showHelp: true }}
@@ -287,7 +290,15 @@ const mapDispatchToProps = (_: Dispatch) => ({
   navigateToLanguagePreferenceScreen: () => navigateToLanguagePreferenceScreen()
 });
 
+const PreferencesScreenFC = (props: Props) => {
+  const { ...modalContext } = React.useContext(LightModalContext);
+  const navigation = useIONavigation();
+  return (
+    <PreferencesScreen {...props} {...modalContext} navigation={navigation} />
+  );
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(PreferencesScreen));
+)(PreferencesScreenFC);

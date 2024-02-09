@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
@@ -27,6 +26,8 @@ import {
 } from "../store/actions";
 import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
 import PAYPAL_ROUTES from "../navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -104,7 +105,7 @@ const CheckoutContent = (
  * 4. navigate to the checkout completed screen
  */
 const PayPalOnboardingCheckoutScreen = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const { refreshPMtoken } = props;
   // refresh the PM at the startup
   useEffect(() => {
@@ -113,8 +114,11 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 
   const handleCheckoutCompleted = (outcomeCode: O.Option<string>) => {
     props.setOutcomeCode(outcomeCode);
-    navigation.navigate(PAYPAL_ROUTES.ONBOARDING.MAIN, {
-      screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_COMPLETED
+    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_COMPLETED
+      }
     });
   };
 

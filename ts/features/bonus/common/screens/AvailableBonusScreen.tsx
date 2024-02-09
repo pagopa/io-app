@@ -18,7 +18,6 @@ import { ServicePublic } from "../../../../../definitions/backend/ServicePublic"
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
@@ -58,6 +57,7 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -271,7 +271,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(showServiceDetails(service))
 });
 
+const AvailableBonusScreenFC: React.FunctionComponent<Props> = (
+  props: Props
+) => (
+  <LoadingSpinnerOverlay isLoading={props.isLoading}>
+    <AvailableBonusScreen {...props} />
+  </LoadingSpinnerOverlay>
+);
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLoadingSpinner(AvailableBonusScreen));
+)(AvailableBonusScreenFC);

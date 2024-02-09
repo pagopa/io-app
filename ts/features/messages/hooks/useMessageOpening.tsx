@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { IOColors } from "@pagopa/io-app-design-system";
@@ -33,6 +32,7 @@ import {
 } from "../components/PreconditionBottomSheet/PreconditionContent";
 import { PreconditionFooter } from "../components/PreconditionBottomSheet/PreconditionFooter";
 import { MESSAGES_ROUTES } from "../navigation/routes";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 
 const renderPreconditionHeader = (
   content: RemoteValue<ThirdPartyMessagePrecondition, Error>
@@ -88,7 +88,7 @@ const renderPreconditionFooter = (
 };
 
 export const useMessageOpening = () => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
   const pnSupported = useIOSelector(isPnSupportedSelector);

@@ -8,12 +8,14 @@ import { Alert, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Locales, TranslationKeys } from "../../../locales/locales";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { AlertModal } from "../../components/ui/AlertModal";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import {
+  LightModalContext,
+  LightModalContextInterface
+} from "../../components/ui/LightModal";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n, { availableTranslations } from "../../i18n";
 import { preferredLanguageSaveSuccess } from "../../store/actions/persistedPreferences";
@@ -28,11 +30,12 @@ import {
 } from "../../utils/locale";
 import { showToast } from "../../utils/showToast";
 
-type Props = LightModalContextInterface &
-  ReturnType<typeof mapDispatchToProps> &
+type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 type State = { isLoading: boolean; selectedLocale?: Locales };
+
+type LanguagesPreferencesScreenProps = Props & LightModalContextInterface;
 
 const iconSize: IOIconSizeScale = 12;
 
@@ -44,8 +47,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Allows the user to select one of the available Languages as preferred
  */
-class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
+class LanguagesPreferencesScreen extends React.PureComponent<
+  LanguagesPreferencesScreenProps,
+  State
+> {
+  constructor(props: LanguagesPreferencesScreenProps) {
     super(props);
     this.state = { isLoading: false };
   }
@@ -122,7 +128,9 @@ class LanguagesPreferencesScreen extends React.PureComponent<Props, State> {
   public render() {
     const ContainerComponent = withLoadingSpinner(() => (
       <RNavScreenWithLargeHeader
-        title={I18n.t("profile.preferences.list.preferred_language.title")}
+        title={{
+          label: I18n.t("profile.preferences.list.preferred_language.title")
+        }}
         description={I18n.t(
           "profile.preferences.list.preferred_language.subtitle"
         )}
@@ -187,7 +195,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     )
 });
 
+const LanguagesPreferencesScreenFC = (props: Props) => {
+  const { ...modalContext } = React.useContext(LightModalContext);
+  return <LanguagesPreferencesScreen {...props} {...modalContext} />;
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(LanguagesPreferencesScreen));
+)(LanguagesPreferencesScreenFC);

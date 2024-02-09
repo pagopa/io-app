@@ -8,9 +8,9 @@ import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
-import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 import { Action } from "../../../../../store/actions/types";
@@ -50,7 +50,7 @@ export type WalletPaymentState = {
   authorizationUrl: pot.Pot<string, NetworkError>;
   startRoute?: {
     routeName: keyof AppParamsList;
-    routeKey: keyof NavigatorScreenParams<AppParamsList>["screen"];
+    routeKey: NavigatorScreenParams<AppParamsList>["screen"];
   };
 };
 
