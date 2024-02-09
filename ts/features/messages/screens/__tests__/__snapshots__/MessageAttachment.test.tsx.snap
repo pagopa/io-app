@@ -424,7 +424,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           }
                         >
                           <View
-                            accessibilityLabel="TODO"
+                            accessibilityLabel="Preview of the PDF document"
                             accessible={true}
                             style={
                               Object {
