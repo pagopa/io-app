@@ -3,9 +3,10 @@ import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentStartOrigin, PaymentStartRoute } from "../../types";
 
-type PaymentInitStateParams = {
-  startRoute: PaymentStartRoute;
+export type PaymentInitStateParams = {
   startOrigin?: PaymentStartOrigin;
+  startRoute?: PaymentStartRoute;
+  showTransaction?: boolean;
 };
 
 /**

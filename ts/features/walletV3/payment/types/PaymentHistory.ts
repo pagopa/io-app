@@ -1,11 +1,3 @@
-import { NavigatorScreenParams } from "@react-navigation/native";
-import { AppParamsList } from "../../../../navigation/params/AppParamsList";
-
-export type PaymentStartRoute = {
-  routeName: keyof AppParamsList;
-  routeKey: NavigatorScreenParams<AppParamsList>["screen"];
-};
-
 export type PaymentStartOrigin =
   | "message"
   | "qrcode_scan"

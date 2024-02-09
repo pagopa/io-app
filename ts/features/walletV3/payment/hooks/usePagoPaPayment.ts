@@ -13,19 +13,20 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentInitState } from "../store/actions/orchestration";
-import { PaymentStartOrigin, PaymentStartRoute } from "../types";
+import {
+  PaymentInitStateParams,
+  walletPaymentInitState
+} from "../store/actions/orchestration";
+import { PaymentStartRoute } from "../types";
 
-type PaymentConfiguration = {
-  startOrigin?: PaymentStartOrigin;
-};
+type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 
 const usePagoPaPayment = () => {
   const route = useRoute();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
-  const initPaymentState = ({ startOrigin }: PaymentConfiguration) => {
+  const initPaymentState = ({ startOrigin }: PagoPaPaymentParams) => {
     const startRoute: PaymentStartRoute = {
       routeName: route.name as keyof AppParamsList,
       routeKey:
@@ -39,11 +40,8 @@ const usePagoPaPayment = () => {
     );
   };
 
-  const startPaymentFlow = (
-    rptId: RptId,
-    configuration: PaymentConfiguration = {}
-  ) => {
-    initPaymentState(configuration);
+  const startPaymentFlow = (rptId: RptId, params: PagoPaPaymentParams = {}) => {
+    initPaymentState(params);
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
       params: {
@@ -54,14 +52,14 @@ const usePagoPaPayment = () => {
 
   const startPaymentFlowWithRptId = (
     rptId: PagoPaRptId,
-    configuration: PaymentConfiguration = {}
+    params: PagoPaPaymentParams = {}
   ) => {
     pipe(
       O.fromNullable(rptId),
       O.map(PagoPaRptIdFromString.encode),
       O.map(RptId.decode),
       O.chain(O.fromEither),
-      O.map(rptIdString => startPaymentFlow(rptIdString, configuration))
+      O.map(rptIdString => startPaymentFlow(rptIdString, params))
     );
   };
 
@@ -70,12 +68,12 @@ const usePagoPaPayment = () => {
       paymentNoticeNumber: string;
       organizationFiscalCode: string;
     },
-    configuration: PaymentConfiguration = {}
+    params: PagoPaPaymentParams = {}
   ) => {
     pipe(
       PagoPaRptIdFromString.decode(data),
       E.chain(RptId.decode),
-      E.map(rptIdString => startPaymentFlow(rptIdString, configuration))
+      E.map(rptIdString => startPaymentFlow(rptIdString, params))
     );
   };
 

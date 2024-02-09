@@ -44,8 +44,9 @@ export type WalletPaymentState = {
   chosenPsp: O.Option<Bundle>;
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  startRoute?: PaymentStartRoute;
   paymentHistory: PaymentHistory;
+  startRoute?: PaymentStartRoute;
+  showTransaction?: boolean;
 };
 
 const INITIAL_STATE: WalletPaymentState = {
@@ -70,10 +71,11 @@ const reducer = (
     case getType(walletPaymentInitState):
       return {
         ...INITIAL_STATE,
-        startRoute: action.payload.startRoute,
         paymentHistory: {
           startOrigin: action.payload.startOrigin
-        }
+        },
+        startRoute: action.payload.startRoute,
+        showTransaction: action.payload.showTransaction
       };
 
     // eCommerce Session token
