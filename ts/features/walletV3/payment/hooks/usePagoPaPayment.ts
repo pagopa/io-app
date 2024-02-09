@@ -21,11 +21,22 @@ import { PaymentStartRoute } from "../types";
 
 type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
 
+/**
+ * A hook for initiating a PagoPA payment flow.
+ * This hook provides functions to start a payment flow using various input methods.
+ * @returns An object containing functions to start different types of payment flows.
+ */
 const usePagoPaPayment = () => {
   const route = useRoute();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
+  /**
+   * Initializes the payment state based on the provided parameters.
+   * The initialization includes the store of the current route which allows the app to
+   * return to it when the payment flow is finished.
+   * @param {PagoPaPaymentParams} params - Parameters for initializing the payment state.
+   */
   const initPaymentState = ({ startOrigin }: PagoPaPaymentParams) => {
     const startRoute: PaymentStartRoute = {
       routeName: route.name as keyof AppParamsList,
@@ -40,6 +51,11 @@ const usePagoPaPayment = () => {
     );
   };
 
+  /**
+   * Initiates the payment flow using the provided RptId string and additional parameters.
+   * @param {RptId} rptId - The RptId for the payment flow.
+   * @param {PagoPaPaymentParams} params - Additional parameters for the payment flow.
+   */
   const startPaymentFlow = (rptId: RptId, params: PagoPaPaymentParams = {}) => {
     initPaymentState(params);
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
@@ -50,6 +66,11 @@ const usePagoPaPayment = () => {
     });
   };
 
+  /**
+   * Initiates the payment flow using the provided PagoPA RptId and additional parameters.
+   * @param {PagoPaRptId} rptId - The PagoPA RptId for the payment flow.
+   * @param {PagoPaPaymentParams} params - Additional parameters for the payment flow.
+   */
   const startPaymentFlowWithRptId = (
     rptId: PagoPaRptId,
     params: PagoPaPaymentParams = {}
@@ -63,6 +84,11 @@ const usePagoPaPayment = () => {
     );
   };
 
+  /**
+   * Initiates the payment flow using the provided payment data and additional parameters.
+   * @param {Object} data - Payment data containing the payment notice number and an organization fiscal code.
+   * @param {PagoPaPaymentParams} params - Additional parameters for the payment flow.
+   */
   const startPaymentFlowWithData = (
     data: {
       paymentNoticeNumber: string;
