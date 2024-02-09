@@ -1926,6 +1926,7 @@ messagePDFPreview:
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:
       title: "L’anteprima non è disponibile"
