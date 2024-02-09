@@ -24,16 +24,17 @@ const MessagesHomeTabNavigator = () => (
   <Tab.Navigator
     initialRouteName={MessagesHomeTabRoutes.MESSAGES_INBOX}
     tabBarPosition="top"
-    tabBarOptions={{
-      style: {
+    screenOptions={{
+      lazy: true,
+      tabBarStyle: {
         elevation: 0
       },
-      activeTintColor: IOColors.blue,
-      inactiveTintColor: IOColors.bluegrey,
-      tabStyle: {
+      tabBarActiveTintColor: IOColors.blue,
+      tabBarInactiveTintColor: IOColors.bluegrey,
+      tabBarItemStyle: {
         height: 40
       },
-      labelStyle: {
+      tabBarLabelStyle: {
         ...makeFontStyleObject("SemiBold"),
         fontSize: Platform.OS === "android" ? 16 : undefined,
         fontWeight: Platform.OS === "android" ? "normal" : "bold",
@@ -41,7 +42,6 @@ const MessagesHomeTabNavigator = () => (
         height: 34
       }
     }}
-    lazy={true}
   >
     <Tab.Screen
       name={MessagesHomeTabRoutes.MESSAGES_INBOX}

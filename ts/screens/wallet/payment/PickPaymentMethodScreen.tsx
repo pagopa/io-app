@@ -10,6 +10,7 @@ import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -32,7 +33,10 @@ import {
 } from "../../../common/model/RemoteValue";
 import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
@@ -282,7 +286,25 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     })
 });
 
-export default connect(
+const ConnectedPickPaymentMethodScreen = connect(
   mapStateToProps,
   mapDispatchToProps
 )(withLoadingSpinner(PickPaymentMethodScreen));
+
+const PickPaymentMethodScreenFC = () => {
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PAYMENT_METHOD">
+    >();
+  const route =
+    useRoute<
+      Route<
+        "PAYMENT_PICK_PAYMENT_METHOD",
+        PickPaymentMethodScreenNavigationParams
+      >
+    >();
+  return (
+    <ConnectedPickPaymentMethodScreen navigation={navigation} route={route} />
+  );
+};
+export default PickPaymentMethodScreenFC;

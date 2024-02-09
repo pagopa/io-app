@@ -26,6 +26,7 @@ import {
   Alert as AlertComponent,
   FooterWithButtons
 } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -33,8 +34,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
@@ -66,11 +66,6 @@ export type CduEmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
 }>;
 
-type Props = IOStackNavigationRouteProps<
-  ProfileParamsList,
-  "INSERT_EMAIL_SCREEN"
->;
-
 const styles = StyleSheet.create({
   flex: {
     flex: 1
@@ -88,9 +83,17 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen to allow user to insert an email address.
  */
-const CduEmailInsertScreen = (props: Props) => {
+const CduEmailInsertScreen = () => {
   const viewRef = createRef<View>();
   const { showModal } = useContext(LightModalContext);
+  const { isOnboarding } =
+    useRoute<
+      Route<
+        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
+        CduEmailInsertScreenNavigationParams
+      >
+    >().params;
+  const navigation = useIONavigation();
 
   const dispatch = useIODispatch();
 
@@ -103,7 +106,7 @@ const CduEmailInsertScreen = (props: Props) => {
   );
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const { isOnboarding } = props.route.params ?? {};
+  // const { isOnboarding } = props.route.params ?? {};
 
   const flow = getFlowType(isOnboarding, isFirstOnBoarding);
 
@@ -236,8 +239,8 @@ const CduEmailInsertScreen = (props: Props) => {
 
   const handleGoBack = useCallback(() => {
     // goback if the onboarding is completed
-    props.navigation.goBack();
-  }, [props.navigation]);
+    navigation.goBack();
+  }, [navigation]);
 
   useOnFirstRender(() => {
     if (!isFirstOnBoarding) {

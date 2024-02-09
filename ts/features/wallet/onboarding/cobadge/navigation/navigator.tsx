@@ -12,8 +12,7 @@ const Stack = createStackNavigator<PaymentMethodOnboardingCoBadgeParamsList>();
 const PaymentMethodOnboardingCoBadgeNavigator = () => (
   <Stack.Navigator
     initialRouteName={WALLET_ONBOARDING_COBADGE_ROUTES.MAIN}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={WALLET_ONBOARDING_COBADGE_ROUTES.CHOOSE_TYPE}

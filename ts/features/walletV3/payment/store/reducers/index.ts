@@ -25,7 +25,8 @@ import {
   walletPaymentGetDetails,
   walletPaymentGetTransactionInfo,
   walletPaymentGetUserWallets,
-  walletPaymentNewSessionToken
+  walletPaymentNewSessionToken,
+  walletPaymentResetPspList
 } from "../actions/networking";
 import {
   walletPaymentInitState,
@@ -50,7 +51,7 @@ export type WalletPaymentState = {
   authorizationUrl: pot.Pot<string, NetworkError>;
   startRoute?: {
     routeName: keyof AppParamsList;
-    routeKey: keyof NavigatorScreenParams<AppParamsList>["screen"];
+    routeKey: NavigatorScreenParams<AppParamsList>["screen"];
   };
 };
 
@@ -191,6 +192,12 @@ const reducer = (
       return {
         ...state,
         chosenPsp: O.none
+      };
+
+    case getType(walletPaymentResetPspList):
+      return {
+        ...state,
+        pspList: pot.none
       };
 
     // Transaction
