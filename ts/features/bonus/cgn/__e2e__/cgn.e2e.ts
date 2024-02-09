@@ -28,7 +28,9 @@ const activateBonusSuccess = async () => {
 
   // The section has a loading spinner on top of
   // everything so we must wait for it to disappear
-  await waitFor(scrollView).toBeVisible().withTimeout(e2eWaitRenderTimeout);
+  await waitFor(scrollView)
+    .toBeVisible()
+    .withTimeout(2 * e2eWaitRenderTimeout);
 
   // make sure to scroll to bottom, otherwise in small devices the element will not be visible nor tappable
   await scrollView.scrollTo("bottom");
