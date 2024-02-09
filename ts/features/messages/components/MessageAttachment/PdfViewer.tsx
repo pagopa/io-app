@@ -31,7 +31,11 @@ export const PdfViewer = ({
       isLoading={isLoading}
       loadingCaption={I18n.t("messageDetails.attachments.loading")}
     >
-      <View style={{ flex: 1 }} accessible={true} accessibilityLabel={"TODO"}>
+      <View
+        style={{ flex: 1 }}
+        accessible={true}
+        accessibilityLabel={I18n.t("messagePDFPreview.pdfAccessibility")}
+      >
         <Pdf
           {...rest}
           source={{ uri: downloadPath, cache: true }}
