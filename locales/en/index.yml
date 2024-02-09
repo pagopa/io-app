@@ -2628,6 +2628,8 @@ features:
     updateBottomSheet:
       title: "Aggiorna l'app IO"
       subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
+    badge:
+      dueDate: Expired on {{date}} at {{time}}
   euCovidCertificate:
     save:
       album: "IO"
