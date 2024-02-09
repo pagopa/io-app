@@ -2620,12 +2620,16 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    attachmentDownloadFeedback: "Download in corso"
+    attachments: "Allegati"
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
     updateBottomSheet:
       title: "Aggiorna l'app IO"
       subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
+    badge:
+      dueDate: Scaduto il {{date}} alle ore {{time}}
   euCovidCertificate:
     save:
       album: "IO"

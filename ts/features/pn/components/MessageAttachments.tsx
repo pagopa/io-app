@@ -2,29 +2,39 @@ import React from "react";
 import { View } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { VSpacer, WithTestID } from "@pagopa/io-app-design-system";
-import { UIAttachment } from "../types";
-import { ContentTypeValues } from "../types/contentType";
-import { useAttachmentDownload } from "../hooks/useAttachmentDownload";
-import { ModuleAttachment, ModuleAttachmentProps } from "./ModuleAttachment";
+import { ContentTypeValues } from "../../messages/types/contentType";
+import {
+  LegacyModuleAttachment,
+  LegacyModuleAttachmentProps
+} from "../../messages/components/MessageDetail/LegacyModuleAttachment";
+import { useLegacyAttachmentDownload } from "../../messages/hooks/useLegacyAttachmentDownload";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { UIMessageId } from "../../messages/types";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../../messages/store/reducers/transformers";
 
 type PartialProps = {
   downloadAttachmentBeforePreview?: boolean;
-  openPreview: (attachment: UIAttachment) => void;
+  openPreview: (attachment: ThirdPartyAttachment) => void;
 };
 
 type MessageAttachmentProps = {
-  attachment: UIAttachment;
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
 } & PartialProps;
 
 type MessageAttachmentsProps = WithTestID<
   {
-    attachments: ReadonlyArray<UIAttachment>;
+    attachments: ReadonlyArray<ThirdPartyAttachment>;
+    messageId: UIMessageId;
   } & PartialProps
 >;
 
 const getFormatByContentType = (
-  contentType: UIAttachment["contentType"]
-): ModuleAttachmentProps["format"] => {
+  contentType: string
+): LegacyModuleAttachmentProps["format"] => {
   switch (contentType) {
     case ContentTypeValues.applicationPdf:
       return "pdf";
@@ -36,19 +46,23 @@ const getFormatByContentType = (
 const AttachmentItem = ({
   attachment,
   openPreview,
-  downloadAttachmentBeforePreview
+  downloadAttachmentBeforePreview,
+  messageId
 }: MessageAttachmentProps) => {
-  const { downloadPot, onAttachmentSelect } = useAttachmentDownload(
+  const { downloadPot, onAttachmentSelect } = useLegacyAttachmentDownload(
     attachment,
+    messageId,
     downloadAttachmentBeforePreview,
     openPreview
   );
 
+  const name = attachmentDisplayName(attachment);
+  const mimeType = attachmentContentType(attachment);
   return (
-    <ModuleAttachment
+    <LegacyModuleAttachment
       testID="message-attachment"
-      format={getFormatByContentType(attachment.contentType)}
-      title={attachment.displayName}
+      format={getFormatByContentType(mimeType)}
+      title={name}
       isFetching={pot.isLoading(downloadPot)}
       onPress={onAttachmentSelect}
     />

@@ -1,5 +1,6 @@
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { FiscalCode } from "../../../../definitions/backend/FiscalCode";
+import { PaymentDataWithRequiredPayee } from "../../../../definitions/backend/PaymentDataWithRequiredPayee";
 import { UIMessageDetails } from "../types";
 import { toUIMessageDetails } from "../store/reducers/transformers";
 
@@ -21,6 +22,37 @@ export const message_1: CreatedMessageWithContentAndAttachments = {
   },
   sender_service_id: service_1.service_id
 };
+
+export const messageWithValidPayment: CreatedMessageWithContentAndAttachments =
+  {
+    ...message_1,
+    created_at: new Date("2024-01-01T14:16:41Z"),
+    content: {
+      ...message_1.content,
+      payment_data: {
+        notice_number: "075970423479738892",
+        amount: 698,
+        invalid_after_due_date: true,
+        payee: { fiscal_code: "00000000003" }
+      } as PaymentDataWithRequiredPayee
+    }
+  };
+
+export const messageWithExpairedPayment: CreatedMessageWithContentAndAttachments =
+  {
+    ...message_1,
+    created_at: new Date("2024-01-01T14:16:41Z"),
+    content: {
+      ...message_1.content,
+      due_date: new Date("2024-02-03T14:16:41Z"),
+      payment_data: {
+        notice_number: "075970423479738892",
+        amount: 698,
+        invalid_after_due_date: true,
+        payee: { fiscal_code: "00000000003" }
+      } as PaymentDataWithRequiredPayee
+    }
+  };
 
 export const paymentValidInvalidAfterDueDate: CreatedMessageWithContentAndAttachments =
   {
