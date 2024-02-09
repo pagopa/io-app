@@ -1,28 +1,28 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as SEP from "fp-ts/lib/Separated";
-import { HSpacer, IOStyles, Tag, VSpacer } from "@pagopa/io-app-design-system";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
-import { UIMessageId } from "../../messages/types";
-import { PNMessage } from "../store/types/types";
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { MessageDetailHeader } from "../../messages/components/MessageDetail/MessageDetailHeader";
-import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import I18n from "../../../i18n";
+import { IOStyles, Tag, VSpacer } from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import I18n from "../../../i18n";
+import { PNMessage } from "../store/types/types";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
+import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/MessageDetailsTagBox";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 
 type MessageDetailsProps = {
   message: PNMessage;
-  messageId: UIMessageId;
-  service?: ServicePublic;
+  serviceId: ServiceId;
   payments?: ReadonlyArray<NotificationPaymentInfo>;
 };
 
-export const MessageDetails = ({ message, service }: MessageDetailsProps) => {
+export const MessageDetails = ({ message, serviceId }: MessageDetailsProps) => {
   const partitionedAttachments = pipe(
     message.attachments,
     O.fromNullable,
@@ -33,28 +33,28 @@ export const MessageDetails = ({ message, service }: MessageDetailsProps) => {
   const attachmentList = SEP.left(partitionedAttachments);
 
   return (
-    <ScrollView>
-      <MessageDetailHeader
-        service={service}
-        sender={message.senderDenomination}
-        subject={message.subject}
-        createdAt={message.created_at}
-      >
-        <View style={IOStyles.row}>
-          <Tag
-            text={I18n.t("features.pn.details.badge.legalValue")}
-            variant="legalMessage"
-          />
+    <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
+      <ScrollView>
+        <MessageDetailsHeader
+          serviceId={serviceId}
+          subject={message.subject}
+          createdAt={message.created_at}
+        >
+          <MessageDetailsTagBox>
+            <Tag
+              text={I18n.t("features.pn.details.badge.legalValue")}
+              variant="legalMessage"
+            />
+          </MessageDetailsTagBox>
           {attachmentList.length > 0 && (
-            <>
-              <HSpacer size={8} />
+            <MessageDetailsTagBox>
               <Tag variant="attachment" testID="attachment-tag" />
-            </>
+            </MessageDetailsTagBox>
           )}
-        </View>
-        <VSpacer size={8} />
-      </MessageDetailHeader>
-      <MessageDetailsContent abstract={message.abstract} />
-    </ScrollView>
+          <VSpacer size={8} />
+        </MessageDetailsHeader>
+        <MessageDetailsContent abstract={message.abstract} />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
