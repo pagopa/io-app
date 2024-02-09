@@ -3,6 +3,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
@@ -84,6 +85,11 @@ export const messageMarkdownSelector = (
       messageContent.markdown
   );
 
+export const hasAttachmentsSelector = (
+  state: GlobalState,
+  ioMessageId: UIMessageId
+) => pipe(thirdPartyMessageAttachments(state, ioMessageId), RA.isNonEmpty);
+
 export const thirdPartyMessageAttachments = (
   state: GlobalState,
   ioMessageId: UIMessageId
@@ -139,5 +145,12 @@ const messageContentSelector = <T>(
         )
       )
     ),
-    O.toUndefined
+    O.getOrElse(() =>
+      pipe(
+        state.entities.messages.detailsById[ioMessageId] ?? pot.none,
+        pot.toOption,
+        O.map(extractionFunction),
+        O.toUndefined
+      )
+    )
   );
