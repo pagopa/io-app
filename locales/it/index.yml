@@ -1926,6 +1926,7 @@ messagePDFPreview:
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:
       title: "L’anteprima non è disponibile"
@@ -2628,6 +2629,8 @@ features:
     updateBottomSheet:
       title: "Aggiorna l'app IO"
       subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
+    badge:
+      dueDate: Scaduto il {{date}} alle ore {{time}}
   euCovidCertificate:
     save:
       album: "IO"
