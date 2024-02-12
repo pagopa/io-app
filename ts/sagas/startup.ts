@@ -64,19 +64,12 @@ import {
 } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../store/actions/crossSessions";
+import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
-import {
-  clearCache,
-  profileLoadSuccess,
-  resetProfileState
-} from "../store/actions/profile";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
@@ -459,13 +452,6 @@ export function* initializeApplicationSaga(
         return;
       }
     }
-  }
-  // We dispatch a load success to allow the execution of the check
-  // which save the hashed code tax code
-  const profile = yield* select(profileSelector);
-  if (pot.isSome(profile)) {
-    yield* put(profileLoadSuccess(profile.value));
-    yield* take(setProfileHashedFiscalCode);
   }
 
   // Ask to accept ToS if there is a new available version
