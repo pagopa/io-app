@@ -292,7 +292,7 @@ const MessageList = ({
         ListEmptyComponent={renderEmptyList({
           error,
           EmptyComponent: didLoad ? ListEmptyComponent : null
-        })}
+        })()}
         data={messages}
         initialNumToRender={pageSize}
         keyExtractor={(message: UIMessage): string => message.id}
@@ -314,7 +314,7 @@ const MessageList = ({
         onEndReached={onEndReached}
         onEndReachedThreshold={0.25}
         testID={testID}
-        ListFooterComponent={shouldShowFooterLoader && <Loader />}
+        ListFooterComponent={shouldShowFooterLoader ? <Loader /> : null}
       />
     </>
   );

@@ -461,9 +461,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 ######## subject ########
                               </Text>
                               <View
-                                accessibilityLabel="Contextual Help"
-                                accessibilityRole="button"
-                                accessibilityState={
+                                style={
                                   Object {
                                     "height": 8,
                                   }
@@ -1195,7 +1193,6 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                       }
                     >
                       <RCTSafeAreaView
-                        emulateUnlessSupported={true}
                         style={
                           Object {
                             "flexGrow": 1,
