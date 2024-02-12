@@ -2,9 +2,7 @@ import { device } from "detox";
 import I18n from "../../../i18n";
 import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../__e2e__/utils";
-
-const qrCodeTestId = "QRCode";
-const fullScreenQrCodeTestId = "fullScreenQRCode";
+import { openValidEUCovidMessage } from "./utils";
 
 describe("EuCovidCert Valid", () => {
   beforeAll(async () => {
@@ -12,13 +10,15 @@ describe("EuCovidCert Valid", () => {
     await ensureLoggedIn();
   });
 
-  it("should open the QRCode in fullscreen and return back", async () => {
-    const qrCode = element(by.id(qrCodeTestId));
-    await qrCode.tap();
+  it("should open the certificate details page and return back", async () => {
+    await openValidEUCovidMessage();
 
-    await waitFor(element(by.id(fullScreenQrCodeTestId)))
+    await waitFor(element(by.text(I18n.t("global.buttons.details"))))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
+
+    const detailsButton = element(by.text(I18n.t("global.buttons.details")));
+    await detailsButton.tap();
 
     await waitFor(element(by.text(I18n.t("global.buttons.close"))))
       .toBeVisible()

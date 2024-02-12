@@ -2,6 +2,7 @@ import { device } from "detox";
 import I18n from "../../../i18n";
 import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../__e2e__/utils";
+import { openValidEUCovidMessage } from "./utils";
 
 describe("EuCovidCert Valid", () => {
   beforeAll(async () => {
@@ -9,19 +10,39 @@ describe("EuCovidCert Valid", () => {
     await ensureLoggedIn();
   });
 
-  it("should open the certificate details page and return back", async () => {
-    await waitFor(element(by.text(I18n.t("global.buttons.details"))))
+  it("should save the certificate in the gallery", async () => {
+    await openValidEUCovidMessage();
+
+    await waitFor(element(by.text(I18n.t("global.genericSave"))))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
 
-    const detailsButton = element(by.text(I18n.t("global.buttons.details")));
-    await detailsButton.tap();
+    const saveButton = element(by.text(I18n.t("global.genericSave")));
+    await saveButton.tap();
 
-    await waitFor(element(by.text(I18n.t("global.buttons.close"))))
+    await waitFor(
+      element(
+        by.text(
+          I18n.t(
+            "features.euCovidCertificate.save.bottomSheet.saveAsImage.title"
+          )
+        )
+      )
+    )
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
 
-    const closeButton = element(by.text(I18n.t("global.buttons.close")));
-    await closeButton.tap();
+    const saveIntoGalleryButton = element(
+      by.text(
+        I18n.t("features.euCovidCertificate.save.bottomSheet.saveAsImage.title")
+      )
+    );
+    await saveIntoGalleryButton.tap();
+
+    await waitFor(
+      element(by.text(I18n.t("features.euCovidCertificate.save.ok")))
+    )
+      .toBeVisible()
+      .withTimeout(e2eWaitRenderTimeout);
   });
 });
