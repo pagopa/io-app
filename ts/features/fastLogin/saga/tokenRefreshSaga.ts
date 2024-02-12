@@ -44,6 +44,7 @@ import {
 import { getPin } from "../../../utils/keychain";
 import { dismissSupport } from "../../../utils/supportAssistance";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import ROUTES from "../../../navigation/routes";
 
 export function* watchTokenRefreshSaga(): SagaIterator {
   yield* takeLatest(refreshSessionToken.request, handleRefreshSessionToken);
@@ -90,7 +91,9 @@ function* handleRefreshSessionToken(
     }
   } else {
     // Lock the app
-    NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_HOME);
+    NavigationService.navigate(ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
     yield* put(identificationRequest());
   }
 }

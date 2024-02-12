@@ -901,8 +901,9 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
     if (entrypointRoute !== undefined) {
       yield* call(
         NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(entrypointRoute.name, {
-          key: entrypointRoute.key
+        CommonActions.navigate({
+          name: entrypointRoute.name,
+          merge: true
         })
       );
       yield* put(paymentInitializeState());

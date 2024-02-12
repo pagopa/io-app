@@ -1,6 +1,6 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback } from "react";
 import { View } from "react-native";
@@ -24,12 +24,13 @@ import { CDC_ROUTES } from "../navigation/routes";
 import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
 import { CdcBonusRequestList } from "../types/CdcBonusRequest";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
 };
 const ReadyButton = (props: ReadyButtonProp) => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   // Check if at least one year can be activable
   const activableBonuses = props.bonusRequestList.filter(

@@ -288,6 +288,7 @@ const reducer = (
           return pot.some({
             ...currentProfile,
             email: newProfile.email,
+            last_app_version: newProfile.last_app_version,
             is_inbox_enabled: newProfile.is_inbox_enabled === true,
             is_email_enabled: newProfile.is_email_enabled === true,
             is_email_validated: newProfile.is_email_validated === true,
