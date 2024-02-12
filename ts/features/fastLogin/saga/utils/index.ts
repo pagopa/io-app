@@ -14,7 +14,8 @@ import {
 type RefreshApiCallErrorHandlingTypeWithTypeField = {
   errorMessage?: string;
   skipThrowingError?: boolean;
-  // Because we check type in a type guard with Action,
+  // Because we check the "type" field in a type guard
+  // looking for a Redux Action,
   // we must be sure to never put a property named "type"
   // inside this object.
   type?: never;
