@@ -132,7 +132,9 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   );
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.main.privacy.removeAccount.title")}
+      title={{
+        label: I18n.t("profile.main.privacy.removeAccount.title")
+      }}
       description={I18n.t("profile.main.privacy.removeAccount.details.body")}
       fixedBottomSlot={withKeyboard(
         <FooterWithButtons
