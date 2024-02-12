@@ -20,7 +20,7 @@ export function* watchWalletSaga(walletToken: string): SagaIterator {
   const paymentClient = createPaymentClient(walletBaseUrl, walletToken);
 
   yield* fork(watchWalletOnboardingSaga, walletClient);
-  yield* fork(watchWalletPaymentSaga, walletClient, paymentClient);
   yield* fork(watchWalletDetailsSaga, walletClient);
   yield* fork(watchWalletTransactionSaga, walletClient);
+  yield* fork(watchWalletPaymentSaga, paymentClient);
 }

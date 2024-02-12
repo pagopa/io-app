@@ -3277,10 +3277,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.20.1":
-  version "1.20.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.20.1.tgz#e439ad96e5dc73eeece2172f5141abfbcb30558e"
-  integrity sha512-ClSiEj5BrJpTMfR95wrhLz9FkFmitbZivPdEj2VRgi3Xusoclv8lb2RBUQetpPsVTK0cEV4uWPlthSJG/iNbiA==
+"@pagopa/io-app-design-system@1.22.0":
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.22.0.tgz#bdebbb0a8d0e2a5f5a9765ece757a5dc43edbf23"
+  integrity sha512-jOx/skTgIbF6pRKXtJTA3gr2Kf9fSzGKEg5AnvOym8oQUm9QlYaZ3O1M8boHB/GQ4rqGg6WQPLd1d5Ouca4WwA==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3310,10 +3310,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
   integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
 
-"@pagopa/io-react-native-login-utils@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.2.tgz#9b37787f98d94fac645e70bda926638b14e59d0d"
-  integrity sha512-rOChvrMsJ5QvfLvcsttGP6M5LZkOWhOD2YVRL4+bMCVqNRMsSDmteBNoMWzWlRcXrKyd2ZORgDEa1zPmMRMhTw==
+"@pagopa/io-react-native-login-utils@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.0.tgz#26aa8fe2ae2c30f18d2714264524fd281f0f2b12"
+  integrity sha512-9OXV4ebpZAGdFfbV5HOt0YbVhGvVb104KshCA7u74YnsTkJp32FhdIVwoqmerRwNO4rRjwwvDjWZdhT80IrOzA==
 
 "@pagopa/io-react-native-zendesk@^0.3.28":
   version "0.3.28"
@@ -3671,7 +3671,7 @@
   resolved "https://registry.yarnpkg.com/@react-native/polyfills/-/polyfills-2.0.0.tgz#4c40b74655c83982c8cf47530ee7dc13d957b6aa"
   integrity sha512-K0aGNn1TjalKj+65D7ycc1//H9roAQ51GJVk5ZJQFb2teECGmzd86bYDC0aYdbRf7gtovescq4Zt6FR0tgXiHQ==
 
-"@react-navigation/bottom-tabs@^6.5.11":
+"@react-navigation/bottom-tabs@6.5.11":
   version "6.5.11"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-6.5.11.tgz#b6e67a3aa19e60ed9c1139fa0253586c479832d5"
   integrity sha512-CBN/NOdxnMvmjw+AJQI1kltOYaClTZmGec5pQ3ZNTPX86ytbIOylDIITKMfTgHZcIEFQDymx1SHeS++PIL3Szw==
@@ -3697,7 +3697,7 @@
   resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-1.3.21.tgz#debac6becc6b6692da09ec30e705e476a780dfe1"
   integrity sha512-eyS2C6McNR8ihUoYfc166O1D8VYVh9KIl0UQPI8/ZJVsStlfSTgeEEh+WXge6+7SFPnZ4ewzEJdSAHH+jzcEfg==
 
-"@react-navigation/material-top-tabs@^6.6.5":
+"@react-navigation/material-top-tabs@6.6.5":
   version "6.6.5"
   resolved "https://registry.yarnpkg.com/@react-navigation/material-top-tabs/-/material-top-tabs-6.6.5.tgz#5cfc33e0d02f2dcd1a0654284704f4eef1d16697"
   integrity sha512-ovKc+ltWYJwu3ju5sw1txBTMemlRM85/JceSrkqU++QnL9l0TAPiPxDlO+wJddR1iwi+P6zj5/+QkXR5Ku+trw==
@@ -3705,7 +3705,7 @@
     color "^4.2.3"
     warn-once "^0.1.0"
 
-"@react-navigation/native@^6.1.9":
+"@react-navigation/native@6.1.9":
   version "6.1.9"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-6.1.9.tgz#8ef87095cd9c2ed094308c726157c7f6fc28796e"
   integrity sha512-AMuJDpwXE7UlfyhIXaUCCynXmv69Kb8NzKgKJO7v0k0L+u6xUTbt6xvshmJ79vsvaFyaEH9Jg5FMzek5/S5qNw==
@@ -3722,7 +3722,7 @@
   dependencies:
     nanoid "^3.1.23"
 
-"@react-navigation/stack@^6.3.20":
+"@react-navigation/stack@6.3.20":
   version "6.3.20"
   resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-6.3.20.tgz#8eec944888f317bb1ba1ff30e7f513806bea16c2"
   integrity sha512-vE6mgZzOgoa5Uy7ayT97Cj+ZIK7DK+JBYVuKUViILlWZy6IWK7HFDuqoChSbZ1ajTIfAxj/acVGg1jkbAKsToA==
@@ -14734,7 +14734,7 @@ react-native-svg@^12.3.0:
     css-select "^4.2.1"
     css-tree "^1.0.0-alpha.39"
 
-react-native-tab-view@^3.5.2:
+react-native-tab-view@3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.5.2.tgz#2789b8af6148b16835869566bf13dc3b0e6c1b46"
   integrity sha512-nE5WqjbeEPsWQx4mtz81QGVvgHRhujTNIIZiMCx3Bj6CBFDafbk7XZp9ocmtzXUQaZ4bhtVS43R4FIiR4LboJw==

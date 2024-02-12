@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.53.0-rc.1](https://github.com/pagopa/io-app/compare/2.53.0-rc.0...2.53.0-rc.1) (2024-02-06)
+
+
+### Features
+
+* **Firma con IO:** [[SFEQS-2071](https://pagopa.atlassian.net/browse/SFEQS-2071)] Update `Firma con IO` with new DS components ([#5377](https://github.com/pagopa/io-app/issues/5377)) ([e34d79d](https://github.com/pagopa/io-app/commit/e34d79db5afdb45c5c91247c70afc54f911534aa))
+* [[IOCOM-867](https://pagopa.atlassian.net/browse/IOCOM-867)] Add service info in MessageDetailsScreen ([#5461](https://github.com/pagopa/io-app/issues/5461)) ([b2ea541](https://github.com/pagopa/io-app/commit/b2ea541609ff95afef6be15bb09cbffa682860fa))
+
+
+### Bug Fixes
+
+* [[IOBP-458](https://pagopa.atlassian.net/browse/IOBP-458),[IOBP-459](https://pagopa.atlassian.net/browse/IOBP-459)] Added accessibility label to the RNavScreenWithLargeHeader component ([#5467](https://github.com/pagopa/io-app/issues/5467)) ([a57d5e2](https://github.com/pagopa/io-app/commit/a57d5e2342be768bea5f3d5a92ae254dbd3e3725))
+* [[IOPID-1436](https://pagopa.atlassian.net/browse/IOPID-1436)], [[IOPID-1453](https://pagopa.atlassian.net/browse/IOPID-1453)] Delete helper button and header title on email validate screen and add logic to show support buttons in faq screen ([#5484](https://github.com/pagopa/io-app/issues/5484)) ([00743fd](https://github.com/pagopa/io-app/commit/00743fd5708ce4af62039ca7f6422bd22dbd747e)), closes [/github.com/pagopa/io-app/blob/6c076a1fee25c0a0853644d63aa894ff26854aa3/ts/sagas/startup.ts#L492](https://github.com/pagopa//github.com/pagopa/io-app/blob/6c076a1fee25c0a0853644d63aa894ff26854aa3/ts/sagas/startup.ts/issues/L492)
+* align podfile.lock io-react-native-zendesk version ([#5483](https://github.com/pagopa/io-app/issues/5483)) ([6c076a1](https://github.com/pagopa/io-app/commit/6c076a1fee25c0a0853644d63aa894ff26854aa3))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-210](https://pagopa.atlassian.net/browse/IOAPPX-210)] Upgrade `react-navigation` to v6 ([#5415](https://github.com/pagopa/io-app/issues/5415)) ([f730e55](https://github.com/pagopa/io-app/commit/f730e55d493df6230319494fad43626bf2070a98))
+* [[IOBP-529](https://pagopa.atlassian.net/browse/IOBP-529)] Retrieve payments methods list from eCommerce client endpoint ([#5479](https://github.com/pagopa/io-app/issues/5479)) ([63fd1c2](https://github.com/pagopa/io-app/commit/63fd1c2a73bd3408996cd35d02e145e9e195579a))
+* 🇩🇪 language adjustments ([#5490](https://github.com/pagopa/io-app/issues/5490)) ([957e245](https://github.com/pagopa/io-app/commit/957e2455330caae4af29f3a33bda6b7360ffb1d2))
+
 ## [2.53.0-rc.0](https://github.com/pagopa/io-app/compare/2.52.0-rc.0...2.53.0-rc.0) (2024-02-02)
 
 
