@@ -35,12 +35,9 @@ export function* fetchUserMetadata(
   SagaCallReturnType<typeof getUserMetadata>
 > {
   try {
-    const response = (yield* call(
-      withRefreshApiCall,
-      getUserMetadata({}),
-      undefined,
-      { skipThrowingError: true }
-    )) as unknown as SagaCallReturnType<typeof getUserMetadata>;
+    const response = (yield* call(withRefreshApiCall, getUserMetadata({}), {
+      skipThrowingError: true
+    })) as unknown as SagaCallReturnType<typeof getUserMetadata>;
 
     // Can't decode response
     if (E.isLeft(response)) {

@@ -171,7 +171,6 @@ function* createOrUpdateProfileSaga(
       createOrUpdateProfile({
         body: newProfile
       }),
-      undefined,
       { skipThrowingError: true }
     )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 

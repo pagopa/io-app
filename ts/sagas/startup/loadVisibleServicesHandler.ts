@@ -25,12 +25,9 @@ export function* loadVisibleServicesRequestHandler(
   SagaCallReturnType<typeof getVisibleServices>
 > {
   try {
-    const response = (yield* call(
-      withRefreshApiCall,
-      getVisibleServices({}),
-      undefined,
-      { skipThrowingError: true }
-    )) as unknown as SagaCallReturnType<typeof getVisibleServices>;
+    const response = (yield* call(withRefreshApiCall, getVisibleServices({}), {
+      skipThrowingError: true
+    })) as unknown as SagaCallReturnType<typeof getVisibleServices>;
 
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
