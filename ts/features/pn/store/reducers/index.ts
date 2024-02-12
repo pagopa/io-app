@@ -6,7 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import { Action } from "../../../../store/actions/types";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
 import { toPNMessage } from "../types/transformers";
-import { UIAttachmentId, UIMessageId } from "../../../messages/types";
+import { UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
 import { MultiplePaymentState, paymentsReducer } from "./payments";
@@ -29,7 +29,7 @@ export const pnMessageFromIdSelector = createSelector(
 export const pnMessageAttachmentSelector =
   (state: GlobalState) =>
   (ioMessageId: UIMessageId) =>
-  (pnMessageAttachmentId: UIAttachmentId) =>
+  (pnMessageAttachmentId: string) =>
     pipe(
       pnMessageFromIdSelector(state, ioMessageId),
       pot.toOption,

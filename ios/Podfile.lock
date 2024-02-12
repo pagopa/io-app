@@ -135,7 +135,7 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.2.1):
     - React-Core
-  - pagopa-io-react-native-login-utils (0.2.2):
+  - pagopa-io-react-native-login-utils (1.0.0):
     - React-Core
   - PromisesObjC (2.3.1)
   - RCT-Folly (2021.07.22.00):
@@ -941,7 +941,7 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
-  pagopa-io-react-native-login-utils: 51a58dc0e5fe3cba461759b9e98e795fc22e17c8
+  pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 2a96ea90ffddd10cc43115bd93803692e09b5d9a

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
 import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
@@ -31,19 +31,25 @@ export const PdfViewer = ({
       isLoading={isLoading}
       loadingCaption={I18n.t("messageDetails.attachments.loading")}
     >
-      <Pdf
-        {...rest}
-        source={{ uri: downloadPath, cache: true }}
-        style={[styles.pdf, style]}
-        onLoadComplete={(...args) => {
-          setIsLoading(false);
-          onLoadComplete?.(...args);
-        }}
-        onError={(...args) => {
-          setIsLoading(false);
-          onError?.(...args);
-        }}
-      />
+      <View
+        style={{ flex: 1 }}
+        accessible={true}
+        accessibilityLabel={I18n.t("messagePDFPreview.pdfAccessibility")}
+      >
+        <Pdf
+          {...rest}
+          source={{ uri: downloadPath, cache: true }}
+          style={[styles.pdf, style]}
+          onLoadComplete={(...args) => {
+            setIsLoading(false);
+            onLoadComplete?.(...args);
+          }}
+          onError={(...args) => {
+            setIsLoading(false);
+            onError?.(...args);
+          }}
+        />
+      </View>
     </LoadingSpinnerOverlay>
   );
 };

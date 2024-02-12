@@ -8,7 +8,7 @@ import { MessagesParamsList } from "../navigation/params";
 import { showToast } from "../../../utils/showToast";
 import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import { useIOSelector } from "../../../store/hooks";
-import { thirdPartyMessageUIAttachment } from "../store/reducers/thirdPartyById";
+import { thirdPartyMessageAttachment } from "../store/reducers/thirdPartyById";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,
@@ -32,7 +32,7 @@ export const LegacyMessageDetailAttachment = (
   );
 
   const maybeThirdPartyMessageUIAttachment = useIOSelector(state =>
-    thirdPartyMessageUIAttachment(state)(messageId)(attachmentId)
+    thirdPartyMessageAttachment(state)(messageId)(attachmentId)
   );
 
   useEffect(() => {

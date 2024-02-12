@@ -67,7 +67,7 @@ const renderLoadingState = () => (
   </View>
 );
 
-const MessageDetailScreen = () => {
+const LegacyMessageDetailScreen = () => {
   const { messageId, serviceId } =
     useRoute<Route<"MESSAGE_DETAIL", MessageDetailScreenNavigationParams>>()
       .params;
@@ -168,4 +168,4 @@ const MessageDetailScreen = () => {
   );
 };
 
-export default MessageDetailScreen;
+export default LegacyMessageDetailScreen;

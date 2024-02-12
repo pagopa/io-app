@@ -1,12 +1,14 @@
 import React from "react";
-import { MessageAttachments } from "../../messages/components/MessageAttachments";
-import { UIAttachment } from "../../messages/types";
+import { MessageAttachments } from "../components/MessageAttachments";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { UIMessageId } from "../../messages/types";
 
 export const useF24BottomSheet = (
-  attachments: ReadonlyArray<UIAttachment>,
-  openPreview: (attachment: UIAttachment) => void
+  attachments: ReadonlyArray<ThirdPartyAttachment>,
+  messageId: UIMessageId,
+  openPreview: (attachment: ThirdPartyAttachment) => void
 ) => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
     {
@@ -15,7 +17,8 @@ export const useF24BottomSheet = (
           testID="f24-list-container-bs"
           attachments={attachments}
           downloadAttachmentBeforePreview={true}
-          openPreview={(attachment: UIAttachment) => {
+          messageId={messageId}
+          openPreview={(attachment: ThirdPartyAttachment) => {
             dismiss();
             openPreview(attachment);
           }}
