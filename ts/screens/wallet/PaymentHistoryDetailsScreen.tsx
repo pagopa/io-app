@@ -5,6 +5,7 @@ import { Text as NBButtonText } from "native-base";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { useNavigation, useRoute, Route } from "@react-navigation/native";
 import { EnteBeneficiario } from "../../../definitions/backend/EnteBeneficiario";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { ToolEnum } from "../../../definitions/content/AssistanceToolConfig";
@@ -27,7 +28,10 @@ import {
   zendeskSupportStart
 } from "../../features/zendesk/store/actions";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { canShowHelpSelector } from "../../store/reducers/assistanceTools";
@@ -422,7 +426,28 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(zendeskSelectedCategory(category))
 });
 
-export default connect(
+const ConnectedPaymentHistoryDetailsScreen = connect(
   mapStateToProps,
   mapDispatchToProps
 )(PaymentHistoryDetailsScreen);
+
+const PaymentHistoryDetailsScreenFC = () => {
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<WalletParamsList, "PAYMENT_HISTORY_DETAIL_INFO">
+    >();
+  const route =
+    useRoute<
+      Route<
+        "PAYMENT_HISTORY_DETAIL_INFO",
+        PaymentHistoryDetailsScreenNavigationParams
+      >
+    >();
+  return (
+    <ConnectedPaymentHistoryDetailsScreen
+      navigation={navigation}
+      route={route}
+    />
+  );
+};
+export default PaymentHistoryDetailsScreenFC;

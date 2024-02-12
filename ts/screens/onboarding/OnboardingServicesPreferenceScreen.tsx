@@ -115,7 +115,9 @@ const OnboardingServicesPreferenceScreen = (
   const showBadge = !isFirstOnboarding;
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("services.optIn.preferences.title")}
+      title={{
+        label: I18n.t("services.optIn.preferences.title")
+      }}
       description={I18n.t("services.optIn.preferences.body")}
       headerActionsProp={{ showHelp: true }}
       contextualHelp={emptyContextualHelp}

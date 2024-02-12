@@ -72,9 +72,6 @@ const WalletTransactionInfoSection = ({
             {psp?.businessName && (
               <>
                 <ListItemInfo
-                  accessibilityLabel={I18n.t(
-                    "transaction.details.info.pspName"
-                  )}
                   label={I18n.t("transaction.details.info.pspName")}
                   value={psp.businessName}
                 />
@@ -82,9 +79,6 @@ const WalletTransactionInfoSection = ({
               </>
             )}
             <ListItemInfo
-              accessibilityLabel={I18n.t(
-                "transaction.details.info.dateAndHour"
-              )}
               label={I18n.t("transaction.details.info.dateAndHour")}
               value={format(transaction.created, "DD MMMM YYYY, HH:mm:ss")}
             />
@@ -93,9 +87,9 @@ const WalletTransactionInfoSection = ({
               onPress={() =>
                 clipboardSetStringWithFeedback(transaction.id.toString())
               }
-              accessibilityLabel={I18n.t(
+              accessibilityLabel={`${I18n.t(
                 "transaction.details.info.transactionId"
-              )}
+              )}: ${transaction.id.toString()}`}
               label={I18n.t("transaction.details.info.transactionId")}
               value={transaction.id.toString()}
             />

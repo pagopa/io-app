@@ -2290,7 +2290,7 @@ features:
         title: "Etwas ist schief gelaufen"
         body: "Die Details zu deiner Mitteilung konnten nicht abgerufen werden. Bitte versuche es erneut"
       cancelledMessage:
-        body: "Dieser Bescheid wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
+        body: "Diese Zustellung wurde vom Absender gelöscht. Du kannst dessen Inhalt ignorieren."
         unpaidPayments: "Für die Erstattung von Zahlungen im Zusammenhang mit diesem Bescheid wende dich bitte an den Absender."
         payments: "Zahlungen"
       paymentSection:
@@ -2306,10 +2306,10 @@ features:
         bottomSheet:
           title: "Beiliegende F24-Formulare"
       infoSection:
-        title: "Informationen zum Bescheid"
+        title: "Informationen zur Zustellung"
         iun: "IUN-Code"
       timeline:
-        title: "STATUS DES BESCHEIDS"
+        title: "STATUS DER ZUSTELLUNG"
         status:
           DELIVERED: "Zugestellt"
           DELIVERING: "In Zustellung"
@@ -2331,7 +2331,7 @@ support:
   helpCenter:
     header: "Hilfe"
     cta:
-      contactSupport: "Erstelle ein Ticket"
+      contactSupport: "Ticket erstellen"
       seeReports: "Offene Tickets"
     supportComponent:
       title: "Benötigst du Hilfe?"
