@@ -11,13 +11,18 @@ import {
   savePendingAction
 } from "../../store/actions/tokenRefreshActions";
 
+export type RefreshApiCallErrorHandlingType = {
+  errorMessage?: string;
+  skipThrowingError?: boolean;
+};
+
 export function* withRefreshApiCall<R, A extends Action>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,
   action?: A | undefined,
-  errorMessage?: string,
-  skipThrowingError: boolean = false
+  errorHandling?: RefreshApiCallErrorHandlingType
 ): SagaIterator<t.Validation<IResponseType<401, any> | R>> {
   const response = yield* call(() => apiCall);
+  const { errorMessage, skipThrowingError } = errorHandling ?? {};
   // BEWARE: we can cast to any only because we know for sure that f will
   // always return a Promise<IResponseType<A, B>>
   if (E.isRight(response) && (response.right as any).status === 401) {

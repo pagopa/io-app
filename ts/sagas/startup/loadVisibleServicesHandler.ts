@@ -29,8 +29,7 @@ export function* loadVisibleServicesRequestHandler(
       withRefreshApiCall,
       getVisibleServices({}),
       undefined,
-      undefined,
-      true
+      { skipThrowingError: true }
     )) as unknown as SagaCallReturnType<typeof getVisibleServices>;
 
     if (E.isLeft(response)) {

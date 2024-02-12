@@ -39,8 +39,7 @@ export function* fetchUserMetadata(
       withRefreshApiCall,
       getUserMetadata({}),
       undefined,
-      undefined,
-      true
+      { skipThrowingError: true }
     )) as unknown as SagaCallReturnType<typeof getUserMetadata>;
 
     // Can't decode response
