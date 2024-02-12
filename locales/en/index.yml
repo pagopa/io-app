@@ -1926,6 +1926,7 @@ messagePDFPreview:
   open: "Open"
   save: "Save"
   savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  pdfAccessibility: "Preview of the PDF document"
   errors:
     previewing:
       title: "Preview is not available"
