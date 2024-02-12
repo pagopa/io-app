@@ -1,8 +1,8 @@
 import {
-  ButtonLink,
+  ButtonOutline,
+  ButtonSolid,
   HSpacer,
   IOColors,
-  IOStyles,
   IOVisualCostants,
   IconButtonSolid,
   LabelSmallAlt,
@@ -10,14 +10,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18n-js";
 import React, { useCallback } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View
-} from "react-native";
+import { ScrollView, StyleSheet, TextInput, View } from "react-native";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
 import Markdown from "../../../components/ui/Markdown";
@@ -31,7 +26,6 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { maybeNotNullyString } from "../../../utils/strings";
 
 const styles = StyleSheet.create({
-  flex: { flex: 1 },
   textInput: {
     flex: 1,
     padding: 8,
@@ -44,12 +38,58 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
+  },
+  horizontalScroll: {
+    flexShrink: 1,
+    marginLeft: -IOVisualCostants.appMarginDefault,
+    marginRight: -IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IOVisualCostants.appMarginDefault
   }
 });
+
+const MARKDOWN_REFERENCE = I18n.t("global.markdown.reference");
+
+const MARKDOWN_HEADING = `# I am a Header 1
+
+## I am a Header 2
+
+### I am a Header 3
+
+#### I am a Header 4
+
+##### I am a Header 5
+
+###### I am a Header 6
+`;
+
+const MARKDOWN_PARAGRAPH = `A simple paragraph.
+
+Text can be emphasized with *asterisk* or _underscore_.
+
+If you need bold use **double asterisk**.
+`;
+
+const MARKDOWN_LIST = `Unordered list:
+
+* React
+* Vue
+* Angular
+
+Ordered list:
+
+1. React
+2. Vue
+3. Angular
+`;
 
 const MarkdownPlayground = () => {
   const [markdownText, setMarkdownText] = React.useState("");
   const [inputText, setInputText] = React.useState("");
+
+  const setMarkdown = (markdownString: string) => {
+    setMarkdownText(markdownString);
+    setInputText(markdownString);
+  };
 
   useHeaderSecondLevel({
     title: "Markdown playground"
@@ -66,13 +106,13 @@ const MarkdownPlayground = () => {
     ? `${maybeCTA.value.cta_1 ? "2" : "1"} cta found!`
     : "No CTA found";
   const isMarkdownSet = O.isSome(maybeNotNullyString(markdownText));
+
   return (
-    <SafeAreaView style={styles.flex}>
+    <View style={{ flex: 1 }}>
       <ScrollView
-        contentContainerStyle={[
-          { paddingHorizontal: IOVisualCostants.appMarginDefault },
-          IOStyles.flex
-        ]}
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
       >
         <View style={styles.row}>
           <TextInput
@@ -91,10 +131,48 @@ const MarkdownPlayground = () => {
             />
           </View>
         </View>
+        <VSpacer />
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          style={styles.horizontalScroll}
+        >
+          <View style={{ flexDirection: "row" }}>
+            <ButtonSolid
+              label="Heading"
+              accessibilityLabel="Heading"
+              onPress={() => setMarkdown(MARKDOWN_HEADING)}
+            />
+            <HSpacer size={8} />
+            <ButtonSolid
+              label="Paragraph"
+              accessibilityLabel="Paragraph"
+              onPress={() => setMarkdown(MARKDOWN_PARAGRAPH)}
+            />
+            <HSpacer size={8} />
+            <ButtonSolid
+              label="List"
+              accessibilityLabel="List"
+              onPress={() => setMarkdown(MARKDOWN_LIST)}
+            />
+            <HSpacer size={8} />
+            <ButtonSolid
+              label="All"
+              accessibilityLabel="All"
+              onPress={() => setMarkdown(MARKDOWN_REFERENCE)}
+            />
+            <HSpacer size={48} />
+          </View>
+        </ScrollView>
         <View style={{ marginTop: 10 }}>
-          <ButtonLink onPress={() => setInputText("")} label="Clear" />
+          <ButtonOutline
+            onPress={() => setMarkdown("")}
+            label="Clear"
+            accessibilityLabel="Clear"
+          />
         </View>
         <VSpacer size={16} />
+
         {isMarkdownSet && <LabelSmallAlt>{ctaMessage}</LabelSmallAlt>}
 
         {O.isSome(maybeCTA) && (
@@ -127,7 +205,7 @@ const MarkdownPlayground = () => {
           </>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
