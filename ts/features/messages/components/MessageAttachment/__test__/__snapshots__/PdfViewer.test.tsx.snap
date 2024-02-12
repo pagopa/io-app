@@ -245,6 +245,16 @@ exports[`PdfViewer should match the snapshot 1`] = `
         },
       ]
     }
-  />
+  >
+    <View
+      accessibilityLabel="Preview of the PDF document"
+      accessible={true}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    />
+  </View>
 </View>
 `;

@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
@@ -90,6 +94,10 @@ export const walletPaymentAuthorization = createAsyncAction(
   undefined
 >();
 
+export const walletPaymentResetPspList = createStandardAction(
+  "WALLET_PAYMENT_RESET_PSP_LIST"
+)();
+
 export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentNewSessionToken>
   | ActionType<typeof walletPaymentGetDetails>
@@ -99,4 +107,5 @@ export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentCreateTransaction>
   | ActionType<typeof walletPaymentGetTransactionInfo>
   | ActionType<typeof walletPaymentDeleteTransaction>
-  | ActionType<typeof walletPaymentAuthorization>;
+  | ActionType<typeof walletPaymentAuthorization>
+  | ActionType<typeof walletPaymentResetPspList>;

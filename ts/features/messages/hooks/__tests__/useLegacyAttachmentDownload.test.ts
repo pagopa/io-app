@@ -1,5 +1,9 @@
 import { mockOtherAttachment } from "../../__mocks__/attachment";
-import { testableFunctions } from "../useAttachmentDownload";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../../store/reducers/transformers";
+import { testableFunctions } from "../useLegacyAttachmentDownload";
 
 const path = "/tmp/path.pdf";
 
@@ -46,14 +50,18 @@ describe("Open attachment", function () {
       Promise.resolve()
     );
 
-    await taskCopyToMediaStore(mockOtherAttachment, path)();
+    const name = attachmentDisplayName(mockOtherAttachment);
+    const mimeType = attachmentContentType(mockOtherAttachment);
+    await taskCopyToMediaStore(name, mimeType, path)();
     expect(mockMediaCollectionCopyToMediaStore).toBeCalledTimes(1);
   });
 
   it("Should add an existing file to Downloads app", async () => {
     mockAndroidAddCompleteDownload.mockImplementation(() => Promise.resolve());
 
-    await taskAddCompleteDownload(mockOtherAttachment, path)();
+    const name = attachmentDisplayName(mockOtherAttachment);
+    const mimeType = attachmentContentType(mockOtherAttachment);
+    await taskAddCompleteDownload(name, mimeType, path)();
     expect(mockAndroidAddCompleteDownload).toBeCalledTimes(1);
   });
 
@@ -64,10 +72,9 @@ describe("Open attachment", function () {
     });
 
     it("Should display an options menu", async () => {
-      await taskDownloadFileIntoAndroidPublicFolder(
-        mockOtherAttachment,
-        path
-      )();
+      const name = attachmentDisplayName(mockOtherAttachment);
+      const mimeType = attachmentContentType(mockOtherAttachment);
+      await taskDownloadFileIntoAndroidPublicFolder(name, mimeType, path)();
       expect(mockIosPresentOptionsMenu).toBeCalledTimes(1);
     });
   });
@@ -86,10 +93,9 @@ describe("Open attachment", function () {
         Promise.resolve()
       );
 
-      await taskDownloadFileIntoAndroidPublicFolder(
-        mockOtherAttachment,
-        path
-      )();
+      const name = attachmentDisplayName(mockOtherAttachment);
+      const mimeType = attachmentContentType(mockOtherAttachment);
+      await taskDownloadFileIntoAndroidPublicFolder(name, mimeType, path)();
       expect(mockMediaCollectionCopyToMediaStore).toBeCalledTimes(1);
       expect(mockAndroidAddCompleteDownload).toBeCalledTimes(1);
       expect(mockShowToast).not.toHaveBeenCalled();
@@ -100,10 +106,9 @@ describe("Open attachment", function () {
         Promise.reject(new Error("Error on reject"))
       );
 
-      await taskDownloadFileIntoAndroidPublicFolder(
-        mockOtherAttachment,
-        path
-      )();
+      const name = attachmentDisplayName(mockOtherAttachment);
+      const mimeType = attachmentContentType(mockOtherAttachment);
+      await taskDownloadFileIntoAndroidPublicFolder(name, mimeType, path)();
       expect(mockShowToast).toBeCalledTimes(1);
     });
 
@@ -115,10 +120,9 @@ describe("Open attachment", function () {
         Promise.reject(new Error("Error on reject"))
       );
 
-      await taskDownloadFileIntoAndroidPublicFolder(
-        mockOtherAttachment,
-        path
-      )();
+      const name = attachmentDisplayName(mockOtherAttachment);
+      const mimeType = attachmentContentType(mockOtherAttachment);
+      await taskDownloadFileIntoAndroidPublicFolder(name, mimeType, path)();
       expect(mockShowToast).toBeCalledTimes(1);
     });
   });

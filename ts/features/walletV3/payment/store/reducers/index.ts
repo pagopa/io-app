@@ -21,7 +21,8 @@ import {
   walletPaymentGetDetails,
   walletPaymentGetTransactionInfo,
   walletPaymentGetUserWallets,
-  walletPaymentNewSessionToken
+  walletPaymentNewSessionToken,
+  walletPaymentResetPspList
 } from "../actions/networking";
 import {
   walletPaymentInitState,
@@ -180,6 +181,12 @@ const reducer = (
       return {
         ...state,
         chosenPsp: O.none
+      };
+
+    case getType(walletPaymentResetPspList):
+      return {
+        ...state,
+        pspList: pot.none
       };
 
     // Transaction

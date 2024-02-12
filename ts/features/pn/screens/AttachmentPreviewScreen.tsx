@@ -3,7 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { PnParamsList } from "../navigation/params";
-import { UIMessageId, UIAttachmentId } from "../../messages/types";
+import { UIMessageId } from "../../messages/types";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { pnMessageAttachmentSelector } from "../store/reducers";
@@ -19,7 +19,7 @@ import { LegacyMessageAttachmentPreview } from "../../messages/components/Messag
 
 export type AttachmentPreviewScreenNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: UIAttachmentId;
+  attachmentId: string;
   category?: string;
 }>;
 
