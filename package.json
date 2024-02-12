@@ -108,7 +108,6 @@
     "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-community/slider": "^3.0.3",
     "@react-native-cookies/cookies": "^6.2.1",
-    "@react-native-picker/picker": "^2.4.1",
     "@react-navigation/bottom-tabs": "6.5.11",
     "@react-navigation/material-top-tabs": "6.6.5",
     "@react-navigation/native": "6.1.9",
