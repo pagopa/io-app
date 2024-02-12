@@ -31,7 +31,7 @@ const WalletPlayground = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title="New wallet playground"
+      title={{ label: "New wallet playground" }}
       description="Choose the playground flow for the new wallet"
     >
       <ContentWrapper>
