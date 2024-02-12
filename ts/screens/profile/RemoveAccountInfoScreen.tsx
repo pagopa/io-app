@@ -34,7 +34,9 @@ const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.main.privacy.removeAccount.title")}
+      title={{
+        label: I18n.t("profile.main.privacy.removeAccount.title")
+      }}
       fixedBottomSlot={
         <FooterWithButtons
           type={"SingleButton"}

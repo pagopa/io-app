@@ -257,12 +257,12 @@ export const AuthSessionPage = () => {
     (error?: LoginUtilsError) => {
       void mixpanelTrack("SPID_ERROR", {
         idp,
-        description: error?.userInfo.Error,
+        description: error?.userInfo?.error,
         errorType: ErrorType.LOADING_ERROR
       });
 
       const backPressed: LoginUtilsErrorType = "NativeAuthSessionClosed";
-      if (error?.userInfo.Error === backPressed) {
+      if (error?.userInfo?.error === backPressed) {
         onBack();
         return;
       }

@@ -4,6 +4,7 @@ import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body } from "../../../components/core/typography/Body";
@@ -20,8 +21,7 @@ import {
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
@@ -42,11 +42,6 @@ import {
 export type CreditCardOnboardingAttemptDetailScreenNavigationParams = Readonly<{
   attempt: CreditCardInsertion;
 }>;
-
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL"
->;
 
 const styles = StyleSheet.create({
   row: {
@@ -78,9 +73,16 @@ const renderRow = (label: string, value: string) => (
  * This screen shows credit card onboarding attempt details and allows the user
  * to ask assistance about this attempts
  */
-const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
+const CreditCardOnboardingAttemptDetailScreen = () => {
   const dispatch = useDispatch();
-  const attempt = props.route.params.attempt;
+  const { attempt } =
+    useRoute<
+      Route<
+        "CREDIT_CARD_ONBOARDING_ATTEMPT_DETAIL",
+        CreditCardOnboardingAttemptDetailScreenNavigationParams
+      >
+    >().params;
+  const navigation = useIONavigation();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const outcomeCodes = useIOSelector(outcomeCodesSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
@@ -160,7 +162,7 @@ const CreditCardOnboardingAttemptDetailScreen = (props: Props) => {
       : undefined;
   return (
     <BaseScreenComponent
-      goBack={() => props.navigation.goBack()}
+      goBack={() => navigation.goBack()}
       showChat={false}
       dark={true}
       headerTitle={I18n.t("wallet.creditCard.onboardingAttempts.title")}

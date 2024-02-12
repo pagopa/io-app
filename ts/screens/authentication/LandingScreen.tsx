@@ -12,7 +12,6 @@ import { View, Alert, StyleSheet } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { useDispatch, useStore } from "react-redux";
 import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CieNotSupported from "../../components/cie/CieNotSupported";
@@ -60,6 +59,7 @@ import { useIOSelector } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -175,7 +175,7 @@ export const LandingScreen = () => {
   const store = useStore();
 
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
 

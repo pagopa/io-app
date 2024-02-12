@@ -28,13 +28,11 @@ import {
   RemoveAccountMotivationPayload,
   removeAccountMotivation
 } from "../../store/actions/profile";
-import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { withKeyboard } from "../../utils/keyboard";
 
-type Props = ReduxProps &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const getMotivationItems = (): ReadonlyArray<

@@ -137,7 +137,7 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.2.1):
     - React-Core
-  - pagopa-io-react-native-login-utils (0.2.2):
+  - pagopa-io-react-native-login-utils (1.0.0):
     - React-Core
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.1)
@@ -392,6 +392,8 @@ PODS:
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
     - React
+  - react-native-pager-view (6.2.3):
+    - React-Core
   - react-native-pdf (6.4.0):
     - React-Core
   - react-native-pdf-thumbnail (1.2.1):
@@ -544,7 +546,7 @@ PODS:
     - React-Core
   - RNSVG (12.3.0):
     - React-Core
-  - RNZendeskChat (0.3.23):
+  - RNZendeskChat (0.3.28):
     - React
     - ZendeskAnswerBotSDK (~> 3.0.0)
     - ZendeskChatSDK (~> 3.0.0)
@@ -648,6 +650,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
@@ -690,7 +693,7 @@ DEPENDENCIES:
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
+  - "RNZendeskChat (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -812,6 +815,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
   react-native-pdf-thumbnail:
@@ -897,7 +902,7 @@ EXTERNAL SOURCES:
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNZendeskChat:
-    :path: "../node_modules/io-react-native-zendesk"
+    :path: "../node_modules/@pagopa/io-react-native-zendesk"
   vision-camera-code-scanner:
     :path: "../node_modules/vision-camera-code-scanner"
   VisionCamera:
@@ -940,7 +945,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
-  pagopa-io-react-native-login-utils: 51a58dc0e5fe3cba461759b9e98e795fc22e17c8
+  pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
@@ -969,6 +974,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
+  react-native-pager-view: c29d484f19c49ff19525a94105e4ab2c4d4ae273
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
@@ -1011,7 +1017,7 @@ SPEC CHECKSUMS:
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
-  RNZendeskChat: 338c369def4e1552a533d9d34155b4b491aaf3d7
+  RNZendeskChat: 10c0a1f6a97665eab8319b4d543535a8ac199944
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: 5fc30ecebdfd0335d11123ec9511dcbc27ee4046

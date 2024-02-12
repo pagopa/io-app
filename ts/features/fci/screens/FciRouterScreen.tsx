@@ -1,5 +1,5 @@
 import * as React from "react";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -11,7 +11,6 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { FciParamsList } from "../navigation/params";
 import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
-import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
 import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
@@ -24,6 +23,7 @@ import {
 } from "../../../utils/errors";
 import { ProblemJson } from "../../../../definitions/fci/ProblemJson";
 import ErrorComponent from "../components/ErrorComponent";
+import LoadingComponent from "../components/LoadingComponent";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -57,13 +57,8 @@ const FciSignatureScreen = (
     );
   }
 
-  const LoadingComponent = () => (
-    <LoadingErrorComponent
-      isLoading={true}
-      loadingCaption={""}
-      onRetry={constNull}
-      testID={"FciRouterLoadingScreenTestID"}
-    />
+  const LoadingView = () => (
+    <LoadingComponent testID={"FciRouterLoadingScreenTestID"} />
   );
 
   const GenericError = (status?: ProblemJson["status"]) => {
@@ -110,13 +105,13 @@ const FciSignatureScreen = (
 
   return pot.fold(
     fciSignatureRequest,
-    () => <LoadingComponent />,
-    () => <LoadingComponent />,
-    () => <LoadingComponent />,
+    () => <LoadingView />,
+    () => <LoadingView />,
+    () => <LoadingView />,
     renderErrorComponent,
     b => <SuccessComponent signatureRequest={b} />,
-    () => <LoadingComponent />,
-    () => <LoadingComponent />,
+    () => <LoadingView />,
+    () => <LoadingView />,
     () => renderErrorComponent()
   );
 };

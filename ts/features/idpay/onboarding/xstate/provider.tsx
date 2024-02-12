@@ -9,10 +9,7 @@ import {
   idPayApiUatBaseUrl,
   idPayTestToken
 } from "../../../../config";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import {
@@ -54,10 +51,13 @@ const IDPayOnboardingMachineProvider = (props: Props) => {
 
   const sessionInfo = useIOSelector(sessionInfoSelector);
 
-  const rootNavigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const rootNavigation = useIONavigation();
   const onboardingNavigation =
     useNavigation<
-      IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>
+      IDPayOnboardingStackNavigationProp<
+        IDPayOnboardingParamsList,
+        keyof IDPayOnboardingParamsList
+      >
     >();
 
   if (O.isNone(sessionInfo)) {

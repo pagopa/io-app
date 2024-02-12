@@ -97,7 +97,7 @@ describe("Payment", () => {
       await element(by.text(I18n.t("global.navigator.wallet"))).tap();
       await element(by.text(I18n.t("wallet.payNotice"))).tap();
 
-      await element(by.text(I18n.t("wallet.QRtoPay.setManually"))).tap();
+      await element(by.id("barcodeScanBaseScreenTabInput")).tap();
 
       const matchNoticeCodeInput = by.id("NoticeCodeInputMask");
       await waitFor(element(matchNoticeCodeInput))
@@ -151,7 +151,7 @@ const completePaymentFlow = async () => {
 
 const openPaymentFromMessage = async () => {
   const messageWithPayment = element(
-    by.id(`MessageListItem_00000000000000000000000021`)
+    by.id(`MessageListItem_00000000000000000000000019`)
   );
   await waitFor(messageWithPayment)
     .toBeVisible()
