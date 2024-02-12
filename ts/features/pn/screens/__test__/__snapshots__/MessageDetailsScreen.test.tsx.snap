@@ -361,16 +361,16 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       }
                                     >
                                       <RNSVGSvgView
-                                        accessibilityElementsHidden={true}
-                                        accessibilityLabel=""
-                                        accessible={false}
+                                        accessibilityElementsHidden={false}
+                                        accessibilityLabel="Includes attachments"
+                                        accessible={true}
                                         align="xMidYMid"
                                         bbHeight={16}
                                         bbWidth={16}
                                         color={4283784304}
                                         focusable={false}
                                         height={16}
-                                        importantForAccessibility="no-hide-descendants"
+                                        importantForAccessibility="auto"
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
