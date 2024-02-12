@@ -244,7 +244,9 @@ class PreferencesScreen extends React.Component<PreferencesScreenProps> {
 
     return (
       <RNavScreenWithLargeHeader
-        title={I18n.t("profile.preferences.title")}
+        title={{
+          label: I18n.t("profile.preferences.title")
+        }}
         description={I18n.t("profile.preferences.subtitle")}
         contextualHelpMarkdown={contextualHelpMarkdown}
         headerActionsProp={{ showHelp: true }}

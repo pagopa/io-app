@@ -12,6 +12,13 @@ export const navigationRef =
 // eslint-disable-next-line functional/no-let
 let isNavigationReady: boolean = false;
 
+// eslint-disable-next-line functional/no-let
+let isMainNavigatorReady = false;
+
+export const setMainNavigatorReady = () => {
+  isMainNavigatorReady = true;
+};
+
 export const setNavigationReady = () => {
   // eslint-disable-next-line functional/immutable-data
   isNavigationReady = true;
@@ -60,6 +67,8 @@ const dispatchNavigationAction = (action: NavigationAction) => {
   navigationRef.current?.dispatch(action);
 };
 
+const getIsMainNavigatorReady = () => isMainNavigatorReady;
+
 const getCurrentRouteName = (): string | undefined =>
   navigationRef.current?.getCurrentRoute()?.name;
 
@@ -82,5 +91,6 @@ export default {
   getCurrentRoute,
   getCurrentState,
   getIsNavigationReady,
-  setNavigationReady
+  setNavigationReady,
+  getIsMainNavigatorReady
 };

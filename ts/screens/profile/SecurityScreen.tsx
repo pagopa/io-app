@@ -139,7 +139,9 @@ const SecurityScreen = (): React.ReactElement => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.security.title")}
+      title={{
+        label: I18n.t("profile.security.title")
+      }}
       description={I18n.t("profile.security.subtitle")}
       headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}

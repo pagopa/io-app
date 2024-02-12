@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test LoadingComponent component should render a LoadingComponent component with props correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "justifyContent": "center",
+      "padding": 24,
+    }
+  }
+>
+  <View
+    accessibilityRole="progressbar"
+    accessible={true}
+    importantForAccessibility="no-hide-descendants"
+    style={
+      Object {
+        "height": 76,
+        "width": 76,
+      }
+    }
+    testID="LoadingSpinnerTestID"
+  >
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "transform": Array [
+            Object {
+              "rotateZ": "0deg",
+            },
+          ],
+        }
+      }
+      testID="LoadingSpinnerAnimatedTestID"
+    >
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight={76}
+        bbWidth={76}
+        fill="none"
+        focusable={false}
+        height={76}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "flex": 0,
+              "height": 76,
+              "width": 76,
+            },
+          ]
+        }
+        vbHeight={76}
+        vbWidth={76}
+        width={76}
+      >
+        <RNSVGGroup
+          fill={null}
+          propList={
+            Array [
+              "fill",
+            ]
+          }
+        >
+          <RNSVGDefs>
+            <RNSVGLinearGradient
+              gradient={
+                Array [
+                  0,
+                  736995,
+                  1,
+                  -16040221,
+                ]
+              }
+              gradientTransform={null}
+              gradientUnits={0}
+              name="spinner-secondHalf"
+              x1="0%"
+              x2="100%"
+              y1="0%"
+              y2="0%"
+            />
+            <RNSVGLinearGradient
+              gradient={
+                Array [
+                  0,
+                  -16040221,
+                  1,
+                  -16040221,
+                ]
+              }
+              gradientTransform={null}
+              gradientUnits={0}
+              name="spinner-firstHalf"
+              x1="0%"
+              x2="100%"
+              y1="0%"
+              y2="0%"
+            />
+          </RNSVGDefs>
+          <RNSVGGroup
+            propList={
+              Array [
+                "strokeWidth",
+              ]
+            }
+            strokeWidth={7}
+          >
+            <RNSVGPath
+              d="M 3.5 38 A 34.5 34.5 0 0 1 72.5 38"
+              propList={
+                Array [
+                  "stroke",
+                ]
+              }
+              stroke={
+                Array [
+                  1,
+                  "spinner-secondHalf",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M 72.5 38 A 34.5 34.5 0 0 1 3.5 38"
+              propList={
+                Array [
+                  "stroke",
+                ]
+              }
+              stroke={
+                Array [
+                  1,
+                  "spinner-firstHalf",
+                ]
+              }
+            />
+            <RNSVGPath
+              d="M 3.5 38 A 34.5 34.5 0 0 1 3.5 36.25"
+              propList={
+                Array [
+                  "stroke",
+                  "strokeLinecap",
+                ]
+              }
+              stroke={4278927075}
+              strokeLinecap={1}
+            />
+          </RNSVGGroup>
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "height": 48,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegreyDark"
+    defaultColor="bluegreyDark"
+    defaultWeight="SemiBold"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 24,
+        "lineHeight": 34,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "textAlign": "center",
+        },
+        Object {
+          "fontSize": 24,
+          "lineHeight": 34,
+        },
+        Object {
+          "color": "#17324D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "600",
+        },
+      ]
+    }
+    testID="LoadingSpinnerCaptionTitleID"
+    weight="SemiBold"
+  >
+    Loading
+  </Text>
+  <View
+    style={
+      Object {
+        "height": 16,
+      }
+    }
+  />
+  <Text
+    allowFontScaling={false}
+    color="bluegrey"
+    defaultColor="bluegrey"
+    defaultWeight="Regular"
+    font="TitilliumWeb"
+    fontStyle={
+      Object {
+        "fontSize": 16,
+        "lineHeight": 24,
+      }
+    }
+    style={
+      Array [
+        Object {
+          "textAlign": "center",
+        },
+        Object {
+          "fontSize": 16,
+          "lineHeight": 24,
+        },
+        Object {
+          "color": "#475A6D",
+          "fontFamily": "Titillium Web",
+          "fontStyle": "normal",
+          "fontWeight": "400",
+        },
+      ]
+    }
+    testID="LoadingSpinnerCaptionSubTitleID"
+    weight="Regular"
+  >
+    Please wait...
+  </Text>
+</View>
+`;

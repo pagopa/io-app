@@ -23,6 +23,7 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
@@ -32,6 +33,7 @@ import {
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
 import { clearCache } from "../../store/actions/profile";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   sessionTokenSelector,
   walletTokenSelector
@@ -46,8 +48,7 @@ import {
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
+
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -137,7 +138,7 @@ const DeveloperActionsSection = () => {
           <VSpacer size={8} />
           <ButtonSolid
             fullWidth
-            color="danger"
+            color="primary"
             label={I18n.t("profile.main.dumpAsyncStorage")}
             onPress={() => {
               /* eslint-disable no-console */

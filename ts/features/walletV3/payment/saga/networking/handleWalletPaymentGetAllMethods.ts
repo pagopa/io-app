@@ -6,21 +6,35 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
-import { WalletClient } from "../../../common/api/client";
+import { PaymentClient } from "../../api/client";
 import { walletPaymentGetAllMethods } from "../../store/actions/networking";
+import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetAllMethods(
-  getAllPaymentMethods: WalletClient["getAllPaymentMethods"],
+  getAllPaymentMethods: PaymentClient["getAllPaymentMethods"],
   action: ActionType<(typeof walletPaymentGetAllMethods)["request"]>
 ) {
-  const getAllPaymentMethodsRequest = getAllPaymentMethods({});
+  const sessionToken = yield* getOrFetchWalletSessionToken();
+
+  if (sessionToken === undefined) {
+    yield* put(
+      walletPaymentGetAllMethods.failure({
+        ...getGenericError(new Error(`Missing session token`))
+      })
+    );
+    return;
+  }
+
+  const getAllPaymentMethodsRequest = getAllPaymentMethods({
+    eCommerceSessionToken: sessionToken
+  });
 
   try {
     const getAllPaymentMethodsResult = (yield* call(
       withRefreshApiCall,
       getAllPaymentMethodsRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof getAllPaymentMethods>;
+    )) as SagaCallReturnType<typeof getAllPaymentMethods>;
 
     yield* put(
       pipe(

@@ -7,18 +7,16 @@ import {
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
-  UIAttachment,
   UIMessage,
   UIMessageDetails,
   UIMessageId,
-  WithSkipMixpanelTrackingOnFailure,
   WithUIMessageId
 } from "../../types";
 import { MessageGetStatusFailurePhaseType } from "../reducers/messageGetStatus";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
-import { Download, DownloadError } from "../reducers/downloads";
 import { MessagesStatus } from "../reducers/messagesStatus";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
@@ -219,6 +217,29 @@ export const resetMigrationStatus = createAction(
   "MESSAGES_MIGRATE_TO_PAGINATED_DONE"
 );
 
+export type DownloadAttachmentRequest = {
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
+  skipMixpanelTrackingOnFailure: boolean;
+};
+
+export type DownloadAttachmentSuccess = {
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
+  path: string;
+};
+
+export type DownloadAttachmentError = {
+  attachment: ThirdPartyAttachment;
+  error: Error;
+  messageId: UIMessageId;
+};
+
+export type DownloadAttachmentCancel = {
+  attachment: ThirdPartyAttachment;
+  messageId: UIMessageId;
+};
+
 /**
  * The user requests an attachment download.
  */
@@ -228,14 +249,18 @@ export const downloadAttachment = createAsyncAction(
   "DOWNLOAD_ATTACHMENT_FAILURE",
   "DOWNLOAD_ATTACHMENT_CANCEL"
 )<
-  WithSkipMixpanelTrackingOnFailure<UIAttachment>,
-  Download,
-  DownloadError<Error>,
-  UIAttachment
+  DownloadAttachmentRequest,
+  DownloadAttachmentSuccess,
+  DownloadAttachmentError,
+  DownloadAttachmentCancel
 >();
 
 export const cancelPreviousAttachmentDownload = createAction(
   "CANCEL_PREVIOUS_ATTACHMENT_DOWNLOAD"
+);
+
+export const clearRequestedAttachmentDownload = createAction(
+  "CLEAR_REQUESTED_ATTACHMNET_DOWNLOAD"
 );
 
 /**
@@ -243,7 +268,7 @@ export const cancelPreviousAttachmentDownload = createAction(
  */
 export const removeCachedAttachment = createStandardAction(
   "REMOVE_CACHED_ATTACHMENT"
-)<Download>();
+)<DownloadAttachmentSuccess>();
 
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
@@ -258,6 +283,7 @@ export type MessagesActions = ActionType<
   | typeof loadThirdPartyMessage
   | typeof downloadAttachment
   | typeof cancelPreviousAttachmentDownload
+  | typeof clearRequestedAttachmentDownload
   | typeof removeCachedAttachment
   | typeof getMessagePrecondition
   | typeof clearMessagePrecondition

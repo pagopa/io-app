@@ -11,6 +11,7 @@ import {
   walletPaymentAuthorization
 } from "../../../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "../handleWalletPaymentAuthorization";
+import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
 describe("Test handleWalletPaymentAuthorization saga", () => {
   const requestTransactionAuthorizationPayload: WalletPaymentAuthorizePayload =
@@ -21,6 +22,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       transactionId: "",
       walletId: ""
     };
+  const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
     walletPaymentAuthorization.success
@@ -38,6 +40,8 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       walletPaymentAuthorization.request(requestTransactionAuthorizationPayload)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockRequestTransactionAuthorization(),
@@ -68,6 +72,8 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       walletPaymentAuthorization.request(requestTransactionAuthorizationPayload)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockRequestTransactionAuthorization(),
@@ -96,6 +102,8 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       walletPaymentAuthorization.request(requestTransactionAuthorizationPayload)
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockRequestTransactionAuthorization(),

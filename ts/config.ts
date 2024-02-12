@@ -1,7 +1,6 @@
 // Main config file. Mostly read the configuration from .env files
 
 import { CommaSeparatedListOf } from "@pagopa/ts-commons/lib/comma-separated-list";
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Millisecond, Second } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
@@ -54,12 +53,7 @@ export const isDebugBiometricIdentificationEnabled =
 
 export const myPortalEnabled: boolean = Config.MYPORTAL_ENABLED === "YES";
 
-export const bpdEnabled: boolean = Config.BPD_ENABLED === "YES";
-
-export const bpdApiUrlPrefix: string = Config.BPD_API_URL_PREFIX;
-
-export const bpdApiSitUrlPrefix: string = Config.BPD_API_SIT;
-export const bpdApiUatUrlPrefix: string = Config.BPD_API_UAT;
+export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
@@ -68,18 +62,11 @@ export const isPlaygroundsEnabled: boolean =
 export const euCovidCertificateEnabled: boolean =
   Config.EU_COVID_CERT_ENABLED === "YES";
 
-// SiciliaVola Feature Flag
-export const svEnabled: boolean = Config.SICILIAVOLA_ENABLED === "YES";
-
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";
 
 // CGN new merchants features
 export const cgnMerchantsV2Enabled = Config.CGN_MERCHANTS_V2_ENABLED === "YES";
-
-// Opt-in payments method
-export const bpdOptInPaymentMethodsEnabled =
-  Config.BPD_OPT_IN_PAYMENT_METHODS === "YES";
 
 // Ukraine donation
 export const uaDonationsEnabled = Config.UA_DONATIONS_ENABLED === "YES";
@@ -120,9 +107,6 @@ export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
 export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
-
-// version of ToS
-export const tosVersion: NonNegativeNumber = 4.7 as NonNegativeNumber;
 
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),

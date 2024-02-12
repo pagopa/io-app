@@ -3,6 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
@@ -15,7 +16,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { showToast } from "../../utils/showToast";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
@@ -71,7 +71,9 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
   return (
     <LoadingSpinnerOverlay isLoading={props.isLoading}>
       <RNavScreenWithLargeHeader
-        title={I18n.t("services.optIn.preferences.title")}
+        title={{
+          label: I18n.t("services.optIn.preferences.title")
+        }}
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
       >

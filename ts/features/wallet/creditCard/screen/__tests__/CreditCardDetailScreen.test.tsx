@@ -22,10 +22,7 @@ import CreditCardDetailScreen from "../CreditCardDetailScreen";
 const creditCard: CreditCardPaymentMethod = {
   walletType: WalletTypeEnum.Card,
   createDate: "2021-07-08",
-  enableableFunctions: [
-    EnableableFunctionsEnum.BPD,
-    EnableableFunctionsEnum.pagoPA
-  ],
+  enableableFunctions: [EnableableFunctionsEnum.pagoPA],
   favourite: false,
   idWallet: 23216,
   info: {
@@ -49,9 +46,6 @@ const creditCard: CreditCardPaymentMethod = {
   icon: 37
 };
 
-jest.mock("../../../../../config", () => ({
-  bpdEnabled: true
-}));
 const mockInitiative = {
   initiativeId: "idpay",
   initiativeName: "idpay",

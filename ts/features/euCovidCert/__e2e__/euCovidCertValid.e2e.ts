@@ -13,7 +13,7 @@ const fullScreenQrCodeTestId = "fullScreenQRCode";
 
 describe("EuCovidCert Valid", () => {
   beforeAll(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
     await ensureLoggedIn();
   });
 
