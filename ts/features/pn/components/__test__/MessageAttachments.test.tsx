@@ -6,11 +6,12 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
-import { Downloads } from "../../store/reducers/downloads";
-import { mockPdfAttachment } from "../../__mocks__/attachment";
-import { downloadAttachment } from "../../store/actions";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { MessageAttachments } from "../MessageAttachments";
+import { Downloads } from "../../../messages/store/reducers/downloads";
+import { mockPdfAttachment } from "../../../messages/__mocks__/attachment";
+import { downloadAttachment } from "../../../messages/store/actions";
+import I18n from "../../../../i18n";
+import { messageId_1 } from "../../../messages/__mocks__/messages";
 
 const mockOpenPreview = jest.fn();
 const mockShowToast = jest.fn();
@@ -19,7 +20,7 @@ jest.mock("../../../../utils/showToast", () => ({
   showToast: () => mockShowToast()
 }));
 
-describe("LegacyMessageAttachments", () => {
+describe("MessageAttachments", () => {
   beforeEach(() => {
     mockShowToast.mockReset();
     mockOpenPreview.mockReset();
@@ -27,7 +28,7 @@ describe("LegacyMessageAttachments", () => {
 
   describe("given an attachment", () => {
     describe("when the pot is loading", () => {
-      it("it should show a loading indicator", async () => {
+      it("it should show a loading indicator", () => {
         [
           pot.noneLoading,
           pot.someLoading({ path: "path", attachment: mockPdfAttachment })
@@ -35,23 +36,26 @@ describe("LegacyMessageAttachments", () => {
           const { component } = renderComponent(
             {
               attachments: [mockPdfAttachment],
+              messageId: messageId_1,
               openPreview: jest.fn()
             },
             {
-              [mockPdfAttachment.messageId]: {
+              [messageId_1]: {
                 [mockPdfAttachment.id]: loadingPot
               }
             }
           );
           expect(
-            component.queryByTestId("attachmentActivityIndicator")
+            component.queryByHintText(
+              I18n.t("global.accessibility.activityIndicator.hint")
+            )
           ).not.toBeNull();
         });
       });
     });
 
     describe("when the pot is NOT loading", () => {
-      it("it should NOT show a loading indicator", async () => {
+      it("it should NOT show a loading indicator", () => {
         [
           pot.none,
           pot.noneError(new Error()),
@@ -64,16 +68,19 @@ describe("LegacyMessageAttachments", () => {
           const { component } = renderComponent(
             {
               attachments: [mockPdfAttachment],
+              messageId: messageId_1,
               openPreview: jest.fn()
             },
             {
-              [mockPdfAttachment.messageId]: {
+              [messageId_1]: {
                 [mockPdfAttachment.id]: notLoadingPot
               }
             }
           );
           expect(
-            component.queryByTestId("attachmentActivityIndicator")
+            component.queryByHintText(
+              I18n.t("global.accessibility.activityIndicator.hint")
+            )
           ).toBeNull();
         });
       });
@@ -84,19 +91,21 @@ describe("LegacyMessageAttachments", () => {
         const { store } = renderComponent(
           {
             attachments: [mockPdfAttachment],
+            messageId: messageId_1,
             openPreview: jest.fn()
           },
           {
-            [mockPdfAttachment.messageId]: {
+            [messageId_1]: {
               [mockPdfAttachment.id]: pot.noneLoading
             }
           }
         );
 
-        await act(async () =>
+        await act(() =>
           store.dispatch(
             downloadAttachment.failure({
               attachment: mockPdfAttachment,
+              messageId: messageId_1,
               error: new Error()
             })
           )
@@ -110,10 +119,11 @@ describe("LegacyMessageAttachments", () => {
         const { store } = renderComponent(
           {
             attachments: [mockPdfAttachment],
+            messageId: messageId_1,
             openPreview: mockOpenPreview()
           },
           {
-            [mockPdfAttachment.messageId]: {
+            [messageId_1]: {
               [mockPdfAttachment.id]: pot.noneLoading
             }
           }
@@ -123,6 +133,7 @@ describe("LegacyMessageAttachments", () => {
           store.dispatch(
             downloadAttachment.success({
               path: "path",
+              messageId: messageId_1,
               attachment: mockPdfAttachment
             })
           )
@@ -134,7 +145,7 @@ describe("LegacyMessageAttachments", () => {
 });
 
 const renderComponent = (
-  props: React.ComponentProps<typeof LegacyMessageAttachments>,
+  props: React.ComponentProps<typeof MessageAttachments>,
   downloads: Downloads = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -151,8 +162,8 @@ const renderComponent = (
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <LegacyMessageAttachments {...props} />,
-      MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
+      () => <MessageAttachments {...props} />,
+      "DUMMY",
       {},
       store
     ),

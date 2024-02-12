@@ -152,16 +152,19 @@ export const DesignSystemNavigator = () => {
       With RN Navigation 6.x it's much easier because you can
       use the Group function */}
         <ModalStack.Navigator
-          mode="modal"
-          headerMode="screen"
           screenOptions={
             Platform.OS === "ios"
               ? {
                   gestureEnabled: isGestureEnabled,
                   cardOverlayEnabled: true,
+                  headerMode: "screen",
+                  presentation: "modal",
                   ...TransitionPresets.ModalPresentationIOS
                 }
-              : {}
+              : {
+                  headerMode: "screen",
+                  presentation: "modal"
+                }
           }
         >
           <ModalStack.Screen
@@ -191,7 +194,8 @@ const DesignSystemMainStack = () => {
       },
       headerTitleAlign: "center",
       headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
-      headerLeft: RNNBackButton
+      headerLeft: RNNBackButton,
+      headerMode: "screen"
     }),
     [insets]
   );
@@ -199,7 +203,6 @@ const DesignSystemMainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
-      headerMode="screen"
       screenOptions={customHeaderConf}
     >
       <ModalStack.Screen

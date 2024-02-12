@@ -151,7 +151,7 @@ const completePaymentFlow = async () => {
 
 const openPaymentFromMessage = async () => {
   const messageWithPayment = element(
-    by.id(`MessageListItem_00000000000000000000000021`)
+    by.id(`MessageListItem_00000000000000000000000019`)
   );
   await waitFor(messageWithPayment)
     .toBeVisible()

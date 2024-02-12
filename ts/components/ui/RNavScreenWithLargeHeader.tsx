@@ -22,11 +22,16 @@ import {
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import I18n from "../../i18n";
 
+export type LargeHeaderTitleProps = {
+  label: string;
+  accessibilityLabel?: string;
+  testID?: string;
+};
+
 type Props = {
   children: React.ReactNode;
   fixedBottomSlot?: React.ReactNode;
-  title: string;
-  titleTestID?: string;
+  title: LargeHeaderTitleProps;
   description?: string;
   goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
@@ -49,7 +54,6 @@ export const RNavScreenWithLargeHeader = ({
   children,
   fixedBottomSlot,
   title,
-  titleTestID,
   goBack,
   description,
   contextualHelp,
@@ -75,7 +79,7 @@ export const RNavScreenWithLargeHeader = ({
   const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps({
     backAccessibilityLabel: I18n.t("global.buttons.back"),
     goBack: goBack ?? navigation.goBack,
-    title,
+    title: title.label,
     scrollValues: {
       contentOffsetY: translationY,
       triggerOffset: titleHeight
@@ -109,7 +113,13 @@ export const RNavScreenWithLargeHeader = ({
           style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
         >
-          <H2 testID={titleTestID}>{title}</H2>
+          <H2
+            testID={title.testID}
+            accessibilityLabel={title.accessibilityLabel ?? title.label}
+            accessibilityRole="header"
+          >
+            {title.label}
+          </H2>
         </View>
 
         {description && (

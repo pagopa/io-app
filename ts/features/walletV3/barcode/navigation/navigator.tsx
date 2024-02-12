@@ -16,8 +16,7 @@ const Stack = createStackNavigator<WalletBarcodeParamsList>();
 export const WalletBarcodeNavigator = () => (
   <Stack.Navigator
     initialRouteName={WalletBarcodeRoutes.WALLET_BARCODE_MAIN}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={WalletBarcodeRoutes.WALLET_BARCODE_SCAN}

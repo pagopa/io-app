@@ -112,28 +112,6 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
   );
 
 /**
- * Email
- */
-
-/**
- * @deprecated
- */
-export const navigateToEmailReadScreen = () => {
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.READ_EMAIL_SCREEN)
-  );
-};
-
-/**
- * @deprecated
- */
-export const navigateToEmailInsertScreen = () => {
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.INSERT_EMAIL_SCREEN)
-  );
-};
-
-/**
  * Service
  */
 

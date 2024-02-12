@@ -12,8 +12,7 @@ const Stack = createStackNavigator<PaymentMethodOnboardingBPayParamsList>();
 const PaymentMethodOnboardingBPayNavigator = () => (
   <Stack.Navigator
     initialRouteName={WALLET_ONBOARDING_BPAY_ROUTES.MAIN}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={WALLET_ONBOARDING_BPAY_ROUTES.START}

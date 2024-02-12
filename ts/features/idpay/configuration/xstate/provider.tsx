@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
@@ -16,10 +15,7 @@ import {
   pagoPaApiUrlPrefixTest
 } from "../../../../config";
 import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import {
@@ -62,7 +58,7 @@ const IDPayConfigurationMachineProvider = (props: Props) => {
     O.getOrElse(() => PreferredLanguageEnum.it_IT)
   );
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
 
   if (O.isNone(sessionInfo)) {
     throw new Error("Session info is undefined");

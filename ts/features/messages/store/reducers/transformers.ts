@@ -1,5 +1,3 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
 import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
@@ -7,14 +5,11 @@ import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase"
 import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { apiUrlPrefix } from "../../../../config";
 import { ContentTypeValues } from "../../types/contentType";
 import {
   EUCovidCertificate,
   PaymentData,
-  UIAttachment,
-  UIAttachmentId,
   UIMessage,
   UIMessageDetails,
   UIMessageId
@@ -107,43 +102,15 @@ export const toUIMessageDetails = (
   };
 };
 
-const generateAttachmentUrl = (messageId: string, attachmentUrl: string) =>
-  `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachmentUrl.replace(
+export const attachmentDisplayName = (attachment: ThirdPartyAttachment) =>
+  attachment.name ?? attachment.id;
+export const attachmentContentType = (attachment: ThirdPartyAttachment) =>
+  attachment.content_type ?? ContentTypeValues.applicationOctetStream;
+export const attachmentDownloadUrl = (
+  messageId: UIMessageId,
+  attachment: ThirdPartyAttachment
+) =>
+  `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachment.url.replace(
     /^\//g, // note that attachmentUrl might contains a / at the beginning, so let's strip it
     ""
   )}`;
-
-export const attachmentsFromThirdPartyMessage = (
-  messageFromApi: ThirdPartyMessageWithContent
-): O.Option<Array<UIAttachment>> =>
-  pipe(
-    messageFromApi.third_party_message.attachments,
-    O.fromNullable,
-    O.map(thirdPartyMessageAttachmentArray =>
-      thirdPartyMessageAttachmentArray.map(thirdPartyMessageAttachment =>
-        attachmentFromThirdPartyMessage(
-          messageFromApi.id,
-          thirdPartyMessageAttachment
-        )
-      )
-    )
-  );
-
-export const attachmentFromThirdPartyMessage = (
-  thirdPartyMessageId: string,
-  thirPartyMessageAttachment: ThirdPartyAttachment
-): UIAttachment => ({
-  messageId: thirdPartyMessageId as UIMessageId,
-  id: thirPartyMessageAttachment.id as string as UIAttachmentId,
-  displayName: thirPartyMessageAttachment.name ?? thirPartyMessageAttachment.id,
-  contentType:
-    thirPartyMessageAttachment.content_type ??
-    ContentTypeValues.applicationOctetStream,
-  resourceUrl: {
-    href: generateAttachmentUrl(
-      thirdPartyMessageId,
-      thirPartyMessageAttachment.url
-    )
-  },
-  category: thirPartyMessageAttachment.category
-});
