@@ -92,8 +92,10 @@ const DownloadProfileDataScreen = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.main.privacy.exportData.title")}
-      titleTestID={"share-data-component-title"}
+      title={{
+        label: I18n.t("profile.main.privacy.exportData.title"),
+        testID: "share-data-component-title"
+      }}
       description={I18n.t("profile.main.privacy.exportData.info.title")}
       fixedBottomSlot={
         isMarkdownLoaded && (
