@@ -31,7 +31,6 @@ import {
 } from "../config";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { watchBonusSaga } from "../features/bonus/common/store/sagas/bonusSaga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
@@ -65,19 +64,12 @@ import {
 } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../store/actions/crossSessions";
+import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
-import {
-  clearCache,
-  profileLoadSuccess,
-  resetProfileState
-} from "../store/actions/profile";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
@@ -461,13 +453,6 @@ export function* initializeApplicationSaga(
       }
     }
   }
-  // We dispatch a load success to allow the execution of the check
-  // which save the hashed code tax code
-  const profile = yield* select(profileSelector);
-  if (pot.isSome(profile)) {
-    yield* put(profileLoadSuccess(profile.value));
-    yield* take(setProfileHashedFiscalCode);
-  }
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
@@ -525,7 +510,6 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for cgn actions
-  yield* fork(watchBonusSaga, sessionToken);
   yield* fork(watchBonusCgnSaga, sessionToken);
 
   if (euCovidCertificateEnabled) {

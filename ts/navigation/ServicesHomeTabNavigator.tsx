@@ -12,18 +12,17 @@ const Tab = createMaterialTopTabNavigator();
 const ServicesHomeTabNavigator = () => (
   <Tab.Navigator
     initialRouteName="SERVICES_NATIONAL"
-    lazy={true}
-    tabBarPosition="top"
-    tabBarOptions={{
-      activeTintColor: IOColors.blue,
-      inactiveTintColor: IOColors.bluegrey,
-      style: {
+    screenOptions={{
+      lazy: true,
+      tabBarActiveTintColor: IOColors.blue,
+      tabBarInactiveTintColor: IOColors.bluegrey,
+      tabBarStyle: {
         elevation: 0
       },
-      tabStyle: {
+      tabBarItemStyle: {
         height: 40
       },
-      labelStyle: {
+      tabBarLabelStyle: {
         ...makeFontStyleObject("SemiBold"),
         fontSize: Platform.OS === "android" ? 16 : undefined,
         fontWeight: Platform.OS === "android" ? "normal" : "bold",
@@ -31,6 +30,7 @@ const ServicesHomeTabNavigator = () => (
         height: 34
       }
     }}
+    tabBarPosition="top"
   >
     <Tab.Screen
       name={"SERVICES_NATIONAL"}

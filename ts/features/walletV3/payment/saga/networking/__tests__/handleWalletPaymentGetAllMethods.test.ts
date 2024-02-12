@@ -2,15 +2,19 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { Range } from "../../../../../../../definitions/pagopa/ecommerce/Range";
-import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
-import { PaymentMethodsResponse } from "../../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodStatus";
+import { PaymentMethodsResponse } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { walletPaymentGetAllMethods } from "../../../store/actions/networking";
 import { handleWalletPaymentGetAllMethods } from "../handleWalletPaymentGetAllMethods";
+import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
+import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
 describe("Test handleWalletPaymentGetAllMethods saga", () => {
+  const T_SESSION_TOKEN = "ABCD";
+
   it(`should put ${getType(
     walletPaymentGetAllMethods.success
   )} when getAllPaymentMethods is 200`, () => {
@@ -28,7 +32,8 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
               max: 10 as Range["max"]
             }
           ],
-          status: PaymentMethodStatusEnum.ENABLED
+          status: PaymentMethodStatusEnum.ENABLED,
+          methodManagement: PaymentMethodManagementTypeEnum.ONBOARDABLE
         }
       ]
     };
@@ -39,6 +44,8 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       walletPaymentGetAllMethods.request()
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetAllPaymentMethods(),
@@ -61,6 +68,8 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       walletPaymentGetAllMethods.request()
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetAllPaymentMethods(),
@@ -87,6 +96,8 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       walletPaymentGetAllMethods.request()
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetAllPaymentMethods(),

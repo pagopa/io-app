@@ -13,7 +13,6 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -57,9 +56,6 @@ export const MessageDetailsScreen = () => {
 
   const { messageId, serviceId, firstTimeOpening } = route.params;
 
-  const service = pot.toUndefined(
-    useIOSelector(state => serviceByIdSelector(state, serviceId))
-  );
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
@@ -71,7 +67,7 @@ export const MessageDetailsScreen = () => {
     dispatch(cancelQueuedPaymentUpdates());
     dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
-  }, []);
+  }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
     title: "",
@@ -129,9 +125,8 @@ export const MessageDetailsScreen = () => {
           ),
           message => (
             <MessageDetails
-              messageId={messageId}
               message={message}
-              service={service}
+              serviceId={serviceId}
               payments={payments}
             />
           )

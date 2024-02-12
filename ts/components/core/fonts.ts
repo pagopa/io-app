@@ -24,6 +24,10 @@ const fonts = {
     android: "TitilliumWeb",
     ios: "Titillium Web"
   }),
+  TitilliumSansPro: Platform.select({
+    android: "TitilliumSansPro",
+    ios: "Titillium Sans Pro"
+  }),
   ReadexPro: Platform.select({
     android: "ReadexPro",
     ios: "Readex Pro"

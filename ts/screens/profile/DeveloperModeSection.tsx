@@ -11,7 +11,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
@@ -48,6 +47,8 @@ import {
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -267,7 +268,7 @@ const DeveloperDataSection = () => {
 };
 
 const DesignSystemSection = () => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   return (
     <ContentWrapper>
@@ -289,7 +290,7 @@ const DesignSystemSection = () => {
 };
 
 const PlaygroundsSection = () => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const isIdPayTestEnabled = useIOSelector(isIdPayTestEnabledSelector);
   const playgroundsNavListItems: ReadonlyArray<PlaygroundsNavListItem> = [
     {

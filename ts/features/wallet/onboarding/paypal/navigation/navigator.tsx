@@ -13,8 +13,7 @@ const Stack = createStackNavigator<PaymentMethodOnboardingPayPalParamsList>();
 export const PaymentMethodOnboardingPayPalOnboardingNavigator = () => (
   <Stack.Navigator
     initialRouteName={PAYPAL_ROUTES.ONBOARDING.MAIN}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={PAYPAL_ROUTES.ONBOARDING.START}
