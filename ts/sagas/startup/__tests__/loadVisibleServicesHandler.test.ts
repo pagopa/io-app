@@ -19,7 +19,9 @@ describe("loadVisibleServicesHandler", () => {
     it("returns a generic error if backend response is 500", () => {
       testSaga(loadVisibleServicesRequestHandler, getVisibleServices)
         .next()
-        .call(withRefreshApiCall, getVisibleServices({}))
+        .call(withRefreshApiCall, getVisibleServices({}), {
+          skipThrowingError: true
+        })
         .next(
           E.right({
             status: 500,
@@ -39,10 +41,12 @@ describe("loadVisibleServicesHandler", () => {
       it("the session expiration is handled by withRefreshApiCall", () => {
         testSaga(loadVisibleServicesRequestHandler, getVisibleServices)
           .next()
-          .call(withRefreshApiCall, getVisibleServices({}))
+          .call(withRefreshApiCall, getVisibleServices({}), {
+            skipThrowingError: true
+          })
           .next(
             E.right({
-              status: 401,
+              status: 403,
               value: "An error occurred loading visible services"
             })
           )
@@ -59,7 +63,9 @@ describe("loadVisibleServicesHandler", () => {
     it("return an array of visibile services if backend response is 200", () => {
       testSaga(loadVisibleServicesRequestHandler, getVisibleServices)
         .next()
-        .call(withRefreshApiCall, getVisibleServices({}))
+        .call(withRefreshApiCall, getVisibleServices({}), {
+          skipThrowingError: true
+        })
         .next(E.right({ status: 200, value: { items: mockedVisibleServices } }))
         .put(loadVisibleServices.success(mockedVisibleServices))
         .next();

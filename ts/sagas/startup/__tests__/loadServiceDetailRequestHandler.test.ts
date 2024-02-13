@@ -11,6 +11,7 @@ import { loadServiceDetail } from "../../../store/actions/services";
 import { handleOrganizationNameUpdateSaga } from "../../services/handleOrganizationNameUpdateSaga";
 import { handleServiceReadabilitySaga } from "../../services/handleServiceReadabilitySaga";
 import { loadServiceDetailRequestHandler } from "../loadServiceDetailRequestHandler";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
 
 const mockedServiceId = "A01" as ServiceId;
 const getService = jest.fn();
@@ -32,7 +33,11 @@ describe("loadServiceDetailRequestHandler", () => {
   it("returns an error if backend response is 500", () => {
     testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
-      .call(getService, { service_id: mockedServiceId })
+      .call(
+        withRefreshApiCall,
+        getService({ service_id: mockedServiceId }),
+        mockedAction
+      )
       .next(E.right({ status: 500, value: "generic error" }))
       .put(
         loadServiceDetail.failure({
@@ -47,7 +52,11 @@ describe("loadServiceDetailRequestHandler", () => {
   it("returns service detail if the backend response is 200", () => {
     testSaga(loadServiceDetailRequestHandler, getService, mockedAction)
       .next()
-      .call(getService, { service_id: mockedServiceId })
+      .call(
+        withRefreshApiCall,
+        getService({ service_id: mockedServiceId }),
+        mockedAction
+      )
       .next(E.right({ status: 200, value: mockedService }))
       .put(loadServiceDetail.success(mockedService))
       .next()
