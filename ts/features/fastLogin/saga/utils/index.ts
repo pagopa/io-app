@@ -36,21 +36,17 @@ function isReduxAction<A extends Action>(
 // This has been done as a refactor to avoid the use of optional parameters
 export function* withRefreshApiCall<R, A extends Action>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,
-  actionOrErrorHandling?: A | RefreshApiCallErrorHandlingType,
-  errorHandlingOrUndefined?: RefreshApiCallErrorHandlingType
+  actionOrErrorHandling?: A | RefreshApiCallErrorHandlingType
 ): SagaIterator<t.Validation<IResponseType<401, any> | R>> {
   const response = yield* call(() => apiCall);
 
   // eslint-disable-next-line functional/no-let
   let action: A | undefined;
   // eslint-disable-next-line functional/no-let
-  let errorHandling:
-    | typeof actionOrErrorHandling
-    | typeof errorHandlingOrUndefined = {};
+  let errorHandling: typeof actionOrErrorHandling = {};
 
   if (isReduxAction(actionOrErrorHandling)) {
     action = actionOrErrorHandling;
-    errorHandling = errorHandlingOrUndefined ?? {};
   } else {
     errorHandling =
       (actionOrErrorHandling as RefreshApiCallErrorHandlingType) ?? {};
