@@ -137,9 +137,6 @@ const ProfileStackNavigator = () => {
         component={PinScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_DOWNLOAD_DATA}
         component={DownloadProfileDataScreen}
       />
