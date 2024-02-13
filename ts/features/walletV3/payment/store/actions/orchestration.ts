@@ -1,7 +1,8 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { PaymentStartOrigin, PaymentStartRoute } from "../../types";
+import { PaymentStartRoute } from "../../types";
+import { PaymentStartOrigin } from "../../../history/types";
 
 export type PaymentInitStateParams = {
   startOrigin?: PaymentStartOrigin;
