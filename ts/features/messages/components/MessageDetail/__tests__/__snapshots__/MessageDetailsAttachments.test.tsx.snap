@@ -331,6 +331,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 1 attachment 1`] =
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             Object {
                               "alignItems": "center",
@@ -788,6 +789,7 @@ exports[`MessageDetailsAttachments Should match snapshot with 10 attachments 1`]
                         }
                       >
                         <View
+                          importantForAccessibility="no-hide-descendants"
                           style={
                             Object {
                               "alignItems": "center",
