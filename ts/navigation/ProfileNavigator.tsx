@@ -190,9 +190,6 @@ const ProfileStackNavigator = () => {
         component={RemoveAccountInfo}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS}
         component={RemoveAccountDetails}
       />
