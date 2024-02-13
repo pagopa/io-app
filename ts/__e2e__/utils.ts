@@ -1,3 +1,5 @@
+import { formatNumberCentsToAmount } from "../utils/stringBuilder";
+import I18n from "../i18n";
 import {
   e2ePinChar1,
   e2ePinChar2,
@@ -126,4 +128,52 @@ export const closeKeyboard = async () => {
   } catch (e) {
     await element(by.label("Done")).atIndex(0).tap();
   }
+};
+
+export const openPaymentFromMessage = async () => {
+  const messageWithPayment = element(
+    by.id(`MessageListItem_00000000000000000000000019`)
+  );
+  await waitFor(messageWithPayment)
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
+  await messageWithPayment.tap();
+
+  const seeNoticeButton = element(by.text(I18n.t("messages.cta.seeNotice")));
+  await waitFor(seeNoticeButton)
+    .toBeVisible()
+    .withTimeout(e2eWaitRenderTimeout);
+  await seeNoticeButton.tap();
+};
+
+export const completePaymentFlow = async () => {
+  await waitFor(element(by.text(I18n.t("wallet.continue"))))
+    .toExist()
+    .withTimeout(e2eWaitRenderTimeout);
+  await element(by.text(I18n.t("wallet.continue"))).tap();
+
+  const matchConfirmPayment = by.text(
+    `${I18n.t("wallet.ConfirmPayment.pay")} ${formatNumberCentsToAmount(
+      2322,
+      true
+    )}`
+  );
+  await waitFor(element(matchConfirmPayment))
+    .toExist()
+    .withTimeout(e2eWaitRenderTimeout);
+  await element(matchConfirmPayment).tap();
+
+  await waitFor(
+    element(
+      by.text(
+        I18n.t("payment.paidConfirm", {
+          amount: formatNumberCentsToAmount(2322, true)
+        })
+      )
+    )
+  )
+    .toExist()
+    .withTimeout(e2eWaitRenderTimeout);
+
+  await element(by.text(I18n.t("wallet.outcomeMessage.cta.close"))).tap();
 };

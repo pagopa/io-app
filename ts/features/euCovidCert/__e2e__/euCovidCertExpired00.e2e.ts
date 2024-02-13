@@ -1,13 +1,11 @@
 import { device } from "detox";
-import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
 import { ensureLoggedIn } from "../../../__e2e__/utils";
+import { e2eWaitRenderTimeout } from "../../../__e2e__/config";
+import { learnMoreLinkTestId, scrollToEUCovidMessage } from "./utils";
 
 const euCovidCertExpiredSubject = "🏥 EUCovidCert - expired";
 const euCovidCertExpiredTitle = "Expired Certificate title";
 const euCovidCertExpiredSubTitle = "Expired Certificate sub title";
-
-const messageListTestId = "MessageList_inbox";
-const learnMoreLinkTestId = "euCovidCertLearnMoreLink";
 
 describe("EuCovidCert Expired", () => {
   beforeAll(async () => {
@@ -15,17 +13,9 @@ describe("EuCovidCert Expired", () => {
     await ensureLoggedIn();
   });
 
-  it("should find the expired EuCovidCert message and open it", async () => {
-    await waitFor(element(by.text(euCovidCertExpiredSubject)))
-      .toBeVisible()
-      .whileElement(by.id(messageListTestId))
-      .scroll(350, "down");
+  it("should find the expired EuCovidCert message, open it and check all the correct elements in the details page", async () => {
+    await openExpiredEUCovidMessage();
 
-    const subject = element(by.text(euCovidCertExpiredSubject));
-    await subject.tap();
-  });
-
-  it("should check all the correct elements in the details page", async () => {
     await waitFor(element(by.text(euCovidCertExpiredTitle)))
       .toBeVisible()
       .withTimeout(e2eWaitRenderTimeout);
@@ -39,3 +29,10 @@ describe("EuCovidCert Expired", () => {
       .withTimeout(e2eWaitRenderTimeout);
   });
 });
+
+const openExpiredEUCovidMessage = async () => {
+  await scrollToEUCovidMessage(euCovidCertExpiredSubject);
+
+  const subject = element(by.text(euCovidCertExpiredSubject));
+  await subject.tap();
+};
