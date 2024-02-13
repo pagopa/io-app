@@ -31,10 +31,10 @@ import WebPlayground from "../screens/profile/WebPlayground";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
+import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPaymentPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { useIOSelector } from "../store/hooks";
 import { isGestureEnabled } from "../utils/navigation";
-import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPaymentPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -208,9 +208,6 @@ const ProfileStackNavigator = () => {
         component={RemoveAccountInfo}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS}
         component={RemoveAccountDetails}
       />
