@@ -100,7 +100,13 @@ export const MessageDetailsScreen = (
         >
           {hasAttachments && (
             <MessageDetailsTagBox>
-              <Tag variant="attachment" testID="attachment-tag" />
+              <Tag
+                variant="attachment"
+                testID="attachment-tag"
+                iconAccessibilityLabel={I18n.t(
+                  "messageDetails.accessibilityAttachmentIcon"
+                )}
+              />
             </MessageDetailsTagBox>
           )}
           {messageDetails.dueDate && expiringInfo === "expired" && (

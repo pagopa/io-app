@@ -21,6 +21,8 @@ import {
 } from "../../store/reducers/userMetadata";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
 import { convertUnknownToError } from "../../utils/errors";
+import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**
  * A saga to fetch user metadata from the Backend
@@ -33,14 +35,24 @@ export function* fetchUserMetadata(
   SagaCallReturnType<typeof getUserMetadata>
 > {
   try {
-    const response = yield* call(getUserMetadata, {});
+    const response = (yield* call(withRefreshApiCall, getUserMetadata({}), {
+      skipThrowingError: true
+    })) as unknown as SagaCallReturnType<typeof getUserMetadata>;
 
     // Can't decode response
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
     }
-
     if (response.right.status !== 200) {
+      if (response.right.status === 401) {
+        const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+        if (isFastLoginEnabled) {
+          // Return an empty object cause we have a token refresh
+          // The flow that called this API, must recall it once the token is refreshed
+          return E.right<Error, BackendUserMetadata>(emptyUserMetadata);
+        }
+      }
+
       if (response.right.status === 204) {
         // Return an empty object cause profile has no metadata yet (204 === No Content)
         return E.right<Error, BackendUserMetadata>(emptyUserMetadata);
