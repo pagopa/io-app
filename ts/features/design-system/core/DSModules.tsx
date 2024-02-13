@@ -3,6 +3,7 @@ import { Alert, View, ImageSourcePropType } from "react-native";
 import {
   ButtonExtendedOutline,
   IOThemeContext,
+  ModuleAttachment,
   ModuleCheckout,
   ModuleIDP,
   ModulePaymentNotice,
@@ -16,7 +17,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { LegacyModuleAttachment } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { ModuleAttachment } from "../../messages/components/MessageDetail/ModuleAttachment";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
