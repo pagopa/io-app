@@ -3202,8 +3202,8 @@ features:
       cancel: "Quit signing"
       confirm: "Keep signing"
       alert:
-        title: "Do you want to interrupt the operation?"
-        confirm: "Yes, interrupt"
+        title: "Do you want to stop the operation?"
+        confirm: "Yes, stop it"
         cancel: "No, go back"
     checkService:
       title: "Turn on messages"
