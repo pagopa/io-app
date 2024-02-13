@@ -1879,6 +1879,7 @@ messages:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
 messageDetails:
+  accessibilityAttachmentIcon: "Includes attachments"
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Message
