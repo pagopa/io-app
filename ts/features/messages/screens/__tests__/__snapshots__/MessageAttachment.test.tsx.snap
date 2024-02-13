@@ -750,6 +750,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               </View>
                             </View>
                             <Text
+                              accessible={false}
                               numberOfLines={1}
                               style={
                                 Array [
@@ -770,9 +771,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   },
                                 ]
                               }
-                            >
-                              PDF Preview
-                            </Text>
+                            />
                             <View
                               style={
                                 Array [
@@ -1494,6 +1493,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               </View>
                             </View>
                             <Text
+                              accessible={false}
                               numberOfLines={1}
                               style={
                                 Array [
@@ -1514,9 +1514,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   },
                                 ]
                               }
-                            >
-                              PDF Preview
-                            </Text>
+                            />
                             <View
                               style={
                                 Array [
