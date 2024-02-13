@@ -1879,6 +1879,7 @@ messages:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
 messageDetails:
+  accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
