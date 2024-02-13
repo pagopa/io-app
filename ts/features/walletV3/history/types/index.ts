@@ -1,3 +1,5 @@
+import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+
 export type PaymentStartOrigin =
   | "message"
   | "qrcode_scan"
@@ -7,4 +9,7 @@ export type PaymentStartOrigin =
 
 export type PaymentHistory = {
   startOrigin?: PaymentStartOrigin;
+  rptId?: RptId;
+  startedAt?: Date;
+  lookupId?: string;
 };
