@@ -34,16 +34,14 @@ const reducer = (
 ): WalletPaymentHistoryState => {
   switch (action.type) {
     case getType(walletPaymentInitState):
-      return updatePaymentHistory(
-        {
-          history: state.history
-        },
-        {
+      return {
+        ...state,
+        activePaymentHistory: {
           startOrigin: action.payload.startOrigin,
           startedAt: new Date(),
           lookupId: getLookUpId()
         }
-      );
+      };
     case getType(walletPaymentGetDetails.request):
       return updatePaymentHistory(state, {
         rptId: action.payload
