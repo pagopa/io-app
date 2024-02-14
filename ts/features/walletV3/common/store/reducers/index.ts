@@ -5,7 +5,7 @@ import walletDetailsReducer, {
 } from "../../../details/store";
 import walletPaymentHistoryReducer, {
   WalletPaymentHistoryState
-} from "../../../history/store";
+} from "../../../history/store/reducers";
 import walletOnboardingReducer, {
   WalletOnboardingState
 } from "../../../onboarding/store";

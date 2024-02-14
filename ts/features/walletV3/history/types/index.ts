@@ -1,15 +1,17 @@
+import { NewTransactionResponse } from "../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
-
-export type PaymentStartOrigin =
-  | "message"
-  | "qrcode_scan"
-  | "poste_datamatrix_scan"
-  | "manual_insertion"
-  | "donation";
+import { PaymentStartOrigin } from "../../payment/types";
+import { WalletPaymentOutcomeEnum } from "../../payment/types/PaymentOutcomeEnum";
+import { WalletPaymentFailure } from "../../payment/types/WalletPaymentFailure";
 
 export type PaymentHistory = {
   startOrigin?: PaymentStartOrigin;
   rptId?: RptId;
   startedAt?: Date;
   lookupId?: string;
+  verifiedData?: PaymentRequestsGetResponse;
+  transaction?: NewTransactionResponse;
+  outcome?: WalletPaymentOutcomeEnum;
+  failure?: WalletPaymentFailure;
 };
