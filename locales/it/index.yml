@@ -1879,6 +1879,7 @@ messages:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
 messageDetails:
+  accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
@@ -1926,6 +1927,7 @@ messagePDFPreview:
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:
       title: "L’anteprima non è disponibile"

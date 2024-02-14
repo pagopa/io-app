@@ -1879,6 +1879,7 @@ messages:
       success: "Successfully unarchived."
       failure: "Failed to unarchive"
 messageDetails:
+  accessibilityAttachmentIcon: "Includes attachments"
   contextualHelpTitle: Message details
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Message
@@ -1926,6 +1927,7 @@ messagePDFPreview:
   open: "Open"
   save: "Save"
   savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  pdfAccessibility: "Preview of the PDF document"
   errors:
     previewing:
       title: "Preview is not available"

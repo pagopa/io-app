@@ -3277,10 +3277,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.22.0":
-  version "1.22.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.22.0.tgz#bdebbb0a8d0e2a5f5a9765ece757a5dc43edbf23"
-  integrity sha512-jOx/skTgIbF6pRKXtJTA3gr2Kf9fSzGKEg5AnvOym8oQUm9QlYaZ3O1M8boHB/GQ4rqGg6WQPLd1d5Ouca4WwA==
+"@pagopa/io-app-design-system@1.23.1":
+  version "1.23.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.23.1.tgz#acdc3cb37cc157c60a5a3f993223141757f49c8f"
+  integrity sha512-pOd36qeV6c9dALih/3+ro5g/+izQWVf5J0u4sKSr0LF9zTBZ/sDRSpd4Z3/qrrXkKcopOkMEg3lqR6TJrdsGeA==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3310,10 +3310,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-crypto/-/io-react-native-crypto-0.2.1.tgz#3d62b0f0cf45b2a878e4ee0652239ea69089988e"
   integrity sha512-J+VP1kLXl1lQSJJYFMa+ljW9fWgMIYQskBJZFaVKPrtrZr8MJyrhNzlFUf2/EGwxm3kA+7o7budq6fPqdfVvvg==
 
-"@pagopa/io-react-native-login-utils@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-0.2.2.tgz#9b37787f98d94fac645e70bda926638b14e59d0d"
-  integrity sha512-rOChvrMsJ5QvfLvcsttGP6M5LZkOWhOD2YVRL4+bMCVqNRMsSDmteBNoMWzWlRcXrKyd2ZORgDEa1zPmMRMhTw==
+"@pagopa/io-react-native-login-utils@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.0.tgz#26aa8fe2ae2c30f18d2714264524fd281f0f2b12"
+  integrity sha512-9OXV4ebpZAGdFfbV5HOt0YbVhGvVb104KshCA7u74YnsTkJp32FhdIVwoqmerRwNO4rRjwwvDjWZdhT80IrOzA==
 
 "@pagopa/io-react-native-zendesk@^0.3.28":
   version "0.3.28"
@@ -3650,11 +3650,6 @@
   version "1.16.8"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.8.tgz#2126ca54d4a5a3e9ea5e3f39ad1e6643f8e4b3d4"
   integrity sha512-pacdQDX6V6EmjF+HoiIh6u++qx4mTK0WnhgUHRc01B+Qt5eoeUwseBqmqfTSXTx/aHDEd6PiIw7UGvKgFoqgFQ==
-
-"@react-native-picker/picker@^2.4.1":
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.4.1.tgz#92feb7e0672d739624517dae04bf4de1452dfcdc"
-  integrity sha512-1XWy3IQgwr7MWd30KdY1iUh2gQZD+JiotN1ifj/ptFUYKon/0UFwngKQaWCO/CP/FdLl20/huSSLwKedYrdMMA==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"

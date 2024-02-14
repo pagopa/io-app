@@ -137,7 +137,7 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.2.1):
     - React-Core
-  - pagopa-io-react-native-login-utils (0.2.2):
+  - pagopa-io-react-native-login-utils (1.0.0):
     - React-Core
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.1)
@@ -488,8 +488,6 @@ PODS:
     - React-Core
   - RNCClipboard (1.10.0):
     - React-Core
-  - RNCPicker (2.4.1):
-    - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
   - RNDateTimePicker (3.5.2):
@@ -677,7 +675,6 @@ DEPENDENCIES:
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
-  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -869,8 +866,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
-  RNCPicker:
-    :path: "../node_modules/@react-native-picker/picker"
   RNCPushNotificationIOS:
     :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
@@ -945,7 +940,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
-  pagopa-io-react-native-login-utils: 51a58dc0e5fe3cba461759b9e98e795fc22e17c8
+  pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
@@ -1001,7 +996,6 @@ SPEC CHECKSUMS:
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: f1736c75ab85b627a4d57587edb4b60999c4dd80
-  RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
