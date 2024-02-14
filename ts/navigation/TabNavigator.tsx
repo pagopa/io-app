@@ -62,7 +62,6 @@ export const MainTabNavigator = () => {
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
-      {/* <HeaderFirstLevelHandler /> */}
       <Tab.Navigator
         screenOptions={{
           tabBarLabelStyle: {
