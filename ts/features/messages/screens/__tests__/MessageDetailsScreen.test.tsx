@@ -1,5 +1,4 @@
-import configureMockStore from "redux-mock-store";
-import { Action, Store } from "redux";
+import { Action, Store, createStore } from "redux";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
@@ -71,8 +70,7 @@ describe("MessageDetailsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const mockStore = configureMockStore<GlobalState>();
-    const store: Store<GlobalState> = mockStore(state);
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
 
     const { component } = renderComponent(store);
     expect(component.queryByTestId("attachment-tag")).not.toBeNull();
@@ -102,8 +100,7 @@ describe("MessageDetailsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const mockStore = configureMockStore<GlobalState>();
-    const store: Store<GlobalState> = mockStore(state);
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
 
     const { component } = renderComponent(store);
     expect(component.queryByTestId("attachment-tag")).toBeNull();
@@ -122,8 +119,7 @@ describe("MessageDetailsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const mockStore = configureMockStore<GlobalState>();
-    const store: Store<GlobalState> = mockStore(state);
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
 
     const { component } = renderComponent(store);
     expect(component.queryByTestId("due-date-tag")).not.toBeNull();
@@ -142,11 +138,58 @@ describe("MessageDetailsScreen", () => {
       appReducer,
       sequenceOfActions
     );
-    const mockStore = configureMockStore<GlobalState>();
-    const store: Store<GlobalState> = mockStore(state);
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
 
     const { component } = renderComponent(store);
     expect(component.queryByTestId("due-date-tag")).toBeNull();
+  });
+
+  it("should display the alert banner if the payment is expiring", () => {
+    const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
+
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      loadMessageById.success(toUIMessage(message_1)),
+      loadServiceDetail.success(service_1),
+      loadMessageDetails.success(
+        toUIMessageDetails({
+          ...messageWithValidPayment,
+          content: {
+            ...messageWithValidPayment.content,
+            due_date: next7Days
+          }
+        })
+      )
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
+
+    const { component } = renderComponent(store);
+    expect(component.queryByTestId("due-date-alert")).not.toBeNull();
+  });
+
+  it("should NOT display the alert banner if the payment is NOT expiring", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      loadMessageById.success(toUIMessage(message_1)),
+      loadServiceDetail.success(service_1),
+      loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment))
+    ];
+
+    const state: Partial<GlobalState> = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const store: Store<GlobalState> = createStore(appReducer, state as any);
+
+    const { component } = renderComponent(store);
+    expect(component.queryByTestId("due-date-alert")).toBeNull();
   });
 });
 
