@@ -48,7 +48,13 @@ export const MessageDetails = ({ message, serviceId }: MessageDetailsProps) => {
           </MessageDetailsTagBox>
           {attachmentList.length > 0 && (
             <MessageDetailsTagBox>
-              <Tag variant="attachment" testID="attachment-tag" />
+              <Tag
+                variant="attachment"
+                testID="attachment-tag"
+                iconAccessibilityLabel={I18n.t(
+                  "messageDetails.accessibilityAttachmentIcon"
+                )}
+              />
             </MessageDetailsTagBox>
           )}
           <VSpacer size={8} />

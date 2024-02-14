@@ -1,13 +1,8 @@
 import fetch from "node-fetch";
 import { e2eWaitRenderTimeout } from "../../../../__e2e__/config";
-import { ensureLoggedIn } from "../../../../__e2e__/utils";
 import I18n from "../../../../i18n";
-import { ID_CGN_TYPE } from "../../common/utils";
 
-const CGN_TITLE = "Carta Giovani Nazionale";
-const SERVICES_LIST = "services-list";
-
-const activateBonusSuccess = async () => {
+export const activateCGNBonusSuccess = async () => {
   const startActivationCta = element(by.id("activate-bonus-button"));
   await waitFor(startActivationCta)
     .toBeVisible()
@@ -48,67 +43,7 @@ const activateBonusSuccess = async () => {
   await alertCTA.tap();
 };
 
-describe("CGN", () => {
-  beforeEach(async () => {
-    await deactivateCGNCardIfNeeded();
-    await device.launchApp({ newInstance: true });
-    await ensureLoggedIn();
-  });
-
-  describe("When the user want to start activation from bonus list", () => {
-    it("Should complete activation", async () => {
-      await element(by.text(I18n.t("global.navigator.wallet"))).tap();
-      await element(by.id("walletAddNewPaymentMethodTestId")).tap();
-      await element(by.id("bonusNameTestId")).tap();
-      const cgnBonusItem = element(by.id(`AvailableBonusItem-${ID_CGN_TYPE}`));
-      await waitFor(cgnBonusItem)
-        .toBeVisible()
-        .withTimeout(e2eWaitRenderTimeout);
-      await cgnBonusItem.tap();
-      await activateBonusSuccess();
-    });
-  });
-
-  describe("When the user want to start activation from card carousel", () => {
-    it("Should complete activation", async () => {
-      await element(by.text(I18n.t("global.navigator.wallet"))).tap();
-      // TODO: This could be fail if we will add more e2e tests on the addition of a new payment method (just do a single swipe, not a scroll)
-      await waitFor(element(by.id("walletPaymentMethodsTestId")))
-        .toBeVisible()
-        .withTimeout(e2eWaitRenderTimeout);
-      await element(by.id("walletPaymentMethodsTestId")).swipe("up");
-      await element(by.id("FeaturedCardCGNTestID")).tap();
-      await activateBonusSuccess();
-    });
-  });
-
-  describe("When the user want to start activation from service detail", () => {
-    it("Should complete activation", async () => {
-      await element(by.text(I18n.t("global.navigator.services"))).tap();
-
-      await waitFor(element(by.id(SERVICES_LIST)))
-        .toBeVisible()
-        .withTimeout(e2eWaitRenderTimeout);
-
-      await waitFor(element(by.id(CGN_TITLE)))
-        .toBeVisible()
-        .whileElement(by.id(SERVICES_LIST))
-        .scroll(300, "down");
-
-      await element(by.id(CGN_TITLE)).tap();
-      const startActivationCta = element(
-        by.id("service-activate-bonus-button")
-      );
-      await waitFor(startActivationCta)
-        .toBeVisible()
-        .withTimeout(e2eWaitRenderTimeout);
-      await startActivationCta.tap();
-      await activateBonusSuccess();
-    });
-  });
-});
-
-const deactivateCGNCardIfNeeded = async () => {
+export const deactivateCGNCardIfNeeded = async () => {
   // This is needed since an E2E can fail at any moment. If it does so
   // after the card has been activated, all subsequent retries and tests
   // will fail, since the card is already activated. Be aware that this

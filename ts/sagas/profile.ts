@@ -171,9 +171,7 @@ function* createOrUpdateProfileSaga(
       createOrUpdateProfile({
         body: newProfile
       }),
-      undefined,
-      undefined,
-      true
+      { skipThrowingError: true }
     )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 
     if (E.isLeft(response)) {
