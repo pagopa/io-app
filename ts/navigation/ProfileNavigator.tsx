@@ -141,9 +141,6 @@ const ProfileStackNavigator = () => {
         component={DownloadProfileDataScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.MARKDOWN_PLAYGROUND}
         component={MarkdownPlayground}
       />
@@ -154,24 +151,12 @@ const ProfileStackNavigator = () => {
         name={ROUTES.DESIGN_SYSTEM}
         component={DesignSystemNavigator}
       />
+      <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={ROUTES.WEB_PLAYGROUND}
-        component={WebPlayground}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.LOLLIPOP_PLAYGROUND}
         component={LollipopPlayground}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.CGN_LANDING_PLAYGROUND}
         component={CgnLandingPlayground}
       />
@@ -190,9 +175,6 @@ const ProfileStackNavigator = () => {
         component={IdPayCodePlayGround}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.WALLET_PLAYGROUND}
         component={WalletPlayground}
       />
