@@ -1,26 +1,27 @@
-import * as O from "fp-ts/lib/Option";
-import React from "react";
-import { View, StyleSheet, TextInput } from "react-native";
 import {
   Alert,
   ButtonOutline,
   ButtonSolid,
+  CheckboxLabel,
   HSpacer,
+  IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
-import { Label } from "../../../components/core/typography/Label";
-import { maybeNotNullyString } from "../../../utils/strings";
+import * as O from "fp-ts/lib/Option";
+import React from "react";
+import { StyleSheet, TextInput, View } from "react-native";
 import { WithTestID } from "../../../types/WithTestID";
+import { maybeNotNullyString } from "../../../utils/strings";
 import { LollipopPlaygroundState } from "./LollipopPlayground";
 
 const styles = StyleSheet.create({
   textInput: {
     textAlignVertical: "top", // Prop supported on Android only
-    padding: 10,
+    padding: 12,
     borderWidth: 1,
     height: 120,
-    borderRadius: 4
+    borderRadius: 8,
+    borderColor: IOColors["grey-450"]
   },
   column: {
     flexDirection: "column",
@@ -64,12 +65,11 @@ const LollipopPlaygroundContent = (props: Props) => {
       />
       <VSpacer size={16} />
       <View style={styles.rowStart}>
-        <CheckBox
+        <CheckboxLabel
           checked={props.playgroundState.doSignBody}
           onValueChange={props.onCheckBoxPress}
+          label="Sign body"
         />
-        <HSpacer />
-        <Label>{"Sign body"}</Label>
       </View>
       <VSpacer size={16} />
       <View style={styles.row}>
