@@ -1,6 +1,12 @@
-import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
+import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
+import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
+import { LandingScreen } from "../screens/authentication/LandingScreen";
+import NewOptInScreen from "../screens/authentication/NewOptInScreen";
+import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
 import CieAuthorizeDataUsageScreen from "../screens/authentication/cie/CieAuthorizeDataUsageScreen";
 import CieCardReaderScreen from "../screens/authentication/cie/CieCardReaderScreen";
 import CieConsentDataUsageScreen from "../screens/authentication/cie/CieConsentDataUsageScreen";
@@ -8,14 +14,7 @@ import CieExpiredOrInvalidScreen from "../screens/authentication/cie/CieExpiredO
 import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinLockedTemporarilyScreen";
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
-import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
-import IdpSelectionScreen from "../screens/authentication/IdpSelectionScreen";
-import { LandingScreen } from "../screens/authentication/LandingScreen";
-import TestAuthenticationScreen from "../screens/authentication/TestAuthenticationScreen";
-import MarkdownScreen from "../screens/development/MarkdownScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
-import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
-import NewOptInScreen from "../screens/authentication/NewOptInScreen";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
@@ -60,8 +59,6 @@ const AuthenticationStackNavigator = () => (
       name={ROUTES.AUTHENTICATION_IDP_TEST}
       component={TestAuthenticationScreen}
     />
-
-    <Stack.Screen name={ROUTES.MARKDOWN} component={MarkdownScreen} />
 
     <Stack.Screen
       name={ROUTES.CIE_EXPIRED_SCREEN}
