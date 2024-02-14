@@ -785,7 +785,6 @@ email:
     title: "Bestätige deine E-Mail-Adresse"
     subtitle: "Folge den Anweisungen, die an folgende Adresse gesendet wurden:"
     link: "Ist sie nicht korrekt?"
-    buttonlabelsent: "E-Mail gesendet"
     buttonlabelsentagain: "E-Mail erneut senden"
     toast: "Erledigt! Prüf deinen Posteingang."
   newvalidemail:
