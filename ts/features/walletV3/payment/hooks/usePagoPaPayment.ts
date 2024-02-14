@@ -1,8 +1,11 @@
 import {
   RptId as PagoPaRptId,
-  RptIdFromString as PagoPaRptIdFromString
+  RptIdFromString as PagoPaRptIdFromString,
+  PaymentNoticeNumberFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { NavigatorScreenParams, useRoute } from "@react-navigation/native";
+import { sequenceS } from "fp-ts/lib/Apply";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -97,7 +100,15 @@ const usePagoPaPayment = () => {
     params: PagoPaPaymentParams = {}
   ) => {
     pipe(
-      PagoPaRptIdFromString.decode(data),
+      sequenceS(E.Monad)({
+        paymentNoticeNumber: PaymentNoticeNumberFromString.decode(
+          data.paymentNoticeNumber
+        ),
+        organizationFiscalCode: OrganizationFiscalCode.decode(
+          data.organizationFiscalCode
+        )
+      }),
+      E.map(PagoPaRptIdFromString.encode),
       E.chain(RptId.decode),
       E.map(rptIdString => startPaymentFlow(rptIdString, params))
     );
