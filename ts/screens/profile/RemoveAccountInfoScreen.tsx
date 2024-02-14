@@ -1,16 +1,16 @@
-import { Content } from "native-base";
+import {
+  BlockButtonProps,
+  Body,
+  ContentWrapper,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SafeAreaView } from "react-native";
-import { Dispatch } from "redux";
 import { connect } from "react-redux";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { Dispatch } from "redux";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
-import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
 import { navigateToRemoveAccountDetailScreen } from "../../store/actions/navigation";
+import { loadBonusBeforeRemoveAccount } from "../../store/actions/profile";
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
@@ -19,34 +19,37 @@ type Props = ReturnType<typeof mapDispatchToProps>;
  * Here user can ask to delete his account
  */
 const RemoveAccountInfo: React.FunctionComponent<Props> = props => {
-  const continueButtonProps = {
-    block: true,
-    primary: true,
-    onPress: () => {
-      props.loadBonus();
-      props.navigateToRemoveAccountDetail();
-    },
-    title: I18n.t("profile.main.privacy.removeAccount.info.cta")
+  const continueButtonProps: BlockButtonProps = {
+    type: "Solid",
+    buttonProps: {
+      color: "primary",
+      label: I18n.t("profile.main.privacy.removeAccount.info.cta"),
+      accessibilityLabel: I18n.t("profile.main.privacy.removeAccount.info.cta"),
+      onPress: () => {
+        props.loadBonus();
+        props.navigateToRemoveAccountDetail();
+      }
+    }
   };
 
-  const footerComponent = (
-    <FooterWithButtons type={"SingleButton"} leftButton={continueButtonProps} />
-  );
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.title")}
+    <RNavScreenWithLargeHeader
+      title={{
+        label: I18n.t("profile.main.privacy.removeAccount.title")
+      }}
+      fixedBottomSlot={
+        <FooterWithButtons
+          type={"SingleButton"}
+          primary={continueButtonProps}
+        />
+      }
     >
-      <SafeAreaView style={IOStyles.flex}>
-        <Content>
-          <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
-          <H4 weight="Regular">
-            {I18n.t("profile.main.privacy.removeAccount.info.body")}
-          </H4>
-        </Content>
-        {footerComponent}
-      </SafeAreaView>
-    </BaseScreenComponent>
+      <ContentWrapper>
+        <Body weight="Regular">
+          {I18n.t("profile.main.privacy.removeAccount.info.body")}
+        </Body>
+      </ContentWrapper>
+    </RNavScreenWithLargeHeader>
   );
 };
 const mapDispatchToProps = (dispatch: Dispatch) => ({

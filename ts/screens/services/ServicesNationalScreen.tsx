@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback } from "react";
 import { Animated } from "react-native";
@@ -17,11 +16,12 @@ import {
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
 import { userMetadataSelector } from "../../store/reducers/userMetadata";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 const tabScrollOffset = new Animated.Value(0);
 
 const ServicesNationalScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const nationalTabSections = useIOSelector(nationalServicesSectionsSelector);
   const visibleServicesContentLoadState = useIOSelector(

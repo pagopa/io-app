@@ -5,13 +5,14 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "../../../../i18n";
 import { downloadAttachmentWorker } from "../handleDownloadAttachment";
 import { SessionToken } from "../../../../types/SessionToken";
-import { downloadAttachment } from "../../../../store/actions/messages";
-import { mockPdfAttachment } from "../../../../__mocks__/attachment";
+import { downloadAttachment } from "../../store/actions";
+import { mockPdfAttachment } from "../../__mocks__/attachment";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
+import { messageId_1 } from "../../__mocks__/messages";
 
 const savePath = "/tmp/attachment.pdf";
 const serviceId = "service0000001" as ServiceId;
@@ -23,7 +24,7 @@ const somePublicKey = O.some({
   y: "Tz0xNv++cOeLVapU/BhBS0FJydIcNcV25/ALb1HVu+s="
 });
 
-jest.mock("../../../../store/reducers/entities/messages/paginatedById", () => ({
+jest.mock("../../store/reducers/paginatedById", () => ({
   getServiceByMessageId: jest.fn().mockReturnValue(serviceId)
 }));
 
@@ -42,7 +43,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachmentWorker,
         "token" as SessionToken,
         downloadAttachment.request({
-          ...attachment,
+          attachment,
+          messageId: messageId_1,
           skipMixpanelTrackingOnFailure: false
         })
       )
@@ -62,6 +64,7 @@ describe("downloadAttachment given an attachment", () => {
         .put(
           downloadAttachment.success({
             attachment,
+            messageId: messageId_1,
             path: savePath
           })
         )
@@ -74,7 +77,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachmentWorker,
         "token" as SessionToken,
         downloadAttachment.request({
-          ...attachment,
+          attachment,
+          messageId: messageId_1,
           skipMixpanelTrackingOnFailure: false
         })
       )
@@ -93,6 +97,7 @@ describe("downloadAttachment given an attachment", () => {
         .put(
           downloadAttachment.failure({
             attachment,
+            messageId: messageId_1,
             error: new Error(
               I18n.t("messageDetails.attachments.downloadFailed")
             )
@@ -107,7 +112,8 @@ describe("downloadAttachment given an attachment", () => {
         downloadAttachmentWorker,
         "token" as SessionToken,
         downloadAttachment.request({
-          ...attachment,
+          attachment,
+          messageId: messageId_1,
           skipMixpanelTrackingOnFailure: false
         })
       )
@@ -126,6 +132,7 @@ describe("downloadAttachment given an attachment", () => {
         .put(
           downloadAttachment.failure({
             attachment,
+            messageId: messageId_1,
             error: new Error(I18n.t("messageDetails.attachments.badFormat"))
           })
         )

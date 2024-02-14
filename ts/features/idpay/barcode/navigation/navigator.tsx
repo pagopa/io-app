@@ -8,8 +8,7 @@ const Stack = createStackNavigator<IdPayBarcodeParamsList>();
 export const IdPayBarcodeNavigator = () => (
   <Stack.Navigator
     initialRouteName={IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: true }}
+    screenOptions={{ gestureEnabled: true, headerShown: false }}
   >
     <Stack.Screen
       name={IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT}

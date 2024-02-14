@@ -1,20 +1,18 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { View, FlatList, ListRenderItemInfo } from "react-native";
+import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { GlobalState } from "../../../../store/reducers/types";
-import { Dispatch } from "../../../../store/actions/types";
-import { H1 } from "../../../../components/core/typography/H1";
-import { Body } from "../../../../components/core/typography/Body";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H4 } from "../../../../components/core/typography/H4";
-import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
-import { H5 } from "../../../../components/core/typography/H5";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import I18n from "../../../../i18n";
+import * as React from "react";
+import { FlatList, ListRenderItemInfo, View } from "react-native";
+import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
+import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../components/core/IOBadge";
+import { H4 } from "../../../../components/core/typography/H4";
+import { H5 } from "../../../../components/core/typography/H5";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import I18n from "../../../../i18n";
+import { Dispatch } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 
 type Props = {
   onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
@@ -96,19 +94,13 @@ const ServicesContactComponent = (props: Props): React.ReactElement => {
   };
 
   return (
-    <>
-      <H1>{I18n.t("services.optIn.preferences.title")}</H1>
-      <VSpacer size={8} />
-      <Body>{I18n.t("services.optIn.preferences.body")}</Body>
-      <VSpacer size={24} />
-      <FlatList
-        style={{ flexGrow: 0 }}
-        scrollEnabled={false}
-        data={options()}
-        renderItem={renderListItem}
-        keyExtractor={o => o.mode}
-      />
-    </>
+    <FlatList
+      style={{ flexGrow: 0 }}
+      scrollEnabled={false}
+      data={options()}
+      renderItem={renderListItem}
+      keyExtractor={o => o.mode}
+    />
   );
 };
 

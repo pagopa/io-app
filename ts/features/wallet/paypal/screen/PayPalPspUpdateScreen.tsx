@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { Route, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect } from "react";
@@ -23,8 +23,7 @@ import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   pspForPaymentV2,
   pspSelectedForPaymentV2
@@ -33,8 +32,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import { pspV2ListSelector } from "../../../../store/reducers/wallet/payment";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
-import { LoadingErrorComponent } from "../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { isError, isReady } from "../../../bonus/bpd/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
+import { isError, isReady } from "../../../../common/model/RemoteValue";
 import { useImageResize } from "../../onboarding/bancomat/hooks/useImageResize";
 import {
   PSP_LOGO_MAX_HEIGHT,
@@ -157,28 +156,27 @@ export type PayPalPspUpdateScreenNavigationParams = {
   idPayment: string;
   idWallet: number;
 };
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_PAYPAL_UPDATE_PAYMENT_PSP"
->;
 
 /**
  * This screen is where the user updates the PSP that will be used for the payment
  * Only 1 psp can be selected
  */
-const PayPalPspUpdateScreen: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+const PayPalPspUpdateScreen: React.FunctionComponent = () => {
+  const { idPayment, idWallet } =
+    useRoute<
+      Route<
+        "WALLET_PAYPAL_UPDATE_PAYMENT_PSP",
+        PayPalPspUpdateScreenNavigationParams
+      >
+    >().params;
   const locales = getLocales();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const dispatch = useDispatch();
   const pspList = useIOSelector(pspV2ListSelector);
-  const idPayment = props.route.params.idPayment;
-  const idWallet = props.route.params.idWallet;
   const searchPaypalPsp = () => {
     dispatch(pspForPaymentV2.request({ idPayment, idWallet }));
   };
-  useEffect(searchPaypalPsp, [dispatch]);
+  useEffect(searchPaypalPsp, [dispatch, idPayment, idWallet]);
 
   const goBack = () => navigation.goBack();
   return (

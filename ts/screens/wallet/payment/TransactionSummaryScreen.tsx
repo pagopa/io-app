@@ -25,7 +25,7 @@ import {
   isError as isRemoteError,
   isLoading as isRemoteLoading,
   isUndefined
-} from "../../../features/bonus/bpd/model/RemoteValue";
+} from "../../../common/model/RemoteValue";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart

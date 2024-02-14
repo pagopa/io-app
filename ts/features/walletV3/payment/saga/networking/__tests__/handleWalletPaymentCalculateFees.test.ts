@@ -6,24 +6,35 @@ import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import {
-  WalletPaymentCalculateFeesPayload,
-  walletPaymentCalculateFees
-} from "../../../store/actions/networking";
+import { walletPaymentCalculateFees } from "../../../store/actions/networking";
 import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculateFees";
+import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
+import { selectWalletPaymentSessionToken } from "../../../store/selectors";
+import { preferredLanguageSelector } from "../../../../../../store/reducers/persistedPreferences";
+import { walletPaymentPickPsp } from "../../../store/actions/orchestration";
 
 describe("Test handleWalletPaymentCalculateFees saga", () => {
-  const calculateFeesPayload: WalletPaymentCalculateFeesPayload = {
-    walletId: "1234",
-    paymentAmountInCents: 1234
+  const calculateFeesPayload: CalculateFeeRequest & {
+    paymentMethodId: string;
+  } = {
+    paymentMethodId: "1234",
+    paymentAmount: 1234
   };
+  const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
     walletPaymentCalculateFees.success
-  )} when calculateFees is 200`, () => {
+  )} when calculateFees is 200 and bundles are more than one`, () => {
     const mockCalculateFees = jest.fn();
     const calculateFeesResponse: CalculateFeeResponse = {
-      bundles: [],
+      bundles: [
+        {
+          idBundle: "idBundle"
+        },
+        {
+          idBundle: "idBundle2"
+        }
+      ],
       paymentMethodDescription: "paymentMethodDescription",
       paymentMethodName: "paymentMethodName",
       paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
@@ -35,12 +46,17 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       walletPaymentCalculateFees.request(calculateFeesPayload)
     )
       .next()
+      .select(preferredLanguageSelector)
+      .next("IT")
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockCalculateFees(),
         walletPaymentCalculateFees.request(calculateFeesPayload)
       )
       .next(E.right({ status: 200, value: calculateFeesResponse }))
+      .next()
       .put(walletPaymentCalculateFees.success(calculateFeesResponse))
       .next()
       .isDone();
@@ -57,6 +73,10 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       walletPaymentCalculateFees.request(calculateFeesPayload)
     )
       .next()
+      .select(preferredLanguageSelector)
+      .next("IT")
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockCalculateFees(),
@@ -83,6 +103,10 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       walletPaymentCalculateFees.request(calculateFeesPayload)
     )
       .next()
+      .select(preferredLanguageSelector)
+      .next("IT")
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockCalculateFees(),
@@ -94,6 +118,45 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )
+      .next()
+      .isDone();
+  });
+
+  it(`should put ${getType(
+    walletPaymentPickPsp
+  )} with first psp in the list when calculateFees is 200 and bundles is only one in list`, () => {
+    const mockCalculateFees = jest.fn();
+    const calculateFeesResponse: CalculateFeeResponse = {
+      bundles: [
+        {
+          idBundle: "idBundle"
+        }
+      ],
+      paymentMethodDescription: "paymentMethodDescription",
+      paymentMethodName: "paymentMethodName",
+      paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
+    };
+
+    testSaga(
+      handleWalletPaymentCalculateFees,
+      mockCalculateFees,
+      walletPaymentCalculateFees.request(calculateFeesPayload)
+    )
+      .next()
+      .select(preferredLanguageSelector)
+      .next("IT")
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
+      .call(
+        withRefreshApiCall,
+        mockCalculateFees(),
+        walletPaymentCalculateFees.request(calculateFeesPayload)
+      )
+      .next(E.right({ status: 200, value: calculateFeesResponse }))
+      .next()
+      .put(walletPaymentPickPsp(calculateFeesResponse.bundles[0]))
+      .next()
+      .put(walletPaymentCalculateFees.success(calculateFeesResponse))
       .next()
       .isDone();
   });

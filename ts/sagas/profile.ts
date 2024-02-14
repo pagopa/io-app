@@ -3,8 +3,8 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as S from "fp-ts/lib/string";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
@@ -12,17 +12,15 @@ import { AppVersion } from "../../definitions/backend/AppVersion";
 import { ExtendedProfile } from "../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../definitions/backend/ServicesPreferencesMode";
+import { UpdateProfile412ErrorTypesEnum } from "../../definitions/backend/UpdateProfile412ErrorTypes";
 import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserDataProcessingChoice";
 import { BackendClient } from "../api/backend";
-import { tosVersion } from "../config";
-import { loadAllBonusActivations } from "../features/bonus/bonusVacanze/store/actions/bonusVacanze";
-import { allBonusActiveSelector } from "../features/bonus/bonusVacanze/store/reducers/allActive";
-import { bpdLoadActivationStatus } from "../features/bonus/bpd/store/actions/details";
-import { bpdEnabledSelector } from "../features/bonus/bpd/store/reducers/details/activation";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { cgnDetailSelector } from "../features/bonus/cgn/store/reducers/details";
+import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
 import I18n from "../i18n";
 import { mixpanelTrack } from "../mixpanel";
+import { trackProfileLoadSuccess } from "../screens/profile/analytics";
 import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
@@ -41,6 +39,8 @@ import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { isCGNEnabledSelector } from "../store/reducers/backendStatus";
 import { isDifferentFiscalCodeSelector } from "../store/reducers/crossSessions";
 import { profileSelector } from "../store/reducers/profile";
+import { ProfileError } from "../store/reducers/profileErrorType";
+import { GlobalState } from "../store/reducers/types";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { getAppVersion } from "../utils/appVersion";
 import { isTestEnv } from "../utils/environment";
@@ -51,11 +51,7 @@ import {
   getLocalePrimaryWithFallback
 } from "../utils/locale";
 import { readablePrivacyReport } from "../utils/reporters";
-import { withRefreshApiCall } from "../features/fastLogin/saga/utils";
-import { ProfileError } from "../store/reducers/profileErrorType";
-import { UpdateProfile412ErrorTypesEnum } from "../../definitions/backend/UpdateProfile412ErrorTypes";
-import { GlobalState } from "../store/reducers/types";
-import { trackProfileLoadSuccess } from "../screens/profile/analytics";
+import { tosConfigSelector } from "../features/tos/store/selectors";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -111,6 +107,8 @@ function* createOrUpdateProfileSaga(
     // the user didn't yet authenticated: ignore this upsert request.
     return;
   }
+
+  const tosVersion = (yield* select(tosConfigSelector)).tos_version;
 
   const currentProfile = profileState.value;
 
@@ -173,9 +171,7 @@ function* createOrUpdateProfileSaga(
       createOrUpdateProfile({
         body: newProfile
       }),
-      undefined,
-      undefined,
-      true
+      { skipThrowingError: true }
     )) as unknown as SagaCallReturnType<typeof createOrUpdateProfile>;
 
     if (E.isLeft(response)) {
@@ -328,31 +324,6 @@ function* startEmailValidationProcessSaga(
 }
 
 function* handleLoadBonusBeforeRemoveAccount() {
-  const bpdActive: ReturnType<typeof bpdEnabledSelector> = yield* select(
-    bpdEnabledSelector
-  );
-
-  // check if there are some bpd
-  if (pot.isNone(bpdActive)) {
-    // Load the bpd data and wait for a response
-    yield* put(bpdLoadActivationStatus.request());
-
-    yield* take([
-      bpdLoadActivationStatus.success,
-      bpdLoadActivationStatus.failure
-    ]);
-  }
-
-  const bonusVacanzeBonus: ReturnType<typeof allBonusActiveSelector> =
-    yield* select(allBonusActiveSelector);
-
-  // check if there are some bonus vacanze
-  if (bonusVacanzeBonus.length === 0) {
-    // Load the bonus data and no wait because if there are some bonus
-    // they will be loaded individually
-    yield* put(loadAllBonusActivations.request());
-  }
-
   const cgnActive: ReturnType<typeof cgnDetailSelector> = yield* select(
     cgnDetailSelector
   );

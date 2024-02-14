@@ -15,7 +15,7 @@ import {
   PatchedWalletV2ListResponse,
   PaymentMethod
 } from "../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { convertWalletV2toWalletV1 } from "../../../../utils/walletv2";
 import PagoPaPaymentCapability from "../features/PagoPaPaymentCapability";
 
@@ -46,7 +46,7 @@ describe("PagoPaPaymentCapability", () => {
     const store = createStore(appReducer, globalState as any);
     store.dispatch(fetchWalletsSuccess(updatedMethods));
 
-    const testComponent = renderScreenFakeNavRedux<GlobalState>(
+    const testComponent = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
@@ -61,13 +61,13 @@ describe("PagoPaPaymentCapability", () => {
     const aPaymentMethod = {
       ...aBancomat,
       kind: "Bancomat",
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
+      enableableFunctions: []
     } as PaymentMethod;
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},
@@ -88,13 +88,13 @@ describe("PagoPaPaymentCapability", () => {
       ...aNonMaestroCreditCard,
       kind: "CreditCard",
       pagoPA: false,
-      enableableFunctions: [EnableableFunctionsEnum.BPD]
+      enableableFunctions: []
     } as PaymentMethod;
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
 
-    const component = renderScreenFakeNavRedux<GlobalState>(
+    const component = renderScreenWithNavigationStoreContext<GlobalState>(
       () => <PagoPaPaymentCapability paymentMethod={aPaymentMethod} />,
       ROUTES.WALLET_HOME,
       {},

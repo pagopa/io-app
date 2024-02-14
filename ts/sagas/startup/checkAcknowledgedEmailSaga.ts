@@ -39,7 +39,8 @@ export function* checkAcknowledgedEmailSaga(
       // An email exists on the user's profile but it is not validated, the conditional
       // view shows the component that reminds to validate the email address or allows the navigation to edit it.
       yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+        screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+        params: { isOnboarding: true }
       });
     } else {
       // we can go on, no need to wait
@@ -50,9 +51,18 @@ export function* checkAcknowledgedEmailSaga(
     // EmailInsertScreen knows if the user comes from onboarding or not
     // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
     // to validate it
-    yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
-    });
+    yield* call(
+      NavigationService.navigate,
+      ROUTES.ONBOARDING,
+      isEmailUniquenessValidationEnabled
+        ? {
+            screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+            params: { isOnboarding: true }
+          }
+        : {
+            screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+          }
+    );
   }
 
   // Wait for the user to press "Continue" button after having checked out

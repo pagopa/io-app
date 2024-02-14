@@ -20,28 +20,31 @@ const Stack = createStackNavigator<WalletPaymentParamsList>();
 export const WalletPaymentNavigator = () => (
   <Stack.Navigator
     initialRouteName={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER}
       component={WalletPaymentInputNoticeNumberScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE}
       component={WalletPaymentInputFiscalCodeScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
       name={WalletPaymentRoutes.WALLET_PAYMENT_DETAIL}
       component={WalletPaymentDetailScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        // Should be false by default: the headerShown is set to true once the payment details are loaded
+        headerShown: false
       }}
     />
     <Stack.Screen
@@ -69,7 +72,8 @@ export const WalletPaymentNavigator = () => (
       name={WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME}
       component={WalletPaymentOutcomeScreen}
       options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
   </Stack.Navigator>

@@ -67,9 +67,7 @@ const getComponent = () => {
   } as ConfirmCardDetailsScreenNavigationParams;
   const ToBeTested: React.FunctionComponent<
     React.ComponentProps<typeof ConfirmCardDetailsScreen>
-  > = (props: React.ComponentProps<typeof ConfirmCardDetailsScreen>) => (
-    <ConfirmCardDetailsScreen {...props} />
-  );
+  > = () => <ConfirmCardDetailsScreen />;
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);

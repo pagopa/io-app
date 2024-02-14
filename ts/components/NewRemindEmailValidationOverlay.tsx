@@ -35,7 +35,6 @@ import { emailAcknowledged } from "../store/actions/onboarding";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
 import { getFlowType } from "../utils/analytics";
-import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import {
   trackEmailValidation,
   trackEmailValidationSuccess,
@@ -69,14 +68,6 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
-
-  useOnFirstRender(() => {
-    if (isEmailValidated) {
-      trackEmailValidationSuccess(flow);
-    } else {
-      trackEmailValidation(flow);
-    }
-  });
 
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
     useState(false);
@@ -212,18 +203,16 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
   useEffect(() => {
     if (isEmailValidated) {
       clearInterval(polling.current);
+      trackEmailValidationSuccess(flow);
+    } else {
+      trackEmailValidation(flow);
     }
-  }, [isEmailValidated]);
+  }, [flow, isEmailValidated]);
 
   return (
     <BaseScreenComponent
       goBack={false}
       accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-      contextualHelpMarkdown={{
-        title: "email.validate.title",
-        body: "email.validate.help"
-      }}
-      headerTitle={I18n.t("email.newinsert.header")}
     >
       <SafeAreaView style={IOStyles.flex}>
         <VSpacer size={40} />

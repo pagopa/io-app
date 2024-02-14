@@ -1,17 +1,21 @@
-import * as O from "fp-ts/lib/Option";
-import { ListItemTransactionStatusWithBadge } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
-import { pipe } from "fp-ts/lib/function";
-
-import { isExpiredDate } from "../../../../utils/dates";
-import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
-import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import {
-  TypeEnum,
-  WalletInfoDetails1
-} from "../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
+  IOLogoPaymentType,
+  IOPaymentLogos,
+  ListItemTransactionStatusWithBadge
+} from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18n-js";
+import _ from "lodash";
+import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
 import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
+import { isExpiredDate } from "../../../../utils/dates";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { WalletPaymentPspSortType } from "../../payment/types";
 
 /**
  * A simple function to get the corresponding translated badge text,
@@ -41,16 +45,15 @@ export const getBadgeTextByTransactionStatus = (
  * left if expiring date can't be evaluated
  * @param paymentMethod
  */
-export const isPaymentMethodExpired = (paymentMethod: WalletInfo): boolean => {
-  switch (paymentMethod.details?.type) {
-    case TypeEnum.PAYPAL:
-      return false;
-    case TypeEnum.CARDS:
-      const cardDetails = paymentMethod.details as WalletInfoDetails1;
-      return isExpiredDate(cardDetails.expiryDate);
-  }
-  return false;
-};
+export const isPaymentMethodExpired = (
+  details?: UIWalletInfoDetails
+): boolean =>
+  pipe(
+    details?.expiryDate,
+    O.fromNullable,
+    O.map(isExpiredDate),
+    O.getOrElse(() => false)
+  );
 
 /**
  * true if the given paymentMethod supports the given walletFunction
@@ -99,4 +102,48 @@ export const isPaymentSupported = (
     O.alt(() => notAvailableCustomRepresentation),
     O.getOrElseW(() => "notAvailable" as const)
   );
+};
+
+export const getPaymentLogo = (
+  details: UIWalletInfoDetails
+): IOLogoPaymentType | undefined => {
+  if (details.maskedEmail !== undefined) {
+    return "payPal";
+  } else if (details.maskedNumber !== undefined) {
+    return "bancomatPay";
+  } else if (details.maskedPan !== undefined) {
+    return pipe(
+      details.brand,
+      O.fromNullable,
+      O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
+      O.fold(
+        () => undefined,
+        ([logoName, _]) => logoName
+      )
+    ) as IOLogoPaymentType;
+  }
+
+  return undefined;
+};
+
+export const WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL =
+  "https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/elenco-PSP-attivi/";
+
+/**
+ * Function that returns a sorted list of psp based on the given sortType
+ * The sortType can be: "name", "amount" or "default"
+ */
+export const getSortedPspList = (
+  pspList: ReadonlyArray<Bundle>,
+  sortType: WalletPaymentPspSortType
+) => {
+  switch (sortType) {
+    case "name":
+      return _.orderBy(pspList, psp => psp.bundleName);
+    case "amount":
+      return _.orderBy(pspList, psp => psp.taxPayerFee);
+    case "default":
+    default:
+      return _.orderBy(pspList, ["onUs", "taxPayerFee"]);
+  }
 };

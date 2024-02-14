@@ -1,12 +1,15 @@
+diff --git a/node_modules/react-native/Libraries/.DS_Store b/node_modules/react-native/Libraries/.DS_Store
+new file mode 100644
+index 0000000..e69de29
 diff --git a/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js b/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js
-index 227af12..537e2b8 100644
+index 227af12..2c59500 100644
 --- a/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js
 +++ b/node_modules/react-native/Libraries/PermissionsAndroid/PermissionsAndroid.js
 @@ -68,6 +68,7 @@ const PERMISSIONS = Object.freeze({
    ANSWER_PHONE_CALLS: 'android.permission.ANSWER_PHONE_CALLS',
    READ_PHONE_NUMBERS: 'android.permission.READ_PHONE_NUMBERS',
    UWB_RANGING: 'android.permission.UWB_RANGING',
-+  POST_NOTIFICATIONS: 'android.permission.POST_NOTIFICATIONS',
++  POST_NOTIFICATIONS: 'android.permission.POST_NOTIFICATIONS'
  });
  
  /**

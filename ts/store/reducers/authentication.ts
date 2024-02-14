@@ -23,7 +23,7 @@ import {
   remoteReady,
   remoteUndefined,
   RemoteValue
-} from "../../features/bonus/bpd/model/RemoteValue";
+} from "../../common/model/RemoteValue";
 import { SupportToken } from "../../../definitions/backend/SupportToken";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { refreshSessionToken } from "../../features/fastLogin/store/actions/tokenRefreshActions";
@@ -185,6 +185,11 @@ export const supportTokenSelector = (state: GlobalState): SupportTokenState =>
 export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.zendeskToken
+    : undefined;
+
+export const walletTokenSelector = (state: GlobalState): string | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.walletToken
     : undefined;
 
 export const tokenFromNameSelector = (

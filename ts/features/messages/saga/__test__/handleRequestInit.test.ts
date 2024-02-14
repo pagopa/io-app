@@ -5,13 +5,14 @@ import {
   handleRequestInit,
   testableHandleRequestInitFactory
 } from "../handleRequestInit";
-import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { generateKeyInfo } from "../../../lollipop/saga";
 import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { messageId_1 } from "../../__mocks__/messages";
 
 const handleRequestInitFactory = testableHandleRequestInitFactory!;
 
@@ -29,13 +30,15 @@ describe("handleDownloadAttachment", () => {
 
   it("handleRequestInit should follow the proper flow and return the enhanced lollipop headers", () => {
     const data = fetchParametersCommonInputData();
+    const attachmentFullUrl = `undefined/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
     testSaga(
       handleRequestInit,
       {
-        resourceUrl: {
-          href: data.attachmentFullUrl
-        }
-      } as UIAttachment,
+        id: data.attachmentId,
+        name: data.attachmentName,
+        url: data.attachmentFullUrl
+      } as ThirdPartyAttachment,
+      data.messageId,
       data.bearerToken,
       data.nonce
     )
@@ -50,26 +53,28 @@ describe("handleDownloadAttachment", () => {
         lollipopRequestInit,
         { nonce: data.nonce },
         data.keyInfo,
-        data.attachmentFullUrl,
+        attachmentFullUrl,
         { headers: data.headers, method: "GET" }
       )
       .next({ headers: data.enhancedHeaders })
       .returns({
         method: "GET",
-        attachmentFullUrl: data.attachmentFullUrl,
+        attachmentFullUrl,
         headers: data.enhancedHeaders
       });
   });
 
   it("handleRequestInit should follow the proper flow and return standard headers when lollipopRequestInit fails", () => {
     const data = fetchParametersCommonInputData();
+    const attachmentFullUrl = `undefined/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
     testSaga(
       handleRequestInit,
       {
-        resourceUrl: {
-          href: data.attachmentFullUrl
-        }
-      } as UIAttachment,
+        id: data.attachmentId,
+        name: data.attachmentName,
+        url: data.attachmentFullUrl
+      } as ThirdPartyAttachment,
+      data.messageId,
       data.bearerToken,
       data.nonce
     )
@@ -84,13 +89,13 @@ describe("handleDownloadAttachment", () => {
         lollipopRequestInit,
         { nonce: data.nonce },
         data.keyInfo,
-        data.attachmentFullUrl,
+        attachmentFullUrl,
         { headers: data.headers, method: "GET" }
       )
       .next({ headers: undefined })
       .returns({
         method: "GET",
-        attachmentFullUrl: data.attachmentFullUrl,
+        attachmentFullUrl,
         headers: data.headers
       });
   });
@@ -118,6 +123,9 @@ const fetchParametersCommonInputData = () => {
       publicKey,
       publicKeyThumbprint: "thumbprint"
     },
+    messageId: messageId_1,
+    attachmentId: "1",
+    attachmentName: "1.pdf",
     attachmentFullUrl: "https://my.attachment/full/url",
     headers,
     enhancedHeaders: {

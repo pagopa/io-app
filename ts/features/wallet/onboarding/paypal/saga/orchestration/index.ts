@@ -1,5 +1,4 @@
-import { StackActions } from "@react-navigation/compat";
-import { CommonActions } from "@react-navigation/native";
+import { CommonActions, StackActions } from "@react-navigation/native";
 import { call } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -65,7 +64,7 @@ export function* addPaypalToWallet(
       case "back":
         yield* call(
           NavigationService.dispatchNavigationAction,
-          StackActions.pop({ n: 1 })
+          StackActions.pop(1)
         );
         break;
     }

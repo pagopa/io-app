@@ -19,7 +19,7 @@ import {
   getValueOrElse,
   isError,
   isLoading
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";

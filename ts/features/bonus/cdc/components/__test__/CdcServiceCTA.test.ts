@@ -1,17 +1,17 @@
 import { createStore, Store } from "redux";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
-import CdcServiceCTA from "../CdcServiceCTA";
-import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
-import { CdcBonusRequest } from "../../types/CdcBonusRequest";
-import { getTimeoutError } from "../../../../../utils/errors";
 import { Anno } from "../../../../../../definitions/cdc/Anno";
 import { StatoBeneficiarioEnum } from "../../../../../../definitions/cdc/StatoBeneficiario";
-import { loadAvailableBonuses } from "../../../bonusVacanze/store/actions/bonusVacanze";
 import { BonusAvailable } from "../../../../../../definitions/content/BonusAvailable";
+import ROUTES from "../../../../../navigation/routes";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getTimeoutError } from "../../../../../utils/errors";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
+import { cdcRequestBonusList } from "../../store/actions/cdcBonusRequest";
+import { CdcBonusRequest } from "../../types/CdcBonusRequest";
+import CdcServiceCTA from "../CdcServiceCTA";
 
 jest.useFakeTimers();
 
@@ -171,7 +171,7 @@ describe("CdcServiceCTA", () => {
 });
 
 function renderComponent(store: Store<GlobalState>) {
-  return renderScreenFakeNavRedux<GlobalState>(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     CdcServiceCTA,
     ROUTES.MAIN,
     {},

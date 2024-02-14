@@ -24,9 +24,9 @@ import {
   LabelSmall,
   VSpacer,
   Alert as AlertComponent,
-  FooterWithButtons,
-  IOToast
+  FooterWithButtons
 } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -34,8 +34,7 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
@@ -61,15 +60,11 @@ import {
 import { getFlowType } from "../../utils/analytics";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
+import { showToast } from "../../utils/showToast";
 
 export type CduEmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
 }>;
-
-type Props = IOStackNavigationRouteProps<
-  ProfileParamsList,
-  "INSERT_EMAIL_SCREEN"
->;
 
 const styles = StyleSheet.create({
   flex: {
@@ -88,9 +83,17 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen to allow user to insert an email address.
  */
-const CduEmailInsertScreen = (props: Props) => {
+const CduEmailInsertScreen = () => {
   const viewRef = createRef<View>();
   const { showModal } = useContext(LightModalContext);
+  const { isOnboarding } =
+    useRoute<
+      Route<
+        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
+        CduEmailInsertScreenNavigationParams
+      >
+    >().params;
+  const navigation = useIONavigation();
 
   const dispatch = useIODispatch();
 
@@ -103,7 +106,7 @@ const CduEmailInsertScreen = (props: Props) => {
   );
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const { isOnboarding } = props.route.params ?? {};
+  // const { isOnboarding } = props.route.params ?? {};
 
   const flow = getFlowType(isOnboarding, isFirstOnBoarding);
 
@@ -178,6 +181,7 @@ const CduEmailInsertScreen = (props: Props) => {
       ),
     [areSameEmails, email]
   );
+  const isContinueButtonDisabled = !isValidEmail() && !isLoading;
 
   const continueOnPress = () => {
     Keyboard.dismiss();
@@ -191,7 +195,7 @@ const CduEmailInsertScreen = (props: Props) => {
 
   const renderFooterButtons = () => {
     const continueButtonProps = {
-      disabled: !isValidEmail() && !isLoading,
+      disabled: isContinueButtonDisabled,
       onPress: continueOnPress,
       label: I18n.t("global.buttons.continue"),
       accessibilityLabel: I18n.t("global.buttons.continue"),
@@ -211,19 +215,39 @@ const CduEmailInsertScreen = (props: Props) => {
   };
 
   const handleOnChangeEmailText = (value: string) => {
-    setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+    /**
+     * SCENARIOS:
+     * 1. first onboarding and email already taken => if the CIT writes
+     *    the same email as the one he has to modify, he is blocked.
+     * 2. first onboarding and NOT email already taken => in this case,
+     *    the CIT does not need his email to be compared with another one,
+     *    so the areSameEmails will always be false.
+     * 3. Not first onboarding => if the CIT write the same email as the one
+     *    he already has, he is blocked.
+     */
+    if (isFirstOnBoarding) {
+      setAreSameEmails(
+        isProfileEmailAlreadyTaken
+          ? areStringsEqual(O.some(value), optionEmail, true)
+          : false
+      );
+    } else {
+      setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+    }
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
   };
 
   const handleGoBack = useCallback(() => {
     // goback if the onboarding is completed
-    props.navigation.goBack();
-  }, [props.navigation]);
+    navigation.goBack();
+  }, [navigation]);
 
-  useEffect(() => {
-    setAreSameEmails(false);
-    setEmail(O.some(EMPTY_EMAIL));
-  }, []);
+  useOnFirstRender(() => {
+    if (!isFirstOnBoarding) {
+      setEmail(O.some(EMPTY_EMAIL));
+      setAreSameEmails(false);
+    }
+  });
 
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // we show the modal to remind the user to validate the email.
@@ -256,7 +280,7 @@ const CduEmailInsertScreen = (props: Props) => {
             ]
           );
         } else {
-          IOToast.error(I18n.t("email.edit.upsert_ko"));
+          showToast(I18n.t("email.edit.upsert_ko"));
         }
         // display a toast with error
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
@@ -367,7 +391,11 @@ const CduEmailInsertScreen = (props: Props) => {
                     }
                     inputProps={{
                       returnKeyType: "done",
-                      onSubmitEditing: continueOnPress,
+                      // continueOnPress is called by pressing the
+                      // button on the keyboard only if the mail is valid
+                      onSubmitEditing: isContinueButtonDisabled
+                        ? undefined
+                        : continueOnPress,
                       autoCapitalize: "none",
                       keyboardType: "email-address",
                       defaultValue: pipe(

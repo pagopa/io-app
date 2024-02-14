@@ -3,6 +3,7 @@ import * as React from "react";
 import LogoutScreen from "../components/screens/LogoutScreen";
 import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
+import { isEmailUniquenessValidationEnabledSelector } from "../features/fastLogin/store/selectors";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
@@ -17,6 +18,7 @@ import { NotificationsPreferencesScreen } from "../screens/profile/Notifications
 import PinScreen from "../screens/profile/PinScreen";
 import PreferencesScreen from "../screens/profile/PreferencesScreen";
 import PrivacyMainScreen from "../screens/profile/PrivacyMainScreen";
+import ProfileAboutApp from "../screens/profile/ProfileAboutApp";
 import ProfileDataScreen from "../screens/profile/ProfileDataScreen";
 import RemoveAccountDetails from "../screens/profile/RemoveAccountDetailsScreen";
 import RemoveAccountInfo from "../screens/profile/RemoveAccountInfoScreen";
@@ -29,10 +31,10 @@ import WebPlayground from "../screens/profile/WebPlayground";
 import { IdPayCodePlayGround } from "../screens/profile/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../screens/profile/playgrounds/IdPayOnboardingPlayground";
 import MarkdownPlayground from "../screens/profile/playgrounds/MarkdownPlayground";
+import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPaymentPlayground";
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
-import { isGestureEnabled } from "../utils/navigation";
-import { isEmailUniquenessValidationEnabledSelector } from "../features/fastLogin/store/selectors";
 import { useIOSelector } from "../store/hooks";
+import { isGestureEnabled } from "../utils/navigation";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -49,39 +51,20 @@ const ProfileStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={ROUTES.PROFILE_DATA}
-      headerMode={"screen"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={ROUTES.PROFILE_DATA}
-        component={ProfileDataScreen}
-      />
+      <Stack.Screen name={ROUTES.PROFILE_DATA} component={ProfileDataScreen} />
       <Stack.Screen
         name={ROUTES.PROFILE_PRIVACY_MAIN}
         component={PrivacyMainScreen}
       />
       <Stack.Screen name={ROUTES.PROFILE_PRIVACY} component={TosScreen} />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PRIVACY_SHARE_DATA}
         component={ShareDataScreen}
       />
+      <Stack.Screen name={ROUTES.PROFILE_SECURITY} component={SecurityScreen} />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={ROUTES.PROFILE_SECURITY}
-        component={SecurityScreen}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_SERVICES}
         component={ServicesPreferenceScreen}
       />
@@ -93,25 +76,20 @@ const ProfileStackNavigator = () => {
         component={EmailForwardingScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_HOME}
         component={PreferencesScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_CALENDAR}
         component={CalendarsPreferencesScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_PREFERENCES_LANGUAGE}
         component={LanguagesPreferencesScreen}
+      />
+      <Stack.Screen
+        name={ROUTES.PROFILE_ABOUT_APP}
+        component={ProfileAboutApp}
       />
       <Stack.Screen
         options={{
@@ -159,16 +137,10 @@ const ProfileStackNavigator = () => {
         component={PinScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_DOWNLOAD_DATA}
         component={DownloadProfileDataScreen}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.MARKDOWN_PLAYGROUND}
         component={MarkdownPlayground}
       />
@@ -179,24 +151,12 @@ const ProfileStackNavigator = () => {
         name={ROUTES.DESIGN_SYSTEM}
         component={DesignSystemNavigator}
       />
+      <Stack.Screen name={ROUTES.WEB_PLAYGROUND} component={WebPlayground} />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
-        name={ROUTES.WEB_PLAYGROUND}
-        component={WebPlayground}
-      />
-      <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.LOLLIPOP_PLAYGROUND}
         component={LollipopPlayground}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.CGN_LANDING_PLAYGROUND}
         component={CgnLandingPlayground}
       />
@@ -215,23 +175,18 @@ const ProfileStackNavigator = () => {
         component={IdPayCodePlayGround}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.WALLET_PLAYGROUND}
         component={WalletPlayground}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
+        name={ROUTES.WALLET_PAYMENT_PLAYGROUND}
+        component={WalletPaymentPlayground}
+      />
+      <Stack.Screen
         name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
         component={RemoveAccountInfo}
       />
       <Stack.Screen
-        options={{
-          headerShown: false
-        }}
         name={ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS}
         component={RemoveAccountDetails}
       />
@@ -244,9 +199,6 @@ const ProfileStackNavigator = () => {
       />
       {remindersOptInEnabled && (
         <Stack.Screen
-          options={{
-            headerShown: false
-          }}
           name={ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
           component={NotificationsPreferencesScreen}
         />

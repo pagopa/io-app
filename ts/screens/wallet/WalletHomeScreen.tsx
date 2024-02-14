@@ -11,7 +11,6 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { BonusActivationWithQrCode } from "../../../definitions/bonus_vacanze/BonusActivationWithQrCode";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import SectionStatusComponent from "../../components/SectionStatus";
@@ -34,31 +33,17 @@ import WalletLayout from "../../components/wallet/WalletLayout";
 import SectionCardComponent, {
   SectionCardStatus
 } from "../../components/wallet/card/SectionCardComponent";
-import { bonusVacanzeEnabled, bpdEnabled } from "../../config";
-import RequestBonus from "../../features/bonus/bonusVacanze/components/RequestBonus";
-import {
-  navigateToAvailableBonusScreen,
-  navigateToBonusActiveDetailScreen
-} from "../../features/bonus/bonusVacanze/navigation/action";
-import {
-  loadAllBonusActivations,
-  loadAvailableBonuses
-} from "../../features/bonus/bonusVacanze/store/actions/bonusVacanze";
-import { allBonusActiveSelector } from "../../features/bonus/bonusVacanze/store/reducers/allActive";
-import { supportedAvailableBonusSelector } from "../../features/bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import BpdOptInPaymentMethodsContainer from "../../features/bonus/bpd/components/optInPaymentMethods/BpdOptInPaymentMethodsContainer";
-import BpdCardsInWalletContainer from "../../features/bonus/bpd/components/walletCardContainer/BpdCardsInWalletComponent";
-import { bpdAllData } from "../../features/bonus/bpd/store/actions/details";
-import { bpdPeriodsAmountWalletVisibleSelector } from "../../features/bonus/bpd/store/reducers/details/combiner";
-import { bpdLastUpdateSelector } from "../../features/bonus/bpd/store/reducers/details/lastUpdate";
 import CgnCardInWalletContainer from "../../features/bonus/cgn/components/CgnCardInWalletComponent";
 import { cgnDetails } from "../../features/bonus/cgn/store/actions/details";
 import {
   cgnDetailSelector,
   isCgnInformationAvailableSelector
 } from "../../features/bonus/cgn/store/reducers/details";
+import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
+import { supportedAvailableBonusSelector } from "../../features/bonus/common/store/selectors";
 import IDPayCardsInWalletContainer from "../../features/idpay/wallet/components/IDPayCardsInWalletContainer";
 import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
+import { idPayWalletInitiativeListSelector } from "../../features/idpay/wallet/store/reducers";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
@@ -82,7 +67,6 @@ import {
   runSendAddCobadgeTrackSaga
 } from "../../store/actions/wallet/wallets";
 import {
-  bpdRemoteConfigSelector,
   isCGNEnabledSelector,
   isIdPayEnabledSelector
 } from "../../store/reducers/backendStatus";
@@ -105,7 +89,6 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
-import { isStrictSome } from "../../utils/pot";
 import { showToast } from "../../utils/showToast";
 
 export type WalletHomeNavigationParams = Readonly<{
@@ -174,26 +157,13 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   private onFocus = () => {
-    this.loadBonusVacanze();
+    this.props.loadAvailableBonuses();
     this.loadBonusIDPay();
     this.setState({ hasFocus: true });
   };
 
   private onLostFocus = () => {
     this.setState({ hasFocus: false });
-  };
-
-  private loadBonusVacanze = () => {
-    if (bonusVacanzeEnabled) {
-      this.props.loadAvailableBonuses();
-      this.props.loadAllBonusActivations();
-    }
-  };
-
-  private loadBonusBpd = () => {
-    if (bpdEnabled) {
-      this.props.loadBpdData();
-    }
   };
 
   private loadBonusCgn = () => {
@@ -209,18 +179,16 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   };
 
   public componentDidMount() {
-    if (bonusVacanzeEnabled) {
-      // eslint-disable-next-line functional/immutable-data
-      this.blurUnsubscribe = this.props.navigation.addListener(
-        "blur",
-        this.onLostFocus
-      );
-      // eslint-disable-next-line functional/immutable-data
-      this.focusUnsubscribe = this.props.navigation.addListener(
-        "focus",
-        this.onFocus
-      );
-    }
+    // eslint-disable-next-line functional/immutable-data
+    this.blurUnsubscribe = this.props.navigation.addListener(
+      "blur",
+      this.onLostFocus
+    );
+    // eslint-disable-next-line functional/immutable-data
+    this.focusUnsubscribe = this.props.navigation.addListener(
+      "focus",
+      this.onFocus
+    );
     // WIP loadTransactions should not be called from here
     // (transactions should be persisted & fetched periodically)
     // https://www.pivotaltracker.com/story/show/168836972
@@ -228,7 +196,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     this.props.loadWallets();
 
     // load the bonus information on Wallet mount
-    this.loadBonusBpd();
     // FIXME restore loadTransactions see https://www.pivotaltracker.com/story/show/176051000
 
     // eslint-disable-next-line functional/immutable-data
@@ -245,10 +212,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   public componentWillUnmount() {
     this.subscription?.remove();
-    if (bonusVacanzeEnabled) {
-      this.focusUnsubscribe();
-      this.blurUnsubscribe();
-    }
+    this.focusUnsubscribe();
+    this.blurUnsubscribe();
   }
 
   public componentDidUpdate(prevProps: Readonly<Props>) {
@@ -263,15 +228,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     }
     if (
       this.state.hasFocus &&
-      // error loading: bpd bonus
-      ((!pot.isError(prevProps.bpdLoadState) &&
-        pot.isError(this.props.bpdLoadState)) ||
-        // error loading: bonus vacanze
-        (prevProps.allActiveBonus.some(ab => !pot.isError(ab)) &&
-          this.props.allActiveBonus.some(ab => pot.isError(ab))) ||
-        // error loading: wallet
-        (!pot.isError(prevProps.potWallets) &&
-          pot.isError(this.props.potWallets)))
+      !pot.isError(prevProps.potWallets) &&
+      pot.isError(this.props.potWallets)
     ) {
       showToast(I18n.t("wallet.errors.loadingData"));
     }
@@ -330,24 +288,17 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       .filter(w => w.type === TypeEnum.CREDIT_CARD);
 
   private getBonusLoadingStatus = (): SectionCardStatus => {
+    const isCgnLoading = pot.isLoading(this.props.cgnDetails);
+    const isIdPayLoading = pot.isLoading(this.props.idPayDetails);
+    const areBonusesLoading = isCgnLoading || isIdPayLoading;
+    const areBonusesSome =
+      pot.isSome(this.props.cgnDetails) || pot.isSome(this.props.idPayDetails);
     // if any bonus is loading or updating
-    // note: in the BPD case, we are watching for loading on one of several steps
-    // so this loading state is very weak
-    if (
-      pot.isLoading(this.props.bpdLoadState) ||
-      this.props.allActiveBonus.find(
-        ab => pot.isLoading(ab) || (pot.isNone(ab) && !pot.isError(ab))
-      ) ||
-      pot.isLoading(this.props.cgnDetails)
-    ) {
+    if (areBonusesLoading) {
       return "loading";
     }
     // if at least one bonus is some
-    if (
-      this.props.allActiveBonus.length === 0 ||
-      this.props.allActiveBonus.every(ab => isStrictSome(ab)) ||
-      pot.isSome(this.props.bpdLoadState)
-    ) {
+    if (areBonusesSome) {
       return "refresh";
     }
     return "show";
@@ -355,35 +306,32 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private cardPreview() {
     const bonusLoadingStatus = this.getBonusLoadingStatus();
+    const { isCgnEnabled, isIdPayEnabled } = this.props;
     return (
       <View>
         <VSpacer size={16} />
         {this.cardHeader(false)}
-
         {/* new payment methods rendering */}
         <WalletV2PreviewCards />
-
-        {/* Display this item only if the flag is enabled */}
-        {(bonusVacanzeEnabled || bpdEnabled) && (
-          <RequestBonus
-            status={bonusLoadingStatus}
-            onButtonPress={() => {
-              if (bonusLoadingStatus !== "loading") {
-                this.loadBonusVacanze();
-                this.loadBonusBpd();
+        <SectionCardComponent
+          status={bonusLoadingStatus}
+          accessibilityLabel={I18n.t("bonus.accessibility.sectionCardLabel")}
+          accessibilityHint={I18n.t("bonus.accessibility.sectionCardHint")}
+          label={I18n.t("bonus.requestLabel")}
+          onPress={() => {
+            if (bonusLoadingStatus !== "loading") {
+              this.props.loadAvailableBonuses();
+              if (isCgnEnabled) {
                 this.loadBonusCgn();
+              }
+              if (isIdPayEnabled) {
                 this.loadBonusIDPay();
               }
-            }}
-            activeBonuses={this.props.allActiveBonus}
-            availableBonusesList={this.props.availableBonusesList}
-            onBonusPress={this.props.navigateToBonusDetail}
-          />
-        )}
-
-        {bpdEnabled && <BpdCardsInWalletContainer />}
-        <CgnCardInWalletContainer />
-        {this.props.isIdPayEnabled && <IDPayCardsInWalletContainer />}
+            }
+          }}
+        />
+        {isCgnEnabled && <CgnCardInWalletContainer />}
+        {isIdPayEnabled && <IDPayCardsInWalletContainer />}
       </View>
     );
   }
@@ -534,9 +482,8 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
         headerPaddingMin={true}
         footerFullWidth={<SectionStatusComponent sectionKey={"wallets"} />}
       >
-        <BpdOptInPaymentMethodsContainer />
         <>
-          {(bpdEnabled || this.props.isCgnEnabled) && <FeaturedCardCarousel />}
+          {this.props.isCgnEnabled && <FeaturedCardCarousel />}
           {transactionContent}
         </>
         <NewPaymentMethodAddedNotifier />
@@ -547,10 +494,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private getHeaderHeight() {
     return (
       250 +
-      (bonusVacanzeEnabled ? this.props.allActiveBonus.length * 65 : 0) +
-      (bpdEnabled
-        ? pot.getOrElse(this.props.periodsWithAmount, []).length * 88
-        : 0) +
       (this.props.isCgnEnabled && this.props.isCgnInfoAvailable ? 88 : 0) +
       this.getCreditCards().length * 56
     );
@@ -558,8 +501,6 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 }
 
 const mapStateToProps = (state: GlobalState) => ({
-  periodsWithAmount: bpdPeriodsAmountWalletVisibleSelector(state),
-  allActiveBonus: allBonusActiveSelector(state),
   availableBonusesList: supportedAvailableBonusSelector(state),
   // TODO: This selector (pagoPaCreditCardWalletV1Selector) should return the credit cards
   //  available for display in the wallet, so the cards added with the APP or with the WISP.
@@ -571,19 +512,17 @@ const mapStateToProps = (state: GlobalState) => ({
   transactionsLoadedLength: getTransactionsLoadedLength(state),
   areMoreTransactionsAvailable: areMoreTransactionsAvailable(state),
   isPagoPATestEnabled: isPagoPATestEnabledSelector(state),
-  bpdLoadState: bpdLastUpdateSelector(state),
   cgnDetails: cgnDetailSelector(state),
+  idPayDetails: idPayWalletInitiativeListSelector(state),
   isCgnInfoAvailable: isCgnInformationAvailableSelector(state),
   isCgnEnabled: isCGNEnabledSelector(state),
   bancomatListVisibleInWallet: bancomatListVisibleInWalletSelector(state),
   coBadgeListVisibleInWallet: cobadgeListVisibleInWalletSelector(state),
-  bpdConfig: bpdRemoteConfigSelector(state),
   isDesignSystemEnabled: isDesignSystemEnabledSelector(state),
   isIdPayEnabled: isIdPayEnabledSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadBpdData: () => dispatch(bpdAllData.request()),
   loadCgnData: () => dispatch(cgnDetails.request()),
   loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
@@ -595,13 +534,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     });
   },
   loadAvailableBonuses: () => dispatch(loadAvailableBonuses.request()),
-  loadAllBonusActivations: () => dispatch(loadAllBonusActivations.request()),
-  navigateToBonusDetail: (
-    bonus: BonusActivationWithQrCode,
-    validFrom?: Date,
-    validTo?: Date
-  ) => navigateToBonusActiveDetailScreen({ bonus, validFrom, validTo }),
-  navigateToBonusList: () => navigateToAvailableBonusScreen(),
   navigateBack: () => navigateBack(),
   loadTransactions: (start: number) =>
     dispatch(fetchTransactionsRequestWithExpBackoff({ start })),

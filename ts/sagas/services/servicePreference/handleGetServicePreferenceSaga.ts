@@ -1,5 +1,5 @@
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
@@ -7,6 +7,8 @@ import { ServicePreferenceResponseFailure } from "../../../types/services/Servic
 import { SagaCallReturnType } from "../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../utils/errors";
 import { readablePrivacyReport } from "../../../utils/reporters";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
 
 export const mapKinds: Record<
   number,
@@ -30,9 +32,20 @@ export function* handleGetServicePreference(
 ) {
   try {
     const response: SagaCallReturnType<typeof getServicePreference> =
-      yield* call(getServicePreference, { service_id: action.payload });
+      (yield* call(
+        withRefreshApiCall,
+        getServicePreference({ service_id: action.payload }),
+        action
+      )) as unknown as SagaCallReturnType<typeof getServicePreference>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+        if (isFastLoginEnabled) {
+          return;
+        }
+      }
+
       if (response.right.status === 200) {
         yield* put(
           loadServicePreference.success({

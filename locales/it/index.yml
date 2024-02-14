@@ -424,16 +424,17 @@ profile:
       description: Per saperne di più sull'app IO
       contextualHelpContent: !include profile/profile_appinfo_main.md
     developersSectionHeader: Sviluppatori
+    testEnvironmentSectionHeader: Ambiente di test
     pagoPaEnvironment:
-      pagoPaEnv: Ambiente pagoPA di Test
+      pagoPaEnv: pagoPA
       pagoPAEnvAlert: La modifica richiede il riavvio dell'app
       alertConfirmTitle: Vuoi usare l'ambiente di test pagoPA?
       alertConfirmMessage: Se abiliti l'ambiente di test pagoPA non vedrai più lo storico delle tue transazioni e i tuoi metodi di pagamento salvati, e potrai usare solo metodi di pagamento espressamente creati per questo scopo. Se non ti è chiaro cosa questo significa non abilitare questa funzione.
       alertMessage: È necessario il riavvio dell'applicazione affinché le modifiche abbiano effetto.
     pnEnvironment:
-      pnEnv: Ambiente PN di Test
+      pnEnv: SEND (PN)
     idpay:
-      idpayTest: Test IDPay
+      idpayTest: IDPay
       idpayTestAlert: La modifica richiede il riavvio dell'app
     designSystemEnvironment: Design System sperimentale
     appVersion: Versione
@@ -447,7 +448,7 @@ profile:
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
     walletPlayground:
-      titleSection: "New Wallet Playground"
+      titleSection: "New Wallet"
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -680,18 +681,18 @@ authentication:
     contextualHelpContent: Qui puoi trovare le informazioni sulle modalità di autenticazione su IO e alcuni consigli di sicurezza.
     news: novità
     title: Ora è più facile accedere!
-    identity_check: Non dovrai più autenticarti con SPID o CIE non ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
+    identity_check: Non dovrai più identificarti con SPID o CIE ogni 30 giorni, ma solo una volta all’anno o se esci dall’app
     security_suggests: Alcuni consigli di sicurezza
     passcode: Per tutte le altre volte basterà il tuo volto, impronta o codice di sblocco
-    notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO.
+    notification: Riceverai un’email a ogni nuovo accesso. Se non lo riconosci, potrai bloccare l’accesso a IO
     button_accept_lv: Continua con l’accesso rapido
-    button_decline_lv: Autenticati con SPID o CIE ogni 30 giorni
-  security_suggestions: 
-    fingerprint: Non condividere il tuo o codice di sblocco o riconoscimento biometrico con nessuno
+    button_decline_lv: Entra con SPID o CIE ogni 30 giorni
+  security_suggestions:
+    fingerprint: Non condividere il tuo codice di sblocco o riconoscimento biometrico con nessuno
     io_logout: Se perdi il dispositivo, esci dall’app da web
-    io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app
+    io_lock_access: Se temi che qualcuno possa usare il tuo SPID o CIE, puoi bloccare l’accesso all’app entrando dal web
     access_new_device: Se accedi a IO con un dispositivo di altri, ricordati di uscire dall’app quando hai finito
-    navigate_to_the_site: Scopri come
+    navigate_to_the_site: Vai al sito
   idp_selection:
     headerTitle: Home
     contentTitle: Scegli il tuo Identity Provider
@@ -727,7 +728,6 @@ authentication:
       error_1001: "Accesso negato: non hai l'età minima richiesta per usare IO"
   expiredSessionBanner:
     title: Avviso di sicurezza
-    message: Per mantenere al sicuro i tuoi dati privati, accedi nuovamente con le tue credenziali SPID, grazie!
   unlock:
     title: Sblocca l’accesso
     subtitlel2: Per poter usare l'app, devi prima sbloccare l'accesso a IO.
@@ -740,12 +740,12 @@ authentication:
     description1_2: In alternativa, è possibile entrare in app utilizzando un accesso con il
     description1_3: livello massimo di sicurezza.
     description1_4: Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.
-    title2: Come sbloccare l’accesso a IO
+    title2: Vuoi sbloccare l’accesso a IO?
     listitem1: Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.
     listitem2_1: Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.
     listitem2_2: Vai al sito
     listitem3_1: Vai alla sezione
-    listitem3_2: Sblocca accesso a IO
+    listitem3_2: Sblocca l'accesso a IO
     listitem3_3: e segui i passaggi indicati. Quando richiesto inserisci il
     listitem3_4: codice di ripristino
     listitem3_5: per confermare l’operazione.
@@ -977,6 +977,17 @@ payment:
         description: IO non ha memorizzato tentativi di pagamento. Qui troverai i tentativi di pagamento più recenti
       title: Tentativi di pagamento
       iuv: Codice IUV {{iuv}}
+  confirm:
+    totalAmount: Totale da pagare
+    pay: Paga
+    payWith: Paga con
+    fee: Commissione
+    feeAppliedBy: Applicata da
+    editButton: Modifica
+    termsAndConditions: Proseguendo dichiari di aver letto e compreso i
+    termsAndConditionsLink: Termini e condizioni d'uso e l'Informativa Privacy
+    loading:
+      title: Sto caricando le informazioni del pagamento
 wallet:
   methodDetails:
     cobadgeTitle: "Carta di debito"
@@ -1001,6 +1012,11 @@ wallet:
       title: Vuoi pagare in app?
       content: Scopri quali sono i metodi che puoi aggiungere al tuo portafoglio.
       cta: Scopri di più
+    error:
+      title: Si è verificato un errore
+      subtitle: Riprova o contatta l'assistenza
+      primaryButton: Chiudi
+      secondaryButton: Riprova
   wallet: Portafoglio
   refreshWallet: Aggiorna il Portafoglio
   favourite:
@@ -1352,6 +1368,7 @@ wallet:
           bottomSheetTitle: "Perché non riesco a pagare con questo metodo?"
           bottomSheetDescription: "La funzionalità “Pagamenti in app” potrebbe essere disattivata.\nPrima di riprovare ad effettuare il pagamento, procedi come segue:\n\n1. vai nella sezione “Portafoglio”;\n2. seleziona il metodo di pagamento che vuoi utilizzare;\n3. abilita “Pagamenti in app”."
   firstTransactionSummary:
+    loading: Recupero delle informazioni in corso
     title: Dati del pagamento
     amount: Importo
     total: Totale pagato
@@ -1618,10 +1635,6 @@ wallet:
         title: "La tua carta è stata aggiunta con successo!"
     payment:
       success:
-        banner:
-          title: Puoi dirci com’è andata?
-          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
-          action: Vai al sondaggio
         title: "Grazie, l’operazione è stata eseguita con successo!"
         description1: "Abbiamo inviato una ricevuta a"
         description2: "Puoi trovarla anche nel tuo Portafoglio."
@@ -1643,6 +1656,106 @@ wallet:
         title: Inserisci il codice fiscale dell’Ente Creditore
         subtitle: Ha 11 cifre, lo trovi vicino al codice QR.
         placeholder: Codice fiscale Ente Creditore
+    abortDialog:
+      title: Vuoi interrompere l'operazione?
+      confirm: Sì, interrompi
+      cancel: No, torna indietro
+    methodSelection:
+      header: Seleziona un metodo
+      yourMethods: I tuoi metodi
+      otherMethods: Altri metodi
+      alert:
+        body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
+        cta: "Ok, ho capito!"
+      missingMethodsError:
+        title: Aggiungi un metodo per effettuare pagamenti in app
+        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
+        addMethod: Aggiungi metodo
+        notNow: Non ora
+    psp:
+      title: Scegli chi gestirà il pagamento
+      description: Ogni gestore propone una commissione.
+      taxDescription: In questa lista trovi tutti i gestori compatibili,
+      taxDescriptionBold: anche se non sei loro cliente.
+      defaultName: Gestore
+      pspTitle: Gestore
+      pspSortButton: Ordina
+      featuredReason: Perché sei già cliente
+      continueButton: Continua
+      sortBottomSheet:
+        default: Default
+        amount: Per importo
+        name: Per nome
+    failure:
+      PAYMENT_UNAVAILABLE:
+        title: "C’è un problema tecnico con questo avviso"
+      PAYMENT_UNKNOWN:
+        title: "I dati dell’avviso non sono corretti"
+      DOMAIN_UNKNOWN:
+        title: "L’Ente Creditore sta avendo problemi nella risposta"
+        subtitle: "Riprova più tardi. Se il problema persiste, contatta l’assistenza."
+      PAYMENT_ONGOING:
+        title: "C’è già un pagamento in corso, riprova più tardi"
+        subtitle: "Se il problema persiste, puoi aprire una segnalazione."
+      PAYMENT_EXPIRED:
+        title: "L’avviso è scaduto e non è più possibile pagarlo"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_CANCELED:
+        title: "L’Ente Creditore ha revocato questo avviso"
+        subtitle: "Contatta l’Ente per maggiori informazioni."
+      PAYMENT_DUPLICATED:
+        title: "Questo avviso è stato già pagato!"
+      GENERIC_ERROR:
+        title: "Si è verificato un errore imprevisto"
+        subtitle: "Riprova, oppure contatta l’assistenza."
+      PAA_PAGAMENTO_SCONOSCIUTO:
+        title: "Non riusciamo a trovare l’avviso"
+        subtitle: "L’avviso potrebbe essere stato già pagato. Per ricevere assistenza, contatta l’Ente Creditore che lo ha emesso."
+    outcome:
+      SUCCESS:
+        title: Hai pagato {{amount}}
+        button: Ok, chiudi
+        banner:
+          title: Puoi dirci com’è andata?
+          content: Raccontaci la tua esperienza con il pagamento e aiutaci a migliorare.
+          action: Vai al sondaggio
+      GENERIC_ERROR:
+        title: Si è verificato un errore imprevisto
+        subtitle: Non è stato addebitato alcun importo.
+      AUTH_ERROR:
+        title: Autorizzazione negata
+        subtitle: "Non è stato addebitato alcun importo.\nControlla di aver seguito correttamente le istruzioni della tua banca."
+      INVALID_DATA:
+        title: I dati del metodo di pagamento non sono corretti
+        subtitle: Se hai pagato con una carta di debito o credito, assicurati di inserire i dati come riportato sul fronte.
+      TIMEOUT:
+        title: La sessione è scaduta
+        subtitle: Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione.
+      CIRCUIT_ERROR:
+        title: Il circuito della carta non è supportato
+      MISSING_FIELDS:
+        title: Mancano alcuni dati per procedere con il pagamento
+      INVALID_CARD:
+        title: Il metodo di pagamento è scaduto o non più valido
+        subtitle: Per maggiori informazioni, contatta la tua banca.
+      CANCELED_BY_USER:
+        title: L’operazione è stata annullata
+        subtitle: Non è stato addebitato alcun importo.
+      EXCESSIVE_AMOUNT:
+        title: Autorizzazione negata
+        subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
+      INVALID_METHOD:
+        title: Il metodo di pagamento non è supportato
+    support:
+      button: "Contatta l'assistenza"
+      supportTitle: Contatta l'assistenza
+      phone: Chiama {{phoneNumber}}
+      chat: Chiedi aiuto in chat
+      additionalDataTitle: "Dati aggiuntivi"
+      copyAll: Copia tutti
+      errorCode: Codice errore
+      noticeNumber: Codice avviso
+      entityCode: Codice Fiscale Ente
 saveCard:
   saveCard: Salva la carta
   header: Vuoi salvare questa carta?
@@ -1708,13 +1821,6 @@ messages:
       expiredAlert:
         block1: Scaduto il
         block2: alle ore
-    prescription:
-      expiringOrValidAlert:
-        block1: Scade il
-        block2: alle
-      expiredAlert:
-        block1: Scaduta il
-        block2: alle
     pay: Paga € {{amount}}
     onlyPay: Paga
     paid: Pagato
@@ -1760,17 +1866,6 @@ messages:
     emptyMessage:
       title: Non hai scadenze in programma.
       subtitle: Usa il pulsante qui sopra per vedere le scadenze già trascorse.
-  medical:
-    not_available: "n/a"
-    prescription: Ricetta elettronica
-    memo: Promemoria per l'assistito
-    nre: Numero Ricetta Elettronica
-    iup: Identificativo Unico Prenotazione
-    patient_fiscal_code: Codice Fiscale dell'assistito
-    prescriber_fiscal_code: Codice fiscale del medico
-    barcodes: Codici a barre
-    nationalService: Servizio Sanitario Nazionale
-    note: "Rilasciato ai sensi dell'art.11, comma 16 del DL 31 mag 2010, n.78 e dell’art.1, comma 4 del DM 2 nov 2011"
   pagination:
     migration:
       started: "Attendi, stiamo aggiornando la sezione messaggi"
@@ -1784,6 +1879,7 @@ messages:
       success: "Ripristino effettuato."
       failure: "Il ripristino non è andato a buon fine"
 messageDetails:
+  accessibilityAttachmentIcon: "Contiene allegati"
   contextualHelpTitle: Dettagli del messaggio
   contextualHelpContent: !include messages/message_detail.md
   headerTitle: Messaggio
@@ -1831,6 +1927,7 @@ messagePDFPreview:
   open: "Apri"
   save: "Salva"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:
       title: "L’anteprima non è disponibile"
@@ -2262,13 +2359,6 @@ bonus:
       caption: "concluso"
       description: "Questa iniziativa è terminata e non è più possibile richiederla"
   bonusVacanze:
-    accessibility:
-      preview: Bonus Vacanze, importo massimo {{value}} euro, {{status}}
-      card: Il tuo Bonus Vacanze con codice {{code}}, del valore massimo di {{value}} euro è {{status}}
-    statusInfo:
-      validBetween: Potrai usare questo Bonus Vacanze dal {{from}} fino al {{to}}
-      bonusRejected: Attenzione! Questo Bonus Vacanze è stato annullato
-      redeemed: Questo Bonus Vacanze è stato utilizzato il {{date}}
     multipleBonus: Risultano due o più bonus richiesti e attivati da te. Assicurati di usare quello relativo alla DSU corretta, per evitare che chi utilizza il bonus incorra in successive azioni di recupero.
     usableAmount: Spendibile presso la struttura ricettiva
     taxBenefit: Detraibile in dichiarazione dei redditi
@@ -2287,89 +2377,20 @@ bonus:
     shareMessage: "Questo è il codice del tuo Bonus Vacanze:"
     saveScreenShotOk: "Bonus salvato nella tua galleria!"
     savedOn: "Salvato il "
-    detail:
-      contextualHelp:
-        title: Bonus Vacanze
-        body: Qui sono visualizzati i dettagli del Bonus Vacanze e le informazioni necessarie per spendere il bonus.
-    checkBonusEligibility:
-      loading: Verifico l'idoneità per l'accesso al bonus
-    cta:
-      requestBonus: Richiedi Bonus
-      cancelRequest: Annulla la richiesta
-      qrCode: QR code
-      copyCode: Copia codice
-      openQRCode: Visualizza QR code
     eligibility:
       loading: "Stiamo verificando l’ISEE del tuo nucleo familiare con INPS\nTi preghiamo di attendere."
-      iseeNotAvailable:
-        title: "Siamo spiacenti.\n Non hai un ISEE ordinario o corrente in corso di validità."
-        text:
-          first: "E' necessario presentare una Dichiarazione Sostitutiva Unica (DSU) per il calcolo dell’ISEE ordinario o corrente, prima di richiedere nuovamente il Bonus Vacanze.\n\n Puoi fare subito una "
-          secondo: "simulazione online"
-          third: " sul sito dell'INPS per verificare la tua idoneità, oppure richiedere l'ISEE sui canali previsti da INPS."
-        goToDSU: Richiedi ISEE
-      iseeNotEligible:
-        title: "Siamo spiacenti.\n Il tuo ISEE supera la soglia richiesta."
-        text: Se la situazione patrimoniale del tuo nucleo familiare è cambiata rispetto all'ultima Dichiarazioni Sostitutiva Unica (DSU) presentata, puoi presentarne una nuova attraverso i canali previsti da INPS.
-        goToNewDSU: Richiedi nuovo ISEE
       activateBonus:
-        contextualHelp:
-          title: Il Bonus Vacanze del tuo nucleo familiare
-          body: !include bonus/bonusVacanze/eligible_ch.md
         headerTitle: Richiesta Bonus Vacanze
         title: Buone notizie!
         description: "Il tuo nucleo familiare ha diritto al seguente Bonus Vacanze:"
-        reminder:
-          text: "Ciascun componente del tuo nucleo familiare concorre a determinare l'importo e potrà spendere il bonus. Se i dati non sono corretti o aggiornati, per evitare problemi in seguito all'utilizzo del Bonus, ti invitiamo a presentare una nuova DSU prima di procedere con la richiesta."
         discrepancies:
           attention: "Attenzione!"
           text: "INPS ha segnalato alcune omissioni o difformità nel tuo ISEE. Verifica che sia tutto corretto prima di continuare. Se decidi di proseguire, potresti essere chiamato a fornire la documentazione per provare la completezza e la veridicità dei dati indicati nella DSU Altrimenti, puoi presentare una nuova DSU e richiedere il Bonus in un secondo momento."
         activateCTA: "Attiva il Bonus"
-      timeout:
-        title: Stiamo procedendo alla verifica del tuo ISEE.
-        description:
-          first: "Ti invieremo un messaggio in app non appena sarà completata.\n\nQuando lo riceverai, se l'esito sarà positivo, ricordati di completare la tua richiesta "
-          second: "entro 24 ore"
-          third: ", altrimenti dovrai iniziarne una nuova."
-      activationPending:
-        title: Il bonus per il tuo nucleo familiare è già stato richiesto ed è in fase di attivazione.
-        description: Riceverai un messaggio quando sarà attivato.
-      underage:
-        title: "Siamo spiacenti. Solo i cittadini maggiorenni possono richiedere il Bonus Vacanze"
     activation:
       loading: "Abbiamo inoltrato la tua richiesta a Agenzia delle Entrate\nTi preghiamo di attendere."
-      goToDetails: Visualizza Bonus Vacanze
       timeout:
         title: Stiamo processando la tua richiesta.
-        description: Ti invieremo un messaggio in app quando il tuo bonus sarà pronto.
-      alreadyRedeemed:
-        title: Il bonus per il tuo nucleo familiare è già attivo!
-        body: Puoi visualizzarne i dettagli nella sezione Portafoglio.
-        cta: Visualizza Bonus disponibili
-      eligibilityExpired:
-        title: Tempo scaduto.
-        body: Le 24 ore utili a proseguire la tua richiesta sono scadute. Ti chiediamo di ricominciare una nuova richiesta.
-        cta: "Richiedi Bonus"
-      confirm:
-        title: Attenzione
-        body: Continuando nel processo, non sarà più possibile annullare la richiesta.
-        cancel: Torna alla richiesta
-        confirm: Continua
-      completed:
-        title: Congratulazioni!
-        description: Il tuo bonus è attivo
-    abort:
-      title: Annulla
-      body: Vuoi davvero uscire dal processo? Per richiedere il bonus vacanze dovrai ripetere il flusso dall’inizio.
-      cancel: Continua
-      confirm: Annulla la richiesta
-      completed: Richiesta annullata
-    composition:
-      amount: "Importo massimo"
-      expendable: "Spendibile presso la struttura ricettiva"
-      taxBenefit: "Detraibile in dichiarazione dei redditi"
-    family:
-      title: "Chi può riscuotere il bonus?"
   bonusList:
     title: Aggiungi bonus o sconto
     contentTitle: Seleziona uno dei bonus disponibili
@@ -2380,8 +2401,6 @@ bonus:
     contextualHelp:
       title: Il bonus vacanze
       body: Qui sono visualizzate tutte le informazioni relative al bonus vacanze, il provvedimento istituito dal Decreto Rilancio per incentivare  il turismo dopo il lockdown dovuto all'emergenza Coronavirus.
-    requestAlert:
-      title: Attenzione
   request: Richiedi un nuovo bonus
   requestLabel: Bonus e sconti
   requestTitle: Richiesta
@@ -2394,265 +2413,11 @@ bonus:
     title: Informativa sul trattamento dei dati personali
     content: !include bonus/bonusVacanze/bonus_tos.md
   bpd:
-    accessibility:
-      card:
-        preview: "Cashback, periodo dal {{startDate}} al {{endDate}}. Importo accumulato {{amount}}  €"
     title: Cashback
     description: "Ottieni un rimborso quando paghi nei negozi con questo metodo"
     name: Cashback
-    earned: Importo accumulato
     cta:
       activeBonus: Attiva il Cashback
-    unsubscribe:
-      cta: "Cancella la tua iscrizione al Cashback"
-      title: "Disattivazione Cashback"
-      body1: "Vuoi davvero cancellare la tua iscrizione al Cashback?"
-      body2: "Se confermi, le tue transazioni non potranno più essere registrate per il Cashback né potrai concorrere per il Super Cashback; inoltre, **non potrai riscuotere un rimborso**, nel caso ti fosse stato riconosciuto. La disattivazione del Cashback avrà effetto **anche negli altri canali** che hai usato per attivarlo (home banking, app, etc).\n\nSe riattivi il Cashback in un secondo momento, **ripartirai da zero transazioni**."
-      confirmCta: "Cancella iscrizione"
-      loading: "Stiamo cancellando la tua iscrizione"
-      success: "La tua iscrizione al Cashback è stata cancellata"
-      failure: "Non siamo riusciti a cancellare la tua iscrizione, riprova per favore"
-    onboarding:
-      alert:
-        title: Il Cashback è già attivo
-        body: Puoi vedere maggiori dettagli nel tuo Portafoglio.
-        cancel: Chiudi
-        confirm: Torna indietro
-      loadingActivationStatus:
-        title: Verifico lo stato di attivazione
-      declaration:
-        header: Per poter attivare il Cashback devi dichiarare
-        cta: "Dichiaro"
-        conditions:
-          age: di essere maggiorenne
-          resident: di risiedere in Italia
-          owner:
-            normal: "di attivare ai fini del Cashback "
-            bold: "solo metodi di pagamento di cui sei il titolare"
-          personal_use:
-            normal: "che userai i metodi di pagamento su cui è attivo il Cashback solo per acquisti effettuati per finalità personali, "
-            bold: "non legati ad attività di Impresa, Arte o Professione"
-        disclaimer:
-          normal1: "Questa autodichiarazione è resa ai sensi del "
-          link: "dpr 28 dicembre 2000 n. 445 art 46 e 47"
-          normal2: " e consapevole delle sanzioni penali e della perdita di diritto al rimborso in caso di falsa dichiarazione"
-      loadingActivateBpd:
-        title: "Stiamo attivando il Cashback"
-        body: "Ti preghiamo di attendere..."
-      noPaymentMethod:
-        title: "Aggiungi almeno un metodo di pagamento"
-        body: "Per iniziare a collezionare transazioni valide, aggiungi al tuo Portafoglio i tuoi metodi di pagamento preferiti: oggi sono supportate le principali carte di pagamento, app e altri strumenti digitali.\n\n In futuro verranno supportati altri strumenti: potrai aggiungere quando vuoi nuovi metodi di pagamento su IO e attivare su ciascuno il Cashback!"
-      enrollPaymentMethod:
-        title: "Scegli quali metodi di pagamento attivare"
-        body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-        body2: "Potrai aggiungere in un secondo momento altri metodi di pagamento al tuo portafoglio e attivare su questi il Cashback."
-      errorPaymentMethod:
-        title: "Ci siamo quasi, attiva il Cashback sui tuoi metodi di pagamento!"
-        body: "Abilita il Cashback sui metodi già presenti nel tuo portafoglio o aggiungine di nuovi."
-        cta: "Attiva i metodi di pagamento"
-    suggestActivation:
-      title: "Vuoi attivare il Cashback?"
-      body: "Hai aggiunto dei metodi di pagamento compatibili con il Cashback, l’iniziativa promossa dalla Presidenza del Consiglio dei Ministri e dal Ministero dell’Economia e delle Finanze, allo scopo di incentivare un maggiore utilizzo di moneta elettronica nel Paese.\n\n Puoi ricevere un rimborso sugli acquisti effettuati con carte, bancomat e app di pagamento.\n\n"
-      skip: "No, grazie"
-      confirm: "Info e attivazione"
-    activateOnNewMethods:
-      title: "Vuoi attivare il Cashback?"
-      body1: "Attiva il Cashback sui metodi salvati nel tuo portafoglio per iniziare a collezionare le transazioni valide."
-      body2: "Se preferisci, puoi attivare il Cashback su questi metodi anche in un secondo momento."
-      skip: "Non ora"
-    iban:
-      bpdCompletedMessage: "Questa iniziativa è terminata e non è più possibile modificare l'IBAN"
-      cta:
-        bpdNotActiveTitle: "attenzione"
-        bpdNotActiveMessage: "non sei iscritto al cashback, iscriviti e riprova."
-        noActivePeriodTitle: "attenzione"
-        noActivePeriodMessage: "non c'è alcun cashback attivo in questo momento."
-      iban: "IBAN"
-      edit: "Modifica IBAN"
-      verify: "Controlla IBAN"
-      insertion:
-        title: "IBAN per l’accredito"
-        body1: "Per ricevere eventuali rimborsi, inserisci il tuo "
-        body1Bold: "codice IBAN senza spazi"
-        body2: "L’IBAN verrà verificato per sapere se il relativo conto corrente è intestato proprio a te. Puoi inserirlo anche in un secondo momento."
-      koWrong:
-        title: "IBAN non corretto"
-        text1: "L'IBAN che hai inserito"
-        text2: "non risulta corretto: controllalo per piacere!"
-      koCannotVerify:
-        title: "Non è stato possibile verificare il tuo IBAN"
-        text1: "Se hai la certezza che l’IBAN"
-        text2: "identifichi il conto su cui vuoi ricevere gli accrediti, puoi proseguire."
-      koNotOwned:
-        title: "Controlla l'IBAN inserito"
-        text1: "L’IBAN"
-        text2: "non risulta intestato a"
-      loading: "Stiamo verificando il tuo IBAN\n\nTi preghiamo di attendere."
-      success: "IBAN inserito con successo"
-    details:
-      howItWorks:
-        title: "Extra Cashback di Natale"
-        body: "1. Il programma Cashback si divide in periodi. Il periodo corrente inizia il **{{startDate}}** e finisce il **{{endDate}}**. **Accumula transazioni** valide durante tutta la durata di ciascun periodo con i **metodi di pagamento che hai attivato**.\n\n2. In questo periodo, se raggiungi le **{{minTransactionNumber}} transazioni**, riceverai un rimborso pari al {{cashbackPercentage}}% fino ad un rimborso massimo di **{{maxTransactionCashback}} euro** a transazione ed un massimo di **{{maxPeriodCashback}} euro** in tutto il periodo.\n\n3. Al termine del periodo, ricevi il rimborso accumulato sull’IBAN da te indicato.\n\n‎"
-      components:
-        iban:
-          title: "IBAN per l’accredito"
-          noIbanBody: "Imposta il tuo IBAN per poter ricevere il Cashback accumulato"
-          button: "Imposta IBAN"
-        transactionsCountOverview:
-          title: "Le tue transazioni"
-          of: "su"
-          closedPeriodKOBody: "Non hai raggiunto le {{transactions}} transazioni necessarie per ottenere un rimborso: avresti ricevuto € {{amount}}. Provaci nel prossimo periodo!"
-          currentPeriodKOBody:
-            one: "Devi aver fatto almeno"
-            two: " {{transactions}} transazioni"
-            three: " per sbloccare il Cashback che hai accumulato!"
-          currentPeriodUnlockBody: "Complimenti {{name}}! Hai superato la soglia di {{transactions}} transazioni e sbloccato il Cashback!"
-          currentPeriodMaxAmount: "Complimenti {{name}}! Hai raggiunto l’importo massimo previsto!"
-          currentPeriodSuperCashback: "In questo momento avresti diritto al Super Cashback di {{superCashbackAmount}} €! Continua così per rimanere in classifica."
-          gracePeriodBody: "Questo periodo del Cashback si è chiuso il {{date}}. Stiamo aspettando di ricevere le ultime transazioni, per calcolare i rimborsi. Riceverai un messaggio quando l'operazione verrà completata."
-          closedPeriodOKBody: "Complimenti {{name}}! \nHai diritto ad un rimborso di € {{amount}}"
-          closedPeriodMaxAmount: ", il massimo del rimborso possibile"
-          closedPeriodSuperCashback: ", di cui € {{amount}} di Super Cashback"
-          moneyTransfer: "Riceverai un messaggio quando verrà effettuato il bonifico all'IBAN da te scelto."
-          inactivePeriodBody: "Potrai iniziare a collezionare transazioni valide a partire dal {{date}}"
-          label:
-            one: "1 transazione valida"
-            other: "{{transactions}} transazioni valide"
-        ranking:
-          title: "La tua posizione"
-          notReady:
-            title: "Quando vedrai la classifica Super Cashback?"
-            body: "La classifica si basa sul **numero di transazioni** eseguite con i metodi di pagamento su cui hai attivato il Cashback.\n\n Mostreremo la tua posizione in classifica **quando la distribuzione dei partecipanti sarà più significativa**: in questo momento ci sono moltissimi utenti con lo stesso numero di transazioni.\n\n Una volta pubblicata, la classifica **continuerà a cambiare** a seconda del numero di transazioni di tutti i partecipanti, fino alla fine dei 6 mesi."
-      transaction:
-        label:
-          one: "1 transazione"
-          other: "{{transactions}} transazioni"
-        title: "Le tue transazioni"
-        goToButton: "Dettaglio transazioni"
-        loading: "Stiamo recuperando la lista delle tue transazioni\n\nAttendi qualche secondo..."
-        error:
-          title: "I sistemi stanno impiegando più tempo del previsto"
-          body: "In questo momento non riusciamo a recuperare le tue transazioni. Non preoccuparti, a breve l’elenco tornerà nuovamente disponibile."
-          pageLoading: "Non riusciamo a recuperare le transazioni, riprova per piacere."
-        noPaymentMethod:
-          text1: "Devi attivare "
-          text2: "almeno un metodo di pagamento "
-          text3: "al Cashback per iniziare a collezionare le transazioni necessarie"
-        detail:
-          empty:
-            text1: "Non ci sono ancora transazioni valide."
-            text2: "Controlla di nuovo nei prossimi giorni!"
-          summary:
-            bottomSheet:
-              title: Quando troverai le transazioni?
-              body: "**Continui a non vedere la transazione?**\n\n- Controlla se la tua banca ha già **contabilizzato** la transazione: i dati vengono trasmessi all'app entro 5 giorni lavorativi dalla contabilizzazione.\n\n- I pagamenti effettuati con Google Pay, Apple Pay e Samsung Pay non sono ancora supportati. Stiamo lavorando con la tua banca per ricevere anche questo tipo di transazioni.\n\n- La transazione potrebbe essere stata gestita con il POS di un soggetto (acquirer) **non ancora convenzionato.**"
-              readMore: "Leggi di più"
-            calendarBlock:
-              text1: "Ti informiamo che prima che tu veda la transazione su IO,"
-              text2: "possono passare in media 3 giorni lavorativi"
-              text3: "."
-            lastUpdated: "Ultimo aggiornamento: "
-            link: "Manca qualcosa?"
-            body:
-              text1: "Nel periodo "
-              text2: "hai totalizzato "
-              text3:
-                one: "1 transazione valida "
-                other: "{{transactions}} transazioni valide "
-              text4: "e accumulato "
-              text5: "un rimborso di "
-            milestone:
-              title: "Complimenti, hai raggiunto {{cashbackValue}}"
-              body: "Hai raggiunto l'importo massimo previsto in questo periodo. Continua ad accumulare transazioni valide per salire in classifica!"
-          title: "Dettaglio della transazione"
-          paymentCircuit: "Circuito di pagamento"
-          transactionAmount: "Importo transazione"
-          cashbackAmount: "Importo Cashback"
-          acquirerId: "ID transazione Acquirer"
-          issuerId: "ID transazione Issuer"
-          maxCashbackWarning: "Per ogni transazione puoi ottenere un Cashback massimo di € {{amount}}."
-          maxCashbackForPeriodWarning: "Hai già raggiunto il rimborso massimo previsto per questo periodo."
-          canceledOperationWarning: "Questa transazione è uno storno, ovvero annulla una transazione che era stata effettuata in precedenza."
-          canceled: "Storno"
-      paymentMethods:
-        add:
-          cta: "Aggiungi un metodo al Cashback"
-          alertBody: "Il metodo di pagamento che stai aggiungendo sarà salvato nel wallet dell'app IO e, se compatibile, potrà essere usato anche per eventuali pagamenti all'interno dell'app."
-        noPaymentMethods: "Devi aggiungere almeno un metodo di pagamento per iniziare a collezionare transazioni valide"
-        noActiveMethod: "Devi aver attivato almeno un metodo di pagamento per collezionare transazioni valide"
-        error: "Anche se in questo momento non è possibile visualizzare i tuoi metodi, registreremo le transazioni effettuate coi metodi già abilitati al Cashback."
-        activateOnOthersChannel:
-          text1: "Attivati su "
-          text2: "altri canali"
-          title: "Metodi aggiunti da altri canali"
-          body: "Hai aggiunto al Cashback questi metodi di pagamento direttamente dai canali messi a disposizione dalla tua banca o app di pagamenti. Puoi attivare o disattivare la registrazione delle transazioni di questi metodi anche da IO.\n Se vuoi usare alcuni di questi metodi anche per pagare tramite IO, aggiungili al tuo portafoglio!"
-          addWallet: "Aggiungi al portafoglio"
-          whyOtherCards:
-            title: "Perché vedo carte che non riconosco?"
-            body: "Non preoccuparti, si tratta delle versioni virtuali delle tue carte che Apple, Google e Samsung utilizzano per proteggere i tuoi acquisti effettuati tramite i loro ‘wallet’. Stiamo lavorando con i soggetti coinvolti nell’iniziativa per migliorare la visualizzazione sull’app IO di questo tipo di carte."
-            cta: "Scopri di più"
-        notActivable:
-          header: "Non attivabili o non compatibili"
-          title: "Metodo non attivabile"
-          body: "Qualcun altro ha già attivo in questo momento il Cashback su questo metodo di pagamento: il Cashback può essere attivato da un solo utente alla volta per ciascun metodo di pagamento."
-        notCompatible:
-          title: "Metodo non compatibile"
-          body: "Il metodo di pagamento non è compatibile con il Cashback perché la banca non ha ancora attivato il supporto a queste funzionalità. Contatta la tua banca per maggiori dettagli."
-        activate:
-          title: "Attivare il Cashback su questo metodo?"
-          body: "L’attivazione sarà operativa **da domani**, quindi non saranno valide ai fini del Cashback le transazioni effettuate nella giornata di oggi."
-          disclaimer: "Scegliendo {{activate}}, dichiari di essere il titolare di questo metodo di pagamento."
-        deactivate:
-          title: "Disattivare il Cashback su questo metodo?"
-          body: "Se confermi questa scelta, le transazioni effettuate con questo metodo non verranno più collezionate. La disattivazione sarà operativa **da domani**, quindi potrebbero essere ancora collezionate le transazioni effettuate oggi."
-      card:
-        status:
-          active: Attivo
-          closed: Concluso
-          inactive: In arrivo
-      superCashback:
-        rankLabel: "{{position}}º utente in classifica"
-        rankTitle: "Classifica Super Cashback"
-        howItWorks:
-          title: "Come funziona?"
-          body: "I **{{citizens}} cittadini** con il più alto numero di transazioni **ricevono il Super Cashback, un premio pari a €{{amount}}.**"
-          status:
-            active: "**La classifica cambia ogni giorno.** Riceverai un messaggio quando verrà consolidata."
-            closed: "La classifica per questo periodo è chiusa."
-      lastUpdate: Aggiornato alle {{hour}} del {{date}}
-    optInPaymentMethods:
-      cashbackUpdate:
-        header: "Novità e aggiornamenti"
-        title: "Vuoi mantenere i tuoi metodi di pagamento?"
-        body: !include bonus/bpd/optInPaymentMethods.md
-      choice:
-        header: "Configura IO"
-        title: "Vuoi mantenere i tuoi metodi di pagamento?"
-        subtitle: Se li mantieni, potrai utilizzarli per aderire a sconti, bonus e iniziative future o per altre funzionalità, come pagare in app.
-        suggestedOption: Consigliato
-        toast: "Hai già fatto la tua scelta"
-        options:
-          keepAll:
-            title: Mantieni tutti i metodi nel Portafoglio
-            body: PagoPA S.p.A. tratterà i dati dei tuoi metodi di pagamento in qualità di titolare del trattamento. Per maggiori informazioni puoi consultare l’Informativa Privacy.
-          deleteAll:
-            title: Elimina tutti i metodi dal Portafoglio
-            body: Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione.
-        deleteAllButton: Elimina tutti i metodi
-      deletePaymentMethodsBottomSheet:
-        title: "Vuoi davvero eliminare i seguenti metodi dal Portafoglio?"
-        subtitle: "Potrai aggiungerli di nuovo in qualsiasi momento, ma dovrai reinserire i dati e ripetere le procedure di autorizzazione."
-      thankYouPage:
-        cta:
-          goToWallet: "Vai al Portafoglio"
-          retry: "Riprova"
-        success:
-          title: "Fatto!"
-          body: "Abbiamo salvato la tua scelta"
-        retryAfterDeletion:
-          title: "Si è verificato un errore imprevisto"
-          body: "I tuoi metodi non sono stati eliminati. Riprova, oppure vai al Portafoglio ed eliminali manualmente."
-        toast: "La tua scelta non è stata salvata. Riprova più tardi."
   cgn:
     generic:
       linkError: "In questo momento, il sito dell'operatore non è raggiungibile. Riprova più tardi."
@@ -2807,174 +2572,6 @@ bonus:
           other: "{{seconds}} secondi"
   sv:
     headerTitle: "Sicilia Vola"
-    voucherGeneration:
-      acceptTos:
-        alert:
-          title: "Attenzione"
-          message: "Ti informiamo che le informazioni che inserirai costituiscono a tutti gli effetti una autocertificazione. Eventuali dichiarazioni mendaci saranno perseguibili ai sensi del d.P.R. n.445/2000"
-          buttons:
-            ok: "Continua"
-            ko: "Annulla richiesta"
-        buttons:
-          requestBonus: "Richiedi un codice sconto"
-      checkResidence:
-        title: "Regione di residenza"
-        items:
-          inSicily: "Risiedo in Sicilia"
-          notInSicily: "Risiedo in un'altra regione"
-        info: "Ricorda che gli sconti sono diponibili solo per i cittadini residenti in Sicilia."
-      selectBeneficiaryCategory:
-        title: "Dichiaro di essere"
-        categories:
-          student: "Studente fuori sede"
-          disabled: "Disabile grave"
-          worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
-          sick: "Paziente con necessità di cure al di fuori della Sicilia"
-          other: "Nessuno dei precedenti"
-      student:
-        selectDestination:
-          title: "StudentSelectDestinationScreen"
-      disabled:
-        additionalInfo:
-          title: "Informazioni aggiuntive"
-          disclaimer:
-            normal: "Dichiaro di possedere i requisiti di cui all’"
-            link: "articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
-      worker:
-        selectDestination:
-          title: "WorkerSelectDestinationScreen"
-      sick:
-        selectDestination:
-          title: "SickSelectDestinationScreen"
-      checkIncome:
-        title: "Dichiaro inoltre"
-        threshold:
-          under: "di avere un reddito lordo annuo inferiore o uguale a {{amount}}"
-          over: "di avere un reddito lordo annuo superiore a {{amount}}"
-      selectFlightsDate:
-        title: "Data del volo"
-        subtitle: "Indica il tipo di volo e la/le data/e in cui viaggerai"
-        flights_choice:
-          departure: "Volo di sola andata"
-          return: "Andata e ritorno"
-        labels:
-          departure: "Data di partenza"
-          return: "Data di ritorno"
-      summary:
-        title: "Riepilogo"
-        subtitle1:
-          normal1: "Proseguendo dichiari sotto la tua responsabilità e consapevole delle sanzioni penali in caso di dichiarazioni non veritiere e di falsità negli atti ("
-          link: "art. 76 del d.P.R. 28 Dicembre 2000, n.445"
-          normal2: ") di possedere i seguenti requisiti"
-        subtitle2: "E di richiedere un codice sconto per un volo con le seguenti caratteristiche:"
-        fields:
-          residence:
-            label: "Residenza:"
-            value: "Sicilia"
-          category:
-            label: "Categoria:"
-            value:
-              disabled: "Disabile grave ai sensi dell’articolo 3, comma 3, della legge 5 febbraio 1992, n. 104"
-              student: "Studente fuori sede"
-              worker: "Lavoratore dipendente con sede lavorativa al di fuori della Sicilia"
-              sick: "Paziente con necessità di cure al di fuori della regione Sicilia"
-          flightDate:
-            label: "Data del volo:"
-            disabled: "Tutte"
-          availableDestination: "Possibili destinazioni:"
-      voucherGenerated:
-        title: "Ecco il tuo codice sconto"
-        subtitle: "Inseriscilo sul portale o comunicalo alla biglietteria della compagnia in fase di acquisto del biglietto. Ti ricordiamo che il codice è nominativo e non può essere usato da altri."
-      ko:
-        checkIncome:
-          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
-          body: "Gli sconti Sicilia Vola sono dedicati solo a chi ha un reddito personale lordo inferiore a 25.000€."
-        selectBeneficiaryCategory:
-          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
-          body: "Gli sconti Sicilia Vola sono dedicati solo alle categorie presentate nella schermata precedente."
-        checkResidence:
-          title: "Siamo spiacenti.\nNon hai le caratteristiche per accedere agli sconti."
-          body: "Gli sconti Sicilia Vola sono dedicati solo ai residenti in Sicilia."
-        timeout:
-          title: "Il tuo codice sconto Sicilia Vola è in fase di generazione."
-          body: "Riceverai un messaggio in app IO quando sarà pronto."
-    voucherList:
-      title: "I tuoi codici sconto disponibili"
-      loading: "Caricamento in corso"
-      filter:
-        title: "Filtra voucher"
-        searchValuePlaceholder: "Cerca codice buono"
-        stateSection:
-          title: "Stato"
-        dateSection:
-          title: "Data"
-          departure: "Data di partenza"
-          return: "Data di ritorno"
-        cta:
-          removeFilter: "Rimuovi"
-          applyFilter:
-            zero: "Applica filtri"
-            other: "Applica filtri ({{count}})"
-      emptyList:
-        title: "Non ci sono codici sconto disponibili"
-        subtitle: "Fai una ricerca per vedere i tuoi codici utilizzati o scaduti oppure richiedi un nuovo codice"
-        cta: "Genera un nuovo codice"
-      error: "Non riusciamo a recuperare i tuoi voucher, riprova per piacere."
-      details:
-        title: "Il tuo codice sconto"
-        fields:
-          uniqueCode: "Codice univoco"
-          beneficiary: "Beneficiario"
-          residence:
-            label: "Residenza"
-            value: "Sicilia"
-          category: "Categoria"
-          flightDate: "Data del volo"
-          possibleDestination: "Possibili destinazioni"
-        cta:
-          voucherRevocation: "Revoca voucher"
-          openQr: "Apri QR code"
-        voucherRevocation:
-          alert:
-            title: "Attenzione"
-            message: "Sei sicuro di voler procedere? Il codice sconto sarà eliminato."
-            cta:
-              ok: "Continua"
-              ko: "Annulla la richiesta"
-          toast:
-            ok: "Voucher eliminato correttamente"
-            ko: "Errore durante l'eliminazione del voucher. Riprova"
-    components:
-      voucherVisualDetails:
-        uniqueCode: "Codice univoco"
-        qrCode: "QR Code"
-        barCode: "Bar Code"
-      destinationLabels:
-        universityName: "Nome ateneo"
-        companyName: "Ragione sociale azienda"
-        hospitalName: "Nome struttura o professionista"
-        municipality: "Comune"
-      voucherBottomsheet:
-        title: "Codice sconto Sicilia Vola"
-        cta:
-          exit: "Esci"
-          voucherRevocation: "Revoca voucher"
-      destinationSelector:
-        state:
-          title: "Seleziona uno stato"
-          label: "Stato"
-          placeholder: "Seleziona uno stato"
-        municipality:
-          title: "Seleziona un comune"
-          label: "Comune"
-          placeholder: "Seleziona un comune"
-          ko:
-            label1: "Errore durante il caricamento dei comuni. "
-            label2: "Riprova"
-    pdfVoucher:
-      toast:
-        ok: "Voucher salvato con successo"
-        ko: "Problemi durante il salvataggio del voucher"
   cdc:
     title: "Carta della cultura"
     serviceCta:
@@ -3025,12 +2622,19 @@ bonus:
         conjunction: ", "
 features:
   messages:
+    attachmentDownloadFeedback: "Download in corso"
+    attachments: "Allegati"
     loading:
       title: "Sto caricando i dettagli del messaggio"
       subtitle: "Attendi qualche secondo"
     updateBottomSheet:
       title: "Aggiorna l'app IO"
       subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
+    badge:
+      dueDate: Scaduto il {{date}} alle ore {{time}}
+    alert:
+      action: Aggiungi promemoria
+      content: Scade il {{date}} alle ore {{time}}
   euCovidCertificate:
     save:
       album: "IO"
@@ -3096,6 +2700,8 @@ features:
         activated: "Grazie, il servizio è attivo!"
         error: "Si è verificato un errore con la tua richiesta"
     details:
+      badge:
+        legalValue: "Valore legale"
       title: Dettaglio del messaggio
       noticeCode: "Codice avviso"
       loadError:
@@ -3816,21 +3422,12 @@ fastLogin:
   whatsNew:
     title: Abbiamo migliorato l’accesso a IO!
     subtitle: Ora puoi accedere all'app utilizzando il tuo SPID o la tua CIE solo una volta all'anno. Ti basterà poi utilizzare il tuo codice di sblocco o il biometrico per entrare.
-    changes:
-      first:
-        title: Più semplice
-        description: accedi inserendo solo il codice di sblocco dell’app o con il biometrico.
-      second:
-        title: Più veloce
-        description: ti chiederemo di autenticarti con SPID o CIE solo una volta all’anno o se ti disconnetti dall’app.
-      third:
-        title: Più sicura
-        description: a ogni nuovo accesso con SPID o CIE, ti invieremo un’email.
 whatsNew:
   title: Cosa cambia?
 bonusCard:
   validUntil: Valida fino al {{endDate}}
   expiring: Scade il {{endDate}}
+  expired: Scaduta il {{endDate}}
   paused: In pausa
   removed: Rimossa
 transaction:
@@ -3838,7 +3435,8 @@ transaction:
     title: Dettaglio operazione
     totalAmount: Totale
     totalFee: Il totale comprende
-    totalFeePsp: di commissione, applicata da {{pspName}}
+    totalFeePsp: "di commissione, applicata da {{pspName}}."
+    totalFeeNoPsp: "di commissione, applicata dal gestore della transazione (PSP)."
     info:
       title: Informazioni sulla transazione
       pspName: Gestore della transazione (PSP)
@@ -3850,3 +3448,21 @@ transaction:
       debtor: Debitore
       iuv: IUV
       subject: Oggetto del pagamento
+permissionRequest:
+  gallery:
+    title: Consenti a IO di accedere alle tue foto
+    subtitle: Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
+    caption: "Ecco come:"
+    step: Step {{step}}
+    steps:
+      android:
+        1: Vai su “Impostazioni”
+        2: Seleziona “Applicazioni”
+        3: Seleziona “IO”
+        4: Seleziona la voce relativa alle autorizzazioni
+        5: Consenti l’accesso a file e media
+      ios:
+        1: Vai su “Impostazioni”
+        2: Seleziona “IO”
+        3: Seleziona “Foto” e consenti l’accesso
+    cta: Apri Impostazioni

@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
@@ -18,15 +17,17 @@ import { pmSessionTokenSelector } from "../../../../../store/reducers/wallet/pay
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { getLocalePrimaryWithFallback } from "../../../../../utils/locale";
 import { getLookUpIdPO } from "../../../../../utils/pmLookUpId";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
-import { fold } from "../../../../bonus/bpd/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
+import { fold } from "../../../../../common/model/RemoteValue";
 import {
   walletAddPaypalBack,
   walletAddPaypalOutcome,
   walletAddPaypalRefreshPMToken
 } from "../store/actions";
-import { navigateToPayPalCheckoutCompleted } from "../store/actions/navigation";
 import { paypalOnboardingSelectedPsp } from "../store/reducers/selectedPsp";
+import PAYPAL_ROUTES from "../navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -104,7 +105,7 @@ const CheckoutContent = (
  * 4. navigate to the checkout completed screen
  */
 const PayPalOnboardingCheckoutScreen = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const { refreshPMtoken } = props;
   // refresh the PM at the startup
   useEffect(() => {
@@ -113,7 +114,12 @@ const PayPalOnboardingCheckoutScreen = (props: Props) => {
 
   const handleCheckoutCompleted = (outcomeCode: O.Option<string>) => {
     props.setOutcomeCode(outcomeCode);
-    navigation.dispatch(navigateToPayPalCheckoutCompleted());
+    navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+      screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
+      params: {
+        screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT_COMPLETED
+      }
+    });
   };
 
   // notify the user that the current onboarding operation will be interrupted

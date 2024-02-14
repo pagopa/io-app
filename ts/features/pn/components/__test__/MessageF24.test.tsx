@@ -2,24 +2,25 @@ import React from "react";
 import { createStore } from "redux";
 import { act, fireEvent, within } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { UIAttachment } from "../../../../store/reducers/entities/messages/types";
 import { MessageF24 } from "../MessageF24";
 import I18n from "../../../../i18n";
 import {
   mockOtherAttachment,
   mockPdfAttachment
-} from "../../../../__mocks__/attachment";
+} from "../../../messages/__mocks__/attachment";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { Download } from "../../../../store/reducers/entities/messages/downloads";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { Download } from "../../../messages/store/reducers/downloads";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { messageId_1 } from "../../../messages/__mocks__/messages";
 
 const mockOpenPreview = jest.fn();
 
-jest.mock("../../../messages/hooks/useAttachmentDownload", () => ({
-  useAttachmentDownload: (
-    _attachment: UIAttachment,
-    _openPreview: (attachment: UIAttachment) => void
+jest.mock("../../../messages/hooks/useLegacyAttachmentDownload", () => ({
+  useLegacyAttachmentDownload: (
+    _attachment: ThirdPartyAttachment,
+    _openPreview: (attachment: ThirdPartyAttachment) => void
   ) => ({
     onAttachmentSelect: mockOpenPreview,
     downloadPot: { kind: "PotNone" } as pot.Pot<Download, Error>
@@ -110,14 +111,20 @@ describe("MessageF24 component", () => {
 });
 
 const renderComponent = (
-  attachments: ReadonlyArray<UIAttachment>,
-  openPreview: (attachment: UIAttachment) => void
+  attachments: ReadonlyArray<ThirdPartyAttachment>,
+  openPreview: (attachment: ThirdPartyAttachment) => void
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
 
-  return renderScreenFakeNavRedux(
-    () => <MessageF24 attachments={attachments} openPreview={openPreview} />,
+  return renderScreenWithNavigationStoreContext(
+    () => (
+      <MessageF24
+        attachments={attachments}
+        messageId={messageId_1}
+        openPreview={openPreview}
+      />
+    ),
     "DUMMY",
     {},
     store

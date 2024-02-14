@@ -1,10 +1,10 @@
-import ZendDesk from "io-react-native-zendesk";
+import ZendDesk from "@pagopa/io-react-native-zendesk";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import { ZendeskCategory } from "../../definitions/content/ZendeskCategory";
 import { ZendeskConfig } from "../features/zendesk/store/reducers";
-import { getValueOrElse } from "../features/bonus/bpd/model/RemoteValue";
+import { getValueOrElse } from "../common/model/RemoteValue";
 import { zendeskEnabled } from "../config";
 
 export type ZendeskAppConfig = {
@@ -144,13 +144,10 @@ export const resetAssistanceData = () => {
 export const hasSubCategories = (zendeskCategory: ZendeskCategory): boolean =>
   (zendeskCategory.zendeskSubCategories?.subCategories ?? []).length > 0;
 // help can be shown only when remote FF is  zendesk + local FF + emailValidated
-export const canShowHelp = (
-  assistanceTool: ToolEnum,
-  isEmailValidated: boolean
-): boolean => {
+export const canShowHelp = (assistanceTool: ToolEnum): boolean => {
   switch (assistanceTool) {
     case ToolEnum.zendesk:
-      return zendeskEnabled && isEmailValidated;
+      return zendeskEnabled;
     case ToolEnum.instabug:
     case ToolEnum.web:
     case ToolEnum.none:
@@ -167,3 +164,5 @@ export const handleSendAssistanceLog = (
       appendLog(log);
   }
 };
+
+export const PAGOPA_SUPPORT_PHONE_NUMBER = "0645202323";

@@ -6,26 +6,27 @@ import {
   FeatureInfo,
   GradientScrollView,
   H3,
+  H6,
   IOColors,
   IOStyles,
-  LabelSmall,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../utils/url";
 import ROUTES from "../../navigation/routes";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+
 type Props = {
   identifier: "SPID" | "CIE";
 };
 const UnlockAccessScreen = (props: Props) => {
   const { identifier } = props;
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const ModalContent = () => (
     <View testID="modal-view-test">
       <Body weight="Regular" color="grey-700">
@@ -38,7 +39,7 @@ const UnlockAccessScreen = (props: Props) => {
         {I18n.t("authentication.unlockmodal.description1_4")}{" "}
       </Body>
       <VSpacer size={24} />
-      <H3 weight="SemiBold">{I18n.t("authentication.unlockmodal.title2")}</H3>
+      <H6 weight="SemiBold">{I18n.t("authentication.unlockmodal.title2")}</H6>
       <VSpacer size={24} />
       <FeatureInfo
         iconName="security"
@@ -46,16 +47,16 @@ const UnlockAccessScreen = (props: Props) => {
       />
       <VSpacer size={16} />
       <FeatureInfo
-        iconName="security"
+        iconName="login"
         body={I18n.t("authentication.unlockmodal.listitem2_1")}
         actionLabel={I18n.t("authentication.unlockmodal.listitem2_2")}
         actionOnPress={() => openWebUrl("https://ioapp.it/")}
       />
       <VSpacer size={16} />
       <FeatureInfo
-        iconName="security"
+        iconName="locked"
         body={
-          <LabelSmall weight="Regular" color="grey-700">
+          <Body weight="Regular" color="grey-700">
             {I18n.t("authentication.unlockmodal.listitem3_1")}{" "}
             <Text style={{ fontStyle: "italic" }}>
               {I18n.t("authentication.unlockmodal.listitem3_2")}{" "}
@@ -65,7 +66,7 @@ const UnlockAccessScreen = (props: Props) => {
               {I18n.t("authentication.unlockmodal.listitem3_4")}{" "}
             </Text>
             {I18n.t("authentication.unlockmodal.listitem3_5")}
-          </LabelSmall>
+          </Body>
         }
       />
     </View>
@@ -100,7 +101,10 @@ const UnlockAccessScreen = (props: Props) => {
           testID: "button-link-test",
           label: I18n.t("authentication.unlock.loginIO"),
           accessibilityLabel: I18n.t("authentication.unlock.loginIO"),
-          onPress: () => navigation.navigate(ROUTES.AUTHENTICATION_LANDING)
+          onPress: () =>
+            navigation.navigate(ROUTES.AUTHENTICATION, {
+              screen: ROUTES.AUTHENTICATION_LANDING
+            })
         }}
       >
         <SafeAreaView>

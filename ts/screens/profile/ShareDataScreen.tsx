@@ -1,28 +1,27 @@
+import {
+  BlockButtonProps,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOToast } from "../../components/Toast";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
-import { showToast } from "../../utils/showToast";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
-import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
-import { ShareDataComponent } from "./components/ShareDataComponent";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackMixpanelScreen } from "./analytics";
 import {
   trackMixpanelDeclined,
   trackMixpanelSetEnabled
 } from "./analytics/mixpanel/mixpanelAnalytics";
+import { useConfirmOptOutBottomSheet } from "./components/OptOutBottomSheet";
+import { ShareDataComponent } from "./components/ShareDataComponent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -33,9 +32,8 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
     trackMixpanelDeclined(flow);
     trackMixpanelSetEnabled(false, flow);
     props.setMixpanelEnabled(false);
-    showToast(
-      I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
-      "success"
+    IOToast.success(
+      I18n.t("profile.main.privacy.shareData.screen.confirmToast")
     );
   });
   const isMixpanelEnabled = props.isMixpanelEnabled ?? true;
@@ -44,38 +42,58 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
     trackMixpanelScreen(getFlowType(false, false));
   });
 
-  const buttonProps = isMixpanelEnabled
-    ? cancelButtonProps(
-        present,
-        I18n.t("profile.main.privacy.shareData.screen.cta.dontShareData")
-      )
-    : confirmButtonProps(
-        () => {
-          trackMixpanelSetEnabled(true, getFlowType(false, false));
-          props.setMixpanelEnabled(true);
-          showToast(
-            I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
-            "success"
-          );
-        },
-        I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
-        undefined,
-        "share-data-confirm-button"
-      );
+  const buttonProps: BlockButtonProps = isMixpanelEnabled
+    ? {
+        type: "Outline",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t(
+            "profile.main.privacy.shareData.screen.cta.dontShareData"
+          ),
+          onPress: present,
+          label: I18n.t(
+            "profile.main.privacy.shareData.screen.cta.dontShareData"
+          )
+        }
+      }
+    : {
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t(
+            "profile.main.privacy.shareData.screen.cta.dontShareData"
+          ),
+          onPress: () => {
+            trackMixpanelSetEnabled(true, getFlowType(false, false));
+            props.setMixpanelEnabled(true);
+            IOToast.success(
+              I18n.t("profile.main.privacy.shareData.screen.confirmToast")
+            );
+          },
+          label: I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
+          testID: "share-data-confirm-button"
+        }
+      };
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.privacy.shareData.title")}
+    <RNavScreenWithLargeHeader
+      title={{
+        label: I18n.t("profile.main.privacy.shareData.screen.title"),
+        testID: "share-data-component-title"
+      }}
+      description={I18n.t("profile.main.privacy.shareData.screen.description")}
+      fixedBottomSlot={
+        <FooterWithButtons type="SingleButton" primary={buttonProps} />
+      }
     >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={IOStyles.horizontalContentPadding}>
+        <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
           <ShareDataComponent />
-        </ScrollView>
-        <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
+        </View>
+
         {bottomSheet}
       </SafeAreaView>
-    </BaseScreenComponent>
+    </RNavScreenWithLargeHeader>
   );
 };
 

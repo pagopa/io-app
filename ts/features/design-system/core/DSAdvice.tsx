@@ -1,28 +1,27 @@
-import * as React from "react";
-import { View, StyleSheet, Alert } from "react-native";
 import {
+  Banner,
+  FeatureInfo,
   Icon,
   VSpacer,
-  FeatureInfo,
-  Banner,
   bannerBackgroundColours
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { Alert, StyleSheet, View } from "react-native";
+import { InfoBox } from "../../../components/box/InfoBox";
 import PaymentBannerComponent from "../../../components/wallet/PaymentBannerComponent";
 import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
-import { InfoBox } from "../../../components/box/InfoBox";
 
 /* Types */
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { Label } from "../../../components/core/typography/Label";
-import { ActivateBonusReminder } from "../../bonus/bonusVacanze/screens/activation/request/ActivateBonusReminder";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import AdviceComponent from "../../../components/AdviceComponent";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
-import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { H5 } from "../../../components/core/typography/H5";
+import { Label } from "../../../components/core/typography/Label";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const styles = StyleSheet.create({
   content: {
@@ -96,15 +95,9 @@ export const DSAdvice = () => (
         currentAmount={30000 as ImportoEuroCents}
       />
     </DSFullWidthComponent>
-    <VSpacer size={16} />
-    <ActivateBonusReminder
-      text={
-        "Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento visitando la sezione Profilo"
-      }
-    />
     <VSpacer size={24} />
     <View style={[styles.content, IOStyles.horizontalContentPadding]}>
-      <InfoBox iconName="profileAlt" iconColor="bluegrey">
+      <InfoBox iconName="profile" iconColor="bluegrey">
         <Label color={"bluegrey"} weight={"Regular"}>
           Puoi aggiungere o modificare i tuoi IBAN in qualsiasi momento
           visitando la sezione Profilo

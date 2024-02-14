@@ -8,18 +8,24 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { trackPNShowF24 } from "../analytics";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
 import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
-import { MessageAttachments } from "../../messages/components/MessageAttachments";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { UIMessageId } from "../../messages/types";
+import { MessageAttachments } from "./MessageAttachments";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 
 type Props = {
-  attachments: ReadonlyArray<UIAttachment>;
-  openPreview: (attachment: UIAttachment) => void;
+  attachments: ReadonlyArray<ThirdPartyAttachment>;
+  messageId: UIMessageId;
+  openPreview: (attachment: ThirdPartyAttachment) => void;
 };
 
-const MessageF24Content = ({ attachments, openPreview }: Props) => {
-  const { present, bottomSheet } = useF24BottomSheet(attachments, openPreview);
+const MessageF24Content = ({ attachments, messageId, openPreview }: Props) => {
+  const { present, bottomSheet } = useF24BottomSheet(
+    attachments,
+    messageId,
+    openPreview
+  );
 
   if (attachments.length === 1) {
     return (
@@ -27,6 +33,7 @@ const MessageF24Content = ({ attachments, openPreview }: Props) => {
         testID="f24-list-container"
         attachments={attachments.slice(0, 1)}
         downloadAttachmentBeforePreview={true}
+        messageId={messageId}
         openPreview={openPreview}
       />
     );

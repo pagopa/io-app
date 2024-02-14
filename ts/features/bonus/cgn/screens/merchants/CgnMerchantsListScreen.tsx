@@ -15,12 +15,12 @@ import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { LoadingErrorComponent } from "../../../bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
   isLoading,
   isReady
-} from "../../../bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
 import {

@@ -3,7 +3,7 @@ import { Errors } from "io-ts";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { pipe } from "fp-ts/lib/function";
-import { remoteUndefined } from "../../../../features/bonus/bpd/model/RemoteValue";
+import { remoteUndefined } from "../../../../common/model/RemoteValue";
 import {
   CreditCard,
   isRawCreditCard,
@@ -410,22 +410,12 @@ describe("walletV2 reducer - deleteAllByFunction", () => {
       {
         ...aPaymentMethod,
         idWallet: 3,
-        enableableFunctions: [EnableableFunctionsEnum.BPD]
+        enableableFunctions: []
       }
     ];
     const maybeWalletsV2 = PatchedWalletV2ListResponse.decode({ data: wallet });
-    const maybeWalletsExceptBPDV2 = PatchedWalletV2ListResponse.decode({
-      data: wallet.filter(w =>
-        w.enableableFunctions.includes(EnableableFunctionsEnum.BPD)
-      )
-    });
     const convertedWallets = (
       E.getOrElseW(() => [])(maybeWalletsV2) as PatchedWalletV2ListResponse
-    ).data!.map(convertWalletV2toWalletV1);
-    const convertedWalletsExceptBPD = (
-      E.getOrElseW(() => [])(
-        maybeWalletsExceptBPDV2
-      ) as PatchedWalletV2ListResponse
     ).data!.map(convertWalletV2toWalletV1);
 
     const globalState: GlobalState = appReducer(
@@ -442,7 +432,7 @@ describe("walletV2 reducer - deleteAllByFunction", () => {
     const updatedState: GlobalState = appReducer(
       globalState,
       deleteAllPaymentMethodsByFunction.success({
-        wallets: convertedWalletsExceptBPD,
+        wallets: convertedWallets,
         deletedMethodsCount: 1
       })
     );
@@ -450,7 +440,7 @@ describe("walletV2 reducer - deleteAllByFunction", () => {
     expect(pot.isSome(walletUpdated)).toBeTruthy();
     if (pot.isSome(walletUpdated)) {
       expect(Object.keys(walletUpdated.value).length).toEqual(
-        convertedWalletsExceptBPD.length
+        convertedWallets.length
       );
     }
   });

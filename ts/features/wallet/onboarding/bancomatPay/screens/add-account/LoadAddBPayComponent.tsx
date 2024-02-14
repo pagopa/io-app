@@ -1,7 +1,7 @@
 import * as React from "react";
 import I18n from "../../../../../../i18n";
 import { useHardwareBackButton } from "../../../../../../hooks/useHardwareBackButton";
-import { LoadingErrorComponent } from "../../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../../components/LoadingErrorComponent";
 
 export type Props = {
   isLoading: boolean;

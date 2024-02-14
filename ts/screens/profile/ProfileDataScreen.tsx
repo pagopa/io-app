@@ -1,18 +1,13 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { List } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
-import ScreenContent from "../../components/screens/ScreenContent";
-import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
+import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
-import {
-  navigateToEmailInsertScreen,
-  navigateToEmailReadScreen
-} from "../../store/actions/navigation";
 import {
   hasProfileEmailSelector,
   isProfileEmailValidatedSelector,
@@ -20,81 +15,90 @@ import {
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
+
+type Props = ReturnType<typeof mapStateToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
   body: "profile.preferences.contextualHelpContent"
 };
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
 const ProfileDataScreen: React.FC<Props> = ({
   profileEmail,
   isEmailValidated,
   isEmailUniquenessValidationEnabled,
-  navigateToEmailReadScreen,
-  navigateToEmailInsertScreen,
   hasProfileEmail,
   nameSurname
 }): React.ReactElement => {
+  const navigation = useIONavigation();
+
+  const navigateToInsertEmailScreen = React.useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.INSERT_EMAIL_SCREEN,
+      params: {
+        isOnboarding: false
+      }
+    });
+  }, [navigation]);
+
+  const navigateToReadEmailScreen = React.useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.READ_EMAIL_SCREEN
+    });
+  }, [navigation]);
+
   const onPressEmail = () => {
     if (hasProfileEmail) {
       if (isEmailUniquenessValidationEnabled) {
-        navigateToEmailInsertScreen();
+        navigateToInsertEmailScreen();
       } else {
-        navigateToEmailReadScreen();
+        navigateToReadEmailScreen();
       }
     } else {
-      navigateToEmailInsertScreen();
+      navigateToInsertEmailScreen();
     }
   };
   return (
-    <TopScreenComponent
+    <RNavScreenWithLargeHeader
+      title={{
+        label: I18n.t("profile.data.title")
+      }}
+      description={I18n.t("profile.data.subtitle")}
+      headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
-      goBack
     >
-      <ScreenContent
-        title={I18n.t("profile.data.title")}
-        subtitle={I18n.t("profile.data.subtitle")}
-      >
-        <List withContentLateralPadding>
-          {/* Show name and surname */}
-          {nameSurname && (
-            <ListItemComponent
-              title={I18n.t("profile.data.list.nameSurname")}
-              subTitle={nameSurname}
-              hideIcon
-              testID="name-surname"
-            />
-          )}
-          {/* Insert or edit email */}
+      <List withContentLateralPadding>
+        {/* Show name and surname */}
+        {nameSurname && (
           <ListItemComponent
-            title={I18n.t("profile.data.list.email")}
-            subTitle={pipe(
-              profileEmail,
-              O.getOrElse(() => I18n.t("global.remoteStates.notAvailable"))
-            )}
-            titleBadge={
-              !isEmailValidated
-                ? I18n.t("profile.data.list.need_validate")
-                : undefined
-            }
-            onPress={onPressEmail}
-            testID="insert-or-edit-email"
+            title={I18n.t("profile.data.list.nameSurname")}
+            subTitle={nameSurname}
+            hideIcon
+            testID="name-surname"
           />
-        </List>
-      </ScreenContent>
-    </TopScreenComponent>
+        )}
+        {/* Insert or edit email */}
+        <ListItemComponent
+          title={I18n.t("profile.data.list.email")}
+          subTitle={pipe(
+            profileEmail,
+            O.getOrElse(() => I18n.t("global.remoteStates.notAvailable"))
+          )}
+          titleBadge={
+            !isEmailValidated
+              ? I18n.t("profile.data.list.need_validate")
+              : undefined
+          }
+          onPress={onPressEmail}
+          testID="insert-or-edit-email"
+        />
+      </List>
+    </RNavScreenWithLargeHeader>
   );
 };
-
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToEmailReadScreen: () => navigateToEmailReadScreen(),
-  navigateToEmailInsertScreen: () => navigateToEmailInsertScreen()
-});
 
 const mapStateToProps = (state: GlobalState) => ({
   profileEmail: profileEmailSelector(state),
@@ -105,4 +109,4 @@ const mapStateToProps = (state: GlobalState) => ({
     isEmailUniquenessValidationEnabledSelector(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileDataScreen);
+export default connect(mapStateToProps)(ProfileDataScreen);

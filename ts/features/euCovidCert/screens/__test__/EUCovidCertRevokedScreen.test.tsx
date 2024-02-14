@@ -5,7 +5,7 @@ import configureMockStore from "redux-mock-store";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import EUCOVIDCERT_ROUTES from "../../navigation/routes";
 import { revokedCertificate } from "../../types/__mock__/EUCovidCertificate.mock";
 import { RevokedCertificate } from "../../types/EUCovidCertificate";
@@ -38,7 +38,7 @@ const renderComponent = (
   store: Store,
   revokedCertificate: RevokedCertificate
 ) => ({
-  component: renderScreenFakeNavRedux<GlobalState>(
+  component: renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <EuCovidCertRevokedScreen headerData={revokedCertificate.headerData} />
     ),

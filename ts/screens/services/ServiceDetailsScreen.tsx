@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { View, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { SpecialServiceMetadata } from "../../../definitions/backend/SpecialServiceMetadata";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -21,10 +22,9 @@ import ServiceMetadataComponent from "../../components/services/ServiceMetadata"
 import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import Markdown from "../../components/ui/Markdown";
-import { FooterTopShadow } from "../../features/bonus/bonusVacanze/components/FooterTopShadow";
+import { FooterTopShadow } from "../../components/FooterTopShadow";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { ServicesParamsList } from "../../navigation/params/ServicesParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { loadServiceDetail } from "../../store/actions/services";
 import { Dispatch } from "../../store/actions/types";
 import { contentSelector } from "../../store/reducers/content";
@@ -37,9 +37,10 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { getServiceCTA } from "../../utils/messages";
+import { getServiceCTA } from "../../features/messages/utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
+import { useIOSelector } from "../../store/hooks";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -49,14 +50,8 @@ export type ServiceDetailsScreenNavigationParams = Readonly<{
   activate?: boolean;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  ServicesParamsList,
-  "SERVICE_DETAIL"
->;
-
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
+  ReturnType<typeof mapDispatchToProps>;
 
 type SpecialServiceWrapper = {
   isSpecialService: boolean;
@@ -74,8 +69,19 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const ServiceDetailsScreen = (props: Props) => {
   const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
+  const navigation = useIONavigation();
+  const { serviceId, activate } =
+    useRoute<Route<"SERVICE_DETAIL", ServiceDetailsScreenNavigationParams>>()
+      .params;
 
-  const { service, serviceId, loadServiceDetail } = props;
+  const service = useIOSelector(state =>
+    pipe(serviceByIdSelector(state, serviceId), pot.toUndefined)
+  );
+
+  // const serviceId = props.route.params.serviceId;
+  // const activate = props.route.params.activate;
+
+  const { loadServiceDetail } = props;
   useEffect(() => {
     loadServiceDetail(serviceId);
   }, [serviceId, loadServiceDetail]);
@@ -109,7 +115,7 @@ const ServiceDetailsScreen = (props: Props) => {
 
   return (
     <BaseScreenComponent
-      goBack={() => props.navigation.goBack()}
+      goBack={() => navigation.goBack()}
       headerTitle={I18n.t("serviceDetail.headerTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["services_detail"]}
@@ -190,11 +196,11 @@ const ServiceDetailsScreen = (props: Props) => {
               <>
                 <VSpacer size={8} />
                 <SpecialServicesCTA
-                  serviceId={props.serviceId}
+                  serviceId={serviceId}
                   customSpecialFlowOpt={
                     specialServiceInfoOpt.customSpecialFlowOpt
                   }
-                  activate={props.activate}
+                  activate={activate}
                 />
               </>
             )}
@@ -205,22 +211,14 @@ const ServiceDetailsScreen = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState, props: OwnProps) => {
-  const serviceId = props.route.params.serviceId;
-  const activate = props.route.params.activate;
-
-  return {
-    serviceId,
-    activate,
-    service: pipe(serviceByIdSelector(state, serviceId), pot.toUndefined),
-    isInboxEnabled: isInboxEnabledSelector(state),
-    isEmailEnabled: isEmailEnabledSelector(state),
-    isEmailValidated: isProfileEmailValidatedSelector(state),
-    content: contentSelector(state),
-    profile: profileSelector(state),
-    isDebugModeEnabled: isDebugModeEnabledSelector(state)
-  };
-};
+const mapStateToProps = (state: GlobalState) => ({
+  isInboxEnabled: isInboxEnabledSelector(state),
+  isEmailEnabled: isEmailEnabledSelector(state),
+  isEmailValidated: isProfileEmailValidatedSelector(state),
+  content: contentSelector(state),
+  profile: profileSelector(state),
+  isDebugModeEnabled: isDebugModeEnabledSelector(state)
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadServiceDetail: (id: ServiceId) => dispatch(loadServiceDetail.request(id)),

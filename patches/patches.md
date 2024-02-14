@@ -77,17 +77,18 @@ Updated on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### danger-plugin-digitalcitizenship+0.3.1
-Created on **06/08/2020**
-
-#### Reason:
-- Recognizes the ids of pivotal stories even if they are not at the beginning of the line
-
 ### react-native-push-notification+7.3.1
 Created on **10/05/2021**
 
 #### Reason:
 - Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
+
+Updated on **31/01/2024**
+
+#### Reason:
+- Adds a guard to prevent a crash on Android SDK 34 (Android 14) when using Exact Alarms without having requested user's permission first.
+  This works since we are not using local notifications anymore (and the library has to be replaced - since it is deprecated) and the
+  remote notifications do not trigger the Exact Alarms API.
 
 ### react-native-screen-brightness+2.0.0-alpha
 Created on **16/08/2021**
@@ -149,14 +150,6 @@ Created on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### @react-navigation/material-top-tabs+5.3.1
-
-Created on **01/12/2022**
-
-#### Reason:
-
-- This patch is going to add a missing prop to component definition, it can be removed once updating the library.
-
 ### react-native-webview+11.26.1
 
 Updated on **13/07/2023**
@@ -164,3 +157,14 @@ Updated on **13/07/2023**
 #### Reason:
 
 - This patch applies security fixes to avoid access on camera and microphone without user permission.
+
+### react-native-calendar-events+2.2.0.patch
+
+Created on **16/01/2023**
+
+#### Reason:
+
+- This patch fixes a crash on Android devices when trying to find/create/remove calendar events.
+  An Event has an Id property which type may be a long but the library deals only with Java's signed int32.
+  This was fine as long as each event was originally created and handled using this library only but 
+  initially another library was used, react-native-add-calendar-event, which treated event's Id as long

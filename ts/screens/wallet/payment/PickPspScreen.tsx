@@ -3,31 +3,36 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View, FlatList, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-
 import { VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { LightModalContextInterface } from "../../../components/ui/LightModal";
+import {
+  LightModalContext,
+  LightModalContextInterface
+} from "../../../components/ui/LightModal";
 import { PspComponent } from "../../../components/wallet/payment/PspComponent";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
-import { LoadingErrorComponent } from "../../../features/bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
+import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
   isError,
   isLoading
-} from "../../../features/bonus/bpd/model/RemoteValue";
+} from "../../../common/model/RemoteValue";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateBack } from "../../../store/actions/navigation";
 import { Dispatch } from "../../../store/actions/types";
@@ -56,9 +61,9 @@ type OwnProps = IOStackNavigationRouteProps<
 >;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  LightModalContextInterface &
-  OwnProps;
+  ReturnType<typeof mapDispatchToProps>;
+
+type PickPspScreenProps = LightModalContextInterface & Props & OwnProps;
 
 const styles = StyleSheet.create({
   header: {
@@ -77,7 +82,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * Select a PSP to be used for a the current selected wallet
  */
-class PickPspScreen extends React.Component<Props> {
+class PickPspScreen extends React.Component<PickPspScreenProps> {
   public componentDidMount() {
     // load all psp in order to offer to the user the complete psps list
     const idWallet = this.props.route.params.wallet.idWallet;
@@ -201,7 +206,26 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
     )
 });
 
-export default connect(
+const ConnectedPickPspScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(PickPspScreen));
+)(PickPspScreen);
+
+const PickPspScreenFC = () => {
+  const { ...modalContext } = React.useContext(LightModalContext);
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<WalletParamsList, "PAYMENT_PICK_PSP">
+    >();
+  const route =
+    useRoute<Route<"PAYMENT_PICK_PSP", PickPspScreenNavigationParams>>();
+  return (
+    <ConnectedPickPspScreen
+      {...modalContext}
+      navigation={navigation}
+      route={route}
+    />
+  );
+};
+
+export default PickPspScreenFC;

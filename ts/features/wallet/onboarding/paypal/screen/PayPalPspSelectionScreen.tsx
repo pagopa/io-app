@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { connect, useDispatch } from "react-redux";
@@ -19,12 +18,12 @@ import I18n from "../../../../../i18n";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
-import { LoadingErrorComponent } from "../../../../bonus/bonusVacanze/components/loadingErrorScreen/LoadingErrorComponent";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
   isError,
   isReady
-} from "../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../common/model/RemoteValue";
 import { PspRadioItem } from "../components/PspRadioItem";
 import {
   searchPaypalPsp as searchPaypalPspAction,
@@ -32,9 +31,11 @@ import {
   walletAddPaypalCancel,
   walletAddPaypalPspSelected
 } from "../store/actions";
-import { navigateToPayPalCheckout } from "../store/actions/navigation";
 import { payPalPspSelector } from "../store/reducers/searchPsp";
 import { IOPayPalPsp } from "../types";
+import PAYPAL_ROUTES from "../navigation/routes";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -112,7 +113,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const searchPaypalPsp = () => {
     dispatch(searchPaypalPspAction.request());
   };
@@ -136,7 +137,12 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
       onPress: () => {
         if (selectedPsp) {
           props.setPspSelected(selectedPsp);
-          navigation.dispatch(navigateToPayPalCheckout());
+          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+            screen: PAYPAL_ROUTES.ONBOARDING.MAIN,
+            params: {
+              screen: PAYPAL_ROUTES.ONBOARDING.CHECKOUT
+            }
+          });
         }
       },
       title: I18n.t("global.buttons.continue")

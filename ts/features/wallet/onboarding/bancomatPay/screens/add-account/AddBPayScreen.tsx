@@ -14,9 +14,9 @@ import {
   isError,
   isLoading,
   isReady
-} from "../../../../../bonus/bpd/model/RemoteValue";
+} from "../../../../../../common/model/RemoteValue";
 import {
-  addBPayToWallet,
+  addBPayToWalletAction,
   walletAddBPayCancel,
   walletAddBPayCompleted
 } from "../../store/actions";
@@ -96,10 +96,10 @@ const AddBPayScreen = (props: Props): React.ReactElement | null => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addBPay: (bPay: BPay) => dispatch(addBPayToWallet.request(bPay)),
+  addBPay: (bPay: BPay) => dispatch(addBPayToWalletAction.request(bPay)),
   onCompleted: () => dispatch(walletAddBPayCompleted()),
   onCancel: () => dispatch(walletAddBPayCancel()),
-  onRetry: (bPay: BPay) => dispatch(addBPayToWallet.request(bPay))
+  onRetry: (bPay: BPay) => dispatch(addBPayToWalletAction.request(bPay))
 });
 
 const mapStateToProps = (state: GlobalState) => {

@@ -2,7 +2,7 @@ import { createStore } from "redux";
 
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { renderScreenFakeNavRedux } from "../../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import PayPalOnboardingCompletedSuccessComponent from "../PayPalOnboardingCompletedSuccessComponent";
 import I18n, { setLocale } from "../../../../../../i18n";
@@ -86,7 +86,7 @@ const renderComponent = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, globalState as any);
   const render = {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       PayPalOnboardingCompletedSuccessComponent,
       "N/A",
       {},

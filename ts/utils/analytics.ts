@@ -190,9 +190,9 @@ export function trackSpidLoginError(
   if (isLoginUtilsError(e)) {
     void mixpanelTrack(eventName, {
       idp: idpName,
-      code: e.userInfo.StatusCode,
-      description: e.userInfo.Error,
-      domain: e.userInfo.URL
+      code: e.userInfo?.statusCode,
+      description: e.userInfo?.error,
+      domain: e.userInfo?.url
     });
   } else {
     const error = e as Error;

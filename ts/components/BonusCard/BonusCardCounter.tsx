@@ -6,7 +6,9 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { useSelector } from "react-redux";
 import Placeholder from "rn-placeholder";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type CounterType = "Value" | "ValueWithProgress";
 
@@ -69,6 +71,12 @@ type BonusProgressBarProps = {
 };
 
 const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
+  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+
+  const progressBarColor = isDesignSystemEnabled
+    ? IOColors["blueItalia-500"]
+    : IOColors.blue;
+
   const width = useSharedValue(100);
   React.useEffect(() => {
     // eslint-disable-next-line functional/immutable-data
@@ -86,7 +94,7 @@ const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
         style={[
           {
             width: `${width.value}%`,
-            backgroundColor: IOColors["blueItalia-500"],
+            backgroundColor: progressBarColor,
             flex: 1
           },
           scalingWidth
@@ -100,40 +108,48 @@ type BonusCardCounterSkeletonProps = {
   type: CounterType;
 };
 
-const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => (
-  <View
-    style={[styles.container, { alignItems: "center" }]}
-    testID="BonusCardCounterSkeletonTestID"
-  >
-    <Placeholder.Box
-      height={16}
-      width={64}
-      color={IOColors["blueItalia-100"]}
-      animate="fade"
-      radius={16}
-    />
-    <VSpacer size={8} />
-    <Placeholder.Box
-      height={24}
-      width={100}
-      color={IOColors["blueItalia-100"]}
-      animate="fade"
-      radius={24}
-    />
-    {type === "ValueWithProgress" && (
-      <>
-        <VSpacer size={8} />
-        <Placeholder.Box
-          height={6}
-          width={110}
-          color={IOColors["blueItalia-100"]}
-          animate="fade"
-          radius={8}
-        />
-      </>
-    )}
-  </View>
-);
+const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
+  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+
+  const placeholderColor = isDesignSystemEnabled
+    ? IOColors["blueItalia-100"]
+    : IOColors["blueIO-100"];
+
+  return (
+    <View
+      style={[styles.container, { alignItems: "center" }]}
+      testID="BonusCardCounterSkeletonTestID"
+    >
+      <Placeholder.Box
+        height={16}
+        width={64}
+        color={placeholderColor}
+        animate="fade"
+        radius={16}
+      />
+      <VSpacer size={8} />
+      <Placeholder.Box
+        height={24}
+        width={100}
+        color={placeholderColor}
+        animate="fade"
+        radius={24}
+      />
+      {type === "ValueWithProgress" && (
+        <>
+          <VSpacer size={8} />
+          <Placeholder.Box
+            height={6}
+            width={110}
+            color={placeholderColor}
+            animate="fade"
+            radius={8}
+          />
+        </>
+      )}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

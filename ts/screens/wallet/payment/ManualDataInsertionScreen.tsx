@@ -18,18 +18,17 @@ import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../components/core/typography/H1";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-
-import { withLightModalContext } from "../../../components/helpers/withLightModalContext";
 import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { LightModalContextInterface } from "../../../components/ui/LightModal";
-import { cancelButtonProps } from "../../../features/bonus/bonusVacanze/components/buttons/ButtonConfigurations";
+import {
+  LightModalContext,
+  LightModalContextInterface
+} from "../../../components/ui/LightModal";
+import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import {
   navigateBack,
   navigateToPaymentTransactionSummaryScreen,
@@ -48,15 +47,10 @@ export type ManualDataInsertionScreenNavigationParams = {
   isInvalidAmount?: boolean;
 };
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_MANUAL_DATA_INSERTION"
->;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
-type Props = OwnProps &
-  ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  LightModalContextInterface;
+type ManualDataInsertionScreenProps = Props & LightModalContextInterface;
 
 type State = Readonly<{
   paymentNoticeNumber: O.Option<
@@ -93,8 +87,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  *  - integrate contextual help to obtain details on the data to insert for manually identifying the transaction
  *    https://www.pivotaltracker.com/n/projects/2048617/stories/157874540
  */
-class ManualDataInsertionScreen extends React.Component<Props, State> {
-  constructor(props: Props) {
+class ManualDataInsertionScreen extends React.Component<
+  ManualDataInsertionScreenProps,
+  State
+> {
+  constructor(props: ManualDataInsertionScreenProps) {
     super(props);
     this.state = {
       paymentNoticeNumber: O.none,
@@ -317,7 +314,12 @@ const mapStateToProps = (state: GlobalState) => ({
   hasMethodsCanPay: withPaymentFeatureSelector(state).length > 0
 });
 
+const ManualDataInsertionScreenFC = (props: Props) => {
+  const { ...modalContext } = React.useContext(LightModalContext);
+  return <ManualDataInsertionScreen {...props} {...modalContext} />;
+};
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(ManualDataInsertionScreen));
+)(ManualDataInsertionScreenFC);

@@ -3,13 +3,16 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import {
+  AmountInEuroCents,
+  RptIdFromString
+} from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Dispatch } from "redux";
 import I18n from "../../../i18n";
 import { UIService } from "../../../store/reducers/entities/services/types";
 import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
-import { CTAS } from "../../../types/MessageCTA";
+import { CTAS } from "../../messages/types/MessageCTA";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
 import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
@@ -20,7 +23,7 @@ import ROUTES from "../../../navigation/routes";
 import { setSelectedPayment } from "../store/actions";
 import { trackPNPaymentStart } from "../analytics";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { UIAttachment } from "../../../store/reducers/entities/messages/types";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -125,7 +128,7 @@ export const containsF24FromPNMessagePot = (
   pipe(
     pot.getOrElse(potMessage, O.none),
     O.chainNullableK(message => message.attachments),
-    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
 
@@ -150,6 +153,10 @@ export const initializeAndNavigateToWalletForPayment = (
 
   NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
     screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params: { rptId: eitherRptId.right, startOrigin: "message" }
+    params: {
+      rptId: eitherRptId.right,
+      paymentStartOrigin: "message",
+      initialAmount: "00000" as AmountInEuroCents
+    }
   });
 };

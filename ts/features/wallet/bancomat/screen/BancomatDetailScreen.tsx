@@ -4,11 +4,10 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
+import { Route, useRoute } from "@react-navigation/native";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wallets";
@@ -21,18 +20,17 @@ export type BancomatDetailScreenNavigationParams = Readonly<{
   bancomat: BancomatPaymentMethod;
 }>;
 
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_BANCOMAT_DETAIL"
->;
-
 /**
  * Detail screen for a bancomat
  * @constructor
  */
-const BancomatDetailScreen = ({ route }: Props) => {
+const BancomatDetailScreen = () => {
+  const { idWallet } =
+    useRoute<
+      Route<"WALLET_BANCOMAT_DETAIL", BancomatDetailScreenNavigationParams>
+    >().params.bancomat;
   const bancomat = useIOSelector(state =>
-    paymentMethodByIdSelector(state, route.params.bancomat.idWallet)
+    paymentMethodByIdSelector(state, idWallet)
   );
   const bannerViewRef = React.useRef(null);
   const nameSurname = useIOSelector(profileNameSurnameSelector);

@@ -10,7 +10,7 @@ import { Config } from "../../../../../../definitions/content/Config";
 import NavigationService from "../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../navigation/routes";
 import { CreditCardPaymentMethod } from "../../../../../types/pagopa";
-import { renderScreenFakeNavRedux } from "../../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as hooks from "../../../onboarding/bancomat/hooks/useImageResize";
 import CobadgeWalletPreview from "../CobadgeWalletPreview";
 
@@ -23,7 +23,7 @@ describe("CobadgeWalletPreview component", () => {
   const aCobadgeCard: CreditCardPaymentMethod = {
     walletType: "Card",
     createDate: "2021-07-08",
-    enableableFunctions: ["FA", "pagoPA", "BPD"],
+    enableableFunctions: ["FA", "pagoPA"],
     favourite: false,
     idWallet: 25572,
     info: {
@@ -171,7 +171,7 @@ const getComponent = (
   cobadge: CreditCardPaymentMethod,
   store: Store<unknown>
 ) =>
-  renderScreenFakeNavRedux(
+  renderScreenWithNavigationStoreContext(
     () => <CobadgeWalletPreview cobadge={cobadge} />,
     "WALLET_HOME",
     {},

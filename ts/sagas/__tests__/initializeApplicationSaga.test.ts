@@ -54,7 +54,9 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-jest.mock("../../api/backend");
+jest.mock("../../api/backend", () => ({
+  BackendClient: jest.fn().mockReturnValue({})
+}));
 
 const profile: InitializedProfile = {
   ...mockedProfile,
@@ -100,14 +102,6 @@ describe("initializeApplicationSaga", () => {
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // checkSession
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
       .next()
       .next()
       .next()
@@ -248,14 +242,6 @@ describe("initializeApplicationSaga", () => {
       .spawn(watchLogoutSaga, undefined)
       .next()
       .next(200) // check session
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
-      .next()
       .next()
       .next()
       .next()

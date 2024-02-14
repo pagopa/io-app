@@ -36,7 +36,7 @@ const InitiativeTimelineComponent = ({ initiativeId, size = 3 }: Props) => {
   const isLoading = pot.isLoading(paginatedTimelinePot);
 
   const navigateToOperationsList = () => {
-    navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
+    navigation.push(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE,
       params: {
         initiativeId

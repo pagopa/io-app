@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
@@ -8,6 +7,7 @@ import LocalServicesWebView from "../../components/services/LocalServicesWebView
 import ROUTES from "../../navigation/routes";
 import { showServiceDetails } from "../../store/actions/services";
 import { useIODispatch } from "../../store/hooks";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 const styles = StyleSheet.create({
   contentWrapper: {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 
 const ServicesLocalScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const onServiceSelect = useCallback(
     (service: ServicePublic) => {

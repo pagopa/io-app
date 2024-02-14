@@ -1,14 +1,13 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as AR from "fp-ts/lib/Array";
-import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { useEffect } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
-import cashbackLogo from "../../../../../img/bonus/bpd/logo_cashback_blue.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -25,32 +24,27 @@ import {
 import { Dispatch } from "../../../../store/actions/types";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
-  isCdcEnabledSelector,
-  isCGNEnabledSelector
+  isCGNEnabledSelector,
+  isCdcEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getRemoteLocale } from "../../../../utils/messages";
 import { showToast } from "../../../../utils/showToast";
-import {
-  availableBonusTypesSelectorFromId,
-  serviceFromAvailableBonusSelector,
-  supportedAvailableBonusSelector
-} from "../../../bonus/bonusVacanze/store/reducers/availableBonusesTypes";
-import {
-  ID_CDC_TYPE,
-  ID_CGN_TYPE
-} from "../../../bonus/bonusVacanze/utils/bonus";
-import { bpdOnboardingStart } from "../../../bonus/bpd/store/actions/onboarding";
-import { bpdEnabledSelector } from "../../../bonus/bpd/store/reducers/details/activation";
+import { ID_CDC_TYPE, ID_CGN_TYPE } from "../../../bonus/common/utils";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
+import {
+  availableBonusTypesSelectorFromId,
+  supportedAvailableBonusSelector,
+  serviceFromAvailableBonusSelector
+} from "../../../bonus/common/store/selectors";
+import { getRemoteLocale } from "../../../messages/utils/messages";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 type BonusUtils = {
-  logo?: typeof cashbackLogo;
+  logo?: typeof cgnLogo;
   handler: (bonus: BonusAvailable) => void;
 };
 
@@ -196,13 +190,11 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
 };
 
 const mapStateToProps = (state: GlobalState) => ({
-  bpdActiveBonus: bpdEnabledSelector(state),
   cgnActiveBonus: isCgnEnrolledSelector(state),
   availableBonusesList: supportedAvailableBonusSelector(state)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startBpdOnboarding: () => dispatch(bpdOnboardingStart()),
   startCgnActivation: () => dispatch(cgnActivationStart())
 });
 

@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { Platform, SafeAreaView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 import {
   RouteProp,
@@ -13,10 +13,14 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import { IconButton, IOColors } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import {
+  BlockButtonProps,
+  ButtonSolidProps,
+  FooterWithButtons,
+  IOColors,
+  IOStyles
+} from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -34,7 +38,6 @@ import {
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
 import {
   getOptionalSignatureFields,
@@ -42,6 +45,9 @@ import {
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
 import { useFciNoSignatureFields } from "../../hooks/useFciNoSignatureFields";
+import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import LoadingComponent from "../../components/LoadingComponent";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -62,6 +68,7 @@ const FciDocumentsScreen = () => {
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
   const downloadPath = useIOSelector(fciDownloadPathSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useNavigation();
   const documentSignaturesSelector = useSelector(fciDocumentSignaturesSelector);
   const dispatch = useIODispatch();
@@ -99,10 +106,11 @@ const FciDocumentsScreen = () => {
         ).length,
         getOptionalSignatureFields(
           documents[currentDoc]?.metadata.signature_fields
-        ).length
+        ).length,
+        fciEnvironment
       );
     }
-  }, [currentDoc, documents, isFocused]);
+  }, [currentDoc, documents, isFocused, fciEnvironment]);
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
@@ -114,7 +122,7 @@ const FciDocumentsScreen = () => {
 
   const onContinuePress = () => {
     if (getSignatureFieldsLength(documents[currentDoc]) > 0) {
-      trackFciSigningDoc();
+      trackFciSigningDoc(fciEnvironment);
       navigation.dispatch(
         StackActions.push(FCI_ROUTES.SIGNATURE_FIELDS, {
           documentId: documents[currentDoc].id,
@@ -128,19 +136,28 @@ const FciDocumentsScreen = () => {
 
   const onCancelPress = () => present();
 
-  const cancelButtonProps = {
-    block: true,
-    light: false,
-    bordered: true,
+  const cancelButtonProps: ButtonSolidProps = {
     onPress: onCancelPress,
-    title: I18n.t("features.fci.documents.footer.cancel")
+    label: I18n.t("features.fci.documents.footer.cancel"),
+    accessibilityLabel: I18n.t("features.fci.documents.footer.cancel")
   };
 
-  const continueButtonProps = {
-    block: true,
-    primary: true,
+  const continueButtonProps: ButtonSolidProps = {
     onPress: onContinuePress,
-    title: I18n.t("features.fci.documents.footer.continue")
+    label: I18n.t("features.fci.documents.footer.continue"),
+    accessibilityLabel: I18n.t("features.fci.documents.footer.continue")
+  };
+
+  const keepReadingButtonProps: ButtonSolidProps = {
+    onPress: () => pointToPage(totalPages),
+    label: I18n.t("global.buttons.continue"),
+    accessibilityLabel: I18n.t("global.buttons.continue")
+  };
+
+  const secondaryButtonProps: BlockButtonProps = {
+    type: currentPage < totalPages ? "Outline" : "Solid",
+    buttonProps:
+      currentPage < totalPages ? keepReadingButtonProps : continueButtonProps
   };
 
   const pointToPage = (page: number) =>
@@ -149,14 +166,6 @@ const FciDocumentsScreen = () => {
       O.fromNullable,
       O.map(_ => _.setPage(page))
     );
-
-  const keepReadingButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: () => pointToPage(totalPages),
-    title: I18n.t("global.buttons.continue")
-  };
 
   const renderPager = () => (
     <Pdf
@@ -200,64 +209,60 @@ const FciDocumentsScreen = () => {
     );
   };
 
-  const customGoBack: React.ReactElement = (
-    <IconButton
-      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
-      color={"neutral"}
-      onPress={() => {
-        if (currentDoc <= 0) {
-          dispatch(fciClearStateRequest());
-        }
-        navigation.goBack();
-      }}
-      accessibilityLabel={I18n.t("global.buttons.back")}
-    />
-  );
+  useHeaderSecondLevel({
+    title: I18n.t("features.fci.title"),
+    supportRequest: true,
+    contextualHelp: emptyContextualHelp,
+    goBack: () => {
+      if (currentDoc <= 0) {
+        dispatch(fciClearStateRequest());
+      }
+      navigation.goBack();
+    }
+  });
 
-  const renderFooterButtons = () =>
-    currentPage < totalPages ? keepReadingButtonProps : continueButtonProps;
+  if (S.isEmpty(downloadPath)) {
+    return <LoadingComponent />;
+  }
 
   return (
-    <LoadingSpinnerOverlay isLoading={S.isEmpty(downloadPath)}>
-      <BaseScreenComponent
-        goBack={true}
-        headerTitle={I18n.t("features.fci.title")}
-        customGoBack={customGoBack}
-        contextualHelp={emptyContextualHelp}
+    <>
+      <DocumentsNavigationBar
+        indicatorPosition={"right"}
+        titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
+          currentDoc: currentDoc + 1,
+          totalDocs: documents.length
+        })}
+        titleRight={I18n.t("features.fci.documentsBar.titleRight", {
+          currentPage,
+          totalPages
+        })}
+        iconLeftDisabled={currentPage === 1}
+        iconRightDisabled={currentPage === totalPages}
+        onPrevious={onPrevious}
+        onNext={onNext}
+        disabled={false}
+        testID={"FciDocumentsNavBarTestID"}
+      />
+      <SafeAreaView
+        style={IOStyles.flex}
+        testID={"FciDocumentsScreenTestID"}
+        edges={["bottom", "left", "right"]}
       >
-        <DocumentsNavigationBar
-          indicatorPosition={"right"}
-          titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
-            currentDoc: currentDoc + 1,
-            totalDocs: documents.length
-          })}
-          titleRight={I18n.t("features.fci.documentsBar.titleRight", {
-            currentPage,
-            totalPages
-          })}
-          iconLeftColor={currentPage === 1 ? "bluegreyLight" : "blue"}
-          iconRightColor={currentPage === totalPages ? "bluegreyLight" : "blue"}
-          onPrevious={onPrevious}
-          onNext={onNext}
-          disabled={false}
-          testID={"FciDocumentsNavBarTestID"}
-        />
-        <SafeAreaView style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
-          {documents.length > 0 && (
-            <>
-              {renderPager()}
-              <FooterWithButtons
-                type={"TwoButtonsInlineThird"}
-                leftButton={cancelButtonProps}
-                rightButton={renderFooterButtons()}
-              />
-            </>
-          )}
-        </SafeAreaView>
-        {fciAbortSignature}
-        {fciNoSignatureFields}
-      </BaseScreenComponent>
-    </LoadingSpinnerOverlay>
+        {documents.length > 0 && (
+          <>
+            {renderPager()}
+            <FooterWithButtons
+              type="TwoButtonsInlineThird"
+              secondary={secondaryButtonProps}
+              primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+            />
+          </>
+        )}
+      </SafeAreaView>
+      {fciAbortSignature}
+      {fciNoSignatureFields}
+    </>
   );
 };
 export default FciDocumentsScreen;

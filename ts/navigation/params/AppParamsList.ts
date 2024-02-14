@@ -1,7 +1,8 @@
 import {
   NavigatorScreenParams,
   ParamListBase,
-  RouteProp
+  RouteProp,
+  useNavigation
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
@@ -62,9 +63,10 @@ import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
+import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
-import { MessagesParamsList } from "./MessagesParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
 import { ProfileParamsList } from "./ProfileParamsList";
 import { ServicesParamsList } from "./ServicesParamsList";
@@ -80,12 +82,14 @@ export type AppParamsList = {
   [ROUTES.ONBOARDING]: NavigatorScreenParams<OnboardingParamsList>;
   [ROUTES.MAIN]: NavigatorScreenParams<MainTabParamsList>;
 
-  [ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
+  [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
   [ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
 
   [ROUTES.BARCODE_SCAN]: undefined;
+
+  [ROUTES.GALLERY_PERMISSION_INSTRUCTIONS]: undefined;
 
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
@@ -135,3 +139,6 @@ export type IOStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<AppParamsList & ParamList, RouteName>;
+
+export const useIONavigation = () =>
+  useNavigation<IOStackNavigationProp<AppParamsList, keyof AppParamsList>>();
