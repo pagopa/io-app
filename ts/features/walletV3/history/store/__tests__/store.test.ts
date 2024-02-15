@@ -25,7 +25,7 @@ describe("Test Wallet payment history reducers and selectors", () => {
   it("should have INITIAL_STATE before any dispatched action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.wallet.history).toStrictEqual({
-      history: []
+      archive: []
     });
     expect(selectWalletPaymentHistoryArchive(globalState)).toStrictEqual([]);
     expect(selectWalletOngoingPaymentHistory(globalState)).toBeUndefined();
