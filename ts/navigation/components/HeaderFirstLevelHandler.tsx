@@ -64,7 +64,6 @@ type Props = {
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  // const currentRouteName = useIOSelector(currentRouteSelector);
 
   const requestParams = useMemo(
     () =>
@@ -142,8 +141,8 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           }
         };
         break;
-      case "BARCODE_SCAN":
-      case "WALLET_HOME":
+      case ROUTES.BARCODE_SCAN:
+      case ROUTES.WALLET_HOME:
         headerPropsRef.current = {
           title: I18n.t("wallet.wallet"),
           type: "twoActions",
