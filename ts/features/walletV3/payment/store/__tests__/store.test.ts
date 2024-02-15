@@ -13,7 +13,8 @@ const INITIAL_STATE: WalletPaymentState = {
   chosenPaymentMethod: O.none,
   chosenPsp: O.none,
   transaction: pot.none,
-  authorizationUrl: pot.none
+  authorizationUrl: pot.none,
+  paymentHistory: {}
 };
 
 describe("Test Wallet reducer", () => {
