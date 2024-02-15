@@ -2632,6 +2632,9 @@ features:
       subtitle: "Per usare questa funzionalità è richiesta la versione {{value}} di app IO. Aggiorna l’app per continuare."
     badge:
       dueDate: Scaduto il {{date}} alle ore {{time}}
+    alert:
+      action: Aggiungi promemoria
+      content: Scade il {{date}} alle ore {{time}}
   euCovidCertificate:
     save:
       album: "IO"
