@@ -36,7 +36,7 @@ import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
-import { selectWalletActivePaymentHistory } from "../../history/store/selectors";
+import { selectWalletOngoingPaymentHistory } from "../../history/store/selectors";
 import { walletPaymentRptIdSelector } from "../store/selectors";
 import {
   WalletPaymentOutcome,
@@ -63,7 +63,7 @@ const usePaymentFailureSupportModal = ({
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const rptId = useIOSelector(walletPaymentRptIdSelector);
-  const paymentHistory = useIOSelector(selectWalletActivePaymentHistory);
+  const paymentHistory = useIOSelector(selectWalletOngoingPaymentHistory);
   const dispatch = useIODispatch();
 
   const faultCodeDetail =

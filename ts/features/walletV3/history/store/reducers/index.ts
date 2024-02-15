@@ -10,7 +10,8 @@ import { Action } from "../../../../../store/actions/types";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {
   walletPaymentCreateTransaction,
-  walletPaymentGetDetails
+  walletPaymentGetDetails,
+  walletPaymentGetTransactionInfo
 } from "../../../payment/store/actions/networking";
 import { walletPaymentInitState } from "../../../payment/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../payment/types/WalletPaymentFailure";
@@ -18,15 +19,15 @@ import { PaymentHistory } from "../../types";
 import { walletPaymentHistoryStoreOutcome } from "../actions";
 
 export type WalletPaymentHistoryState = {
-  activePaymentHistory?: PaymentHistory;
-  history: ReadonlyArray<PaymentHistory>;
+  ongoingPayment?: PaymentHistory;
+  archive: ReadonlyArray<PaymentHistory>;
 };
 
 const INITIAL_STATE: WalletPaymentHistoryState = {
-  history: []
+  archive: []
 };
 
-export const HISTORY_SIZE = 15;
+export const ARCHIVE_SIZE = 15;
 
 const reducer = (
   state: WalletPaymentHistoryState = INITIAL_STATE,
@@ -36,21 +37,26 @@ const reducer = (
     case getType(walletPaymentInitState):
       return {
         ...state,
-        activePaymentHistory: {
+        ongoingPayment: {
           startOrigin: action.payload.startOrigin,
           startedAt: new Date(),
           lookupId: getLookUpId()
         }
       };
     case getType(walletPaymentGetDetails.request):
-      return updatePaymentHistory(state, {
-        rptId: action.payload
-      });
+      return updatePaymentHistory(
+        state,
+        {
+          rptId: action.payload
+        },
+        true
+      );
     case getType(walletPaymentGetDetails.success):
       return updatePaymentHistory(state, {
         verifiedData: action.payload
       });
     case getType(walletPaymentCreateTransaction.success):
+    case getType(walletPaymentGetTransactionInfo.success):
       return updatePaymentHistory(state, {
         transaction: action.payload
       });
@@ -60,6 +66,7 @@ const reducer = (
       });
     case getType(walletPaymentGetDetails.failure):
     case getType(walletPaymentCreateTransaction.failure):
+    case getType(walletPaymentGetTransactionInfo.failure):
       return updatePaymentHistory(state, {
         failure: pipe(
           WalletPaymentFailure.decode(action.payload),
@@ -74,37 +81,49 @@ const reducer = (
   return state;
 };
 
-const appendItemToHistory = (
-  history: ReadonlyArray<PaymentHistory>,
+const appendItemToArchive = (
+  archive: ReadonlyArray<PaymentHistory>,
   item: PaymentHistory
 ): ReadonlyArray<PaymentHistory> =>
   pipe(
-    history,
+    archive,
     // Remove previous entry if already exists
-    h => h.filter(({ rptId }) => !_.isEqual(rptId, item.rptId)),
-    // Keep only the latest HISTORY_SIZE - 1 entries
-    h => h.slice(-HISTORY_SIZE + 1),
-    // Add the new entry to the history
-    h => [...h, item]
+    a => a.filter(({ rptId }) => !_.isEqual(rptId, item.rptId)),
+    // Keep only the latest ARCHIVE_SIZE - 1 entries
+    a => a.slice(-ARCHIVE_SIZE + 1),
+    // Add the new entry to the archive
+    a => [...a, item]
+  );
+
+const replaceLastItemInArchive = (
+  archive: ReadonlyArray<PaymentHistory>,
+  item: PaymentHistory
+): ReadonlyArray<PaymentHistory> =>
+  pipe(
+    archive,
+    // Remove last element in archive
+    a => a.slice(0, a.length - 1),
+    // Add the entry to the archive
+    a => [...a, item]
   );
 
 const updatePaymentHistory = (
   state: WalletPaymentHistoryState,
-  data: PaymentHistory
+  data: PaymentHistory,
+  reset: boolean = false
 ): WalletPaymentHistoryState => {
-  const updatedActivePaymentHistory = {
-    ...state.activePaymentHistory,
+  const updatedOngoingPaymentHistory = {
+    ...state.ongoingPayment,
     ...data
   };
 
-  const updatedHistory = appendItemToHistory(
-    state.history,
-    updatedActivePaymentHistory
-  );
+  const updatedArchive = (
+    reset ? appendItemToArchive : replaceLastItemInArchive
+  )(state.archive, updatedOngoingPaymentHistory);
 
   return {
-    activePaymentHistory: updatedActivePaymentHistory,
-    history: updatedHistory
+    ongoingPayment: updatedOngoingPaymentHistory,
+    archive: updatedArchive
   };
 };
 
@@ -114,7 +133,7 @@ const persistConfig: PersistConfig = {
   key: "paymentHistory",
   storage: AsyncStorage,
   version: CURRENT_REDUX_PAYMENT_HISTORY_STORE_VERSION,
-  whitelist: ["history"]
+  whitelist: ["archive"]
 };
 
 export const walletPaymentHistoryPersistor = persistReducer<

@@ -1,10 +1,7 @@
 import { GlobalState } from "../../../../../store/reducers/types";
 
-const selectWalletPaymentHistory = (state: GlobalState) =>
-  state.features.wallet.history;
+export const selectWalletPaymentHistoryArchive = (state: GlobalState) =>
+  state.features.wallet.history.archive;
 
-export const selectWalletPaymentsHistory = (state: GlobalState) =>
-  selectWalletPaymentHistory(state).history;
-
-export const selectWalletActivePaymentHistory = (state: GlobalState) =>
-  selectWalletPaymentHistory(state).activePaymentHistory;
+export const selectWalletOngoingPaymentHistory = (state: GlobalState) =>
+  state.features.wallet.history.ongoingPayment;
