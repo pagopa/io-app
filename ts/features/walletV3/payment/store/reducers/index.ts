@@ -1,21 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { NavigatorScreenParams } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
-import NavigationService from "../../../../../navigation/NavigationService";
-import { AppParamsList } from "../../../../../navigation/params/AppParamsList";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { WalletPaymentFailure } from "../../types/failure";
+import { PaymentHistory, PaymentStartRoute } from "../../types";
+import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
   walletPaymentAuthorization,
   walletPaymentCalculateFees,
@@ -49,10 +45,9 @@ export type WalletPaymentState = {
   chosenPsp: O.Option<Bundle>;
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  startRoute?: {
-    routeName: keyof AppParamsList;
-    routeKey: NavigatorScreenParams<AppParamsList>["screen"];
-  };
+  paymentHistory: PaymentHistory;
+  startRoute?: PaymentStartRoute;
+  showTransaction?: boolean;
 };
 
 const INITIAL_STATE: WalletPaymentState = {
@@ -64,7 +59,8 @@ const INITIAL_STATE: WalletPaymentState = {
   chosenPaymentMethod: O.none,
   chosenPsp: O.none,
   transaction: pot.none,
-  authorizationUrl: pot.none
+  authorizationUrl: pot.none,
+  paymentHistory: {}
 };
 
 // eslint-disable-next-line complexity
@@ -74,20 +70,13 @@ const reducer = (
 ): WalletPaymentState => {
   switch (action.type) {
     case getType(walletPaymentInitState):
-      const startRoute = pipe(
-        sequenceS(O.Monad)({
-          routeName: O.fromNullable(
-            NavigationService.getCurrentRouteName() as keyof AppParamsList
-          ),
-          routeKey: O.fromNullable(
-            NavigationService.getCurrentRouteKey() as keyof NavigatorScreenParams<AppParamsList>["screen"]
-          )
-        }),
-        O.toUndefined
-      );
       return {
         ...INITIAL_STATE,
-        startRoute
+        paymentHistory: {
+          startOrigin: action.payload.startOrigin
+        },
+        startRoute: action.payload.startRoute,
+        showTransaction: action.payload.showTransaction
       };
 
     // eCommerce Session token
