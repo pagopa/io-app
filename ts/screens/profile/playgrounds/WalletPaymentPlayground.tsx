@@ -18,6 +18,7 @@ import {
 import { usePagoPaPayment } from "../../../features/walletV3/payment/hooks/usePagoPaPayment";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
+import { generateValidRandomRptIdString } from "./utils";
 
 const WalletPaymentPlayground = () => {
   const { startPaymentFlowWithData } = usePagoPaPayment();
@@ -58,7 +59,7 @@ const WalletPaymentPlayground = () => {
 
   const generateValidRandomRptId = () => {
     pipe(
-      "00000123456002160020399398578",
+      generateValidRandomRptIdString(),
       PagoPaRptIdFromString.decode,
       E.map(setRptId)
     );
