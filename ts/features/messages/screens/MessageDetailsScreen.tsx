@@ -1,4 +1,4 @@
-import React, { createRef, useCallback } from "react";
+import React, { createRef, useCallback, useMemo } from "react";
 import { ScrollView, View } from "react-native";
 import {
   Alert,
@@ -24,6 +24,7 @@ import { cancelPreviousAttachmentDownload } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import {
   hasAttachmentsSelector,
+  messageMarkdownSelector,
   messageTitleSelector
 } from "../store/reducers/thirdPartyById";
 import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
@@ -36,6 +37,8 @@ import {
 } from "../store/reducers/detailsById";
 import { localeDateFormat } from "../../../utils/locale";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
+import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
+import { cleanMarkdownFromCTAs } from "../utils/messages";
 
 export type MessageDetailsScreenNavigationParams = {
   messageId: UIMessageId;
@@ -45,6 +48,7 @@ export type MessageDetailsScreenNavigationParams = {
 export const MessageDetailsScreen = (
   props: IOStackNavigationRouteProps<MessagesParamsList, "MESSAGE_DETAIL">
 ) => {
+  // console.log(`MessageDetailsScreen`);
   const { messageId, serviceId } = props.route.params;
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -79,6 +83,13 @@ export const MessageDetailsScreen = (
     navigation.goBack();
   }, [dispatch, navigation]);
 
+  const messageMarkdown =
+    useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";
+  const markdownWithNoCTA = useMemo(
+    () => cleanMarkdownFromCTAs(messageMarkdown),
+    [messageMarkdown]
+  );
+
   useHeaderSecondLevel({
     title: "",
     goBack,
@@ -98,67 +109,68 @@ export const MessageDetailsScreen = (
   return (
     <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
       <ScrollView>
-        <MessageDetailsHeader
-          serviceId={serviceId}
-          subject={subject}
-          createdAt={message.createdAt}
-        >
-          {hasAttachments && (
-            <MessageDetailsTagBox>
-              <Tag
-                variant="attachment"
-                testID="attachment-tag"
-                iconAccessibilityLabel={I18n.t(
-                  "messageDetails.accessibilityAttachmentIcon"
-                )}
-              />
-            </MessageDetailsTagBox>
-          )}
-          {messageDetails.dueDate && expiringInfo === "expired" && (
-            <MessageDetailsTagBox>
-              <Tag
-                text={I18n.t("features.messages.badge.dueDate", {
+        <ContentWrapper>
+          <MessageDetailsHeader
+            serviceId={serviceId}
+            subject={subject}
+            createdAt={message.createdAt}
+          >
+            {hasAttachments && (
+              <MessageDetailsTagBox>
+                <Tag
+                  variant="attachment"
+                  testID="attachment-tag"
+                  iconAccessibilityLabel={I18n.t(
+                    "messageDetails.accessibilityAttachmentIcon"
+                  )}
+                />
+              </MessageDetailsTagBox>
+            )}
+            {messageDetails.dueDate && expiringInfo === "expired" && (
+              <MessageDetailsTagBox>
+                <Tag
+                  text={I18n.t("features.messages.badge.dueDate", {
+                    date: localeDateFormat(
+                      messageDetails.dueDate,
+                      I18n.t("global.dateFormats.dayMonthWithoutTime")
+                    ),
+                    time: localeDateFormat(
+                      messageDetails.dueDate,
+                      I18n.t("global.dateFormats.timeFormat")
+                    )
+                  })}
+                  variant="error"
+                  testID="due-date-tag"
+                />
+              </MessageDetailsTagBox>
+            )}
+          </MessageDetailsHeader>
+
+          {messageDetails.dueDate && expiringInfo === "expiring" && (
+            <>
+              <VSpacer size={8} />
+              <Alert
+                testID="due-date-alert"
+                viewRef={viewRef}
+                variant="warning"
+                action={I18n.t("features.messages.alert.action")}
+                onPress={constNull}
+                content={I18n.t("features.messages.alert.content", {
                   date: localeDateFormat(
                     messageDetails.dueDate,
-                    I18n.t("global.dateFormats.dayMonthWithoutTime")
+                    I18n.t("global.dateFormats.shortFormat")
                   ),
                   time: localeDateFormat(
                     messageDetails.dueDate,
                     I18n.t("global.dateFormats.timeFormat")
                   )
                 })}
-                variant="error"
-                testID="due-date-tag"
               />
-            </MessageDetailsTagBox>
+            </>
           )}
-        </MessageDetailsHeader>
-
-        {messageDetails.dueDate && expiringInfo === "expiring" && (
-          <ContentWrapper>
-            <VSpacer size={8} />
-            <Alert
-              testID="due-date-alert"
-              viewRef={viewRef}
-              variant="warning"
-              action={I18n.t("features.messages.alert.action")}
-              onPress={constNull}
-              content={I18n.t("features.messages.alert.content", {
-                date: localeDateFormat(
-                  messageDetails.dueDate,
-                  I18n.t("global.dateFormats.shortFormat")
-                ),
-                time: localeDateFormat(
-                  messageDetails.dueDate,
-                  I18n.t("global.dateFormats.timeFormat")
-                )
-              })}
-            />
-          </ContentWrapper>
-        )}
-
-        <VSpacer size={16} />
-        <ContentWrapper>
+          <VSpacer />
+          <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
+          <VSpacer />
           <MessageDetailsAttachments messageId={messageId} />
         </ContentWrapper>
       </ScrollView>

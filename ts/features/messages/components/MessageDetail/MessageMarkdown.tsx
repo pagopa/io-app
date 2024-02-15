@@ -6,7 +6,8 @@ import { Omit } from "@pagopa/ts-commons/lib/types";
 import React from "react";
 
 import customVariables from "../../../../theme/variables";
-import Markdown, { MarkdownProps } from "../../../../components/ui/Markdown";
+import { MarkdownProps } from "../../../../components/ui/Markdown";
+import { Markdown } from "../../../../components/ui/Markdown/Markdown";
 
 type Props = Omit<MarkdownProps, "cssStyle">;
 
@@ -55,8 +56,6 @@ img {
 }
 `;
 
-const MessageMarkdown: React.SFC<Props> = props => (
+export const MessageMarkdown = (props: Props) => (
   <Markdown {...props} cssStyle={MESSAGE_CSS_STYLE} />
 );
-
-export default MessageMarkdown;

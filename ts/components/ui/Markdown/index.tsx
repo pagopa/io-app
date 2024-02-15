@@ -25,7 +25,7 @@ import customVariables from "../../../theme/variables";
 import { WithTestID } from "../../../types/WithTestID";
 import { remarkProcessor } from "../../../utils/markdown";
 import { closeInjectedScript } from "../../../utils/webview";
-import MarkdownWebviewComponent from "./MarkdownWebviewComponent";
+import { MarkdownWebviewComponent } from "./MarkdownWebviewComponent";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 
 const INJECTED_JAVASCRIPT = `
