@@ -5,8 +5,8 @@ import { appReducer } from "../../../../../store/reducers";
 import { walletPaymentInitState } from "../../../payment/store/actions/orchestration";
 import { PaymentStartOrigin } from "../../../payment/types";
 import {
-  selectWalletActivePaymentHistory,
-  selectWalletPaymentsHistory
+  selectWalletOngoingPaymentHistory,
+  selectWalletPaymentHistoryArchive
 } from "../selectors";
 
 const MOCKED_LOOKUP_ID = "123456";
@@ -27,11 +27,11 @@ describe("Test Wallet payment history reducers and selectors", () => {
     expect(globalState.features.wallet.history).toStrictEqual({
       history: []
     });
-    expect(selectWalletPaymentsHistory(globalState)).toStrictEqual([]);
-    expect(selectWalletActivePaymentHistory(globalState)).toBeUndefined();
+    expect(selectWalletPaymentHistoryArchive(globalState)).toStrictEqual([]);
+    expect(selectWalletOngoingPaymentHistory(globalState)).toBeUndefined();
   });
 
-  it("should update active payment history", () => {
+  it("should update ongoing payment history", () => {
     const T_START_ORIGIN: PaymentStartOrigin = "manual_insertion";
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -43,12 +43,12 @@ describe("Test Wallet payment history reducers and selectors", () => {
     );
 
     expect(
-      store.getState().features.wallet.history.activePaymentHistory
+      store.getState().features.wallet.history.ongoingPayment
     ).toStrictEqual({
       startOrigin: T_START_ORIGIN,
       lookupId: MOCKED_LOOKUP_ID,
       startedAt: MOCKED_DATE
     });
-    expect(store.getState().features.wallet.history.history).toStrictEqual([]);
+    expect(store.getState().features.wallet.history.archive).toStrictEqual([]);
   });
 });
