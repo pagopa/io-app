@@ -22,18 +22,21 @@ import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bott
 import {
   PAGOPA_SUPPORT_PHONE_NUMBER,
   addTicketCustomField,
+  appendLog,
   assistanceToolRemoteConfig,
   resetCustomFields,
   zendeskCategoryId,
   zendeskPaymentCategory,
   zendeskPaymentFailure,
   zendeskPaymentNav,
-  zendeskPaymentOrgFiscalCode
+  zendeskPaymentOrgFiscalCode,
+  zendeskPaymentStartOrigin
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../zendesk/store/actions";
+import { selectWalletOngoingPaymentHistory } from "../../history/store/selectors";
 import { walletPaymentRptIdSelector } from "../store/selectors";
 import {
   WalletPaymentOutcome,
@@ -60,6 +63,7 @@ const usePaymentFailureSupportModal = ({
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const rptId = useIOSelector(walletPaymentRptIdSelector);
+  const paymentHistory = useIOSelector(selectWalletOngoingPaymentHistory);
   const dispatch = useIODispatch();
 
   const faultCodeDetail =
@@ -73,9 +77,11 @@ const usePaymentFailureSupportModal = ({
     addTicketCustomField(zendeskPaymentOrgFiscalCode, organizationFiscalCode);
     addTicketCustomField(zendeskPaymentNav, paymentNoticeNumber);
     addTicketCustomField(zendeskPaymentFailure, faultCodeDetail);
-    // TODO Add additional info for zendesk support (IOBP-484)
-    // addTicketCustomField(zendeskPaymentStartOrigin, "n/a");
-    // appendLog(getPaymentHistoryDetails(payment));
+    addTicketCustomField(
+      zendeskPaymentStartOrigin,
+      paymentHistory?.startOrigin || "n/a"
+    );
+    appendLog(JSON.stringify(paymentHistory));
     dispatch(
       zendeskSupportStart({
         startingRoute: "n/a",
