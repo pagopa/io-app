@@ -4,11 +4,10 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
+import { Route, useRoute } from "@react-navigation/native";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import I18n from "../../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
@@ -21,17 +20,15 @@ export type CobadgeDetailScreenNavigationParams = Readonly<{
   cobadge: CreditCardPaymentMethod;
 }>;
 
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_COBADGE_DETAIL"
->;
-
 /**
  * Detail screen for a cobadge card
  * @constructor
  */
-const CobadgeDetailScreen = (props: Props) => {
-  const { cobadge } = props.route.params;
+const CobadgeDetailScreen = () => {
+  const { cobadge } =
+    useRoute<
+      Route<"WALLET_COBADGE_DETAIL", CobadgeDetailScreenNavigationParams>
+    >().params;
   const card = useIOSelector(state =>
     creditCardByIdSelector(state, cobadge.idWallet)
   );

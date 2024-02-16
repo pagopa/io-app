@@ -3,16 +3,11 @@ import { pipe } from "fp-ts/lib/function";
 import { List } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
-import {
-  navigateToEmailInsertScreen,
-  navigateToEmailReadScreen
-} from "../../store/actions/navigation";
 import {
   hasProfileEmailSelector,
   isProfileEmailValidatedSelector,
@@ -20,9 +15,10 @@ import {
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps>;
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "profile.preferences.contextualHelpTitle",
@@ -33,25 +29,42 @@ const ProfileDataScreen: React.FC<Props> = ({
   profileEmail,
   isEmailValidated,
   isEmailUniquenessValidationEnabled,
-  navigateToEmailReadScreen,
-  navigateToEmailInsertScreen,
   hasProfileEmail,
   nameSurname
 }): React.ReactElement => {
+  const navigation = useIONavigation();
+
+  const navigateToInsertEmailScreen = React.useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.INSERT_EMAIL_SCREEN,
+      params: {
+        isOnboarding: false
+      }
+    });
+  }, [navigation]);
+
+  const navigateToReadEmailScreen = React.useCallback(() => {
+    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+      screen: ROUTES.READ_EMAIL_SCREEN
+    });
+  }, [navigation]);
+
   const onPressEmail = () => {
     if (hasProfileEmail) {
       if (isEmailUniquenessValidationEnabled) {
-        navigateToEmailInsertScreen();
+        navigateToInsertEmailScreen();
       } else {
-        navigateToEmailReadScreen();
+        navigateToReadEmailScreen();
       }
     } else {
-      navigateToEmailInsertScreen();
+      navigateToInsertEmailScreen();
     }
   };
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.data.title")}
+      title={{
+        label: I18n.t("profile.data.title")
+      }}
       description={I18n.t("profile.data.subtitle")}
       headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}
@@ -87,11 +100,6 @@ const ProfileDataScreen: React.FC<Props> = ({
   );
 };
 
-const mapDispatchToProps = (_: Dispatch) => ({
-  navigateToEmailReadScreen: () => navigateToEmailReadScreen(),
-  navigateToEmailInsertScreen: () => navigateToEmailInsertScreen()
-});
-
 const mapStateToProps = (state: GlobalState) => ({
   profileEmail: profileEmailSelector(state),
   isEmailValidated: isProfileEmailValidatedSelector(state),
@@ -101,4 +109,4 @@ const mapStateToProps = (state: GlobalState) => ({
     isEmailUniquenessValidationEnabledSelector(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileDataScreen);
+export default connect(mapStateToProps)(ProfileDataScreen);

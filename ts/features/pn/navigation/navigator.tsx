@@ -18,8 +18,7 @@ export const PnStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
-      headerMode="screen"
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen
         name={PN_ROUTES.MESSAGE_DETAILS}

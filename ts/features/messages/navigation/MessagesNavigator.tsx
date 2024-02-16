@@ -2,7 +2,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { EUCovidCertStackNavigator } from "../../euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
-import MessageDetailScreen from "../screens/MessageDetailScreen";
+import LegacyMessageDetailScreen from "../screens/LegacyMessageDetailScreen";
+import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
@@ -24,8 +25,7 @@ export const MessagesStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={MESSAGES_ROUTES.MESSAGE_ROUTER}
-      headerMode={"screen"}
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGE_ROUTER}
@@ -37,9 +37,13 @@ export const MessagesStackNavigator = () => {
 
       <Stack.Screen
         name={MESSAGES_ROUTES.MESSAGE_DETAIL}
-        component={MessageDetailScreen}
+        component={
+          isDesignSystemEnabled
+            ? MessageDetailsScreen
+            : LegacyMessageDetailScreen
+        }
         options={{
-          headerShown: false
+          headerShown: isDesignSystemEnabled
         }}
       />
 

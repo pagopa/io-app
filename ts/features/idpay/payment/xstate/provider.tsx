@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { useInterpret } from "@xstate/react";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
@@ -9,10 +8,7 @@ import {
   idPayTestToken
 } from "../../../../config";
 import { useXStateMachine } from "../../../../xstate/hooks/useXStateMachine";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sessionInfoSelector } from "../../../../store/reducers/authentication";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
@@ -38,7 +34,7 @@ const IDPayPaymentMachineProvider = (props: Props) => {
   const sessionInfo = useIOSelector(sessionInfoSelector);
   const isPagoPATestEnabled = useIOSelector(isPagoPATestEnabledSelector);
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
 
   if (O.isNone(sessionInfo)) {
     throw new Error("Session info is undefined");

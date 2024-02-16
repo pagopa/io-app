@@ -71,8 +71,19 @@ export function* handleWalletPaymentCalculateFees(
         );
         const chosenPsp = yield* select(walletPaymentPickedPspSelector);
         // If the sorted psp list has the first element marked as "onUs" and the user has not already chosen a psp, we pre-select the first element
-        if (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) {
+        if (
+          (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) ||
+          bundlesSortedByDefault.length === 1
+        ) {
           yield* put(walletPaymentPickPsp(bundlesSortedByDefault[0]));
+        }
+        if (bundlesSortedByDefault.length === 0) {
+          yield* put(
+            walletPaymentCalculateFees.failure({
+              ...getGenericError(new Error(`Error: The bundles list is empty`))
+            })
+          );
+          return;
         }
         const sortedResponse: CalculateFeeResponse = {
           ...res.value,

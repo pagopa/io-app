@@ -6,7 +6,7 @@ import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { downloadedMessageAttachmentSelector } from "../store/reducers/downloads";
-import { UIAttachment, UIAttachmentId, UIMessageId } from "../types";
+import { UIMessageId } from "../types";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
 import { IOToast } from "../../../components/Toast";
@@ -28,16 +28,21 @@ import {
   trackPNAttachmentShare
 } from "../../pn/analytics";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../store/reducers/transformers";
 
 export type MessageAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: UIAttachmentId;
+  attachmentId: string;
   isPN: boolean;
   serviceId?: ServiceId;
 }>;
 
 const renderFooter = (
-  attachment: UIAttachment,
+  name: string,
+  mimeType: string,
   downloadPath: string,
   isPN: boolean,
   attachmentCategory?: string
@@ -81,9 +86,9 @@ const renderFooter = (
             onDownload(isPN, attachmentCategory);
             ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
               {
-                name: attachment.displayName,
+                name,
                 parentFolder: "",
-                mimeType: attachment.contentType
+                mimeType
               },
               "Download",
               downloadPath
@@ -91,7 +96,7 @@ const renderFooter = (
               .then(_ => {
                 IOToast.show(
                   I18n.t("messagePDFPreview.savedAtLocation", {
-                    name: attachment.displayName
+                    name
                   })
                 );
               })
@@ -109,7 +114,7 @@ const renderFooter = (
           onPress: () => {
             onOpen(isPN, attachmentCategory);
             ReactNativeBlobUtil.android
-              .actionViewIntent(downloadPath, attachment.contentType)
+              .actionViewIntent(downloadPath, mimeType)
               .catch(_ => {
                 IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
               });
@@ -202,7 +207,7 @@ export const MessageAttachment = (
   }, [attachmentCategory, messageId, isPN, serviceId]);
 
   useHeaderSecondLevel({
-    title: I18n.t("messagePDFPreview.title"),
+    title: "",
     supportRequest: true
   });
 
@@ -215,6 +220,8 @@ export const MessageAttachment = (
       />
     );
   }
+  const name = attachmentDisplayName(attachmentOpt);
+  const mimeType = attachmentContentType(attachmentOpt);
   return (
     <>
       {isPDFRenderingError ? (
@@ -230,7 +237,7 @@ export const MessageAttachment = (
           onLoadComplete={() => onLoadComplete(isPN, attachmentCategory)}
         />
       )}
-      {renderFooter(attachmentOpt, downloadPathOpt, isPN, attachmentCategory)}
+      {renderFooter(name, mimeType, downloadPathOpt, isPN, attachmentCategory)}
     </>
   );
 };

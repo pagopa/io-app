@@ -14,6 +14,8 @@ import { isServicePreferenceResponseSuccess } from "../../../types/services/Serv
 import { SagaCallReturnType } from "../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../utils/errors";
 import { readablePrivacyReport } from "../../../utils/reporters";
+import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
 import { mapKinds } from "./handleGetServicePreferenceSaga";
 
 /**
@@ -88,12 +90,22 @@ export function* handleUpsertServicePreference(
     }
 
     const response: SagaCallReturnType<typeof upsertServicePreferences> =
-      yield* call(upsertServicePreferences, {
-        service_id: serviceIdEither.right,
-        body: updatingPreference
-      });
+      (yield* call(
+        withRefreshApiCall,
+        upsertServicePreferences({
+          service_id: serviceIdEither.right,
+          body: updatingPreference
+        }),
+        action
+      )) as unknown as SagaCallReturnType<typeof upsertServicePreferences>;
 
     if (E.isRight(response)) {
+      if (response.right.status === 401) {
+        const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+        if (isFastLoginEnabled) {
+          return;
+        }
+      }
       if (response.right.status === 200) {
         yield* put(
           upsertServicePreference.success({

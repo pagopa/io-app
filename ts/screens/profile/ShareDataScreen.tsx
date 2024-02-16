@@ -77,8 +77,10 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.main.privacy.shareData.screen.title")}
-      titleTestID={"share-data-component-title"}
+      title={{
+        label: I18n.t("profile.main.privacy.shareData.screen.title"),
+        testID: "share-data-component-title"
+      }}
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       fixedBottomSlot={
         <FooterWithButtons type="SingleButton" primary={buttonProps} />
