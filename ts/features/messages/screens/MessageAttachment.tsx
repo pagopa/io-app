@@ -207,7 +207,7 @@ export const MessageAttachment = (
   }, [attachmentCategory, messageId, isPN, serviceId]);
 
   useHeaderSecondLevel({
-    title: I18n.t("messagePDFPreview.title"),
+    title: "",
     supportRequest: true
   });
 

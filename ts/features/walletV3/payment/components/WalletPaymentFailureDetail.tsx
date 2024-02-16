@@ -12,7 +12,7 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
-import { WalletPaymentFailure } from "../types/failure";
+import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
 type Props = {
   failure: WalletPaymentFailure;

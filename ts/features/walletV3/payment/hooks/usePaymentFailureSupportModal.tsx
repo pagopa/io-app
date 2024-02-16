@@ -39,7 +39,7 @@ import {
   WalletPaymentOutcome,
   getWalletPaymentOutcomeEnumByValue
 } from "../types/PaymentOutcomeEnum";
-import { WalletPaymentFailure } from "../types/failure";
+import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
 type PaymentFailureSupportModalParams = {
   failure?: WalletPaymentFailure;
