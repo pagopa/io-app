@@ -95,18 +95,6 @@ const appendItemToArchive = (
     a => [...a, item]
   );
 
-const replaceLastItemInArchive = (
-  archive: ReadonlyArray<PaymentHistory>,
-  item: PaymentHistory
-): ReadonlyArray<PaymentHistory> =>
-  pipe(
-    archive,
-    // Remove last element in archive
-    a => a.slice(0, a.length - 1),
-    // Add the entry to the archive
-    a => [...a, item]
-  );
-
 const updatePaymentHistory = (
   state: WalletPaymentHistoryState,
   data: PaymentHistory,
@@ -117,13 +105,16 @@ const updatePaymentHistory = (
     ...data
   };
 
-  const updatedArchive = (
-    reset ? appendItemToArchive : replaceLastItemInArchive
-  )(state.archive, updatedOngoingPaymentHistory);
+  if (reset) {
+    return {
+      ongoingPayment: updatedOngoingPaymentHistory,
+      archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory)
+    };
+  }
 
   return {
     ongoingPayment: updatedOngoingPaymentHistory,
-    archive: updatedArchive
+    archive: [..._.dropRight(state.archive), updatedOngoingPaymentHistory]
   };
 };
 
