@@ -12,24 +12,29 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
 import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
+import {
+  LightModalContext,
+  LightModalContextInterface
+} from "../../components/ui/LightModal";
 import { PaymentSummaryComponent } from "../../components/wallet/PaymentSummaryComponent";
 import { SlidedContentComponent } from "../../components/wallet/SlidedContentComponent";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationProp,
+  IOStackNavigationRouteProps
+} from "../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../navigation/params/WalletParamsList";
 import { Dispatch } from "../../store/actions/types";
 import { backToEntrypointPayment } from "../../store/actions/wallet/payment";
@@ -46,6 +51,7 @@ import {
   getTransactionIUV
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 
 export type TransactionDetailsScreenNavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -58,8 +64,10 @@ type OwnProps = IOStackNavigationRouteProps<
 >;
 
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  LightModalContextInterface &
+  ReturnType<typeof mapDispatchToProps>;
+
+type TransactionDetailsScreenProps = LightModalContextInterface &
+  Props &
   OwnProps;
 
 /**
@@ -89,10 +97,13 @@ type State = {
  * a list of information available about a
  * specific transaction.
  */
-class TransactionDetailsScreen extends React.Component<Props, State> {
+class TransactionDetailsScreen extends React.Component<
+  TransactionDetailsScreenProps,
+  State
+> {
   private subscription: NativeEventSubscription | undefined;
   private navigationEventUnsubscribe!: () => void;
-  constructor(props: Props) {
+  constructor(props: TransactionDetailsScreenProps) {
     super(props);
     this.state = { showFullReason: false };
   }
@@ -361,7 +372,31 @@ const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => {
   };
 };
 
-export default connect(
+const ConnectedTransactionDetailsScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(withLightModalContext(withLoadingSpinner(TransactionDetailsScreen)));
+)(withLoadingSpinner(TransactionDetailsScreen));
+
+const TransactionDetailsScreenFC = () => {
+  const { ...modalContext } = React.useContext(LightModalContext);
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<WalletParamsList, "WALLET_TRANSACTION_DETAILS">
+    >();
+  const route =
+    useRoute<
+      Route<
+        "WALLET_TRANSACTION_DETAILS",
+        TransactionDetailsScreenNavigationParams
+      >
+    >();
+  return (
+    <ConnectedTransactionDetailsScreen
+      {...modalContext}
+      navigation={navigation}
+      route={route}
+    />
+  );
+};
+
+export default TransactionDetailsScreenFC;

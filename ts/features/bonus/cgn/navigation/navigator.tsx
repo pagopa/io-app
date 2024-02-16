@@ -18,6 +18,7 @@ import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerch
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
 import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
+import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
@@ -25,7 +26,9 @@ import {
 } from "./params";
 import CGN_ROUTES from "./routes";
 
-export const cgnLinkingOptions: PathConfigMap = {
+export const cgnLinkingOptions: PathConfigMap<
+  CgnActivationParamsList | AppParamsList
+> = {
   [CGN_ROUTES.DETAILS.MAIN]: {
     path: "cgn-details",
     screens: {
@@ -48,8 +51,7 @@ const ActivationStack = createStackNavigator<CgnActivationParamsList>();
 export const CgnActivationNavigator = () => (
   <ActivationStack.Navigator
     initialRouteName={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
-    headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <ActivationStack.Screen
       name={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
@@ -91,8 +93,7 @@ const DetailStack = createStackNavigator<CgnDetailsParamsList>();
 export const CgnDetailsNavigator = () => (
   <DetailStack.Navigator
     initialRouteName={CGN_ROUTES.DETAILS.DETAILS}
-    headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.DETAILS}
@@ -130,8 +131,7 @@ const EycaActivationStack = createStackNavigator<CgnEYCAActivationParamsList>();
 export const CgnEYCAActivationNavigator = () => (
   <EycaActivationStack.Navigator
     initialRouteName={CGN_ROUTES.EYCA.ACTIVATION.LOADING}
-    headerMode="none"
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <EycaActivationStack.Screen
       name={CGN_ROUTES.EYCA.ACTIVATION.LOADING}

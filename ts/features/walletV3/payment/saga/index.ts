@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
-import { WalletClient } from "../../common/api/client";
 import { PaymentClient } from "../api/client";
 import {
   walletPaymentAuthorization,
@@ -9,24 +8,33 @@ import {
   walletPaymentDeleteTransaction,
   walletPaymentGetAllMethods,
   walletPaymentGetDetails,
-  walletPaymentGetUserWallets
+  walletPaymentGetTransactionInfo,
+  walletPaymentGetUserWallets,
+  walletPaymentNewSessionToken
 } from "../store/actions/networking";
+import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
 import { handleWalletPaymentCalculateFees } from "./networking/handleWalletPaymentCalculateFees";
 import { handleWalletPaymentCreateTransaction } from "./networking/handleWalletPaymentCreateTransaction";
+import { handleWalletPaymentDeleteTransaction } from "./networking/handleWalletPaymentDeleteTransaction";
 import { handleWalletPaymentGetAllMethods } from "./networking/handleWalletPaymentGetAllMethods";
 import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentGetDetails";
+import { handleWalletPaymentGetTransactionInfo } from "./networking/handleWalletPaymentGetTransactionInfo";
 import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
-import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
-import { handleWalletPaymentDeleteTransaction } from "./networking/handleWalletPaymentDeleteTransaction";
+import { handleWalletPaymentNewSessionToken } from "./networking/handleWalletPaymentNewSessionToken";
 
 /**
  * Handle the pagoPA payments requests
  * @param bearerToken
  */
 export function* watchWalletPaymentSaga(
-  walletClient: WalletClient,
   paymentClient: PaymentClient
 ): SagaIterator {
+  yield* takeLatest(
+    walletPaymentNewSessionToken.request,
+    handleWalletPaymentNewSessionToken,
+    paymentClient.newSessionToken
+  );
+
   yield* takeLatest(
     walletPaymentGetDetails.request,
     handleWalletPaymentGetDetails,
@@ -36,13 +44,13 @@ export function* watchWalletPaymentSaga(
   yield* takeLatest(
     walletPaymentGetAllMethods.request,
     handleWalletPaymentGetAllMethods,
-    walletClient.getAllPaymentMethods
+    paymentClient.getAllPaymentMethods
   );
 
   yield* takeLatest(
     walletPaymentGetUserWallets.request,
     handleWalletPaymentGetUserWallets,
-    walletClient.getWalletsByIdUser
+    paymentClient.getWalletsByIdUser
   );
 
   yield* takeLatest(
@@ -55,6 +63,12 @@ export function* watchWalletPaymentSaga(
     walletPaymentCreateTransaction.request,
     handleWalletPaymentCreateTransaction,
     paymentClient.newTransaction
+  );
+
+  yield* takeLatest(
+    walletPaymentGetTransactionInfo.request,
+    handleWalletPaymentGetTransactionInfo,
+    paymentClient.getTransactionInfo
   );
 
   yield* takeLatest(

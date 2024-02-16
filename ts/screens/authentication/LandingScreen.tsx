@@ -2,40 +2,51 @@
  * A screen where the user can choose to login with SPID or get more informations.
  * It includes a carousel with highlights on the app functionalities
  */
+import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import JailMonkey from "jail-monkey";
 import { Content, Text as NBButtonText } from "native-base";
 import * as React from "react";
-import { View, Alert, StyleSheet } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import { useDispatch, useStore } from "react-redux";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
+import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
-import CieNotSupported from "../../components/cie/CieNotSupported";
 import ContextualInfo from "../../components/ContextualInfo";
-import { Link } from "../../components/core/typography/Link";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { DevScreenButton } from "../../components/DevScreenButton";
 import { HorizontalScroll } from "../../components/HorizontalScroll";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import SectionStatusComponent from "../../components/SectionStatus";
+import CieNotSupported from "../../components/cie/CieNotSupported";
+import { Link } from "../../components/core/typography/Link";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../components/SectionStatus";
+import { LightModalContext } from "../../components/ui/LightModal";
+import { cieSpidMoreInfoUrl } from "../../config";
+import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
+import {
+  fastLoginOptInFFEnabled,
+  isFastLoginEnabledSelector
+} from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
 import { mixpanelTrack } from "../../mixpanel";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
+import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
+import { useIOSelector } from "../../store/hooks";
+import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import {
   hasApiLevelSupportSelector,
   hasNFCFeatureSelector,
@@ -44,22 +55,9 @@ import {
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import variables from "../../theme/variables";
 import { ComponentProps } from "../../types/react";
-import { isDevEnv } from "../../utils/environment";
-import RootedDeviceModal from "../modal/RootedDeviceModal";
-import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { openWebUrl } from "../../utils/url";
-import { cieSpidMoreInfoUrl } from "../../config";
-import {
-  fastLoginOptInFFEnabled,
-  isFastLoginEnabledSelector
-} from "../../features/fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { useIOSelector } from "../../store/hooks";
-import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import { LightModalContext } from "../../components/ui/LightModal";
-import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
+import { openWebUrl } from "../../utils/url";
+import RootedDeviceModal from "../modal/RootedDeviceModal";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -175,7 +173,7 @@ export const LandingScreen = () => {
   const store = useStore();
 
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
 
@@ -226,14 +224,6 @@ export const LandingScreen = () => {
       );
     }
   };
-
-  const navigateToMarkdown = React.useCallback(
-    () =>
-      navigation.navigate(ROUTES.AUTHENTICATION, {
-        screen: ROUTES.MARKDOWN
-      }),
-    [navigation]
-  );
 
   const navigateToIdpSelection = React.useCallback(() => {
     trackSpidLoginSelected();
@@ -333,8 +323,6 @@ export const LandingScreen = () => {
           isCieSupported() ? ["landing_SPID", "landing_CIE"] : ["landing_SPID"]
         }
       >
-        {isDevEnv && <DevScreenButton onPress={navigateToMarkdown} />}
-
         {isSessionExpired ? (
           <InfoScreenComponent
             title={I18n.t("authentication.landing.session_expired.title")}

@@ -8,8 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { sequenceT } from "fp-ts/lib/Apply";
+import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -27,24 +26,18 @@ import { getSortedPspList } from "../../common/utils";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentCalculateFees } from "../store/actions/networking";
 import {
   walletPaymentPickPsp,
   walletPaymentResetPickedPsp
 } from "../store/actions/orchestration";
 import {
-  walletPaymentAmountSelector,
-  walletPaymentPickedPaymentMethodSelector,
   walletPaymentPickedPspSelector,
   walletPaymentPspListSelector
 } from "../store/selectors";
 import { WalletPaymentPspSortType } from "../types";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentPickPspScreen = () => {
-  const paymentAmountPot = useIOSelector(walletPaymentAmountSelector);
-  const selectedWalletOption = useIOSelector(
-    walletPaymentPickedPaymentMethodSelector
-  );
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
@@ -52,7 +45,12 @@ const WalletPaymentPickPspScreen = () => {
     React.useState<WalletPaymentPspSortType>("default");
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
+
   const isLoading = pot.isLoading(pspListPot);
+  const isError = pot.isError(pspListPot);
+
+  const canContinue = O.isSome(selectedPspOption);
 
   const sortedPspList = pipe(
     pot.toOption(pspListPot),
@@ -60,9 +58,16 @@ const WalletPaymentPickPspScreen = () => {
     O.toUndefined
   );
 
-  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
-
-  const canContinue = O.isSome(selectedPspOption);
+  React.useEffect(() => {
+    if (isError) {
+      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+        params: {
+          outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
+        }
+      });
+    }
+  }, [isError, navigation]);
 
   useHeaderSecondLevel({
     title: "",
@@ -70,25 +75,6 @@ const WalletPaymentPickPspScreen = () => {
     faqCategories: ["payment"],
     supportRequest: true
   });
-
-  useFocusEffect(
-    React.useCallback(() => {
-      pipe(
-        sequenceT(O.Monad)(
-          pot.toOption(paymentAmountPot),
-          selectedWalletOption
-        ),
-        O.map(([paymentAmountInCents, selectedWallet]) => {
-          dispatch(
-            walletPaymentCalculateFees.request({
-              walletId: selectedWallet.walletId,
-              paymentAmountInCents
-            })
-          );
-        })
-      );
-    }, [dispatch, paymentAmountPot, selectedWalletOption])
-  );
 
   React.useEffect(
     () => () => {
@@ -172,13 +158,17 @@ const WalletPaymentPickPspScreen = () => {
 
   return (
     <GradientScrollView
-      primaryActionProps={{
-        label: I18n.t("wallet.payment.psp.continueButton"),
-        accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
-        onPress: handleContinue,
-        disabled: isLoading || !canContinue,
-        loading: isLoading
-      }}
+      primaryActionProps={
+        canContinue
+          ? {
+              label: I18n.t("wallet.payment.psp.continueButton"),
+              accessibilityLabel: I18n.t("wallet.payment.psp.continueButton"),
+              onPress: handleContinue,
+              disabled: isLoading,
+              loading: isLoading
+            }
+          : undefined
+      }
     >
       <SelectPspHeadingContent />
       {!isLoading && (

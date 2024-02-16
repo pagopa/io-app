@@ -9,6 +9,7 @@ jobs:
   run-e2e-test-ios:
     needs: run-static-checks
     runs-on: macos-latest
+    environment: dev
     concurrency:
       group: ${{ github.workflow }}-e2e-tests-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
@@ -60,6 +61,11 @@ jobs:
           path: './_io-dev-api-server_'
       - id: run-e2e-tests
         run: bash ./.github/scripts/run-e2e-tests.sh
+      - id: notify-test-failure
+        if: failure()
+        uses: ./.github/actions/notify-e2e
+        env:
+          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
       - id: upload-artifacts
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2
         if: always()

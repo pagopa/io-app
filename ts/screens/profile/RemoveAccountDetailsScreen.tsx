@@ -1,40 +1,38 @@
+import {
+  BlockButtonProps,
+  ContentWrapper,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Content } from "native-base";
+import { StackActions } from "@react-navigation/native";
 import * as React from "react";
-import { View, Alert, SafeAreaView } from "react-native";
+import { Alert, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StackActions } from "@react-navigation/native";
+import { LabelledItem } from "../../components/LabelledItem";
+import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
 import {
   RadioButtonList,
   RadioItem
 } from "../../components/core/selection/RadioButtonList";
-import { H1 } from "../../components/core/typography/H1";
-import { H4 } from "../../components/core/typography/H4";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../config";
-import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
-import { bpdEnabledSelector } from "../../features/bonus/bpd/store/reducers/details/activation";
 import { isCgnEnrolledSelector } from "../../features/bonus/cgn/store/reducers/details";
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
 import { identificationRequest } from "../../store/actions/identification";
 import { navigateToWalletHome } from "../../store/actions/navigation";
 import {
-  removeAccountMotivation,
   RemoveAccountMotivationEnum,
-  RemoveAccountMotivationPayload
+  RemoveAccountMotivationPayload,
+  removeAccountMotivation
 } from "../../store/actions/profile";
-import { ReduxProps } from "../../store/actions/types";
 import { GlobalState } from "../../store/reducers/types";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { withKeyboard } from "../../utils/keyboard";
 
-type Props = ReduxProps &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const getMotivationItems = (): ReadonlyArray<
@@ -71,8 +69,7 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
   const [otherMotivation, setOtherMotivation] = React.useState<string>("");
 
   const handleContinuePress = () => {
-    const hasActiveBonus =
-      pot.getOrElse(props.bpdActiveBonus, false) || props.cgnActiveBonus;
+    const hasActiveBonus = props.cgnActiveBonus;
 
     if (hasActiveBonus) {
       Alert.alert(
@@ -119,20 +116,33 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
         props.requestIdentification({ reason: selectedMotivation });
     }
   };
-  const continueButtonProps = {
-    block: true,
-    primary: true,
-    onPress: handleContinuePress,
-    title: I18n.t("profile.main.privacy.removeAccount.info.cta")
+
+  const continueButtonProps: BlockButtonProps = {
+    type: "Solid",
+    buttonProps: {
+      color: "primary",
+      label: I18n.t("profile.main.privacy.removeAccount.info.cta"),
+      accessibilityLabel: I18n.t("profile.main.privacy.removeAccount.info.cta"),
+      onPress: handleContinuePress
+    }
   };
 
   const loadingCaption = I18n.t(
     "profile.main.privacy.removeAccount.success.title"
   );
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("profile.main.title")}
+    <RNavScreenWithLargeHeader
+      title={{
+        label: I18n.t("profile.main.privacy.removeAccount.title")
+      }}
+      description={I18n.t("profile.main.privacy.removeAccount.details.body")}
+      fixedBottomSlot={withKeyboard(
+        <FooterWithButtons
+          type={"SingleButton"}
+          primary={continueButtonProps}
+        />,
+        true
+      )}
     >
       {props.isLoading || props.isError ? (
         <LoadingErrorComponent
@@ -147,47 +157,34 @@ const RemoveAccountDetails: React.FunctionComponent<Props> = (props: Props) => {
         />
       ) : (
         <SafeAreaView style={IOStyles.flex}>
-          <Content>
-            <H1>{I18n.t("profile.main.privacy.removeAccount.title")}</H1>
-            <H4 weight="Regular">
-              {I18n.t("profile.main.privacy.removeAccount.details.body")}
-            </H4>
-            <View style={{ paddingTop: 25 }}>
-              <RadioButtonList<RemoveAccountMotivationEnum>
-                head={I18n.t(
-                  "profile.main.privacy.removeAccount.details.question"
-                )}
-                key="delete_reason"
-                items={getMotivationItems()}
-                selectedItem={selectedMotivation}
-                onPress={setSelectedMotivation}
-              />
-              {selectedMotivation === RemoveAccountMotivationEnum.OTHERS && (
-                <LabelledItem
-                  label={I18n.t(
-                    "profile.main.privacy.removeAccount.details.labelOpenAnswer"
-                  )}
-                  inputProps={{
-                    keyboardType: "default",
-                    returnKeyType: "done",
-                    autoFocus: true,
-                    maxLength: 18,
-                    onChangeText: setOtherMotivation
-                  }}
-                />
+          <ContentWrapper>
+            <RadioButtonList<RemoveAccountMotivationEnum>
+              head={I18n.t(
+                "profile.main.privacy.removeAccount.details.question"
               )}
-            </View>
-          </Content>
-          {withKeyboard(
-            <FooterWithButtons
-              type={"SingleButton"}
-              leftButton={continueButtonProps}
-            />,
-            true
-          )}
+              key="delete_reason"
+              items={getMotivationItems()}
+              selectedItem={selectedMotivation}
+              onPress={setSelectedMotivation}
+            />
+            {selectedMotivation === RemoveAccountMotivationEnum.OTHERS && (
+              <LabelledItem
+                label={I18n.t(
+                  "profile.main.privacy.removeAccount.details.labelOpenAnswer"
+                )}
+                inputProps={{
+                  keyboardType: "default",
+                  returnKeyType: "done",
+                  autoFocus: true,
+                  maxLength: 18,
+                  onChangeText: setOtherMotivation
+                }}
+              />
+            )}
+          </ContentWrapper>
         </SafeAreaView>
       )}
-    </BaseScreenComponent>
+    </RNavScreenWithLargeHeader>
   );
 };
 
@@ -226,7 +223,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 
 const mapStateToProps = (state: GlobalState) => {
-  const bpdActiveBonus = bpdEnabledSelector(state);
   const cgnActiveBonus = isCgnEnrolledSelector(state);
   const userDataProcessing = userDataProcessingSelector(state);
   const isLoading =
@@ -234,7 +230,6 @@ const mapStateToProps = (state: GlobalState) => {
     pot.isUpdating(userDataProcessing.DELETE);
   const isError = pot.isError(userDataProcessing.DELETE);
   return {
-    bpdActiveBonus,
     cgnActiveBonus,
     userDataProcessing,
     isLoading,

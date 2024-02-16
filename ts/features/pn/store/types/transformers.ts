@@ -2,7 +2,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/ThirdPartyMessage";
-import { attachmentsFromThirdPartyMessage } from "../../../messages/store/reducers/transformers";
 import { PNMessage } from "./types";
 
 export const toPNMessage = (
@@ -15,9 +14,7 @@ export const toPNMessage = (
     O.chainNullableK(message => message.details),
     O.map(details => ({
       ...details,
-      attachments: pipe(
-        attachmentsFromThirdPartyMessage(messageFromApi),
-        O.toUndefined
-      )
+      created_at: messageFromApi.created_at,
+      attachments: messageFromApi.third_party_message.attachments
     }))
   );

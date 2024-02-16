@@ -3,12 +3,11 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18n-js";
 import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { ListItemInfoCopy } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { PnParamsList } from "../navigation/params";
 import customVariables from "../../../theme/variables";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
@@ -28,13 +27,14 @@ const paidPaymentError = O.some(
   "PPT_PAGAMENTO_DUPLICATO"
 ) as TransactionSummaryError;
 
-export const PaidPaymentScreen = (
-  props: IOStackNavigationRouteProps<
-    PnParamsList,
-    "PN_CANCELLED_MESSAGE_PAID_PAYMENT"
-  >
-): React.ReactElement => {
-  const { noticeCode, creditorTaxId: maybeCreditorTaxId } = props.route.params;
+export const PaidPaymentScreen = (): React.ReactElement => {
+  const { noticeCode, creditorTaxId: maybeCreditorTaxId } =
+    useRoute<
+      Route<
+        "PN_CANCELLED_MESSAGE_PAID_PAYMENT",
+        PaidPaymentScreenNavigationParams
+      >
+    >().params;
   const formattedPaymentNoticeNumber = noticeCode
     .replace(/(\d{4})/g, "$1  ")
     .trim();

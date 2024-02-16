@@ -1,23 +1,23 @@
-import * as O from "fp-ts/lib/Option";
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import React, { useCallback } from "react";
 import { SafeAreaView, ScrollView } from "react-native";
-import { ContentWrapper } from "@pagopa/io-app-design-system";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
+import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
+import { apiUrlPrefix } from "../../../config";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { useIOSelector } from "../../../store/hooks";
 import { sessionTokenSelector } from "../../../store/reducers/authentication";
 import { createLollipopClient, signMessage } from "../api/backend";
-import { useIOSelector } from "../../../store/hooks";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../store/reducers/lollipop";
 import { toThumbprint } from "../utils/crypto";
-import { apiUrlPrefix } from "../../../config";
-import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
-import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 import LollipopPlaygroundContent from "./LollipopPlaygroundContent";
 
 export type LollipopPlaygroundState = {
@@ -38,6 +38,10 @@ const LollipopPlayground = () => {
   const keyTag = useIOSelector(lollipopKeyTagSelector);
   const maybePublicKey = useIOSelector(lollipopPublicKeySelector);
   const maybeSessionToken = O.fromNullable(useIOSelector(sessionTokenSelector));
+
+  useHeaderSecondLevel({
+    title: "Lollipop Playground"
+  });
 
   const lollipopClient = useCallback(
     (signBody: boolean) =>
@@ -125,29 +129,27 @@ const LollipopPlayground = () => {
   );
 
   return (
-    <BaseScreenComponent goBack={true} headerTitle={"Lollipop Playground"}>
-      <SafeAreaView style={IOStyles.flex}>
-        <ScrollView>
-          <ContentWrapper>
-            <LollipopPlaygroundContent
-              onSignButtonPress={body =>
-                onSignButtonPress(body, state.doSignBody)
-              }
-              onCheckBoxPress={v => {
-                setState({
-                  ...state,
-                  doSignBody: v
-                });
-              }}
-              onClearButtonPress={() => {
-                setState(INITIAL_STATE);
-              }}
-              playgroundState={state}
-            />
-          </ContentWrapper>
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+    <SafeAreaView style={IOStyles.flex}>
+      <ScrollView>
+        <ContentWrapper>
+          <LollipopPlaygroundContent
+            onSignButtonPress={body =>
+              onSignButtonPress(body, state.doSignBody)
+            }
+            onCheckBoxPress={v => {
+              setState({
+                ...state,
+                doSignBody: v
+              });
+            }}
+            onClearButtonPress={() => {
+              setState(INITIAL_STATE);
+            }}
+            playgroundState={state}
+          />
+        </ContentWrapper>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

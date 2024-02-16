@@ -12,8 +12,7 @@ const Stack = createStackNavigator<EUCovidCertParamsList>();
 export const EUCovidCertStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={EUCOVIDCERT_ROUTES.CERTIFICATE}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: isGestureEnabled }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
       name={EUCOVIDCERT_ROUTES.CERTIFICATE}

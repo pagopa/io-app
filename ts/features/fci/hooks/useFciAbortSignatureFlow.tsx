@@ -1,26 +1,19 @@
 import * as React from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { Alert } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
-import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { H3 } from "../../../components/core/typography/H3";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import {
+  ButtonSolidProps,
+  FooterWithButtons,
+  useIOExperimentalDesign
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import customVariables from "../../../theme/variables";
-import { errorButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { fciEndRequest } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackFciUserExit } from "../analytics";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 import Markdown from "../../../components/ui/Markdown";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
-
-const styles = StyleSheet.create({
-  verticalPad: {
-    paddingVertical: customVariables.spacerHeight
-  }
-});
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
@@ -41,40 +34,42 @@ export const useFciAbortSignatureFlow = () => {
     dismiss();
   };
 
+  const cancelButtonProps: ButtonSolidProps = {
+    testID: "FciStopAbortingSignatureTestID",
+    onPress: () => dismiss(),
+    label: I18n.t("features.fci.abort.confirm"),
+    accessibilityLabel: I18n.t("features.fci.abort.confirm")
+  };
+  const continueButtonProps: ButtonSolidProps = {
+    onPress: () => abortSignatureFlow(),
+    color: "danger",
+    label: I18n.t("features.fci.abort.cancel"),
+    accessibilityLabel: I18n.t("features.fci.abort.cancel")
+  };
+
   const {
     present: presentBs,
     bottomSheet,
     dismiss
-  } = useLegacyIOBottomSheetModal(
-    <View style={styles.verticalPad}>
+  } = useIOBottomSheetModal({
+    title: I18n.t("features.fci.abort.title"),
+    component: (
       <Markdown>
         {I18n.t("features.fci.abort.content", { dossierTitle })}
       </Markdown>
-    </View>,
-    <View style={IOStyles.flex}>
-      <H3 color={"bluegreyDark"} weight={"SemiBold"}>
-        {I18n.t("features.fci.abort.title")}
-      </H3>
-    </View>,
-    280,
-    <FooterWithButtons
-      type={"TwoButtonsInlineHalf"}
-      leftButton={{
-        testID: "FciStopAbortingSignatureTestID",
-        onPressWithGestureHandler: true,
-        bordered: true,
-        onPress: () => dismiss(),
-        title: I18n.t("features.fci.abort.confirm")
-      }}
-      rightButton={{
-        ...errorButtonProps(
-          () => abortSignatureFlow(),
-          I18n.t("features.fci.abort.cancel")
-        ),
-        onPressWithGestureHandler: true
-      }}
-    />
-  );
+    ),
+    snapPoint: [280],
+    footer: (
+      <FooterWithButtons
+        type={"TwoButtonsInlineHalf"}
+        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+        secondary={{
+          type: "Solid",
+          buttonProps: continueButtonProps
+        }}
+      />
+    )
+  });
 
   /**
    * Show an alert to confirm the abort signature flow.

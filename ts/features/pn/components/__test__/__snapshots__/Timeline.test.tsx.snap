@@ -1,0 +1,844 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Timeline component should match the snapshot with default props 1`] = `
+Array [
+  <View
+    accessible={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        25
+      </Text>
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        03
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingHorizontal": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            Object {
+              "opacity": 0,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "borderColor": "#FFFFFF",
+              "borderRadius": 7,
+              "height": 14,
+              "marginVertical": 4,
+              "width": 14,
+            },
+            Object {
+              "backgroundColor": "#6CC66A",
+              "borderWidth": 0,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flexShrink": 1,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+          }
+        }
+      />
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        10:00
+      </Text>
+    </View>
+  </View>,
+  <View
+    accessible={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        25
+      </Text>
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        03
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingHorizontal": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "borderColor": "#FFFFFF",
+              "borderRadius": 7,
+              "height": 14,
+              "marginVertical": 4,
+              "width": 14,
+            },
+            Object {
+              "backgroundColor": "#BBC2D6",
+              "borderWidth": 1.5,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flexShrink": 1,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+          }
+        }
+      />
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        10:00
+      </Text>
+    </View>
+  </View>,
+  <View
+    accessible={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        25
+      </Text>
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        03
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingHorizontal": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "borderColor": "#FFFFFF",
+              "borderRadius": 7,
+              "height": 14,
+              "marginVertical": 4,
+              "width": 14,
+            },
+            Object {
+              "backgroundColor": "#BBC2D6",
+              "borderWidth": 1.5,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flexShrink": 1,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+          }
+        }
+      />
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        10:00
+      </Text>
+    </View>
+  </View>,
+  <View
+    accessible={true}
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "flexDirection": "row",
+        "flexShrink": 1,
+        "paddingHorizontal": 24,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        25
+      </Text>
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        03
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "paddingHorizontal": 16,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            undefined,
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "borderColor": "#FFFFFF",
+              "borderRadius": 7,
+              "height": 14,
+              "marginVertical": 4,
+              "width": 14,
+            },
+            Object {
+              "backgroundColor": "#BBC2D6",
+              "borderWidth": 0,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#CCD4DC",
+              "flexGrow": 1,
+              "width": 2,
+            },
+            Object {
+              "opacity": 0,
+            },
+          ]
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "flexShrink": 1,
+          "paddingVertical": 12,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="grey-700"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#555C70",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </Text>
+      <View
+        style={
+          Object {
+            "height": 4,
+          }
+        }
+      />
+      <Text
+        allowFontScaling={false}
+        color="grey-450"
+        defaultColor="black"
+        defaultWeight="Regular"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 12,
+            "textTransform": "uppercase",
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 12,
+              "textTransform": "uppercase",
+            },
+            Object {
+              "color": "#99A3C1",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+            },
+          ]
+        }
+        weight="Regular"
+      >
+        10:00
+      </Text>
+    </View>
+  </View>,
+]
+`;
+
+exports[`Timeline component should match the snapshot with empty data 1`] = `null`;
