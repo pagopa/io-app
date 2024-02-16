@@ -16,6 +16,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { walletPaymentHistoryStoreOutcome } from "../../history/store/actions";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
@@ -51,9 +52,10 @@ export const useWalletPaymentAuthorizationModal = ({
         WalletPaymentOutcome.decode,
         E.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
+      dispatch(walletPaymentHistoryStoreOutcome(outcome));
       onAuthorizationOutcome(outcome);
     },
-    [onAuthorizationOutcome]
+    [onAuthorizationOutcome, dispatch]
   );
 
   React.useEffect(() => {
