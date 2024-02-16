@@ -82,12 +82,12 @@ export const useFciAbortSignatureFlow = () => {
   const showAlert = () => {
     Alert.alert(I18n.t("features.fci.abort.alert.title"), undefined, [
       {
-        text: I18n.t("features.fci.abort.alert.confirm"),
-        onPress: () => abortSignatureFlow(),
+        text: I18n.t("features.fci.abort.alert.cancel"),
         style: "cancel"
       },
       {
-        text: I18n.t("features.fci.abort.alert.cancel")
+        text: I18n.t("features.fci.abort.alert.confirm"),
+        onPress: () => abortSignatureFlow()
       }
     ]);
   };
