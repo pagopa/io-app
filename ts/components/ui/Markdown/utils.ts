@@ -71,7 +71,7 @@ body {
   padding: 0;
   color: ${textColor};
   font-size: ${fontSizeBase}px;
-  font-family: 'Titillium Web';
+  font-family: 'Titillium SansPro';
   overflow-wrap: break-word;
   hyphens: auto;
 }
