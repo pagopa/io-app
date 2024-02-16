@@ -1,6 +1,13 @@
+import { FontWeight, IOColors } from "@pagopa/io-app-design-system";
 import { Platform } from "react-native";
 import * as RNFS from "react-native-fs";
-import customVariables from "../../../theme/variables";
+
+const textColor = IOColors.bluegrey;
+const fontSizeBase = 16;
+const textLinkWeight = "600" as FontWeight;
+const textMessageDetailLinkColor = IOColors.blue;
+const toastColor = IOColors.aquaUltraLight;
+const brandPrimary = IOColors.blue;
 
 const OLD_DEMO_TAG_MARKDOWN_REGEX = /^\[demo\]([\s\S]+?)\[\/demo\]\s*\n{2,}/;
 export const convertOldDemoMarkdownTag = (markdown: string) =>
@@ -34,36 +41,36 @@ const generateInlineCss = (cssStyle: string) => `<style>
   ${cssStyle}
   </style>`;
 
-const TITILLIUM_WEB_FONT_PATH =
+const TITILLIUM_SANSPRO_FONT_PATH =
   Platform.OS === "android"
-    ? "file:///android_asset/fonts/TitilliumWeb-Regular.ttf"
-    : `${RNFS.MainBundlePath}/TitilliumWeb-Regular.ttf`;
+    ? "file:///android_asset/fonts/TitilliumSansPro-Regular.otf"
+    : `${RNFS.MainBundlePath}/TitilliumSansPro-Regular.otf`;
 
-const TITILLIUM_WEB_BOLD_FONT_PATH =
+const TITILLIUM_SANSPRO_BOLD_FONT_PATH =
   Platform.OS === "android"
-    ? "file:///android_asset/fonts/TitilliumWeb-Bold.ttf"
-    : `${RNFS.MainBundlePath}/TitilliumWeb-Bold.ttf`;
+    ? "file:///android_asset/fonts/TitilliumSansPro-Bold.otf"
+    : `${RNFS.MainBundlePath}/TitilliumSansPro-Bold.otf`;
 
 const GLOBAL_CSS = `
 <style>
 @font-face {
-  font-family: 'Titillium Web';
+  font-family: 'Titillium SansPro';
   font-style: normal;
   font-weight: normal;
-  src: url('${TITILLIUM_WEB_FONT_PATH}');
+  src: url('${TITILLIUM_SANSPRO_FONT_PATH}');
 }
 @font-face {
-  font-family: 'Titillium Web';
+  font-family: 'Titillium SansPro';
   font-style: normal;
   font-weight: bold;
-  src: url('${TITILLIUM_WEB_BOLD_FONT_PATH}');
+  src: url('${TITILLIUM_SANSPRO_BOLD_FONT_PATH}');
 }
 
 body {
   margin: 0;
   padding: 0;
-  color: ${customVariables.textColor};
-  font-size: ${customVariables.fontSizeBase}px;
+  color: ${textColor};
+  font-size: ${fontSizeBase}px;
   font-family: 'Titillium Web';
   overflow-wrap: break-word;
   hyphens: auto;
@@ -75,7 +82,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-block-start: 0;
-  font-size: ${customVariables.fontSizeBase}px;
+  font-size: ${fontSizeBase}px;
 }
 
 ul, ol {
@@ -83,12 +90,12 @@ ul, ol {
 }
 
 a {
-  font-weight: ${customVariables.textLinkWeight};
-  color: ${customVariables.textMessageDetailLinkColor};
+  font-weight: ${textLinkWeight};
+  color: ${textMessageDetailLinkColor};
 }
 
 div.custom-block.io-demo-block {
-  background-color: ${customVariables.toastColor};
+  background-color: ${toastColor};
   border-radius: 4px;
   margin-bottom: 32px;
   padding: 4px 8px;
@@ -125,7 +132,7 @@ ol {
 ol li::before {
   content: counter(li);
   counter-increment: li;
-  color: ${customVariables.brandPrimary};
+  color: ${brandPrimary};
   display: inline-block;
   width: 1em;
   margin-left: -1.5em;
