@@ -16,7 +16,7 @@ import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
 import { NetworkError } from "../../../../../utils/errors";
-import { WalletPaymentFailure } from "../../types/failure";
+import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 
 export const walletPaymentNewSessionToken = createAsyncAction(
   "WALLET_PAYMENT_NEW_SESSION_TOKEN_REQUEST",
