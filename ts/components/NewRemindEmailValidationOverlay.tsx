@@ -162,7 +162,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     hideModal();
   };
 
-  const countdown = () => {
+  const Countdown = () => {
     if (isValidateEmailButtonDisabled && !isEmailValidated) {
       return (
         <View>
@@ -182,7 +182,7 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
 
   const renderFooter = () => (
     <>
-      {countdown()}
+      <Countdown />
       <VSpacer size={16} />
       <FooterWithButtons
         type={"SingleButton"}
@@ -215,8 +215,10 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     // send validation email KO
     if (pot.isError(emailValidation.sendEmailValidationRequest)) {
       IOToast.error(I18n.t("global.actions.retry"));
+      return;
       // send validation email OK
-    } else if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
+    }
+    if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
       IOToast.show(I18n.t("email.newvalidate.toast"));
       setIsValidateEmailButtonDisabled(true);
       // eslint-disable-next-line functional/immutable-data
@@ -227,8 +229,13 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
       timeout.current = setTimeout(() => {
         setIsValidateEmailButtonDisabled(false);
       }, emailSentTimeout);
-      // if the verification email was never sent, we send it
-    } else if (pot.isNone(emailValidation.sendEmailValidationRequest)) {
+      return;
+    }
+    // if the verification email was never sent, we send it
+    if (
+      pot.isNone(emailValidation.sendEmailValidationRequest) &&
+      !pot.isLoading(emailValidation.sendEmailValidationRequest)
+    ) {
       sendEmailValidation();
     }
   }, [emailValidation.sendEmailValidationRequest, sendEmailValidation]);
