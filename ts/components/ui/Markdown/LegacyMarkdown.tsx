@@ -208,7 +208,7 @@ type State = {
 /**
  * A component to render the message markdown as HTML inside a WebView
  */
-class Markdown extends React.PureComponent<Props, State> {
+class LegacyMarkdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
   private subscription: NativeEventSubscription | undefined;
 
@@ -398,6 +398,6 @@ class Markdown extends React.PureComponent<Props, State> {
   };
 }
 
-export type MarkdownProps = OwnProps;
+export type LegacyMarkdownProps = OwnProps;
 
-export default connect()(Markdown);
+export default connect()(LegacyMarkdown);

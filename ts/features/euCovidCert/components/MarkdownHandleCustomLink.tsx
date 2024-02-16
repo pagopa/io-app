@@ -2,16 +2,16 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { Toast } from "native-base";
 import * as React from "react";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { deriveCustomHandledLink } from "../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../i18n";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
 import { taskLinking } from "../../../utils/url";
 
 export const MarkdownHandleCustomLink = (
-  props: React.ComponentProps<typeof Markdown>
+  props: React.ComponentProps<typeof LegacyMarkdown>
 ): React.ReactElement => (
-  <Markdown
+  <LegacyMarkdown
     {...props}
     onLinkClicked={(link: string) => {
       pipe(
@@ -32,5 +32,5 @@ export const MarkdownHandleCustomLink = (
     }}
   >
     {props.children}
-  </Markdown>
+  </LegacyMarkdown>
 );

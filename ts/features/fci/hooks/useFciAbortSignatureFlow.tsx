@@ -9,7 +9,7 @@ import { fciEndRequest } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackFciUserExit } from "../analytics";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
@@ -40,9 +40,9 @@ export const useFciAbortSignatureFlow = () => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("features.fci.abort.title"),
     component: (
-      <Markdown>
+      <LegacyMarkdown>
         {I18n.t("features.fci.abort.content", { dossierTitle })}
-      </Markdown>
+      </LegacyMarkdown>
     ),
     snapPoint: [280],
     footer: (

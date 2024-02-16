@@ -19,7 +19,7 @@ import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 import { LoadingSkeleton } from "./LoadingSkeleton";
 import { convertOldDemoMarkdownTag, generateHtml } from "./utils";
 
-type Props = {
+export type MarkdownProps = {
   animated?: boolean;
   /**
    * The code will be inserted in the html body between
@@ -51,7 +51,7 @@ type InternalState = {
   webviewKey: number;
 };
 
-export const Markdown = (props: Props) => {
+export const Markdown = (props: MarkdownProps) => {
   // console.log(`Markdown`);
   const [internalState, setInternalState] = useState<InternalState>({
     html: undefined,

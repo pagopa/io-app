@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { useRoute } from "@react-navigation/native";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";
 import {
   ContextualHelpProps,
@@ -7,14 +8,11 @@ import {
 import { zendeskSupportStart } from "../features/zendesk/store/actions";
 import { useIODispatch, useIOSelector } from "../store/hooks";
 import { assistanceToolConfigSelector } from "../store/reducers/backendStatus";
-import { currentRouteSelector } from "../store/reducers/navigation";
 import { FAQsCategoriesType } from "../utils/faq";
 import {
   assistanceToolRemoteConfig,
   resetCustomFields
 } from "../utils/supportAssistance";
-import { useIONavigation } from "../navigation/params/AppParamsList";
-import NavigationService from "../navigation/NavigationService";
 
 export interface SupportRequestParams {
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
@@ -32,7 +30,7 @@ export const useStartSupportRequest = ({
    *  We have to use the deprecated currentRouteSelector because, at the moment, some components are rendered outside the navigation context.
    *  TODO: Full usage of navigation header and modal, in order to have always the right context
    */
-  const currentScreenName = NavigationService.getCurrentRouteName() ?? "";
+  const { name: currentScreenName } = useRoute();
 
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
