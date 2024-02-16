@@ -1203,7 +1203,7 @@ wallet:
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
     success:
-      title: "La carta è stata aggiunta!"
+      title: "Il metodo è stato aggiunto"
       continueButton: "Vedi dettagli"
     failure:
       GENERIC_ERROR:
