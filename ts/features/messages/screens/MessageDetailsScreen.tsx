@@ -1,5 +1,5 @@
-import React, { createRef, useCallback, useMemo } from "react";
-import { ScrollView, View } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { ScrollView } from "react-native";
 import {
   Alert,
   ContentWrapper,
@@ -48,12 +48,9 @@ export type MessageDetailsScreenNavigationParams = {
 export const MessageDetailsScreen = (
   props: IOStackNavigationRouteProps<MessagesParamsList, "MESSAGE_DETAIL">
 ) => {
-  // console.log(`MessageDetailsScreen`);
   const { messageId, serviceId } = props.route.params;
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-
-  const viewRef = createRef<View>();
 
   const message = pipe(
     useIOSelector(state => getPaginatedMessageById(state, messageId)),
@@ -151,7 +148,6 @@ export const MessageDetailsScreen = (
               <VSpacer size={8} />
               <Alert
                 testID="due-date-alert"
-                viewRef={viewRef}
                 variant="warning"
                 action={I18n.t("features.messages.alert.action")}
                 onPress={constNull}
