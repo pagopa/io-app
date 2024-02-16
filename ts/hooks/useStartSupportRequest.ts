@@ -25,17 +25,11 @@ export const useStartSupportRequest = ({
   contextualHelp,
   contextualHelpMarkdown
 }: SupportRequestParams) => {
-  // console.log(`useStartSupportRequest`);
-  /**
-   *  We have to use the deprecated currentRouteSelector because, at the moment, some components are rendered outside the navigation context.
-   *  TODO: Full usage of navigation header and modal, in order to have always the right context
-   */
   const { name: currentScreenName } = useRoute();
 
   const dispatch = useIODispatch();
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-  // console.log(`useStartSupportRequest ${currentScreenName} ${assistanceToolConfig} ${choosenTool}`);
 
   return useCallback((): void => {
     switch (choosenTool) {
