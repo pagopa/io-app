@@ -4,7 +4,7 @@ import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch } from "../../store/hooks";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import {
@@ -14,54 +14,36 @@ import {
 import I18n from "../../i18n";
 import { navigateToServicePreferenceScreen } from "../../store/actions/navigation";
 import { searchMessagesEnabled } from "../../store/actions/search";
-import { currentRouteSelector } from "../../store/reducers/navigation";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
+import ROUTES from "../routes";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
-type TabRoutes =
-  | Exclude<keyof MainTabParamsList, "MESSAGES_HOME" | "SERVICES_HOME">
-  | "MESSAGES_INBOX"
-  | "MESSAGES_ARCHIVE"
-  | "SERVICES_NATIONAL"
-  | "SERVICES_LOCAL";
+type TabRoutes = keyof MainTabParamsList;
 
 const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
   BARCODE_SCAN: {},
-  MESSAGES_ARCHIVE: {
+  [MESSAGES_ROUTES.MESSAGES_HOME]: {
     faqCategories: ["messages"],
     contextualHelpMarkdown: {
       title: "messages.contextualHelpTitle",
       body: "messages.contextualHelpContent"
     }
   },
-  MESSAGES_INBOX: {
-    faqCategories: ["messages"],
-    contextualHelpMarkdown: {
-      title: "messages.contextualHelpTitle",
-      body: "messages.contextualHelpContent"
-    }
-  },
-  PROFILE_MAIN: {
+  [ROUTES.PROFILE_MAIN]: {
     faqCategories: ["profile"],
     contextualHelpMarkdown: {
       title: "profile.main.contextualHelpTitle",
       body: "profile.main.contextualHelpContent"
     }
   },
-  SERVICES_NATIONAL: {
+  [ROUTES.SERVICES_HOME]: {
     faqCategories: ["services"],
     contextualHelpMarkdown: {
       title: "services.contextualHelpTitle",
       body: "services.contextualHelpContent"
     }
   },
-  SERVICES_LOCAL: {
-    faqCategories: ["services"],
-    contextualHelpMarkdown: {
-      title: "services.contextualHelpTitle",
-      body: "services.contextualHelpContent"
-    }
-  },
-  WALLET_HOME: {
+  [ROUTES.WALLET_HOME]: {
     faqCategories: ["wallet", "wallet_methods"],
     contextualHelpMarkdown: {
       title: "wallet.contextualHelpTitle",
@@ -70,17 +52,19 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
   }
 };
 
+type Props = {
+  currentRouteName: TabRoutes;
+};
 /**
  * This Component aims to handle the header of the first level screens. based on the current route
  * it will set the header title and the contextual help and the actions related to the screen
  * THIS COMPONENT IS NOT MEANT TO BE USED OUTSIDE THE NAVIGATION.
  * THIS COMPONENT WILL BE REMOVED ONCE REACT NAVIGATION WILL BE UPGRADED TO V6
  */
-export const HeaderFirstLevelHandler = () => {
+export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useNavigation();
-  const currentRouteName = useIOSelector(currentRouteSelector);
-  // console.log("currentRouteName", currentRouteName);
+
   const requestParams = useMemo(
     () =>
       pipe(
@@ -121,8 +105,7 @@ export const HeaderFirstLevelHandler = () => {
 
   useEffect(() => {
     switch (currentRouteName) {
-      case "SERVICES_NATIONAL":
-      case "SERVICES_LOCAL":
+      case ROUTES.SERVICES_HOME:
         headerPropsRef.current = {
           title: I18n.t("services.title"),
           type: "twoActions",
@@ -136,7 +119,7 @@ export const HeaderFirstLevelHandler = () => {
           }
         };
         break;
-      case "PROFILE_MAIN":
+      case ROUTES.PROFILE_MAIN:
         headerPropsRef.current = {
           title: I18n.t("profile.main.title"),
           backgroundColor: "dark",
@@ -144,8 +127,7 @@ export const HeaderFirstLevelHandler = () => {
           firstAction: helpAction
         };
         break;
-      case "MESSAGES_INBOX":
-      case "MESSAGES_ARCHIVE":
+      case MESSAGES_ROUTES.MESSAGES_HOME:
         headerPropsRef.current = {
           title: I18n.t("messages.contentTitle"),
           type: "twoActions",
@@ -159,8 +141,8 @@ export const HeaderFirstLevelHandler = () => {
           }
         };
         break;
-      case "BARCODE_SCAN":
-      case "WALLET_HOME":
+      case ROUTES.BARCODE_SCAN:
+      case ROUTES.WALLET_HOME:
         headerPropsRef.current = {
           title: I18n.t("wallet.wallet"),
           type: "twoActions",
@@ -178,9 +160,6 @@ export const HeaderFirstLevelHandler = () => {
       default:
         break;
     }
-    navigation.setOptions({
-      header: () => <HeaderFirstLevel {...headerPropsRef.current} />
-    });
   }, [
     navigation,
     currentRouteName,
@@ -189,5 +168,10 @@ export const HeaderFirstLevelHandler = () => {
     dispatch
   ]);
 
-  return <>{WalletHomeHeaderBottomSheet}</>;
+  return (
+    <>
+      <HeaderFirstLevel {...headerPropsRef.current} />
+      {WalletHomeHeaderBottomSheet}
+    </>
+  );
 };
