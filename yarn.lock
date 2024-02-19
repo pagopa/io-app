@@ -3315,10 +3315,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.0.tgz#26aa8fe2ae2c30f18d2714264524fd281f0f2b12"
   integrity sha512-9OXV4ebpZAGdFfbV5HOt0YbVhGvVb104KshCA7u74YnsTkJp32FhdIVwoqmerRwNO4rRjwwvDjWZdhT80IrOzA==
 
-"@pagopa/io-react-native-zendesk@^0.3.28":
-  version "0.3.28"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.28.tgz#eaef19df577bee000b615f6813d52546a1f2513f"
-  integrity sha512-U6avcojN+lbQgus1aYiggJ19wsqoHcVCm1EN4Dc7E+f32aCCfvsclFSisKd5FpubGsUdEd/x3De/+5At5c+K9w==
+"@pagopa/io-react-native-zendesk@^0.3.29":
+  version "0.3.29"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.29.tgz#ada8dab8a9ef15e126275baace2084491148bac8"
+  integrity sha512-CskFyF0Sz+EC/ZyJNNMFEX/Avjyn6cKRwE2K+XSTGWDKYLImPraA8YozTljclCdv3DOxk3ZklUsieMG25PfnSw==
 
 "@pagopa/openapi-codegen-ts@^12.2.1":
   version "12.2.1"
