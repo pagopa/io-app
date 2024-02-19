@@ -502,7 +502,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       exiting={[Function]}
                                       style={
                                         Array [
