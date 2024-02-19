@@ -327,7 +327,6 @@ dependencies {
             }
         }
     }
-    implementation project(':@react-native-community_datetimepicker')
     implementation project(':react-native-fingerprint-scanner')
     implementation project(':react-native-art')
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.41"
