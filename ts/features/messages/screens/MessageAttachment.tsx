@@ -77,7 +77,7 @@ const MessageAttachmentFooter = ({
       secondary={{
         type: "Solid",
         buttonProps: {
-          accessibilityLabel: I18n.t("messagePDFPreview.saveAccessibility"),
+          accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
           onPress: () => {
             onShare(isPN, attachmentCategory);
             share(`file://${downloadPath}`, undefined, false)().catch(_ => {
