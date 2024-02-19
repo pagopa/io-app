@@ -10,7 +10,7 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/Walle
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { PaymentHistory, PaymentStartRoute } from "../../types";
+import { PaymentStartRoute } from "../../types";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
   walletPaymentAuthorization,
@@ -45,7 +45,6 @@ export type WalletPaymentState = {
   chosenPsp: O.Option<Bundle>;
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  paymentHistory: PaymentHistory;
   startRoute?: PaymentStartRoute;
   showTransaction?: boolean;
 };
@@ -59,8 +58,7 @@ const INITIAL_STATE: WalletPaymentState = {
   chosenPaymentMethod: O.none,
   chosenPsp: O.none,
   transaction: pot.none,
-  authorizationUrl: pot.none,
-  paymentHistory: {}
+  authorizationUrl: pot.none
 };
 
 // eslint-disable-next-line complexity
@@ -72,9 +70,6 @@ const reducer = (
     case getType(walletPaymentInitState):
       return {
         ...INITIAL_STATE,
-        paymentHistory: {
-          startOrigin: action.payload.startOrigin
-        },
         startRoute: action.payload.startRoute,
         showTransaction: action.payload.showTransaction
       };
