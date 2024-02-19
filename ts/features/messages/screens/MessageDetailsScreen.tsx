@@ -1,20 +1,23 @@
 import React, { useCallback } from "react";
 import { ScrollView } from "react-native";
 import {
+  Alert,
   ContentWrapper,
   IOStyles,
   Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
+import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../store/actions";
@@ -44,7 +47,7 @@ export const MessageDetailsScreen = (
 ) => {
   const { messageId, serviceId } = props.route.params;
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const message = pipe(
     useIOSelector(state => getPaginatedMessageById(state, messageId)),
@@ -128,6 +131,29 @@ export const MessageDetailsScreen = (
             </MessageDetailsTagBox>
           )}
         </MessageDetailsHeader>
+
+        {messageDetails.dueDate && expiringInfo === "expiring" && (
+          <ContentWrapper>
+            <VSpacer size={8} />
+            <Alert
+              testID="due-date-alert"
+              variant="warning"
+              action={I18n.t("features.messages.alert.action")}
+              onPress={constNull}
+              content={I18n.t("features.messages.alert.content", {
+                date: localeDateFormat(
+                  messageDetails.dueDate,
+                  I18n.t("global.dateFormats.shortFormat")
+                ),
+                time: localeDateFormat(
+                  messageDetails.dueDate,
+                  I18n.t("global.dateFormats.timeFormat")
+                )
+              })}
+            />
+          </ContentWrapper>
+        )}
+
         <VSpacer size={16} />
         <ContentWrapper>
           <MessageDetailsAttachments messageId={messageId} />
