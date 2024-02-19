@@ -139,7 +139,7 @@ PODS:
     - React-Core
   - pagopa-io-react-native-login-utils (1.0.0):
     - React-Core
-  - pagopa-react-native-zendesk (0.3.28):
+  - pagopa-react-native-zendesk (0.3.29):
     - React-Core
     - ZendeskAnswerBotSDK
     - ZendeskChatSDK
@@ -936,7 +936,7 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
   pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
-  pagopa-react-native-zendesk: 381bc1e99d770155d8d00616175f7e83f40fa5ea
+  pagopa-react-native-zendesk: e4a63ee0745a567b641110f7ff78e457086ab7a3
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
