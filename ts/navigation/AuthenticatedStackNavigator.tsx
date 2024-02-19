@@ -106,7 +106,11 @@ const AuthenticatedStackNavigator = () => {
         headerMode: "screen"
       }}
     >
-      <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
+      <Stack.Screen
+        name={ROUTES.MAIN}
+        options={{ headerShown: false }}
+        component={MainTabNavigator}
+      />
 
       <Stack.Screen
         name={ROUTES.ONBOARDING}
