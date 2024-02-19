@@ -422,7 +422,17 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               },
                             ]
                           }
-                        />
+                        >
+                          <View
+                            accessibilityLabel="Preview of the PDF document"
+                            accessible={true}
+                            style={
+                              Object {
+                                "flex": 1,
+                              }
+                            }
+                          />
+                        </View>
                       </View>
                       <View
                         pointerEvents="box-none"
@@ -437,21 +447,26 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                         testID="FooterWithButtons"
                       >
                         <View
+                          onLayout={[Function]}
                           style={
-                            Object {
-                              "backgroundColor": "#FFFFFF",
-                              "elevation": 20,
-                              "paddingBottom": 16,
-                              "paddingHorizontal": 24,
-                              "paddingTop": 16,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": Object {
-                                "height": 50,
-                                "width": 0,
+                            Array [
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "elevation": 20,
+                                "paddingHorizontal": 24,
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": Object {
+                                  "height": 50,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.5,
+                                "shadowRadius": 37,
                               },
-                              "shadowOpacity": 0.5,
-                              "shadowRadius": 37,
-                            }
+                              Object {
+                                "paddingBottom": 16,
+                                "paddingTop": 16,
+                              },
+                            ]
                           }
                         >
                           <View
@@ -527,7 +542,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   }
                                 >
                                   <View
-                                    entering={[Function]}
                                     exiting={[Function]}
                                     style={
                                       Array [
@@ -735,6 +749,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               </View>
                             </View>
                             <Text
+                              accessible={false}
                               numberOfLines={1}
                               style={
                                 Array [
@@ -755,9 +770,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   },
                                 ]
                               }
-                            >
-                              PDF Preview
-                            </Text>
+                            />
                             <View
                               style={
                                 Array [
@@ -1480,6 +1493,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               </View>
                             </View>
                             <Text
+                              accessible={false}
                               numberOfLines={1}
                               style={
                                 Array [
@@ -1500,9 +1514,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   },
                                 ]
                               }
-                            >
-                              PDF Preview
-                            </Text>
+                            />
                             <View
                               style={
                                 Array [

@@ -29,7 +29,7 @@ const Stack = createStackNavigator<WalletTransactionParamsList>();
 export const WalletTransactionNavigator = () => (
   <Stack.Navigator
     initialRouteName={WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: true }}
   >
     <Stack.Screen
       name={WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS}

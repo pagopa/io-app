@@ -3,6 +3,8 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { loadThirdPartyMessage, reloadAllMessages } from "../actions";
 import { Action } from "../../../../store/actions/types";
@@ -14,8 +16,7 @@ import {
 } from "../../../../store/reducers/IndexedByIdPot";
 import { GlobalState } from "../../../../store/reducers/types";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
-import { UIAttachmentId, UIMessageDetails, UIMessageId } from "../../types";
-import { attachmentFromThirdPartyMessage } from "./transformers";
+import { UIMessageDetails, UIMessageId } from "../../types";
 
 export type ThirdPartyById = IndexedById<
   pot.Pot<ThirdPartyMessageWithContent, Error>
@@ -84,10 +85,28 @@ export const messageMarkdownSelector = (
       messageContent.markdown
   );
 
-export const thirdPartyMessageUIAttachment =
+export const hasAttachmentsSelector = (
+  state: GlobalState,
+  ioMessageId: UIMessageId
+) => pipe(thirdPartyMessageAttachments(state, ioMessageId), RA.isNonEmpty);
+
+export const thirdPartyMessageAttachments = (
+  state: GlobalState,
+  ioMessageId: UIMessageId
+): ReadonlyArray<ThirdPartyAttachment> =>
+  pipe(
+    thirdPartyFromIdSelector(state, ioMessageId),
+    pot.toOption,
+    O.chainNullableK(
+      thirdPartyMessage => thirdPartyMessage.third_party_message.attachments
+    ),
+    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => [])
+  );
+
+export const thirdPartyMessageAttachment =
   (state: GlobalState) =>
   (ioMessageId: UIMessageId) =>
-  (thirdPartyMessageAttachmentId: UIAttachmentId) =>
+  (thirdPartyMessageAttachmentId: string): O.Option<ThirdPartyAttachment> =>
     pipe(
       thirdPartyFromIdSelector(state, ioMessageId),
       pot.toOption,
@@ -99,12 +118,6 @@ export const thirdPartyMessageUIAttachment =
           thirdPartyMessageAttachment =>
             thirdPartyMessageAttachment.id ===
             (thirdPartyMessageAttachmentId as string as NonEmptyString)
-        )
-      ),
-      O.map(thirdPartyMessageAttachment =>
-        attachmentFromThirdPartyMessage(
-          ioMessageId,
-          thirdPartyMessageAttachment
         )
       )
     );
@@ -132,5 +145,12 @@ const messageContentSelector = <T>(
         )
       )
     ),
-    O.toUndefined
+    O.getOrElse(() =>
+      pipe(
+        state.entities.messages.detailsById[ioMessageId] ?? pot.none,
+        pot.toOption,
+        O.map(extractionFunction),
+        O.toUndefined
+      )
+    )
   );
