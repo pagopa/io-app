@@ -1928,9 +1928,13 @@ messageDetails:
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
+  singleBtnAccessibility: "Salva o condividi documento"
   open: "Apri"
   save: "Salva"
+  saveAccessibility: "Salva documento"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  share: "Condividi"
+  shareAccessibility: "Condividi documento"
   pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:

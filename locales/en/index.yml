@@ -1928,9 +1928,13 @@ messageDetails:
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
+  singleBtnAccessibility: "Save or share document"
   open: "Open"
   save: "Save"
+  saveAccessibility: "Save document"
   savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  share: "Share"
+  shareAccessibility: "Share document"
   pdfAccessibility: "Preview of the PDF document"
   errors:
     previewing:
