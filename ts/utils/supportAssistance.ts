@@ -1,4 +1,4 @@
-import ZendDesk from "@pagopa/io-react-native-zendesk";
+import * as ZendDesk from "@pagopa/io-react-native-zendesk";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { ToolEnum } from "../../definitions/content/AssistanceToolConfig";

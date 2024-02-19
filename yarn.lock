@@ -3277,10 +3277,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.23.1":
-  version "1.23.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.23.1.tgz#acdc3cb37cc157c60a5a3f993223141757f49c8f"
-  integrity sha512-pOd36qeV6c9dALih/3+ro5g/+izQWVf5J0u4sKSr0LF9zTBZ/sDRSpd4Z3/qrrXkKcopOkMEg3lqR6TJrdsGeA==
+"@pagopa/io-app-design-system@1.23.2":
+  version "1.23.2"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.23.2.tgz#739da99711af7c208b547d7c0b5cc82c77e1bad3"
+  integrity sha512-MqQnd5bHxGwXd+KdAb95e0Onw2C2Ic+GpJnIUSWN15sggb4oF/bl14tViMhV2yCJCpq7dYaiS8GmdWQjl2fQIQ==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3315,10 +3315,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.0.tgz#26aa8fe2ae2c30f18d2714264524fd281f0f2b12"
   integrity sha512-9OXV4ebpZAGdFfbV5HOt0YbVhGvVb104KshCA7u74YnsTkJp32FhdIVwoqmerRwNO4rRjwwvDjWZdhT80IrOzA==
 
-"@pagopa/io-react-native-zendesk@^0.3.28":
-  version "0.3.28"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.28.tgz#eaef19df577bee000b615f6813d52546a1f2513f"
-  integrity sha512-U6avcojN+lbQgus1aYiggJ19wsqoHcVCm1EN4Dc7E+f32aCCfvsclFSisKd5FpubGsUdEd/x3De/+5At5c+K9w==
+"@pagopa/io-react-native-zendesk@^0.3.29":
+  version "0.3.29"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.29.tgz#ada8dab8a9ef15e126275baace2084491148bac8"
+  integrity sha512-CskFyF0Sz+EC/ZyJNNMFEX/Avjyn6cKRwE2K+XSTGWDKYLImPraA8YozTljclCdv3DOxk3ZklUsieMG25PfnSw==
 
 "@pagopa/openapi-codegen-ts@^12.2.1":
   version "12.2.1"
@@ -3596,7 +3596,7 @@
     prompts "^2.4.0"
     semver "^6.3.0"
 
-"@react-native-community/datetimepicker@^3.0.2", "@react-native-community/datetimepicker@^3.5.2":
+"@react-native-community/datetimepicker@^3.0.2":
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.5.2.tgz#8e6feb30f2620e5abdf565d5fe74c0c04edcf6ae"
   integrity sha512-TWRuAtr/DnrEcRewqvXMLea2oB+YF+SbtuYLHguALLxNJQLl/RFB7aTNZeF+OoH75zKFqtXECXV1/uxQUpA+sg==
@@ -14581,13 +14581,6 @@ react-native-mixpanel@1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.2.0.tgz#17c24151cf2039482cd20decc54ccf0e49ccebc5"
   integrity sha512-Xy+KEIEVFidWuASBdexZquXTJBb3JCyFM7xSgnIOZt5PRzpARGFrYMDErTUZ1wSPK+KFaf1oylInOoC2DddI/Q==
-
-react-native-modal-datetime-picker@^10.2.0:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-10.2.0.tgz#3ec5c299e8bdc9fd2ec0a1a6642a459c408b910f"
-  integrity sha512-eMQb3EPqHx47WrlLPTrXvmLZDwGwGH//WTWiQBUvJ+6ehDeuTjIn8/v/ANv8wxCCrt4NeHem8FQY3Z5fa4fRgQ==
-  dependencies:
-    prop-types "^15.7.2"
 
 react-native-pager-view@^6.2.3:
   version "6.2.3"

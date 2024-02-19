@@ -71,9 +71,8 @@ export const MessageDetailsHeader = ({
       <Divider />
       {service && (
         <>
-          {/* TODO: update logoUri when MultiImage component will be available in DS */}
           <OrganizationHeader
-            logoUri={logosForService(service)[0]}
+            logoUri={logosForService(service)}
             organizationName={service.organization_name}
             serviceName={service.service_name}
           />
