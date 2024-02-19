@@ -7,6 +7,7 @@ import {
   ListItemRadio,
   RadioGroup,
   RadioItem,
+  Stepper,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -80,7 +81,13 @@ const WalletPaymentPickMethodScreen = () => {
     goBack: handleGoBack,
     contextualHelp: emptyContextualHelp,
     faqCategories: ["payment"],
-    supportRequest: true
+    supportRequest: true,
+    children: (
+      <>
+        <Stepper steps={4} currentStep={1} />
+        <VSpacer size={16} />
+      </>
+    )
   });
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);

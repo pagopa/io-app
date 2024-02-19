@@ -5,6 +5,7 @@ import {
   ListItemHeader,
   RadioGroup,
   RadioItemWithAmount,
+  Stepper,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -73,7 +74,13 @@ const WalletPaymentPickPspScreen = () => {
     title: "",
     contextualHelp: emptyContextualHelp,
     faqCategories: ["payment"],
-    supportRequest: true
+    supportRequest: true,
+    children: (
+      <>
+        <Stepper steps={4} currentStep={2} />
+        <VSpacer size={16} />
+      </>
+    )
   });
 
   React.useEffect(

@@ -2,6 +2,7 @@ import {
   H3,
   IOSpacingScale,
   LoadingSpinner,
+  Stepper,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -48,7 +49,13 @@ const WalletPaymentConfirmScreen = () => {
     title: "",
     contextualHelp: emptyContextualHelp,
     faqCategories: ["payment"],
-    supportRequest: true
+    supportRequest: true,
+    children: (
+      <>
+        <Stepper steps={4} currentStep={3} />
+        <VSpacer size={16} />
+      </>
+    )
   });
 
   const handleStartPaymentAuthorization = () =>
