@@ -62,7 +62,7 @@ type OwnProp = {
 
 type Props = LightModalContextInterface & OwnProp;
 
-const NewRemindEmailValidationOverlayInner = (props: Props) => {
+const NewRemindEmailValidationOverlayComponent = (props: Props) => {
   const { isOnboarding, hideModal, sendEmailAtFirstRender } = props;
   const dispatch = useIODispatch();
   const optionEmail = useIOSelector(profileEmailSelector);
@@ -321,7 +321,7 @@ const NewRemindEmailValidationOverlayInner = (props: Props) => {
 
 const NewRemindEmailValidationOverlay = (props: Props) => (
   <CountdownProvider timerTiming={emailSentTimeout / 1000}>
-    <NewRemindEmailValidationOverlayInner {...props} />
+    <NewRemindEmailValidationOverlayComponent {...props} />
   </CountdownProvider>
 );
 
