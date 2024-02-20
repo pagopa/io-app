@@ -3277,10 +3277,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.23.2":
-  version "1.23.2"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.23.2.tgz#739da99711af7c208b547d7c0b5cc82c77e1bad3"
-  integrity sha512-MqQnd5bHxGwXd+KdAb95e0Onw2C2Ic+GpJnIUSWN15sggb4oF/bl14tViMhV2yCJCpq7dYaiS8GmdWQjl2fQIQ==
+"@pagopa/io-app-design-system@1.23.3":
+  version "1.23.3"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.23.3.tgz#6b9b31c616f13148874ba144191ba544b45811b0"
+  integrity sha512-67YKokZnTtM+mXkYYvNV69Ml0c/2KU00BTam9l/BDYmeUUc/D7kleoi8T5lKlBNd9ZNMscPyVbvPcDkiHPjB3A==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3315,10 +3315,10 @@
   resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-login-utils/-/io-react-native-login-utils-1.0.0.tgz#26aa8fe2ae2c30f18d2714264524fd281f0f2b12"
   integrity sha512-9OXV4ebpZAGdFfbV5HOt0YbVhGvVb104KshCA7u74YnsTkJp32FhdIVwoqmerRwNO4rRjwwvDjWZdhT80IrOzA==
 
-"@pagopa/io-react-native-zendesk@^0.3.28":
-  version "0.3.28"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.28.tgz#eaef19df577bee000b615f6813d52546a1f2513f"
-  integrity sha512-U6avcojN+lbQgus1aYiggJ19wsqoHcVCm1EN4Dc7E+f32aCCfvsclFSisKd5FpubGsUdEd/x3De/+5At5c+K9w==
+"@pagopa/io-react-native-zendesk@^0.3.29":
+  version "0.3.29"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-react-native-zendesk/-/io-react-native-zendesk-0.3.29.tgz#ada8dab8a9ef15e126275baace2084491148bac8"
+  integrity sha512-CskFyF0Sz+EC/ZyJNNMFEX/Avjyn6cKRwE2K+XSTGWDKYLImPraA8YozTljclCdv3DOxk3ZklUsieMG25PfnSw==
 
 "@pagopa/openapi-codegen-ts@^12.2.1":
   version "12.2.1"
