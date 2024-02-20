@@ -13,6 +13,7 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { WALLET_PAYMENT_STEP_MAX } from "../store/reducers";
 
 type WalletPaymentHeaderProps = {
   currentStep: number;
@@ -60,7 +61,7 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
           )
         }}
       />
-      <Stepper steps={4} currentStep={currentStep} />
+      <Stepper steps={WALLET_PAYMENT_STEP_MAX} currentStep={currentStep} />
       <VSpacer size={16} />
     </>
   );

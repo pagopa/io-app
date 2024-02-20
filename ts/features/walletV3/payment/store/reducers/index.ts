@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import _ from "lodash";
 import { getType } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
@@ -31,6 +32,8 @@ import {
   walletPaymentResetPickedPsp,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
+
+export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type WalletPaymentState = {
   currentStep: number;
@@ -80,7 +83,7 @@ const reducer = (
     case getType(walletPaymentSetCurrentStep):
       return {
         ...state,
-        currentStep: action.payload
+        currentStep: _.clamp(action.payload, 1, WALLET_PAYMENT_STEP_MAX)
       };
 
     // eCommerce Session token
