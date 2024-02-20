@@ -385,7 +385,7 @@ PODS:
     - React-Core
   - react-native-cookies (6.2.1):
     - React-Core
-  - react-native-document-picker (9.0.1):
+  - react-native-document-picker (9.1.1):
     - React-Core
   - react-native-fingerprint-scanner (6.0.0):
     - React
@@ -959,7 +959,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: 2f08db1ecc9b73dbc01f89335d6d5179fac2894c
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-cookies: f54fcded06bb0cda05c11d86788020b43528a26c
-  react-native-document-picker: 2b8f18667caee73a96708a82b284a4f40b30a156
+  react-native-document-picker: 3599b238843369026201d2ef466df53f77ae0452
   react-native-fingerprint-scanner: ac6656f18c8e45a7459302b84da41a44ad96dbbe
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
