@@ -49,7 +49,7 @@ import { withLightModalContext } from "./helpers/withLightModalContext";
 import BaseScreenComponent from "./screens/BaseScreenComponent";
 import { CountdownProvider, useCountdown } from "./countdown/CountdownProvider";
 
-const emailSentTimeout = 10000 as Millisecond; // 60 seconds
+const emailSentTimeout = 60000 as Millisecond; // 60 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
 
 const EMPTY_EMAIL = "";
@@ -103,6 +103,8 @@ const NewRemindEmailValidationOverlayInner = (props: Props) => {
     // if the verification email was never sent, we send it
     if (sendEmailAtFirstRender) {
       sendEmailValidation();
+      IOToast.show(I18n.t("email.newvalidate.toast"));
+      setIsValidateEmailButtonDisabled(true);
     }
   }, [sendEmailAtFirstRender, sendEmailValidation]);
 
@@ -155,6 +157,8 @@ const NewRemindEmailValidationOverlayInner = (props: Props) => {
     } else {
       // resend the validation email
       sendEmailValidation();
+      IOToast.show(I18n.t("email.newvalidate.toast"));
+      setIsValidateEmailButtonDisabled(true);
     }
   };
 
@@ -236,19 +240,12 @@ const NewRemindEmailValidationOverlayInner = (props: Props) => {
       clearInterval(polling.current);
     };
   }, [hideModal, reloadProfile]);
-
   useEffect(() => {
     // send validation email KO
     if (pot.isError(emailValidation.sendEmailValidationRequest)) {
       IOToast.error(I18n.t("global.actions.retry"));
-      return;
-      // send validation email OK
     }
-    if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
-      IOToast.show(I18n.t("email.newvalidate.toast"));
-      setIsValidateEmailButtonDisabled(true);
-    }
-  }, [emailValidation.sendEmailValidationRequest, sendEmailValidation]);
+  }, [emailValidation.sendEmailValidationRequest]);
 
   useEffect(() => {
     if (isEmailValidated) {
