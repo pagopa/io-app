@@ -28,10 +28,12 @@ import {
   walletPaymentInitState,
   walletPaymentPickPaymentMethod,
   walletPaymentPickPsp,
-  walletPaymentResetPickedPsp
+  walletPaymentResetPickedPsp,
+  walletPaymentSetCurrentStep
 } from "../actions/orchestration";
 
 export type WalletPaymentState = {
+  currentStep: number;
   rptId?: RptId;
   sessionToken: pot.Pot<string, NetworkError>;
   paymentDetails: pot.Pot<
@@ -50,6 +52,7 @@ export type WalletPaymentState = {
 };
 
 const INITIAL_STATE: WalletPaymentState = {
+  currentStep: 1,
   sessionToken: pot.none,
   paymentDetails: pot.none,
   userWallets: pot.none,
@@ -72,6 +75,12 @@ const reducer = (
         ...INITIAL_STATE,
         startRoute: action.payload.startRoute,
         showTransaction: action.payload.showTransaction
+      };
+
+    case getType(walletPaymentSetCurrentStep):
+      return {
+        ...state,
+        currentStep: action.payload
       };
 
     // eCommerce Session token

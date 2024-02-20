@@ -7,6 +7,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 const selectWalletPayment = (state: GlobalState) =>
   state.features.wallet.payment;
 
+export const selectWalletPaymentCurrentStep = (state: GlobalState) =>
+  selectWalletPayment(state).currentStep;
+
 export const selectWalletPaymentSessionTokenPot = (state: GlobalState) =>
   selectWalletPayment(state).sessionToken;
 
