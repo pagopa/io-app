@@ -503,7 +503,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       exiting={[Function]}
                                       style={
                                         Array [
@@ -528,6 +527,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             "fontSize": 16,
                                           }
                                         }
+                                        importantForAccessibility="no-hide-descendants"
                                         maxFontSizeMultiplier={1.3}
                                         numberOfLines={1}
                                         style={
