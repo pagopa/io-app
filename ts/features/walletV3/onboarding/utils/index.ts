@@ -31,7 +31,8 @@ export const ONBOARDING_OUTCOME_ERROR_PICTOGRAM: Record<
   [OnboardingOutcomeEnum.TIMEOUT]: "time",
   [OnboardingOutcomeEnum.CANCELED_BY_USER]: "trash",
   [OnboardingOutcomeEnum.INVALID_SESSION]: "umbrellaNew",
-  [OnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success"
+  [OnboardingOutcomeEnum.ALREADY_ONBOARDED]: "success",
+  [OnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention"
 };
 
 /**
