@@ -3,7 +3,8 @@ import React, {
   useContext,
   useState,
   ReactNode,
-  useRef
+  useRef,
+  useEffect
 } from "react";
 
 type CountdownContextType = {
@@ -19,19 +20,22 @@ const CountdownContext = createContext<CountdownContextType>({ timerCount: 0 });
 interface CountdownProviderProps {
   children: ReactNode;
   timerTiming: number;
+  intervalDuration: number;
 }
 
 export const CountdownProvider = (props: CountdownProviderProps) => {
-  const { children, timerTiming } = props;
+  const { children, timerTiming, intervalDuration } = props;
   const [timerCount, setTimerCount] = useState<number>(timerTiming);
   const interval = useRef<number | undefined>();
+
+  useEffect(() => () => clearInterval(interval.current), []);
 
   const startTimer = () => {
     if (!interval.current) {
       // eslint-disable-next-line functional/immutable-data
       interval.current = setInterval(() => {
         setTimerCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
-      }, 1000);
+      }, intervalDuration);
     }
   };
 

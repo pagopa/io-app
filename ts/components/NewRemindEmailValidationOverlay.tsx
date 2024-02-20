@@ -51,6 +51,7 @@ import { CountdownProvider, useCountdown } from "./countdown/CountdownProvider";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
+const intervalDuration = 1000 as Millisecond; // 1 second
 
 const EMPTY_EMAIL = "";
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 80;
@@ -320,7 +321,10 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
 };
 
 const NewRemindEmailValidationOverlay = (props: Props) => (
-  <CountdownProvider timerTiming={emailSentTimeout / 1000}>
+  <CountdownProvider
+    timerTiming={emailSentTimeout / 1000}
+    intervalDuration={intervalDuration}
+  >
     <NewRemindEmailValidationOverlayComponent {...props} />
   </CountdownProvider>
 );
