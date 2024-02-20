@@ -12,6 +12,7 @@ import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 
 type WalletPaymentHeaderProps = {
   currentStep: number;
@@ -38,6 +39,11 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
 
     dispatch(walletPaymentSetCurrentStep(currentStep - 1));
   }, [navigation, dispatch, goBackHandler, currentStep]);
+
+  useHardwareBackButton(() => {
+    handleGoBack();
+    return true;
+  });
 
   return (
     <>
