@@ -2,25 +2,23 @@ import {
   H3,
   IOSpacingScale,
   LoadingSpinner,
-  Stepper,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { AmountEuroCents } from "../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
-  IOStackNavigationProp
+  IOStackNavigationProp,
+  useIONavigation
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WalletPaymentConfirmContent } from "../components/WalletPaymentConfirmContent";
 import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
 import { WalletPaymentRoutes } from "../navigation/routes";
@@ -34,9 +32,11 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 
 const WalletPaymentConfirmScreen = () => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
+  const dispatch = useIODispatch();
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const transactionPot = useIOSelector(walletPaymentTransactionSelector);
@@ -44,19 +44,6 @@ const WalletPaymentConfirmScreen = () => {
     walletPaymentPickedPaymentMethodSelector
   );
   const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
-
-  useHeaderSecondLevel({
-    title: "",
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["payment"],
-    supportRequest: true,
-    children: (
-      <>
-        <Stepper steps={4} currentStep={3} />
-        <VSpacer size={16} />
-      </>
-    )
-  });
 
   const handleStartPaymentAuthorization = () =>
     pipe(

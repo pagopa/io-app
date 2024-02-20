@@ -20,7 +20,6 @@ type CommonProps = {
   goBack?: () => void;
   transparent?: boolean;
   scrollValues?: ScrollValues;
-  children?: React.ReactElement;
 };
 
 type NoAdditionalActions = {
@@ -70,8 +69,7 @@ export const useHeaderSecondLevel = ({
   secondAction,
   thirdAction,
   transparent = false,
-  scrollValues,
-  children
+  scrollValues
 }: HeaderSecondLevelHookProps) => {
   const startSupportRequest = useStartSupportRequest({
     faqCategories,
@@ -142,16 +140,13 @@ export const useHeaderSecondLevel = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       header: () => (
-        <>
-          <HeaderSecondLevel
-            scrollValues={scrollValues}
-            transparent={transparent}
-            {...headerComponentProps}
-          />
-          {children}
-        </>
+        <HeaderSecondLevel
+          scrollValues={scrollValues}
+          transparent={transparent}
+          {...headerComponentProps}
+        />
       ),
       headerTransparent: transparent
     });
-  }, [headerComponentProps, navigation, transparent, scrollValues, children]);
+  }, [headerComponentProps, navigation, transparent, scrollValues]);
 };
