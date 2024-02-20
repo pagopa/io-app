@@ -1204,7 +1204,7 @@ wallet:
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
     success:
-      title: "La carta è stata aggiunta!"
+      title: "Il metodo è stato aggiunto"
       continueButton: "Vedi dettagli"
     failure:
       GENERIC_ERROR:
@@ -1231,6 +1231,10 @@ wallet:
       ALREADY_ONBOARDED:
         title: Hai già aggiunto questo metodo
         subtitle: ""
+        primaryAction: Chiudi
+      BPAY_NOT_FOUND:
+        title: Non abbiamo trovato alcun BANCOMAT Pay attivo
+        subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
@@ -1925,9 +1929,13 @@ messageDetails:
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
+  singleBtnAccessibility: "Salva o condividi documento"
   open: "Apri"
   save: "Salva"
+  saveAccessibility: "Salva documento"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  share: "Condividi"
+  shareAccessibility: "Condividi documento"
   pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:

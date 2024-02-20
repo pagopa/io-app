@@ -1232,6 +1232,10 @@ wallet:
         title: Hai già aggiunto questo metodo
         subtitle: ""
         primaryAction: Chiudi
+      BPAY_NOT_FOUND:
+        title: Non abbiamo trovato alcun BANCOMAT Pay attivo
+        subtitle: "Contatta la tua Banca per attivare il servizio."
+        primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
     msgErrorUpdateApp: "An error occurred while opening the app store"
@@ -1925,9 +1929,13 @@ messageDetails:
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
+  singleBtnAccessibility: "Save or share document"
   open: "Open"
   save: "Save"
+  saveAccessibility: "Save document"
   savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  share: "Share"
+  shareAccessibility: "Share document"
   pdfAccessibility: "Preview of the PDF document"
   errors:
     previewing:
