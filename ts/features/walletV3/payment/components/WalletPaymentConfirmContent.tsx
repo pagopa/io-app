@@ -7,15 +7,11 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { capitalize } from "../../../../utils/strings";
@@ -24,7 +20,7 @@ import {
   getPaymentLogo
 } from "../../common/utils";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { WalletPaymentTotalAmount } from "./WalletPaymentTotalAmount";
 
 export type WalletPaymentConfirmContentProps = {
@@ -42,7 +38,7 @@ export const WalletPaymentConfirmContent = ({
   isLoading,
   onConfirm
 }: WalletPaymentConfirmContentProps) => {
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const dispatch = useIODispatch();
 
   const taxFee = selectedPsp.taxPayerFee ?? 0;
 
@@ -76,11 +72,7 @@ export const WalletPaymentConfirmContent = ({
         paymentLogo={getPaymentLogo(paymentMethodDetails)}
         title={getPaymentTitle(paymentMethodDetails)}
         subtitle={getPaymentSubtitle(paymentMethodDetails)}
-        onPress={() =>
-          navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-            screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
-          })
-        }
+        onPress={() => dispatch(walletPaymentSetCurrentStep(1))}
       />
       <VSpacer size={24} />
       <ListItemHeader
@@ -94,11 +86,7 @@ export const WalletPaymentConfirmContent = ({
         subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${
           selectedPsp.bundleName
         }`}
-        onPress={() =>
-          navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-            screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
-          })
-        }
+        onPress={() => dispatch(walletPaymentSetCurrentStep(2))}
       />
       <VSpacer size={24} />
       <WalletPaymentTotalAmount totalAmount={totalAmount} />
