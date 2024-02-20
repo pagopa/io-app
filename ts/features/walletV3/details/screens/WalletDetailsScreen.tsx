@@ -38,12 +38,27 @@ export type WalletDetailsScreenRouteProps = RouteProp<
 >;
 
 const generateCardComponent = (details: UIWalletInfoDetails) => {
+  // TODO: IOBP-559
+  // This part is still type-dependant. We should refactor the component to allow
+  // unconditional rendering of every info of the card
+
   if (details.maskedEmail !== undefined) {
     return (
       <PaymentCardBig
         testID="CreditCardComponent"
         cardType="PAYPAL"
         holderEmail={details.maskedEmail}
+      />
+    );
+  }
+
+  if (details.maskedNumber !== undefined) {
+    return (
+      <PaymentCardBig
+        testID="CreditCardComponent"
+        cardType="BANCOMATPAY"
+        holderName={details.holder || ""}
+        phoneNumber={details.maskedNumber}
       />
     );
   }
