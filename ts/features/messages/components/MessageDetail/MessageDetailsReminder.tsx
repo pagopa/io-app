@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Alert } from "@pagopa/io-app-design-system";
 import { UIMessageId } from "../../types";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -23,16 +23,18 @@ export const MessageDetailsReminder = ({
 
   const preferredCalendar = useIOSelector(preferredCalendarSelector);
 
+  const navigate = useCallback(() => {
+    navigation.navigate("MESSAGES_NAVIGATOR", {
+      screen: "MESSAGE_DETAIL_CALENDAR",
+      params: {
+        messageId
+      }
+    });
+  }, [messageId, navigation]);
+
   const { isEventInDeviceCalendar, upsertReminder } = useMessageReminder(
     messageId,
-    () => {
-      navigation.navigate("MESSAGES_NAVIGATOR", {
-        screen: "MESSAGE_DETAIL_CALENDAR",
-        params: {
-          messageId
-        }
-      });
-    }
+    navigate
   );
 
   return (
