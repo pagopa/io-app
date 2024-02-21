@@ -28,8 +28,8 @@ import {
   CieLoginState
 } from "../../../cieLogin/store/reducers";
 
-import walletV3Reducer, {
-  WalletState as WalletV3State
+import paymentsReducer, {
+  PaymentsState
 } from "../../../payments/common/store/reducers";
 import {
   fastLoginReducer,
@@ -50,7 +50,7 @@ export type FeaturesState = {
   idPay: IDPayState;
   whatsNew: WhatsNewState & PersistPartial;
   loginFeatures: LoginFeaturesState;
-  wallet: WalletV3State;
+  payments: PaymentsState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -60,7 +60,7 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   pn: pnReducer,
   fci: fciReducer,
   idPay: idPayReducer,
-  wallet: walletV3Reducer,
+  payments: paymentsReducer,
   whatsNew: whatsNewPersistor,
   loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
