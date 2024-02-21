@@ -28,6 +28,7 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}
       component={LandingScreen}
+      options={{ headerShown: true }}
     />
 
     <Stack.Screen

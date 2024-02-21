@@ -3,58 +3,49 @@
  */
 
 import * as React from "react";
-import { View, Dimensions, Image, ScrollView, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "./core/typography/Body";
-import { H2 } from "./core/typography/H2";
+import { View, ScrollView, useWindowDimensions } from "react-native";
+import {
+  Body,
+  H3,
+  IOPictograms,
+  IOStyles,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 
 type Props = {
   id: number;
-  image: NodeRequire;
+  pictogramName: IOPictograms;
   title: string;
   content: string;
   accessibilityLabel?: string;
   accessibilityHint?: string;
 };
 
-const screenWidth = Dimensions.get("screen").width;
+export const LandingCardComponent = (card: Props) => {
+  const screenWidth = useWindowDimensions().width;
 
-const styles = StyleSheet.create({
-  card: {
-    width: screenWidth,
-    alignItems: "center",
-    alignContent: "flex-start"
-  },
-  image: {
-    width: screenWidth / 2,
-    height: screenWidth / 2,
-    resizeMode: "contain"
-  }
-});
-
-export const LandingCardComponent: React.SFC<Props> = card => (
-  <ScrollView>
-    <View
-      style={styles.card}
-      accessible={true}
-      accessibilityLabel={card.accessibilityLabel}
-      accessibilityHint={card.accessibilityHint}
-    >
-      <Image source={card.image} style={styles.image} />
-      <VSpacer size={16} />
-      <Grid>
-        <Col size={1} />
-        <Col size={7}>
-          <H2 style={{ textAlign: "center" }} weight="Bold">
-            {card.title}
-          </H2>
-          <VSpacer size={16} />
-          <Body style={{ textAlign: "center" }}>{card.content}</Body>
-          <VSpacer size={16} />
-        </Col>
-        <Col size={1} />
-      </Grid>
-    </View>
-  </ScrollView>
-);
+  return (
+    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: "center" }}>
+      <View
+        style={[
+          {
+            width: screenWidth
+          },
+          IOStyles.horizontalContentPadding,
+          IOStyles.alignCenter
+        ]}
+        accessible={true}
+        accessibilityLabel={card.accessibilityLabel}
+        accessibilityHint={card.accessibilityHint}
+      >
+        <Pictogram size={180} name={card.pictogramName} />
+        <VSpacer size={16} />
+        <H3 style={{ textAlign: "center" }}>{card.title}</H3>
+        <VSpacer size={16} />
+        <Body style={{ textAlign: "center" }}>{card.content}</Body>
+        <VSpacer size={16} />
+      </View>
+    </ScrollView>
+  );
+};

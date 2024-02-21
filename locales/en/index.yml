@@ -579,6 +579,7 @@ authentication:
     loginSpidCie: Login with SPID or CIE
     infoSpidCie: Introduction to SPID and CIE
     loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
+    privacyLink: Informativa privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
     card1-title: All messages in one place
