@@ -21,7 +21,7 @@ import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/acti
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
-import { WalletActions as WalletV3Actions } from "../../features/payments/common/store/actions";
+import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
@@ -98,7 +98,7 @@ export type Action =
   | LollipopActions
   | FastLoginActions
   | WhatsNewActions
-  | WalletV3Actions;
+  | PaymentsFeatureActions;
 
 export type Dispatch = DispatchAPI<Action>;
 
