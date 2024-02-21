@@ -50,10 +50,6 @@ export const MessageCalendarScreen = () => {
   const { addEventToCalendar, setPreferredCalendar } =
     useMessageCalendar(messageId);
 
-  const handleOnPress = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
-
   const handleCalendarSelected = useCallback(
     (calendar: Calendar) => {
       pipe(
@@ -94,7 +90,7 @@ export const MessageCalendarScreen = () => {
     {
       iconName: "closeLarge",
       accessibilityLabel: I18n.t("accessibility.buttons.torch.turnOff"),
-      onPress: handleOnPress
+      onPress: () => navigation.goBack()
     };
 
   if (pot.isError(calendarsByAccount)) {
