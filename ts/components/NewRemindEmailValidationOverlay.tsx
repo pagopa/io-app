@@ -42,6 +42,7 @@ import {
   trackEmailValidationSuccessConfirmed
 } from "../screens/analytics/emailAnalytics";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../utils/hooks/usePrevious";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -70,6 +71,7 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const emailValidation = useIOSelector(emailValidationSelector);
+  const prevEmailValidation = usePrevious(emailValidation);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
@@ -105,8 +107,6 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
     // if the verification email was never sent, we send it
     if (sendEmailAtFirstRender) {
       sendEmailValidation();
-      IOToast.show(I18n.t("email.newvalidate.toast"));
-      setIsValidateEmailButtonDisabled(true);
     }
   });
 
@@ -159,8 +159,6 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
     } else {
       // resend the validation email
       sendEmailValidation();
-      IOToast.show(I18n.t("email.newvalidate.toast"));
-      setIsValidateEmailButtonDisabled(true);
     }
   };
 
@@ -242,12 +240,25 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
       clearInterval(polling.current);
     };
   }, [hideModal, reloadProfile]);
+
   useEffect(() => {
-    // send validation email KO
-    if (pot.isError(emailValidation.sendEmailValidationRequest)) {
-      IOToast.error(I18n.t("global.actions.retry"));
+    if (
+      prevEmailValidation !== undefined &&
+      pot.isLoading(prevEmailValidation.sendEmailValidationRequest)
+    ) {
+      // send validation email KO
+      if (pot.isError(emailValidation.sendEmailValidationRequest)) {
+        IOToast.error(I18n.t("global.actions.retry"));
+        setIsValidateEmailButtonDisabled(false);
+        return;
+      }
+      // send validation email OK
+      if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
+        IOToast.show(I18n.t("email.newvalidate.toast"));
+        setIsValidateEmailButtonDisabled(true);
+      }
     }
-  }, [emailValidation.sendEmailValidationRequest]);
+  }, [emailValidation.sendEmailValidationRequest, prevEmailValidation]);
 
   useEffect(() => {
     if (isEmailValidated) {
