@@ -47,8 +47,9 @@ const reducer = (
 };
 
 // Selectors
-export const calendarEventByMessageIdSelector =
-  (messageId: string) => (state: GlobalState) =>
-    state.entities.calendarEvents.byMessageId[messageId];
+export const calendarEventByMessageIdSelector = (
+  state: GlobalState,
+  messageId: string
+) => state.entities.calendarEvents.byMessageId[messageId];
 
 export default reducer;
