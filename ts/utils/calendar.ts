@@ -226,20 +226,15 @@ export const requestCalendarPermission = async (): Promise<boolean> => {
 /**
  * Check if the event is in the device calendar
  */
-export const isEventInCalendar = (eventId: string) => {
-  const authTask = TE.tryCatch(() => requestCalendarPermission(), E.toError);
-  const findTask = TE.tryCatch(
-    () => RNCalendarEvents.findEventById(eventId),
-    E.toError
-  );
-
-  return pipe(
-    authTask,
+export const isEventInCalendar = (eventId: string) =>
+  pipe(
+    TE.tryCatch(() => requestCalendarPermission(), E.toError),
     TE.chain(TE.fromPredicate(identity, () => Error("Permission not granted"))),
-    TE.chain(() => findTask),
+    TE.chain(() =>
+      TE.tryCatch(() => RNCalendarEvents.findEventById(eventId), E.toError)
+    ),
     TE.map(ev => ev !== null)
   );
-};
 
 /**
  * Add an event to the device calendar
