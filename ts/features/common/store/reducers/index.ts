@@ -30,7 +30,7 @@ import {
 
 import walletV3Reducer, {
   WalletState as WalletV3State
-} from "../../../walletV3/common/store/reducers";
+} from "../../../payments/common/store/reducers";
 import {
   fastLoginReducer,
   FastLoginState

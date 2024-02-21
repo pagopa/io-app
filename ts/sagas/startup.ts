@@ -50,7 +50,7 @@ import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/l
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
+import { watchWalletSaga as watchWalletV3Saga } from "../features/payments/common/saga";
 import {
   watchZendeskGetSessionSaga,
   watchZendeskSupportSaga

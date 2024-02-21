@@ -29,7 +29,7 @@ import { ProductCategoryEnum } from "../../../../definitions/cgn/merchants/Produ
 import DetailedlistItemComponent from "../../../components/DetailedlistItemComponent";
 import CgnMerchantListItem from "../../bonus/cgn/components/merchants/CgnMerchantListItem";
 import OrderOption from "../../bonus/cgn/components/merchants/search/OrderOption";
-import { getBadgeTextByTransactionStatus } from "../../walletV3/common/utils";
+import { getBadgeTextByTransactionStatus } from "../../payments/common/utils";
 import ZendeskItemPermissionComponent from "../../zendesk/components/ZendeskItemPermissionComponent";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
