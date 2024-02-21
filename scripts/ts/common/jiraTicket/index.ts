@@ -82,16 +82,12 @@ export const getJiraIdFromPrTitle = (
  */
 export const getTicketsFromTitle = async (
   title: string
-): Promise<JiraTicketRetrievalResults> => {
-  const maybeJiraIds = getJiraIdFromPrTitle(title);
-
-  if (O.isNone(maybeJiraIds)) {
-    return [];
-  } else {
-    const maybeJiraTickets = await pipe(maybeJiraIds.value, getJiraTickets);
-
-    return maybeJiraTickets
-      ? maybeJiraTickets
-      : [E.left(new Error("No Jira ticket found"))];
-  }
-};
+): Promise<JiraTicketRetrievalResults> =>
+  pipe(
+    title,
+    getJiraIdFromPrTitle,
+    O.fold(
+      () => Promise.resolve([]),
+      jiraIds => getJiraTickets(jiraIds)
+    )
+  );
