@@ -1,8 +1,9 @@
 name: Run e2e tests
 on:
-  push:
-    branches:
-      - master
+  - pull_request
+  # push:
+  #   branches:
+  #     - master
 jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
