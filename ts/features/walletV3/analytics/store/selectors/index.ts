@@ -8,10 +8,8 @@ import { walletPaymentDetailsSelector } from "../../../payment/store/selectors";
 const selectWalletAnalytics = (state: GlobalState) =>
   state.features.wallet.analytics;
 
-export const walletPaymentAttemptsByRptIdSelector = createSelector(
-  selectWalletAnalytics,
-  state => state.paymentAttemptsByRptId
-);
+export const walletPaymentAttemptsByRptIdSelector = (state: GlobalState) =>
+  selectWalletAnalytics(state).paymentAttemptsByRptId;
 
 export const walletPaymentAttemptSelector = createSelector(
   [walletPaymentAttemptsByRptIdSelector, walletPaymentDetailsSelector],
