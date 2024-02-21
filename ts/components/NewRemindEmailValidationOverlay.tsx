@@ -193,7 +193,7 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
 
     if (visible) {
       return (
-        <View>
+        <View style={IOStyles.alignCenter}>
           <Body>
             <Label weight="Regular" style={{ textAlign: "center" }}>
               {I18n.t("email.newvalidate.countdowntext")}{" "}
