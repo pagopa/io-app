@@ -338,7 +338,6 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      // New Wallet
       value: "Payments",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
