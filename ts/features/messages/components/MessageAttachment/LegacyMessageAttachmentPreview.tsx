@@ -16,7 +16,7 @@ import {
 } from "../../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { downloadPotForMessageAttachmentSelector } from "../../store/reducers/downloads";
-import { UIAttachment, UIMessageId } from "../../types";
+import { UIMessageId } from "../../types";
 import variables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isIos } from "../../../../utils/platform";
@@ -24,11 +24,16 @@ import { isStrictNone } from "../../../../utils/pot";
 import { share } from "../../../../utils/share";
 import { showToast } from "../../../../utils/showToast";
 import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../../store/reducers/transformers";
 import LegacyPdfViewer from "./LegacyPdfViewer";
 
 type Props = {
   messageId: UIMessageId;
-  attachment: UIAttachment;
+  attachment: ThirdPartyAttachment;
   enableDownloadAttachment?: boolean;
   onLoadComplete?: () => void;
   onPDFError?: () => void;
@@ -74,9 +79,14 @@ const renderError = (title: string, body: string) => (
 );
 
 const renderPDF = (
+  name: string,
+  mimeType: string,
   downloadPath: string,
   isPDFError: boolean,
-  props: Omit<Props, "enableDownloadAttachment">,
+  props: Omit<
+    Props,
+    "enableDownloadAttachment" | "attachment" | "messageId" | "onPDFError"
+  >,
   onPDFLoadingError: () => void
 ) => (
   <>
@@ -93,7 +103,8 @@ const renderPDF = (
       />
     )}
     {renderFooter(
-      props.attachment,
+      name,
+      mimeType,
       downloadPath,
       props.onShare,
       props.onOpen,
@@ -103,7 +114,8 @@ const renderPDF = (
 );
 
 const renderFooter = (
-  attachment: UIAttachment,
+  name: string,
+  mimeType: string,
   downloadPath: string,
   onShare?: () => void,
   onOpen?: () => void,
@@ -140,9 +152,9 @@ const renderFooter = (
           onDownload?.();
           ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
             {
-              name: attachment.displayName,
+              name,
               parentFolder: "",
-              mimeType: attachment.contentType
+              mimeType
             },
             "Download",
             downloadPath
@@ -150,7 +162,7 @@ const renderFooter = (
             .then(_ => {
               showToast(
                 I18n.t("messagePDFPreview.savedAtLocation", {
-                  name: attachment.displayName
+                  name
                 }),
                 "success"
               );
@@ -165,7 +177,7 @@ const renderFooter = (
         () => {
           onOpen?.();
           ReactNativeBlobUtil.android
-            .actionViewIntent(downloadPath, attachment.contentType)
+            .actionViewIntent(downloadPath, mimeType)
             .catch(_ => {
               showToast(I18n.t("messagePDFPreview.errors.opening"));
             });
@@ -194,10 +206,7 @@ export const LegacyMessageAttachmentPreview = ({
   const attachment = props.attachment;
   const attachmentId = attachment.id;
   const downloadPot = useIOSelector(state =>
-    downloadPotForMessageAttachmentSelector(state, {
-      messageId,
-      id: attachmentId
-    })
+    downloadPotForMessageAttachmentSelector(state, messageId, attachmentId)
   );
   // This component handles the attachment blob download only if
   // it is a generic attachment (not a PN one, since that flow
@@ -239,8 +248,9 @@ export const LegacyMessageAttachmentPreview = ({
     if (shouldDownloadAttachment) {
       dispatch(
         downloadAttachment.request({
-          ...attachment,
-          skipMixpanelTrackingOnFailure: true
+          attachment,
+          messageId,
+          skipMixpanelTrackingOnFailure: false
         })
       );
     } else if (
@@ -259,6 +269,7 @@ export const LegacyMessageAttachmentPreview = ({
     downloadPot,
     dispatch,
     enableDownloadAttachment,
+    messageId,
     navigation,
     shouldDownloadAttachment
   ]);
@@ -266,6 +277,9 @@ export const LegacyMessageAttachmentPreview = ({
   const shouldDisplayDownloadProgress = pot.isLoading(downloadPot);
   const shouldDisplayPDFPreview =
     pot.isSome(downloadPot) && !pot.isError(downloadPot);
+
+  const name = attachmentDisplayName(attachment);
+  const mimeType = attachmentContentType(attachment);
 
   return (
     <BaseScreenComponent
@@ -280,6 +294,8 @@ export const LegacyMessageAttachmentPreview = ({
         {shouldDisplayDownloadProgress && renderDownloadFeedback()}
         {shouldDisplayPDFPreview &&
           renderPDF(
+            name,
+            mimeType,
             downloadPot.value.path,
             isPDFError,
             props,

@@ -6,14 +6,28 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
-import { WalletClient } from "../../../common/api/client";
+import { PaymentClient } from "../../api/client";
 import { walletPaymentGetUserWallets } from "../../store/actions/networking";
+import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetUserWallets(
-  getWalletsByIdUser: WalletClient["getWalletsByIdUser"],
+  getWalletsByIdUser: PaymentClient["getWalletsByIdUser"],
   action: ActionType<(typeof walletPaymentGetUserWallets)["request"]>
 ) {
-  const getWalletsByIdUserRequest = getWalletsByIdUser({});
+  const sessionToken = yield* getOrFetchWalletSessionToken();
+
+  if (sessionToken === undefined) {
+    yield* put(
+      walletPaymentGetUserWallets.failure({
+        ...getGenericError(new Error(`Missing session token`))
+      })
+    );
+    return;
+  }
+
+  const getWalletsByIdUserRequest = getWalletsByIdUser({
+    eCommerceSessionToken: sessionToken
+  });
 
   try {
     const getWalletsByIdUserResult = (yield* call(
@@ -33,6 +47,9 @@ export function* handleWalletPaymentGetUserWallets(
           res => {
             if (res.status === 200) {
               return walletPaymentGetUserWallets.success(res.value);
+            }
+            if (res.status === 404) {
+              return walletPaymentGetUserWallets.success({ wallets: [] });
             }
             return walletPaymentGetUserWallets.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))

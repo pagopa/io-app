@@ -6,7 +6,7 @@ import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { downloadedMessageAttachmentSelector } from "../store/reducers/downloads";
-import { UIAttachment, UIAttachmentId, UIMessageId } from "../types";
+import { UIMessageId } from "../types";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
 import { IOToast } from "../../../components/Toast";
@@ -21,34 +21,48 @@ import {
 } from "../analytics";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
-  trackPNAttachmentOpen,
   trackPNAttachmentOpeningSuccess,
   trackPNAttachmentSave,
   trackPNAttachmentSaveShare,
   trackPNAttachmentShare
 } from "../../pn/analytics";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../store/reducers/transformers";
 
 export type MessageAttachmentNavigationParams = Readonly<{
   messageId: UIMessageId;
-  attachmentId: UIAttachmentId;
+  attachmentId: string;
   isPN: boolean;
   serviceId?: ServiceId;
 }>;
 
-const renderFooter = (
-  attachment: UIAttachment,
-  downloadPath: string,
-  isPN: boolean,
-  attachmentCategory?: string
-) =>
+type MessageAttachmentFooterProps = {
+  attachmentCategory?: string;
+  downloadPath: string;
+  isPN: boolean;
+  mimeType: string;
+  name: string;
+};
+
+const MessageAttachmentFooter = ({
+  attachmentCategory,
+  downloadPath,
+  isPN,
+  mimeType,
+  name
+}: MessageAttachmentFooterProps) =>
   isIos ? (
     <FooterWithButtons
       type={"SingleButton"}
       primary={{
         type: "Solid",
         buttonProps: {
-          accessibilityLabel: I18n.t("messagePDFPreview.singleBtn"),
+          accessibilityLabel: I18n.t(
+            "messagePDFPreview.singleBtnAccessibility"
+          ),
           onPress: () => {
             onShare(isPN, attachmentCategory);
             ReactNativeBlobUtil.ios.presentOptionsMenu(downloadPath);
@@ -59,31 +73,31 @@ const renderFooter = (
     />
   ) : (
     <FooterWithButtons
-      type={"ThreeButtonsInLine"}
-      primary={{
-        type: "Outline",
+      type={"TwoButtonsInlineHalf"}
+      secondary={{
+        type: "Solid",
         buttonProps: {
-          accessibilityLabel: I18n.t("global.buttons.share"),
+          accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
           onPress: () => {
             onShare(isPN, attachmentCategory);
             share(`file://${downloadPath}`, undefined, false)().catch(_ => {
               IOToast.show(I18n.t("messagePDFPreview.errors.sharing"));
             });
           },
-          label: I18n.t("global.buttons.share")
+          label: I18n.t("messagePDFPreview.share")
         }
       }}
-      third={{
-        type: "Outline",
+      primary={{
+        type: "Solid",
         buttonProps: {
-          accessibilityLabel: I18n.t("messagePDFPreview.save"),
+          accessibilityLabel: I18n.t("messagePDFPreview.saveAccessibility"),
           onPress: () => {
             onDownload(isPN, attachmentCategory);
             ReactNativeBlobUtil.MediaCollection.copyToMediaStore(
               {
-                name: attachment.displayName,
+                name,
                 parentFolder: "",
-                mimeType: attachment.contentType
+                mimeType
               },
               "Download",
               downloadPath
@@ -91,7 +105,7 @@ const renderFooter = (
               .then(_ => {
                 IOToast.show(
                   I18n.t("messagePDFPreview.savedAtLocation", {
-                    name: attachment.displayName
+                    name
                   })
                 );
               })
@@ -100,21 +114,6 @@ const renderFooter = (
               });
           },
           label: I18n.t("messagePDFPreview.save")
-        }
-      }}
-      secondary={{
-        type: "Solid",
-        buttonProps: {
-          accessibilityLabel: I18n.t("messagePDFPreview.open"),
-          onPress: () => {
-            onOpen(isPN, attachmentCategory);
-            ReactNativeBlobUtil.android
-              .actionViewIntent(downloadPath, attachment.contentType)
-              .catch(_ => {
-                IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
-              });
-          },
-          label: I18n.t("messagePDFPreview.open")
         }
       }}
     />
@@ -162,15 +161,6 @@ const onShare = (isPN: boolean, attachmentCategory?: string) =>
     )
   );
 
-const onOpen = (isPN: boolean, attachmentCategory?: string) =>
-  pipe(
-    isPN,
-    B.fold(
-      () => trackThirdPartyMessageAttachmentUserAction("open"),
-      () => trackPNAttachmentOpen(attachmentCategory)
-    )
-  );
-
 const onDownload = (isPN: boolean, attachmentCategory?: string) =>
   pipe(
     isPN,
@@ -202,7 +192,7 @@ export const MessageAttachment = (
   }, [attachmentCategory, messageId, isPN, serviceId]);
 
   useHeaderSecondLevel({
-    title: I18n.t("messagePDFPreview.title"),
+    title: "",
     supportRequest: true
   });
 
@@ -215,6 +205,8 @@ export const MessageAttachment = (
       />
     );
   }
+  const name = attachmentDisplayName(attachmentOpt);
+  const mimeType = attachmentContentType(attachmentOpt);
   return (
     <>
       {isPDFRenderingError ? (
@@ -230,7 +222,13 @@ export const MessageAttachment = (
           onLoadComplete={() => onLoadComplete(isPN, attachmentCategory)}
         />
       )}
-      {renderFooter(attachmentOpt, downloadPathOpt, isPN, attachmentCategory)}
+      <MessageAttachmentFooter
+        attachmentCategory={attachmentCategory}
+        downloadPath={downloadPathOpt}
+        isPN={isPN}
+        mimeType={mimeType}
+        name={name}
+      />
     </>
   );
 };

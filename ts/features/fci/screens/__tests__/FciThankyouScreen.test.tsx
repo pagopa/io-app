@@ -73,8 +73,7 @@ describe("Test FciThankyouScreen screen", () => {
     store.dispatch(fciSigningRequest.success(mockSignatureDetailView));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
-    expect(component.queryByTestId("FciTypSuccessTestID")).toBeTruthy();
-    const closeButton = component.getByTestId("FciTypSuccessFooterButton");
+    const closeButton = component.getByTestId("FciTypCloseButton");
     expect(closeButton).toBeTruthy();
     expect(closeButton).toBeEnabled();
     fireEvent.press(closeButton, "onPress");

@@ -1,18 +1,22 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
+import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { CalculateFeeResponse } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeResponse";
+import { NewSessionTokenResponse } from "../../../../../../definitions/pagopa/ecommerce/NewSessionTokenResponse";
 import { NewTransactionRequest } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionRequest";
 import { NewTransactionResponse } from "../../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RequestAuthorizationResponse } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
-import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
-import { NetworkError } from "../../../../../utils/errors";
-import { WalletPaymentFailure } from "../../types/failure";
-import { NewSessionTokenResponse } from "../../../../../../definitions/pagopa/ecommerce/NewSessionTokenResponse";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
-import { CalculateFeeRequest } from "../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
+import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodsResponse";
+import { NetworkError } from "../../../../../utils/errors";
+import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 
 export const walletPaymentNewSessionToken = createAsyncAction(
   "WALLET_PAYMENT_NEW_SESSION_TOKEN_REQUEST",
@@ -90,6 +94,10 @@ export const walletPaymentAuthorization = createAsyncAction(
   undefined
 >();
 
+export const walletPaymentResetPspList = createStandardAction(
+  "WALLET_PAYMENT_RESET_PSP_LIST"
+)();
+
 export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentNewSessionToken>
   | ActionType<typeof walletPaymentGetDetails>
@@ -99,4 +107,5 @@ export type WalletPaymentNetworkingActions =
   | ActionType<typeof walletPaymentCreateTransaction>
   | ActionType<typeof walletPaymentGetTransactionInfo>
   | ActionType<typeof walletPaymentDeleteTransaction>
-  | ActionType<typeof walletPaymentAuthorization>;
+  | ActionType<typeof walletPaymentAuthorization>
+  | ActionType<typeof walletPaymentResetPspList>;

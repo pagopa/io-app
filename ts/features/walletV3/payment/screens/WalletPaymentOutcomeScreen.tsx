@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -8,12 +8,10 @@ import {
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentParamsList } from "../navigation/params";
@@ -25,7 +23,6 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -42,7 +39,7 @@ const WalletPaymentOutcomeScreen = () => {
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentStartRoute = useIOSelector(walletPaymentStartRouteSelector);
 
@@ -75,7 +72,8 @@ const WalletPaymentOutcomeScreen = () => {
 
   const handleClose = () => {
     if (paymentStartRoute) {
-      navigation.navigate(paymentStartRoute.routeName, {
+      // TODO: this is a workaround to solve type errors need to investigate deeply
+      navigation.navigate(paymentStartRoute.routeName as any, {
         screen: paymentStartRoute.routeKey
       });
       return;
@@ -182,6 +180,26 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t("wallet.payment.outcome.INVALID_METHOD.title"),
           action: contactSupportAction,
           secondaryAction: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
+        return {
+          pictogram: "timing",
+          title: I18n.t(
+            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle"
+          ),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.METHOD_NOT_ENABLED:
+        return {
+          pictogram: "activate",
+          title: I18n.t("wallet.payment.outcome.METHOD_NOT_ENABLED.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.METHOD_NOT_ENABLED.subtitle"
+          ),
+          action: closeFailureAction
         };
     }
   };

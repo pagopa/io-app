@@ -54,8 +54,11 @@ const T_INITIATIVE_INFO_DTO: InitiativeDataDTO = {
 
 describe("IDPay Onboarding machine actions", () => {
   const actions = createActionsImplementation(
-    rootNavigation as IOStackNavigationProp<AppParamsList>,
-    onboardingNavigation as IDPayOnboardingStackNavigationProp<IDPayOnboardingParamsList>,
+    rootNavigation as IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
+    onboardingNavigation as IDPayOnboardingStackNavigationProp<
+      IDPayOnboardingParamsList,
+      keyof IDPayOnboardingParamsList
+    >,
     dispatch
   );
 

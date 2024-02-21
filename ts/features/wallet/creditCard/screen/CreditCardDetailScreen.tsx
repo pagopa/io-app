@@ -4,11 +4,10 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
@@ -22,17 +21,15 @@ export type CreditCardDetailScreenNavigationParams = Readonly<{
   creditCard: CreditCardPaymentMethod;
 }>;
 
-type Props = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_CREDIT_CARD_DETAIL"
->;
-
 /**
  * Detail screen for a credit card
  */
-const CreditCardDetailScreen = ({ route }: Props) => {
+const CreditCardDetailScreen = () => {
   const [walletExisted, setWalletExisted] = React.useState(false);
-  const paramCreditCard: CreditCardPaymentMethod = route.params.creditCard;
+  const { creditCard: paramCreditCard } =
+    useRoute<
+      Route<"WALLET_CREDIT_CARD_DETAIL", CreditCardDetailScreenNavigationParams>
+    >().params;
   // We need to read the card from the store to receive the updates
   // TODO: to avoid this we need a store refactoring for the wallet section (all the component should receive the id and not the wallet, in order to update when needed)
   const storeCreditCard = useIOSelector(state =>

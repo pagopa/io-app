@@ -20,6 +20,7 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
+import ROUTES from "../../../../../../navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
@@ -45,7 +46,9 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
   );
 
   if (initialScreen?.name === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
-    yield* call(NavigationService.navigate, MESSAGES_ROUTES.MESSAGES_HOME);
+    yield* call(NavigationService.navigate, ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
   }
   if (result === "completed") {
     if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {

@@ -11,7 +11,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
@@ -29,6 +29,7 @@ import { IdPayBarcodeParamsList } from "../navigation/params";
 import { idPayBarcodeByInitiativeIdSelector } from "../store";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
 import { idPayGenerateBarcode } from "../store/actions";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 // -------------------- types --------------------
 
@@ -52,15 +53,15 @@ type BarcodeExpiredContentProps = {
 const IdPayBarcodeResultScreen = () => {
   const route = useRoute<IdPayBarcodeResultRouteProps>();
   const { initiativeId } = route.params;
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const barcodePot = useIOSelector(state =>
     idPayBarcodeByInitiativeIdSelector(state)(initiativeId)
   );
 
   const navigateToInitiativeDetails = () =>
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
-      route: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
-      routeParams: { initiativeId }
+      screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
+      params: { initiativeId }
     });
 
   if (pot.isLoading(barcodePot)) {
@@ -170,7 +171,7 @@ const SuccessContent = ({ goBack, barcode }: SuccessContentProps) => {
 const BarcodeExpiredContent = ({
   initiativeId
 }: BarcodeExpiredContentProps) => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const { goBack } = navigation;
   const ctaClickHandler = () => {

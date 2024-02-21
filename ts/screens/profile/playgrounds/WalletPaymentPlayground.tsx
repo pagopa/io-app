@@ -5,33 +5,23 @@ import {
 } from "@pagopa/io-app-design-system";
 import {
   RptId as PagoPaRptId,
-  PaymentNoticeNumberFromString,
-  RptIdFromString as PagoPaRptIdFromString
+  RptIdFromString as PagoPaRptIdFromString,
+  PaymentNoticeNumberFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { useNavigation } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
-import { RptId } from "../../../../definitions/pagopa/ecommerce/RptId";
 import {
   validateOrganizationFiscalCode,
   validatePaymentNoticeNumber
 } from "../../../features/walletV3/common/utils/validation";
-import { WalletPaymentRoutes } from "../../../features/walletV3/payment/navigation/routes";
-import { walletPaymentInitState } from "../../../features/walletV3/payment/store/actions/orchestration";
+import { usePagoPaPayment } from "../../../features/walletV3/payment/hooks/usePagoPaPayment";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../store/hooks";
+import { generateValidRandomRptIdString } from "./utils";
 
 const WalletPaymentPlayground = () => {
-  const dispatch = useIODispatch();
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const { startPaymentFlowWithData } = usePagoPaPayment();
 
   const [rptId, setRptId] = React.useState<PagoPaRptId>();
   const [paymentNoticeNumber, setPaymentNoticeNumber] =
@@ -54,36 +44,22 @@ const WalletPaymentPlayground = () => {
 
   React.useEffect(() => {
     pipe(
-      sequenceS(E.Monad)({
-        paymentNoticeNumber: E.right(paymentNoticeNumber),
-        organizationFiscalCode: E.right(organizationFiscalCode)
-      }),
-      E.chain(PagoPaRptId.decode),
+      PagoPaRptId.decode({ paymentNoticeNumber, organizationFiscalCode }),
       E.map(setRptId),
       E.getOrElse(() => setRptId(undefined))
     );
   }, [paymentNoticeNumber, organizationFiscalCode]);
 
   const navigateToWalletPayment = () => {
-    pipe(
-      rptId,
-      O.fromNullable,
-      O.map(PagoPaRptIdFromString.encode),
-      O.map(rptId => {
-        dispatch(walletPaymentInitState());
-        navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-          screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
-          params: {
-            rptId: rptId as RptId
-          }
-        });
-      })
-    );
+    startPaymentFlowWithData({
+      paymentNoticeNumber,
+      organizationFiscalCode
+    });
   };
 
   const generateValidRandomRptId = () => {
     pipe(
-      "00000123456002160020399398578",
+      generateValidRandomRptIdString(),
       PagoPaRptIdFromString.decode,
       E.map(setRptId)
     );

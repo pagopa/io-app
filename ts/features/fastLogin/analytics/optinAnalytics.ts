@@ -6,7 +6,7 @@ import { buildEventProperties } from "../../../utils/analytics";
 
 export function trackLoginSessionOptIn() {
   void mixpanelTrack(
-    "LOGIN_SESSION_OPTIN",
+    "LOGIN_SESSION_OPTIN_2",
     buildEventProperties("UX", "screen_view")
   );
 }

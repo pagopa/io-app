@@ -46,7 +46,7 @@ export const IDPayUnsubscriptionNavigator = () => {
         initialRouteName={
           IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION
         }
-        headerMode={"none"}
+        screenOptions={{ headerShown: false }}
       >
         <Stack.Screen
           name={IDPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_CONFIRMATION}

@@ -1,13 +1,13 @@
 import { CommonActions } from "@react-navigation/native";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { MessageDetailScreenNavigationParams } from "../../screens/MessageDetailScreen";
 import { MessageRouterScreenNavigationParams } from "../../screens/MessageRouterScreen";
+import { MessageDetailsScreenNavigationParams } from "../../screens/MessageDetailsScreen";
 
 /**
  * Open the Message Detail screen supporting the new UIMessage type.
  */
 export const navigateToMessageDetailScreenAction = (
-  params: MessageDetailScreenNavigationParams
+  params: MessageDetailsScreenNavigationParams
 ) =>
   CommonActions.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
     screen: MESSAGES_ROUTES.MESSAGE_DETAIL,

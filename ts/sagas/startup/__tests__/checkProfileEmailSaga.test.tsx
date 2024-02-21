@@ -6,7 +6,6 @@ import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 
-import { navigateToEmailReadScreen } from "../../../store/actions/navigation";
 import {
   emailAcknowledged,
   emailInsert
@@ -34,13 +33,6 @@ describe("checkAcknowledgedEmailSaga", () => {
     jest.useRealTimers();
   });
 
-  describe("when user has an email and it is validated", () => {
-    it("should do nothing", () =>
-      expectSaga(checkAcknowledgedEmailSaga, mockedProfile)
-        .not.call(navigateToEmailReadScreen)
-        .run());
-  });
-
   describe("when user is on his first onboarding and he has an email and it is validated", () => {
     const profileEmailValidatedFirstOnboarding = {
       ...mockedProfile,
@@ -54,7 +46,8 @@ describe("checkAcknowledgedEmailSaga", () => {
         profileEmailValidatedFirstOnboarding
       )
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+          params: { isOnboarding: true }
         })
         .run();
     });
@@ -70,7 +63,8 @@ describe("checkAcknowledgedEmailSaga", () => {
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+          params: { isOnboarding: true }
         })
         .dispatch(emailAcknowledged())
         .run());
