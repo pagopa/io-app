@@ -224,9 +224,7 @@ export const requestCalendarPermission = async (): Promise<boolean> => {
 };
 
 /**
- * return a TaskEither where left is an error
- * and right is a boolean -> true === the is in calendar
- * @param eventId
+ * Check if the event is in the device calendar
  */
 export const isEventInCalendar = (eventId: string) => {
   const authTask = TE.tryCatch(() => requestCalendarPermission(), E.toError);
