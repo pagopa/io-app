@@ -1,23 +1,20 @@
 import React, { useCallback } from "react";
 import { ScrollView } from "react-native";
 import {
-  Alert,
   ContentWrapper,
   IOStyles,
   Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../store/actions";
@@ -36,18 +33,22 @@ import {
 } from "../store/reducers/detailsById";
 import { localeDateFormat } from "../../../utils/locale";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
+import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 
 export type MessageDetailsScreenNavigationParams = {
   messageId: UIMessageId;
   serviceId: ServiceId;
 };
 
-export const MessageDetailsScreen = (
-  props: IOStackNavigationRouteProps<MessagesParamsList, "MESSAGE_DETAIL">
-) => {
-  const { messageId, serviceId } = props.route.params;
-  const dispatch = useIODispatch();
+type MessageDetailsRouteProps = RouteProp<MessagesParamsList, "MESSAGE_DETAIL">;
+
+export const MessageDetailsScreen = () => {
+  const { params } = useRoute<MessageDetailsRouteProps>();
+  const { messageId, serviceId } = params;
+
   const navigation = useIONavigation();
+
+  const dispatch = useIODispatch();
 
   const message = pipe(
     useIOSelector(state => getPaginatedMessageById(state, messageId)),
@@ -135,21 +136,10 @@ export const MessageDetailsScreen = (
         {messageDetails.dueDate && expiringInfo === "expiring" && (
           <ContentWrapper>
             <VSpacer size={8} />
-            <Alert
-              testID="due-date-alert"
-              variant="warning"
-              action={I18n.t("features.messages.alert.action")}
-              onPress={constNull}
-              content={I18n.t("features.messages.alert.content", {
-                date: localeDateFormat(
-                  messageDetails.dueDate,
-                  I18n.t("global.dateFormats.shortFormat")
-                ),
-                time: localeDateFormat(
-                  messageDetails.dueDate,
-                  I18n.t("global.dateFormats.timeFormat")
-                )
-              })}
+            <MessageDetailsReminder
+              dueDate={messageDetails.dueDate}
+              messageId={messageId}
+              title={subject}
             />
           </ContentWrapper>
         )}
