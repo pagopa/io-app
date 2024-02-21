@@ -3,12 +3,12 @@ import * as TE from "fp-ts/lib/TaskEither";
 import * as E from "fp-ts/lib/Either";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { Platform } from "react-native";
-import { pipe } from "fp-ts/lib/function";
+import { identity, pipe } from "fp-ts/lib/function";
+import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { TranslationKeys } from "../../locales/locales";
 import I18n from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { formatDateAsReminder } from "./dates";
 import { showToast } from "./showToast";
 
@@ -97,7 +97,7 @@ export function convertLocalCalendarName(calendarTitle: string) {
  * and right is a boolean -> true === the is in calendar
  * @param eventId
  */
-export const isEventInCalendar = (
+export const legacyIsEventInCalendar = (
   eventId: string
 ): TE.TaskEither<Error, boolean> => {
   const authTask = TE.tryCatch(
@@ -208,3 +208,67 @@ export const removeCalendarEventFromDeviceCalendar = (
     showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
   }
 };
+
+/**
+ * Check and request the permission to access the device calendar
+ * @returns a boolean that is true if the permission is granted
+ */
+export const requestCalendarPermission = async (): Promise<boolean> => {
+  const checkResult = await RNCalendarEvents.checkPermissions();
+  if (checkResult === "authorized") {
+    return true;
+  }
+
+  const requestStatus = await RNCalendarEvents.requestPermissions();
+  return requestStatus === "authorized";
+};
+
+/**
+ * Check if the event is in the device calendar
+ */
+export const isEventInCalendar = (eventId: string) =>
+  pipe(
+    TE.tryCatch(() => requestCalendarPermission(), E.toError),
+    TE.chain(TE.fromPredicate(identity, () => Error("Permission not granted"))),
+    TE.chain(() =>
+      TE.tryCatch(() => RNCalendarEvents.findEventById(eventId), E.toError)
+    ),
+    TE.map(ev => ev !== null)
+  );
+
+/**
+ * Add an event to the device calendar
+ */
+export const saveEventToDeviceCalendarTask = (
+  calendarId: string,
+  dueDate: Date,
+  title: string
+) =>
+  TE.tryCatch(
+    () =>
+      RNCalendarEvents.saveEvent(title, {
+        calendarId,
+        startDate: dueDate.toISOString(),
+        endDate: dueDate.toISOString(),
+        allDay: true,
+        alarms: []
+      }),
+    E.toError
+  );
+
+/**
+ * Remove an event from the device calendar
+ */
+export const removeEventFromDeviceCalendarTask = (eventId: string) =>
+  pipe(
+    TE.tryCatch(() => RNCalendarEvents.removeEvent(eventId), E.toError),
+    TE.map(_ => eventId)
+  );
+
+/**
+ * Find the device calendars
+ */
+export const findDeviceCalendarsTask = TE.tryCatch(
+  () => RNCalendarEvents.findCalendars(),
+  E.toError
+);
