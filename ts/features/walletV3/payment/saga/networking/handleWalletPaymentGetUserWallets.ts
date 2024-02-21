@@ -48,6 +48,9 @@ export function* handleWalletPaymentGetUserWallets(
             if (res.status === 200) {
               return walletPaymentGetUserWallets.success(res.value);
             }
+            if (res.status === 404) {
+              return walletPaymentGetUserWallets.success({ wallets: [] });
+            }
             return walletPaymentGetUserWallets.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))
             });

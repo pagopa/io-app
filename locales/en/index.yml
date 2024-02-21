@@ -2647,7 +2647,8 @@ features:
     badge:
       dueDate: Expired on {{date}} at {{time}}
     alert:
-      action: Add reminder
+      addReminder: Add reminder
+      removeReminder: Remove reminder
       content: Expires on {{date}} at {{time}}
   euCovidCertificate:
     save:
