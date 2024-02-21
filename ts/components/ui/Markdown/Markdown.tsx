@@ -102,14 +102,23 @@ export const Markdown = (props: MarkdownProps) => {
               onError?.(error);
               return;
             }
+            // The check below on `isLoading` is to set the property back to 'false'
+            // value when refreshing with metro, since it is set back to the initial
+            // 'true' value but the underlying MarkdownWebviewComponent does not
+            // reload its content (the html is recompiled but it does not change),
+            // thus, not calling the `handleLoadEnd` callback
+            const html = generateHtml(
+              String(file),
+              cssStyle,
+              useCustomSortedList,
+              avoidTextSelection
+            );
             setInternalState(currentInternalState => ({
               ...currentInternalState,
-              html: generateHtml(
-                String(file),
-                cssStyle,
-                useCustomSortedList,
-                avoidTextSelection
-              )
+              isLoading:
+                currentInternalState.isLoading &&
+                currentInternalState.html !== html,
+              html
             }));
           }
         );
