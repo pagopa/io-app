@@ -162,8 +162,7 @@ const MessageDetailsComponent = ({
         params: {
           messageId,
           serviceId: serviceIdOpt,
-          attachmentId: attachment.id,
-          isPN: false
+          attachmentId: attachment.id
         }
       });
     },

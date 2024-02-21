@@ -35,7 +35,7 @@ import { localeDateFormat } from "../../../utils/locale";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 
-export type MessageDetailsScreenNavigationParams = {
+export type MessageDetailsScreenRouteParams = {
   messageId: UIMessageId;
   serviceId: ServiceId;
 };
