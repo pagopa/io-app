@@ -137,8 +137,14 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.2.1):
     - React-Core
-  - pagopa-io-react-native-login-utils (0.2.2):
+  - pagopa-io-react-native-login-utils (1.0.0):
     - React-Core
+  - pagopa-react-native-zendesk (0.3.29):
+    - React-Core
+    - ZendeskAnswerBotSDK
+    - ZendeskChatSDK
+    - ZendeskMessagingAPISDK
+    - ZendeskSupportSDK
   - PromisesObjC (2.0.0)
   - Protobuf (3.19.1)
   - RCT-Folly (2021.06.28.00-v2):
@@ -392,6 +398,8 @@ PODS:
   - react-native-mixpanel (1.2.0):
     - Mixpanel (~> 3.6.0)
     - React
+  - react-native-pager-view (6.2.3):
+    - React-Core
   - react-native-pdf (6.4.0):
     - React-Core
   - react-native-pdf-thumbnail (1.2.1):
@@ -486,11 +494,7 @@ PODS:
     - React-Core
   - RNCClipboard (1.10.0):
     - React-Core
-  - RNCPicker (2.4.1):
-    - React-Core
   - RNCPushNotificationIOS (1.8.0):
-    - React-Core
-  - RNDateTimePicker (3.5.2):
     - React-Core
   - RNDeviceInfo (10.8.0):
     - React-Core
@@ -502,6 +506,8 @@ PODS:
     - React
   - RNKeychain (4.0.5):
     - React
+  - RNPermissions (4.0.0):
+    - React-Core
   - RNQrGenerator (1.4.0):
     - React
     - ZXingObjC
@@ -542,12 +548,6 @@ PODS:
     - React-Core
   - RNSVG (12.3.0):
     - React-Core
-  - RNZendeskChat (0.3.23):
-    - React
-    - ZendeskAnswerBotSDK (~> 3.0.0)
-    - ZendeskChatSDK (~> 3.0.0)
-    - ZendeskMessagingAPISDK (~> 4.0.0)
-    - ZendeskSupportSDK (~> 6.0.0)
   - SocketRocket (0.6.0)
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
@@ -559,28 +559,28 @@ PODS:
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
-  - ZendeskAnswerBotProvidersSDK (3.0.0):
-    - ZendeskSupportProvidersSDK (= 6.0.0)
-  - ZendeskAnswerBotSDK (3.0.0):
-    - ZendeskAnswerBotProvidersSDK (= 3.0.0)
-    - ZendeskMessagingSDK (= 4.0.0)
-  - ZendeskChatProvidersSDK (3.0.0)
-  - ZendeskChatSDK (3.0.0):
-    - ZendeskChatProvidersSDK (= 3.0.0)
-    - ZendeskMessagingSDK (= 4.0.0)
-  - ZendeskCommonUISDK (7.0.0)
-  - ZendeskCoreSDK (3.0.0)
-  - ZendeskMessagingAPISDK (4.0.0):
-    - ZendeskSDKConfigurationsSDK (= 2.0.0)
-  - ZendeskMessagingSDK (4.0.0):
-    - ZendeskCommonUISDK (= 7.0.0)
-    - ZendeskMessagingAPISDK (= 4.0.0)
-  - ZendeskSDKConfigurationsSDK (2.0.0)
-  - ZendeskSupportProvidersSDK (6.0.0):
-    - ZendeskCoreSDK (= 3.0.0)
-  - ZendeskSupportSDK (6.0.0):
-    - ZendeskMessagingSDK (= 4.0.0)
-    - ZendeskSupportProvidersSDK (= 6.0.0)
+  - ZendeskAnswerBotProvidersSDK (5.0.0):
+    - ZendeskSupportProvidersSDK (~> 8.0.0)
+  - ZendeskAnswerBotSDK (5.0.0):
+    - ZendeskAnswerBotProvidersSDK (~> 5.0.0)
+    - ZendeskMessagingSDK (~> 6.0.0)
+  - ZendeskChatProvidersSDK (5.0.0)
+  - ZendeskChatSDK (5.0.0):
+    - ZendeskChatProvidersSDK (~> 5.0.0)
+    - ZendeskMessagingSDK (~> 6.0.0)
+  - ZendeskCommonUISDK (9.0.0)
+  - ZendeskCoreSDK (5.0.0)
+  - ZendeskMessagingAPISDK (6.0.0):
+    - ZendeskSDKConfigurationsSDK (~> 4.0.0)
+  - ZendeskMessagingSDK (6.0.0):
+    - ZendeskCommonUISDK (~> 9.0.0)
+    - ZendeskMessagingAPISDK (~> 6.0.0)
+  - ZendeskSDKConfigurationsSDK (4.0.0)
+  - ZendeskSupportProvidersSDK (8.0.0):
+    - ZendeskCoreSDK (~> 5.0.0)
+  - ZendeskSupportSDK (8.0.0):
+    - ZendeskMessagingSDK (~> 6.0.0)
+    - ZendeskSupportProvidersSDK (~> 8.0.0)
   - ZXingObjC (3.6.5):
     - ZXingObjC/All (= 3.6.5)
   - ZXingObjC/All (3.6.5)
@@ -619,6 +619,7 @@ DEPENDENCIES:
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
+  - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -646,6 +647,7 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
+  - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
   - react-native-render-html (from `../node_modules/react-native-render-html`)
@@ -672,14 +674,13 @@ DEPENDENCIES:
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
-  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNI18n (from `../node_modules/react-native-i18n`)
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNPermissions (from `../node_modules/react-native-permissions`)
   - RNQrGenerator (from `../node_modules/rn-qr-generator`)
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -687,7 +688,6 @@ DEPENDENCIES:
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - RNZendeskChat (from `../node_modules/io-react-native-zendesk`)
   - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -757,6 +757,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-login-utils:
     :path: "../node_modules/@pagopa/io-react-native-login-utils"
+  pagopa-react-native-zendesk:
+    :path: "../node_modules/@pagopa/io-react-native-zendesk"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -809,6 +811,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-mixpanel:
     :path: "../node_modules/react-native-mixpanel"
+  react-native-pager-view:
+    :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
   react-native-pdf-thumbnail:
@@ -861,12 +865,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
-  RNCPicker:
-    :path: "../node_modules/@react-native-picker/picker"
   RNCPushNotificationIOS:
     :path: "../node_modules/@react-native-community/push-notification-ios"
-  RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFS:
@@ -877,6 +877,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-i18n"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
+  RNPermissions:
+    :path: "../node_modules/react-native-permissions"
   RNQrGenerator:
     :path: "../node_modules/rn-qr-generator"
   RNReactNativeHapticFeedback:
@@ -891,8 +893,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNZendeskChat:
-    :path: "../node_modules/io-react-native-zendesk"
   vision-camera-code-scanner:
     :path: "../node_modules/vision-camera-code-scanner"
   VisionCamera:
@@ -935,7 +935,8 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
-  pagopa-io-react-native-login-utils: 51a58dc0e5fe3cba461759b9e98e795fc22e17c8
+  pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
+  pagopa-react-native-zendesk: e4a63ee0745a567b641110f7ff78e457086ab7a3
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   Protobuf: 3724efa50cb2846d7ccebc8691c574e85fd74471
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
@@ -964,6 +965,7 @@ SPEC CHECKSUMS:
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
   react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
+  react-native-pager-view: c29d484f19c49ff19525a94105e4ab2c4d4ae273
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
   react-native-render-html: 96c979fe7452a0a41559685d2f83b12b93edac8c
@@ -990,14 +992,13 @@ SPEC CHECKSUMS:
   RNCalendarEvents: 7e65eb4a94f53c1744d1e275f7fafcfaa619f7a3
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: f1736c75ab85b627a4d57587edb4b60999c4dd80
-  RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
-  RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
+  RNPermissions: b3d9d00889e37cc184d365ab04bb7a3f20811b1c
   RNQrGenerator: 1676221c08bfabec978242989c733810dad20959
   RNReactNativeHapticFeedback: 6d24decfa94e037c2ecc312407d2a057b7933f10
   RNReanimated: 7faa787e8d4493fbc95fab2ad331fa7625828cfa
@@ -1005,25 +1006,24 @@ SPEC CHECKSUMS:
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
-  RNZendeskChat: 338c369def4e1552a533d9d34155b4b491aaf3d7
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: 5fc30ecebdfd0335d11123ec9511dcbc27ee4046
   Yoga: 7a4d48cfb35dfa542151e615fa73c1a0d88caf21
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
-  ZendeskAnswerBotProvidersSDK: 7eca94f07f10a567c631321601a645b2ba35c2da
-  ZendeskAnswerBotSDK: 31bd28c7c9732243d4bf3b850c441a3cdd6eba50
-  ZendeskChatProvidersSDK: af93e02e2058875f92e6ad86e74ee51203b4079e
-  ZendeskChatSDK: fe03650a5ebe3d35fd1f4da90792021f809bcf11
-  ZendeskCommonUISDK: f06dbac6c9e74c3afff75ecdc6bec3832b23258c
-  ZendeskCoreSDK: ce6dbb5eb4d61d2d061547a92bd0b0fe98602e9d
-  ZendeskMessagingAPISDK: 95a99f1eab9482b4106ec88466b93a89f9f7c5fa
-  ZendeskMessagingSDK: 4f5f3d43766bb3b2ea6411d1331cfe609ff33618
-  ZendeskSDKConfigurationsSDK: a5c21010e17b71d02bc2cfe73dcc9da1efa0a7b2
-  ZendeskSupportProvidersSDK: 685b5d185af47ced0ec40564ec46355c838bbd06
-  ZendeskSupportSDK: 92e6f9d334e81e9186f8a17583862350460a5393
+  ZendeskAnswerBotProvidersSDK: a024260282886870a15e7a986bf5286c23fd9311
+  ZendeskAnswerBotSDK: b9f74105b26fda5f74d6639c0dc8fe37f522a867
+  ZendeskChatProvidersSDK: fa1c5acd7fd09157b5994fb05a3b1628409fdfd1
+  ZendeskChatSDK: 40fa26f80a589eb38c6cecf17af71206da7bcaf3
+  ZendeskCommonUISDK: b87f90874386ebcc01f4b2a0b20a28c62658987a
+  ZendeskCoreSDK: cdc814e7fd64764fb0b0acb04e596df437708faa
+  ZendeskMessagingAPISDK: 9ce539eebcaa014fe6acc44da31262a2c52891c1
+  ZendeskMessagingSDK: ccc8dd41b774b0d2f94733505b9f1882d72184da
+  ZendeskSDKConfigurationsSDK: 79c444da987390456ec05657ffa2f5ca0eb54aef
+  ZendeskSupportProvidersSDK: 4aafe8114a9bba1a98dc03ca14d8fa6510cf4e70
+  ZendeskSupportSDK: 8cf921c496269bb5f53aac9320f3d002a793991d
   ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 0d78c2a7f58353c7eed2163b7e3b3747b00ff101
+PODFILE CHECKSUM: 4a1130da2ee9cd7365bb5a5290feaed31a6bd470
 
 COCOAPODS: 1.12.1

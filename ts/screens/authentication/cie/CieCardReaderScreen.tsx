@@ -335,6 +335,7 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         );
         break;
       case ReadingState.error:
+        trackLoginCieCardReadingError();
         this.setState(
           state => getTextForState(ReadingState.error, state.errorMessage),
           this.announceUpdate

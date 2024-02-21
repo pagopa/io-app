@@ -1,13 +1,4 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
-import { BonusVacanzeParamsList } from "../../features/bonus/bonusVacanze/navigation/params";
-import BONUSVACANZE_ROUTES from "../../features/bonus/bonusVacanze/navigation/routes";
-import { ActiveBonusScreenNavigationParams } from "../../features/bonus/bonusVacanze/screens/ActiveBonusScreen";
-import {
-  BpdDetailsParamsList,
-  BpdOnboardingParamsList,
-  BpdOptInParamsList
-} from "../../features/bonus/bpd/navigation/params";
-import BPD_ROUTES from "../../features/bonus/bpd/navigation/routes";
 import { IdPayInstrumentInitiativesScreenRouteParams } from "../../features/idpay/wallet/screens/IdPayInstrumentInitiativesScreen";
 import { BancomatDetailScreenNavigationParams } from "../../features/wallet/bancomat/screen/BancomatDetailScreen";
 import { BPayDetailScreenNavigationParams } from "../../features/wallet/bancomatpay/screen/BPayDetailScreen";
@@ -35,8 +26,10 @@ import { PickPspScreenNavigationParams } from "../../screens/wallet/payment/Pick
 import { TransactionErrorScreenNavigationParams } from "../../screens/wallet/payment/TransactionErrorScreen";
 import { TransactionSummaryScreenNavigationParams } from "../../screens/wallet/payment/TransactionSummaryScreen";
 import ROUTES from "../routes";
+import { BONUS_ROUTES } from "../../features/bonus/common/navigation/navigator";
 
 export type WalletParamsList = {
+  [ROUTES.WALLET_HOME]: undefined;
   [ROUTES.WALLET_IDPAY_INITIATIVE_LIST]: IdPayInstrumentInitiativesScreenRouteParams;
   [ROUTES.WALLET_ADD_PAYMENT_METHOD]: AddPaymentMethodScreenNavigationParams;
   [ROUTES.WALLET_TRANSACTION_DETAILS]: TransactionDetailsScreenNavigationParams;
@@ -62,22 +55,10 @@ export type WalletParamsList = {
   [ROUTES.ADD_CREDIT_CARD_OUTCOMECODE_MESSAGE]: AddCreditCardOutcomeCodeMessageNavigationParams;
   [ROUTES.PAYMENT_OUTCOMECODE_MESSAGE]: PaymentOutcomeCodeMessageNavigationParams;
 
-  [BONUSVACANZE_ROUTES.MAIN]: NavigatorScreenParams<BonusVacanzeParamsList>;
-  [BONUSVACANZE_ROUTES.BONUS_ACTIVE_DETAIL_SCREEN]: ActiveBonusScreenNavigationParams;
-
-  [BPD_ROUTES.ONBOARDING.MAIN]: NavigatorScreenParams<BpdOnboardingParamsList>;
-  [BPD_ROUTES.DETAILS_MAIN]: NavigatorScreenParams<BpdDetailsParamsList>;
-  [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: undefined;
-  [BPD_ROUTES.IBAN]: undefined;
-
-  [BPD_ROUTES.OPT_IN_PAYMENT_METHODS
-    .MAIN]: NavigatorScreenParams<BpdOptInParamsList>;
+  [BONUS_ROUTES.MAIN]: undefined;
 
   [WALLET_ONBOARDING_BPAY_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingBPayParamsList>;
   [WALLET_ONBOARDING_COBADGE_ROUTES.MAIN]: NavigatorScreenParams<PaymentMethodOnboardingCoBadgeParamsList>;
   [PAYPAL_ROUTES.ONBOARDING
     .MAIN]: NavigatorScreenParams<PaymentMethodOnboardingPayPalParamsList>;
-
-  [WALLET_ONBOARDING_BPAY_ROUTES.ACTIVATE_BPD_NEW]: undefined;
-  [WALLET_ONBOARDING_COBADGE_ROUTES.ACTIVATE_BPD_NEW]: undefined;
 };

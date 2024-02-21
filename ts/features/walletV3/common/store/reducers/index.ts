@@ -6,6 +6,9 @@ import walletAnalyticsReducer, {
 import walletDetailsReducer, {
   WalletDetailsState
 } from "../../../details/store";
+import walletPaymentHistoryReducer, {
+  WalletPaymentHistoryState
+} from "../../../history/store/reducers";
 import walletOnboardingReducer, {
   WalletOnboardingState
 } from "../../../onboarding/store";
@@ -22,6 +25,7 @@ export type WalletState = {
   details: WalletDetailsState;
   payment: WalletPaymentState;
   transaction: WalletTransactionState;
+  history: WalletPaymentHistoryState & PersistPartial;
 };
 
 const walletReducer = combineReducers({
@@ -29,7 +33,8 @@ const walletReducer = combineReducers({
   onboarding: walletOnboardingReducer,
   details: walletDetailsReducer,
   payment: walletPaymentReducer,
-  transaction: walletTransactionReducer
+  transaction: walletTransactionReducer,
+  history: walletPaymentHistoryReducer
 });
 
 export default walletReducer;

@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -8,16 +8,17 @@ import {
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
 import { WalletPaymentParamsList } from "../navigation/params";
-import { walletPaymentDetailsSelector } from "../store/selectors";
+import {
+  walletPaymentDetailsSelector,
+  walletPaymentStartRouteSelector
+} from "../store/selectors";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
@@ -33,15 +34,30 @@ type WalletPaymentOutcomeRouteProps = RouteProp<
 >;
 
 const WalletPaymentOutcomeScreen = () => {
+  useAvoidHardwareBackButton();
+
   const { params } = useRoute<WalletPaymentOutcomeRouteProps>();
   const { outcome } = params;
 
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
+  const paymentStartRoute = useIOSelector(walletPaymentStartRouteSelector);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
   });
+
+  // TODO: This is a workaround to disable swipe back gesture on this screen
+  // .. it should be removed as soon as the migration to react-navigation v6 is completed (https://pagopa.atlassian.net/browse/IOBP-522)
+  React.useEffect(() => {
+    // Disable swipe
+    navigation.setOptions({ gestureEnabled: false });
+    navigation.getParent()?.setOptions({ gestureEnabled: false });
+    // Re-enable swipe after going back
+    return () => {
+      navigation.getParent()?.setOptions({ gestureEnabled: true });
+    };
+  }, [navigation]);
 
   const paymentAmount = pipe(
     paymentDetailsPot,
@@ -55,6 +71,13 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
+    if (paymentStartRoute) {
+      // TODO: this is a workaround to solve type errors need to investigate deeply
+      navigation.navigate(paymentStartRoute.routeName as any, {
+        screen: paymentStartRoute.routeKey
+      });
+      return;
+    }
     navigation.popToTop();
     navigation.pop();
   };

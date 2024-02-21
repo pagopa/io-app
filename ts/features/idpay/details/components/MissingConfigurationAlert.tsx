@@ -1,13 +1,14 @@
-import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { View } from "react-native";
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
+import { NavigatorScreenParams } from "@react-navigation/native";
 import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import I18n from "../../../../i18n";
 import {
   IDPayConfigurationParamsList,
   IDPayConfigurationRoutes
 } from "../../configuration/navigation/navigator";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type StatusWithAlert = Exclude<
   InitiativeStatusEnum,
@@ -22,7 +23,7 @@ type Props = {
 };
 
 const MissingConfigurationAlert = (props: Props) => {
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
 
   const { status, initiativeId } = props;
 
@@ -46,11 +47,11 @@ const MissingConfigurationAlert = (props: Props) => {
 
   const handleNavigation = () => {
     navigation.navigate(IDPayConfigurationRoutes.IDPAY_CONFIGURATION_MAIN, {
-      screen: screen[status],
+      screen: screen[status] as keyof IDPayConfigurationParamsList,
       params: {
         initiativeId
       }
-    });
+    } as NavigatorScreenParams<IDPayConfigurationParamsList>);
   };
 
   return (

@@ -21,9 +21,11 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { walletPaymentHistoryStoreOutcome } from "../../history/store/actions";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
+  onDismiss: () => void;
 };
 
 export type WalletPaymentAuthorizationModal = {
@@ -34,7 +36,8 @@ export type WalletPaymentAuthorizationModal = {
 };
 
 export const useWalletPaymentAuthorizationModal = ({
-  onAuthorizationOutcome
+  onAuthorizationOutcome,
+  onDismiss
 }: Props): WalletPaymentAuthorizationModal => {
   const dispatch = useIODispatch();
 
@@ -74,8 +77,9 @@ export const useWalletPaymentAuthorizationModal = ({
       );
       resetPaymentTentativeOnSuccess(outcome);
       onAuthorizationOutcome(outcome);
+      dispatch(walletPaymentHistoryStoreOutcome(outcome));
     },
-    [onAuthorizationOutcome, resetPaymentTentativeOnSuccess]
+    [onAuthorizationOutcome, resetPaymentTentativeOnSuccess, dispatch]
   );
 
   React.useEffect(() => {
@@ -97,6 +101,7 @@ export const useWalletPaymentAuthorizationModal = ({
             );
           },
           () => {
+            onDismiss();
             dispatch(walletPaymentAuthorization.cancel());
             setIsPendingAuthorization(false);
           }
@@ -110,6 +115,7 @@ export const useWalletPaymentAuthorizationModal = ({
     isPendingAuthorization,
     authorizationUrlPot,
     handleAuthorizationResult,
+    onDismiss,
     dispatch
   ]);
 

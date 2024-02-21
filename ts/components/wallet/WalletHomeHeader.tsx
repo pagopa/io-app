@@ -1,8 +1,8 @@
+import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { navigateToAvailableBonusScreen } from "../../features/bonus/bonusVacanze/navigation/action";
+import { navigateToAvailableBonusListScreen } from "../../features/bonus/common/navigation/actions";
 import I18n from "../../i18n";
 import NavigationService from "../../navigation/NavigationService";
 import { navigateToWalletAddPaymentMethod } from "../../store/actions/navigation";
@@ -48,6 +48,7 @@ export const useWalletHomeHeaderBottomSheet = (): IOBottomSheetModal => {
   const navigationListItems: ReadonlyArray<NavigationListItem> = [
     {
       title: I18n.t("wallet.paymentMethod"),
+      testId: "wallet.paymentMethod",
       subtitle: I18n.t("wallet.paymentMethodDesc"),
       onPress: () =>
         navigateToWalletAddPaymentMethod({
@@ -59,7 +60,7 @@ export const useWalletHomeHeaderBottomSheet = (): IOBottomSheetModal => {
       title: I18n.t("wallet.methods.bonus.name"),
       subtitle: I18n.t("wallet.methods.bonus.description"),
       testId: "bonusNameTestId",
-      onPress: navigateToAvailableBonusScreen
+      onPress: navigateToAvailableBonusListScreen
     }
   ];
 

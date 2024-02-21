@@ -38,16 +38,15 @@ import { DSHapticFeedback } from "../core/DSHapticFeedback";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
-import { DSNumberPad } from "../core/DSNumberPad";
 import { DSIcons } from "../core/DSIcons";
 import { DSLayout } from "../core/DSLayout";
-import { DSLegacyButtons } from "../core/DSLegacyButtons";
 import { DSLegacyIllustrations } from "../core/DSLegacyIllustrations";
 import { DSLegacyPictograms } from "../core/DSLegacyPictograms";
 import { DSListItems } from "../core/DSListItems";
 import { DSLoaders } from "../core/DSLoaders";
 import { DSLogos } from "../core/DSLogos";
 import { DSModules } from "../core/DSModules";
+import { DSNumberPad } from "../core/DSNumberPad";
 import { DSPictograms } from "../core/DSPictograms";
 import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
@@ -152,16 +151,19 @@ export const DesignSystemNavigator = () => {
       With RN Navigation 6.x it's much easier because you can
       use the Group function */}
         <ModalStack.Navigator
-          mode="modal"
-          headerMode="screen"
           screenOptions={
             Platform.OS === "ios"
               ? {
                   gestureEnabled: isGestureEnabled,
                   cardOverlayEnabled: true,
+                  headerMode: "screen",
+                  presentation: "modal",
                   ...TransitionPresets.ModalPresentationIOS
                 }
-              : {}
+              : {
+                  headerMode: "screen",
+                  presentation: "modal"
+                }
           }
         >
           <ModalStack.Screen
@@ -191,7 +193,8 @@ const DesignSystemMainStack = () => {
       },
       headerTitleAlign: "center",
       headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
-      headerLeft: RNNBackButton
+      headerLeft: RNNBackButton,
+      headerMode: "screen"
     }),
     [insets]
   );
@@ -199,7 +202,6 @@ const DesignSystemMainStack = () => {
   return (
     <Stack.Navigator
       initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
-      headerMode="screen"
       screenOptions={customHeaderConf}
     >
       <ModalStack.Screen
@@ -456,13 +458,6 @@ const DesignSystemMainStack = () => {
         component={DSLegacyPictograms}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
-        }}
-      />
-      <Stack.Screen
-        name={DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route}
-        component={DSLegacyButtons}
-        options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.title
         }}
       />
       <Stack.Screen

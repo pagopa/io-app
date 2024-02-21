@@ -5,16 +5,12 @@ import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import {
-  bpdEnabled,
   fciEnabled,
   fimsEnabled,
   myPortalEnabled,
-  svEnabled,
   uaDonationsEnabled
 } from "../config";
-import BPD_ROUTES from "../features/bonus/bpd/navigation/routes";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
-import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
@@ -55,10 +51,6 @@ const legacyRoutesToNavigationLink: Record<string, string> = {
   PREFERENCES_HOME: "/profile/preferences"
 };
 
-const bpdRoutesToNavigationLink: Record<string, string> = {
-  [BPD_ROUTES.CTA_BPD_IBAN_EDIT]: "/wallet/bpd-iban-update"
-};
-
 const cgnRoutesToNavigationLink: Record<string, string> = {
   [CGN_ROUTES.ACTIVATION.CTA_START_CGN]: "/cgn-activation/start",
   [CGN_ROUTES.DETAILS.DETAILS]: "/cgn-details/detail"
@@ -70,12 +62,6 @@ const myPortalRoutesToNavigationLink: Record<string, string> = {
 
 const uaDonationsRoutesToNavigationLink: Record<string, string> = {
   [UADONATION_ROUTES.WEBVIEW]: "/uadonations-webview"
-};
-
-const svRoutesToNavigationLink: Record<string, string> = {
-  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]:
-    "/services/sv-generation/check-status",
-  [SV_ROUTES.VOUCHER_LIST.LIST]: "/services/sv-vouchers/list"
 };
 
 const fimsRoutesToNavigationLink: Record<string, string> = {
@@ -91,8 +77,6 @@ const allowedRoutes = {
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
   ...(myPortalEnabled ? myPortalRoutesToNavigationLink : {}),
-  ...(bpdEnabled ? bpdRoutesToNavigationLink : {}),
-  ...(svEnabled ? svRoutesToNavigationLink : {}),
   ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationLink : {}),
   ...(fimsEnabled ? fimsRoutesToNavigationLink : {}),
   ...(fciEnabled ? fciRoutesToNavigationLink : {})

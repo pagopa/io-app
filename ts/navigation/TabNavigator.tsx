@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -17,7 +16,7 @@ import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPrefer
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import { AppParamsList, IOStackNavigationProp } from "./params/AppParamsList";
+import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
@@ -52,7 +51,7 @@ export const MainTabNavigator = () => {
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -63,10 +62,9 @@ export const MainTabNavigator = () => {
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
-      <HeaderFirstLevelHandler />
       <Tab.Navigator
-        tabBarOptions={{
-          labelStyle: {
+        screenOptions={{
+          tabBarLabelStyle: {
             fontSize: isDesignSystemEnabled ? 10 : 12,
             ...makeFontStyleObject(
               "Regular",
@@ -74,13 +72,13 @@ export const MainTabNavigator = () => {
               isDesignSystemEnabled ? "ReadexPro" : "TitilliumWeb"
             )
           },
-          keyboardHidesTabBar: true,
-          allowFontScaling: false,
-          activeTintColor: isDesignSystemEnabled
+          tabBarHideOnKeyboard: true,
+          tabBarAllowFontScaling: false,
+          tabBarActiveTintColor: isDesignSystemEnabled
             ? IOColors["blueIO-500"]
             : IOColors.blue,
-          inactiveTintColor: IOColors["grey-850"],
-          style: [
+          tabBarInactiveTintColor: IOColors["grey-850"],
+          tabBarStyle: [
             styles.tabBarStyle,
             { height: tabBarHeight + bottomInset },
             insets.bottom === 0 ? { paddingBottom: additionalPadding } : {}
@@ -91,6 +89,11 @@ export const MainTabNavigator = () => {
           name={MESSAGES_ROUTES.MESSAGES_HOME}
           component={MessagesHomeScreen}
           options={{
+            header: () => (
+              <HeaderFirstLevelHandler
+                currentRouteName={MESSAGES_ROUTES.MESSAGES_HOME}
+              />
+            ),
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
@@ -108,6 +111,9 @@ export const MainTabNavigator = () => {
           name={ROUTES.WALLET_HOME}
           component={WalletHomeScreen}
           options={{
+            header: () => (
+              <HeaderFirstLevelHandler currentRouteName={ROUTES.WALLET_HOME} />
+            ),
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
@@ -130,6 +136,11 @@ export const MainTabNavigator = () => {
               }
             }}
             options={{
+              header: () => (
+                <HeaderFirstLevelHandler
+                  currentRouteName={ROUTES.BARCODE_SCAN}
+                />
+              ),
               title: I18n.t("global.navigator.scan"),
               tabBarIcon: ({ color, focused }) => (
                 <TabIconComponent
@@ -146,6 +157,11 @@ export const MainTabNavigator = () => {
           name={ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
           options={{
+            header: () => (
+              <HeaderFirstLevelHandler
+                currentRouteName={ROUTES.SERVICES_HOME}
+              />
+            ),
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
@@ -163,6 +179,9 @@ export const MainTabNavigator = () => {
           name={ROUTES.PROFILE_MAIN}
           component={ProfileMainScreen}
           options={{
+            header: () => (
+              <HeaderFirstLevelHandler currentRouteName={ROUTES.PROFILE_MAIN} />
+            ),
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent

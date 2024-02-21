@@ -1,21 +1,20 @@
+import {
+  BlockButtonProps,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOToast } from "../../components/Toast";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../components/buttons/ButtonConfigurations";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../utils/showToast";
 import { trackMixpanelScreen } from "./analytics";
 import {
   trackMixpanelDeclined,
@@ -33,9 +32,8 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
     trackMixpanelDeclined(flow);
     trackMixpanelSetEnabled(false, flow);
     props.setMixpanelEnabled(false);
-    showToast(
-      I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
-      "success"
+    IOToast.success(
+      I18n.t("profile.main.privacy.shareData.screen.confirmToast")
     );
   });
   const isMixpanelEnabled = props.isMixpanelEnabled ?? true;
@@ -44,33 +42,48 @@ const ShareDataScreen = (props: Props): React.ReactElement => {
     trackMixpanelScreen(getFlowType(false, false));
   });
 
-  const buttonProps = isMixpanelEnabled
-    ? cancelButtonProps(
-        present,
-        I18n.t("profile.main.privacy.shareData.screen.cta.dontShareData")
-      )
-    : confirmButtonProps(
-        () => {
-          trackMixpanelSetEnabled(true, getFlowType(false, false));
-          props.setMixpanelEnabled(true);
-          showToast(
-            I18n.t("profile.main.privacy.shareData.screen.confirmToast"),
-            "success"
-          );
-        },
-        I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
-        undefined,
-        "share-data-confirm-button"
-      );
+  const buttonProps: BlockButtonProps = isMixpanelEnabled
+    ? {
+        type: "Outline",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t(
+            "profile.main.privacy.shareData.screen.cta.dontShareData"
+          ),
+          onPress: present,
+          label: I18n.t(
+            "profile.main.privacy.shareData.screen.cta.dontShareData"
+          )
+        }
+      }
+    : {
+        type: "Solid",
+        buttonProps: {
+          color: "primary",
+          accessibilityLabel: I18n.t(
+            "profile.main.privacy.shareData.screen.cta.dontShareData"
+          ),
+          onPress: () => {
+            trackMixpanelSetEnabled(true, getFlowType(false, false));
+            props.setMixpanelEnabled(true);
+            IOToast.success(
+              I18n.t("profile.main.privacy.shareData.screen.confirmToast")
+            );
+          },
+          label: I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
+          testID: "share-data-confirm-button"
+        }
+      };
 
   return (
     <RNavScreenWithLargeHeader
-      title={I18n.t("profile.main.privacy.shareData.screen.title")}
+      title={{
+        label: I18n.t("profile.main.privacy.shareData.screen.title"),
+        testID: "share-data-component-title"
+      }}
       description={I18n.t("profile.main.privacy.shareData.screen.description")}
       fixedBottomSlot={
-        <SafeAreaView>
-          <FooterWithButtons type={"SingleButton"} leftButton={buttonProps} />
-        </SafeAreaView>
+        <FooterWithButtons type="SingleButton" primary={buttonProps} />
       }
     >
       <SafeAreaView style={IOStyles.flex}>

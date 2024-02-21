@@ -10,7 +10,7 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../../common/model/RemoteValue";
-import { addBPayToWallet, walletAddBPayStart } from "../actions";
+import { addBPayToWalletAction, walletAddBPayStart } from "../actions";
 import { NetworkError } from "../../../../../../utils/errors";
 
 export type AddingBPayState = {
@@ -27,17 +27,17 @@ const addingBPayReducer = (
   action: Action
 ): AddingBPayState => {
   switch (action.type) {
-    case getType(addBPayToWallet.request):
+    case getType(addBPayToWalletAction.request):
       return {
         selectedBPay: action.payload,
         addingResult: remoteLoading
       };
-    case getType(addBPayToWallet.success):
+    case getType(addBPayToWalletAction.success):
       return {
         ...state,
         addingResult: remoteReady(action.payload)
       };
-    case getType(addBPayToWallet.failure):
+    case getType(addBPayToWalletAction.failure):
       return {
         ...state,
         addingResult: remoteError(action.payload)

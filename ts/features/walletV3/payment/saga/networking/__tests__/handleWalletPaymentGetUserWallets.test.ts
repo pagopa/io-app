@@ -4,12 +4,15 @@ import { getType } from "typesafe-actions";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import { walletPaymentGetUserWallets } from "../../../store/actions/networking";
 import { handleWalletPaymentGetUserWallets } from "../handleWalletPaymentGetUserWallets";
-import { Wallets } from "../../../../../../../definitions/pagopa/walletv3/Wallets";
+import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/walletv3/WalletStatus";
+import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
 describe("Test handleWalletPaymentGetUserWallets saga", () => {
+  const T_SESSION_TOKEN = "ABCD";
+
   it(`should put ${getType(
     walletPaymentGetUserWallets.success
   )} when getWalletsByIdUser is 200`, () => {
@@ -33,6 +36,8 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       walletPaymentGetUserWallets.request()
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
@@ -55,6 +60,8 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       walletPaymentGetUserWallets.request()
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
@@ -81,6 +88,8 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       walletPaymentGetUserWallets.request()
     )
       .next()
+      .select(selectWalletPaymentSessionToken)
+      .next(T_SESSION_TOKEN)
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),

@@ -1,16 +1,16 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect, useStore } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { InfoBox } from "../../components/box/InfoBox";
+import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { H5 } from "../../components/core/typography/H5";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
@@ -24,16 +24,16 @@ import {
   profileServicePreferencesModeSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
+import { getFlowType } from "../../utils/analytics";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
-import { showToast } from "../../utils/showToast";
-import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
-import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { showToast } from "../../utils/showToast";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
 } from "../profile/analytics";
-import { getFlowType } from "../../utils/analytics";
+import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
+import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -114,9 +114,27 @@ const OnboardingServicesPreferenceScreen = (
   // show a badge when the user is not new
   const showBadge = !isFirstOnboarding;
   return (
-    <BaseScreenComponent contextualHelp={emptyContextualHelp}>
+    <RNavScreenWithLargeHeader
+      title={{
+        label: I18n.t("services.optIn.preferences.title")
+      }}
+      description={I18n.t("services.optIn.preferences.body")}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelp={emptyContextualHelp}
+      fixedBottomSlot={
+        <SafeAreaView>
+          <FooterWithButtons
+            type={"SingleButton"}
+            leftButton={{
+              ...confirmButtonProps(handleOnContinue),
+              disabled: !isServicesPreferenceModeSet(modeSelected)
+            }}
+          />
+        </SafeAreaView>
+      }
+    >
       <SafeAreaView style={IOStyles.flex}>
-        <ScrollView style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
+        <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
           <ServicesContactComponent
             mode={modeSelected}
             onSelectMode={handleOnSelectMode}
@@ -128,17 +146,11 @@ const OnboardingServicesPreferenceScreen = (
             </H5>
           </InfoBox>
           <VSpacer size={16} />
-        </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            ...confirmButtonProps(handleOnContinue),
-            disabled: !isServicesPreferenceModeSet(modeSelected)
-          }}
-        />
+        </View>
+
         {manualConfigBottomSheet}
       </SafeAreaView>
-    </BaseScreenComponent>
+    </RNavScreenWithLargeHeader>
   );
 };
 

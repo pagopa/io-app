@@ -7,7 +7,8 @@ import {
 } from "../../../../../../sagas/workUnit";
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
-import BONUSVACANZE_ROUTES from "../../../../bonusVacanze/navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
+import { BONUS_ROUTES } from "../../../../common/navigation/navigator";
 import {
   navigateToCgnActivationInformationTos,
   navigateToCgnDetails
@@ -19,7 +20,7 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
-import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
+import ROUTES from "../../../../../../navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
@@ -45,10 +46,12 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
   );
 
   if (initialScreen?.name === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
-    yield* call(NavigationService.navigate, MESSAGES_ROUTES.MESSAGES_HOME);
+    yield* call(NavigationService.navigate, ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
   }
   if (result === "completed") {
-    if (initialScreen?.name === BONUSVACANZE_ROUTES.BONUS_AVAILABLE_LIST) {
+    if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
       yield* call(navigateBack);
     }
     yield* call(navigateToCgnDetails);

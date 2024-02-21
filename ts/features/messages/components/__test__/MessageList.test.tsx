@@ -3,13 +3,12 @@ import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { Text } from "react-native";
 import configureMockStore from "redux-mock-store";
-
 import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { AllPaginated } from "../../store/reducers/allPaginated";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenFakeNavRedux } from "../../../../utils/testWrapper";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import {
   defaultRequestPayload,
   successReloadMessagesPayload
@@ -131,7 +130,7 @@ const renderComponent = (
   } as GlobalState);
 
   return {
-    component: renderScreenFakeNavRedux<GlobalState>(
+    component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => <MessageList {...props} />,
       MESSAGES_ROUTES.MESSAGES_HOME,
       {},

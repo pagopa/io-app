@@ -13,8 +13,7 @@ const Stack = createStackNavigator<AppParamsList>();
 const NotAuthenticatedStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.AUTHENTICATION}
-    headerMode={"none"}
-    screenOptions={{ gestureEnabled: false }}
+    screenOptions={{ gestureEnabled: false, headerShown: false }}
   >
     <Stack.Screen
       name={ROUTES.AUTHENTICATION}

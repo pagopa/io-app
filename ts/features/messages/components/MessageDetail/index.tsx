@@ -16,20 +16,18 @@ import I18n from "../../../../i18n";
 import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceMetadata } from "../../../../../definitions/backend/ServiceMetadata";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
 import { useIOSelector } from "../../../../store/hooks";
 import {
   messageMarkdownSelector,
   messageTitleSelector,
   thirdPartyFromIdSelector
 } from "../../store/reducers/thirdPartyById";
-
-import { UIAttachment, UIMessage, UIMessageDetails } from "../../types";
-import { attachmentsFromThirdPartyMessage } from "../../store/reducers/transformers";
+import { UIMessage, UIMessageDetails, UIMessageId } from "../../types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
 import { cleanMarkdownFromCTAs } from "../../utils/messages";
 import OrganizationHeader from "../../../../components/OrganizationHeader";
+import { H1 } from "../../../../components/core/typography/H1";
 import { H2 } from "../../../../components/core/typography/H2";
 import {
   AppParamsList,
@@ -37,12 +35,12 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
 import CtaBar from "./CtaBar";
 import { RemoteContentBanner } from "./RemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
-import { MessageTitle } from "./MessageTitle";
 import MessageContent from "./Content";
-import MedicalPrescriptionAttachments from "./MedicalPrescriptionAttachments";
 import MessageMarkdown from "./MessageMarkdown";
 
 const styles = StyleSheet.create({
@@ -133,17 +131,7 @@ const MessageDetailsComponent = ({
   // This is used to make sure that no attachments are shown before the
   // markdown content has rendered
   const [isContentLoadCompleted, setIsContentLoadCompleted] = useState(false);
-  // Note that it is not possibile for a message to have both medical
-  // prescription attachments and third party data. That is why, later in the
-  // code, the UI rendering is guarded by opposite checks on prescription and
-  // third party attachments
-  const {
-    prescriptionAttachments,
-    markdown,
-    prescriptionData,
-    hasRemoteContent
-  } = messageDetails;
-  const isPrescription = prescriptionData !== undefined;
+  const { markdown, hasRemoteContent } = messageDetails;
 
   const { id: messageId, title } = message;
   const thirdPartyDataPot = useIOSelector(state =>
@@ -166,32 +154,38 @@ const MessageDetailsComponent = ({
   const messageTitle =
     useIOSelector(state => messageTitleSelector(state, messageId)) ?? title;
 
+  const serviceIdOpt = service?.id;
   const openAttachment = useCallback(
-    (attachment: UIAttachment) => {
+    (attachment: ThirdPartyAttachment) => {
       navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
-          attachmentId: attachment.id
+          serviceId: serviceIdOpt,
+          attachmentId: attachment.id,
+          isPN: false
         }
       });
     },
-    [messageId, navigation]
+    [messageId, navigation, serviceIdOpt]
   );
 
   const renderThirdPartyAttachments = useCallback(
-    (thirdPartyMessage: ThirdPartyMessageWithContent): React.ReactNode => {
+    (
+      messageId: UIMessageId,
+      thirdPartyMessage: ThirdPartyMessageWithContent
+    ): React.ReactNode => {
       // In order not to break or refactor existing PN code, the backend
       // model for third party attachments is converted into in-app
       // model for attachments when the user generates the request. This
       // is not a speed intensive operation nor a memory consuming task,
       // since the attachment count should be negligible
-      const maybeThirdPartyMessageAttachments =
-        attachmentsFromThirdPartyMessage(thirdPartyMessage);
-      return O.isSome(maybeThirdPartyMessageAttachments) ? (
+      const attachmentsOpt = thirdPartyMessage.third_party_message.attachments;
+      return attachmentsOpt ? (
         <View style={IOStyles.horizontalContentPadding}>
           <LegacyMessageAttachments
-            attachments={maybeThirdPartyMessageAttachments.value}
+            attachments={attachmentsOpt}
+            messageId={messageId}
             openPreview={openAttachment}
           />
         </View>
@@ -212,7 +206,7 @@ const MessageDetailsComponent = ({
 
           <VSpacer size={24} />
 
-          <MessageTitle title={messageTitle} isPrescription={isPrescription} />
+          <H1>{messageTitle}</H1>
 
           <VSpacer size={24} />
         </View>
@@ -230,19 +224,6 @@ const MessageDetailsComponent = ({
           {cleanMarkdownFromCTAs(messageMarkdown)}
         </MessageMarkdown>
         <VSpacer size={24} />
-
-        {prescriptionAttachments &&
-          !hasThirdPartyDataAttachments &&
-          isContentLoadCompleted && (
-            <>
-              <MedicalPrescriptionAttachments
-                prescriptionData={prescriptionData}
-                prescriptionAttachments={prescriptionAttachments}
-                organizationName={message.organizationName}
-              />
-              <VSpacer size={24} />
-            </>
-          )}
 
         {hasRemoteContent && isContentLoadCompleted ? (
           <>
@@ -265,7 +246,7 @@ const MessageDetailsComponent = ({
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsError(),
               thirdPartyMessage =>
-                renderThirdPartyAttachments(thirdPartyMessage),
+                renderThirdPartyAttachments(messageId, thirdPartyMessage),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsLoading(),
               _ => renderThirdPartyAttachmentsError()

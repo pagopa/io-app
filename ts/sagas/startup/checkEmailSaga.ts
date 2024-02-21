@@ -32,11 +32,12 @@ export function* checkEmailSaga() {
       if (isProfileEmailAlreadyTaken(userProfile)) {
         yield* call(NavigationService.navigate, ROUTES.CHECK_EMAIL, {
           screen: ROUTES.CHECK_EMAIL_ALREADY_TAKEN,
-          params: { email: userProfile.email }
+          params: { email: userProfile.email ?? "" }
         });
       } else {
         yield* call(NavigationService.navigate, ROUTES.CHECK_EMAIL, {
-          screen: ROUTES.CHECK_EMAIL_NOT_VERIFIED
+          screen: ROUTES.CHECK_EMAIL_NOT_VERIFIED,
+          params: { email: userProfile.email ?? "" }
         });
       }
       // Wait for the user to press "Continue" button after having checked out

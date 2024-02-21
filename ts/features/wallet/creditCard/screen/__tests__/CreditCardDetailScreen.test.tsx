@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { waitFor } from "@testing-library/react-native";
-import * as React from "react";
 import { Store, createStore } from "redux";
 import { StatusEnum } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { EnableableFunctionsEnum } from "../../../../../../definitions/pagopa/EnableableFunctions";
@@ -23,10 +22,7 @@ import CreditCardDetailScreen from "../CreditCardDetailScreen";
 const creditCard: CreditCardPaymentMethod = {
   walletType: WalletTypeEnum.Card,
   createDate: "2021-07-08",
-  enableableFunctions: [
-    EnableableFunctionsEnum.BPD,
-    EnableableFunctionsEnum.pagoPA
-  ],
+  enableableFunctions: [EnableableFunctionsEnum.pagoPA],
   favourite: false,
   idWallet: 23216,
   info: {
@@ -50,9 +46,6 @@ const creditCard: CreditCardPaymentMethod = {
   icon: 37
 };
 
-jest.mock("../../../../../config", () => ({
-  bpdEnabled: true
-}));
 const mockInitiative = {
   initiativeId: "idpay",
   initiativeName: "idpay",
@@ -172,16 +165,12 @@ describe("Test CreditCardDetailScreen", () => {
   );
 });
 
-const CreditCardWrapper = (
-  props: React.ComponentProps<typeof CreditCardDetailScreen>
-) => <CreditCardDetailScreen {...props} />;
-
 const renderDetailScreen = (
   store: Store,
   creditCard: CreditCardPaymentMethod
 ) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
-    CreditCardWrapper,
+    CreditCardDetailScreen,
     ROUTES.WALLET_CREDIT_CARD_DETAIL,
     { creditCard },
     store

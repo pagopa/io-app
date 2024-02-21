@@ -12,6 +12,7 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING]: undefined;
   [ROUTES.PROFILE_PREFERENCES_CALENDAR]: undefined;
   [ROUTES.PROFILE_PREFERENCES_LANGUAGE]: undefined;
+  [ROUTES.PROFILE_ABOUT_APP]: undefined;
   [ROUTES.PROFILE_LOGOUT]: undefined;
   [ROUTES.PROFILE_FISCAL_CODE]: undefined;
   [ROUTES.READ_EMAIL_SCREEN]: undefined;
@@ -30,4 +31,5 @@ export type ProfileParamsList = {
   [ROUTES.IDPAY_ONBOARDING_PLAYGROUND]: undefined;
   [ROUTES.IDPAY_CODE_PLAYGROUND]: undefined;
   [ROUTES.WALLET_PLAYGROUND]: undefined;
+  [ROUTES.WALLET_PAYMENT_PLAYGROUND]: undefined;
 };

@@ -1,17 +1,17 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Alert, SafeAreaView, ScrollView, StatusBar } from "react-native";
+import { Alert, SafeAreaView, View } from "react-native";
 import { connect, useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { InfoBox } from "../../components/box/InfoBox";
-import { Label } from "../../components/core/typography/Label";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../components/buttons/ButtonConfigurations";
+import { Label } from "../../components/core/typography/Label";
+import { IOStyles } from "../../components/core/variables/IOStyles";
+import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { abortOnboarding } from "../../store/actions/onboarding";
@@ -69,43 +69,51 @@ const OnboardingShareDataScreen = (props: Props): React.ReactElement => {
   };
 
   return (
-    <BaseScreenComponent
+    <RNavScreenWithLargeHeader
       goBack={handleGoBack}
-      headerTitle={I18n.t("onboarding.shareData.title")}
+      title={{
+        label: I18n.t("profile.main.privacy.shareData.screen.title"),
+        testID: "share-data-component-title"
+      }}
+      description={I18n.t("profile.main.privacy.shareData.screen.description")}
+      fixedBottomSlot={
+        <SafeAreaView>
+          <FooterWithButtons
+            type={"TwoButtonsInlineHalf"}
+            leftButton={cancelButtonProps(
+              present,
+              I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
+            )}
+            rightButton={confirmButtonProps(
+              () => {
+                trackMixpanelSetEnabled(
+                  true,
+                  getFlowType(true, isFirstOnBoarding)
+                );
+                props.setMixpanelEnabled(true);
+              },
+              I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
+              undefined,
+              "share-data-confirm-button"
+            )}
+          />
+        </SafeAreaView>
+      }
     >
       <SafeAreaView style={IOStyles.flex}>
-        <StatusBar backgroundColor={IOColors.white} barStyle={"dark-content"} />
-        <ScrollView style={IOStyles.horizontalContentPadding}>
+        <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
           <ShareDataComponent />
-          <VSpacer size={16} />
+          <VSpacer size={24} />
           <InfoBox iconName="profile" iconColor="bluegrey">
             <Label color={"bluegrey"} weight={"Regular"}>
               {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
             </Label>
           </InfoBox>
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(
-            present,
-            I18n.t("profile.main.privacy.shareData.screen.cta.dontShare")
-          )}
-          rightButton={confirmButtonProps(
-            () => {
-              trackMixpanelSetEnabled(
-                true,
-                getFlowType(true, isFirstOnBoarding)
-              );
-              props.setMixpanelEnabled(true);
-            },
-            I18n.t("profile.main.privacy.shareData.screen.cta.shareData"),
-            undefined,
-            "share-data-confirm-button"
-          )}
-        />
+        </View>
+
         {bottomSheet}
       </SafeAreaView>
-    </BaseScreenComponent>
+    </RNavScreenWithLargeHeader>
   );
 };
 

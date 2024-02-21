@@ -1,7 +1,8 @@
 import {
   NavigatorScreenParams,
   ParamListBase,
-  RouteProp
+  RouteProp,
+  useNavigation
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/navigation/params";
@@ -88,7 +89,7 @@ export type AppParamsList = {
 
   [ROUTES.BARCODE_SCAN]: undefined;
 
-  [ROUTES.ANDROID_MEDIA_PERMISSIONS]: undefined;
+  [ROUTES.GALLERY_PERMISSION_INSTRUCTIONS]: undefined;
 
   [CGN_ROUTES.ACTIVATION.MAIN]: NavigatorScreenParams<CgnActivationParamsList>;
   [CGN_ROUTES.DETAILS.MAIN]: NavigatorScreenParams<CgnDetailsParamsList>;
@@ -138,3 +139,6 @@ export type IOStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
 > = StackNavigationProp<AppParamsList & ParamList, RouteName>;
+
+export const useIONavigation = () =>
+  useNavigation<IOStackNavigationProp<AppParamsList, keyof AppParamsList>>();
