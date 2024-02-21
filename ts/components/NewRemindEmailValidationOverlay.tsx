@@ -41,6 +41,7 @@ import {
   trackEmailValidationSuccess,
   trackEmailValidationSuccessConfirmed
 } from "../screens/analytics/emailAnalytics";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { IOToast } from "./Toast";
@@ -100,14 +101,14 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
     [dispatch]
   );
 
-  useEffect(() => {
+  useOnFirstRender(() => {
     // if the verification email was never sent, we send it
     if (sendEmailAtFirstRender) {
       sendEmailValidation();
       IOToast.show(I18n.t("email.newvalidate.toast"));
       setIsValidateEmailButtonDisabled(true);
     }
-  }, [sendEmailAtFirstRender, sendEmailValidation]);
+  });
 
   // function to localize the title of the button.
   // If the email is validated and if it is not,
