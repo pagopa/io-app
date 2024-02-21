@@ -339,7 +339,7 @@ const PlaygroundsSection = () => {
     },
     {
       // New Wallet
-      value: I18n.t("profile.main.walletPlayground.titleSection"),
+      value: "Payments",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.WALLET_PLAYGROUND

@@ -447,8 +447,6 @@ profile:
         title: Warning
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
-    walletPlayground:
-      titleSection: "New Wallet"
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
