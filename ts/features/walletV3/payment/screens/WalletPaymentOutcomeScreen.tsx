@@ -181,6 +181,26 @@ const WalletPaymentOutcomeScreen = () => {
           action: contactSupportAction,
           secondaryAction: closeFailureAction
         };
+      case WalletPaymentOutcomeEnum.WAITING_CONFIRMATION_EMAIL:
+        return {
+          pictogram: "timing",
+          title: I18n.t(
+            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.title"
+          ),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle"
+          ),
+          action: closeFailureAction
+        };
+      case WalletPaymentOutcomeEnum.METHOD_NOT_ENABLED:
+        return {
+          pictogram: "activate",
+          title: I18n.t("wallet.payment.outcome.METHOD_NOT_ENABLED.title"),
+          subtitle: I18n.t(
+            "wallet.payment.outcome.METHOD_NOT_ENABLED.subtitle"
+          ),
+          action: closeFailureAction
+        };
     }
   };
 
