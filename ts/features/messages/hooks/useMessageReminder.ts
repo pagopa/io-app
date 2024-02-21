@@ -96,7 +96,7 @@ export const useMessageReminder = (
       return;
     }
 
-    if (preferredCalendar !== undefined) {
+    if (preferredCalendar) {
       const title = I18n.t("messages.cta.reminderTitle", {
         title: subject
       });
