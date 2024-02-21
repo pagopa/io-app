@@ -52,7 +52,6 @@ type InternalState = {
 };
 
 export const Markdown = (props: MarkdownProps) => {
-  // console.log(`Markdown`);
   const [internalState, setInternalState] = useState<InternalState>({
     html: undefined,
     htmlBodyHeight: 0,

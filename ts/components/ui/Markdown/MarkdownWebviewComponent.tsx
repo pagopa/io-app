@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { LegacyRef } from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
+import { StyleProp, ViewStyle } from "react-native";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
@@ -65,7 +65,6 @@ export const MarkdownWebviewComponent = (props: Props) => {
       })
     );
   };
-  <View ref={undefined} />;
   return (
     <WebView
       androidCameraAccessDisabled={true}
