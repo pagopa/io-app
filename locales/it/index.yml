@@ -2641,7 +2641,8 @@ features:
     badge:
       dueDate: Scaduto il {{date}} alle ore {{time}}
     alert:
-      action: Aggiungi promemoria
+      addReminder: Aggiungi promemoria
+      removeReminder: Rimuovi promemoria
       content: Scade il {{date}} alle ore {{time}}
   euCovidCertificate:
     save:
