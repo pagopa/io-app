@@ -13,7 +13,7 @@ import { isGestureEnabled } from "../../../utils/navigation";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { LegacyMessageDetailAttachment } from "../screens/LegacyMessageAttachment";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { MessageAttachment } from "../screens/MessageAttachment";
+import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
@@ -53,7 +53,7 @@ export const MessagesStackNavigator = () => {
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
           component={
             isDesignSystemEnabled
-              ? MessageAttachment
+              ? MessageAttachmentScreen
               : LegacyMessageDetailAttachment
           }
           options={{
