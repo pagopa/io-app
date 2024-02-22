@@ -1,5 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { StyleSheet } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/native";
+import { LabelSmall } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
@@ -23,6 +25,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { profileEmailSelector } from "../../../../store/reducers/profile";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -42,6 +45,9 @@ const WalletPaymentOutcomeScreen = () => {
   const navigation = useIONavigation();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentStartRoute = useIOSelector(walletPaymentStartRouteSelector);
+
+  const profileEmailOption = useIOSelector(profileEmailSelector);
+  const profileEmail = O.toUndefined(profileEmailOption);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -187,9 +193,7 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t(
             "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.title"
           ),
-          subtitle: I18n.t(
-            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle"
-          ),
+          subtitle: <WaitingConfirmationEmailSubtitle />,
           action: closeFailureAction
         };
       case WalletPaymentOutcomeEnum.METHOD_NOT_ENABLED:
@@ -204,6 +208,18 @@ const WalletPaymentOutcomeScreen = () => {
     }
   };
 
+  const WaitingConfirmationEmailSubtitle = () => (
+    <>
+      <LabelSmall style={styles.text} color="grey-650" weight="Regular">
+        {I18n.t("wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle")}{" "}
+        <LabelSmall style={styles.text} color="grey-650" weight="SemiBold">
+          {profileEmail}
+        </LabelSmall>
+        .
+      </LabelSmall>
+    </>
+  );
+
   const requiresFeedback = outcome === WalletPaymentOutcomeEnum.SUCCESS;
 
   return (
@@ -215,6 +231,12 @@ const WalletPaymentOutcomeScreen = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    textAlign: "center"
+  }
+});
 
 export { WalletPaymentOutcomeScreen };
 export type { WalletPaymentOutcomeScreenNavigationParams };

@@ -19,7 +19,7 @@ import { LabelSmall } from "../core/typography/LabelSmall";
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
-  subtitle?: string;
+  subtitle?: string | React.ReactNode;
   action?: Pick<
     ButtonSolidProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
@@ -58,9 +58,13 @@ const OperationResultScreenContent = ({
       {subtitle && (
         <>
           <VSpacer size={8} />
-          <LabelSmall style={styles.text} color="grey-650" weight="Regular">
-            {subtitle}
-          </LabelSmall>
+          {typeof subtitle === "string" ? (
+            <LabelSmall style={styles.text} color="grey-650" weight="Regular">
+              {subtitle}
+            </LabelSmall>
+          ) : (
+            subtitle
+          )}
         </>
       )}
       {action && (
