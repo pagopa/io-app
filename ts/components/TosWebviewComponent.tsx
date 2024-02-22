@@ -1,18 +1,20 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { useCallback, useState } from "react";
 import { Image, StyleSheet, View, ViewProps } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  VSpacer,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { openWebUrl } from "../utils/url";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../utils/webview";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import FooterWithButtons from "./ui/FooterWithButtons";
 import { NOTIFY_LINK_CLICK_SCRIPT } from "./ui/Markdown/script";
 import { WebViewMessage } from "./ui/Markdown/types";
 import { H2 } from "./core/typography/H2";
@@ -50,6 +52,7 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
   onAcceptTos
 }: Props) => {
   const [hasError, setHasError] = useState(false);
+  const insets = useSafeAreaInsets();
 
   const handleError = useCallback(() => {
     handleLoadEnd();
@@ -76,17 +79,13 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
       </View>
 
       <View style={styles.errorButtonsContainer}>
-        <ButtonDefaultOpacity
+        <ButtonSolid
+          label={I18n.t("global.buttons.retry")}
+          fullWidth
+          testID="toSErrorContainerButton"
+          accessibilityLabel={I18n.t("global.buttons.retry")}
           onPress={handleRetry}
-          style={{ flex: 2 }}
-          block={true}
-          primary={true}
-          testID={"toSErrorContainerButton"}
-        >
-          <NBButtonText testID={"toSErrorContainerButtonText"}>
-            {I18n.t("global.buttons.retry")}
-          </NBButtonText>
-        </ButtonDefaultOpacity>
+        />
       </View>
     </View>
   );
@@ -108,7 +107,13 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
     renderError()
   ) : (
     <>
-      <View style={{ flex: 1 }} testID={"toSWebViewContainer"}>
+      <View
+        style={[
+          { flex: 1 },
+          shouldRenderFooter ? {} : { paddingBottom: insets.bottom }
+        ]}
+        testID={"toSWebViewContainer"}
+      >
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
@@ -126,19 +131,23 @@ const TosWebviewComponent: React.FunctionComponent<Props> = ({
       {shouldRenderFooter && !hasError && (
         <FooterWithButtons
           type={"TwoButtonsInlineThird"}
-          leftButton={{
-            block: true,
-            bordered: true,
-            onPress: onExit,
-            title: I18n.t("global.buttons.exit"),
-            testID: "toSWebViewContainerFooterLeftButton"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              onPress: () => onExit?.(),
+              label: I18n.t("global.buttons.exit"),
+              accessibilityLabel: I18n.t("global.buttons.exit"),
+              testID: "toSWebViewContainerFooterLeftButton"
+            }
           }}
-          rightButton={{
-            block: true,
-            primary: true,
-            onPress: onAcceptTos,
-            title: I18n.t("onboarding.tos.accept"),
-            testID: "toSWebViewContainerFooterRightButton"
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              onPress: () => onAcceptTos?.(),
+              label: I18n.t("onboarding.tos.accept"),
+              accessibilityLabel: I18n.t("onboarding.tos.accept"),
+              testID: "toSWebViewContainerFooterRightButton"
+            }
           }}
         />
       )}

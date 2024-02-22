@@ -1,7 +1,6 @@
 /**
  * A component to display a bluegrey background color on the screen using it
  */
-import { Content } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -51,7 +50,7 @@ type Props = Readonly<{
   footerFullWidth?: React.ReactNode;
   referenceToContentScreen?: (
     c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<Content>;
+  ) => ScreenContentRoot | React.LegacyRef<View>;
 }>;
 
 const styles = StyleSheet.create({

@@ -2,9 +2,9 @@
  * A screen to check if the NFC in enabled on the device.
  * If not, alert/guide the user to activate it from device settings
  */
-import { Content } from "native-base";
 import * as React from "react";
-import { Alert } from "react-native";
+import { Alert, ScrollView } from "react-native";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { resetToAuthenticationRoute } from "../../store/actions/navigation";
 import { ReduxProps } from "../../store/actions/types";
@@ -12,7 +12,6 @@ import { openNFCSettings } from "../../utils/cie";
 import { Body } from "../core/typography/Body";
 import { ScreenContentHeader } from "../screens/ScreenContentHeader";
 import TopScreenComponent from "../screens/TopScreenComponent";
-import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = ReduxProps;
 
@@ -49,14 +48,20 @@ export default class CieNfcOverlay extends React.PureComponent<Props> {
           title={I18n.t("authentication.cie.nfc.enableNfcTitle")}
           rasterIcon={require("../../../img/icons/nfc-icon.png")}
         />
-        <Content>
+        <ScrollView>
           <Body>{I18n.t("authentication.cie.nfc.enableNfcContent")}</Body>
-        </Content>
+        </ScrollView>
         <FooterWithButtons
           type={"SingleButton"}
-          leftButton={{
-            onPress: this.handleOnPressActivateNFC,
-            title: I18n.t("authentication.cie.nfc.enableNfcTitle")
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              onPress: this.handleOnPressActivateNFC,
+              label: I18n.t("authentication.cie.nfc.enableNfcTitle"),
+              accessibilityLabel: I18n.t(
+                "authentication.cie.nfc.enableNfcTitle"
+              )
+            }
           }}
         />
       </TopScreenComponent>

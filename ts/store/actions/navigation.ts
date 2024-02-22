@@ -451,16 +451,6 @@ export const navigateToWalletConfirmCardDetails = (
 /**
  * @deprecated
  */
-export const navigateToPaymentScanQrCode = () =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.WALLET_NAVIGATOR, {
-      screen: ROUTES.PAYMENT_SCAN_QR_CODE
-    })
-  );
-
-/**
- * @deprecated
- */
 export const navigateToPaymentManualDataInsertion = (
   params?: ManualDataInsertionScreenNavigationParams
 ) =>

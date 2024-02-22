@@ -1,4 +1,3 @@
-import { ListItem } from "native-base";
 import * as React from "react";
 import {
   Text,
@@ -7,14 +6,17 @@ import {
   StyleProp,
   StyleSheet,
   ViewStyle,
-  AccessibilityState
+  AccessibilityState,
+  Pressable
 } from "react-native";
 import {
   Icon,
   IOColors,
   IOIcons,
   IOIconSizeScale,
-  HSpacer
+  HSpacer,
+  Divider,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import Switch from "../../components/ui/Switch";
 import customVariables from "../../theme/variables";
@@ -87,6 +89,10 @@ const styles = StyleSheet.create({
   }
 });
 
+/**
+ *
+ * @deprecated It should be more appropriate to use a proper list item or just let the Flatlist handel the rendering.
+ */
 export default class ListItemComponent extends React.Component<Props> {
   public render() {
     const ICON_SIZE: IOIconSizeScale = this.props.iconSize
@@ -95,99 +101,110 @@ export default class ListItemComponent extends React.Component<Props> {
     const showDefaultIcon =
       this.props.iconName === undefined && this.props.hideIcon !== true;
     return (
-      <ListItem
-        style={[styles.listItem, IOStyles.rowSpaceBetween, this.props.style]}
-        onPress={this.props.onPress}
-        onLongPress={this.props.onLongPress}
-        first={this.props.isFirstItem}
-        last={this.props.isLastItem || this.props.hideSeparator}
-        accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityState={this.props.accessibilityState}
-        accessibilityRole={this.props.accessibilityRole}
-        testID={this.props.testID}
-      >
-        <View style={styles.flexColumn}>
-          <View style={IOStyles.rowSpaceBetween}>
-            <View style={styles.flexRow2}>
-              {this.props.hasBadge && (
-                <View style={styles.spacingBase}>
-                  <BadgeComponent />
-                </View>
-              )}
+      <>
+        <VSpacer size={16} />
+        <Pressable
+          style={[styles.listItem, IOStyles.rowSpaceBetween, this.props.style]}
+          onPress={this.props.onPress}
+          onLongPress={this.props.onLongPress}
+          accessibilityLabel={this.props.accessibilityLabel}
+          accessibilityState={this.props.accessibilityState}
+          accessibilityRole={this.props.accessibilityRole}
+          testID={this.props.testID}
+        >
+          <View style={styles.flexColumn}>
+            <View style={IOStyles.rowSpaceBetween}>
+              <View style={styles.flexRow2}>
+                {this.props.hasBadge && (
+                  <View style={styles.spacingBase}>
+                    <BadgeComponent />
+                  </View>
+                )}
 
-              <Text
-                style={[
-                  styles.listItemText,
-                  {
-                    color: this.props.isItemDisabled
-                      ? IOColors.grey
-                      : IOColors.bluegreyDark
-                  }
-                ]}
-                numberOfLines={2}
-              >
-                {this.props.title}
-              </Text>
-              <HSpacer size={16} />
+                <Text
+                  style={[
+                    styles.listItemText,
+                    {
+                      color: this.props.isItemDisabled
+                        ? IOColors.grey
+                        : IOColors.bluegreyDark
+                    }
+                  ]}
+                  numberOfLines={2}
+                >
+                  {this.props.title}
+                </Text>
+                <HSpacer size={16} />
 
-              {this.props.titleBadge && (
-                <View style={{ marginTop: 4 }}>
-                  {/* Use marginTop to align the badge
+                {this.props.titleBadge && (
+                  <View style={{ marginTop: 4 }}>
+                    {/* Use marginTop to align the badge
                   to the text. TODO: Replace it with a
                   more robust approach. */}
-                  <IOBadge
-                    small
-                    text={this.props.titleBadge}
-                    variant="solid"
+                    <IOBadge
+                      small
+                      text={this.props.titleBadge}
+                      variant="solid"
+                      color="blue"
+                    />
+                    <HSpacer size={4} />
+                  </View>
+                )}
+              </View>
+              {showDefaultIcon &&
+                (this.props.isLongPressEnabled ? (
+                  <Switch
+                    key={this.props.keySwitch}
+                    value={this.props.switchValue}
+                    onValueChange={this.props.onSwitchValueChanged}
+                    disabled={this.props.switchDisabled}
+                    accessibilityElementsHidden
+                    importantForAccessibility="no-hide-descendants"
+                  />
+                ) : (
+                  <Icon
+                    name="chevronRightListItem"
+                    size={ICON_SIZE}
                     color="blue"
                   />
-                  <HSpacer size={4} />
-                </View>
-              )}
+                ))}
             </View>
-            {showDefaultIcon &&
-              (this.props.isLongPressEnabled ? (
-                <Switch
-                  key={this.props.keySwitch}
-                  value={this.props.switchValue}
-                  onValueChange={this.props.onSwitchValueChanged}
-                  disabled={this.props.switchDisabled}
-                  accessibilityElementsHidden
-                  importantForAccessibility="no-hide-descendants"
-                />
-              ) : (
+            {this.props.subTitle && (
+              <Body
+                numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
+                style={[
+                  { alignSelf: "flex-start" },
+                  {
+                    paddingRight:
+                      this.props.paddingRightDescription ||
+                      PADDING_R_DESCRIPTION
+                  }
+                ]}
+              >
+                {this.props.subTitle}
+              </Body>
+            )}
+          </View>
+          {this.props.iconName !== undefined &&
+            this.props.hideIcon !== true && (
+              <View style={this.props.iconOnTop && styles.alignToStart}>
                 <Icon
-                  name="chevronRightListItem"
-                  size={ICON_SIZE}
+                  name={this.props.iconName}
+                  size={
+                    this.props.smallIconSize ? ICON_SIZE : ICON_SIZE_DEFAULT
+                  }
                   color="blue"
                 />
-              ))}
-          </View>
-          {this.props.subTitle && (
-            <Body
-              numberOfLines={this.props.useExtendedSubTitle ? undefined : 1}
-              style={[
-                { alignSelf: "flex-start" },
-                {
-                  paddingRight:
-                    this.props.paddingRightDescription || PADDING_R_DESCRIPTION
-                }
-              ]}
-            >
-              {this.props.subTitle}
-            </Body>
-          )}
-        </View>
-        {this.props.iconName !== undefined && this.props.hideIcon !== true && (
-          <View style={this.props.iconOnTop && styles.alignToStart}>
-            <Icon
-              name={this.props.iconName}
-              size={this.props.smallIconSize ? ICON_SIZE : ICON_SIZE_DEFAULT}
-              color="blue"
-            />
-          </View>
+              </View>
+            )}
+        </Pressable>
+        {!this.props.isLastItem && !this.props.hideSeparator && (
+          <>
+            <VSpacer size={16} />
+            <Divider />
+          </>
         )}
-      </ListItem>
+      </>
     );
   }
 }

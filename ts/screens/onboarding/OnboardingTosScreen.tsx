@@ -7,7 +7,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
-import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { useStore } from "react-redux";
 import { Body } from "../../components/core/typography/Body";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -137,7 +137,7 @@ const OnboardingTosScreen = () => {
         faqCategories={["privacy"]}
         headerTitle={I18n.t("onboarding.tos.headerTitle")}
       >
-        <SafeAreaView style={styles.webViewContainer}>
+        <View style={styles.webViewContainer}>
           <View style={styles.titlePadding}>
             <H1
               accessible={true}
@@ -176,7 +176,7 @@ const OnboardingTosScreen = () => {
               );
             }}
           />
-        </SafeAreaView>
+        </View>
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );

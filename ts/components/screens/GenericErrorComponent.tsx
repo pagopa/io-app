@@ -1,8 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
-import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  ScrollView
+} from "react-native";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useMemo } from "react";
@@ -84,7 +89,7 @@ const GenericErrorComponent = (props: Props) => {
 
   return (
     <React.Fragment>
-      <Content
+      <ScrollView
         bounces={false}
         testID={props.testID}
         contentContainerStyle={styles.contentContainerStyle}
@@ -111,7 +116,7 @@ const GenericErrorComponent = (props: Props) => {
           </View>
           <VSpacer size={40} />
         </View>
-      </Content>
+      </ScrollView>
       {renderFooterButtons()}
     </React.Fragment>
   );

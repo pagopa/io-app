@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Button, Text as NBButtonText } from "native-base";
 import * as React from "react";
 
 import { View, ListRenderItemInfo, SectionList } from "react-native";
 import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
+import { ButtonSolid } from "@pagopa/io-app-design-system";
 import ListItemComponent from "../components/screens/ListItemComponent";
 import I18n from "../i18n";
 import { preferredCalendarSaveSuccess } from "../store/actions/persistedPreferences";
@@ -119,9 +119,11 @@ class CalendarsListContainer extends React.PureComponent<Props, State> {
         {pot.isError(calendarsByAccount) && (
           <React.Fragment>
             <Body>{mapResourceErrorToMessage(calendarsByAccount.error)}</Body>
-            <Button onPress={this.fetchCalendars}>
-              <NBButtonText>{I18n.t("global.buttons.retry")}</NBButtonText>
-            </Button>
+            <ButtonSolid
+              onPress={this.fetchCalendars}
+              label={I18n.t("global.buttons.retry")}
+              accessibilityLabel={I18n.t("global.buttons.retry")}
+            />
           </React.Fragment>
         )}
         <View style={{ paddingHorizontal: customVariables.contentPadding }}>

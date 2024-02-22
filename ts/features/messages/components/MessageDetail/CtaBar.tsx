@@ -135,14 +135,15 @@ const CtaBar = ({
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <View style={styles.footerContainer} pointerEvents={"box-none"}>
       <View testID={"CtaBar_withCTA"} style={[IOStyles.footer, IOStyles.row]}>
+        {/* <View style={IOStyles.flex}> */}
         <ExtractedCTABar
           ctas={maybeCtas.value}
-          xsmall={false}
           dispatch={dispatch}
           serviceMetadata={serviceMetadata}
           service={service?.raw}
           isPNOptInMessage={isPNOptInMessageInfo}
         />
+        {/* </View> */}
       </View>
     </View>
   );

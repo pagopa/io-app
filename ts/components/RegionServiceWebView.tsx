@@ -1,22 +1,21 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import {
-  Body,
-  Container,
-  Content,
-  Right,
-  Text as NBButtonText
-} from "native-base";
 import * as React from "react";
-import { View, Alert, Image, StyleSheet } from "react-native";
+import { View, Alert, Image, StyleSheet, ScrollView } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  HeaderSecondLevel,
+  IOColors,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../img/broken-link.png";
 import I18n from "../i18n";
 import { WebviewMessage } from "../types/WebviewMessage";
@@ -27,11 +26,9 @@ import {
   AVOID_ZOOM_JS,
   closeInjectedScript
 } from "../utils/webview";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Label } from "./core/typography/Label";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
-import AppHeader from "./ui/AppHeader";
 import { LightModalContextInterface } from "./ui/LightModal";
 import { IOStyles } from "./core/variables/IOStyles";
 
@@ -49,16 +46,6 @@ const styles = StyleSheet.create({
   },
   errorTitle: {
     marginTop: 10
-  },
-  errorButtonsContainer: {
-    position: "absolute",
-    bottom: 0,
-    flex: 1,
-    flexDirection: "row"
-  },
-  cancelButtonStyle: {
-    flex: 1,
-    marginEnd: 10
   }
 });
 
@@ -74,16 +61,18 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   const urlParsed = new URLParse(props.uri, true);
 
   const showSuccessContent = (text: string, close: () => void) => (
-    <Container>
-      <AppHeader noLeft={true}>
-        <Body />
-        <Right>
-          <ButtonDefaultOpacity onPress={close} transparent={true}>
-            <Icon name="closeLarge" />
-          </ButtonDefaultOpacity>
-        </Right>
-      </AppHeader>
-      <Content style={IOStyles.flex}>
+    <View style={[{ backgroundColor: IOColors.white }, IOStyles.flex]}>
+      <HeaderSecondLevel
+        title=""
+        type="singleAction"
+        firstAction={{
+          icon: "closeLarge",
+          onPress: close,
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          testID: "contextualInfo_closeButton"
+        }}
+      />
+      <ScrollView style={IOStyles.flex}>
         <View style={IOStyles.selfCenter}>
           <Icon name="ok" size={96} color="aqua" />
         </View>
@@ -93,21 +82,23 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
           <Label>{`${I18n.t("global.genericThanks")},`}</Label>
           <Label weight={"Bold"}>{text}</Label>
         </View>
-      </Content>
-    </Container>
+      </ScrollView>
+    </View>
   );
 
   const showErrorContent = (text: string, close: () => void) => (
-    <Container>
-      <AppHeader noLeft={true}>
-        <Body />
-        <Right>
-          <ButtonDefaultOpacity onPress={close} transparent={true}>
-            <Icon name="closeLarge" />
-          </ButtonDefaultOpacity>
-        </Right>
-      </AppHeader>
-      <Content style={IOStyles.flex}>
+    <View style={[{ backgroundColor: IOColors.white }, IOStyles.flex]}>
+      <HeaderSecondLevel
+        title=""
+        type="singleAction"
+        firstAction={{
+          icon: "closeLarge",
+          onPress: close,
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          testID: "contextualInfo_closeButton"
+        }}
+      />
+      <ScrollView style={IOStyles.flex}>
         <View style={IOStyles.selfCenter}>
           <Icon name="errorFilled" size={96} color="red" />
         </View>
@@ -115,8 +106,8 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
         <View style={styles.itemsCenter}>
           <Label weight={"Bold"}>{text}</Label>
         </View>
-      </Content>
-    </Container>
+      </ScrollView>
+    </View>
   );
 
   const onWebviewError = (_: WebViewErrorEvent) => {
@@ -130,34 +121,35 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const renderErrorComponent = () => (
-    <View style={styles.errorContainer}>
-      <VSpacer size={40} />
-      <VSpacer size={40} />
-      <Image source={brokenLinkImage} resizeMode="contain" />
-      <Label style={styles.errorTitle} weight={"Bold"}>
-        {I18n.t("authentication.errors.network.title")}
-      </Label>
-
-      <View style={styles.errorButtonsContainer}>
-        <ButtonDefaultOpacity
-          onPress={props.onWebviewClose}
-          style={styles.cancelButtonStyle}
-          block={true}
-          light={true}
-          bordered={true}
-        >
-          <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
-        </ButtonDefaultOpacity>
-        <ButtonDefaultOpacity
-          onPress={handleReload}
-          style={{ flex: 2 }}
-          block={true}
-          primary={true}
-        >
-          <Label color={"white"}>{I18n.t("global.buttons.retry")}</Label>
-        </ButtonDefaultOpacity>
+    <>
+      <View style={styles.errorContainer}>
+        <VSpacer size={40} />
+        <VSpacer size={40} />
+        <Image source={brokenLinkImage} resizeMode="contain" />
+        <Label style={styles.errorTitle} weight={"Bold"}>
+          {I18n.t("authentication.errors.network.title")}
+        </Label>
       </View>
-    </View>
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: props.onWebviewClose
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.retry"),
+            accessibilityLabel: I18n.t("global.buttons.retry"),
+            onPress: handleReload
+          }
+        }}
+      />
+    </>
   );
 
   const handleReload = () => {

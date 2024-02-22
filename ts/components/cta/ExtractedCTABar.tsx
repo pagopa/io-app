@@ -1,7 +1,8 @@
 import React, { ReactElement, useMemo } from "react";
 import { Dispatch } from "redux";
 import { useLinkTo } from "@react-navigation/native";
-import { HSpacer } from "@pagopa/io-app-design-system";
+import { HSpacer, IOStyles } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import { CTA, CTAS } from "../../features/messages/types/MessageCTA";
 import {
@@ -15,7 +16,6 @@ import { ExtractedCtaButton } from "./ExtractedCtaButton";
 
 type Props = {
   ctas: CTAS;
-  xsmall: boolean;
   dispatch: Dispatch;
   isPNOptInMessage?: PNOptInMessageInfo;
   // service and serviceMetadata could come from message or service detail
@@ -25,7 +25,7 @@ type Props = {
 };
 
 const renderCtaButton = (
-  { xsmall, service, serviceMetadata }: Props,
+  { service, serviceMetadata }: Props,
   linkTo: (path: string) => void,
   primary: boolean,
   isPNOptInMessage: boolean,
@@ -42,7 +42,6 @@ const renderCtaButton = (
     return (
       <ExtractedCtaButton
         cta={cta}
-        xsmall={xsmall}
         primary={primary}
         onCTAPress={handleCTAPress}
       />
@@ -87,9 +86,13 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
 
   return (
     <>
-      {cta2}
-      {cta2 && <HSpacer size={8} />}
-      {cta1}
+      {cta2 && (
+        <>
+          <View style={IOStyles.flex}>{cta2}</View>
+          <HSpacer size={8} />
+        </>
+      )}
+      <View style={IOStyles.flex}>{cta1}</View>
     </>
   );
 };

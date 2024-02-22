@@ -5,10 +5,9 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { View, SafeAreaView } from "react-native";
+import { View, SafeAreaView, ScrollView } from "react-native";
 import {
   LabelLink,
   IOPictogramSizeScale,
@@ -277,7 +276,7 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
       <SafeAreaView style={IOStyles.flex}>
         <VSpacer size={40} />
         <VSpacer size={40} />
-        <Content bounces={false} testID="container-test">
+        <ScrollView bounces={false} testID="container-test">
           <View style={IOStyles.selfCenter}>
             <Pictogram
               name={"emailValidation"}
@@ -325,7 +324,7 @@ const NewRemindEmailValidationOverlayComponent = (props: Props) => {
               <VSpacer size={8} />
             </View>
           )}
-        </Content>
+        </ScrollView>
         <Footer />
       </SafeAreaView>
     </BaseScreenComponent>

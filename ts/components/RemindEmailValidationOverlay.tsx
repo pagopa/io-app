@@ -5,7 +5,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -13,7 +12,8 @@ import {
   BackHandler,
   NativeEventSubscription,
   StyleSheet,
-  Platform
+  Platform,
+  ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -378,7 +378,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
         contextualHelpMarkdown={this.contextualHelpMarkdown}
         accessibilityEvents={{ avoidNavigationEventsUsage: true }}
       >
-        <Content bounces={false}>
+        <ScrollView bounces={false}>
           <VSpacer size={40} />
           <View style={IOStyles.selfCenter}>
             <Pictogram
@@ -409,7 +409,7 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
             </View>
           )}
           <VSpacer size={24} />
-        </Content>
+        </ScrollView>
 
         {this.state.displayError && this.renderErrorBanner}
         {(this.state.emailHasBeenValidate ||
