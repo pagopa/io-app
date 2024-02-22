@@ -17,7 +17,7 @@ import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner"
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Markdown from "../../components/ui/Markdown";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { trackLoginRootedScreen } from "./analytics";
@@ -135,13 +135,13 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
               </View>
             </View>
             <VSpacer size={8} />
-            <Markdown
+            <LegacyMarkdown
               cssStyle={CSS_STYLE}
               onLoadEnd={onMarkdownLoaded}
               extraBodyHeight={100}
             >
               {body}
-            </Markdown>
+            </LegacyMarkdown>
           </Content>
           <FooterWithButtons
             type="TwoButtonsInlineHalf"
