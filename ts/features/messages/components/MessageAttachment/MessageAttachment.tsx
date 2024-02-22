@@ -1,43 +1,33 @@
 import React, { useCallback, useState } from "react";
-import { pipe } from "fp-ts/lib/function";
-import * as B from "fp-ts/lib/boolean";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { FooterWithButtons } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
-import { useIOSelector } from "../../../store/hooks";
-import { downloadedMessageAttachmentSelector } from "../store/reducers/downloads";
-import { UIMessageId } from "../types";
-import { isIos } from "../../../utils/platform";
-import { share } from "../../../utils/share";
-import { IOToast } from "../../../components/Toast";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { PdfViewer } from "../components/MessageAttachment/PdfViewer";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { MessagesParamsList } from "../navigation/params";
+import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
+import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { downloadedMessageAttachmentSelector } from "../../store/reducers/downloads";
+import { UIMessageId } from "../../types";
+import { isIos } from "../../../../utils/platform";
+import { share } from "../../../../utils/share";
+import { IOToast } from "../../../../components/Toast";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import {
+  attachmentContentType,
+  attachmentDisplayName
+} from "../../store/reducers/transformers";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
-} from "../analytics";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+} from "../../analytics";
 import {
   trackPNAttachmentOpeningSuccess,
   trackPNAttachmentSave,
   trackPNAttachmentSaveShare,
   trackPNAttachmentShare
-} from "../../pn/analytics";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import {
-  attachmentContentType,
-  attachmentDisplayName
-} from "../store/reducers/transformers";
-
-export type MessageAttachmentNavigationParams = Readonly<{
-  messageId: UIMessageId;
-  attachmentId: string;
-  isPN: boolean;
-  serviceId?: ServiceId;
-}>;
+} from "../../../pn/analytics";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { PdfViewer } from "./PdfViewer";
 
 type MessageAttachmentFooterProps = {
   attachmentCategory?: string;
@@ -170,13 +160,19 @@ const onDownload = (isPN: boolean, attachmentCategory?: string) =>
     )
   );
 
-export const MessageAttachment = (
-  props: IOStackNavigationRouteProps<
-    MessagesParamsList,
-    "MESSAGE_DETAIL_ATTACHMENT"
-  >
-): React.ReactElement => {
-  const { messageId, attachmentId, isPN, serviceId } = props.route.params;
+export type MessageAttachmentProps = {
+  messageId: UIMessageId;
+  attachmentId: string;
+  isPN: boolean;
+  serviceId?: ServiceId;
+};
+
+export const MessageAttachment = ({
+  attachmentId,
+  isPN,
+  messageId,
+  serviceId
+}: MessageAttachmentProps) => {
   const [isPDFRenderingError, setIsPDFRenderingError] = useState(false);
 
   const downloadedAttachment = useIOSelector(state =>
@@ -191,11 +187,6 @@ export const MessageAttachment = (
     onPDFError(messageId, isPN, serviceId, attachmentCategory);
   }, [attachmentCategory, messageId, isPN, serviceId]);
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true
-  });
-
   if (!attachmentOpt || !downloadPathOpt) {
     return (
       <OperationResultScreenContent
@@ -205,8 +196,10 @@ export const MessageAttachment = (
       />
     );
   }
+
   const name = attachmentDisplayName(attachmentOpt);
   const mimeType = attachmentContentType(attachmentOpt);
+
   return (
     <>
       {isPDFRenderingError ? (

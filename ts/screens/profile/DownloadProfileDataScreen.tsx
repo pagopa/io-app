@@ -11,7 +11,7 @@ import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserD
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { IOToast } from "../../components/Toast";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import Markdown from "../../components/ui/Markdown";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import {
@@ -109,9 +109,9 @@ const DownloadProfileDataScreen = () => {
       <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={0.9}>
         <SafeAreaView style={IOStyles.flex}>
           <ContentWrapper>
-            <Markdown onLoadEnd={() => setIsMarkdownLoaded(true)}>
+            <LegacyMarkdown onLoadEnd={() => setIsMarkdownLoaded(true)}>
               {I18n.t("profile.main.privacy.exportData.info.body")}
-            </Markdown>
+            </LegacyMarkdown>
           </ContentWrapper>
         </SafeAreaView>
       </LoadingSpinnerOverlay>

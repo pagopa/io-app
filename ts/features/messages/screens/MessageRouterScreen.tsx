@@ -28,7 +28,7 @@ import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 
-export type MessageRouterScreenNavigationParams = {
+export type MessageRouterScreenRouteParams = {
   messageId: UIMessageId;
   fromNotification: boolean;
 };

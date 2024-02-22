@@ -49,8 +49,7 @@ export const useAttachmentDownload = (
       params: {
         messageId,
         serviceId,
-        attachmentId,
-        isPN: false
+        attachmentId
       }
     });
   }, [attachmentId, dispatch, messageId, navigation, serviceId]);
