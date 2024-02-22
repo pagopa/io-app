@@ -6,7 +6,7 @@ import { PreferencesListItem } from "../../../../components/PreferencesListItem"
 import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { IOBadge } from "../../../../components/core/IOBadge";
 import { Link } from "../../../../components/core/typography/Link";
-import Markdown from "../../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import Switch from "../../../../components/ui/Switch";
 import I18n from "../../../../i18n";
 import { PaymentMethod } from "../../../../types/pagopa";
@@ -69,9 +69,9 @@ const PagoPaPaymentCapability: React.FC<Props> = props => {
     {
       component: (
         <View>
-          <Markdown>
+          <LegacyMarkdown>
             {I18n.t("wallet.methods.card.pagoPaCapability.bottomSheetBody")}
-          </Markdown>
+          </LegacyMarkdown>
           <ButtonDefaultOpacity
             onPress={onOpenLearnMoreAboutInAppPayments}
             style={styles.bottomSheetCTA}

@@ -1,7 +1,5 @@
-/* eslint-disable functional/immutable-data */
-import React, { ComponentProps, useEffect, useMemo } from "react";
+import React, { ComponentProps, useMemo } from "react";
 import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useIODispatch } from "../../store/hooks";
@@ -63,7 +61,6 @@ type Props = {
  */
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
 
   const requestParams = useMemo(
     () =>
@@ -85,28 +82,16 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     }),
     [startSupportRequest]
   );
-  const headerPropsRef = React.useRef<HeaderFirstLevelProps>({
-    title: I18n.t("messages.contentTitle"),
-    type: "twoActions",
-    firstAction: helpAction,
-    secondAction: {
-      icon: "search",
-      accessibilityLabel: I18n.t("global.accessibility.search"),
-      onPress: () => {
-        dispatch(searchMessagesEnabled(true));
-      }
-    }
-  });
 
   const {
     bottomSheet: WalletHomeHeaderBottomSheet,
     present: presentWalletHomeHeaderBottomsheet
   } = useWalletHomeHeaderBottomSheet();
 
-  useEffect(() => {
+  const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
       case ROUTES.SERVICES_HOME:
-        headerPropsRef.current = {
+        return {
           title: I18n.t("services.title"),
           type: "twoActions",
           firstAction: helpAction,
@@ -118,32 +103,16 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             }
           }
         };
-        break;
       case ROUTES.PROFILE_MAIN:
-        headerPropsRef.current = {
+        return {
           title: I18n.t("profile.main.title"),
           backgroundColor: "dark",
           type: "singleAction",
           firstAction: helpAction
         };
-        break;
-      case MESSAGES_ROUTES.MESSAGES_HOME:
-        headerPropsRef.current = {
-          title: I18n.t("messages.contentTitle"),
-          type: "twoActions",
-          firstAction: helpAction,
-          secondAction: {
-            icon: "search",
-            accessibilityLabel: I18n.t("global.accessibility.search"),
-            onPress: () => {
-              dispatch(searchMessagesEnabled(true));
-            }
-          }
-        };
-        break;
       case ROUTES.BARCODE_SCAN:
       case ROUTES.WALLET_HOME:
-        headerPropsRef.current = {
+        return {
           title: I18n.t("wallet.wallet"),
           type: "twoActions",
           firstAction: helpAction,
@@ -156,12 +125,22 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             testID: "walletAddNewPaymentMethodTestId"
           }
         };
-        break;
+      case MESSAGES_ROUTES.MESSAGES_HOME:
       default:
-        break;
+        return {
+          title: I18n.t("messages.contentTitle"),
+          type: "twoActions",
+          firstAction: helpAction,
+          secondAction: {
+            icon: "search",
+            accessibilityLabel: I18n.t("global.accessibility.search"),
+            onPress: () => {
+              dispatch(searchMessagesEnabled(true));
+            }
+          }
+        };
     }
   }, [
-    navigation,
     currentRouteName,
     helpAction,
     presentWalletHomeHeaderBottomsheet,
@@ -170,7 +149,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   return (
     <>
-      <HeaderFirstLevel {...headerPropsRef.current} />
+      <HeaderFirstLevel {...headerProps} />
       {WalletHomeHeaderBottomSheet}
     </>
   );

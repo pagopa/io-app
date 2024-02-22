@@ -17,7 +17,7 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import Markdown from "../../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
@@ -69,14 +69,14 @@ export const PDNDPrerequisitesScreen = () => {
         "idpay.onboarding.PDNDPrerequisites.prerequisites.info.header"
       ),
       component: (
-        <Markdown>
+        <LegacyMarkdown>
           {I18n.t(
             "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
             {
               provider: authority
             }
           )}
-        </Markdown>
+        </LegacyMarkdown>
       ),
       footer: (
         <ContentWrapper>
