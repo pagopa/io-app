@@ -25,7 +25,7 @@ import customVariables from "../../../theme/variables";
 import { WithTestID } from "../../../types/WithTestID";
 import { remarkProcessor } from "../../../utils/markdown";
 import { closeInjectedScript } from "../../../utils/webview";
-import MarkdownWebviewComponent from "./MarkdownWebviewComponent";
+import { MarkdownWebviewComponent } from "./MarkdownWebviewComponent";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
 
 const INJECTED_JAVASCRIPT = `
@@ -208,7 +208,7 @@ type State = {
 /**
  * A component to render the message markdown as HTML inside a WebView
  */
-class Markdown extends React.PureComponent<Props, State> {
+class LegacyMarkdown extends React.PureComponent<Props, State> {
   private webViewRef = React.createRef<WebView>();
   private subscription: NativeEventSubscription | undefined;
 
@@ -398,6 +398,6 @@ class Markdown extends React.PureComponent<Props, State> {
   };
 }
 
-export type MarkdownProps = OwnProps;
+export type LegacyMarkdownProps = OwnProps;
 
-export default connect()(Markdown);
+export default connect()(LegacyMarkdown);

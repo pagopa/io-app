@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "react-native";
 import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
-import Markdown from "../../../../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
@@ -18,9 +18,12 @@ const EycaInformationComponent: React.FunctionComponent = () => {
     <View>
       <VSpacer size={16} />
       <View>
-        <Markdown avoidTextSelection onLoadEnd={() => setMarkdownloaded(true)}>
+        <LegacyMarkdown
+          avoidTextSelection
+          onLoadEnd={() => setMarkdownloaded(true)}
+        >
           {I18n.t("bonus.cgn.detail.status.eycaDescription")}
-        </Markdown>
+        </LegacyMarkdown>
         <VSpacer size={16} />
         {isMarkdownloaded && (
           <ButtonOutline

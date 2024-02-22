@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { ScrollView } from "react-native";
 import {
   ContentWrapper,
@@ -21,6 +21,7 @@ import { cancelPreviousAttachmentDownload } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import {
   hasAttachmentsSelector,
+  messageMarkdownSelector,
   messageTitleSelector
 } from "../store/reducers/thirdPartyById";
 import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
@@ -33,6 +34,8 @@ import {
 } from "../store/reducers/detailsById";
 import { localeDateFormat } from "../../../utils/locale";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
+import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
+import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 
 export type MessageDetailsScreenRouteParams = {
@@ -78,6 +81,13 @@ export const MessageDetailsScreen = () => {
     navigation.goBack();
   }, [dispatch, navigation]);
 
+  const messageMarkdown =
+    useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";
+  const markdownWithNoCTA = useMemo(
+    () => cleanMarkdownFromCTAs(messageMarkdown),
+    [messageMarkdown]
+  );
+
   useHeaderSecondLevel({
     title: "",
     goBack,
@@ -97,55 +107,56 @@ export const MessageDetailsScreen = () => {
   return (
     <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
       <ScrollView>
-        <MessageDetailsHeader
-          serviceId={serviceId}
-          subject={subject}
-          createdAt={message.createdAt}
-        >
-          {hasAttachments && (
-            <MessageDetailsTagBox>
-              <Tag
-                variant="attachment"
-                testID="attachment-tag"
-                iconAccessibilityLabel={I18n.t(
-                  "messageDetails.accessibilityAttachmentIcon"
-                )}
-              />
-            </MessageDetailsTagBox>
-          )}
-          {messageDetails.dueDate && expiringInfo === "expired" && (
-            <MessageDetailsTagBox>
-              <Tag
-                text={I18n.t("features.messages.badge.dueDate", {
-                  date: localeDateFormat(
-                    messageDetails.dueDate,
-                    I18n.t("global.dateFormats.dayMonthWithoutTime")
-                  ),
-                  time: localeDateFormat(
-                    messageDetails.dueDate,
-                    I18n.t("global.dateFormats.timeFormat")
-                  )
-                })}
-                variant="error"
-                testID="due-date-tag"
-              />
-            </MessageDetailsTagBox>
-          )}
-        </MessageDetailsHeader>
-
-        {messageDetails.dueDate && expiringInfo === "expiring" && (
-          <ContentWrapper>
-            <VSpacer size={8} />
-            <MessageDetailsReminder
-              dueDate={messageDetails.dueDate}
-              messageId={messageId}
-              title={subject}
-            />
-          </ContentWrapper>
-        )}
-
-        <VSpacer size={16} />
         <ContentWrapper>
+          <MessageDetailsHeader
+            serviceId={serviceId}
+            subject={subject}
+            createdAt={message.createdAt}
+          >
+            {hasAttachments && (
+              <MessageDetailsTagBox>
+                <Tag
+                  variant="attachment"
+                  testID="attachment-tag"
+                  iconAccessibilityLabel={I18n.t(
+                    "messageDetails.accessibilityAttachmentIcon"
+                  )}
+                />
+              </MessageDetailsTagBox>
+            )}
+            {messageDetails.dueDate && expiringInfo === "expired" && (
+              <MessageDetailsTagBox>
+                <Tag
+                  text={I18n.t("features.messages.badge.dueDate", {
+                    date: localeDateFormat(
+                      messageDetails.dueDate,
+                      I18n.t("global.dateFormats.dayMonthWithoutTime")
+                    ),
+                    time: localeDateFormat(
+                      messageDetails.dueDate,
+                      I18n.t("global.dateFormats.timeFormat")
+                    )
+                  })}
+                  variant="error"
+                  testID="due-date-tag"
+                />
+              </MessageDetailsTagBox>
+            )}
+          </MessageDetailsHeader>
+
+          {messageDetails.dueDate && expiringInfo === "expiring" && (
+            <>
+              <VSpacer size={8} />
+              <MessageDetailsReminder
+                dueDate={messageDetails.dueDate}
+                messageId={messageId}
+                title={subject}
+              />
+            </>
+          )}
+          <VSpacer />
+          <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
+          <VSpacer />
           <MessageDetailsAttachments messageId={messageId} />
         </ContentWrapper>
       </ScrollView>
