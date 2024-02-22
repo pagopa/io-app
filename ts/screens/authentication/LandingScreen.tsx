@@ -5,6 +5,7 @@
 import {
   ButtonLink,
   ButtonSolid,
+  ContentWrapper,
   IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -414,7 +415,7 @@ export const LandingScreen = () => {
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
-        <View style={IOStyles.horizontalContentPadding}>
+        <ContentWrapper>
           <ButtonSolid
             testID={
               isCieSupported()
@@ -475,7 +476,7 @@ export const LandingScreen = () => {
             />
             <VSpacer size={16} />
           </View>
-        </View>
+        </ContentWrapper>
       </SafeAreaView>
     );
   };

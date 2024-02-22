@@ -24,16 +24,11 @@ type Props = {
 };
 
 export const LandingCardComponent = (card: Props) => {
-  const { width: screenWidth, height: screenHeight } = card.screenDimensions;
-  const LARGE_SCREEN_TRESHOLD = 600;
+  const { width: screenWidth } = card.screenDimensions;
 
   return (
     <ScrollView
-      contentContainerStyle={
-        screenHeight > LARGE_SCREEN_TRESHOLD
-          ? { flex: 1, justifyContent: "center" }
-          : {}
-      }
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
     >
       <View
         style={[
