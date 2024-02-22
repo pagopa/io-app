@@ -2,12 +2,12 @@ import * as React from "react";
 import { ComponentProps } from "react";
 import { FAQType } from "../utils/faq";
 import Accordion from "./ui/Accordion";
-import Markdown from "./ui/Markdown";
+import LegacyMarkdown from "./ui/Markdown/LegacyMarkdown";
 
 type Props = Readonly<{
   faqs: ReadonlyArray<FAQType>;
-  onLinkClicked?: ComponentProps<typeof Markdown>["onLinkClicked"];
-  shouldHandleLink?: ComponentProps<typeof Markdown>["shouldHandleLink"];
+  onLinkClicked?: ComponentProps<typeof LegacyMarkdown>["onLinkClicked"];
+  shouldHandleLink?: ComponentProps<typeof LegacyMarkdown>["shouldHandleLink"];
 }>;
 
 const FAQComponent: React.FunctionComponent<Props> = (props: Props) => (

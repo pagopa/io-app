@@ -30,7 +30,7 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../../components/screens/EdgeBorderComponent";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
-import Markdown from "../../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { useScreenReaderEnabled } from "../../../../utils/accessibility";
@@ -129,7 +129,7 @@ const getTosFooter = (
                 <VSpacer size={40} />
                 <ItemSeparatorComponent noPadded={true} />
                 <VSpacer size={40} />
-                <Markdown
+                <LegacyMarkdown
                   cssStyle={CSS_STYLE}
                   extraBodyHeight={extraMarkdownBodyHeight}
                 >
@@ -138,7 +138,7 @@ const getTosFooter = (
                     regulationLink: rU.url,
                     tosUrl: bT
                   })}
-                </Markdown>
+                </LegacyMarkdown>
               </>
             )
           )
@@ -259,13 +259,13 @@ const BonusInformationComponent: React.FunctionComponent<Props> = props => {
 
           <VSpacer size={16} />
           <ItemSeparatorComponent noPadded={true} />
-          <Markdown
+          <LegacyMarkdown
             cssStyle={CSS_STYLE}
             extraBodyHeight={extraMarkdownBodyHeight}
             onLoadEnd={onMarkdownLoaded}
           >
             {bonusTypeLocalizedContent.content}
-          </Markdown>
+          </LegacyMarkdown>
           <VSpacer size={40} />
           {isMarkdownLoaded && renderUrls()}
           {getTosFooter(
