@@ -3,7 +3,7 @@
  */
 
 import * as React from "react";
-import { View, ScrollView, useWindowDimensions } from "react-native";
+import { View, ScrollView, ScaledSize } from "react-native";
 import {
   Body,
   H3,
@@ -20,13 +20,21 @@ type Props = {
   content: string;
   accessibilityLabel?: string;
   accessibilityHint?: string;
+  screenDimensions: ScaledSize;
 };
 
 export const LandingCardComponent = (card: Props) => {
-  const screenWidth = useWindowDimensions().width;
+  const { width: screenWidth, height: screenHeight } = card.screenDimensions;
+  const LARGE_SCREEN_TRESHOLD = 600;
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1, justifyContent: "center" }}>
+    <ScrollView
+      contentContainerStyle={
+        screenHeight > LARGE_SCREEN_TRESHOLD
+          ? { flex: 1, justifyContent: "center" }
+          : {}
+      }
+    >
       <View
         style={[
           {

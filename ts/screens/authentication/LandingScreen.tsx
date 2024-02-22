@@ -23,7 +23,8 @@ import {
   View,
   StyleSheet,
   useWindowDimensions,
-  GestureResponderEvent
+  GestureResponderEvent,
+  useColorScheme
 } from "react-native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
@@ -60,7 +61,10 @@ import {
   hasNFCFeatureSelector,
   isCieSupportedSelector
 } from "../../store/reducers/cie";
-import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
+import {
+  continueWithRootOrJailbreakSelector,
+  isDesignSystemEnabledSelector
+} from "../../store/reducers/persistedPreferences";
 import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
 });
 
 const carouselCards: ReadonlyArray<
-  ComponentProps<typeof LandingCardComponent>
+  Omit<ComponentProps<typeof LandingCardComponent>, "screenDimensions">
 > = [
   {
     id: 5,
@@ -146,8 +150,12 @@ export const IdpCIE: SpidIdp = {
 };
 
 export const LandingScreen = () => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const colorScheme = useColorScheme();
+
   const scrollX = React.useRef(new Animated.Value(0)).current;
-  const { width: windowWidth } = useWindowDimensions();
+  const screenDimension = useWindowDimensions();
+  const windowWidth = screenDimension.width;
 
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = React.useState<
     O.Option<boolean>
@@ -286,7 +294,11 @@ export const LandingScreen = () => {
   const renderCardComponents = () => {
     const cardProps = carouselCards;
     return cardProps.map(p => (
-      <LandingCardComponent key={`card-${p.id}`} {...p} />
+      <LandingCardComponent
+        screenDimensions={screenDimension}
+        key={`card-${p.id}`}
+        {...p}
+      />
     ));
   };
 
@@ -296,6 +308,13 @@ export const LandingScreen = () => {
 
   const CarouselDots = () => {
     const dotTouchCount = React.useRef(0);
+
+    const blueColor =
+      colorScheme === "dark"
+        ? IOColors.white
+        : isDesignSystemEnabled
+        ? IOColors["blueIO-500"]
+        : IOColors.blue;
 
     return (
       <View
@@ -329,9 +348,9 @@ export const LandingScreen = () => {
               windowWidth * (imageIndex + 1)
             ],
             outputRange: [
-              IOColors.greyLight,
-              IOColors.blue,
-              IOColors.greyLight
+              IOColors["grey-200"],
+              blueColor,
+              IOColors["grey-200"]
             ],
             extrapolate: "clamp"
           });

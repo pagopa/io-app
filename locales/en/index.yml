@@ -591,7 +591,7 @@ authentication:
     card4-title: You can login only with SPID
     card4-content: The device you are using does not support access with Electronic Identity Card (CIE)
     card5-title: Welcome to the public version of IO!
-    card5-content: In this version you can find in the upper-right corner the icons to report bugs or start a chat with the development team. We're waiting for your feedback!
+    card5-content: Vediamo insieme cosa puoi fare
     card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
