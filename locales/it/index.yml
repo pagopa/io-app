@@ -1992,7 +1992,7 @@ services:
         label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
         body:
-          text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
+          text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
       manualConfig:
         value: "Configurazione manuale"

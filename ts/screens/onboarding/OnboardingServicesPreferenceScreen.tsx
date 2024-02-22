@@ -1,15 +1,16 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FeatureInfo,
+  FooterWithButtons,
+  IOStyles,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect, useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
-import { InfoBox } from "../../components/box/InfoBox";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { H5 } from "../../components/core/typography/H5";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -27,7 +28,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../utils/showToast";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
@@ -45,18 +45,16 @@ type Props = ReturnType<typeof mapStateToProps> &
     "ONBOARDING_SERVICES_PREFERENCE"
   >;
 
-const OnboardingServicesPreferenceScreen = (
-  props: Props
-): React.ReactElement => {
+const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const isFirstOnboarding = props.route.params.isFirstOnboarding;
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
   const mode = props.profileServicePreferenceMode;
-  const [modeSelected, setModeSelected] = React.useState<
+  const [modeSelected, setModeSelected] = useState<
     ServicesPreferencesModeEnum | undefined
   >(mode);
-  const [prevPotProfile, setPrevPotProfile] = React.useState<
-    typeof props.potProfile
-  >(props.potProfile);
+  const [prevPotProfile, setPrevPotProfile] = useState<typeof props.potProfile>(
+    props.potProfile
+  );
 
   const { profileServicePreferenceMode, potProfile, onContinue } = props;
 
@@ -66,7 +64,7 @@ const OnboardingServicesPreferenceScreen = (
 
   const store = useStore();
 
-  React.useEffect(() => {
+  useEffect(() => {
     // when the user made a choice (the profile is right updated), continue to the next step
     if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
       void trackServiceConfiguration(
@@ -80,7 +78,7 @@ const OnboardingServicesPreferenceScreen = (
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
     if (!pot.isError(prevPotProfile) && pot.isError(potProfile)) {
-      showToast(I18n.t("global.genericError"));
+      IOToast.error(I18n.t("global.genericError"));
     }
     setPrevPotProfile(potProfile);
   }, [
@@ -97,6 +95,7 @@ const OnboardingServicesPreferenceScreen = (
       props.onServicePreferenceSelected(modeSelected);
     }
   };
+
   const { present: confirmManualConfig, manualConfigBottomSheet } =
     useManualConfigBottomSheet(() =>
       props.onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
@@ -124,10 +123,15 @@ const OnboardingServicesPreferenceScreen = (
       fixedBottomSlot={
         <SafeAreaView>
           <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              ...confirmButtonProps(handleOnContinue),
-              disabled: !isServicesPreferenceModeSet(modeSelected)
+            type="SingleButton"
+            primary={{
+              type: "Solid",
+              buttonProps: {
+                label: I18n.t("global.buttons.confirm"),
+                onPress: handleOnContinue,
+                accessibilityLabel: I18n.t("global.buttons.confirm"),
+                disabled: !isServicesPreferenceModeSet(modeSelected)
+              }
             }}
           />
         </SafeAreaView>
@@ -140,14 +144,16 @@ const OnboardingServicesPreferenceScreen = (
             onSelectMode={handleOnSelectMode}
             showBadge={showBadge}
           />
-          <InfoBox iconName="navProfile" iconColor="bluegrey">
-            <H5 color={"bluegrey"} weight={"Regular"}>
-              {I18n.t("profile.main.privacy.shareData.screen.profileSettings")}
-            </H5>
-          </InfoBox>
           <VSpacer size={16} />
+          <View>
+            <FeatureInfo
+              iconName="navProfile"
+              body={I18n.t(
+                "profile.main.privacy.shareData.screen.profileSettings"
+              )}
+            />
+          </View>
         </View>
-
         {manualConfigBottomSheet}
       </SafeAreaView>
     </RNavScreenWithLargeHeader>
