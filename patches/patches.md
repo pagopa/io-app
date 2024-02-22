@@ -138,7 +138,7 @@ Created on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### react-native-webview+11.26.1
+### react-native-webview+13.8.1
 
 Updated on **13/07/2023**
 
