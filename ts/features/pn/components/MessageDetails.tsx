@@ -5,7 +5,12 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as SEP from "fp-ts/lib/Separated";
-import { IOStyles, Tag, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  IOStyles,
+  Tag,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -35,31 +40,33 @@ export const MessageDetails = ({ message, serviceId }: MessageDetailsProps) => {
   return (
     <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
       <ScrollView>
-        <MessageDetailsHeader
-          serviceId={serviceId}
-          subject={message.subject}
-          createdAt={message.created_at}
-        >
-          <MessageDetailsTagBox>
-            <Tag
-              text={I18n.t("features.pn.details.badge.legalValue")}
-              variant="legalMessage"
-            />
-          </MessageDetailsTagBox>
-          {attachmentList.length > 0 && (
+        <ContentWrapper>
+          <MessageDetailsHeader
+            serviceId={serviceId}
+            subject={message.subject}
+            createdAt={message.created_at}
+          >
             <MessageDetailsTagBox>
               <Tag
-                variant="attachment"
-                testID="attachment-tag"
-                iconAccessibilityLabel={I18n.t(
-                  "messageDetails.accessibilityAttachmentIcon"
-                )}
+                text={I18n.t("features.pn.details.badge.legalValue")}
+                variant="legalMessage"
               />
             </MessageDetailsTagBox>
-          )}
-          <VSpacer size={8} />
-        </MessageDetailsHeader>
-        <MessageDetailsContent abstract={message.abstract} />
+            {attachmentList.length > 0 && (
+              <MessageDetailsTagBox>
+                <Tag
+                  variant="attachment"
+                  testID="attachment-tag"
+                  iconAccessibilityLabel={I18n.t(
+                    "messageDetails.accessibilityAttachmentIcon"
+                  )}
+                />
+              </MessageDetailsTagBox>
+            )}
+            <VSpacer size={8} />
+          </MessageDetailsHeader>
+          <MessageDetailsContent abstract={message.abstract} />
+        </ContentWrapper>
       </ScrollView>
     </SafeAreaView>
   );

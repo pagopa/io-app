@@ -824,6 +824,7 @@ email:
     title: Conferma la tua email
     subtitle: Segui le istruzioni che abbiamo inviato a
     link: Non è corretta?
+    countdowntext: Richiedi una nuova email tra 
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
     toast: Fatto! Controlla tua casella di posta.
