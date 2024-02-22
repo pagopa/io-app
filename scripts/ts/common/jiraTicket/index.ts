@@ -79,6 +79,7 @@ export const getJiraIdFromPrTitle = (
  * Try to retrieve Jira tickets from pr title
  * and transforms them into {@link GenericTicket}
  * @param title
+ * @returns a promise of {@link JiraTicketRetrievalResults} containing the jira tickets or an error. If no tickets are found, an empty array is returned
  */
 export const getTicketsFromTitle = async (
   title: string
