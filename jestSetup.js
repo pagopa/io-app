@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+// eslint-disable-next-line no-redeclare
 /* globals jest, NativeModules, require, global */
 /**
  * Set up of the testing environment
@@ -77,6 +79,7 @@ jest.mock("hastscript", () => jest.fn());
 
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
+// eslint-disable-next-line no-underscore-dangle, functional/immutable-data
 global.__reanimatedWorkletInit = () => jest.fn();
 
 jest.mock("@gorhom/bottom-sheet", () => {
@@ -124,5 +127,18 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
       }
       return turboModuleRegistry.getEnforcing(name);
     }
+  };
+});
+
+jest.mock("react-native-webview", () => {
+  const React = require("react");
+  const { View } = require("react-native");
+
+  const WebView = props => <View {...props} />;
+
+  return {
+    WebView,
+    default: WebView,
+    __esModule: true
   };
 });
