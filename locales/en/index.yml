@@ -823,7 +823,8 @@ email:
     title: Validate your email
     subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent!
+    buttonlabelsent: Email sent!    
+    countdowntext: Request new email in 
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -1230,6 +1231,10 @@ wallet:
       ALREADY_ONBOARDED:
         title: Hai già aggiunto questo metodo
         subtitle: ""
+        primaryAction: Chiudi
+      BPAY_NOT_FOUND:
+        title: Non abbiamo trovato alcun BANCOMAT Pay attivo
+        subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: An error occurred while opening the supported cards page.
@@ -1746,6 +1751,12 @@ wallet:
         subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
+      WAITING_CONFIRMATION_EMAIL:
+        title: Attendi la conferma via email
+        subtitle: Non è stato possibile verificare l'esito del pagamento. Se è andato a buon fine, riceverai a breve un'email. Se non arriva, contatta l'assistenza.
+      METHOD_NOT_ENABLED:
+        title: Abilita il metodo per effettuare pagamenti in app
+        subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1924,9 +1935,13 @@ messageDetails:
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
+  singleBtnAccessibility: "Save or share document"
   open: "Open"
   save: "Save"
+  saveAccessibility: "Save document"
   savedAtLocation: "Document {{name}} was successfully saved in your Download folder."
+  share: "Share"
+  shareAccessibility: "Share document"
   pdfAccessibility: "Preview of the PDF document"
   errors:
     previewing:
@@ -2633,7 +2648,8 @@ features:
     badge:
       dueDate: Expired on {{date}} at {{time}}
     alert:
-      action: Add reminder
+      addReminder: Add reminder
+      removeReminder: Remove reminder
       content: Expires on {{date}} at {{time}}
   euCovidCertificate:
     save:

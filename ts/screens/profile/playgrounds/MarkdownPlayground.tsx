@@ -15,7 +15,7 @@ import React, { useCallback } from "react";
 import { ScrollView, StyleSheet, TextInput, View } from "react-native";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ExtractedCtaButton } from "../../../components/cta/ExtractedCtaButton";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { CTA } from "../../../features/messages/types/MessageCTA";
 import {
   cleanMarkdownFromCTAs,
@@ -199,9 +199,9 @@ const MarkdownPlayground = () => {
         {isMarkdownSet && (
           <>
             <VSpacer size={16} />
-            <Markdown extraBodyHeight={60}>
+            <LegacyMarkdown extraBodyHeight={60}>
               {cleanMarkdownFromCTAs(markdownText as MessageBodyMarkdown)}
-            </Markdown>
+            </LegacyMarkdown>
           </>
         )}
       </ScrollView>

@@ -26,7 +26,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { openAppSettings } from "../../../../utils/appSettings";
 import {
   checkAndRequestPermission,
-  isEventInCalendar,
+  legacyIsEventInCalendar,
   removeCalendarEventFromDeviceCalendar,
   saveCalendarEvent,
   searchEventInCalendar
@@ -90,7 +90,9 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
       });
       return;
     }
-    const mayBeInCalendar = await isEventInCalendar(calendarEvent.eventId)();
+    const mayBeInCalendar = await legacyIsEventInCalendar(
+      calendarEvent.eventId
+    )();
     this.setState({
       isEventInDeviceCalendar: pipe(
         mayBeInCalendar,
@@ -356,7 +358,7 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
 
 const mapStateToProps = (state: GlobalState, ownProps: OwnProps) => ({
   preferredCalendar: preferredCalendarSelector(state),
-  calendarEvent: calendarEventByMessageIdSelector(ownProps.message.id)(state)
+  calendarEvent: calendarEventByMessageIdSelector(state, ownProps.message.id)
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -10,6 +10,7 @@ import {
   IOThemeContext,
   IOThemes
 } from "@pagopa/io-app-design-system";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
@@ -27,23 +28,25 @@ export type AppDispatch = typeof store.dispatch;
 export const App: React.FunctionComponent<never> = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <StyleProvider style={theme()}>
-      <IOThemeContext.Provider value={IOThemes.light}>
-        <IODSExperimentalContextProvider>
-          <ToastProvider>
-            <Provider store={store}>
-              <PersistGate loading={undefined} persistor={persistor}>
-                <BottomSheetModalProvider>
-                  <LightModalProvider>
-                    <MenuProvider>
-                      <RootContainer />
-                    </MenuProvider>
-                  </LightModalProvider>
-                </BottomSheetModalProvider>
-              </PersistGate>
-            </Provider>
-          </ToastProvider>
-        </IODSExperimentalContextProvider>
-      </IOThemeContext.Provider>
+      <SafeAreaProvider>
+        <IOThemeContext.Provider value={IOThemes.light}>
+          <IODSExperimentalContextProvider>
+            <ToastProvider>
+              <Provider store={store}>
+                <PersistGate loading={undefined} persistor={persistor}>
+                  <BottomSheetModalProvider>
+                    <LightModalProvider>
+                      <MenuProvider>
+                        <RootContainer />
+                      </MenuProvider>
+                    </LightModalProvider>
+                  </BottomSheetModalProvider>
+                </PersistGate>
+              </Provider>
+            </ToastProvider>
+          </IODSExperimentalContextProvider>
+        </IOThemeContext.Provider>
+      </SafeAreaProvider>
     </StyleProvider>
   </GestureHandlerRootView>
 );

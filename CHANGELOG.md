@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.54.0-rc.1](https://github.com/pagopa/io-app/compare/2.54.0-rc.0...2.54.0-rc.1) (2024-02-21)
+
+
+### Features
+
+* [[IOCOM-1059](https://pagopa.atlassian.net/browse/IOCOM-1059)] Remove 'Open' CTA on Android attachment preview (new DS) ([#5523](https://github.com/pagopa/io-app/issues/5523)) ([eb0691f](https://github.com/pagopa/io-app/commit/eb0691f0eef1ae3bf352fb2dc4f86362896f1ba2))
+* [[IOCOM-851](https://pagopa.atlassian.net/browse/IOCOM-851)] Add calendar event for messages with `due_date` ([#5524](https://github.com/pagopa/io-app/issues/5524)) ([12acdbe](https://github.com/pagopa/io-app/commit/12acdbe5a9c0309a63050f2464ae43d412d7785b))
+* [[IOCOM-851](https://pagopa.atlassian.net/browse/IOCOM-851)] Removed view reference ([#5511](https://github.com/pagopa/io-app/issues/5511)) ([39a2611](https://github.com/pagopa/io-app/commit/39a26119bf56ac5f517628888998dbe3be741504))
+
+
+### Bug Fixes
+
+* HeaderFirstLevel glitching on tab change ([#5530](https://github.com/pagopa/io-app/issues/5530)) ([d69e091](https://github.com/pagopa/io-app/commit/d69e091d888cca94c8ce9717659ff295412e559d))
+* **Cross:** [[IOAPPX-250](https://pagopa.atlassian.net/browse/IOAPPX-250)] Crash when consuming safe area insets outside of navigation context ([#5522](https://github.com/pagopa/io-app/issues/5522)) ([5ce18c2](https://github.com/pagopa/io-app/commit/5ce18c2d58c26eb00cc5d460474c7453c543c939))
+
+
+### Chores
+
+* **deps:** bump ip from 1.1.5 to 1.1.9 ([#5532](https://github.com/pagopa/io-app/issues/5532)) ([afc36a7](https://github.com/pagopa/io-app/commit/afc36a7742ac872f12a454b711d791509bcf01ee))
+* [[IOBP-555](https://pagopa.atlassian.net/browse/IOBP-555)] Add payment outcome screen for the outcome 17 and 15 ([#5527](https://github.com/pagopa/io-app/issues/5527)) ([755926d](https://github.com/pagopa/io-app/commit/755926d48cf101286847f934b59c3173f7f24b3b))
+* **Cross:** [[IOAPPX-252](https://pagopa.atlassian.net/browse/IOAPPX-252)] Update IO app icon in the main README ([#5531](https://github.com/pagopa/io-app/issues/5531)) ([f29ae25](https://github.com/pagopa/io-app/commit/f29ae2520e841554c13ee2d094749067d66a977d))
+* [[IOBP-544](https://pagopa.atlassian.net/browse/IOBP-544)] Add `usePagoPaPayment` custom hook ([#5503](https://github.com/pagopa/io-app/issues/5503)) ([b7257ad](https://github.com/pagopa/io-app/commit/b7257ad29a0c7ccf0d39a87e22c0a08559286c41))
+* [[IOBP-549](https://pagopa.atlassian.net/browse/IOBP-549)] Add new wallet payments history tracking ([#5515](https://github.com/pagopa/io-app/issues/5515)) ([ca54cd8](https://github.com/pagopa/io-app/commit/ca54cd8352b97bd4fe50b91c37c29c3987d43fb2))
+* [[IOBP-552](https://pagopa.atlassian.net/browse/IOBP-552),[IOBP-556](https://pagopa.atlassian.net/browse/IOBP-556)] Additional onboarding outcome screen for BPay ([#5518](https://github.com/pagopa/io-app/issues/5518)) ([de192e6](https://github.com/pagopa/io-app/commit/de192e6e4e48303bc9a037bdcf39d866c918c365))
+* [[IOBP-557](https://pagopa.atlassian.net/browse/IOBP-557)] Handled 404 response status with empty list from user wallet list ([#5528](https://github.com/pagopa/io-app/issues/5528)) ([a78bbce](https://github.com/pagopa/io-app/commit/a78bbce292b7987cdbe742e2c074a3fe15bf43d8))
+* [[IOBP-558](https://pagopa.atlassian.net/browse/IOBP-558)] Handle BancomatPay in method details screen ([#5517](https://github.com/pagopa/io-app/issues/5517)) ([505662b](https://github.com/pagopa/io-app/commit/505662b72745b377188360371c3aa7513a3975c1))
+* [[IOPLT-327](https://pagopa.atlassian.net/browse/IOPLT-327)] Updates Zendesk npm package version ([#5489](https://github.com/pagopa/io-app/issues/5489)) ([1dce8d5](https://github.com/pagopa/io-app/commit/1dce8d5329f34cdb0dd8dad375ddc21a8d413f5d)), closes [pagopa/io-react-native-zendesk#30](https://github.com/pagopa/io-react-native-zendesk/issues/30)
+* **Cross:** [[IOAPPX-212](https://pagopa.atlassian.net/browse/IOAPPX-212)] Removes current route selector logic from header first level handler logic ([#5510](https://github.com/pagopa/io-app/issues/5510)) ([4400127](https://github.com/pagopa/io-app/commit/44001272b06441ba3644ba2c89ac8c083f2860c8))
+* **Cross:** [[IOAPPX-230](https://pagopa.atlassian.net/browse/IOAPPX-230)] Remove `datetimepicker` and `react-native-modal-datetime-picker` dependencies ([#5451](https://github.com/pagopa/io-app/issues/5451)) ([76c841d](https://github.com/pagopa/io-app/commit/76c841d7b9b574ea1dfe99c4bb166be313bf4582))
+
 ## [2.54.0-rc.0](https://github.com/pagopa/io-app/compare/2.53.0-rc.1...2.54.0-rc.0) (2024-02-15)
 
 

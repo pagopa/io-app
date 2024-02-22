@@ -8,7 +8,8 @@ export enum OnboardingOutcomeEnum {
   TIMEOUT = "4",
   CANCELED_BY_USER = "8",
   INVALID_SESSION = "14",
-  ALREADY_ONBOARDED = "15"
+  ALREADY_ONBOARDED = "15",
+  BPAY_NOT_FOUND = "16"
 }
 
 export type OnboardingOutcome = `${OnboardingOutcomeEnum}`;

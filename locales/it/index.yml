@@ -823,6 +823,7 @@ email:
     title: Conferma la tua email
     subtitle: Segui le istruzioni che abbiamo inviato a
     link: Non è corretta?
+    countdowntext: Richiedi una nuova email tra 
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
     toast: Fatto! Controlla tua casella di posta.
@@ -1203,7 +1204,7 @@ wallet:
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
     success:
-      title: "La carta è stata aggiunta!"
+      title: "Il metodo è stato aggiunto"
       continueButton: "Vedi dettagli"
     failure:
       GENERIC_ERROR:
@@ -1230,6 +1231,10 @@ wallet:
       ALREADY_ONBOARDED:
         title: Hai già aggiunto questo metodo
         subtitle: ""
+        primaryAction: Chiudi
+      BPAY_NOT_FOUND:
+        title: Non abbiamo trovato alcun BANCOMAT Pay attivo
+        subtitle: "Contatta la tua Banca per attivare il servizio."
         primaryAction: Chiudi
   alert:
     supportedCardPageLinkError: Si è verificato un errore durante l'apertura della pagina di riferimento per le carte supportate.
@@ -1746,6 +1751,12 @@ wallet:
         subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
+      WAITING_CONFIRMATION_EMAIL:
+        title: Attendi la conferma via email
+        subtitle: Non è stato possibile verificare l'esito del pagamento. Se è andato a buon fine, riceverai a breve un'email. Se non arriva, contatta l'assistenza.
+      METHOD_NOT_ENABLED:
+        title: Abilita il metodo per effettuare pagamenti in app
+        subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
@@ -1924,9 +1935,13 @@ messageDetails:
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"
+  singleBtnAccessibility: "Salva o condividi documento"
   open: "Apri"
   save: "Salva"
+  saveAccessibility: "Salva documento"
   savedAtLocation: "Il documento {{name}} è stato salvato nella cartella Download."
+  share: "Condividi"
+  shareAccessibility: "Condividi documento"
   pdfAccessibility: "Anteprima documento PDF"
   errors:
     previewing:
@@ -2633,7 +2648,8 @@ features:
     badge:
       dueDate: Scaduto il {{date}} alle ore {{time}}
     alert:
-      action: Aggiungi promemoria
+      addReminder: Aggiungi promemoria
+      removeReminder: Rimuovi promemoria
       content: Scade il {{date}} alle ore {{time}}
   euCovidCertificate:
     save:
