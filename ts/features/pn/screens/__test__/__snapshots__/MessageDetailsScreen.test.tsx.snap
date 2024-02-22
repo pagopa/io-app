@@ -644,14 +644,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   }
                                 }
                               />
-                            </View>
-                            <View
-                              style={
-                                Object {
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
                               <View
                                 style={
                                   Object {
