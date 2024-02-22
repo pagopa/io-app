@@ -150,6 +150,8 @@ export const IdpCIE: SpidIdp = {
   profileUrl: ""
 };
 
+const BUTTON_SPACING = 24;
+
 export const LandingScreen = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme = useColorScheme();
@@ -386,6 +388,7 @@ export const LandingScreen = () => {
         {renderCardComponents()}
       </ScrollView>
       <CarouselDots />
+      <VSpacer size={24} />
     </>
   );
 
@@ -408,10 +411,7 @@ export const LandingScreen = () => {
             image={renderInfoRasterImage(sessionExpiredImg)}
           />
         ) : (
-          <View style={IOStyles.flex}>
-            <Carousel />
-            <VSpacer size={24} />
-          </View>
+          <Carousel />
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
@@ -439,7 +439,7 @@ export const LandingScreen = () => {
               isCieSupported() ? navigateToCiePinScreen : navigateToIdpSelection
             }
           />
-          <VSpacer size={16} />
+          <VSpacer size={BUTTON_SPACING} />
           <ButtonSolid
             testID={
               isCieSupported()
@@ -466,7 +466,7 @@ export const LandingScreen = () => {
               isCieSupported() ? navigateToIdpSelection : navigateToCiePinScreen
             }
           />
-          <VSpacer size={16} />
+          <VSpacer size={BUTTON_SPACING} />
           <View style={IOStyles.selfCenter}>
             <ButtonLink
               accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
@@ -474,7 +474,7 @@ export const LandingScreen = () => {
               label={I18n.t("authentication.landing.privacyLink")}
               onPress={navigateToPrivacyUrl}
             />
-            <VSpacer size={16} />
+            <VSpacer size={BUTTON_SPACING} />
           </View>
         </ContentWrapper>
       </SafeAreaView>

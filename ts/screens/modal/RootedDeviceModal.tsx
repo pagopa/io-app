@@ -19,10 +19,10 @@ import image from "../../../img/rooted/broken-phone.png";
 import { H2 } from "../../components/core/typography/H2";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import Markdown from "../../components/ui/Markdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { trackLoginRootedScreen } from "./analytics";
 
 type Props = {
@@ -145,13 +145,13 @@ const RootedDeviceModal = (props: Props) => {
           </View>
         </View>
         <VSpacer size={8} />
-        <Markdown
+        <LegacyMarkdown
           cssStyle={CSS_STYLE}
           onLoadEnd={onMarkdownLoaded}
           extraBodyHeight={100}
         >
           {body}
-        </Markdown>
+        </LegacyMarkdown>
       </ScrollView>
       <FooterWithButtons
         type="TwoButtonsInlineHalf"
