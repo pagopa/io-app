@@ -413,7 +413,7 @@ PODS:
     - React
   - react-native-view-shot (3.1.2):
     - React
-  - react-native-webview (11.26.1):
+  - react-native-webview (13.8.1):
     - React-Core
   - React-perflogger (0.70.15)
   - React-RCTActionSheet (0.70.15):
@@ -969,7 +969,7 @@ SPEC CHECKSUMS:
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-view-shot: 4475fde003fe8a210053d1f98fb9e06c1d834e1c
-  react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
+  react-native-webview: bef49fb935d75e1ca83aed3ac74eecf5b78764ac
   React-perflogger: 010e98d3335e5185a8f7496babca50d82a042e84
   React-RCTActionSheet: 0f585d684b540a5bbfc62b0a1fbc5292cff2aefc
   React-RCTAnimation: eb0e5b020333f9cc652d85f27a47086fbf56fffd
