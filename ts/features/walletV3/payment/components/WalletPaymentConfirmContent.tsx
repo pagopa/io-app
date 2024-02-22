@@ -75,7 +75,6 @@ export const WalletPaymentConfirmContent = ({
         ctaText={I18n.t("payment.confirm.editButton")}
         paymentLogo={getPaymentLogo(paymentMethodDetails)}
         title={getPaymentTitle(paymentMethodDetails)}
-        subtitle={getPaymentSubtitle(paymentMethodDetails)}
         onPress={() =>
           navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
             screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
