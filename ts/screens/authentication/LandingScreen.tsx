@@ -22,7 +22,8 @@ import {
   ScrollView,
   View,
   StyleSheet,
-  useWindowDimensions
+  useWindowDimensions,
+  GestureResponderEvent
 } from "react-native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
@@ -86,9 +87,9 @@ const styles = StyleSheet.create({
   }
 });
 
-const getCards = (): ReadonlyArray<
+const carouselCards: ReadonlyArray<
   ComponentProps<typeof LandingCardComponent>
-> => [
+> = [
   {
     id: 5,
     pictogramName: "hello",
@@ -283,7 +284,7 @@ export const LandingScreen = () => {
   }, [isCieSupported, navigation]);
 
   const renderCardComponents = () => {
-    const cardProps = getCards();
+    const cardProps = carouselCards;
     return cardProps.map(p => (
       <LandingCardComponent key={`card-${p.id}`} {...p} />
     ));
@@ -292,6 +293,81 @@ export const LandingScreen = () => {
   const handleContinueWithRootOrJailbreak = (continueWith: boolean) => {
     dispatch(continueWithRootOrJailbreak(continueWith));
   };
+
+  const CarouselDots = () => {
+    const dotTouchCount = React.useRef(0);
+
+    return (
+      <View
+        importantForAccessibility="yes"
+        accessibilityElementsHidden={false}
+        style={styles.indicatorContainer}
+        onTouchEnd={(_: GestureResponderEvent) => {
+          // eslint-disable-next-line functional/immutable-data
+          dotTouchCount.current++;
+          if (dotTouchCount.current === 3) {
+            // eslint-disable-next-line functional/immutable-data
+            dotTouchCount.current = 0;
+            navigateToCieUatSelectionScreen();
+          }
+        }}
+      >
+        {carouselCards.map((_, imageIndex) => {
+          const width = scrollX.interpolate({
+            inputRange: [
+              windowWidth * (imageIndex - 1),
+              windowWidth * imageIndex,
+              windowWidth * (imageIndex + 1)
+            ],
+            outputRange: [8, 16, 8],
+            extrapolate: "clamp"
+          });
+          const backgroundColor = scrollX.interpolate({
+            inputRange: [
+              windowWidth * (imageIndex - 1),
+              windowWidth * imageIndex,
+              windowWidth * (imageIndex + 1)
+            ],
+            outputRange: [
+              IOColors.greyLight,
+              IOColors.blue,
+              IOColors.greyLight
+            ],
+            extrapolate: "clamp"
+          });
+          return (
+            <Animated.View
+              key={imageIndex}
+              style={[styles.normalDot, { width, backgroundColor }]}
+            />
+          );
+        })}
+      </View>
+    );
+  };
+
+  const Carousel = () => (
+    <>
+      <ScrollView
+        horizontal={true}
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event([
+          {
+            nativeEvent: {
+              contentOffset: {
+                x: scrollX
+              }
+            }
+          }
+        ])}
+        scrollEventThrottle={1}
+      >
+        {renderCardComponents()}
+      </ScrollView>
+      <CarouselDots />
+    </>
+  );
 
   const LandingScreen = () => {
     useHeaderSecondLevel({
@@ -313,56 +389,8 @@ export const LandingScreen = () => {
           />
         ) : (
           <View style={IOStyles.flex}>
-            <ScrollView
-              horizontal={true}
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              onScroll={Animated.event([
-                {
-                  nativeEvent: {
-                    contentOffset: {
-                      x: scrollX
-                    }
-                  }
-                }
-              ])}
-              scrollEventThrottle={1}
-            >
-              {renderCardComponents()}
-            </ScrollView>
-            <View style={styles.indicatorContainer}>
-              {getCards().map((_, imageIndex) => {
-                const width = scrollX.interpolate({
-                  inputRange: [
-                    windowWidth * (imageIndex - 1),
-                    windowWidth * imageIndex,
-                    windowWidth * (imageIndex + 1)
-                  ],
-                  outputRange: [8, 16, 8],
-                  extrapolate: "clamp"
-                });
-                const backgroundColor = scrollX.interpolate({
-                  inputRange: [
-                    windowWidth * (imageIndex - 1),
-                    windowWidth * imageIndex,
-                    windowWidth * (imageIndex + 1)
-                  ],
-                  outputRange: [
-                    IOColors.greyLight,
-                    IOColors.blue,
-                    IOColors.greyLight
-                  ],
-                  extrapolate: "clamp"
-                });
-                return (
-                  <Animated.View
-                    key={imageIndex}
-                    style={[styles.normalDot, { width, backgroundColor }]}
-                  />
-                );
-              })}
-            </View>
-            <VSpacer size={16} />
+            <Carousel />
+            <VSpacer size={24} />
           </View>
         )}
 
@@ -380,7 +408,7 @@ export const LandingScreen = () => {
                 : I18n.t("authentication.landing.loginSpid")
             }
             fullWidth={true}
-            color="primary"
+            color={isCieUatEnabled ? "danger" : "primary"}
             label={
               isCieSupported()
                 ? I18n.t("authentication.landing.loginCie")
@@ -405,7 +433,9 @@ export const LandingScreen = () => {
                 : I18n.t("authentication.landing.loginCie")
             }
             color="primary"
-            disabled={!isCieSupported()}
+            // if CIE is not supported, since the new DS has not a
+            // "semi-enabled" state, we leave the button enabled
+            // but we navigate to the CIE unsupported info screen.
             label={
               isCieSupported()
                 ? I18n.t("authentication.landing.loginSpid")
@@ -424,6 +454,7 @@ export const LandingScreen = () => {
               label={I18n.t("authentication.landing.privacyLink")}
               onPress={navigateToPrivacyUrl}
             />
+            <VSpacer size={16} />
           </View>
         </View>
       </SafeAreaView>
