@@ -38,7 +38,7 @@ import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 
-export type MessageDetailsScreenNavigationParams = {
+export type MessageDetailsScreenRouteParams = {
   messageId: UIMessageId;
   serviceId: ServiceId;
 };

@@ -38,7 +38,7 @@ import { selectedPaymentIdSelector } from "../store/reducers/payments";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
-export type MessageDetailsScreenNavigationParams = {
+export type MessageDetailsScreenRouteParams = {
   messageId: UIMessageId;
   serviceId: ServiceId;
   firstTimeOpening: boolean;

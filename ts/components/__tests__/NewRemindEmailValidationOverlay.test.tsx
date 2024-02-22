@@ -82,18 +82,19 @@ describe("NewRemindEmailValidationOverlay with isEmailValidated as false", () =>
     const button = component.getByTestId("button-test");
     expect(button).toBeDefined();
     expect(
-      component.getByText(I18n.t("email.newvalidate.buttonlabelsentagain"))
+      component.getByText(I18n.t("email.newvalidate.buttonlabelsent"))
     ).toBeTruthy();
-    expect(button).not.toBeDisabled();
-    if (button) {
-      fireEvent.press(button);
-    }
+    expect(button).toBeDisabled();
 
     setTimeout(() => {
-      expect(
-        component.getByText(I18n.t("email.newvalidate.buttonlabelsentagain"))
-      ).not.toBeDisabled();
-    }, 10000);
+      const button = component.getByText(
+        I18n.t("email.newvalidate.buttonlabelsentagain")
+      );
+      expect(button).not.toBeDisabled();
+      if (button) {
+        fireEvent.press(button);
+      }
+    }, 60000);
   });
 });
 
