@@ -1,12 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  ContentWrapper,
-  Divider,
-  H3,
-  LabelSmall,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Divider, H3, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -63,7 +57,7 @@ export const MessageDetailsHeader = ({
   );
 
   return (
-    <ContentWrapper>
+    <>
       <View style={styles.tagsWrapper}>{children}</View>
       <VSpacer size={8} />
       <MessageDetailsHeaderContent {...rest} />
@@ -79,6 +73,6 @@ export const MessageDetailsHeader = ({
           <Divider />
         </>
       )}
-    </ContentWrapper>
+    </>
   );
 };

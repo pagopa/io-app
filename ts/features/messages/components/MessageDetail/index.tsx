@@ -41,7 +41,7 @@ import CtaBar from "./CtaBar";
 import { RemoteContentBanner } from "./RemoteContentBanner";
 import { HeaderDueDateBar } from "./HeaderDueDateBar";
 import MessageContent from "./Content";
-import MessageMarkdown from "./MessageMarkdown";
+import { MessageMarkdown } from "./MessageMarkdown";
 
 const styles = StyleSheet.create({
   webview: {
