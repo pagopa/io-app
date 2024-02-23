@@ -19,6 +19,6 @@ const INITIAL_STATE: WalletPaymentState = {
 describe("Test Wallet reducer", () => {
   it("should have initial state at startup", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.payment).toStrictEqual(INITIAL_STATE);
+    expect(globalState.features.payments.payment).toStrictEqual(INITIAL_STATE);
   });
 });
