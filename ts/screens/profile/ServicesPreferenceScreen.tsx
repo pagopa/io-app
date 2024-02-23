@@ -1,12 +1,11 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { connect } from "react-redux";
+import { useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
-import { Dispatch } from "../../store/actions/types";
 import {
   profileSelector,
   profileServicePreferencesModeSelector
@@ -14,8 +13,8 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../utils/showToast";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
@@ -23,41 +22,58 @@ import {
 import { useManualConfigBottomSheet } from "./components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "./components/services/ServicesContactComponent";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
-
 /**
  * Display the current profile services preference mode (auto or manual)
  * User can update his/her mode
  * @param props
  * @constructor
  */
-const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
-  const { potProfile, state } = props;
+const ServicesPreferenceScreen = (): React.ReactElement => {
+  const store = useStore();
+  const state = store.getState();
+  const dispatch = useIODispatch();
+  const profile = useIOSelector(profileSelector);
+  const isLoading = pot.isUpdating(profile) || pot.isLoading(profile);
+  const profileServicePreferenceMode = useIOSelector(
+    profileServicePreferencesModeSelector
+  );
+
+  const dispatchServicePreferencesSetting = React.useCallback(
+    (mode: ServicesPreferencesModeEnum) =>
+      dispatch(
+        profileUpsert.request({ service_preferences_settings: { mode } })
+      ),
+    [dispatch]
+  );
+
+  const onServicePreferenceSelected = (
+    mode: ServicesPreferencesModeEnum,
+    state: GlobalState
+  ) => {
+    void trackServiceConfiguration(mode, getFlowType(false, false), state);
+    dispatchServicePreferencesSetting(mode);
+  };
+
   const { present: confirmManualConfig, manualConfigBottomSheet } =
     useManualConfigBottomSheet(() =>
-      props.onServicePreferenceSelected(
-        ServicesPreferencesModeEnum.MANUAL,
-        state
-      )
+      onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL, state)
     );
 
   useOnFirstRender(() => {
     trackServiceConfigurationScreen(getFlowType(false, false));
   });
 
-  const [prevPotProfile, setPrevPotProfile] = React.useState<
-    typeof props.potProfile
-  >(props.potProfile);
+  const [prevPotProfile, setPrevPotProfile] =
+    React.useState<typeof profile>(profile);
   React.useEffect(() => {
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
-    if (!pot.isError(prevPotProfile) && pot.isError(potProfile)) {
-      showToast(I18n.t("global.genericError"));
+    if (!pot.isError(prevPotProfile) && pot.isError(profile)) {
+      IOToast.error(I18n.t("global.genericError"));
     }
 
-    setPrevPotProfile(potProfile);
-  }, [potProfile, prevPotProfile]);
+    setPrevPotProfile(profile);
+  }, [profile, prevPotProfile]);
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
@@ -65,11 +81,11 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
       confirmManualConfig();
       return;
     }
-    props.onServicePreferenceSelected(mode, state);
+    onServicePreferenceSelected(mode, state);
   };
 
   return (
-    <LoadingSpinnerOverlay isLoading={props.isLoading}>
+    <LoadingSpinnerOverlay isLoading={isLoading}>
       <RNavScreenWithLargeHeader
         title={{
           label: I18n.t("services.optIn.preferences.title")
@@ -81,7 +97,7 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
         <ContentWrapper>
           <ServicesContactComponent
             onSelectMode={handleOnSelectMode}
-            mode={props.profileServicePreferenceMode}
+            mode={profileServicePreferenceMode}
           />
         </ContentWrapper>
         {manualConfigBottomSheet}
@@ -90,27 +106,4 @@ const ServicesPreferenceScreen = (props: Props): React.ReactElement => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => {
-  const profile = profileSelector(state);
-  return {
-    isLoading: pot.isUpdating(profile) || pot.isLoading(profile),
-    potProfile: profile,
-    profileServicePreferenceMode: profileServicePreferencesModeSelector(state),
-    state
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onServicePreferenceSelected: (
-    mode: ServicesPreferencesModeEnum,
-    state: GlobalState
-  ) => {
-    void trackServiceConfiguration(mode, getFlowType(false, false), state);
-    dispatch(profileUpsert.request({ service_preferences_settings: { mode } }));
-  }
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ServicesPreferenceScreen);
+export default ServicesPreferenceScreen;
