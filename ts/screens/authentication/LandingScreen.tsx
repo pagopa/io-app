@@ -27,6 +27,7 @@ import {
   GestureResponderEvent,
   useColorScheme
 } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ContextualInfo from "../../components/ContextualInfo";
@@ -71,6 +72,7 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
 import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
   trackCieLoginSelected,
   trackMethodInfo,
@@ -153,6 +155,7 @@ export const IdpCIE: SpidIdp = {
 const BUTTON_SPACING = 24;
 
 export const LandingScreen = () => {
+  const accessibilityFirstFocuseViewRef = React.useRef(null);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme = useColorScheme();
 
@@ -199,6 +202,13 @@ export const LandingScreen = () => {
     [isCIEAuthenticationSupported]
   );
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
+
+  useFocusEffect(
+    React.useCallback(
+      () => setAccessibilityFocus(accessibilityFirstFocuseViewRef),
+      [accessibilityFirstFocuseViewRef]
+    )
+  );
 
   useOnFirstRender(async () => {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
@@ -387,6 +397,7 @@ export const LandingScreen = () => {
   const Carousel = () => (
     <>
       <ScrollView
+        ref={accessibilityFirstFocuseViewRef}
         horizontal={true}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
