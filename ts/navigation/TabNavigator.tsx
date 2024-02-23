@@ -64,6 +64,11 @@ export const MainTabNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
+          header: ({ route }) => (
+            <HeaderFirstLevelHandler
+              currentRouteName={route.name as keyof MainTabParamsList}
+            />
+          ),
           tabBarLabelStyle: {
             fontSize: isDesignSystemEnabled ? 10 : 12,
             ...makeFontStyleObject(
@@ -89,11 +94,6 @@ export const MainTabNavigator = () => {
           name={MESSAGES_ROUTES.MESSAGES_HOME}
           component={MessagesHomeScreen}
           options={{
-            header: () => (
-              <HeaderFirstLevelHandler
-                currentRouteName={MESSAGES_ROUTES.MESSAGES_HOME}
-              />
-            ),
             title: I18n.t("global.navigator.messages"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
@@ -111,9 +111,6 @@ export const MainTabNavigator = () => {
           name={ROUTES.WALLET_HOME}
           component={WalletHomeScreen}
           options={{
-            header: () => (
-              <HeaderFirstLevelHandler currentRouteName={ROUTES.WALLET_HOME} />
-            ),
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
@@ -136,11 +133,6 @@ export const MainTabNavigator = () => {
               }
             }}
             options={{
-              header: () => (
-                <HeaderFirstLevelHandler
-                  currentRouteName={ROUTES.BARCODE_SCAN}
-                />
-              ),
               title: I18n.t("global.navigator.scan"),
               tabBarIcon: ({ color, focused }) => (
                 <TabIconComponent
@@ -157,11 +149,6 @@ export const MainTabNavigator = () => {
           name={ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
           options={{
-            header: () => (
-              <HeaderFirstLevelHandler
-                currentRouteName={ROUTES.SERVICES_HOME}
-              />
-            ),
             title: I18n.t("global.navigator.services"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent
@@ -179,9 +166,6 @@ export const MainTabNavigator = () => {
           name={ROUTES.PROFILE_MAIN}
           component={ProfileMainScreen}
           options={{
-            header: () => (
-              <HeaderFirstLevelHandler currentRouteName={ROUTES.PROFILE_MAIN} />
-            ),
             title: I18n.t("global.navigator.profile"),
             tabBarIcon: ({ color, focused }) => (
               <TabIconComponent

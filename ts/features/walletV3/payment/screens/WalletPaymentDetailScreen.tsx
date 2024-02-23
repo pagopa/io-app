@@ -160,7 +160,7 @@ const WalletPaymentDetailContent = ({
   );
 
   const amount = pipe(payment.amount, centsToAmount, amount =>
-    formatNumberAmount(amount, true)
+    formatNumberAmount(amount, true, "right")
   );
 
   const dueDate = pipe(

@@ -29,7 +29,7 @@ import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../components/ui/LightModal";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
@@ -79,7 +79,9 @@ const CIE_PIN_LENGTH = 8;
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
   body: () => (
-    <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+    <LegacyMarkdown>
+      {I18n.t("authentication.cie.pin.contextualHelpBody")}
+    </LegacyMarkdown>
   )
 });
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
@@ -109,9 +111,9 @@ const CiePinScreen: React.FC<Props> = props => {
 
   const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <View>
-      <Markdown avoidTextSelection>
+      <LegacyMarkdown avoidTextSelection>
         {I18n.t("bottomSheets.ciePin.content")}
-      </Markdown>
+      </LegacyMarkdown>
       <ButtonDefaultOpacity
         onPress={onOpenForgotPinPage}
         style={styles.bsLinkButton}

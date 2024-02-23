@@ -24,7 +24,7 @@ import { findDeviceCalendarsTask } from "../../../utils/calendar";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { useMessageCalendar } from "../hooks/useMessageCalendar";
 
-export type MessageCalendarRouteParams = {
+export type MessageCalendarScreenRouteParams = {
   messageId: UIMessageId;
 };
 

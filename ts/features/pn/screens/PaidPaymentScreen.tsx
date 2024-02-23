@@ -1,40 +1,33 @@
 import React from "react";
-import * as O from "fp-ts/lib/Option";
-import I18n from "i18n-js";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { ListItemInfoCopy } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import I18n from "../../../i18n";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
 import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import customVariables from "../../../theme/variables";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { PnParamsList } from "../navigation/params";
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
-
-export type PaidPaymentScreenNavigationParams = Readonly<{
+export type PaidPaymentScreenRouteParams = Readonly<{
   noticeCode: string;
   creditorTaxId?: string;
 }>;
+
+type PaidPaymentScreenProps = IOStackNavigationRouteProps<
+  PnParamsList,
+  "PN_CANCELLED_MESSAGE_PAID_PAYMENT"
+>;
 
 const paidPaymentError = O.some(
   "PPT_PAGAMENTO_DUPLICATO"
 ) as TransactionSummaryError;
 
-export const PaidPaymentScreen = (): React.ReactElement => {
-  const { noticeCode, creditorTaxId: maybeCreditorTaxId } =
-    useRoute<
-      Route<
-        "PN_CANCELLED_MESSAGE_PAID_PAYMENT",
-        PaidPaymentScreenNavigationParams
-      >
-    >().params;
+export const PaidPaymentScreen = ({ route }: PaidPaymentScreenProps) => {
+  const { noticeCode, creditorTaxId } = route.params;
   const formattedPaymentNoticeNumber = noticeCode
     .replace(/(\d{4})/g, "$1  ")
     .trim();
@@ -47,21 +40,21 @@ export const PaidPaymentScreen = (): React.ReactElement => {
     >
       <SafeAreaView style={IOStyles.flex}>
         <TransactionSummaryStatus error={paidPaymentError} />
-        <ScrollView style={styles.container}>
+        <ScrollView style={IOStyles.horizontalContentPadding}>
           <ListItemInfoCopy
             label={I18n.t("payment.noticeCode")}
             accessibilityLabel={I18n.t("payment.noticeCode")}
             value={formattedPaymentNoticeNumber}
             onPress={() => clipboardSetStringWithFeedback(noticeCode)}
           />
-          {maybeCreditorTaxId && (
+          {creditorTaxId && (
             <ListItemInfoCopy
               label={I18n.t("wallet.firstTransactionSummary.entityCode")}
               accessibilityLabel={I18n.t(
                 "wallet.firstTransactionSummary.entityCode"
               )}
-              value={maybeCreditorTaxId}
-              onPress={() => clipboardSetStringWithFeedback(maybeCreditorTaxId)}
+              value={creditorTaxId}
+              onPress={() => clipboardSetStringWithFeedback(creditorTaxId)}
             />
           )}
         </ScrollView>

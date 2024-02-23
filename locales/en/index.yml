@@ -823,7 +823,8 @@ email:
     title: Validate your email
     subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent!
+    buttonlabelsent: Email sent!    
+    countdowntext: Request new email in 
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
