@@ -97,12 +97,6 @@ const reducer = (
         ...state,
         rptId: action.payload,
         paymentDetails: pot.toLoading(state.paymentDetails)
-        /*
-        tentativeByRptId: {
-          ...state.tentativeByRptId,
-          [action.payload]: (state.tentativeByRptId[action.payload] || 0) + 1
-        }
-        */
       };
     case getType(walletPaymentGetDetails.success):
       return {
