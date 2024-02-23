@@ -29,7 +29,7 @@ import {
   initialLollipopState,
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
-import { WalletState } from "../features/walletV3/common/store/reducers";
+import { PaymentsState as PaymentsFeatureState } from "../features/payments/common/store/reducers";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -363,13 +363,13 @@ const migrations: MigrationManifest = {
   // Adds payments history archive persistence
   "24": (state: PersistedState) => {
     const features: FeaturesState = (state as PersistedGlobalState).features;
-    const wallet: WalletState = features.wallet;
+    const payments: PaymentsFeatureState = features.payments;
     return {
       ...state,
       features: {
         ...features,
-        wallet: {
-          ...wallet,
+        payments: {
+          ...payments,
           history: {
             archive: []
           }
