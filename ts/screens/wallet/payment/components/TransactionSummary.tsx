@@ -118,7 +118,11 @@ export const TransactionSummary = (props: Props): React.ReactElement => {
 
   const amount = pot.toUndefined(
     pot.map(props.paymentVerification, _ =>
-      formatNumberAmount(centsToAmount(_.importoSingoloVersamento), true)
+      formatNumberAmount(
+        centsToAmount(_.importoSingoloVersamento),
+        true,
+        "right"
+      )
     )
   );
 
