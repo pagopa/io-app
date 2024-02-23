@@ -9,7 +9,7 @@ import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { watchWalletDetailsSaga } from "../../details/saga";
 import { watchWalletTransactionSaga } from "../../transaction/saga";
 
-export function* watchWalletSaga(walletToken: string): SagaIterator {
+export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
 
   const walletBaseUrl = isPagoPATestEnabled

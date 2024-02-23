@@ -7,7 +7,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { RNavScreenWithLargeHeader } from "../../../components/ui/RNavScreenWithLargeHeader";
-import { WalletOnboardingRoutes } from "../../../features/walletV3/onboarding/navigation/navigator";
+import { WalletOnboardingRoutes } from "../../../features/payments/onboarding/navigation/navigator";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -31,7 +31,7 @@ const WalletPlayground = () => {
 
   return (
     <RNavScreenWithLargeHeader
-      title={{ label: "New wallet playground" }}
+      title={{ label: "Payments playground" }}
       description="Choose the playground flow for the new wallet"
     >
       <ContentWrapper>
