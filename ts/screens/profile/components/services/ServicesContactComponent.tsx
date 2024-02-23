@@ -1,7 +1,8 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import I18n from "../../../../i18n";
+import { usePrevious } from "../../../../utils/hooks/usePrevious";
 
 type Props = {
   onSelectMode: (mode: ServicesPreferencesModeEnum) => void;
@@ -25,11 +26,21 @@ const options = (): ReadonlyArray<RadioItem<string>> => [
 const ServicesContactComponent = (props: Props): ReactElement => {
   const { mode, onSelectMode } = props;
   const [selectedItem, setSelectedItem] = useState(mode);
+  const prevMode = usePrevious(mode);
 
   const handlePress = (value: any) => {
     onSelectMode(value);
-    setSelectedItem(value);
   };
+
+  useEffect(() => {
+    if (mode !== prevMode) {
+      // in case "MANUAL" if the user confirms that he
+      // wants to use the MANUAL MODE after being
+      // shown the bottomsheet then the data is selected
+      // else the other option remains selected
+      setSelectedItem(mode);
+    }
+  }, [mode, prevMode]);
 
   return (
     <RadioGroup<string>
