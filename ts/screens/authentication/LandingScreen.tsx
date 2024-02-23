@@ -174,6 +174,10 @@ export const LandingScreen = () => {
   const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
+  // Since the page is rendered more than once,
+  // due to many async selectors, like the JailMonkey.isJailBroken(),
+  // we need to keep track of the session expiration.
+  const isSessionExpiredRef = React.useRef(false);
 
   const isContinueWithRootOrJailbreak = useIOSelector(
     continueWithRootOrJailbreakSelector
@@ -200,9 +204,21 @@ export const LandingScreen = () => {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
     setIsRootedOrJailbroken(O.some(isRootedOrJailbroken));
     if (isSessionExpired) {
+      // eslint-disable-next-line functional/immutable-data
+      isSessionExpiredRef.current = isSessionExpired;
       dispatch(resetAuthenticationState());
     }
   });
+
+  // We reset the session expiration flag
+  // when the component is unmounted
+  React.useEffect(
+    () => () => {
+      // eslint-disable-next-line functional/immutable-data
+      isSessionExpiredRef.current = false;
+    },
+    []
+  );
 
   const { hideModal, showAnimatedModal } = React.useContext(LightModalContext);
 
@@ -402,7 +418,7 @@ export const LandingScreen = () => {
 
     return (
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
-        {isSessionExpired ? (
+        {isSessionExpiredRef.current ? (
           <InfoScreenComponent
             title={I18n.t("authentication.landing.session_expired.title")}
             body={I18n.t("authentication.landing.session_expired.body", {
