@@ -23,7 +23,7 @@ import {
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
-import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
+import { WalletPaymentRoutes } from "../../payments/payment/navigation/routes";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
@@ -38,7 +38,7 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { WalletBarcodeRoutes } from "../../walletV3/barcode/navigation/routes";
+import { WalletBarcodeRoutes } from "../../payments/barcode/navigation/routes";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 const BarcodeScanScreen = () => {

@@ -13,23 +13,23 @@ import {
   IOColors,
   VSpacer,
   IOSpacingScale,
-  ListItemAction
+  ListItemAction,
+  IOStyles
 } from "@pagopa/io-app-design-system";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { useIOToast } from "../../../components/Toast";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import I18n from "../../../i18n";
-import { deleteWalletRequest } from "../../../store/actions/wallet/wallets";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { getWalletsById } from "../../../store/reducers/wallet/wallets";
-import { PaymentMethod } from "../../../types/pagopa";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import I18n from "../../../../i18n";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { IOToast } from "../../../../components/Toast";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { walletDetailsInstrumentPotSelector } from "../store";
+import { walletDetailsDeleteInstrument } from "../store/actions";
 
 type Props = {
-  paymentMethod: PaymentMethod;
+  paymentMethod?: WalletInfo;
   card: React.ReactNode;
   content: React.ReactNode;
   headerTitle?: string;
@@ -40,27 +40,28 @@ type Props = {
 /**
  * Base layout for payment methods screen & legacy delete handling
  */
-const BasePaymentMethodScreen = (props: Props) => {
+const WalletDetailsPaymentMethodScreen = (props: Props) => {
   const { card, content, paymentMethod } = props;
-  const hasErrorDelete = pot.isError(useIOSelector(getWalletsById));
+  const hasErrorDelete = pot.isError(
+    useIOSelector(walletDetailsInstrumentPotSelector)
+  );
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
   const dispatch = useIODispatch();
   const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
   const blueHeaderColor = isDSenabled ? IOColors["blueIO-600"] : IOColors.blue;
 
   const navigation = useNavigation();
-  const toast = useIOToast();
 
-  const deleteWallet = (walletId: number) =>
+  const deleteWallet = (walletId: string) =>
     dispatch(
-      deleteWalletRequest({
+      walletDetailsDeleteInstrument.request({
         walletId,
         onSuccess: _ => {
-          toast.success(I18n.t("wallet.delete.successful"));
+          IOToast.success(I18n.t("wallet.delete.successful"));
           navigation.goBack();
         },
         onFailure: _ => {
-          toast.error(I18n.t("wallet.delete.failed"));
+          IOToast.error(I18n.t("wallet.delete.failed"));
         }
       })
     );
@@ -84,7 +85,9 @@ const BasePaymentMethodScreen = (props: Props) => {
               : I18n.t(`wallet.delete.android.confirm`),
           style: "destructive",
           onPress: () => {
-            deleteWallet(paymentMethod.idWallet);
+            if (paymentMethod) {
+              deleteWallet(paymentMethod.walletId);
+            }
           }
         },
         {
@@ -127,7 +130,7 @@ const BasePaymentMethodScreen = (props: Props) => {
         <View style={IOStyles.horizontalContentPadding}>
           {content}
           <VSpacer size={24} />
-          <DeleteButton onPress={onDeleteMethod} />
+          {paymentMethod && <DeleteButton onPress={onDeleteMethod} />}
         </View>
         <VSpacer size={40} />
       </ScrollView>
@@ -135,7 +138,7 @@ const BasePaymentMethodScreen = (props: Props) => {
   );
 };
 
-// ----------------------------- utils & export -----------------------------------
+// ----------------------------- utils -----------------------------------
 
 const DeleteButton = ({
   onPress
@@ -170,4 +173,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default BasePaymentMethodScreen;
+export default WalletDetailsPaymentMethodScreen;
