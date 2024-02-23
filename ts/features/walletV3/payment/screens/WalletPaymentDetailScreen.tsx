@@ -45,13 +45,13 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { walletAnalyticsStorePaymentAttempt } from "../../analytics/store/actions";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { WalletPaymentParamsList } from "../navigation/params";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { walletPaymentStoreNewAttempt } from "../../history/store/actions";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -134,7 +134,7 @@ const WalletPaymentDetailContent = ({
   });
 
   const handleGoToPayment = () => {
-    dispatch(walletAnalyticsStorePaymentAttempt(rptId));
+    dispatch(walletPaymentStoreNewAttempt(rptId));
     navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
     });

@@ -16,7 +16,10 @@ import {
 import { walletPaymentInitState } from "../../../payment/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../payment/types/WalletPaymentFailure";
 import { PaymentHistory } from "../../types";
-import { walletPaymentHistoryStoreOutcome } from "../actions";
+import {
+  walletPaymentStoreNewAttempt,
+  walletPaymentHistoryStoreOutcome
+} from "../actions";
 
 export type WalletPaymentHistoryState = {
   ongoingPayment?: PaymentHistory;
@@ -43,7 +46,11 @@ const reducer = (
           lookupId: getLookUpId()
         }
       };
-    case getType(walletPaymentGetDetails.request):
+    case getType(walletPaymentGetDetails.success):
+      return updatePaymentHistory(state, {
+        verifiedData: action.payload
+      });
+    case getType(walletPaymentStoreNewAttempt):
       return updatePaymentHistory(
         state,
         {
@@ -51,10 +58,6 @@ const reducer = (
         },
         true
       );
-    case getType(walletPaymentGetDetails.success):
-      return updatePaymentHistory(state, {
-        verifiedData: action.payload
-      });
     case getType(walletPaymentCreateTransaction.success):
     case getType(walletPaymentGetTransactionInfo.success):
       return updatePaymentHistory(state, {
@@ -98,14 +101,14 @@ const appendItemToArchive = (
 const updatePaymentHistory = (
   state: WalletPaymentHistoryState,
   data: PaymentHistory,
-  reset: boolean = false
+  newAttempt: boolean = false
 ): WalletPaymentHistoryState => {
   const updatedOngoingPaymentHistory = {
     ...state.ongoingPayment,
     ...data
   };
 
-  if (reset) {
+  if (newAttempt) {
     return {
       ongoingPayment: updatedOngoingPaymentHistory,
       archive: appendItemToArchive(state.archive, updatedOngoingPaymentHistory)
