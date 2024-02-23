@@ -27,19 +27,19 @@ describe("Test Wallet reducer", () => {
 
   it("should correctly update payment step, also when trying to overflow the steps, it should set the steps to WALLET_PAYMENT_STEP_MAX, and in case zero is passed it should set the step to 1", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.payment).toStrictEqual(INITIAL_STATE);
+    expect(globalState.features.payments.payment).toStrictEqual(INITIAL_STATE);
 
     const store = createStore(appReducer, globalState as any);
 
     store.dispatch(walletPaymentSetCurrentStep(2));
-    expect(store.getState().features.wallet.payment.currentStep).toBe(2);
+    expect(store.getState().features.payments.payment.currentStep).toBe(2);
 
     store.dispatch(walletPaymentSetCurrentStep(20));
-    expect(store.getState().features.wallet.payment.currentStep).toBe(
+    expect(store.getState().features.payments.payment.currentStep).toBe(
       WALLET_PAYMENT_STEP_MAX
     );
 
     store.dispatch(walletPaymentSetCurrentStep(0));
-    expect(store.getState().features.wallet.payment.currentStep).toBe(1);
+    expect(store.getState().features.payments.payment.currentStep).toBe(1);
   });
 });
