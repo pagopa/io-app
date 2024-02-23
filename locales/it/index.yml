@@ -931,7 +931,7 @@ payment:
       headerCTA: Aggiungi
     historySection:
      header: Storico operazioni
-     headerCTA: Vedi tutti
+     headerCTA: Vedi tutte
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app

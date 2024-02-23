@@ -925,13 +925,13 @@ datetimes:
   notValid: Invalid date.
 payment:
   homeScreen:
-    title: Pagamenti
+    title: Payments
     methodsSection:
-      header: Metodi di pagamento
-      headerCTA: Aggiungi
+      header: Payment methods
+      headerCTA: Add
     historySection:
-     header: Storico operazioni
-     headerCTA: Vedi tutti
+     header: Transaction history
+     headerCTA: View all
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
