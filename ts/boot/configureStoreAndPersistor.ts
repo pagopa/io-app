@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as O from "fp-ts/lib/Option";
 import _, { merge } from "lodash";
 import {
   applyMiddleware,
@@ -23,11 +23,13 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../common/model/RemoteValue";
+import { FeaturesState } from "../features/common/store/reducers";
 import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
 import {
   initialLollipopState,
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
+import { WalletState } from "../features/walletV3/common/store/reducers";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -38,8 +40,8 @@ import {
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
 import {
-  InstallationState,
-  INSTALLATION_INITIAL_STATE
+  INSTALLATION_INITIAL_STATE,
+  InstallationState
 } from "../store/reducers/installation";
 import { NotificationsState } from "../store/reducers/notifications";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
@@ -354,6 +356,24 @@ const migrations: MigrationManifest = {
       ...state,
       persistedPreferences: {
         ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
+      }
+    };
+  },
+  // Version 24
+  // Adds payments history archive persistence
+  "24": (state: PersistedState) => {
+    const features: FeaturesState = (state as PersistedGlobalState).features;
+    const wallet: WalletState = features.wallet;
+    return {
+      ...state,
+      features: {
+        ...features,
+        wallet: {
+          ...wallet,
+          history: {
+            archive: []
+          }
+        }
       }
     };
   }
