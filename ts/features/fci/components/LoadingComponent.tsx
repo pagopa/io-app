@@ -8,6 +8,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
+import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
 const styles = StyleSheet.create({
   main: {
@@ -37,7 +38,7 @@ const LoadingComponent = (props: Props) => {
 
   return (
     <View style={styles.main} testID={props.testID}>
-      <LoadingSpinner size={76} />
+      <LoadingIndicator />
       <VSpacer size={48} />
       <H3 style={styles.textAlignCenter} testID="LoadingSpinnerCaptionTitleID">
         {captionTitle}
