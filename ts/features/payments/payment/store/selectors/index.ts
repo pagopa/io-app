@@ -5,7 +5,7 @@ import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 
 const selectWalletPayment = (state: GlobalState) =>
-  state.features.wallet.payment;
+  state.features.payments.payment;
 
 export const selectWalletPaymentSessionTokenPot = (state: GlobalState) =>
   selectWalletPayment(state).sessionToken;
@@ -13,15 +13,11 @@ export const selectWalletPaymentSessionTokenPot = (state: GlobalState) =>
 export const selectWalletPaymentSessionToken = (state: GlobalState) =>
   pot.toUndefined(selectWalletPaymentSessionTokenPot(state));
 
-export const walletPaymentRptIdSelector = createSelector(
-  selectWalletPayment,
-  state => state.rptId
-);
+export const walletPaymentRptIdSelector = (state: GlobalState) =>
+  selectWalletPayment(state).rptId;
 
-export const walletPaymentDetailsSelector = createSelector(
-  selectWalletPayment,
-  state => state.paymentDetails
-);
+export const walletPaymentDetailsSelector = (state: GlobalState) =>
+  selectWalletPayment(state).paymentDetails;
 
 export const walletPaymentAmountSelector = createSelector(
   walletPaymentDetailsSelector,
@@ -58,32 +54,20 @@ export const walletPaymentSavedMethodByIdSelector = createSelector(
     )
 );
 
-export const walletPaymentPickedPaymentMethodSelector = createSelector(
-  selectWalletPayment,
-  state => state.chosenPaymentMethod
-);
+export const walletPaymentPickedPaymentMethodSelector = (state: GlobalState) =>
+  selectWalletPayment(state).chosenPaymentMethod;
 
-export const walletPaymentPspListSelector = createSelector(
-  selectWalletPayment,
-  state => state.pspList
-);
+export const walletPaymentPspListSelector = (state: GlobalState) =>
+  selectWalletPayment(state).pspList;
 
-export const walletPaymentPickedPspSelector = createSelector(
-  selectWalletPayment,
-  state => state.chosenPsp
-);
+export const walletPaymentPickedPspSelector = (state: GlobalState) =>
+  selectWalletPayment(state).chosenPsp;
 
-export const walletPaymentTransactionSelector = createSelector(
-  selectWalletPayment,
-  state => state.transaction
-);
+export const walletPaymentTransactionSelector = (state: GlobalState) =>
+  selectWalletPayment(state).transaction;
 
-export const walletPaymentAuthorizationUrlSelector = createSelector(
-  selectWalletPayment,
-  state => state.authorizationUrl
-);
+export const walletPaymentAuthorizationUrlSelector = (state: GlobalState) =>
+  selectWalletPayment(state).authorizationUrl;
 
-export const walletPaymentStartRouteSelector = createSelector(
-  selectWalletPayment,
-  state => state.startRoute
-);
+export const walletPaymentStartRouteSelector = (state: GlobalState) =>
+  selectWalletPayment(state).startRoute;
