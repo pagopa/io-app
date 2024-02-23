@@ -62,7 +62,8 @@ const reducer = (
       });
     case getType(walletPaymentHistoryStoreOutcome):
       return updatePaymentHistory(state, {
-        outcome: action.payload
+        outcome: action.payload,
+        success: action.payload === "0" ? true : undefined
       });
     case getType(walletPaymentGetDetails.failure):
     case getType(walletPaymentCreateTransaction.failure):
