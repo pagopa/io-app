@@ -16,7 +16,7 @@ import walletTransactionReducer, {
   WalletTransactionState
 } from "../../../transaction/store";
 
-export type WalletState = {
+export type PaymentsState = {
   onboarding: WalletOnboardingState;
   details: WalletDetailsState;
   payment: WalletPaymentState;
@@ -24,7 +24,7 @@ export type WalletState = {
   history: WalletPaymentHistoryState & PersistPartial;
 };
 
-const walletReducer = combineReducers({
+const paymentsReducer = combineReducers({
   onboarding: walletOnboardingReducer,
   details: walletDetailsReducer,
   payment: walletPaymentReducer,
@@ -32,4 +32,4 @@ const walletReducer = combineReducers({
   history: walletPaymentHistoryReducer
 });
 
-export default walletReducer;
+export default paymentsReducer;

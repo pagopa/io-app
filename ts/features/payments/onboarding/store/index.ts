@@ -1,12 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as _ from "lodash";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { Action } from "../../../../store/actions/types";
-import { NetworkError } from "../../../../utils/errors";
-import { GlobalState } from "../../../../store/reducers/types";
-import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
 import { PaymentMethodsResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
+import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { NetworkError } from "../../../../utils/errors";
 
 import { walletGetPaymentMethods, walletStartOnboarding } from "./actions";
 
@@ -72,21 +70,15 @@ const walletOnboardingReducer = (
 };
 
 const walletOnboardingSelector = (state: GlobalState) =>
-  state.features.wallet.onboarding;
+  state.features.payments.onboarding;
 
-export const walletOnboardingStartupSelector = createSelector(
-  walletOnboardingSelector,
-  onboarding => onboarding.result
-);
+export const walletOnboardingStartupSelector = (state: GlobalState) =>
+  walletOnboardingSelector(state).result;
 
-export const walletOnboardingPaymentMethodsSelector = createSelector(
-  walletOnboardingSelector,
-  onboarding => onboarding.paymentMethods
-);
+export const walletOnboardingPaymentMethodsSelector = (state: GlobalState) =>
+  walletOnboardingSelector(state).paymentMethods;
 
-export const isLoadingPaymentMethodsSelector = createSelector(
-  walletOnboardingPaymentMethodsSelector,
-  paymentMethods => pot.isLoading(paymentMethods)
-);
+export const isLoadingPaymentMethodsSelector = (state: GlobalState) =>
+  pot.isLoading(walletOnboardingSelector(state).paymentMethods);
 
 export default walletOnboardingReducer;

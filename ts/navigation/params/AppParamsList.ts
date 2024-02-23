@@ -44,22 +44,22 @@ import {
 } from "../../features/idpay/unsubscription/navigation/navigator";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
-import { WalletBarcodeParamsList } from "../../features/walletV3/barcode/navigation/params";
-import { WalletBarcodeRoutes } from "../../features/walletV3/barcode/navigation/routes";
+import { WalletBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
+import { WalletBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
 import {
   WalletOnboardingParamsList,
   WalletOnboardingRoutes
-} from "../../features/walletV3/onboarding/navigation/navigator";
+} from "../../features/payments/onboarding/navigation/navigator";
 import {
   WalletDetailsParamsList,
   WalletDetailsRoutes
-} from "../../features/walletV3/details/navigation/navigator";
+} from "../../features/payments/details/navigation/navigator";
 import {
   WalletTransactionParamsList,
   WalletTransactionRoutes
-} from "../../features/walletV3/transaction/navigation/navigator";
-import { WalletPaymentParamsList } from "../../features/walletV3/payment/navigation/params";
-import { WalletPaymentRoutes } from "../../features/walletV3/payment/navigation/routes";
+} from "../../features/payments/transaction/navigation/navigator";
+import { WalletPaymentParamsList } from "../../features/payments/payment/navigation/params";
+import { WalletPaymentRoutes } from "../../features/payments/payment/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
