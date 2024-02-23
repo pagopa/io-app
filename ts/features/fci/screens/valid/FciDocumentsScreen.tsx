@@ -4,7 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import {
   RouteProp,
@@ -244,11 +244,7 @@ const FciDocumentsScreen = () => {
         disabled={false}
         testID={"FciDocumentsNavBarTestID"}
       />
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"FciDocumentsScreenTestID"}
-        edges={["bottom", "left", "right"]}
-      >
+      <View style={IOStyles.flex} testID={"FciDocumentsScreenTestID"}>
         {documents.length > 0 && (
           <>
             {renderPager()}
@@ -259,7 +255,7 @@ const FciDocumentsScreen = () => {
             />
           </>
         )}
-      </SafeAreaView>
+      </View>
       {fciAbortSignature}
       {fciNoSignatureFields}
     </>

@@ -89,14 +89,10 @@ const FciSignatureRequestsScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={dataItems === undefined}>
-      <>
-        <SafeAreaView style={IOStyles.flex} edges={["bottom", "left", "right"]}>
-          <ScrollView style={IOStyles.horizontalContentPadding}>
-            <H2>{I18n.t("features.fci.requests.title")}</H2>
-            {renderSignatureRequests()}
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <ScrollView style={IOStyles.horizontalContentPadding}>
+        <H2>{I18n.t("features.fci.requests.title")}</H2>
+        {renderSignatureRequests()}
+      </ScrollView>
     </LoadingSpinnerOverlay>
   );
 };

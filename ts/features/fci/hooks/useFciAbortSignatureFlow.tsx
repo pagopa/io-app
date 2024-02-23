@@ -1,9 +1,12 @@
 import * as React from "react";
 import { useRoute } from "@react-navigation/native";
 import {
+  BlockButtons,
   ButtonSolidProps,
-  FooterWithButtons
+  FooterWithButtons,
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import I18n from "../../../i18n";
 import { fciEndRequest } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -46,14 +49,13 @@ export const useFciAbortSignatureFlow = () => {
     ),
     snapPoint: [280],
     footer: (
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-        secondary={{
-          type: "Solid",
-          buttonProps: continueButtonProps
-        }}
-      />
+      <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
+        <BlockButtons
+          type={"TwoButtonsInlineHalf"}
+          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+          secondary={{ type: "Solid", buttonProps: continueButtonProps }}
+        />
+      </View>
     )
   });
 

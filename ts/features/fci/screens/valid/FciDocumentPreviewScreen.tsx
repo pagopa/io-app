@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 import * as S from "fp-ts/lib/string";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
@@ -17,12 +17,6 @@ export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
   enableAnnotationRendering?: boolean;
 }>;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 export const FciDocumentPreviewScreen = (
   props: IOStackNavigationRouteProps<FciParamsList, "FCI_DOC_PREVIEW">
@@ -54,19 +48,13 @@ export const FciDocumentPreviewScreen = (
 
   return (
     <>
-      <SafeAreaView
-        style={styles.container}
-        testID={"FciDocumentPreviewScreenTestID"}
-        edges={["bottom", "left", "right"]}
-      >
-        {S.isEmpty(documentUrl) === false && (
-          <DocumentViewer
-            enableAnnotationRendering={enableAnnotationRendering}
-            documentUrl={documentUrl}
-            onError={() => setIsError(true)}
-          />
-        )}
-      </SafeAreaView>
+      {S.isEmpty(documentUrl) === false && (
+        <DocumentViewer
+          enableAnnotationRendering={enableAnnotationRendering}
+          documentUrl={documentUrl}
+          onError={() => setIsError(true)}
+        />
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import {
   Body,
   H3,
@@ -7,11 +7,9 @@ import {
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import customVariables from "../../../theme/variables";
 
 const styles = StyleSheet.create({
   main: {
-    padding: customVariables.contentPadding,
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
@@ -36,7 +34,7 @@ const LoadingComponent = (props: Props) => {
   const { captionTitle, captionSubtitle } = props;
 
   return (
-    <View style={styles.main} testID={props.testID}>
+    <SafeAreaView style={styles.main} testID={props.testID}>
       <LoadingSpinner size={76} />
       <VSpacer size={48} />
       <H3 style={styles.textAlignCenter} testID="LoadingSpinnerCaptionTitleID">
@@ -49,7 +47,7 @@ const LoadingComponent = (props: Props) => {
       >
         {captionSubtitle}
       </Body>
-    </View>
+    </SafeAreaView>
   );
 };
 

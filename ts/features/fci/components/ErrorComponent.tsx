@@ -144,9 +144,9 @@ const ErrorComponent = (props: Props) => {
 
   return (
     <SafeAreaView
+      edges={["top", "left", "right"]}
       style={IOStyles.flex}
       testID={props.testID}
-      edges={["left", "right"]}
     >
       <InfoScreenComponent
         image={<Pictogram name={props.pictogram} />}

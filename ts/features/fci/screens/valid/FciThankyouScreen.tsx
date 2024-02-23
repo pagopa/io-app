@@ -7,6 +7,7 @@ import {
   Pictogram
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
@@ -49,23 +50,17 @@ const FciThankyouScreen = () => {
       testID: "FciTypCloseButton"
     };
     return (
-      <>
-        <SafeAreaView
-          style={IOStyles.flex}
-          testID={"FciTypSuccessTestID"}
-          edges={["bottom", "left", "right"]}
-        >
-          <InfoScreenComponent
-            image={<Pictogram name={"success"} />}
-            title={I18n.t("features.fci.thankYouPage.title")}
-            body={I18n.t("features.fci.thankYouPage.content")}
-          />
-          <FooterWithButtons
-            type={"SingleButton"}
-            primary={{ type: "Solid", buttonProps: continueButtonProps }}
-          />
-        </SafeAreaView>
-      </>
+      <View style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
+        <InfoScreenComponent
+          image={<Pictogram name={"success"} />}
+          title={I18n.t("features.fci.thankYouPage.title")}
+          body={I18n.t("features.fci.thankYouPage.content")}
+        />
+        <FooterWithButtons
+          type={"SingleButton"}
+          primary={{ type: "Solid", buttonProps: continueButtonProps }}
+        />
+      </View>
     );
   };
 
