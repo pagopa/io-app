@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test LoadingComponent component should render a LoadingComponent component with props correctly 1`] = `
-<View
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
   style={
     Object {
       "alignItems": "center",
       "flex": 1,
       "justifyContent": "center",
-      "padding": 24,
     }
   }
 >
@@ -241,5 +241,5 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   >
     Please wait...
   </Text>
-</View>
+</RCTSafeAreaView>
 `;
