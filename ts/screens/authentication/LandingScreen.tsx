@@ -29,15 +29,12 @@ import {
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import sessionExpiredImg from "../../../img/landing/session_expired.png";
 import ContextualInfo from "../../components/ContextualInfo";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../components/SectionStatus";
 import CieNotSupported from "../../components/cie/CieNotSupported";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../components/infoScreen/imageRendering";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { privacyUrl } from "../../config";
