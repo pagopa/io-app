@@ -133,10 +133,10 @@ const WalletPaymentDetailContent = ({
     contextualHelp: emptyContextualHelp
   });
 
-  const handleGoToPayment = () => {
+  const navigateToMakePaymentScreen = () => {
     dispatch(walletPaymentStoreNewAttempt(rptId));
     navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_MAKE
     });
   };
 
@@ -203,7 +203,7 @@ const WalletPaymentDetailContent = ({
       primaryActionProps={{
         label: "Vai al pagamento",
         accessibilityLabel: "Vai al pagmento",
-        onPress: handleGoToPayment
+        onPress: navigateToMakePaymentScreen
       }}
     >
       <ListItemInfo

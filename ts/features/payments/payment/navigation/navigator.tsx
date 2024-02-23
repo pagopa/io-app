@@ -8,10 +8,8 @@ import { isGestureEnabled } from "../../../../utils/navigation";
 import { WalletPaymentDetailScreen } from "../screens/WalletPaymentDetailScreen";
 import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInputFiscalCodeScreen";
 import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
-import { WalletPaymentPickMethodScreen } from "../screens/WalletPaymentPickMethodScreen";
+import { WalletPaymentMakeScreen } from "../screens/WalletPaymentMakeScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
-import { WalletPaymentPickPspScreen } from "../screens/WalletPaymentPickPspScreen";
-import { WalletPaymentConfirmScreen } from "../screens/WalletPaymentConfirmScreen";
 import { WalletPaymentParamsList } from "./params";
 import { WalletPaymentRoutes } from "./routes";
 
@@ -48,24 +46,11 @@ export const WalletPaymentNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD}
-      component={WalletPaymentPickMethodScreen}
+      name={WalletPaymentRoutes.WALLET_PAYMENT_MAKE}
+      component={WalletPaymentMakeScreen}
       options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP}
-      component={WalletPaymentPickPspScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
-      }}
-    />
-    <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM}
-      component={WalletPaymentConfirmScreen}
-      options={{
-        gestureEnabled: isGestureEnabled
+        gestureEnabled: isGestureEnabled,
+        headerShown: false
       }}
     />
     <Stack.Screen
