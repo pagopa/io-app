@@ -1,12 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  Body,
-  H3,
-  LoadingSpinner,
-  VSpacer,
-  WithTestID
-} from "@pagopa/io-app-design-system";
+import { Body, H3, VSpacer, WithTestID } from "@pagopa/io-app-design-system";
 import customVariables from "../../../theme/variables";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
