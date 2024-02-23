@@ -8,7 +8,7 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import { H1 } from "../../../components/core/typography/H1";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
@@ -63,9 +63,9 @@ class CieAuthorizeDataUsageScreen extends React.PureComponent<Props, State> {
           <View style={styles.contentContainerStyle}>
             <H1>{I18n.t("authentication.cie.noDataTitle")}</H1>
             <VSpacer size={16} />
-            <Markdown onLoadEnd={this.handleMarkdownLoadingCompleted}>
+            <LegacyMarkdown onLoadEnd={this.handleMarkdownLoadingCompleted}>
               {I18n.t("authentication.cie.authToSendData")}
-            </Markdown>
+            </LegacyMarkdown>
           </View>
         </Content>
         {this.state.isLoadingCompleted && (

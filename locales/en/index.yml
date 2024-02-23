@@ -821,7 +821,8 @@ email:
     title: Validate your email
     subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent!
+    buttonlabelsent: Email sent!    
+    countdowntext: Request new email in 
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -1748,6 +1749,12 @@ wallet:
         subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
       INVALID_METHOD:
         title: Il metodo di pagamento non è supportato
+      WAITING_CONFIRMATION_EMAIL:
+        title: Attendi la conferma via email
+        subtitle: Non è stato possibile verificare l'esito del pagamento. Se è andato a buon fine, riceverai a breve un'email. Se non arriva, contatta l'assistenza.
+      METHOD_NOT_ENABLED:
+        title: Abilita il metodo per effettuare pagamenti in app
+        subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
     support:
       button: "Contatta l'assistenza"
       supportTitle: Contatta l'assistenza
