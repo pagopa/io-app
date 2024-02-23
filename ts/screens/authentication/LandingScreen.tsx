@@ -430,12 +430,18 @@ export const LandingScreen = () => {
     return (
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
         {isSessionExpiredRef.current ? (
-          <InfoScreenComponent
+          <LandingCardComponent
+            id={0}
+            screenDimensions={screenDimension}
+            pictogramName={"time"}
             title={I18n.t("authentication.landing.session_expired.title")}
-            body={I18n.t("authentication.landing.session_expired.body", {
+            content={I18n.t("authentication.landing.session_expired.body", {
               days: isFastLoginEnabled ? "365" : "30"
             })}
-            image={renderInfoRasterImage(sessionExpiredImg)}
+            accessibilityLabel={`${I18n.t(
+              "authentication.landing.session_expired.title"
+            )} ${I18n.t("authentication.landing.session_expired.body")}
+            `}
           />
         ) : (
           <Carousel />

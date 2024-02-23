@@ -560,7 +560,7 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo {{days}} giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
+      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md

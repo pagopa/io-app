@@ -560,7 +560,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after {{days}} days from the last login with SPID or CIE, we ask you to sign in again to use IO.
+      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
