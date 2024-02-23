@@ -1,27 +1,22 @@
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletAnalyticsStorePaymentAttempt } from "../../analytics/store/actions";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
+import { walletPaymentHistoryStoreOutcome } from "../../history/store/actions";
 import {
   WalletPaymentAuthorizePayload,
   walletPaymentAuthorization
 } from "../store/actions/networking";
-import {
-  walletPaymentAuthorizationUrlSelector,
-  walletPaymentDetailsSelector
-} from "../store/selectors";
+import { walletPaymentAuthorizationUrlSelector } from "../store/selectors";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { walletPaymentHistoryStoreOutcome } from "../../history/store/actions";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
@@ -41,7 +36,6 @@ export const useWalletPaymentAuthorizationModal = ({
 }: Props): WalletPaymentAuthorizationModal => {
   const dispatch = useIODispatch();
 
-  const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
   );
@@ -51,22 +45,6 @@ export const useWalletPaymentAuthorizationModal = ({
   const isLoading = pot.isLoading(authorizationUrlPot);
   const isError = pot.isError(authorizationUrlPot);
 
-  const resetPaymentTentativeOnSuccess = React.useCallback(
-    (outcome: WalletPaymentOutcomeEnum) => {
-      // If the outcome is SUCCESS, reset the payment tentative in the store
-      if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
-        pipe(
-          paymentDetailsPot,
-          pot.toOption,
-          O.map(({ rptId }) => rptId),
-          O.map(walletAnalyticsStorePaymentAttempt),
-          O.map(dispatch)
-        );
-      }
-    },
-    [dispatch, paymentDetailsPot]
-  );
-
   const handleAuthorizationResult = React.useCallback(
     (resultUrl: string) => {
       const outcome = pipe(
@@ -75,11 +53,10 @@ export const useWalletPaymentAuthorizationModal = ({
         WalletPaymentOutcome.decode,
         E.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
-      resetPaymentTentativeOnSuccess(outcome);
       onAuthorizationOutcome(outcome);
       dispatch(walletPaymentHistoryStoreOutcome(outcome));
     },
-    [onAuthorizationOutcome, resetPaymentTentativeOnSuccess, dispatch]
+    [onAuthorizationOutcome, dispatch]
   );
 
   React.useEffect(() => {

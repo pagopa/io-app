@@ -1,4 +1,5 @@
 import * as O from "fp-ts/lib/Option";
+import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { AsyncStorage } from "react-native";
@@ -20,6 +21,7 @@ import {
   walletPaymentStoreNewAttempt,
   walletPaymentHistoryStoreOutcome
 } from "../actions";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
 export type WalletPaymentHistoryState = {
   ongoingPayment?: PaymentHistory;
@@ -46,18 +48,25 @@ const reducer = (
           lookupId: getLookUpId()
         }
       };
+    case getType(walletPaymentGetDetails.request):
+      return {
+        ...state,
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          rptId: action.payload,
+          attempt: getPaymentAttemptByRptId(state, action.payload)
+        }
+      };
     case getType(walletPaymentGetDetails.success):
-      return updatePaymentHistory(state, {
-        verifiedData: action.payload
-      });
+      return {
+        ...state,
+        ongoingPayment: {
+          ...state.ongoingPayment,
+          verifiedData: action.payload
+        }
+      };
     case getType(walletPaymentStoreNewAttempt):
-      return updatePaymentHistory(
-        state,
-        {
-          rptId: action.payload
-        },
-        true
-      );
+      return updatePaymentHistory(state, {}, true);
     case getType(walletPaymentCreateTransaction.success):
     case getType(walletPaymentGetTransactionInfo.success):
       return updatePaymentHistory(state, {
@@ -84,6 +93,17 @@ const reducer = (
   return state;
 };
 
+const getPaymentAttemptByRptId = (
+  state: WalletPaymentHistoryState,
+  rptId: RptId
+) =>
+  pipe(
+    state.archive as Array<PaymentHistory>,
+    A.findFirst(h => h.rptId === rptId),
+    O.chainNullableK(h => h.attempt),
+    O.getOrElse(() => 0)
+  );
+
 const appendItemToArchive = (
   archive: ReadonlyArray<PaymentHistory>,
   item: PaymentHistory
@@ -103,9 +123,11 @@ const updatePaymentHistory = (
   data: PaymentHistory,
   newAttempt: boolean = false
 ): WalletPaymentHistoryState => {
-  const updatedOngoingPaymentHistory = {
+  const currentAttempt = state.ongoingPayment?.attempt || 0;
+  const updatedOngoingPaymentHistory: PaymentHistory = {
     ...state.ongoingPayment,
-    ...data
+    ...data,
+    attempt: newAttempt ? currentAttempt + 1 : currentAttempt
   };
 
   if (newAttempt) {
