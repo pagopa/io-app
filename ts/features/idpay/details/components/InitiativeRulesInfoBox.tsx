@@ -13,7 +13,7 @@ import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import Markdown from "../../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
@@ -26,7 +26,7 @@ const InitiativeRulesInfoBox = (props: Props) => {
 
   const { bottomSheet, present, dismiss } = useIOBottomSheetAutoresizableModal(
     {
-      component: <Markdown>{content}</Markdown>,
+      component: <LegacyMarkdown>{content}</LegacyMarkdown>,
       title: I18n.t("idpay.initiative.beneficiaryDetails.infoModal.title"),
       footer: (
         <ContentWrapper>

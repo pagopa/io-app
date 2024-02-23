@@ -4,7 +4,7 @@ import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { privacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { ioSuppliersUrl } from "../../../urls";
@@ -18,7 +18,7 @@ type MarkdownProps = {
 const MarkdownBody = (props: MarkdownProps): React.ReactElement => (
   <>
     <VSpacer size={16} />
-    <Markdown avoidTextSelection={true}>{props.body}</Markdown>
+    <LegacyMarkdown avoidTextSelection={true}>{props.body}</LegacyMarkdown>
   </>
 );
 
