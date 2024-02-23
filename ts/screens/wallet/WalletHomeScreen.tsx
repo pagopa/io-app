@@ -47,8 +47,8 @@ import { idPayWalletInitiativeListSelector } from "../../features/idpay/wallet/s
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import { WalletBarcodeRoutes } from "../../features/walletV3/barcode/navigation/routes";
-import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
+import { WalletBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
+import { WalletTransactionRoutes } from "../../features/payments/transaction/navigation/navigator";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";

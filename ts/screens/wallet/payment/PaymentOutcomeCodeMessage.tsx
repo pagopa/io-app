@@ -15,7 +15,7 @@ import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenCo
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
-import { WalletPaymentFeebackBanner } from "../../../features/walletV3/payment/components/WalletPaymentFeedbackBanner";
+import { WalletPaymentFeebackBanner } from "../../../features/payments/payment/components/WalletPaymentFeedbackBanner";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import I18n from "../../../i18n";
 import { navigateToWalletHome } from "../../../store/actions/navigation";

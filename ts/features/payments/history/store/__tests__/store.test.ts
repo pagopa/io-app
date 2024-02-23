@@ -24,7 +24,7 @@ describe("Test Wallet payment history reducers and selectors", () => {
 
   it("should have INITIAL_STATE before any dispatched action", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
-    expect(globalState.features.wallet.history).toStrictEqual({
+    expect(globalState.features.payments.history).toStrictEqual({
       archive: []
     });
     expect(selectWalletPaymentHistoryArchive(globalState)).toStrictEqual([]);
@@ -43,12 +43,14 @@ describe("Test Wallet payment history reducers and selectors", () => {
     );
 
     expect(
-      store.getState().features.wallet.history.ongoingPayment
+      store.getState().features.payments.history.ongoingPayment
     ).toStrictEqual({
       startOrigin: T_START_ORIGIN,
       lookupId: MOCKED_LOOKUP_ID,
       startedAt: MOCKED_DATE
     });
-    expect(store.getState().features.wallet.history.archive).toStrictEqual([]);
+    expect(store.getState().features.payments.history.archive).toStrictEqual(
+      []
+    );
   });
 });
