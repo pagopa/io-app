@@ -1,7 +1,5 @@
 import React from "react";
 import * as S from "fp-ts/lib/string";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";

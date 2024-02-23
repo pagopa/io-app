@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
@@ -7,10 +7,8 @@ import * as S from "fp-ts/lib/string";
 import {
   ButtonSolidProps,
   FooterWithButtons,
-  IOColors,
-  IOStyles
+  IOColors
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../i18n";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";

@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SectionList, ScrollView } from "react-native";
 import { H2, IOStyles } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";

@@ -3,7 +3,6 @@ import { useRoute } from "@react-navigation/native";
 import {
   BlockButtons,
   ButtonSolidProps,
-  FooterWithButtons,
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
