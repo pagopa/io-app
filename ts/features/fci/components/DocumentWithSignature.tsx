@@ -187,7 +187,7 @@ const DocumentWithSignature = (props: Props) => {
     <SafeAreaView
       style={[IOStyles.flex, IOStyles.bgWhite]}
       testID={"FciDocumentsScreenTestID"}
-      edges={["bottom", "left", "right"]}
+      edges={["top", "left", "right"]}
     >
       <View style={[IOStyles.horizontalContentPadding, styles.header]}>
         <HSpacer />
