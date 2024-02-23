@@ -115,7 +115,10 @@ const BasePaymentMethodScreen = (props: Props) => {
       dark={true}
       headerBackgroundColor={blueHeaderColor}
     >
-      <FocusAwareStatusBar barStyle="light-content" />
+      <FocusAwareStatusBar
+        backgroundColor={blueHeaderColor}
+        barStyle="light-content"
+      />
       <ScrollView>
         <View style={[styles.blueHeader, { backgroundColor: blueHeaderColor }]}>
           <View style={styles.cardContainer}>{card}</View>
