@@ -1,10 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as _ from "lodash";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { NetworkError } from "../../../../utils/errors";
 import { GlobalState } from "../../../../store/reducers/types";
+import { NetworkError } from "../../../../utils/errors";
 
 import { Transaction } from "../../../../types/pagopa";
 import { walletTransactionDetailsGet } from "./actions";
@@ -48,11 +46,9 @@ const walletTransactionReducer = (
 };
 
 const walletTransactionSelector = (state: GlobalState) =>
-  state.features.wallet.transaction;
+  state.features.payments.transaction;
 
-export const walletTransactionDetailsPotSelector = createSelector(
-  walletTransactionSelector,
-  transaction => transaction.details
-);
+export const walletTransactionDetailsPotSelector = (state: GlobalState) =>
+  walletTransactionSelector(state).details;
 
 export default walletTransactionReducer;

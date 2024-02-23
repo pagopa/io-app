@@ -4,7 +4,7 @@ import { WalletOnboardingActions } from "../../../onboarding/store/actions";
 import { WalletPaymentActions } from "../../../payment/store/actions";
 import { WalletTransactionActions } from "../../../transaction/store/actions";
 
-export type WalletActions =
+export type PaymentsActions =
   | WalletOnboardingActions
   | WalletDetailsActions
   | WalletPaymentActions

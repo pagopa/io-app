@@ -1,14 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as _ from "lodash";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { NetworkError } from "../../../../utils/errors";
 import { GlobalState } from "../../../../store/reducers/types";
+import { NetworkError } from "../../../../utils/errors";
 
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import {
   walletDetailsGetInstrument,
   walletDetailsPagoPaCapabilityToggle
@@ -78,26 +76,18 @@ const walletDetailsReducer = (
 };
 
 const walletDetailsSelector = (state: GlobalState) =>
-  state.features.wallet.details;
+  state.features.payments.details;
 
-export const walletDetailsInstrumentPotSelector = createSelector(
-  walletDetailsSelector,
-  details => details.walletDetails
-);
+export const walletDetailsInstrumentPotSelector = (state: GlobalState) =>
+  walletDetailsSelector(state).walletDetails;
 
-export const walletDetailsInstrumentSelector = createSelector(
-  walletDetailsInstrumentPotSelector,
-  details => pot.toUndefined(details)
-);
+export const walletDetailsInstrumentSelector = (state: GlobalState) =>
+  pot.toUndefined(walletDetailsSelector(state).walletDetails);
 
-export const isLoadingWalletInstrumentSelector = createSelector(
-  walletDetailsInstrumentPotSelector,
-  walletInstrument => pot.isLoading(walletInstrument)
-);
+export const isLoadingWalletInstrumentSelector = (state: GlobalState) =>
+  pot.isLoading(walletDetailsSelector(state).walletDetails);
 
-export const isErrorWalletInstrumentSelector = createSelector(
-  walletDetailsInstrumentPotSelector,
-  walletInstrument => pot.isError(walletInstrument)
-);
+export const isErrorWalletInstrumentSelector = (state: GlobalState) =>
+  pot.isError(walletDetailsSelector(state).walletDetails);
 
 export default walletDetailsReducer;
