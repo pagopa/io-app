@@ -447,8 +447,6 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
-    walletPlayground:
-      titleSection: "New Wallet"
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
