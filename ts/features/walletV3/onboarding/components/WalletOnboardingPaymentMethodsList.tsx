@@ -17,21 +17,26 @@ import { FlatList } from "react-native";
 import { WalletPaymentMethodItemSkeleton } from "../../common/components/WalletPaymentMethodItemSkeleton";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { useIOSelector } from "../../../../store/hooks";
+import { walletOnboardingSelectedPaymentMethodSelector } from "../store";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<PaymentMethodResponse>;
   onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
-  isLoading?: boolean;
+  isLoadingMethods?: boolean;
+  isLoadingWebView?: boolean;
   header?: React.ReactElement;
 }>;
 
 type PaymentMethodItemProps = {
   paymentMethod: PaymentMethodResponse;
+  isLoading?: boolean;
   onPress: () => void;
 };
 
 const PaymentMethodItem = ({
   paymentMethod,
+  isLoading,
   onPress
 }: PaymentMethodItemProps) => {
   const listItemNavCommonProps: ListItemNav = {
@@ -50,6 +55,7 @@ const PaymentMethodItem = ({
       brand => (
         <ListItemNav
           {...listItemNavCommonProps}
+          loading={isLoading}
           paymentLogo={brand as IOLogoPaymentType}
         />
       )
@@ -63,25 +69,32 @@ const PaymentMethodItem = ({
 const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
   onSelectPaymentMethod,
-  isLoading,
+  isLoadingMethods,
+  isLoadingWebView,
   header
-}: OwnProps) => (
-  <FlatList
-    removeClippedSubviews={false}
-    contentContainerStyle={IOStyles.horizontalContentPadding}
-    data={paymentMethods}
-    keyExtractor={item => item.name}
-    ListHeaderComponent={header}
-    ListFooterComponent={renderListFooter(isLoading)}
-    ItemSeparatorComponent={() => <Divider />}
-    renderItem={({ item }) => (
-      <PaymentMethodItem
-        paymentMethod={item}
-        onPress={() => onSelectPaymentMethod(item)}
-      />
-    )}
-  />
-);
+}: OwnProps) => {
+  const selectedPaymentMethodId = useIOSelector(
+    walletOnboardingSelectedPaymentMethodSelector
+  );
+  return (
+    <FlatList
+      removeClippedSubviews={false}
+      contentContainerStyle={IOStyles.horizontalContentPadding}
+      data={paymentMethods}
+      keyExtractor={item => item.id}
+      ListHeaderComponent={header}
+      ListFooterComponent={renderListFooter(isLoadingMethods)}
+      ItemSeparatorComponent={() => <Divider />}
+      renderItem={({ item }) => (
+        <PaymentMethodItem
+          paymentMethod={item}
+          isLoading={isLoadingWebView && item.id === selectedPaymentMethodId}
+          onPress={() => onSelectPaymentMethod(item)}
+        />
+      )}
+    />
+  );
+};
 
 const renderListFooter = (isLoading?: boolean) => {
   if (isLoading) {

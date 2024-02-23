@@ -26,7 +26,6 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
 import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView";
 import { OnboardingOutcomeEnum, OnboardingResult } from "../types";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 const WalletOnboardingSelectPaymentMethodScreen = () => {
   const navigation = useNavigation<WalletOnboardingStackNavigation>();
@@ -79,31 +78,30 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
   };
 
   return (
-    <LoadingSpinnerOverlay isLoading={isLoading}>
-      <TopScreenComponent goBack>
-        {pot.isError(paymentMethodsPot) ? (
-          <OperationResultScreenContent
-            pictogram="umbrellaNew"
-            title={I18n.t("genericError")}
-            subtitle={I18n.t("global.genericError")}
-            action={{
-              label: I18n.t("global.genericRetry"),
-              accessibilityLabel: I18n.t("global.genericRetry"),
-              onPress: () => dispatch(walletGetPaymentMethods.request())
-            }}
+    <TopScreenComponent goBack>
+      {pot.isError(paymentMethodsPot) ? (
+        <OperationResultScreenContent
+          pictogram="umbrellaNew"
+          title={I18n.t("genericError")}
+          subtitle={I18n.t("global.genericError")}
+          action={{
+            label: I18n.t("global.genericRetry"),
+            accessibilityLabel: I18n.t("global.genericRetry"),
+            onPress: () => dispatch(walletGetPaymentMethods.request())
+          }}
+        />
+      ) : (
+        <SafeAreaView style={IOStyles.flex}>
+          <WalletOnboardingPaymentMethodsList
+            header={<PaymentMethodsHeading />}
+            isLoadingMethods={isLoadingPaymentMethods}
+            onSelectPaymentMethod={handleSelectedPaymentMethod}
+            paymentMethods={availablePaymentMethods}
+            isLoadingWebView={isLoading}
           />
-        ) : (
-          <SafeAreaView style={IOStyles.flex}>
-            <WalletOnboardingPaymentMethodsList
-              header={<PaymentMethodsHeading />}
-              isLoading={isLoadingPaymentMethods}
-              onSelectPaymentMethod={handleSelectedPaymentMethod}
-              paymentMethods={availablePaymentMethods}
-            />
-          </SafeAreaView>
-        )}
-      </TopScreenComponent>
-    </LoadingSpinnerOverlay>
+        </SafeAreaView>
+      )}
+    </TopScreenComponent>
   );
 };
 

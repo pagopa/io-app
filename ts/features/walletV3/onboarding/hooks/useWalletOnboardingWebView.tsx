@@ -110,7 +110,7 @@ export const useWalletOnboardingWebView = (
   }, [onboardingStartupResult, openOnboardingWebView, onError]);
 
   const startOnboarding = (paymentMethodId: string) => {
-    if (!pot.isLoading(onboardingStartupResult)) {
+    if (!pot.isLoading(onboardingStartupResult) && !isLoading) {
       setIsLoading(true);
       dispatch(walletStartOnboarding.request({ paymentMethodId }));
     }
