@@ -6,7 +6,6 @@ import {
   IOStyles,
   Pictogram
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
