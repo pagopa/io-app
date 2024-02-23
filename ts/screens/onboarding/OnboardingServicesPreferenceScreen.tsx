@@ -2,7 +2,6 @@ import {
   FeatureInfo,
   FooterWithButtons,
   IOStyles,
-  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -12,9 +11,11 @@ import { useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
-import { navigateToOnboardingServicePreferenceCompleteAction } from "../../store/actions/navigation";
 import { servicesOptinCompleted } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import {
@@ -33,6 +34,9 @@ import { useManualConfigBottomSheet } from "../profile/components/services/Manua
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { IOToast } from "../../components/Toast";
+import { usePrevious } from "../../utils/hooks/usePrevious";
+import ROUTES from "../../navigation/routes";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -44,9 +48,11 @@ type Props = IOStackNavigationRouteProps<
 
 const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const isFirstOnboarding = props.route.params.isFirstOnboarding;
   const store = useStore();
   const profile = useIOSelector(profileSelector);
+  const prevProfile = usePrevious(profile);
   const isLoading = pot.isUpdating(profile) || pot.isLoading(profile);
   const profileServicePreferenceMode = useIOSelector(
     profileServicePreferencesModeSelector
@@ -57,7 +63,6 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const [modeSelected, setModeSelected] = useState<
     ServicesPreferencesModeEnum | undefined
   >(mode);
-  const [prevPotProfile, setPrevPotProfile] = useState<typeof profile>(profile);
 
   const dispatchServicesOptinCompleted = useCallback(
     () => dispatch(servicesOptinCompleted()),
@@ -72,44 +77,23 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     [dispatch]
   );
 
+  const navigateToOnboardingServicePreferenceComplete = useCallback(() => {
+    navigation.navigate(ROUTES.ONBOARDING, {
+      screen: ROUTES.ONBOARDING_SERVICES_PREFERENCE_COMPLETE
+    });
+  }, [navigation]);
+
   const onContinue = useCallback(
     (isFirstOnboarding: boolean) =>
       // if the user is not new, navigate to the thank-you screen
       !isFirstOnboarding
-        ? navigateToOnboardingServicePreferenceCompleteAction()
+        ? navigateToOnboardingServicePreferenceComplete()
         : dispatchServicesOptinCompleted(),
-    [dispatchServicesOptinCompleted]
+    [
+      dispatchServicesOptinCompleted,
+      navigateToOnboardingServicePreferenceComplete
+    ]
   );
-
-  useOnFirstRender(() => {
-    trackServiceConfigurationScreen(getFlowType(true, isFirstOnboarding));
-  });
-
-  useEffect(() => {
-    // when the user made a choice (the profile is right updated), continue to the next step
-    if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
-      void trackServiceConfiguration(
-        profileServicePreferenceMode,
-        getFlowType(true, isFirstOnboarding),
-        store.getState()
-      );
-      onContinue(isFirstOnboarding);
-      return;
-    }
-    // show error toast only when the profile updating fails
-    // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
-    if (!pot.isError(prevPotProfile) && pot.isError(profile)) {
-      IOToast.error(I18n.t("global.genericError"));
-    }
-    setPrevPotProfile(profile);
-  }, [
-    isFirstOnboarding,
-    prevPotProfile,
-    profile,
-    profileServicePreferenceMode,
-    onContinue,
-    store
-  ]);
 
   const handleOnContinue = () => {
     if (modeSelected) {
@@ -130,6 +114,40 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     }
     setModeSelected(mode);
   };
+
+  useOnFirstRender(() => {
+    trackServiceConfigurationScreen(getFlowType(true, isFirstOnboarding));
+  });
+
+  useEffect(() => {
+    // when the user made a choice (the profile is right updated), continue to the next step
+    if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
+      void trackServiceConfiguration(
+        profileServicePreferenceMode,
+        getFlowType(true, isFirstOnboarding),
+        store.getState()
+      );
+      onContinue(isFirstOnboarding);
+      return;
+    }
+    // show error toast only when the profile updating fails
+    // otherwise, if the profile is in error state,
+    // the toast will be shown immediately without any updates
+    if (
+      prevProfile !== undefined &&
+      !pot.isError(prevProfile) &&
+      pot.isError(profile)
+    ) {
+      IOToast.error(I18n.t("global.genericError"));
+    }
+  }, [
+    isFirstOnboarding,
+    prevProfile,
+    profile,
+    profileServicePreferenceMode,
+    onContinue,
+    store
+  ]);
 
   // show a badge when the user is not new
   const showBadge = !isFirstOnboarding;

@@ -1,4 +1,4 @@
-import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { useStore } from "react-redux";
@@ -15,6 +15,8 @@ import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { IOToast } from "../../components/Toast";
+import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
@@ -33,6 +35,7 @@ const ServicesPreferenceScreen = (): React.ReactElement => {
   const state = store.getState();
   const dispatch = useIODispatch();
   const profile = useIOSelector(profileSelector);
+  const prevProfile = usePrevious(profile);
   const isLoading = pot.isUpdating(profile) || pot.isLoading(profile);
   const profileServicePreferenceMode = useIOSelector(
     profileServicePreferencesModeSelector
@@ -63,17 +66,17 @@ const ServicesPreferenceScreen = (): React.ReactElement => {
     trackServiceConfigurationScreen(getFlowType(false, false));
   });
 
-  const [prevPotProfile, setPrevPotProfile] =
-    React.useState<typeof profile>(profile);
   React.useEffect(() => {
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
-    if (!pot.isError(prevPotProfile) && pot.isError(profile)) {
+    if (
+      prevProfile !== undefined &&
+      !pot.isError(prevProfile) &&
+      pot.isError(profile)
+    ) {
       IOToast.error(I18n.t("global.genericError"));
     }
-
-    setPrevPotProfile(profile);
-  }, [profile, prevPotProfile]);
+  }, [profile, prevProfile]);
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
