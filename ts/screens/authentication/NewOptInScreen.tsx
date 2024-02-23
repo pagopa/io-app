@@ -11,7 +11,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useStore } from "react-redux";
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -28,6 +28,7 @@ import {
   trackLoginSessionOptInInfo
 } from "../../features/fastLogin/analytics/optinAnalytics";
 import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
@@ -41,6 +42,7 @@ export type ChosenIdentifier = {
 };
 
 const NewOptInScreen = () => {
+  const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
   const dispatch = useIODispatch();
   const {
     securitySuggestionBottomSheet,
@@ -54,6 +56,8 @@ const NewOptInScreen = () => {
   useOnFirstRender(() => {
     trackLoginSessionOptIn();
   });
+
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {
@@ -109,32 +113,35 @@ const NewOptInScreen = () => {
             />
           </View>
           <VSpacer size={24} />
-          <H3
-            style={{ textAlign: "center", alignItems: "center" }}
-            testID="title-test"
-          >
-            {I18n.t("authentication.opt_in.title")}
-          </H3>
-          <VSpacer size={24} />
-          <FeatureInfo
-            pictogramName="identityCheck"
-            body={I18n.t("authentication.opt_in.identity_check")}
-          />
-          <VSpacer size={24} />
-          <FeatureInfo
-            pictogramName="passcode"
-            body={I18n.t("authentication.opt_in.passcode")}
-          />
-          <VSpacer size={24} />
-          <FeatureInfo
-            pictogramName="notification"
-            body={I18n.t("authentication.opt_in.notification")}
-            actionLabel={I18n.t("authentication.opt_in.security_suggests")}
-            actionOnPress={() => {
-              trackLoginSessionOptInInfo();
-              return presentSecuritySuggestionBottomSheet();
-            }}
-          />
+          <View ref={accessibilityFirstFocuseViewRef}>
+            <H3
+              accessible={true}
+              style={{ textAlign: "center", alignItems: "center" }}
+              testID="title-test"
+            >
+              {I18n.t("authentication.opt_in.title")}
+            </H3>
+            <VSpacer size={24} />
+            <FeatureInfo
+              pictogramName="identityCheck"
+              body={I18n.t("authentication.opt_in.identity_check")}
+            />
+            <VSpacer size={24} />
+            <FeatureInfo
+              pictogramName="passcode"
+              body={I18n.t("authentication.opt_in.passcode")}
+            />
+            <VSpacer size={24} />
+            <FeatureInfo
+              pictogramName="notification"
+              body={I18n.t("authentication.opt_in.notification")}
+              actionLabel={I18n.t("authentication.opt_in.security_suggests")}
+              actionOnPress={() => {
+                trackLoginSessionOptInInfo();
+                return presentSecuritySuggestionBottomSheet();
+              }}
+            />
+          </View>
         </ContentWrapper>
         {securitySuggestionBottomSheet}
       </GradientScrollView>

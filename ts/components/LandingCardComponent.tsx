@@ -23,32 +23,43 @@ type Props = {
   screenDimensions: ScaledSize;
 };
 
-export const LandingCardComponent = (card: Props) => {
-  const { width: screenWidth } = card.screenDimensions;
+export const LandingCardComponent = React.forwardRef<View, Props>(
+  (props, ref) => {
+    const { width: screenWidth } = props.screenDimensions;
+    const {
+      accessibilityLabel,
+      accessibilityHint,
+      pictogramName,
+      title,
+      content
+    } = props;
 
-  return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-    >
-      <View
-        style={[
-          {
-            width: screenWidth
-          },
-          IOStyles.horizontalContentPadding,
-          IOStyles.alignCenter
-        ]}
-        accessible={true}
-        accessibilityLabel={card.accessibilityLabel}
-        accessibilityHint={card.accessibilityHint}
+    return (
+      <ScrollView
+        accessible={false}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       >
-        <Pictogram size={180} name={card.pictogramName} />
-        <VSpacer size={16} />
-        <H3 style={{ textAlign: "center" }}>{card.title}</H3>
-        <VSpacer size={16} />
-        <Body style={{ textAlign: "center" }}>{card.content}</Body>
-        <VSpacer size={16} />
-      </View>
-    </ScrollView>
-  );
-};
+        <View
+          ref={ref}
+          style={[
+            {
+              width: screenWidth
+            },
+            IOStyles.horizontalContentPadding,
+            IOStyles.alignCenter
+          ]}
+          accessible={true}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint={accessibilityHint}
+        >
+          <Pictogram size={180} name={pictogramName} />
+          <VSpacer size={16} />
+          <H3 style={{ textAlign: "center" }}>{title}</H3>
+          <VSpacer size={16} />
+          <Body style={{ textAlign: "center" }}>{content}</Body>
+          <VSpacer size={16} />
+        </View>
+      </ScrollView>
+    );
+  }
+);

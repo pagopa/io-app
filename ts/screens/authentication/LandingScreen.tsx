@@ -16,7 +16,10 @@ import JailMonkey from "jail-monkey";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
 import { useDispatch, useStore } from "react-redux";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from "react-native-safe-area-context";
 import {
   Alert,
   Animated,
@@ -152,13 +155,14 @@ export const IdpCIE: SpidIdp = {
 const BUTTON_SPACING = 24;
 
 export const LandingScreen = () => {
-  const accessibilityFirstFocuseViewRef = React.useRef(null);
+  const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme = useColorScheme();
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
+  const insets = useSafeAreaInsets();
 
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = React.useState<
     O.Option<boolean>
@@ -200,12 +204,7 @@ export const LandingScreen = () => {
   );
   const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
-  useFocusEffect(
-    React.useCallback(
-      () => setAccessibilityFocus(accessibilityFirstFocuseViewRef),
-      [accessibilityFirstFocuseViewRef]
-    )
-  );
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   useOnFirstRender(async () => {
     const isRootedOrJailbroken = await JailMonkey.isJailBroken();
@@ -321,6 +320,7 @@ export const LandingScreen = () => {
     const cardProps = carouselCards;
     return cardProps.map(p => (
       <LandingCardComponent
+        ref={p.id === 5 ? accessibilityFirstFocuseViewRef : null}
         screenDimensions={screenDimension}
         key={`card-${p.id}`}
         {...p}
@@ -394,7 +394,6 @@ export const LandingScreen = () => {
   const Carousel = () => (
     <>
       <ScrollView
-        ref={accessibilityFirstFocuseViewRef}
         horizontal={true}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -504,7 +503,7 @@ export const LandingScreen = () => {
               label={I18n.t("authentication.landing.privacyLink")}
               onPress={navigateToPrivacyUrl}
             />
-            <VSpacer size={BUTTON_SPACING} />
+            {insets.bottom === 0 && <VSpacer size={BUTTON_SPACING} />}
           </View>
         </ContentWrapper>
       </SafeAreaView>
