@@ -8,8 +8,6 @@ export type WalletPaymentParamsList = {
   [WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER]: undefined;
   [WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE]: WalletPaymentInputFiscalCodeScreenNavigationParams;
   [WalletPaymentRoutes.WALLET_PAYMENT_DETAIL]: WalletPaymentDetailScreenNavigationParams;
-  [WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM]: undefined;
+  [WalletPaymentRoutes.WALLET_PAYMENT_MAKE]: undefined;
   [WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
 };

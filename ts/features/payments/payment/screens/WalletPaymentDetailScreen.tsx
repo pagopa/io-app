@@ -51,6 +51,7 @@ import { WalletPaymentRoutes } from "../navigation/routes";
 import { walletPaymentGetDetails } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
+import { walletPaymentStoreNewAttempt } from "../../history/store/actions";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
@@ -117,6 +118,7 @@ const WalletPaymentDetailContent = ({
   rptId,
   payment
 }: WalletPaymentDetailContentProps) => {
+  const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   useLayoutEffect(() => {
@@ -131,9 +133,10 @@ const WalletPaymentDetailContent = ({
     contextualHelp: emptyContextualHelp
   });
 
-  const navigateToMethodSelection = () => {
+  const navigateToMakePaymentScreen = () => {
+    dispatch(walletPaymentStoreNewAttempt(rptId));
     navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_METHOD
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_MAKE
     });
   };
 
@@ -200,7 +203,7 @@ const WalletPaymentDetailContent = ({
       primaryActionProps={{
         label: "Vai al pagamento",
         accessibilityLabel: "Vai al pagmento",
-        onPress: navigateToMethodSelection
+        onPress: navigateToMakePaymentScreen
       }}
     >
       <ListItemInfo

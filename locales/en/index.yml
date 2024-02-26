@@ -925,13 +925,13 @@ datetimes:
   notValid: Invalid date.
 payment:
   homeScreen:
-    title: Pagamenti
+    title: Payments
     methodsSection:
-      header: Metodi di pagamento
-      headerCTA: Aggiungi
+      header: Payment methods
+      headerCTA: Add
     historySection:
-     header: Storico operazioni
-     headerCTA: Vedi tutti
+     header: Transaction history
+     headerCTA: View all
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
@@ -2810,6 +2810,10 @@ features:
       content: "Do you want to quit signing **{{dossierTitle}}**?"
       cancel: "Quit signing"
       confirm: "Keep signing"
+      alert:
+        title: "Do you want to stop the operation?"
+        confirm: "Yes, stop it"
+        cancel: "No, go back"
     checkService:
       title: "Turn on messages"
       content: "To receive the signed documents, you must turn on the setting that allows the service to send you messages. If you don't turn it on, you can complete the signature but you won't receive the signed documents."

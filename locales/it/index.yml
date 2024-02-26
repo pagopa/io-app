@@ -931,7 +931,7 @@ payment:
       headerCTA: Aggiungi
     historySection:
      header: Storico operazioni
-     headerCTA: Vedi tutti
+     headerCTA: Vedi tutte
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
@@ -2810,6 +2810,10 @@ features:
       content: "Vuoi annullare la firma di **{{dossierTitle}}**?"
       cancel: "Annulla la firma"
       confirm: "Continua a firmare"
+      alert: 
+        title: "Vuoi interrompere l'operazione?"
+        confirm: "Sì, interrompi"
+        cancel: "No, torna indietro"
     checkService:
       title: "Attiva i messaggi"
       content: "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati."

@@ -8,19 +8,13 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { getSortedPspList } from "../../common/utils";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
@@ -28,7 +22,8 @@ import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentPickPsp,
-  walletPaymentResetPickedPsp
+  walletPaymentResetPickedPsp,
+  walletPaymentSetCurrentStep
 } from "../store/actions/orchestration";
 import {
   walletPaymentPickedPspSelector,
@@ -39,7 +34,8 @@ import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentPickPspScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const navigation = useIONavigation();
+
   const [showFeaturedPsp, setShowFeaturedPsp] = React.useState(true);
   const [sortType, setSortType] =
     React.useState<WalletPaymentPspSortType>("default");
@@ -68,13 +64,6 @@ const WalletPaymentPickPspScreen = () => {
       });
     }
   }, [isError, navigation]);
-
-  useHeaderSecondLevel({
-    title: "",
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["payment"],
-    supportRequest: true
-  });
 
   React.useEffect(
     () => () => {
@@ -114,9 +103,7 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   const handleContinue = () => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM
-    });
+    dispatch(walletPaymentSetCurrentStep(3));
   };
 
   const sortButtonProps: ListItemHeader["endElement"] = React.useMemo(
