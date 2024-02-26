@@ -184,7 +184,7 @@ const ProfileStackNavigator = () => {
         component={WalletPaymentPlayground}
       />
       <Stack.Screen
-        name={ROUTES.PAYMENTS_PAGE_PLAYGROUND}
+        name={ROUTES.PAYMENTS_HOME}
         component={PaymentsHomeScreen}
       />
       <Stack.Screen
