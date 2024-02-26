@@ -585,9 +585,7 @@ authentication:
     card2-title: Usa i tuoi metodi di pagamento preferiti
     card2-content: Puoi pagare un tributo o una multa con il tuo conto corrente e le tue carte
     card3-title: Paga velocemente un avviso cartaceo
-    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo
-    card4-title: Puoi accedere solo con SPID
-    card4-content: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)
+    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo    
     card5-title: Ti diamo il benvenuto su IO!
     card5-content: Vediamo insieme cosa puoi fare
     card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
