@@ -54,9 +54,13 @@ export const LandingCardComponent = React.forwardRef<View, Props>(
         >
           <Pictogram size={180} name={pictogramName} />
           <VSpacer size={16} />
-          <H3 style={{ textAlign: "center" }}>{title}</H3>
+          <H3 importantForAccessibility="no" style={{ textAlign: "center" }}>
+            {title}
+          </H3>
           <VSpacer size={16} />
-          <Body style={{ textAlign: "center" }}>{content}</Body>
+          <Body importantForAccessibility="no" style={{ textAlign: "center" }}>
+            {content}
+          </Body>
           <VSpacer size={16} />
         </View>
       </ScrollView>

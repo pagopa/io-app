@@ -114,7 +114,7 @@ const NewOptInScreen = () => {
           />
         </View>
         <VSpacer size={24} />
-        <View ref={accessibilityFirstFocuseViewRef}>
+        <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
           <H3
             accessible={true}
             style={{ textAlign: "center", alignItems: "center" }}
@@ -122,27 +122,27 @@ const NewOptInScreen = () => {
           >
             {I18n.t("authentication.opt_in.title")}
           </H3>
-          <VSpacer size={24} />
-          <FeatureInfo
-            pictogramName="identityCheck"
-            body={I18n.t("authentication.opt_in.identity_check")}
-          />
-          <VSpacer size={24} />
-          <FeatureInfo
-            pictogramName="passcode"
-            body={I18n.t("authentication.opt_in.passcode")}
-          />
-          <VSpacer size={24} />
-          <FeatureInfo
-            pictogramName="notification"
-            body={I18n.t("authentication.opt_in.notification")}
-            actionLabel={I18n.t("authentication.opt_in.security_suggests")}
-            actionOnPress={() => {
-              trackLoginSessionOptInInfo();
-              return presentSecuritySuggestionBottomSheet();
-            }}
-          />
         </View>
+        <VSpacer size={24} />
+        <FeatureInfo
+          pictogramName="identityCheck"
+          body={I18n.t("authentication.opt_in.identity_check")}
+        />
+        <VSpacer size={24} />
+        <FeatureInfo
+          pictogramName="passcode"
+          body={I18n.t("authentication.opt_in.passcode")}
+        />
+        <VSpacer size={24} />
+        <FeatureInfo
+          pictogramName="notification"
+          body={I18n.t("authentication.opt_in.notification")}
+          actionLabel={I18n.t("authentication.opt_in.security_suggests")}
+          actionOnPress={() => {
+            trackLoginSessionOptInInfo();
+            return presentSecuritySuggestionBottomSheet();
+          }}
+        />
       </ContentWrapper>
       {securitySuggestionBottomSheet}
     </GradientScrollView>

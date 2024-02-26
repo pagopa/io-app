@@ -533,8 +533,7 @@ authentication:
         label: "Vorstellung von IO"
         hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
-      title: "Deine Sitzung ist abgelaufen"
-      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
+      title: "Deine Sitzung ist abgelaufen"      
     cie_unsupported:
       title: "Anmeldung mit CIE nicht möglich"
       os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
