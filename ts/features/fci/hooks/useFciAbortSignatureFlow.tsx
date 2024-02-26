@@ -1,11 +1,12 @@
 import * as React from "react";
+import { Alert, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import {
   BlockButtons,
   ButtonSolidProps,
-  IOVisualCostants
+  IOVisualCostants,
+  useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
 import I18n from "../../../i18n";
 import { fciEndRequest } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -22,6 +23,18 @@ export const useFciAbortSignatureFlow = () => {
   const dispatch = useIODispatch();
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
+  const { isExperimental } = useIOExperimentalDesign();
+
+  /**
+   * Callback function to abort the signature flow.
+   */
+  const abortSignatureFlow = () => {
+    trackFciUserExit(route.name, fciEnvironment);
+    dispatch(fciEndRequest());
+    dismiss();
+  };
+
   const cancelButtonProps: ButtonSolidProps = {
     testID: "FciStopAbortingSignatureTestID",
     onPress: () => dismiss(),
@@ -29,17 +42,17 @@ export const useFciAbortSignatureFlow = () => {
     accessibilityLabel: I18n.t("features.fci.abort.confirm")
   };
   const continueButtonProps: ButtonSolidProps = {
-    onPress: () => {
-      trackFciUserExit(route.name, fciEnvironment);
-      dispatch(fciEndRequest());
-      dismiss();
-    },
+    onPress: () => abortSignatureFlow(),
     color: "danger",
     label: I18n.t("features.fci.abort.cancel"),
     accessibilityLabel: I18n.t("features.fci.abort.cancel")
   };
-  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
-  const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
+
+  const {
+    present: presentBs,
+    bottomSheet,
+    dismiss
+  } = useIOBottomSheetModal({
     title: I18n.t("features.fci.abort.title"),
     component: (
       <LegacyMarkdown>
@@ -57,6 +70,29 @@ export const useFciAbortSignatureFlow = () => {
       </View>
     )
   });
+
+  /**
+   * Show an alert to confirm the abort signature flow.
+   */
+  const showAlert = () => {
+    Alert.alert(I18n.t("features.fci.abort.alert.title"), undefined, [
+      {
+        text: I18n.t("features.fci.abort.alert.cancel"),
+        style: "cancel"
+      },
+      {
+        text: I18n.t("features.fci.abort.alert.confirm"),
+        onPress: () => abortSignatureFlow()
+      }
+    ]);
+  };
+
+  /**
+   * Overrides the present function of the bottom sheet to show an alert instead if the experimental design is enabled.
+   * This allows us to use an alert without changing single components which use the hook.
+   * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
+   */
+  const present = () => (isExperimental ? showAlert() : presentBs());
 
   return {
     dismiss,
