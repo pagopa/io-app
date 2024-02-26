@@ -1,11 +1,11 @@
 import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { PaymentCardSmallProps } from "../../../../../components/ui/cards/payment/PaymentCardSmall";
-import { PaymentCardsCarousel } from "../../../../../components/ui/cards/payment/PaymentCardsCarousel";
-import I18n from "../../../../../i18n";
-import { UIWalletInfoDetails } from "../../../details/types/UIWalletInfoDetails";
+import { PaymentCardSmallProps } from "../../../../components/ui/cards/payment/PaymentCardSmall";
+import { PaymentCardsCarousel } from "../../../../components/ui/cards/payment/PaymentCardsCarousel";
+import I18n from "../../../../i18n";
+import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 
 const loadingCards: Array<PaymentCardSmallProps> = Array.from({
   length: 3

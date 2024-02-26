@@ -6,12 +6,12 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-import I18n from "../../../../../i18n";
+import I18n from "../../../../i18n";
 import {
   formatDateOrDefault,
   formatNumberCurrencyCentsOrDefault
-} from "../../../../idpay/common/utils/strings";
-import { PaymentHistory } from "../../../history/types";
+} from "../../../idpay/common/utils/strings";
+import { PaymentHistory } from "../../history/types";
 
 const loadingHistory = Array.from({ length: 5 }).map((_, index) => (
   <ListItemTransaction

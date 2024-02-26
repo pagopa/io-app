@@ -4,13 +4,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { selectWalletPaymentHistoryArchive } from "../../features/walletV3/history/store/selectors";
-import PaymentMethodsSection from "../../features/walletV3/payment/components/homeScreen/PaymentsHomeScreenMethodsSection";
-import PaymentHistorySection from "../../features/walletV3/payment/components/homeScreen/PaymentsHomeScreenPaymentHistorySection";
-import { walletPaymentGetUserWallets } from "../../features/walletV3/payment/store/actions/networking";
-import { walletPaymentUserWalletsSelector } from "../../features/walletV3/payment/store/selectors";
-import I18n from "../../i18n";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import I18n from "../../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { walletPaymentGetUserWallets } from "../../payment/store/actions/networking";
+import { selectWalletPaymentHistoryArchive } from "../../history/store/selectors";
+import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
+import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
+import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
 
 export const PaymentsHomeScreen = () => {
   const dispatch = useIODispatch();
