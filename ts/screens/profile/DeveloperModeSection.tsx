@@ -349,7 +349,7 @@ const PlaygroundsSection = () => {
       value: "Payments page playground",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PAYMENTS_PAGE_PLAYGROUND
+          screen: ROUTES.PAYMENTS_HOME
         })
     }
   ];

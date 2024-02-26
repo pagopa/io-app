@@ -5,7 +5,7 @@ import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import { isEmailUniquenessValidationEnabledSelector } from "../features/fastLogin/store/selectors";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
-import { PaymentsHomeScreen } from "../screens/payments/PaymentsHomeScreen";
+import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
@@ -184,7 +184,7 @@ const ProfileStackNavigator = () => {
         component={WalletPaymentPlayground}
       />
       <Stack.Screen
-        name={ROUTES.PAYMENTS_PAGE_PLAYGROUND}
+        name={ROUTES.PAYMENTS_HOME}
         component={PaymentsHomeScreen}
       />
       <Stack.Screen
