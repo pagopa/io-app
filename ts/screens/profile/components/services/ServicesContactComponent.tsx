@@ -1,5 +1,11 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  LabelSmall,
+  RadioGroup,
+  RadioItem
+} from "@pagopa/io-app-design-system";
+import { Text } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import I18n from "../../../../i18n";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
@@ -14,7 +20,14 @@ const options = (): ReadonlyArray<RadioItem<string>> => [
   {
     value: I18n.t("services.optIn.preferences.quickConfig.title"),
     id: ServicesPreferencesModeEnum.AUTO,
-    description: I18n.t("services.optIn.preferences.quickConfig.body.text1")
+    description: (
+      <LabelSmall color="grey-700" weight="Regular">
+        {I18n.t("services.optIn.preferences.quickConfig.body.text1")}{" "}
+        <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
+          {I18n.t("services.optIn.preferences.quickConfig.body.text2")}
+        </Text>
+      </LabelSmall>
+    )
   },
   {
     value: I18n.t("services.optIn.preferences.manualConfig.title"),
