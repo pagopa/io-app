@@ -12,9 +12,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useStore } from "react-redux";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import I18n from "../../i18n";
@@ -29,6 +27,7 @@ import {
 } from "../../features/fastLogin/analytics/optinAnalytics";
 import { useSecuritySuggestionsBottomSheet } from "../../hooks/useSecuritySuggestionBottomSheet";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "authentication.opt_in.contextualHelpTitle",
@@ -42,6 +41,12 @@ export type ChosenIdentifier = {
 };
 
 const NewOptInScreen = () => {
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    contextualHelpMarkdown
+  });
+
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
   const dispatch = useIODispatch();
   const {
@@ -75,77 +80,72 @@ const NewOptInScreen = () => {
   };
 
   return (
-    <BaseScreenComponent
-      goBack={true}
-      contextualHelpMarkdown={contextualHelpMarkdown}
+    <GradientScrollView
+      testID="container-test"
+      primaryActionProps={{
+        label: I18n.t("authentication.opt_in.button_accept_lv"),
+        accessibilityLabel: I18n.t("authentication.opt_in.button_accept_lv"),
+        onPress: () => navigateToIdpPage(true),
+        testID: "accept-button-test"
+      }}
+      secondaryActionProps={{
+        label: I18n.t("authentication.opt_in.button_decline_lv"),
+        accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
+        onPress: () => navigateToIdpPage(false),
+        testID: "decline-button-test"
+      }}
     >
-      <GradientScrollView
-        testID="container-test"
-        primaryActionProps={{
-          label: I18n.t("authentication.opt_in.button_accept_lv"),
-          accessibilityLabel: I18n.t("authentication.opt_in.button_accept_lv"),
-          onPress: () => navigateToIdpPage(true),
-          testID: "accept-button-test"
-        }}
-        secondaryActionProps={{
-          label: I18n.t("authentication.opt_in.button_decline_lv"),
-          accessibilityLabel: I18n.t("authentication.opt_in.button_decline_lv"),
-          onPress: () => navigateToIdpPage(false),
-          testID: "decline-button-test"
-        }}
-      >
-        <ContentWrapper>
-          {/* 
+      <ContentWrapper>
+        {/* 
           if the device height is > 820 then the pictogram will be visible, 
           otherwise it will not be visible
           */}
-          {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
-            <View style={IOStyles.selfCenter} testID="pictogram-test">
-              <Pictogram name="passcode" size={120} />
-            </View>
-          )}
-          <VSpacer size={24} />
-          <View style={IOStyles.selfCenter}>
-            <Badge
-              text={I18n.t("authentication.opt_in.news")}
-              variant="info"
-              testID="badge-test"
-            />
+        {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
+          <View style={IOStyles.selfCenter} testID="pictogram-test">
+            <Pictogram name="passcode" size={120} />
           </View>
+        )}
+        <VSpacer size={24} />
+        <View style={IOStyles.selfCenter}>
+          <Badge
+            text={I18n.t("authentication.opt_in.news")}
+            variant="info"
+            testID="badge-test"
+          />
+        </View>
+        <VSpacer size={24} />
+        <View ref={accessibilityFirstFocuseViewRef}>
+          <H3
+            accessible={true}
+            style={{ textAlign: "center", alignItems: "center" }}
+            testID="title-test"
+          >
+            {I18n.t("authentication.opt_in.title")}
+          </H3>
           <VSpacer size={24} />
-          <View ref={accessibilityFirstFocuseViewRef}>
-            <H3
-              accessible={true}
-              style={{ textAlign: "center", alignItems: "center" }}
-              testID="title-test"
-            >
-              {I18n.t("authentication.opt_in.title")}
-            </H3>
-            <VSpacer size={24} />
-            <FeatureInfo
-              pictogramName="identityCheck"
-              body={I18n.t("authentication.opt_in.identity_check")}
-            />
-            <VSpacer size={24} />
-            <FeatureInfo
-              pictogramName="passcode"
-              body={I18n.t("authentication.opt_in.passcode")}
-            />
-            <VSpacer size={24} />
-            <FeatureInfo
-              pictogramName="notification"
-              body={I18n.t("authentication.opt_in.notification")}
-              actionLabel={I18n.t("authentication.opt_in.security_suggests")}
-              actionOnPress={() => {
-                trackLoginSessionOptInInfo();
-                return presentSecuritySuggestionBottomSheet();
-              }}
-            />
-          </View>
-        </ContentWrapper>
-        {securitySuggestionBottomSheet}
-      </GradientScrollView>
-    </BaseScreenComponent>
+          <FeatureInfo
+            pictogramName="identityCheck"
+            body={I18n.t("authentication.opt_in.identity_check")}
+          />
+          <VSpacer size={24} />
+          <FeatureInfo
+            pictogramName="passcode"
+            body={I18n.t("authentication.opt_in.passcode")}
+          />
+          <VSpacer size={24} />
+          <FeatureInfo
+            pictogramName="notification"
+            body={I18n.t("authentication.opt_in.notification")}
+            actionLabel={I18n.t("authentication.opt_in.security_suggests")}
+            actionOnPress={() => {
+              trackLoginSessionOptInInfo();
+              return presentSecuritySuggestionBottomSheet();
+            }}
+          />
+        </View>
+      </ContentWrapper>
+      {securitySuggestionBottomSheet}
+    </GradientScrollView>
   );
 };
 

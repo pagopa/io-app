@@ -178,8 +178,9 @@ export const LandingScreen = () => {
   const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);
-  // Since the page is rendered more than once,
-  // due to many async selectors, like the JailMonkey.isJailBroken(),
+  // Since the page is rendered more than once
+  // and if the session is expired
+  // we dispatch the resetAuthenticationState action,
   // we need to keep track of the session expiration.
   const isSessionExpiredRef = React.useRef(false);
 
@@ -397,15 +398,18 @@ export const LandingScreen = () => {
         horizontal={true}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event([
-          {
-            nativeEvent: {
-              contentOffset: {
-                x: scrollX
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: {
+                contentOffset: {
+                  x: scrollX
+                }
               }
             }
-          }
-        ])}
+          ],
+          { useNativeDriver: false }
+        )}
         scrollEventThrottle={1}
       >
         {renderCardComponents()}
@@ -428,6 +432,7 @@ export const LandingScreen = () => {
         {isSessionExpiredRef.current ? (
           <LandingCardComponent
             id={0}
+            ref={accessibilityFirstFocuseViewRef}
             screenDimensions={screenDimension}
             pictogramName={"time"}
             title={I18n.t("authentication.landing.session_expired.title")}
