@@ -1,27 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Test LoadingComponent component should render a LoadingComponent component with props correctly 1`] = `
-<View
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
   style={
     Object {
       "alignItems": "center",
       "flex": 1,
       "justifyContent": "center",
-      "padding": 24,
     }
   }
 >
   <View
+    accessibilityHint="[missing \\"en.global.accessibility.activityIndicator.hint\\" translation]"
+    accessibilityLabel="[missing \\"en.global.accessibility.activityIndicator.label\\" translation]"
     accessibilityRole="progressbar"
     accessible={true}
     importantForAccessibility="no-hide-descendants"
     style={
       Object {
-        "height": 76,
-        "width": 76,
+        "height": 48,
+        "width": 48,
       }
     }
-    testID="LoadingSpinnerTestID"
+    testID="LoadingIndicator"
   >
     <View
       collapsable={false}
@@ -38,11 +40,11 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
     >
       <RNSVGSvgView
         align="xMidYMid"
-        bbHeight={76}
-        bbWidth={76}
+        bbHeight={48}
+        bbWidth={48}
         fill="none"
         focusable={false}
-        height={76}
+        height={48}
         meetOrSlice={0}
         minX={0}
         minY={0}
@@ -54,14 +56,14 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
             },
             Object {
               "flex": 0,
-              "height": 76,
-              "width": 76,
+              "height": 48,
+              "width": 48,
             },
           ]
         }
-        vbHeight={76}
-        vbWidth={76}
-        width={76}
+        vbHeight={48}
+        vbWidth={48}
+        width={48}
       >
         <RNSVGGroup
           fill={null}
@@ -76,9 +78,9 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               gradient={
                 Array [
                   0,
-                  736995,
+                  29670,
                   1,
-                  -16040221,
+                  -16747546,
                 ]
               }
               gradientTransform={null}
@@ -93,9 +95,9 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               gradient={
                 Array [
                   0,
-                  -16040221,
+                  -16747546,
                   1,
-                  -16040221,
+                  -16747546,
                 ]
               }
               gradientTransform={null}
@@ -113,10 +115,10 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
                 "strokeWidth",
               ]
             }
-            strokeWidth={7}
+            strokeWidth={5}
           >
             <RNSVGPath
-              d="M 3.5 38 A 34.5 34.5 0 0 1 72.5 38"
+              d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
               propList={
                 Array [
                   "stroke",
@@ -130,7 +132,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               }
             />
             <RNSVGPath
-              d="M 72.5 38 A 34.5 34.5 0 0 1 3.5 38"
+              d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
               propList={
                 Array [
                   "stroke",
@@ -144,14 +146,14 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               }
             />
             <RNSVGPath
-              d="M 3.5 38 A 34.5 34.5 0 0 1 3.5 36.25"
+              d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
               propList={
                 Array [
                   "stroke",
                   "strokeLinecap",
                 ]
               }
-              stroke={4278927075}
+              stroke={4278219750}
               strokeLinecap={1}
             />
           </RNSVGGroup>
@@ -241,5 +243,5 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
   >
     Please wait...
   </Text>
-</View>
+</RCTSafeAreaView>
 `;

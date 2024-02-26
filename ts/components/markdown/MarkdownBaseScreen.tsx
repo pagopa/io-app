@@ -4,7 +4,7 @@ import { View, StyleSheet } from "react-native";
 import BaseScreenComponent from "../screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../screens/EdgeBorderComponent";
 import ScreenContent from "../screens/ScreenContent";
-import Markdown from "../ui/Markdown";
+import LegacyMarkdown from "../ui/Markdown/LegacyMarkdown";
 import themeVariables from "../../theme/variables";
 
 /**
@@ -45,9 +45,9 @@ export const MarkdownBaseScreen: React.FunctionComponent<Props> = props => {
         hideHeader={props.hideHeader}
       >
         <View style={styles.markdownContainer}>
-          <Markdown onLoadEnd={() => setMarkdownLoaded(true)}>
+          <LegacyMarkdown onLoadEnd={() => setMarkdownLoaded(true)}>
             {props.markDown}
-          </Markdown>
+          </LegacyMarkdown>
           {isMarkdownLoaded && <EdgeBorderComponent />}
         </View>
       </ScreenContent>

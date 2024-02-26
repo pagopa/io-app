@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
-import Markdown from "../ui/Markdown";
+import LegacyMarkdown from "../ui/Markdown/LegacyMarkdown";
 import { Body } from "../core/typography/Body";
 
 type Props = {
@@ -29,16 +29,16 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
   const handleMarkdownLoaded = () => setMarkdownLoaded(s => s + 1);
   return (
     <React.Fragment>
-      <Markdown onLoadEnd={handleMarkdownLoaded}>
+      <LegacyMarkdown onLoadEnd={handleMarkdownLoaded}>
         {I18n.t("authentication.landing.cie_unsupported.body")}
-      </Markdown>
+      </LegacyMarkdown>
 
       {Platform.OS === "android" && (
         <React.Fragment>
           <VSpacer size={16} />
-          <Markdown onLoadEnd={handleMarkdownLoaded}>
+          <LegacyMarkdown onLoadEnd={handleMarkdownLoaded}>
             {I18n.t("authentication.landing.cie_unsupported.android_desc")}
-          </Markdown>
+          </LegacyMarkdown>
           <VSpacer size={40} />
           {markdownLoaded === markDownElements && (
             <List>

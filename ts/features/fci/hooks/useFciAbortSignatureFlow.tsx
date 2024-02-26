@@ -1,15 +1,17 @@
 import * as React from "react";
 import { useRoute } from "@react-navigation/native";
 import {
+  BlockButtons,
   ButtonSolidProps,
-  FooterWithButtons
+  IOVisualCostants
 } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import I18n from "../../../i18n";
 import { fciEndRequest } from "../store/actions";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackFciUserExit } from "../analytics";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 
@@ -40,20 +42,19 @@ export const useFciAbortSignatureFlow = () => {
   const { present, bottomSheet, dismiss } = useIOBottomSheetModal({
     title: I18n.t("features.fci.abort.title"),
     component: (
-      <Markdown>
+      <LegacyMarkdown>
         {I18n.t("features.fci.abort.content", { dossierTitle })}
-      </Markdown>
+      </LegacyMarkdown>
     ),
     snapPoint: [280],
     footer: (
-      <FooterWithButtons
-        type={"TwoButtonsInlineHalf"}
-        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-        secondary={{
-          type: "Solid",
-          buttonProps: continueButtonProps
-        }}
-      />
+      <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
+        <BlockButtons
+          type={"TwoButtonsInlineHalf"}
+          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+          secondary={{ type: "Solid", buttonProps: continueButtonProps }}
+        />
+      </View>
     )
   });
 

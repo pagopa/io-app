@@ -4,7 +4,7 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import { Idp } from "../../../definitions/content/Idp";
 import { handleItemOnPress } from "../../utils/url";
 import BlockButtons from "../ui/BlockButtons";
-import Markdown from "../ui/Markdown";
+import LegacyMarkdown from "../ui/Markdown/LegacyMarkdown";
 import EmailCallCTA from "./EmailCallCTA";
 
 type Props = Readonly<{
@@ -25,11 +25,11 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
   return (
     <React.Fragment>
       {/** Recover credentials */}
-      <Markdown onLoadEnd={() => setIsMarkdown1Loaded(true)}>
+      <LegacyMarkdown onLoadEnd={() => setIsMarkdown1Loaded(true)}>
         {idpTextData.recover_username
           ? I18n.t("authentication.idp_login.dualRecoverDescription")
           : I18n.t("authentication.idp_login.recoverDescription")}
-      </Markdown>
+      </LegacyMarkdown>
 
       <VSpacer size={16} />
       {isMarkdown1Loaded && (
@@ -60,9 +60,9 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
 
       {/** Idp contacts */}
       <VSpacer size={16} />
-      <Markdown onLoadEnd={() => setIsMarkdown2Loaded(true)}>
+      <LegacyMarkdown onLoadEnd={() => setIsMarkdown2Loaded(true)}>
         {idpTextData.description}
-      </Markdown>
+      </LegacyMarkdown>
       <VSpacer size={16} />
       {isMarkdown2Loaded && (
         <React.Fragment>
