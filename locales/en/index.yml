@@ -249,7 +249,7 @@ permissionRationale:
     title: "Allow camera access"
     message: "We require camera permissions to use the torch on the back of your phone."
 startup:
-  title: Initialization
+  title: Stiamo preparando la tua esperienza su IO
   authentication: User authenticated
   sessionInfo: SPID attributes loaded
   profileInfo: User profile loaded
