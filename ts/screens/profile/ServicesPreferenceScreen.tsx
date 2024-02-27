@@ -67,8 +67,20 @@ const ServicesPreferenceScreen = (): ReactElement => {
   });
 
   useEffect(() => {
-    // if profile preferences are updated
-    // correctly then the success banner is shown
+    // show error toast only when the profile updating fails
+    // otherwise, if the profile is in error state,
+    // the toast will be shown immediately without any updates
+    if (
+      prevProfile !== undefined &&
+      !pot.isError(prevProfile) &&
+      pot.isError(profile)
+    ) {
+      IOToast.error(I18n.t("global.genericError"));
+      return;
+    }
+    // if profile preferences are updated correctly
+    // the button is selected
+    // and the success banner is shown
     if (
       prevProfile !== undefined &&
       pot.isUpdating(prevProfile) &&
@@ -79,18 +91,6 @@ const ServicesPreferenceScreen = (): ReactElement => {
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
       );
-      return;
-    }
-
-    // show error toast only when the profile updating fails
-    // otherwise, if the profile is in error state,
-    // the toast will be shown immediately without any updates
-    if (
-      prevProfile !== undefined &&
-      !pot.isError(prevProfile) &&
-      pot.isError(profile)
-    ) {
-      IOToast.error(I18n.t("global.genericError"));
     }
   }, [profile, prevProfile, profileServicePreferenceMode]);
 
