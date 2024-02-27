@@ -1,7 +1,6 @@
 import * as React from "react";
 import { SectionList, ScrollView } from "react-native";
 import { H2, IOStyles } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import SignatureRequestItem from "../../components/SignatureRequestItem";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciSignaturesListSelector } from "../../store/reducers/fciSignaturesList";
@@ -89,14 +88,10 @@ const FciSignatureRequestsScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={dataItems === undefined}>
-      <>
-        <SafeAreaView style={IOStyles.flex} edges={["bottom", "left", "right"]}>
-          <ScrollView style={IOStyles.horizontalContentPadding}>
-            <H2>{I18n.t("features.fci.requests.title")}</H2>
-            {renderSignatureRequests()}
-          </ScrollView>
-        </SafeAreaView>
-      </>
+      <ScrollView style={IOStyles.horizontalContentPadding}>
+        <H2>{I18n.t("features.fci.requests.title")}</H2>
+        {renderSignatureRequests()}
+      </ScrollView>
     </LoadingSpinnerOverlay>
   );
 };

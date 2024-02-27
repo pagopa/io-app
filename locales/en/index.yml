@@ -447,8 +447,6 @@ profile:
         title: Warning
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
-    walletPlayground:
-      titleSection: "New Wallet"
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -823,7 +821,8 @@ email:
     title: Validate your email
     subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent!
+    buttonlabelsent: Email sent!    
+    countdowntext: Request new email in 
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -2802,6 +2801,10 @@ features:
       content: "Do you want to quit signing **{{dossierTitle}}**?"
       cancel: "Quit signing"
       confirm: "Keep signing"
+      alert:
+        title: "Do you want to stop the operation?"
+        confirm: "Yes, stop it"
+        cancel: "No, go back"
     checkService:
       title: "Turn on messages"
       content: "To receive the signed documents, you must turn on the setting that allows the service to send you messages. If you don't turn it on, you can complete the signature but you won't receive the signed documents."
