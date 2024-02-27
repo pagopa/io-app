@@ -78,6 +78,7 @@ import {
   trackMethodInfo,
   trackSpidLoginSelected
 } from "./analytics";
+import { trackCarousel } from "./analytics/carouselAnalytics";
 
 const styles = StyleSheet.create({
   normalDot: {
@@ -155,6 +156,7 @@ export const IdpCIE: SpidIdp = {
 const BUTTON_SPACING = 24;
 
 export const LandingScreen = () => {
+  const trackFirstCarouselPageOnFirstRenderRef = React.useRef(false);
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme = useColorScheme();
@@ -317,17 +319,18 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const renderCardComponents = React.useCallback(() => {
-    const cardProps = carouselCards;
-    return cardProps.map(p => (
-      <LandingCardComponent
-        ref={p.id === 5 ? accessibilityFirstFocuseViewRef : null}
-        screenDimensions={screenDimension}
-        key={`card-${p.id}`}
-        {...p}
-      />
-    ));
-  }, [screenDimension]);
+  const renderCardComponents = React.useCallback(
+    () =>
+      carouselCards.map(p => (
+        <LandingCardComponent
+          ref={p.id === 5 ? accessibilityFirstFocuseViewRef : null}
+          screenDimensions={screenDimension}
+          key={`card-${p.id}`}
+          {...p}
+        />
+      )),
+    [screenDimension]
+  );
 
   const handleContinueWithRootOrJailbreak = React.useCallback(
     (continueWith: boolean) => {
@@ -395,32 +398,54 @@ export const LandingScreen = () => {
     );
   };
 
-  const Carousel = () => (
-    <>
-      <ScrollView
-        horizontal={true}
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: scrollX
+  const Carousel = () => {
+    const cardComponents = renderCardComponents();
+
+    return (
+      <>
+        <ScrollView
+          horizontal={true}
+          pagingEnabled
+          onLayout={() => {
+            // The ScrollView onScrollEndDrag is not called on layout rendering
+            if (!trackFirstCarouselPageOnFirstRenderRef.current) {
+              trackCarousel(0, cardComponents);
+              // eslint-disable-next-line functional/immutable-data
+              trackFirstCarouselPageOnFirstRenderRef.current = true;
+            }
+          }}
+          showsHorizontalScrollIndicator={false}
+          onScrollEndDrag={event => {
+            const contentOffsetX = event.nativeEvent.contentOffset.x;
+            const currentPageIndex = Math.round(contentOffsetX / windowWidth);
+            if (
+              currentPageIndex >= 0 &&
+              cardComponents.length > currentPageIndex
+            ) {
+              trackCarousel(currentPageIndex, cardComponents);
+            }
+          }}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: {
+                  contentOffset: {
+                    x: scrollX
+                  }
                 }
               }
-            }
-          ],
-          { useNativeDriver: false }
-        )}
-        scrollEventThrottle={1}
-      >
-        {renderCardComponents()}
-      </ScrollView>
-      <CarouselDots />
-      <VSpacer size={24} />
-    </>
-  );
+            ],
+            { useNativeDriver: false }
+          )}
+          scrollEventThrottle={1}
+        >
+          {cardComponents}
+        </ScrollView>
+        <CarouselDots />
+        <VSpacer size={24} />
+      </>
+    );
+  };
 
   const LandingScreen = () => {
     useHeaderSecondLevel({
