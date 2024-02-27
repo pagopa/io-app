@@ -12,6 +12,13 @@ export async function trackProfileLoadSuccess(state: GlobalState) {
   await mixpanelTrack(profileLoadSuccess.toString());
 }
 
+export function trackIdpAuthenticationSuccessScreen(idpId: string | undefined) {
+  void mixpanelTrack("IDENTIFICATION_CONFIRM_SCREEN", {
+    idpId,
+    ...buildEventProperties("UX", "screen_view")
+  });
+}
+
 export function trackTosScreen(flow: FlowType) {
   void mixpanelTrack(
     "TOS",
