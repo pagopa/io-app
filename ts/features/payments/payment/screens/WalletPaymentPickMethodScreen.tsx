@@ -10,7 +10,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { sequenceS, sequenceT } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
@@ -18,21 +18,16 @@ import { pipe } from "fp-ts/lib/function";
 import { capitalize } from "lodash";
 import React, { useEffect, useMemo } from "react";
 import { View } from "react-native";
-import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
+import { Transfer } from "../../../../../definitions/pagopa/ecommerce/Transfer";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
+import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ComponentProps } from "../../../../types/react";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
-import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
 import { WalletPaymentRoutes } from "../navigation/routes";
 import {
@@ -41,7 +36,10 @@ import {
   walletPaymentGetUserWallets,
   walletPaymentResetPspList
 } from "../store/actions/networking";
-import { walletPaymentPickPaymentMethod } from "../store/actions/orchestration";
+import {
+  walletPaymentPickPaymentMethod,
+  walletPaymentSetCurrentStep
+} from "../store/actions/orchestration";
 import {
   walletPaymentAllMethodsSelector,
   walletPaymentAmountSelector,
@@ -53,7 +51,6 @@ import {
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import { Transfer } from "../../../../../definitions/pagopa/ecommerce/Transfer";
 
 type SavedMethodState = {
   kind: "saved";
@@ -71,17 +68,7 @@ type SelectedMethodState = SavedMethodState | NotSavedMethodState | undefined;
 
 const WalletPaymentPickMethodScreen = () => {
   const dispatch = useIODispatch();
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const handleGoBack = useWalletPaymentGoBackHandler();
-
-  useHeaderSecondLevel({
-    title: "",
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: handleGoBack,
-    contextualHelp: emptyContextualHelp,
-    faqCategories: ["payment"],
-    supportRequest: true
-  });
+  const navigation = useIONavigation();
 
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const getSavedtMethodById = useIOSelector(
@@ -138,17 +125,13 @@ const WalletPaymentPickMethodScreen = () => {
       pot.toOption,
       O.map(pspList => {
         if (pspList.length > 1) {
-          navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-            screen: WalletPaymentRoutes.WALLET_PAYMENT_PICK_PSP
-          });
+          dispatch(walletPaymentSetCurrentStep(2));
         } else if (pspList.length >= 1) {
-          navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-            screen: WalletPaymentRoutes.WALLET_PAYMENT_CONFIRM
-          });
+          dispatch(walletPaymentSetCurrentStep(3));
         }
       })
     );
-  }, [navigation, pspListPot]);
+  }, [pspListPot, dispatch]);
 
   const alertRef = React.useRef<View>(null);
 
@@ -260,7 +243,7 @@ const WalletPaymentPickMethodScreen = () => {
     }
   }, [isLoading, genericMethodsListItems, savedMethodsListItems]);
 
-  if (!isLoading && savedMethodsListItems.length === 0) {
+  if (pot.isSome(userWalletsPots) && userWalletsPots.value.length === 0) {
     return <WalletPaymentMissingMethodsError />;
   }
 

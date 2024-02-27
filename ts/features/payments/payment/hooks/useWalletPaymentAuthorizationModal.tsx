@@ -7,6 +7,7 @@ import * as React from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
+import { walletPaymentHistoryStoreOutcome } from "../../history/store/actions";
 import {
   WalletPaymentAuthorizePayload,
   walletPaymentAuthorization
@@ -16,7 +17,6 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { walletPaymentHistoryStoreOutcome } from "../../history/store/actions";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
@@ -35,6 +35,7 @@ export const useWalletPaymentAuthorizationModal = ({
   onDismiss
 }: Props): WalletPaymentAuthorizationModal => {
   const dispatch = useIODispatch();
+
   const authorizationUrlPot = useIOSelector(
     walletPaymentAuthorizationUrlSelector
   );
@@ -52,8 +53,8 @@ export const useWalletPaymentAuthorizationModal = ({
         WalletPaymentOutcome.decode,
         E.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
-      dispatch(walletPaymentHistoryStoreOutcome(outcome));
       onAuthorizationOutcome(outcome);
+      dispatch(walletPaymentHistoryStoreOutcome(outcome));
     },
     [onAuthorizationOutcome, dispatch]
   );
