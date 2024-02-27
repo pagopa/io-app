@@ -1986,7 +1986,6 @@ services:
       unavailable: "Not defined"
       title: "Who can contact you?"
       body: "IO is simple because there's nothing to set up: if an institution or a service have something important to tell you, they can send you a message."
-      successAlert: "Hai abilitato la {{mode}}"
       quickConfig:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."

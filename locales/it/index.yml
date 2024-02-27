@@ -1986,7 +1986,6 @@ services:
       unavailable: "Non selezionato"
       title: "Chi può scriverti?"
       body: "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio."
-      successAlert: "Hai abilitato la {{mode}}"
       quickConfig:
         value: "Configurazione rapida"
         label: "tutti i servizi che non hai disattivato possono contattarti."
