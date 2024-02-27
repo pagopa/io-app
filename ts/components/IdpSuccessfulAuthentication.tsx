@@ -8,7 +8,8 @@ import {
   ContentWrapper,
   H3,
   IOStyles,
-  Pictogram
+  Pictogram,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { profileNameSelector } from "../store/reducers/profile";
 import I18n from "../i18n";
@@ -37,7 +38,8 @@ export const IdpSuccessfulAuthentication = () => {
     <SafeAreaView style={styles.container}>
       <ContentWrapper>
         <View style={{ alignItems: "center" }}>
-          <Pictogram name="success" size={180} />
+          <Pictogram name="success" size={120} />
+          <VSpacer size={24} />
           {name && (
             <H3
               style={{ textAlign: "center" }}
