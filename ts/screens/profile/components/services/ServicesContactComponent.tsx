@@ -1,10 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import {
-  IOColors,
-  LabelSmall,
-  RadioGroup,
-  RadioItem
-} from "@pagopa/io-app-design-system";
+import { IOColors, LabelSmall, RadioGroup } from "@pagopa/io-app-design-system";
 import { Text } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import I18n from "../../../../i18n";
@@ -16,7 +11,7 @@ type Props = {
   showBadge?: boolean;
 };
 
-const options = (): ReadonlyArray<RadioItem<string>> => [
+const options = [
   {
     value: I18n.t("services.optIn.preferences.quickConfig.title"),
     id: ServicesPreferencesModeEnum.AUTO,
@@ -63,7 +58,7 @@ const ServicesContactComponent = (props: Props): ReactElement => {
   return (
     <RadioGroup<string>
       type="radioListItem"
-      items={options()}
+      items={options}
       selectedItem={selectedItem}
       onPress={handlePress}
     />

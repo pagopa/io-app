@@ -40,6 +40,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
   const profileServicePreferenceMode = useIOSelector(
     profileServicePreferencesModeSelector
   );
+  const prevMode = usePrevious(profileServicePreferenceMode);
 
   const dispatchServicePreferencesSetting = useCallback(
     (mode: ServicesPreferencesModeEnum) =>
@@ -84,7 +85,8 @@ const ServicesPreferenceScreen = (): ReactElement => {
     if (
       prevProfile !== undefined &&
       pot.isUpdating(prevProfile) &&
-      pot.isSome(profile)
+      pot.isSome(profile) &&
+      prevMode !== profileServicePreferenceMode
     ) {
       IOToast.success(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
@@ -92,7 +94,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
       );
     }
-  }, [profile, prevProfile, profileServicePreferenceMode]);
+  }, [profile, prevProfile, profileServicePreferenceMode, prevMode]);
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation

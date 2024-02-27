@@ -57,6 +57,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   const profileServicePreferenceMode = useIOSelector(
     profileServicePreferencesModeSelector
   );
+  const prevMode = usePrevious(profileServicePreferenceMode);
 
   // if the user is not new and he/she hasn't a preference set, pre-set with AUTO mode
   const mode = profileServicePreferenceMode;
@@ -145,7 +146,8 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     if (
       prevProfile !== undefined &&
       pot.isUpdating(prevProfile) &&
-      pot.isSome(profile)
+      pot.isSome(profile) &&
+      profileServicePreferenceMode !== prevMode
     ) {
       setModeSelected(profileServicePreferenceMode);
       IOToast.success(
@@ -154,7 +156,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
       );
     }
-  }, [prevProfile, profile, profileServicePreferenceMode]);
+  }, [prevMode, prevProfile, profile, profileServicePreferenceMode]);
 
   // show a badge when the user is not new
   // As explained in this comment (https://pagopa.atlassian.net/browse/IOPID-1511?focusedCommentId=126354)
