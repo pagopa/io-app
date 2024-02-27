@@ -229,7 +229,7 @@ export const LandingScreen = () => {
 
   const { hideModal, showAnimatedModal } = React.useContext(LightModalContext);
 
-  const displayTabletAlert = () => {
+  const displayTabletAlert = React.useCallback(() => {
     if (!hasTabletCompatibilityAlertAlreadyShown) {
       setHasTabletCompatibilityAlertAlreadyShown(true);
       Alert.alert(
@@ -244,7 +244,7 @@ export const LandingScreen = () => {
         { cancelable: true }
       );
     }
-  };
+  }, [hasTabletCompatibilityAlertAlreadyShown]);
 
   const navigateToIdpSelection = React.useCallback(() => {
     trackSpidLoginSelected();
@@ -304,10 +304,10 @@ export const LandingScreen = () => {
     store
   ]);
 
-  const navigateToPrivacyUrl = () => {
+  const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
     openWebUrl(privacyUrl);
-  };
+  }, []);
 
   const navigateToCieUatSelectionScreen = React.useCallback(() => {
     if (isCieSupported()) {
@@ -317,7 +317,7 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const renderCardComponents = () => {
+  const renderCardComponents = React.useCallback(() => {
     const cardProps = carouselCards;
     return cardProps.map(p => (
       <LandingCardComponent
@@ -327,11 +327,14 @@ export const LandingScreen = () => {
         {...p}
       />
     ));
-  };
+  }, [screenDimension]);
 
-  const handleContinueWithRootOrJailbreak = (continueWith: boolean) => {
-    dispatch(continueWithRootOrJailbreak(continueWith));
-  };
+  const handleContinueWithRootOrJailbreak = React.useCallback(
+    (continueWith: boolean) => {
+      dispatch(continueWithRootOrJailbreak(continueWith));
+    },
+    [dispatch]
+  );
 
   const CarouselDots = () => {
     const dotTouchCount = React.useRef(0);
