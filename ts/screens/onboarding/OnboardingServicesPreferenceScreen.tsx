@@ -157,6 +157,9 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   }, [prevProfile, profile, profileServicePreferenceMode]);
 
   // show a badge when the user is not new
+  // As explained in this comment (https://pagopa.atlassian.net/browse/IOPID-1511?focusedCommentId=126354)
+  // a future feature will be need this value,
+  // so I didn't delete it even though it is not used
   const showBadge = !isFirstOnboarding;
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
