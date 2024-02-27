@@ -130,6 +130,20 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       onContinue(isFirstOnboarding);
       return;
     }
+    // if profile preferences are updated
+    // correctly then the success banner is shown
+    if (
+      prevProfile !== undefined &&
+      pot.isUpdating(prevProfile) &&
+      pot.isSome(profile)
+    ) {
+      IOToast.success(
+        profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
+          ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
+          : I18n.t("services.optIn.preferences.quickConfig.successAlert")
+      );
+      return;
+    }
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state,
     // the toast will be shown immediately without any updates
@@ -144,9 +158,9 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     isFirstOnboarding,
     prevProfile,
     profile,
-    profileServicePreferenceMode,
     onContinue,
-    store
+    store,
+    profileServicePreferenceMode
   ]);
 
   // show a badge when the user is not new

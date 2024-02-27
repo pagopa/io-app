@@ -1986,10 +1986,12 @@ services:
       unavailable: "Non selezionato"
       title: "Chi può scriverti?"
       body: "IO è semplice perché non devi fare nulla: se un Ente o un servizio hanno qualcosa di importante da dirti, possono mandarti un messaggio."
+      successAlert: "Hai abilitato la {{mode}}"
       quickConfig:
         value: "Configurazione rapida"
         label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
+        successAlert: "Hai abilitato la configurazione rapida"
         body:
           text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
@@ -1997,6 +1999,7 @@ services:
         value: "Configurazione manuale"
         label: "ti possono contattare solo i servizi che hai attivato."
         title: "Configura manualmente"
+        successAlert: "Hai abilitato la configurazione manuale"
         body:
           text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
         bottomSheet:

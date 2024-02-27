@@ -1,6 +1,6 @@
 import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
+import React, { ReactElement, useCallback, useEffect } from "react";
 import { useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
@@ -30,7 +30,7 @@ import ServicesContactComponent from "./components/services/ServicesContactCompo
  * @param props
  * @constructor
  */
-const ServicesPreferenceScreen = (): React.ReactElement => {
+const ServicesPreferenceScreen = (): ReactElement => {
   const store = useStore();
   const state = store.getState();
   const dispatch = useIODispatch();
@@ -41,7 +41,7 @@ const ServicesPreferenceScreen = (): React.ReactElement => {
     profileServicePreferencesModeSelector
   );
 
-  const dispatchServicePreferencesSetting = React.useCallback(
+  const dispatchServicePreferencesSetting = useCallback(
     (mode: ServicesPreferencesModeEnum) =>
       dispatch(
         profileUpsert.request({ service_preferences_settings: { mode } })
@@ -66,9 +66,25 @@ const ServicesPreferenceScreen = (): React.ReactElement => {
     trackServiceConfigurationScreen(getFlowType(false, false));
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
+    // if profile preferences are updated
+    // correctly then the success banner is shown
+    if (
+      prevProfile !== undefined &&
+      pot.isUpdating(prevProfile) &&
+      pot.isSome(profile)
+    ) {
+      IOToast.success(
+        profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
+          ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
+          : I18n.t("services.optIn.preferences.quickConfig.successAlert")
+      );
+      return;
+    }
+
     // show error toast only when the profile updating fails
-    // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
+    // otherwise, if the profile is in error state,
+    // the toast will be shown immediately without any updates
     if (
       prevProfile !== undefined &&
       !pot.isError(prevProfile) &&
@@ -76,7 +92,7 @@ const ServicesPreferenceScreen = (): React.ReactElement => {
     ) {
       IOToast.error(I18n.t("global.genericError"));
     }
-  }, [profile, prevProfile]);
+  }, [profile, prevProfile, profileServicePreferenceMode]);
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
