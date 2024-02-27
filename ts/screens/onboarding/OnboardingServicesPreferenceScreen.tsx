@@ -96,15 +96,23 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   );
 
   const handleOnContinue = () => {
-    if (modeSelected) {
-      onServicePreferenceSelected(modeSelected);
-    }
+    void trackServiceConfiguration(
+      profileServicePreferenceMode,
+      getFlowType(true, isFirstOnboarding),
+      store.getState()
+    );
+    onContinue(isFirstOnboarding);
+  };
+
+  const selectCurrentMode = (mode: ServicesPreferencesModeEnum) => {
+    setModeSelected(mode);
+    onServicePreferenceSelected(mode);
   };
 
   const { present: confirmManualConfig, manualConfigBottomSheet } =
-    useManualConfigBottomSheet(() =>
-      onServicePreferenceSelected(ServicesPreferencesModeEnum.MANUAL)
-    );
+    useManualConfigBottomSheet(() => {
+      selectCurrentMode(ServicesPreferencesModeEnum.MANUAL);
+    });
 
   const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
     // if user's choice is 'manual', open bottom sheet to ask confirmation
@@ -112,7 +120,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
       confirmManualConfig();
       return;
     }
-    setModeSelected(mode);
+    selectCurrentMode(mode);
   };
 
   useOnFirstRender(() => {
@@ -120,16 +128,6 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   });
 
   useEffect(() => {
-    // when the user made a choice (the profile is right updated), continue to the next step
-    if (isServicesPreferenceModeSet(profileServicePreferenceMode)) {
-      void trackServiceConfiguration(
-        profileServicePreferenceMode,
-        getFlowType(true, isFirstOnboarding),
-        store.getState()
-      );
-      onContinue(isFirstOnboarding);
-      return;
-    }
     // if profile preferences are updated
     // correctly then the success banner is shown
     if (
@@ -154,14 +152,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     ) {
       IOToast.error(I18n.t("global.genericError"));
     }
-  }, [
-    isFirstOnboarding,
-    prevProfile,
-    profile,
-    onContinue,
-    store,
-    profileServicePreferenceMode
-  ]);
+  }, [prevProfile, profile, profileServicePreferenceMode]);
 
   // show a badge when the user is not new
   const showBadge = !isFirstOnboarding;
