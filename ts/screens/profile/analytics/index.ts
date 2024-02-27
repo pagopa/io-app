@@ -14,7 +14,7 @@ export async function trackProfileLoadSuccess(state: GlobalState) {
 
 export function trackIdpAuthenticationSuccessScreen(idpId: string | undefined) {
   void mixpanelTrack("IDENTIFICATION_CONFIRM_SCREEN", {
-    idpId,
+    idp: idpId,
     ...buildEventProperties("UX", "screen_view")
   });
 }
