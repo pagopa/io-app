@@ -2,9 +2,14 @@
  * A component to display a white tick on a blue background
  */
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 
-import { H3, IOStyles, Pictogram } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  H3,
+  IOStyles,
+  Pictogram
+} from "@pagopa/io-app-design-system";
 import { profileNameSelector } from "../store/reducers/profile";
 import I18n from "../i18n";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
@@ -14,7 +19,6 @@ import { loggedInIdpSelector } from "../store/reducers/authentication";
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     ...IOStyles.centerJustified,
     ...IOStyles.flex
   }
@@ -30,9 +34,20 @@ export const IdpSuccessfulAuthentication = () => {
     name
   });
   return (
-    <View style={styles.container}>
-      <Pictogram name="success" size={180} />
-      {name && <H3 accessibilityLabel={contentTitle}>{contentTitle}</H3>}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ContentWrapper>
+        <View style={{ alignItems: "center" }}>
+          <Pictogram name="success" size={180} />
+          {name && (
+            <H3
+              style={{ textAlign: "center" }}
+              accessibilityLabel={contentTitle}
+            >
+              {contentTitle}
+            </H3>
+          )}
+        </View>
+      </ContentWrapper>
+    </SafeAreaView>
   );
 };
