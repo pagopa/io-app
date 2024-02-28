@@ -12,7 +12,7 @@ import React from "react";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import I18n from "../../../../i18n";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { capitalize } from "../../../../utils/strings";
@@ -22,9 +22,8 @@ import {
 } from "../../common/utils";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
-import { WalletPaymentTotalAmount } from "./WalletPaymentTotalAmount";
-import { useIOSelector } from "../../../../store/hooks";
 import { walletPaymentPspListSelector } from "../store/selectors";
+import { WalletPaymentTotalAmount } from "./WalletPaymentTotalAmount";
 
 export type WalletPaymentConfirmContentProps = {
   paymentMethodDetails: UIWalletInfoDetails;
