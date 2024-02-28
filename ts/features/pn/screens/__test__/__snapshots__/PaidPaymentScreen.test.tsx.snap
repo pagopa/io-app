@@ -331,6 +331,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -601,6 +602,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -1336,6 +1338,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -1606,6 +1609,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,

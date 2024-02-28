@@ -331,6 +331,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -567,6 +568,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -995,6 +997,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -1231,6 +1234,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -1659,6 +1663,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -1895,6 +1900,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -1902,6 +1908,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                           }
                         >
                           <RCTSafeAreaView
+                            emulateUnlessSupported={true}
                             style={
                               Object {
                                 "backgroundColor": "transparent",
@@ -2617,6 +2624,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -2853,6 +2861,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -3281,6 +3290,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -3517,6 +3527,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
