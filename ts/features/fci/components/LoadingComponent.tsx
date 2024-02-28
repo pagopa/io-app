@@ -1,17 +1,10 @@
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import {
-  Body,
-  H3,
-  LoadingSpinner,
-  VSpacer,
-  WithTestID
-} from "@pagopa/io-app-design-system";
-import customVariables from "../../../theme/variables";
+import { SafeAreaView, StyleSheet } from "react-native";
+import { Body, H3, VSpacer, WithTestID } from "@pagopa/io-app-design-system";
+import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
 const styles = StyleSheet.create({
   main: {
-    padding: customVariables.contentPadding,
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
@@ -36,8 +29,8 @@ const LoadingComponent = (props: Props) => {
   const { captionTitle, captionSubtitle } = props;
 
   return (
-    <View style={styles.main} testID={props.testID}>
-      <LoadingSpinner size={76} />
+    <SafeAreaView style={styles.main} testID={props.testID}>
+      <LoadingIndicator />
       <VSpacer size={48} />
       <H3 style={styles.textAlignCenter} testID="LoadingSpinnerCaptionTitleID">
         {captionTitle}
@@ -49,7 +42,7 @@ const LoadingComponent = (props: Props) => {
       >
         {captionSubtitle}
       </Body>
-    </View>
+    </SafeAreaView>
   );
 };
 
