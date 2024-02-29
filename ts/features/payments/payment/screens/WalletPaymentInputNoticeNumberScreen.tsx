@@ -46,7 +46,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     noticeNumber: O.none
   });
 
-  const handleContinueClick = () => {
+  const handleContinueClick = () =>
     O.fold(
       () => {
         Keyboard.dismiss();
@@ -61,7 +61,6 @@ const WalletPaymentInputNoticeNumberScreen = () => {
         });
       }
     )(inputState.noticeNumber);
-  };
 
   const focusTextInput = () => {
     const textInputA11yWrapper = findNodeHandle(textInputWrappperRef.current);
