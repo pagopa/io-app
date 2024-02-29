@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import Pdf from "react-native-pdf";
-import * as S from "fp-ts/lib/string";
 import {
   ButtonSolidProps,
   FooterWithButtons,
   IOColors
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as S from "fp-ts/lib/string";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
+import ReactNativeBlobUtil from "react-native-blob-util";
+import Pdf from "react-native-pdf";
+import { IOToast } from "../../../components/Toast";
 import I18n from "../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isIos } from "../../../utils/platform";
 import { share } from "../../../utils/share";
-import { showToast } from "../../../utils/showToast";
 import { FciDownloadPreviewDirectoryPath } from "../saga/networking/handleDownloadDocument";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { fciDownloadPreview } from "../store/actions";
 import {
   fciDownloadPathSelector,
@@ -48,7 +48,7 @@ const renderFooter = (url: string, filePath: string) => {
         undefined,
         false
       )().catch(_ => {
-        showToast(I18n.t("messagePDFPreview.errors.sharing"));
+        IOToast.error(I18n.t("messagePDFPreview.errors.sharing"));
       });
     },
     label: I18n.t("global.buttons.share"),
@@ -67,15 +67,14 @@ const renderFooter = (url: string, filePath: string) => {
         FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url)
       )
         .then(_ => {
-          showToast(
+          IOToast.success(
             I18n.t("messagePDFPreview.savedAtLocation", {
               name: "attachment.displayName"
-            }),
-            "success"
+            })
           );
         })
         .catch(_ => {
-          showToast(I18n.t("messagePDFPreview.errors.saving"));
+          IOToast.error(I18n.t("messagePDFPreview.errors.saving"));
         });
     },
     label: I18n.t("messagePDFPreview.save"),
@@ -90,7 +89,7 @@ const renderFooter = (url: string, filePath: string) => {
           "application/pdf"
         )
         .catch(_ => {
-          showToast(I18n.t("messagePDFPreview.errors.opening"));
+          IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
         });
     },
     label: I18n.t("messagePDFPreview.open"),

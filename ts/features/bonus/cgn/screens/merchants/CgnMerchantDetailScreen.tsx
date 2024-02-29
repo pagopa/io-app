@@ -1,3 +1,4 @@
+import { Icon, IconButton, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -11,10 +12,12 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Icon, IconButton, VSpacer } from "@pagopa/io-app-design-system";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
+import { IOToast } from "../../../../../components/Toast";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -25,10 +28,7 @@ import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../../utils/showToast";
 import { openWebUrl } from "../../../../../utils/url";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
@@ -119,7 +119,7 @@ const CgnMerchantDetailScreen = () => {
                     ]}
                     onPress={() =>
                       openWebUrl(url, () =>
-                        showToast(I18n.t("bonus.cgn.generic.linkError"))
+                        IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
                       )
                     }
                   >

@@ -17,6 +17,8 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { IOToast } from "../../../../components/Toast";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -41,7 +43,6 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
-import { showToast } from "../../../../utils/showToast";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
   AvailableBonusItem,
@@ -57,7 +58,6 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -104,7 +104,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
   private openAppStore = () => {
     // storeUrl is not a webUrl, try to open it
     Linking.openURL(storeUrl).catch(() => {
-      showToast(I18n.t("msgErrorUpdateApp"));
+      IOToast.error(I18n.t("msgErrorUpdateApp"));
     });
   };
 
@@ -126,7 +126,7 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
           O.fold(
             () => {
               // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
-              showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
+              IOToast.show(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
             },
             s => () => {
               this.props.showServiceDetails(s);

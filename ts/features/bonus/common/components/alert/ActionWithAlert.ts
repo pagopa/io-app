@@ -1,5 +1,5 @@
 import { Alert } from "react-native";
-import { showToast } from "../../../../../utils/showToast";
+import { IOToast } from "../../../../../components/Toast";
 
 type ConfirmConfig = {
   title: string;
@@ -27,7 +27,7 @@ export const actionWithAlert = (confirmConfig: ConfirmConfig) => {
         onPress: () => {
           confirmConfig.onConfirmAction();
           if (confirmConfig.completedFeedbackText) {
-            showToast(confirmConfig.completedFeedbackText, "success");
+            IOToast.success(confirmConfig.completedFeedbackText);
           }
         },
         style: "cancel"

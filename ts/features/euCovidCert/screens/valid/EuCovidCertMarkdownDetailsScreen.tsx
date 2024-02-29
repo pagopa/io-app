@@ -1,8 +1,10 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { IOToast } from "../../../../components/Toast";
+import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
@@ -11,8 +13,6 @@ import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../utils/showToast";
-import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 });
 
 const showToastError = (error: string = I18n.t("global.genericError")) =>
-  showToast(error);
+  IOToast.error(error);
 
 export const EuCovidCertMarkdownDetailsScreen = (
   props: IOStackNavigationRouteProps<
@@ -67,10 +67,10 @@ export const EuCovidCertMarkdownDetailsScreen = (
     }
     captureScreenshot(screenShotViewContainerRef, screenshotOptions, {
       onSuccess: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
+        IOToast.success(I18n.t("features.euCovidCertificate.save.ok")),
       onNoPermissions: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => showToast(I18n.t("global.genericError")),
+        IOToast.info(I18n.t("features.euCovidCertificate.save.noPermission")),
+      onError: () => IOToast.error(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);

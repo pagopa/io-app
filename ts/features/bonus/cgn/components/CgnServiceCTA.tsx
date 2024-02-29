@@ -1,23 +1,23 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Alert } from "react-native";
-import { constNull } from "fp-ts/lib/function";
-import { Label } from "../../../../components/core/typography/Label";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { fold, isLoading } from "../../../../common/model/RemoteValue";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { IOToast } from "../../../../components/Toast";
+import { Label } from "../../../../components/core/typography/Label";
+import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
+import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
-import { fold, isLoading } from "../../../../common/model/RemoteValue";
-import { showToast } from "../../../../utils/showToast";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
-import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
-import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 
 type Props = {
   serviceId: ServiceId;
@@ -37,11 +37,11 @@ const CgnServiceCTA = (props: Props) => {
         constNull,
         constNull,
         () => {
-          showToast(I18n.t("bonus.cgn.activation.deactivate.toast"), "success");
+          IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
           dispatch(loadServicePreference.request(props.serviceId));
         },
         () => {
-          showToast(I18n.t("global.genericError"), "danger");
+          IOToast.error(I18n.t("global.genericError"));
         }
       );
     }

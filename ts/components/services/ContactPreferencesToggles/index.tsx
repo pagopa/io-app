@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useIsFocused } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { NotificationChannelEnum } from "../../../../definitions/backend/NotificationChannel";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { trackPNPushSettings } from "../../../features/pn/analytics";
 import I18n from "../../../i18n";
 import {
   loadServicePreference,
@@ -15,19 +16,18 @@ import { Dispatch } from "../../../store/actions/types";
 import { useIOSelector } from "../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../store/reducers/backendStatus";
 import {
-  servicePreferenceSelector,
-  ServicePreferenceState
+  ServicePreferenceState,
+  servicePreferenceSelector
 } from "../../../store/reducers/entities/services/servicePreference";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  isServicePreferenceResponseSuccess,
-  ServicePreference
+  ServicePreference,
+  isServicePreferenceResponseSuccess
 } from "../../../types/services/ServicePreferenceResponse";
 import { isStrictSome } from "../../../utils/pot";
-import { showToast } from "../../../utils/showToast";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
+import { IOToast } from "../../Toast";
 import SectionHeader from "../SectionHeader";
-import { trackPNPushSettings } from "../../../features/pn/analytics";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 
 type Item = "email" | "push" | "inbox" | "can_access_message_read_status";
@@ -91,7 +91,7 @@ const ContactPreferencesToggle: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     if (!isFirstRender) {
       if (isError) {
-        showToast(I18n.t("global.genericError"));
+        IOToast.error(I18n.t("global.genericError"));
       }
     } else {
       setIsFirstRender(false);

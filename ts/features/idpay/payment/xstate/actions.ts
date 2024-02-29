@@ -1,12 +1,12 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { IOToast } from "../../../../components/Toast";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { showToast } from "../../../../utils/showToast";
 import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IDPayPaymentRoutes } from "../navigation/navigator";
@@ -39,7 +39,7 @@ const createActionsImplementation = (
     });
 
   const showErrorToast = () =>
-    showToast(I18n.t("idpay.payment.authorization.error"), "danger", "top");
+    IOToast.error(I18n.t("idpay.payment.authorization.error"));
 
   const exitAuthorization = (context: Context) => {
     pipe(

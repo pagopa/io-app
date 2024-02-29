@@ -1,6 +1,6 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Alert } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
@@ -9,8 +9,9 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import { IOToast } from "../../../components/Toast";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import {
   AlertContent,
@@ -20,13 +21,13 @@ import {
   ToastPayload,
   WebviewMessage
 } from "../../../types/WebviewMessage";
-import { getRemoteLocale } from "../../messages/utils/messages";
 import { showToast } from "../../../utils/showToast";
 import {
   APP_EVENT_HANDLER,
   AVOID_ZOOM_JS,
   closeInjectedScript
 } from "../../../utils/webview";
+import { getRemoteLocale } from "../../messages/utils/messages";
 import WebviewErrorComponent from "./WebviewErrorComponent";
 
 type ContentOf<T extends AlertPayload | TitlePayload | ToastPayload> =
@@ -106,7 +107,7 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
       WebviewMessage.decode,
       E.fold(
         () => {
-          showToast(I18n.t("webView.error.convertMessage"));
+          IOToast.error(I18n.t("webView.error.convertMessage"));
         },
         message => {
           switch (message.type) {

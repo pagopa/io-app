@@ -4,10 +4,10 @@ import { StyleSheet } from "react-native";
 import { TranslationKeys } from "../../../locales/locales";
 import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
-import { showToast } from "../../utils/showToast";
 
 import { Link } from "../core/typography/Link";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
+import { IOToast } from "../Toast";
 
 const styles = StyleSheet.create({
   link: {
@@ -25,7 +25,7 @@ const LinkRow = ({ text, href }: Props) => (
     <Link
       ellipsizeMode={"tail"}
       onPress={() =>
-        openWebUrl(href, () => showToast(I18n.t("global.jserror.title")))
+        openWebUrl(href, () => IOToast.error(I18n.t("global.jserror.title")))
       }
       numberOfLines={1}
       style={styles.link}

@@ -3,11 +3,11 @@ import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
+import { IOToast } from "../../../../components/Toast";
 import TypedI18n from "../../../../i18n";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { showToast } from "../../../../utils/showToast";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idpayInitiativesInstrumentEnroll } from "../store/actions";
@@ -37,7 +37,7 @@ export function* handleInitiativeInstrumentEnrollment(
         updateInstrumentStatusResult,
         E.fold(
           error => {
-            showToast(
+            IOToast.error(
               TypedI18n.t(
                 "idpay.wallet.initiativePairing.errorToasts.enrollment"
               )
@@ -57,7 +57,7 @@ export function* handleInitiativeInstrumentEnrollment(
               });
             }
             // not handled error codes
-            showToast(
+            IOToast.show(
               TypedI18n.t(
                 "idpay.wallet.initiativePairing.errorToasts.enrollment"
               )
@@ -73,7 +73,7 @@ export function* handleInitiativeInstrumentEnrollment(
       )
     );
   } catch (e) {
-    showToast(
+    IOToast.error(
       TypedI18n.t("idpay.wallet.initiativePairing.errorToasts.enrollment")
     );
     yield* put(

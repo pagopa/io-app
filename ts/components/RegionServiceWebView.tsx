@@ -1,14 +1,3 @@
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { View, Alert, Image, StyleSheet, ScrollView } from "react-native";
-import WebView, { WebViewMessageEvent } from "react-native-webview";
-import {
-  WebViewErrorEvent,
-  WebViewHttpErrorEvent
-} from "react-native-webview/lib/WebViewTypes";
-import URLParse from "url-parse";
 import {
   FooterWithButtons,
   HeaderSecondLevel,
@@ -16,21 +5,32 @@ import {
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
+import WebView, { WebViewMessageEvent } from "react-native-webview";
+import {
+  WebViewErrorEvent,
+  WebViewHttpErrorEvent
+} from "react-native-webview/lib/WebViewTypes";
+import URLParse from "url-parse";
 import brokenLinkImage from "../../img/broken-link.png";
+import { getRemoteLocale } from "../features/messages/utils/messages";
 import I18n from "../i18n";
 import { WebviewMessage } from "../types/WebviewMessage";
-import { getRemoteLocale } from "../features/messages/utils/messages";
-import { showToast } from "../utils/showToast";
 import {
   APP_EVENT_HANDLER,
   AVOID_ZOOM_JS,
   closeInjectedScript
 } from "../utils/webview";
-import { Label } from "./core/typography/Label";
-import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
-import { LightModalContextInterface } from "./ui/LightModal";
+import { IOToast } from "./Toast";
+import { Label } from "./core/typography/Label";
 import { IOStyles } from "./core/variables/IOStyles";
+import { withLightModalContext } from "./helpers/withLightModalContext";
+import { LightModalContextInterface } from "./ui/LightModal";
 
 type Props = {
   onWebviewClose: () => void;
@@ -172,7 +172,7 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
     const maybeData = WebviewMessage.decode(JSON.parse(event.nativeEvent.data));
 
     if (E.isLeft(maybeData)) {
-      showToast(I18n.t("webView.error.convertMessage"));
+      IOToast.show(I18n.t("webView.error.convertMessage"));
       return;
     }
 
