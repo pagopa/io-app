@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
   }
 });
 
+const PICTOGRAM_SIZE = 120;
+const SPACE_BETWEEN_PICTOGRAM_AND_TEXT = 24;
+
 export const IdpSuccessfulAuthentication = () => {
   const idp = useIOSelector(loggedInIdpSelector);
   useOnFirstRender(() => {
@@ -38,8 +41,8 @@ export const IdpSuccessfulAuthentication = () => {
     <SafeAreaView style={styles.container}>
       <ContentWrapper>
         <View style={{ alignItems: "center" }}>
-          <Pictogram name="success" size={120} />
-          <VSpacer size={24} />
+          <Pictogram name="success" size={PICTOGRAM_SIZE} />
+          <VSpacer size={SPACE_BETWEEN_PICTOGRAM_AND_TEXT} />
           {name && (
             <H3
               style={{ textAlign: "center" }}
