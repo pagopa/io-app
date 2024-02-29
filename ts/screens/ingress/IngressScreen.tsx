@@ -18,6 +18,7 @@ import { buildEventProperties } from "../../utils/analytics";
 
 const styles = StyleSheet.create({
   container: {
+    ...IOStyles.bgWhite,
     ...IOStyles.centerJustified,
     ...IOStyles.flex
   }
