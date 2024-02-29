@@ -118,14 +118,12 @@ export const WalletPaymentConfirmContent = ({
 const getPaymentSubtitle = (
   details: UIWalletInfoDetails
 ): string | undefined => {
-  if (details.maskedPan !== undefined) {
-    return undefined;
-  } else if (details.maskedEmail !== undefined) {
+  if (details.maskedEmail !== undefined) {
     return I18n.t("wallet.onboarding.paypal.name");
   } else if (details.maskedNumber !== undefined) {
     return `${details.bankName}`;
   }
-  return "";
+  return undefined;
 };
 
 const getPaymentTitle = (details: UIWalletInfoDetails): string => {
