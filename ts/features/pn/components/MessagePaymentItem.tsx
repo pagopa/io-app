@@ -6,7 +6,8 @@ import { useDispatch, useStore } from "react-redux";
 import {
   ModulePaymentNotice,
   PaymentNoticeStatus,
-  VSpacer
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -32,7 +33,6 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../utils/stringBuilder";
-import { useIOToast } from "../../../components/Toast";
 import { initializeAndNavigateToWalletForPayment } from "../utils";
 
 type MessagePaymentItemProps = {

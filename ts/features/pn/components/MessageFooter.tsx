@@ -1,6 +1,10 @@
 import React, { MutableRefObject, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  IOStyles,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
@@ -10,7 +14,6 @@ import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import variables from "../../../theme/variables";
 import { initializeAndNavigateToWalletForPayment } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-import { useIOToast } from "../../../components/Toast";
 import { trackPNShowAllPayments } from "../analytics";
 
 const styles = StyleSheet.create({

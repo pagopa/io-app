@@ -1,6 +1,7 @@
 import {
   ButtonSolid,
   ContentWrapper,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -18,7 +19,6 @@ import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { IOToast } from "../../../components/Toast";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {

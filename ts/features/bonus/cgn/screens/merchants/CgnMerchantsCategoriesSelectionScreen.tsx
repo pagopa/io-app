@@ -9,6 +9,7 @@ import {
   getGradientColorValues,
   VSpacer,
   Badge,
+  IOToast,
   Icon
 } from "@pagopa/io-app-design-system";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
@@ -26,7 +27,6 @@ import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { IOToast } from "../../../../../components/Toast";
 
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const isFirstRender = useRef<boolean>(true);

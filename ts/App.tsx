@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   IODSExperimentalContextProvider,
+  ToastProvider,
   IOThemeContext,
   IOThemes
 } from "@pagopa/io-app-design-system";
@@ -15,7 +16,6 @@ import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
 import theme from "./theme";
-import { ToastProvider } from "./components/Toast";
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;

@@ -8,6 +8,7 @@ import {
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -15,7 +16,6 @@ import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
-import { IOToast } from "../../components/Toast";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";

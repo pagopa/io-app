@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
@@ -19,7 +20,6 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { attachmentDisplayName } from "../store/reducers/transformers";
 import I18n from "../../../i18n";
-import { IOToast } from "../../../components/Toast";
 import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 
