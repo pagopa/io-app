@@ -5,11 +5,10 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Container } from "native-base";
 import * as React from "react";
-import { View, Image, Modal, StyleSheet } from "react-native";
+import { View, Image, Modal, StyleSheet, ScrollView } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -50,25 +49,27 @@ class SystemOffModal extends React.PureComponent<Props> {
           goBack={false}
           accessibilityEvents={{ avoidNavigationEventsUsage: true }}
         >
-          <Container>
-            <View style={styles.container}>
-              <React.Fragment>
-                <Image
-                  style={styles.image}
-                  source={require("../../../img/servicesStatus/error-detail-icon.png")}
-                />
-                <VSpacer size={40} />
-              </React.Fragment>
-              <View style={IOStyles.alignCenter}>
-                <H1>{I18n.t("systemsOff.title")}</H1>
+          <ScrollView style={IOStyles.flex}>
+            <ContentWrapper>
+              <View style={styles.container}>
+                <React.Fragment>
+                  <Image
+                    style={styles.image}
+                    source={require("../../../img/servicesStatus/error-detail-icon.png")}
+                  />
+                  <VSpacer size={40} />
+                </React.Fragment>
+                <View style={IOStyles.alignCenter}>
+                  <H1>{I18n.t("systemsOff.title")}</H1>
+                </View>
+                <VSpacer size={16} />
+                <View style={IOStyles.alignCenter}>
+                  {message && <Body>{message}</Body>}
+                  <Body weight="SemiBold">{I18n.t("systemsOff.closeApp")}</Body>
+                </View>
               </View>
-              <VSpacer size={16} />
-              <View style={IOStyles.alignCenter}>
-                {message && <Body>{message}</Body>}
-                <Body weight="SemiBold">{I18n.t("systemsOff.closeApp")}</Body>
-              </View>
-            </View>
-          </Container>
+            </ContentWrapper>
+          </ScrollView>
         </BaseScreenComponent>
       </Modal>
     );

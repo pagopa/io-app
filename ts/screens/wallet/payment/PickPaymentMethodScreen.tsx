@@ -9,7 +9,7 @@ import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { Divider, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
@@ -126,6 +126,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   testID={"availablePaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCanPay}
+                  ItemSeparatorComponent={() => <Divider />}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
@@ -165,6 +166,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   testID={"DisabledPaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCanPayButDisabled}
+                  ItemSeparatorComponent={() => <Divider />}
                   keyExtractor={item => `disabled_payment_${item.idWallet}`}
                   ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (
@@ -194,6 +196,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                   testID={"notPayablePaymentMethodList"}
                   removeClippedSubviews={false}
                   data={methodsCantPay}
+                  ItemSeparatorComponent={() => <Divider />}
                   keyExtractor={item => item.idWallet.toString()}
                   ListFooterComponent={<VSpacer size={16} />}
                   renderItem={i => (

@@ -4,7 +4,6 @@
  */
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ListItem } from "native-base";
 import * as React from "react";
 import { FC } from "react";
 import {
@@ -12,11 +11,12 @@ import {
   Alert,
   FlatList,
   ListRenderItemInfo,
-  StyleSheet
+  StyleSheet,
+  Pressable
 } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { connect } from "react-redux";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { Icon, HSpacer, VSpacer, Divider } from "@pagopa/io-app-design-system";
 import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
 import I18n from "../../i18n";
@@ -54,9 +54,7 @@ export type IPaymentMethod = Readonly<{
 const styles = StyleSheet.create({
   container: {
     paddingRight: 10,
-    paddingLeft: 0,
-    flexDirection: "row",
-    justifyContent: "space-between"
+    paddingLeft: 0
   },
   flexColumn: {
     flexDirection: "column",
@@ -136,71 +134,74 @@ const getBadgeStatus = (
 
 const renderListItem = (
   itemInfo: ListRenderItemInfo<IPaymentMethod>,
-  paymentMethodsLength: number,
   backendStatus: O.Option<BackendStatus>
 ) => {
   switch (itemInfo.item.status) {
     case "implemented": {
       const badgeStatus = getBadgeStatus(itemInfo.item, backendStatus);
       return (
-        <ListItem
+        <Pressable
           onPress={badgeStatus?.alert ?? itemInfo.item.onPress}
           style={styles.container}
-          first={itemInfo.index === 0}
-          last={itemInfo.index === paymentMethodsLength}
         >
-          {itemInfo.item.icon({ width: 20, height: 20 })}
-          <HSpacer size={16} />
-          <View style={styles.flexColumn}>
-            <View style={IOStyles.rowSpaceBetween}>
-              <View>
-                {badgeStatus?.badge}
-                <H3 color={"bluegreyDark"} weight={"SemiBold"}>
-                  {itemInfo.item.name}
-                </H3>
+          <VSpacer />
+          <View style={IOStyles.rowSpaceBetween}>
+            {itemInfo.item.icon({ width: 20, height: 20 })}
+            <HSpacer size={16} />
+            <View style={styles.flexColumn}>
+              <View style={IOStyles.rowSpaceBetween}>
+                <View>
+                  {badgeStatus?.badge}
+                  <H3 color={"bluegreyDark"} weight={"SemiBold"}>
+                    {itemInfo.item.name}
+                  </H3>
+                </View>
               </View>
+              <H5
+                color={"bluegrey"}
+                weight={"Regular"}
+                style={styles.descriptionPadding}
+              >
+                {itemInfo.item.description}
+              </H5>
             </View>
-            <H5
-              color={"bluegrey"}
-              weight={"Regular"}
-              style={styles.descriptionPadding}
-            >
-              {itemInfo.item.description}
-            </H5>
+            <Icon name="chevronRightListItem" color="blue" size={24} />
           </View>
-          <Icon name="chevronRightListItem" color="blue" size={24} />
-        </ListItem>
+          <VSpacer />
+        </Pressable>
       );
     }
     case "incoming":
       return (
-        <ListItem
+        <Pressable
           onPress={showPaymentMethodIncomingAlert}
           style={styles.container}
-          first={itemInfo.index === 0}
-          last={itemInfo.index === paymentMethodsLength}
         >
-          <View style={styles.flexColumn}>
-            <View>
-              <IOBadge
-                small
-                text={I18n.t("wallet.methods.comingSoon")}
-                variant="solid"
-                color="blue"
-              />
-              <H3 color={"bluegrey"} weight={"SemiBold"}>
-                {itemInfo.item.name}
-              </H3>
+          <VSpacer />
+          <View style={IOStyles.rowSpaceBetween}>
+            <View style={styles.flexColumn}>
+              <View>
+                <IOBadge
+                  small
+                  text={I18n.t("wallet.methods.comingSoon")}
+                  variant="solid"
+                  color="blue"
+                />
+                <H3 color={"bluegrey"} weight={"SemiBold"}>
+                  {itemInfo.item.name}
+                </H3>
+              </View>
+              <H5
+                color={"bluegrey"}
+                weight={"Regular"}
+                style={styles.descriptionPadding}
+              >
+                {itemInfo.item.description}
+              </H5>
             </View>
-            <H5
-              color={"bluegrey"}
-              weight={"Regular"}
-              style={styles.descriptionPadding}
-            >
-              {itemInfo.item.description}
-            </H5>
           </View>
-        </ListItem>
+          <VSpacer />
+        </Pressable>
       );
     case "notImplemented":
       return null;
@@ -215,15 +216,9 @@ const PaymentMethodsList: React.FunctionComponent<Props> = (props: Props) => (
       removeClippedSubviews={false}
       data={props.paymentMethods}
       keyExtractor={item => item.name}
+      ItemSeparatorComponent={() => <Divider />}
       ListFooterComponent={<VSpacer size={16} />}
-      renderItem={i =>
-        renderListItem(
-          i,
-          props.paymentMethods.filter(pm => pm.status !== "notImplemented")
-            .length,
-          props.sectionStatus
-        )
-      }
+      renderItem={i => renderListItem(i, props.sectionStatus)}
     />
   </View>
 );

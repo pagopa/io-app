@@ -1,9 +1,7 @@
-import I18n from "i18n-js";
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, SafeAreaView, StyleSheet, Modal } from "react-native";
-import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { VSpacer, Pictogram, ButtonSolid } from "@pagopa/io-app-design-system";
+import I18n from "../../../i18n";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -51,9 +49,12 @@ const UnsupportedDeviceScreen = () => {
           </Body>
         </View>
         <View style={styles.buttonContainer}>
-          <ButtonDefaultOpacity block={true} onPress={handleLearnMorePress}>
-            <NBButtonText>{I18n.t("unsupportedDevice.cta.faq")}</NBButtonText>
-          </ButtonDefaultOpacity>
+          <ButtonSolid
+            fullWidth
+            onPress={handleLearnMorePress}
+            label={I18n.t("unsupportedDevice.cta.faq")}
+            accessibilityLabel={I18n.t("unsupportedDevice.cta.faq")}
+          />
         </View>
       </SafeAreaView>
     </Modal>

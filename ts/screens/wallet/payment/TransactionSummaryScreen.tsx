@@ -12,9 +12,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { ActionSheet } from "native-base";
 import React, { useCallback, useEffect } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -305,25 +304,26 @@ const TransactionSummaryScreen = (): React.ReactElement => {
     if (pot.isSome(paymentId)) {
       // If we have a paymentId (payment check already done) we need to
       // ask the user to cancel the payment and in case reset it
-      ActionSheet.show(
-        {
-          options: [
-            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
-            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
-          ],
-          destructiveButtonIndex: 0,
-          cancelButtonIndex: 1,
-          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            dispatch(backToEntrypointPayment());
-            resetPayment();
-            IOToast.success(
-              I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess")
-            );
+      Alert.alert(
+        I18n.t("wallet.ConfirmPayment.confirmCancelTitle"),
+        undefined,
+        [
+          {
+            text: I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            style: "destructive",
+            onPress: () => {
+              dispatch(backToEntrypointPayment());
+              resetPayment();
+              IOToast.success(
+                I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess")
+              );
+            }
+          },
+          {
+            text: I18n.t("wallet.ConfirmPayment.confirmContinuePayment"),
+            style: "cancel"
           }
-        }
+        ]
       );
     } else {
       navigation.goBack();

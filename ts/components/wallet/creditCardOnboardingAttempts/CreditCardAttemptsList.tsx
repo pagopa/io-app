@@ -1,7 +1,17 @@
-import { Content } from "native-base";
 import * as React from "react";
-import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  View,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  ScrollView
+} from "react-native";
+import {
+  ContentWrapper,
+  IOColors,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
@@ -135,26 +145,28 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <Content style={styles.whiteContent}>
-      <View>
-        <View style={styles.subHeaderContent}>
-          <Body>{props.title}</Body>
+    <ScrollView style={styles.whiteContent}>
+      <ContentWrapper>
+        <View>
+          <View style={styles.subHeaderContent}>
+            <Body>{props.title}</Body>
+          </View>
         </View>
-      </View>
 
-      <FlatList
-        scrollEnabled={false}
-        data={creditCardAttempts}
-        renderItem={renderCreditCardAttempt}
-        ListEmptyComponent={ListEmptyComponent}
-        ItemSeparatorComponent={() => (
-          <ItemSeparatorComponent noPadded={true} />
-        )}
-        ListFooterComponent={
-          creditCardAttempts.length > 0 ? <EdgeBorderComponent /> : null
-        }
-        keyExtractor={c => c.hashedPan}
-      />
-    </Content>
+        <FlatList
+          scrollEnabled={false}
+          data={creditCardAttempts}
+          renderItem={renderCreditCardAttempt}
+          ListEmptyComponent={ListEmptyComponent}
+          ItemSeparatorComponent={() => (
+            <ItemSeparatorComponent noPadded={true} />
+          )}
+          ListFooterComponent={
+            creditCardAttempts.length > 0 ? <EdgeBorderComponent /> : null
+          }
+          keyExtractor={c => c.hashedPan}
+        />
+      </ContentWrapper>
+    </ScrollView>
   );
 };

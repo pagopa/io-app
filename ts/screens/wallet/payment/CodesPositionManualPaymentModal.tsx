@@ -1,17 +1,19 @@
-import { Body, Container, Right } from "native-base";
 import * as React from "react";
 import {
   BackHandler,
   Dimensions,
   Image,
   NativeEventSubscription,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import ImageZoom from "react-native-image-pan-zoom";
-import { Icon } from "@pagopa/io-app-design-system";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-
-import AppHeader from "./../../../components/ui/AppHeader";
+import {
+  HeaderSecondLevel,
+  IOColors,
+  IOStyles
+} from "@pagopa/io-app-design-system";
+import I18n from "../../../i18n";
 
 type Props = {
   onCancel: () => void;
@@ -55,18 +57,17 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
 
   public render() {
     return (
-      <Container>
-        <AppHeader noLeft={true}>
-          <Body />
-          <Right>
-            <ButtonDefaultOpacity
-              onPress={this.props.onCancel}
-              transparent={true}
-            >
-              <Icon name="closeLarge" color="black" />
-            </ButtonDefaultOpacity>
-          </Right>
-        </AppHeader>
+      <View style={[IOStyles.flex, { backgroundColor: IOColors.white }]}>
+        <HeaderSecondLevel
+          title=""
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            onPress: this.handleBackPress,
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            testID: "contextualInfo_closeButton"
+          }}
+        />
         <ImageZoom
           imageHeight={screenHeight}
           imageWidth={screenWidth}
@@ -78,7 +79,7 @@ class CodesPositionManualPaymentModal extends React.PureComponent<Props> {
             style={styles.imageStyle}
           />
         </ImageZoom>
-      </Container>
+      </View>
     );
   }
 }

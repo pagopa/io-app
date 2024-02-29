@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
 import _ from "lodash";
-import { Body, Container, Left, Right } from "native-base";
 import {
   View,
   FlatList,
@@ -11,10 +10,7 @@ import {
   ScrollView,
   Platform
 } from "react-native";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
-import AppHeader from "../../../../../components/ui/AppHeader";
-import ButtonDefaultOpacity from "../../../../../components/ButtonDefaultOpacity";
-import { H5 } from "../../../../../components/core/typography/H5";
+import { HeaderSecondLevel, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../../i18n";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -95,20 +91,17 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
     checkedCategories.length + (searchValue.length > 0 ? 1 : 0);
 
   return (
-    <Container>
-      <AppHeader>
-        <Left />
-        <Body style={{ alignItems: "center" }}>
-          <H5 weight={"SemiBold"} color={"bluegrey"}>
-            {I18n.t("bonus.cgn.merchantsList.filter.title")}
-          </H5>
-        </Body>
-        <Right>
-          <ButtonDefaultOpacity onPress={props.onClose} transparent={true}>
-            <Icon name="closeLarge" />
-          </ButtonDefaultOpacity>
-        </Right>
-      </AppHeader>
+    <>
+      <HeaderSecondLevel
+        title={I18n.t("bonus.cgn.merchantsList.filter.title")}
+        type="singleAction"
+        firstAction={{
+          icon: "closeLarge",
+          onPress: props.onClose,
+          accessibilityLabel: I18n.t("global.buttons.close"),
+          testID: "contextualInfo_closeButton"
+        }}
+      />
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView
           style={IOStyles.flex}
@@ -202,7 +195,7 @@ const CgnMerchantsFilters: React.FunctionComponent<Props> = (props: Props) => {
           )}
         />
       </SafeAreaView>
-    </Container>
+    </>
   );
 };
 

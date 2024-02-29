@@ -1,9 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Text as NBButtonText } from "native-base";
-import { IOColors } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  IOColors
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
   buttonBar: {
@@ -13,18 +15,14 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.greyLight,
     padding: 5
   },
-  flex2: {
-    flex: 2,
+  flex: {
+    flex: 1,
     margin: 5
-  },
-  buttonBarCenter: {
-    backgroundColor: IOColors.white
   }
 });
 
 type Props = {
   onResetSelection: () => void;
-  onToggleAllSelection?: () => void;
   onToggleSelection: () => void;
   primaryButtonText: string;
   selectedItems: number;
@@ -35,7 +33,6 @@ type Props = {
  * Render a bottom bar with buttons for Cancel, Select all and Archive/Restore items.
  */
 const ListSelectionBar = ({
-  onToggleAllSelection,
   onToggleSelection,
   onResetSelection,
   primaryButtonText,
@@ -43,40 +40,23 @@ const ListSelectionBar = ({
   totalItems
 }: Props) => (
   <View style={styles.buttonBar}>
-    <ButtonDefaultOpacity
-      block={true}
-      bordered={true}
-      light={true}
-      onPress={onResetSelection}
-      style={styles.flex2}
-    >
-      <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
-    </ButtonDefaultOpacity>
-    {onToggleAllSelection && (
-      <ButtonDefaultOpacity
-        block={true}
-        bordered={true}
-        style={[styles.buttonBarCenter, styles.flex2]}
-        onPress={onToggleAllSelection}
-        testID={"toggleAllSelection"}
-      >
-        <NBButtonText>
-          {I18n.t(
-            selectedItems === totalItems
-              ? "messages.cta.deselectAll"
-              : "messages.cta.selectAll"
-          )}
-        </NBButtonText>
-      </ButtonDefaultOpacity>
-    )}
-    <ButtonDefaultOpacity
-      block={true}
-      style={styles.flex2}
-      disabled={selectedItems === 0}
-      onPress={onToggleSelection}
-    >
-      <NBButtonText>{primaryButtonText}</NBButtonText>
-    </ButtonDefaultOpacity>
+    <View style={styles.flex}>
+      <ButtonOutline
+        fullWidth={true}
+        label={I18n.t("global.buttons.cancel")}
+        accessibilityLabel={I18n.t("global.buttons.cancel")}
+        onPress={onResetSelection}
+      />
+    </View>
+    <View style={styles.flex}>
+      <ButtonSolid
+        fullWidth={true}
+        label={primaryButtonText}
+        onPress={onToggleSelection}
+        disabled={selectedItems === 0}
+        accessibilityLabel={primaryButtonText}
+      />
+    </View>
   </View>
 );
 

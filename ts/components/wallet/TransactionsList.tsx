@@ -1,25 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
-import {
-  Dimensions,
-  FlatList,
-  ListRenderItemInfo,
-  StyleSheet,
-  View
-} from "react-native";
+import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import {
+  ButtonOutline,
   IOColors,
   IOVisualCostants,
-  ListItemTransaction
+  ListItemTransaction,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { formatNumberCurrencyCents } from "../../features/idpay/common/utils/strings";
 import I18n from "../../i18n";
 import variables from "../../theme/variables";
 import { Transaction } from "../../types/pagopa";
 import { format } from "../../utils/dates";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import { Body } from "../core/typography/Body";
 import { H3 } from "../core/typography/H3";
@@ -36,7 +30,6 @@ type Props = Readonly<{
   helpMessage?: React.ReactNode;
   ListEmptyComponent?: React.ReactElement;
 }>;
-const screenWidth = Dimensions.get("screen").width;
 
 export const TransactionsList = (props: Props) => {
   const [isLoadingMore, setIsLoadingMore] = React.useState(false);
@@ -89,25 +82,27 @@ export const TransactionsList = (props: Props) => {
 
     return (
       <>
-        <ButtonDefaultOpacity
-          style={styles.moreButton}
-          bordered={true}
-          disabled={isLoadingMore}
+        <ButtonOutline
+          fullWidth
+          label={I18n.t(
+            // change the button text if we are loading another slice of transactions
+            isLoadingMore
+              ? "wallet.transacionsLoadingMore"
+              : "wallet.transactionsLoadMore"
+          )}
+          accessibilityLabel={I18n.t(
+            // change the button text if we are loading another slice of transactions
+            isLoadingMore
+              ? "wallet.transacionsLoadingMore"
+              : "wallet.transactionsLoadMore"
+          )}
           onPress={() => {
             setIsLoadingMore(true);
             onLoadMoreTransactions();
           }}
-        >
-          <NBButtonText>
-            {I18n.t(
-              // change the button text if we are loading another slice of transactions
-              isLoadingMore
-                ? "wallet.transacionsLoadingMore"
-                : "wallet.transactionsLoadMore"
-            )}
-          </NBButtonText>
-        </ButtonDefaultOpacity>
-        <EdgeBorderComponent />
+          disabled={isLoadingMore}
+        />
+        <VSpacer />
       </>
     );
   };
@@ -182,13 +177,5 @@ const styles = StyleSheet.create({
     alignItems: "baseline",
     justifyContent: "space-between",
     paddingHorizontal: variables.contentPadding
-  },
-  moreButton: {
-    flex: 1,
-    alignContent: "center",
-    justifyContent: "center",
-    alignSelf: "center",
-    width: screenWidth - variables.contentPadding * 2,
-    backgroundColor: IOColors.white
   }
 });

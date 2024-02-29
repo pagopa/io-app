@@ -1,9 +1,15 @@
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActionSheet, Content } from "native-base";
 import * as React from "react";
-import { View, Alert, SafeAreaView, StyleSheet, Text } from "react-native";
+import {
+  View,
+  Alert,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  ScrollView
+} from "react-native";
 import { connect } from "react-redux";
 import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
@@ -404,7 +410,7 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
         backButtonTestID="cancelPaymentButton"
       >
         <SafeAreaView style={styles.flex}>
-          <Content noPadded={true}>
+          <ScrollView style={styles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
               <VSpacer size={16} />
 
@@ -527,7 +533,7 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
 
               <VSpacer size={40} />
             </View>
-          </Content>
+          </ScrollView>
 
           {O.isSome(props.payStartWebviewPayload) && (
             <PayWebViewModal
@@ -596,21 +602,22 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
   return {
     onCancel: () => {
-      ActionSheet.show(
-        {
-          options: [
-            I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
-            I18n.t("wallet.ConfirmPayment.confirmContinuePayment")
-          ],
-          destructiveButtonIndex: 0,
-          cancelButtonIndex: 1,
-          title: I18n.t("wallet.ConfirmPayment.confirmCancelTitle")
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            dispatchCancelPayment();
+      Alert.alert(
+        I18n.t("wallet.ConfirmPayment.confirmCancelTitle"),
+        undefined,
+        [
+          {
+            text: I18n.t("wallet.ConfirmPayment.confirmCancelPayment"),
+            style: "destructive",
+            onPress: () => {
+              dispatchCancelPayment();
+            }
+          },
+          {
+            text: I18n.t("wallet.ConfirmPayment.confirmContinuePayment"),
+            style: "cancel"
           }
-        }
+        ]
       );
     },
     dispatchPaymentStart: (

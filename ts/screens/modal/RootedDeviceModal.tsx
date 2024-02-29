@@ -1,4 +1,3 @@
-import { Container, Content } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -6,20 +5,21 @@ import {
   AlertButton,
   Image,
   Platform,
-  SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  VSpacer,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
 import image from "../../../img/rooted/broken-phone.png";
 import { H2 } from "../../components/core/typography/H2";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { trackLoginRootedScreen } from "./analytics";
 
 type Props = {
@@ -28,12 +28,7 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
   main: {
-    paddingTop: customVariables.contentPadding,
-    paddingHorizontal: customVariables.contentPadding,
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
@@ -98,19 +93,6 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
     onConfirmAction: props.onCancel
   };
 
-  const leftButton: BlockButtonProps = {
-    title: I18n.t("global.buttons.continue"),
-    bordered: true,
-    danger: true,
-    onPress: () => showAlert(continueAlertConfig)
-  };
-
-  const rightButton: BlockButtonProps = {
-    title: I18n.t("global.buttons.cancel"),
-    primary: true,
-    onPress: () => showAlert(cancelAlertConfig)
-  };
-
   const onMarkdownLoaded = () => {
     setMarkdownLoaded(true);
   };
@@ -124,32 +106,45 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
       goBack={false}
       accessibilityEvents={{ avoidNavigationEventsUsage: true }}
     >
-      <Container>
-        <SafeAreaView style={styles.flex}>
-          <Content>
-            <View style={styles.main}>
-              <Image source={image} resizeMode="contain" style={styles.image} />
-              <VSpacer size={24} />
-              <View style={IOStyles.alignCenter}>
-                <H2>{I18n.t("rooted.title")}</H2>
-              </View>
+      <ScrollView style={IOStyles.flex}>
+        <ContentWrapper>
+          <View style={styles.main}>
+            <Image source={image} resizeMode="contain" style={styles.image} />
+            <VSpacer size={24} />
+            <View style={IOStyles.alignCenter}>
+              <H2>{I18n.t("rooted.title")}</H2>
             </View>
-            <VSpacer size={8} />
-            <LegacyMarkdown
-              cssStyle={CSS_STYLE}
-              onLoadEnd={onMarkdownLoaded}
-              extraBodyHeight={100}
-            >
-              {body}
-            </LegacyMarkdown>
-          </Content>
-          <FooterWithButtons
-            type="TwoButtonsInlineHalf"
-            leftButton={leftButton}
-            rightButton={rightButton}
-          />
-        </SafeAreaView>
-      </Container>
+          </View>
+          <VSpacer size={8} />
+          <LegacyMarkdown
+            cssStyle={CSS_STYLE}
+            onLoadEnd={onMarkdownLoaded}
+            extraBodyHeight={100}
+          >
+            {body}
+          </LegacyMarkdown>
+        </ContentWrapper>
+      </ScrollView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            color: "danger",
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: () => showAlert(continueAlertConfig)
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: () => showAlert(cancelAlertConfig)
+          }
+        }}
+      />
     </BaseScreenComponent>
   ));
 

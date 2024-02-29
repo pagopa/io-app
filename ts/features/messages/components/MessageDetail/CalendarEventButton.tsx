@@ -1,13 +1,12 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBButtonText } from "native-base";
 import React from "react";
-import { Alert, Dimensions, StyleSheet } from "react-native";
+import { Alert, Dimensions, StyleSheet, View } from "react-native";
 import { Calendar } from "react-native-calendar-events";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon, IOIcons, HSpacer } from "@pagopa/io-app-design-system";
+import { ButtonOutline } from "@pagopa/io-app-design-system";
 import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import I18n from "../../../../i18n";
 import {
@@ -32,7 +31,6 @@ import {
   searchEventInCalendar
 } from "../../../../utils/calendar";
 import { requestWriteCalendarPermission } from "../../../../utils/permission";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import SelectCalendarModal from "../../../../components/SelectCalendarModal";
 import { LightModalContextInterface } from "../../../../components/ui/LightModal";
@@ -63,8 +61,7 @@ const styles = StyleSheet.create({
   },
   oneThird: {
     flex: 5
-  },
-  marginTop1: { marginTop: 1 }
+  }
 });
 
 class CalendarEventButton extends React.PureComponent<Props, State> {
@@ -333,25 +330,21 @@ class CalendarEventButton extends React.PureComponent<Props, State> {
         ? "messages.cta.reminderShort"
         : "messages.cta.reminder"
     );
-    const { small, disabled, medium } = this.props;
+    const { disabled } = this.props;
     const iconName = this.state.isEventInDeviceCalendar
       ? "checkTickBig"
       : "add";
     return (
-      <ButtonDefaultOpacity
-        disabled={disabled}
-        onPress={this.onPressHandler}
-        xsmall={small}
-        small={medium}
-        bordered={!disabled}
-        style={this.props.small ? styles.oneThird : styles.button}
-      >
-        {/* This condition doesn't make sense. We should replace it using
-        a different component (e.g. ButtonOutline) */}
-        <Icon name={iconName as IOIcons} color={disabled ? "white" : "blue"} />
-        <HSpacer size={4} />
-        <NBButtonText style={styles.marginTop1}>{reminderText}</NBButtonText>
-      </ButtonDefaultOpacity>
+      <View style={this.props.small ? styles.oneThird : styles.button}>
+        <ButtonOutline
+          fullWidth
+          icon={iconName}
+          label={reminderText}
+          accessibilityLabel={reminderText}
+          disabled={disabled}
+          onPress={this.onPressHandler}
+        />
+      </View>
     );
   }
 }
