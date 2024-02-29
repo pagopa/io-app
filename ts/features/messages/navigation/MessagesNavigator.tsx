@@ -13,7 +13,7 @@ import { isGestureEnabled } from "../../../utils/navigation";
 import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { LegacyMessageDetailAttachment } from "../screens/LegacyMessageAttachment";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { MessageAttachment } from "../screens/MessageAttachment";
+import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
@@ -26,7 +26,11 @@ export const MessagesStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={MESSAGES_ROUTES.MESSAGE_ROUTER}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
+      screenOptions={{
+        gestureEnabled: isGestureEnabled,
+        headerMode: "screen",
+        headerShown: isDesignSystemEnabled
+      }}
     >
       <Stack.Group>
         <Stack.Screen
@@ -44,21 +48,15 @@ export const MessagesStackNavigator = () => {
               ? MessageDetailsScreen
               : LegacyMessageDetailScreen
           }
-          options={{
-            headerShown: isDesignSystemEnabled
-          }}
         />
 
         <Stack.Screen
           name={MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT}
           component={
             isDesignSystemEnabled
-              ? MessageAttachment
+              ? MessageAttachmentScreen
               : LegacyMessageDetailAttachment
           }
-          options={{
-            headerShown: isDesignSystemEnabled
-          }}
         />
 
         <Stack.Screen

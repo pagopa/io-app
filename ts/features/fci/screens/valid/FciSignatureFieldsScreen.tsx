@@ -15,7 +15,6 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIODispatch } from "../../../../store/hooks";
@@ -272,25 +271,19 @@ const FciSignatureFieldsScreen = () => {
   }
 
   return (
-    <>
-      <SafeAreaView
-        style={IOStyles.flex}
-        testID={"FciSignatureFieldsTestID"}
-        edges={["bottom", "left", "right"]}
-      >
-        <ScrollView style={IOStyles.horizontalContentPadding}>
-          <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
-          <VSpacer size={32} />
-          {renderSignatureFields()}
-        </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          secondary={{ type: "Solid", buttonProps: continueButtonProps }}
-          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
-        />
-      </SafeAreaView>
+    <View style={IOStyles.flex} testID={"FciSignatureFieldsTestID"}>
+      <ScrollView style={IOStyles.horizontalContentPadding}>
+        <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
+        <VSpacer size={32} />
+        {renderSignatureFields()}
+      </ScrollView>
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        secondary={{ type: "Solid", buttonProps: continueButtonProps }}
+        primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+      />
       {fciAbortSignature}
-    </>
+    </View>
   );
 };
 export default FciSignatureFieldsScreen;
