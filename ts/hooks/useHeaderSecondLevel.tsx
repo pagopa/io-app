@@ -18,6 +18,7 @@ type CommonProps = {
   title: string;
   backAccessibilityLabel?: string;
   goBack?: () => void;
+  canGoBack?: boolean;
   transparent?: boolean;
   scrollValues?: ScrollValues;
 };
@@ -65,6 +66,7 @@ export const useHeaderSecondLevel = ({
   contextualHelpMarkdown,
   faqCategories,
   goBack,
+  canGoBack = true,
   supportRequest,
   secondAction,
   thirdAction,
@@ -79,12 +81,14 @@ export const useHeaderSecondLevel = ({
 
   const navigation = useNavigation();
   const headerComponentProps: HeaderProps = React.useMemo(() => {
-    const baseProps = {
-      title,
-      backAccessibilityLabel:
-        backAccessibilityLabel ?? I18n.t("global.buttons.back"),
-      goBack: goBack ?? navigation.goBack
-    };
+    const baseProps = canGoBack
+      ? {
+          title,
+          backAccessibilityLabel:
+            backAccessibilityLabel ?? I18n.t("global.buttons.back"),
+          goBack: goBack ?? navigation.goBack
+        }
+      : { title };
 
     if (supportRequest) {
       const helpAction = {
@@ -127,6 +131,7 @@ export const useHeaderSecondLevel = ({
       type: "base"
     };
   }, [
+    canGoBack,
     title,
     backAccessibilityLabel,
     goBack,
