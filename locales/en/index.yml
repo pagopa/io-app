@@ -558,7 +558,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after {{days}} days from the last login with SPID or CIE, we ask you to sign in again to use IO.
+      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -577,6 +577,7 @@ authentication:
     loginSpidCie: Login with SPID or CIE
     infoSpidCie: Introduction to SPID and CIE
     loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
+    privacyLink: Informativa privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
     card1-title: All messages in one place
@@ -584,11 +585,9 @@ authentication:
     card2-title: Use your favourite payment methods
     card2-content: You can pay a tax or a penalty by your bank account and your cards
     card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice
-    card4-title: You can login only with SPID
-    card4-content: The device you are using does not support access with Electronic Identity Card (CIE)
+    card3-content: You can pay a notice also by scanning the QR code on the physical notice    
     card5-title: Welcome to the public version of IO!
-    card5-content: In this version you can find in the upper-right corner the icons to report bugs or start a chat with the development team. We're waiting for your feedback!
+    card5-content: Vediamo insieme cosa puoi fare
     card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
