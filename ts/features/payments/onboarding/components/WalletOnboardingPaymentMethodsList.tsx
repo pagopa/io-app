@@ -42,6 +42,7 @@ const PaymentMethodItem = ({
   const listItemNavCommonProps: ListItemNav = {
     accessibilityLabel: paymentMethod.description,
     onPress,
+    loading: isLoading,
     value: paymentMethod.description
   };
 
@@ -55,7 +56,6 @@ const PaymentMethodItem = ({
       brand => (
         <ListItemNav
           {...listItemNavCommonProps}
-          loading={isLoading}
           paymentLogo={brand as IOLogoPaymentType}
         />
       )
