@@ -52,13 +52,6 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
   <RCTSwitch
     accessibilityLabel="Push Notifications"
     accessibilityRole="switch"
-    accessibilityState={
-      Object {
-        "checked": true,
-        "disabled": undefined,
-      }
-    }
-    accessible={true}
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
@@ -70,14 +63,13 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
           "width": 51,
         },
         Object {
-          "marginBottom": -5,
-          "marginTop": -5,
+          "backgroundColor": "#F5F6F7",
+          "borderRadius": 16,
         },
       ]
     }
-    testID="preference-toggle-row"
-    thumbTintColor="default"
-    tintColor="default"
+    thumbTintColor="#FFFFFF"
+    tintColor="#F5F6F7"
     value={true}
   />
 </View>

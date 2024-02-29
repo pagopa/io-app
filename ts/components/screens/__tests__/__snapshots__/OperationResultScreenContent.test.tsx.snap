@@ -320,6 +320,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                       }
                     >
                       <RCTSafeAreaView
+                        emulateUnlessSupported={true}
                         style={
                           Object {
                             "flexGrow": 1,

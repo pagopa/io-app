@@ -13,215 +13,216 @@ exports[`ListSelectionBar component should match the snapshot with default props
   }
 >
   <View
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "disabled": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    forwardedRef={[Function]}
-    hitSlop={
-      Object {
-        "bottom": 4,
-        "top": 4,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "alignItems": "center",
-        "alignSelf": "stretch",
-        "backgroundColor": "transparent",
-        "borderBottomWidth": 1,
-        "borderColor": "#a9a9a9",
-        "borderLeftWidth": 1,
-        "borderRadius": 5,
-        "borderRightWidth": 1,
-        "borderTopWidth": 1,
-        "borderWidth": 1,
-        "elevation": null,
-        "flex": 2,
-        "flexDirection": "row",
-        "height": 45,
-        "justifyContent": "center",
+        "flex": 1,
         "margin": 5,
-        "opacity": 1,
-        "paddingBottom": 6,
-        "paddingTop": 6,
-        "shadowColor": null,
-        "shadowOffset": null,
-        "shadowOpacity": null,
-        "shadowRadius": null,
       }
     }
   >
-    <Text
-      style={
+    <View
+      accessibilityLabel="Cancel"
+      accessibilityRole="button"
+      accessibilityState={
         Object {
-          "backgroundColor": "transparent",
-          "color": "#a9a9a9",
-          "fontFamily": "System",
-          "fontSize": 16.5,
-          "marginLeft": 0,
-          "marginRight": 0,
-          "paddingLeft": 16,
-          "paddingRight": 16,
+          "disabled": false,
         }
       }
-      uppercase={false}
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={Object {}}
     >
-      Cancel
-    </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 4,
+              "elevation": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingHorizontal": 16,
+              "textAlignVertical": "center",
+            },
+            false,
+            Object {
+              "borderWidth": 1,
+            },
+            Object {
+              "height": 40,
+            },
+            false,
+            Object {
+              "backgroundColor": "rgba(0,115,230,0)",
+              "borderColor": "#0073E6",
+            },
+            Object {
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "transform": Array [
+                Object {
+                  "scale": undefined,
+                },
+              ],
+            },
+          ]
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          ellipsizeMode="tail"
+          importantForAccessibility="no-hide-descendants"
+          maxFontSizeMultiplier={1.3}
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "fontFamily": "Titillium Web",
+                "fontStyle": "normal",
+                "fontWeight": "700",
+              },
+              Object {
+                "alignSelf": "center",
+              },
+              Object {
+                "color": "#0073E6",
+              },
+              Object {
+                "color": undefined,
+              },
+            ]
+          }
+        >
+          Cancel
+        </Text>
+      </View>
+    </View>
   </View>
   <View
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "disabled": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    forwardedRef={[Function]}
-    hitSlop={
-      Object {
-        "bottom": 4,
-        "top": 4,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "alignItems": "center",
-        "alignSelf": "stretch",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 1,
-        "borderColor": "#007aff",
-        "borderLeftWidth": 1,
-        "borderRadius": 5,
-        "borderRightWidth": 1,
-        "borderTopWidth": 1,
-        "borderWidth": 1,
-        "elevation": null,
-        "flex": 2,
-        "flexDirection": "row",
-        "height": 45,
-        "justifyContent": "center",
+        "flex": 1,
         "margin": 5,
-        "opacity": 1,
-        "paddingBottom": 6,
-        "paddingTop": 6,
-        "shadowColor": null,
-        "shadowOffset": null,
-        "shadowOpacity": null,
-        "shadowRadius": null,
-      }
-    }
-    testID="toggleAllSelection"
-  >
-    <Text
-      style={
-        Object {
-          "backgroundColor": "transparent",
-          "color": "#a9a9a9",
-          "fontFamily": "System",
-          "fontSize": 16.5,
-          "marginLeft": 0,
-          "marginRight": 0,
-          "paddingLeft": 16,
-          "paddingRight": 16,
-        }
-      }
-      uppercase={false}
-    >
-      All
-    </Text>
-  </View>
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      Object {
-        "disabled": false,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    forwardedRef={[Function]}
-    hitSlop={
-      Object {
-        "bottom": 4,
-        "top": 4,
-      }
-    }
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "stretch",
-        "backgroundColor": "#007aff",
-        "borderBottomWidth": null,
-        "borderColor": "#007aff",
-        "borderLeftWidth": null,
-        "borderRadius": 5,
-        "borderRightWidth": null,
-        "borderTopWidth": null,
-        "borderWidth": undefined,
-        "elevation": 2,
-        "flex": 2,
-        "flexDirection": "row",
-        "height": 45,
-        "justifyContent": "center",
-        "margin": 5,
-        "opacity": 1,
-        "paddingBottom": 6,
-        "paddingTop": 6,
-        "shadowColor": undefined,
-        "shadowOffset": undefined,
-        "shadowOpacity": undefined,
-        "shadowRadius": undefined,
       }
     }
   >
-    <Text
-      style={
+    <View
+      accessibilityLabel="archive"
+      accessibilityRole="button"
+      accessibilityState={
         Object {
-          "backgroundColor": "transparent",
-          "color": "#a9a9a9",
-          "fontFamily": "System",
-          "fontSize": 16.5,
-          "marginLeft": 0,
-          "marginRight": 0,
-          "paddingLeft": 16,
-          "paddingRight": 16,
+          "busy": false,
+          "disabled": false,
         }
       }
-      uppercase={false}
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={Object {}}
     >
-      archive
-    </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "borderRadius": 4,
+              "elevation": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "paddingHorizontal": 16,
+              "textAlignVertical": "center",
+            },
+            Object {
+              "overflow": "hidden",
+            },
+            false,
+            Object {
+              "height": 40,
+            },
+            Object {
+              "backgroundColor": "#0073E6",
+            },
+            Object {
+              "backgroundColor": undefined,
+              "transform": Array [
+                Object {
+                  "scale": undefined,
+                },
+              ],
+            },
+          ]
+        }
+      >
+        <View
+          exiting={[Function]}
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              false,
+            ]
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            color="white"
+            defaultColor="white"
+            defaultWeight="Bold"
+            ellipsizeMode="tail"
+            font="TitilliumWeb"
+            fontStyle={
+              Object {
+                "fontSize": 16,
+              }
+            }
+            importantForAccessibility="no-hide-descendants"
+            maxFontSizeMultiplier={1.3}
+            numberOfLines={1}
+            style={
+              Array [
+                Object {
+                  "alignSelf": "center",
+                },
+                Object {
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                  "fontFamily": "Titillium Web",
+                  "fontStyle": "normal",
+                  "fontWeight": "700",
+                },
+              ]
+            }
+            weight="Bold"
+          >
+            archive
+          </Text>
+        </View>
+      </View>
+    </View>
   </View>
 </View>
 `;

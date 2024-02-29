@@ -322,15 +322,14 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#fff",
-                            "flex": 1,
-                            "height": 1334,
+                            "flexGrow": 1,
                           }
                         }
                       >
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -567,6 +566,7 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -986,15 +986,14 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#fff",
-                            "flex": 1,
-                            "height": 1334,
+                            "flexGrow": 1,
                           }
                         }
                       >
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -1231,6 +1230,7 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -1650,15 +1650,14 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#fff",
-                            "flex": 1,
-                            "height": 1334,
+                            "flexGrow": 1,
                           }
                         }
                       >
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -1895,76 +1894,52 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
                             }
                           }
                         >
-                          <RCTSafeAreaView
-                            style={
+                          <RCTScrollView
+                            bounces={false}
+                            contentContainerStyle={
                               Object {
-                                "backgroundColor": "transparent",
-                                "flex": 1,
+                                "flexGrow": 1,
+                                "justifyContent": "center",
                               }
                             }
+                            testID="LoadingErrorComponentError"
                           >
-                            <RCTScrollView
-                              automaticallyAdjustContentInsets={false}
-                              bounces={false}
-                              contentContainerStyle={
-                                Array [
+                            <View>
+                              <View
+                                style={
                                   Object {
-                                    "padding": undefined,
-                                  },
-                                  Object {
-                                    "flexGrow": 1,
-                                    "justifyContent": "center",
-                                  },
-                                ]
-                              }
-                              contentInset={
-                                Object {
-                                  "bottom": 0,
+                                    "alignItems": "center",
+                                  }
                                 }
-                              }
-                              enableAutomaticScroll={true}
-                              enableOnAndroid={false}
-                              enableResetScrollToCoords={true}
-                              extraHeight={75}
-                              extraScrollHeight={0}
-                              getScrollResponder={[Function]}
-                              handleOnScroll={[Function]}
-                              keyboardDismissMode="interactive"
-                              keyboardOpeningTime={250}
-                              keyboardShouldPersistTaps="handled"
-                              keyboardSpace={0}
-                              onScroll={[Function]}
-                              resetKeyboardSpace={[Function]}
-                              resetScrollToCoords={
-                                Object {
-                                  "x": 0,
-                                  "y": 0,
-                                }
-                              }
-                              scrollEventThrottle={1}
-                              scrollForExtraHeightOnAndroid={[Function]}
-                              scrollIntoView={[Function]}
-                              scrollToEnd={[Function]}
-                              scrollToFocusedInput={[Function]}
-                              scrollToPosition={[Function]}
-                              showsVerticalScrollIndicator={true}
-                              style={
-                                Object {
-                                  "backgroundColor": "transparent",
-                                  "flex": 1,
-                                }
-                              }
-                              testID="LoadingErrorComponentError"
-                              update={[Function]}
-                              viewIsInsideTabBar={false}
-                            >
-                              <View>
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "height": 40,
+                                    }
+                                  }
+                                />
+                                <Image
+                                  source={
+                                    Object {
+                                      "testUri": "../../../img/wallet/errors/generic-error-icon.png",
+                                    }
+                                  }
+                                />
+                                <View
+                                  style={
+                                    Object {
+                                      "height": 40,
+                                    }
+                                  }
+                                />
                                 <View
                                   style={
                                     Object {
@@ -1972,110 +1947,81 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     }
                                   }
                                 >
-                                  <View
+                                  <Text
+                                    color="bluegreyDark"
+                                    defaultColor="bluegreyDark"
+                                    defaultWeight="Bold"
+                                    font="TitilliumWeb"
+                                    fontStyle={
+                                      Object {
+                                        "fontSize": 20,
+                                        "lineHeight": 24,
+                                      }
+                                    }
                                     style={
-                                      Object {
-                                        "height": 40,
-                                      }
-                                    }
-                                  />
-                                  <Image
-                                    source={
-                                      Object {
-                                        "testUri": "../../../img/wallet/errors/generic-error-icon.png",
-                                      }
-                                    }
-                                  />
-                                  <View
-                                    style={
-                                      Object {
-                                        "height": 40,
-                                      }
-                                    }
-                                  />
-                                  <View
-                                    style={
-                                      Object {
-                                        "alignItems": "center",
-                                      }
-                                    }
-                                  >
-                                    <Text
-                                      color="bluegreyDark"
-                                      defaultColor="bluegreyDark"
-                                      defaultWeight="Bold"
-                                      font="TitilliumWeb"
-                                      fontStyle={
+                                      Array [
                                         Object {
                                           "fontSize": 20,
                                           "lineHeight": 24,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "fontSize": 20,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "color": "#17324D",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "700",
-                                          },
-                                        ]
-                                      }
-                                      weight="Bold"
-                                    >
-                                      There is a temporary problem, please try again.
-                                    </Text>
-                                    <View
-                                      style={
+                                        },
                                         Object {
-                                          "height": 16,
-                                        }
-                                      }
-                                    />
-                                    <Text
-                                      accessible={false}
-                                      color="bluegrey"
-                                      defaultColor="bluegrey"
-                                      defaultWeight="Regular"
-                                      font="TitilliumWeb"
-                                      fontStyle={
-                                        Object {
-                                          "fontSize": 16,
-                                          "lineHeight": 24,
-                                        }
-                                      }
-                                      style={
-                                        Array [
-                                          Object {
-                                            "fontSize": 16,
-                                            "lineHeight": 24,
-                                          },
-                                          Object {
-                                            "color": "#475A6D",
-                                            "fontFamily": "Titillium Web",
-                                            "fontStyle": "normal",
-                                            "fontWeight": "400",
-                                          },
-                                        ]
-                                      }
-                                      weight="Regular"
-                                    />
-                                  </View>
+                                          "color": "#17324D",
+                                          "fontFamily": "Titillium Web",
+                                          "fontStyle": "normal",
+                                          "fontWeight": "700",
+                                        },
+                                      ]
+                                    }
+                                    weight="Bold"
+                                  >
+                                    There is a temporary problem, please try again.
+                                  </Text>
                                   <View
                                     style={
                                       Object {
-                                        "height": 40,
+                                        "height": 16,
                                       }
                                     }
                                   />
+                                  <Text
+                                    accessible={false}
+                                    color="bluegrey"
+                                    defaultColor="bluegrey"
+                                    defaultWeight="Regular"
+                                    font="TitilliumWeb"
+                                    fontStyle={
+                                      Object {
+                                        "fontSize": 16,
+                                        "lineHeight": 24,
+                                      }
+                                    }
+                                    style={
+                                      Array [
+                                        Object {
+                                          "fontSize": 16,
+                                          "lineHeight": 24,
+                                        },
+                                        Object {
+                                          "color": "#475A6D",
+                                          "fontFamily": "Titillium Web",
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                        },
+                                      ]
+                                    }
+                                    weight="Regular"
+                                  />
                                 </View>
+                                <View
+                                  style={
+                                    Object {
+                                      "height": 40,
+                                    }
+                                  }
+                                />
                               </View>
-                            </RCTScrollView>
-                          </RCTSafeAreaView>
+                            </View>
+                          </RCTScrollView>
                           <View
                             pointerEvents="box-none"
                             style={
@@ -2608,15 +2554,14 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#fff",
-                            "flex": 1,
-                            "height": 1334,
+                            "flexGrow": 1,
                           }
                         }
                       >
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -2853,6 +2798,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
@@ -3272,15 +3218,14 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#fff",
-                            "flex": 1,
-                            "height": 1334,
+                            "flexGrow": 1,
                           }
                         }
                       >
                         <View>
                           <View>
                             <RCTSafeAreaView
+                              emulateUnlessSupported={true}
                               style={
                                 Object {
                                   "backgroundColor": "#F8F8F8",
@@ -3517,6 +3462,7 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                           </View>
                         </View>
                         <RCTSafeAreaView
+                          emulateUnlessSupported={true}
                           style={
                             Object {
                               "flex": 1,
