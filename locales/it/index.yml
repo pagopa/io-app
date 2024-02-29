@@ -447,8 +447,6 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
-    walletPlayground:
-      titleSection: "New Wallet"
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -560,7 +558,7 @@ authentication:
         hint: Carosello contenente una guida introduttiva alle funzionalità di IO. Seleziona per consultarne il contenuto
     session_expired:
       title: La tua sessione è scaduta
-      body: Per ragioni di sicurezza, dopo {{days}} giorni dall'ultimo accesso con SPID o CIE, ti chiediamo di inserire nuovamente le credenziali per utilizzare IO.
+      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
     cie_unsupported:
       title: Accesso con CIE non disponibile
       body: !include cie/cieNotSupported.md
@@ -579,6 +577,7 @@ authentication:
     loginSpidCie: Accedi con SPID o CIE
     infoSpidCie: Introduzione a SPID e CIE
     loginSpidCieContent: Da oggi, oltre a SPID, puoi usare la tua Carta d'Identità Elettronica per accedere
+    privacyLink: Informativa privacy 
     nospid: Non hai SPID? Scopri di più
     nospid-nocie: Non hai SPID o CIE? Scopri di più
     card1-title: Tutti i messaggi in un solo posto
@@ -586,11 +585,9 @@ authentication:
     card2-title: Usa i tuoi metodi di pagamento preferiti
     card2-content: Puoi pagare un tributo o una multa con il tuo conto corrente e le tue carte
     card3-title: Paga velocemente un avviso cartaceo
-    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo
-    card4-title: Puoi accedere solo con SPID
-    card4-content: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE)
-    card5-title: Benvenuto nella prima versione pubblica di IO!
-    card5-content: In alto a destra trovi l'icona '?' per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card3-content: Tramite la scansione del QR code puoi velocemente pagare anche un avviso cartaceo    
+    card5-title: Ti diamo il benvenuto su IO!
+    card5-content: Vediamo insieme cosa puoi fare
     card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
     expiredCardTitle: Carta scaduta o non più valida
     expiredCardHeaderTitle: Entra con CIE
@@ -2803,6 +2800,10 @@ features:
       content: "Vuoi annullare la firma di **{{dossierTitle}}**?"
       cancel: "Annulla la firma"
       confirm: "Continua a firmare"
+      alert: 
+        title: "Vuoi interrompere l'operazione?"
+        confirm: "Sì, interrompi"
+        cancel: "No, torna indietro"
     checkService:
       title: "Attiva i messaggi"
       content: "Per ricevere i documenti firmati devi attivare l’opzione che consente al servizio di inviarti messaggi. Se non la attivi, puoi completare la firma ma non riceverai i documenti firmati."
