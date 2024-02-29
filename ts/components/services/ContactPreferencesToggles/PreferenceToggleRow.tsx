@@ -33,6 +33,7 @@ const PreferenceToggleRow = ({
   value,
   graphicalState,
   onReload,
+  disabled,
   testID = "preference-toggle-row"
 }: Props): React.ReactElement => {
   const getComponentByGraphicalState = () => {
@@ -61,10 +62,8 @@ const PreferenceToggleRow = ({
           <NativeSwitch
             value={value}
             onValueChange={onPress}
-            // testID={testID}
-            // disabled={disabled}
-            // accessibilityRole={"switch"}
-            // accessibilityState={{ checked: value, disabled }}
+            testID={testID}
+            disabled={disabled}
             accessibilityLabel={label}
           />
         );

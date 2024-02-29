@@ -40,9 +40,9 @@ type SwitchProps = Pick<
 
 const SwitchVersion = (props: SwitchProps) => (
   <NativeSwitch
-    // testID={props.testID}
+    testID={props.testID}
     value={props.value}
-    // disabled={props.disabled}
+    disabled={props.disabled}
     onValueChange={props.onValueChange}
     accessibilityLabel={props.accessibilityLabel}
   />

@@ -244,8 +244,8 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 <NativeSwitch
                   value={previewEnabled}
                   onValueChange={setPreviewEnabled}
-                  // disabled={isUpdating}
-                  // testID="previewsPreferenceSwitch"
+                  disabled={isUpdating}
+                  testID="previewsPreferenceSwitch"
                 />
               }
             />
