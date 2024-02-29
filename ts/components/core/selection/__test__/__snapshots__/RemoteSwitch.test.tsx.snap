@@ -265,6 +265,7 @@ exports[`RemoteSwitch tests Snapshot for pot.someLoading 2`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -290,6 +291,7 @@ exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 2`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}

@@ -9,6 +9,7 @@ import renderer from "react-test-renderer";
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
 // import I18n from "i18n-js";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import TosWebviewComponent from "../TosWebviewComponent";
 // import * as urlUtils from "../../../ts/utils/url";
 // import brokenLinkImage from "../../../img/broken-link.png";
@@ -26,12 +27,16 @@ describe("TosWebviewComponent", () => {
     it("Should render correctly with bottom footer and a basic placeholding HTML", () => {
       const tree = renderer
         .create(
-          <TosWebviewComponent
-            shouldRenderFooter={true}
-            webViewSource={{ html: "<html><head></head><body></body></html>" }}
-            handleLoadEnd={() => undefined}
-            handleReload={() => undefined} // TODO
-          />
+          <SafeAreaProvider>
+            <TosWebviewComponent
+              shouldRenderFooter={true}
+              webViewSource={{
+                html: "<html><head></head><body></body></html>"
+              }}
+              handleLoadEnd={() => undefined}
+              handleReload={() => undefined} // TODO
+            />
+          </SafeAreaProvider>
         )
         .toJSON();
       expect(tree).toMatchSnapshot();
@@ -230,12 +235,14 @@ const commonSetup = ({
   onLoaded = () => undefined
 }: CurrentTestConfiguration = {}) =>
   render(
-    <TosWebviewComponent
-      shouldRenderFooter={shouldRenderFooter}
-      webViewSource={{ html: "<html><head></head><body></body></html>" }}
-      handleLoadEnd={onLoaded}
-      handleReload={onReload}
-      onExit={onLeftButton}
-      onAcceptTos={onRightButton}
-    />
+    <SafeAreaProvider>
+      <TosWebviewComponent
+        shouldRenderFooter={shouldRenderFooter}
+        webViewSource={{ html: "<html><head></head><body></body></html>" }}
+        handleLoadEnd={onLoaded}
+        handleReload={onReload}
+        onExit={onLeftButton}
+        onAcceptTos={onRightButton}
+      />
+    </SafeAreaProvider>
   );

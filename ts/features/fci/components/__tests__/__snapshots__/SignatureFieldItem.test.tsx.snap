@@ -13,6 +13,14 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
   }
 >
   <View
+    accessibilityLabel="Field not selected"
+    accessibilityRole="checkbox"
+    accessibilityState={
+      Object {
+        "checked": false,
+        "disabled": false,
+      }
+    }
     accessible={true}
     collapsable={false}
     focusable={true}

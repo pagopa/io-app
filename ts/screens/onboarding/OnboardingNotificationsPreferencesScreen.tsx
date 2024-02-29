@@ -261,8 +261,8 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 <NativeSwitch
                   value={remindersEnabled}
                   onValueChange={setRemindersEnabled}
-                  // disabled={isUpdating}
-                  // testID="remindersPreferenceSwitch"
+                  disabled={isUpdating}
+                  testID="remindersPreferenceSwitch"
                 />
               }
             />

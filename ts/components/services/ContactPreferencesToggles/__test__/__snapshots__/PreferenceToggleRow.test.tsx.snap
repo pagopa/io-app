@@ -68,6 +68,7 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
         },
       ]
     }
+    testID="preference-toggle-row"
     thumbTintColor="#FFFFFF"
     tintColor="#F5F6F7"
     value={true}
