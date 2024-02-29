@@ -16,9 +16,9 @@ import {
   IOIconSizeScale,
   HSpacer,
   Divider,
-  VSpacer
+  VSpacer,
+  NativeSwitch
 } from "@pagopa/io-app-design-system";
-import Switch from "../../components/ui/Switch";
 import customVariables from "../../theme/variables";
 import { makeFontStyleObject } from "../core/fonts";
 import { IOBadge } from "../core/IOBadge";
@@ -153,13 +153,13 @@ export default class ListItemComponent extends React.Component<Props> {
               </View>
               {showDefaultIcon &&
                 (this.props.isLongPressEnabled ? (
-                  <Switch
+                  <NativeSwitch
                     key={this.props.keySwitch}
                     value={this.props.switchValue}
                     onValueChange={this.props.onSwitchValueChanged}
-                    disabled={this.props.switchDisabled}
-                    accessibilityElementsHidden
-                    importantForAccessibility="no-hide-descendants"
+                    // disabled={this.props.switchDisabled}
+                    // accessibilityElementsHidden
+                    // importantForAccessibility="no-hide-descendants"
                   />
                 ) : (
                   <Icon

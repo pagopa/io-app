@@ -9,7 +9,8 @@ import {
   Divider,
   VSpacer,
   ContentWrapper,
-  IOVisualCostants
+  IOVisualCostants,
+  NativeSwitch
 } from "@pagopa/io-app-design-system";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
@@ -25,7 +26,6 @@ import BaseScreenComponent, {
 } from "../../components/screens/BaseScreenComponent";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Switch from "../../components/ui/Switch";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
@@ -241,11 +241,11 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 moreInfoTap: present
               }}
               rightElement={
-                <Switch
+                <NativeSwitch
                   value={previewEnabled}
                   onValueChange={setPreviewEnabled}
-                  disabled={isUpdating}
-                  testID="previewsPreferenceSwitch"
+                  // disabled={isUpdating}
+                  // testID="previewsPreferenceSwitch"
                 />
               }
             />
@@ -258,11 +258,11 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
                 "profile.preferences.notifications.reminders.description"
               )}
               rightElement={
-                <Switch
+                <NativeSwitch
                   value={remindersEnabled}
                   onValueChange={setRemindersEnabled}
-                  disabled={isUpdating}
-                  testID="remindersPreferenceSwitch"
+                  // disabled={isUpdating}
+                  // testID="remindersPreferenceSwitch"
                 />
               }
             />

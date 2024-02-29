@@ -3,6 +3,7 @@ import * as React from "react";
 import { View, ActivityIndicator } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { NativeSwitch } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { setFavouriteWalletRequest } from "../../store/actions/wallet/wallets";
 import { GlobalState } from "../../store/reducers/types";
@@ -15,7 +16,6 @@ import { isAndroid } from "../../utils/platform";
 import { handleSetFavourite } from "../../utils/wallet";
 import { IOStyleVariables } from "../core/variables/IOStyleVariables";
 import { PreferencesListItem } from "../PreferencesListItem";
-import Switch from "../ui/Switch";
 
 type OwnProps = {
   onValueChange?: (value: boolean) => void;
@@ -64,7 +64,7 @@ const FavoritePaymentMethodSwitch = (props: Props) => {
       />
     </View>
   ) : (
-    <Switch
+    <NativeSwitch
       onValueChange={v =>
         handleSetFavourite(v, () =>
           props.setFavoriteWallet(props.paymentMethod.idWallet)

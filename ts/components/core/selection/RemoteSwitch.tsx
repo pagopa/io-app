@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View, ActivityIndicator } from "react-native";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, NativeSwitch } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { TestID } from "../../../types/WithTestID";
 import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import Switch from "../../ui/Switch";
 import { calculateSlop } from "../accessibility";
 import { IOStyleVariables } from "../variables/IOStyleVariables";
 
@@ -14,7 +13,7 @@ type Props<E> = {
   onRetry?: () => void;
 } & TestID &
   Pick<
-    React.ComponentProps<typeof Switch>,
+    React.ComponentProps<typeof NativeSwitch>,
     "onValueChange" | "accessibilityLabel"
   >;
 
@@ -32,15 +31,18 @@ const LoadingVersion = (props: TestID) => (
 );
 
 type SwitchProps = Pick<
-  React.ComponentProps<typeof Switch>,
-  "testID" | "value" | "disabled" | "onValueChange" | "accessibilityLabel"
->;
+  React.ComponentProps<typeof NativeSwitch>,
+  "value" | "onValueChange" | "accessibilityLabel"
+> & {
+  testID?: string;
+  disabled?: boolean;
+};
 
 const SwitchVersion = (props: SwitchProps) => (
-  <Switch
-    testID={props.testID}
+  <NativeSwitch
+    // testID={props.testID}
     value={props.value}
-    disabled={props.disabled}
+    // disabled={props.disabled}
     onValueChange={props.onValueChange}
     accessibilityLabel={props.accessibilityLabel}
   />

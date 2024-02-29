@@ -1,6 +1,6 @@
 {
   "name": "italia-app",
-  "version": "2.54.0-rc.1",
+  "version": "2.55.0-rc.0",
   "io_backend_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_backend.yaml",
   "io_public_api": "https://raw.githubusercontent.com/pagopa/io-backend/v13.32.1-RELEASE/api_public.yaml",
   "io_content_specs": "https://raw.githubusercontent.com/pagopa/io-services-metadata/1.0.30/definitions.yml",
@@ -95,9 +95,10 @@
   "dependencies": {
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@gorhom/bottom-sheet": "^4.1.5",
-    "@pagopa/io-app-design-system": "1.23.3",
+    "@pagopa/io-app-design-system": "1.25.0",
     "@pagopa/io-pagopa-commons": "^3.1.0",
     "@pagopa/io-react-native-crypto": "^0.2.1",
+    "@pagopa/io-react-native-http-client": "^0.1.3",
     "@pagopa/io-react-native-login-utils": "^1.0.0",
     "@pagopa/io-react-native-zendesk": "^0.3.29",
     "@pagopa/react-native-cie": "1.2.0",

@@ -11,7 +11,7 @@ import * as React from "react";
 import { View, Alert, SafeAreaView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { HSpacer, NativeSwitch, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation, useRoute, Route } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -28,7 +28,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Switch from "../../components/ui/Switch";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
@@ -291,7 +290,7 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
             </View>
             <HSpacer size={16} />
             <View style={{ paddingTop: 7 }}>
-              <Switch
+              <NativeSwitch
                 value={this.state.setAsFavourite}
                 onValueChange={this.onSetFavouriteValueChange}
               />
