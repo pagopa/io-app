@@ -3,7 +3,7 @@
  */
 
 import * as React from "react";
-import { View, ScrollView, ScaledSize } from "react-native";
+import { View, ScrollView, useWindowDimensions } from "react-native";
 import {
   Body,
   H3,
@@ -20,12 +20,14 @@ type Props = {
   content: string;
   accessibilityLabel?: string;
   accessibilityHint?: string;
-  screenDimensions: ScaledSize;
 };
+
+const VERTICAL_SPACING = 16;
 
 export const LandingCardComponent = React.forwardRef<View, Props>(
   (props, ref) => {
-    const { width: screenWidth } = props.screenDimensions;
+    const screenDimension = useWindowDimensions();
+    const screenWidth = screenDimension.width;
     const {
       accessibilityLabel,
       accessibilityHint,
@@ -53,15 +55,15 @@ export const LandingCardComponent = React.forwardRef<View, Props>(
           accessibilityHint={accessibilityHint}
         >
           <Pictogram size={180} name={pictogramName} />
-          <VSpacer size={16} />
+          <VSpacer size={VERTICAL_SPACING} />
           <H3 importantForAccessibility="no" style={{ textAlign: "center" }}>
             {title}
           </H3>
-          <VSpacer size={16} />
+          <VSpacer size={VERTICAL_SPACING} />
           <Body importantForAccessibility="no" style={{ textAlign: "center" }}>
             {content}
           </Body>
-          <VSpacer size={16} />
+          <VSpacer size={VERTICAL_SPACING} />
         </View>
       </ScrollView>
     );

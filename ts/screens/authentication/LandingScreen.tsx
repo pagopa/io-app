@@ -6,7 +6,6 @@ import {
   ButtonLink,
   ButtonSolid,
   ContentWrapper,
-  IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -20,16 +19,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-import {
-  Alert,
-  Animated,
-  ScrollView,
-  View,
-  StyleSheet,
-  useWindowDimensions,
-  GestureResponderEvent,
-  useColorScheme
-} from "react-native";
+import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import ContextualInfo from "../../components/ContextualInfo";
@@ -63,10 +53,7 @@ import {
   hasNFCFeatureSelector,
   isCieSupportedSelector
 } from "../../store/reducers/cie";
-import {
-  continueWithRootOrJailbreakSelector,
-  isDesignSystemEnabledSelector
-} from "../../store/reducers/persistedPreferences";
+import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
@@ -78,28 +65,13 @@ import {
   trackMethodInfo,
   trackSpidLoginSelected
 } from "./analytics";
-import { trackCarousel } from "./analytics/carouselAnalytics";
-
-const styles = StyleSheet.create({
-  normalDot: {
-    height: 8,
-    width: 8,
-    borderRadius: 4,
-    backgroundColor: IOColors.greyLight,
-    marginHorizontal: 4
-  },
-  indicatorContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+import { Carousel } from "./carousel/Carousel";
 
 const carouselCards: ReadonlyArray<
-  Omit<ComponentProps<typeof LandingCardComponent>, "screenDimensions">
+  ComponentProps<typeof LandingCardComponent>
 > = [
   {
-    id: 5,
+    id: 0,
     pictogramName: "hello",
     title: I18n.t("authentication.landing.card5-title"),
     content: I18n.t("authentication.landing.card5-content"),
@@ -153,17 +125,11 @@ export const IdpCIE: SpidIdp = {
   profileUrl: ""
 };
 
-const BUTTON_SPACING = 24;
+const SPACE_BETWEEN_BUTTONS = 8;
+const SPACE_AROUND_BUTTON_LINK = 16;
 
 export const LandingScreen = () => {
-  const trackFirstCarouselPageOnFirstRenderRef = React.useRef(false);
   const accessibilityFirstFocuseViewRef = React.useRef<View>(null);
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const colorScheme = useColorScheme();
-
-  const scrollX = React.useRef(new Animated.Value(0)).current;
-  const screenDimension = useWindowDimensions();
-  const windowWidth = screenDimension.width;
   const insets = useSafeAreaInsets();
 
   const [isRootedOrJailbroken, setIsRootedOrJailbroken] = React.useState<
@@ -210,8 +176,8 @@ export const LandingScreen = () => {
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   useOnFirstRender(async () => {
-    const isRootedOrJailbroken = await JailMonkey.isJailBroken();
-    setIsRootedOrJailbroken(O.some(isRootedOrJailbroken));
+    const isRootedOrJailbrokenFromJailMonkey = await JailMonkey.isJailBroken();
+    setIsRootedOrJailbroken(O.some(isRootedOrJailbrokenFromJailMonkey));
     if (isSessionExpired) {
       // eslint-disable-next-line functional/immutable-data
       isSessionExpiredRef.current = isSessionExpired;
@@ -319,133 +285,12 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const renderCardComponents = React.useCallback(
-    () =>
-      carouselCards.map(p => (
-        <LandingCardComponent
-          ref={p.id === 5 ? accessibilityFirstFocuseViewRef : null}
-          screenDimensions={screenDimension}
-          key={`card-${p.id}`}
-          {...p}
-        />
-      )),
-    [screenDimension]
-  );
-
   const handleContinueWithRootOrJailbreak = React.useCallback(
     (continueWith: boolean) => {
       dispatch(continueWithRootOrJailbreak(continueWith));
     },
     [dispatch]
   );
-
-  const CarouselDots = () => {
-    const dotTouchCount = React.useRef(0);
-
-    const blueColor =
-      colorScheme === "dark"
-        ? IOColors.white
-        : isDesignSystemEnabled
-        ? IOColors["blueIO-500"]
-        : IOColors.blue;
-
-    return (
-      <View
-        importantForAccessibility="yes"
-        accessibilityElementsHidden={false}
-        style={styles.indicatorContainer}
-        onTouchEnd={(_: GestureResponderEvent) => {
-          // eslint-disable-next-line functional/immutable-data
-          dotTouchCount.current++;
-          if (dotTouchCount.current === 3) {
-            // eslint-disable-next-line functional/immutable-data
-            dotTouchCount.current = 0;
-            navigateToCieUatSelectionScreen();
-          }
-        }}
-      >
-        {carouselCards.map((_, imageIndex) => {
-          const width = scrollX.interpolate({
-            inputRange: [
-              windowWidth * (imageIndex - 1),
-              windowWidth * imageIndex,
-              windowWidth * (imageIndex + 1)
-            ],
-            outputRange: [8, 16, 8],
-            extrapolate: "clamp"
-          });
-          const backgroundColor = scrollX.interpolate({
-            inputRange: [
-              windowWidth * (imageIndex - 1),
-              windowWidth * imageIndex,
-              windowWidth * (imageIndex + 1)
-            ],
-            outputRange: [
-              IOColors["grey-200"],
-              blueColor,
-              IOColors["grey-200"]
-            ],
-            extrapolate: "clamp"
-          });
-          return (
-            <Animated.View
-              key={imageIndex}
-              style={[styles.normalDot, { width, backgroundColor }]}
-            />
-          );
-        })}
-      </View>
-    );
-  };
-
-  const Carousel = () => {
-    const cardComponents = renderCardComponents();
-
-    return (
-      <>
-        <ScrollView
-          horizontal={true}
-          pagingEnabled
-          onLayout={() => {
-            // The ScrollView onScrollEndDrag is not called on layout rendering
-            if (!trackFirstCarouselPageOnFirstRenderRef.current) {
-              trackCarousel(0, cardComponents);
-              // eslint-disable-next-line functional/immutable-data
-              trackFirstCarouselPageOnFirstRenderRef.current = true;
-            }
-          }}
-          showsHorizontalScrollIndicator={false}
-          onScrollEndDrag={event => {
-            const contentOffsetX = event.nativeEvent.contentOffset.x;
-            const currentPageIndex = Math.round(contentOffsetX / windowWidth);
-            if (
-              currentPageIndex >= 0 &&
-              cardComponents.length > currentPageIndex
-            ) {
-              trackCarousel(currentPageIndex, cardComponents);
-            }
-          }}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: {
-                  contentOffset: {
-                    x: scrollX
-                  }
-                }
-              }
-            ],
-            { useNativeDriver: false }
-          )}
-          scrollEventThrottle={1}
-        >
-          {cardComponents}
-        </ScrollView>
-        <CarouselDots />
-        <VSpacer size={24} />
-      </>
-    );
-  };
 
   const LandingScreen = () => {
     useHeaderSecondLevel({
@@ -455,25 +300,32 @@ export const LandingScreen = () => {
       contextualHelpMarkdown
     });
 
+    const sessionExpiredCardContent = I18n.t(
+      "authentication.landing.session_expired.body",
+      {
+        days: isFastLoginEnabled ? "365" : "30"
+      }
+    );
+
     return (
       <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
         {isSessionExpiredRef.current ? (
           <LandingCardComponent
             id={0}
             ref={accessibilityFirstFocuseViewRef}
-            screenDimensions={screenDimension}
             pictogramName={"time"}
             title={I18n.t("authentication.landing.session_expired.title")}
-            content={I18n.t("authentication.landing.session_expired.body", {
-              days: isFastLoginEnabled ? "365" : "30"
-            })}
+            content={sessionExpiredCardContent}
             accessibilityLabel={`${I18n.t(
               "authentication.landing.session_expired.title"
-            )} ${I18n.t("authentication.landing.session_expired.body")}
-            `}
+            )} ${sessionExpiredCardContent}`}
           />
         ) : (
-          <Carousel />
+          <Carousel
+            ref={accessibilityFirstFocuseViewRef}
+            carouselCards={carouselCards}
+            dotEasterEggCallback={navigateToCieUatSelectionScreen}
+          />
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
@@ -501,7 +353,7 @@ export const LandingScreen = () => {
               isCieSupported() ? navigateToCiePinScreen : navigateToIdpSelection
             }
           />
-          <VSpacer size={BUTTON_SPACING} />
+          <VSpacer size={SPACE_BETWEEN_BUTTONS} />
           <ButtonSolid
             testID={
               isCieSupported()
@@ -528,7 +380,7 @@ export const LandingScreen = () => {
               isCieSupported() ? navigateToIdpSelection : navigateToCiePinScreen
             }
           />
-          <VSpacer size={BUTTON_SPACING} />
+          <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           <View style={IOStyles.selfCenter}>
             <ButtonLink
               accessibilityLabel={I18n.t("authentication.landing.privacyLink")}
@@ -536,7 +388,7 @@ export const LandingScreen = () => {
               label={I18n.t("authentication.landing.privacyLink")}
               onPress={navigateToPrivacyUrl}
             />
-            {insets.bottom === 0 && <VSpacer size={BUTTON_SPACING} />}
+            {insets.bottom === 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
           </View>
         </ContentWrapper>
       </SafeAreaView>
