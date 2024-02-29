@@ -14,9 +14,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { mixpanelTrack } from "../../mixpanel";
-import { buildEventProperties } from "../../utils/analytics";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { trackIngressScreen } from "../profile/analytics";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,10 +31,7 @@ const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 export const IngressScreen = () => {
   const accessibilityFocusFirstElementRef = React.useRef<View>(null);
   useOnFirstRender(() => {
-    void mixpanelTrack(
-      "INITIALIZATION_LOADING",
-      buildEventProperties("UX", "screen_view")
-    );
+    trackIngressScreen();
   });
 
   useFocusEffect(() => {
