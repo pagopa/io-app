@@ -1,4 +1,9 @@
-import { Divider, ListItemNav, VSpacer, IOToast } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  ListItemNav,
+  VSpacer,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
