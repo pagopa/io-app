@@ -923,6 +923,21 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  homeScreen:
+    title: Pagamenti
+    methodsSection:
+      header: Metodi di pagamento
+      headerCTA: Aggiungi
+      empty:
+        body: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        cta: Aggiungi un metodo
+    historySection:
+     header: Storico operazioni
+     headerCTA: Vedi tutte
+     empty:
+       header: Qui vedrai le tue ricevute pagoPA
+       body: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
     message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.

@@ -12,9 +12,10 @@ import {
 import { WithTestID } from "../../../../types/WithTestID";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 import { useSpringPressScaleAnimation } from "../../utils/hooks/useSpringPressScaleAnimation";
+import { BrandEnum } from "../../../../../definitions/pagopa/ecommerce/WalletInfoDetails";
 
 type RenderData = {
-  iconName: IOLogoPaymentType | undefined;
+  iconName: IOLogoPaymentType | BrandEnum | undefined;
   bottomText: string;
 };
 const getRenderData = (props: CardDataType): RenderData => {
@@ -50,7 +51,7 @@ type CardDataType =
   | {
       cardType: "CREDIT";
       hpan: string;
-      cardIcon?: IOLogoPaymentType;
+      cardIcon?: IOLogoPaymentType | BrandEnum;
     }
   | {
       cardType: "PAGOBANCOMAT";
@@ -62,7 +63,7 @@ type CardDataType =
   | {
       cardType: "COBADGE";
       providerName: string;
-      cardIcon?: IOLogoPaymentType;
+      cardIcon?: IOLogoPaymentType | BrandEnum;
     };
 
 export type PaymentCardSmallProps = WithTestID<
