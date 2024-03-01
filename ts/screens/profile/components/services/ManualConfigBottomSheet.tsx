@@ -4,6 +4,8 @@ import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
+const SNAP_POINT_VALUE = 250;
+
 const ManualConfigConfirm = (): React.ReactElement => (
   <>
     <VSpacer size={16} />
@@ -51,7 +53,7 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
         />
       )
     },
-    250
+    SNAP_POINT_VALUE
   );
 
   return { present, manualConfigBottomSheet, dismiss };

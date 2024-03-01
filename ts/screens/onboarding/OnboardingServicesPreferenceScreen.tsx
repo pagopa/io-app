@@ -1,4 +1,5 @@
 import {
+  ContentWrapper,
   FeatureInfo,
   FooterWithButtons,
   IOStyles,
@@ -96,32 +97,38 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     ]
   );
 
-  const handleOnContinue = () => {
+  const handleOnContinue = useCallback(() => {
     void trackServiceConfiguration(
       profileServicePreferenceMode,
       getFlowType(true, isFirstOnboarding),
       store.getState()
     );
     onContinue(isFirstOnboarding);
-  };
+  }, [isFirstOnboarding, onContinue, profileServicePreferenceMode, store]);
 
-  const selectCurrentMode = (mode: ServicesPreferencesModeEnum) => {
-    onServicePreferenceSelected(mode);
-  };
+  const selectCurrentMode = useCallback(
+    (mode: ServicesPreferencesModeEnum) => {
+      onServicePreferenceSelected(mode);
+    },
+    [onServicePreferenceSelected]
+  );
 
   const { present: confirmManualConfig, manualConfigBottomSheet } =
     useManualConfigBottomSheet(() => {
       selectCurrentMode(ServicesPreferencesModeEnum.MANUAL);
     });
 
-  const handleOnSelectMode = (mode: ServicesPreferencesModeEnum) => {
-    // if user's choice is 'manual', open bottom sheet to ask confirmation
-    if (mode === ServicesPreferencesModeEnum.MANUAL) {
-      confirmManualConfig();
-      return;
-    }
-    selectCurrentMode(mode);
-  };
+  const handleOnSelectMode = useCallback(
+    (mode: ServicesPreferencesModeEnum) => {
+      // if user's choice is 'manual', open bottom sheet to ask confirmation
+      if (mode === ServicesPreferencesModeEnum.MANUAL) {
+        confirmManualConfig();
+        return;
+      }
+      selectCurrentMode(mode);
+    },
+    [confirmManualConfig, selectCurrentMode]
+  );
 
   useOnFirstRender(() => {
     trackServiceConfigurationScreen(getFlowType(true, isFirstOnboarding));
@@ -131,11 +138,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state,
     // the toast will be shown immediately without any updates
-    if (
-      prevProfile !== undefined &&
-      !pot.isError(prevProfile) &&
-      pot.isError(profile)
-    ) {
+    if (prevProfile && !pot.isError(prevProfile) && pot.isError(profile)) {
       IOToast.error(I18n.t("global.genericError"));
       return;
     }
@@ -144,7 +147,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     // the button is selected
     // and the success banner is shown
     if (
-      prevProfile !== undefined &&
+      prevProfile &&
       pot.isUpdating(prevProfile) &&
       pot.isSome(profile) &&
       profileServicePreferenceMode !== prevMode
@@ -173,24 +176,22 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
         fixedBottomSlot={
-          <SafeAreaView>
-            <FooterWithButtons
-              type="SingleButton"
-              primary={{
-                type: "Solid",
-                buttonProps: {
-                  label: I18n.t("global.buttons.confirm"),
-                  onPress: handleOnContinue,
-                  accessibilityLabel: I18n.t("global.buttons.confirm"),
-                  disabled: !isServicesPreferenceModeSet(modeSelected)
-                }
-              }}
-            />
-          </SafeAreaView>
+          <FooterWithButtons
+            type="SingleButton"
+            primary={{
+              type: "Solid",
+              buttonProps: {
+                label: I18n.t("global.buttons.confirm"),
+                onPress: () => handleOnContinue(),
+                accessibilityLabel: I18n.t("global.buttons.confirm"),
+                disabled: !isServicesPreferenceModeSet(modeSelected)
+              }
+            }}
+          />
         }
       >
         <SafeAreaView style={IOStyles.flex}>
-          <View style={[IOStyles.horizontalContentPadding, { flexGrow: 1 }]}>
+          <ContentWrapper>
             <ServicesContactComponent
               mode={modeSelected}
               onSelectMode={handleOnSelectMode}
@@ -205,7 +206,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
                 )}
               />
             </View>
-          </View>
+          </ContentWrapper>
           {manualConfigBottomSheet}
         </SafeAreaView>
       </RNavScreenWithLargeHeader>

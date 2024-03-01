@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { IOColors, LabelSmall, RadioGroup } from "@pagopa/io-app-design-system";
 import { Text } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
@@ -36,14 +36,17 @@ const ServicesContactComponent = (props: Props): ReactElement => {
   const [selectedItem, setSelectedItem] = useState(mode);
   const prevMode = usePrevious(mode);
 
-  const handlePress = (value: any) => {
-    // if the selected mode is the same,
-    // it does not have to do anything,
-    // otherwise it would re-run the POST /profile
-    if (mode !== value) {
-      onSelectMode(value);
-    }
-  };
+  const handlePress = useCallback(
+    (value: any) => {
+      // if the selected mode is the same,
+      // it does not have to do anything,
+      // otherwise it would re-run the POST /profile
+      if (mode !== value) {
+        onSelectMode(value);
+      }
+    },
+    [mode, onSelectMode]
+  );
 
   useEffect(() => {
     if (mode !== prevMode) {
