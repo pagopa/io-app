@@ -1,12 +1,12 @@
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
-import { View, SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
 import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
@@ -16,7 +16,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList, {
   IPaymentMethod
@@ -154,15 +153,9 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
       keyFrom
     });
 
-  const cancelButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: props.navigateBack,
-    title: O.isSome(inPayment)
-      ? I18n.t("global.buttons.back")
-      : I18n.t("global.buttons.cancel")
-  };
+  const buttonLabel = O.isSome(inPayment)
+    ? I18n.t("global.buttons.back")
+    : I18n.t("global.buttons.cancel");
 
   return (
     <BaseScreenComponent
@@ -219,11 +212,18 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
             />
           </Content>
         )}
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            onPress: props.navigateBack,
+            accessibilityLabel: buttonLabel,
+            label: buttonLabel
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
