@@ -30,7 +30,6 @@ import {
 } from "../../components/helpers/withUseTabItemPressWhenScreenActive";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import DarkLayout from "../../components/screens/DarkLayout";
-import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -73,11 +72,25 @@ const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
  * A screen to show all the options related to the user profile
  */
 class ProfileMainScreen extends React.PureComponent<Props, State> {
+  private scrollViewContentRef = React.createRef<ScrollView>();
+
   constructor(props: Props) {
     super(props);
     this.state = {
       tapsOnAppVersion: 0
     };
+  }
+
+  public componentDidMount() {
+    this.props.setTabPressCallback(() => () => {
+      if (this.scrollViewContentRef.current) {
+        this.scrollViewContentRef.current.scrollTo({
+          x: 0,
+          y: 0,
+          animated: true
+        });
+      }
+    });
   }
 
   public componentWillUnmount() {
@@ -246,14 +259,7 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
 
     return (
       <DarkLayout
-        referenceToContentScreen={(c: ScreenContentRoot) => {
-          this.props.setTabPressCallback(
-            // eslint-disable-next-line no-underscore-dangle
-            () => () => c._root.scrollToPosition(0, 0)
-          );
-
-          return c;
-        }}
+        referenceToContentScreen={this.scrollViewContentRef}
         accessibilityLabel={I18n.t("profile.main.title")}
         appLogo={true}
         hideBaseHeader={true}

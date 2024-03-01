@@ -24,7 +24,7 @@ import {
   ContextualHelpProps,
   ContextualHelpPropsMarkdown
 } from "./BaseScreenComponent";
-import ScreenContent, { ScreenContentRoot } from "./ScreenContent";
+import ScreenContent from "./ScreenContent";
 import TopScreenComponent from "./TopScreenComponent";
 
 type Props = Readonly<{
@@ -49,9 +49,7 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
-  referenceToContentScreen?: (
-    c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<ScrollView>;
+  referenceToContentScreen?: React.RefObject<ScrollView>;
 }>;
 
 const styles = StyleSheet.create({

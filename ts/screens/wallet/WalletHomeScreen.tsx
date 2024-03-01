@@ -12,6 +12,7 @@ import {
   BackHandler,
   Image,
   NativeEventSubscription,
+  ScrollView,
   StyleSheet,
   View
 } from "react-native";
@@ -31,7 +32,6 @@ import { withValidatedEmail } from "../../components/helpers/withValidatedEmail"
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
-import { ScreenContentRoot } from "../../components/screens/ScreenContent";
 import { LightModalContextInterface } from "../../components/ui/LightModal";
 import { TransactionsList } from "../../components/wallet/TransactionsList";
 import WalletLayout from "../../components/wallet/WalletLayout";
@@ -140,7 +140,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   private subscription: NativeEventSubscription | undefined;
   private focusUnsubscribe!: () => void;
   private blurUnsubscribe!: () => void;
-
+  private scrollViewContentRef: React.RefObject<ScrollView> = React.createRef();
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -212,6 +212,14 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
     // to add the co-badge card.
     // This cover the case in which a user update the app and don't refresh the wallet.
     this.props.runSendAddCobadgeMessageSaga();
+
+    this.props.setTabPressCallback(() => () => {
+      this.scrollViewContentRef.current?.scrollTo({
+        x: 0,
+        y: 0,
+        animated: true
+      });
+    });
   }
 
   public componentWillUnmount() {
@@ -454,14 +462,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
     return (
       <WalletLayout
-        referenceToContentScreen={(c: ScreenContentRoot) => {
-          this.props.setTabPressCallback(
-            // eslint-disable-next-line no-underscore-dangle
-            () => () => c._root.scrollToPosition(0, 0)
-          );
-
-          return c;
-        }}
+        referenceToContentScreen={this.scrollViewContentRef}
         accessibilityLabel={I18n.t("wallet.wallet")}
         title={I18n.t("wallet.wallet")}
         allowGoBack={false}

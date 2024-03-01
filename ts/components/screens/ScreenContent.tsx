@@ -9,18 +9,8 @@ interface OwnProps {
   contentStyle?: StyleProp<ViewStyle>;
   bounces?: boolean;
   contentRefreshControl?: ComponentProps<ScrollView>["refreshControl"];
-  referenceToContentScreen?: (
-    c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<ScrollView>;
+  referenceToContentScreen?: React.RefObject<ScrollView>;
 }
-
-export type ScreenContentRoot = {
-  _root: ScreenContentFunctions;
-};
-
-type ScreenContentFunctions = {
-  scrollToPosition: (x: number, y: number) => void;
-};
 
 type Props = OwnProps & ComponentProps<typeof ScreenContentHeader>;
 

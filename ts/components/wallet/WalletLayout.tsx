@@ -26,8 +26,6 @@ import {
 } from "../screens/BaseScreenComponent";
 import DarkLayout from "../screens/DarkLayout";
 
-import { ScreenContentRoot } from "../screens/ScreenContent";
-
 type Props = Readonly<{
   accessibilityLabel?: string;
   title: string;
@@ -46,9 +44,7 @@ type Props = Readonly<{
   gradientHeader?: boolean;
   headerPaddingMin?: boolean;
   footerFullWidth?: React.ReactNode;
-  referenceToContentScreen?: (
-    c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<ScrollView>;
+  referenceToContentScreen?: React.RefObject<ScrollView>;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {
