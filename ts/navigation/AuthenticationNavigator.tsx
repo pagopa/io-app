@@ -28,11 +28,13 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}
       component={LandingScreen}
+      options={{ headerShown: true }}
     />
 
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_OPT_IN}
       component={NewOptInScreen}
+      options={{ headerShown: true }}
     />
 
     <Stack.Screen
