@@ -20,7 +20,8 @@ import { MESSAGES_ROUTES } from "./routes";
 const Stack = createStackNavigator<MessagesParamsList>();
 
 export const MessagesStackNavigator = () => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled =
+    useIOSelector(isDesignSystemEnabledSelector) ?? false;
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
 
   return (
