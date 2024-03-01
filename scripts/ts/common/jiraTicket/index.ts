@@ -81,7 +81,7 @@ export const getJiraIdFromPrTitle = (
  * @param title
  * @returns a promise of {@link JiraTicketRetrievalResults} containing the jira tickets or an error. If no tickets are found, an empty array is returned
  */
-export const getTicketsFromTitle = async (
+export const getTicketsFromTitle = (
   title: string
 ): Promise<JiraTicketRetrievalResults> =>
   pipe(
