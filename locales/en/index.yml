@@ -706,7 +706,7 @@ authentication:
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
   idp_login_success:
-    contentTitle: Ciao {{name}}!
+    contentTitle: Hi, {{name}}!
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
