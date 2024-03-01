@@ -1,29 +1,29 @@
-import { useCallback, useEffect, useState } from "react";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import ReactNativeBlobUtil from "react-native-blob-util";
-import RNFS from "react-native-fs";
-import { identity, pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
+import { identity, pipe } from "fp-ts/lib/function";
+import { useCallback, useEffect, useState } from "react";
+import ReactNativeBlobUtil from "react-native-blob-util";
+import RNFS from "react-native-fs";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { IOToast } from "../../../components/Toast";
 import i18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { ContentTypeValues } from "../types/contentType";
+import { isTestEnv } from "../../../utils/environment";
 import { isAndroid } from "../../../utils/platform";
-import { showToast } from "../../../utils/showToast";
+import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
+import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
 } from "../store/actions";
 import { downloadPotForMessageAttachmentSelector } from "../store/reducers/downloads";
-import { isTestEnv } from "../../../utils/environment";
-import { trackPNAttachmentDownloadFailure } from "../../pn/analytics";
-import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { UIMessageId } from "../types";
 import {
   attachmentContentType,
   attachmentDisplayName
 } from "../store/reducers/transformers";
+import { UIMessageId } from "../types";
+import { ContentTypeValues } from "../types/contentType";
 
 const taskCopyToMediaStore = (name: string, mimeType: string, path: string) =>
   TE.tryCatch(
@@ -69,7 +69,7 @@ const taskDownloadFileIntoAndroidPublicFolder = (
           taskAddCompleteDownload(name, mimeType, downloadFilePath)
         ),
         TE.mapLeft(_ =>
-          showToast(i18n.t("messageDetails.attachments.failing.details"))
+          IOToast.error(i18n.t("messageDetails.attachments.failing.details"))
         )
       )
     )
@@ -107,7 +107,7 @@ export const useLegacyAttachmentDownload = (
 
     if (pot.isError(downloadPot)) {
       trackPNAttachmentDownloadFailure(attachment.category);
-      showToast(i18n.t("messageDetails.attachments.failing.details"));
+      IOToast.error(i18n.t("messageDetails.attachments.failing.details"));
     } else if (download) {
       const { path, attachment } = download;
 

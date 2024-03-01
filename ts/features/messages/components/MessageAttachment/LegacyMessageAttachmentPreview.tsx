@@ -3,32 +3,32 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
+import { IOToast } from "../../../../components/Toast";
+import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { H2 } from "../../../../components/core/typography/H2";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import {
-  cancelPreviousAttachmentDownload,
-  downloadAttachment
-} from "../../store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { downloadPotForMessageAttachmentSelector } from "../../store/reducers/downloads";
-import { UIMessageId } from "../../types";
 import variables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { isIos } from "../../../../utils/platform";
 import { isStrictNone } from "../../../../utils/pot";
 import { share } from "../../../../utils/share";
-import { showToast } from "../../../../utils/showToast";
-import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../store/actions";
+import { downloadPotForMessageAttachmentSelector } from "../../store/reducers/downloads";
 import {
   attachmentContentType,
   attachmentDisplayName
 } from "../../store/reducers/transformers";
+import { UIMessageId } from "../../types";
 import LegacyPdfViewer from "./LegacyPdfViewer";
 
 type Props = {
@@ -139,7 +139,7 @@ const renderFooter = (
         onPress: () => {
           onShare?.();
           share(`file://${downloadPath}`, undefined, false)().catch(_ => {
-            showToast(I18n.t("messagePDFPreview.errors.sharing"));
+            IOToast.error(I18n.t("messagePDFPreview.errors.sharing"));
           });
         },
         title: I18n.t("global.buttons.share")
@@ -160,15 +160,14 @@ const renderFooter = (
             downloadPath
           )
             .then(_ => {
-              showToast(
+              IOToast.success(
                 I18n.t("messagePDFPreview.savedAtLocation", {
                   name
-                }),
-                "success"
+                })
               );
             })
             .catch(_ => {
-              showToast(I18n.t("messagePDFPreview.errors.saving"));
+              IOToast.error(I18n.t("messagePDFPreview.errors.saving"));
             });
         },
         title: I18n.t("messagePDFPreview.save")
@@ -179,7 +178,7 @@ const renderFooter = (
           ReactNativeBlobUtil.android
             .actionViewIntent(downloadPath, mimeType)
             .catch(_ => {
-              showToast(I18n.t("messagePDFPreview.errors.opening"));
+              IOToast.error(I18n.t("messagePDFPreview.errors.opening"));
             });
         },
         I18n.t("messagePDFPreview.open"),
@@ -261,7 +260,7 @@ export const LegacyMessageAttachmentPreview = ({
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
       const error = downloadPot.error;
-      showToast(error.message);
+      IOToast.error(error.message);
       navigation.goBack();
     }
   }, [

@@ -1,14 +1,15 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
 import {
   IOColors,
   IOIconSizeScale,
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
+import React, { useCallback, useEffect } from "react";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import { IOToast } from "../../../components/Toast";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -35,7 +36,6 @@ import { getAppVersion } from "../../../utils/appVersion";
 import { getModel, getSystemVersion } from "../../../utils/device";
 import { getFullLocale } from "../../../utils/locale";
 import { isIos } from "../../../utils/platform";
-import { showToast } from "../../../utils/showToast";
 import {
   addTicketCustomField,
   addTicketTag,
@@ -48,8 +48,8 @@ import {
   setUserIdentity,
   zendeskCurrentAppVersionId,
   zendeskDeviceAndOSId,
-  zendeskidentityProviderId,
-  zendeskVersionsHistoryId
+  zendeskVersionsHistoryId,
+  zendeskidentityProviderId
 } from "../../../utils/supportAssistance";
 import { handleItemOnPress, openWebUrl } from "../../../utils/url";
 import ZendeskItemPermissionComponent, {
@@ -284,11 +284,10 @@ const ZendeskAskPermissions = () => {
       undefined,
       constNull,
       () => {
-        showToast(
+        IOToast.warning(
           I18n.t("support.askPermissions.toast.emailClientNotFound", {
             emailAddress: anonymousAssistanceAddress
-          }),
-          "warning"
+          })
         );
       }
     )();
@@ -353,7 +352,7 @@ const ZendeskAskPermissions = () => {
             <Link
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>
-                  showToast(I18n.t("global.jserror.title"))
+                  IOToast.error(I18n.t("global.jserror.title"))
                 );
               }}
             >

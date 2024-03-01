@@ -1,19 +1,19 @@
-import React, { useEffect, useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import React, { useEffect, useRef } from "react";
+import { IOToast } from "../../../components/Toast";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { LegacyMessageAttachmentPreview } from "../components/MessageAttachment/LegacyMessageAttachmentPreview";
-import { MessagesParamsList } from "../navigation/params";
-import { showToast } from "../../../utils/showToast";
-import { getServiceByMessageId } from "../store/reducers/paginatedById";
 import { useIOSelector } from "../../../store/hooks";
-import { thirdPartyMessageAttachment } from "../store/reducers/thirdPartyById";
 import {
   trackThirdPartyMessageAttachmentCorruptedFile,
   trackThirdPartyMessageAttachmentPreviewSuccess,
   trackThirdPartyMessageAttachmentUserAction
 } from "../analytics";
+import { LegacyMessageAttachmentPreview } from "../components/MessageAttachment/LegacyMessageAttachmentPreview";
+import { MessagesParamsList } from "../navigation/params";
+import { getServiceByMessageId } from "../store/reducers/paginatedById";
+import { thirdPartyMessageAttachment } from "../store/reducers/thirdPartyById";
 
 export const LegacyMessageDetailAttachment = (
   props: IOStackNavigationRouteProps<
@@ -44,7 +44,7 @@ export const LegacyMessageDetailAttachment = (
     ) {
       // eslint-disable-next-line functional/immutable-data
       autoBackOnErrorHandled.current = true;
-      showToast(I18n.t("messageDetails.attachments.downloadFailed"));
+      IOToast.error(I18n.t("messageDetails.attachments.downloadFailed"));
       navigation.goBack();
     }
   }, [navigation, maybeThirdPartyMessageUIAttachment]);
@@ -55,7 +55,7 @@ export const LegacyMessageDetailAttachment = (
       attachment={maybeThirdPartyMessageUIAttachment.value}
       onPDFError={() => {
         trackThirdPartyMessageAttachmentCorruptedFile(messageId, serviceId);
-        showToast(I18n.t("messageDetails.attachments.corruptedFile"));
+        IOToast.error(I18n.t("messageDetails.attachments.corruptedFile"));
       }}
       onLoadComplete={() => {
         trackThirdPartyMessageAttachmentPreviewSuccess();

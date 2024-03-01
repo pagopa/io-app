@@ -8,15 +8,17 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
-import { View, Alert, SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 
 import { HSpacer, NativeSwitch, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation, useRoute, Route } from "@react-navigation/native";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { InfoBox } from "../../components/box/InfoBox";
+import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
+import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { H5 } from "../../components/core/typography/H5";
@@ -31,15 +33,15 @@ import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 
-import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
 import {
   isError,
-  isLoading as isRemoteLoading,
-  isReady
+  isReady,
+  isLoading as isRemoteLoading
 } from "../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
+import { IOToast } from "../../components/Toast";
+import { LightModalContext } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
   IOStackNavigationProp,
@@ -69,8 +71,6 @@ import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
-import { showToast } from "../../utils/showToast";
-import { LightModalContext } from "../../components/ui/LightModal";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type ConfirmCardDetailsScreenNavigationParams = Readonly<{
@@ -408,12 +408,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           // a toast and navigate to the wallet selection screen
           if (failureReason === "FETCH_PSPS_FAILURE") {
             // fetching the PSPs for the payment has failed
-            showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
+            IOToast.warning(I18n.t("wallet.payWith.fetchPspFailure"));
           } else if (failureReason === "NO_PSPS_AVAILABLE") {
             // this card cannot be used for this payment
             // TODO: perhaps we can temporarily hide the selected wallet from
             //       the list of available wallets
-            showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+            IOToast.error(I18n.t("wallet.payWith.noPspsAvailable"));
           }
           // navigate to the wallet selection screen
 
@@ -448,13 +448,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
             navigateToNextScreen(O.some(addedWallet));
           },
           onFailure: error => {
-            showToast(
+            IOToast.error(
               I18n.t(
                 error === "ALREADY_EXISTS"
                   ? "wallet.newPaymentMethod.failedCardAlreadyExists"
                   : "wallet.newPaymentMethod.failed"
-              ),
-              "danger"
+              )
             );
             navigateToNextScreen(O.none);
           }

@@ -2,19 +2,22 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { H1 } from "../../components/core/typography/H1";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { IOToast } from "../../components/Toast";
+import { Body } from "../../components/core/typography/Body";
+import { H1 } from "../../components/core/typography/H1";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -30,15 +33,12 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
+import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
-import { showToast } from "../../utils/showToast";
-import { Body } from "../../components/core/typography/Body";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackEmailEditing } from "../analytics/emailAnalytics";
-import { getFlowType } from "../../utils/analytics";
 
 type Props = IOStackNavigationRouteProps<
   ProfileParamsList,
@@ -173,7 +173,7 @@ const EmailInsertScreen = (props: Props) => {
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
       if (pot.isError(profile)) {
         // display a toast with error
-        showToast(I18n.t("email.edit.upsert_ko"), "danger");
+        IOToast.error(I18n.t("email.edit.upsert_ko"));
       } else if (pot.isSome(profile)) {
         // user is inserting his email from onboarding phase
         // he comes from checkAcknowledgedEmailSaga if onboarding is not finished yet

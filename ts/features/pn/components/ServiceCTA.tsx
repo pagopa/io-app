@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { identity, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { ActivityIndicator } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { identity, pipe } from "fp-ts/lib/function";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { AppDispatch } from "../../../App";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { IOToast } from "../../../components/Toast";
 import { Label } from "../../../components/core/typography/Label";
+import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
+import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { servicePreferenceSelector } from "../../../store/reducers/entities/services/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
-import { AppDispatch } from "../../../App";
-import { pnActivationUpsert } from "../store/actions";
-import { pnActivationSelector } from "../store/reducers/activation";
-import { showToast } from "../../../utils/showToast";
-import { Link } from "../../../components/core/typography/Link";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,
   trackPNServiceStartActivation,
   trackPNServiceStartDeactivation
 } from "../analytics";
+import { pnActivationUpsert } from "../store/actions";
+import { pnActivationSelector } from "../store/reducers/activation";
 
 type Props = {
   serviceId: ServiceId;
@@ -113,11 +113,11 @@ const ServiceCTA = ({ serviceId, activate }: Props) => {
     const isError = pot.isError(serviceActivation);
     if (wasUpdating && !isStillUpdating) {
       if (isError) {
-        showToast(I18n.t("features.pn.service.toast.error"), "danger");
+        IOToast.error(I18n.t("features.pn.service.toast.error"));
       } else {
         dispatch(loadServicePreference.request(serviceId));
         if (pot.toUndefined(serviceActivation)) {
-          showToast(I18n.t("features.pn.service.toast.activated"), "success");
+          IOToast.success(I18n.t("features.pn.service.toast.activated"));
         }
       }
     }

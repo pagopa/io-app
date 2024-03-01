@@ -3,23 +3,23 @@
  * (holder, pan, cvc, expiration date)
  */
 
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import { Route, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Content } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
-import { Link } from "../../components/core/typography/Link";
 import { LabelledItem } from "../../components/LabelledItem";
+import SectionStatusComponent from "../../components/SectionStatus";
+import { Link } from "../../components/core/typography/Link";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../components/SectionStatus";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
@@ -28,6 +28,8 @@ import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
 
+import { IOToast } from "../../components/Toast";
+import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
 import { isTestEnv } from "../../utils/environment";
@@ -37,16 +39,14 @@ import {
   CreditCardExpirationYear,
   CreditCardState,
   CreditCardStateKeys,
-  getCreditCardFromState,
   INITIAL_CARD_FORM_STATE,
+  MIN_PAN_DIGITS,
+  getCreditCardFromState,
   isValidCardHolder,
   isValidPan,
-  isValidSecurityCode,
-  MIN_PAN_DIGITS
+  isValidSecurityCode
 } from "../../utils/input";
-import { showToast } from "../../utils/showToast";
 import { openWebUrl } from "../../utils/url";
-import { acceptedPaymentMethodsFaqUrl } from "../../urls";
 
 export type AddCardScreenNavigationParams = Readonly<{
   inPayment: O.Option<{
@@ -82,7 +82,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 
 const openSupportedCardsPage = (): void => {
   openWebUrl(acceptedPaymentMethodsFaqUrl, () =>
-    showToast(I18n.t("wallet.alert.supportedCardPageLinkError"))
+    IOToast.error(I18n.t("wallet.alert.supportedCardPageLinkError"))
   );
 };
 

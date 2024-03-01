@@ -4,6 +4,7 @@ import * as React from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect, useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import { IOToast } from "../../components/Toast";
 import { InfoBox } from "../../components/box/InfoBox";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { H5 } from "../../components/core/typography/H5";
@@ -27,7 +28,6 @@ import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { emptyContextualHelp } from "../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../utils/showToast";
 import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
@@ -80,7 +80,7 @@ const OnboardingServicesPreferenceScreen = (
     // show error toast only when the profile updating fails
     // otherwise, if the profile is in error state, the toast will be shown immediately without any updates
     if (!pot.isError(prevPotProfile) && pot.isError(potProfile)) {
-      showToast(I18n.t("global.genericError"));
+      IOToast.error(I18n.t("global.genericError"));
     }
     setPrevPotProfile(potProfile);
   }, [

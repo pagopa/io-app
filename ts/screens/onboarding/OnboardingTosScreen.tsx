@@ -9,12 +9,15 @@ import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { useStore } from "react-redux";
-import { Body } from "../../components/core/typography/Body";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import { IOToast } from "../../components/Toast";
+import TosWebviewComponent from "../../components/TosWebviewComponent";
+import { Body } from "../../components/core/typography/Body";
+import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import TosWebviewComponent from "../../components/TosWebviewComponent";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 import I18n from "../../i18n";
 import { abortOnboarding, tosAccepted } from "../../store/actions/onboarding";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
@@ -24,13 +27,10 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import { showToast } from "../../utils/showToast";
-import { H1 } from "../../components/core/typography/H1";
-import { trackTosUserExit } from "../authentication/analytics";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { trackTosUserExit } from "../authentication/analytics";
 import { trackTosAccepted, trackTosScreen } from "../profile/analytics";
-import { tosConfigSelector } from "../../features/tos/store/selectors";
 
 const styles = StyleSheet.create({
   titlePadding: {
@@ -95,7 +95,7 @@ const OnboardingTosScreen = () => {
 
   useEffect(() => {
     if (hasProfileError) {
-      showToast(I18n.t("global.genericError"));
+      IOToast.error(I18n.t("global.genericError"));
     }
   }, [hasProfileError]);
 
