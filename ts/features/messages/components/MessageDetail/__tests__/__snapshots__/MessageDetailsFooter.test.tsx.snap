@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessageDetailsFooter component should match the snapshot when the service's contact detail are defined 1`] = `
+exports[`MessageDetailsFooter component should match the snapshot when the service's contact details are defined 1`] = `
 <View
   style={
     Object {
@@ -634,7 +634,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
 </View>
 `;
 
-exports[`MessageDetailsFooter component should match the snapshot when the service's contact detail are not defined 1`] = `
+exports[`MessageDetailsFooter component should match the snapshot when the service's contact details are not defined 1`] = `
 <View
   style={
     Object {

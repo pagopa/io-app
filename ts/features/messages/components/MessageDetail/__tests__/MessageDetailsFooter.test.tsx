@@ -16,7 +16,7 @@ const defaultProps: ComponentProps<typeof MessageDetailsFooter> = {
 };
 
 describe("MessageDetailsFooter component", () => {
-  it("should match the snapshot when the service's contact detail are defined", () => {
+  it("should match the snapshot when the service's contact details are defined", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
       loadServiceDetail.success({
@@ -38,7 +38,7 @@ describe("MessageDetailsFooter component", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it("should match the snapshot when the service's contact detail are not defined", () => {
+  it("should match the snapshot when the service's contact details are not defined", () => {
     const sequenceOfActions: ReadonlyArray<Action> = [
       applicationChangeState("active"),
       loadServiceDetail.success(service_1)
