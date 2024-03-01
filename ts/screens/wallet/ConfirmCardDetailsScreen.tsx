@@ -11,7 +11,12 @@ import * as React from "react";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 
-import { HSpacer, NativeSwitch, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  HSpacer,
+  NativeSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
@@ -29,7 +34,6 @@ import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenCompo
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
@@ -194,27 +198,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       psp: undefined
     };
 
-    const primaryButtonProps = {
-      block: true,
-      primary: true,
-      onPress: () =>
-        this.props.runStartOrResumeAddCreditCardSaga(
-          creditCard,
-          this.state.setAsFavourite
-        ),
-      title: isInPayment
-        ? I18n.t("wallet.saveCardInPayment.save")
-        : I18n.t("global.buttons.continue"),
-      testID: "saveOrContinueButton"
-    };
-
-    const secondaryButtonProps = {
-      block: true,
-      bordered: true,
-      onPress: this.goBack,
-      title: I18n.t("global.buttons.back")
-    };
-
     // shown when wallets pot is in error state
     const walletsInErrorContent = (
       <SafeAreaView style={IOStyles.flex}>
@@ -262,73 +245,107 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
     );
 
     const noErrorContent = (
-      <SafeAreaView style={IOStyles.flex}>
-        <Content noPadded={true} style={styles.paddedLR}>
-          <H1>{I18n.t("wallet.saveCard.title")}</H1>
-          <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
-          <VSpacer size={16} />
-          <CardComponent
-            wallet={wallet}
-            type={"Full"}
-            extraSpace={true}
-            hideMenu={true}
-            hideFavoriteIcon={true}
-          />
-          <VSpacer size={16} />
-          <InfoBox alignedCentral={true} iconSize={24} iconColor="bluegreyDark">
-            <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
-          </InfoBox>
-          <VSpacer size={24} />
-          <View style={styles.preferredMethodContainer}>
-            <View style={IOStyles.flex}>
-              <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-                {I18n.t("wallet.saveCard.infoTitle")}
-              </H4>
-              <H5 weight={"Regular"} color={"bluegrey"}>
-                {I18n.t("wallet.saveCard.info")}
-              </H5>
+      <>
+        <SafeAreaView style={IOStyles.flex}>
+          <Content noPadded={true} style={styles.paddedLR}>
+            <H1>{I18n.t("wallet.saveCard.title")}</H1>
+            <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
+            <VSpacer size={16} />
+            <CardComponent
+              wallet={wallet}
+              type={"Full"}
+              extraSpace={true}
+              hideMenu={true}
+              hideFavoriteIcon={true}
+            />
+            <VSpacer size={16} />
+            <InfoBox
+              alignedCentral={true}
+              iconSize={24}
+              iconColor="bluegreyDark"
+            >
+              <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
+            </InfoBox>
+            <VSpacer size={24} />
+            <View style={styles.preferredMethodContainer}>
+              <View style={IOStyles.flex}>
+                <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+                  {I18n.t("wallet.saveCard.infoTitle")}
+                </H4>
+                <H5 weight={"Regular"} color={"bluegrey"}>
+                  {I18n.t("wallet.saveCard.info")}
+                </H5>
+              </View>
+              <HSpacer size={16} />
+              <View style={{ paddingTop: 7 }}>
+                <NativeSwitch
+                  value={this.state.setAsFavourite}
+                  onValueChange={this.onSetFavouriteValueChange}
+                />
+              </View>
             </View>
-            <HSpacer size={16} />
-            <View style={{ paddingTop: 7 }}>
-              <NativeSwitch
-                value={this.state.setAsFavourite}
-                onValueChange={this.onSetFavouriteValueChange}
-              />
-            </View>
-          </View>
-        </Content>
+          </Content>
 
-        <FooterWithButtons
+          {/* <LegacyFooterWithButtons
           type={"TwoButtonsInlineThird"}
           leftButton={secondaryButtonProps}
           rightButton={primaryButtonProps}
-        />
+        /> */}
 
-        {/*
-         * When the first step is finished (creditCardAddWallet === O.some) show the webview
-         * for the payment component.
-         */}
-        {payWebViewPayload && (
-          <PayWebViewModal
-            postUri={urlPrefix + payUrlSuffix}
-            formData={formData}
-            finishPathName={webViewExitPathName}
-            onFinish={(maybeCode, navigationUrls) => {
-              this.props.dispatchCreditCardPaymentNavigationUrls(
-                navigationUrls
-              );
-              this.props.storeCreditCardOutcome(maybeCode);
-              this.props.goToAddCreditCardOutcomeCode(
-                payWebViewPayload.crediCardTempWallet
-              );
-              this.props.dispatchEndAddCreditCardWebview("EXIT_PATH");
-            }}
-            outcomeQueryparamName={webViewOutcomeParamName}
-            onGoBack={handlePayWebviewGoBack}
-            modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
-          />
-        )}
-      </SafeAreaView>
+          {/*
+           * When the first step is finished (creditCardAddWallet === O.some) show the webview
+           * for the payment component.
+           */}
+          {payWebViewPayload && (
+            <PayWebViewModal
+              postUri={urlPrefix + payUrlSuffix}
+              formData={formData}
+              finishPathName={webViewExitPathName}
+              onFinish={(maybeCode, navigationUrls) => {
+                this.props.dispatchCreditCardPaymentNavigationUrls(
+                  navigationUrls
+                );
+                this.props.storeCreditCardOutcome(maybeCode);
+                this.props.goToAddCreditCardOutcomeCode(
+                  payWebViewPayload.crediCardTempWallet
+                );
+                this.props.dispatchEndAddCreditCardWebview("EXIT_PATH");
+              }}
+              outcomeQueryparamName={webViewOutcomeParamName}
+              onGoBack={handlePayWebviewGoBack}
+              modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
+            />
+          )}
+        </SafeAreaView>
+        <FooterWithButtons
+          type="TwoButtonsInlineThird"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              onPress: this.goBack,
+              label: I18n.t("global.buttons.back"),
+              accessibilityLabel: I18n.t("global.buttons.back")
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              onPress: () =>
+                this.props.runStartOrResumeAddCreditCardSaga(
+                  creditCard,
+                  this.state.setAsFavourite
+                ),
+              label: isInPayment
+                ? I18n.t("wallet.saveCardInPayment.save")
+                : I18n.t("global.buttons.continue"),
+              accessibilityLabel: isInPayment
+                ? I18n.t("wallet.saveCardInPayment.save")
+                : I18n.t("global.buttons.continue"),
+              testID: "saveOrContinueButton"
+            }
+          }}
+        />
+      </>
     );
     const error = O.isSome(this.props.error) || this.props.areWalletsInError;
     return (
