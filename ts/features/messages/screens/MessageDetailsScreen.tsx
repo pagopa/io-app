@@ -1,11 +1,6 @@
 import React, { useCallback, useMemo } from "react";
-import { ScrollView } from "react-native";
-import {
-  ContentWrapper,
-  IOStyles,
-  Tag,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { ScrollView, View } from "react-native";
+import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
@@ -37,6 +32,7 @@ import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetails
 import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
+import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: UIMessageId;
@@ -105,8 +101,8 @@ export const MessageDetailsScreen = () => {
   }
 
   return (
-    <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
-      <ScrollView>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <View style={{ flexGrow: 1 }}>
         <ContentWrapper>
           <MessageDetailsHeader
             serviceId={serviceId}
@@ -159,7 +155,11 @@ export const MessageDetailsScreen = () => {
           <VSpacer />
           <MessageDetailsAttachments messageId={messageId} />
         </ContentWrapper>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+      <VSpacer size={24} />
+      <SafeAreaView edges={["bottom"]}>
+        <MessageDetailsFooter serviceId={serviceId} />
+      </SafeAreaView>
+    </ScrollView>
   );
 };
