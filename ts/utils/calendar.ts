@@ -1,16 +1,16 @@
+import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as E from "fp-ts/lib/Either";
-import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
-import { Platform } from "react-native";
 import { identity, pipe } from "fp-ts/lib/function";
+import { Platform } from "react-native";
+import RNCalendarEvents, { Calendar } from "react-native-calendar-events";
 import { CreatedMessageWithContentAndAttachments } from "../../definitions/backend/CreatedMessageWithContentAndAttachments";
 import { TranslationKeys } from "../../locales/locales";
+import { IOToast } from "../components/Toast";
 import I18n from "../i18n";
 import { AddCalendarEventPayload } from "../store/actions/calendarEvents";
 import { CalendarEvent } from "../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 import { formatDateAsReminder } from "./dates";
-import { showToast } from "./showToast";
 
 /**
  * Utility functions to interact with the device calendars
@@ -171,12 +171,11 @@ export const saveCalendarEvent = (
     alarms: []
   })
     .then(eventId => {
-      showToast(
+      IOToast.success(
         I18n.t("messages.cta.reminderAddSuccess", {
           title,
           calendarTitle: convertLocalCalendarName(calendar.title)
-        }),
-        "success"
+        })
       );
       const messageId = message.id;
       if (onAddCalendarEvent) {
@@ -186,7 +185,7 @@ export const saveCalendarEvent = (
         });
       }
     })
-    .catch(_ => showToast(I18n.t("messages.cta.reminderAddFailure"), "danger"));
+    .catch(_ => IOToast.error(I18n.t("messages.cta.reminderAddFailure")));
 };
 
 export const removeCalendarEventFromDeviceCalendar = (
@@ -196,16 +195,14 @@ export const removeCalendarEventFromDeviceCalendar = (
   if (calendarEvent) {
     RNCalendarEvents.removeEvent(calendarEvent.eventId)
       .then(_ => {
-        showToast(I18n.t("messages.cta.reminderRemoveSuccess"), "success");
+        IOToast.success(I18n.t("messages.cta.reminderRemoveSuccess"));
         if (onRemoveEvent) {
           onRemoveEvent(calendarEvent);
         }
       })
-      .catch(_ =>
-        showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger")
-      );
+      .catch(_ => IOToast.error(I18n.t("messages.cta.reminderRemoveFailure")));
   } else {
-    showToast(I18n.t("messages.cta.reminderRemoveFailure"), "danger");
+    IOToast.error(I18n.t("messages.cta.reminderRemoveFailure"));
   }
 };
 

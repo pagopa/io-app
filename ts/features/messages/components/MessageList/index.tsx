@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -12,17 +13,22 @@ import {
   Vibration
 } from "react-native";
 import { connect } from "react-redux";
-import { useFocusEffect } from "@react-navigation/native";
+import { IOToast } from "../../../../components/Toast";
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";
+import { Dispatch } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import customVariables, {
+  VIBRATION_LONG_PRESS_DURATION
+} from "../../../../theme/variables";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   Filter,
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../store/actions";
-import { Dispatch } from "../../../../store/actions/types";
 import {
   allArchiveSelector,
   allInboxSelector,
@@ -34,19 +40,13 @@ import {
   isReloadingInbox
 } from "../../store/reducers/allPaginated";
 import { UIMessage } from "../../types";
-import { GlobalState } from "../../../../store/reducers/types";
-import customVariables, {
-  VIBRATION_LONG_PRESS_DURATION
-} from "../../../../theme/variables";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../../../utils/showToast";
+import MessageListItem from "./Item";
 import {
   EmptyComponent,
-  generateItemLayout,
   ItemSeparator,
+  generateItemLayout,
   renderEmptyList
 } from "./helpers";
-import MessageListItem from "./Item";
 
 const styles = StyleSheet.create({
   padded: {
@@ -265,7 +265,7 @@ const MessageList = ({
 
   useEffect(() => {
     if (error) {
-      showToast(I18n.t("global.genericError"), "warning");
+      IOToast.warning(I18n.t("global.genericError"));
     }
   }, [error]);
 

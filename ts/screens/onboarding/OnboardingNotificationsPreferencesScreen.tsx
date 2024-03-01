@@ -1,26 +1,27 @@
+import {
+  ContentWrapper,
+  Divider,
+  IOColors,
+  IOVisualCostants,
+  NativeSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
+import { pipe } from "fp-ts/lib/function";
 import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { useSelector, useStore } from "react-redux";
-import {
-  IOColors,
-  Divider,
-  VSpacer,
-  ContentWrapper,
-  IOVisualCostants,
-  NativeSwitch
-} from "@pagopa/io-app-design-system";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { PreferencesListItem } from "../../components/PreferencesListItem";
+import { IOToast } from "../../components/Toast";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOBadge } from "../../components/core/IOBadge";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { H5 } from "../../components/core/typography/H5";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { PreferencesListItem } from "../../components/PreferencesListItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -33,10 +34,9 @@ import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch } from "../../store/hooks";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
-import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
-import { showToast } from "../../utils/showToast";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
 import {
   trackNotificationPreferenceConfiguration,
   trackNotificationScreen,
@@ -171,7 +171,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
 
   useEffect(() => {
     if (isError && !isUpdating) {
-      showToast(I18n.t("profile.preferences.notifications.error"));
+      IOToast.error(I18n.t("profile.preferences.notifications.error"));
     }
   }, [isError, isUpdating]);
 

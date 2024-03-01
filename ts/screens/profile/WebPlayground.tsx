@@ -1,27 +1,27 @@
 import {
   ButtonOutline,
   ButtonSolid,
+  ContentWrapper,
   Divider,
   HSpacer,
   IOColors,
   IOStyles,
-  IOVisualCostants,
   IconButtonContained,
   ListItemSwitch,
+  TextInput,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import * as React from "react";
 import {
+  TextInput as RNTextInput,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  TextInput,
   View
 } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import { LabelledItem } from "../../components/LabelledItem";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import { IOToast } from "../../components/Toast";
 import { Monospace } from "../../components/core/typography/Monospace";
@@ -96,9 +96,9 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
   return (
     <SafeAreaView style={styles.flex}>
       <ScrollView contentContainerStyle={[IOStyles.flex]}>
-        <View style={{ paddingHorizontal: IOVisualCostants.appMarginDefault }}>
+        <ContentWrapper>
           <View style={styles.row}>
-            <TextInput
+            <RNTextInput
               style={styles.textInput}
               onChangeText={handleUriInput}
               value={navigationURI}
@@ -137,35 +137,30 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
             value={saveCookie}
             onSwitchValueChange={setSaveCookie}
           />
-        </View>
-        <View style={{ flex: 1 }}>
           {saveCookie && (
             <>
-              <LabelledItem
-                label={"Cookie name"}
-                inputProps={{
-                  value: cookieName,
-                  returnKeyType: "done",
-                  onChangeText: setCookieName
-                }}
+              <TextInput
+                placeholder={"Cookie name"}
+                value={cookieName}
+                onChangeText={setCookieName}
               />
-              <LabelledItem
-                label={"Cookie value"}
-                inputProps={{
-                  value: cookieValue,
-                  returnKeyType: "done",
-                  onChangeText: setCookieValue
-                }}
+              <VSpacer size={16} />
+              <TextInput
+                placeholder={"Cookie value"}
+                value={cookieValue}
+                onChangeText={setCookieValue}
               />
-              <VSpacer size={8} />
+              <VSpacer size={16} />
               <ButtonSolid
                 onPress={() => setCookieOnDomain()}
                 label="Save"
                 accessibilityLabel={"Save"}
               />
-              <VSpacer size={8} />
+              <VSpacer size={16} />
             </>
           )}
+        </ContentWrapper>
+        <View style={{ flex: 1 }}>
           {showDebug && <Monospace>{webMessage}</Monospace>}
           <RegionServiceWebView
             key={`${reloadKey}_webview`}

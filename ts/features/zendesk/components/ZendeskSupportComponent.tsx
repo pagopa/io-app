@@ -1,11 +1,12 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { InfoBox } from "../../../components/box/InfoBox";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
+import { IOToast } from "../../../components/Toast";
+import { InfoBox } from "../../../components/box/InfoBox";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Label } from "../../../components/core/typography/Label";
@@ -22,7 +23,6 @@ import {
   isProfileEmailValidatedSelector,
   profileSelector
 } from "../../../store/reducers/profile";
-import { showToast } from "../../../utils/showToast";
 import { openWebUrl } from "../../../utils/url";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { zendeskConfigSelector } from "../store/reducers";
@@ -82,7 +82,7 @@ const ZendeskSupportComponent = ({
         <Link
           onPress={() => {
             openWebUrl(zendeskPrivacyUrl, () =>
-              showToast(I18n.t("global.jserror.title"))
+              IOToast.error(I18n.t("global.jserror.title"))
             );
           }}
         >

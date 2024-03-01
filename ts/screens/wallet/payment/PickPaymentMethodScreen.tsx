@@ -1,16 +1,16 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
  */
+import { Divider, VSpacer } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { Content } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import { Divider, VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
@@ -18,19 +18,20 @@ import BaseScreenComponent, {
 } from "../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
+import {
+  isLoading as isLoadingRemote,
+  isLoading as isRemoteLoading
+} from "../../../common/model/RemoteValue";
+import { IOToast } from "../../../components/Toast";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../components/buttons/ButtonConfigurations";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import PickAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickAvailablePaymentMethodListItem";
 import PickNotAvailablePaymentMethodListItem from "../../../components/wallet/payment/PickNotAvailablePaymentMethodListItem";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../components/buttons/ButtonConfigurations";
-import {
-  isLoading as isLoadingRemote,
-  isLoading as isRemoteLoading
-} from "../../../common/model/RemoteValue";
 import PaymentStatusSwitch from "../../../features/wallet/component/features/PaymentStatusSwitch";
 import I18n from "../../../i18n";
 import {
@@ -51,8 +52,8 @@ import { profileNameSurnameSelector } from "../../../store/reducers/profile";
 import { GlobalState } from "../../../store/reducers/types";
 import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import {
-  bancomatListVisibleInWalletSelector,
   bPayListVisibleInWalletSelector,
+  bancomatListVisibleInWalletSelector,
   creditCardListVisibleInWalletSelector,
   paypalListSelector
 } from "../../../store/reducers/wallet/wallets";
@@ -62,7 +63,6 @@ import {
   isDisabledToPay,
   isEnabledToPay
 } from "../../../utils/paymentMethodCapabilities";
-import { showToast } from "../../../utils/showToast";
 import { convertWalletV2toWalletV1 } from "../../../utils/walletv2";
 import { dispatchPickPspOrConfirm } from "./common";
 
@@ -268,12 +268,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
 
         if (failureReason === "FETCH_PSPS_FAILURE") {
           // fetching the PSPs for the payment has failed
-          showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
+          IOToast.warning(I18n.t("wallet.payWith.fetchPspFailure"));
         } else if (failureReason === "NO_PSPS_AVAILABLE") {
           // this wallet cannot be used for this payment
           // TODO: perhaps we can temporarily hide the selected wallet from
           //       the list of available wallets
-          showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+          IOToast.error(I18n.t("wallet.payWith.noPspsAvailable"));
         }
       }
     );

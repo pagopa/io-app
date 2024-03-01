@@ -1,14 +1,15 @@
-import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
 import {
   IOColors,
   IOIconSizeScale,
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import { IOToast } from "../../../components/Toast";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -29,7 +30,6 @@ import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
-import { showToast } from "../../../utils/showToast";
 import { openWebUrl } from "../../../utils/url";
 import ZendeskItemPermissionComponent, {
   ItemPermissionProps
@@ -140,7 +140,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             <Link
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>
-                  showToast(I18n.t("global.jserror.title"))
+                  IOToast.error(I18n.t("global.jserror.title"))
                 );
               }}
             >

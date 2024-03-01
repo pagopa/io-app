@@ -2,6 +2,7 @@
  * A screens to express the preferences related to email forwarding.
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -10,7 +11,6 @@ import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -20,6 +20,7 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
+import { IOToast } from "../../components/Toast";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -38,7 +39,6 @@ import {
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
-import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
   navigation: IOStackNavigationProp<
@@ -99,7 +99,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
       // if we got an error while updating the preference
       // show a toast
       if (pot.isError(this.props.potProfile)) {
-        showToast(I18n.t("global.genericError"));
+        IOToast.error(I18n.t("global.genericError"));
         this.setState({ isLoading: false });
         return;
       }

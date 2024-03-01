@@ -6,6 +6,7 @@ import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/P
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
+import { IOToast } from "../../components/Toast";
 import { RemoteSwitch } from "../../components/core/selection/RemoteSwitch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
@@ -16,7 +17,6 @@ import { profilePreferencesSelector } from "../../store/reducers/profile";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
-import { showToast } from "../../utils/showToast";
 import {
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
@@ -46,7 +46,7 @@ export const NotificationsPreferencesScreen = () => {
 
   useEffect(() => {
     if (isError && isUpserting) {
-      showToast(I18n.t("profile.preferences.notifications.error"));
+      IOToast.error(I18n.t("profile.preferences.notifications.error"));
     }
     if (!isUpdating) {
       setIsUpserting(false);

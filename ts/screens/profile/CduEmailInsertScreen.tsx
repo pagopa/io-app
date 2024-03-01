@@ -2,41 +2,48 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { Content, Form } from "native-base";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  useContext,
-  createRef
-} from "react";
-import validator from "validator";
-import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
 import {
+  Alert as AlertComponent,
+  FooterWithButtons,
   IOColors,
   Icon,
   LabelSmall,
-  VSpacer,
-  Alert as AlertComponent,
-  FooterWithButtons
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { Route, useRoute } from "@react-navigation/native";
-import { H1 } from "../../components/core/typography/H1";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { Content, Form } from "native-base";
+import React, {
+  createRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from "react";
+import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
+import validator from "validator";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
+import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
+import { IOToast } from "../../components/Toast";
+import { Body } from "../../components/core/typography/Body";
+import { H1 } from "../../components/core/typography/H1";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
+import { LightModalContext } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
+import { emailAcknowledged } from "../../store/actions/onboarding";
 import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import {
   isProfileEmailAlreadyTakenSelector,
   isProfileEmailValidatedSelector,
@@ -44,23 +51,16 @@ import {
   profileEmailSelector,
   profileSelector
 } from "../../store/reducers/profile";
+import { getFlowType } from "../../utils/analytics";
+import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
-import { Body } from "../../components/core/typography/Body";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { LightModalContext } from "../../components/ui/LightModal";
-import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
-import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import {
   trackEmailDuplicateEditing,
   trackEmailEditing,
   trackEmailEditingError
 } from "../analytics/emailAnalytics";
-import { getFlowType } from "../../utils/analytics";
-import { emailValidationSelector } from "../../store/reducers/emailValidation";
-import { emailAcknowledged } from "../../store/actions/onboarding";
-import { showToast } from "../../utils/showToast";
 
 export type CduEmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -288,7 +288,7 @@ const CduEmailInsertScreen = () => {
             ]
           );
         } else {
-          showToast(I18n.t("email.edit.upsert_ko"));
+          IOToast.error(I18n.t("email.edit.upsert_ko"));
         }
         // display a toast with error
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {

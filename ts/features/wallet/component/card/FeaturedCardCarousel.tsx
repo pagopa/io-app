@@ -9,6 +9,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
+import { IOToast } from "../../../../components/Toast";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
@@ -28,15 +29,14 @@ import {
   isCdcEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import { showToast } from "../../../../utils/showToast";
-import { ID_CDC_TYPE, ID_CGN_TYPE } from "../../../bonus/common/utils";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import {
   availableBonusTypesSelectorFromId,
-  supportedAvailableBonusSelector,
-  serviceFromAvailableBonusSelector
+  serviceFromAvailableBonusSelector,
+  supportedAvailableBonusSelector
 } from "../../../bonus/common/store/selectors";
+import { ID_CDC_TYPE, ID_CGN_TYPE } from "../../../bonus/common/utils";
 import { getRemoteLocale } from "../../../messages/utils/messages";
 import FeaturedCard from "./FeaturedCard";
 
@@ -101,7 +101,7 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
           O.fold(
             () => {
               // TODO: add mixpanel tracking and alert: https://pagopa.atlassian.net/browse/AP-14
-              showToast(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
+              IOToast.info(I18n.t("bonus.cdc.serviceEntryPoint.notAvailable"));
             },
             s => () => {
               dispatch(showServiceDetails(s));

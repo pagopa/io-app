@@ -1,18 +1,18 @@
+import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { pipe } from "fp-ts/lib/function";
+import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   Alert,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
-  ScrollView
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
@@ -20,6 +20,15 @@ import CardIcon from "../../../../img/wallet/card.svg";
 import BancomatPayLogo from "../../../../img/wallet/payment-methods/bancomat_pay.svg";
 import PaypalLogo from "../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
 import TagIcon from "../../../../img/wallet/tag.svg";
+import {
+  getValueOrElse,
+  isError,
+  isLoading,
+  isReady
+} from "../../../common/model/RemoteValue";
+import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import { IOToast } from "../../../components/Toast";
+import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
@@ -33,17 +42,10 @@ import {
   LightModalContext,
   LightModalContextInterface
 } from "../../../components/ui/LightModal";
-import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import { PayWebViewModal } from "../../../components/wallet/PayWebViewModal";
 import { SelectionBox } from "../../../components/wallet/SelectionBox";
+import { getCardIconFromBrandLogo } from "../../../components/wallet/card/Logo";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../../config";
-import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
-import {
-  getValueOrElse,
-  isError,
-  isLoading,
-  isReady
-} from "../../../common/model/RemoteValue";
 import { BrandImage } from "../../../features/wallet/component/card/BrandImage";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -56,13 +58,13 @@ import {
 import { Dispatch } from "../../../store/actions/types";
 import { paymentOutcomeCode } from "../../../store/actions/wallet/outcomeCode";
 import {
+  PaymentMethodType,
+  PaymentWebViewEndReason,
   abortRunningPayment,
   paymentCompletedFailure,
   paymentCompletedSuccess,
   paymentExecuteStart,
-  PaymentMethodType,
-  paymentWebViewEnd,
-  PaymentWebViewEndReason
+  paymentWebViewEnd
 } from "../../../store/actions/wallet/payment";
 import { fetchTransactionsRequestWithExpBackoff } from "../../../store/actions/wallet/transactions";
 import {
@@ -73,8 +75,8 @@ import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPr
 import { GlobalState } from "../../../store/reducers/types";
 import { outcomeCodesSelector } from "../../../store/reducers/wallet/outcomeCode";
 import {
-  paymentStartPayloadSelector,
   PaymentStartWebViewPayload,
+  paymentStartPayloadSelector,
   pmSessionTokenSelector,
   pspSelectedV2ListSelector,
   pspV2ListSelector
@@ -82,11 +84,11 @@ import {
 import { paymentMethodByIdSelector } from "../../../store/reducers/wallet/wallets";
 import { OutcomeCodesKey } from "../../../types/outcomeCode";
 import {
-  isCreditCard,
-  isRawPayPal,
   PaymentMethod,
   RawPaymentMethod,
-  Wallet
+  Wallet,
+  isCreditCard,
+  isRawPayPal
 } from "../../../types/pagopa";
 import { PayloadForAction } from "../../../types/utils";
 import { getTranslatedShortNumericMonthYear } from "../../../utils/dates";
@@ -94,10 +96,8 @@ import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isPaymentOutcomeCodeSuccessfully } from "../../../utils/payment";
 import { getPaypalAccountEmail } from "../../../utils/paypal";
 import { getLookUpIdPO } from "../../../utils/pmLookUpId";
-import { showToast } from "../../../utils/showToast";
 import { formatNumberCentsToAmount } from "../../../utils/stringBuilder";
 import { openWebUrl } from "../../../utils/url";
-import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
 
 // temporary feature flag since this feature is still WIP
 // (missing task to complete https://pagopa.atlassian.net/browse/IA-684?filter=10121)
@@ -243,7 +243,7 @@ const ConfirmPaymentMethodScreen: React.FC<ConfirmPaymentMethodScreenProps> = (
   React.useEffect(() => {
     // show a toast if we got an error while retrieving pm session token
     if (O.isSome(props.retrievingSessionTokenError)) {
-      showToast(I18n.t("global.actions.retry"));
+      IOToast.error(I18n.t("global.actions.retry"));
     }
   }, [props.retrievingSessionTokenError]);
 
@@ -598,7 +598,7 @@ const mapStateToProps = (state: GlobalState) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
   const dispatchCancelPayment = () => {
     dispatch(abortRunningPayment());
-    showToast(I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"), "success");
+    IOToast.success(I18n.t("wallet.ConfirmPayment.cancelPaymentSuccess"));
   };
   return {
     onCancel: () => {

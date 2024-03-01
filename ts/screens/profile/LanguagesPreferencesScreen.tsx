@@ -8,6 +8,7 @@ import { Alert, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Locales, TranslationKeys } from "../../../locales/locales";
 import SectionStatusComponent from "../../components/SectionStatus";
+import { IOToast } from "../../components/Toast";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
@@ -28,7 +29,6 @@ import {
   fromLocaleToPreferredLanguage,
   getLocalePrimaryWithFallback
 } from "../../utils/locale";
-import { showToast } from "../../utils/showToast";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -113,7 +113,7 @@ class LanguagesPreferencesScreen extends React.PureComponent<
 
     // update error
     if (pot.isUpdating(prevProps.profile) && pot.isError(this.props.profile)) {
-      showToast(I18n.t("errors.profileUpdateError"));
+      IOToast.error(I18n.t("errors.profileUpdateError"));
     }
   }
 

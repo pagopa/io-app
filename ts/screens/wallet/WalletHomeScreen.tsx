@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
+import { constVoid } from "fp-ts/lib/function";
 import * as React from "react";
 import {
   BackHandler,
@@ -15,9 +16,9 @@ import {
   View
 } from "react-native";
 import { connect } from "react-redux";
-import { constVoid } from "fp-ts/lib/function";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import SectionStatusComponent from "../../components/SectionStatus";
+import { IOToast } from "../../components/Toast";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -48,11 +49,11 @@ import { supportedAvailableBonusSelector } from "../../features/bonus/common/sto
 import IDPayCardsInWalletContainer from "../../features/idpay/wallet/components/IDPayCardsInWalletContainer";
 import { idPayWalletGet } from "../../features/idpay/wallet/store/actions";
 import { idPayWalletInitiativeListSelector } from "../../features/idpay/wallet/store/reducers";
+import { WalletBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
+import { WalletTransactionRoutes } from "../../features/payments/transaction/navigation/navigator";
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import { WalletBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import { WalletTransactionRoutes } from "../../features/payments/transaction/navigation/navigator";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -93,7 +94,6 @@ import {
 } from "../../store/reducers/wallet/wallets";
 import customVariables from "../../theme/variables";
 import { Transaction, Wallet } from "../../types/pagopa";
-import { showToast } from "../../utils/showToast";
 
 export type WalletHomeNavigationParams = Readonly<{
   newMethodAdded: boolean;
@@ -235,7 +235,7 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
       !pot.isError(prevProps.potWallets) &&
       pot.isError(this.props.potWallets)
     ) {
-      showToast(I18n.t("wallet.errors.loadingData"));
+      IOToast.error(I18n.t("wallet.errors.loadingData"));
     }
 
     // Dispatch the action associated to the saga responsible to remind a user
