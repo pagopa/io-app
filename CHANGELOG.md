@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.55.0-rc.1](https://github.com/pagopa/io-app/compare/2.55.0-rc.0...2.55.0-rc.1) (2024-03-01)
+
+
+### Features
+
+* [[IOPID-1501](https://pagopa.atlassian.net/browse/IOPID-1501)] Adapt LandingScreen to the new DS ([#5536](https://github.com/pagopa/io-app/issues/5536)) ([9c4c4d1](https://github.com/pagopa/io-app/commit/9c4c4d14cedbe79a2d3738ffc9ce0ad73e6cb402))
+
+
+### Bug Fixes
+
+* [[IOCOM-1154](https://pagopa.atlassian.net/browse/IOCOM-1154)] Fix for double navigation bar on message details ([#5559](https://github.com/pagopa/io-app/issues/5559)) ([3bad813](https://github.com/pagopa/io-app/commit/3bad813f1aeafe8117c76de95bfa134a6a24ce4b))
+
 ## [2.55.0-rc.0](https://github.com/pagopa/io-app/compare/2.54.0-rc.1...2.55.0-rc.0) (2024-02-28)
 
 
