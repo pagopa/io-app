@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ScrollView, StyleProp, ViewStyle } from "react-native";
+import { IOStyles } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
@@ -43,7 +44,7 @@ class ScreenContent extends React.PureComponent<Props> {
     return (
       <ScrollView
         ref={referenceToContentScreen as unknown as React.LegacyRef<ScrollView>}
-        style={contentStyle}
+        style={[contentStyle, IOStyles.flex]}
         bounces={bounces}
         refreshControl={this.props.contentRefreshControl}
       >
