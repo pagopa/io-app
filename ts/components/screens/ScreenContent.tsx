@@ -1,7 +1,5 @@
-import { Content } from "native-base";
 import * as React from "react";
-
-import { StyleProp, ViewStyle } from "react-native";
+import { ScrollView, StyleProp, ViewStyle } from "react-native";
 import { ComponentProps } from "../../types/react";
 import { ScreenContentHeader } from "./ScreenContentHeader";
 
@@ -9,10 +7,10 @@ interface OwnProps {
   hideHeader?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   bounces?: boolean;
-  contentRefreshControl?: ComponentProps<Content>["refreshControl"];
+  contentRefreshControl?: ComponentProps<ScrollView>["refreshControl"];
   referenceToContentScreen?: (
     c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<Content>;
+  ) => ScreenContentRoot | React.LegacyRef<ScrollView>;
 }
 
 export type ScreenContentRoot = {
@@ -43,9 +41,8 @@ class ScreenContent extends React.PureComponent<Props> {
     } = this.props;
 
     return (
-      <Content
-        ref={referenceToContentScreen as unknown as React.LegacyRef<Content>}
-        noPadded={true}
+      <ScrollView
+        ref={referenceToContentScreen as unknown as React.LegacyRef<ScrollView>}
         style={contentStyle}
         bounces={bounces}
         refreshControl={this.props.contentRefreshControl}
@@ -60,7 +57,7 @@ class ScreenContent extends React.PureComponent<Props> {
           />
         )}
         {this.props.children}
-      </Content>
+      </ScrollView>
     );
   }
 }

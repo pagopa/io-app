@@ -36,8 +36,7 @@ const ListSelectionBar = ({
   onToggleSelection,
   onResetSelection,
   primaryButtonText,
-  selectedItems,
-  totalItems
+  selectedItems
 }: Props) => (
   <View style={styles.buttonBar}>
     <View style={styles.flex}>

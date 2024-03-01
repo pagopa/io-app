@@ -8,9 +8,15 @@
  * footer with a button for starting a new payment
  */
 
-import { Content } from "native-base";
 import * as React from "react";
-import { Animated, Dimensions, StyleProp, View, ViewStyle } from "react-native";
+import {
+  Animated,
+  Dimensions,
+  ScrollView,
+  StyleProp,
+  View,
+  ViewStyle
+} from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import { FAQsCategoriesType } from "../../utils/faq";
@@ -32,7 +38,7 @@ type Props = Readonly<{
   hideBaseHeader?: boolean;
   footerContent?: React.ReactNode;
   contentStyle?: StyleProp<ViewStyle>;
-  refreshControl?: Animated.ComponentProps<Content>["refreshControl"];
+  refreshControl?: Animated.ComponentProps<ScrollView>["refreshControl"];
   contextualHelp?: ContextualHelpProps;
   contextualHelpMarkdown?: ContextualHelpPropsMarkdown;
   faqCategories?: ReadonlyArray<FAQsCategoriesType>;
@@ -42,7 +48,7 @@ type Props = Readonly<{
   footerFullWidth?: React.ReactNode;
   referenceToContentScreen?: (
     c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<Content>;
+  ) => ScreenContentRoot | React.LegacyRef<ScrollView>;
 }>;
 
 export default class WalletLayout extends React.Component<Props> {

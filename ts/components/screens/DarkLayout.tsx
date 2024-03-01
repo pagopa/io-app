@@ -7,7 +7,8 @@ import {
   ImageSourcePropType,
   StyleProp,
   StyleSheet,
-  ViewStyle
+  ViewStyle,
+  ScrollView
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
@@ -50,7 +51,7 @@ type Props = Readonly<{
   footerFullWidth?: React.ReactNode;
   referenceToContentScreen?: (
     c: ScreenContentRoot
-  ) => ScreenContentRoot | React.LegacyRef<View>;
+  ) => ScreenContentRoot | React.LegacyRef<ScrollView>;
 }>;
 
 const styles = StyleSheet.create({
