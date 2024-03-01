@@ -68,13 +68,13 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   });
 
   const textInputWrappperRef = React.useRef<View>(null);
-  // ---------------------- handlers
   const focusTextInput = () => {
     const textInputA11yWrapper = findNodeHandle(textInputWrappperRef.current);
     if (textInputA11yWrapper) {
       AccessibilityInfo.setAccessibilityFocus(textInputA11yWrapper);
     }
   };
+
   const navigateToTransactionSummary = () => {
     pipe(
       sequenceS(O.Monad)({
@@ -98,15 +98,13 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   };
 
   const handleContinueClick = () =>
-    O.fold(
-      () => {
+    pipe(
+      inputState.fiscalCode,
+      O.fold(() => {
         Keyboard.dismiss();
         focusTextInput();
-      },
-      _some => navigateToTransactionSummary()
-    )(inputState.fiscalCode);
-
-  // -------------------- render
+      }, navigateToTransactionSummary)
+    );
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>

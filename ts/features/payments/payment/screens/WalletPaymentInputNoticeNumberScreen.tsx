@@ -10,6 +10,7 @@ import {
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
   AccessibilityInfo,
@@ -46,21 +47,22 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     noticeNumber: O.none
   });
 
+  const navigateToFiscalCodeInput = () =>
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE,
+      params: {
+        paymentNoticeNumber: inputState.noticeNumber
+      }
+    });
+
   const handleContinueClick = () =>
-    O.fold(
-      () => {
+    pipe(
+      inputState.noticeNumber,
+      O.fold(() => {
         Keyboard.dismiss();
         focusTextInput();
-      },
-      _some => {
-        navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-          screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE,
-          params: {
-            paymentNoticeNumber: inputState.noticeNumber
-          }
-        });
-      }
-    )(inputState.noticeNumber);
+      }, navigateToFiscalCodeInput)
+    );
 
   const focusTextInput = () => {
     const textInputA11yWrapper = findNodeHandle(textInputWrappperRef.current);
