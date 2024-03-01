@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.55.0-rc.1](https://github.com/pagopa/io-app/compare/2.55.0-rc.0...2.55.0-rc.1) (2024-03-01)
+
+
+### Features
+
+* [[IOPID-1501](https://pagopa.atlassian.net/browse/IOPID-1501)] Adapt LandingScreen to the new DS ([#5536](https://github.com/pagopa/io-app/issues/5536)) ([9c4c4d1](https://github.com/pagopa/io-app/commit/9c4c4d14cedbe79a2d3738ffc9ce0ad73e6cb402))
+
+
+### Bug Fixes
+
+* [[IOCOM-1154](https://pagopa.atlassian.net/browse/IOCOM-1154)] Fix for double navigation bar on message details ([#5559](https://github.com/pagopa/io-app/issues/5559)) ([3bad813](https://github.com/pagopa/io-app/commit/3bad813f1aeafe8117c76de95bfa134a6a24ce4b))
+
+## [2.55.0-rc.0](https://github.com/pagopa/io-app/compare/2.54.0-rc.1...2.55.0-rc.0) (2024-02-28)
+
+
+### Features
+
+* [[IOCOM-1051](https://pagopa.atlassian.net/browse/IOCOM-1051)] Native HTTP client ([#5550](https://github.com/pagopa/io-app/issues/5550)) ([910a39c](https://github.com/pagopa/io-app/commit/910a39cc3de5a168cc0843e2e5b84078685b95fb))
+* **Firma con IO:** [[SFEQS-2083](https://pagopa.atlassian.net/browse/SFEQS-2083)] Replace abort bottom sheet with alert ([#5425](https://github.com/pagopa/io-app/issues/5425)) ([9d33b39](https://github.com/pagopa/io-app/commit/9d33b39b0db8c318a4047ef2879cbc4d441bfacf))
+* [[IOCOM-848](https://pagopa.atlassian.net/browse/IOCOM-848)] Message content with new DS System ([#5519](https://github.com/pagopa/io-app/issues/5519)) ([1560834](https://github.com/pagopa/io-app/commit/1560834b6bc3d964b252172a8988388e45edccda))
+* [[IOCOM-881](https://pagopa.atlassian.net/browse/IOCOM-881)] Update message attachment preview ([#5537](https://github.com/pagopa/io-app/issues/5537)) ([541e5c7](https://github.com/pagopa/io-app/commit/541e5c72357fc857d1ef52b2154bf95ecd7fad04))
+
+
+### Bug Fixes
+
+* [[IOCOM-1154](https://pagopa.atlassian.net/browse/IOCOM-1154)] Fix for double navigation bar on message details ([#5555](https://github.com/pagopa/io-app/issues/5555)) ([86ba3d3](https://github.com/pagopa/io-app/commit/86ba3d3a9424c1fe4a693db020de56b1b8ddda7f))
+* **Firma con IO:** [[SFEQS-2123](https://pagopa.atlassian.net/browse/SFEQS-2123)] Loading spinner not following DS toggle ([#5545](https://github.com/pagopa/io-app/issues/5545)) ([106c7df](https://github.com/pagopa/io-app/commit/106c7df8e95e2c9d7c7dd982f75d6103b0d4a768))
+* **Firma con IO:** [[SFEQS-2124](https://pagopa.atlassian.net/browse/SFEQS-2124)] Wrong margins in FCI flow ([#5543](https://github.com/pagopa/io-app/issues/5543)) ([dd16b6b](https://github.com/pagopa/io-app/commit/dd16b6b1756fa6d282c38279cc763ae49642e6cc))
+* [[IOBP-542](https://pagopa.atlassian.net/browse/IOBP-542)] StatusBar background color for Android devices in wallet details screen ([#5539](https://github.com/pagopa/io-app/issues/5539)) ([fe64210](https://github.com/pagopa/io-app/commit/fe642100928e85557293d29617d172d23f35d6bc))
+
+
+### Chores
+
+* [[IOBP-498](https://pagopa.atlassian.net/browse/IOBP-498)] Adds stepper in payment's screens header ([#5525](https://github.com/pagopa/io-app/issues/5525)) ([d09e9b0](https://github.com/pagopa/io-app/commit/d09e9b08b452bcef8526483d2956c05b014a4fe9))
+* [[IOBP-503](https://pagopa.atlassian.net/browse/IOBP-503)] Add payment attempts tracking ([#5401](https://github.com/pagopa/io-app/issues/5401)) ([54f967a](https://github.com/pagopa/io-app/commit/54f967a30ecf44bc60a43a0d33f1b5175a13182a))
+* [[IOBP-530](https://pagopa.atlassian.net/browse/IOBP-530)] Removed CTA button in payment confirmation screen with one PSP element ([#5488](https://github.com/pagopa/io-app/issues/5488)) ([69af3d9](https://github.com/pagopa/io-app/commit/69af3d923da3e2e5bdfea47c97eb3cc78eed2761))
+* [[IOBP-566](https://pagopa.atlassian.net/browse/IOBP-566)] Renames `walletV3` feature to `payments` ([#5533](https://github.com/pagopa/io-app/issues/5533)) ([4e32f86](https://github.com/pagopa/io-app/commit/4e32f8679863b0ef1d080ef57a9cb18af6c50374))
+* [[IOBP-572](https://pagopa.atlassian.net/browse/IOBP-572)] Move currency symbol to the right of the amount ([#5540](https://github.com/pagopa/io-app/issues/5540)) ([691b194](https://github.com/pagopa/io-app/commit/691b194855b0e8cb6071f22d65fcc9fa27a8e097))
+* [[IOPID-1481](https://pagopa.atlassian.net/browse/IOPID-1481)], [[IOPID-1482](https://pagopa.atlassian.net/browse/IOPID-1482)] Countdown 60 seconds ([#5514](https://github.com/pagopa/io-app/issues/5514)) ([2befb34](https://github.com/pagopa/io-app/commit/2befb345ab417d41a0a33c84c522331f4bdbb64a))
+
 ## [2.54.0-rc.1](https://github.com/pagopa/io-app/compare/2.54.0-rc.0...2.54.0-rc.1) (2024-02-21)
 
 

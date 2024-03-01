@@ -1,4 +1,3 @@
-import { Container, Content } from "native-base";
 import * as React from "react";
 import {
   View,
@@ -6,20 +5,24 @@ import {
   AlertButton,
   Image,
   Platform,
-  SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  GestureResponderEvent
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  BlockButtonProps,
+  FooterWithButtons,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 import image from "../../../img/rooted/broken-phone.png";
 import { H2 } from "../../components/core/typography/H2";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { trackLoginRootedScreen } from "./analytics";
 
 type Props = {
@@ -60,9 +63,14 @@ type ConfirmConfig = {
   onConfirmAction: () => void;
 };
 
-const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
+const RootedDeviceModal = (props: Props) => {
   const [markdownLoaded, setMarkdownLoaded] = React.useState(false);
   trackLoginRootedScreen();
+
+  useHeaderSecondLevel({
+    title: "",
+    canGoBack: false
+  });
 
   const showAlert = (confirmConfig: ConfirmConfig) => {
     const buttons: ReadonlyArray<AlertButton> = [
@@ -99,16 +107,23 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
   };
 
   const leftButton: BlockButtonProps = {
-    title: I18n.t("global.buttons.continue"),
-    bordered: true,
-    danger: true,
-    onPress: () => showAlert(continueAlertConfig)
+    type: "Outline",
+    buttonProps: {
+      color: "danger",
+      label: I18n.t("global.buttons.continue"),
+      accessibilityLabel: I18n.t("global.buttons.continue"),
+      onPress: (_: GestureResponderEvent) => showAlert(continueAlertConfig)
+    }
   };
 
   const rightButton: BlockButtonProps = {
-    title: I18n.t("global.buttons.cancel"),
-    primary: true,
-    onPress: () => showAlert(cancelAlertConfig)
+    type: "Solid",
+    buttonProps: {
+      color: "primary",
+      label: I18n.t("global.buttons.cancel"),
+      accessibilityLabel: I18n.t("global.buttons.cancel"),
+      onPress: (_: GestureResponderEvent) => showAlert(cancelAlertConfig)
+    }
   };
 
   const onMarkdownLoaded = () => {
@@ -120,37 +135,30 @@ const RootedDeviceModal: React.FunctionComponent<Props> = (props: Props) => {
     default: I18n.t("rooted.bodyAndroid")
   });
   const ComponentWithLoading = withLoadingSpinner(() => (
-    <BaseScreenComponent
-      goBack={false}
-      accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-    >
-      <Container>
-        <SafeAreaView style={styles.flex}>
-          <Content>
-            <View style={styles.main}>
-              <Image source={image} resizeMode="contain" style={styles.image} />
-              <VSpacer size={24} />
-              <View style={IOStyles.alignCenter}>
-                <H2>{I18n.t("rooted.title")}</H2>
-              </View>
-            </View>
-            <VSpacer size={8} />
-            <LegacyMarkdown
-              cssStyle={CSS_STYLE}
-              onLoadEnd={onMarkdownLoaded}
-              extraBodyHeight={100}
-            >
-              {body}
-            </LegacyMarkdown>
-          </Content>
-          <FooterWithButtons
-            type="TwoButtonsInlineHalf"
-            leftButton={leftButton}
-            rightButton={rightButton}
-          />
-        </SafeAreaView>
-      </Container>
-    </BaseScreenComponent>
+    <SafeAreaView edges={["bottom"]} style={styles.flex}>
+      <ScrollView style={IOStyles.horizontalContentPadding}>
+        <View style={styles.main}>
+          <Image source={image} resizeMode="contain" style={styles.image} />
+          <VSpacer size={24} />
+          <View style={IOStyles.alignCenter}>
+            <H2>{I18n.t("rooted.title")}</H2>
+          </View>
+        </View>
+        <VSpacer size={8} />
+        <LegacyMarkdown
+          cssStyle={CSS_STYLE}
+          onLoadEnd={onMarkdownLoaded}
+          extraBodyHeight={100}
+        >
+          {body}
+        </LegacyMarkdown>
+      </ScrollView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={leftButton}
+        secondary={rightButton}
+      />
+    </SafeAreaView>
   ));
 
   return (
