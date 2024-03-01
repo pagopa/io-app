@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useRoute } from "@react-navigation/native";
 import I18n from "../../i18n";
@@ -26,6 +26,16 @@ const OnboardingCompletedScreen = () => {
     trackThankYouPageScreen();
   });
 
+  const handleContinue = () => {
+    trackLoginEnded(
+      isFastLoginEnabled,
+      idp,
+      getFlowType(false, true),
+      route.name
+    );
+    dispatch(completeOnboarding());
+  };
+
   return (
     <OperationResultScreenContent
       pictogram="success"
@@ -33,15 +43,7 @@ const OnboardingCompletedScreen = () => {
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
-        onPress: () => {
-          trackLoginEnded(
-            isFastLoginEnabled,
-            idp,
-            getFlowType(false, true),
-            route.name
-          );
-          dispatch(completeOnboarding());
-        }
+        onPress: handleContinue
       }}
     />
   );
