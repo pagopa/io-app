@@ -3,7 +3,11 @@
  * (holder, pan, cvc, expiration date)
  */
 
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Route, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
@@ -20,7 +24,6 @@ import { Link } from "../../components/core/typography/Link";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
@@ -91,13 +94,7 @@ const usePrimaryButtonPropsFromState = (
   onNavigate: (card: CreditCard) => void,
   isHolderValid: boolean,
   isExpirationDateValid?: boolean
-): ComponentProps<typeof FooterWithButtons>["leftButton"] => {
-  const baseButtonProps = {
-    block: true,
-    primary: true,
-    title: I18n.t("global.buttons.continue")
-  };
-
+): ComponentProps<typeof FooterWithButtons>["primary"] => {
   const { isCardNumberValid, isCvvValid } = useLuhnValidation(
     pipe(
       state.pan,
@@ -115,21 +112,29 @@ const usePrimaryButtonPropsFromState = (
     card,
     E.foldW(
       e => ({
-        ...baseButtonProps,
-        disabled: true,
-        accessibilityRole: "button",
-        accessibilityLabel: e
+        type: "Solid",
+        buttonProps: {
+          disabled: true,
+          accessibilityLabel: e,
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          onPress: () => {},
+          label: I18n.t("global.buttons.continue")
+        }
       }),
       c => ({
-        ...baseButtonProps,
-        disabled:
-          !isCardNumberValid ||
-          !isCvvValid ||
-          !isHolderValid ||
-          !isExpirationDateValid,
-        onPress: () => {
-          Keyboard.dismiss();
-          onNavigate(c);
+        type: "Solid",
+        buttonProps: {
+          disabled:
+            !isCardNumberValid ||
+            !isCvvValid ||
+            !isHolderValid ||
+            !isExpirationDateValid,
+          onPress: () => {
+            Keyboard.dismiss();
+            onNavigate(c);
+          },
+          accessibilityLabel: I18n.t("global.buttons.continue"),
+          label: I18n.t("global.buttons.continue")
         }
       })
     )
@@ -253,13 +258,6 @@ const AddCardScreen: React.FC = () => {
       ...creditCard,
       [key]: O.fromPredicate((value: string) => value.length > 0)(value)
     });
-  };
-
-  const secondaryButtonProps = {
-    block: true,
-    bordered: true,
-    onPress: navigation.goBack,
-    title: I18n.t("global.buttons.back")
   };
 
   const isScreenReaderEnabled = !useScreenReaderEnabled();
@@ -432,17 +430,25 @@ const AddCardScreen: React.FC = () => {
           </Content>
         </ScrollView>
         <SectionStatusComponent sectionKey={"credit_card"} />
-        <FooterWithButtons
-          type="TwoButtonsInlineHalf"
-          leftButton={secondaryButtonProps}
-          rightButton={usePrimaryButtonPropsFromState(
-            creditCard,
-            navigateToConfirmCardDetailsScreen,
-            isValidCardHolder(creditCard.holder),
-            O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
-          )}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            color: "primary",
+            accessibilityLabel: I18n.t("global.buttons.back"),
+            onPress: navigation.goBack
+          }
+        }}
+        secondary={usePrimaryButtonPropsFromState(
+          creditCard,
+          navigateToConfirmCardDetailsScreen,
+          isValidCardHolder(creditCard.holder),
+          O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
+        )}
+      />
     </BaseScreenComponent>
   );
 };
