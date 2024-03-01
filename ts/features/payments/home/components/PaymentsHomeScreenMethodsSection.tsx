@@ -55,7 +55,7 @@ const EmptyPaymentMethods = () => {
       viewRef={viewRef}
       size="big"
       onClose={() => null}
-      labelClose="CLOSE"
+      labelClose={I18n.t("global.accessibility.contextualHelp.close")}
       content={I18n.t("payment.homeScreen.methodsSection.empty.body")}
       action={I18n.t("payment.homeScreen.methodsSection.empty.cta")}
       onPress={() => null}
