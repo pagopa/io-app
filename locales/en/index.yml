@@ -929,9 +929,15 @@ payment:
     methodsSection:
       header: Payment methods
       headerCTA: Add
+      empty:
+        body: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        cta: Aggiungi un metodo
     historySection:
      header: Transaction history
      headerCTA: View all
+     empty:
+       header: Qui vedrai le tue ricevute pagoPA
+       body: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments

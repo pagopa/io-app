@@ -1,19 +1,35 @@
-import { HeaderFirstLevel, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  HeaderFirstLevel,
+  IOStyles,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
+import { SafeAreaView, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletPaymentGetUserWallets } from "../../payment/store/actions/networking";
 import { selectWalletPaymentHistoryArchive } from "../../history/store/selectors";
+import { walletPaymentGetUserWallets } from "../../payment/store/actions/networking";
 import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
+import PaymentHistorySection, {
+  EmptyPaymentHistorySection
+} from "../components/PaymentsHomeScreenHistorySection";
 import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
-import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
+
+/**
+ * Home screen for the payment section
+ *
+ * this screen is divided into Methods and history sections,
+ * with their own handled empty states
+ * to allow for reusability
+ */
 
 export const PaymentsHomeScreen = () => {
   const dispatch = useIODispatch();
+  const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
+  const paymentHistory = useIOSelector(selectWalletPaymentHistoryArchive) ?? [];
 
   useFocusEffect(
     React.useCallback(() => {
@@ -21,25 +37,36 @@ export const PaymentsHomeScreen = () => {
     }, [dispatch])
   );
 
-  const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
-  const paymentHistory = useIOSelector(selectWalletPaymentHistoryArchive) ?? [];
+  const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
 
-  const paymentMethods = pipe(
-    paymentMethodsPot,
-    pot.toOption,
-    O.fold(
-      () => [],
-      methods => methods
-    )
+  const FullPage = () => (
+    <>
+      <VSpacer size={24} />
+      <PaymentMethodsSection
+        isLoading={pot.isLoading(paymentMethodsPot)}
+        methods={paymentMethods}
+      />
+
+      <VSpacer size={24} />
+      <View style={[IOStyles.flex, IOStyles.centerJustified]}>
+        <PaymentHistorySection history={paymentHistory} />
+      </View>
+    </>
   );
 
-  // if pot.isSome(cards)|| pot.isSome(history) then load,
-  // let the single components handle empty cases.
-  //
-  // else if neither is some, render empty page.
+  const ScreenContent = () => {
+    const isHistoryEmpty = paymentHistory.length === 0;
+    const areMethodsEmpty =
+      paymentMethods.length === 0 && !pot.isLoading(paymentMethodsPot);
+
+    if (isHistoryEmpty && areMethodsEmpty) {
+      return <EmptyPage />;
+    }
+    return <FullPage />;
+  };
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1 }}>
       <HeaderFirstLevel
         title={I18n.t("payment.homeScreen.title")}
         type="singleAction"
@@ -49,17 +76,14 @@ export const PaymentsHomeScreen = () => {
           onPress: () => null
         }}
       />
-      <VSpacer size={24} />
-
-      {paymentMethods.length !== 0 && ( // will be handled by component in next PR
-        <PaymentMethodsSection methods={paymentMethods} />
-      )}
-
-      <VSpacer size={24} />
-
-      {paymentHistory.length !== 0 && ( // will be handled by component in next PR
-        <PaymentHistorySection history={paymentHistory} />
-      )}
-    </>
+      <ScreenContent />
+    </SafeAreaView>
   );
 };
+
+const EmptyPage = () => (
+  <View style={[IOStyles.flex, IOStyles.centerJustified, IOStyles.alignCenter]}>
+    <Pictogram name="empty" />
+    <EmptyPaymentHistorySection />
+  </View>
+);

@@ -1,8 +1,12 @@
 import {
+  Body,
+  ButtonSolid,
   GradientScrollView,
+  H4,
   IOStyles,
   ListItemHeader,
-  ListItemTransaction
+  ListItemTransaction,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
@@ -50,6 +54,12 @@ const PaymentHistorySection = ({
     ? loadingHistory
     : mapHistoryToItems(history);
 
+  const shouldRenderEmpty = historyRenderElements.length === 0;
+
+  if (shouldRenderEmpty) {
+    return <EmptyPaymentHistorySection />;
+  }
+
   return (
     <>
       <View style={IOStyles.horizontalContentPadding}>
@@ -81,5 +91,26 @@ const PaymentHistorySection = ({
     </>
   );
 };
+
+export const EmptyPaymentHistorySection = () => (
+  <View style={[IOStyles.horizontalContentPadding, IOStyles.alignCenter]}>
+    <H4 style={{ textAlign: "center" }}>
+      {I18n.t("payment.homeScreen.historySection.empty.header")}
+    </H4>
+    <VSpacer size={8} />
+    <Body style={{ textAlign: "center" }}>
+      {I18n.t("payment.homeScreen.historySection.empty.body")}
+    </Body>
+    <VSpacer size={24} />
+    <ButtonSolid
+      accessibilityLabel={I18n.t("payment.homeScreen.CTA")}
+      label={I18n.t("payment.homeScreen.CTA")}
+      onPress={() => null}
+      icon={"qrCode"}
+      iconPosition={"end"}
+      fullWidth={true}
+    />
+  </View>
+);
 
 export default PaymentHistorySection;
