@@ -1865,6 +1865,7 @@ messagePDFPreview:
   open: "Öffnen"
   save: "Speichern"
   savedAtLocation: "Das Dokument {{name}} wurde im Ordner Download gespeichert."
+  pdfAccessibility: "Vorschau PDF-Dokument"
   errors:
     previewing:
       title: "Keine Vorschau verfügbar"
