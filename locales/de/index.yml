@@ -2285,6 +2285,8 @@ features:
         activated: "Vielen Dank, der Dienst ist aktiv!"
         error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
     details:
+      badge:
+        legalValue: "Rechtsgültig"
       title: "Details der Mitteilung"
       noticeCode: "Zahlungskodex"
       loadError:
