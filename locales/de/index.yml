@@ -1692,6 +1692,12 @@ wallet:
         subtitle: "Es wurde kein Betrag abgebucht.\nDu hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten."
       INVALID_METHOD:
         title: "Die Zahlungsmethode wird nicht unterstützt"
+      WAITING_CONFIRMATION_EMAIL:
+        title: "Warte auf eine Bestätigung per E-Mail"
+        subtitle: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, wirst du in Kürze eine E-Mail erhalten. Sollte diese nicht ankommen, kontaktiere bitte den Support."
+      METHOD_NOT_ENABLED:
+        title: "Zahlungsmethode in der App aktivieren"
+        subtitle: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion “Zahlungen in der App”."
     support:
       button: "Support kontaktieren"
       supportTitle: "Support kontaktieren"
