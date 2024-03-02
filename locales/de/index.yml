@@ -533,7 +533,8 @@ authentication:
         label: "Vorstellung von IO"
         hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
-      title: "Deine Sitzung ist abgelaufen"      
+      title: "Deine Sitzung ist abgelaufen"
+      body: "Aus Sicherheitsgründen bitten wir dich, dich alle {{days}} Tage oder wenn du die App verlässt, mit SPID oder CIE anzumelden."
     cie_unsupported:
       title: "Anmeldung mit CIE nicht möglich"
       os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
@@ -548,6 +549,7 @@ authentication:
     loginSpidCie: "Anmeldung mit SPID oder CIE"
     infoSpidCie: "Einführung in SPID und CIE"
     loginSpidCieContent: "Ab heute kannst du dich zusätzlich zu SPID mit deiner elektronischen Identitätskarte (CIE) anmelden"
+    privacyLink: "Datenschutzerklärung"
     nospid: "Du hast keinen SPID? Erfahre mehr"
     nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
     card1-title: "Alle Mitteilungen an einem Ort"
@@ -556,7 +558,8 @@ authentication:
     card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
     card3-title: "Bezahle schnell eine Aufforderung in Papierform"
     card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"    
-    card5-title: "Willkommen bei der ersten öffentlichen Version von IO!"    
+    card5-title: "Willkommen in IO!" 
+    card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
     card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
     expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
