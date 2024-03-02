@@ -1863,9 +1863,13 @@ messageDetails:
 messagePDFPreview:
   title: "PDF-Vorschau"
   singleBtn: "Speichern oder freigeben"
+  singleBtnAccessibility: "Dokument speichern oder freigeben"
   open: "Öffnen"
   save: "Speichern"
+  saveAccessibility: "Dokument speichern"
   savedAtLocation: "Das Dokument {{name}} wurde im Ordner Download gespeichert."
+  share: "Freigeben"
+  shareAccessibility: "Dokument freigeben"
   pdfAccessibility: "Vorschau PDF-Dokument"
   errors:
     previewing:
