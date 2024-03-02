@@ -2221,6 +2221,8 @@ bonus:
           other: "{{seconds}} Sekunden"
 features:
   messages:
+    attachmentDownloadFeedback: "Download läuft"
+    attachments: "Anlagen"
     loading:
       title: "Die Details der Mitteilung werden geladen"
       subtitle: "Warte ein paar Sekunden"
