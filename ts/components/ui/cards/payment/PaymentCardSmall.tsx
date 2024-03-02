@@ -1,14 +1,14 @@
+import {
+  H6,
+  IOColors,
+  IOLogoPaymentType,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import {
-  IOColors,
-  Icon,
-  VSpacer,
-  IOLogoPaymentType,
-  H6
-} from "@pagopa/io-app-design-system";
 import { WithTestID } from "../../../../types/WithTestID";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 import { useSpringPressScaleAnimation } from "../../utils/hooks/useSpringPressScaleAnimation";
@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
     flexBasis: PAYMENT_CARD_SMALL_WIDTH,
     flexGrow: 0,
     borderRadius: 8,
+    borderCurve: "continuous",
     padding: 16
   },
   logoRow: {
