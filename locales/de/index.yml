@@ -1820,6 +1820,7 @@ messages:
       success: "Wiederherstellung durchgeführt."
       failure: "Die Wiederherstellung ist fehlgeschlagen"
 messageDetails:
+  accessibilityAttachmentIcon: "Enthält Anhänge"
   contextualHelpTitle: "Mitteilungsdetails"
   headerTitle: "Mitteilung"
   emptyMessage: "Kein Inhalt"
@@ -1858,7 +1859,7 @@ messageDetails:
     action: "Mehr erfahren"
   bottomSheet:
     title: "Was ist eine dynamische Mitteilung?"
-    body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anlagen.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
+    body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
 messagePDFPreview:
   title: "PDF-Vorschau"
   singleBtn: "Speichern oder freigeben"
@@ -2223,7 +2224,7 @@ bonus:
 features:
   messages:
     attachmentDownloadFeedback: "Download läuft"
-    attachments: "Anlagen"
+    attachments: "Anhänge"
     loading:
       title: "Die Details der Mitteilung werden geladen"
       subtitle: "Warte ein paar Sekunden"
