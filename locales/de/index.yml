@@ -2229,6 +2229,8 @@ features:
     updateBottomSheet:
       title: "Aktualisiere die IO-App"
       subtitle: "App IO Version {{value}} ist erforderlich, um diese Funktion zu nutzen. Bitte aktualisiere die App, um fortzufahren."
+    badge:
+      dueDate: "Abgelaufen am {{date}} um {{time}}"
   euCovidCertificate:
     save:
       album: "IO"
