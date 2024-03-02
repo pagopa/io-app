@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useIOExperimentalDesign } from "@pagopa/io-app-design-system";
 import { EUCovidCertStackNavigator } from "../../euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import LegacyMessageDetailScreen from "../screens/LegacyMessageDetailScreen";
@@ -15,25 +14,14 @@ import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { LegacyMessageDetailAttachment } from "../screens/LegacyMessageAttachment";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
-import { mixpanelTrack } from "../../../mixpanel";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 
 const Stack = createStackNavigator<MessagesParamsList>();
 
 export const MessagesStackNavigator = () => {
-  const isDesignSystemEnabledUnsafe = useIOSelector(
-    isDesignSystemEnabledSelector
-  );
-  const isDesignSystemEnabled = !!isDesignSystemEnabledUnsafe;
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const isPnEnabled = useIOSelector(isPnEnabledSelector);
-
-  const { isExperimental } = useIOExperimentalDesign();
-
-  void mixpanelTrack("DESIGN_SYSTEM_STATUS", {
-    isDesignSystemEnabled: isDesignSystemEnabledUnsafe,
-    isExperimentalContextEnabled: isExperimental
-  });
 
   return (
     <Stack.Navigator
