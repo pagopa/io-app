@@ -1002,7 +1002,7 @@ wallet:
         text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast. "
         text4: "Liste der verfügbaren Banken"
     bpay:
-      title: "Zahle auf IO mit BANCOMAT Pay"
+      title: "Zahle auf IO mit BANCOMAT-Pay"
       description:
         text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
@@ -1024,7 +1024,7 @@ wallet:
       creditCard: "{{brand}}-Karte, die Kartennummer endet mit {{blurredNumber}}"
       bancomat: "BANCOMAT {{bankName}}"
       coBadge: "{{brand}}-Karte, {{bankName}}"
-      bancomatPay: "BANCOMATPay {{bankName}}"
+      bancomatPay: "BANCOMAT Pay {{bankName}}"
       cta: "Details zur Zahlungsmethode anzeigen"
       bankNotAvailable: "Bankenname nicht verfügbar"
     addElement: "Element zum Konto hinzufügen"
@@ -1038,7 +1038,7 @@ wallet:
     bancomat:
       headerTitle: "PagoBANCOMAT-Karte hinzufügen"
       koTimeout:
-        title: "Wir konnten deine PagoBANCOMAT Karten nicht finden"
+        title: "Wir konnten deine PagoBANCOMAT-Karten nicht finden"
         body: "Versuche es erneut"
       koNotFound:
         title: "Wir konnten keine Karten finden"
@@ -1184,6 +1184,10 @@ wallet:
       ALREADY_ONBOARDED:
         title: "Du hast diese Zahlungsmethode bereits hinzugefügt"
         subtitle: ""
+        primaryAction: "Schließen"
+      BPAY_NOT_FOUND:
+        title: "Wir haben kein aktives BANCOMAT Pay Konto gefunden."
+        subtitle: "Wende dich an deine Bank, um den Dienst zu aktivieren."
         primaryAction: "Schließen"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
