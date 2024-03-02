@@ -1876,14 +1876,14 @@ messageDetails:
     body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
 messagePDFPreview:
   title: "PDF-Vorschau"
-  singleBtn: "Speichern oder freigeben"
-  singleBtnAccessibility: "Dokument speichern oder freigeben"
+  singleBtn: "Speichern oder teilen"
+  singleBtnAccessibility: "Dokument speichern oder teilen"
   open: "Öffnen"
   save: "Speichern"
   saveAccessibility: "Dokument speichern"
   savedAtLocation: "Das Dokument {{name}} wurde im Ordner Download gespeichert."
-  share: "Freigeben"
-  shareAccessibility: "Dokument freigeben"
+  share: "Teilen"
+  shareAccessibility: "Dokument teilen"
   pdfAccessibility: "Vorschau PDF-Dokument"
   errors:
     previewing:
