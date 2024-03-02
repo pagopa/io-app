@@ -2233,6 +2233,9 @@ features:
       subtitle: "App IO Version {{value}} ist erforderlich, um diese Funktion zu nutzen. Bitte aktualisiere die App, um fortzufahren."
     badge:
       dueDate: "Abgelaufen am {{date}} um {{time}}"
+    alert:
+      action: "Erinnerung hinzufügen"
+      content: "Läuft am {{date}} um {{time}} ab"
   euCovidCertificate:
     save:
       album: "IO"
