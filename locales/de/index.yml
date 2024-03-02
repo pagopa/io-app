@@ -2242,7 +2242,8 @@ features:
     badge:
       dueDate: "Abgelaufen am {{date}} um {{time}}"
     alert:
-      action: "Erinnerung hinzufügen"
+      addReminder: "Erinnerung hinzufügen"
+      removeReminder: "Erinnerung entfernen"
       content: "Läuft am {{date}} um {{time}} ab"
   euCovidCertificate:
     save:
