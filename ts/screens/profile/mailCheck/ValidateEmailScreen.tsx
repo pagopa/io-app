@@ -1,21 +1,24 @@
-import * as React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
-import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
-import { useCallback } from "react";
+import {
+  FooterWithButtons,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import I18n from "../../../i18n";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { useCallback } from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import themeVariables from "../../../theme/variables";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { Link } from "../../../components/core/typography/Link";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import ROUTES from "../../../navigation/routes";
-import { useIODispatch } from "../../../store/hooks";
-import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
+import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
+import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
+import { useIODispatch } from "../../../store/hooks";
+import themeVariables from "../../../theme/variables";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -61,12 +64,6 @@ const ValidateEmailScreen = () => {
     navigateToInsertEmailScreen();
   }, [dispatch, navigateToInsertEmailScreen]);
 
-  const continueButtonProps = {
-    onPress: confirmButtonOnPress,
-    title: I18n.t("email.cduScreens.validateMail.validateButton"),
-    block: true
-  };
-
   return (
     <BaseScreenComponent
       goBack={false}
@@ -94,11 +91,20 @@ const ValidateEmailScreen = () => {
             {I18n.t("email.cduScreens.validateMail.editButton")}
           </Link>
         </View>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            onPress: confirmButtonOnPress,
+            label: I18n.t("email.cduScreens.validateMail.validateButton"),
+            accessibilityLabel: I18n.t(
+              "email.cduScreens.validateMail.validateButton"
+            )
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
