@@ -6,6 +6,11 @@ import {
   useBottomSheetModal
 } from "@gorhom/bottom-sheet";
 import { BottomSheetFooterProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetFooter";
+import {
+  IOBottomSheetHeaderRadius,
+  IOSpacingScale,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -18,11 +23,6 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  IOBottomSheetHeaderRadius,
-  IOSpacingScale,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   bottomSheet: {
     borderTopRightRadius: IOBottomSheetHeaderRadius,
     borderTopLeftRadius: IOBottomSheetHeaderRadius,
+    borderCurve: "continuous",
     // Don't delete the overflow property
     // oterwise the above borderRadius won't work
     overflow: "hidden"
