@@ -1,24 +1,22 @@
-import { pipe } from "fp-ts/lib/function";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
+import { useMemo } from "react";
 import {
-  View,
   Image,
   ImageSourcePropType,
+  ScrollView,
   StyleSheet,
-  ScrollView
+  View
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import { useMemo } from "react";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { Body } from "../core/typography/Body";
 import { H2 } from "../core/typography/H2";
 import { IOStyles } from "../core/variables/IOStyles";
-import { SingleButton, TwoButtonsInlineHalf } from "../ui/BlockButtons";
-import FooterWithButtons from "../ui/FooterWithButtons";
 
 type Props = WithTestID<
   Readonly<{
@@ -38,36 +36,49 @@ const styles = StyleSheet.create({
   contentContainerStyle: { flexGrow: 1, justifyContent: "center" }
 });
 
+/**
+ ** @deprecated Use `OperationResultScreen` instead
+ */
 const GenericErrorComponent = (props: Props) => {
   const ref = useMemo(() => props.ref ?? React.createRef<View>(), [props.ref]);
-  const renderFooterButtons = () => {
-    const footerProps1: TwoButtonsInlineHalf = {
-      type: "TwoButtonsInlineHalf",
-      leftButton: {
-        bordered: true,
-        title: props.cancelButtonTitle ?? I18n.t("global.buttons.cancel"),
-        onPress: props.onCancel
-      },
-      rightButton: {
-        primary: true,
-        title: props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
-        onPress: props.onRetry
-      }
-    };
 
-    const footerProps2: SingleButton = {
-      type: "SingleButton",
-      leftButton: {
-        primary: true,
-        title: props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
-        onPress: props.onRetry
-      }
-    };
-
-    return (
-      <FooterWithButtons {...(props.onCancel ? footerProps1 : footerProps2)} />
+  const renderFooterButtons = () =>
+    props.onCancel ? (
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: props.cancelButtonTitle ?? I18n.t("global.buttons.cancel"),
+            accessibilityLabel:
+              props.cancelButtonTitle ?? I18n.t("global.buttons.cancel"),
+            onPress: props.onCancel
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
+            accessibilityLabel:
+              props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
+            onPress: props.onRetry
+          }
+        }}
+      />
+    ) : (
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
+            accessibilityLabel:
+              props.retryButtonTitle ?? I18n.t("global.buttons.retry"),
+            onPress: props.onRetry
+          }
+        }}
+      />
     );
-  };
 
   // accessible if undefined (default error subtext) or text length > 0
   const subTextAccessible = pipe(
