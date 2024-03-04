@@ -1,4 +1,10 @@
-import { ButtonOutline, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  BlockButtonProps,
+  ButtonOutline,
+  FooterWithButtons,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { defaultPin } from "../config";
@@ -11,7 +17,6 @@ import { PinString } from "../types/PinString";
 import { getFlowType } from "../utils/analytics";
 import { PIN_LENGTH_SIX } from "../utils/constants";
 import { isDevEnv } from "../utils/environment";
-import { confirmButtonProps } from "./buttons/ButtonConfigurations";
 import { LabelledItem } from "./LabelledItem";
 import { InfoBox } from "./box/InfoBox";
 import { Body } from "./core/typography/Body";
@@ -19,7 +24,6 @@ import { H1 } from "./core/typography/H1";
 import { Label } from "./core/typography/Label";
 import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOStyles } from "./core/variables/IOStyles";
-import FooterWithButtons from "./ui/FooterWithButtons";
 
 export type Props = {
   onSubmit: (pin: PinString) => void;
@@ -78,16 +82,16 @@ export const PinCreationForm = ({ onSubmit, isOnboarding }: Props) => {
     onSubmit(typedPin);
   }, [pin, isFormValid, onSubmit]);
 
-  const computedConfirmButtonProps = React.useMemo(
+  const computedConfirmButtonProps: BlockButtonProps = React.useMemo(
     () => ({
-      ...confirmButtonProps(
-        () => null,
-        I18n.t("global.buttons.continue"),
-        undefined,
-        "pin-creation-form-confirm"
-      ),
-      disabled: !isFormValid,
-      onPress: handleSubmit
+      type: "Solid",
+      buttonProps: {
+        disabled: !isFormValid,
+        onPress: handleSubmit,
+        label: I18n.t("global.buttons.continue"),
+        accessibilityLabel: I18n.t("global.buttons.continue"),
+        testID: "pin-creation-form-confirm"
+      }
     }),
     [isFormValid, handleSubmit]
   );
@@ -239,7 +243,7 @@ export const PinCreationForm = ({ onSubmit, isOnboarding }: Props) => {
 
       <FooterWithButtons
         type="SingleButton"
-        leftButton={computedConfirmButtonProps}
+        primary={computedConfirmButtonProps}
       />
     </View>
   );
