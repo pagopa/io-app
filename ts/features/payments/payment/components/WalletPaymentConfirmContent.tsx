@@ -13,7 +13,6 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { capitalize } from "../../../../utils/strings";
 import {
@@ -116,16 +115,15 @@ export const WalletPaymentConfirmContent = ({
   );
 };
 
-const getPaymentSubtitle = (details: UIWalletInfoDetails): string => {
-  if (details.maskedPan !== undefined) {
-    return `${format(details.expiryDate, "MM/YY")}`;
-  } else if (details.maskedEmail !== undefined) {
+const getPaymentSubtitle = (
+  details: UIWalletInfoDetails
+): string | undefined => {
+  if (details.maskedEmail !== undefined) {
     return I18n.t("wallet.onboarding.paypal.name");
   } else if (details.maskedNumber !== undefined) {
     return `${details.bankName}`;
   }
-
-  return "";
+  return undefined;
 };
 
 const getPaymentTitle = (details: UIWalletInfoDetails): string => {

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.55.0-rc.2](https://github.com/pagopa/io-app/compare/2.55.0-rc.1...2.55.0-rc.2) (2024-03-01)
+
+
+### Bug Fixes
+
+* [[IOCOM-1154](https://pagopa.atlassian.net/browse/IOCOM-1154)] Fix for `undefined` value on `isDesignSystemEnabled` (and double navigation bar) ([#5563](https://github.com/pagopa/io-app/issues/5563)) ([7d4414d](https://github.com/pagopa/io-app/commit/7d4414d6f745f7f5f68f5587a9dfc76e53542a92))
+
+
+### Chores
+
+* [[IOBP-561](https://pagopa.atlassian.net/browse/IOBP-561)] Addition of new payments page playground ([#5529](https://github.com/pagopa/io-app/issues/5529)) ([09b490a](https://github.com/pagopa/io-app/commit/09b490a888a4db071dc4477a6e71e97e97d30dba))
+* [[IOBP-569](https://pagopa.atlassian.net/browse/IOBP-569)] Removed expiry date from payment summary module checkout ([#5542](https://github.com/pagopa/io-app/issues/5542)) ([3355897](https://github.com/pagopa/io-app/commit/33558975ad36a8a75c1e166d8d21b9a76960dd28))
+
 ## [2.55.0-rc.1](https://github.com/pagopa/io-app/compare/2.55.0-rc.0...2.55.0-rc.1) (2024-03-01)
 
 
