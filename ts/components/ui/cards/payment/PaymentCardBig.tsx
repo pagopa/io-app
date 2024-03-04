@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     height: 207,
     borderRadius: 16,
+    borderCurve: "continuous",
     backgroundColor: IOColors["grey-100"],
     padding: 24,
     width: "100%" // required for consistent skeleton sizing

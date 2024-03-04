@@ -38,6 +38,11 @@ export type PersistedPreferencesState = Readonly<{
   isMixpanelEnabled: boolean | null;
   isPnTestEnabled: boolean;
   isIdPayTestEnabled?: boolean;
+  // 'isDesignSystemEnabled' has been introduced without a migration
+  // (PR https://github.com/pagopa/io-app/pull/4427) so there are cases
+  // where its value is `undefined` (when the user updates the app without
+  // changing the variable value later). Typescript cannot detect this so
+  // be sure to handle such case when reading and using this value
   isDesignSystemEnabled: boolean;
 }>;
 
@@ -182,8 +187,13 @@ export const isPnTestEnabledSelector = (state: GlobalState) =>
 export const isIdPayTestEnabledSelector = (state: GlobalState) =>
   !!state.persistedPreferences?.isIdPayTestEnabled;
 
+// 'isDesignSystemEnabled' has been introduced without a migration
+// (PR https://github.com/pagopa/io-app/pull/4427) so there are cases
+// where its value is `undefined` (when the user updates the app without
+// changing the variable value later). Typescript cannot detect this so
+// we must make sure that the signature's return type is respected
 export const isDesignSystemEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences.isDesignSystemEnabled;
+  state.persistedPreferences.isDesignSystemEnabled ?? false;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<
