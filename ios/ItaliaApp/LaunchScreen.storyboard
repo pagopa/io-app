@@ -37,17 +37,17 @@
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="aL7-ys-jhQ">
-                                <rect key="frame" x="28.5" y="571" width="318" height="48"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="aL7-ys-jhQ">
+                                <rect key="frame" x="24" y="571" width="327" height="48"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_pagopa" translatesAutoresizingMaskIntoConstraints="NO" id="ur6-nk-fTh" userLabel="PagoPa logo">
-                                        <rect key="frame" x="0.0" y="0.0" width="101" height="48"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="104" height="48"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_consiglio_ministri" translatesAutoresizingMaskIntoConstraints="NO" id="Tei-FP-Id0">
-                                        <rect key="frame" x="133" y="0.0" width="43" height="48"/>
+                                        <rect key="frame" x="136" y="0.0" width="55" height="48"/>
                                     </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="euNextLogo" translatesAutoresizingMaskIntoConstraints="NO" id="BYK-0Z-U9E">
-                                        <rect key="frame" x="208" y="0.0" width="110" height="48"/>
+                                        <rect key="frame" x="223" y="0.0" width="104" height="48"/>
                                     </imageView>
                                 </subviews>
                             </stackView>
@@ -60,10 +60,12 @@
                             <constraint firstItem="pdm-K5-7Ya" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="OBs-ee-kkB"/>
                             <constraint firstItem="JZQ-jS-lo4" firstAttribute="top" secondItem="pdm-K5-7Ya" secondAttribute="bottom" constant="8" id="OEo-H1-u0B"/>
                             <constraint firstItem="DPp-fO-Sok" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="TOF-qK-UX1"/>
+                            <constraint firstItem="aL7-ys-jhQ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="8" id="Vqb-vz-bVi"/>
                             <constraint firstItem="DPp-fO-Sok" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Ylg-bg-Ae3"/>
                             <constraint firstItem="pdm-K5-7Ya" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-48" id="ayz-qR-dOQ"/>
                             <constraint firstItem="aL7-ys-jhQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="nr1-zv-P1U"/>
                             <constraint firstItem="JZQ-jS-lo4" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ods-Ud-rpo"/>
+                            <constraint firstItem="Tei-FP-Id0" firstAttribute="centerX" secondItem="pdm-K5-7Ya" secondAttribute="centerX" id="pZI-tr-LRI"/>
                             <constraint firstAttribute="bottom" secondItem="DPp-fO-Sok" secondAttribute="bottom" id="tET-pj-opH"/>
                         </constraints>
                     </view>
