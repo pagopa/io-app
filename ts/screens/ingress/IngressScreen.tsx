@@ -35,6 +35,8 @@ export const IngressScreen = () => {
   });
 
   useFocusEffect(() => {
+    // We need to set the accessibility focus on the first element of the screen
+    // only on iOS, because on Android TalkBack reads the H3 title when the screen is mounted.
     if (Platform.OS === "ios") {
       setAccessibilityFocus(accessibilityFocusFirstElementRef);
     }
@@ -45,7 +47,11 @@ export const IngressScreen = () => {
     <SafeAreaView style={styles.container}>
       <ContentWrapper>
         <View style={{ alignItems: "center" }}>
-          <View accessible={false}>
+          <View
+            accessible={false}
+            accessibilityElementsHidden={true}
+            importantForAccessibility={"no-hide-descendants"}
+          >
             <LoadingSpinner size={SPINNER_SIZE} />
           </View>
           <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
