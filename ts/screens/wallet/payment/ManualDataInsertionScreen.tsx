@@ -1,4 +1,9 @@
 import {
+  FooterWithButtons,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import {
   AmountInEuroCents,
   PaymentNoticeNumberFromString,
   RptId
@@ -8,26 +13,24 @@ import {
   OrganizationFiscalCode
 } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Content, Form } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { LabelledItem } from "../../../components/LabelledItem";
+import { Body } from "../../../components/core/typography/Body";
 import { H1 } from "../../../components/core/typography/H1";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../../components/LabelledItem";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   LightModalContext,
   LightModalContextInterface
 } from "../../../components/ui/LightModal";
-import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import I18n from "../../../i18n";
 import {
   navigateBack,
@@ -40,7 +43,6 @@ import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import { GlobalState } from "../../../store/reducers/types";
 import { withPaymentFeatureSelector } from "../../../store/reducers/wallet/wallets";
 import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
-import { Body } from "../../../components/core/typography/Body";
 import CodesPositionManualPaymentModal from "./CodesPositionManualPaymentModal";
 
 export type ManualDataInsertionScreenNavigationParams = {
@@ -171,14 +173,6 @@ class ManualDataInsertionScreen extends React.Component<
   }
 
   public render(): React.ReactNode {
-    const primaryButtonProps = {
-      disabled: !this.isFormValid(),
-      block: true,
-      primary: this.isFormValid(),
-      onPress: this.proceedToSummary,
-      title: I18n.t("global.buttons.continue")
-    };
-
     return (
       <BaseScreenComponent
         goBack={true}
@@ -265,15 +259,27 @@ class ManualDataInsertionScreen extends React.Component<
               </Form>
             </Content>
           </ScrollView>
-          <FooterWithButtons
-            type="TwoButtonsInlineHalf"
-            leftButton={cancelButtonProps(
-              this.props.goBack,
-              I18n.t("global.buttons.back")
-            )}
-            rightButton={primaryButtonProps}
-          />
         </SafeAreaView>
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.back"),
+              accessibilityLabel: I18n.t("global.buttons.back"),
+              onPress: this.props.goBack
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.continue"),
+              accessibilityLabel: I18n.t("global.buttons.continue"),
+              disabled: !this.isFormValid(),
+              onPress: this.proceedToSummary
+            }
+          }}
+        />
       </BaseScreenComponent>
     );
   }
