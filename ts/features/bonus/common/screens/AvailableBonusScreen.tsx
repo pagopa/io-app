@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, IOColors } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Content } from "native-base";
@@ -24,7 +24,6 @@ import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
@@ -198,13 +197,6 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
 
   public render() {
     const { availableBonusesList, isError } = this.props;
-    const cancelButtonProps = {
-      block: true,
-      light: true,
-      bordered: true,
-      onPress: this.props.navigateBack,
-      title: I18n.t("global.buttons.cancel")
-    };
 
     return isError ? (
       <GenericErrorComponent
@@ -238,8 +230,15 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
             </View>
           </Content>
           <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={cancelButtonProps}
+            type="SingleButton"
+            primary={{
+              type: "Outline",
+              buttonProps: {
+                onPress: this.props.navigateBack,
+                label: I18n.t("global.buttons.cancel"),
+                accessibilityLabel: I18n.t("global.buttons.cancel")
+              }
+            }}
           />
         </SafeAreaView>
       </BaseScreenComponent>
