@@ -4,7 +4,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { UIMessageId } from "../../../messages/types";
+import { UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   isError,
@@ -18,15 +18,15 @@ import {
   RemoteValue
 } from "../../../../common/model/RemoteValue";
 import {
-  clearSelectedPayment,
-  setSelectedPayment,
+  clearMessagesSelectedPayment,
+  reloadAllMessages,
+  setMessagesSelectedPayment,
   updatePaymentForMessage
 } from "../actions";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { getRptIdStringFromPayment } from "../../utils/rptId";
-import { reloadAllMessages } from "../../../messages/store/actions";
+import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
@@ -81,12 +81,12 @@ export const paymentsReducer = (
         }),
         state
       );
-    case getType(setSelectedPayment):
+    case getType(setMessagesSelectedPayment):
       return {
         ...state,
         selectedPayment: action.payload.paymentId
       };
-    case getType(clearSelectedPayment):
+    case getType(clearMessagesSelectedPayment):
       return {
         ...state,
         selectedPayment: undefined
@@ -103,7 +103,7 @@ export const shouldUpdatePaymentSelector = (
   paymentId: string
 ) =>
   pipe(
-    state.features.pn.payments[messageId],
+    state.entities.messages.payments[messageId],
     O.fromNullable,
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
     O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
@@ -118,7 +118,7 @@ export const paymentStatusForUISelector = (
   paymentId: string
 ): RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum> =>
   pipe(
-    state.features.pn.payments[messageId],
+    state.entities.messages.payments[messageId],
     O.fromNullable,
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
     O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
@@ -134,7 +134,7 @@ export const paymentsButtonStateSelector = (
   maxVisiblePaymentCount: number
 ) =>
   pipe(
-    state.features.pn.payments[messageId],
+    state.entities.messages.payments[messageId],
     O.fromNullable,
     computeUpdatedPaymentCount(payments, maxVisiblePaymentCount),
     buttonStateFromUpdatedPaymentCount(payments, maxVisiblePaymentCount)
@@ -238,4 +238,4 @@ const buttonStateFromUpdatedPaymentCount =
     );
 
 export const selectedPaymentIdSelector = (state: GlobalState) =>
-  state.features.pn.payments.selectedPayment;
+  state.entities.messages.payments.selectedPayment;

@@ -15,7 +15,12 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { LegacyMessageDetails } from "../components/LegacyMessageDetails";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
-import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
+import {
+  cancelPreviousAttachmentDownload,
+  cancelQueuedPaymentUpdates,
+  clearMessagesSelectedPayment,
+  updatePaymentForMessage
+} from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
   containsF24FromPNMessagePot,
@@ -26,12 +31,9 @@ import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPaymentStatusTracking,
-  cancelQueuedPaymentUpdates,
-  clearSelectedPayment,
-  startPaymentStatusTracking,
-  updatePaymentForMessage
+  startPaymentStatusTracking
 } from "../store/actions";
-import { selectedPaymentIdSelector } from "../store/reducers/payments";
+import { selectedPaymentIdSelector } from "../../messages/store/reducers/payments";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import genericErrorIcon from "../../../../img/wallet/errors/generic-error-icon.png";
@@ -84,7 +86,7 @@ export const LegacyMessageDetailsScreen = (
       const globalState = store.getState();
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
-        dispatch(clearSelectedPayment());
+        dispatch(clearMessagesSelectedPayment());
         dispatch(
           updatePaymentForMessage.request({
             messageId,
