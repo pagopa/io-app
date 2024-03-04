@@ -1,4 +1,5 @@
 import {
+  FooterWithButtons,
   IOColors,
   IOIconSizeScale,
   Icon,
@@ -16,7 +17,6 @@ import { H4 } from "../../../components/core/typography/H4";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -322,19 +322,6 @@ const ZendeskAskPermissions = () => {
     void mixpanelTrack("ZENDESK_OPEN_TICKET");
     workUnitCompleted();
   };
-  const cancelButtonProps = {
-    testID: "cancelButtonId",
-    primary: false,
-    bordered: true,
-    onPress: handleOnCancel,
-    title: I18n.t("support.askPermissions.cta.denies")
-  };
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    onPress: handleOnContinuePress,
-    title: I18n.t("support.askPermissions.cta.allow")
-  };
 
   return (
     <BaseScreenComponent
@@ -369,12 +356,28 @@ const ZendeskAskPermissions = () => {
             ))}
           </View>
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("support.askPermissions.cta.denies"),
+            accessibilityLabel: I18n.t("support.askPermissions.cta.denies"),
+            testID: "cancelButtonId",
+            onPress: handleOnCancel
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("support.askPermissions.cta.allow"),
+            accessibilityLabel: I18n.t("support.askPermissions.cta.allow"),
+            testID: "continueButtonId",
+            onPress: handleOnContinuePress
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

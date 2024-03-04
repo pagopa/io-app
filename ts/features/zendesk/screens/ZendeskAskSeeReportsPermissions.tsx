@@ -1,4 +1,5 @@
 import {
+  FooterWithButtons,
   IOColors,
   IOIconSizeScale,
   Icon,
@@ -16,7 +17,6 @@ import { H4 } from "../../../components/core/typography/H4";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import {
@@ -110,18 +110,6 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     // remove these item whose have no value associated
     .filter(it => it.value);
 
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    onPress: () => {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-        params: { assistanceForPayment, assistanceForCard, assistanceForFci }
-      });
-    },
-    title: I18n.t("support.askPermissions.cta.allow")
-  };
-
   return (
     <BaseScreenComponent
       showChat={false}
@@ -157,11 +145,28 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             ))}
           </View>
         </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("support.askPermissions.cta.allow"),
+            accessibilityLabel: I18n.t("support.askPermissions.cta.allow"),
+            testID: "continueButtonId",
+            onPress: () => {
+              navigation.navigate("ZENDESK_MAIN", {
+                screen: "ZENDESK_SEE_REPORTS_ROUTERS",
+                params: {
+                  assistanceForPayment,
+                  assistanceForCard,
+                  assistanceForFci
+                }
+              });
+            }
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
