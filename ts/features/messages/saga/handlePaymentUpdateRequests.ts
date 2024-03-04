@@ -13,7 +13,7 @@ import {
 
 const generatePaymentUpdateWorkerCount = () => 5;
 
-export function* watchPaymentUpdateRequests(
+export function* handlePaymentUpdateRequests(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
 ) {
   // create a channel to queue incoming requests
@@ -28,7 +28,7 @@ export function* watchPaymentUpdateRequests(
   // eslint-disable-next-line functional/no-let
   for (let i = 0; i < paymentUpdateWorkerCount; i++) {
     yield* fork(
-      handlePaymentUpdateRequests,
+      paymentUpdateRequestWorker,
       paymentUpdateChannel,
       getVerificaRpt
     );
@@ -56,7 +56,7 @@ export function* watchPaymentUpdateRequests(
   }
 }
 
-function* handlePaymentUpdateRequests(
+function* paymentUpdateRequestWorker(
   paymentStatusChannel: Channel<
     ActionType<typeof updatePaymentForMessage.request>
   >,
