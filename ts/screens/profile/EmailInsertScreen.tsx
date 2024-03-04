@@ -2,7 +2,7 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
@@ -21,7 +21,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -125,22 +124,20 @@ const EmailInsertScreen = (props: Props) => {
     }
   };
 
-  const renderFooterButtons = () => {
-    const continueButtonProps = {
-      disabled: isValidEmail() !== true && !isLoading,
-      onPress: continueOnPress,
-      title: I18n.t("global.buttons.continue"),
-      block: true,
-      primary: isValidEmail()
-    };
-
-    return (
-      <FooterWithButtons
-        type={"SingleButton"}
-        leftButton={continueButtonProps}
-      />
-    );
-  };
+  const renderFooterButtons = () => (
+    <FooterWithButtons
+      type="SingleButton"
+      primary={{
+        type: "Solid",
+        buttonProps: {
+          disabled: isValidEmail() !== true && !isLoading,
+          onPress: continueOnPress,
+          label: I18n.t("global.buttons.continue"),
+          accessibilityLabel: I18n.t("global.buttons.continue")
+        }
+      }}
+    />
+  );
 
   const handleOnChangeEmailText = (value: string) => {
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
@@ -261,8 +258,8 @@ const EmailInsertScreen = (props: Props) => {
               </Form>
             </View>
           </Content>
-          {withKeyboard(renderFooterButtons())}
         </SafeAreaView>
+        {withKeyboard(renderFooterButtons())}
       </BaseScreenComponent>
     </LoadingSpinnerOverlay>
   );
