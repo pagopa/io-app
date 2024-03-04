@@ -5,7 +5,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
@@ -40,7 +39,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * the instruction to enable the fingerprint/faceID usage
  */
 const FingerprintScreen = () => {
-  const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
