@@ -1,7 +1,11 @@
 /**
  * This screen allows the user to select the payment method for a selected transaction
  */
-import { Divider, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  FooterWithButtons,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
@@ -16,17 +20,12 @@ import { withLoadingSpinner } from "../../../components/helpers/withLoadingSpinn
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 
 import {
   isLoading as isLoadingRemote,
   isLoading as isRemoteLoading
 } from "../../../common/model/RemoteValue";
 import { IOToast } from "../../../components/Toast";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../components/buttons/ButtonConfigurations";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -86,19 +85,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.payWith.contextualHelpTitle",
   body: "wallet.payWith.contextualHelpContent"
 };
-
-const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
-  <FooterWithButtons
-    type={"TwoButtonsInlineThird"}
-    leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.back"))}
-    rightButton={confirmButtonProps(
-      onContinue,
-      I18n.t("wallet.newPaymentMethod.addButton"),
-      undefined,
-      "walletAddNewPaymentMethodTestId"
-    )}
-  />
-);
 
 const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
   props: Props
@@ -210,8 +196,27 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
             )}
           </Content>
         </ScrollView>
-        {renderFooterButtons(props.goBack, props.navigateToAddPaymentMethod)}
       </SafeAreaView>
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.back"),
+            accessibilityLabel: I18n.t("global.buttons.back"),
+            onPress: props.goBack
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("wallet.newPaymentMethod.addButton"),
+            accessibilityLabel: I18n.t("wallet.newPaymentMethod.addButton"),
+            onPress: props.navigateToAddPaymentMethod,
+            testID: "walletAddNewPaymentMethodTestId"
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
