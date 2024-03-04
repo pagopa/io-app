@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
@@ -15,7 +15,6 @@ import {
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import { IOToast } from "../../../components/Toast";
-import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
@@ -23,7 +22,6 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   LightModalContext,
   LightModalContextInterface
@@ -127,45 +125,51 @@ class PickPspScreen extends React.Component<PickPspScreenProps> {
             loadingCaption={I18n.t("wallet.pickPsp.loadingPsps")}
           />
         ) : (
-          <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
-            <VSpacer size={16} />
-            <View style={styles.padded}>
-              <H1>{I18n.t("wallet.pickPsp.title")}</H1>
-              <VSpacer size={8} />
-              <H4 weight="Regular" color="bluegreyDark">
-                {I18n.t("wallet.pickPsp.info")}
-              </H4>
-              <H4 weight="Regular" color="bluegreyDark">
-                {I18n.t("wallet.pickPsp.info2")}
-                <H4 color="bluegreyDark">{` ${I18n.t(
-                  "wallet.pickPsp.info2Bold"
-                )}`}</H4>
-              </H4>
-            </View>
-            <VSpacer size={16} />
-            <FlatList
-              testID="pspList"
-              ItemSeparatorComponent={() => <ItemSeparatorComponent />}
-              removeClippedSubviews={false}
-              data={availablePsps}
-              keyExtractor={item => item.idPsp}
-              renderItem={({ item }) => (
-                <PspComponent
-                  psp={item}
-                  onPress={() => this.props.pickPsp(item, this.props.allPsps)}
-                />
-              )}
-              ListHeaderComponent={this.headerItem}
-              ListFooterComponent={() => <ItemSeparatorComponent />}
-            />
+          <>
+            <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
+              <VSpacer size={16} />
+              <View style={styles.padded}>
+                <H1>{I18n.t("wallet.pickPsp.title")}</H1>
+                <VSpacer size={8} />
+                <H4 weight="Regular" color="bluegreyDark">
+                  {I18n.t("wallet.pickPsp.info")}
+                </H4>
+                <H4 weight="Regular" color="bluegreyDark">
+                  {I18n.t("wallet.pickPsp.info2")}
+                  <H4 color="bluegreyDark">{` ${I18n.t(
+                    "wallet.pickPsp.info2Bold"
+                  )}`}</H4>
+                </H4>
+              </View>
+              <VSpacer size={16} />
+              <FlatList
+                testID="pspList"
+                ItemSeparatorComponent={() => <ItemSeparatorComponent />}
+                removeClippedSubviews={false}
+                data={availablePsps}
+                keyExtractor={item => item.idPsp}
+                renderItem={({ item }) => (
+                  <PspComponent
+                    psp={item}
+                    onPress={() => this.props.pickPsp(item, this.props.allPsps)}
+                  />
+                )}
+                ListHeaderComponent={this.headerItem}
+                ListFooterComponent={() => <ItemSeparatorComponent />}
+              />
+            </SafeAreaView>
             <FooterWithButtons
               type="SingleButton"
-              leftButton={cancelButtonProps(
-                this.props.navigateBack,
-                I18n.t("global.buttons.back")
-              )}
+              primary={{
+                type: "Outline",
+                buttonProps: {
+                  label: I18n.t("global.buttons.back"),
+                  accessibilityLabel: I18n.t("global.buttons.back"),
+                  onPress: this.props.navigateBack
+                }
+              }}
             />
-          </SafeAreaView>
+          </>
         )}
       </BaseScreenComponent>
     );
