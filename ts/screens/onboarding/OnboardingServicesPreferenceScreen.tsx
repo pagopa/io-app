@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { SafeAreaView, View } from "react-native";
@@ -6,11 +6,9 @@ import { connect, useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { IOToast } from "../../components/Toast";
 import { InfoBox } from "../../components/box/InfoBox";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { H5 } from "../../components/core/typography/H5";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
@@ -122,15 +120,18 @@ const OnboardingServicesPreferenceScreen = (
       headerActionsProp={{ showHelp: true }}
       contextualHelp={emptyContextualHelp}
       fixedBottomSlot={
-        <SafeAreaView>
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              ...confirmButtonProps(handleOnContinue),
-              disabled: !isServicesPreferenceModeSet(modeSelected)
-            }}
-          />
-        </SafeAreaView>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.confirm"),
+              accessibilityLabel: I18n.t("global.buttons.confirm"),
+              disabled: !isServicesPreferenceModeSet(modeSelected),
+              onPress: handleOnContinue
+            }
+          }}
+        />
       }
     >
       <SafeAreaView style={IOStyles.flex}>
