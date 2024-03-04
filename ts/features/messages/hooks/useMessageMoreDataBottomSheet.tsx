@@ -13,7 +13,7 @@ export const useMessageMoreDataBottomSheet = (messageId: UIMessageId) => {
           value={messageId}
           label={I18n.t("messageDetails.showMoreDataBottomSheet.messageId")}
           accessibilityLabel={I18n.t(
-            "messageDetails.showMoreDataBottomSheet.messageId"
+            "messageDetails.showMoreDataBottomSheet.messageIdAccessibility"
           )}
           onPress={() => clipboardSetStringWithFeedback(messageId)}
         />

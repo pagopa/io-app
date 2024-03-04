@@ -1935,6 +1935,7 @@ messageDetails:
   showMoreDataBottomSheet:
     title: "Dati identificativi"
     messageId: "ID messaggio"
+    messageIdAccessibility: "ID messaggio, copia"
 messagePDFPreview:
   title: "Anteprima PDF"
   singleBtn: "Salva o condividi"

@@ -1935,6 +1935,7 @@ messageDetails:
   showMoreDataBottomSheet:
     title: "Identification data"
     messageId: "Message ID"
+    messageIdAccessibility: "ID messaggio, copy to clipboard"
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
