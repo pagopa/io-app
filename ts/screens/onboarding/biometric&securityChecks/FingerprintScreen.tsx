@@ -1,19 +1,21 @@
+import {
+  FooterWithButtons,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
-import { useDispatch } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
+import { useDispatch } from "react-redux";
+import { InfoBox } from "../../../components/box/InfoBox";
 import { Body } from "../../../components/core/typography/Body";
+import { H5 } from "../../../components/core/typography/H5";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
-import { InfoBox } from "../../../components/box/InfoBox";
-import { H5 } from "../../../components/core/typography/H5";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
@@ -21,6 +23,7 @@ import {
   BiometriActivationUserType,
   mayUserActivateBiometric
 } from "../../../utils/biometrics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
   trackBiometricActivationAccepted,
   trackBiometricActivationDeclined,
@@ -107,15 +110,13 @@ const FingerprintScreen = () => {
           </InfoBox>
         </View>
       </ScrollView>
-      {/* Waiting for a component that makes this wrapper
-      useless. FooterWithButtons currently uses
-      NativeBase buttons, instead of new ones */}
-      <View style={{ paddingBottom: insets.bottom }}>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={{
-            title: I18n.t("global.buttons.notNow"),
-            bordered: true,
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.notNow"),
+            accessibilityLabel: I18n.t("global.buttons.notNow"),
             onPress: () => {
               trackBiometricActivationDeclined(
                 getFlowType(true, isFirstOnBoarding)
@@ -126,9 +127,13 @@ const FingerprintScreen = () => {
                 })
               );
             }
-          }}
-          rightButton={{
-            title: I18n.t("global.buttons.activate2"),
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.activate2"),
+            accessibilityLabel: I18n.t("global.buttons.activate2"),
             onPress: () =>
               mayUserActivateBiometric()
                 .then(_ => {
@@ -154,9 +159,9 @@ const FingerprintScreen = () => {
                     );
                   }
                 })
-          }}
-        />
-      </View>
+          }
+        }}
+      />
     </TopScreenComponent>
   );
 };
