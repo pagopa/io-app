@@ -1,15 +1,18 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
+import {
+  BlockButtonProps,
+  FooterWithButtons,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Content } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
@@ -40,21 +43,27 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
   }
 
   private renderFooterButtons = () => {
-    const cancelButtonProps = {
-      bordered: true,
-      onPress: resetToAuthenticationRoute,
-      title: I18n.t("global.buttons.cancel")
+    const cancelButtonProps: BlockButtonProps = {
+      type: "Outline",
+      buttonProps: {
+        label: I18n.t("global.buttons.cancel"),
+        accessibilityLabel: I18n.t("global.buttons.cancel"),
+        onPress: resetToAuthenticationRoute
+      }
     };
-    const retryButtonProps = {
-      primary: true,
-      onPress: this.navigateToCiePinScreen,
-      title: I18n.t("global.buttons.retry")
+    const retryButtonProps: BlockButtonProps = {
+      type: "Solid",
+      buttonProps: {
+        label: I18n.t("global.buttons.retry"),
+        accessibilityLabel: I18n.t("global.buttons.retry"),
+        onPress: this.navigateToCiePinScreen
+      }
     };
     return (
       <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        rightButton={retryButtonProps}
-        leftButton={cancelButtonProps}
+        type="TwoButtonsInlineHalf"
+        primary={cancelButtonProps}
+        secondary={retryButtonProps}
       />
     );
   };
