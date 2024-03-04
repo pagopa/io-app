@@ -28,7 +28,6 @@ const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 export const IngressScreen = () => {
   const contentTitle = I18n.t("startup.title");
-  const accessibilityFocusFirstElementRef = React.useRef<View>(null);
   useOnFirstRender(() => {
     trackIngressScreen();
     // Since the screen is shown for a very short time,
@@ -49,11 +48,7 @@ export const IngressScreen = () => {
             <LoadingSpinner size={SPINNER_SIZE} />
           </View>
           <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
-          <H3
-            ref={accessibilityFocusFirstElementRef}
-            style={{ textAlign: "center" }}
-            accessibilityLabel={contentTitle}
-          >
+          <H3 style={{ textAlign: "center" }} accessibilityLabel={contentTitle}>
             {contentTitle}
           </H3>
         </View>
