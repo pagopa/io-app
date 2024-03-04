@@ -27,7 +27,9 @@ export type MessageDetailsFooterProps = {
 export const MessageDetailsFooter = ({
   serviceId
 }: MessageDetailsFooterProps) => {
-  const serviceMetadata = useIOSelector(serviceMetadataByIdSelector(serviceId));
+  const serviceMetadata = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, serviceId)
+  );
 
   return (
     <View style={[IOStyles.horizontalContentPadding, styles.container]}>
