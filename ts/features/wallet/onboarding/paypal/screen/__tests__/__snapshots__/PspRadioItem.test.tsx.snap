@@ -143,6 +143,7 @@ exports[`PspRadioItem match snapshot 1`] = `
     }
     style={
       Object {
+        "borderCurve": "continuous",
         "borderTopLeftRadius": 24,
         "borderTopRightRadius": 24,
         "overflow": "hidden",
