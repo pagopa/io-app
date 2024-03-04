@@ -1,32 +1,12 @@
-/**
- * A component to display a white tick on a blue background
- */
-import * as React from "react";
-import { View, StyleSheet, SafeAreaView } from "react-native";
-
-import {
-  ContentWrapper,
-  H3,
-  IOStyles,
-  Pictogram,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { useEffect } from "react";
+import { AccessibilityInfo } from "react-native";
 import { profileNameSelector } from "../store/reducers/profile";
 import I18n from "../i18n";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import { trackIdpAuthenticationSuccessScreen } from "../screens/profile/analytics";
 import { useIOSelector } from "../store/hooks";
 import { loggedInIdpSelector } from "../store/reducers/authentication";
-
-const styles = StyleSheet.create({
-  container: {
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
-  }
-});
-
-const PICTOGRAM_SIZE = 120;
-const SPACE_BETWEEN_PICTOGRAM_AND_TEXT = 24;
+import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";
 
 export const IdpSuccessfulAuthentication = () => {
   const idp = useIOSelector(loggedInIdpSelector);
@@ -34,25 +14,24 @@ export const IdpSuccessfulAuthentication = () => {
     trackIdpAuthenticationSuccessScreen(idp?.id);
   });
   const name = useIOSelector(profileNameSelector);
-  const contentTitle = I18n.t("authentication.idp_login_success.contentTitle", {
-    name
+  // If the name is undefined, we set it to an empty string to avoid
+  // the pictogram shift up when the name is available.
+  const contentTitle = name
+    ? I18n.t("authentication.idp_login_success.contentTitle", {
+        name
+      })
+    : " ";
+  // Announce the screen content when the name is available.
+  // Prefer an announce intead of setting the focus to the title
+  // because the screen is visible just for a short time.
+  useEffect(() => {
+    if (name) {
+      AccessibilityInfo.announceForAccessibility(contentTitle);
+    }
+  }, [contentTitle, name]);
+  return OperationResultScreenContent({
+    pictogram: "success",
+    title: contentTitle,
+    testID: "idp-successful-authentication"
   });
-  return (
-    <SafeAreaView style={styles.container}>
-      <ContentWrapper>
-        <View style={{ alignItems: "center" }}>
-          <Pictogram name="success" size={PICTOGRAM_SIZE} />
-          <VSpacer size={SPACE_BETWEEN_PICTOGRAM_AND_TEXT} />
-          {name && (
-            <H3
-              style={{ textAlign: "center" }}
-              accessibilityLabel={contentTitle}
-            >
-              {contentTitle}
-            </H3>
-          )}
-        </View>
-      </ContentWrapper>
-    </SafeAreaView>
-  );
 };
