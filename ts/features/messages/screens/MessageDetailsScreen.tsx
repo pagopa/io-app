@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -33,6 +33,15 @@ import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
+
+const styles = StyleSheet.create({
+  scrollContentContainer: {
+    flexGrow: 1
+  },
+  container: {
+    flexGrow: 1
+  }
+});
 
 export type MessageDetailsScreenRouteParams = {
   messageId: UIMessageId;
@@ -101,8 +110,8 @@ export const MessageDetailsScreen = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <View style={{ flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+      <View style={styles.container}>
         <ContentWrapper>
           <MessageDetailsHeader
             serviceId={serviceId}
