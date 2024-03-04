@@ -3,18 +3,18 @@
  *
  */
 
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import {
-  View,
   BackHandler,
   Image,
   Linking,
   Modal,
   Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import updateIcon from "../../../img/icons/update-icon.png";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
@@ -23,7 +23,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import SectionStatusComponent from "../../components/SectionStatus";
-// import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
