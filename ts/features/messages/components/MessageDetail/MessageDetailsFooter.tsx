@@ -34,7 +34,7 @@ export const MessageDetailsFooter = ({
   return (
     <View style={[IOStyles.horizontalContentPadding, styles.container]}>
       <VSpacer size={16} />
-      {serviceMetadata?.email || serviceMetadata?.phone ? (
+      {(serviceMetadata?.email || serviceMetadata?.phone) && (
         <ListItemAction
           variant="primary"
           icon="message"
@@ -42,7 +42,7 @@ export const MessageDetailsFooter = ({
           onPress={constNull}
           accessibilityLabel={I18n.t("messageDetails.footer.contact")}
         />
-      ) : null}
+      )}
 
       <ListItemAction
         variant="primary"
