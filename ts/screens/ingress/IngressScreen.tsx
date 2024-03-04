@@ -2,7 +2,7 @@
  * An ingress screen to choose the real first screen the user must navigate to.
  */
 import * as React from "react";
-import { View, StyleSheet, AccessibilityInfo } from "react-native";
+import { View, StyleSheet, AccessibilityInfo, Platform } from "react-native";
 import {
   ContentWrapper,
   H3,
@@ -33,7 +33,12 @@ export const IngressScreen = () => {
     // Since the screen is shown for a very short time,
     // we prefer to announce the content to the screen reader,
     // instead of focusing the first element.
-    AccessibilityInfo.announceForAccessibility(contentTitle);
+    if (Platform.OS === "android") {
+      // We use it only on Android, because on iOS the screen reader
+      // stops reading the content when the ingress screen is unmounted
+      // and the focus is moved to another element.
+      AccessibilityInfo.announceForAccessibility(contentTitle);
+    }
   });
 
   return (
