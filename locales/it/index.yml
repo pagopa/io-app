@@ -1938,7 +1938,7 @@ messageDetails:
     messageIdAccessibility: "ID messaggio, copia"
   contactsBottomSheet:
     title: "Assistenza"
-    body: "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato indicando l’ID del messaggio."
+    body: "Se non ti è chiaro il contenuto del messaggio, contatta l’ente che te lo ha inviato."
     actions:
       call: Fai una chiamata
       email: Scrivi un'email
