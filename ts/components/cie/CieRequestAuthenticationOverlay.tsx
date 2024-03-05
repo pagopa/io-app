@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createRef, useEffect } from "react";
-import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -307,7 +307,7 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: { onRetry: () => void } & Pick<Props, "onClose">
 ) => (
-  <SafeAreaView style={[IOStyles.flex, styles.errorContainer]}>
+  <View style={[IOStyles.flex, styles.errorContainer]}>
     <OperationResultScreenContent
       pictogram="umbrellaNew"
       title={I18n.t("authentication.errors.network.title")}
@@ -322,7 +322,7 @@ const ErrorComponent = (
         onPress: props.onClose
       }}
     />
-  </SafeAreaView>
+  </View>
 );
 
 /**
