@@ -20,10 +20,10 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { paymentInitializeState } from "../../../store/actions/wallet/payment";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { setSelectedPayment } from "../store/actions";
 import { trackPNPaymentStart } from "../analytics";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { setMessagesSelectedPayment } from "../../messages/store/actions";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -148,7 +148,7 @@ export const initializeAndNavigateToWalletForPayment = (
 
   trackPNPaymentStart();
 
-  dispatch(setSelectedPayment(paymentId));
+  dispatch(setMessagesSelectedPayment(paymentId));
   dispatch(paymentInitializeState());
 
   NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {

@@ -79,6 +79,7 @@ Object {
       },
     },
     "paginatedById": Object {},
+    "payments": Object {},
     "thirdPartyById": Object {},
   },
   "messagesStatus": Object {},

@@ -17,7 +17,12 @@ import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
 import { pnMessageFromIdSelector } from "../store/reducers";
-import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
+import {
+  cancelPreviousAttachmentDownload,
+  cancelQueuedPaymentUpdates,
+  clearMessagesSelectedPayment,
+  updatePaymentForMessage
+} from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
   containsF24FromPNMessagePot,
@@ -28,13 +33,10 @@ import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPaymentStatusTracking,
-  cancelQueuedPaymentUpdates,
-  clearSelectedPayment,
-  startPaymentStatusTracking,
-  updatePaymentForMessage
+  startPaymentStatusTracking
 } from "../store/actions";
 import { GlobalState } from "../../../store/reducers/types";
-import { selectedPaymentIdSelector } from "../store/reducers/payments";
+import { selectedPaymentIdSelector } from "../../messages/store/reducers/payments";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
@@ -98,7 +100,7 @@ export const MessageDetailsScreen = () => {
       const globalState = store.getState() as GlobalState;
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
-        dispatch(clearSelectedPayment());
+        dispatch(clearMessagesSelectedPayment());
         dispatch(
           updatePaymentForMessage.request({
             messageId,
