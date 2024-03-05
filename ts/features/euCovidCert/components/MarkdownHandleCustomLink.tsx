@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
-import { Toast } from "native-base";
 import * as React from "react";
+import { IOToast } from "../../../components/Toast";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { deriveCustomHandledLink } from "../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../i18n";
@@ -22,10 +22,7 @@ export const MarkdownHandleCustomLink = (
             return;
           }
           taskLinking(hl.url)().catch(_ =>
-            Toast.show({
-              text: I18n.t("global.genericError"),
-              type: "danger"
-            })
+            IOToast.error(I18n.t("global.genericError"))
           );
         })
       );
