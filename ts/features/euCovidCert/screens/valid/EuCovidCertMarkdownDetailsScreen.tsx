@@ -1,14 +1,16 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { IOToast } from "../../../../components/Toast";
-import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -133,16 +135,20 @@ export const EuCovidCertMarkdownDetailsScreen = (
             )}
           </View>
         </ScrollView>
-        {canShowButton && (
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={cancelButtonProps(
-              () => props.navigation.goBack(),
-              I18n.t("global.buttons.close")
-            )}
-          />
-        )}
       </SafeAreaView>
+      {canShowButton && (
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.close"),
+              accessibilityLabel: I18n.t("global.buttons.close"),
+              onPress: () => props.navigation.goBack()
+            }
+          }}
+        />
+      )}
       {/* this view must be the last one, since it must be drawn on top of all */}
       <FlashAnimatedComponent
         state={flashAnimationState}
