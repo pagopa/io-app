@@ -1,3 +1,4 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useNavigation } from "@react-navigation/native";
 import React, {
@@ -8,51 +9,50 @@ import React, {
   useState
 } from "react";
 import {
-  View,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect, useSelector } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { IdpData } from "../../../../definitions/content/IdpData";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
+import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import { Link } from "../../../components/core/typography/Link";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import LegacyFooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../components/ui/LightModal";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
+import { pinPukHelpUrl } from "../../../config";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
+import { loginSuccess } from "../../../store/actions/authentication";
 import { nfcIsEnabled } from "../../../store/actions/cie";
 import { Dispatch } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
+import { SessionToken } from "../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { openWebUrl } from "../../../utils/url";
-import { pinPukHelpUrl } from "../../../config";
-import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
-import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
-import { loginSuccess } from "../../../store/actions/authentication";
-import { IdpData } from "../../../../definitions/content/IdpData";
-import { SessionToken } from "../../../types/SessionToken";
-import { cieFlowForDevServerEnabled } from "../../../features/cieLogin/utils";
+import { openWebUrl } from "../../../utils/url";
 import {
   trackLoginCiePinInfo,
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request()),
@@ -97,7 +97,7 @@ const CiePinScreen: React.FC<Props> = props => {
       IOStackNavigationProp<AuthenticationParamsList, "CIE_PIN_SCREEN">
     >();
   const [pin, setPin] = useState("");
-  const continueButtonRef = useRef<FooterWithButtons>(null);
+  const continueButtonRef = useRef<LegacyFooterWithButtons>(null);
   const pinPadViewRef = useRef<View>(null);
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
@@ -222,7 +222,21 @@ const CiePinScreen: React.FC<Props> = props => {
         </View>
       </ScrollView>
       {pin.length === CIE_PIN_LENGTH && (
-        <FooterWithButtons
+        // `ref` prop is missing
+        //
+        // <FooterWithButtons
+        //   type="SingleButton"
+        //   ref={continueButtonRef}
+        //   primary={{
+        //     type: "Solid",
+        //     buttonProps: {
+        //       label: I18n.t("global.buttons.continue"),
+        //       accessibilityLabel: I18n.t("global.buttons.continue"),
+        //       onPress: showModal
+        //     }
+        //   }}
+        // />
+        <LegacyFooterWithButtons
           ref={continueButtonRef}
           type={"SingleButton"}
           leftButton={{
