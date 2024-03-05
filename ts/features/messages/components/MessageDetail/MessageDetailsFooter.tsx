@@ -6,13 +6,13 @@ import {
   ListItemAction,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIMessageId } from "../../types";
 import { useMessageMoreDataBottomSheet } from "../../hooks/useMessageMoreDataBottomSheet";
+import { useMessageContactsBottomSheet } from "../../hooks/useMessageContactsBottomSheet";
 
 const styles = StyleSheet.create({
   container: {
@@ -41,12 +41,9 @@ export const MessageDetailsFooter = ({
     <View style={[IOStyles.horizontalContentPadding, styles.container]}>
       <VSpacer size={16} />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
-        <ListItemAction
-          variant="primary"
-          icon="message"
-          label={I18n.t("messageDetails.footer.contact")}
-          onPress={constNull}
-          accessibilityLabel={I18n.t("messageDetails.footer.contact")}
+        <ContactsAction
+          email={serviceMetadata.email}
+          phone={serviceMetadata.phone}
         />
       )}
 
@@ -60,5 +57,28 @@ export const MessageDetailsFooter = ({
       />
       {bottomSheet}
     </View>
+  );
+};
+
+type ContactsActionProps = {
+  email?: string;
+  phone?: string;
+};
+
+const ContactsAction = ({ email, phone }: ContactsActionProps) => {
+  const { bottomSheet, present } = useMessageContactsBottomSheet(email, phone);
+
+  return (
+    <>
+      <ListItemAction
+        accessibilityLabel={I18n.t("messageDetails.footer.contacts")}
+        icon="message"
+        label={I18n.t("messageDetails.footer.contacts")}
+        onPress={present}
+        testID="contacts-action"
+        variant="primary"
+      />
+      {bottomSheet}
+    </>
   );
 };
