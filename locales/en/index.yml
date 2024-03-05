@@ -1931,6 +1931,13 @@ messageDetails:
   bottomSheet:
     title: "What's a dynamic message?"
     body: "It's a message that the sender can edit after you've received it. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in specific cases. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
+  footer:
+    contact: "Contact the sender"
+    showMoreData: "Show more data"
+  showMoreDataBottomSheet:
+    title: "Identification data"
+    messageId: "Message ID"
+    messageIdAccessibility: "ID messaggio, copy"
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
