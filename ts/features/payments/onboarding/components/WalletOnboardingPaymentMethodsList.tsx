@@ -76,6 +76,10 @@ const WalletOnboardingPaymentMethodsList = ({
   const selectedPaymentMethodId = useIOSelector(
     walletOnboardingSelectedPaymentMethodSelector
   );
+  const isMethodLoading = (itemId: string) =>
+    isLoadingWebView && itemId === selectedPaymentMethodId;
+  const ListFooter = () => renderListFooter(isLoadingMethods);
+
   return (
     <FlatList
       removeClippedSubviews={false}
@@ -83,12 +87,12 @@ const WalletOnboardingPaymentMethodsList = ({
       data={paymentMethods}
       keyExtractor={item => item.id}
       ListHeaderComponent={header}
-      ListFooterComponent={renderListFooter(isLoadingMethods)}
+      ListFooterComponent={<ListFooter />}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <PaymentMethodItem
           paymentMethod={item}
-          isLoading={isLoadingWebView && item.id === selectedPaymentMethodId}
+          isLoading={isMethodLoading(item.id)}
           onPress={() => onSelectPaymentMethod(item)}
         />
       )}

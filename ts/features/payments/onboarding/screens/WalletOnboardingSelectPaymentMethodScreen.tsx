@@ -46,7 +46,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
     O.getOrElseW(() => [])
   );
 
-  const { startOnboarding, isLoading } = useWalletOnboardingWebView({
+  const { startOnboarding, isLoadingWebView } = useWalletOnboardingWebView({
     onSuccess: (outcome, walletId) =>
       navigateToFeedbackPage({ status: "SUCCESS", outcome, walletId }),
     onFailure: outcome =>
@@ -97,7 +97,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
             isLoadingMethods={isLoadingPaymentMethods}
             onSelectPaymentMethod={handleSelectedPaymentMethod}
             paymentMethods={availablePaymentMethods}
-            isLoadingWebView={isLoading}
+            isLoadingWebView={isLoadingWebView}
           />
         </SafeAreaView>
       )}
