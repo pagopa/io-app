@@ -7,23 +7,28 @@ import {
   ContentWrapper,
   H3,
   IOStyles,
-  LoadingSpinner,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../i18n";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { trackIngressScreen } from "../profile/analytics";
+import { LoadingIndicator } from "../../components/ui/LoadingIndicator";
 
 const styles = StyleSheet.create({
   container: {
     ...IOStyles.bgWhite,
     ...IOStyles.centerJustified,
     ...IOStyles.flex
+  },
+  contentTitle: {
+    textAlign: "center"
+  },
+  content: {
+    alignItems: "center"
   }
 });
 
-const SPINNER_SIZE = 48;
 const SPACE_BETWEEN_SPINNER_AND_TEXT = 24;
 
 export const IngressScreen = () => {
@@ -44,16 +49,16 @@ export const IngressScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ContentWrapper>
-        <View style={{ alignItems: "center" }}>
+        <View style={styles.content}>
           <View
             accessible={false}
             accessibilityElementsHidden={true}
             importantForAccessibility={"no-hide-descendants"}
           >
-            <LoadingSpinner size={SPINNER_SIZE} />
+            <LoadingIndicator />
           </View>
           <VSpacer size={SPACE_BETWEEN_SPINNER_AND_TEXT} />
-          <H3 style={{ textAlign: "center" }} accessibilityLabel={contentTitle}>
+          <H3 style={styles.contentTitle} accessibilityLabel={contentTitle}>
             {contentTitle}
           </H3>
         </View>
