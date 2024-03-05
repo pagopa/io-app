@@ -1938,7 +1938,7 @@ messageDetails:
     messageIdAccessibility: "ID messaggio, copy"
   contactsBottomSheet:
     title: "Support"
-    body: "If something is unclear about the content of the message, contact the service directly by indicating the following message ID"
+    body: "If you are unclear about the content of the message, contact the Institution that sent it to you."
     actions:
       call: Call
       email: Send email
