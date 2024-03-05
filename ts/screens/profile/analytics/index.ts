@@ -12,6 +12,13 @@ export async function trackProfileLoadSuccess(state: GlobalState) {
   await mixpanelTrack(profileLoadSuccess.toString());
 }
 
+export function trackIngressScreen() {
+  void mixpanelTrack(
+    "INITIALIZATION_LOADING",
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
 export function trackTosScreen(flow: FlowType) {
   void mixpanelTrack(
     "TOS",
