@@ -40,8 +40,8 @@ import {
   useScreenReaderEnabled
 } from "../../../utils/accessibility";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { showToast } from "../../../utils/showToast";
 import { useSecuritySuggestionsBottomSheet } from "../../../hooks/useSecuritySuggestionBottomSheet";
+import { IOToast } from "../../../components/Toast";
 import MigratingMessage from "./MigratingMessage";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -90,7 +90,7 @@ const MessagesHomeScreen = ({
           operation: l.operation,
           archive: I18n.t("messages.operations.archive.failure"),
           restore: I18n.t("messages.operations.restore.failure"),
-          type: "danger" as const
+          type: "error" as const
         }),
         r => ({
           operation: r,
@@ -99,7 +99,7 @@ const MessagesHomeScreen = ({
           type: "success" as const
         })
       ),
-      lmo => showToast(lmo[lmo.operation], lmo.type)
+      lmo => IOToast[lmo.type](lmo[lmo.operation])
     );
   }, [latestMessageOperation]);
 
