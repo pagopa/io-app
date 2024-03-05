@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../messages/types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { cancelQueuedPaymentUpdates } from "../store/actions";
+import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 export type MessagePaymentBottomSheetProps = {

@@ -17,7 +17,7 @@ import { InfoBox } from "../../../components/box/InfoBox";
 import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
-import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import { paymentsButtonStateSelector } from "../../messages/store/reducers/payments";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";

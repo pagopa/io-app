@@ -40,6 +40,7 @@ import { handleUpsertMessageStatusAttribues } from "./handleUpsertMessageStatusA
 import { handleMigrateToPagination } from "./handleMigrateToPagination";
 import { handleMessagePrecondition } from "./handleMessagePrecondition";
 import { handleThirdPartyMessage } from "./handleThirdPartyMessage";
+import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
 
 /**
  * Handle messages requests
@@ -112,6 +113,9 @@ export function* watchMessagesSaga(
     handleDownloadAttachment,
     bearerToken
   );
+
+  // handle the request for updating a message's payment
+  yield* fork(handlePaymentUpdateRequests, backendClient.getVerificaRpt);
 
   // handle the request for removing a downloaded attachment
   yield* takeEvery(removeCachedAttachment, handleClearAttachment);
