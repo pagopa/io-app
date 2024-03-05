@@ -239,20 +239,6 @@ export const abortRunningPayment = createStandardAction(
   "PAYMENT_ABORT_RUNNING_PAYMENT"
 )();
 
-//
-// run startOrResumePaymentSaga
-//
-
-type RunStartOrResumePaymentActivationSagaPayload = Readonly<{
-  rptId: RptId;
-  verifica: PaymentRequestsGetResponse;
-  onSuccess: (idPayment: string) => void;
-}>;
-
-export const runStartOrResumePaymentActivationSaga = createStandardAction(
-  "PAYMENT_RUN_START_OR_RESUME_PAYMENT_ACTIVATION_SAGA"
-)<RunStartOrResumePaymentActivationSagaPayload>();
-
 /**
  * the psp selected for the payment
  */
@@ -313,7 +299,6 @@ export type PaymentActions =
   | ActionType<typeof runDeleteActivePaymentSaga>
   | ActionType<typeof abortRunningPayment>
   | ActionType<typeof paymentRedirectionUrls>
-  | ActionType<typeof runStartOrResumePaymentActivationSaga>
   | ActionType<typeof pspForPaymentV2>
   | ActionType<typeof pspSelectedForPaymentV2>
   | ActionType<typeof pspForPaymentV2WithCallbacks>
