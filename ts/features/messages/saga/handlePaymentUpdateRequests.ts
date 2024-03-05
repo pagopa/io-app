@@ -3,17 +3,17 @@ import { Channel, buffers, channel } from "redux-saga";
 import { call, flush, fork, put, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { BackendClient } from "../../../../api/backend";
+import { BackendClient } from "../../../api/backend";
+import { commonPaymentVerificationProcedure } from "../../../sagas/wallet/pagopaApis";
+import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import {
-  updatePaymentForMessage,
-  cancelQueuedPaymentUpdates
-} from "../actions";
-import { commonPaymentVerificationProcedure } from "../../../../sagas/wallet/pagopaApis";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+  cancelQueuedPaymentUpdates,
+  updatePaymentForMessage
+} from "../store/actions";
 
 const generatePaymentUpdateWorkerCount = () => 5;
 
-export function* watchPaymentUpdateRequests(
+export function* handlePaymentUpdateRequests(
   getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
 ) {
   // create a channel to queue incoming requests
@@ -28,7 +28,7 @@ export function* watchPaymentUpdateRequests(
   // eslint-disable-next-line functional/no-let
   for (let i = 0; i < paymentUpdateWorkerCount; i++) {
     yield* fork(
-      handlePaymentUpdateRequests,
+      paymentUpdateRequestWorker,
       paymentUpdateChannel,
       getVerificaRpt
     );
@@ -56,7 +56,7 @@ export function* watchPaymentUpdateRequests(
   }
 }
 
-function* handlePaymentUpdateRequests(
+function* paymentUpdateRequestWorker(
   paymentStatusChannel: Channel<
     ActionType<typeof updatePaymentForMessage.request>
   >,
