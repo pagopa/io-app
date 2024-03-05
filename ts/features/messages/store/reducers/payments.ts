@@ -27,6 +27,8 @@ import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblem
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
+import { isProfileEmailValidatedSelector } from "../../../../store/reducers/profile";
+import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
@@ -239,3 +241,13 @@ const buttonStateFromUpdatedPaymentCount =
 
 export const selectedPaymentIdSelector = (state: GlobalState) =>
   state.entities.messages.payments.selectedPayment;
+
+export const canNavigateToPaymentFromMessageSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    isProfileEmailValidatedSelector,
+    B.fold(
+      () => false,
+      () => pipe(state, isPagoPaSupportedSelector)
+    )
+  );

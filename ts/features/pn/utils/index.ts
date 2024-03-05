@@ -13,6 +13,7 @@ import { NotificationRecipient } from "../../../../definitions/pn/NotificationRe
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { getRptIdStringFromPayment } from "./rptId";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -119,4 +120,30 @@ export const containsF24FromPNMessagePot = (
     O.chainNullableK(message => message.attachments),
     O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
+  );
+
+export const isPNMessageRelatedPayment = (
+  selectedPaymentId: string,
+  pnMessagePot: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    pnMessagePot,
+    pot.toOption,
+    O.flatten,
+    O.map(message => message.recipients),
+    O.map(recipients =>
+      pipe(
+        recipients,
+        RA.some(recipient =>
+          pipe(
+            recipient.payment,
+            O.fromNullable,
+            O.map(getRptIdStringFromPayment),
+            O.map(rptId => rptId === selectedPaymentId),
+            O.getOrElse(() => false)
+          )
+        )
+      )
+    ),
+    O.getOrElse(() => false)
   );

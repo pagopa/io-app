@@ -12,6 +12,7 @@ import I18n from "../../../../i18n";
 import { UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
+  canNavigateToPaymentFromMessageSelector,
   paymentStatusForUISelector,
   shouldUpdatePaymentSelector
 } from "../../store/reducers/payments";
@@ -37,6 +38,7 @@ import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount"
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
   index?: number;
+  isPNPayment?: boolean;
   messageId: UIMessageId;
   noSpaceOnTop?: boolean;
   noticeNumber: string;
@@ -152,6 +154,7 @@ const modulePaymentNoticeFromPaymentStatus = (
 export const MessagePaymentItem = ({
   hideExpirationDate = false,
   index = 0,
+  isPNPayment = false,
   messageId,
   noSpaceOnTop = false,
   noticeNumber,
@@ -173,16 +176,30 @@ export const MessagePaymentItem = ({
     paymentStatusForUISelector(state, messageId, rptId)
   );
 
+  const canNavigateToPayment =
+    canNavigateToPaymentFromMessageSelector(globalState);
+
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(
       messageId,
       rptId,
       paymentAmount,
+      canNavigateToPayment,
       dispatch,
+      isPNPayment,
       () => toast.error(I18n.t("genericError")),
       () => willNavigateToPayment?.()
     );
-  }, [dispatch, messageId, paymentAmount, rptId, toast, willNavigateToPayment]);
+  }, [
+    canNavigateToPayment,
+    dispatch,
+    isPNPayment,
+    messageId,
+    paymentAmount,
+    rptId,
+    toast,
+    willNavigateToPayment
+  ]);
   useEffect(() => {
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({

@@ -182,6 +182,7 @@ export const MessagePayments = ({
             return (
               <MessagePaymentItem
                 index={index}
+                isPNPayment
                 key={`PM_${index}`}
                 messageId={messageId}
                 rptId={rptId}

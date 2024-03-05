@@ -25,6 +25,7 @@ import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
   containsF24FromPNMessagePot,
   isCancelledFromPNMessagePot,
+  isPNMessageRelatedPayment,
   paymentsFromPNMessagePot
 } from "../utils";
 import { trackPNUxSuccess } from "../analytics";
@@ -86,15 +87,21 @@ export const LegacyMessageDetailsScreen = (
       const globalState = store.getState();
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
-        dispatch(clearMessagesSelectedPayment());
-        dispatch(
-          updatePaymentForMessage.request({
-            messageId,
-            paymentId: selectedPaymentId
-          })
+        const isRelatedPayment = isPNMessageRelatedPayment(
+          selectedPaymentId,
+          messagePot
         );
+        if (isRelatedPayment) {
+          dispatch(clearMessagesSelectedPayment());
+          dispatch(
+            updatePaymentForMessage.request({
+              messageId,
+              paymentId: selectedPaymentId
+            })
+          );
+        }
       }
-    }, [dispatch, messageId, store])
+    }, [dispatch, messageId, messagePot, store])
   );
 
   return (

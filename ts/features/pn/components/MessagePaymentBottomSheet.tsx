@@ -32,6 +32,7 @@ export const MessagePaymentBottomSheet = ({
           return (
             <MessagePaymentItem
               index={index}
+              isPNPayment
               key={`LI_${index}`}
               messageId={messageId}
               rptId={rptId}

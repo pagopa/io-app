@@ -13,11 +13,9 @@ import { setMessagesSelectedPayment } from "../store/actions";
 import { getExpireStatus } from "../../../utils/dates";
 import { PaymentData, UIMessageDetails, UIMessageId } from "../types";
 import { NetworkError, getNetworkError } from "../../../utils/errors";
-import { store } from "../../../boot/configureStoreAndPersistor";
-import { isProfileEmailValidatedSelector } from "../../../store/reducers/profile";
-import { isPagoPaSupportedSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { getAmountFromPaymentAmount } from "../../../utils/payment";
+import { trackPNPaymentStart } from "../../pn/analytics";
 import { MessagePaymentExpirationInfo } from "./messages";
 
 export const gapBetweenItemsInAGrid = 8;
@@ -55,7 +53,9 @@ export const initializeAndNavigateToWalletForPayment = (
   messageId: UIMessageId,
   paymentId: string,
   paymentAmount: PaymentAmount | undefined,
+  canNavigateToPayment: boolean,
   dispatch: Dispatch<any>,
+  isPNPayment: boolean,
   decodeErrorCallback: (() => void) | undefined,
   preNavigationCallback: (() => void) | undefined = undefined
 ) => {
@@ -67,10 +67,7 @@ export const initializeAndNavigateToWalletForPayment = (
 
   preNavigationCallback?.();
 
-  const globalState = store.getState();
-  const isProfileEmailValidated = isProfileEmailValidatedSelector(globalState);
-  const isPagoPASupported = isPagoPaSupportedSelector(globalState);
-  if (!isProfileEmailValidated || !isPagoPASupported) {
+  if (!canNavigateToPayment) {
     // Navigating to Wallet home, having the email address is not validated,
     // it will be displayed RemindEmailValidationOverlay
     NavigationService.navigate(ROUTES.MAIN, {
@@ -82,7 +79,9 @@ export const initializeAndNavigateToWalletForPayment = (
     return;
   }
 
-  // trackPNPaymentStart(); // TODO
+  if (isPNPayment) {
+    trackPNPaymentStart();
+  }
 
   dispatch(setMessagesSelectedPayment(paymentId));
   dispatch(paymentInitializeState());
@@ -105,3 +104,16 @@ export const initializeAndNavigateToWalletForPayment = (
     }
   });
 };
+
+export const isMessageRelatedPayment = (
+  selectedPaymentId: string,
+  message: UIMessageDetails | undefined
+) =>
+  pipe(
+    message,
+    O.fromNullable,
+    O.chainNullableK(message => message.paymentData),
+    O.map(getRptIdStringFromPaymentData),
+    O.map(rptId => rptId === selectedPaymentId),
+    O.getOrElse(() => false)
+  );

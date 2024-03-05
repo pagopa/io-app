@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -11,8 +11,13 @@ import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { cancelPreviousAttachmentDownload } from "../store/actions";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import {
+  cancelPreviousAttachmentDownload,
+  cancelQueuedPaymentUpdates,
+  clearMessagesSelectedPayment,
+  updatePaymentForMessage
+} from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import {
   hasAttachmentsSelector,
@@ -34,6 +39,9 @@ import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
+import { selectedPaymentIdSelector } from "../store/reducers/payments";
+import { isMessageRelatedPayment } from "../utils";
+import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -84,6 +92,8 @@ export const MessageDetailsScreen = () => {
 
   const goBack = useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
+    dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
   }, [dispatch, navigation]);
 
@@ -99,6 +109,29 @@ export const MessageDetailsScreen = () => {
     goBack,
     supportRequest: true
   });
+
+  const store = useIOStore();
+  useFocusEffect(
+    useCallback(() => {
+      const globalState = store.getState();
+      const selectedPaymentId = selectedPaymentIdSelector(globalState);
+      if (selectedPaymentId) {
+        const isRelatedPayment = isMessageRelatedPayment(
+          selectedPaymentId,
+          messageDetails
+        );
+        if (isRelatedPayment) {
+          dispatch(clearMessagesSelectedPayment());
+          dispatch(
+            updatePaymentForMessage.request({
+              messageId,
+              paymentId: selectedPaymentId
+            })
+          );
+        }
+      }
+    }, [dispatch, messageId, messageDetails, store])
+  );
 
   if (message === undefined || messageDetails === undefined) {
     return (

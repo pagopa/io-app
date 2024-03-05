@@ -1410,7 +1410,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 }
                                 weight="Regular"
                               >
-                                Codice avviso
+                                Notice code
                               </Text>
                               <Text
                                 allowFontScaling={false}
