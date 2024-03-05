@@ -46,11 +46,7 @@ const SignatureFieldItem = (props: Props) => {
         onValueChange={() => {
           onChange(!checked);
         }}
-        accessibilityLabel={
-          checked
-            ? I18n.t("features.fci.signatureFields.accessibility.selected")
-            : I18n.t("features.fci.signatureFields.accessibility.unselected")
-        }
+        accessibilityLabel={props.title}
       />
       <View style={[IOStyles.row, styles.details]}>
         <LabelLink
