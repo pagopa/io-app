@@ -12,17 +12,12 @@ import { mockPdfAttachment } from "../../../messages/__mocks__/attachment";
 import { downloadAttachment } from "../../../messages/store/actions";
 import I18n from "../../../../i18n";
 import { messageId_1 } from "../../../messages/__mocks__/messages";
+import { IOToast } from "../../../../components/Toast";
 
 const mockOpenPreview = jest.fn();
-const mockShowToast = jest.fn();
-
-jest.mock("../../../../utils/showToast", () => ({
-  showToast: () => mockShowToast()
-}));
 
 describe("MessageAttachments", () => {
   beforeEach(() => {
-    mockShowToast.mockReset();
     mockOpenPreview.mockReset();
   });
 
@@ -100,6 +95,7 @@ describe("MessageAttachments", () => {
             }
           }
         );
+        const showToastSpy = jest.spyOn(IOToast, "error");
 
         await act(() =>
           store.dispatch(
@@ -110,7 +106,7 @@ describe("MessageAttachments", () => {
             })
           )
         );
-        expect(mockShowToast).toHaveBeenCalledTimes(1);
+        expect(showToastSpy).toHaveBeenCalledTimes(1);
       });
     });
 

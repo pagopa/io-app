@@ -17,9 +17,6 @@ import MessageList from "../MessageList";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 
 jest.useFakeTimers();
-jest.mock("../../../../utils/showToast", () => ({
-  showToast: jest.fn()
-}));
 
 const messages = successReloadMessagesPayload.messages;
 

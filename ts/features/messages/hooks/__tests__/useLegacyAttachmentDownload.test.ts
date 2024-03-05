@@ -1,3 +1,4 @@
+import { IOToast } from "../../../../components/Toast";
 import { mockOtherAttachment } from "../../__mocks__/attachment";
 import {
   attachmentContentType,
@@ -8,12 +9,6 @@ import { testableFunctions } from "../useLegacyAttachmentDownload";
 const path = "/tmp/path.pdf";
 
 jest.mock("../../../../utils/platform");
-
-const mockShowToast = jest.fn();
-
-jest.mock("../../../../utils/showToast", () => ({
-  showToast: () => mockShowToast()
-}));
 
 const mockIosPresentOptionsMenu = jest.fn();
 const mockAndroidAddCompleteDownload = jest.fn();
@@ -92,24 +87,26 @@ describe("Open attachment", function () {
       mockAndroidAddCompleteDownload.mockImplementation(() =>
         Promise.resolve()
       );
+      const showToastSpy = jest.spyOn(IOToast, "error");
 
       const name = attachmentDisplayName(mockOtherAttachment);
       const mimeType = attachmentContentType(mockOtherAttachment);
       await taskDownloadFileIntoAndroidPublicFolder(name, mimeType, path)();
       expect(mockMediaCollectionCopyToMediaStore).toBeCalledTimes(1);
       expect(mockAndroidAddCompleteDownload).toBeCalledTimes(1);
-      expect(mockShowToast).not.toHaveBeenCalled();
+      expect(showToastSpy).not.toHaveBeenCalled();
     });
 
     it("Should display an alert if the creation of a new file within the collection fails", async () => {
       mockMediaCollectionCopyToMediaStore.mockImplementation(() =>
         Promise.reject(new Error("Error on reject"))
       );
+      const showToastSpy = jest.spyOn(IOToast, "error");
 
       const name = attachmentDisplayName(mockOtherAttachment);
       const mimeType = attachmentContentType(mockOtherAttachment);
       await taskDownloadFileIntoAndroidPublicFolder(name, mimeType, path)();
-      expect(mockShowToast).toBeCalledTimes(1);
+      expect(showToastSpy).toBeCalledTimes(1);
     });
 
     it("Should display an alert when adding an existing file to the Downloads app fails", async () => {
@@ -119,11 +116,12 @@ describe("Open attachment", function () {
       mockAndroidAddCompleteDownload.mockImplementation(() =>
         Promise.reject(new Error("Error on reject"))
       );
+      const showToastSpy = jest.spyOn(IOToast, "error");
 
       const name = attachmentDisplayName(mockOtherAttachment);
       const mimeType = attachmentContentType(mockOtherAttachment);
       await taskDownloadFileIntoAndroidPublicFolder(name, mimeType, path)();
-      expect(mockShowToast).toBeCalledTimes(1);
+      expect(showToastSpy).toBeCalledTimes(1);
     });
   });
 });
