@@ -50,14 +50,18 @@ export const MessageFooter = ({
     if (payments?.length === 1) {
       const firstPayment = payments[0];
       const paymentId = getRptIdStringFromPayment(firstPayment);
-      initializeAndNavigateToWalletForPayment(paymentId, dispatch, () =>
-        toast.error(I18n.t("genericError"))
+      initializeAndNavigateToWalletForPayment(
+        messageId,
+        paymentId,
+        undefined,
+        dispatch,
+        () => toast.error(I18n.t("genericError"))
       );
     } else {
       trackPNShowAllPayments();
       presentPaymentsBottomSheetRef.current?.();
     }
-  }, [dispatch, payments, presentPaymentsBottomSheetRef, toast]);
+  }, [dispatch, messageId, payments, presentPaymentsBottomSheetRef, toast]);
   if (isCancelled || buttonState === "hidden") {
     return null;
   }

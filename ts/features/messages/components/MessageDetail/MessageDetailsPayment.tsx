@@ -33,10 +33,12 @@ export const MessageDetailsPayment = ({
         iconColor={"blueItalia-500"}
       />
       <MessagePaymentItem
+        hideExpirationDate
         messageId={messageId}
-        rptId={rptId}
-        noticeNumber={paymentData.noticeNumber}
         noSpaceOnTop
+        noticeNumber={paymentData.noticeNumber}
+        paymentAmount={paymentData.amount}
+        rptId={rptId}
       />
     </>
   );

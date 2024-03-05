@@ -9,6 +9,7 @@ import { useStore } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -39,6 +40,8 @@ import { GlobalState } from "../../../store/reducers/types";
 import { selectedPaymentIdSelector } from "../../messages/store/reducers/payments";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { PNMessage } from "../store/types/types";
+import { getRptIdStringFromPayment } from "../utils/rptId";
 
 export type MessageDetailsScreenRouteParams = {
   messageId: UIMessageId;
@@ -50,6 +53,32 @@ type MessageDetailsRouteProps = RouteProp<
   PnParamsList,
   "PN_ROUTES_MESSAGE_DETAILS"
 >;
+
+const isPNMessageRelatedPayment = (
+  selectedPaymentId: string,
+  pnMessagePot: pot.Pot<O.Option<PNMessage>, Error>
+) =>
+  pipe(
+    pnMessagePot,
+    pot.toOption,
+    O.flatten,
+    O.map(message => message.recipients),
+    O.map(recipients =>
+      pipe(
+        recipients,
+        RA.some(recipient =>
+          pipe(
+            recipient.payment,
+            O.fromNullable,
+            O.map(getRptIdStringFromPayment),
+            O.map(rptId => rptId === selectedPaymentId),
+            O.getOrElse(() => false)
+          )
+        )
+      )
+    ),
+    O.getOrElse(() => false)
+  );
 
 export const MessageDetailsScreen = () => {
   const dispatch = useIODispatch();
@@ -100,15 +129,21 @@ export const MessageDetailsScreen = () => {
       const globalState = store.getState() as GlobalState;
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
-        dispatch(clearMessagesSelectedPayment());
-        dispatch(
-          updatePaymentForMessage.request({
-            messageId,
-            paymentId: selectedPaymentId
-          })
+        const isThisPNMessagePayment = isPNMessageRelatedPayment(
+          selectedPaymentId,
+          messagePot
         );
+        if (isThisPNMessagePayment) {
+          dispatch(clearMessagesSelectedPayment());
+          dispatch(
+            updatePaymentForMessage.request({
+              messageId,
+              paymentId: selectedPaymentId
+            })
+          );
+        }
       }
-    }, [dispatch, messageId, store])
+    }, [dispatch, messageId, messagePot, store])
   );
 
   return (

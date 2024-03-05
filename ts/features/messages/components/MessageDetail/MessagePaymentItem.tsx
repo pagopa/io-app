@@ -32,13 +32,16 @@ import {
 } from "../../../../utils/stringBuilder";
 import { useIOToast } from "../../../../components/Toast";
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
+import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
 
 type MessagePaymentItemProps = {
+  hideExpirationDate?: boolean;
   index?: number;
   messageId: UIMessageId;
-  rptId: string;
-  noticeNumber: string;
   noSpaceOnTop?: boolean;
+  noticeNumber: string;
+  paymentAmount?: PaymentAmount;
+  rptId: string;
   willNavigateToPayment?: () => void;
 };
 
@@ -86,6 +89,7 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
 );
 
 const modulePaymentNoticeFromPaymentStatus = (
+  hideExpirationDate: boolean,
   noticeNumber: string,
   paymentStatus: RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>,
   paymentCallback: () => void
@@ -98,6 +102,7 @@ const modulePaymentNoticeFromPaymentStatus = (
       const dueDateOrUndefined = pipe(
         payablePayment.dueDate,
         O.fromNullable,
+        O.filter(_ => !hideExpirationDate),
         O.map(
           dueDate =>
             `${I18n.t("wallet.firstTransactionSummary.dueDate")} ${format(
@@ -145,11 +150,13 @@ const modulePaymentNoticeFromPaymentStatus = (
   );
 
 export const MessagePaymentItem = ({
+  hideExpirationDate = false,
   index = 0,
   messageId,
-  rptId,
-  noticeNumber,
   noSpaceOnTop = false,
+  noticeNumber,
+  paymentAmount = undefined,
+  rptId,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
   const dispatch = useDispatch();
@@ -168,12 +175,14 @@ export const MessagePaymentItem = ({
 
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(
+      messageId,
       rptId,
+      paymentAmount,
       dispatch,
       () => toast.error(I18n.t("genericError")),
       () => willNavigateToPayment?.()
     );
-  }, [dispatch, rptId, toast, willNavigateToPayment]);
+  }, [dispatch, messageId, paymentAmount, rptId, toast, willNavigateToPayment]);
   useEffect(() => {
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
@@ -187,6 +196,7 @@ export const MessagePaymentItem = ({
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
       {modulePaymentNoticeFromPaymentStatus(
+        hideExpirationDate,
         noticeNumber,
         paymentStatusForUI,
         startPaymentCallback
