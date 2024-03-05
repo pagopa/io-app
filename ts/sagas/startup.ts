@@ -524,7 +524,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
+    yield* fork(watchPnSaga, sessionToken);
   }
 
   const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =

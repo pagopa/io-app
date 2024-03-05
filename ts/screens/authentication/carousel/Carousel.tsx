@@ -102,7 +102,7 @@ const CarouselDots = (props: CarouselDotsProps) => {
 };
 
 export const Carousel = React.forwardRef<View, CarouselProps>((props, ref) => {
-  const { carouselCards } = props;
+  const { carouselCards, dotEasterEggCallback } = props;
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -153,7 +153,11 @@ export const Carousel = React.forwardRef<View, CarouselProps>((props, ref) => {
       >
         {cardComponents}
       </ScrollView>
-      <CarouselDots carouselCards={carouselCards} scrollX={scrollX} />
+      <CarouselDots
+        dotEasterEggCallback={dotEasterEggCallback}
+        carouselCards={carouselCards}
+        scrollX={scrollX}
+      />
       <VSpacer size={24} />
     </>
   );
