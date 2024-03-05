@@ -558,7 +558,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, we ask you to log in with SPID or CIE every {{days}} day or if you log out
+      body: For security reasons, we ask you to log in with SPID or CIE every {{days}} days or if you log out
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
