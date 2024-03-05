@@ -167,7 +167,7 @@ export const MessageDetailsScreen = () => {
       </View>
       <VSpacer size={24} />
       <SafeAreaView edges={["bottom"]}>
-        <MessageDetailsFooter serviceId={serviceId} />
+        <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
       </SafeAreaView>
     </ScrollView>
   );
