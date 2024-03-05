@@ -1,4 +1,5 @@
 import {
+  ContentWrapper,
   FooterWithButtons,
   IOColors,
   VSpacer
@@ -15,7 +16,7 @@ import {
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Content, Form } from "native-base";
+import { Form } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -185,7 +186,7 @@ class ManualDataInsertionScreen extends React.Component<
             style={styles.whiteBg}
             keyboardShouldPersistTaps="handled"
           >
-            <Content scrollEnabled={false}>
+            <ContentWrapper>
               <H1>{I18n.t("wallet.insertManually.title")}</H1>
               <Body>{I18n.t("wallet.insertManually.info")}</Body>
               <Link onPress={this.showModal}>
@@ -257,7 +258,7 @@ class ManualDataInsertionScreen extends React.Component<
                   }}
                 />
               </Form>
-            </Content>
+            </ContentWrapper>
           </ScrollView>
         </SafeAreaView>
         <FooterWithButtons
