@@ -21,7 +21,6 @@ import {
   ToastPayload,
   WebviewMessage
 } from "../../../types/WebviewMessage";
-import { showToast } from "../../../utils/showToast";
 import {
   APP_EVENT_HANDLER,
   AVOID_ZOOM_JS,
@@ -119,8 +118,9 @@ const FimsWebView = ({ uri, fimsDomain, onWebviewClose, onTitle }: Props) => {
               Alert.alert(value.title, value.description);
               break;
             case "SHOW_TOAST":
-              const { text, type } = getMessageContent<ToastPayload>(message);
-              showToast(text, type);
+              const { text, type = "error" } =
+                getMessageContent<ToastPayload>(message);
+              IOToast[type](text);
               break;
             case "SET_TITLE":
               const title = getMessageContent<TitlePayload>(message);
