@@ -1,9 +1,6 @@
-import React from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { useActor } from "@xstate/react";
 import {
   Body,
+  FooterWithButtons,
   H1,
   IOColors,
   IOStyles,
@@ -11,20 +8,23 @@ import {
   LabelSmall,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useActor } from "@xstate/react";
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import CreditCardIcon from "../../../../../img/features/idpay/creditcard.svg";
+import InstitutionIcon from "../../../../../img/features/idpay/institution.svg";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import InstitutionIcon from "../../../../../img/features/idpay/institution.svg";
-import CreditCardIcon from "../../../../../img/features/idpay/creditcard.svg";
-import { useConfigurationMachineService } from "../xstate/provider";
-import { LOADING_TAG } from "../../../../xstate/utils";
 import I18n from "../../../../i18n";
-import { ConfigurationMode } from "../xstate/context";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { LOADING_TAG } from "../../../../xstate/utils";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
+import { ConfigurationMode } from "../xstate/context";
+import { useConfigurationMachineService } from "../xstate/provider";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -124,14 +124,20 @@ const InitiativeConfigurationIntroScreen = () => {
               ))}
             </View>
           </ScrollView>
-          <FooterWithButtons
-            type={"SingleButton"}
-            leftButton={{
-              title: I18n.t("idpay.configuration.intro.buttons.continue"),
-              onPress: handleContinuePress
-            }}
-          />
         </SafeAreaView>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("idpay.configuration.intro.buttons.continue"),
+              accessibilityLabel: I18n.t(
+                "idpay.configuration.intro.buttons.continue"
+              ),
+              onPress: handleContinuePress
+            }
+          }}
+        />
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );
