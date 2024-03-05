@@ -587,7 +587,7 @@ authentication:
     card3-title: Quickly pay a physical notice
     card3-content: You can pay a notice also by scanning the QR code on the physical notice    
     card5-title: Welcome to IO!
-    card5-content: What you can do?
+    card5-content: What can you do?
     card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
