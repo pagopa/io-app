@@ -4,16 +4,20 @@ import {
   Stepper,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import React from "react";
 import { useStartSupportRequest } from "../../../../hooks/useStartSupportRequest";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHandler";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { WALLET_PAYMENT_STEP_MAX } from "../store/reducers";
+import { walletPaymentPspListSelector } from "../store/selectors";
+import { walletPaymentResetPspList } from "../store/actions/networking";
 
 type WalletPaymentHeaderProps = {
   currentStep: number;
@@ -23,6 +27,9 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const goBackHandler = useWalletPaymentGoBackHandler();
+
+  const pspListPot = useIOSelector(walletPaymentPspListSelector);
+  const pspList = pot.getOrElse(pspListPot, []);
 
   const startSupportRequest = useStartSupportRequest({
     faqCategories: ["payment"],
@@ -38,8 +45,13 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
       return navigation.goBack();
     }
 
-    dispatch(walletPaymentSetCurrentStep(currentStep - 1));
-  }, [navigation, dispatch, goBackHandler, currentStep]);
+    if (currentStep === 3 && pspList.length === 1) {
+      dispatch(walletPaymentSetCurrentStep(currentStep - 2));
+      dispatch(walletPaymentResetPspList());
+    } else {
+      dispatch(walletPaymentSetCurrentStep(currentStep - 1));
+    }
+  }, [navigation, dispatch, goBackHandler, currentStep, pspList]);
 
   useHardwareBackButton(() => {
     handleGoBack();
