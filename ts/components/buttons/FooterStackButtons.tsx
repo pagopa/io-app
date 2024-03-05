@@ -1,16 +1,18 @@
 import {
   ButtonOutline,
   ButtonSolid,
-  ButtonSolidProps,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { ComponentProps } from "react";
 import { FooterTopShadow } from "../FooterTopShadow";
 
 type FooterStackButtonProps = {
-  primaryActionProps: Omit<ButtonSolidProps, "fullWidth">;
-  // It should be `ButtonOutlineProps` but it hasn't exported yet
-  secondaryActionProps?: Omit<ButtonSolidProps, "fullWidth">;
+  primaryActionProps: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
+  secondaryActionProps?: Omit<
+    ComponentProps<typeof ButtonOutline>,
+    "fullWidth"
+  >;
 };
 
 /**
