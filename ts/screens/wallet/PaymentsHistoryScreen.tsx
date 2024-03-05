@@ -1,9 +1,7 @@
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as AR from "fp-ts/lib/Array";
-import { Content } from "native-base";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
@@ -23,33 +21,19 @@ import {
   paymentsHistorySelector
 } from "../../store/reducers/payments/history";
 import { GlobalState } from "../../store/reducers/types";
-import variables from "../../theme/variables";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   IOStackNavigationRouteProps<AppParamsList>;
 
-const styles = StyleSheet.create({
-  noBottomPadding: {
-    padding: variables.contentPadding,
-    paddingBottom: 0
-  },
-  whiteBg: {
-    backgroundColor: IOColors.white
-  }
-});
-
-const ListEmptyComponent = (
-  <Content
-    scrollEnabled={false}
-    style={[styles.noBottomPadding, styles.whiteBg]}
-  >
+const ListEmptyComponent = () => (
+  <ContentWrapper>
     <H2 color={"bluegrey"}>{I18n.t("payment.details.list.empty.title")}</H2>
     <VSpacer size={16} />
     <Body>{I18n.t("payment.details.list.empty.description")}</Body>
     <VSpacer size={24} />
     <EdgeBorderComponent />
-  </Content>
+  </ContentWrapper>
 );
 
 /**
