@@ -287,6 +287,12 @@ export const pspForPaymentV2WithCallbacks = createStandardAction(
   onFailure: () => void;
 }>();
 
+// This action is used to notify that wallet sagas handlers have been initialized
+// Used by the Fast Login sagas to wait before dispatching any pending actions
+export const walletPaymentHandlersInitialized = createStandardAction(
+  "WALLET_PAYMENT_HANDLERS_INITIALIZED"
+)();
+
 /**
  * All possible payment actions
  */
@@ -310,4 +316,5 @@ export type PaymentActions =
   | ActionType<typeof runStartOrResumePaymentActivationSaga>
   | ActionType<typeof pspForPaymentV2>
   | ActionType<typeof pspSelectedForPaymentV2>
-  | ActionType<typeof pspForPaymentV2WithCallbacks>;
+  | ActionType<typeof pspForPaymentV2WithCallbacks>
+  | ActionType<typeof walletPaymentHandlersInitialized>;

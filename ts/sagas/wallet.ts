@@ -87,7 +87,8 @@ import {
   pspForPaymentV2,
   pspForPaymentV2WithCallbacks,
   runDeleteActivePaymentSaga,
-  runStartOrResumePaymentActivationSaga
+  runStartOrResumePaymentActivationSaga,
+  walletPaymentHandlersInitialized
 } from "../store/actions/wallet/payment";
 import {
   fetchPsp,
@@ -713,6 +714,8 @@ export function* watchWalletSaga(
     paymentManagerClient,
     pmSessionManager
   );
+
+  yield* put(walletPaymentHandlersInitialized());
 
   /**
    * whenever the profile is loaded (from a load request or from un update)
