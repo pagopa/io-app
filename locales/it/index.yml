@@ -2655,6 +2655,9 @@ features:
       addReminder: Aggiungi promemoria
       removeReminder: Rimuovi promemoria
       content: Scade il {{date}} alle ore {{time}}
+    payments:
+      title: "Avvisi pagoPA"
+      noticeCode: "Codice avviso"
   euCovidCertificate:
     save:
       album: "IO"

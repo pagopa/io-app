@@ -104,4 +104,12 @@ export const messageDetailsExpiringInfoSelector = (
     O.getOrElseW(() => "does_not_expire" as const)
   );
 
+export const messagePaymentData = (state: GlobalState, id: string) =>
+  pipe(
+    messageDetailsByIdSelector(state, id),
+    pot.toOption,
+    O.chainNullableK(message => message.paymentData),
+    O.toUndefined
+  );
+
 export default reducer;

@@ -33,6 +33,7 @@ import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
+import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -161,6 +162,7 @@ export const MessageDetailsScreen = () => {
           )}
           <VSpacer />
           <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
+          <MessageDetailsPayment messageId={messageId} />
           <VSpacer />
           <MessageDetailsAttachments messageId={messageId} />
         </ContentWrapper>

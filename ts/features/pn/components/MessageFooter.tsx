@@ -8,10 +8,10 @@ import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
 import { paymentsButtonStateSelector } from "../../messages/store/reducers/payments";
 import variables from "../../../theme/variables";
-import { initializeAndNavigateToWalletForPayment } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { useIOToast } from "../../../components/Toast";
 import { trackPNShowAllPayments } from "../analytics";
+import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 
 const styles = StyleSheet.create({
   container: {
