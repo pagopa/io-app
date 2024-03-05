@@ -14,8 +14,8 @@ import {
   remoteUndefined
 } from "../../../../../common/model/RemoteValue";
 import {
-  clearSelectedPayment,
-  setSelectedPayment,
+  clearMessagesSelectedPayment,
+  setMessagesSelectedPayment,
   updatePaymentForMessage
 } from "../../actions";
 import {
@@ -25,7 +25,7 @@ import {
   paymentsReducer,
   selectedPaymentIdSelector,
   shouldUpdatePaymentSelector
-} from "../payments";
+} from "../../../../messages/store/reducers/payments";
 
 describe("PN Payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -323,14 +323,14 @@ describe("PN Payments reducer's tests", () => {
   });
   it("Should have the paymentId for a setSelectedPayment action", () => {
     const paymentId = "p1";
-    const setSelectedPaymentAction = setSelectedPayment(paymentId);
+    const setSelectedPaymentAction = setMessagesSelectedPayment(paymentId);
     const paymentsState = paymentsReducer(undefined, setSelectedPaymentAction);
     const selectedPaymentId = paymentsState.selectedPayment;
     expect(selectedPaymentId).toBe(paymentId);
   });
   it("Should clear the paymentId for a clearSelectedPayment action", () => {
     const paymentId = "p1";
-    const setSelectedPaymentAction = setSelectedPayment(paymentId);
+    const setSelectedPaymentAction = setMessagesSelectedPayment(paymentId);
     const startingPaymentsState = paymentsReducer(
       undefined,
       setSelectedPaymentAction
@@ -339,14 +339,14 @@ describe("PN Payments reducer's tests", () => {
     expect(startingSelectedPaymentId).toBe(paymentId);
     const endingPaymentsState = paymentsReducer(
       startingPaymentsState,
-      clearSelectedPayment()
+      clearMessagesSelectedPayment()
     );
     const endingSelectedPaymentId = endingPaymentsState.selectedPayment;
     expect(endingSelectedPaymentId).toBeUndefined();
   });
   it("Should clear the paymentId for a reloadAllMessages action", () => {
     const paymentId = "p1";
-    const setSelectedPaymentAction = setSelectedPayment(paymentId);
+    const setSelectedPaymentAction = setMessagesSelectedPayment(paymentId);
     const startingPaymentsState = paymentsReducer(
       undefined,
       setSelectedPaymentAction
@@ -441,7 +441,7 @@ describe("PN Payments selectors' tests", () => {
     });
     const state = appReducer(startingState, updatePaymentForMessageAction);
     const paymentStatusOnStore =
-      state.features.pn.payments["m1" as UIMessageId]?.p1;
+      state.entities.messages.payments["m1" as UIMessageId]?.p1;
     expect(paymentStatusOnStore).toBe(remoteLoading);
     const paymentStatus = paymentStatusForUISelector(
       state,
@@ -691,7 +691,7 @@ describe("PN Payments selectors' tests", () => {
     expect(selectedPaymentId).toBeUndefined();
   });
   it("selectedPaymentIdSelector should return the selected payment", () => {
-    const appState = appReducer(undefined, setSelectedPayment("p1"));
+    const appState = appReducer(undefined, setMessagesSelectedPayment("p1"));
     const selectedPaymentId = selectedPaymentIdSelector(appState);
     expect(selectedPaymentId).toBe("p1");
   });
