@@ -22,7 +22,6 @@ import { PaymentRequestsGetResponse } from "../../../definitions/backend/Payment
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { InfoBox } from "../../components/box/InfoBox";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
@@ -207,13 +206,15 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           body={I18n.t("wallet.saveCard.loadWalletsErrorBody")}
         />
         <FooterStackButton
-          buttons={[
-            confirmButtonProps(() => {
+          primaryActionProps={{
+            onPress: () => {
               // load wallets and navigate to wallet home
               this.props.loadWallets();
               this.props.navigateToWalletHome();
-            }, I18n.t("wallet.refreshWallet"))
-          ]}
+            },
+            label: I18n.t("wallet.refreshWallet"),
+            accessibilityLabel: I18n.t("wallet.refreshWallet")
+          }}
         />
       </SafeAreaView>
     );
