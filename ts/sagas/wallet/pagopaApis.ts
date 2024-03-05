@@ -820,13 +820,18 @@ export function* paymentIdPollingRequestHandler(
       yield* select(isPagoPATestEnabledSelector);
 
     const getPaymentId = getPaymentIdApi.e2;
-    const response: SagaCallReturnType<typeof getPaymentId> = yield* call(
-      getPaymentId,
-      {
-        codiceContestoPagamento: action.payload.codiceContestoPagamento,
-        test: isPagoPATestEnabled
-      }
-    );
+
+    const request = getPaymentId({
+      codiceContestoPagamento: action.payload.codiceContestoPagamento,
+      test: isPagoPATestEnabled
+    });
+
+    const response: SagaCallReturnType<typeof getPaymentId> = (yield* call(
+      withRefreshApiCall,
+      request,
+      action
+    )) as unknown as SagaCallReturnType<typeof getPaymentId>;
+
     if (E.isRight(response)) {
       // Attiva succeeded
       if (response.right.status === 200) {
