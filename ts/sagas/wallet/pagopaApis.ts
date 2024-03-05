@@ -733,6 +733,9 @@ export function* commonPaymentVerificationProcedure<A extends Action>(
         const details = response.right.value.detail_v2;
         const failureAction = failureActionProvider(details);
         yield* put(failureAction);
+      } else if (response.right.status === 401) {
+        // This status code does not represent an error to show to the user
+        // The authentication will be handled by the Fast Login token refresh procedure
       } else {
         throw Error(`response status ${response.right.status}`);
       }
@@ -785,6 +788,9 @@ export function* paymentAttivaRequestHandler(
       ) {
         // Attiva failed
         throw Error(response.right.value.detail_v2);
+      } else if (response.right.status === 401) {
+        // This status code does not represent an error to show to the user
+        // The authentication will be handled by the Fast Login token refresh procedure
       } else {
         throw Error(`response status ${response.right.status}`);
       }
