@@ -1,10 +1,13 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { IOToast } from "../../../components/Toast";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { H3 } from "../../../components/core/typography/H3";
@@ -99,7 +102,8 @@ const ZendeskSupportComponent = ({
 
       {showRequestSupportButtons && (
         <>
-          <ButtonDefaultOpacity
+          <ButtonOutline
+            fullWidth
             onPress={() => {
               void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
               if (O.isNone(maybeProfile)) {
@@ -122,29 +126,18 @@ const ZendeskSupportComponent = ({
                 });
               }
             }}
-            style={{
-              alignSelf: "stretch"
-            }}
-            disabled={false}
-            bordered={true}
             testID={"showTicketsButton"}
-          >
-            <Label>{I18n.t("support.helpCenter.cta.seeReports")}</Label>
-          </ButtonDefaultOpacity>
+            label={I18n.t("support.helpCenter.cta.seeReports")}
+            accessibilityLabel={I18n.t("support.helpCenter.cta.seeReports")}
+          />
           <VSpacer size={16} />
-
-          <ButtonDefaultOpacity
-            style={{
-              alignSelf: "stretch"
-            }}
+          <ButtonSolid
+            fullWidth
+            label={I18n.t("support.helpCenter.cta.contactSupport")}
+            accessibilityLabel={I18n.t("support.helpCenter.cta.contactSupport")}
             onPress={handleContactSupportPress}
-            disabled={false}
             testID={"contactSupportButton"}
-          >
-            <Label color={"white"}>
-              {I18n.t("support.helpCenter.cta.contactSupport")}
-            </Label>
-          </ButtonDefaultOpacity>
+          />
         </>
       )}
     </>
