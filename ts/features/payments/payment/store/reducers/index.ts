@@ -9,7 +9,7 @@ import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { PaymentStartRoute } from "../../types";
+import { PaymentStartRoute, WalletPaymentStepEnum } from "../../types";
 import {
   walletPaymentAuthorization,
   walletPaymentCalculateFees,
@@ -36,7 +36,7 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/Walle
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
 export type WalletPaymentState = {
-  currentStep: number;
+  currentStep: WalletPaymentStepEnum;
   rptId?: RptId;
   sessionToken: pot.Pot<string, NetworkError>;
   paymentDetails: pot.Pot<
@@ -55,7 +55,7 @@ export type WalletPaymentState = {
 };
 
 const INITIAL_STATE: WalletPaymentState = {
-  currentStep: 1,
+  currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
   sessionToken: pot.none,
   paymentDetails: pot.none,
   userWallets: pot.none,
