@@ -27,9 +27,11 @@ import {
   userSelectedPaymentRptIdSelector,
   paymentsButtonStateSelector,
   paymentsReducer,
-  shouldUpdatePaymentSelector
-} from "../../../../messages/store/reducers/payments";
+  shouldUpdatePaymentSelector,
+  isUserSelectedPaymentSelector
+} from "../payments";
 import { getRptIdStringFromPaymentData } from "../../../utils";
+import { applicationChangeState } from "../../../../../store/actions/application";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -851,5 +853,51 @@ describe("PN Payments selectors' tests", () => {
     expect(userSelectedPayments4.has(paymentId1)).toBe(false);
     expect(userSelectedPayments4.has(paymentId2)).toBe(false);
     expect(userSelectedPayments4.has(paymentId3)).toBe(false);
+  });
+});
+
+describe("isUserSelectedPaymentSelector", () => {
+  it("should return false when there is no match on an empty state", () => {
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const isUserSelectedPayment = isUserSelectedPaymentSelector(
+      appState,
+      "01234567890012345678912345610"
+    );
+    expect(isUserSelectedPayment).toBe(false);
+  });
+  it("should return false when there is no match on a non-empty state", () => {
+    const initialState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    const appState = appReducer(
+      initialState,
+      addUserSelectedPaymentRptId("01234567890012345678912345620")
+    );
+    const isUserSelectedPayment = isUserSelectedPaymentSelector(
+      appState,
+      "01234567890012345678912345610"
+    );
+    expect(isUserSelectedPayment).toBe(false);
+  });
+  it("should return true when there is a match", () => {
+    const initialState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    const intermediateState = appReducer(
+      initialState,
+      addUserSelectedPaymentRptId("01234567890012345678912345620")
+    );
+    const rptId = "01234567890012345678912345610";
+    const appState = appReducer(
+      intermediateState,
+      addUserSelectedPaymentRptId(rptId)
+    );
+    const isUserSelectedPayment = isUserSelectedPaymentSelector(
+      appState,
+      rptId
+    );
+    expect(isUserSelectedPayment).toBe(true);
   });
 });
