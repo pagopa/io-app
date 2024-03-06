@@ -28,10 +28,13 @@ import {
   paymentsButtonStateSelector,
   paymentsReducer,
   shouldUpdatePaymentSelector,
-  isUserSelectedPaymentSelector
+  isUserSelectedPaymentSelector,
+  canNavigateToPaymentFromMessageSelector
 } from "../payments";
 import { getRptIdStringFromPaymentData } from "../../../utils";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
+import * as profile from "../../../../../store/reducers/profile";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -899,5 +902,60 @@ describe("isUserSelectedPaymentSelector", () => {
       rptId
     );
     expect(isUserSelectedPayment).toBe(true);
+  });
+});
+
+describe("canNavigateToPaymentFromMessageSelector", () => {
+  it("should return false if profile email is not validated and pagopa is not supported", () => {
+    jest
+      .spyOn(profile, "isProfileEmailValidatedSelector")
+      .mockReturnValueOnce(false);
+    jest
+      .spyOn(versionInfo, "isPagoPaSupportedSelector")
+      .mockReturnValueOnce(false);
+
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const canNavigateToPaymentFromMessage =
+      canNavigateToPaymentFromMessageSelector(appState);
+    expect(canNavigateToPaymentFromMessage).toBe(false);
+  });
+  it("should return false if profile email is not validated", () => {
+    jest
+      .spyOn(profile, "isProfileEmailValidatedSelector")
+      .mockReturnValueOnce(false);
+    jest
+      .spyOn(versionInfo, "isPagoPaSupportedSelector")
+      .mockReturnValueOnce(true);
+
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const canNavigateToPaymentFromMessage =
+      canNavigateToPaymentFromMessageSelector(appState);
+    expect(canNavigateToPaymentFromMessage).toBe(false);
+  });
+  it("should return false if pagopa is not supported", () => {
+    jest
+      .spyOn(profile, "isProfileEmailValidatedSelector")
+      .mockReturnValueOnce(true);
+    jest
+      .spyOn(versionInfo, "isPagoPaSupportedSelector")
+      .mockReturnValueOnce(false);
+
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const canNavigateToPaymentFromMessage =
+      canNavigateToPaymentFromMessageSelector(appState);
+    expect(canNavigateToPaymentFromMessage).toBe(false);
+  });
+  it("should return true if email si validated and pagopa is supported", () => {
+    jest
+      .spyOn(profile, "isProfileEmailValidatedSelector")
+      .mockReturnValueOnce(true);
+    jest
+      .spyOn(versionInfo, "isPagoPaSupportedSelector")
+      .mockReturnValueOnce(true);
+
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const canNavigateToPaymentFromMessage =
+      canNavigateToPaymentFromMessageSelector(appState);
+    expect(canNavigateToPaymentFromMessage).toBe(true);
   });
 });
