@@ -129,8 +129,8 @@ const CiePinScreen: React.FC<Props> = props => {
   const handleAuthenticationOverlayOnClose = useCallback(() => {
     setPin("");
     setAuthUrlGenerated(undefined);
-    hideModal();
-  }, [setPin, setAuthUrlGenerated, hideModal]);
+    navigation.goBack();
+  }, [setPin, setAuthUrlGenerated, navigation]);
 
   const { doLoginSuccess } = props;
 
@@ -159,13 +159,20 @@ const CiePinScreen: React.FC<Props> = props => {
   const showModal = () => {
     props.requestNfcEnabledCheck();
     Keyboard.dismiss();
-    showAnimatedModal(
-      <CieRequestAuthenticationOverlay
-        onClose={handleAuthenticationOverlayOnClose}
-        onSuccess={setAuthUrlGenerated}
-      />,
-      BottomTopAnimation
-    );
+    navigation.navigate(ROUTES.AUTHENTICATION, {
+      screen: ROUTES.CIE_REQUEST_AUTHENTICATION,
+      params: {
+        onClose: handleAuthenticationOverlayOnClose,
+        onSuccess: setAuthUrlGenerated
+      }
+    });
+    // showAnimatedModal(
+    //   <CieRequestAuthenticationOverlay
+    //     onClose={handleAuthenticationOverlayOnClose}
+    //     onSuccess={setAuthUrlGenerated}
+    //   />,
+    //   BottomTopAnimation
+    // );
   };
 
   const doSetAccessibilityFocus = useCallback(() => {

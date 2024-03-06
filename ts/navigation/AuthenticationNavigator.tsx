@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  TransitionPresets,
+  createStackNavigator
+} from "@react-navigation/stack";
 import * as React from "react";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
@@ -15,6 +18,7 @@ import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinL
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
+import { CieRequestAuthenticationOverlay } from "../components/cie/CieRequestAuthenticationOverlay";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
@@ -69,6 +73,18 @@ const AuthenticationStackNavigator = () => (
 
     <Stack.Screen name={ROUTES.CIE_PIN_SCREEN} component={CiePinScreen} />
 
+    <Stack.Group
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        ...TransitionPresets.ModalSlideFromBottomIOS
+      }}
+    >
+      <Stack.Screen
+        name={ROUTES.CIE_REQUEST_AUTHENTICATION}
+        component={CieRequestAuthenticationOverlay}
+      />
+    </Stack.Group>
     <Stack.Screen
       name={ROUTES.CIE_LOGIN_CONFIG_SCREEN}
       component={CieLoginConfigScreen}

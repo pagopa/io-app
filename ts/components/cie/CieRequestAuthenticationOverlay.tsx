@@ -16,6 +16,7 @@ import * as TE from "fp-ts/lib/TaskEither";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
 import { IOColors } from "@pagopa/io-app-design-system";
+import { useRoute, Route } from "@react-navigation/core";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -32,6 +33,7 @@ import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/sele
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
+import ROUTES from "../../navigation/routes";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -64,7 +66,7 @@ const injectJs =
 `
     : undefined;
 
-type Props = {
+export type CieRequestAuthenticationOverlayParams = {
   onClose: () => void;
   onSuccess: (authorizationUri: string) => void;
 };
@@ -133,7 +135,7 @@ export enum CieEntityIds {
   DEV = "xx_servizicie_coll"
 }
 
-const CieWebView = (props: Props) => {
+const CieWebView = (props: CieRequestAuthenticationOverlayParams) => {
   const [internalState, setInternalState] = React.useState<InternalState>(
     generateResetState()
   );
@@ -305,7 +307,10 @@ const CieWebView = (props: Props) => {
 };
 
 const ErrorComponent = (
-  props: { onRetry: () => void } & Pick<Props, "onClose">
+  props: { onRetry: () => void } & Pick<
+    CieRequestAuthenticationOverlayParams,
+    "onClose"
+  >
 ) => (
   <View style={[IOStyles.flex, styles.errorContainer]}>
     <OperationResultScreenContent
@@ -333,14 +338,19 @@ const ErrorComponent = (
  * @param props
  * @constructor
  */
-export const CieRequestAuthenticationOverlay = (
-  props: Props
-): React.ReactElement => {
+export const CieRequestAuthenticationOverlay = () => {
+  const params =
+    useRoute<
+      Route<
+        typeof ROUTES.CIE_REQUEST_AUTHENTICATION,
+        CieRequestAuthenticationOverlayParams
+      >
+    >().params;
   // Disable android back button
   useHardwareBackButton(() => {
-    props.onClose();
+    params.onClose();
     return true;
   });
 
-  return <CieWebView {...props} />;
+  return <CieWebView {...params} />;
 };

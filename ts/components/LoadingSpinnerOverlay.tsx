@@ -68,7 +68,9 @@ const LoadingSpinnerOverlay = ({
                       cancel={true}
                       testID={"loadingSpinnerOverlayCancelButton"}
                     >
-                      <Body>{I18n.t("global.buttons.cancel")}</Body>
+                      <Body color="white">
+                        {I18n.t("global.buttons.cancel")}
+                      </Body>
                     </ButtonDefaultOpacity>
                   )}
                 </View>
