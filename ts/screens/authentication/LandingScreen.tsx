@@ -15,10 +15,7 @@ import JailMonkey from "jail-monkey";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
 import { useDispatch, useStore } from "react-redux";
-import {
-  SafeAreaView,
-  useSafeAreaInsets
-} from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
@@ -308,7 +305,7 @@ export const LandingScreen = () => {
     );
 
     return (
-      <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
+      <View style={IOStyles.flex}>
         {isSessionExpiredRef.current ? (
           <LandingCardComponent
             id={0}
@@ -388,10 +385,11 @@ export const LandingScreen = () => {
               label={I18n.t("authentication.landing.privacyLink")}
               onPress={navigateToPrivacyUrl}
             />
-            {insets.bottom === 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
+            <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           </View>
+          {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}
         </ContentWrapper>
-      </SafeAreaView>
+      </View>
     );
   };
 
