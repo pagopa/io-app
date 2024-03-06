@@ -2,7 +2,7 @@ import * as React from "react";
 import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import { UIMessageId } from "../../types";
 import { useIOSelector } from "../../../../store/hooks";
-import { messagePaymentData } from "../../store/reducers/detailsById";
+import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
 import I18n from "../../../../i18n";
 import { getRptIdStringFromPaymentData } from "../../utils";
 import { MessagePaymentItem } from "./MessagePaymentItem";
@@ -15,7 +15,7 @@ export const MessageDetailsPayment = ({
   messageId
 }: MessageDetailsPaymentProps) => {
   const paymentData = useIOSelector(state =>
-    messagePaymentData(state, messageId)
+    messagePaymentDataSelector(state, messageId)
   );
 
   if (!paymentData) {

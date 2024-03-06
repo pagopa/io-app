@@ -21,7 +21,7 @@ const INITIAL_STATE: DetailsById = {};
 /**
  * A reducer to store all messages details by ID
  */
-const reducer = (
+export const detailsByIdReducer = (
   state: DetailsById = INITIAL_STATE,
   action: Action
 ): DetailsById => {
@@ -104,12 +104,10 @@ export const messageDetailsExpiringInfoSelector = (
     O.getOrElseW(() => "does_not_expire" as const)
   );
 
-export const messagePaymentData = (state: GlobalState, id: string) =>
+export const messagePaymentDataSelector = (state: GlobalState, id: string) =>
   pipe(
     messageDetailsByIdSelector(state, id),
     pot.toOption,
     O.chainNullableK(message => message.paymentData),
     O.toUndefined
   );
-
-export default reducer;
