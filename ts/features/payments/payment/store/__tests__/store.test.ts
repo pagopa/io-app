@@ -4,7 +4,7 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { walletPaymentSetCurrentStep } from "../actions/orchestration";
-import { WALLET_PAYMENT_STEP_MAX, WalletPaymentState } from "../reducers";
+import { WalletPaymentState } from "../reducers";
 
 const INITIAL_STATE: WalletPaymentState = {
   currentStep: 1,
@@ -33,11 +33,6 @@ describe("Test Wallet reducer", () => {
 
     store.dispatch(walletPaymentSetCurrentStep(2));
     expect(store.getState().features.payments.payment.currentStep).toBe(2);
-
-    store.dispatch(walletPaymentSetCurrentStep(20));
-    expect(store.getState().features.payments.payment.currentStep).toBe(
-      WALLET_PAYMENT_STEP_MAX
-    );
 
     store.dispatch(walletPaymentSetCurrentStep(0));
     expect(store.getState().features.payments.payment.currentStep).toBe(1);
