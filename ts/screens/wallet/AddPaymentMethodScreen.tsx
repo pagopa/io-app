@@ -4,7 +4,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { SafeAreaView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
@@ -167,7 +167,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
           : I18n.t("wallet.addPaymentMethodTitle")
       }
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         {O.isSome(inPayment) ? (
           <>
             <PaymentBannerComponent
@@ -208,7 +208,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
             )}
           />
         )}
-      </SafeAreaView>
+      </ScrollView>
       <FooterWithButtons
         type="SingleButton"
         primary={{
