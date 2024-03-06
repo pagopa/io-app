@@ -17,6 +17,12 @@ export function trackIdpAuthenticationSuccessScreen(idpId: string | undefined) {
     idp: idpId,
     ...buildEventProperties("UX", "screen_view")
   });
+
+export function trackIngressScreen() {
+  void mixpanelTrack(
+    "INITIALIZATION_LOADING",
+    buildEventProperties("UX", "screen_view")
+  );
 }
 
 export function trackTosScreen(flow: FlowType) {

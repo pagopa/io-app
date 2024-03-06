@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
-import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import { paymentsButtonStateSelector } from "../../messages/store/reducers/payments";
 import variables from "../../../theme/variables";
 import { initializeAndNavigateToWalletForPayment } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";

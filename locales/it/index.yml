@@ -249,7 +249,7 @@ permissionRationale:
     title: "Consenti l’accesso alla fotocamera"
     message: "Abbiamo bisogno dell'accesso alla fotocamera per utilizzare la torcia."
 startup:
-  title: Inizializzazione
+  title: Stiamo preparando la tua esperienza su IO
   authentication: Utente autenticato
   sessionInfo: Attributi SPID caricati
   profileInfo: Profilo utente caricato
