@@ -7,7 +7,6 @@ import getTheme from "native-base/src/theme/components";
 
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
-import contentTheme from "./components/Content";
 import headerTheme from "./components/Header";
 import inputTheme from "./components/Input";
 import itemTheme from "./components/Item";
@@ -24,9 +23,6 @@ const theme = (): Theme => {
   const overrides = {
     "NativeBase.Button": {
       ...buttonTheme()
-    },
-    "NativeBase.Content": {
-      ...contentTheme()
     },
     "NativeBase.Header": {
       ...headerTheme()
