@@ -1,5 +1,7 @@
 import { Dispatch } from "redux";
 import {
+  duplicateSetAndAdd,
+  duplicateSetAndRemove,
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "..";
@@ -288,5 +290,56 @@ describe("intializeAndNavigateToWalletForPayment", () => {
         messageId
       }
     });
+  });
+});
+
+describe("duplicateSetAndAdd", () => {
+  it("should duplicate input set and add new item", () => {
+    const inputSet = new Set<string>();
+    const newItem = "newItem";
+    const outputSet = duplicateSetAndAdd(inputSet, newItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size - 1);
+    expect(inputSet.has(newItem)).toBe(false);
+    expect(outputSet.has(newItem)).toBe(true);
+  });
+  it("should duplicate input set but not add an existing item", () => {
+    const inputSet = new Set<string>();
+    const existingItem = "existingItem";
+    inputSet.add(existingItem);
+    const duplicatedItem = "existingItem";
+    const outputSet = duplicateSetAndAdd(inputSet, duplicatedItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size);
+    expect(inputSet.has(existingItem)).toBe(true);
+    expect(outputSet.has(existingItem)).toBe(true);
+    expect(inputSet.has(duplicatedItem)).toBe(true);
+    expect(outputSet.has(duplicatedItem)).toBe(true);
+  });
+});
+
+describe("duplicateSetAndRemove", () => {
+  it("should duplicate input set and remove existing item", () => {
+    const inputSet = new Set<string>();
+    const existingItem = "newItem";
+    inputSet.add(existingItem);
+    const outputSet = duplicateSetAndRemove(inputSet, existingItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size + 1);
+    expect(inputSet.has(existingItem)).toBe(true);
+    expect(outputSet.has(existingItem)).toBe(false);
+  });
+  it("should duplicate input set and do nothing it the item does not exist", () => {
+    const inputSet = new Set<string>();
+    const existingItem = "existingItem";
+    inputSet.add(existingItem);
+    const unmatchingItem = "unmathingItem";
+    const outputSet = duplicateSetAndRemove(inputSet, unmatchingItem);
+    expect(inputSet).not.toBe(outputSet);
+    expect(inputSet.size).toBe(outputSet.size);
+    expect(inputSet.has(existingItem)).toBe(true);
+    expect(outputSet.has(existingItem)).toBe(true);
+    expect(inputSet.has(unmatchingItem)).toBe(false);
+    expect(outputSet.has(unmatchingItem)).toBe(false);
   });
 });
