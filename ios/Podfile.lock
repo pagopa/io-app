@@ -136,7 +136,7 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.1100)
-  - pagopa-io-react-native-crypto (0.2.1):
+  - pagopa-io-react-native-crypto (0.3.0):
     - React-Core
   - pagopa-io-react-native-http-client (0.1.3):
     - Alamofire
@@ -943,7 +943,7 @@ SPEC CHECKSUMS:
   MLKitVision: e87dc3f2e456a6ab32361ebd985e078dd2746143
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
+  pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
   pagopa-io-react-native-http-client: 14b1ed3cd090108f9cb324f951811fe556b81e51
   pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
   pagopa-react-native-zendesk: e4a63ee0745a567b641110f7ff78e457086ab7a3

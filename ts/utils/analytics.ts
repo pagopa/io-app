@@ -6,6 +6,7 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
+import { Platform } from "react-native";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
@@ -175,6 +176,20 @@ export function trackLollipopKeyGenerationFailure(reason: string) {
 
 export function trackLollipopIdpLoginFailure(reason: string) {
   void mixpanelTrack("LOLLIPOP_IDP_LOGIN_FAILURE", {
+    reason
+  });
+}
+
+export function trackLollipopIsKeyStrongboxBackedSuccess(
+  isStrongboxBacked: boolean
+) {
+  void mixpanelTrack("LOLLIPOP_IS_KEY_STRONGBOX_BACKED_SUCCESS", {
+    isStrongboxBacked
+  });
+}
+
+export function trackLollipopIsKeyStrongboxBackedFailure(reason: string) {
+  void mixpanelTrack("LOLLIPOP_IS_KEY_STRONGBOX_BACKED_FAILURE", {
     reason
   });
 }
