@@ -19,6 +19,7 @@ import {
   WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
   getPaymentLogo
 } from "../../common/utils";
+import { WalletPaymentStepEnum } from "../types";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentPspListSelector } from "../store/selectors";
@@ -77,7 +78,13 @@ export const WalletPaymentConfirmContent = ({
         paymentLogo={getPaymentLogo(paymentMethodDetails)}
         title={getPaymentTitle(paymentMethodDetails)}
         subtitle={getPaymentSubtitle(paymentMethodDetails)}
-        onPress={() => dispatch(walletPaymentSetCurrentStep(1))}
+        onPress={() =>
+          dispatch(
+            walletPaymentSetCurrentStep(
+              WalletPaymentStepEnum.PICK_PAYMENT_METHOD
+            )
+          )
+        }
       />
       <VSpacer size={24} />
       <ListItemHeader
@@ -93,7 +100,9 @@ export const WalletPaymentConfirmContent = ({
         subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${
           selectedPsp.bundleName
         }`}
-        onPress={() => dispatch(walletPaymentSetCurrentStep(2))}
+        onPress={() =>
+          dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP))
+        }
       />
       <VSpacer size={24} />
       <WalletPaymentTotalAmount totalAmount={totalAmount} />

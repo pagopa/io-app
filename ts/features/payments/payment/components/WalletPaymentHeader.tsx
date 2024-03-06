@@ -18,6 +18,7 @@ import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { WALLET_PAYMENT_STEP_MAX } from "../store/reducers";
 import { walletPaymentPspListSelector } from "../store/selectors";
 import { walletPaymentResetPspList } from "../store/actions/networking";
+import { WalletPaymentStepEnum } from "../types";
 
 type WalletPaymentHeaderProps = {
   currentStep: number;
@@ -37,19 +38,27 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   });
 
   const handleGoBack = React.useCallback(() => {
-    if (currentStep === 1 && goBackHandler) {
+    if (
+      currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD &&
+      goBackHandler
+    ) {
       return goBackHandler();
     }
 
-    if (currentStep === 1) {
+    if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {
       return navigation.goBack();
     }
 
-    if (currentStep === 3 && pspList.length === 1) {
-      dispatch(walletPaymentSetCurrentStep(currentStep - 2));
+    if (
+      currentStep === WalletPaymentStepEnum.CONFIRM_TRANSACTION &&
+      pspList.length === 1
+    ) {
+      dispatch(
+        walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
+      );
       dispatch(walletPaymentResetPspList());
     } else {
-      dispatch(walletPaymentSetCurrentStep(currentStep - 1));
+      dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));
     }
   }, [navigation, dispatch, goBackHandler, currentStep, pspList]);
 
