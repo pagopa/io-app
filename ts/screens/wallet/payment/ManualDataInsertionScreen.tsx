@@ -16,7 +16,6 @@ import {
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Form } from "native-base";
 import * as React from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
@@ -193,71 +192,65 @@ class ManualDataInsertionScreen extends React.Component<
                 {I18n.t("wallet.insertManually.link")}
               </Link>
               <VSpacer size={16} />
-              <Form>
-                <LabelledItem
-                  isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
-                  label={I18n.t("wallet.insertManually.noticeCode")}
-                  accessibilityLabel={I18n.t(
-                    "wallet.insertManually.noticeCode"
-                  )}
-                  testID={"NoticeCode"}
-                  overrideBorderColor={this.getColorFromInputValidatorState(
-                    unwrapOptionalEither(this.state.paymentNoticeNumber)
-                  )}
-                  inputMaskProps={{
-                    type: "custom",
-                    options: { mask: "9999 9999 9999 9999 99" },
-                    keyboardType: "numeric",
-                    returnKeyType: "done",
-                    value: this.state.noticeNumberInputValue,
-                    // notice code structure:
-                    // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
-                    onChangeText: value => {
-                      this.setState({
-                        noticeNumberInputValue: value,
-                        paymentNoticeNumber: pipe(
-                          O.some(value),
-                          O.filter(NonEmptyString.is),
-                          O.map(_ => _.replace(/\s/g, "")),
-                          O.map(_ => PaymentNoticeNumberFromString.decode(_))
-                        )
-                      });
-                    }
-                  }}
-                />
-                <VSpacer size={16} />
-                <LabelledItem
-                  isValid={unwrapOptionalEither(
-                    this.state.organizationFiscalCode
-                  )}
-                  label={I18n.t("wallet.insertManually.entityCode")}
-                  accessibilityLabel={I18n.t(
-                    "wallet.insertManually.entityCode"
-                  )}
-                  testID={"EntityCode"}
-                  overrideBorderColor={this.getColorFromInputValidatorState(
-                    unwrapOptionalEither(this.state.organizationFiscalCode)
-                  )}
-                  inputMaskProps={{
-                    type: "custom",
-                    options: { mask: "99999999999" }, // 11 digits for an oragnization fiscal code
-                    keyboardType: "numeric",
-                    returnKeyType: "done",
-                    value: this.state.orgFiscalCodeInputValue,
-                    onChangeText: value => {
-                      this.setState({
-                        orgFiscalCodeInputValue: value,
-                        organizationFiscalCode: pipe(
-                          O.some(value),
-                          O.filter(NonEmptyString.is),
-                          O.map(_ => _.replace(/\s/g, "")),
-                          O.map(_ => OrganizationFiscalCode.decode(_))
-                        )
-                      });
-                    }
-                  }}
-                />
-              </Form>
+              <LabelledItem
+                isValid={unwrapOptionalEither(this.state.paymentNoticeNumber)}
+                label={I18n.t("wallet.insertManually.noticeCode")}
+                accessibilityLabel={I18n.t("wallet.insertManually.noticeCode")}
+                testID={"NoticeCode"}
+                overrideBorderColor={this.getColorFromInputValidatorState(
+                  unwrapOptionalEither(this.state.paymentNoticeNumber)
+                )}
+                inputMaskProps={{
+                  type: "custom",
+                  options: { mask: "9999 9999 9999 9999 99" },
+                  keyboardType: "numeric",
+                  returnKeyType: "done",
+                  value: this.state.noticeNumberInputValue,
+                  // notice code structure:
+                  // <aux digit 1n 0-3>| IUV 17>>|<segregation code (2n)><local info system (2n)><payment number (11n)><check digit (2n)>
+                  onChangeText: value => {
+                    this.setState({
+                      noticeNumberInputValue: value,
+                      paymentNoticeNumber: pipe(
+                        O.some(value),
+                        O.filter(NonEmptyString.is),
+                        O.map(_ => _.replace(/\s/g, "")),
+                        O.map(_ => PaymentNoticeNumberFromString.decode(_))
+                      )
+                    });
+                  }
+                }}
+              />
+              <VSpacer size={16} />
+              <LabelledItem
+                isValid={unwrapOptionalEither(
+                  this.state.organizationFiscalCode
+                )}
+                label={I18n.t("wallet.insertManually.entityCode")}
+                accessibilityLabel={I18n.t("wallet.insertManually.entityCode")}
+                testID={"EntityCode"}
+                overrideBorderColor={this.getColorFromInputValidatorState(
+                  unwrapOptionalEither(this.state.organizationFiscalCode)
+                )}
+                inputMaskProps={{
+                  type: "custom",
+                  options: { mask: "99999999999" }, // 11 digits for an oragnization fiscal code
+                  keyboardType: "numeric",
+                  returnKeyType: "done",
+                  value: this.state.orgFiscalCodeInputValue,
+                  onChangeText: value => {
+                    this.setState({
+                      orgFiscalCodeInputValue: value,
+                      organizationFiscalCode: pipe(
+                        O.some(value),
+                        O.filter(NonEmptyString.is),
+                        O.map(_ => _.replace(/\s/g, "")),
+                        O.map(_ => OrganizationFiscalCode.decode(_))
+                      )
+                    });
+                  }
+                }}
+              />
             </ContentWrapper>
           </ScrollView>
         </SafeAreaView>

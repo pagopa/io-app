@@ -1,14 +1,22 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { View, Alert, Modal, StatusBar, StyleSheet, Text } from "react-native";
+import {
+  Alert,
+  Modal,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import { Link } from "../../components/core/typography/Link";
 import Pinpad from "../../components/Pinpad";
+import { Link } from "../../components/core/typography/Link";
 import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import {
@@ -21,8 +29,8 @@ import {
 import { appCurrentStateSelector } from "../../store/reducers/appState";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
-  freeAttempts,
   IdentificationCancelData,
+  freeAttempts,
   identificationFailSelector,
   maxAttempts,
   progressSelector
@@ -32,8 +40,8 @@ import { profileNameSelector } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
-  biometricAuthenticationRequest,
   BiometricsValidType,
+  biometricAuthenticationRequest,
   getBiometricsType,
   isBiometricsValidType
 } from "../../utils/biometrics";
@@ -41,10 +49,10 @@ import { maybeNotNullyString } from "../../utils/strings";
 
 import customVariables from "../../theme/variables";
 
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { Label } from "../../components/core/typography/Label";
 import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
+import { Label } from "../../components/core/typography/Label";
+import { IOStyles } from "../../components/core/variables/IOStyles";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -529,69 +537,74 @@ class IdentificationModal extends React.PureComponent<Props, State> {
             barStyle="light-content"
             backgroundColor={customVariables.contentPrimaryBackground}
           />
-          <Content
-            primary={!isValidatingTask}
+          <ScrollView
             contentContainerStyle={styles.contentContainerStyle}
-            noPadded
+            style={
+              !isValidatingTask
+                ? { backgroundColor: customVariables.contentPrimaryBackground }
+                : { backgroundColor: customVariables.contentBackground }
+            }
           >
-            {this.renderHeader(isValidatingTask)}
-            {this.renderErrorDescription()}
-            <Pinpad
-              onPinResetHandler={this.props.onPinResetHandler}
-              isValidatingTask={isValidatingTask}
-              isFingerprintEnabled={
-                isFingerprintEnabled &&
-                identificationByBiometryState !== "failure"
-              }
-              biometryType={biometryType}
-              onFingerPrintReq={() =>
-                this.onFingerprintRequest(this.onIdentificationSuccessHandler)
-              }
-              shufflePad={shufflePad}
-              disabled={!canInsertPin}
-              compareWithCode={pin as string}
-              activeColor={defaultColor}
-              inactiveColor={defaultColor}
-              buttonType={isValidatingTask ? "light" : "primary"}
-              delayOnFailureMillis={1000}
-              onFulfill={(_: string, __: boolean) =>
-                this.onPinFullfill(
-                  _,
-                  __,
-                  this.onIdentificationSuccessHandler,
-                  this.onIdentificationFailureHandler
-                )
-              }
-              clearOnInvalid={true}
-              onCancel={
-                identificationCancelData
-                  ? () =>
-                      this.onIdentificationCancelHandler(
-                        identificationCancelData
+            <SafeAreaView style={{ flexGrow: 1 }}>
+              {this.renderHeader(isValidatingTask)}
+              {this.renderErrorDescription()}
+              <Pinpad
+                onPinResetHandler={this.props.onPinResetHandler}
+                isValidatingTask={isValidatingTask}
+                isFingerprintEnabled={
+                  isFingerprintEnabled &&
+                  identificationByBiometryState !== "failure"
+                }
+                biometryType={biometryType}
+                onFingerPrintReq={() =>
+                  this.onFingerprintRequest(this.onIdentificationSuccessHandler)
+                }
+                shufflePad={shufflePad}
+                disabled={!canInsertPin}
+                compareWithCode={pin as string}
+                activeColor={defaultColor}
+                inactiveColor={defaultColor}
+                buttonType={isValidatingTask ? "light" : "primary"}
+                delayOnFailureMillis={1000}
+                onFulfill={(_: string, __: boolean) =>
+                  this.onPinFullfill(
+                    _,
+                    __,
+                    this.onIdentificationSuccessHandler,
+                    this.onIdentificationFailureHandler
+                  )
+                }
+                clearOnInvalid={true}
+                onCancel={
+                  identificationCancelData
+                    ? () =>
+                        this.onIdentificationCancelHandler(
+                          identificationCancelData
+                        )
+                    : undefined
+                }
+                remainingAttempts={displayRemainingAttempts}
+              />
+              <VSpacer size={24} />
+              {!isValidatingTask && (
+                <View style={styles.bottomContainer}>
+                  <Link onPress={this.onLogout} weight="Bold" color="white">
+                    {pipe(
+                      this.props.profileName,
+                      O.fromNullable,
+                      O.fold(
+                        () => I18n.t("identification.logout"),
+                        pN =>
+                          I18n.t("identification.logoutProfileName", {
+                            profileName: pN
+                          })
                       )
-                  : undefined
-              }
-              remainingAttempts={displayRemainingAttempts}
-            />
-            <VSpacer size={24} />
-            {!isValidatingTask && (
-              <View style={styles.bottomContainer}>
-                <Link onPress={this.onLogout} weight="Bold" color="white">
-                  {pipe(
-                    this.props.profileName,
-                    O.fromNullable,
-                    O.fold(
-                      () => I18n.t("identification.logout"),
-                      pN =>
-                        I18n.t("identification.logoutProfileName", {
-                          profileName: pN
-                        })
-                    )
-                  )}
-                </Link>
-              </View>
-            )}
-          </Content>
+                    )}
+                  </Link>
+                </View>
+              )}
+            </SafeAreaView>
+          </ScrollView>
         </BaseScreenComponent>
       </Modal>
     );

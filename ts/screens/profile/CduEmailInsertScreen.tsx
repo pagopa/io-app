@@ -16,7 +16,6 @@ import { Route, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Content, Form } from "native-base";
 import React, {
   createRef,
   useCallback,
@@ -351,12 +350,7 @@ const CduEmailInsertScreen = () => {
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <SafeAreaView style={styles.flex}>
-          <Content
-            testID="container-test"
-            noPadded={true}
-            style={styles.flex}
-            scrollEnabled={false}
-          >
+          <View testID="container-test" style={styles.flex}>
             <View style={IOStyles.horizontalContentPadding}>
               <H1 color={"bluegreyDark"} weight={"Bold"} testID="title-test">
                 {isFirstOnboarding
@@ -397,59 +391,55 @@ const CduEmailInsertScreen = () => {
                 </>
               )}
               <VSpacer size={16} />
-              <Form>
-                <View>
-                  <LabelledItem
-                    label={
-                      isFirstOnboarding
-                        ? I18n.t("email.edit.label")
-                        : I18n.t("email.newinsert.label")
-                    }
-                    icon="email"
-                    isValid={isValidEmail()}
-                    overrideBorderColor={
-                      areSameEmails ? IOColors.red : undefined
-                    }
-                    inputProps={{
-                      returnKeyType: "done",
-                      // continueOnPress is called by pressing the
-                      // button on the keyboard only if the mail is valid
-                      onSubmitEditing: isContinueButtonDisabled
-                        ? undefined
-                        : continueOnPress,
-                      autoCapitalize: "none",
-                      keyboardType: "email-address",
-                      defaultValue: pipe(
-                        getEmail(email),
-                        O.getOrElse(() => EMPTY_EMAIL)
-                      ),
-                      onChangeText: handleOnChangeEmailText
+              <View>
+                <LabelledItem
+                  label={
+                    isFirstOnboarding
+                      ? I18n.t("email.edit.label")
+                      : I18n.t("email.newinsert.label")
+                  }
+                  icon="email"
+                  isValid={isValidEmail()}
+                  overrideBorderColor={areSameEmails ? IOColors.red : undefined}
+                  inputProps={{
+                    returnKeyType: "done",
+                    // continueOnPress is called by pressing the
+                    // button on the keyboard only if the mail is valid
+                    onSubmitEditing: isContinueButtonDisabled
+                      ? undefined
+                      : continueOnPress,
+                    autoCapitalize: "none",
+                    keyboardType: "email-address",
+                    defaultValue: pipe(
+                      getEmail(email),
+                      O.getOrElse(() => EMPTY_EMAIL)
+                    ),
+                    onChangeText: handleOnChangeEmailText
+                  }}
+                  testID="TextField"
+                />
+                {areSameEmails && (
+                  <View
+                    testID="error-label"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center"
                     }}
-                    testID="TextField"
-                  />
-                  {areSameEmails && (
-                    <View
-                      testID="error-label"
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center"
-                      }}
-                      accessibilityElementsHidden={true}
-                      importantForAccessibility="no-hide-descendants"
-                    >
-                      <View style={{ marginRight: 6 }}>
-                        <Icon size={14} name="notice" color="red" />
-                      </View>
-                      <LabelSmall weight="Regular" color="red">
-                        {I18n.t("email.newinsert.alert.description")}
-                      </LabelSmall>
+                    accessibilityElementsHidden={true}
+                    importantForAccessibility="no-hide-descendants"
+                  >
+                    <View style={{ marginRight: 6 }}>
+                      <Icon size={14} name="notice" color="red" />
                     </View>
-                  )}
-                </View>
-              </Form>
+                    <LabelSmall weight="Regular" color="red">
+                      {I18n.t("email.newinsert.alert.description")}
+                    </LabelSmall>
+                  </View>
+                )}
+              </View>
             </View>
-          </Content>
+          </View>
           {withKeyboard(renderFooterButtons())}
         </SafeAreaView>
       </BaseScreenComponent>

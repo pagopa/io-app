@@ -6,12 +6,18 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import { connect } from "react-redux";
 
 import {
+  ContentWrapper,
   FooterWithButtons,
   HSpacer,
   NativeSwitch,
@@ -70,7 +76,6 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import { pmSessionTokenSelector } from "../../store/reducers/wallet/payment";
 import { getAllWallets } from "../../store/reducers/wallet/wallets";
-import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
@@ -106,10 +111,6 @@ type State = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  paddedLR: {
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
-  },
   preferredMethodContainer: {
     flexDirection: "row",
     justifyContent: "space-between"
@@ -248,50 +249,46 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
     const noErrorContent = (
       <>
         <SafeAreaView style={IOStyles.flex}>
-          <Content noPadded={true} style={styles.paddedLR}>
-            <H1>{I18n.t("wallet.saveCard.title")}</H1>
-            <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
-            <VSpacer size={16} />
-            <CardComponent
-              wallet={wallet}
-              type={"Full"}
-              extraSpace={true}
-              hideMenu={true}
-              hideFavoriteIcon={true}
-            />
-            <VSpacer size={16} />
-            <InfoBox
-              alignedCentral={true}
-              iconSize={24}
-              iconColor="bluegreyDark"
-            >
-              <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
-            </InfoBox>
-            <VSpacer size={24} />
-            <View style={styles.preferredMethodContainer}>
-              <View style={IOStyles.flex}>
-                <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-                  {I18n.t("wallet.saveCard.infoTitle")}
-                </H4>
-                <H5 weight={"Regular"} color={"bluegrey"}>
-                  {I18n.t("wallet.saveCard.info")}
-                </H5>
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <ContentWrapper>
+              <H1>{I18n.t("wallet.saveCard.title")}</H1>
+              <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
+              <VSpacer size={16} />
+              <CardComponent
+                wallet={wallet}
+                type={"Full"}
+                extraSpace={true}
+                hideMenu={true}
+                hideFavoriteIcon={true}
+              />
+              <VSpacer size={16} />
+              <InfoBox
+                alignedCentral={true}
+                iconSize={24}
+                iconColor="bluegreyDark"
+              >
+                <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
+              </InfoBox>
+              <VSpacer size={24} />
+              <View style={styles.preferredMethodContainer}>
+                <View style={IOStyles.flex}>
+                  <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+                    {I18n.t("wallet.saveCard.infoTitle")}
+                  </H4>
+                  <H5 weight={"Regular"} color={"bluegrey"}>
+                    {I18n.t("wallet.saveCard.info")}
+                  </H5>
+                </View>
+                <HSpacer size={16} />
+                <View style={{ paddingTop: 7 }}>
+                  <NativeSwitch
+                    value={this.state.setAsFavourite}
+                    onValueChange={this.onSetFavouriteValueChange}
+                  />
+                </View>
               </View>
-              <HSpacer size={16} />
-              <View style={{ paddingTop: 7 }}>
-                <NativeSwitch
-                  value={this.state.setAsFavourite}
-                  onValueChange={this.onSetFavouriteValueChange}
-                />
-              </View>
-            </View>
-          </Content>
-
-          {/* <LegacyFooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
-        /> */}
+            </ContentWrapper>
+          </ScrollView>
 
           {/*
            * When the first step is finished (creditCardAddWallet === O.some) show the webview

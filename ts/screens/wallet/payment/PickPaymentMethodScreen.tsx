@@ -2,6 +2,7 @@
  * This screen allows the user to select the payment method for a selected transaction
  */
 import {
+  ContentWrapper,
   Divider,
   FooterWithButtons,
   VSpacer
@@ -10,7 +11,6 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
 import { FlatList, SafeAreaView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -100,7 +100,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
     >
       <SafeAreaView style={IOStyles.flex}>
         <ScrollView style={IOStyles.flex}>
-          <Content>
+          <ContentWrapper>
             <H1>{I18n.t("wallet.payWith.pickPaymentMethod.title")}</H1>
             <VSpacer size={16} />
             {methodsCanPay.length > 0 ? (
@@ -194,7 +194,7 @@ const PickPaymentMethodScreen: React.FunctionComponent<Props> = (
                 />
               </>
             )}
-          </Content>
+          </ContentWrapper>
         </ScrollView>
       </SafeAreaView>
       <FooterWithButtons

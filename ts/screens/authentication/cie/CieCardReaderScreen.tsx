@@ -3,40 +3,45 @@
  * TODO: isolate cie event listener as saga
  * TODO: when 100% is reached, the animation end
  */
+import {
+  ContentWrapper,
+  FooterWithButtons,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import cieManager, { Event as CEvent } from "@pagopa/react-native-cie";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   AccessibilityInfo,
   Platform,
+  ScrollView,
   StyleSheet,
+  Text,
   Vibration,
-  Text
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import CieNfcOverlay from "../../../components/cie/CieNfcOverlay";
 import CieReadingCardAnimation, {
   ReadingState
 } from "../../../components/cie/CieReadingCardAnimation";
 import { Body } from "../../../components/core/typography/Body";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
+import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
+import { getCieUatEndpoint } from "../../../features/cieLogin/utils/endpoints";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import {
-  cieAuthenticationError,
   CieAuthenticationErrorPayload,
-  CieAuthenticationErrorReason
+  CieAuthenticationErrorReason,
+  cieAuthenticationError
 } from "../../../store/actions/cie";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
@@ -47,15 +52,13 @@ import {
   isScreenReaderEnabled,
   setAccessibilityFocus
 } from "../../../utils/accessibility";
+import { isDevEnv } from "../../../utils/environment";
 import { isIos } from "../../../utils/platform";
+import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
 import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../utils/supportAssistance";
-import { isDevEnv } from "../../../utils/environment";
-import { isCieLoginUatEnabledSelector } from "../../../features/cieLogin/store/selectors";
-import { withTrailingPoliceCarLightEmojii } from "../../../utils/strings";
-import { getCieUatEndpoint } from "../../../features/cieLogin/utils/endpoints";
 import {
   trackLoginCieCardReaderScreen,
   trackLoginCieCardReadingError,
@@ -476,25 +479,35 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
     Platform.select({
       default: (
         <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            onPress: this.handleCancel,
-            bordered: true,
-            title: I18n.t("global.buttons.cancel")
+          type="SingleButton"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.cancel"),
+              accessibilityLabel: I18n.t("global.buttons.cancel"),
+              onPress: this.handleCancel
+            }
           }}
         />
       ),
       ios: (
         <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={{
-            bordered: true,
-            onPress: this.handleCancel,
-            title: I18n.t("global.buttons.cancel")
+          type="TwoButtonsInlineThird"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.cancel"),
+              accessibilityLabel: I18n.t("global.buttons.cancel"),
+              onPress: this.handleCancel
+            }
           }}
-          rightButton={{
-            onPress: () => this.startCieiOS(this.props.isCieUatEnabled),
-            title: I18n.t("authentication.cie.nfc.retry")
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("authentication.cie.nfc.retry"),
+              accessibilityLabel: I18n.t("authentication.cie.nfc.retry"),
+              onPress: () => this.startCieiOS(this.props.isCieUatEnabled)
+            }
           }}
         />
       )
@@ -511,18 +524,16 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         )}
       >
         <ScreenContentHeader title={this.state.title} />
-        <Content bounces={false} noPadded={true}>
-          <View style={IOStyles.horizontalContentPadding}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ContentWrapper>
             <Body ref={this.subTitleRef}>{this.state.subtitle}</Body>
-          </View>
-          {!isIos && (
-            <CieReadingCardAnimation readingState={this.state.readingState} />
-          )}
-          {isIos && <VSpacer size={16} />}
-          <View style={IOStyles.horizontalContentPadding}>
+            {!isIos && (
+              <CieReadingCardAnimation readingState={this.state.readingState} />
+            )}
+            {isIos && <VSpacer size={16} />}
             <Body accessible={true}>{this.state.content}</Body>
-          </View>
-        </Content>
+          </ContentWrapper>
+        </ScrollView>
         {this.state.readingState !== ReadingState.completed && // TODO: validate - the screen has the back button on top left so it includes cancel also on reading success
           this.getFooter()}
       </TopScreenComponent>

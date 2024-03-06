@@ -1,7 +1,6 @@
-import { FooterWithButtons, IOColors } from "@pagopa/io-app-design-system";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Content } from "native-base";
 import * as React from "react";
 import {
   FlatList,
@@ -9,8 +8,7 @@ import {
   ListRenderItemInfo,
   Platform,
   SafeAreaView,
-  StyleSheet,
-  View
+  ScrollView
 } from "react-native";
 import { connect } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
@@ -40,7 +38,6 @@ import {
   isCdcEnabledSelector
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
-import variables from "../../../../theme/variables";
 import { storeUrl } from "../../../../utils/appVersion";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
@@ -60,17 +57,6 @@ import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-const styles = StyleSheet.create({
-  whiteContent: {
-    backgroundColor: IOColors.white,
-    flex: 1
-  },
-  paddedContent: {
-    padding: variables.contentPadding,
-    flex: 1
-  }
-});
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "bonus.bonusList.contextualHelp.title",
@@ -212,35 +198,29 @@ class AvailableBonusScreen extends React.PureComponent<Props> {
         faqCategories={["bonus_available_list"]}
       >
         <SafeAreaView style={IOStyles.flex}>
-          <Content
-            noPadded={true}
-            scrollEnabled={false}
-            style={styles.whiteContent}
-          >
-            <View style={styles.paddedContent}>
-              <FlatList
-                scrollEnabled={false}
-                data={availableBonusesList.filter(experimentalAndVisibleBonus)}
-                renderItem={b => this.renderListItem(b)}
-                keyExtractor={item => item.id_type.toString()}
-                ItemSeparatorComponent={() => (
-                  <ItemSeparatorComponent noPadded={true} />
-                )}
-              />
-            </View>
-          </Content>
-          <FooterWithButtons
-            type="SingleButton"
-            primary={{
-              type: "Outline",
-              buttonProps: {
-                onPress: this.props.navigateBack,
-                label: I18n.t("global.buttons.cancel"),
-                accessibilityLabel: I18n.t("global.buttons.cancel")
-              }
-            }}
-          />
+          <ScrollView contentContainerStyle={IOStyles.horizontalContentPadding}>
+            <FlatList
+              scrollEnabled={false}
+              data={availableBonusesList.filter(experimentalAndVisibleBonus)}
+              renderItem={b => this.renderListItem(b)}
+              keyExtractor={item => item.id_type.toString()}
+              ItemSeparatorComponent={() => (
+                <ItemSeparatorComponent noPadded={true} />
+              )}
+            />
+          </ScrollView>
         </SafeAreaView>
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              onPress: this.props.navigateBack,
+              label: I18n.t("global.buttons.cancel"),
+              accessibilityLabel: I18n.t("global.buttons.cancel")
+            }
+          }}
+        />
       </BaseScreenComponent>
     );
   }

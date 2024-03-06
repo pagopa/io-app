@@ -2,22 +2,24 @@
  * A screen where user after login (with CIE) can set email address if it is
  * not present in the profile.
  */
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  FooterWithButtons,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Content, Form } from "native-base";
 import * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
+import { Alert, Keyboard, SafeAreaView, StyleSheet } from "react-native";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { IOToast } from "../../components/Toast";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -219,45 +221,41 @@ const EmailInsertScreen = (props: Props) => {
         contextualHelpMarkdown={contextualHelpMarkdown}
       >
         <SafeAreaView style={styles.flex}>
-          <Content noPadded={true} style={styles.flex} scrollEnabled={false}>
-            <View style={IOStyles.horizontalContentPadding}>
-              <H1 color={"bluegreyDark"} weight={"Bold"}>
-                {I18n.t("email.edit.title")}
-              </H1>
-              <VSpacer />
-              <VSpacer size={16} />
-              <Body>
-                {isEmailValidated
-                  ? I18n.t("email.edit.validated")
-                  : I18n.t("email.edit.subtitle")}
-                <Body weight="SemiBold">
-                  {` ${pipe(
-                    optionEmail,
-                    O.getOrElse(() => "")
-                  )}`}
-                </Body>
+          <ContentWrapper>
+            <H1 color={"bluegreyDark"} weight={"Bold"}>
+              {I18n.t("email.edit.title")}
+            </H1>
+            <VSpacer size={16} />
+
+            <Body>
+              {isEmailValidated
+                ? I18n.t("email.edit.validated")
+                : I18n.t("email.edit.subtitle")}
+              <Body weight="SemiBold">
+                {` ${pipe(
+                  optionEmail,
+                  O.getOrElse(() => "")
+                )}`}
               </Body>
-              <VSpacer size={16} />
-              <Form>
-                <LabelledItem
-                  label={I18n.t("email.edit.label")}
-                  icon="email"
-                  isValid={isValidEmail()}
-                  inputProps={{
-                    returnKeyType: "done",
-                    onSubmitEditing: continueOnPress,
-                    autoCapitalize: "none",
-                    keyboardType: "email-address",
-                    value: pipe(
-                      email,
-                      O.getOrElse(() => EMPTY_EMAIL)
-                    ),
-                    onChangeText: handleOnChangeEmailText
-                  }}
-                />
-              </Form>
-            </View>
-          </Content>
+            </Body>
+            <VSpacer size={16} />
+            <LabelledItem
+              label={I18n.t("email.edit.label")}
+              icon="email"
+              isValid={isValidEmail()}
+              inputProps={{
+                returnKeyType: "done",
+                onSubmitEditing: continueOnPress,
+                autoCapitalize: "none",
+                keyboardType: "email-address",
+                value: pipe(
+                  email,
+                  O.getOrElse(() => EMPTY_EMAIL)
+                ),
+                onChangeText: handleOnChangeEmailText
+              }}
+            />
+          </ContentWrapper>
         </SafeAreaView>
         {withKeyboard(renderFooterButtons())}
       </BaseScreenComponent>

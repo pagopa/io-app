@@ -3,11 +3,12 @@
  */
 import {
   BlockButtonProps,
+  ContentWrapper,
   FooterWithButtons,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { Content } from "native-base";
 import * as React from "react";
+import { ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Body } from "../../../components/core/typography/Body";
@@ -77,21 +78,23 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
           "authentication.cie.pin.incorrectCiePinHeaderTitle"
         )}
       >
-        <ScreenContentHeader
-          title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
-            remainingCount
-          })}
-        />
-        <Content>
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
-          </Body>
-          <VSpacer size={16} />
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
-          </Body>
-          <VSpacer size={16} />
-        </Content>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ScreenContentHeader
+            title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
+              remainingCount
+            })}
+          />
+
+          <ContentWrapper>
+            <Body>
+              {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
+            </Body>
+            <VSpacer size={16} />
+            <Body>
+              {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
+            </Body>
+          </ContentWrapper>
+        </ScrollView>
 
         {this.renderFooterButtons()}
       </TopScreenComponent>

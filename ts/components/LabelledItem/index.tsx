@@ -9,6 +9,8 @@
  * icon  |
  *       input
  */
+import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
 import { Input as InputNativeBase, Item } from "native-base";
 import * as React from "react";
@@ -23,8 +25,6 @@ import {
   View
 } from "react-native";
 import { TextInputMaskProps } from "react-native-masked-text";
-import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
 import { WithTestID } from "../../types/WithTestID";
 
@@ -41,9 +41,6 @@ const styles = StyleSheet.create({
   },
   bottomLine: {
     borderBottomWidth: 1
-  },
-  flex: {
-    flex: 1
   },
   textInputMask: {
     ...makeFontStyleObject("Regular")
@@ -165,7 +162,7 @@ export const LabelledItem: React.FC<Props> = ({
     setIsEmpty(isStringNullyOrEmpty(text));
 
   return (
-    <View style={styles.flex}>
+    <View style={{ flexGrow: 1 }}>
       {props.label && (
         <View
           testID="label"

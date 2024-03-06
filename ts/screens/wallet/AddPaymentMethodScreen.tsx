@@ -3,7 +3,6 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
@@ -170,7 +169,7 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
     >
       <SafeAreaView style={IOStyles.flex}>
         {O.isSome(inPayment) ? (
-          <Content noPadded={true}>
+          <>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
               currentAmount={inPayment.value.verifica.importoSingoloVersamento}
@@ -194,23 +193,20 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
                 )}
               />
             </View>
-          </Content>
+          </>
         ) : (
-          <Content noPadded={true} style={IOStyles.horizontalContentPadding}>
-            <PaymentMethodsList
-              paymentMethods={getPaymentMethods(
-                props,
-                {
-                  onlyPaymentMethodCanPay:
-                    showOnlyPayablePaymentMethods === true,
-                  isPaymentOnGoing: O.isSome(inPayment),
-                  isPaypalEnabled: props.isPaypalEnabled,
-                  canOnboardBPay: props.canOnboardBPay
-                },
-                navigateToAddCreditCard
-              )}
-            />
-          </Content>
+          <PaymentMethodsList
+            paymentMethods={getPaymentMethods(
+              props,
+              {
+                onlyPaymentMethodCanPay: showOnlyPayablePaymentMethods === true,
+                isPaymentOnGoing: O.isSome(inPayment),
+                isPaypalEnabled: props.isPaypalEnabled,
+                canOnboardBPay: props.canOnboardBPay
+              },
+              navigateToAddCreditCard
+            )}
+          />
         )}
       </SafeAreaView>
       <FooterWithButtons

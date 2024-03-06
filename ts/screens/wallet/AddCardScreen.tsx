@@ -4,6 +4,7 @@
  */
 
 import {
+  ContentWrapper,
   FooterWithButtons,
   IOColors,
   VSpacer
@@ -13,7 +14,6 @@ import { Route, useRoute } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Content } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
@@ -289,7 +289,7 @@ const AddCardScreen: React.FC = () => {
           style={styles.whiteBg}
           keyboardShouldPersistTaps="handled"
         >
-          <Content scrollEnabled={false}>
+          <ContentWrapper>
             <LabelledItem
               label={I18n.t("wallet.dummyCard.labels.holder.label")}
               description={
@@ -427,7 +427,7 @@ const AddCardScreen: React.FC = () => {
             >
               {I18n.t("wallet.openAcceptedCardsPageCTA")}
             </Link>
-          </Content>
+          </ContentWrapper>
         </ScrollView>
         <SectionStatusComponent sectionKey={"credit_card"} />
       </SafeAreaView>

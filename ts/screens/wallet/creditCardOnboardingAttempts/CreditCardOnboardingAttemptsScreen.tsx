@@ -1,10 +1,8 @@
-import { Content } from "native-base";
+import { H4, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { StyleSheet } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
-import { H2 } from "../../../components/core/typography/H2";
+import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../../components/helpers/withValidatedPagoPaVersion";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../../components/screens/EdgeBorderComponent";
@@ -18,39 +16,25 @@ import { navigateToCreditCardOnboardingAttempt } from "../../../store/actions/na
 import { Dispatch } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
 import {
-  creditCardAttemptsSelector,
-  CreditCardInsertion
+  CreditCardInsertion,
+  creditCardAttemptsSelector
 } from "../../../store/reducers/wallet/creditCard";
-import variables from "../../../theme/variables";
-import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   IOStackNavigationRouteProps<AppParamsList>;
 
-const styles = StyleSheet.create({
-  noBottomPadding: {
-    padding: variables.contentPadding,
-    paddingBottom: 0
-  },
-  whiteBg: {
-    backgroundColor: IOColors.white
-  }
-});
-
 const ListEmptyComponent = (
-  <Content
-    scrollEnabled={false}
-    style={[styles.noBottomPadding, styles.whiteBg]}
-  >
-    <H2 color={"bluegreyDark"}>
+  <>
+    <VSpacer />
+    <H4 color={"bluegreyDark"}>
       {I18n.t("wallet.creditCard.onboardingAttempts.emptyTitle")}
-    </H2>
+    </H4>
     <VSpacer size={16} />
     <Body>{I18n.t("wallet.creditCard.onboardingAttempts.emptyBody")}</Body>
     <VSpacer size={24} />
     <EdgeBorderComponent />
-  </Content>
+  </>
 );
 
 /**

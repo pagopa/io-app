@@ -1,13 +1,14 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { makeFontStyleObject } from "../components/core/fonts";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import I18n from "../i18n";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen";
+import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
@@ -15,11 +16,10 @@ import { useIOSelector } from "../store/hooks";
 import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
-import { HeaderFirstLevelHandler } from "./components/HeaderFirstLevelHandler";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
 
