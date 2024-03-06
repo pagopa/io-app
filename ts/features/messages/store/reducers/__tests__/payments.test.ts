@@ -4,7 +4,11 @@ import { NotificationPaymentInfo } from "../../../../../../definitions/pn/Notifi
 import { reloadAllMessages } from "../../../../messages/store/actions";
 import { Action } from "../../../../../store/actions/types";
 import { appReducer } from "../../../../../store/reducers";
-import { UIMessageId } from "../../../../messages/types";
+import {
+  PaymentData,
+  UIMessageDetails,
+  UIMessageId
+} from "../../../../messages/types";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { reproduceSequence } from "../../../../../utils/tests";
 import {
@@ -14,18 +18,18 @@ import {
   remoteUndefined
 } from "../../../../../common/model/RemoteValue";
 import {
-  clearMessagesSelectedPayment,
-  setMessagesSelectedPayment,
+  addMessagePaymentToCheck,
   updatePaymentForMessage
 } from "../../actions";
 import {
   initialState,
   paymentStatusForUISelector,
+  userSelectedPaymentRptIdSelector,
   paymentsButtonStateSelector,
   paymentsReducer,
-  selectedPaymentIdSelector,
   shouldUpdatePaymentSelector
 } from "../../../../messages/store/reducers/payments";
+import { getRptIdStringFromPaymentData } from "../../../utils";
 
 describe("PN Payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -321,44 +325,54 @@ describe("PN Payments reducer's tests", () => {
     const m3p3S2 = m3S2?.[paymentId3];
     expect(m3p3S2).toBeUndefined();
   });
-  it("Should have the paymentId for a setSelectedPayment action", () => {
+  it("Should have the paymentId for an addMessagePaymentToCheck action", () => {
     const paymentId = "p1";
-    const setSelectedPaymentAction = setMessagesSelectedPayment(paymentId);
+    const setSelectedPaymentAction = addMessagePaymentToCheck(paymentId);
     const paymentsState = paymentsReducer(undefined, setSelectedPaymentAction);
-    const selectedPaymentId = paymentsState.selectedPayment;
-    expect(selectedPaymentId).toBe(paymentId);
+    const userSelectedPayments = paymentsState.userSelectedPayments;
+    const hasPaymentRptId = userSelectedPayments.has(paymentId);
+    expect(hasPaymentRptId).toBe(true);
   });
-  it("Should clear the paymentId for a clearSelectedPayment action", () => {
+  it("Should clear the paymentId for a updatePaymentForMessage.request action", () => {
     const paymentId = "p1";
-    const setSelectedPaymentAction = setMessagesSelectedPayment(paymentId);
+    const setSelectedPaymentAction = addMessagePaymentToCheck(paymentId);
     const startingPaymentsState = paymentsReducer(
       undefined,
       setSelectedPaymentAction
     );
-    const startingSelectedPaymentId = startingPaymentsState.selectedPayment;
-    expect(startingSelectedPaymentId).toBe(paymentId);
+    const userSelectedPayments = startingPaymentsState.userSelectedPayments;
+    const hasPaymentRptId = userSelectedPayments.has(paymentId);
+    expect(hasPaymentRptId).toBe(true);
     const endingPaymentsState = paymentsReducer(
       startingPaymentsState,
-      clearMessagesSelectedPayment()
+      updatePaymentForMessage.request({
+        messageId: "01HR9GY9GHGH5BQEJAKPWXEKV3" as UIMessageId,
+        paymentId
+      })
     );
-    const endingSelectedPaymentId = endingPaymentsState.selectedPayment;
-    expect(endingSelectedPaymentId).toBeUndefined();
+    const endingUserSelectedPayments = endingPaymentsState.userSelectedPayments;
+    const endingHasPaymentRptId = endingUserSelectedPayments.has(paymentId);
+    expect(endingHasPaymentRptId).toBe(false);
   });
   it("Should clear the paymentId for a reloadAllMessages action", () => {
     const paymentId = "p1";
-    const setSelectedPaymentAction = setMessagesSelectedPayment(paymentId);
+    const addMessagePaymentToCheckAction = addMessagePaymentToCheck(paymentId);
     const startingPaymentsState = paymentsReducer(
       undefined,
-      setSelectedPaymentAction
+      addMessagePaymentToCheckAction
     );
-    const startingSelectedPaymentId = startingPaymentsState.selectedPayment;
-    expect(startingSelectedPaymentId).toBe(paymentId);
+    const startingUserSelectedPayments =
+      startingPaymentsState.userSelectedPayments;
+    const startingHasPaymentToCheck =
+      startingUserSelectedPayments.has(paymentId);
+    expect(startingHasPaymentToCheck).toBe(true);
     const endingPaymentsState = paymentsReducer(
       startingPaymentsState,
       reloadAllMessages.request({ pageSize: 12, filter: {} })
     );
-    const endingSelectedPaymentId = endingPaymentsState.selectedPayment;
-    expect(endingSelectedPaymentId).toBeUndefined();
+    const endingUserSelectedPayments = endingPaymentsState.userSelectedPayments;
+    const endingPaymentsToCheckSize = endingUserSelectedPayments.size;
+    expect(endingPaymentsToCheckSize).toBe(0);
   });
 });
 
@@ -685,14 +699,38 @@ describe("PN Payments selectors' tests", () => {
     );
     expect(buttonState).toBe("visibleEnabled");
   });
-  it("selectedPaymentIdSelector should return undefined when none is set", () => {
+  it("paymentToCheckRptIdSelector should return undefined when none is set", () => {
     const appState = appReducer(undefined, {} as Action);
-    const selectedPaymentId = selectedPaymentIdSelector(appState);
-    expect(selectedPaymentId).toBeUndefined();
+    const messageDetails = {
+      paymentData: {
+        noticeNumber: "",
+        payee: {
+          fiscalCode: ""
+        }
+      }
+    } as UIMessageDetails;
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appState,
+      messageDetails
+    );
+    expect(paymentToCheckRptId).toBeUndefined();
   });
-  it("selectedPaymentIdSelector should return the selected payment", () => {
-    const appState = appReducer(undefined, setMessagesSelectedPayment("p1"));
-    const selectedPaymentId = selectedPaymentIdSelector(appState);
-    expect(selectedPaymentId).toBe("p1");
+  it("paymentToCheckRptIdSelector should return the selected payment", () => {
+    const paymentData = {
+      noticeNumber: "012345678912345678",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetails = {
+      paymentData
+    } as UIMessageDetails;
+    const rtpId = getRptIdStringFromPaymentData(paymentData);
+    const appState = appReducer(undefined, addMessagePaymentToCheck(rtpId));
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appState,
+      messageDetails
+    );
+    expect(paymentToCheckRptId).toBe(rtpId);
   });
 });

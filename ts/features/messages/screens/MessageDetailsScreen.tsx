@@ -15,7 +15,6 @@ import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
-  clearMessagesSelectedPayment,
   updatePaymentForMessage
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
@@ -39,9 +38,9 @@ import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
-import { selectedPaymentIdSelector } from "../store/reducers/payments";
-import { isMessageRelatedPayment } from "../utils";
+
 import { cancelPaymentStatusTracking } from "../../pn/store/actions";
+import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -114,21 +113,17 @@ export const MessageDetailsScreen = () => {
   useFocusEffect(
     useCallback(() => {
       const globalState = store.getState();
-      const selectedPaymentId = selectedPaymentIdSelector(globalState);
-      if (selectedPaymentId) {
-        const isRelatedPayment = isMessageRelatedPayment(
-          selectedPaymentId,
-          messageDetails
+      const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+        globalState,
+        messageDetails
+      );
+      if (paymentToCheckRptId) {
+        dispatch(
+          updatePaymentForMessage.request({
+            messageId,
+            paymentId: paymentToCheckRptId
+          })
         );
-        if (isRelatedPayment) {
-          dispatch(clearMessagesSelectedPayment());
-          dispatch(
-            updatePaymentForMessage.request({
-              messageId,
-              paymentId: selectedPaymentId
-            })
-          );
-        }
       }
     }, [dispatch, messageId, messageDetails, store])
   );

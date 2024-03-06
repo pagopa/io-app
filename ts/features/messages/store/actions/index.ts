@@ -308,13 +308,9 @@ export const cancelQueuedPaymentUpdates = createAction(
   "CANCEL_QUEUED_PAYMENT_UPDATES"
 );
 
-export const setMessagesSelectedPayment = createAction(
-  "MESSAGES_SET_SELECTED_PAYMENT",
+export const addMessagePaymentToCheck = createAction(
+  "MESSAGES_ADD_PAYMENT_TO_CHECK",
   resolve => (paymentId: string) => resolve({ paymentId })
-);
-
-export const clearMessagesSelectedPayment = createAction(
-  "MESSAGES_CLEAR_SELECTED_PAYMENT"
 );
 
 export type MessagesActions = ActionType<
@@ -339,6 +335,5 @@ export type MessagesActions = ActionType<
   | typeof resetGetMessageDataAction
   | typeof updatePaymentForMessage
   | typeof cancelQueuedPaymentUpdates
-  | typeof setMessagesSelectedPayment
-  | typeof clearMessagesSelectedPayment
+  | typeof addMessagePaymentToCheck
 >;

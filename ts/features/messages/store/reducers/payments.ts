@@ -4,7 +4,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { UIMessageId } from "../../types";
+import { UIMessageDetails, UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   isError,
@@ -18,9 +18,8 @@ import {
   RemoteValue
 } from "../../../../common/model/RemoteValue";
 import {
-  clearMessagesSelectedPayment,
+  addMessagePaymentToCheck,
   reloadAllMessages,
-  setMessagesSelectedPayment,
   updatePaymentForMessage
 } from "../actions";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
@@ -29,10 +28,15 @@ import { NotificationPaymentInfo } from "../../../../../definitions/pn/Notificat
 import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { isProfileEmailValidatedSelector } from "../../../../store/reducers/profile";
 import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
+import {
+  duplicateSetAndAdd,
+  duplicateSetAndRemove,
+  getRptIdStringFromPaymentData
+} from "../../utils";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
-  selectedPayment?: string;
+  userSelectedPayments: Set<string>;
 };
 
 export type SinglePaymentState = {
@@ -41,7 +45,9 @@ export type SinglePaymentState = {
     | undefined;
 };
 
-export const initialState: MultiplePaymentState = {};
+export const initialState: MultiplePaymentState = {
+  userSelectedPayments: new Set<string>()
+};
 
 export const paymentsReducer = (
   state: MultiplePaymentState = initialState,
@@ -54,7 +60,11 @@ export const paymentsReducer = (
         [action.payload.messageId]: {
           ...state[action.payload.messageId],
           [action.payload.paymentId]: remoteLoading
-        }
+        },
+        userSelectedPayments: duplicateSetAndRemove(
+          state.userSelectedPayments,
+          action.payload.paymentId
+        )
       };
     case getType(updatePaymentForMessage.success):
       return {
@@ -83,15 +93,13 @@ export const paymentsReducer = (
         }),
         state
       );
-    case getType(setMessagesSelectedPayment):
+    case getType(addMessagePaymentToCheck):
       return {
         ...state,
-        selectedPayment: action.payload.paymentId
-      };
-    case getType(clearMessagesSelectedPayment):
-      return {
-        ...state,
-        selectedPayment: undefined
+        userSelectedPayments: duplicateSetAndAdd(
+          state.userSelectedPayments,
+          action.payload.paymentId
+        )
       };
     case getType(reloadAllMessages.request):
       return initialState;
@@ -239,8 +247,23 @@ const buttonStateFromUpdatedPaymentCount =
       )
     );
 
-export const selectedPaymentIdSelector = (state: GlobalState) =>
-  state.entities.messages.payments.selectedPayment;
+export const isUserSelectedPaymentSelector = (
+  state: GlobalState,
+  rptId: string
+) => state.entities.messages.payments.userSelectedPayments.has(rptId);
+
+export const userSelectedPaymentRptIdSelector = (
+  state: GlobalState,
+  message: UIMessageDetails | undefined
+) =>
+  pipe(
+    message,
+    O.fromNullable,
+    O.chainNullableK(message => message.paymentData),
+    O.map(getRptIdStringFromPaymentData),
+    O.filter(rptId => isUserSelectedPaymentSelector(state, rptId)),
+    O.toUndefined
+  );
 
 export const canNavigateToPaymentFromMessageSelector = (state: GlobalState) =>
   pipe(

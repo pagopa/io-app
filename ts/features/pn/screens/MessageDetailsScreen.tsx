@@ -15,18 +15,19 @@ import { UIMessageId } from "../../messages/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
-import { pnMessageFromIdSelector } from "../store/reducers";
+import {
+  pnMessageFromIdSelector,
+  pnUserSelectedPaymentRptIdSelector
+} from "../store/reducers";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
-  clearMessagesSelectedPayment,
   updatePaymentForMessage
 } from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
   containsF24FromPNMessagePot,
   isCancelledFromPNMessagePot,
-  isPNMessageRelatedPayment,
   paymentsFromPNMessagePot
 } from "../utils";
 import { trackPNUxSuccess } from "../analytics";
@@ -35,7 +36,6 @@ import {
   cancelPaymentStatusTracking,
   startPaymentStatusTracking
 } from "../store/actions";
-import { selectedPaymentIdSelector } from "../../messages/store/reducers/payments";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
@@ -97,21 +97,17 @@ export const MessageDetailsScreen = () => {
   useFocusEffect(
     useCallback(() => {
       const globalState = store.getState();
-      const selectedPaymentId = selectedPaymentIdSelector(globalState);
-      if (selectedPaymentId) {
-        const isRelatedPayment = isPNMessageRelatedPayment(
-          selectedPaymentId,
-          messagePot
+      const paymentToCheckRptId = pnUserSelectedPaymentRptIdSelector(
+        globalState,
+        messagePot
+      );
+      if (paymentToCheckRptId) {
+        dispatch(
+          updatePaymentForMessage.request({
+            messageId,
+            paymentId: paymentToCheckRptId
+          })
         );
-        if (isRelatedPayment) {
-          dispatch(clearMessagesSelectedPayment());
-          dispatch(
-            updatePaymentForMessage.request({
-              messageId,
-              paymentId: selectedPaymentId
-            })
-          );
-        }
       }
     }, [dispatch, messageId, messagePot, store])
   );
