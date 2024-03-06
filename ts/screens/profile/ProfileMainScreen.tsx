@@ -4,7 +4,8 @@ import {
   IOColors,
   IOVisualCostants,
   ListItemNav,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
@@ -197,47 +198,6 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
       }
     ];
 
-    const renderProfileNavItem = ({
-      item: { value, description, onPress, testID, hideChevron }
-    }: ListRenderItemInfo<ProfileNavListItem>) => (
-      <ListItemNav
-        accessibilityLabel={value}
-        value={value}
-        description={description}
-        onPress={onPress}
-        testID={testID}
-        hideChevron={hideChevron}
-      />
-    );
-
-    const screenContent = () => (
-      <ScrollView style={IOStyles.bgWhite}>
-        <VSpacer size={16} />
-        <FlatList
-          scrollEnabled={false}
-          keyExtractor={(item: ProfileNavListItem, index: number) =>
-            `${item.value}-${index}`
-          }
-          contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault
-          }}
-          data={profileNavListItems}
-          renderItem={renderProfileNavItem}
-          ItemSeparatorComponent={() => <Divider />}
-        />
-
-        <ContentWrapper>
-          <AppVersion onPress={this.onTapAppVersion} />
-        </ContentWrapper>
-
-        {/* Developer Section */}
-        {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
-
-        {/* End Page */}
-        <VSpacer size={24} />
-      </ScrollView>
-    );
-
     /* The dimensions of the screen that will be used
     to hide the white background when inertial
     scrolling is turned on. */
@@ -288,11 +248,67 @@ class ProfileMainScreen extends React.PureComponent<Props, State> {
         contextualHelpMarkdown={contextualHelpMarkdown}
         faqCategories={["profile"]}
       >
-        {screenContent()}
+        <ScreenContent
+          onTapAppVersion={this.onTapAppVersion}
+          profileNavListItems={profileNavListItems}
+          isDebugModeEnabled={isDebugModeEnabled}
+        />
       </DarkLayout>
     );
   }
 }
+type ScreenContentProps = {
+  isDebugModeEnabled: boolean;
+  onTapAppVersion: () => void;
+  profileNavListItems: ReadonlyArray<ProfileNavListItem>;
+};
+
+const ScreenContent = ({
+  profileNavListItems,
+  onTapAppVersion,
+  isDebugModeEnabled
+}: ScreenContentProps) => {
+  const theme = useIOTheme();
+  const renderProfileNavItem = ({
+    item: { value, description, onPress, testID, hideChevron }
+  }: ListRenderItemInfo<ProfileNavListItem>) => (
+    <ListItemNav
+      accessibilityLabel={value}
+      value={value}
+      description={description}
+      onPress={onPress}
+      testID={testID}
+      hideChevron={hideChevron}
+    />
+  );
+  return (
+    <ScrollView style={{ backgroundColor: theme["appBackground-primary"] }}>
+      <VSpacer size={16} />
+      <FlatList
+        scrollEnabled={false}
+        keyExtractor={(item: ProfileNavListItem, index: number) =>
+          `${item.value}-${index}`
+        }
+        contentContainerStyle={{
+          paddingHorizontal: IOVisualCostants.appMarginDefault
+        }}
+        data={profileNavListItems}
+        renderItem={renderProfileNavItem}
+        ItemSeparatorComponent={() => <Divider />}
+      />
+
+      <ContentWrapper>
+        <AppVersion onPress={onTapAppVersion} />
+      </ContentWrapper>
+
+      {/* Developer Section */}
+      {(isDebugModeEnabled || isDevEnv) && <DeveloperModeSection />}
+
+      {/* End Page */}
+      <VSpacer size={24} />
+    </ScrollView>
+  );
+};
 
 const mapStateToProps = (state: GlobalState) => ({
   isDebugModeEnabled: isDebugModeEnabledSelector(state)
