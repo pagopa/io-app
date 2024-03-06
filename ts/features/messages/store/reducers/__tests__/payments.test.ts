@@ -705,106 +705,7 @@ describe("PN Payments selectors' tests", () => {
     );
     expect(buttonState).toBe("visibleEnabled");
   });
-  it("userSelectedPaymentRptIdSelector should return undefined when none is set", () => {
-    const appState = appReducer(undefined, {} as Action);
-    const messageDetails = {
-      paymentData: {
-        noticeNumber: "",
-        payee: {
-          fiscalCode: ""
-        }
-      }
-    } as UIMessageDetails;
-    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
-      appState,
-      messageDetails
-    );
-    expect(paymentToCheckRptId).toBeUndefined();
-  });
-  it("userSelectedPaymentRptIdSelector should return none when ids do not match", () => {
-    const paymentData = {
-      noticeNumber: "012345678912345678",
-      payee: {
-        fiscalCode: "01234567890"
-      }
-    } as PaymentData;
-    const messageDetails = {
-      paymentData: {
-        noticeNumber: "012345678912345679",
-        payee: {
-          fiscalCode: "01234567890"
-        }
-      } as PaymentData
-    } as UIMessageDetails;
-    const rtpId = getRptIdStringFromPaymentData(paymentData);
-    const appState = appReducer(undefined, addUserSelectedPaymentRptId(rtpId));
-    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
-      appState,
-      messageDetails
-    );
-    expect(paymentToCheckRptId).toBeUndefined();
-  });
-  it("userSelectedPaymentRptIdSelector should return the selected payment when it matches", () => {
-    const paymentData = {
-      noticeNumber: "012345678912345678",
-      payee: {
-        fiscalCode: "01234567890"
-      }
-    } as PaymentData;
-    const messageDetails = {
-      paymentData
-    } as UIMessageDetails;
-    const rtpId = getRptIdStringFromPaymentData(paymentData);
-    const appState = appReducer(undefined, addUserSelectedPaymentRptId(rtpId));
-    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
-      appState,
-      messageDetails
-    );
-    expect(paymentToCheckRptId).toBe(rtpId);
-  });
-  it("userSelectedPaymentRptIdSelector should return the selected payment when it matches (and there are multiple user selected payments)", () => {
-    const paymentData = {
-      noticeNumber: "012345678912345678",
-      payee: {
-        fiscalCode: "01234567890"
-      }
-    } as PaymentData;
-    const messageDetails = {
-      paymentData
-    } as UIMessageDetails;
-    const appState = appReducer(
-      undefined,
-      addUserSelectedPaymentRptId(
-        getRptIdStringFromPaymentData({
-          noticeNumber: "012345678912345677",
-          payee: {
-            fiscalCode: "01234567890"
-          }
-        } as PaymentData)
-      )
-    );
-    const appStateIntermediate = appReducer(
-      appState,
-      addUserSelectedPaymentRptId(
-        getRptIdStringFromPaymentData({
-          noticeNumber: "012345678912345676",
-          payee: {
-            fiscalCode: "01234567890"
-          }
-        } as PaymentData)
-      )
-    );
-    const rtpId = getRptIdStringFromPaymentData(paymentData);
-    const appStateFinal = appReducer(
-      appStateIntermediate,
-      addUserSelectedPaymentRptId(rtpId)
-    );
-    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
-      appStateFinal,
-      messageDetails
-    );
-    expect(paymentToCheckRptId).toBe(rtpId);
-  });
+
   it("addUserSelectedPaymentRptId should contain added user selected payments and removed one later", () => {
     const paymentId1 = "01234567890012345678912345610";
     const paymentId2 = "01234567890012345678912345620";
@@ -902,6 +803,109 @@ describe("isUserSelectedPaymentSelector", () => {
       rptId
     );
     expect(isUserSelectedPayment).toBe(true);
+  });
+});
+
+describe("userSelectedPaymentRptIdSelector", () => {
+  it("should return undefined when none is set", () => {
+    const appState = appReducer(undefined, {} as Action);
+    const messageDetails = {
+      paymentData: {
+        noticeNumber: "",
+        payee: {
+          fiscalCode: ""
+        }
+      }
+    } as UIMessageDetails;
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appState,
+      messageDetails
+    );
+    expect(paymentToCheckRptId).toBeUndefined();
+  });
+  it("should return none when ids do not match", () => {
+    const paymentData = {
+      noticeNumber: "012345678912345678",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetails = {
+      paymentData: {
+        noticeNumber: "012345678912345679",
+        payee: {
+          fiscalCode: "01234567890"
+        }
+      } as PaymentData
+    } as UIMessageDetails;
+    const rtpId = getRptIdStringFromPaymentData(paymentData);
+    const appState = appReducer(undefined, addUserSelectedPaymentRptId(rtpId));
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appState,
+      messageDetails
+    );
+    expect(paymentToCheckRptId).toBeUndefined();
+  });
+  it("should return the selected payment when it matches", () => {
+    const paymentData = {
+      noticeNumber: "012345678912345678",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetails = {
+      paymentData
+    } as UIMessageDetails;
+    const rtpId = getRptIdStringFromPaymentData(paymentData);
+    const appState = appReducer(undefined, addUserSelectedPaymentRptId(rtpId));
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appState,
+      messageDetails
+    );
+    expect(paymentToCheckRptId).toBe(rtpId);
+  });
+  it("should return the selected payment when it matches (and there are multiple user selected payments)", () => {
+    const paymentData = {
+      noticeNumber: "012345678912345678",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetails = {
+      paymentData
+    } as UIMessageDetails;
+    const appState = appReducer(
+      undefined,
+      addUserSelectedPaymentRptId(
+        getRptIdStringFromPaymentData({
+          noticeNumber: "012345678912345677",
+          payee: {
+            fiscalCode: "01234567890"
+          }
+        } as PaymentData)
+      )
+    );
+    const appStateIntermediate = appReducer(
+      appState,
+      addUserSelectedPaymentRptId(
+        getRptIdStringFromPaymentData({
+          noticeNumber: "012345678912345676",
+          payee: {
+            fiscalCode: "01234567890"
+          }
+        } as PaymentData)
+      )
+    );
+    const rtpId = getRptIdStringFromPaymentData(paymentData);
+    const appStateFinal = appReducer(
+      appStateIntermediate,
+      addUserSelectedPaymentRptId(rtpId)
+    );
+    const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+      appStateFinal,
+      messageDetails
+    );
+    expect(paymentToCheckRptId).toBe(rtpId);
   });
 });
 
