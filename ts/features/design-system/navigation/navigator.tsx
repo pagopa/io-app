@@ -11,7 +11,7 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import { useMemo } from "react";
-import { Alert, Platform, View, useColorScheme } from "react-native";
+import { Alert, Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
