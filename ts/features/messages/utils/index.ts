@@ -15,7 +15,7 @@ import { NetworkError, getNetworkError } from "../../../utils/errors";
 import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { getAmountFromPaymentAmount } from "../../../utils/payment";
 import { trackPNPaymentStart } from "../../pn/analytics";
-import { addMessagePaymentToCheck } from "../store/actions";
+import { addUserSelectedPaymentRptId } from "../store/actions";
 import { MessagePaymentExpirationInfo } from "./messages";
 
 export const gapBetweenItemsInAGrid = 8;
@@ -83,7 +83,7 @@ export const initializeAndNavigateToWalletForPayment = (
     trackPNPaymentStart();
   }
 
-  dispatch(addMessagePaymentToCheck(paymentId));
+  dispatch(addUserSelectedPaymentRptId(paymentId));
   dispatch(paymentInitializeState());
 
   const initialAmount = pipe(

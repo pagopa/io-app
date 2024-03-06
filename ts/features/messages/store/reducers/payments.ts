@@ -18,7 +18,7 @@ import {
   RemoteValue
 } from "../../../../common/model/RemoteValue";
 import {
-  addMessagePaymentToCheck,
+  addUserSelectedPaymentRptId,
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
@@ -93,7 +93,7 @@ export const paymentsReducer = (
         }),
         state
       );
-    case getType(addMessagePaymentToCheck):
+    case getType(addUserSelectedPaymentRptId):
       return {
         ...state,
         userSelectedPayments: duplicateSetAndAdd(
