@@ -91,6 +91,11 @@ jobs:
           ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: ${{secrets.ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD}}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       - id: upload-dsym-files
+        # Sometimes the upload fails for timeout, s
+        # in this case we want to upload the dSYM files anyway
+        if: ${{ always() }} 
+        # We don't want to fail the build if the dSYM upload fails
+        continue-on-error: true 
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.0.3
         with:
           name: ItaliaApp.app.dSYM.zip
