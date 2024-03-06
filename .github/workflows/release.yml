@@ -91,7 +91,7 @@ jobs:
           ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: ${{secrets.ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD}}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       - id: upload-dsym-files
-        # Sometimes the upload fails for timeout, s
+        # Sometimes the upload fails for timeout,
         # in this case we want to upload the dSYM files anyway
         if: ${{ always() }} 
         # We don't want to fail the build if the dSYM upload fails
