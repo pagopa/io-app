@@ -94,7 +94,7 @@ jobs:
         # Sometimes the upload fails for timeout,
         # in this case we want to upload the dSYM files anyway
         if: ${{ always() }} 
-        # We don't want to fail the build if the dSYM upload fails
+        # We don't want to fail whole job if the dSYM upload step fails
         continue-on-error: true 
         uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.0.3
         with:
