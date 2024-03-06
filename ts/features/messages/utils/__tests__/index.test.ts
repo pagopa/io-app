@@ -6,7 +6,7 @@ describe("getRptIdStringFromPaymentData", () => {
     const fiscalCode = "01234567890";
     const noticeNumber = "012345678912345610";
     const paymentData = {
-      noticeNumber: "",
+      noticeNumber,
       payee: {
         fiscalCode
       }
