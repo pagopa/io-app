@@ -14,3 +14,10 @@ export type PaymentStartRoute = {
   routeName: keyof AppParamsList;
   routeKey: NavigatorScreenParams<AppParamsList>["screen"];
 };
+
+export enum WalletPaymentStepEnum {
+  NONE = 0,
+  PICK_PAYMENT_METHOD = 1,
+  PICK_PSP = 2,
+  CONFIRM_TRANSACTION = 3
+}
