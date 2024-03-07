@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { List } from "native-base";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
@@ -11,7 +10,7 @@ import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreen
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
-import { useIODispatch } from "../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
@@ -31,7 +30,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
   const [isUpserting, setIsUpserting] = useState(false);
-  const preferences = useSelector(profilePreferencesSelector);
+  const preferences = useIOSelector(profilePreferencesSelector);
 
   const reminder = pot.map(preferences, p => p.reminder);
   const preview = pot.map(preferences, p => p.preview);

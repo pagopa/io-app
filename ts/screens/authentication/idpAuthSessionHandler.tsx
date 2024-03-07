@@ -37,7 +37,7 @@ import NavigationService from "../../navigation/NavigationService";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { trackLollipopIdpLoginFailure } from "../../utils/analytics";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../features/lollipop/utils/login";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
@@ -63,7 +63,6 @@ import {
   IdpAuthErrorScreen,
   IdpAuthErrorScreenType
 } from "./idpAuthErrorScreen";
-import { useStore } from "react-redux";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
 import { IdpData } from "../../../definitions/content/IdpData";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
@@ -148,8 +147,8 @@ export const AuthSessionPage = () => {
 
   const dispatch = useIODispatch();
 
-  // We call useStore beacause we only need some values from store, we don't need any re-render logic
-  const store = useStore();
+  // We call useIOStore beacause we only need some values from store, we don't need any re-render logic
+  const store = useIOStore();
 
   // Memoized values/func --start--
   const state = useMemo(() => store.getState(), [store]);

@@ -1,15 +1,15 @@
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ListItem } from "native-base";
 import React from "react";
 import {
-  View,
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  View
 } from "react-native";
-import { useDispatch } from "react-redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
+import { isReady } from "../../../common/model/RemoteValue";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
@@ -17,13 +17,12 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { toArray } from "../../../store/helpers/indexer";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
   hasSubCategories
 } from "../../../utils/supportAssistance";
-import { isReady } from "../../../common/model/RemoteValue";
 import { ZendeskParamsList } from "../navigation/params";
 import ZENDESK_ROUTES from "../navigation/routes";
 import {
@@ -47,7 +46,7 @@ type Props = IOStackNavigationRouteProps<
  * this screen shows the categories for which the user can ask support with the assistance
  */
 const ZendeskChooseCategory = (props: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { assistanceForPayment, assistanceForCard, assistanceForFci } =
     props.route.params;
   const zendeskConfig = useIOSelector(zendeskConfigSelector);

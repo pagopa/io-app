@@ -3,7 +3,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import React, { memo, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { useSelector, useStore } from "react-redux";
 import {
   IOColors,
   Divider,
@@ -30,7 +29,7 @@ import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
 import { profileUpsert } from "../../store/actions/profile";
-import { useIODispatch } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
 import customVariables from "../../theme/variables";
 import { usePreviewMoreInfo } from "../../utils/hooks/usePreviewMoreInfo";
@@ -143,7 +142,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
   const [previewEnabled, setPreviewEnabled] = useState(true);
   const [remindersEnabled, setRemindersEnabled] = useState(true);
 
-  const preferences = useSelector(profilePreferencesSelector);
+  const preferences = useIOSelector(profilePreferencesSelector);
   const { present, bottomSheet } = usePreviewMoreInfo();
 
   const isError = pot.isError(preferences);
@@ -175,7 +174,7 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
     }
   }, [isError, isUpdating]);
 
-  const store = useStore();
+  const store = useIOStore();
 
   const upsertPreferences = () => {
     void trackNotificationPreferenceConfiguration(

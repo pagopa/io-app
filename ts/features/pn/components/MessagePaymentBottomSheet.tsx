@@ -1,11 +1,11 @@
 import React, { MutableRefObject } from "react";
 import { Dimensions, View } from "react-native";
 import I18n from "i18n-js";
-import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../messages/types";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
+import { useIODispatch } from "../../../store/hooks";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 export type MessagePaymentBottomSheetProps = {
@@ -19,7 +19,7 @@ export const MessagePaymentBottomSheet = ({
   payments,
   presentPaymentsBottomSheetRef
 }: MessagePaymentBottomSheetProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const windowHeight = Dimensions.get("window").height;
   const snapPoint = (payments.length > 5 ? 0.75 : 0.5) * windowHeight;
   // TODO replace with FlatList, check IOCOM-636 for further details

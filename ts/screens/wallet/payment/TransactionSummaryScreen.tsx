@@ -16,16 +16,15 @@ import { ActionSheet } from "native-base";
 import React, { useCallback, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { IOToast } from "../../../components/Toast";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
   isError as isRemoteError,
   isLoading as isRemoteLoading,
   isUndefined
 } from "../../../common/model/RemoteValue";
+import { IOToast } from "../../../components/Toast";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
@@ -50,7 +49,7 @@ import {
   runStartOrResumePaymentActivationSaga
 } from "../../../store/actions/wallet/payment";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
@@ -168,7 +167,7 @@ const TransactionSummaryScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const { rptId, paymentStartOrigin, initialAmount, messageId } = route.params;
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const {
     verifica: paymentVerification,
     attiva,

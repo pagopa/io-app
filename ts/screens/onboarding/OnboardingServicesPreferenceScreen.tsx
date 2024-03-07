@@ -2,7 +2,7 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { SafeAreaView, View } from "react-native";
-import { connect, useStore } from "react-redux";
+import { connect } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { InfoBox } from "../../components/box/InfoBox";
 import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
@@ -34,6 +34,7 @@ import {
 } from "../profile/analytics";
 import { useManualConfigBottomSheet } from "../profile/components/services/ManualConfigBottomSheet";
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
+import { useIOStore } from "../../store/hooks";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -64,7 +65,7 @@ const OnboardingServicesPreferenceScreen = (
     trackServiceConfigurationScreen(getFlowType(true, isFirstOnboarding));
   });
 
-  const store = useStore();
+  const store = useIOStore();
 
   React.useEffect(() => {
     // when the user made a choice (the profile is right updated), continue to the next step

@@ -3,11 +3,10 @@ import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import React, { ComponentProps, PropsWithChildren, ReactNode } from "react";
 import { ColorValue } from "react-native";
-import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
 import { zendeskSupportStart } from "../../../features/zendesk/store/actions";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { canShowHelpSelector } from "../../../store/reducers/assistanceTools";
 import { assistanceToolConfigSelector } from "../../../store/reducers/backendStatus";
 import { currentRouteSelector } from "../../../store/reducers/navigation";
@@ -84,7 +83,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
      */
     const currentScreenName = useIOSelector(currentRouteSelector);
 
-    const dispatch = useDispatch();
+    const dispatch = useIODispatch();
     const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
     const canShowHelp = useIOSelector(canShowHelpSelector);
     const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);

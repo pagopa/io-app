@@ -10,14 +10,13 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useStore } from "react-redux";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import I18n from "../../i18n";
 import { setFastLoginOptIn } from "../../features/fastLogin/store/actions/optInActions";
-import { useIODispatch } from "../../store/hooks";
+import { useIODispatch, useIOStore } from "../../store/hooks";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import {
   trackLoginSessionOptIn,
@@ -56,7 +55,7 @@ const NewOptInScreen = () => {
   const { identifier } =
     useRoute<Route<"AUTHENTICATION_OPT_IN", ChosenIdentifier>>().params;
   const navigation = useIONavigation();
-  const store = useStore();
+  const store = useIOStore();
 
   useOnFirstRender(() => {
     trackLoginSessionOptIn();

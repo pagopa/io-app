@@ -1,11 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import React, { useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
-import { useStore } from "react-redux";
 import { HSpacer } from "@pagopa/io-app-design-system";
 import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { PaymentData, UIMessageDetails, UIMessageId } from "../../types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import variables from "../../../../theme/variables";
@@ -89,7 +88,7 @@ const CtaBar = ({
 }: Props): React.ReactElement | null => {
   const dispatch = useIODispatch();
   const shoulCheckForPNOptInMessage = useRef(true);
-  const store = useStore();
+  const store = useIOStore();
 
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
   const maybeCtas = getMessageCTA(

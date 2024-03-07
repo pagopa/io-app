@@ -1,13 +1,12 @@
 import * as React from "react";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
 import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
 
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import { capitalize } from "../../../../utils/strings";
 import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPaymentMethodScreen";
@@ -92,7 +91,7 @@ const generateCardHeaderTitle = (details?: UIWalletInfoDetails) => {
 const WalletDetailsScreen = () => {
   const route = useRoute<WalletDetailsScreenRouteProps>();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { walletId } = route.params;
   const walletDetails = useIOSelector(walletDetailsInstrumentSelector);
   const isLoadingWalletDetails = useIOSelector(

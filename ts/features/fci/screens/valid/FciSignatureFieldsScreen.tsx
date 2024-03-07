@@ -1,6 +1,5 @@
 import * as React from "react";
 import { View, SectionList, ScrollView } from "react-native";
-import { useSelector } from "react-redux";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
@@ -17,7 +16,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   fciDocumentSignatureFieldsSelector,
   fciSignatureDetailDocumentsSelector
@@ -66,14 +65,14 @@ const FciSignatureFieldsScreen = () => {
       Route<"FCI_SIGNATURE_FIELDS", FciSignatureFieldsScreenNavigationParams>
     >().params;
 
-  const documentsSelector = useSelector(fciSignatureDetailDocumentsSelector);
-  const signatureFieldsSelector = useSelector(
+  const documentsSelector = useIOSelector(fciSignatureDetailDocumentsSelector);
+  const signatureFieldsSelector = useIOSelector(
     fciDocumentSignatureFieldsSelector(docId)
   );
-  const documentsSignaturesSelector = useSelector(
+  const documentsSignaturesSelector = useIOSelector(
     fciDocumentSignaturesSelector
   );
-  const fciEnvironment = useSelector(fciEnvironmentSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const [isClausesChecked, setIsClausesChecked] = React.useState(false);

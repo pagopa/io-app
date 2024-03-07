@@ -1,10 +1,9 @@
 import React, { MutableRefObject, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
-import { useDispatch } from "react-redux";
+import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
 import { paymentsButtonStateSelector } from "../../messages/store/reducers/payments";
 import variables from "../../../theme/variables";
@@ -44,7 +43,7 @@ export const MessageFooter = ({
       maxVisiblePaymentCount
     )
   );
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const toast = useIOToast();
   const onFooterPressCallback = useCallback(() => {
     if (payments?.length === 1) {

@@ -1,14 +1,13 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
 import React, { useEffect, useState } from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
-import { useDispatch } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { SafeAreaView, ScrollView, View } from "react-native";
+import FAQComponent from "../../../components/FAQComponent";
 import { H3 } from "../../../components/core/typography/H3";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
-import FAQComponent from "../../../components/FAQComponent";
 import BaseScreenComponent, {
   ContextualHelpProps
 } from "../../../components/screens/BaseScreenComponent";
@@ -24,19 +23,19 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
 import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
-import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
-import { ZendeskParamsList } from "../navigation/params";
-import {
-  getZendeskConfig,
-  ZendeskStartPayload,
-  zendeskSupportCancel,
-  zendeskSupportCompleted
-} from "../store/actions";
-import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
 import {
   addTicketCustomField,
   zendeskFciId
 } from "../../../utils/supportAssistance";
+import { fciSignatureRequestIdSelector } from "../../fci/store/reducers/fciSignatureRequest";
+import ZendeskSupportComponent from "../components/ZendeskSupportComponent";
+import { ZendeskParamsList } from "../navigation/params";
+import {
+  ZendeskStartPayload,
+  getZendeskConfig,
+  zendeskSupportCancel,
+  zendeskSupportCompleted
+} from "../store/actions";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -61,7 +60,7 @@ export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
  * @constructor
  */
 const FaqManager = (props: FaqManagerProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
   const potContextualData = useIOSelector(
     getContextualHelpDataFromRouteSelector(props.startingRoute)

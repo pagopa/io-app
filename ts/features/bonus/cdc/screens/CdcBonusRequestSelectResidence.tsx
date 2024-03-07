@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -22,7 +21,7 @@ import {
   confirmButtonProps
 } from "../../../../components/buttons/ButtonConfigurations";
 import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { H3 } from "../../../../components/core/typography/H3";
 import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import { ResidentChoice } from "../types/CdcBonusRequest";
@@ -45,7 +44,7 @@ const CdcBonusRequestSelectResidence = () => {
     useNavigation<
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_RESIDENCE">
     >();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const [isResidentInItaly, setIsResidentInItaly] = React.useState<
     Record<string, ResidentChoice>
   >({});

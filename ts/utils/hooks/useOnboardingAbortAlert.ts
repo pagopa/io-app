@@ -1,7 +1,7 @@
-import { useDispatch } from "react-redux";
 import { Alert } from "react-native";
-import { abortOnboarding } from "../../store/actions/onboarding";
 import I18n from "../../i18n";
+import { abortOnboarding } from "../../store/actions/onboarding";
+import { useIODispatch } from "../../store/hooks";
 
 type OnboardingAbortAlertUtils = {
   showAlert: () => void;
@@ -12,7 +12,7 @@ type OnboardingAbortAlertUtils = {
  * that will trigger the `abortOnboarding` action.
  */
 export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
 
   const executeAbortOnboarding = () => {
     dispatch(abortOnboarding());

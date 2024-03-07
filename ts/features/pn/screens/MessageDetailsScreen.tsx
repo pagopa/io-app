@@ -5,13 +5,12 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import { useStore } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageDetails } from "../components/MessageDetails";
@@ -35,7 +34,6 @@ import {
   cancelPaymentStatusTracking,
   startPaymentStatusTracking
 } from "../store/actions";
-import { GlobalState } from "../../../store/reducers/types";
 import { selectedPaymentIdSelector } from "../../messages/store/reducers/payments";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
@@ -94,10 +92,10 @@ export const MessageDetailsScreen = () => {
     }
   });
 
-  const store = useStore();
+  const store = useIOStore();
   useFocusEffect(
     useCallback(() => {
-      const globalState = store.getState() as GlobalState;
+      const globalState = store.getState();
       const selectedPaymentId = selectedPaymentIdSelector(globalState);
       if (selectedPaymentId) {
         dispatch(clearMessagesSelectedPayment());

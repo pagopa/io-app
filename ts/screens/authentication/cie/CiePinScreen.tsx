@@ -15,7 +15,7 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
@@ -53,6 +53,7 @@ import {
   trackLoginCiePinScreen
 } from "../analytics/cieAnalytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { useIOSelector } from "../../../store/hooks";
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   requestNfcEnabledCheck: () => dispatch(nfcIsEnabled.request()),
@@ -172,8 +173,10 @@ const CiePinScreen: React.FC<Props> = props => {
     setAccessibilityFocus(pinPadViewRef, 100 as Millisecond);
   }, [pinPadViewRef]);
 
-  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
-  const useCieUat = useSelector(isCieLoginUatEnabledSelector);
+  const isFastLoginFeatureFlagEnabled = useIOSelector(
+    isFastLoginEnabledSelector
+  );
+  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   return (
     <TopScreenComponent

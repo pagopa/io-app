@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FlatList, View, ScrollView } from "react-native";
-import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Body,
@@ -22,7 +21,7 @@ import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import customVariables from "../../../../theme/variables";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
 import {
   fciPollFilledDocumentErrorSelector,
@@ -46,18 +45,18 @@ const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const [clausesChecked, setClausesChecked] = React.useState(0);
-  const servicePreference = useSelector(servicePreferenceSelector);
-  const qtspClausesSelector = useSelector(fciQtspClausesSelector);
-  const qtspPrivacyTextSelector = useSelector(fciQtspPrivacyTextSelector);
-  const qtspPrivacyUrlSelector = useSelector(fciQtspPrivacyUrlSelector);
-  const isPollFilledDocumentReady = useSelector(
+  const servicePreference = useIOSelector(servicePreferenceSelector);
+  const qtspClausesSelector = useIOSelector(fciQtspClausesSelector);
+  const qtspPrivacyTextSelector = useIOSelector(fciQtspPrivacyTextSelector);
+  const qtspPrivacyUrlSelector = useIOSelector(fciQtspPrivacyUrlSelector);
+  const isPollFilledDocumentReady = useIOSelector(
     fciPollFilledDocumentReadySelector
   );
-  const fciPollFilledDocumentError = useSelector(
+  const fciPollFilledDocumentError = useIOSelector(
     fciPollFilledDocumentErrorSelector
   );
-  const fciServiceId = useSelector(fciMetadataServiceIdSelector);
-  const fciEnvironment = useSelector(fciEnvironmentSelector);
+  const fciServiceId = useIOSelector(fciMetadataServiceIdSelector);
+  const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
   const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
 

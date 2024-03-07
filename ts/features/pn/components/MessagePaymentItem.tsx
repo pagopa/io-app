@@ -2,7 +2,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect } from "react";
 import { View } from "react-native";
-import { useDispatch, useStore } from "react-redux";
 import {
   ModulePaymentNotice,
   PaymentNoticeStatus,
@@ -12,12 +11,11 @@ import I18n from "i18n-js";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { UIMessageId } from "../../messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-import { GlobalState } from "../../../store/reducers/types";
 import {
   paymentStatusForUISelector,
   shouldUpdatePaymentSelector
 } from "../../messages/store/reducers/payments";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { updatePaymentForMessage } from "../../messages/store/actions";
 import { RemoteValue, fold } from "../../../common/model/RemoteValue";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
@@ -152,13 +150,13 @@ export const MessagePaymentItem = ({
   noSpaceOnTop = false,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
-  const dispatch = useDispatch();
-  const store = useStore();
+  const dispatch = useIODispatch();
+  const store = useIOStore();
   const toast = useIOToast();
 
   const paymentId = getRptIdStringFromPayment(payment);
 
-  const globalState = store.getState() as GlobalState;
+  const globalState = store.getState();
   const shouldUpdatePayment = shouldUpdatePaymentSelector(
     globalState,
     messageId,

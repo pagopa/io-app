@@ -1,8 +1,7 @@
+import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
@@ -11,10 +10,10 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -28,7 +27,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  */
 const MissingDeviceBiometricScreen = () => {
   const insets = useSafeAreaInsets();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
 
