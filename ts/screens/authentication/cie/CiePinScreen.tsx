@@ -1,12 +1,6 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useNavigation } from "@react-navigation/native";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   View,
   Keyboard,
@@ -19,16 +13,11 @@ import { connect, useSelector } from "react-redux";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import AdviceComponent from "../../../components/AdviceComponent";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequestAuthenticationOverlay";
 import CiePinpad from "../../../components/CiePinpad";
 import { Link } from "../../../components/core/typography/Link";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import {
-  BottomTopAnimation,
-  LightModalContext
-} from "../../../components/ui/LightModal";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
@@ -91,7 +80,6 @@ const CiePinScreen: React.FC<Props> = props => {
     trackLoginCiePinScreen();
   });
 
-  const { showAnimatedModal, hideModal } = useContext(LightModalContext);
   const navigation =
     useNavigation<
       IOStackNavigationProp<AuthenticationParamsList, "CIE_PIN_SCREEN">
@@ -126,11 +114,16 @@ const CiePinScreen: React.FC<Props> = props => {
     320
   );
 
-  const handleAuthenticationOverlayOnClose = useCallback(() => {
-    setPin("");
-    setAuthUrlGenerated(undefined);
-    navigation.goBack();
-  }, [setPin, setAuthUrlGenerated, navigation]);
+  const handleAuthenticationOverlayOnClose = useCallback(
+    (goBack: boolean = true) => {
+      setPin("");
+      setAuthUrlGenerated(undefined);
+      if (goBack) {
+        navigation.goBack();
+      }
+    },
+    [navigation]
+  );
 
   const { doLoginSuccess } = props;
 
@@ -145,12 +138,11 @@ const CiePinScreen: React.FC<Props> = props => {
           authorizationUri: authUrlGenerated
         });
       }
-      handleAuthenticationOverlayOnClose();
+      handleAuthenticationOverlayOnClose(false);
     }
   }, [
     handleAuthenticationOverlayOnClose,
     authUrlGenerated,
-    hideModal,
     navigation,
     pin,
     doLoginSuccess
@@ -166,13 +158,6 @@ const CiePinScreen: React.FC<Props> = props => {
         onSuccess: setAuthUrlGenerated
       }
     });
-    // showAnimatedModal(
-    //   <CieRequestAuthenticationOverlay
-    //     onClose={handleAuthenticationOverlayOnClose}
-    //     onSuccess={setAuthUrlGenerated}
-    //   />,
-    //   BottomTopAnimation
-    // );
   };
 
   const doSetAccessibilityFocus = useCallback(() => {

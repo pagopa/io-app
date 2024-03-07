@@ -17,6 +17,7 @@ import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { useRoute, Route } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
 import { getIdpLoginUri } from "../../utils/login";
@@ -169,13 +170,17 @@ const CieWebView = (props: CieRequestAuthenticationOverlayParams) => {
     []
   );
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
       onSuccess(internalState.authUrl);
       // reset the state when authUrl has been found
       setInternalState(generateResetState());
+      // dismiss the modal
+      navigation.goBack();
     }
-  }, [internalState.authUrl, onSuccess]);
+  }, [internalState.authUrl, navigation, onSuccess]);
 
   const handleOnShouldStartLoadWithRequest = (
     event: WebViewNavigation
