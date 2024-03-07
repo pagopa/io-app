@@ -174,11 +174,12 @@ const CieWebView = (props: CieRequestAuthenticationOverlayParams) => {
 
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
+      // dismiss the modal
+      navigation.goBack();
+      // call the callback
       onSuccess(internalState.authUrl);
       // reset the state when authUrl has been found
       setInternalState(generateResetState());
-      // dismiss the modal
-      navigation.goBack();
     }
   }, [internalState.authUrl, navigation, onSuccess]);
 
