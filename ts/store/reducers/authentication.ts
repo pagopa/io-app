@@ -210,6 +210,9 @@ export const tokenFromNameSelector = (
       )
   );
 
+export const loggedInIdpSelector = (state: GlobalState) =>
+  isLoggedIn(state.authentication) ? state.authentication.idp : undefined;
+
 export const isLoggedInWithTestIdpSelector = (state: GlobalState) =>
   isLoggedIn(state.authentication) && state.authentication.idp.isTestIdp;
 
