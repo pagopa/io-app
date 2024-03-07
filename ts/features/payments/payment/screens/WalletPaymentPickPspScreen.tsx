@@ -29,7 +29,7 @@ import {
   walletPaymentPickedPspSelector,
   walletPaymentPspListSelector
 } from "../store/selectors";
-import { WalletPaymentPspSortType } from "../types";
+import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentPickPspScreen = () => {
@@ -103,7 +103,9 @@ const WalletPaymentPickPspScreen = () => {
   );
 
   const handleContinue = () => {
-    dispatch(walletPaymentSetCurrentStep(3));
+    dispatch(
+      walletPaymentSetCurrentStep(WalletPaymentStepEnum.CONFIRM_TRANSACTION)
+    );
   };
 
   const sortButtonProps: ListItemHeader["endElement"] = React.useMemo(
