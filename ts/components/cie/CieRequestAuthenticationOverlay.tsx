@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createRef, useEffect } from "react";
-import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
+import { View, Platform, StyleSheet } from "react-native";
 import WebView from "react-native-webview";
 import {
   WebViewErrorEvent,
@@ -22,7 +22,6 @@ import { getIdpLoginUri } from "../../utils/login";
 import { closeInjectedScript } from "../../utils/webview";
 import { IOStyles } from "../core/variables/IOStyles";
 import { withLoadingSpinner } from "../helpers/withLoadingSpinner";
-import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { lollipopKeyTagSelector } from "../../features/lollipop/store/reducers/lollipop";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
@@ -32,6 +31,7 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
 import { selectedIdentityProviderSelector } from "../../store/reducers/authentication";
+import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -307,15 +307,22 @@ const CieWebView = (props: Props) => {
 const ErrorComponent = (
   props: { onRetry: () => void } & Pick<Props, "onClose">
 ) => (
-  <SafeAreaView style={[IOStyles.flex, styles.errorContainer]}>
-    <GenericErrorComponent
-      avoidNavigationEvents={true}
-      onRetry={props.onRetry}
-      onCancel={props.onClose}
-      image={require("../../../img/broken-link.png")} // TODO: use custom or generic image?
-      text={I18n.t("authentication.errors.network.title")} // TODO: use custom or generic text?
+  <View style={[IOStyles.flex, styles.errorContainer]}>
+    <OperationResultScreenContent
+      pictogram="umbrellaNew"
+      title={I18n.t("authentication.errors.network.title")}
+      action={{
+        label: I18n.t("global.buttons.retry"),
+        accessibilityLabel: I18n.t("global.buttons.retry"),
+        onPress: props.onRetry
+      }}
+      secondaryAction={{
+        label: I18n.t("global.buttons.cancel"),
+        accessibilityLabel: I18n.t("global.buttons.cancel"),
+        onPress: props.onClose
+      }}
     />
-  </SafeAreaView>
+  </View>
 );
 
 /**
