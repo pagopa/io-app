@@ -1,11 +1,14 @@
 import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
+import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentCardSmallProps } from "../../../../components/ui/cards/payment/PaymentCardSmall";
 import { PaymentCardsCarousel } from "../../../../components/ui/cards/payment/PaymentCardsCarousel";
 import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
-import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
 
 const loadingCards: Array<PaymentCardSmallProps> = Array.from({
   length: 3
@@ -14,14 +17,14 @@ const loadingCards: Array<PaymentCardSmallProps> = Array.from({
 }));
 
 type PaymentMethodsSectionProps = {
-  methods: ReadonlyArray<WalletInfo>;
   isLoading?: boolean;
 };
 
-const PaymentMethodsSection = ({
-  methods,
-  isLoading
-}: PaymentMethodsSectionProps) => {
+const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
+  const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
+  const isLoadingSection = isLoading || pot.isLoading(paymentMethodsPot);
+  const methods = pot.getOrElse(paymentMethodsPot, []);
+
   const mapMethods = (
     // this function is here to allow future navigation usage
     method: NonNullable<WalletInfo>
@@ -49,7 +52,9 @@ const PaymentMethodsSection = ({
     return undefined;
   };
 
-  const renderMethods = isLoading ? loadingCards : methods.map(mapMethods);
+  const renderMethods = isLoadingSection
+    ? loadingCards
+    : methods.map(mapMethods);
 
   return (
     <View style={IOStyles.horizontalContentPadding}>

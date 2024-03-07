@@ -1,42 +1,55 @@
 import { HeaderFirstLevel, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
+import { createSelector } from "reselect";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletPaymentGetUserWallets } from "../../payment/store/actions/networking";
-import { selectWalletPaymentHistoryArchive } from "../../history/store/selectors";
 import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
-import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
 import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
+import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
+import { walletTransactionHistorySelector } from "../store/selectors";
+import { useTransactionHistory } from "../utils/transactionHistoryHandler";
+
+/* "rendering truth table" for both pots goes as such
+ *          SOME | NONE
+ * LOADING    X  |  X
+ * ERROR      X  |  O
+ * -          X  |  O
+ *
+ * we need to make sure that only in O case we render the empty state
+ */
+const anySectionSomeOrLoading = createSelector(
+  walletPaymentUserWalletsSelector,
+  walletTransactionHistorySelector,
+  (userWallets, transactions) => {
+    const shouldRenderMethods =
+      pot.isSome(userWallets) || pot.isLoading(userWallets);
+    const shouldRenderHistory =
+      pot.isSome(transactions) || pot.isLoading(transactions);
+    return shouldRenderMethods || shouldRenderHistory;
+  }
+);
 
 export const PaymentsHomeScreen = () => {
   const dispatch = useIODispatch();
+  const { loadFirstHistoryPage } = useTransactionHistory();
+  const shouldRenderEmptyState = !useIOSelector(anySectionSomeOrLoading);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      dispatch(walletPaymentGetUserWallets.request());
-    }, [dispatch])
-  );
+  const fetchData = React.useCallback(() => {
+    dispatch(walletPaymentGetUserWallets.request());
+    loadFirstHistoryPage();
+  }, [dispatch, loadFirstHistoryPage]);
+  useFocusEffect(fetchData);
 
-  const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
-  const paymentHistory = useIOSelector(selectWalletPaymentHistoryArchive) ?? [];
+  if (shouldRenderEmptyState) {
+    return <></>;
+  }
 
-  const paymentMethods = pipe(
-    paymentMethodsPot,
-    pot.toOption,
-    O.fold(
-      () => [],
-      methods => methods
-    )
-  );
-
-  // if pot.isSome(cards)|| pot.isSome(history) then load,
   // let the single components handle empty cases.
   //
-  // else if neither is some, render empty page.
+  // else if neither is some/loading, render empty page.
 
   return (
     <>
@@ -50,16 +63,9 @@ export const PaymentsHomeScreen = () => {
         }}
       />
       <VSpacer size={24} />
-
-      {paymentMethods.length !== 0 && ( // will be handled by component in next PR
-        <PaymentMethodsSection methods={paymentMethods} />
-      )}
-
+      <PaymentMethodsSection />
       <VSpacer size={24} />
-
-      {paymentHistory.length !== 0 && ( // will be handled by component in next PR
-        <PaymentHistorySection history={paymentHistory} />
-      )}
+      <PaymentHistorySection />
     </>
   );
 };

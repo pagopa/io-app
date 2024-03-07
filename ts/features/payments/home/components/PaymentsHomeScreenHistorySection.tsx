@@ -4,53 +4,34 @@ import {
   ListItemHeader,
   ListItemTransaction
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { View } from "react-native";
 import I18n from "../../../../i18n";
-import {
-  formatDateOrDefault,
-  formatNumberCurrencyCentsOrDefault
-} from "../../../idpay/common/utils/strings";
-import { PaymentHistory } from "../../history/types";
+import { useIOSelector } from "../../../../store/hooks";
+import { walletTransactionHistorySelector } from "../store/selectors";
+import { getHistoryList } from "./PaymentsHomeScreenHistoryList";
 
-const loadingHistory = Array.from({ length: 5 }).map((_, index) => (
-  <ListItemTransaction
-    isLoading={true}
-    key={index}
-    transactionStatus="success"
-    transactionAmount=""
-    title=""
-    subtitle=""
-  />
-));
-
-const mapHistoryToItems = (history: ReadonlyArray<PaymentHistory>) =>
-  history.map((item: PaymentHistory, index) => (
+const getLoadingHistory = () =>
+  Array.from({ length: 5 }).map((_, index) => (
     <ListItemTransaction
+      isLoading={true}
       key={index}
-      title={item.verifiedData?.paName ?? ""}
-      transactionAmount={formatNumberCurrencyCentsOrDefault(
-        item.verifiedData?.amount,
-        "-"
-      )}
-      subtitle={formatDateOrDefault(item.startedAt, "-", "DD MMM YYYY, hh:mm")}
-      transactionStatus={"success"}
+      transactionStatus="success"
+      transactionAmount=""
+      title=""
+      subtitle=""
     />
   ));
 
-type PaymentHistorySectionProps = {
-  history: ReadonlyArray<PaymentHistory>;
-  isLoading?: boolean;
-};
-const PaymentHistorySection = ({
-  history,
-  isLoading
-}: PaymentHistorySectionProps) => {
-  const historyRenderElements = isLoading
-    ? loadingHistory
-    : mapHistoryToItems(history);
+const PaymentHistorySection = () => {
+  const historyPot = useIOSelector(walletTransactionHistorySelector);
+  const renderItems = pot.isLoading(historyPot)
+    ? getLoadingHistory()
+    : getHistoryList(pot.getOrElse(historyPot, {}));
 
   return (
+    // full pages history loading will be handled by history details page
     <>
       <View style={IOStyles.horizontalContentPadding}>
         <ListItemHeader
@@ -76,7 +57,7 @@ const PaymentHistorySection = ({
           iconPosition: "end"
         }}
       >
-        {historyRenderElements}
+        {renderItems}
       </GradientScrollView>
     </>
   );

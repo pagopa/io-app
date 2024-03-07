@@ -931,6 +931,9 @@ payment:
     historySection:
      header: Storico operazioni
      headerCTA: Vedi tutte
+     transactionStatusBadges:
+      failure: "FALLITA"
+      success: ""
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app

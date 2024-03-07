@@ -931,6 +931,9 @@ payment:
     historySection:
      header: Transaction history
      headerCTA: View all
+     transactionStatusBadges:
+      failure: "FALLITA"
+      success: ""
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
