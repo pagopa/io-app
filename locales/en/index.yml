@@ -249,7 +249,7 @@ permissionRationale:
     title: "Allow camera access"
     message: "We require camera permissions to use the torch on the back of your phone."
 startup:
-  title: Initialization
+  title: We are getting ready for your experience on IO
   authentication: User authenticated
   sessionInfo: SPID attributes loaded
   profileInfo: User profile loaded
@@ -558,7 +558,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: For security reasons, after {{days}} days from the last login with SPID or CIE, we ask you to sign in again to use IO.
+      body: For security reasons, we ask you to log in with SPID or CIE every {{days}} days or if you log out
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -577,6 +577,7 @@ authentication:
     loginSpidCie: Login with SPID or CIE
     infoSpidCie: Introduction to SPID and CIE
     loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
+    privacyLink: Privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
     card1-title: All messages in one place
@@ -584,12 +585,10 @@ authentication:
     card2-title: Use your favourite payment methods
     card2-content: You can pay a tax or a penalty by your bank account and your cards
     card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice
-    card4-title: You can login only with SPID
-    card4-content: The device you are using does not support access with Electronic Identity Card (CIE)
-    card5-title: Welcome to the public version of IO!
-    card5-content: In this version you can find in the upper-right corner the icons to report bugs or start a chat with the development team. We're waiting for your feedback!
-    card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card3-content: You can pay a notice also by scanning the QR code on the physical notice    
+    card5-title: Welcome to IO!
+    card5-content: What can you do?
+    card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
@@ -706,6 +705,8 @@ authentication:
     recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
+  idp_login_success:
+    contentTitle: Hi, {{name}}!
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -1930,6 +1931,13 @@ messageDetails:
   bottomSheet:
     title: "What's a dynamic message?"
     body: "It's a message that the sender can edit after you've received it. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in specific cases. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
+  footer:
+    contact: "Contact the sender"
+    showMoreData: "Show more data"
+  showMoreDataBottomSheet:
+    title: "Identification data"
+    messageId: "Message ID"
+    messageIdAccessibility: "ID messaggio, copy"
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
