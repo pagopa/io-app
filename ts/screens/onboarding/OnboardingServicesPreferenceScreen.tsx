@@ -172,6 +172,7 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
         title={{
           label: I18n.t("services.optIn.preferences.title")
         }}
+        canGoback={false}
         description={I18n.t("services.optIn.preferences.body")}
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}

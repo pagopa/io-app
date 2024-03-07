@@ -35,6 +35,7 @@ type Props = {
   description?: string;
   goBack?: BackProps["goBack"];
   headerActionsProp?: HeaderActionProps;
+  canGoback?: boolean;
 } & SupportRequestParams;
 
 /**
@@ -49,12 +50,14 @@ type Props = {
  * @param contextualHelpMarkdown
  * @param faqCategories
  * @param headerProps
+ * @param canGoback allows to show/not show the back button and consequently does not pass to the HeaderSecondLevel the props that would display the back button
  */
 export const RNavScreenWithLargeHeader = ({
   children,
   fixedBottomSlot,
   title,
   goBack,
+  canGoback = true,
   description,
   contextualHelp,
   contextualHelpMarkdown,
@@ -76,9 +79,7 @@ export const RNavScreenWithLargeHeader = ({
     translationY.value = event.contentOffset.y;
   });
 
-  const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps({
-    backAccessibilityLabel: I18n.t("global.buttons.back"),
-    goBack: goBack ?? navigation.goBack,
+  const headerPropsWithoutGoBack = {
     title: title.label,
     scrollValues: {
       contentOffsetY: translationY,
@@ -88,7 +89,17 @@ export const RNavScreenWithLargeHeader = ({
     contextualHelpMarkdown,
     faqCategories,
     ...headerActionsProp
-  });
+  };
+
+  const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps(
+    canGoback
+      ? {
+          backAccessibilityLabel: I18n.t("global.buttons.back"),
+          goBack: goBack ?? navigation.goBack,
+          ...headerPropsWithoutGoBack
+        }
+      : headerPropsWithoutGoBack
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
