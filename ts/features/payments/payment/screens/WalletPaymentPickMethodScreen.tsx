@@ -51,6 +51,7 @@ import {
   walletPaymentUserWalletsSelector
 } from "../store/selectors";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import { WalletPaymentStepEnum } from "../types";
 
 type SavedMethodState = {
   kind: "saved";
@@ -125,9 +126,13 @@ const WalletPaymentPickMethodScreen = () => {
       pot.toOption,
       O.map(pspList => {
         if (pspList.length > 1) {
-          dispatch(walletPaymentSetCurrentStep(2));
+          dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));
         } else if (pspList.length >= 1) {
-          dispatch(walletPaymentSetCurrentStep(3));
+          dispatch(
+            walletPaymentSetCurrentStep(
+              WalletPaymentStepEnum.CONFIRM_TRANSACTION
+            )
+          );
         }
       })
     );
