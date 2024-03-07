@@ -93,6 +93,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
         Array [
           Object {
             "borderColor": "rgba(14,15,19,0.1)",
+            "borderCurve": "continuous",
             "borderWidth": 1,
             "overflow": "hidden",
             "resizeMode": "contain",

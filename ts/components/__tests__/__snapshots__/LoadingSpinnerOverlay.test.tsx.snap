@@ -303,6 +303,8 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
             }
           >
             <Text
+              accessibilityElementsHidden={true}
+              accessible={false}
               allowFontScaling={false}
               ellipsizeMode="tail"
               importantForAccessibility="no-hide-descendants"

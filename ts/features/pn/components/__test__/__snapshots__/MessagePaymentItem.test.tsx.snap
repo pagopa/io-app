@@ -334,6 +334,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
                               "borderColor": "#E8EBF1",
+                              "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
                               "flexDirection": "row",
@@ -797,6 +798,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -1354,6 +1356,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -1464,6 +1467,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
