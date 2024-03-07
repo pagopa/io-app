@@ -1,13 +1,15 @@
 import React from "react";
 import { Linking } from "react-native";
 import { Body, ListItemAction, VSpacer } from "@pagopa/io-app-design-system";
-import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
-import I18n from "../../../i18n";
+import I18n from "../../../../i18n";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 
-export const useMessageContactsBottomSheet = (
-  email?: string,
-  phone?: string
-) => {
+type ContactsListItemProps = {
+  email?: string;
+  phone?: string;
+};
+
+export const ContactsListItem = ({ email, phone }: ContactsListItemProps) => {
   const { present, bottomSheet } = useIOBottomSheetAutoresizableModal(
     {
       component: (
@@ -45,8 +47,17 @@ export const useMessageContactsBottomSheet = (
     100
   );
 
-  return {
-    bottomSheet,
-    present
-  };
+  return (
+    <>
+      <ListItemAction
+        accessibilityLabel={I18n.t("messageDetails.footer.contacts")}
+        icon="message"
+        label={I18n.t("messageDetails.footer.contacts")}
+        onPress={present}
+        testID="contacts-action"
+        variant="primary"
+      />
+      {bottomSheet}
+    </>
+  );
 };
