@@ -705,6 +705,8 @@ authentication:
     dualRecoverDescription: Se hai dimenticato le tue credenziali, ti consigliamo di procedere cliccando sui bottoni qui di seguito.
     recoverUsername: Recupera il nome utente
     recoverPassword: Recupera la password
+  idp_login_success:
+    contentTitle: Ciao {{name}}!
   errors:
     notoken: La sessione non è pronta o non è valida
     logout: Errore nel logout
