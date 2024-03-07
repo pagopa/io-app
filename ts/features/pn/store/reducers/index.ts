@@ -9,16 +9,13 @@ import { toPNMessage } from "../types/transformers";
 import { UIMessageId } from "../../../messages/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
-import { MultiplePaymentState, paymentsReducer } from "./payments";
 
 export type PnState = {
   activation: PnActivationState;
-  payments: MultiplePaymentState;
 };
 
 export const pnReducer = combineReducers<PnState, Action>({
-  activation: pnActivationReducer,
-  payments: paymentsReducer
+  activation: pnActivationReducer
 });
 
 export const pnMessageFromIdSelector = createSelector(
