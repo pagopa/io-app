@@ -17,9 +17,7 @@ describe("Given the OnboardingCompletedScreen", () => {
   describe("when the user taps on the continue button", () => {
     it("then the completeOnboarding action is dispatched", () => {
       const { screen, store } = renderComponent();
-      const continueButton = screen.queryByText(
-        I18n.t("global.buttons.continue")
-      );
+      const continueButton = screen.queryByText(I18n.t("global.buttons.close"));
       expect(continueButton).toBeTruthy();
       if (continueButton) {
         fireEvent.press(continueButton);
