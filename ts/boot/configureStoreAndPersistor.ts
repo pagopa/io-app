@@ -433,7 +433,10 @@ const sagaMiddleware = createSagaMiddleware(
   RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
 );
 
-function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
+function configureStoreAndPersistor(): {
+  store: Store<GlobalState, Action>;
+  persistor: Persistor;
+} {
   /**
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.

@@ -125,6 +125,7 @@ const idpAuthSession = (
     )
   );
 
+// This page is used in the native login process.
 export const AuthSessionPage = () => {
   const [requestInfo, setRequestInfo] = useState<RequestInfo>({
     requestState: "LOADING",
