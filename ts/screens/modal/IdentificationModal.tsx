@@ -25,7 +25,10 @@ import {
   identificationSuccess
 } from "../../store/actions/identification";
 import { useIOSelector } from "../../store/hooks";
-import { progressSelector } from "../../store/reducers/identification";
+import {
+  identificationFailSelector,
+  progressSelector
+} from "../../store/reducers/identification";
 import { useBiometricType } from "../../utils/hooks/useBiometricType";
 import { profileNameSelector } from "../../store/reducers/profile";
 
@@ -35,7 +38,14 @@ const VERTICAL_PADDING = 16;
 // Avoid the modal to be dismissed by the user
 const onRequestCloseHandler = () => undefined;
 
-const getInstructions = (biometricType: BiometricsValidType | undefined) => {
+const getInstructions = (
+  biometricType: BiometricsValidType | undefined,
+  isBimoetricIdentificatoinFailed: boolean = false
+) => {
+  if (isBimoetricIdentificatoinFailed) {
+    return I18n.t("identification.subtitleCode");
+  }
+
   switch (biometricType) {
     case "BIOMETRICS":
       return I18n.t("identification.subtitleCodeFingerprint");
@@ -61,6 +71,7 @@ const IdentificationModal = () => {
   );
 
   const identificationProgressState = useIOSelector(progressSelector);
+  const identificationFailState = useIOSelector(identificationFailSelector);
   const name = useIOSelector(profileNameSelector);
   const biometricType = useBiometricType();
 
