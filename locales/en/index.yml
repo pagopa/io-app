@@ -705,6 +705,8 @@ authentication:
     recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
+  idp_login_success:
+    contentTitle: Hi, {{name}}!
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -1742,7 +1744,7 @@ wallet:
         subtitle: Per maggiori informazioni, contatta la tua banca.
       CANCELED_BY_USER:
         title: L’operazione è stata annullata
-        subtitle: Non è stato addebitato alcun importo.
+        subtitle: Se vuoi pagare l’avviso, attendi qualche minuto prima di riprovare.
       EXCESSIVE_AMOUNT:
         title: Autorizzazione negata
         subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
