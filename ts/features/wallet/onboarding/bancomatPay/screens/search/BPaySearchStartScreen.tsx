@@ -1,25 +1,23 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { withLightModalContext } from "../../../../../../components/helpers/withLightModalContext";
-import { LightModalContextInterface } from "../../../../../../components/ui/LightModal";
+import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
+import { LightModalContext } from "../../../../../../components/ui/LightModal";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import TosBonusComponent from "../../../../../bonus/common/components/TosBonusComponent";
-import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
-import { abiSelector } from "../../../store/abi";
 import SearchStartScreen from "../../../common/searchBank/SearchStartScreen";
+import { abiSelector } from "../../../store/abi";
+import {
+  navigateToOnboardingBPayChooseBank,
+  navigateToOnboardingBPaySearchAvailableUserAccount
+} from "../../navigation/action";
 import {
   searchUserBPay,
   walletAddBPayBack,
   walletAddBPayCancel
 } from "../../store/actions";
-import {
-  navigateToOnboardingBPayChooseBank,
-  navigateToOnboardingBPaySearchAvailableUserAccount
-} from "../../navigation/action";
 
-type Props = LightModalContextInterface &
-  ReturnType<typeof mapStateToProps> &
+type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const tos_url = "https://io.italia.it/app-content/privacy_bpay.html";
@@ -31,10 +29,10 @@ const tos_url = "https://io.italia.it/app-content/privacy_bpay.html";
 const BPaySearchStartScreen: React.FunctionComponent<Props> = (
   props: Props
 ) => {
+  const { showModal, hideModal } = React.useContext(LightModalContext);
+
   const openTosModal = () => {
-    props.showModal(
-      <TosBonusComponent tos_url={tos_url} onClose={props.hideModal} />
-    );
+    showModal(<TosBonusComponent tos_url={tos_url} onClose={hideModal} />);
   };
 
   return (
@@ -65,6 +63,7 @@ const mapStateToProps = (state: GlobalState) => ({
   isError: isError(abiSelector(state))
 });
 
-export default withLightModalContext(
-  connect(mapStateToProps, mapDispatchToProps)(BPaySearchStartScreen)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BPaySearchStartScreen);
