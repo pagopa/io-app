@@ -16,12 +16,10 @@ import {
   Alert,
   ColorSchemeName,
   Modal,
-  Platform,
-  StatusBar,
   View,
   useWindowDimensions
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import I18n from "../../i18n";
@@ -34,6 +32,7 @@ import { useIOSelector } from "../../store/hooks";
 import { progressSelector } from "../../store/reducers/identification";
 
 const PIN_LENGTH = 6;
+const VERTICAL_PADDING = 16;
 
 // Avoid the modal to be dismissed by the user
 const onRequestCloseHandler = () => undefined;
@@ -54,8 +53,6 @@ const IdentificationModal = () => {
   const dispatch = useDispatch();
   const onIdentificationCancel = () => dispatch(identificationCancel());
   const onIdentificationSuccess = () => dispatch(identificationSuccess());
-
-  const inset = useSafeAreaInsets();
 
   const onValueChange = (v: string) => {
     if (v.length <= PIN_LENGTH) {
@@ -80,27 +77,22 @@ const IdentificationModal = () => {
     return false;
   };
 
-  const topInset =
-    inset.top +
-    8 +
-    (Platform.OS === "android" ? StatusBar.currentHeight ?? 40 : 0);
-
   return (
     <Modal
       statusBarTranslucent
       transparent
       onRequestClose={onRequestCloseHandler}
     >
-      <View style={{ flexGrow: 1, backgroundColor: blueColor }}>
+      <SafeAreaView style={{ flexGrow: 1, backgroundColor: blueColor }}>
         <View
           style={{
             zIndex: 100,
             flexGrow: 1,
-            alignItems: "flex-end",
-            top: topInset
+            alignItems: "flex-end"
           }}
         >
           <ContentWrapper>
+            <VSpacer size={VERTICAL_PADDING} />
             <IconButton
               icon={"closeLarge"}
               color="contrast"
@@ -114,7 +106,7 @@ const IdentificationModal = () => {
         </View>
         <ScrollView
           centerContent={true}
-          contentContainerStyle={{ flexGrow: 1, paddingBottom: topInset }}
+          contentContainerStyle={{ flexGrow: 1 }}
         >
           <ContentWrapper>
             <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -166,11 +158,12 @@ const IdentificationModal = () => {
                   label={"Hai dimenticato il codice di sblocco?"}
                   onPress={() => Alert.alert("Forgot unlock code")}
                 />
+                <VSpacer size={VERTICAL_PADDING} />
               </View>
             </View>
           </ContentWrapper>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 };
