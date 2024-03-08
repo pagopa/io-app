@@ -10,15 +10,11 @@ import {
   IconButton,
   ContentWrapper,
   ButtonLink,
-  IOStyles
+  IOStyles,
+  BiometricsValidType,
+  IOPictograms
 } from "@pagopa/io-app-design-system";
-import {
-  Alert,
-  ColorSchemeName,
-  Modal,
-  View,
-  useWindowDimensions
-} from "react-native";
+import { Alert, ColorSchemeName, Modal, View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
@@ -30,6 +26,8 @@ import {
 } from "../../store/actions/identification";
 import { useIOSelector } from "../../store/hooks";
 import { progressSelector } from "../../store/reducers/identification";
+import { useBiometricType } from "../../utils/hooks/useBiometricType";
+import { profileNameSelector } from "../../store/reducers/profile";
 
 const PIN_LENGTH = 6;
 const VERTICAL_PADDING = 16;
@@ -37,7 +35,21 @@ const VERTICAL_PADDING = 16;
 // Avoid the modal to be dismissed by the user
 const onRequestCloseHandler = () => undefined;
 
+const getInstructions = (biometricType: BiometricsValidType | undefined) => {
+  switch (biometricType) {
+    case "BIOMETRICS":
+      return I18n.t("identification.subtitleCodeFingerprint");
+    case "FACE_ID":
+      return I18n.t("identification.subtitleCodeFaceId");
+    case "TOUCH_ID":
+      return I18n.t("identification.subtitleCodeFingerprint");
+    default:
+      return I18n.t("identification.subtitleCode");
+  }
+};
+
 const IdentificationModal = () => {
+  console.log("Refreshing IdentificationModal 🔁");
   const [value, setValue] = React.useState("");
   // TODO: forced new blue until we have a proper color mapping on the design system
   const isDesignSystemEnabled = true; // useIOSelector(isDesignSystemEnabledSelector);
@@ -49,6 +61,23 @@ const IdentificationModal = () => {
   );
 
   const identificationProgressState = useIOSelector(progressSelector);
+  const name = useIOSelector(profileNameSelector);
+  const biometricType = useBiometricType();
+
+  const biometricsConfig = biometricType
+    ? {
+        biometricType,
+        biometricAccessibilityLabel: "Face ID",
+        onBiometricPress: () => Alert.alert("biometric")
+      }
+    : {};
+
+  const instructions = getInstructions(biometricType);
+  const forgotCodeLabel = `${I18n.t(
+    "identification.unlockCode.reset.button"
+  )} ${I18n.t("identification.unlockCode.reset.code")}?`;
+  const closeButtonLabel = I18n.t("global.buttons.close");
+  const nameLabel = name ? I18n.t("identification.title", { name }) : "";
 
   const dispatch = useDispatch();
   const onIdentificationCancel = () => dispatch(identificationCancel());
@@ -60,22 +89,21 @@ const IdentificationModal = () => {
     }
   };
 
-  const windowDimentions = useWindowDimensions();
-
   if (identificationProgressState.kind !== "started") {
     return null;
   }
 
-  const { pin } = identificationProgressState;
+  const { pin, isValidatingTask } = identificationProgressState;
 
   const onPinValidated = (v: string) => {
     if (v === pin) {
-      console.log("pin validated 👍");
       onIdentificationSuccess();
       return true;
     }
     return false;
   };
+
+  const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
   return (
     <Modal
@@ -83,52 +111,45 @@ const IdentificationModal = () => {
       transparent
       onRequestClose={onRequestCloseHandler}
     >
-      <SafeAreaView style={{ flexGrow: 1, backgroundColor: blueColor }}>
-        <View
-          style={{
-            zIndex: 100,
-            flexGrow: 1,
-            alignItems: "flex-end"
-          }}
-        >
-          <ContentWrapper>
-            <VSpacer size={VERTICAL_PADDING} />
-            <IconButton
-              icon={"closeLarge"}
-              color="contrast"
-              onPress={() => {
-                console.log("cancel 👈");
-                onIdentificationCancel();
-              }}
-              accessibilityLabel={"backAccessibilityLabel"}
-            />
-          </ContentWrapper>
-        </View>
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: blueColor }]}>
+        {isValidatingTask && (
+          <View style={styles.closeButton}>
+            <ContentWrapper>
+              <VSpacer size={VERTICAL_PADDING} />
+              <IconButton
+                icon={"closeLarge"}
+                color="contrast"
+                onPress={() => {
+                  onIdentificationCancel();
+                }}
+                accessibilityLabel={closeButtonLabel}
+              />
+            </ContentWrapper>
+          </View>
+        )}
         <ScrollView
           centerContent={true}
-          contentContainerStyle={{ flexGrow: 1 }}
+          contentContainerStyle={[
+            styles.scrollViewContentContainer,
+            {
+              justifyContent: isValidatingTask ? undefined : "center"
+            }
+          ]}
         >
           <ContentWrapper>
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
+            <View style={IOStyles.alignCenter}>
               <VSpacer size={16} />
-              <Pictogram name="key" size={64} />
+              <Pictogram name={pictogramKey} size={64} />
               <VSpacer size={8} />
-              <H2 color={"white"}>Ciao {`{name}`},</H2>
+              <H2 color={"white"}>{nameLabel}</H2>
               <VSpacer size={8} />
-              <Body color={"white"}>
-                {"per accedere usa il volto o il codice di sblocco"}
+              <Body accessibilityLabel={instructions} color={"white"}>
+                {instructions}
               </Body>
             </View>
             <VSpacer size={32} />
-            <View style={{ alignItems: "center" }}>
-              <View
-                style={{
-                  position: "absolute",
-                  alignItems: "center",
-                  opacity: 0.5,
-                  bottom: -32
-                }}
-              >
+            <View style={IOStyles.alignCenter}>
+              <View style={styles.smallPinLabel}>
                 <LabelSmallAlt color={"white"}>{value}</LabelSmallAlt>
               </View>
               <CodeInput
@@ -146,16 +167,14 @@ const IdentificationModal = () => {
                 deleteAccessibilityLabel="Delete"
                 onValueChange={onValueChange}
                 variant={"dark"}
-                biometricType="FACE_ID"
-                biometricAccessibilityLabel="Face ID"
-                onBiometricPress={() => Alert.alert("biometric")}
+                {...biometricsConfig}
               />
               <VSpacer size={32} />
               <View style={IOStyles.selfCenter}>
                 <ButtonLink
-                  accessibilityLabel={"Hai dimenticato il codice di sblocco?"}
+                  accessibilityLabel={forgotCodeLabel}
                   color="contrast"
-                  label={"Hai dimenticato il codice di sblocco?"}
+                  label={forgotCodeLabel}
                   onPress={() => Alert.alert("Forgot unlock code")}
                 />
                 <VSpacer size={VERTICAL_PADDING} />
@@ -167,5 +186,23 @@ const IdentificationModal = () => {
     </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  safeArea: { flexGrow: 1 },
+  closeButton: {
+    zIndex: 100,
+    flexGrow: 1,
+    alignItems: "flex-end"
+  },
+  scrollViewContentContainer: {
+    flexGrow: 1
+  },
+  smallPinLabel: {
+    position: "absolute",
+    alignItems: "center",
+    opacity: 0.5,
+    bottom: -32
+  }
+});
 
 export default IdentificationModal;

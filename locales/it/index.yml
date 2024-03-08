@@ -2070,7 +2070,7 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  title: Ciao!
+  title: Ciao {{name}}!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
   logout: Esci

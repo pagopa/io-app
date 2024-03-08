@@ -1996,7 +1996,7 @@ serviceDetail:
   disabled: "deaktiviert"
   notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
-  title: "Hallo!"
+  title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
   titleValidation: "Bestätige den Vorgang"
   logout: "Abmelden"
