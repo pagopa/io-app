@@ -7,7 +7,7 @@ import { combineReducers } from "redux";
 import { Action } from "../../../../store/actions/types";
 
 import allPaginatedReducer, { AllPaginated } from "./allPaginated";
-import detailsByIdReducer, { DetailsById } from "./detailsById";
+import { DetailsById, detailsByIdReducer } from "./detailsById";
 import paginatedByIdReducer, { PaginatedById } from "./paginatedById";
 import { thirdPartyByIdReducer, ThirdPartyById } from "./thirdPartyById";
 import { Downloads, downloadsReducer } from "./downloads";
