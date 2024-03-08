@@ -12,7 +12,6 @@ import { CreatedMessageWithContentAndAttachments } from "../../../../definitions
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/backend/ServiceMetadata";
-import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { Locales } from "../../../../locales/locales";
 import {
   deriveCustomHandledLink,
@@ -70,7 +69,7 @@ export function messageNeedsCTABar(
 export const handleCtaAction = (
   cta: CTA,
   linkTo: (path: string) => void,
-  service?: ServicePublic
+  serviceId?: ServiceId
 ) => {
   if (isIoInternalLink(cta.action)) {
     const convertedLink = getInternalRoute(cta.action);
@@ -79,9 +78,7 @@ export const handleCtaAction = (
     if (cta.action.indexOf(ROUTES.SERVICE_WEBVIEW) !== -1) {
       handleInternalLink(
         linkTo,
-        `${convertedLink}${
-          service ? "&serviceId=" + (service.service_id as string) : ""
-        }`
+        `${convertedLink}${serviceId ? "&serviceId=" + serviceId : ""}`
       );
       return;
     }
@@ -213,7 +210,7 @@ export const getRemoteLocale = (): Extract<Locales, MessageCTALocales> =>
     E.getOrElseW(() => localeFallback.locale)
   );
 
-const extractCTA = (
+const extractCTAs = (
   text: string,
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
@@ -222,24 +219,25 @@ const extractCTA = (
     text,
     FM.test,
     O.fromPredicate(identity),
-    O.chainNullableK(() => {
-      try {
-        return FM<MessageCTA>(text).attributes;
-      } catch (e) {
-        trackMessageCTAFrontMatterDecodingError(serviceId);
-        return null;
-      }
-    }),
-    O.chain(attrs =>
+    O.chain(() =>
       pipe(
-        attrs[getRemoteLocale()],
+        E.tryCatch(() => FM<MessageCTA>(text).attributes, E.toError),
+        E.mapLeft(() => trackMessageCTAFrontMatterDecodingError(serviceId)),
+        O.fromEither
+      )
+    ),
+    O.chain(attributes =>
+      pipe(
+        attributes[getRemoteLocale()],
         CTAS.decode,
-        E.fold(
-          _ => O.none,
+        O.fromEither,
+        O.chain(ctas => {
           // check if the decoded actions are valid
-          cta =>
-            hasCtaValidActions(cta, serviceMetadata) ? O.some(cta) : O.none
-        )
+          if (hasCtaValidActions(ctas, serviceMetadata)) {
+            return O.some(ctas);
+          }
+          return O.none;
+        })
       )
     )
   );
@@ -255,7 +253,7 @@ export const getMessageCTA = (
   markdown: MessageBodyMarkdown | string,
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
-): O.Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
+): O.Option<CTAS> => extractCTAs(markdown, serviceMetadata, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
@@ -268,7 +266,7 @@ export const getServiceCTA = (
   pipe(
     serviceMetadata?.cta,
     O.fromNullable,
-    O.chain(cta => extractCTA(cta, serviceMetadata))
+    O.chain(cta => extractCTAs(cta, serviceMetadata))
   );
 
 /**

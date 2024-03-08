@@ -24,6 +24,7 @@ import { trackPNPaymentStart } from "../analytics";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { setMessagesSelectedPayment } from "../../messages/store/actions";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -39,7 +40,7 @@ export type PNOptInMessageInfo = {
   cta2HasServiceNavigationLink: boolean;
 };
 
-export const isPNOptInMessage = (
+export const legacyIsPNOptInMessage = (
   maybeCtas: O.Option<CTAS>,
   service: UIService | undefined,
   state: GlobalState
@@ -66,25 +67,28 @@ export const isPNOptInMessage = (
           cta2HasServiceNavigationLink:
             !!ctas.cta_2 && isServiceDetailNavigationLink(ctas.cta_2.action)
         })),
-        O.map(
-          ctaNavigationLinkInfo =>
-            ({
-              isPNOptInMessage:
-                ctaNavigationLinkInfo.cta1HasServiceNavigationLink ||
-                ctaNavigationLinkInfo.cta2HasServiceNavigationLink,
-              ...ctaNavigationLinkInfo
-            } as PNOptInMessageInfo)
-        )
+        O.map(ctaNavigationLinkInfo => ({
+          isPNOptInMessage:
+            ctaNavigationLinkInfo.cta1HasServiceNavigationLink ||
+            ctaNavigationLinkInfo.cta2HasServiceNavigationLink,
+          ...ctaNavigationLinkInfo
+        }))
       )
     ),
-    O.getOrElse(
-      () =>
-        ({
-          isPNOptInMessage: false,
-          cta1HasServiceNavigationLink: false,
-          cta2HasServiceNavigationLink: false
-        } as PNOptInMessageInfo)
-    )
+    O.getOrElse<PNOptInMessageInfo>(() => ({
+      isPNOptInMessage: false,
+      cta1HasServiceNavigationLink: false,
+      cta2HasServiceNavigationLink: false
+    }))
+  );
+
+export const isPNOptInMessage = (serviceId: ServiceId, state: GlobalState) =>
+  pipe(
+    state.backendStatus.status,
+    O.map(
+      backendStatus => backendStatus.config.pn.optInServiceId === serviceId
+    ),
+    O.getOrElse(() => false)
   );
 
 export const paymentsFromPNMessagePot = (

@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { isPNOptInMessage } from "..";
+import { legacyIsPNOptInMessage } from "..";
 import { UIService } from "../../../../store/reducers/entities/services/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../messages/types/MessageCTA";
@@ -262,7 +262,7 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
 describe("isPNOptInMessage", () => {
   isPNOptInMessageTestInput.forEach(testData => {
     it(testData.testDescription, () => {
-      const isPNOptInMessageInfo = isPNOptInMessage(
+      const isPNOptInMessageInfo = legacyIsPNOptInMessage(
         testData.input.CTAs,
         testData.input.service,
         testData.input.state

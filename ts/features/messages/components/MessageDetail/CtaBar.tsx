@@ -17,7 +17,7 @@ import {
 } from "../../utils/messages";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import ExtractedCTABar from "../../../../components/cta/ExtractedCTABar";
-import { isPNOptInMessage } from "../../../pn/utils";
+import { legacyIsPNOptInMessage } from "../../../pn/utils";
 import {
   trackPNOptInMessageCTADisplaySuccess,
   trackPNOptInMessageOpened
@@ -98,7 +98,11 @@ const CtaBar = ({
     service?.id as ServiceId
   );
   const state = store.getState();
-  const isPNOptInMessageInfo = isPNOptInMessage(maybeCtas, service, state);
+  const isPNOptInMessageInfo = legacyIsPNOptInMessage(
+    maybeCtas,
+    service,
+    state
+  );
   const isPNOptIn = isPNOptInMessageInfo.isPNOptInMessage;
 
   useEffect(() => {
