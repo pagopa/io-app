@@ -789,17 +789,18 @@ email:
   newinsert:
     header: "Configure IO"
     title: "What is your email address?"
-    subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
+    subtitle: Servirà a inviarti comunicazioni come ricevute di pagamento o messaggi di assistenza.
     label: "Personal email address"
     alert:
-      title: "The email address {{email}} associated with your SPID identity is already in use on IO. Please enter a different one."
-      description: "email address already in use"
-      modaltitle: "This email address is already in use"
+      title: "{{email}} è già in uso, inseriscine un’altra."
+      description: email address already in use
+      invalidemail: Inserisci un indirizzo email valido
+      modaltitle: This email address is already in use
       modaldescription: "This can happen if you share the same address with a family member"
-      modalbutton: "Use another email address"
+      modalbutton: Use another email address
   edit:
     title: Edit email
-    subtitle: The email you inserted is
+    subtitle: Ora stai usando
     validated: The email you inserted and validated is
     label: New personal email address
     cta: Edit email

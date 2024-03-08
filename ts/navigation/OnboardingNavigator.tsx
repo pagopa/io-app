@@ -78,7 +78,7 @@ const OnboardingNavigator = () => {
       />
       {isEmailUniquenessValidationEnabled ? (
         <Stack.Screen
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
           name={ROUTES.ONBOARDING_READ_EMAIL_SCREEN}
           component={CduEmailInsertScreen}
         />

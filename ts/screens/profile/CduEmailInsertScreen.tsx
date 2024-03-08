@@ -4,35 +4,26 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content, Form } from "native-base";
 import React, {
   useCallback,
   useEffect,
   useMemo,
   useState,
-  useContext,
-  createRef
+  useContext
 } from "react";
 import validator from "validator";
-import { Alert, Keyboard, SafeAreaView, StyleSheet, View } from "react-native";
+import { Alert, Keyboard } from "react-native";
 import {
-  IOColors,
-  Icon,
-  LabelSmall,
   VSpacer,
-  Alert as AlertComponent,
-  FooterWithButtons
+  H1,
+  TextInputValidation,
+  GradientScrollView
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
-import { H1 } from "../../components/core/typography/H1";
-import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { profileUpsert } from "../../store/actions/profile";
@@ -45,10 +36,8 @@ import {
   profileSelector
 } from "../../store/reducers/profile";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import { withKeyboard } from "../../utils/keyboard";
 import { areStringsEqual } from "../../utils/options";
 import { Body } from "../../components/core/typography/Body";
-import { IOStyles } from "../../components/core/variables/IOStyles";
 import { LightModalContext } from "../../components/ui/LightModal";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
@@ -59,18 +48,14 @@ import {
 } from "../analytics/emailAnalytics";
 import { getFlowType } from "../../utils/analytics";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
-import { emailAcknowledged } from "../../store/actions/onboarding";
-import { showToast } from "../../utils/showToast";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
+import { IOToast } from "../../components/Toast";
+import { trackTosUserExit } from "../authentication/analytics";
+import { abortOnboarding } from "../../store/actions/onboarding";
 
 export type CduEmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
 }>;
-
-const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  }
-});
 
 const EMPTY_EMAIL = "";
 
@@ -84,7 +69,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to allow user to insert an email address.
  */
 const CduEmailInsertScreen = () => {
-  const viewRef = createRef<View>();
   const { showModal } = useContext(LightModalContext);
   const { isOnboarding } =
     useRoute<
@@ -104,15 +88,23 @@ const CduEmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
-
+  const [stringa, setStringa] = useState("");
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  // const { isOnboarding } = props.route.params ?? {};
-
   const flow = getFlowType(isOnboarding, isFirstOnBoarding);
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
       trackEmailEditing(flow);
+      if (isFirstOnBoarding) {
+        IOToast.info(
+          I18n.t("email.newinsert.alert.title", {
+            email: pipe(
+              optionEmail,
+              O.getOrElse(() => EMPTY_EMAIL)
+            )
+          })
+        );
+      }
     } else {
       trackEmailDuplicateEditing(flow);
     }
@@ -129,11 +121,6 @@ const CduEmailInsertScreen = () => {
     [profile]
   );
 
-  const acknowledgeEmail = useCallback(
-    () => dispatch(emailAcknowledged()),
-    [dispatch]
-  );
-
   const updateEmail = useCallback(
     (email: EmailString) =>
       dispatch(
@@ -141,6 +128,11 @@ const CduEmailInsertScreen = () => {
           email
         })
       ),
+    [dispatch]
+  );
+
+  const dispatchAbortOnboarding = useCallback(
+    () => dispatch(abortOnboarding()),
     [dispatch]
   );
 
@@ -168,50 +160,39 @@ const CduEmailInsertScreen = () => {
       pipe(
         email,
         O.map(value => {
-          if (
-            EMPTY_EMAIL === value ||
-            !validator.isEmail(value) ||
-            areSameEmails
-          ) {
-            return undefined;
+          if (EMPTY_EMAIL === value || !validator.isEmail(value)) {
+            setStringa(I18n.t("email.newinsert.alert.invalidemail"));
+            return false;
           }
-          return E.isRight(EmailString.decode(value));
+          if (areSameEmails) {
+            setStringa(I18n.t("email.newinsert.alert.description"));
+            return false;
+          }
+          return true;
         }),
         O.toUndefined
       ),
     [areSameEmails, email]
   );
-  const isContinueButtonDisabled = !isValidEmail() && !isLoading;
+
+  const isValidEmailWrapper = useCallback(() => {
+    if (isValidEmail() === undefined) {
+      setStringa(I18n.t("email.newinsert.alert.invalidemail"));
+      return false;
+    }
+    return isValidEmail();
+  }, [isValidEmail]);
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    pipe(
-      email,
-      O.map(e => {
-        updateEmail(e as EmailString);
-      })
-    );
-  };
-
-  const renderFooterButtons = () => {
-    const continueButtonProps = {
-      disabled: isContinueButtonDisabled,
-      onPress: continueOnPress,
-      label: I18n.t("global.buttons.continue"),
-      accessibilityLabel: I18n.t("global.buttons.continue"),
-      block: true,
-      primary: isValidEmail()
-    };
-
-    return (
-      <FooterWithButtons
-        type={"SingleButton"}
-        primary={{
-          type: "Solid",
-          buttonProps: continueButtonProps
-        }}
-      />
-    );
+    if (isValidEmail()) {
+      pipe(
+        email,
+        O.map(e => {
+          updateEmail(e as EmailString);
+        })
+      );
+    }
   };
 
   const handleOnChangeEmailText = (value: string) => {
@@ -239,8 +220,29 @@ const CduEmailInsertScreen = () => {
 
   const handleGoBack = useCallback(() => {
     // goback if the onboarding is completed
-    navigation.goBack();
-  }, [navigation]);
+    if (isFirstOnBoarding) {
+      Alert.alert(
+        I18n.t("onboarding.alert.title"),
+        I18n.t("onboarding.alert.description"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.exit"),
+            style: "default",
+            onPress: () => {
+              trackTosUserExit(getFlowType(true, isFirstOnBoarding));
+              dispatchAbortOnboarding();
+            }
+          }
+        ]
+      );
+    } else {
+      navigation.goBack();
+    }
+  }, [dispatchAbortOnboarding, isFirstOnBoarding, navigation]);
 
   useOnFirstRender(() => {
     if (!isFirstOnBoarding) {
@@ -288,7 +290,7 @@ const CduEmailInsertScreen = () => {
             ]
           );
         } else {
-          showToast(I18n.t("email.edit.upsert_ko"));
+          IOToast.error(I18n.t("email.edit.upsert_ko"));
         }
         // display a toast with error
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
@@ -319,7 +321,6 @@ const CduEmailInsertScreen = () => {
       }
     }
   }, [
-    acknowledgeEmail,
     handleGoBack,
     isEmailValidated,
     isFirstOnboarding,
@@ -328,131 +329,62 @@ const CduEmailInsertScreen = () => {
     showModal
   ]);
 
-  const showGoBack = () => {
-    if (isFirstOnBoarding) {
-      return undefined;
-    } else {
-      if (!isEmailValidated) {
-        return undefined;
-      }
-      return handleGoBack;
-    }
-  };
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    contextualHelpMarkdown,
+    goBack: handleGoBack
+  });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <BaseScreenComponent
-        goBack={showGoBack()}
-        headerTitle={
-          isFirstOnboarding
-            ? I18n.t("email.newinsert.header")
-            : I18n.t("profile.data.list.email")
-        }
-        contextualHelpMarkdown={contextualHelpMarkdown}
+      <GradientScrollView
+        primaryActionProps={{
+          onPress: continueOnPress,
+          label: I18n.t("global.buttons.continue"),
+          accessibilityLabel: I18n.t("global.buttons.continue")
+        }}
+        testID="container-test"
       >
-        <SafeAreaView style={styles.flex}>
-          <Content
-            testID="container-test"
-            noPadded={true}
-            style={styles.flex}
-            scrollEnabled={false}
-          >
-            <View style={IOStyles.horizontalContentPadding}>
-              <H1 color={"bluegreyDark"} weight={"Bold"} testID="title-test">
-                {isFirstOnboarding
-                  ? I18n.t("email.newinsert.title")
-                  : I18n.t("email.edit.title")}
-              </H1>
-              <VSpacer />
-              <VSpacer size={16} />
-              <Body>
-                {isFirstOnboarding ? (
-                  I18n.t("email.newinsert.subtitle")
-                ) : (
-                  <>
-                    {I18n.t("email.edit.subtitle")}
-                    <Body weight="SemiBold">
-                      {` ${pipe(
-                        optionEmail,
-                        O.getOrElse(() => "")
-                      )}`}
-                    </Body>
-                  </>
-                )}
+        <H1 testID="title-test">
+          {isFirstOnboarding
+            ? I18n.t("email.newinsert.title")
+            : I18n.t("email.edit.title")}
+        </H1>
+        <VSpacer size={16} />
+        <Body>
+          {isFirstOnboarding ? (
+            I18n.t("email.newinsert.subtitle")
+          ) : (
+            <>
+              {I18n.t("email.edit.subtitle")}
+              <Body weight="SemiBold">
+                {` ${pipe(
+                  optionEmail,
+                  O.getOrElse(() => "")
+                )}`}
               </Body>
-              {isProfileEmailAlreadyTaken && isFirstOnboarding && (
-                <>
-                  <VSpacer size={24} />
-                  <AlertComponent
-                    testID="alert-test"
-                    viewRef={viewRef}
-                    variant="info"
-                    content={I18n.t("email.newinsert.alert.title", {
-                      email: pipe(
-                        optionEmail,
-                        O.getOrElse(() => EMPTY_EMAIL)
-                      )
-                    })}
-                  />
-                </>
-              )}
-              <VSpacer size={16} />
-              <Form>
-                <View>
-                  <LabelledItem
-                    label={
-                      isFirstOnboarding
-                        ? I18n.t("email.edit.label")
-                        : I18n.t("email.newinsert.label")
-                    }
-                    icon="email"
-                    isValid={isValidEmail()}
-                    overrideBorderColor={
-                      areSameEmails ? IOColors.red : undefined
-                    }
-                    inputProps={{
-                      returnKeyType: "done",
-                      // continueOnPress is called by pressing the
-                      // button on the keyboard only if the mail is valid
-                      onSubmitEditing: isContinueButtonDisabled
-                        ? undefined
-                        : continueOnPress,
-                      autoCapitalize: "none",
-                      keyboardType: "email-address",
-                      defaultValue: pipe(
-                        getEmail(email),
-                        O.getOrElse(() => EMPTY_EMAIL)
-                      ),
-                      onChangeText: handleOnChangeEmailText
-                    }}
-                    testID="TextField"
-                  />
-                  {areSameEmails && (
-                    <View
-                      testID="error-label"
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center"
-                      }}
-                      accessibilityElementsHidden={true}
-                      importantForAccessibility="no-hide-descendants"
-                    >
-                      <View style={{ marginRight: 6 }}>
-                        <Icon size={14} name="notice" color="red" />
-                      </View>
-                      <LabelSmall weight="Regular" color="red">
-                        {I18n.t("email.newinsert.alert.description")}
-                      </LabelSmall>
-                    </View>
-                  )}
-                </View>
-              </Form>
-            </View>
-          </Content>
-          {withKeyboard(renderFooterButtons())}
-        </SafeAreaView>
-      </BaseScreenComponent>
+            </>
+          )}
+        </Body>
+        <VSpacer size={16} />
+        <TextInputValidation
+          textInputProps={{
+            autoCorrect: false,
+            autoCapitalize: "none",
+            inputMode: true
+          }}
+          accessibilityLabel={I18n.t("email.newinsert.label")}
+          placeholder={I18n.t("email.newinsert.label")}
+          onValidate={() => !!isValidEmailWrapper()}
+          errorMessage={stringa}
+          value={pipe(
+            email,
+            O.getOrElse(() => EMPTY_EMAIL)
+          )}
+          onChangeText={handleOnChangeEmailText}
+        />
+      </GradientScrollView>
     </LoadingSpinnerOverlay>
   );
 };

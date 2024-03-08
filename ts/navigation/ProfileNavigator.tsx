@@ -116,7 +116,7 @@ const ProfileStackNavigator = () => {
       {isEmailUniquenessValidationEnabled ? (
         <Stack.Screen
           options={{
-            headerShown: false
+            headerShown: true
           }}
           name={ROUTES.INSERT_EMAIL_SCREEN}
           component={CduEmailInsertScreen}
