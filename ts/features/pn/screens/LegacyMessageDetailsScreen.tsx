@@ -14,11 +14,13 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { LegacyMessageDetails } from "../components/LegacyMessageDetails";
 import { PnParamsList } from "../navigation/params";
-import { pnMessageFromIdSelector } from "../store/reducers";
+import {
+  pnMessageFromIdSelector,
+  pnUserSelectedPaymentRptIdSelector
+} from "../store/reducers";
 import {
   cancelPreviousAttachmentDownload,
   cancelQueuedPaymentUpdates,
-  clearMessagesSelectedPayment,
   updatePaymentForMessage
 } from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
@@ -33,7 +35,6 @@ import {
   cancelPaymentStatusTracking,
   startPaymentStatusTracking
 } from "../store/actions";
-import { selectedPaymentIdSelector } from "../../messages/store/reducers/payments";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import genericErrorIcon from "../../../../img/wallet/errors/generic-error-icon.png";
@@ -84,17 +85,19 @@ export const LegacyMessageDetailsScreen = (
   useFocusEffect(
     React.useCallback(() => {
       const globalState = store.getState();
-      const selectedPaymentId = selectedPaymentIdSelector(globalState);
-      if (selectedPaymentId) {
-        dispatch(clearMessagesSelectedPayment());
+      const paymentToCheckRptId = pnUserSelectedPaymentRptIdSelector(
+        globalState,
+        messagePot
+      );
+      if (paymentToCheckRptId) {
         dispatch(
           updatePaymentForMessage.request({
             messageId,
-            paymentId: selectedPaymentId
+            paymentId: paymentToCheckRptId
           })
         );
       }
-    }, [dispatch, messageId, store])
+    }, [dispatch, messageId, messagePot, store])
   );
 
   return (
