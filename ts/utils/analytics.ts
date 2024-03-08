@@ -6,7 +6,6 @@ import {
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { Platform } from "react-native";
 import EUCOVIDCERT_ROUTES from "../features/euCovidCert/navigation/routes";
 import { euCovidCertificateEnabled } from "../config";
 import { PushNotificationsContentTypeEnum } from "../../definitions/backend/PushNotificationsContentType";
