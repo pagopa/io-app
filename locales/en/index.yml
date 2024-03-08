@@ -705,6 +705,8 @@ authentication:
     recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
+  idp_login_success:
+    contentTitle: Hi, {{name}}!
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -1742,7 +1744,7 @@ wallet:
         subtitle: Per maggiori informazioni, contatta la tua banca.
       CANCELED_BY_USER:
         title: L’operazione è stata annullata
-        subtitle: Non è stato addebitato alcun importo.
+        subtitle: Se vuoi pagare l’avviso, attendi qualche minuto prima di riprovare.
       EXCESSIVE_AMOUNT:
         title: Autorizzazione negata
         subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
@@ -1930,12 +1932,18 @@ messageDetails:
     title: "What's a dynamic message?"
     body: "It's a message that the sender can edit after you've received it. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in specific cases. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
   footer:
-    contact: "Contact the sender"
+    contacts: "Contact the sender"
     showMoreData: "Show more data"
   showMoreDataBottomSheet:
     title: "Identification data"
     messageId: "Message ID"
     messageIdAccessibility: "ID messaggio, copy"
+  contactsBottomSheet:
+    title: "Support"
+    body: "If you are unclear about the content of the message, contact the Institution that sent it to you."
+    actions:
+      call: Call
+      email: Send email
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"

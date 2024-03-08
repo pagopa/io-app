@@ -356,6 +356,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
                           onTouchEnd={[Function]}
+                          testID="contacts-action"
                         >
                           <View
                             style={
