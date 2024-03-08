@@ -79,7 +79,9 @@ Object {
       },
     },
     "paginatedById": Object {},
-    "payments": Object {},
+    "payments": Object {
+      "userSelectedPayments": Set {},
+    },
     "thirdPartyById": Object {},
   },
   "messagesStatus": Object {},
