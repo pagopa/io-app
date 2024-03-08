@@ -1,13 +1,7 @@
-import { Pictogram } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { SafeAreaView } from "react-native";
-import { IOStyles } from "../../components/core/variables/IOStyles";
-import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenComponent";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
+import React from "react";
+import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
 import { completeOnboarding } from "../../store/actions/onboarding";
@@ -27,38 +21,30 @@ const OnboardingCompletedScreen = () => {
   const idp = O.isSome(idpSelected) ? idpSelected.value.name : "";
   const route = useRoute();
 
-  const continueButtonProps: BlockButtonProps = {
-    bordered: false,
-    title: I18n.t("global.buttons.continue"),
-    onPress: () => {
-      trackLoginEnded(
-        isFastLoginEnabled,
-        idp,
-        getFlowType(false, true),
-        route.name
-      );
-      dispatch(completeOnboarding());
-    }
-  };
-
   useOnFirstRender(() => {
     trackThankYouPageScreen();
   });
 
-  return (
-    <BaseScreenComponent>
-      <SafeAreaView style={IOStyles.flex}>
-        <InfoScreenComponent
-          image={<Pictogram name="fireworks" />}
-          title={I18n.t("onboarding.thankYouPage.title")}
-        />
+  const handleContinue = () => {
+    trackLoginEnded(
+      isFastLoginEnabled,
+      idp,
+      getFlowType(false, true),
+      route.name
+    );
+    dispatch(completeOnboarding());
+  };
 
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
+  return (
+    <OperationResultScreenContent
+      pictogram="success"
+      title={I18n.t("onboarding.thankYouPage.title")}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        onPress: handleContinue
+      }}
+    />
   );
 };
 
