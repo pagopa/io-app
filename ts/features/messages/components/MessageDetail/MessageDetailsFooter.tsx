@@ -1,18 +1,12 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  IOColors,
-  IOStyles,
-  ListItemAction,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { constNull } from "fp-ts/lib/function";
-import I18n from "../../../../i18n";
+import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
 import { serviceMetadataByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIMessageId } from "../../types";
-import { useMessageMoreDataBottomSheet } from "../../hooks/useMessageMoreDataBottomSheet";
+import { ContactsListItem } from "./ContactsListItem";
+import { ShowMoreListItem } from "./ShowMoreListItem";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,30 +29,17 @@ export const MessageDetailsFooter = ({
     serviceMetadataByIdSelector(state, serviceId)
   );
 
-  const { bottomSheet, present } = useMessageMoreDataBottomSheet(messageId);
-
   return (
     <View style={[IOStyles.horizontalContentPadding, styles.container]}>
       <VSpacer size={16} />
       {(serviceMetadata?.email || serviceMetadata?.phone) && (
-        <ListItemAction
-          variant="primary"
-          icon="message"
-          label={I18n.t("messageDetails.footer.contact")}
-          onPress={constNull}
-          accessibilityLabel={I18n.t("messageDetails.footer.contact")}
+        <ContactsListItem
+          email={serviceMetadata.email}
+          phone={serviceMetadata.phone}
         />
       )}
 
-      <ListItemAction
-        accessibilityLabel={I18n.t("messageDetails.footer.showMoreData")}
-        icon="terms"
-        label={I18n.t("messageDetails.footer.showMoreData")}
-        onPress={present}
-        testID="show-more-data-action"
-        variant="primary"
-      />
-      {bottomSheet}
+      <ShowMoreListItem messageId={messageId} />
     </View>
   );
 };
