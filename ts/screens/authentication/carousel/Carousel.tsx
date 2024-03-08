@@ -14,6 +14,7 @@ import { isDesignSystemEnabledSelector } from "../../../store/reducers/persisted
 import { trackCarousel } from "../analytics/carouselAnalytics";
 import { LandingCardComponent } from "../../../components/LandingCardComponent";
 import { ComponentProps } from "../../../types/react";
+import { IOStyleVariables } from "../../../components/core/variables/IOStyleVariables";
 
 const styles = StyleSheet.create({
   normalDot: {
@@ -30,7 +31,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const newDsBlue = IOColors["blueIO-500"];
 const newDsGrey = IOColors["grey-200"];
 
 type CarouselProps = {
@@ -46,15 +46,13 @@ const CarouselDots = (props: CarouselDotsProps) => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme = useColorScheme();
 
+  const blueColor = IOStyleVariables.colorPrimary(
+    colorScheme,
+    isDesignSystemEnabled
+  );
+
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
-
-  const blueColor =
-    colorScheme === "dark"
-      ? IOColors.white
-      : isDesignSystemEnabled
-      ? newDsBlue
-      : IOColors.blue;
 
   return (
     <View
