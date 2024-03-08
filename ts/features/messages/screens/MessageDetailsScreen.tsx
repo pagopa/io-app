@@ -41,6 +41,7 @@ import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetail
 
 import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
+import { MessageDetailsPaymentButton } from "../components/MessageDetail/MessageDetailsPaymentButton";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -139,66 +140,69 @@ export const MessageDetailsScreen = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContentContainer}>
-      <View style={styles.container}>
-        <ContentWrapper>
-          <MessageDetailsHeader
-            serviceId={serviceId}
-            subject={subject}
-            createdAt={message.createdAt}
-          >
-            {hasAttachments && (
-              <MessageDetailsTagBox>
-                <Tag
-                  variant="attachment"
-                  testID="attachment-tag"
-                  iconAccessibilityLabel={I18n.t(
-                    "messageDetails.accessibilityAttachmentIcon"
-                  )}
-                />
-              </MessageDetailsTagBox>
-            )}
-            {messageDetails.dueDate && expiringInfo === "expired" && (
-              <MessageDetailsTagBox>
-                <Tag
-                  text={I18n.t("features.messages.badge.dueDate", {
-                    date: localeDateFormat(
-                      messageDetails.dueDate,
-                      I18n.t("global.dateFormats.dayMonthWithoutTime")
-                    ),
-                    time: localeDateFormat(
-                      messageDetails.dueDate,
-                      I18n.t("global.dateFormats.timeFormat")
-                    )
-                  })}
-                  variant="error"
-                  testID="due-date-tag"
-                />
-              </MessageDetailsTagBox>
-            )}
-          </MessageDetailsHeader>
+    <>
+      <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+        <View style={styles.container}>
+          <ContentWrapper>
+            <MessageDetailsHeader
+              serviceId={serviceId}
+              subject={subject}
+              createdAt={message.createdAt}
+            >
+              {hasAttachments && (
+                <MessageDetailsTagBox>
+                  <Tag
+                    variant="attachment"
+                    testID="attachment-tag"
+                    iconAccessibilityLabel={I18n.t(
+                      "messageDetails.accessibilityAttachmentIcon"
+                    )}
+                  />
+                </MessageDetailsTagBox>
+              )}
+              {messageDetails.dueDate && expiringInfo === "expired" && (
+                <MessageDetailsTagBox>
+                  <Tag
+                    text={I18n.t("features.messages.badge.dueDate", {
+                      date: localeDateFormat(
+                        messageDetails.dueDate,
+                        I18n.t("global.dateFormats.dayMonthWithoutTime")
+                      ),
+                      time: localeDateFormat(
+                        messageDetails.dueDate,
+                        I18n.t("global.dateFormats.timeFormat")
+                      )
+                    })}
+                    variant="error"
+                    testID="due-date-tag"
+                  />
+                </MessageDetailsTagBox>
+              )}
+            </MessageDetailsHeader>
 
-          {messageDetails.dueDate && expiringInfo === "expiring" && (
-            <>
-              <VSpacer size={8} />
-              <MessageDetailsReminder
-                dueDate={messageDetails.dueDate}
-                messageId={messageId}
-                title={subject}
-              />
-            </>
-          )}
-          <VSpacer />
-          <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
-          <MessageDetailsPayment messageId={messageId} />
-          <VSpacer />
-          <MessageDetailsAttachments messageId={messageId} />
-        </ContentWrapper>
-      </View>
-      <VSpacer size={24} />
-      <SafeAreaView edges={["bottom"]}>
-        <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
-      </SafeAreaView>
-    </ScrollView>
+            {messageDetails.dueDate && expiringInfo === "expiring" && (
+              <>
+                <VSpacer size={8} />
+                <MessageDetailsReminder
+                  dueDate={messageDetails.dueDate}
+                  messageId={messageId}
+                  title={subject}
+                />
+              </>
+            )}
+            <VSpacer />
+            <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
+            <MessageDetailsPayment messageId={messageId} />
+            <VSpacer />
+            <MessageDetailsAttachments messageId={messageId} />
+          </ContentWrapper>
+        </View>
+        <VSpacer size={24} />
+        <SafeAreaView edges={["bottom"]}>
+          <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
+        </SafeAreaView>
+      </ScrollView>
+      <MessageDetailsPaymentButton messageId={messageId} />
+    </>
   );
 };

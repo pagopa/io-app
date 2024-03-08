@@ -2658,6 +2658,7 @@ features:
     payments:
       title: "Avvisi pagoPA"
       noticeCode: "Codice avviso"
+      pay: "Paga"
   euCovidCertificate:
     save:
       album: "IO"

@@ -6,15 +6,13 @@ import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector, useIOStore } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
-import {
-  canNavigateToPaymentFromMessageSelector,
-  paymentsButtonStateSelector
-} from "../../messages/store/reducers/payments";
+import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import variables from "../../../theme/variables";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { useIOToast } from "../../../components/Toast";
 import { trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({
   container: {
