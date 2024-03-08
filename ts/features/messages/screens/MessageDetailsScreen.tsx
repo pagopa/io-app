@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -13,8 +14,12 @@ import {
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { cancelPreviousAttachmentDownload } from "../store/actions";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import {
+  cancelPreviousAttachmentDownload,
+  cancelQueuedPaymentUpdates,
+  updatePaymentForMessage
+} from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import {
   hasAttachmentsSelector,
@@ -36,6 +41,10 @@ import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
 import { FooterCTAs } from "../components/MessageDetail/FooterCTAs";
+import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
+
+import { cancelPaymentStatusTracking } from "../../pn/store/actions";
+import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -88,6 +97,8 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   const goBack = useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
+    dispatch(cancelQueuedPaymentUpdates());
+    dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
   }, [dispatch, navigation]);
 
@@ -103,6 +114,25 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     goBack,
     supportRequest: true
   });
+
+  const store = useIOStore();
+  useFocusEffect(
+    useCallback(() => {
+      const globalState = store.getState();
+      const paymentToCheckRptId = userSelectedPaymentRptIdSelector(
+        globalState,
+        messageDetails
+      );
+      if (paymentToCheckRptId) {
+        dispatch(
+          updatePaymentForMessage.request({
+            messageId,
+            paymentId: paymentToCheckRptId
+          })
+        );
+      }
+    }, [dispatch, messageId, messageDetails, store])
+  );
 
   if (message === undefined || messageDetails === undefined) {
     return (
@@ -167,6 +197,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             )}
             <VSpacer />
             <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
+            <MessageDetailsPayment messageId={messageId} />
             <VSpacer />
             <MessageDetailsAttachments messageId={messageId} />
           </ContentWrapper>
