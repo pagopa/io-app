@@ -333,6 +333,7 @@ dependencies {
     implementation('com.google.firebase:firebase-iid:21.1.0') {
         because "Firebase messaging 22.0.0 removes Firebase Instance ID API but out current version of the mixpanel sdk requires it https://github.com/mixpanel/mixpanel-android/issues/744 https://firebase.google.com/support/release-notes/android#messaging_v22-0-0"
     }
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
 }
 
 // Run this once to be able to run the application with BUCK
