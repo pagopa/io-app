@@ -2,7 +2,6 @@ import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -41,6 +40,7 @@ import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetail
 import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsPaymentButton } from "../components/MessageDetail/MessageDetailsPaymentButton";
+import { ScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -197,9 +197,8 @@ export const MessageDetailsScreen = () => {
           </ContentWrapper>
         </View>
         <VSpacer size={24} />
-        <SafeAreaView edges={["bottom"]}>
-          <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
-        </SafeAreaView>
+        <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
+        <ScrollViewAdditionalSpace messageId={messageId} />
       </ScrollView>
       <MessageDetailsPaymentButton messageId={messageId} />
     </>

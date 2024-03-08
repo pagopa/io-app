@@ -176,8 +176,9 @@ export const MessagePaymentItem = ({
     paymentStatusForUISelector(state, messageId, rptId)
   );
 
-  const canNavigateToPayment =
-    canNavigateToPaymentFromMessageSelector(globalState);
+  const canNavigateToPayment = useIOSelector(state =>
+    canNavigateToPaymentFromMessageSelector(state)
+  );
 
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(

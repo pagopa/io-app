@@ -161,6 +161,15 @@ export const canNavigateToPaymentFromMessageSelector = (state: GlobalState) =>
     )
   );
 
+export const isPaymentsButtonVisibleSelector = (
+  state: GlobalState,
+  messageId: UIMessageId
+) =>
+  pipe(
+    paymentsButtonStateSelector(state, messageId),
+    status => status !== "hidden"
+  );
+
 export const paymentsButtonStateSelector = (
   state: GlobalState,
   messageId: UIMessageId
@@ -174,7 +183,7 @@ export const paymentsButtonStateSelector = (
       pipe(
         paymentStatus,
         foldK(
-          () => "hidden" as const,
+          () => "loading" as const,
           () => "loading" as const,
           _ => "enabled" as const,
           _ => "hidden" as const

@@ -4,7 +4,7 @@ import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import variables from "../../../theme/variables";
@@ -47,10 +47,9 @@ export const MessageFooter = ({
   );
   const dispatch = useDispatch();
   const toast = useIOToast();
-  const store = useIOStore();
-  const globalState = store.getState();
-  const canNavigateToPayment =
-    canNavigateToPaymentFromMessageSelector(globalState);
+  const canNavigateToPayment = useIOSelector(state =>
+    canNavigateToPaymentFromMessageSelector(state)
+  );
   const onFooterPressCallback = useCallback(() => {
     if (payments?.length === 1) {
       const firstPayment = payments[0];
