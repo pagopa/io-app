@@ -1,43 +1,51 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect } from "react";
-import { View } from "react-native";
 import {
   ModulePaymentNotice,
   PaymentNoticeStatus,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { UIMessageId } from "../../messages/types";
-import { getRptIdStringFromPayment } from "../utils/rptId";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React, { useCallback, useEffect } from "react";
+import { View } from "react-native";
+import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { RemoteValue, fold } from "../../../../common/model/RemoteValue";
+import { useIOToast } from "../../../../components/Toast";
+import I18n from "../../../../i18n";
 import {
-  paymentStatusForUISelector,
-  shouldUpdatePaymentSelector
-} from "../../messages/store/reducers/payments";
-import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { updatePaymentForMessage } from "../../messages/store/actions";
-import { RemoteValue, fold } from "../../../common/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
+import { format } from "../../../../utils/dates";
 import {
   cleanTransactionDescription,
   getV2ErrorMainType
-} from "../../../utils/payment";
-import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
-import { format } from "../../../utils/dates";
+} from "../../../../utils/payment";
 import {
   centsToAmount,
   formatNumberAmount
-} from "../../../utils/stringBuilder";
-import { useIOToast } from "../../../components/Toast";
-import { initializeAndNavigateToWalletForPayment } from "../utils";
+} from "../../../../utils/stringBuilder";
+import { updatePaymentForMessage } from "../../store/actions";
+import {
+  canNavigateToPaymentFromMessageSelector,
+  paymentStatusForUISelector,
+  shouldUpdatePaymentSelector
+} from "../../store/reducers/payments";
+import { UIMessageId } from "../../types";
+import { initializeAndNavigateToWalletForPayment } from "../../utils";
+import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 
 type MessagePaymentItemProps = {
-  index: number;
+  hideExpirationDate?: boolean;
+  index?: number;
+  isPNPayment?: boolean;
   messageId: UIMessageId;
-  payment: NotificationPaymentInfo;
   noSpaceOnTop?: boolean;
+  noticeNumber: string;
+  paymentAmount?: PaymentAmount;
+  rptId: string;
   willNavigateToPayment?: () => void;
 };
 
@@ -85,7 +93,8 @@ const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
 );
 
 const modulePaymentNoticeFromPaymentStatus = (
-  noticeCode: string,
+  hideExpirationDate: boolean,
+  noticeNumber: string,
   paymentStatus: RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>,
   paymentCallback: () => void
 ) =>
@@ -97,6 +106,7 @@ const modulePaymentNoticeFromPaymentStatus = (
       const dueDateOrUndefined = pipe(
         payablePayment.dueDate,
         O.fromNullable,
+        O.filter(_ => !hideExpirationDate),
         O.map(
           dueDate =>
             `${I18n.t("wallet.firstTransactionSummary.dueDate")} ${format(
@@ -126,15 +136,15 @@ const modulePaymentNoticeFromPaymentStatus = (
       );
     },
     processedPaymentDetails => {
-      const formattedPaymentNoticeCode = noticeCode
+      const formattedPaymentNoticeNumber = noticeNumber
         .replace(/(\d{4})/g, "$1  ")
         .trim();
       const { paymentNoticeStatus, badgeText } =
         processedUIPaymentFromDetailV2Enum(processedPaymentDetails);
       return (
         <ModulePaymentNotice
-          title={I18n.t("features.pn.details.noticeCode")}
-          subtitle={formattedPaymentNoticeCode}
+          title={I18n.t("features.messages.payments.noticeCode")}
+          subtitle={formattedPaymentNoticeNumber}
           onPress={paymentCallback}
           paymentNoticeStatus={paymentNoticeStatus}
           badgeText={badgeText}
@@ -144,50 +154,70 @@ const modulePaymentNoticeFromPaymentStatus = (
   );
 
 export const MessagePaymentItem = ({
-  index,
+  hideExpirationDate = false,
+  index = 0,
+  isPNPayment = false,
   messageId,
-  payment,
   noSpaceOnTop = false,
+  noticeNumber,
+  paymentAmount = undefined,
+  rptId,
   willNavigateToPayment = undefined
 }: MessagePaymentItemProps) => {
   const dispatch = useIODispatch();
   const store = useIOStore();
   const toast = useIOToast();
 
-  const paymentId = getRptIdStringFromPayment(payment);
-
   const globalState = store.getState();
+
   const shouldUpdatePayment = shouldUpdatePaymentSelector(
     globalState,
     messageId,
-    paymentId
+    rptId
   );
   const paymentStatusForUI = useIOSelector(state =>
-    paymentStatusForUISelector(state, messageId, paymentId)
+    paymentStatusForUISelector(state, messageId, rptId)
   );
+
+  const canNavigateToPayment =
+    canNavigateToPaymentFromMessageSelector(globalState);
 
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(
-      paymentId,
+      messageId,
+      rptId,
+      paymentAmount,
+      canNavigateToPayment,
       dispatch,
+      isPNPayment,
       () => toast.error(I18n.t("genericError")),
       () => willNavigateToPayment?.()
     );
-  }, [dispatch, paymentId, toast, willNavigateToPayment]);
+  }, [
+    canNavigateToPayment,
+    dispatch,
+    isPNPayment,
+    messageId,
+    paymentAmount,
+    rptId,
+    toast,
+    willNavigateToPayment
+  ]);
   useEffect(() => {
     if (shouldUpdatePayment) {
       const updateAction = updatePaymentForMessage.request({
         messageId,
-        paymentId
+        paymentId: rptId
       });
       dispatch(updateAction);
     }
-  }, [dispatch, messageId, paymentId, shouldUpdatePayment]);
+  }, [dispatch, messageId, rptId, shouldUpdatePayment]);
   return (
     <View>
       {!noSpaceOnTop && <VSpacer size={index > 0 ? 8 : 24} />}
       {modulePaymentNoticeFromPaymentStatus(
-        payment.noticeCode,
+        hideExpirationDate,
+        noticeNumber,
         paymentStatusForUI,
         startPaymentCallback
       )}

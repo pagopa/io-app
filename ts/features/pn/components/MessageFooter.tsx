@@ -1,16 +1,19 @@
+import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import React, { MutableRefObject, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
-import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../messages/types";
-import { paymentsButtonStateSelector } from "../../messages/store/reducers/payments";
-import variables from "../../../theme/variables";
-import { initializeAndNavigateToWalletForPayment } from "../utils";
-import { getRptIdStringFromPayment } from "../utils/rptId";
 import { useIOToast } from "../../../components/Toast";
+import I18n from "../../../i18n";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import variables from "../../../theme/variables";
+import {
+  canNavigateToPaymentFromMessageSelector,
+  paymentsButtonStateSelector
+} from "../../messages/store/reducers/payments";
+import { UIMessageId } from "../../messages/types";
+import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { trackPNShowAllPayments } from "../analytics";
+import { getRptIdStringFromPayment } from "../utils/rptId";
 
 const styles = StyleSheet.create({
   container: {
@@ -45,18 +48,35 @@ export const MessageFooter = ({
   );
   const dispatch = useIODispatch();
   const toast = useIOToast();
+  const store = useIOStore();
+  const globalState = store.getState();
+  const canNavigateToPayment =
+    canNavigateToPaymentFromMessageSelector(globalState);
   const onFooterPressCallback = useCallback(() => {
     if (payments?.length === 1) {
       const firstPayment = payments[0];
       const paymentId = getRptIdStringFromPayment(firstPayment);
-      initializeAndNavigateToWalletForPayment(paymentId, dispatch, () =>
-        toast.error(I18n.t("genericError"))
+      initializeAndNavigateToWalletForPayment(
+        messageId,
+        paymentId,
+        undefined,
+        canNavigateToPayment,
+        dispatch,
+        true,
+        () => toast.error(I18n.t("genericError"))
       );
     } else {
       trackPNShowAllPayments();
       presentPaymentsBottomSheetRef.current?.();
     }
-  }, [dispatch, payments, presentPaymentsBottomSheetRef, toast]);
+  }, [
+    canNavigateToPayment,
+    dispatch,
+    messageId,
+    payments,
+    presentPaymentsBottomSheetRef,
+    toast
+  ]);
   if (isCancelled || buttonState === "hidden") {
     return null;
   }

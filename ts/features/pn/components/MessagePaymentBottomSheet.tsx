@@ -1,12 +1,13 @@
+import I18n from "i18n-js";
 import React, { MutableRefObject } from "react";
 import { Dimensions, View } from "react-native";
-import I18n from "i18n-js";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { UIMessageId } from "../../messages/types";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
 import { useIODispatch } from "../../../store/hooks";
-import { MessagePaymentItem } from "./MessagePaymentItem";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
+import { cancelQueuedPaymentUpdates } from "../../messages/store/actions";
+import { UIMessageId } from "../../messages/types";
+import { getRptIdStringFromPayment } from "../utils/rptId";
 
 export type MessagePaymentBottomSheetProps = {
   messageId: UIMessageId;
@@ -26,16 +27,21 @@ export const MessagePaymentBottomSheet = ({
   const { present, dismiss, bottomSheet } = useIOBottomSheetModal({
     component: (
       <>
-        {payments.map((payment, index) => (
-          <MessagePaymentItem
-            index={index}
-            key={`LI_${index}`}
-            messageId={messageId}
-            payment={payment}
-            noSpaceOnTop={index === 0}
-            willNavigateToPayment={() => dismiss()}
-          />
-        ))}
+        {payments.map((payment, index) => {
+          const rptId = getRptIdStringFromPayment(payment);
+          return (
+            <MessagePaymentItem
+              index={index}
+              isPNPayment
+              key={`LI_${index}`}
+              messageId={messageId}
+              rptId={rptId}
+              noticeNumber={payment.noticeCode}
+              noSpaceOnTop={index === 0}
+              willNavigateToPayment={() => dismiss()}
+            />
+          );
+        })}
       </>
     ),
     title: I18n.t("features.pn.details.paymentSection.bottomSheetTitle"),
