@@ -2663,6 +2663,9 @@ features:
       addReminder: Add reminder
       removeReminder: Remove reminder
       content: Expires on {{date}} at {{time}}
+    payments:
+      title: "pagoPA notices"
+      noticeCode: "Notice code"
   euCovidCertificate:
     save:
       album: "IO"

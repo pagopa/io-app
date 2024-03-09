@@ -3,6 +3,7 @@
  * It only manages SUCCESS actions because all UI state properties (like loading/error)
  * are managed by different global reducers.
  */
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
@@ -165,14 +166,19 @@ export const isProfileFirstOnBoardingSelector = createSelector(
 );
 
 // return true if the profile pot is some and its field is_email_validated exists and it's true
-export const isProfileEmailValidatedSelector = createSelector(
-  profileSelector,
-  (profile: ProfileState): boolean =>
-    pot.getOrElse(
-      pot.map(profile, p => hasProfileEmail(p) && isProfileEmailValidated(p)),
-      false
-    )
-);
+export const isProfileEmailValidatedSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    profileSelector,
+    profileStatusPot =>
+      pot.map(
+        profileStatusPot,
+        profileStatus =>
+          hasProfileEmail(profileStatus) &&
+          isProfileEmailValidated(profileStatus)
+      ),
+    profileEmailValidatedPot => pot.getOrElse(profileEmailValidatedPot, false)
+  );
 
 // return preferences
 export const profilePreferencesSelector = createSelector(
