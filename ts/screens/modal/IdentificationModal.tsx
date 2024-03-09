@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useCallback, useState, useRef } from "react";
 import {
   CodeInput,
   H2,
@@ -14,6 +15,8 @@ import {
   BiometricsValidType,
   IOPictograms
 } from "@pagopa/io-app-design-system";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Alert, ColorSchemeName, Modal, View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
@@ -22,6 +25,8 @@ import I18n from "../../i18n";
 import { IOStyleVariables } from "../../components/core/variables/IOStyleVariables";
 import {
   identificationCancel,
+  identificationFailure,
+  identificationForceLogout,
   identificationSuccess
 } from "../../store/actions/identification";
 import { useIOSelector } from "../../store/hooks";
@@ -60,7 +65,8 @@ const getInstructions = (
 
 const IdentificationModal = () => {
   console.log("Refreshing IdentificationModal 🔁");
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = useState("");
+  const invalidPin = useRef(false);
   // TODO: forced new blue until we have a proper color mapping on the design system
   const isDesignSystemEnabled = true; // useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme: ColorSchemeName = "light";
@@ -90,8 +96,40 @@ const IdentificationModal = () => {
   const closeButtonLabel = I18n.t("global.buttons.close");
 
   const dispatch = useDispatch();
-  const onIdentificationCancel = () => dispatch(identificationCancel());
-  const onIdentificationSuccess = () => dispatch(identificationSuccess());
+  const onIdentificationCancel = useCallback(() => {
+    dispatch(identificationCancel());
+  }, [dispatch]);
+  const onIdentificationSuccess = useCallback(() => {
+    dispatch(identificationSuccess());
+  }, [dispatch]);
+  const onIdentificationForceLogout = useCallback(() => {
+    dispatch(identificationForceLogout());
+  }, [dispatch]);
+  const onIdentificationFailure = useCallback(() => {
+    dispatch(identificationFailure());
+  }, [dispatch]);
+  const onIdentificationFailureHandler = useCallback(() => {
+    const forceLogout = pipe(
+      identificationFailState,
+      O.map(failState => failState.remainingAttempts === 1),
+      O.getOrElse(() => false)
+    );
+    if (forceLogout) {
+      onIdentificationForceLogout();
+    } else {
+      onIdentificationFailure();
+    }
+  }, [
+    identificationFailState,
+    onIdentificationFailure,
+    onIdentificationForceLogout
+  ]);
+
+  if (invalidPin.current) {
+    // eslint-disable-next-line functional/immutable-data
+    invalidPin.current = false;
+    onIdentificationFailureHandler();
+  }
 
   const onValueChange = (v: string) => {
     if (v.length <= PIN_LENGTH) {
@@ -119,6 +157,8 @@ const IdentificationModal = () => {
       onIdentificationSuccess();
       return true;
     }
+    // eslint-disable-next-line functional/immutable-data
+    invalidPin.current = true;
     return false;
   };
 
