@@ -236,6 +236,7 @@ class IdentificationModal extends React.PureComponent<Props, State> {
   }
 
   public componentDidUpdate(prevProps: Props, prevState: State) {
+    console.log("IdentificationModal componentDidUpdate 🔁🔁");
     // When app becomes active from background the state of TouchID support
     // must be updated, because it might be switched off.
     // Don't do this check if I can't authenticate for too many attempts (canInsertPinTooManyAttempts === false)

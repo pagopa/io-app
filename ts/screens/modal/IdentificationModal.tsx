@@ -88,7 +88,6 @@ const IdentificationModal = () => {
     "identification.unlockCode.reset.button"
   )} ${I18n.t("identification.unlockCode.reset.code")}?`;
   const closeButtonLabel = I18n.t("global.buttons.close");
-  const nameLabel = name ? I18n.t("identification.title", { name }) : "";
 
   const dispatch = useDispatch();
   const onIdentificationCancel = () => dispatch(identificationCancel());
@@ -104,10 +103,19 @@ const IdentificationModal = () => {
     return null;
   }
 
-  const { pin, isValidatingTask } = identificationProgressState;
+  const { pin, isValidatingTask, shufflePad } = identificationProgressState;
+
+  const titleLabel = isValidatingTask
+    ? I18n.t("identification.titleValidation")
+    : name
+    ? I18n.t("identification.title", { name })
+    : "";
 
   const onPinValidated = (v: string) => {
     if (v === pin) {
+      // Clear the inserted value
+      setValue("");
+      // Dispatch the success action
       onIdentificationSuccess();
       return true;
     }
@@ -150,9 +158,13 @@ const IdentificationModal = () => {
           <ContentWrapper>
             <View style={IOStyles.alignCenter}>
               <VSpacer size={16} />
-              <Pictogram name={pictogramKey} size={64} />
+              <Pictogram
+                pictogramStyle="light-content"
+                name={pictogramKey}
+                size={64}
+              />
               <VSpacer size={8} />
-              <H2 color={"white"}>{nameLabel}</H2>
+              <H2 color={"white"}>{titleLabel}</H2>
               <VSpacer size={8} />
               <Body accessibilityLabel={instructions} color={"white"}>
                 {instructions}
@@ -177,7 +189,8 @@ const IdentificationModal = () => {
                 value={value}
                 deleteAccessibilityLabel="Delete"
                 onValueChange={onValueChange}
-                variant={"dark"}
+                variant={"dark"} // TODO: missing mapping for standard blue
+                // shufflePad={shufflePad} // TODO: missing
                 {...biometricsConfig}
               />
               <VSpacer size={32} />
