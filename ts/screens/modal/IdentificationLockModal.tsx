@@ -10,6 +10,8 @@ import { H1 } from "../../components/core/typography/H1";
 import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
+import { useIODispatch } from "../../store/hooks";
+import { identificationHideLockModal } from "../../store/actions/identification";
 
 type Props = {
   // milliseconds
@@ -43,14 +45,47 @@ const fromMillisecondsToTimeRepresentation = (ms: Millisecond): string =>
 export const IdentificationLockModal: React.FunctionComponent<
   Props
 > = props => {
+  const { countdown } = props;
+  const timerId = React.useRef<number | null>();
+  const [countdownValue, setCountdownValue] = React.useState(
+    (countdown as number) ?? 0
+  );
+
+  const dispatch = useIODispatch();
+  const hideModal = React.useCallback(() => {
+    dispatch(identificationHideLockModal());
+  }, [dispatch]);
+
   const minuteSeconds = pipe(
-    props.countdown,
+    countdownValue as Millisecond,
     O.fromNullable,
     O.fold(
       () => "0:00",
       x => fromMillisecondsToTimeRepresentation(x)
     )
   );
+
+  React.useEffect(() => {
+    if (countdownValue <= 0) {
+      hideModal();
+    }
+  }, [countdownValue, hideModal]);
+
+  React.useEffect(() => {
+    console.log("⏱️ countdownValue", countdownValue);
+    if (countdownValue > 0) {
+      // eslint-disable-next-line functional/immutable-data
+      timerId.current = setInterval(() => {
+        setCountdownValue(currentValue => currentValue - 1000);
+      }, 1000);
+    }
+    return () => {
+      console.log("🧹 Clearing timer");
+      if (timerId.current) {
+        clearTimeout(timerId.current);
+      }
+    };
+  }, [countdownValue, props]);
 
   return (
     <Modal>

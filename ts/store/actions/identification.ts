@@ -66,6 +66,9 @@ export const identificationReset = createAction("IDENTIFICATION_RESET");
 export const identificationForceLogout = createAction(
   "IDENTIFICATION_FORCE_LOGOUT"
 );
+export const identificationHideLockModal = createAction(
+  "IDENTIFICATION_HIDE_LOCK_MODAL"
+);
 
 export type IdentificationActions =
   | ActionType<typeof identificationStart>
@@ -75,4 +78,5 @@ export type IdentificationActions =
   | ActionType<typeof identificationFailure>
   | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationForceLogout>
-  | ActionType<typeof identificationReset>;
+  | ActionType<typeof identificationReset>
+  | ActionType<typeof identificationHideLockModal>;

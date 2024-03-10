@@ -21,6 +21,7 @@ import { Alert, ColorSchemeName, Modal, View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "../../i18n";
 import { IOStyleVariables } from "../../components/core/variables/IOStyleVariables";
 import {
@@ -36,11 +37,11 @@ import {
 } from "../../store/reducers/identification";
 import { useBiometricType } from "../../utils/hooks/useBiometricType";
 import { profileNameSelector } from "../../store/reducers/profile";
+import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const PIN_LENGTH = 6;
 const VERTICAL_PADDING = 16;
 
-// Avoid the modal to be dismissed by the user
 const onRequestCloseHandler = () => undefined;
 
 const getInstructions = (
@@ -63,6 +64,7 @@ const getInstructions = (
   }
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const IdentificationModal = () => {
   console.log("Refreshing IdentificationModal 🔁");
   const [value, setValue] = useState("");
@@ -164,7 +166,22 @@ const IdentificationModal = () => {
 
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
-  return (
+  // eslint-disable-next-line functional/no-let
+  let countdown = 0 as Millisecond;
+  // eslint-disable-next-line functional/no-let
+  let showLockModal = false;
+  if (O.isSome(identificationFailState)) {
+    showLockModal = identificationFailState.value.showLockModal ?? false;
+    if (showLockModal) {
+      // eslint-disable-next-line functional/immutable-data
+      countdown = (identificationFailState.value.timespanBetweenAttempts *
+        1000) as Millisecond;
+    }
+  }
+
+  return showLockModal ? (
+    <IdentificationLockModal countdown={countdown} />
+  ) : (
     <Modal
       statusBarTranslucent
       transparent

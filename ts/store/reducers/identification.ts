@@ -7,6 +7,7 @@ import { PinString } from "../../types/PinString";
 import {
   identificationCancel,
   identificationFailure,
+  identificationHideLockModal,
   identificationReset,
   identificationStart,
   identificationSuccess
@@ -66,6 +67,7 @@ export type IdentificationFailData = {
   remainingAttempts: number;
   nextLegalAttempt: Date;
   timespanBetweenAttempts: number;
+  showLockModal?: boolean;
 };
 
 export type IdentificationState = {
@@ -100,7 +102,8 @@ const nextErrorData = (
   return {
     nextLegalAttempt: new Date(Date.now() + newTimespan * 1000),
     remainingAttempts: nextRemainingAttempts,
-    timespanBetweenAttempts: newTimespan
+    timespanBetweenAttempts: newTimespan,
+    showLockModal: nextRemainingAttempts <= 3
   };
 };
 
@@ -136,6 +139,20 @@ const reducer = (
     case getType(identificationReset):
       return INITIAL_STATE;
 
+    case getType(identificationHideLockModal):
+      // TODO: make a migration
+      console.log("🔒 hide lock modal: log used to make lint fail");
+      const failData = state.fail
+        ? {
+            ...state.fail,
+            showLockModal: false
+          }
+        : undefined;
+      return {
+        ...state,
+        fail: failData
+      };
+
     case getType(identificationFailure):
       const newErrorData = pipe(
         state.fail,
@@ -144,7 +161,8 @@ const reducer = (
           () => ({
             nextLegalAttempt: new Date(),
             remainingAttempts: maxAttempts - 1,
-            timespanBetweenAttempts: 0
+            timespanBetweenAttempts: 0,
+            showLockModal: false
           }),
           errorData => nextErrorData(errorData)
         )
