@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { PaymentMethodsResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
 import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
@@ -86,9 +85,8 @@ export const walletOnboardingPaymentMethodsSelector = (state: GlobalState) =>
 export const isLoadingPaymentMethodsSelector = (state: GlobalState) =>
   pot.isLoading(walletOnboardingSelector(state).paymentMethods);
 
-export const walletOnboardingSelectedPaymentMethodSelector = createSelector(
-  walletOnboardingSelector,
-  onboarding => onboarding.selectedPaymentMethodId
-);
+export const walletOnboardingSelectedPaymentMethodSelector = (
+  state: GlobalState
+) => walletOnboardingSelector(state).selectedPaymentMethodId;
 
 export default walletOnboardingReducer;
