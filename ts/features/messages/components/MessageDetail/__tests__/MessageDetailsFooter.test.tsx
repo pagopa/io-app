@@ -86,6 +86,31 @@ describe("MessageDetailsFooter component", () => {
     fireEvent.press(showMoreDataAction);
     expect(mockPresentBottomSheet).toBeCalledTimes(1);
   });
+
+  it("should call present function when the 'Contacts' action is pressed", () => {
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      loadServiceDetail.success({
+        ...service_1,
+        service_metadata: {
+          email: "test@test.com",
+          phone: "+393331234567"
+        } as ServiceMetadata
+      })
+    ];
+
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+
+    const { component } = renderComponent(state, defaultProps);
+
+    const contactsAction = component.getByTestId("contacts-action");
+    fireEvent.press(contactsAction);
+    expect(mockPresentBottomSheet).toBeCalledTimes(1);
+  });
 });
 
 const renderComponent = (

@@ -1,14 +1,14 @@
 import React from "react";
 import { createStore } from "redux";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessagePaymentItem } from "../MessagePaymentItem";
-import { UIMessageId } from "../../../messages/types";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { updatePaymentForMessage } from "../../../messages/store/actions";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { UIMessageId } from "../../../types";
+import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
+import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
+import { updatePaymentForMessage } from "../../../store/actions";
+import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
 
 describe("MessagePaymentItem component", () => {
   it("Should match the snapshot for a loading item", () => {
@@ -53,6 +53,7 @@ const renderComponent = (
   payment: NotificationPaymentInfo,
   paymentStatus: "payable" | "processed" | undefined = undefined
 ) => {
+  const rptId = `${payment.creditorTaxId}${payment.noticeCode}`;
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const modifiedState =
     paymentStatus === "payable"
@@ -60,7 +61,7 @@ const renderComponent = (
           globalState,
           updatePaymentForMessage.success({
             messageId,
-            paymentId: `${payment.creditorTaxId}${payment.noticeCode}`,
+            paymentId: rptId,
             paymentData: {
               codiceContestoPagamento: `${payment.noticeCode}`,
               importoSingoloVersamento: 99,
@@ -74,7 +75,7 @@ const renderComponent = (
           globalState,
           updatePaymentForMessage.failure({
             messageId,
-            paymentId: `${payment.creditorTaxId}${payment.noticeCode}`,
+            paymentId: rptId,
             details: Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
           })
         )
@@ -83,7 +84,12 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <MessagePaymentItem index={0} messageId={messageId} payment={payment} />
+      <MessagePaymentItem
+        index={0}
+        messageId={messageId}
+        rptId={rptId}
+        noticeNumber={payment.noticeCode}
+      />
     ),
     "DUMMY",
     {},
