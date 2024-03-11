@@ -6,13 +6,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  useContext
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import validator from "validator";
 import { Alert, Keyboard } from "react-native";
 import {
@@ -25,7 +19,6 @@ import { Route, useRoute } from "@react-navigation/native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { profileUpsert } from "../../store/actions/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import {
@@ -38,8 +31,6 @@ import {
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { areStringsEqual } from "../../utils/options";
 import { Body } from "../../components/core/typography/Body";
-import { LightModalContext } from "../../components/ui/LightModal";
-import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import {
   trackEmailDuplicateEditing,
@@ -52,6 +43,8 @@ import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { IOToast } from "../../components/Toast";
 import { trackTosUserExit } from "../authentication/analytics";
 import { abortOnboarding } from "../../store/actions/onboarding";
+import ROUTES from "../../navigation/routes";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 export type CduEmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -68,7 +61,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to allow user to insert an email address.
  */
 const CduEmailInsertScreen = () => {
-  const { showModal } = useContext(LightModalContext);
   const { isOnboarding } =
     useRoute<
       Route<
@@ -266,14 +258,20 @@ const CduEmailInsertScreen = () => {
       // from the profile page.
       isOnboarding
     ) {
-      showModal(
-        <NewRemindEmailValidationOverlay
-          isOnboarding={isFirstOnboarding}
-          sendEmailAtFirstRender={isOnboarding}
-        />
-      );
+      navigation.navigate(ROUTES.ONBOARDING, {
+        screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
+        params: {
+          isOnboarding: isFirstOnboarding,
+          sendEmailAtFirstRender: isOnboarding
+        }
+      });
     }
-  }, [acknowledgeOnEmailValidated, isFirstOnboarding, isOnboarding, showModal]);
+  }, [
+    acknowledgeOnEmailValidated,
+    isFirstOnboarding,
+    isOnboarding,
+    navigation
+  ]);
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
@@ -312,12 +310,13 @@ const CduEmailInsertScreen = () => {
             sendEmailAtFirstRender =
               profile.value.email === prevUserProfile.value.email;
           }
-          showModal(
-            <NewRemindEmailValidationOverlay
-              sendEmailAtFirstRender={sendEmailAtFirstRender}
-              isOnboarding={isFirstOnboarding}
-            />
-          );
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.EMAIL_VERIFICATION_SCREEN,
+            params: {
+              isOnboarding: isFirstOnboarding,
+              sendEmailAtFirstRender
+            }
+          });
         }
         return;
       }
@@ -326,9 +325,9 @@ const CduEmailInsertScreen = () => {
     handleGoBack,
     isEmailValidated,
     isFirstOnboarding,
+    navigation,
     prevUserProfile,
-    profile,
-    showModal
+    profile
   ]);
 
   useHeaderSecondLevel({

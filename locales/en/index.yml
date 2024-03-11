@@ -820,9 +820,9 @@ email:
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
   newvalidate:
-    title: Validate your email
-    subtitle: Follow the instructions we sent to
-    link: Is the email address wrong?
+    title: Ti abbiamo inviato un’email
+    subtitle: Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a
+    link: Non è corretto?
     buttonlabelsent: Email sent!    
     countdowntext: Request new email in 
     buttonlabelsentagain: Send email again

@@ -36,6 +36,7 @@ import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPa
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { useIOSelector } from "../store/hooks";
 import { isGestureEnabled } from "../utils/navigation";
+import NewRemindEmailValidationScreen from "../screens/profile/NewRemindEmailValiationScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -130,6 +131,11 @@ const ProfileStackNavigator = () => {
           component={EmailInsertScreen}
         />
       )}
+      <Stack.Screen
+        name={ROUTES.EMAIL_VERIFICATION_SCREEN}
+        component={NewRemindEmailValidationScreen}
+      />
+
       <Stack.Screen
         options={{
           headerShown: false
