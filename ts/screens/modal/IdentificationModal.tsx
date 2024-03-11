@@ -170,7 +170,9 @@ const IdentificationModal = () => {
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
   // eslint-disable-next-line functional/no-let
-  let countdown = 0 as Millisecond;
+  let countdownInMs = 0 as Millisecond;
+  // eslint-disable-next-line functional/no-let
+  let timeSpanBetweenAttemptsInSeconds = 0;
   // eslint-disable-next-line functional/no-let
   let showLockModal = false;
   // eslint-disable-next-line functional/no-let
@@ -178,10 +180,20 @@ const IdentificationModal = () => {
   if (O.isSome(identificationFailState)) {
     showLockModal = identificationFailState.value.showLockModal ?? false;
     remainingAttempts = identificationFailState.value.remainingAttempts;
-    if (showLockModal) {
+    timeSpanBetweenAttemptsInSeconds =
+      identificationFailState.value.timespanBetweenAttempts;
+    const nowInMs = new Date().getTime();
+    const nextLegalAttemptInMs =
+      identificationFailState.value.nextLegalAttempt.getTime();
+    const elapsedTimeInMs = nextLegalAttemptInMs - nowInMs;
+    // This screen is refreshing at every app state change.
+    // So we can rely on the elapsed time to show the lock modal.
+    if (showLockModal && elapsedTimeInMs > 0) {
+      // We need to show the lock modal with the countdown
+      // updated with the remaining time to handle cases where
+      // the app has been killed and restarted.
       // eslint-disable-next-line functional/immutable-data
-      countdown = (identificationFailState.value.timespanBetweenAttempts *
-        1000) as Millisecond;
+      countdownInMs = elapsedTimeInMs as Millisecond;
     }
   }
   const remainingAttemptsText = I18n.t(
@@ -194,7 +206,10 @@ const IdentificationModal = () => {
   );
 
   return showLockModal ? (
-    <IdentificationLockModal countdown={countdown} />
+    <IdentificationLockModal
+      countdownInMs={countdownInMs}
+      timeSpanInSeconds={timeSpanBetweenAttemptsInSeconds}
+    />
   ) : (
     <Modal
       statusBarTranslucent

@@ -1,6 +1,5 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
-import * as O from "fp-ts/lib/Option";
 import { View, Modal, StyleSheet, SafeAreaView } from "react-native";
 import {
   ContentWrapper,
@@ -12,7 +11,7 @@ import {
 import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import I18n from "../../i18n";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { useIODispatch } from "../../store/hooks";
 import { identificationHideLockModal } from "../../store/actions/identification";
 import { IOStyleVariables } from "../../components/core/variables/IOStyleVariables";
 import {
@@ -20,11 +19,10 @@ import {
   useCountdown
 } from "../../components/countdown/CountdownProvider";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import { identificationFailSelector } from "../../store/reducers/identification";
 
 type Props = {
-  // milliseconds
-  countdown?: Millisecond;
+  countdownInMs: Millisecond;
+  timeSpanInSeconds: number;
 };
 
 const styles = StyleSheet.create({
@@ -48,13 +46,13 @@ const TIMER_INTERVAL = 1000;
 
 type CountdownProps = {
   onElapsedTimer: () => void;
+  timeSpanInSeconds: number;
 };
 
 const Countdown = (props: CountdownProps) => {
   const { timerCount, startTimer } = useCountdown();
-  const onElapsedTimer = props.onElapsedTimer;
-  const timerCountRef = React.useRef(timerCount);
-  const loaderValue = Math.round((timerCount * 100) / timerCountRef.current);
+  const { onElapsedTimer, timeSpanInSeconds } = props;
+  const loaderValue = Math.round((timerCount * 100) / timeSpanInSeconds);
 
   useOnFirstRender(() => {
     startTimer?.();
@@ -85,8 +83,8 @@ const Countdown = (props: CountdownProps) => {
   A countdown is displayed indicating how long it is to unlock the application.
 */
 export const IdentificationLockModal = (props: Props) => {
-  const { countdown } = props;
-  const timerTiming = (countdown as number) / 1000;
+  const { countdownInMs, timeSpanInSeconds } = props;
+  const timerTiming = Math.round((countdownInMs as number) / 1000);
 
   const dispatch = useIODispatch();
   const hideModal = React.useCallback(() => {
@@ -113,7 +111,10 @@ export const IdentificationLockModal = (props: Props) => {
               timerTiming={timerTiming}
               intervalDuration={TIMER_INTERVAL}
             >
-              <Countdown onElapsedTimer={hideModal} />
+              <Countdown
+                onElapsedTimer={hideModal}
+                timeSpanInSeconds={timeSpanInSeconds}
+              />
             </CountdownProvider>
           </View>
         </ContentWrapper>

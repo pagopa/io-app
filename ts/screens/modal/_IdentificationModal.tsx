@@ -515,7 +515,10 @@ class IdentificationModal extends React.PureComponent<Props, State> {
       : IOColors.white;
 
     return !this.state.canInsertPinTooManyAttempts ? (
-      IdentificationLockModal({ countdown })
+      <IdentificationLockModal
+        countdownInMs={countdown as Millisecond}
+        timeSpanInSeconds={0}
+      />
     ) : (
       <Modal onRequestClose={onRequestCloseHandler}>
         <BaseScreenComponent
