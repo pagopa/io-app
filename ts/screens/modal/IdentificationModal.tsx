@@ -113,6 +113,7 @@ const IdentificationModal = () => {
   const onIdentificationFailure = useCallback(() => {
     dispatch(identificationFailure());
   }, [dispatch]);
+
   const onIdentificationFailureHandler = useCallback(() => {
     const forceLogout = pipe(
       identificationFailState,
@@ -129,6 +130,30 @@ const IdentificationModal = () => {
     onIdentificationFailure,
     onIdentificationForceLogout
   ]);
+
+  const onIdentificationSuccessHandler = useCallback(() => {
+    if (identificationProgressState.kind !== "started") {
+      return;
+    }
+
+    const { identificationSuccessData } = identificationProgressState;
+
+    if (identificationSuccessData) {
+      identificationSuccessData.onSuccess();
+    }
+    onIdentificationSuccess();
+  }, [identificationProgressState, onIdentificationSuccess]);
+
+  const onIdentificationCancelHandler = useCallback(() => {
+    if (identificationProgressState.kind !== "started") {
+      return;
+    }
+
+    const { identificationCancelData } = identificationProgressState;
+
+    identificationCancelData?.onCancel();
+    onIdentificationCancel();
+  }, [identificationProgressState, onIdentificationCancel]);
 
   if (invalidPin.current) {
     // eslint-disable-next-line functional/immutable-data
@@ -159,7 +184,7 @@ const IdentificationModal = () => {
       // Clear the inserted value
       setValue("");
       // Dispatch the success action
-      onIdentificationSuccess();
+      onIdentificationSuccessHandler();
       return true;
     }
     // eslint-disable-next-line functional/immutable-data
@@ -225,7 +250,7 @@ const IdentificationModal = () => {
                 icon={"closeLarge"}
                 color="contrast"
                 onPress={() => {
-                  onIdentificationCancel();
+                  onIdentificationCancelHandler();
                 }}
                 accessibilityLabel={closeButtonLabel}
               />
