@@ -27,32 +27,6 @@ describe("CduEmailInsertScreen", async () => {
       fireEvent.press(continueButton);
     }
   });
-  // TODO: change tests on new inputfield component
-  //   it("should show the correct error for the email insert field", async () => {
-  //     const component = renderComponent();
-  //     const TextFieldInput = component.getByTestId("TextFieldInput");
-  //     const continueButton = component.queryByText(
-  //       I18n.t("global.buttons.continue")
-  //     );
-  //     expect(continueButton).toBeTruthy();
-
-  //     fireEvent.changeText(TextFieldInput, "email.email.it");
-  //     fireEvent(TextFieldInput, "onEndEditing");
-
-  //     await waitFor(() => {
-  //       expect(continueButton).toBeDisabled();
-  //     });
-
-  //     fireEvent.changeText(TextFieldInput, "email.email@prova.it");
-  //     fireEvent(TextFieldInput, "onEndEditing");
-
-  //     await waitFor(() => {
-  //       expect(continueButton).not.toBeDisabled();
-  //       if (continueButton) {
-  //         fireEvent.press(continueButton);
-  //       }
-  //     });
-  //   });
 });
 
 const renderComponent = () => {

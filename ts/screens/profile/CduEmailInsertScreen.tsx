@@ -59,7 +59,6 @@ export type CduEmailInsertScreenNavigationParams = Readonly<{
 
 const EMPTY_EMAIL = "";
 
-// TODO: update content (https://www.pivotaltracker.com/n/projects/2048617/stories/169392558)
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
   body: "email.insert.help.content"
@@ -88,7 +87,7 @@ const CduEmailInsertScreen = () => {
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
-  const [stringa, setStringa] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(isOnboarding, isFirstOnBoarding);
 
@@ -161,11 +160,11 @@ const CduEmailInsertScreen = () => {
         email,
         O.map(value => {
           if (EMPTY_EMAIL === value || !validator.isEmail(value)) {
-            setStringa(I18n.t("email.newinsert.alert.invalidemail"));
+            setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
             return false;
           }
           if (areSameEmails) {
-            setStringa(I18n.t("email.newinsert.alert.description"));
+            setErrorMessage(I18n.t("email.newinsert.alert.description"));
             return false;
           }
           return true;
@@ -177,7 +176,7 @@ const CduEmailInsertScreen = () => {
 
   const isValidEmailWrapper = useCallback(() => {
     if (isValidEmail() === undefined) {
-      setStringa(I18n.t("email.newinsert.alert.invalidemail"));
+      setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
       return false;
     }
     return isValidEmail();
@@ -219,7 +218,8 @@ const CduEmailInsertScreen = () => {
   };
 
   const handleGoBack = useCallback(() => {
-    // goback if the onboarding is completed
+    // click on goback icon
+    // if the flow is onboarding, a warning is displayed at the click
     if (isFirstOnBoarding) {
       Alert.alert(
         I18n.t("onboarding.alert.title"),
@@ -239,6 +239,8 @@ const CduEmailInsertScreen = () => {
           }
         ]
       );
+      // if the flow isn't first onboarding/onboarding
+      // the button allows you to return to the previous step
     } else {
       navigation.goBack();
     }
@@ -377,7 +379,7 @@ const CduEmailInsertScreen = () => {
           accessibilityLabel={I18n.t("email.newinsert.label")}
           placeholder={I18n.t("email.newinsert.label")}
           onValidate={() => !!isValidEmailWrapper()}
-          errorMessage={stringa}
+          errorMessage={errorMessage}
           value={pipe(
             email,
             O.getOrElse(() => EMPTY_EMAIL)
