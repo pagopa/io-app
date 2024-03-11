@@ -163,6 +163,7 @@ Object {
   "isFingerprintEnabled": undefined,
   "isIdPayTestEnabled": false,
   "isMixpanelEnabled": null,
+  "isNewWalletSectionEnabled": false,
   "isPagoPATestEnabled": false,
   "isPnTestEnabled": false,
   "preferredCalendar": undefined,
