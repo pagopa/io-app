@@ -12,6 +12,7 @@ import {
   ContentWrapper,
   ButtonLink,
   IOStyles,
+  ToastNotification,
   BiometricsValidType,
   IOPictograms
 } from "@pagopa/io-app-design-system";
@@ -33,6 +34,7 @@ import {
 import { useIOSelector } from "../../store/hooks";
 import {
   identificationFailSelector,
+  maxAttempts,
   progressSelector
 } from "../../store/reducers/identification";
 import { useBiometricType } from "../../utils/hooks/useBiometricType";
@@ -41,6 +43,7 @@ import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const PIN_LENGTH = 6;
 const VERTICAL_PADDING = 16;
+const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
 
 const onRequestCloseHandler = () => undefined;
 
@@ -143,7 +146,7 @@ const IdentificationModal = () => {
     return null;
   }
 
-  const { pin, isValidatingTask, shufflePad } = identificationProgressState;
+  const { pin, isValidatingTask } = identificationProgressState;
 
   const titleLabel = isValidatingTask
     ? I18n.t("identification.titleValidation")
@@ -170,14 +173,25 @@ const IdentificationModal = () => {
   let countdown = 0 as Millisecond;
   // eslint-disable-next-line functional/no-let
   let showLockModal = false;
+  // eslint-disable-next-line functional/no-let
+  let remainingAttempts = maxAttempts;
   if (O.isSome(identificationFailState)) {
     showLockModal = identificationFailState.value.showLockModal ?? false;
+    remainingAttempts = identificationFailState.value.remainingAttempts;
     if (showLockModal) {
       // eslint-disable-next-line functional/immutable-data
       countdown = (identificationFailState.value.timespanBetweenAttempts *
         1000) as Millisecond;
     }
   }
+  const remainingAttemptsText = I18n.t(
+    remainingAttempts > 1
+      ? "identification.fail.remainingAttempts"
+      : "identification.fail.remainingAttemptSingle",
+    {
+      attempts: remainingAttempts
+    }
+  );
 
   return showLockModal ? (
     <IdentificationLockModal countdown={countdown} />
@@ -215,11 +229,21 @@ const IdentificationModal = () => {
           <ContentWrapper>
             <View style={IOStyles.alignCenter}>
               <VSpacer size={16} />
-              <Pictogram
-                pictogramStyle="light-content"
-                name={pictogramKey}
-                size={64}
-              />
+              {remainingAttempts <= FAIL_ATTEMPTS_TO_SHOW_ALERT ? (
+                <View style={styles.alertContainer}>
+                  <ToastNotification
+                    message={remainingAttemptsText}
+                    icon="warningFilled"
+                    variant="warning"
+                  />
+                </View>
+              ) : (
+                <Pictogram
+                  pictogramStyle="light-content"
+                  name={pictogramKey}
+                  size={64}
+                />
+              )}
               <VSpacer size={8} />
               <H2 color={"white"}>{titleLabel}</H2>
               <VSpacer size={8} />
@@ -247,7 +271,6 @@ const IdentificationModal = () => {
                 deleteAccessibilityLabel="Delete"
                 onValueChange={onValueChange}
                 variant={"dark"} // TODO: missing mapping for standard blue
-                // shufflePad={shufflePad} // TODO: missing
                 {...biometricsConfig}
               />
               <VSpacer size={32} />
@@ -276,6 +299,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end"
   },
   scrollViewContentContainer: {
+    flexGrow: 1
+  },
+  alertContainer: {
     flexGrow: 1
   },
   smallPinLabel: {

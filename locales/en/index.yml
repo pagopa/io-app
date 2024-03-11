@@ -2088,8 +2088,8 @@ identification:
       title: Identification required
       sensorDescription: Login quickly
   fail:
-    remainingAttempts: You have {{attempts}} attempts left.
-    remainingAttemptSingle: You have {{attempts}} attempt left.
+    remainingAttempts: Hai a disposizione ancora {{attempts}} tentativi
+    remainingAttemptSingle: Hai a disposizone ancora {{attempts}} tentativo
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:

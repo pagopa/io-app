@@ -2088,8 +2088,8 @@ identification:
       title: Identificazione richiesta
       sensorDescription: Accedi velocemente
   fail:
-    remainingAttempts: Ti rimangono {{attempts}} tentativi.
-    remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
+    remainingAttempts: Hai a disposizione ancora {{attempts}} tentativi
+    remainingAttemptSingle: Hai a disposizone ancora {{attempts}} tentativo
     tooManyAttempts: Troppi tentativi di inserimento errati.
     waitMessage: "Riprova tra:"
   unlockCode:
