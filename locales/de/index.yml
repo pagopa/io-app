@@ -247,8 +247,7 @@ permissionRationale:
   torch:
     title: "Zugriff auf die Kamera gewähren"
     message: "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
-startup:
-  title: "Initialisierung"
+startup:  
   authentication: "Benutzer authentifiziert"
   sessionInfo: "SPID-Attribute geladen"
   profileInfo: "Benutzerprofil geladen"
@@ -533,7 +532,8 @@ authentication:
         label: "Vorstellung von IO"
         hint: "Karussell mit einer einführenden Anleitung zur IO-Funktionalität. Wähle, um den Inhalt kennenzulernen."
     session_expired:
-      title: "Deine Sitzung ist abgelaufen"      
+      title: "Deine Sitzung ist abgelaufen"
+      body: "Aus Sicherheitsgründen bitten wir dich, dich alle {{days}} Tage oder wenn du die App verlässt, mit SPID oder CIE anzumelden."
     cie_unsupported:
       title: "Anmeldung mit CIE nicht möglich"
       os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
@@ -548,6 +548,7 @@ authentication:
     loginSpidCie: "Anmeldung mit SPID oder CIE"
     infoSpidCie: "Einführung in SPID und CIE"
     loginSpidCieContent: "Ab heute kannst du dich zusätzlich zu SPID mit deiner elektronischen Identitätskarte (CIE) anmelden"
+    privacyLink: "Datenschutzerklärung"
     nospid: "Du hast keinen SPID? Erfahre mehr"
     nospid-nocie: "Du hast keinen SPID und keine CIE? Erfahre mehr"
     card1-title: "Alle Mitteilungen an einem Ort"
@@ -556,7 +557,8 @@ authentication:
     card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
     card3-title: "Bezahle schnell eine Aufforderung in Papierform"
     card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"    
-    card5-title: "Willkommen bei der ersten öffentlichen Version von IO!"    
+    card5-title: "Willkommen in IO!" 
+    card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
     card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
     expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
     expiredCardHeaderTitle: "Anmeldung mit CIE"
@@ -642,12 +644,12 @@ authentication:
     contextualHelpContent: "Hier findest du Informationen darüber, wie du dich bei IO authentifizieren kannst, sowie einige Sicherheitstipps."
     news: "Neu"
     title: "Ab sofort kannst du leichter auf IO zugreifen"
-    identity_check: "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE authentifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt"
+    identity_check: "Du musst dich nicht mehr alle 30 Tage mit SPID oder CIE identifizieren, sondern nur noch einmal im Jahr oder wenn du die App verlässt"
     security_suggests: "Einige Sicherheitstipps"
     passcode: "In allen anderen Fällen reicht dein Gesicht, dein Fingerabdruck oder dein Entsperrcode aus."
     notification: "Du erhältst bei jedem neuen Zugang eine E-Mail. Wenn du diese nicht erkennst, kannst dz den Zugang zu IO sperren."
     button_accept_lv: "Ja, Schnellzugriff einrichten"
-    button_decline_lv: "Nein, ich möchte mich alle 30 Tage neu anmelden"
+    button_decline_lv: "Melde dich alle 30 Tage mit SPID oder CIE an"
   security_suggestions:
     fingerprint: "Gib deinen biometrischen Erkennungs- oder Entsperrcode nicht an Dritte weiter."
     io_logout: "Wenn du dieses Gerät verlierst, beende IO über die Website"
@@ -781,6 +783,7 @@ email:
     title: "Bestätige deine E-Mail-Adresse"
     subtitle: "Folge den Anweisungen, die an folgende Adresse gesendet wurden:"
     link: "Ist sie nicht korrekt?"
+    countdowntext: "Eine neue E-Mail anfordern in "
     buttonlabelsent: "E-Mail gesendet"
     buttonlabelsentagain: "E-Mail erneut senden"
     toast: "Erledigt! Prüf deinen Posteingang."
@@ -966,6 +969,11 @@ wallet:
       title: "Möchtest du in der App bezahlen?"
       content: "Finde heraus, welche Zahlungsmethoden du in dein Konto aufnehmen kannst."
       cta: "Mehr erfahren"
+    error:
+      title: "Es ist ein Fehler aufgetreten"
+      subtitle: "Versuche es erneut oder kontaktiere den Support"
+      primaryButton: "Schließen"
+      secondaryButton: "Erneut versuchen"
   wallet: "Konto"
   refreshWallet: "Konto aktualisieren"
   favourite:
@@ -997,7 +1005,7 @@ wallet:
         text3: "Wenn du möchtest, kannst du die Bank wählen, bei der du eine aktive PagoBANCOMAT-Karte hast. "
         text4: "Liste der verfügbaren Banken"
     bpay:
-      title: "Zahle auf IO mit BANCOMAT Pay"
+      title: "Zahle auf IO mit BANCOMAT-Pay"
       description:
         text1: "Füge BANCOMAT Pay hinzu, um pagoPA-Zahlungsaufforderungen einfacher zu bezahlen sowie an den auf IO verfügbaren Initiativen teilzunehmen.\nWenn du fortfährst, akzeptierst du die "
         text2: "Datenschutzbestimmungen."
@@ -1019,7 +1027,7 @@ wallet:
       creditCard: "{{brand}}-Karte, die Kartennummer endet mit {{blurredNumber}}"
       bancomat: "BANCOMAT {{bankName}}"
       coBadge: "{{brand}}-Karte, {{bankName}}"
-      bancomatPay: "BANCOMATPay {{bankName}}"
+      bancomatPay: "BANCOMAT Pay {{bankName}}"
       cta: "Details zur Zahlungsmethode anzeigen"
       bankNotAvailable: "Bankenname nicht verfügbar"
     addElement: "Element zum Konto hinzufügen"
@@ -1033,7 +1041,7 @@ wallet:
     bancomat:
       headerTitle: "PagoBANCOMAT-Karte hinzufügen"
       koTimeout:
-        title: "Wir konnten deine PagoBANCOMAT Karten nicht finden"
+        title: "Wir konnten deine PagoBANCOMAT-Karten nicht finden"
         body: "Versuche es erneut"
       koNotFound:
         title: "Wir konnten keine Karten finden"
@@ -1179,6 +1187,10 @@ wallet:
       ALREADY_ONBOARDED:
         title: "Du hast diese Zahlungsmethode bereits hinzugefügt"
         subtitle: ""
+        primaryAction: "Schließen"
+      BPAY_NOT_FOUND:
+        title: "Wir haben kein aktives BANCOMAT Pay Konto gefunden."
+        subtitle: "Wende dich an deine Bank, um den Dienst zu aktivieren."
         primaryAction: "Schließen"
   alert:
     supportedCardPageLinkError: "Beim Öffnen der Übersichtsseite der unterstützten Karten ist ein Fehler aufgetreten."
@@ -1683,6 +1695,12 @@ wallet:
         subtitle: "Es wurde kein Betrag abgebucht.\nDu hast wahrscheinlich die Obergrenze deiner Zahlungsmethode überschritten."
       INVALID_METHOD:
         title: "Die Zahlungsmethode wird nicht unterstützt"
+      WAITING_CONFIRMATION_EMAIL:
+        title: "Warte auf eine Bestätigung per E-Mail"
+        subtitle: "Es war nicht möglich, das Ergebnis der Zahlung zu überprüfen. Wenn sie erfolgreich war, wirst du in Kürze eine E-Mail erhalten. Sollte diese nicht ankommen, kontaktiere bitte den Support."
+      METHOD_NOT_ENABLED:
+        title: "Zahlungsmethode in der App aktivieren"
+        subtitle: "Bevor du die Zahlung erneut versuchst, wähle die Zahlungsmethode in deinem Konto aus und aktiviere die Funktion “Zahlungen in der App”."
     support:
       button: "Support kontaktieren"
       supportTitle: "Support kontaktieren"
@@ -1815,6 +1833,7 @@ messages:
       success: "Wiederherstellung durchgeführt."
       failure: "Die Wiederherstellung ist fehlgeschlagen"
 messageDetails:
+  accessibilityAttachmentIcon: "Enthält Anhänge"
   contextualHelpTitle: "Mitteilungsdetails"
   headerTitle: "Mitteilung"
   emptyMessage: "Kein Inhalt"
@@ -1853,13 +1872,18 @@ messageDetails:
     action: "Mehr erfahren"
   bottomSheet:
     title: "Was ist eine dynamische Mitteilung?"
-    body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anlagen.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
+    body: "Die versendende Körperschaft kann den Inhalt dieser Nachricht auch nach dem Versand aktualisieren, um sicherzustellen, dass die Informationen stets korrekt und relevant sind.\n\n Dies geschieht in bestimmten Fällen, wie z. B. bei der Aktualisierung veralteter Informationen oder nicht mehr gültiger Anhänge.\n\n Wenn die Körperschaft dich über neue Informationen oder wichtige Aktualisierungen informieren muss, wird sie dies mittels einer neuen Mitteilung tun."
 messagePDFPreview:
   title: "PDF-Vorschau"
-  singleBtn: "Speichern oder freigeben"
+  singleBtn: "Speichern oder teilen"
+  singleBtnAccessibility: "Dokument speichern oder teilen"
   open: "Öffnen"
   save: "Speichern"
+  saveAccessibility: "Dokument speichern"
   savedAtLocation: "Das Dokument {{name}} wurde im Ordner Download gespeichert."
+  share: "Teilen"
+  shareAccessibility: "Dokument teilen"
+  pdfAccessibility: "Vorschau PDF-Dokument"
   errors:
     previewing:
       title: "Keine Vorschau verfügbar"
@@ -2216,12 +2240,20 @@ bonus:
           other: "{{seconds}} Sekunden"
 features:
   messages:
+    attachmentDownloadFeedback: "Download läuft"
+    attachments: "Anhänge"
     loading:
       title: "Die Details der Mitteilung werden geladen"
       subtitle: "Warte ein paar Sekunden"
     updateBottomSheet:
       title: "Aktualisiere die IO-App"
       subtitle: "App IO Version {{value}} ist erforderlich, um diese Funktion zu nutzen. Bitte aktualisiere die App, um fortzufahren."
+    badge:
+      dueDate: "Abgelaufen am {{date}} um {{time}}"
+    alert:
+      addReminder: "Erinnerung hinzufügen"
+      removeReminder: "Erinnerung entfernen"
+      content: "Läuft am {{date}} um {{time}} ab"
   euCovidCertificate:
     save:
       album: "IO"
@@ -2280,6 +2312,8 @@ features:
         activated: "Vielen Dank, der Dienst ist aktiv!"
         error: "Bei deiner Anfrage ist ein Fehler aufgetreten"
     details:
+      badge:
+        legalValue: "Rechtsgültig"
       title: "Details der Mitteilung"
       noticeCode: "Zahlungskodex"
       loadError:

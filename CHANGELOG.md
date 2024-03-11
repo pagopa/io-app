@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.55.0-rc.3](https://github.com/pagopa/io-app/compare/2.55.0-rc.2...2.55.0-rc.3) (2024-03-05)
+
+
+### Features
+
+* [[IOCOM-853](https://pagopa.atlassian.net/browse/IOCOM-853)] Add footer component to MessageDetailsScreen ([#5560](https://github.com/pagopa/io-app/issues/5560)) ([b3ad3e4](https://github.com/pagopa/io-app/commit/b3ad3e427dd21d0842af6ee8253b5dbda9222a6d))
+* [[IOCOM-855](https://pagopa.atlassian.net/browse/IOCOM-855)] Add bottom sheet to display message extra data ([#5565](https://github.com/pagopa/io-app/issues/5565)) ([dc46b30](https://github.com/pagopa/io-app/commit/dc46b301590cb6ce953cb76af52be8bf7b205b65))
+* [[IOCOM-858](https://pagopa.atlassian.net/browse/IOCOM-858)] Generic payment update for messages ([#5567](https://github.com/pagopa/io-app/issues/5567)) ([8557640](https://github.com/pagopa/io-app/commit/8557640d7ad7d420db0ddd5d8f8e21cf1a552018))
+* [[IOPID-1500](https://pagopa.atlassian.net/browse/IOPID-1500)] Adopt the new DS to `IngressScreen` ([#5548](https://github.com/pagopa/io-app/issues/5548)) ([7350615](https://github.com/pagopa/io-app/commit/7350615dc6586efed94c52f17eec7038536a56db))
+
+
+### Bug Fixes
+
+* [[IOPID-1630](https://pagopa.atlassian.net/browse/IOPID-1630)] EIC error component navigation object not found ([#5571](https://github.com/pagopa/io-app/issues/5571)) ([8cb08e6](https://github.com/pagopa/io-app/commit/8cb08e6e253cff229c74bbf163573569749b5db2))
+* **Firma con IO:** [[SFEQS-2132](https://pagopa.atlassian.net/browse/SFEQS-2132)] Rerender when starting from page 0 in PDF preview ([#5569](https://github.com/pagopa/io-app/issues/5569)) ([b3c521f](https://github.com/pagopa/io-app/commit/b3c521fadf6df98d4492d1d490036c2afcbc0de2))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-259](https://pagopa.atlassian.net/browse/IOAPPX-259)] Upgrade `io-app-design-system` to `v.1.25.1` ([#5566](https://github.com/pagopa/io-app/issues/5566)) ([67f8ba0](https://github.com/pagopa/io-app/commit/67f8ba0a77fbe7ae4ee7b4405fc80694d587db27))
+* 🇩🇪 updates ([#5564](https://github.com/pagopa/io-app/issues/5564)) ([46ec138](https://github.com/pagopa/io-app/commit/46ec13805bcedcdbb37743ed64819f8fc847fb57))
+* **Cross:** [[IOAPPX-254](https://pagopa.atlassian.net/browse/IOAPPX-254)] Add iOS smooth corners to specific components ([#5552](https://github.com/pagopa/io-app/issues/5552)) ([7d5f362](https://github.com/pagopa/io-app/commit/7d5f362ddb4cb946b5f66cb2d2399e9bdd3a7c0a))
+
+## [2.55.0-rc.2](https://github.com/pagopa/io-app/compare/2.55.0-rc.1...2.55.0-rc.2) (2024-03-01)
+
+
+### Bug Fixes
+
+* [[IOCOM-1154](https://pagopa.atlassian.net/browse/IOCOM-1154)] Fix for `undefined` value on `isDesignSystemEnabled` (and double navigation bar) ([#5563](https://github.com/pagopa/io-app/issues/5563)) ([7d4414d](https://github.com/pagopa/io-app/commit/7d4414d6f745f7f5f68f5587a9dfc76e53542a92))
+
+
+### Chores
+
+* [[IOBP-561](https://pagopa.atlassian.net/browse/IOBP-561)] Addition of new payments page playground ([#5529](https://github.com/pagopa/io-app/issues/5529)) ([09b490a](https://github.com/pagopa/io-app/commit/09b490a888a4db071dc4477a6e71e97e97d30dba))
+* [[IOBP-569](https://pagopa.atlassian.net/browse/IOBP-569)] Removed expiry date from payment summary module checkout ([#5542](https://github.com/pagopa/io-app/issues/5542)) ([3355897](https://github.com/pagopa/io-app/commit/33558975ad36a8a75c1e166d8d21b9a76960dd28))
+
+## [2.55.0-rc.1](https://github.com/pagopa/io-app/compare/2.55.0-rc.0...2.55.0-rc.1) (2024-03-01)
+
+
+### Features
+
+* [[IOPID-1501](https://pagopa.atlassian.net/browse/IOPID-1501)] Adapt LandingScreen to the new DS ([#5536](https://github.com/pagopa/io-app/issues/5536)) ([9c4c4d1](https://github.com/pagopa/io-app/commit/9c4c4d14cedbe79a2d3738ffc9ce0ad73e6cb402))
+
+
+### Bug Fixes
+
+* [[IOCOM-1154](https://pagopa.atlassian.net/browse/IOCOM-1154)] Fix for double navigation bar on message details ([#5559](https://github.com/pagopa/io-app/issues/5559)) ([3bad813](https://github.com/pagopa/io-app/commit/3bad813f1aeafe8117c76de95bfa134a6a24ce4b))
+
 ## [2.55.0-rc.0](https://github.com/pagopa/io-app/compare/2.54.0-rc.1...2.55.0-rc.0) (2024-02-28)
 
 
