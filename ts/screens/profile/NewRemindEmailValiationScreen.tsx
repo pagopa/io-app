@@ -70,8 +70,8 @@ export type RemindEmailValidationProp = {
   sendEmailAtFirstRender?: boolean;
 };
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "email.insert.help.title",
-  body: "email.insert.help.content"
+  title: "email.validate.title",
+  body: "email.validate.help"
 };
 const NewRemindEmailValidationScreenComponent = (
   props: RemindEmailValidationProp
