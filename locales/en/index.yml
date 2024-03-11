@@ -2090,7 +2090,7 @@ identification:
   fail:
     remainingAttempts: Hai a disposizione ancora {{attempts}} tentativi
     remainingAttemptSingle: Hai a disposizone ancora {{attempts}} tentativo
-    tooManyAttempts: Too many attempts.
+    tooManyAttempts: Hai inserito troppe volte il codice sbagliato!
     waitMessage: "Try again in:"
   unlockCode:
     accessibility:

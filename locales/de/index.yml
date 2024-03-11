@@ -2013,10 +2013,7 @@ identification:
       reason: "Identifikation durch TouchID fehlgeschlagen"
       title: "Identifikation erforderlich"
       sensorDescription: "Berührungssensor"
-  fail:
-    remainingAttempts: "Du hast noch {{attempts}} Versuche übrig."
-    remainingAttemptSingle: "Du hast noch einen Versuch übrig."
-    tooManyAttempts: "Zu viele falsche Versuche."
+  fail:        
     waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
