@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.56.0-rc.0](https://github.com/pagopa/io-app/compare/2.55.0-rc.3...2.56.0-rc.0) (2024-03-12)
+
+
+### Features
+
+* [[IOCOM-854](https://pagopa.atlassian.net/browse/IOCOM-854)] Add bottom sheet to display message contacts ([#5570](https://github.com/pagopa/io-app/issues/5570)) ([063fe4d](https://github.com/pagopa/io-app/commit/063fe4d3bbd306f5dcb3872d58ed7c42e7f51e76))
+* [[IOCOM-857](https://pagopa.atlassian.net/browse/IOCOM-857)] Payment data on message details ([#5575](https://github.com/pagopa/io-app/issues/5575)) ([32da27d](https://github.com/pagopa/io-app/commit/32da27d5e0a0cc98c14fb6b1a5138abd0ac658fb))
+* [[IOPID-1499](https://pagopa.atlassian.net/browse/IOPID-1499)] Adopt the new DS layout to splash screens ([#5554](https://github.com/pagopa/io-app/issues/5554)) ([a8b32f4](https://github.com/pagopa/io-app/commit/a8b32f47efe1d6402a96c9313b77aef69b70197a))
+* [[IOPID-1504](https://pagopa.atlassian.net/browse/IOPID-1504)] Adopt the new DS to `IdpSuccessfulAuthentication`  ([#5547](https://github.com/pagopa/io-app/issues/5547)) ([7357f9f](https://github.com/pagopa/io-app/commit/7357f9f55f88e80b6c8bcd257bc5d1093e9eaecd))
+* [[IOPID-1512](https://pagopa.atlassian.net/browse/IOPID-1512)] New DS on onboarding finished thank you page ([#5562](https://github.com/pagopa/io-app/issues/5562)) ([c73b6a4](https://github.com/pagopa/io-app/commit/c73b6a4a2764e27cd379999e8786fee0c21d951d))
+* [[IOPLT-342](https://pagopa.atlassian.net/browse/IOPLT-342)] Bump react-native version to 0.70 ([#5506](https://github.com/pagopa/io-app/issues/5506)) ([033eec2](https://github.com/pagopa/io-app/commit/033eec2e547f364d4b6ada6a1004cdbfb59e9bb5))
+
+
+### Bug Fixes
+
+* [[IOBP-513](https://pagopa.atlassian.net/browse/IOBP-513)] Added loading state in onboarding list wallet ([#5456](https://github.com/pagopa/io-app/issues/5456)) ([6f11e44](https://github.com/pagopa/io-app/commit/6f11e4447fa8478a8aaa317115d52c04d9e902f8))
+* [[IOBP-582](https://pagopa.atlassian.net/browse/IOBP-582)] Behavior of the new payment go back with only one PSP ([#5572](https://github.com/pagopa/io-app/issues/5572)) ([3687d7e](https://github.com/pagopa/io-app/commit/3687d7e443ec050fd73edb471da6c5149d0872d6))
+* e2e cache restore issue ([#5585](https://github.com/pagopa/io-app/issues/5585)) ([6050eee](https://github.com/pagopa/io-app/commit/6050eeeeb96a1dcb41ef96db887404abd1abd608))
+
+
+### Chores
+
+* [[IOBP-574](https://pagopa.atlassian.net/browse/IOBP-574)] Adds `success` flag to payment's Zendesk support payload ([#5546](https://github.com/pagopa/io-app/issues/5546)) ([93120f0](https://github.com/pagopa/io-app/commit/93120f0704c0349193c7f05f5a712d31a84d2568))
+* **Cross:** [[IOAPPX-249](https://pagopa.atlassian.net/browse/IOAPPX-249)] Update `build.gradle` ([#5512](https://github.com/pagopa/io-app/issues/5512)) ([51ce2d0](https://github.com/pagopa/io-app/commit/51ce2d06fdbcb50a7b6c61077ecf573e5fde0fc8))
+* **Cross:** [[IOAPPX-257](https://pagopa.atlassian.net/browse/IOAPPX-257)] Upload iOS dSYM files as artifact ([#5574](https://github.com/pagopa/io-app/issues/5574)) ([c51c295](https://github.com/pagopa/io-app/commit/c51c295bc0c7360f5271f9478e60402e182a86aa))
+* [[IOBP-581](https://pagopa.atlassian.net/browse/IOBP-581)] Changed text into payment cancelled by user outcome screen ([#5573](https://github.com/pagopa/io-app/issues/5573)) ([63e1746](https://github.com/pagopa/io-app/commit/63e1746f30be410c440886571d42b77b32ff3d7f))
+
 ## [2.55.0-rc.3](https://github.com/pagopa/io-app/compare/2.55.0-rc.2...2.55.0-rc.3) (2024-03-05)
 
 

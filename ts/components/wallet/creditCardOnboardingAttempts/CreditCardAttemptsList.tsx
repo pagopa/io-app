@@ -22,7 +22,9 @@ type Props = Readonly<{
   title: string;
   creditCardAttempts: CreditCardInsertionState;
   onAttemptPress: (attempt: CreditCardInsertion) => void;
-  ListEmptyComponent: React.ReactNode;
+  ListEmptyComponent: React.ComponentProps<
+    typeof FlatList
+  >["ListEmptyComponent"];
 }>;
 
 const styles = StyleSheet.create({
@@ -149,7 +151,7 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
           <ItemSeparatorComponent noPadded={true} />
         )}
         ListFooterComponent={
-          creditCardAttempts.length > 0 && <EdgeBorderComponent />
+          creditCardAttempts.length > 0 ? <EdgeBorderComponent /> : null
         }
         keyExtractor={c => c.hashedPan}
       />
