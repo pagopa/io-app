@@ -77,7 +77,8 @@ const IdentificationModal = () => {
   console.log("Refreshing IdentificationModal 🔁");
   const [value, setValue] = useState("");
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
-  const invalidPin = useRef(false);
+  const isPinValidRef = useRef(true);
+  const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
   // TODO: forced new blue until we have a proper color mapping on the design system
@@ -121,6 +122,7 @@ const IdentificationModal = () => {
     "identification.unlockCode.reset.button"
   )} ${I18n.t("identification.unlockCode.reset.code")}?`;
   const closeButtonLabel = I18n.t("global.buttons.close");
+  const textTryAgain = I18n.t("global.genericRetry");
 
   const dispatch = useDispatch();
   const onIdentificationCancel = useCallback(() => {
@@ -198,9 +200,11 @@ const IdentificationModal = () => {
     [onIdentificationSuccessHandler, setIsBiometricLocked]
   );
 
-  if (invalidPin.current) {
+  if (!isPinValidRef.current) {
     // eslint-disable-next-line functional/immutable-data
-    invalidPin.current = false;
+    isPinValidRef.current = true;
+    // eslint-disable-next-line functional/immutable-data
+    showRetryText.current = true;
     onIdentificationFailureHandler();
   }
 
@@ -252,11 +256,13 @@ const IdentificationModal = () => {
         setValue("");
         // Dispatch the success action
         onIdentificationSuccessHandler(false);
-        return true;
+        // eslint-disable-next-line functional/immutable-data
+        isPinValidRef.current = true;
+      } else {
+        // eslint-disable-next-line functional/immutable-data
+        isPinValidRef.current = false;
       }
-      // eslint-disable-next-line functional/immutable-data
-      invalidPin.current = true;
-      return false;
+      return isPinValidRef.current;
     },
     [onIdentificationSuccessHandler, pin]
   );
@@ -321,6 +327,11 @@ const IdentificationModal = () => {
     setAccessibilityFocus(headerRef);
   }
 
+  const remainingAttemptsToShowAlert =
+    remainingAttempts <= FAIL_ATTEMPTS_TO_SHOW_ALERT;
+  const showToastNotificationAlert =
+    remainingAttemptsToShowAlert || showRetryText.current;
+
   return showLockModal ? (
     <IdentificationLockModal
       countdownInMs={countdownInMs}
@@ -358,26 +369,32 @@ const IdentificationModal = () => {
           ]}
         >
           <ContentWrapper>
-            <View style={IOStyles.alignCenter}>
+            <View>
               <VSpacer size={16} />
-              {remainingAttempts <= FAIL_ATTEMPTS_TO_SHOW_ALERT ? (
+              {showToastNotificationAlert ? (
                 <View
                   accessible
                   ref={errorStatusRef}
                   style={styles.alertContainer}
                 >
                   <ToastNotification
-                    message={remainingAttemptsText}
+                    message={
+                      remainingAttemptsToShowAlert
+                        ? remainingAttemptsText
+                        : textTryAgain
+                    }
                     icon="warningFilled"
                     variant="warning"
                   />
                 </View>
               ) : (
-                <Pictogram
-                  pictogramStyle="light-content"
-                  name={pictogramKey}
-                  size={64}
-                />
+                <View style={IOStyles.alignCenter}>
+                  <Pictogram
+                    pictogramStyle="light-content"
+                    name={pictogramKey}
+                    size={64}
+                  />
+                </View>
               )}
               <View accessible ref={headerRef} style={IOStyles.alignCenter}>
                 <VSpacer size={8} />
