@@ -56,7 +56,7 @@ target 'ItaliaApp' do
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
         if target.name == 'Flipper'
-          file_path = "Pods/Flipper/xplat/Flipper/FlipperTransportTypes.h"
+          file_path = 'Pods/Flipper/xplat/Flipper/FlipperTransportTypes.h'
           contents = File.read(file_path)
           unless contents.include?('#include <functional>')
             File.open(file_path, 'w') do |file|
@@ -64,7 +64,7 @@ target 'ItaliaApp' do
               file.puts(contents)
             end
           end
-        end
+        end        
         # This is needed in order to build the project on Apple silicon.
       	# Beware that after this modification you need Rosetta to run the app 
       	# on the simulator.
