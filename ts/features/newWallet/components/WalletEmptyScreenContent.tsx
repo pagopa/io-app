@@ -5,7 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 
 const WalletEmptyScreenContent = () => {
@@ -14,17 +14,10 @@ const WalletEmptyScreenContent = () => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        padding: 24,
-        justifyContent: "center",
-        alignItems: "center"
-      }}
-    >
+    <View style={styles.container}>
       <Pictogram name="cardAdd" />
       <VSpacer size={16} />
-      <Body color="grey-650" weight="Regular" style={{ textAlign: "center" }}>
+      <Body color="grey-650" weight="Regular" style={styles.text}>
         {I18n.t("features.wallet.home.emptyMessage")}
       </Body>
       <VSpacer size={24} />
@@ -39,5 +32,15 @@ const WalletEmptyScreenContent = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  text: { textAlign: "center" }
+});
 
 export { WalletEmptyScreenContent };
