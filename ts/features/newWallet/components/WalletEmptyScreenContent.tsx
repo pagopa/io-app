@@ -6,6 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
+import I18n from "../../../i18n";
 
 const WalletEmptyScreenContent = () => {
   const handleAddToWalletButtonPress = () => {
@@ -24,13 +25,12 @@ const WalletEmptyScreenContent = () => {
       <Pictogram name="cardAdd" />
       <VSpacer size={16} />
       <Body color="grey-650" weight="Regular" style={{ textAlign: "center" }}>
-        Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale,
-        bonus e sconti.
+        {I18n.t("features.wallet.home.emptyMessage")}
       </Body>
       <VSpacer size={24} />
       <ButtonSolid
-        label="Aggiungi al Portafoglio"
-        accessibilityLabel="Aggiungi al Portafoglio"
+        label={I18n.t("features.wallet.home.cta")}
+        accessibilityLabel={I18n.t("features.wallet.home.cta")}
         onPress={handleAddToWalletButtonPress}
         icon="add"
         iconPosition="end"
