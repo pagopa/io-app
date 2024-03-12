@@ -1,14 +1,17 @@
 import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
-import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { UIMessageId } from "../types";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { MessagesParamsList } from "../navigation/params";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
@@ -36,6 +39,7 @@ import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
+import { FooterCTAs } from "../components/MessageDetail/FooterCTAs";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
 import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
@@ -56,11 +60,13 @@ export type MessageDetailsScreenRouteParams = {
   serviceId: ServiceId;
 };
 
-type MessageDetailsRouteProps = RouteProp<MessagesParamsList, "MESSAGE_DETAIL">;
+type MessageDetailsScreenProps = IOStackNavigationRouteProps<
+  MessagesParamsList,
+  "MESSAGE_DETAIL"
+>;
 
-export const MessageDetailsScreen = () => {
-  const { params } = useRoute<MessageDetailsRouteProps>();
-  const { messageId, serviceId } = params;
+export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
+  const { messageId, serviceId } = props.route.params;
 
   const navigation = useIONavigation();
 
@@ -200,6 +206,7 @@ export const MessageDetailsScreen = () => {
         <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
         <ScrollViewAdditionalSpace messageId={messageId} />
       </ScrollView>
+      <FooterCTAs markdown={messageMarkdown} serviceId={serviceId} />
       <MessageDetailsPaymentButton messageId={messageId} />
     </>
   );
