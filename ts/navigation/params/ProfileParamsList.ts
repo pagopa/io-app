@@ -1,5 +1,5 @@
 import { CduEmailInsertScreenNavigationParams } from "../../screens/profile/CduEmailInsertScreen";
-import { RemindEmailValidationProp } from "../../screens/profile/NewRemindEmailValiationScreen";
+import { EmailValidationScreenProp } from "../../screens/profile/EmailValidationScreen";
 import ROUTES from "../routes";
 
 export type ProfileParamsList = {
@@ -18,7 +18,7 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_FISCAL_CODE]: undefined;
   [ROUTES.READ_EMAIL_SCREEN]: undefined;
   [ROUTES.INSERT_EMAIL_SCREEN]: CduEmailInsertScreenNavigationParams;
-  [ROUTES.EMAIL_VERIFICATION_SCREEN]: RemindEmailValidationProp;
+  [ROUTES.EMAIL_VERIFICATION_SCREEN]: EmailValidationScreenProp;
   [ROUTES.PIN_SCREEN]: undefined;
   [ROUTES.PROFILE_DOWNLOAD_DATA]: undefined;
   [ROUTES.MARKDOWN_PLAYGROUND]: undefined;

@@ -17,7 +17,7 @@ import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChec
 import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
 import { useIOSelector } from "../store/hooks";
 import { isGestureEnabled } from "../utils/navigation";
-import NewRemindEmailValidationScreen from "../screens/profile/NewRemindEmailValiationScreen";
+import EmailValidationScreen from "../screens/profile/EmailValidationScreen";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
@@ -92,7 +92,7 @@ const OnboardingNavigator = () => {
       )}
       <Stack.Screen
         name={ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN}
-        component={NewRemindEmailValidationScreen}
+        component={EmailValidationScreen}
       />
       <Stack.Screen
         options={{ headerShown: false }}

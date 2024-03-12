@@ -7,10 +7,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Platform, ScrollView, StyleSheet, View } from "react-native";
+import {
+  AccessibilityInfo,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import {
   IOPictogramSizeScale,
-  Label,
   Pictogram,
   VSpacer,
   Body,
@@ -65,7 +70,7 @@ const countdownIntervalDuration = 1000 as Millisecond; // 1 second
 const EMPTY_EMAIL = "";
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 120;
 
-export type RemindEmailValidationProp = {
+export type EmailValidationScreenProp = {
   isOnboarding?: boolean;
   sendEmailAtFirstRender?: boolean;
 };
@@ -73,9 +78,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.validate.title",
   body: "email.validate.help"
 };
-const NewRemindEmailValidationScreenComponent = (
-  props: RemindEmailValidationProp
-) => {
+const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
   const { isOnboarding, sendEmailAtFirstRender } = props;
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -181,13 +184,11 @@ const NewRemindEmailValidationScreenComponent = (
     if (visible) {
       return (
         <View style={IOStyles.alignCenter}>
-          <Body>
-            <Label weight="Regular" style={{ textAlign: "center" }}>
-              {I18n.t("email.newvalidate.countdowntext")}{" "}
-            </Label>
-            <Label weight="SemiBold" style={{ textAlign: "center" }}>
+          <Body weight="Regular" style={{ textAlign: "center" }} color="black">
+            {I18n.t("email.newvalidate.countdowntext")}{" "}
+            <Body weight="SemiBold" color="black">
               {timerCount}s
-            </Label>
+            </Body>
           </Body>
         </View>
       );
@@ -213,12 +214,18 @@ const NewRemindEmailValidationScreenComponent = (
       // send validation email KO
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
+        AccessibilityInfo.announceForAccessibility(
+          I18n.t("global.actions.retry")
+        );
         setIsValidateEmailButtonDisabled(false);
         return;
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
         IOToast.show(I18n.t("email.newvalidate.toast"));
+        AccessibilityInfo.announceForAccessibility(
+          I18n.t("email.newvalidate.toast")
+        );
         setIsValidateEmailButtonDisabled(true);
       }
     }
@@ -281,9 +288,9 @@ const NewRemindEmailValidationScreenComponent = (
             <Body weight="SemiBold">{email}</Body>
           </Body>
         </View>
+        <VSpacer size={24} />
         {!isEmailValidated && (
           <View style={IOStyles.selfCenter}>
-            <VSpacer size={16} />
             <ButtonLink
               label={I18n.t("email.newvalidate.link")}
               accessibilityLabel={I18n.t("email.newvalidate.link")}
@@ -299,7 +306,6 @@ const NewRemindEmailValidationScreenComponent = (
           }}
           visible={isValidateEmailButtonDisabled && !isEmailValidated}
         />
-        <VSpacer size={24} />
         {isEmailValidated ? (
           <View style={IOStyles.selfCenter}>
             <ButtonSolid
@@ -326,12 +332,12 @@ const NewRemindEmailValidationScreenComponent = (
   );
 };
 
-const NewRemindEmailValidationScreen = () => {
+const EmailValidationScreen = () => {
   const props =
     useRoute<
       Route<
         "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
-        RemindEmailValidationProp
+        EmailValidationScreenProp
       >
     >().params;
   return (
@@ -339,7 +345,7 @@ const NewRemindEmailValidationScreen = () => {
       timerTiming={emailSentTimeout / 1000}
       intervalDuration={countdownIntervalDuration}
     >
-      <NewRemindEmailValidationScreenComponent {...props} />
+      <EmailValidationScreenComponent {...props} />
     </CountdownProvider>
   );
 };
@@ -361,4 +367,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewRemindEmailValidationScreen;
+export default EmailValidationScreen;
