@@ -27,8 +27,12 @@ type OwnProps = {
   columnWrapperStyle?: StyleProp<ViewStyle>;
   contentContainerStyle?: StyleProp<ViewStyle>;
   headerComponentStyle?: StyleProp<ViewStyle>;
-  headerComponent?: React.ReactNode;
-  footerComponent?: React.ReactNode;
+  headerComponent?: React.ComponentProps<
+    typeof FlatList
+  >["ListHeaderComponent"];
+  footerComponent?: React.ComponentProps<
+    typeof FlatList
+  >["ListFooterComponent"];
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected
