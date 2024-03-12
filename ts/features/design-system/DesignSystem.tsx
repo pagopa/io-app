@@ -107,6 +107,7 @@ export const DesignSystem = () => {
     <>
       <StatusBar
         barStyle={colorScheme === "dark" ? "light-content" : "default"}
+        backgroundColor={theme["appBackground-primary"]}
       />
       <SectionList
         keyExtractor={(item, index) => `${item.route}-${index}`}
