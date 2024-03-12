@@ -29,6 +29,7 @@ import {
   identificationCancel,
   identificationFailure,
   identificationForceLogout,
+  identificationPinReset,
   identificationSuccess
 } from "../../store/actions/identification";
 import { useIOSelector } from "../../store/hooks";
@@ -97,6 +98,15 @@ const IdentificationModal = () => {
   const identificationFailState = useIOSelector(identificationFailSelector);
   const name = useIOSelector(profileNameSelector);
   const { biometricType, isFingerprintEnabled } = useBiometricType();
+
+  // eslint-disable-next-line functional/no-let
+  let pin = "";
+  // eslint-disable-next-line functional/no-let
+  let isValidatingTask = false;
+  if (identificationProgressState.kind === "started") {
+    pin = identificationProgressState.pin;
+    isValidatingTask = identificationProgressState.isValidatingTask;
+  }
 
   const biometricsConfig = biometricType
     ? {
@@ -200,11 +210,34 @@ const IdentificationModal = () => {
     }
   };
 
-  if (identificationProgressState.kind !== "started") {
-    return null;
-  }
+  const onPinResetHandler = useCallback(() => {
+    dispatch(identificationPinReset());
+  }, [dispatch]);
 
-  const { pin, isValidatingTask } = identificationProgressState;
+  const confirmResetAlert = useCallback(
+    () =>
+      Alert.alert(
+        I18n.t("identification.forgetCode.confirmTitle"),
+        I18n.t(
+          isValidatingTask
+            ? "identification.forgetCode.confirmMsgWithTask"
+            : "identification.forgetCode.confirmMsg"
+        ),
+        [
+          {
+            text: I18n.t("global.buttons.confirm"),
+            style: "default",
+            onPress: onPinResetHandler
+          },
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      ),
+    [isValidatingTask, onPinResetHandler]
+  );
 
   const titleLabel = isValidatingTask
     ? I18n.t("identification.titleValidation")
@@ -212,18 +245,21 @@ const IdentificationModal = () => {
     ? I18n.t("identification.title", { name })
     : "";
 
-  const onPinValidated = (v: string) => {
-    if (v === pin) {
-      // Clear the inserted value
-      setValue("");
-      // Dispatch the success action
-      onIdentificationSuccessHandler(false);
-      return true;
-    }
-    // eslint-disable-next-line functional/immutable-data
-    invalidPin.current = true;
-    return false;
-  };
+  const onPinValidated = useCallback(
+    (v: string) => {
+      if (v === pin) {
+        // Clear the inserted value
+        setValue("");
+        // Dispatch the success action
+        onIdentificationSuccessHandler(false);
+        return true;
+      }
+      // eslint-disable-next-line functional/immutable-data
+      invalidPin.current = true;
+      return false;
+    },
+    [onIdentificationSuccessHandler, pin]
+  );
 
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
@@ -263,6 +299,13 @@ const IdentificationModal = () => {
     }
   );
 
+  // If the authentication process is not started, we don't show the modal.
+  // We need to put this before the biometric request,
+  // to avoid the biometric request to be triggered when the modal is not shown.
+  if (identificationProgressState.kind !== "started") {
+    return null;
+  }
+
   // When app becomes active from background the state of TouchID support
   // must be updated, because it might be switched off.
   // Don't do this check if I can't authenticate
@@ -274,7 +317,6 @@ const IdentificationModal = () => {
       (previousIdentificationProgressState?.kind !== "started" &&
         identificationProgressState.kind === "started"))
   ) {
-    console.log("ask for bio auth 🤲🏼");
     void onFingerprintRequest();
     setAccessibilityFocus(headerRef);
   }
@@ -374,7 +416,7 @@ const IdentificationModal = () => {
                   accessibilityLabel={forgotCodeLabel}
                   color="contrast"
                   label={forgotCodeLabel}
-                  onPress={() => Alert.alert("Forgot unlock code")}
+                  onPress={confirmResetAlert}
                 />
                 <VSpacer size={VERTICAL_PADDING} />
               </View>
