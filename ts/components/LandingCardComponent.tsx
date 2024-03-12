@@ -3,58 +3,69 @@
  */
 
 import * as React from "react";
-import { View, Dimensions, Image, ScrollView, StyleSheet } from "react-native";
-import { Col, Grid } from "react-native-easy-grid";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Body } from "./core/typography/Body";
-import { H2 } from "./core/typography/H2";
+import { View, ScrollView, useWindowDimensions } from "react-native";
+import {
+  Body,
+  H3,
+  IOPictograms,
+  IOStyles,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 
 type Props = {
   id: number;
-  image: NodeRequire;
+  pictogramName: IOPictograms;
   title: string;
   content: string;
   accessibilityLabel?: string;
   accessibilityHint?: string;
 };
 
-const screenWidth = Dimensions.get("screen").width;
+const VERTICAL_SPACING = 16;
 
-const styles = StyleSheet.create({
-  card: {
-    width: screenWidth,
-    alignItems: "center",
-    alignContent: "flex-start"
-  },
-  image: {
-    width: screenWidth / 2,
-    height: screenWidth / 2,
-    resizeMode: "contain"
+export const LandingCardComponent = React.forwardRef<View, Props>(
+  (props, ref) => {
+    const screenDimension = useWindowDimensions();
+    const screenWidth = screenDimension.width;
+    const {
+      accessibilityLabel,
+      accessibilityHint,
+      pictogramName,
+      title,
+      content
+    } = props;
+
+    return (
+      <ScrollView
+        accessible={false}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
+        <View
+          ref={ref}
+          style={[
+            {
+              width: screenWidth
+            },
+            IOStyles.horizontalContentPadding,
+            IOStyles.alignCenter
+          ]}
+          accessible={true}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint={accessibilityHint}
+        >
+          <Pictogram size={180} name={pictogramName} />
+          <VSpacer size={VERTICAL_SPACING} />
+          <H3 importantForAccessibility="no" style={{ textAlign: "center" }}>
+            {title}
+          </H3>
+          <VSpacer size={VERTICAL_SPACING} />
+          <Body importantForAccessibility="no" style={{ textAlign: "center" }}>
+            {content}
+          </Body>
+          <VSpacer size={VERTICAL_SPACING} />
+        </View>
+      </ScrollView>
+    );
   }
-});
-
-export const LandingCardComponent: React.SFC<Props> = card => (
-  <ScrollView>
-    <View
-      style={styles.card}
-      accessible={true}
-      accessibilityLabel={card.accessibilityLabel}
-      accessibilityHint={card.accessibilityHint}
-    >
-      <Image source={card.image} style={styles.image} />
-      <VSpacer size={16} />
-      <Grid>
-        <Col size={1} />
-        <Col size={7}>
-          <H2 style={{ textAlign: "center" }} weight="Bold">
-            {card.title}
-          </H2>
-          <VSpacer size={16} />
-          <Body style={{ textAlign: "center" }}>{card.content}</Body>
-          <VSpacer size={16} />
-        </Col>
-        <Col size={1} />
-      </Grid>
-    </View>
-  </ScrollView>
 );

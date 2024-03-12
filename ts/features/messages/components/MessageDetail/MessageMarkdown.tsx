@@ -4,9 +4,14 @@
 
 import { Omit } from "@pagopa/ts-commons/lib/types";
 import React from "react";
-
 import customVariables from "../../../../theme/variables";
-import Markdown, { MarkdownProps } from "../../../../components/ui/Markdown";
+import {
+  Markdown,
+  MarkdownProps
+} from "../../../../components/ui/Markdown/Markdown";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { useIOSelector } from "../../../../store/hooks";
+import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 
 type Props = Omit<MarkdownProps, "cssStyle">;
 
@@ -55,8 +60,11 @@ img {
 }
 `;
 
-const MessageMarkdown: React.SFC<Props> = props => (
-  <Markdown {...props} cssStyle={MESSAGE_CSS_STYLE} />
-);
-
-export default MessageMarkdown;
+export const MessageMarkdown = (props: Props) => {
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  return isDesignSystemEnabled ? (
+    <Markdown {...props} cssStyle={MESSAGE_CSS_STYLE} />
+  ) : (
+    <LegacyMarkdown {...props} cssStyle={MESSAGE_CSS_STYLE} />
+  );
+};

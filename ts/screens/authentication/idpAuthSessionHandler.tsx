@@ -31,7 +31,7 @@ import {
   getIdpLoginUri
 } from "../../utils/login";
 import { idpContextualHelpDataFromIdSelector } from "../../store/reducers/content";
-import Markdown from "../../components/ui/Markdown";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import IdpCustomContextualHelpContent from "../../components/screens/IdpCustomContextualHelpContent";
 import NavigationService from "../../navigation/NavigationService";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
@@ -122,6 +122,7 @@ const idpAuthSession = (
     )
   );
 
+// This page is used in the native login process.
 export const AuthSessionPage = () => {
   const [requestInfo, setRequestInfo] = useState<RequestInfo>({
     requestState: "LOADING",
@@ -196,9 +197,9 @@ export const AuthSessionPage = () => {
           () => ({
             title: I18n.t("authentication.idp_login.contextualHelpTitle"),
             body: () => (
-              <Markdown>
+              <LegacyMarkdown>
                 {I18n.t("authentication.idp_login.contextualHelpContent")}
-              </Markdown>
+              </LegacyMarkdown>
             )
           }),
           idpTextData => IdpCustomContextualHelpContent(idpTextData)

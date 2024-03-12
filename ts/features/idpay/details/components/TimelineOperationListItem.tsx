@@ -48,7 +48,7 @@ import {
 import I18n from "../../../../i18n";
 import { hoursAndMinutesToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { localeDateFormat } from "../../../../utils/locale";
-import { getBadgeTextByTransactionStatus } from "../../../walletV3/common/utils";
+import { getBadgeTextByTransactionStatus } from "../../../payments/common/utils";
 import { formatAbsNumberAmountOrDefault } from "../../common/utils/strings";
 
 export type TimelineOperationListItemProps = WithTestID<

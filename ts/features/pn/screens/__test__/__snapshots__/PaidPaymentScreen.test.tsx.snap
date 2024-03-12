@@ -23,7 +23,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
       style={
         Array [
           Object {
-            "backgroundColor": "rgb(242, 242, 242)",
+            "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
           undefined,
@@ -65,7 +65,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
               collapsable={false}
               style={
                 Object {
-                  "backgroundColor": "rgb(255, 255, 255)",
+                  "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
@@ -297,7 +297,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                       },
                       Array [
                         Object {
-                          "backgroundColor": "rgb(242, 242, 242)",
+                          "backgroundColor": "#FFFFFF",
                         },
                         undefined,
                       ],
@@ -1028,7 +1028,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
       style={
         Array [
           Object {
-            "backgroundColor": "rgb(242, 242, 242)",
+            "backgroundColor": "#FFFFFF",
             "flex": 1,
           },
           undefined,
@@ -1070,7 +1070,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
               collapsable={false}
               style={
                 Object {
-                  "backgroundColor": "rgb(255, 255, 255)",
+                  "backgroundColor": "#FFFFFF",
                   "borderBottomColor": "rgb(216, 216, 216)",
                   "flex": 1,
                   "shadowColor": "rgb(216, 216, 216)",
@@ -1302,7 +1302,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                       },
                       Array [
                         Object {
-                          "backgroundColor": "rgb(242, 242, 242)",
+                          "backgroundColor": "#FFFFFF",
                         },
                         undefined,
                       ],

@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.8.1)
   - boost (1.76.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -135,8 +136,17 @@ PODS:
   - OpenSSL-Universal (1.1.1100)
   - pagopa-io-react-native-crypto (0.2.1):
     - React-Core
+  - pagopa-io-react-native-http-client (0.1.3):
+    - Alamofire
+    - React-Core
   - pagopa-io-react-native-login-utils (1.0.0):
     - React-Core
+  - pagopa-react-native-zendesk (0.3.29):
+    - React-Core
+    - ZendeskAnswerBotSDK
+    - ZendeskChatSDK
+    - ZendeskMessagingAPISDK
+    - ZendeskSupportSDK
   - PromisesObjC (2.3.1)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -487,8 +497,6 @@ PODS:
     - React-Core
   - RNCPushNotificationIOS (1.8.0):
     - React-Core
-  - RNDateTimePicker (3.5.2):
-    - React-Core
   - RNDeviceInfo (10.8.0):
     - React-Core
   - RNFS (2.18.0):
@@ -541,12 +549,6 @@ PODS:
     - React-Core
   - RNSVG (12.3.0):
     - React-Core
-  - RNZendeskChat (0.3.28):
-    - React
-    - ZendeskAnswerBotSDK (~> 3.0.0)
-    - ZendeskChatSDK (~> 3.0.0)
-    - ZendeskMessagingAPISDK (~> 4.0.0)
-    - ZendeskSupportSDK (~> 6.0.0)
   - SocketRocket (0.6.1)
   - vision-camera-code-scanner (0.2.0):
     - GoogleMLKit/BarcodeScanning
@@ -558,31 +560,31 @@ PODS:
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
-  - ZendeskAnswerBotProvidersSDK (3.0.0):
-    - ZendeskSupportProvidersSDK (= 6.0.0)
-  - ZendeskAnswerBotSDK (3.0.0):
-    - ZendeskAnswerBotProvidersSDK (= 3.0.0)
-    - ZendeskMessagingSDK (= 4.0.0)
-  - ZendeskChatProvidersSDK (3.0.0)
-  - ZendeskChatSDK (3.0.0):
-    - ZendeskChatProvidersSDK (= 3.0.0)
-    - ZendeskMessagingSDK (= 4.0.0)
-  - ZendeskCommonUISDK (7.0.0)
-  - ZendeskCoreSDK (3.0.0)
-  - ZendeskMessagingAPISDK (4.0.0):
-    - ZendeskSDKConfigurationsSDK (= 2.0.0)
-  - ZendeskMessagingSDK (4.0.0):
-    - ZendeskCommonUISDK (= 7.0.0)
-    - ZendeskMessagingAPISDK (= 4.0.0)
-  - ZendeskSDKConfigurationsSDK (2.0.0)
-  - ZendeskSupportProvidersSDK (6.0.0):
-    - ZendeskCoreSDK (= 3.0.0)
-  - ZendeskSupportSDK (6.0.0):
-    - ZendeskMessagingSDK (= 4.0.0)
-    - ZendeskSupportProvidersSDK (= 6.0.0)
-  - ZXingObjC (3.6.9):
-    - ZXingObjC/All (= 3.6.9)
-  - ZXingObjC/All (3.6.9)
+  - ZendeskAnswerBotProvidersSDK (5.0.0):
+    - ZendeskSupportProvidersSDK (~> 8.0.0)
+  - ZendeskAnswerBotSDK (5.0.0):
+    - ZendeskAnswerBotProvidersSDK (~> 5.0.0)
+    - ZendeskMessagingSDK (~> 6.0.0)
+  - ZendeskChatProvidersSDK (5.0.0)
+  - ZendeskChatSDK (5.0.0):
+    - ZendeskChatProvidersSDK (~> 5.0.0)
+    - ZendeskMessagingSDK (~> 6.0.0)
+  - ZendeskCommonUISDK (9.0.0)
+  - ZendeskCoreSDK (5.0.0)
+  - ZendeskMessagingAPISDK (6.0.0):
+    - ZendeskSDKConfigurationsSDK (~> 4.0.0)
+  - ZendeskMessagingSDK (6.0.0):
+    - ZendeskCommonUISDK (~> 9.0.0)
+    - ZendeskMessagingAPISDK (~> 6.0.0)
+  - ZendeskSDKConfigurationsSDK (4.0.0)
+  - ZendeskSupportProvidersSDK (8.0.0):
+    - ZendeskCoreSDK (~> 5.0.0)
+  - ZendeskSupportSDK (8.0.0):
+    - ZendeskMessagingSDK (~> 6.0.0)
+    - ZendeskSupportProvidersSDK (~> 8.0.0)
+  - ZXingObjC (3.6.5):
+    - ZXingObjC/All (= 3.6.5)
+  - ZXingObjC/All (3.6.5)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
@@ -617,7 +619,9 @@ DEPENDENCIES:
   - libevent (~> 2.1.12)
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
+  - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
+  - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -673,7 +677,6 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
-  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -687,13 +690,13 @@ DEPENDENCIES:
   - RNSha256 (from `../node_modules/react-native-sha256`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - "RNZendeskChat (from `../node_modules/@pagopa/io-react-native-zendesk`)"
   - vision-camera-code-scanner (from `../node_modules/vision-camera-code-scanner`)
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - CocoaAsyncSocket
     - Flipper
     - Flipper-Boost-iOSX
@@ -754,8 +757,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/jail-monkey"
   pagopa-io-react-native-crypto:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
+  pagopa-io-react-native-http-client:
+    :path: "../node_modules/@pagopa/io-react-native-http-client"
   pagopa-io-react-native-login-utils:
     :path: "../node_modules/@pagopa/io-react-native-login-utils"
+  pagopa-react-native-zendesk:
+    :path: "../node_modules/@pagopa/io-react-native-zendesk"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -864,8 +871,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-clipboard/clipboard"
   RNCPushNotificationIOS:
     :path: "../node_modules/@react-native-community/push-notification-ios"
-  RNDateTimePicker:
-    :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFS:
@@ -892,8 +897,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
-  RNZendeskChat:
-    :path: "../node_modules/@pagopa/io-react-native-zendesk"
   vision-camera-code-scanner:
     :path: "../node_modules/vision-camera-code-scanner"
   VisionCamera:
@@ -902,6 +905,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   boost: 9fa78656d705f55b1220151d997e57e2a3f2cde0
   BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
@@ -936,7 +940,9 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 644fece16966f2e1ea1f872344ee5a3c6c8761a1
+  pagopa-io-react-native-http-client: 14b1ed3cd090108f9cb324f951811fe556b81e51
   pagopa-io-react-native-login-utils: 442a5e2ab8db2c476fed2cff6d7ad16388ff1f21
+  pagopa-react-native-zendesk: e4a63ee0745a567b641110f7ff78e457086ab7a3
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 2a96ea90ffddd10cc43115bd93803692e09b5d9a
@@ -992,7 +998,6 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCClipboard: f1736c75ab85b627a4d57587edb4b60999c4dd80
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
-  RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
@@ -1006,25 +1011,24 @@ SPEC CHECKSUMS:
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
-  RNZendeskChat: 10c0a1f6a97665eab8319b4d543535a8ac199944
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: e9a95af10e00aaebe99d648ff4519fd336e16ffe
   Yoga: d6134eb3d6e3675afc1d6d65ccb3169b60e21980
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
-  ZendeskAnswerBotProvidersSDK: 7eca94f07f10a567c631321601a645b2ba35c2da
-  ZendeskAnswerBotSDK: 31bd28c7c9732243d4bf3b850c441a3cdd6eba50
-  ZendeskChatProvidersSDK: af93e02e2058875f92e6ad86e74ee51203b4079e
-  ZendeskChatSDK: fe03650a5ebe3d35fd1f4da90792021f809bcf11
-  ZendeskCommonUISDK: f06dbac6c9e74c3afff75ecdc6bec3832b23258c
-  ZendeskCoreSDK: ce6dbb5eb4d61d2d061547a92bd0b0fe98602e9d
-  ZendeskMessagingAPISDK: 95a99f1eab9482b4106ec88466b93a89f9f7c5fa
-  ZendeskMessagingSDK: 4f5f3d43766bb3b2ea6411d1331cfe609ff33618
-  ZendeskSDKConfigurationsSDK: a5c21010e17b71d02bc2cfe73dcc9da1efa0a7b2
-  ZendeskSupportProvidersSDK: 685b5d185af47ced0ec40564ec46355c838bbd06
-  ZendeskSupportSDK: 92e6f9d334e81e9186f8a17583862350460a5393
-  ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
+  ZendeskAnswerBotProvidersSDK: a024260282886870a15e7a986bf5286c23fd9311
+  ZendeskAnswerBotSDK: b9f74105b26fda5f74d6639c0dc8fe37f522a867
+  ZendeskChatProvidersSDK: fa1c5acd7fd09157b5994fb05a3b1628409fdfd1
+  ZendeskChatSDK: 40fa26f80a589eb38c6cecf17af71206da7bcaf3
+  ZendeskCommonUISDK: b87f90874386ebcc01f4b2a0b20a28c62658987a
+  ZendeskCoreSDK: cdc814e7fd64764fb0b0acb04e596df437708faa
+  ZendeskMessagingAPISDK: 9ce539eebcaa014fe6acc44da31262a2c52891c1
+  ZendeskMessagingSDK: ccc8dd41b774b0d2f94733505b9f1882d72184da
+  ZendeskSDKConfigurationsSDK: 79c444da987390456ec05657ffa2f5ca0eb54aef
+  ZendeskSupportProvidersSDK: 4aafe8114a9bba1a98dc03ca14d8fa6510cf4e70
+  ZendeskSupportSDK: 8cf921c496269bb5f53aac9320f3d002a793991d
+  ZXingObjC: fdbb269f25dd2032da343e06f10224d62f537bdb
 
-PODFILE CHECKSUM: 3df4381480d2bcb020ca057d4c1df9878d684e29
+PODFILE CHECKSUM: 7dfdfa4afe9355d54bec685917054fc54ab9040f
 
 COCOAPODS: 1.12.1

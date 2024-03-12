@@ -18,6 +18,7 @@
 		2AD40B9924CB049500E4124A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AD40B9824CB049500E4124A /* LaunchScreen.storyboard */; };
 		3A3CA4696BA44782A02FE37E /* TitilliumWeb-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */; };
 		4D331CF68DAC4800A6D6297A /* TitilliumWeb-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C2483C363E432BB4D0A583 /* TitilliumWeb-Regular.ttf */; };
+		544D7A6A6990E1AD0E113BF2 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88AAE92C2AA92D33DB25F0C /* libPods-ItaliaApp.a */; };
 		570BBC8FC70C4A76ABF035AC /* TitilliumWeb-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 163BC670599B42509D4D138E /* TitilliumWeb-Light.ttf */; };
 		69A5E1839C924EE5B8CD9470 /* ReadexPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C584AD92CB24628B1AA76DE /* ReadexPro-Regular.ttf */; };
 		6B44A74498354CC19B90FE9C /* TitilliumWeb-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6754714BBEF54AA59833C0EB /* TitilliumWeb-ExtraLightItalic.ttf */; };
@@ -49,7 +50,6 @@
 		F2B163172B753C9D00F6E487 /* TitilliumSansPro-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630B2B753C9D00F6E487 /* TitilliumSansPro-BlackItalic.otf */; };
 		F2B163182B753C9D00F6E487 /* TitilliumSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630C2B753C9D00F6E487 /* TitilliumSansPro-Bold.otf */; };
 		F2B163192B753C9D00F6E487 /* TitilliumSansPro-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630D2B753C9D00F6E487 /* TitilliumSansPro-ThinItalic.otf */; };
-		F979B2982B2909A68F208546 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA78A5BDFCE253F9BB4EC906 /* libPods-ItaliaApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,7 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */,
-				FD275BEC1393DF97E5FF0AE5 /* libPods-ItaliaApp.a in Frameworks */,
+				544D7A6A6990E1AD0E113BF2 /* libPods-ItaliaApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -848,7 +848,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -889,7 +889,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;

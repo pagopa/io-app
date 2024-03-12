@@ -86,9 +86,8 @@ export const LegacyMessageDetails = ({
         params: {
           screen: PN_ROUTES.MESSAGE_ATTACHMENT,
           params: {
-            messageId,
             attachmentId: attachment.id,
-            category: attachment.category
+            messageId
           }
         }
       });

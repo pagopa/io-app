@@ -252,7 +252,7 @@ const extractCTA = (
  * @param serviceId
  */
 export const getMessageCTA = (
-  markdown: MessageBodyMarkdown,
+  markdown: MessageBodyMarkdown | string,
   serviceMetadata?: ServiceMetadata,
   serviceId?: ServiceId
 ): O.Option<CTAS> => extractCTA(markdown, serviceMetadata, serviceId);
@@ -326,7 +326,9 @@ export const hasCtaValidActions = (
  * remove the cta front-matter if it is nested inside the markdown
  * @param markdown
  */
-export const cleanMarkdownFromCTAs = (markdown: MessageBodyMarkdown): string =>
+export const cleanMarkdownFromCTAs = (
+  markdown: MessageBodyMarkdown | string
+): string =>
   pipe(
     markdown,
     FM.test,

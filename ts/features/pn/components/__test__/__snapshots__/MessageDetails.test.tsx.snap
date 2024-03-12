@@ -654,14 +654,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   }
                                 }
                               />
-                            </View>
-                            <View
-                              style={
-                                Object {
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
                               <View
                                 style={
                                   Object {

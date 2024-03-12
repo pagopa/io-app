@@ -62,10 +62,13 @@ export const MainTabNavigator = () => {
       isLoading={startupLoaded === StartupStatusEnum.ONBOARDING}
       loadingOpacity={1}
     >
-      <HeaderFirstLevelHandler />
       <Tab.Navigator
         screenOptions={{
-          headerShown: false,
+          header: ({ route }) => (
+            <HeaderFirstLevelHandler
+              currentRouteName={route.name as keyof MainTabParamsList}
+            />
+          ),
           tabBarLabelStyle: {
             fontSize: isDesignSystemEnabled ? 10 : 12,
             ...makeFontStyleObject(
