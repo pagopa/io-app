@@ -96,11 +96,10 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
             "borderCurve": "continuous",
             "borderWidth": 1,
             "overflow": "hidden",
-            "resizeMode": "contain",
           },
           Object {
             "backgroundColor": "#FFFFFF",
-            "borderRadius": 22,
+            "borderRadius": 8,
             "height": 44,
             "padding": 6,
             "width": 44,
@@ -108,20 +107,36 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
         ]
       }
     >
-      <Image
-        onError={[Function]}
-        source={
-          Object {
-            "testUri": "../../../img/test/logo.png",
-          }
-        }
+      <View
         style={
-          Object {
-            "height": "100%",
-            "width": "100%",
-          }
+          Array [
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderCurve": "continuous",
+              "overflow": "hidden",
+              "resizeMode": "contain",
+            },
+            Object {
+              "borderRadius": 2,
+            },
+          ]
         }
-      />
+      >
+        <Image
+          onError={[Function]}
+          source={
+            Object {
+              "testUri": "../../../img/test/logo.png",
+            }
+          }
+          style={
+            Object {
+              "height": "100%",
+              "width": "100%",
+            }
+          }
+        />
+      </View>
     </View>
   </View>
 </View>
