@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
     width: "100%",
-    // This Magic number is an heritage of the app code-base, this component should be removed in favor of `GradientBottomAction`
     marginTop: -50,
     paddingTop: 50
   },
