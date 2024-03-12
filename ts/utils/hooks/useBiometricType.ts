@@ -22,5 +22,5 @@ export const useBiometricType = () => {
     }
   }, [isFingerprintEnabled]);
 
-  return biometricType;
+  return { biometricType, isFingerprintEnabled };
 };

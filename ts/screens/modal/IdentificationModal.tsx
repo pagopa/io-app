@@ -39,6 +39,10 @@ import {
 } from "../../store/reducers/identification";
 import { useBiometricType } from "../../utils/hooks/useBiometricType";
 import { profileNameSelector } from "../../store/reducers/profile";
+import { biometricAuthenticationRequest } from "../../utils/biometrics";
+import { appCurrentStateSelector } from "../../store/reducers/appState";
+import { usePrevious } from "../../utils/hooks/usePrevious";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const PIN_LENGTH = 6;
@@ -67,11 +71,14 @@ const getInstructions = (
   }
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
+// eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 const IdentificationModal = () => {
   console.log("Refreshing IdentificationModal 🔁");
   const [value, setValue] = useState("");
+  const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const invalidPin = useRef(false);
+  const headerRef = useRef<View>(null);
+  const errorStatusRef = useRef<View>(null);
   // TODO: forced new blue until we have a proper color mapping on the design system
   const isDesignSystemEnabled = true; // useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme: ColorSchemeName = "light";
@@ -81,20 +88,25 @@ const IdentificationModal = () => {
     isDesignSystemEnabled
   );
 
+  const appState = useIOSelector(appCurrentStateSelector);
+  const previousAppState = usePrevious(appState);
   const identificationProgressState = useIOSelector(progressSelector);
+  const previousIdentificationProgressState = usePrevious(
+    identificationProgressState
+  );
   const identificationFailState = useIOSelector(identificationFailSelector);
   const name = useIOSelector(profileNameSelector);
-  const biometricType = useBiometricType();
+  const { biometricType, isFingerprintEnabled } = useBiometricType();
 
   const biometricsConfig = biometricType
     ? {
         biometricType,
         biometricAccessibilityLabel: "Face ID",
-        onBiometricPress: () => Alert.alert("biometric")
+        onBiometricPress: () => onFingerprintRequest()
       }
     : {};
 
-  const instructions = getInstructions(biometricType);
+  const instructions = getInstructions(biometricType, isBiometricLocked);
   const forgotCodeLabel = `${I18n.t(
     "identification.unlockCode.reset.button"
   )} ${I18n.t("identification.unlockCode.reset.code")}?`;
@@ -104,9 +116,12 @@ const IdentificationModal = () => {
   const onIdentificationCancel = useCallback(() => {
     dispatch(identificationCancel());
   }, [dispatch]);
-  const onIdentificationSuccess = useCallback(() => {
-    dispatch(identificationSuccess());
-  }, [dispatch]);
+  const onIdentificationSuccess = useCallback(
+    (isBiometric: boolean) => {
+      dispatch(identificationSuccess(isBiometric));
+    },
+    [dispatch]
+  );
   const onIdentificationForceLogout = useCallback(() => {
     dispatch(identificationForceLogout());
   }, [dispatch]);
@@ -131,18 +146,21 @@ const IdentificationModal = () => {
     onIdentificationForceLogout
   ]);
 
-  const onIdentificationSuccessHandler = useCallback(() => {
-    if (identificationProgressState.kind !== "started") {
-      return;
-    }
+  const onIdentificationSuccessHandler = useCallback(
+    (isBiometric: boolean) => {
+      if (identificationProgressState.kind !== "started") {
+        return;
+      }
 
-    const { identificationSuccessData } = identificationProgressState;
+      const { identificationSuccessData } = identificationProgressState;
 
-    if (identificationSuccessData) {
-      identificationSuccessData.onSuccess();
-    }
-    onIdentificationSuccess();
-  }, [identificationProgressState, onIdentificationSuccess]);
+      if (identificationSuccessData) {
+        identificationSuccessData.onSuccess();
+      }
+      onIdentificationSuccess(isBiometric);
+    },
+    [identificationProgressState, onIdentificationSuccess]
+  );
 
   const onIdentificationCancelHandler = useCallback(() => {
     if (identificationProgressState.kind !== "started") {
@@ -154,6 +172,21 @@ const IdentificationModal = () => {
     identificationCancelData?.onCancel();
     onIdentificationCancel();
   }, [identificationProgressState, onIdentificationCancel]);
+
+  const onFingerprintRequest = useCallback(
+    () =>
+      biometricAuthenticationRequest(
+        () => {
+          onIdentificationSuccessHandler(true);
+        },
+        e => {
+          if (e.name === "DeviceLocked" || e.name === "DeviceLockedPermanent") {
+            setIsBiometricLocked(true);
+          }
+        }
+      ),
+    [onIdentificationSuccessHandler, setIsBiometricLocked]
+  );
 
   if (invalidPin.current) {
     // eslint-disable-next-line functional/immutable-data
@@ -184,7 +217,7 @@ const IdentificationModal = () => {
       // Clear the inserted value
       setValue("");
       // Dispatch the success action
-      onIdentificationSuccessHandler();
+      onIdentificationSuccessHandler(false);
       return true;
     }
     // eslint-disable-next-line functional/immutable-data
@@ -230,6 +263,22 @@ const IdentificationModal = () => {
     }
   );
 
+  // When app becomes active from background the state of TouchID support
+  // must be updated, because it might be switched off.
+  // Don't do this check if I can't authenticate
+  // for too many attempts.
+  if (
+    !showLockModal &&
+    isFingerprintEnabled &&
+    ((previousAppState === "background" && appState === "active") ||
+      (previousIdentificationProgressState?.kind !== "started" &&
+        identificationProgressState.kind === "started"))
+  ) {
+    console.log("ask for bio auth 🤲🏼");
+    void onFingerprintRequest();
+    setAccessibilityFocus(headerRef);
+  }
+
   return showLockModal ? (
     <IdentificationLockModal
       countdownInMs={countdownInMs}
@@ -270,7 +319,11 @@ const IdentificationModal = () => {
             <View style={IOStyles.alignCenter}>
               <VSpacer size={16} />
               {remainingAttempts <= FAIL_ATTEMPTS_TO_SHOW_ALERT ? (
-                <View style={styles.alertContainer}>
+                <View
+                  accessible
+                  ref={errorStatusRef}
+                  style={styles.alertContainer}
+                >
                   <ToastNotification
                     message={remainingAttemptsText}
                     icon="warningFilled"
@@ -284,12 +337,14 @@ const IdentificationModal = () => {
                   size={64}
                 />
               )}
-              <VSpacer size={8} />
-              <H2 color={"white"}>{titleLabel}</H2>
-              <VSpacer size={8} />
-              <Body accessibilityLabel={instructions} color={"white"}>
-                {instructions}
-              </Body>
+              <View accessible ref={headerRef} style={IOStyles.alignCenter}>
+                <VSpacer size={8} />
+                <H2 color={"white"}>{titleLabel}</H2>
+                <VSpacer size={8} />
+                <Body accessibilityLabel={instructions} color={"white"}>
+                  {instructions}
+                </Body>
+              </View>
             </View>
             <VSpacer size={32} />
             <View style={IOStyles.alignCenter}>
