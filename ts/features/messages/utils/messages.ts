@@ -231,13 +231,8 @@ const extractCTAs = (
         attributes[getRemoteLocale()],
         CTAS.decode,
         O.fromEither,
-        O.chain(ctas => {
-          // check if the decoded actions are valid
-          if (hasCtaValidActions(ctas, serviceMetadata)) {
-            return O.some(ctas);
-          }
-          return O.none;
-        })
+        // check if the decoded actions are valid
+        O.filter(ctas => hasCtaValidActions(ctas, serviceMetadata))
       )
     )
   );
