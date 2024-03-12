@@ -49,6 +49,7 @@ export const useWalletOnboardingWebView = (
   props: WalletOnboardingWebViewProps
 ) => {
   const { onSuccess, onError, onFailure, onDismiss } = props;
+  const [isLoadingWebView, setIsLoadingWebView] = React.useState(false);
   const onboardingStartupResult = useIOSelector(
     walletOnboardingStartupSelector
   );
@@ -84,6 +85,8 @@ export const useWalletOnboardingWebView = (
       handleResultOnboarding(resultUrl);
     } catch (err) {
       onDismiss?.();
+    } finally {
+      setIsLoadingWebView(false);
     }
   }, [onboardingStartupResult, handleResultOnboarding, onDismiss]);
 
@@ -107,12 +110,14 @@ export const useWalletOnboardingWebView = (
   }, [onboardingStartupResult, openOnboardingWebView, onError]);
 
   const startOnboarding = (paymentMethodId: string) => {
-    if (!pot.isLoading(onboardingStartupResult)) {
+    if (!pot.isLoading(onboardingStartupResult) && !isLoadingWebView) {
+      setIsLoadingWebView(true);
       dispatch(walletStartOnboarding.request({ paymentMethodId }));
     }
   };
 
   return {
-    startOnboarding
+    startOnboarding,
+    isLoadingWebView
   };
 };
