@@ -754,7 +754,7 @@ email:
     label: "Persönliche E-Mail Adresse"
     alert:
       title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
-      description: "E-Mail bereits in Gebrauch"
+      description1: "E-Mail bereits in Gebrauch"
       modaltitle: "Diese E-Mail ist bereits in Gebrauch"
       modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
       modalbutton: "Andere E-Mail verwenden"

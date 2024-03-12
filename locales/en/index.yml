@@ -793,7 +793,9 @@ email:
     label: "Personal email address"
     alert:
       title: "{{email}} è già in uso, inseriscine un’altra."
-      description: email address already in use
+      description1: email address already in use
+      description2: inserisci un indirizzo diverso da quello attuale
+      description3: stai già usando questa email
       invalidemail: Inserisci un indirizzo email valido
       modaltitle: This email address is already in use
       modaldescription: "This can happen if you share the same address with a family member"

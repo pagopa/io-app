@@ -139,6 +139,23 @@ const CduEmailInsertScreen = () => {
     }
   }, [areSameEmails, flow]);
 
+  const sameEmailsErrorRender = useCallback(() => {
+    if (isProfileEmailAlreadyTaken && isFirstOnBoarding) {
+      setErrorMessage(I18n.t("email.newinsert.alert.description1"));
+      return false;
+    }
+    if (isOnboarding) {
+      setErrorMessage(I18n.t("email.newinsert.alert.description2"));
+      return false;
+    }
+    if (!isOnboarding && !isFirstOnBoarding) {
+      setErrorMessage(I18n.t("email.newinsert.alert.description3"));
+      return false;
+    }
+    setErrorMessage(I18n.t("email.newinsert.alert.description1"));
+    return false;
+  }, [isFirstOnBoarding, isOnboarding, isProfileEmailAlreadyTaken]);
+
   /** validate email returning three possible values:
    * - _true_,      if email is valid.
    * - _false_,     if email has been already changed from the user and it is not
@@ -156,14 +173,13 @@ const CduEmailInsertScreen = () => {
             return false;
           }
           if (areSameEmails) {
-            setErrorMessage(I18n.t("email.newinsert.alert.description"));
-            return false;
+            sameEmailsErrorRender();
           }
           return true;
         }),
         O.toUndefined
       ),
-    [areSameEmails, email]
+    [areSameEmails, email, sameEmailsErrorRender]
   );
 
   const isValidEmailWrapper = useCallback(() => {
@@ -176,7 +192,7 @@ const CduEmailInsertScreen = () => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
-    if (isValidEmail()) {
+    if (isValidEmailWrapper()) {
       pipe(
         email,
         O.map(e => {
