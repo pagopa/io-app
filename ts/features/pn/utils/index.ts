@@ -3,7 +3,6 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "../../../i18n";
-import { UIService } from "../../../store/reducers/entities/services/types";
 import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { CTAS } from "../../messages/types/MessageCTA";
@@ -29,26 +28,27 @@ export type PNOptInMessageInfo = {
   cta2HasServiceNavigationLink: boolean;
 };
 
-export const legacyIsPNOptInMessage = (
-  maybeCtas: O.Option<CTAS>,
-  service: UIService | undefined,
+export const isPNOptInMessage = (
+  ctas: CTAS | undefined,
+  serviceId: ServiceId | undefined,
   state: GlobalState
 ) =>
   pipe(
-    service,
+    serviceId,
     O.fromNullable,
-    O.chain(service =>
+    O.chain(serviceId =>
       pipe(
         state.backendStatus.status,
         O.map(
-          backendStatus => backendStatus.config.pn.optInServiceId === service.id
+          backendStatus => backendStatus.config.pn.optInServiceId === serviceId
         )
       )
     ),
     O.filter(identity),
-    O.chain(_ =>
+    O.chain(() =>
       pipe(
-        maybeCtas,
+        ctas,
+        O.fromNullable,
         O.map(ctas => ({
           cta1HasServiceNavigationLink: isServiceDetailNavigationLink(
             ctas.cta_1.action
@@ -69,15 +69,6 @@ export const legacyIsPNOptInMessage = (
       cta1HasServiceNavigationLink: false,
       cta2HasServiceNavigationLink: false
     }))
-  );
-
-export const isPNOptInMessage = (serviceId: ServiceId, state: GlobalState) =>
-  pipe(
-    state.backendStatus.status,
-    O.map(
-      backendStatus => backendStatus.config.pn.optInServiceId === serviceId
-    ),
-    O.getOrElse(() => false)
   );
 
 export const paymentsFromPNMessagePot = (

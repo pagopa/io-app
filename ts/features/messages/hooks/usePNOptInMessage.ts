@@ -6,21 +6,23 @@ import {
 } from "../../pn/analytics";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { useIOStore } from "../../../store/hooks";
+import { CTAS } from "../types/MessageCTA";
 
-export const usePNOptInMessage = (serviceId: ServiceId) => {
+export const usePNOptInMessage = (
+  ctas: CTAS | undefined,
+  serviceId: ServiceId
+) => {
   const store = useIOStore();
   const state = store.getState();
-  const isPNOptIn = isPNOptInMessage(serviceId, state);
+  const pnOptInMessageInfo = isPNOptInMessage(ctas, serviceId, state);
 
   useOnFirstRender(
     () => {
       trackPNOptInMessageOpened();
       trackPNOptInMessageCTADisplaySuccess();
     },
-    () => isPNOptIn
+    () => pnOptInMessageInfo.isPNOptInMessage
   );
 
-  return {
-    isPNOptIn
-  };
+  return pnOptInMessageInfo;
 };

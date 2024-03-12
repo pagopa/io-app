@@ -9,13 +9,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import { CTA, CTAS } from "../../features/messages/types/MessageCTA";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
-import { isServiceDetailNavigationLink } from "../../utils/internalLink";
 import { trackPNOptInMessageAccepted } from "../../features/pn/analytics";
 import { handleCtaAction } from "../../features/messages/utils/messages";
+import { PNOptInMessageInfo } from "../../features/pn/utils";
 
 type ExtractedCtasProps = {
   ctas: CTAS;
-  isPNOptIn?: boolean;
+  pnOptInMessageInfo: PNOptInMessageInfo;
   serviceId: ServiceId;
 };
 
@@ -25,15 +25,20 @@ type ExtractedCtasProps = {
  */
 export const ExtractedCtas = ({
   ctas,
-  serviceId,
-  isPNOptIn = false
+  pnOptInMessageInfo,
+  serviceId
 }: ExtractedCtasProps) => {
   const { cta_1, cta_2 } = ctas;
+  const {
+    cta1HasServiceNavigationLink,
+    cta2HasServiceNavigationLink,
+    isPNOptInMessage
+  } = pnOptInMessageInfo;
 
   const linkTo = useLinkTo();
 
-  const handleOnPress = (cta: CTA) => {
-    if (isPNOptIn && isServiceDetailNavigationLink(cta.action)) {
+  const handleOnPress = (cta: CTA, isServiceNavigationLink: boolean) => {
+    if (isPNOptInMessage && isServiceNavigationLink) {
       trackPNOptInMessageAccepted();
     }
     handleCtaAction(cta, linkTo, serviceId);
@@ -48,7 +53,7 @@ export const ExtractedCtas = ({
               accessibilityLabel={cta_2.text}
               fullWidth
               label={cta_2.text}
-              onPress={() => handleOnPress(cta_2)}
+              onPress={() => handleOnPress(cta_2, cta2HasServiceNavigationLink)}
             />
           </View>
           <HSpacer size={8} />
@@ -59,7 +64,7 @@ export const ExtractedCtas = ({
           accessibilityLabel={cta_1.text}
           fullWidth
           label={cta_1.text}
-          onPress={() => handleOnPress(cta_1)}
+          onPress={() => handleOnPress(cta_1, cta1HasServiceNavigationLink)}
         />
       </View>
     </View>

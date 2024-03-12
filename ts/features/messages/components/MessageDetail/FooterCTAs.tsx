@@ -60,7 +60,7 @@ export const FooterCTAs = ({ markdown, serviceId }: FooterCTAsProps) => {
     O.toUndefined
   );
 
-  const { isPNOptIn } = usePNOptInMessage(serviceId);
+  const pnOptInMessageInfo = usePNOptInMessage(ctas, serviceId);
 
   /* Check if the iPhone bottom handle is present.
   If not add a default margin to prevent the
@@ -89,7 +89,7 @@ export const FooterCTAs = ({ markdown, serviceId }: FooterCTAsProps) => {
       >
         <ExtractedCtas
           ctas={ctas}
-          isPNOptIn={isPNOptIn}
+          pnOptInMessageInfo={pnOptInMessageInfo}
           serviceId={serviceId}
         />
       </View>
