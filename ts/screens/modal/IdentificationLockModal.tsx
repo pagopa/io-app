@@ -72,7 +72,7 @@ const Countdown = (props: CountdownProps) => {
         <LabelSmall color="black" weight="Regular">
           {waitMessageText}
         </LabelSmall>
-        <LabelSmall color="black"> {timerCount}</LabelSmall>
+        <LabelSmall color="black"> {timerCount}s</LabelSmall>
       </View>
     </>
   );
