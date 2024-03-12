@@ -52,6 +52,18 @@ const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
 
 const onRequestCloseHandler = () => undefined;
 
+const getBiometryIconName = (
+  biometryPrintableSimpleType: BiometricsValidType
+) => {
+  switch (biometryPrintableSimpleType) {
+    case "BIOMETRICS":
+    case "TOUCH_ID":
+      return I18n.t("identification.unlockCode.accessibility.fingerprint");
+    case "FACE_ID":
+      return I18n.t("identification.unlockCode.accessibility.faceId");
+  }
+};
+
 const getInstructions = (
   biometricType: BiometricsValidType | undefined,
   isBimoetricIdentificatoinFailed: boolean = false
@@ -112,7 +124,7 @@ const IdentificationModal = () => {
   const biometricsConfig = biometricType
     ? {
         biometricType,
-        biometricAccessibilityLabel: "Face ID",
+        biometricAccessibilityLabel: getBiometryIconName(biometricType),
         onBiometricPress: () => onFingerprintRequest()
       }
     : {};
