@@ -5,7 +5,7 @@ jobs:
   run-static-checks:
     uses: ./.github/workflows/staticcheck.yaml
   run-e2e-test-ios:
-    needs: run-static-checks
+    # needs: run-static-checks
     runs-on: macos-latest
     environment: dev
     concurrency:
