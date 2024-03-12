@@ -376,6 +376,19 @@ const migrations: MigrationManifest = {
         }
       }
     };
+  },
+  // Version 25
+  // Adds new wallet section FF
+  "25": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...persistedPreferences,
+        isNewWalletSectionEnabled: false
+      }
+    };
   }
 };
 
