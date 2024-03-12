@@ -28,6 +28,7 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
+  preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -41,6 +42,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
   isIdPayTestEnabledSelector,
+  isNewWalletSectionEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -269,6 +271,19 @@ const DeveloperDataSection = () => {
 
 const DesignSystemSection = () => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
+
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
+
+  const onNewWalletSectionToggle = (enabled: boolean) => {
+    dispatch(
+      preferencesNewWalletSectionSetEnabled({
+        isNewWalletSectionEnabled: enabled
+      })
+    );
+  };
 
   return (
     <ContentWrapper>
@@ -285,6 +300,12 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <DSEnableSwitch />
+      <Divider />
+      <ListItemSwitch
+        label={I18n.t("profile.main.newWalletSection")}
+        value={isNewWalletSectionEnabled}
+        onSwitchValueChange={onNewWalletSectionToggle}
+      />
     </ContentWrapper>
   );
 };
