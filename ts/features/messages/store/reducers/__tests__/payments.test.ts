@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { reloadAllMessages } from "../../../../messages/store/actions";
@@ -25,12 +26,14 @@ import {
   paymentsReducer,
   shouldUpdatePaymentSelector,
   isUserSelectedPaymentSelector,
-  canNavigateToPaymentFromMessageSelector
+  canNavigateToPaymentFromMessageSelector,
+  paymentsButtonStateSelector
 } from "../payments";
 import { getRptIdStringFromPaymentData } from "../../../utils";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
 import * as profile from "../../../../../store/reducers/profile";
+import * as detailsById from "../detailsById";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -754,5 +757,69 @@ describe("canNavigateToPaymentFromMessageSelector", () => {
     const canNavigateToPaymentFromMessage =
       canNavigateToPaymentFromMessageSelector(appState);
     expect(canNavigateToPaymentFromMessage).toBe(true);
+  });
+});
+
+describe("paymentsButtonStateSelector", () => {
+  it("should return hidden for a pot.none message details", () => {
+    jest
+      .spyOn(detailsById, "messageDetailsByIdSelector")
+      .mockImplementation((_state, _id) => pot.none);
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const paymentsButtonState = paymentsButtonStateSelector(
+      appState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("hidden");
+  });
+  it("should return hidden for a message without payment data", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const messageDetailsPot = pot.some({
+      id: messageId
+    } as UIMessageDetails);
+    jest
+      .spyOn(detailsById, "messageDetailsByIdSelector")
+      .mockImplementation((_state, id) =>
+        id === messageId ? messageDetailsPot : pot.none
+      );
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const paymentsButtonState = paymentsButtonStateSelector(
+      appState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("hidden");
+  });
+  it("should return hidden for a failed payment", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const paymentData = {
+      noticeNumber: "012345678912345610",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetailsPot = pot.some({
+      id: messageId,
+      paymentData
+    } as UIMessageDetails);
+    jest
+      .spyOn(detailsById, "messageDetailsByIdSelector")
+      .mockImplementation((_state, id) =>
+        id === messageId ? messageDetailsPot : pot.none
+      );
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = appReducer(
+      appState,
+      updatePaymentForMessage.failure({
+        details: Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO,
+        messageId,
+        paymentId: getRptIdStringFromPaymentData(paymentData)
+      })
+    );
+    const paymentsButtonState = paymentsButtonStateSelector(
+      finalState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("hidden");
   });
 });
