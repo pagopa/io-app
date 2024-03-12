@@ -14,8 +14,8 @@ import React from "react";
 import {
   validateOrganizationFiscalCode,
   validatePaymentNoticeNumber
-} from "../../../features/walletV3/common/utils/validation";
-import { usePagoPaPayment } from "../../../features/walletV3/payment/hooks/usePagoPaPayment";
+} from "../../../features/payments/common/utils/validation";
+import { usePagoPaPayment } from "../../../features/payments/payment/hooks/usePagoPaPayment";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { generateValidRandomRptIdString } from "./utils";

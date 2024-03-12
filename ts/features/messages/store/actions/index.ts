@@ -17,6 +17,8 @@ import { MessageCategory } from "../../../../../definitions/backend/MessageCateg
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { MessagesStatus } from "../reducers/messagesStatus";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 
 export type ThirdPartyMessageActions = ActionType<typeof loadThirdPartyMessage>;
 
@@ -270,6 +272,47 @@ export const removeCachedAttachment = createStandardAction(
   "REMOVE_CACHED_ATTACHMENT"
 )<DownloadAttachmentSuccess>();
 
+export type UpdatePaymentForMessageRequest = {
+  messageId: UIMessageId;
+  paymentId: string;
+};
+
+export type UpdatePaymentForMessageSuccess = {
+  messageId: UIMessageId;
+  paymentId: string;
+  paymentData: PaymentRequestsGetResponse;
+};
+
+export type UpdatePaymentForMessageFailure = {
+  messageId: UIMessageId;
+  paymentId: string;
+  details: Detail_v2Enum;
+};
+
+export type UpdatePaymentForMessageCancel =
+  ReadonlyArray<UpdatePaymentForMessageRequest>;
+
+export const updatePaymentForMessage = createAsyncAction(
+  "UPDATE_PAYMENT_FOR_MESSAGE_REQUEST",
+  "UPDATE_PAYMENT_FOR_MESSAGE_SUCCESS",
+  "UPDATE_PAYMENT_FOR_MESSAGE_FAILURE",
+  "UPDATE_PAYMENT_FOR_MESSAGE_CANCEL"
+)<
+  UpdatePaymentForMessageRequest,
+  UpdatePaymentForMessageSuccess,
+  UpdatePaymentForMessageFailure,
+  UpdatePaymentForMessageCancel
+>();
+
+export const cancelQueuedPaymentUpdates = createAction(
+  "CANCEL_QUEUED_PAYMENT_UPDATES"
+);
+
+export const addUserSelectedPaymentRptId = createAction(
+  "MESSAGES_ADD_USER_SELECTED_PAYMENT_RPTID",
+  resolve => (paymentId: string) => resolve({ paymentId })
+);
+
 export type MessagesActions = ActionType<
   | typeof reloadAllMessages
   | typeof loadNextPageMessages
@@ -290,4 +333,7 @@ export type MessagesActions = ActionType<
   | typeof getMessageDataAction
   | typeof cancelGetMessageDataAction
   | typeof resetGetMessageDataAction
+  | typeof updatePaymentForMessage
+  | typeof cancelQueuedPaymentUpdates
+  | typeof addUserSelectedPaymentRptId
 >;

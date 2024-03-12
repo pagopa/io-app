@@ -4,7 +4,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { MessageAttachment } from "../MessageAttachment";
+import { MessageAttachmentScreen } from "../MessageAttachmentScreen";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { downloadAttachment } from "../../store/actions";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
@@ -52,7 +52,7 @@ const renderScreen = (
   );
 
   return renderScreenWithNavigationStoreContext(
-    MessageAttachment,
+    MessageAttachmentScreen,
     MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
     { messageId, attachmentId, isPN: false, serviceId },
     store

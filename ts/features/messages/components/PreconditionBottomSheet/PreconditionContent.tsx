@@ -3,7 +3,7 @@ import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { VSpacer } from "@pagopa/io-app-design-system";
 import customVariables from "../../../../theme/variables";
-import MessageMarkdown from "../MessageDetail/MessageMarkdown";
+import { MessageMarkdown } from "../MessageDetail/MessageMarkdown";
 
 type Props = {
   markdown: string;
