@@ -14,5 +14,6 @@ export type PaymentHistory = {
   transaction?: NewTransactionResponse;
   outcome?: WalletPaymentOutcomeEnum;
   failure?: WalletPaymentFailure;
+  success?: true;
   attempt?: number;
 };

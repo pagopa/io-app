@@ -58,8 +58,8 @@ describe("checkAcknowledgedEmailSaga", () => {
       ...mockedProfile,
       is_email_validated: false
     };
-    it("should prompt the screen to remember to validate", () =>
-      expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
+    it("should prompt the screen to remember to validate", async () => {
+      await expectSaga(checkAcknowledgedEmailSaga, profileWithEmailNotValidated)
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
@@ -67,7 +67,8 @@ describe("checkAcknowledgedEmailSaga", () => {
           params: { isOnboarding: true }
         })
         .dispatch(emailAcknowledged())
-        .run());
+        .run();
+    });
   });
 
   describe("when user has not an email", () => {

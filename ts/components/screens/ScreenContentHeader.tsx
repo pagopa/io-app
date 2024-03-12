@@ -29,7 +29,7 @@ type Props = Readonly<{
   subtitle?: string;
   subtitleLink?: JSX.Element;
   dark?: boolean;
-  dynamicHeight?: Animated.AnimatedInterpolation;
+  dynamicHeight?: Animated.AnimatedInterpolation<number>;
   // Specified if a custom component is needed, if both icon and rightComponent are defined rightComponent
   // will be rendered in place of icon
   rightComponent?: React.ReactElement;
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const shouldCollapse = 1 as unknown as Animated.AnimatedInterpolation;
-const shouldExpand = 0 as unknown as Animated.AnimatedInterpolation;
+const shouldCollapse = 1 as unknown as Animated.AnimatedInterpolation<number>;
+const shouldExpand = 0 as unknown as Animated.AnimatedInterpolation<number>;
 
 export class ScreenContentHeader extends React.PureComponent<Props> {
   private heightAnimation: Animated.Value;
