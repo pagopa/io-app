@@ -11,11 +11,13 @@ import { walletGetPaymentMethods, walletStartOnboarding } from "./actions";
 export type WalletOnboardingState = {
   result: pot.Pot<WalletCreateResponse, NetworkError>;
   paymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
+  selectedPaymentMethodId?: string;
 };
 
 const INITIAL_STATE: WalletOnboardingState = {
   result: pot.none,
-  paymentMethods: pot.noneLoading
+  paymentMethods: pot.noneLoading,
+  selectedPaymentMethodId: undefined
 };
 
 const walletOnboardingReducer = (
@@ -27,6 +29,7 @@ const walletOnboardingReducer = (
     case getType(walletStartOnboarding.request):
       return {
         ...state,
+        selectedPaymentMethodId: action.payload.paymentMethodId,
         result: pot.toLoading(pot.none)
       };
     case getType(walletStartOnboarding.success):
@@ -42,6 +45,7 @@ const walletOnboardingReducer = (
     case getType(walletStartOnboarding.cancel):
       return {
         ...state,
+        selectedPaymentMethodId: undefined,
         result: pot.none
       };
     // GET ONBOARDABLE PAYMENT METHODS LIST
@@ -80,5 +84,9 @@ export const walletOnboardingPaymentMethodsSelector = (state: GlobalState) =>
 
 export const isLoadingPaymentMethodsSelector = (state: GlobalState) =>
   pot.isLoading(walletOnboardingSelector(state).paymentMethods);
+
+export const walletOnboardingSelectedPaymentMethodSelector = (
+  state: GlobalState
+) => walletOnboardingSelector(state).selectedPaymentMethodId;
 
 export default walletOnboardingReducer;

@@ -20,7 +20,6 @@ import {
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
-  onDismiss: () => void;
 };
 
 export type WalletPaymentAuthorizationModal = {
@@ -31,8 +30,7 @@ export type WalletPaymentAuthorizationModal = {
 };
 
 export const useWalletPaymentAuthorizationModal = ({
-  onAuthorizationOutcome,
-  onDismiss
+  onAuthorizationOutcome
 }: Props): WalletPaymentAuthorizationModal => {
   const dispatch = useIODispatch();
 
@@ -45,6 +43,14 @@ export const useWalletPaymentAuthorizationModal = ({
   const isLoading = pot.isLoading(authorizationUrlPot);
   const isError = pot.isError(authorizationUrlPot);
 
+  const handleAuthorizationOutcome = React.useCallback(
+    (outcome: WalletPaymentOutcome) => {
+      onAuthorizationOutcome(outcome);
+      dispatch(walletPaymentHistoryStoreOutcome(outcome));
+    },
+    [onAuthorizationOutcome, dispatch]
+  );
+
   const handleAuthorizationResult = React.useCallback(
     (resultUrl: string) => {
       const outcome = pipe(
@@ -53,10 +59,9 @@ export const useWalletPaymentAuthorizationModal = ({
         WalletPaymentOutcome.decode,
         E.getOrElse(() => WalletPaymentOutcomeEnum.GENERIC_ERROR)
       );
-      onAuthorizationOutcome(outcome);
-      dispatch(walletPaymentHistoryStoreOutcome(outcome));
+      handleAuthorizationOutcome(outcome);
     },
-    [onAuthorizationOutcome, dispatch]
+    [handleAuthorizationOutcome]
   );
 
   React.useEffect(() => {
@@ -78,9 +83,9 @@ export const useWalletPaymentAuthorizationModal = ({
             );
           },
           () => {
-            onDismiss();
-            dispatch(walletPaymentAuthorization.cancel());
-            setIsPendingAuthorization(false);
+            handleAuthorizationOutcome(
+              WalletPaymentOutcomeEnum.CANCELED_BY_USER
+            );
           }
         )
       ),
@@ -92,7 +97,7 @@ export const useWalletPaymentAuthorizationModal = ({
     isPendingAuthorization,
     authorizationUrlPot,
     handleAuthorizationResult,
-    onDismiss,
+    handleAuthorizationOutcome,
     dispatch
   ]);
 

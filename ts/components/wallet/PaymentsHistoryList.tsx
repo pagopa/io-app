@@ -136,7 +136,9 @@ export default class PaymentHistoryList extends React.Component<Props> {
           ItemSeparatorComponent={() => (
             <ItemSeparatorComponent noPadded={true} />
           )}
-          ListFooterComponent={payments.length > 0 && <EdgeBorderComponent />}
+          ListFooterComponent={
+            payments.length > 0 ? <EdgeBorderComponent /> : null
+          }
           keyExtractor={(_, index) => index.toString()}
         />
       </Content>
