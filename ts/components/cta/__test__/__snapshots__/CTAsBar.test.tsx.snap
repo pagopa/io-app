@@ -392,6 +392,8 @@ exports[`CTAsBar should match snapshot with both CTAs 1`] = `
                               }
                             >
                               <Text
+                                accessibilityElementsHidden={true}
+                                accessible={false}
                                 allowFontScaling={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
@@ -505,6 +507,8 @@ exports[`CTAsBar should match snapshot with both CTAs 1`] = `
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
                                   allowFontScaling={false}
                                   color="white"
                                   defaultColor="white"
@@ -960,6 +964,8 @@ exports[`CTAsBar should match snapshot with one CTA 1`] = `
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
                                   allowFontScaling={false}
                                   color="white"
                                   defaultColor="white"
