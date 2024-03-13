@@ -25,9 +25,13 @@ import { LocalIdpsFallback } from "../utils/idps";
 
 type OwnProps = {
   contentContainerStyle?: StyleProp<ViewStyle>;
-  footerComponent?: React.ReactNode;
+  footerComponent?: React.ComponentProps<
+    typeof FlatList
+  >["ListFooterComponent"];
   headerComponentStyle?: StyleProp<ViewStyle>;
-  headerComponent?: React.ReactNode;
+  headerComponent?: React.ComponentProps<
+    typeof FlatList
+  >["ListHeaderComponent"];
   // Array of Identity Provider to show in the grid.
   idps: ReadonlyArray<LocalIdpsFallback>;
   // A callback function called when an Identity Provider is selected

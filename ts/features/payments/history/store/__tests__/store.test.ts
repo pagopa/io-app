@@ -8,6 +8,8 @@ import {
   selectWalletOngoingPaymentHistory,
   selectWalletPaymentHistoryArchive
 } from "../selectors";
+import { walletPaymentHistoryStoreOutcome } from "../actions";
+import { WalletPaymentOutcomeEnum } from "../../../payment/types/PaymentOutcomeEnum";
 
 const MOCKED_LOOKUP_ID = "123456";
 const MOCKED_DATE = new Date();
@@ -31,7 +33,7 @@ describe("Test Wallet payment history reducers and selectors", () => {
     expect(selectWalletOngoingPaymentHistory(globalState)).toBeUndefined();
   });
 
-  it("should update ongoing payment history", () => {
+  it("should correctly update ongoing payment history", () => {
     const T_START_ORIGIN: PaymentStartOrigin = "manual_insertion";
 
     const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -52,5 +54,35 @@ describe("Test Wallet payment history reducers and selectors", () => {
     expect(store.getState().features.payments.history.archive).toStrictEqual(
       []
     );
+  });
+
+  it("should correctly update payment outcome on SUCCESS", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      walletPaymentHistoryStoreOutcome(WalletPaymentOutcomeEnum.SUCCESS)
+    );
+    expect(
+      store.getState().features.payments.history.ongoingPayment?.outcome
+    ).toBe(WalletPaymentOutcomeEnum.SUCCESS);
+    expect(
+      store.getState().features.payments.history.ongoingPayment?.success
+    ).toBe(true);
+  });
+
+  it("should correctly update payment outcome on failure", () => {
+    const globalState = appReducer(undefined, applicationChangeState("active"));
+    const store = createStore(appReducer, globalState as any);
+    store.dispatch(
+      walletPaymentHistoryStoreOutcome(
+        WalletPaymentOutcomeEnum.CANCELED_BY_USER
+      )
+    );
+    expect(
+      store.getState().features.payments.history.ongoingPayment?.outcome
+    ).toBe(WalletPaymentOutcomeEnum.CANCELED_BY_USER);
+    expect(
+      store.getState().features.payments.history.ongoingPayment?.success
+    ).toBeUndefined();
   });
 });

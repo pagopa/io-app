@@ -37,6 +37,7 @@ local.properties
 *.iml
 *.hprof
 Google Play Android Developer-04750d2c0cf8.json
+.cxx/
 
 **/fastlane/report.xml
 **/fastlane/Preview.html
