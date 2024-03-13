@@ -35,7 +35,7 @@ const renderCtaButton = (
     if (isPNOptInMessage) {
       trackPNOptInMessageAccepted();
     }
-    handleCtaAction(cta, linkTo, service);
+    handleCtaAction(cta, linkTo, service?.service_id);
   };
 
   if (cta !== undefined && isCtaActionValid(cta, serviceMetadata)) {
