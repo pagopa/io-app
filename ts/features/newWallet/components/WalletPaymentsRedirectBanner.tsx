@@ -35,7 +35,7 @@ const WalletPaymentsRedirectBanner = () => {
         action={I18n.t("features.wallet.home.paymentsBanner.action")}
         labelClose={I18n.t("features.wallet.home.paymentsBanner.close")}
         color="neutral"
-        pictogramName="timing"
+        pictogramName="payments"
         size="small"
         viewRef={bannerRef}
         onPress={handleOnBannerPress}
