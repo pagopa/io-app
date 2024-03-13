@@ -300,6 +300,8 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
           }
         />
         <Text
+          accessibilityElementsHidden={true}
+          accessible={false}
           allowFontScaling={false}
           color="white"
           defaultColor="white"
