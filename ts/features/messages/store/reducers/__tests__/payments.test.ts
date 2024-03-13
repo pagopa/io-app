@@ -33,7 +33,7 @@ import { getRptIdStringFromPaymentData } from "../../../utils";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
 import * as profile from "../../../../../store/reducers/profile";
-import * as detailsById from "../detailsById";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {
@@ -762,9 +762,6 @@ describe("canNavigateToPaymentFromMessageSelector", () => {
 
 describe("paymentsButtonStateSelector", () => {
   it("should return hidden for a pot.none message details", () => {
-    jest
-      .spyOn(detailsById, "messageDetailsByIdSelector")
-      .mockImplementation((_state, _id) => pot.none);
     const appState = appReducer(undefined, applicationChangeState("active"));
     const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
     const paymentsButtonState = paymentsButtonStateSelector(
@@ -778,19 +775,27 @@ describe("paymentsButtonStateSelector", () => {
     const messageDetailsPot = pot.some({
       id: messageId
     } as UIMessageDetails);
-    jest
-      .spyOn(detailsById, "messageDetailsByIdSelector")
-      .mockImplementation((_state, id) =>
-        id === messageId ? messageDetailsPot : pot.none
-      );
     const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRSSD1R29DA2HJQHGYJP19T8": messageDetailsPot
+          }
+        }
+      }
+    } as GlobalState;
     const paymentsButtonState = paymentsButtonStateSelector(
-      appState,
+      finalState,
       messageId
     );
     expect(paymentsButtonState).toBe("hidden");
   });
-  it("should return hidden for a failed payment", () => {
+  it("should return hidden for a payment with an error", () => {
     const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
     const paymentData = {
       noticeNumber: "012345678912345610",
@@ -802,24 +807,214 @@ describe("paymentsButtonStateSelector", () => {
       id: messageId,
       paymentData
     } as UIMessageDetails);
-    jest
-      .spyOn(detailsById, "messageDetailsByIdSelector")
-      .mockImplementation((_state, id) =>
-        id === messageId ? messageDetailsPot : pot.none
-      );
     const appState = appReducer(undefined, applicationChangeState("active"));
-    const finalState = appReducer(
-      appState,
-      updatePaymentForMessage.failure({
-        details: Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO,
-        messageId,
-        paymentId: getRptIdStringFromPaymentData(paymentData)
-      })
-    );
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRSSD1R29DA2HJQHGYJP19T8": messageDetailsPot
+          },
+          payments: {
+            ...appState.entities.messages.payments,
+            "01HRSSD1R29DA2HJQHGYJP19T8": {
+              "01234567890012345678912345610": remoteError(
+                Detail_v2Enum.PAA_PAGAMENTO_ANNULLATO
+              )
+            }
+          }
+        }
+      }
+    } as GlobalState;
     const paymentsButtonState = paymentsButtonStateSelector(
       finalState,
       messageId
     );
     expect(paymentsButtonState).toBe("hidden");
+  });
+  it("should return loading for a payment with no data (no message entry in the payment section of redux)", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const paymentData = {
+      noticeNumber: "012345678912345610",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetailsPot = pot.some({
+      id: messageId,
+      paymentData
+    } as UIMessageDetails);
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRSSD1R29DA2HJQHGYJP19T8": messageDetailsPot
+          }
+        }
+      }
+    } as GlobalState;
+    const paymentsButtonState = paymentsButtonStateSelector(
+      finalState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("loading");
+  });
+  it("should return loading for a payment with no data (no payment entry in the message's payment section of redux)", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const paymentData = {
+      noticeNumber: "012345678912345610",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetailsPot = pot.some({
+      id: messageId,
+      paymentData
+    } as UIMessageDetails);
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRSSD1R29DA2HJQHGYJP19T8": messageDetailsPot
+          },
+          payments: {
+            ...appState.entities.messages.payments,
+            "01HRSSD1R29DA2HJQHGYJP19T8": {}
+          }
+        }
+      }
+    } as GlobalState;
+    const paymentsButtonState = paymentsButtonStateSelector(
+      finalState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("loading");
+  });
+  it("should return loading for a payment with remoteUndefined value", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const paymentData = {
+      noticeNumber: "012345678912345610",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetailsPot = pot.some({
+      id: messageId,
+      paymentData
+    } as UIMessageDetails);
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRSSD1R29DA2HJQHGYJP19T8": messageDetailsPot
+          },
+          payments: {
+            ...appState.entities.messages.payments,
+            "01HRSSD1R29DA2HJQHGYJP19T8": {
+              "01234567890012345678912345610": remoteUndefined
+            }
+          }
+        }
+      }
+    } as GlobalState;
+    const paymentsButtonState = paymentsButtonStateSelector(
+      finalState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("loading");
+  });
+  it("should return loading for a loading payment", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const paymentData = {
+      noticeNumber: "012345678912345610",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetailsPot = pot.some({
+      id: messageId,
+      paymentData
+    } as UIMessageDetails);
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRSSD1R29DA2HJQHGYJP19T8": messageDetailsPot
+          },
+          payments: {
+            ...appState.entities.messages.payments,
+            "01HRSSD1R29DA2HJQHGYJP19T8": {
+              "01234567890012345678912345610": remoteLoading
+            }
+          }
+        }
+      }
+    } as GlobalState;
+    const paymentsButtonState = paymentsButtonStateSelector(
+      finalState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("loading");
+  });
+  it("should return enabled for a payable payment", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const paymentData = {
+      noticeNumber: "012345678912345610",
+      payee: {
+        fiscalCode: "01234567890"
+      }
+    } as PaymentData;
+    const messageDetailsPot = pot.some({
+      id: messageId,
+      paymentData
+    } as UIMessageDetails);
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            ...appState.entities.messages.detailsById,
+            "01HRSSD1R29DA2HJQHGYJP19T8": messageDetailsPot
+          },
+          payments: {
+            ...appState.entities.messages.payments,
+            "01HRSSD1R29DA2HJQHGYJP19T8": {
+              "01234567890012345678912345610": remoteReady(paymentData)
+            }
+          }
+        }
+      }
+    } as GlobalState;
+    const paymentsButtonState = paymentsButtonStateSelector(
+      finalState,
+      messageId
+    );
+    expect(paymentsButtonState).toBe("enabled");
   });
 });
