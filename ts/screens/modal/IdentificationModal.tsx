@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useState, useRef, useMemo } from "react";
 import {
   CodeInput,
   H2,
@@ -24,7 +24,6 @@ import { useDispatch } from "react-redux";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { isDevEnv } from "../../utils/environment";
 import I18n from "../../i18n";
-import { IOStyleVariables } from "../../components/core/variables/IOStyleVariables";
 import {
   identificationCancel,
   identificationFailure,
@@ -49,7 +48,7 @@ import {
   getBiometricInstructions,
   getBiometryIconName
 } from "../../utils/identification";
-import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { useAppBackgroundAccent } from "../../utils/hooks/theme";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const PIN_LENGTH = 6;
@@ -66,13 +65,10 @@ const IdentificationModal = () => {
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme: ColorSchemeName = "light";
+  const numberPadVariant = colorScheme ? "dark" : "light";
 
-  const blueColor = IOStyleVariables.colorPrimary(
-    colorScheme,
-    isDesignSystemEnabled
-  );
+  const blueColor = useAppBackgroundAccent();
 
   const appState = useIOSelector(appCurrentStateSelector);
   const previousAppState = usePrevious(appState);
@@ -92,14 +88,6 @@ const IdentificationModal = () => {
     pin = identificationProgressState.pin;
     isValidatingTask = identificationProgressState.isValidatingTask;
   }
-
-  const biometricsConfig = biometricType
-    ? {
-        biometricType,
-        biometricAccessibilityLabel: getBiometryIconName(biometricType),
-        onBiometricPress: () => onFingerprintRequest()
-      }
-    : {};
 
   const instructions = getBiometricInstructions(
     biometricType,
@@ -187,6 +175,18 @@ const IdentificationModal = () => {
     [onIdentificationSuccessHandler, setIsBiometricLocked]
   );
 
+  const biometricsConfig = useMemo(
+    () =>
+      biometricType
+        ? {
+            biometricType,
+            biometricAccessibilityLabel: getBiometryIconName(biometricType),
+            onBiometricPress: () => onFingerprintRequest()
+          }
+        : {},
+    [biometricType, onFingerprintRequest]
+  );
+
   if (!isPinValidRef.current) {
     // eslint-disable-next-line functional/immutable-data
     isPinValidRef.current = true;
@@ -195,11 +195,11 @@ const IdentificationModal = () => {
     onIdentificationFailureHandler();
   }
 
-  const onValueChange = (v: string) => {
+  const onValueChange = useCallback((v: string) => {
     if (v.length <= PIN_LENGTH) {
       setValue(v);
     }
-  };
+  }, []);
 
   const onPinResetHandler = useCallback(() => {
     dispatch(identificationPinReset());
@@ -423,7 +423,7 @@ const IdentificationModal = () => {
                 value={value}
                 deleteAccessibilityLabel="Delete"
                 onValueChange={onValueChange}
-                variant={"dark"} // TODO: missing mapping for standard blue
+                variant={numberPadVariant}
                 {...biometricsConfig}
               />
               <VSpacer size={32} />
