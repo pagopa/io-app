@@ -3277,10 +3277,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@pagopa/io-app-design-system@1.25.1":
-  version "1.25.1"
-  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.25.1.tgz#01211e065c8b32ee4bb6b22b9e86c52d68a9d74c"
-  integrity sha512-fxxYCJWL2KR8l2klrsMqQInGWH//Qq15QJOdCAPYofe3kFFY1DA+MWvCZTFZimB3KwcJzPC7hAINZ6mFilbP0Q==
+"@pagopa/io-app-design-system@1.28.0":
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/@pagopa/io-app-design-system/-/io-app-design-system-1.28.0.tgz#92e360c527556ac6303c9c8b81d78db4cae0af68"
+  integrity sha512-15C7OQClPDxIptYmWwrooFoHaS0lB3TG4B6vgLbolauAxokGcMfoBltcKdtImViG+ZMImeCQ8xNYR9HvQoIlgg==
   dependencies:
     "@pagopa/ts-commons" "^12.0.0"
     "@testing-library/jest-native" "^5.4.2"
@@ -3288,6 +3288,7 @@
     "@types/react-test-renderer" "^18.0.0"
     auto-changelog "^2.4.0"
     lodash "^4.17.21"
+    react-native-easing-gradient "^1.1.1"
     react-native-gesture-handler "^2.12.0"
     react-native-haptic-feedback "^2.0.2"
     react-native-linear-gradient "^2.5.6"
@@ -14454,6 +14455,11 @@ react-native-drawer@2.5.1:
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
+
+react-native-easing-gradient@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-easing-gradient/-/react-native-easing-gradient-1.1.1.tgz#8d099795d7a0065e67d37a8489bffe354ffb94fa"
+  integrity sha512-KrGU97kPTMrLNzVXxFirFMgl65uo70gVNoKw2OngDzcDfoswb648I3ggeCnoY+JgMWkPyx4LlG7n3ZNgSPFnLw==
 
 react-native-easy-grid@0.2.2:
   version "0.2.2"
