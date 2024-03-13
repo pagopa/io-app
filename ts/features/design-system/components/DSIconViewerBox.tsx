@@ -1,6 +1,6 @@
 import * as React from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { IOColors, IOThemeContext } from "@pagopa/io-app-design-system";
+import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 
 export const iconItemGutter = 8;
 
@@ -91,40 +91,39 @@ export const DSIconViewerBox = ({
   image,
   size,
   withDot = false
-}: DSIconViewerBoxProps) => (
-  <IOThemeContext.Consumer>
-    {theme => (
+}: DSIconViewerBoxProps) => {
+  const theme = useIOTheme();
+  return (
+    <View
+      style={[
+        styles.iconWrapper,
+        size ? sizeMap[size].wrapper : styles.iconWrapperAuto
+      ]}
+    >
       <View
         style={[
-          styles.iconWrapper,
-          size ? sizeMap[size].wrapper : styles.iconWrapperAuto
+          styles.iconItem,
+          size ? sizeMap[size].item : {},
+          { borderColor: IOColors[theme["cardBorder-default"]] }
         ]}
       >
-        <View
-          style={[
-            styles.iconItem,
-            size ? sizeMap[size].item : {},
-            { borderColor: IOColors[theme["cardBorder-default"]] }
-          ]}
-        >
-          {withDot && <View style={styles.signalDot} />}
-          {image}
-        </View>
-        <View style={styles.nameWrapper}>
-          {name && (
-            <Text
-              numberOfLines={1}
-              ellipsizeMode="tail"
-              style={[
-                { color: IOColors[theme["textBody-secondary"]] },
-                size ? sizeMap[size].label : styles.iconLabelMedium
-              ]}
-            >
-              {name}
-            </Text>
-          )}
-        </View>
+        {withDot && <View style={styles.signalDot} />}
+        {image}
       </View>
-    )}
-  </IOThemeContext.Consumer>
-);
+      <View style={styles.nameWrapper}>
+        {name && (
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={[
+              { color: IOColors[theme["textBody-secondary"]] },
+              size ? sizeMap[size].label : styles.iconLabelMedium
+            ]}
+          >
+            {name}
+          </Text>
+        )}
+      </View>
+    </View>
+  );
+};
