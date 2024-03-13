@@ -13,7 +13,6 @@ import {
   ButtonLink,
   IOStyles,
   ToastNotification,
-  BiometricsValidType,
   IOPictograms
 } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
@@ -23,6 +22,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { isDevEnv } from "../../utils/environment";
 import I18n from "../../i18n";
 import { IOStyleVariables } from "../../components/core/variables/IOStyleVariables";
 import {
@@ -44,45 +44,17 @@ import { biometricAuthenticationRequest } from "../../utils/biometrics";
 import { appCurrentStateSelector } from "../../store/reducers/appState";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import {
+  FAIL_ATTEMPTS_TO_SHOW_ALERT,
+  getBiometricInstructions,
+  getBiometryIconName
+} from "../../utils/identification";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const PIN_LENGTH = 6;
 const VERTICAL_PADDING = 16;
-const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
 
 const onRequestCloseHandler = () => undefined;
-
-const getBiometryIconName = (
-  biometryPrintableSimpleType: BiometricsValidType
-) => {
-  switch (biometryPrintableSimpleType) {
-    case "BIOMETRICS":
-    case "TOUCH_ID":
-      return I18n.t("identification.unlockCode.accessibility.fingerprint");
-    case "FACE_ID":
-      return I18n.t("identification.unlockCode.accessibility.faceId");
-  }
-};
-
-const getInstructions = (
-  biometricType: BiometricsValidType | undefined,
-  isBimoetricIdentificatoinFailed: boolean = false
-) => {
-  if (isBimoetricIdentificatoinFailed) {
-    return I18n.t("identification.subtitleCode");
-  }
-
-  switch (biometricType) {
-    case "BIOMETRICS":
-      return I18n.t("identification.subtitleCodeFingerprint");
-    case "FACE_ID":
-      return I18n.t("identification.subtitleCodeFaceId");
-    case "TOUCH_ID":
-      return I18n.t("identification.subtitleCodeFingerprint");
-    default:
-      return I18n.t("identification.subtitleCode");
-  }
-};
 
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 const IdentificationModal = () => {
@@ -129,7 +101,10 @@ const IdentificationModal = () => {
       }
     : {};
 
-  const instructions = getInstructions(biometricType, isBiometricLocked);
+  const instructions = getBiometricInstructions(
+    biometricType,
+    isBiometricLocked
+  );
   const forgotCodeLabel = `${I18n.t(
     "identification.unlockCode.reset.button"
   )} ${I18n.t("identification.unlockCode.reset.code")}?`;
@@ -142,7 +117,7 @@ const IdentificationModal = () => {
   }, [dispatch]);
   const onIdentificationSuccess = useCallback(
     (isBiometric: boolean) => {
-      dispatch(identificationSuccess(isBiometric));
+      dispatch(identificationSuccess({ isBiometric }));
     },
     [dispatch]
   );
@@ -406,6 +381,18 @@ const IdentificationModal = () => {
                     name={pictogramKey}
                     size={64}
                   />
+                  {isDevEnv && (
+                    <IconButton
+                      icon={"systemPermissionsAndroid"}
+                      color="contrast"
+                      onPress={() => {
+                        setValue(pin);
+                      }}
+                      accessibilityLabel={
+                        "Inserisci il codice di sblocco di test"
+                      }
+                    />
+                  )}
                 </View>
               )}
               <View accessible ref={headerRef} style={IOStyles.alignCenter}>

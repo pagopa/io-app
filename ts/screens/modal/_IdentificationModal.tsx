@@ -671,7 +671,8 @@ class IdentificationModal extends React.PureComponent<Props, State> {
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onPinResetHandler: () => dispatch(identificationPinReset()),
   onCancelIdentification: () => dispatch(identificationCancel()),
-  onIdentificationSuccess: () => dispatch(identificationSuccess(false)),
+  onIdentificationSuccess: () =>
+    dispatch(identificationSuccess({ isBiometric: false })),
   onIdentificationForceLogout: () => dispatch(identificationForceLogout()),
   onIdentificationFailure: () => dispatch(identificationFailure())
 });

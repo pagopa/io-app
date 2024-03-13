@@ -106,6 +106,7 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../actions/wallet/wallets";
+import { buildEventProperties } from "../../utils/analytics";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
@@ -306,10 +307,11 @@ const trackAction =
       case getType(sessionInvalid):
       case getType(logoutSuccess):
       // identification
+      // identificationSuccess is handled separately
+      // because it has a payload.
       case getType(identificationRequest):
       case getType(identificationStart):
       case getType(identificationCancel):
-      case getType(identificationSuccess):
       case getType(identificationFailure):
       case getType(identificationPinReset):
       case getType(identificationForceLogout):
@@ -370,6 +372,16 @@ const trackAction =
           choice: action.payload.choice,
           reason: action.payload.error.message
         });
+      // identification: identificationSuccess
+      case getType(identificationSuccess):
+        return mp.track(
+          action.type,
+          buildEventProperties("UX", "confirm", {
+            identification_method: action.payload.isBiometric
+              ? "biometric"
+              : "pin"
+          })
+        );
     }
     return Promise.resolve();
   };

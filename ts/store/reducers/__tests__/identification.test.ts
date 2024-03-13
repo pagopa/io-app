@@ -29,7 +29,10 @@ describe("Identification reducer", () => {
   });
   it("should return correct state after identification success", () => {
     const startState = reducer(undefined, identificationStartMock);
-    const successState = reducer(startState, identificationSuccess(false));
+    const successState = reducer(
+      startState,
+      identificationSuccess({ isBiometric: false })
+    );
     expect(successState.progress.kind).toEqual("identified");
     expect(successState.fail).toEqual(undefined);
   });
@@ -85,7 +88,10 @@ describe("Identification reducer", () => {
     };
 
     // after a success the fail state is cleared
-    expectFailStateReset(identificationSuccess(false), "identified");
+    expectFailStateReset(
+      identificationSuccess({ isBiometric: false }),
+      "identified"
+    );
 
     // after a reset the fail state is cleared
     expectFailStateReset(identificationReset(), "unidentified");
@@ -109,7 +115,7 @@ describe("Identification reducer", () => {
     // start the full identification sequence from different states
     [
       identificationCancel(),
-      identificationSuccess(false),
+      identificationSuccess({ isBiometric: false }),
       identificationStartMock
     ].forEach(action => expectFailSequenceFromStartingState(action));
   });
@@ -120,7 +126,7 @@ describe("Identification reducer", () => {
       identificationResetState,
       expectFailSequence,
       (state: IdentificationState) =>
-        reducer(state, identificationSuccess(false)),
+        reducer(state, identificationSuccess({ isBiometric: false })),
       expectFailSequence,
       (state: IdentificationState) => reducer(state, identificationReset()),
       expectFailSequence
