@@ -1,5 +1,6 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
+import { useEffect } from "react";
 import { View, Modal, StyleSheet, SafeAreaView } from "react-native";
 import {
   ContentWrapper,
@@ -25,20 +26,6 @@ type Props = {
   timeSpanInSeconds: number;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    ...IOStyles.bgWhite,
-    ...IOStyles.centerJustified,
-    ...IOStyles.flex
-  },
-  contentTitle: {
-    textAlign: "center"
-  },
-  content: {
-    alignItems: "center"
-  }
-});
-
 const waitMessageText = I18n.t("identification.fail.waitMessage");
 const tooManyAttemptsText = I18n.t("identification.fail.tooManyAttempts");
 
@@ -58,7 +45,7 @@ const Countdown = (props: CountdownProps) => {
     startTimer?.();
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (timerCount === 0) {
       onElapsedTimer();
     }
@@ -122,3 +109,17 @@ export const IdentificationLockModal = (props: Props) => {
     </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    ...IOStyles.bgWhite,
+    ...IOStyles.centerJustified,
+    ...IOStyles.flex
+  },
+  contentTitle: {
+    textAlign: "center"
+  },
+  content: {
+    alignItems: "center"
+  }
+});
