@@ -2,10 +2,10 @@ import * as React from "react";
 import { SafeAreaView } from "react-native";
 import {
   ButtonSolid,
-  IOThemeContext,
   VSpacer,
   ContentWrapper,
-  ListItemNav
+  ListItemNav,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { H2 } from "../../../components/core/typography/H2";
@@ -18,6 +18,7 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
 
 export const DSBottomSheet = () => {
+  const theme = useIOTheme();
   const handlePressDismiss = () => {
     dismissStaticBottomSheet();
     dismissStaticBottomSheetWithFooter();
@@ -186,85 +187,79 @@ export const DSBottomSheet = () => {
   );
 
   return (
-    <IOThemeContext.Consumer>
-      {theme => (
-        <DesignSystemScreen
-          title={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title}
-        >
-          <H2
-            color={theme["textHeading-default"]}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16, marginTop: 16 }}
-          >
-            Available bottom sheets
-          </H2>
-          <ListItemNav
-            value="Static bottom sheet"
-            description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
-            accessibilityLabel="Static bottom sheet"
-            onPress={presentStaticBottomSheet}
-          />
-          <ListItemNav
-            value="Static bottom sheet with footer"
-            description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration with a footer"
-            accessibilityLabel="Static bottom sheet"
-            onPress={presentStaticBottomSheetWithFooter}
-          />
-          <ListItemNav
-            value="Autoresizable bottom sheet"
-            description="This bottom sheet has a snap point that is calculated based on the content height"
-            accessibilityLabel="Autoresizable bottom sheet"
-            onPress={presentAutoresizableBottomSheet}
-          />
-          <ListItemNav
-            value="Autoresizable bottom sheet with footer"
-            description="This bottom sheet has a snap point that is calculated based on the content height with a footer"
-            accessibilityLabel="Autoresizable bottom sheet with footer"
-            onPress={presentAutoresizableBottomSheetWithFooter}
-          />
-          <ListItemNav
-            value="Autoresizable bottom sheet with very long content and a footer"
-            description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long  and the modal should snap below the upper safe area limit"
-            accessibilityLabel="Static bottom sheet"
-            onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
-          />
-          <ListItemNav
-            value="Autoresizable bottom sheet with very long content and a footer, full screen"
-            description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long and the modal takes the full screen"
-            accessibilityLabel="Static bottom sheet"
-            onPress={
-              presentVeryLongAutoresizableBottomSheetWithFooterFullScreen
-            }
-          />
-          <H2
-            color={theme["textHeading-default"]}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16, marginTop: 16 }}
-          >
-            Legacy
-          </H2>
+    <DesignSystemScreen
+      title={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title}
+    >
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        Available bottom sheets
+      </H2>
+      <ListItemNav
+        value="Static bottom sheet"
+        description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration"
+        accessibilityLabel="Static bottom sheet"
+        onPress={presentStaticBottomSheet}
+      />
+      <ListItemNav
+        value="Static bottom sheet with footer"
+        description="This bottom sheet has a static snap point of 300 hard coded in the hook declaration with a footer"
+        accessibilityLabel="Static bottom sheet"
+        onPress={presentStaticBottomSheetWithFooter}
+      />
+      <ListItemNav
+        value="Autoresizable bottom sheet"
+        description="This bottom sheet has a snap point that is calculated based on the content height"
+        accessibilityLabel="Autoresizable bottom sheet"
+        onPress={presentAutoresizableBottomSheet}
+      />
+      <ListItemNav
+        value="Autoresizable bottom sheet with footer"
+        description="This bottom sheet has a snap point that is calculated based on the content height with a footer"
+        accessibilityLabel="Autoresizable bottom sheet with footer"
+        onPress={presentAutoresizableBottomSheetWithFooter}
+      />
+      <ListItemNav
+        value="Autoresizable bottom sheet with very long content and a footer"
+        description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long  and the modal should snap below the upper safe area limit"
+        accessibilityLabel="Static bottom sheet"
+        onPress={presentVeryLongAutoresizableBottomSheetWithFooter}
+      />
+      <ListItemNav
+        value="Autoresizable bottom sheet with very long content and a footer, full screen"
+        description="This bottom sheet has a snap point that is calculated based on the content height with a footer, its content is very long and the modal takes the full screen"
+        accessibilityLabel="Static bottom sheet"
+        onPress={presentVeryLongAutoresizableBottomSheetWithFooterFullScreen}
+      />
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        Legacy
+      </H2>
 
-          <ListItemNav
-            value="Legacy bottom sheet"
-            accessibilityLabel="Legacy bottom sheet"
-            onPress={presentLegacyBottomSheet}
-          />
-          <ListItemNav
-            value="Legacy bottom sheet with footer"
-            accessibilityLabel="Legacy bottom sheet with footer"
-            onPress={presentLegacyBottomSheetWithFooter}
-          />
-          <VSpacer size={24} />
-          {staticBottomSheet}
-          {staticBottomSheetWithFooter}
-          {autoResizableBottomSheet}
-          {autoResizableBottomSheetWithFooter}
-          {veryLongAutoResizableBottomSheetWithFooter}
-          {veryLongAutoResizableBottomSheetWithFooterFullScreen}
-          {legacyBottomSheet}
-          {legacyBottomSheetWithFooter}
-        </DesignSystemScreen>
-      )}
-    </IOThemeContext.Consumer>
+      <ListItemNav
+        value="Legacy bottom sheet"
+        accessibilityLabel="Legacy bottom sheet"
+        onPress={presentLegacyBottomSheet}
+      />
+      <ListItemNav
+        value="Legacy bottom sheet with footer"
+        accessibilityLabel="Legacy bottom sheet with footer"
+        onPress={presentLegacyBottomSheetWithFooter}
+      />
+      <VSpacer size={24} />
+      {staticBottomSheet}
+      {staticBottomSheetWithFooter}
+      {autoResizableBottomSheet}
+      {autoResizableBottomSheetWithFooter}
+      {veryLongAutoResizableBottomSheetWithFooter}
+      {veryLongAutoResizableBottomSheetWithFooterFullScreen}
+      {legacyBottomSheet}
+      {legacyBottomSheetWithFooter}
+    </DesignSystemScreen>
   );
 };

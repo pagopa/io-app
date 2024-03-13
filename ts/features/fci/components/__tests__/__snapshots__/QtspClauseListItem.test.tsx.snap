@@ -534,6 +534,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   style={
                                     Array [
                                       Object {
+                                        "borderCurve": "continuous",
                                         "borderRadius": 5,
                                         "borderWidth": 2,
                                         "height": 24,
@@ -552,6 +553,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   style={
                                     Array [
                                       Object {
+                                        "borderCurve": "continuous",
                                         "borderRadius": 5,
                                         "height": 24,
                                         "left": 0,
