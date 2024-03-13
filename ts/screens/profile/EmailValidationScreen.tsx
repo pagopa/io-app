@@ -52,7 +52,8 @@ import { getFlowType } from "../../utils/analytics";
 import {
   trackEmailValidation,
   trackEmailValidationSuccess,
-  trackEmailValidationSuccessConfirmed
+  trackEmailValidationSuccessConfirmed,
+  trackResendValidationEmail
 } from "../analytics/emailAnalytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
@@ -169,6 +170,7 @@ const EmailValidationScreen = () => {
   };
 
   const handleResendEmail = () => {
+    trackResendValidationEmail(flow);
     sendEmailValidation();
   };
 

@@ -12,8 +12,15 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import {
+  trackEmailAlreadyTaken,
+  trackEmailDuplicateEditingConfirm
+} from "../../analytics/emailAnalytics";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { getFlowType } from "../../../utils/analytics";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -43,7 +50,8 @@ const EmailAlreadyTakenScreen = () => {
 
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const flow = getFlowType(true, isFirstOnBoarding);
   const navigateToInsertEmailScreen = React.useCallback(() => {
     navigation.navigate(ROUTES.ONBOARDING, {
       screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
@@ -53,10 +61,15 @@ const EmailAlreadyTakenScreen = () => {
     });
   }, [navigation]);
 
+  useOnFirstRender(() => {
+    trackEmailAlreadyTaken(flow);
+  });
+
   const confirmButtonOnPress = React.useCallback(() => {
+    trackEmailDuplicateEditingConfirm(flow);
     dispatch(acknowledgeOnEmailValidation(O.none));
     navigateToInsertEmailScreen();
-  }, [dispatch, navigateToInsertEmailScreen]);
+  }, [dispatch, flow, navigateToInsertEmailScreen]);
 
   const continueButtonProps = {
     onPress: confirmButtonOnPress,

@@ -35,7 +35,8 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import {
   trackEmailDuplicateEditing,
   trackEmailEditing,
-  trackEmailEditingError
+  trackEmailEditingError,
+  trackSendValidationEmail
 } from "../analytics/emailAnalytics";
 import { getFlowType } from "../../utils/analytics";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
@@ -194,6 +195,9 @@ const CduEmailInsertScreen = () => {
           updateEmail(e as EmailString);
         })
       );
+      if (isFirstOnBoarding) {
+        trackSendValidationEmail(flow);
+      }
     }
   };
 
