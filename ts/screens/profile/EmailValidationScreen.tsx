@@ -6,7 +6,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useHeaderHeight } from "@react-navigation/elements";
+import { useCallback, useEffect, useState } from "react";
 import {
   AccessibilityInfo,
   Platform,
@@ -24,7 +25,8 @@ import {
   IOVisualCostants,
   ButtonOutline,
   ButtonSolid,
-  ButtonLink
+  ButtonLink,
+  ProgressLoader
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useRoute } from "@react-navigation/native";
@@ -32,19 +34,19 @@ import I18n from "../../i18n";
 
 import {
   acknowledgeOnEmailValidation,
-  profileLoadRequest,
+  emailValidationPollingStart,
+  emailValidationPollingStop,
   setEmailCheckAtStartupFailure,
   startEmailValidation
 } from "../../store/actions/profile";
 import {
-  isProfileEmailValidatedSelector,
+  isEmailValidatedSelector,
   isProfileFirstOnBoardingSelector,
   profileEmailSelector
 } from "../../store/reducers/profile";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
-import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { getFlowType } from "../../utils/analytics";
 import {
@@ -64,7 +66,6 @@ import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
-const profilePolling = 5000 as Millisecond; // 5 seconds
 const countdownIntervalDuration = 1000 as Millisecond; // 1 second
 
 const EMPTY_EMAIL = "";
@@ -78,19 +79,31 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.validate.title",
   body: "email.validate.help"
 };
-const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
+const EmailValidationScreen = () => {
+  const props =
+    useRoute<
+      Route<
+        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
+        EmailValidationScreenProp
+      >
+    >().params;
   const { isOnboarding, sendEmailAtFirstRender } = props;
+  const headerHeight = useHeaderHeight();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const optionEmail = useIOSelector(profileEmailSelector);
-  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const optionEmail = useIOSelector(
+    profileEmailSelector,
+    (l, r) =>
+      (O.isNone(l) && O.isNone(r)) ||
+      (O.isSome(l) && O.isSome(r) && l.value === r.value)
+  );
+  const isEmailValidated = useIOSelector(isEmailValidatedSelector);
   const emailValidation = useIOSelector(emailValidationSelector);
   const prevEmailValidation = usePrevious(emailValidation);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
     useState(true);
-  const polling = useRef<number | undefined>();
   const email = pipe(
     optionEmail,
     O.getOrElse(() => EMPTY_EMAIL)
@@ -106,8 +119,12 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
     [dispatch]
   );
 
-  const reloadProfile = useCallback(
-    () => dispatch(profileLoadRequest()),
+  const startPollingSaga = useCallback(
+    () => dispatch(emailValidationPollingStart()),
+    [dispatch]
+  );
+  const stopPollingSaga = useCallback(
+    () => dispatch(emailValidationPollingStop()),
     [dispatch]
   );
 
@@ -118,6 +135,8 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
   );
 
   useOnFirstRender(() => {
+    // polling starts every time the user land on this screen
+    startPollingSaga();
     // if the verification email was never sent, we send it
     if (sendEmailAtFirstRender) {
       sendEmailValidation();
@@ -141,7 +160,7 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
           dispatchAcknowledgeOnEmailValidation(O.none);
           dispatch(setEmailCheckAtStartupFailure(O.none));
         } else {
-          NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
             screen: ROUTES.PROFILE_DATA
           });
         }
@@ -184,6 +203,9 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
     if (visible) {
       return (
         <View style={IOStyles.alignCenter}>
+          <VSpacer size={24} />
+          <ProgressLoader progress={(timerCount / 60) * 100} />
+          <VSpacer size={8} />
           <Body weight="Regular" style={{ textAlign: "center" }} color="black">
             {I18n.t("email.newvalidate.countdowntext")}{" "}
             <Body weight="SemiBold" color="black">
@@ -195,16 +217,6 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
     }
     return null;
   };
-
-  useEffect(() => {
-    // use polling to get the profile info, to check if the email is valid or not
-    // eslint-disable-next-line functional/immutable-data
-    polling.current = setInterval(() => reloadProfile(), profilePolling);
-    // at the unmount of the page clear all timeout and interval
-    return () => {
-      clearInterval(polling.current);
-    };
-  }, [reloadProfile]);
 
   useEffect(() => {
     if (
@@ -233,12 +245,18 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
 
   useEffect(() => {
     if (isEmailValidated) {
-      clearInterval(polling.current);
+      // if the user has validated the email the polling can stop
+      stopPollingSaga();
       trackEmailValidationSuccess(flow);
     } else {
       trackEmailValidation(flow);
     }
-  }, [flow, isEmailValidated]);
+
+    return () => {
+      // if the user change screen the polling can stop
+      stopPollingSaga();
+    };
+  }, [flow, isEmailValidated, stopPollingSaga]);
 
   useHeaderSecondLevel({
     title: "",
@@ -248,7 +266,7 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { paddingTop: -headerHeight }]}>
       <ScrollView
         centerContent={true}
         contentContainerStyle={[
@@ -300,12 +318,17 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
             <VSpacer size={24} />
           </View>
         )}
-        <Countdown
-          timerElapsed={() => {
-            setIsValidateEmailButtonDisabled(false);
-          }}
-          visible={isValidateEmailButtonDisabled && !isEmailValidated}
-        />
+        <CountdownProvider
+          timerTiming={emailSentTimeout / 1000}
+          intervalDuration={countdownIntervalDuration}
+        >
+          <Countdown
+            timerElapsed={() => {
+              setIsValidateEmailButtonDisabled(false);
+            }}
+            visible={isValidateEmailButtonDisabled && !isEmailValidated}
+          />
+        </CountdownProvider>
         {isEmailValidated ? (
           <View style={IOStyles.selfCenter}>
             <ButtonSolid
@@ -329,24 +352,6 @@ const EmailValidationScreenComponent = (props: EmailValidationScreenProp) => {
         )}
       </ScrollView>
     </SafeAreaView>
-  );
-};
-
-const EmailValidationScreen = () => {
-  const props =
-    useRoute<
-      Route<
-        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
-        EmailValidationScreenProp
-      >
-    >().params;
-  return (
-    <CountdownProvider
-      timerTiming={emailSentTimeout / 1000}
-      intervalDuration={countdownIntervalDuration}
-    >
-      <EmailValidationScreenComponent {...props} />
-    </CountdownProvider>
   );
 };
 

@@ -94,6 +94,7 @@ import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import {
   clearKeychainError,
   keychainError
@@ -470,6 +471,8 @@ export function* initializeApplicationSaga(
 
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
+
+  yield* fork(watchEmailValidationSaga);
 
   if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);

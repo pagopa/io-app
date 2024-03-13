@@ -142,57 +142,52 @@ const CduEmailInsertScreen = () => {
   const sameEmailsErrorRender = useCallback(() => {
     if (isProfileEmailAlreadyTaken && isFirstOnBoarding) {
       setErrorMessage(I18n.t("email.newinsert.alert.description1"));
-      return false;
+      return;
     }
     if (isOnboarding) {
       setErrorMessage(I18n.t("email.newinsert.alert.description2"));
-      return false;
+      return;
     }
     if (!isOnboarding && !isFirstOnBoarding) {
       setErrorMessage(I18n.t("email.newinsert.alert.description3"));
-      return false;
+      return;
     }
     setErrorMessage(I18n.t("email.newinsert.alert.description1"));
-    return false;
   }, [isFirstOnBoarding, isOnboarding, isProfileEmailAlreadyTaken]);
 
-  /** validate email returning three possible values:
+  /** validate email returning two possible values:
    * - _true_,      if email is valid.
    * - _false_,     if email has been already changed from the user and it is not
    * valid.
-   * - _undefined_, if email field is empty. This state is consumed by
-   * LabelledItem Component and it used for style pourposes ONLY.
    */
   const isValidEmail = useCallback(
     () =>
       pipe(
         email,
-        O.map(value => {
-          if (EMPTY_EMAIL === value || !validator.isEmail(value)) {
+        O.fold(
+          () => {
             setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
             return false;
+          },
+          value => {
+            if (!validator.isEmail(value)) {
+              setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
+              return false;
+            }
+            if (areSameEmails) {
+              sameEmailsErrorRender();
+              return false;
+            }
+            return true;
           }
-          if (areSameEmails) {
-            sameEmailsErrorRender();
-          }
-          return true;
-        }),
-        O.toUndefined
+        )
       ),
     [areSameEmails, email, sameEmailsErrorRender]
   );
 
-  const isValidEmailWrapper = useCallback(() => {
-    if (isValidEmail() === undefined) {
-      setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
-      return false;
-    }
-    return isValidEmail();
-  }, [isValidEmail]);
-
   const continueOnPress = () => {
     Keyboard.dismiss();
-    if (isValidEmailWrapper()) {
+    if (isValidEmail()) {
       pipe(
         email,
         O.map(e => {
@@ -393,7 +388,7 @@ const CduEmailInsertScreen = () => {
           }}
           accessibilityLabel={I18n.t("email.newinsert.label")}
           placeholder={I18n.t("email.newinsert.label")}
-          onValidate={() => !!isValidEmailWrapper()}
+          onValidate={() => isValidEmail()}
           errorMessage={errorMessage}
           value={pipe(
             email,
