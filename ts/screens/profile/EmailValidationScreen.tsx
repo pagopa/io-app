@@ -25,8 +25,7 @@ import {
   IOVisualCostants,
   ButtonOutline,
   ButtonSolid,
-  ButtonLink,
-  ProgressLoader
+  ButtonLink
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useRoute } from "@react-navigation/native";
@@ -57,14 +56,12 @@ import {
 } from "../analytics/emailAnalytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import {
-  CountdownProvider,
-  useCountdown
-} from "../../components/countdown/CountdownProvider";
+import { CountdownProvider } from "../../components/countdown/CountdownProvider";
 import { IOToast } from "../../components/Toast";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import Countdown from "./components/CountdownComponent";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
 const countdownIntervalDuration = 1000 as Millisecond; // 1 second
@@ -103,8 +100,7 @@ const EmailValidationScreen = () => {
   const prevEmailValidation = usePrevious(emailValidation);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
-  const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
-    useState(true);
+  const [showCountdown, setShowCountdown] = useState(true);
   const email = pipe(
     optionEmail,
     O.getOrElse(() => EMPTY_EMAIL)
@@ -179,47 +175,6 @@ const EmailValidationScreen = () => {
     navigation.goBack();
   };
 
-  type CountdownProps = {
-    visible: boolean;
-    timerElapsed?: () => void;
-  };
-
-  const Countdown = (props: CountdownProps) => {
-    const { visible } = props;
-    const { timerCount, resetTimer, startTimer, isRunning } = useCountdown();
-
-    if (timerCount === 0 && props.timerElapsed) {
-      props.timerElapsed();
-    }
-
-    if (!visible) {
-      if (resetTimer) {
-        resetTimer();
-      }
-
-      return null;
-    } else if (startTimer && isRunning && !isRunning()) {
-      startTimer();
-    }
-
-    if (visible) {
-      return (
-        <View style={IOStyles.alignCenter}>
-          <VSpacer size={24} />
-          <ProgressLoader progress={(timerCount / 60) * 100} />
-          <VSpacer size={8} />
-          <Body weight="Regular" style={{ textAlign: "center" }} color="black">
-            {I18n.t("email.newvalidate.countdowntext")}{" "}
-            <Body weight="SemiBold" color="black">
-              {timerCount}s
-            </Body>
-          </Body>
-        </View>
-      );
-    }
-    return null;
-  };
-
   useEffect(() => {
     if (
       prevEmailValidation !== undefined &&
@@ -231,22 +186,23 @@ const EmailValidationScreen = () => {
         AccessibilityInfo.announceForAccessibility(
           I18n.t("global.actions.retry")
         );
-        setIsValidateEmailButtonDisabled(false);
+        setShowCountdown(false);
         return;
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
-        IOToast.success(I18n.t("email.newvalidate.toast"));
+        IOToast.show(I18n.t("email.newvalidate.toast"));
         AccessibilityInfo.announceForAccessibility(
           I18n.t("email.newvalidate.toast")
         );
-        setIsValidateEmailButtonDisabled(true);
+        setShowCountdown(true);
       }
     }
   }, [emailValidation.sendEmailValidationRequest, prevEmailValidation]);
 
   useEffect(() => {
     if (isEmailValidated) {
+      setShowCountdown(false);
       // if the user has validated the email the polling can stop
       stopPollingSaga();
       trackEmailValidationSuccess(flow);
@@ -326,9 +282,9 @@ const EmailValidationScreen = () => {
         >
           <Countdown
             timerElapsed={() => {
-              setIsValidateEmailButtonDisabled(false);
+              setShowCountdown(false);
             }}
-            visible={isValidateEmailButtonDisabled && !isEmailValidated}
+            visible={showCountdown && !isEmailValidated}
           />
         </CountdownProvider>
         {isEmailValidated ? (
@@ -340,7 +296,7 @@ const EmailValidationScreen = () => {
             />
           </View>
         ) : (
-          !isValidateEmailButtonDisabled && (
+          !showCountdown && (
             <View style={IOStyles.selfCenter}>
               <ButtonOutline
                 label={I18n.t("email.newvalidate.buttonlabelsentagain")}
