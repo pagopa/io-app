@@ -377,9 +377,7 @@ const trackAction =
         return mp.track(
           action.type,
           buildEventProperties("UX", "confirm", {
-            identification_method: action.payload.isBiometric
-              ? "biometric"
-              : "pin"
+            identification_method: action.payload.isBiometric ? "bio" : "pin"
           })
         );
     }
