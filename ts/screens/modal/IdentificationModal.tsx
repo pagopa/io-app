@@ -53,6 +53,7 @@ import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const PIN_LENGTH = 6;
 const VERTICAL_PADDING = 16;
+const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 
 const onRequestCloseHandler = () => undefined;
 
@@ -311,7 +312,7 @@ const IdentificationModal = () => {
         identificationProgressState.kind === "started"))
   ) {
     void onFingerprintRequest();
-    setAccessibilityFocus(headerRef);
+    setAccessibilityFocus(headerRef, A11Y_FOCUS_DELAY);
   }
 
   const remainingAttemptsToShowAlert =
@@ -381,18 +382,6 @@ const IdentificationModal = () => {
                     name={pictogramKey}
                     size={64}
                   />
-                  {isDevEnv && (
-                    <IconButton
-                      icon={"systemPermissionsAndroid"}
-                      color="contrast"
-                      onPress={() => {
-                        setValue(pin);
-                      }}
-                      accessibilityLabel={
-                        "Inserisci il codice di sblocco di test"
-                      }
-                    />
-                  )}
                 </View>
               )}
               <View accessible ref={headerRef} style={IOStyles.alignCenter}>
@@ -437,6 +426,18 @@ const IdentificationModal = () => {
                 <VSpacer size={VERTICAL_PADDING} />
               </View>
             </View>
+            {isDevEnv && (
+              <View style={IOStyles.alignCenter}>
+                <IconButton
+                  icon={"systemPermissionsAndroid"}
+                  color="contrast"
+                  onPress={() => {
+                    setValue(pin);
+                  }}
+                  accessibilityLabel={"Inserisci il codice di sblocco di test"}
+                />
+              </View>
+            )}
           </ContentWrapper>
         </ScrollView>
       </SafeAreaView>
