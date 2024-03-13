@@ -27,7 +27,8 @@ import {
   shouldUpdatePaymentSelector,
   isUserSelectedPaymentSelector,
   canNavigateToPaymentFromMessageSelector,
-  paymentsButtonStateSelector
+  paymentsButtonStateSelector,
+  isPaymentsButtonVisibleSelector
 } from "../payments";
 import { getRptIdStringFromPaymentData } from "../../../utils";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -1005,7 +1006,7 @@ describe("paymentsButtonStateSelector", () => {
           payments: {
             ...appState.entities.messages.payments,
             "01HRSSD1R29DA2HJQHGYJP19T8": {
-              "01234567890012345678912345610": remoteReady(paymentData)
+              "01234567890012345678912345610": remoteReady({})
             }
           }
         }
@@ -1016,5 +1017,81 @@ describe("paymentsButtonStateSelector", () => {
       messageId
     );
     expect(paymentsButtonState).toBe("enabled");
+  });
+});
+
+describe("isPaymentsButtonVisibleSelector", () => {
+  it("Should return false when the button is hidden", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const isPaymentButtonVisible = isPaymentsButtonVisibleSelector(
+      appState,
+      messageId
+    );
+    expect(isPaymentButtonVisible).toBe(false);
+  });
+  it("Should return true when the button is loading", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            "01HRSSD1R29DA2HJQHGYJP19T8": pot.some({
+              id: messageId,
+              paymentData: {
+                noticeNumber: "012345678912345610",
+                payee: {
+                  fiscalCode: "01234567890"
+                }
+              } as PaymentData
+            } as UIMessageDetails)
+          }
+        }
+      }
+    } as GlobalState;
+    const isPaymentButtonVisible = isPaymentsButtonVisibleSelector(
+      finalState,
+      messageId
+    );
+    expect(isPaymentButtonVisible).toBe(true);
+  });
+  it("Should return true when the button is enabled", () => {
+    const messageId = "01HRSSD1R29DA2HJQHGYJP19T8" as UIMessageId;
+    const appState = appReducer(undefined, applicationChangeState("active"));
+    const finalState = {
+      ...appState,
+      entities: {
+        ...appState.entities,
+        messages: {
+          ...appState.entities.messages,
+          detailsById: {
+            "01HRSSD1R29DA2HJQHGYJP19T8": pot.some({
+              id: messageId,
+              paymentData: {
+                noticeNumber: "012345678912345610",
+                payee: {
+                  fiscalCode: "01234567890"
+                }
+              } as PaymentData
+            } as UIMessageDetails)
+          },
+          payments: {
+            ...appState.entities.messages.payments,
+            "01HRSSD1R29DA2HJQHGYJP19T8": {
+              "01234567890012345678912345610": remoteReady({})
+            }
+          }
+        }
+      }
+    } as GlobalState;
+    const isPaymentButtonVisible = isPaymentsButtonVisibleSelector(
+      finalState,
+      messageId
+    );
+    expect(isPaymentButtonVisible).toBe(true);
   });
 });
