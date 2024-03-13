@@ -1,11 +1,6 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  ButtonSolid,
-  IOColors,
-  IOStyles,
-  IOVisualCostants
-} from "@pagopa/io-app-design-system";
+import { ButtonSolid, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { UIMessageId } from "../../types";
@@ -16,29 +11,33 @@ import {
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
 import {
-  gapBetweenItemsInAGrid,
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "../../utils";
 import { useIOToast } from "../../../../components/Toast";
+import { CTAS } from "../../types/MessageCTA";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { CTAsBar } from "../../../../components/cta/CTAsBar";
 
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    backgroundColor: IOColors.white,
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
-    paddingTop: gapBetweenItemsInAGrid,
+    overflow: "hidden",
     bottom: 0,
     width: "100%"
   }
 });
 
 type MessageDetailsPaymentButtonProps = {
+  ctas?: CTAS;
   messageId: UIMessageId;
+  serviceId: ServiceId;
 };
 
-export const MessageDetailsPaymentButton = ({
-  messageId
+export const MessageDetailsStickyFooter = ({
+  ctas,
+  messageId,
+  serviceId
 }: MessageDetailsPaymentButtonProps) => {
   const dispatch = useIODispatch();
   const toast = useIOToast();
@@ -52,34 +51,44 @@ export const MessageDetailsPaymentButton = ({
   const canNavigateToPayment = useIOSelector(state =>
     canNavigateToPaymentFromMessageSelector(state)
   );
-  if (!paymentData || componentVisibility === "hidden") {
+  const hidePaymentButton = !paymentData || componentVisibility === "hidden";
+  if (!ctas && hidePaymentButton) {
     return null;
   }
-  const paymentId = getRptIdStringFromPaymentData(paymentData);
   return (
     <View
       style={[
+        IOStyles.footer,
         styles.container,
         { paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom }
       ]}
     >
-      <ButtonSolid
-        label={I18n.t("features.messages.payments.pay")}
-        accessibilityLabel={I18n.t("features.messages.payments.pay")}
-        onPress={() =>
-          initializeAndNavigateToWalletForPayment(
-            messageId,
-            paymentId,
-            paymentData.amount,
-            canNavigateToPayment,
-            dispatch,
-            false,
-            () => toast.error(I18n.t("genericError"))
-          )
-        }
-        fullWidth
-        loading={componentVisibility === "loading"}
-      />
+      {ctas && (
+        <>
+          <CTAsBar ctas={ctas} serviceId={serviceId} />
+          {!hidePaymentButton && <VSpacer size={8} />}
+        </>
+      )}
+      {!hidePaymentButton && (
+        <ButtonSolid
+          label={I18n.t("features.messages.payments.pay")}
+          accessibilityLabel={I18n.t("features.messages.payments.pay")}
+          onPress={() =>
+            initializeAndNavigateToWalletForPayment(
+              messageId,
+              getRptIdStringFromPaymentData(paymentData),
+              false,
+              paymentData.amount,
+              canNavigateToPayment,
+              dispatch,
+              false,
+              () => toast.error(I18n.t("genericError"))
+            )
+          }
+          fullWidth
+          loading={componentVisibility === "loading"}
+        />
+      )}
     </View>
   );
 };

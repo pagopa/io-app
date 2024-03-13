@@ -57,6 +57,7 @@ export const MessageFooter = ({
       initializeAndNavigateToWalletForPayment(
         messageId,
         paymentId,
+        false,
         undefined,
         canNavigateToPayment,
         dispatch,

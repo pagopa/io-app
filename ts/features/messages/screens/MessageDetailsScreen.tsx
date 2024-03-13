@@ -36,15 +36,15 @@ import {
 import { localeDateFormat } from "../../../utils/locale";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
-import { cleanMarkdownFromCTAs } from "../utils/messages";
+import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
-import { FooterCTAs } from "../components/MessageDetail/FooterCTAs";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
 import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
-import { MessageDetailsPaymentButton } from "../components/MessageDetail/MessageDetailsPaymentButton";
-import { ScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
+import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
+import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
+import { serviceMetadataByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -108,6 +108,17 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     () => cleanMarkdownFromCTAs(messageMarkdown),
     [messageMarkdown]
   );
+  const serviceMetadata = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, serviceId)
+  );
+  const maybeCTAs = useMemo(
+    () =>
+      pipe(
+        getMessageCTA(messageMarkdown, serviceMetadata, serviceId),
+        O.toUndefined
+      ),
+    [messageMarkdown, serviceId, serviceMetadata]
+  );
 
   useHeaderSecondLevel({
     title: "",
@@ -146,7 +157,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+      <ScrollView contentContainerStyle={[styles.scrollContentContainer]}>
         <View style={styles.container}>
           <ContentWrapper>
             <MessageDetailsHeader
@@ -204,10 +215,16 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         </View>
         <VSpacer size={24} />
         <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
-        <ScrollViewAdditionalSpace messageId={messageId} />
+        <MessageDetailsScrollViewAdditionalSpace
+          hasCTAS={!!maybeCTAs}
+          messageId={messageId}
+        />
       </ScrollView>
-      <FooterCTAs markdown={messageMarkdown} serviceId={serviceId} />
-      <MessageDetailsPaymentButton messageId={messageId} />
+      <MessageDetailsStickyFooter
+        messageId={messageId}
+        ctas={maybeCTAs}
+        serviceId={serviceId}
+      />
     </>
   );
 };
