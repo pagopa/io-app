@@ -94,7 +94,7 @@ describe("MessageDetailsStickyFooter", () => {
     jest
       .spyOn(payments, "paymentsButtonStateSelector")
       .mockImplementation((_state, _messageId) => "hidden");
-    const component = renderComponent();
+    const component = renderComponent(bothCTAs);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("should match snapshot with one CTA and no payment button", () => {
