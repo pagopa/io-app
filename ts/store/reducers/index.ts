@@ -3,7 +3,15 @@
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, Reducer } from "redux";
-import { PersistConfig, persistReducer, purgeStoredState } from "redux-persist";
+import {
+  createMigrate,
+  MigrationManifest,
+  PersistConfig,
+  PersistedState,
+  PersistPartial,
+  persistReducer,
+  purgeStoredState
+} from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import { versionInfoReducer } from "../../common/versionInfo/store/reducers/versionInfo";
 import bonusReducer from "../../features/bonus/common/store/reducers";
@@ -20,6 +28,7 @@ import createSecureStorage from "../storages/keychain";
 import { DateISO8601Transform } from "../transforms/dateISO8601Tranform";
 import { whatsNewInitialState } from "../../features/whatsnew/store/reducers";
 import { fastLoginOptInInitialState } from "../../features/fastLogin/store/reducers/optInReducer";
+import { isDevEnv } from "../../utils/environment";
 import appStateReducer from "./appState";
 import assistanceToolsReducer from "./assistanceTools";
 import authenticationReducer, {
@@ -41,6 +50,7 @@ import entitiesReducer, {
 } from "./entities";
 import identificationReducer, {
   IdentificationState,
+  fillShowLockModal,
   INITIAL_STATE as identificationInitialState
 } from "./identification";
 import installationReducer from "./installation";
@@ -68,12 +78,29 @@ export const authenticationPersistConfig: PersistConfig = {
   blacklist: ["deepLink"]
 };
 
+export const IDENTIFICATION_STATE_MIGRATION_VERSION = 0;
+export const identificationStateMigration: MigrationManifest = {
+  // version 0
+  // we added showLockModal
+  "0": (state: PersistedState) => {
+    const previousState = state as IdentificationState & PersistPartial;
+    const failData = previousState.fail
+      ? fillShowLockModal(previousState.fail)
+      : undefined;
+    return {
+      ...previousState,
+      fail: failData
+    } as PersistedState;
+  }
+};
 // A custom configuration to store the fail information of the identification section
 export const identificationPersistConfig: PersistConfig = {
   key: "identification",
   storage: AsyncStorage,
   blacklist: ["progress"],
-  transforms: [DateISO8601Transform]
+  transforms: [DateISO8601Transform],
+  version: IDENTIFICATION_STATE_MIGRATION_VERSION,
+  migrate: createMigrate(identificationStateMigration, { debug: isDevEnv })
 };
 
 /**

@@ -86,6 +86,20 @@ export const INITIAL_STATE: IdentificationState = {
   fail: undefined
 };
 
+export const fillShowLockModal = (actualErrorData: IdentificationFailData) => {
+  // showLockModal is true if the time gap between now and the next legal attempt
+  // is less than the timespanBetweenAttempts and the remaining attempts are less than 3
+  const timeGap =
+    new Date().getTime() - actualErrorData.nextLegalAttempt.getTime();
+  const showLockModal =
+    actualErrorData.remainingAttempts <= 3 &&
+    timeGap < actualErrorData.timespanBetweenAttempts * 1000;
+  return {
+    ...actualErrorData,
+    showLockModal
+  };
+};
+
 const nextErrorData = (
   errorData: IdentificationFailData
 ): IdentificationFailData => {
@@ -140,8 +154,6 @@ const reducer = (
       return INITIAL_STATE;
 
     case getType(identificationHideLockModal):
-      // TODO: make a migration
-      console.log("🔒 hide lock modal: log used to make lint fail");
       const failData = state.fail
         ? {
             ...state.fail,
