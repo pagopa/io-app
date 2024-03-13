@@ -191,7 +191,7 @@ const EmailValidationScreen = () => {
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
-        IOToast.show(I18n.t("email.newvalidate.toast"));
+        IOToast.success(I18n.t("email.newvalidate.toast"));
         AccessibilityInfo.announceForAccessibility(
           I18n.t("email.newvalidate.toast")
         );
