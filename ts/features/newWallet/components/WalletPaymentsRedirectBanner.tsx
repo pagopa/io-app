@@ -2,17 +2,26 @@ import { Banner } from "@pagopa/io-app-design-system";
 import React from "react";
 import { View } from "react-native";
 import I18n from "../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { isWalletPaymentsRedirectBannerVisibleSelector } from "../store/selectors";
+import { walletSetPaymentsRedirectBannerVisible } from "../store/actions/preferences";
 
 const WalletPaymentsRedirectBanner = () => {
+  const dispatch = useIODispatch();
   const bannerRef = React.createRef<View>();
-  const [isVisible, setVisible] = React.useState(true);
+
+  const isVisible = useIOSelector(
+    isWalletPaymentsRedirectBannerVisibleSelector
+  );
 
   const handleOnBannerPress = () => {
     // TODO add payments section navigation
+    // Currently we do not have a payments section to navigate to
+    // The navigation will be handled with a future PR
   };
 
   const handleOnBannerClose = () => {
-    setVisible(false);
+    dispatch(walletSetPaymentsRedirectBannerVisible(false));
   };
 
   if (!isVisible) {
