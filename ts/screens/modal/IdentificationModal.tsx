@@ -49,6 +49,7 @@ import {
   getBiometricInstructions,
   getBiometryIconName
 } from "../../utils/identification";
+import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { IdentificationLockModal } from "./IdentificationLockModal";
 
 const PIN_LENGTH = 6;
@@ -65,8 +66,7 @@ const IdentificationModal = () => {
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
-  // TODO: forced new blue until we have a proper color mapping on the design system
-  const isDesignSystemEnabled = true; // useIOSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const colorScheme: ColorSchemeName = "light";
 
   const blueColor = IOStyleVariables.colorPrimary(
