@@ -5,12 +5,12 @@ import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 
 const WalletHomeScreen = () => (
-    <>
-      <WalletPaymentsRedirectBanner />
-      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
-        <WalletEmptyScreenContent />
-      </Animated.View>
-    </>
-  );
+  <>
+    <WalletPaymentsRedirectBanner />
+    <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+      <WalletEmptyScreenContent />
+    </Animated.View>
+  </>
+);
 
 export { WalletHomeScreen };
