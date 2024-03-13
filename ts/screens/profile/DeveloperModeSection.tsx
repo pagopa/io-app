@@ -8,7 +8,8 @@ import {
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
-  VSpacer
+  VSpacer,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18n-js";
@@ -23,6 +24,7 @@ import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selec
 import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
 import { toThumbprint } from "../../features/lollipop/utils/crypto";
 import { walletAddCoBadgeStart } from "../../features/wallet/onboarding/cobadge/store/actions";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import ROUTES from "../../navigation/routes";
 import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
@@ -49,7 +51,6 @@ import {
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { getDeviceId } from "../../utils/device";
 import { isDevEnv } from "../../utils/environment";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 import DSEnableSwitch from "./components/DSEnableSwitch";
 
@@ -271,6 +272,7 @@ const DeveloperDataSection = () => {
 
 const DesignSystemSection = () => {
   const navigation = useIONavigation();
+  const { themeType, setTheme } = useIOThemeContext();
   const dispatch = useIODispatch();
 
   const isNewWalletSectionEnabled = useIOSelector(
@@ -300,6 +302,14 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <DSEnableSwitch />
+      <VSpacer size={8} />
+      <ListItemSwitch
+        label="Abilita Dark Mode"
+        value={themeType === "dark"}
+        onSwitchValueChange={() =>
+          setTheme(themeType === "dark" ? "light" : "dark")
+        }
+      />
       <Divider />
       <ListItemSwitch
         label={I18n.t("profile.main.newWalletSection")}
