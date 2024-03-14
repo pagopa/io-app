@@ -298,13 +298,16 @@ const IdentificationModal = () => {
         identificationProgressState.kind === "started"))
   ) {
     void onFingerprintRequest();
-    setAccessibilityFocus(headerRef, A11Y_FOCUS_DELAY);
   }
 
   const remainingAttemptsToShowAlert =
     remainingAttempts <= FAIL_ATTEMPTS_TO_SHOW_ALERT;
   const showToastNotificationAlert =
     remainingAttemptsToShowAlert || showRetryText.current;
+
+  if (showRetryText.current) {
+    setAccessibilityFocus(errorStatusRef, A11Y_FOCUS_DELAY);
+  }
 
   return showLockModal ? (
     <IdentificationLockModal

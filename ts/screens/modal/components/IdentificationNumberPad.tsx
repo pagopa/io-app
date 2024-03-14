@@ -93,7 +93,12 @@ export const IdentificationNumberPad = (
         />
       </View>
       {isDevEnv && (
-        <View style={IOStyles.alignCenter}>
+        <View
+          accessible={false}
+          importantForAccessibility="no-hide-descendants"
+          accessibilityElementsHidden
+          style={IOStyles.alignCenter}
+        >
           <VSpacer size={16} />
           <IconButton
             icon={"systemPermissionsAndroid"}
