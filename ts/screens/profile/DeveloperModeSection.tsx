@@ -302,7 +302,7 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <DSEnableSwitch />
-      <VSpacer size={8} />
+      <Divider />
       <ListItemSwitch
         label="Abilita Dark Mode"
         value={themeType === "dark"}
