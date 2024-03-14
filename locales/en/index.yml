@@ -2881,6 +2881,10 @@ features:
     signatureFieldInfo:
       title: "What are restrictive clauses?"
       subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."
+  wallet:
+    home:
+      emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
+      cta: Aggiungi al portafoglio
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
