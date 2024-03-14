@@ -1,29 +1,29 @@
-import { View, StyleSheet, Alert } from "react-native";
-import * as React from "react";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import {
+  BlockButtons,
   ButtonLink,
   ButtonOutline,
   ButtonSolid,
-  IconButton,
-  IconButtonSolid,
-  IconButtonContained,
-  IOColors,
   HSpacer,
+  IOColors,
+  IconButton,
+  IconButtonContained,
+  IconButtonSolid,
+  ListItemSwitch,
   VSpacer,
   useIOExperimentalDesign,
-  useIOTheme,
-  BlockButtons,
-  ListItemSwitch
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as React from "react";
 import { useState } from "react";
-import { H2 } from "../../../components/core/typography/H2";
-import CopyButtonComponent from "../../../components/CopyButtonComponent";
-import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
+import { Alert, StyleSheet, View } from "react-native";
 import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoticeNumber";
+import CopyButtonComponent from "../../../components/CopyButtonComponent";
+import { H2 } from "../../../components/core/typography/H2";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import PaymentButton from "../../messages/components/MessageDetail/PaymentButton";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
 
 const styles = StyleSheet.create({
   primaryBlockLegacy: {
@@ -78,7 +78,7 @@ export const DSButtons = () => {
       >
         ButtonLink
       </H2>
-      {renderButtonLink()}
+      {renderButtonLink(isExperimental)}
 
       <VSpacer size={48} />
 
@@ -628,7 +628,7 @@ const renderButtonOutline = (isExperimental: boolean) => (
   </>
 );
 
-const renderButtonLink = () => (
+const renderButtonLink = (isExperimental: boolean) => (
   <>
     <DSComponentViewerBox name="ButtonLink · Primary variant (using Pressable API)">
       <ButtonLink
@@ -687,6 +687,84 @@ const renderButtonLink = () => (
         />
       </View>
     </DSComponentViewerBox>
+
+    <View
+      style={isExperimental ? styles.primaryBlock : styles.primaryBlockLegacy}
+    >
+      <DSComponentViewerBox
+        name="ButtonLink · Contrast variant"
+        colorMode="dark"
+      >
+        <View>
+          <ButtonLink
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button"}
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonLink
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button"}
+            icon="starEmpty"
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonLink
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button"}
+            icon="starEmpty"
+            iconPosition="end"
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <View style={{ alignSelf: "center" }}>
+            <ButtonLink
+              color="contrast"
+              accessibilityLabel="Tap to trigger test alert"
+              label={"Primary button (centered)"}
+              onPress={onButtonPress}
+            />
+          </View>
+        </View>
+      </DSComponentViewerBox>
+
+      <DSComponentViewerBox
+        name="ButtonLink · Contrast, disabled"
+        colorMode="dark"
+        last
+      >
+        <View>
+          <ButtonLink
+            disabled
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            onPress={onButtonPress}
+          />
+
+          <VSpacer size={16} />
+
+          <ButtonLink
+            disabled
+            color="contrast"
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Primary button (disabled)"}
+            icon="starEmpty"
+            iconPosition="end"
+            onPress={onButtonPress}
+          />
+        </View>
+      </DSComponentViewerBox>
+    </View>
   </>
 );
 

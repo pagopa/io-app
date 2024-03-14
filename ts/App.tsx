@@ -27,8 +27,8 @@ export const App: React.FunctionComponent<never> = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <StyleProvider style={theme()}>
       <SafeAreaProvider>
-        <IOThemeContextProvider theme={"light"}>
-          <IODSExperimentalContextProvider>
+        <IODSExperimentalContextProvider>
+          <IOThemeContextProvider theme={"light"}>
             <ToastProvider>
               <Provider store={store}>
                 <PersistGate loading={undefined} persistor={persistor}>
@@ -42,8 +42,8 @@ export const App: React.FunctionComponent<never> = () => (
                 </PersistGate>
               </Provider>
             </ToastProvider>
-          </IODSExperimentalContextProvider>
-        </IOThemeContextProvider>
+          </IOThemeContextProvider>
+        </IODSExperimentalContextProvider>
       </SafeAreaProvider>
     </StyleProvider>
   </GestureHandlerRootView>
