@@ -9,5 +9,5 @@ export const isWalletPaymentsRedirectBannerVisibleSelector = (
   pipe(
     state,
     selectWalletFeature,
-    wallet => wallet.shouldShowPaymentsRedirectBanner
+    wallet => wallet.preferences.shouldShowPaymentsRedirectBanner
   );
