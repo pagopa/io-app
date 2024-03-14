@@ -3,6 +3,7 @@ import Animated, { Layout } from "react-native-reanimated";
 import { IOStyles } from "@pagopa/io-app-design-system";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
+import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 
 const WalletHomeScreen = () => (
   <>
