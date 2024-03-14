@@ -10,7 +10,6 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { FlatList, ScrollView, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useSelector } from "react-redux";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -172,11 +171,7 @@ const FciQtspClausesScreen = () => {
 
   return (
     <>
-      <SafeAreaView
-        style={IOStyles.flex}
-        edges={["bottom", "left", "right"]}
-        testID={"FciQtspClausesTestID"}
-      >
+      <View style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H2>{I18n.t("features.fci.qtspTos.title")}</H2>
           <VSpacer size={16} />
@@ -188,7 +183,7 @@ const FciQtspClausesScreen = () => {
           primary={{ type: "Outline", buttonProps: cancelButtonProps }}
           secondary={{ type: "Solid", buttonProps: continueButtonProps }}
         />
-      </SafeAreaView>
+      </View>
       {fciAbortSignature}
       {fciCheckService}
     </>

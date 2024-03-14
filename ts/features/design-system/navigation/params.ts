@@ -36,6 +36,5 @@ export type DesignSystemParamsList = {
   [DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route]: undefined;
-  [DESIGN_SYSTEM_ROUTES.LEGACY.BUTTONS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route]: undefined;
 };

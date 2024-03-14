@@ -90,6 +90,17 @@ jobs:
           APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
           ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD: ${{secrets.ITMSTRANSPORTER_FORCE_ITMS_PACKAGE_UPLOAD}}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      - id: upload-dsym-files
+        # Sometimes the build-upload-app-store step fails for timeout,
+        # in this case we want to upload the dSYM files anyway
+        if: ${{ always() }} 
+        # We don't want to fail whole job if the dSYM upload step fails
+        continue-on-error: true 
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.0.3
+        with:
+          name: ItaliaApp.app.dSYM.zip
+          path: ios/ItaliaApp.app.dSYM.zip
+          retention-days: 60        
   notify-new-version:
     environment: dev
     runs-on: ubuntu-latest

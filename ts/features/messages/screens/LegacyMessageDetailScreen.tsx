@@ -94,8 +94,8 @@ const LegacyMessageDetailScreen = () => {
     O.toUndefined
   );
   // Map the potential message to the potential service
-  const maybeServiceMetadata = useIOSelector(
-    serviceMetadataByIdSelector(serviceId)
+  const maybeServiceMetadata = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, serviceId)
   );
   const hasPaidBadge: boolean = useIOSelector(state =>
     message ? isNoticePaidSelector(state, message.category) : false

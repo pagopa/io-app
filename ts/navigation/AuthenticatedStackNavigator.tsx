@@ -46,22 +46,22 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
-import { WalletBarcodeNavigator } from "../features/walletV3/barcode/navigation/navigator";
-import { WalletBarcodeRoutes } from "../features/walletV3/barcode/navigation/routes";
+import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
+import { WalletBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import {
   WalletDetailsNavigator,
   WalletDetailsRoutes
-} from "../features/walletV3/details/navigation/navigator";
+} from "../features/payments/details/navigation/navigator";
 import {
   WalletOnboardingNavigator,
   WalletOnboardingRoutes
-} from "../features/walletV3/onboarding/navigation/navigator";
-import { WalletPaymentNavigator } from "../features/walletV3/payment/navigation/navigator";
-import { WalletPaymentRoutes } from "../features/walletV3/payment/navigation/routes";
+} from "../features/payments/onboarding/navigation/navigator";
+import { WalletPaymentNavigator } from "../features/payments/payment/navigation/navigator";
+import { WalletPaymentRoutes } from "../features/payments/payment/navigation/routes";
 import {
   WalletTransactionNavigator,
   WalletTransactionRoutes
-} from "../features/walletV3/transaction/navigation/navigator";
+} from "../features/payments/transaction/navigation/navigator";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
@@ -106,7 +106,11 @@ const AuthenticatedStackNavigator = () => {
         headerMode: "screen"
       }}
     >
-      <Stack.Screen name={ROUTES.MAIN} component={MainTabNavigator} />
+      <Stack.Screen
+        name={ROUTES.MAIN}
+        options={{ headerShown: false }}
+        component={MainTabNavigator}
+      />
 
       <Stack.Screen
         name={ROUTES.ONBOARDING}

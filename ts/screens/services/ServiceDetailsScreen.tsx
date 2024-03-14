@@ -21,7 +21,7 @@ import ContactPreferencesToggles from "../../components/services/ContactPreferen
 import ServiceMetadataComponent from "../../components/services/ServiceMetadata";
 import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
-import Markdown from "../../components/ui/Markdown";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { FooterTopShadow } from "../../components/FooterTopShadow";
 import I18n from "../../i18n";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
@@ -133,13 +133,13 @@ const ServiceDetailsScreen = (props: Props) => {
 
           {metadata?.description && (
             <>
-              <Markdown
+              <LegacyMarkdown
                 animated={true}
                 onLoadEnd={onMarkdownEnd}
                 onError={onMarkdownEnd}
               >
                 {metadata.description}
-              </Markdown>
+              </LegacyMarkdown>
               <VSpacer size={24} />
             </>
           )}

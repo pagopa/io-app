@@ -8,7 +8,8 @@ import {
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
-  VSpacer
+  VSpacer,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "i18n-js";
@@ -29,6 +30,7 @@ import { sessionExpired } from "../../store/actions/authentication";
 import { setDebugModeEnabled } from "../../store/actions/debug";
 import {
   preferencesIdPayTestSetEnabled,
+  preferencesNewWalletSectionSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
   preferencesPnTestEnvironmentSetEnabled
 } from "../../store/actions/persistedPreferences";
@@ -42,6 +44,7 @@ import { isDebugModeEnabledSelector } from "../../store/reducers/debug";
 import { notificationsInstallationSelector } from "../../store/reducers/notifications/installation";
 import {
   isIdPayTestEnabledSelector,
+  isNewWalletSectionEnabledSelector,
   isPagoPATestEnabledSelector,
   isPnTestEnabledSelector
 } from "../../store/reducers/persistedPreferences";
@@ -269,6 +272,20 @@ const DeveloperDataSection = () => {
 
 const DesignSystemSection = () => {
   const navigation = useIONavigation();
+  const { themeType, setTheme } = useIOThemeContext();
+  const dispatch = useIODispatch();
+
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
+
+  const onNewWalletSectionToggle = (enabled: boolean) => {
+    dispatch(
+      preferencesNewWalletSectionSetEnabled({
+        isNewWalletSectionEnabled: enabled
+      })
+    );
+  };
 
   return (
     <ContentWrapper>
@@ -285,6 +302,20 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <DSEnableSwitch />
+      <VSpacer size={8} />
+      <ListItemSwitch
+        label="Abilita Dark Mode"
+        value={themeType === "dark"}
+        onSwitchValueChange={() =>
+          setTheme(themeType === "dark" ? "light" : "dark")
+        }
+      />
+      <Divider />
+      <ListItemSwitch
+        label={I18n.t("profile.main.newWalletSection")}
+        value={isNewWalletSectionEnabled}
+        onSwitchValueChange={onNewWalletSectionToggle}
+      />
     </ContentWrapper>
   );
 };
@@ -338,11 +369,18 @@ const PlaygroundsSection = () => {
         })
     },
     {
-      // New Wallet
-      value: I18n.t("profile.main.walletPlayground.titleSection"),
+      value: "Payments",
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.WALLET_PLAYGROUND
+        })
+    },
+    {
+      // new Payments page
+      value: "Payments page playground",
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.PAYMENTS_HOME
         })
     }
   ];

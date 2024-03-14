@@ -2,12 +2,13 @@ import * as React from "react";
 import { Alert, View, ImageSourcePropType } from "react-native";
 import {
   ButtonExtendedOutline,
-  IOThemeContext,
+  ModuleAttachment,
   ModuleCheckout,
   ModuleIDP,
   ModulePaymentNotice,
   PaymentNoticeStatus,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { H2 } from "../../../components/core/typography/H2";
@@ -16,7 +17,6 @@ import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { LegacyModuleAttachment } from "../../messages/components/MessageDetail/LegacyModuleAttachment";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
-import { ModuleAttachment } from "../../messages/components/MessageDetail/ModuleAttachment";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -37,65 +37,62 @@ const noticeStatusArray: Array<PaymentNoticeStatusWithoutDefault> = [
 
 export const DSModules = () => {
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const theme = useIOTheme();
   return (
-    <IOThemeContext.Consumer>
-      {theme => (
-        <DesignSystemScreen title="Modules">
-          <H2
-            color={theme["textHeading-default"]}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            ModuleAttachment
-          </H2>
-          {renderModuleAttachment(isDesignSystemEnabled)}
+    <DesignSystemScreen title="Modules">
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
+        ModuleAttachment
+      </H2>
+      {renderModuleAttachment(isDesignSystemEnabled)}
 
-          <VSpacer size={40} />
+      <VSpacer size={40} />
 
-          <H2
-            color={theme["textHeading-default"]}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            ModulePaymentNotice
-          </H2>
-          {renderModulePaymentNotice()}
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
+        ModulePaymentNotice
+      </H2>
+      {renderModulePaymentNotice()}
 
-          <VSpacer size={40} />
+      <VSpacer size={40} />
 
-          <H2
-            color={theme["textHeading-default"]}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            ModuleCheckout
-          </H2>
-          {renderModuleCheckout()}
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
+        ModuleCheckout
+      </H2>
+      {renderModuleCheckout()}
 
-          <VSpacer size={40} />
+      <VSpacer size={40} />
 
-          <H2
-            color={theme["textHeading-default"]}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            ButtonExtendedOutline
-          </H2>
-          {renderButtonExtendedOutline()}
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
+        ButtonExtendedOutline
+      </H2>
+      {renderButtonExtendedOutline()}
 
-          <VSpacer size={40} />
+      <VSpacer size={40} />
 
-          <H2
-            color={theme["textHeading-default"]}
-            weight={"SemiBold"}
-            style={{ marginBottom: 16 }}
-          >
-            ModuleIDP
-          </H2>
-          {renderModuleIDP()}
-        </DesignSystemScreen>
-      )}
-    </IOThemeContext.Consumer>
+      <H2
+        color={theme["textHeading-default"]}
+        weight={"SemiBold"}
+        style={{ marginBottom: 16 }}
+      >
+        ModuleIDP
+      </H2>
+      {renderModuleIDP()}
+    </DesignSystemScreen>
   );
 };
 

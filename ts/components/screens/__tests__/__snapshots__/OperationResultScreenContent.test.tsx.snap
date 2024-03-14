@@ -320,7 +320,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                       }
                     >
                       <RCTSafeAreaView
-                        emulateUnlessSupported={true}
                         style={
                           Object {
                             "flexGrow": 1,
@@ -503,7 +502,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                     }
                                   >
                                     <View
-                                      entering={[Function]}
                                       exiting={[Function]}
                                       style={
                                         Array [
@@ -517,6 +515,8 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                       }
                                     >
                                       <Text
+                                        accessibilityElementsHidden={true}
+                                        accessible={false}
                                         allowFontScaling={false}
                                         color="white"
                                         defaultColor="white"
@@ -528,6 +528,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                             "fontSize": 16,
                                           }
                                         }
+                                        importantForAccessibility="no-hide-descendants"
                                         maxFontSizeMultiplier={1.3}
                                         numberOfLines={1}
                                         style={
@@ -628,8 +629,11 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                     }
                                   >
                                     <Text
+                                      accessibilityElementsHidden={true}
+                                      accessible={false}
                                       allowFontScaling={false}
                                       ellipsizeMode="tail"
+                                      importantForAccessibility="no-hide-descendants"
                                       maxFontSizeMultiplier={1.3}
                                       numberOfLines={1}
                                       style={

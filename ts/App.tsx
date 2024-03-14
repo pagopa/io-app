@@ -7,9 +7,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   IODSExperimentalContextProvider,
-  IOThemeContext,
-  IOThemes
+  IOThemeContextProvider
 } from "@pagopa/io-app-design-system";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
 import RootContainer from "./RootContainer";
@@ -27,23 +27,25 @@ export type AppDispatch = typeof store.dispatch;
 export const App: React.FunctionComponent<never> = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <StyleProvider style={theme()}>
-      <IOThemeContext.Provider value={IOThemes.light}>
+      <SafeAreaProvider>
         <IODSExperimentalContextProvider>
-          <ToastProvider>
-            <Provider store={store}>
-              <PersistGate loading={undefined} persistor={persistor}>
-                <BottomSheetModalProvider>
-                  <LightModalProvider>
-                    <MenuProvider>
-                      <RootContainer />
-                    </MenuProvider>
-                  </LightModalProvider>
-                </BottomSheetModalProvider>
-              </PersistGate>
-            </Provider>
-          </ToastProvider>
+          <IOThemeContextProvider theme={"light"}>
+            <ToastProvider>
+              <Provider store={store}>
+                <PersistGate loading={undefined} persistor={persistor}>
+                  <BottomSheetModalProvider>
+                    <LightModalProvider>
+                      <MenuProvider>
+                        <RootContainer />
+                      </MenuProvider>
+                    </LightModalProvider>
+                  </BottomSheetModalProvider>
+                </PersistGate>
+              </Provider>
+            </ToastProvider>
+          </IOThemeContextProvider>
         </IODSExperimentalContextProvider>
-      </IOThemeContext.Provider>
+      </SafeAreaProvider>
     </StyleProvider>
   </GestureHandlerRootView>
 );

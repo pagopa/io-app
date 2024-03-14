@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as O from "fp-ts/lib/Option";
 import _, { merge } from "lodash";
 import {
   applyMiddleware,
@@ -23,11 +23,13 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../common/model/RemoteValue";
+import { FeaturesState } from "../features/common/store/reducers";
 import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
 import {
   initialLollipopState,
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
+import { PaymentsState as PaymentsFeatureState } from "../features/payments/common/store/reducers";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -38,8 +40,8 @@ import {
 import { ContentState } from "../store/reducers/content";
 import { entitiesPersistConfig } from "../store/reducers/entities";
 import {
-  InstallationState,
-  INSTALLATION_INITIAL_STATE
+  INSTALLATION_INITIAL_STATE,
+  InstallationState
 } from "../store/reducers/installation";
 import { NotificationsState } from "../store/reducers/notifications";
 import { getInitialState as getInstallationInitialState } from "../store/reducers/notifications/installation";
@@ -356,6 +358,37 @@ const migrations: MigrationManifest = {
         ..._.omit(persistedPreferences, "isExperimentalFeaturesEnabled")
       }
     };
+  },
+  // Version 24
+  // Adds payments history archive persistence
+  "24": (state: PersistedState) => {
+    const features: FeaturesState = (state as PersistedGlobalState).features;
+    const payments: PaymentsFeatureState = features.payments;
+    return {
+      ...state,
+      features: {
+        ...features,
+        payments: {
+          ...payments,
+          history: {
+            archive: []
+          }
+        }
+      }
+    };
+  },
+  // Version 25
+  // Adds new wallet section FF
+  "25": (state: PersistedState) => {
+    const persistedPreferences = (state as PersistedGlobalState)
+      .persistedPreferences;
+    return {
+      ...state,
+      persistedPreferences: {
+        ...persistedPreferences,
+        isNewWalletSectionEnabled: false
+      }
+    };
   }
 };
 
@@ -413,7 +446,10 @@ const sagaMiddleware = createSagaMiddleware(
   RTron ? { sagaMonitor: (RTron as any).createSagaMonitor() } : {}
 );
 
-function configureStoreAndPersistor(): { store: Store; persistor: Persistor } {
+function configureStoreAndPersistor(): {
+  store: Store<GlobalState, Action>;
+  persistor: Persistor;
+} {
   /**
    * If available use redux-devtool version of the compose function that allow
    * the inspection of the store from the devtool.

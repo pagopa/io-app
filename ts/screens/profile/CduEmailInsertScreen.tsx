@@ -255,13 +255,21 @@ const CduEmailInsertScreen = () => {
   useEffect(() => {
     if (
       O.isSome(acknowledgeOnEmailValidated) &&
-      acknowledgeOnEmailValidated.value === false
+      acknowledgeOnEmailValidated.value === false &&
+      // We check to be in the onboarding flow
+      // to avoid showing the modal
+      // when the user is editing the email
+      // from the profile page.
+      isOnboarding
     ) {
       showModal(
-        <NewRemindEmailValidationOverlay isOnboarding={isFirstOnboarding} />
+        <NewRemindEmailValidationOverlay
+          isOnboarding={isFirstOnboarding}
+          sendEmailAtFirstRender={isOnboarding}
+        />
       );
     }
-  }, [acknowledgeOnEmailValidated, isFirstOnboarding, showModal]);
+  }, [acknowledgeOnEmailValidated, isFirstOnboarding, isOnboarding, showModal]);
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
@@ -290,8 +298,21 @@ const CduEmailInsertScreen = () => {
             handleGoBack();
           }
         } else {
+          // eslint-disable-next-line functional/no-let
+          let sendEmailAtFirstRender = false;
+          // the IO BE orchestrator already send an email
+          // if the previous profile email is different from the current one.
+          if (pot.isSome(prevUserProfile)) {
+            // So we need to check if the email is not changed
+            // to send the email validation process programmatically.
+            sendEmailAtFirstRender =
+              profile.value.email === prevUserProfile.value.email;
+          }
           showModal(
-            <NewRemindEmailValidationOverlay isOnboarding={isFirstOnboarding} />
+            <NewRemindEmailValidationOverlay
+              sendEmailAtFirstRender={sendEmailAtFirstRender}
+              isOnboarding={isFirstOnboarding}
+            />
           );
         }
         return;

@@ -10,7 +10,6 @@ import {
 
 /* PICTOGRAMS */
 import BrokenLink from "../../../../img/broken-link.png";
-import AirBaloonRaster from "../../../../img/landing/session_expired.png";
 import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
 import AirBaloonArrow from "../../../../img/messages/empty-message-list-icon.png";
 import PiggyBank from "../../../../img/messages/empty-transaction-list-icon.png";
@@ -72,11 +71,6 @@ export const DSLegacyPictograms = () => {
           type="raster"
           name={"Hourglass"}
           image={renderRasterImage(Hourglass)}
-        />
-        <DSAssetViewerBox
-          type="raster"
-          name={"Air Baloon (raster)"}
-          image={renderRasterImage(AirBaloonRaster)}
         />
         <DSAssetViewerBox
           type="raster"

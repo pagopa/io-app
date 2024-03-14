@@ -2,7 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 import Placeholder from "rn-placeholder";
 import { VSpacer } from "@pagopa/io-app-design-system";
-import Markdown from "../../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 
 type Props = {
   description: string;
@@ -28,7 +28,9 @@ const OnboardingDescriptionMarkdown = (props: Props) => {
     return (
       <View style={{ flexGrow: 1 }}>
         {!isLoaded && <OnboardingDescriptionMarkdownSkeleton />}
-        <Markdown onLoadEnd={handleOnLoadEnd}>{description}</Markdown>
+        <LegacyMarkdown onLoadEnd={handleOnLoadEnd}>
+          {description}
+        </LegacyMarkdown>
       </View>
     );
   }

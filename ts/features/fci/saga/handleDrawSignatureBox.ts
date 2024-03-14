@@ -28,7 +28,8 @@ export function* handleDrawSignatureBox(
       yield* put(
         fciDocumentSignatureFields.success({
           ...state.value,
-          ...res
+          drawnBase64: res.drawnBase64,
+          signaturePage: res.signaturePage + 1 // pdf-lib pages are 0-based but react-native-pdf pages are 1-based
         })
       );
     } else {
@@ -42,7 +43,8 @@ export function* handleDrawSignatureBox(
         fciDocumentSignatureFields.success({
           rawBase64,
           uri: action.payload.uri,
-          ...res
+          drawnBase64: res.drawnBase64,
+          signaturePage: res.signaturePage + 1 // pdf-lib pages are 0-based but react-native-pdf pages are 1-based
         })
       );
     }

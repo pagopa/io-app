@@ -3,8 +3,9 @@ import * as React from "react";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { AttachmentPreviewScreen } from "../screens/AttachmentPreviewScreen";
+import { LegacyAttachmentPreviewScreen } from "../screens/LegacyAttachmentPreviewScreen";
 import { LegacyMessageDetailsScreen } from "../screens/LegacyMessageDetailsScreen";
+import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { PnParamsList } from "./params";
@@ -18,7 +19,11 @@ export const PnStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
+      screenOptions={{
+        gestureEnabled: isGestureEnabled,
+        headerMode: "screen",
+        headerShown: isDesignSystemEnabled
+      }}
     >
       <Stack.Screen
         name={PN_ROUTES.MESSAGE_DETAILS}
@@ -27,16 +32,14 @@ export const PnStackNavigator = () => {
             ? MessageDetailsScreen
             : LegacyMessageDetailsScreen
         }
-        options={{
-          headerShown: isDesignSystemEnabled
-        }}
       />
       <Stack.Screen
         name={PN_ROUTES.MESSAGE_ATTACHMENT}
-        component={AttachmentPreviewScreen}
-        options={{
-          headerShown: false
-        }}
+        component={
+          isDesignSystemEnabled
+            ? MessageAttachmentScreen
+            : LegacyAttachmentPreviewScreen
+        }
       />
       <Stack.Screen
         name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}

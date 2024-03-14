@@ -366,6 +366,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
                                         "borderColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
                                         "borderRadius": 6,
                                         "borderWidth": 1,
                                         "flexDirection": "row",
@@ -484,6 +485,7 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
                                         "borderColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
                                         "borderRadius": 6,
                                         "borderWidth": 1,
                                         "flexDirection": "row",
@@ -502,16 +504,16 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                       }
                                     >
                                       <RNSVGSvgView
-                                        accessibilityElementsHidden={true}
-                                        accessibilityLabel=""
-                                        accessible={false}
+                                        accessibilityElementsHidden={false}
+                                        accessibilityLabel="Includes attachments"
+                                        accessible={true}
                                         align="xMidYMid"
                                         bbHeight={16}
                                         bbWidth={16}
                                         color={4283784304}
                                         focusable={false}
                                         height={16}
-                                        importantForAccessibility="no-hide-descendants"
+                                        importantForAccessibility="auto"
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
@@ -654,14 +656,6 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                   }
                                 }
                               />
-                            </View>
-                            <View
-                              style={
-                                Object {
-                                  "paddingHorizontal": 24,
-                                }
-                              }
-                            >
                               <View
                                 style={
                                   Object {

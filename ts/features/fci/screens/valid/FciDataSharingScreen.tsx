@@ -16,7 +16,6 @@ import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../i18n";
@@ -127,80 +126,78 @@ const FciDataSharingScreen = (): React.ReactElement => {
 
   return (
     <>
-      <SafeAreaView style={IOStyles.flex} edges={["bottom", "left", "right"]}>
-        <ScrollView
-          style={IOStyles.horizontalContentPadding}
-          testID={"FciDataSharingScreenListTestID"}
-        >
-          <H2>{I18n.t("features.fci.shareDataScreen.title")}</H2>
-          <VSpacer size={16} />
-          <Body>{I18n.t("features.fci.shareDataScreen.content")}</Body>
-          {name && (
-            <ListItemNav
-              testID="FciDataSharingScreenNameTestID"
-              value={I18n.t("features.fci.shareDataScreen.name")}
-              description={name}
-              accessibilityLabel={I18n.t("features.fci.shareDataScreen.name")}
-              onPress={() => undefined}
-              hideChevron
-            />
-          )}
-          {familyName && (
-            <ListItemNav
-              testID="FciDataSharingScreenFamilyNameTestID"
-              value={I18n.t("features.fci.shareDataScreen.familyName")}
-              description={familyName}
-              onPress={() => undefined}
-              hideChevron
-              accessibilityLabel={I18n.t(
-                "features.fci.shareDataScreen.familyName"
-              )}
-            />
-          )}
-          {birthDate && (
-            <ListItemNav
-              testID="FciDataSharingScreenBirthDateTestID"
-              value={I18n.t("features.fci.shareDataScreen.birthDate")}
-              description={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
-              hideChevron
-              accessibilityLabel={I18n.t(
-                "features.fci.shareDataScreen.birthDate"
-              )}
-              onPress={() => undefined}
-            />
-          )}
-          {fiscalCode && (
-            <ListItemNav
-              testID="FciDataSharingScreenFiscalCodeTestID"
-              value={I18n.t("profile.fiscalCode.fiscalCode")}
-              description={fiscalCode}
-              hideChevron
-              accessibilityLabel={I18n.t("profile.fiscalCode.fiscalCode")}
-              onPress={() => undefined}
-            />
-          )}
-          {O.isSome(email) && (
-            <>
-              <ListItemNav
-                testID="FciDataSharingScreenEmailTestID"
-                value={I18n.t("profile.data.list.email")}
-                description={email.value}
-                hideChevron
-                accessibilityLabel={I18n.t("profile.data.list.email")}
-                onPress={() => undefined}
-              />
-              <AlertTextComponent />
-            </>
-          )}
-        </ScrollView>
-        <View testID="FciDataSharingScreenFooterTestID">
-          <FooterWithButtons
-            type={"TwoButtonsInlineThird"}
-            secondary={{ type: "Solid", buttonProps: confirmButtonProps }}
-            primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+      <ScrollView
+        style={IOStyles.horizontalContentPadding}
+        testID={"FciDataSharingScreenListTestID"}
+      >
+        <H2>{I18n.t("features.fci.shareDataScreen.title")}</H2>
+        <VSpacer size={16} />
+        <Body>{I18n.t("features.fci.shareDataScreen.content")}</Body>
+        {name && (
+          <ListItemNav
+            testID="FciDataSharingScreenNameTestID"
+            value={I18n.t("features.fci.shareDataScreen.name")}
+            description={name}
+            accessibilityLabel={I18n.t("features.fci.shareDataScreen.name")}
+            onPress={() => undefined}
+            hideChevron
           />
-        </View>
-      </SafeAreaView>
+        )}
+        {familyName && (
+          <ListItemNav
+            testID="FciDataSharingScreenFamilyNameTestID"
+            value={I18n.t("features.fci.shareDataScreen.familyName")}
+            description={familyName}
+            onPress={() => undefined}
+            hideChevron
+            accessibilityLabel={I18n.t(
+              "features.fci.shareDataScreen.familyName"
+            )}
+          />
+        )}
+        {birthDate && (
+          <ListItemNav
+            testID="FciDataSharingScreenBirthDateTestID"
+            value={I18n.t("features.fci.shareDataScreen.birthDate")}
+            description={formatFiscalCodeBirthdayAsShortFormat(birthDate)}
+            hideChevron
+            accessibilityLabel={I18n.t(
+              "features.fci.shareDataScreen.birthDate"
+            )}
+            onPress={() => undefined}
+          />
+        )}
+        {fiscalCode && (
+          <ListItemNav
+            testID="FciDataSharingScreenFiscalCodeTestID"
+            value={I18n.t("profile.fiscalCode.fiscalCode")}
+            description={fiscalCode}
+            hideChevron
+            accessibilityLabel={I18n.t("profile.fiscalCode.fiscalCode")}
+            onPress={() => undefined}
+          />
+        )}
+        {O.isSome(email) && (
+          <>
+            <ListItemNav
+              testID="FciDataSharingScreenEmailTestID"
+              value={I18n.t("profile.data.list.email")}
+              description={email.value}
+              hideChevron
+              accessibilityLabel={I18n.t("profile.data.list.email")}
+              onPress={() => undefined}
+            />
+            <AlertTextComponent />
+          </>
+        )}
+      </ScrollView>
+      <View testID="FciDataSharingScreenFooterTestID">
+        <FooterWithButtons
+          type={"TwoButtonsInlineThird"}
+          secondary={{ type: "Solid", buttonProps: confirmButtonProps }}
+          primary={{ type: "Outline", buttonProps: cancelButtonProps }}
+        />
+      </View>
 
       {fciAbortSignature}
     </>

@@ -1,6 +1,6 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
 import { BackendClient } from "../../api/backend";
 import { loadVisibleServices } from "../../store/actions/services";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../types/utils";
@@ -8,6 +8,7 @@ import { convertUnknownToError } from "../../utils/errors";
 import { refreshStoredServices } from "../services/refreshStoredServices";
 import { removeUnusedStoredServices } from "../services/removeUnusedStoredServices";
 import { withRefreshApiCall } from "../../features/fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**
  * A generator to load the service details from the Backend
@@ -24,12 +25,18 @@ export function* loadVisibleServicesRequestHandler(
   SagaCallReturnType<typeof getVisibleServices>
 > {
   try {
-    const response = (yield* call(
-      withRefreshApiCall,
-      getVisibleServices({})
-    )) as unknown as SagaCallReturnType<typeof getVisibleServices>;
+    const response = (yield* call(withRefreshApiCall, getVisibleServices({}), {
+      skipThrowingError: true
+    })) as unknown as SagaCallReturnType<typeof getVisibleServices>;
+
     if (E.isLeft(response)) {
       throw Error(readableReport(response.left));
+    }
+    if (response.right.status === 401) {
+      const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
+      if (isFastLoginEnabled) {
+        return;
+      }
     }
     if (response.right.status === 200) {
       const { items: visibleServices } = response.right.value;

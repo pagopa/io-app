@@ -23,13 +23,6 @@ function trackCarouselPaymentScreen() {
   );
 }
 
-function trackCarouselAccessScreen() {
-  void mixpanelTrack(
-    "LOGIN_CAROUSEL_5",
-    buildEventProperties("UX", "screen_view")
-  );
-}
-
 export function trackCarousel(
   index: number,
   cards: ReadonlyArray<JSX.Element>
@@ -49,10 +42,6 @@ export function trackCarousel(
     }
     case 3: {
       trackCarouselPaymentScreen();
-      break;
-    }
-    case 4: {
-      trackCarouselAccessScreen();
       break;
     }
   }
