@@ -40,7 +40,7 @@ import { MessageDetailsHeader } from "./MessageDetailsHeader";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessageTimeline } from "./MessageTimeline";
 import { MessageTimelineCTA } from "./MessageTimelineCTA";
-import { MessageF24 } from "./MessageF24";
+import { LegacyMessageF24 } from "./LegacyMessageF24";
 import { MessagePayments } from "./MessagePayments";
 import { MessageFooter } from "./MessageFooter";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
@@ -154,7 +154,7 @@ export const LegacyMessageDetails = ({
 
         {!isCancelled && RA.isNonEmpty(f24List) ? (
           <>
-            <MessageF24
+            <LegacyMessageF24
               attachments={f24List}
               messageId={messageId}
               openPreview={openAttachment}
