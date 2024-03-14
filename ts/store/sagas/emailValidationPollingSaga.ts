@@ -7,7 +7,7 @@ import {
   profileLoadRequest,
   profileLoadSuccess
 } from "../actions/profile";
-import { isEmailValidationPollingRunningSelector } from "../reducers/emailValidation";
+import { emailValidationSelector } from "../reducers/emailValidation";
 
 const GET_PROFILE_POLLING_INTERVAL = 5000 as Millisecond;
 
@@ -20,10 +20,9 @@ function* emailValidationPollingLoop() {
     yield* call(startTimer, GET_PROFILE_POLLING_INTERVAL);
 
     yield* put(profileLoadRequest());
-
-    profilePollingIsRunning = yield* select(
-      isEmailValidationPollingRunningSelector
-    );
+    const isEmailValidationSelector = yield* select(emailValidationSelector);
+    profilePollingIsRunning =
+      isEmailValidationSelector.isEmailValidationPollingRunning;
     yield* take(profileLoadSuccess);
   }
 }

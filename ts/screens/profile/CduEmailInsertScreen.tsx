@@ -8,7 +8,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import validator from "validator";
-import { Alert, Keyboard } from "react-native";
+import { AccessibilityInfo, Alert, Keyboard } from "react-native";
 import {
   VSpacer,
   H1,
@@ -89,6 +89,14 @@ const CduEmailInsertScreen = () => {
       trackEmailEditing(flow);
       if (isFirstOnBoarding) {
         IOToast.info(
+          I18n.t("email.newinsert.alert.title", {
+            email: pipe(
+              optionEmail,
+              O.getOrElse(() => EMPTY_EMAIL)
+            )
+          })
+        );
+        AccessibilityInfo.announceForAccessibility(
           I18n.t("email.newinsert.alert.title", {
             email: pipe(
               optionEmail,
@@ -362,7 +370,11 @@ const CduEmailInsertScreen = () => {
         }}
         testID="container-test"
       >
-        <H1 testID="title-test">
+        <H1
+          testID="title-test"
+          importantForAccessibility="yes"
+          aria-live="assertive"
+        >
           {isFirstOnboarding
             ? I18n.t("email.newinsert.title")
             : I18n.t("email.edit.title")}
