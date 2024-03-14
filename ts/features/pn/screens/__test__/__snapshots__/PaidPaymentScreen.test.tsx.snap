@@ -821,6 +821,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     Array [
                                       Object {
@@ -1824,6 +1825,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     Array [
                                       Object {
@@ -2006,6 +2008,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     Array [
                                       Object {

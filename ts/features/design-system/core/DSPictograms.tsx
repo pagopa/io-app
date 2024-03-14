@@ -5,16 +5,15 @@ import {
   IOPictogramsBleed,
   IOPictogramsObject,
   IOPictogramsLegacy,
-  IOThemeContext,
   Pictogram,
   PictogramBleed,
   SVGPictogramProps,
   IOColors,
   HSpacer,
   hexToRgba,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import { useContext } from "react";
 import {
   DSAssetViewerBox,
   assetItemGutter
@@ -77,7 +76,7 @@ const filteredIOPictograms = filterPictogramSet(
 );
 
 export const DSPictograms = () => {
-  const theme = useContext(IOThemeContext);
+  const theme = useIOTheme();
   return (
     <DesignSystemScreen title={"Pictograms"}>
       <View style={styles.itemsWrapper}>

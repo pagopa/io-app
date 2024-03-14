@@ -1078,6 +1078,8 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
                                 }
                               >
                                 <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
                                   allowFontScaling={false}
                                   color="white"
                                   defaultColor="white"

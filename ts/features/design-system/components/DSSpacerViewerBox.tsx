@@ -2,11 +2,11 @@ import * as React from "react";
 import { View, Text } from "react-native";
 import {
   IOColors,
-  IOThemeContext,
   VSpacer,
   HSpacer,
   IOSpacer,
-  SpacerOrientation
+  SpacerOrientation,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 
 type DSSpacerViewerBoxProps = {
@@ -18,60 +18,58 @@ type DSSpacerLabelProps = {
   value: IOSpacer;
 };
 
-const DSSpacerLabel = ({ value }: DSSpacerLabelProps) => (
-  <IOThemeContext.Consumer>
-    {theme => (
-      <Text
-        numberOfLines={1}
-        ellipsizeMode="tail"
-        style={{ fontSize: 9, color: IOColors[theme["textBody-tertiary"]] }}
-      >
-        {value}
-      </Text>
-    )}
-  </IOThemeContext.Consumer>
-);
+const DSSpacerLabel = ({ value }: DSSpacerLabelProps) => {
+  const theme = useIOTheme();
+  return (
+    <Text
+      numberOfLines={1}
+      ellipsizeMode="tail"
+      style={{ fontSize: 9, color: IOColors[theme["textBody-tertiary"]] }}
+    >
+      {value}
+    </Text>
+  );
+};
 
 export const DSSpacerViewerBox = ({
   size,
   orientation = "vertical"
-}: DSSpacerViewerBoxProps) => (
-  <IOThemeContext.Consumer>
-    {theme => (
-      <>
-        {orientation === "vertical" ? (
-          <View style={{ flexDirection: "column" }}>
-            <View
-              style={{
-                backgroundColor: IOColors[theme["appBackground-tertiary"]]
-              }}
-            >
-              <VSpacer size={size} />
-            </View>
-            {size && (
-              <View style={{ flexDirection: "row", marginTop: 4 }}>
-                <DSSpacerLabel value={size} />
-              </View>
-            )}
+}: DSSpacerViewerBoxProps) => {
+  const theme = useIOTheme();
+  return (
+    <>
+      {orientation === "vertical" ? (
+        <View style={{ flexDirection: "column" }}>
+          <View
+            style={{
+              backgroundColor: IOColors[theme["appBackground-tertiary"]]
+            }}
+          >
+            <VSpacer size={size} />
           </View>
-        ) : (
-          <View style={{ flexDirection: "row" }}>
-            <View
-              style={{
-                backgroundColor: IOColors[theme["appBackground-tertiary"]],
-                height: 75
-              }}
-            >
-              <HSpacer size={size} />
+          {size && (
+            <View style={{ flexDirection: "row", marginTop: 4 }}>
+              <DSSpacerLabel value={size} />
             </View>
-            {size && (
-              <View style={{ flexDirection: "column", marginLeft: 4 }}>
-                <DSSpacerLabel value={size} />
-              </View>
-            )}
+          )}
+        </View>
+      ) : (
+        <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              backgroundColor: IOColors[theme["appBackground-tertiary"]],
+              height: 75
+            }}
+          >
+            <HSpacer size={size} />
           </View>
-        )}
-      </>
-    )}
-  </IOThemeContext.Consumer>
-);
+          {size && (
+            <View style={{ flexDirection: "column", marginLeft: 4 }}>
+              <DSSpacerLabel value={size} />
+            </View>
+          )}
+        </View>
+      )}
+    </>
+  );
+};

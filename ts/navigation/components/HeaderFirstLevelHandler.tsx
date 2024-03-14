@@ -2,7 +2,7 @@ import React, { ComponentProps, useMemo } from "react";
 import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useIODispatch } from "../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
 import {
@@ -14,6 +14,7 @@ import { navigateToServicePreferenceScreen } from "../../store/actions/navigatio
 import { searchMessagesEnabled } from "../../store/actions/search";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import ROUTES from "../routes";
+import { isNewWalletSectionEnabledSelector } from "../../store/reducers/persistedPreferences";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
@@ -61,6 +62,10 @@ type Props = {
  */
 export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
   const dispatch = useIODispatch();
+
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
 
   const requestParams = useMemo(
     () =>
@@ -112,6 +117,14 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
         };
       case ROUTES.BARCODE_SCAN:
       case ROUTES.WALLET_HOME:
+        if (isNewWalletSectionEnabled) {
+          return {
+            title: I18n.t("wallet.wallet"),
+            type: "singleAction",
+            firstAction: helpAction,
+            testID: "wallet-home-header-title"
+          };
+        }
         return {
           title: I18n.t("wallet.wallet"),
           type: "twoActions",
@@ -144,6 +157,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
     currentRouteName,
     helpAction,
     presentWalletHomeHeaderBottomsheet,
+    isNewWalletSectionEnabled,
     dispatch
   ]);
 
