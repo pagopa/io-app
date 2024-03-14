@@ -122,6 +122,7 @@ const MessagesHomeScreen = ({
         disableAccessibilityFocus: messageSectionStatusActive
       }}
       hideBaseHeader={!isSearchEnabled}
+      hideSafeArea={isSearchEnabled}
       accessibilityLabel={I18n.t("messages.contentTitle")}
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["messages"]}

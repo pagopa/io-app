@@ -1,26 +1,41 @@
 /**
  * A customized Header component.
  */
-import { Header, NativeBase } from "native-base";
 import * as React from "react";
-import { View, ColorValue, ViewProps } from "react-native";
+import { View, ColorValue, ViewProps, StatusBar } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { IOStyles, IOVisualCostants } from "@pagopa/io-app-design-system";
 import variables from "../../theme/variables";
 
-type Props = NativeBase.Header & ViewProps & { backgroundColor?: ColorValue };
+type Props = ViewProps & {
+  backgroundColor?: ColorValue;
+  hideSafeArea?: boolean;
+};
 
-const AppHeader = (props: React.PropsWithChildren<Props>) => (
-  <View>
-    <Header
-      style={
-        props.backgroundColor
-          ? { backgroundColor: props.backgroundColor }
-          : undefined
-      }
-      androidStatusBarColor={variables.androidStatusBarColor}
-      iosBarStyle={"dark-content"}
-      {...props}
-    />
-  </View>
-);
+const AppHeader = (props: React.PropsWithChildren<Props>) => {
+  const { top } = useSafeAreaInsets();
+  return (
+    <View
+      style={{
+        paddingTop: props.hideSafeArea ? undefined : top,
+        paddingHorizontal: IOVisualCostants.appMarginDefault,
+        backgroundColor: props.backgroundColor
+      }}
+    >
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={variables.androidStatusBarColor}
+      />
+      <View
+        style={{
+          ...IOStyles.row,
+          height: IOVisualCostants.headerHeight
+        }}
+      >
+        {props.children}
+      </View>
+    </View>
+  );
+};
 
 export default AppHeader;

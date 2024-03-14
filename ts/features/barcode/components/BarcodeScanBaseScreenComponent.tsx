@@ -310,6 +310,7 @@ const BarcodeScanBaseScreenComponent = ({
         >
           {/* FIXME: replace with new header */}
           <BaseHeader
+            hideSafeArea={true}
             dark={true}
             backgroundColor={"transparent"}
             goBack={true}

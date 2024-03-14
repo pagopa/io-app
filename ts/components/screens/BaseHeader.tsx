@@ -83,6 +83,7 @@ interface OwnProps {
   backgroundColor?: ColorValue;
   goBack?: React.ComponentProps<typeof GoBackButton>["goBack"];
   primary?: boolean; // Used only for Icons color TODO Think to use titleColor as unique prop for icons color too
+  hideSafeArea?: boolean;
   appLogo?: boolean;
   onShowHelp?: () => void;
   // A property to set a custom AppHeader body
@@ -218,19 +219,28 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       backgroundColor,
       body,
       isSearchEnabled,
+      isSearchAvailable,
       dark,
-      accessibilityLabel
+      primary,
+      accessibilityLabel,
+      hideSafeArea
     } = this.props;
 
     const maybeAccessibilityLabel = maybeNotNullyString(accessibilityLabel);
     return (
       <AppHeader
-        backgroundColor={backgroundColor}
-        primary={this.props.primary}
-        noShadow={isSearchEnabled}
-        dark={dark}
+        hideSafeArea={hideSafeArea}
+        backgroundColor={
+          backgroundColor
+            ? backgroundColor
+            : dark
+            ? IOColors.bluegrey
+            : primary
+            ? IOColors.blue
+            : IOColors.white
+        }
       >
-        {this.renderLeft()}
+        {!isSearchEnabled && this.renderLeft()}
 
         {/* if screen reader is active and the accessibility label is defined, render the accessibility label
           as placeholder where force focus
@@ -251,7 +261,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           </NBBody>
         )}
 
-        {this.renderRight()}
+        {!isSearchEnabled && this.renderRight()}
+        {isSearchAvailable?.enabled && (
+          <SearchButton
+            searchType={isSearchAvailable.searchType}
+            onSearchTap={isSearchAvailable.onSearchTap}
+          />
+        )}
       </AppHeader>
     );
   }
@@ -268,13 +284,6 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
     return (
       <Right>
-        {isSearchAvailable?.enabled && (
-          <SearchButton
-            searchType={isSearchAvailable.searchType}
-            onSearchTap={isSearchAvailable.onSearchTap}
-          />
-        )}
-
         {customRightIcon && !isSearchEnabled && (
           <>
             <IconButton

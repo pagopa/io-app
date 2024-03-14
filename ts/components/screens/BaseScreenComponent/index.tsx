@@ -72,7 +72,8 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       onAccessibilityNavigationHeaderFocus,
       primary,
       showChat,
-      titleColor
+      titleColor,
+      hideSafeArea
     } = props;
 
     /**
@@ -125,6 +126,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       <View style={{ flexGrow: 1 }}>
         {!hideBaseHeader && (
           <BaseHeader
+            hideSafeArea={hideSafeArea}
             onAccessibilityNavigationHeaderFocus={
               onAccessibilityNavigationHeaderFocus
             }

@@ -28,7 +28,8 @@ type BaseScreenComponentProps =
   | "headerBody"
   | "hideBaseHeader"
   | "customGoBack"
-  | "isSearchAvailable";
+  | "isSearchAvailable"
+  | "hideSafeArea";
 
 type Props = OwnProps &
   Pick<ComponentProps<typeof BaseScreenComponent>, BaseScreenComponentProps>;
@@ -56,11 +57,13 @@ class TopScreenComponent extends React.PureComponent<Props> {
       onAccessibilityNavigationHeaderFocus,
       faqCategories,
       accessibilityEvents,
+      hideSafeArea,
       titleColor
     } = this.props;
 
     return (
       <BaseScreenComponent
+        hideSafeArea={hideSafeArea}
         onAccessibilityNavigationHeaderFocus={
           onAccessibilityNavigationHeaderFocus
         }
