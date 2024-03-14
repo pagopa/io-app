@@ -2881,6 +2881,10 @@ features:
     signatureFieldInfo:
       title: "Cosa sono le clausole vessatorie?"
       subTitle: "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
+  wallet:
+    home:
+      emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
+      cta: Aggiungi al portafoglio
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
