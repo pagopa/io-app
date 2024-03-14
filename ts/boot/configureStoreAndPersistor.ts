@@ -23,13 +23,11 @@ import {
 } from "redux-persist";
 import createSagaMiddleware from "redux-saga";
 import { remoteUndefined } from "../common/model/RemoteValue";
-import { FeaturesState } from "../features/common/store/reducers";
 import { CURRENT_REDUX_LOLLIPOP_STORE_VERSION } from "../features/lollipop/store";
 import {
   initialLollipopState,
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
-import { PaymentsState as PaymentsFeatureState } from "../features/payments/common/store/reducers";
 import rootSaga from "../sagas";
 import { Action, StoreEnhancer } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -55,7 +53,7 @@ import { configureReactotron } from "./configureRectotron";
 /**
  * Redux persist will migrate the store to the current version
  */
-const CURRENT_REDUX_STORE_VERSION = 23;
+const CURRENT_REDUX_STORE_VERSION = 26;
 
 // see redux-persist documentation:
 // https://github.com/rt2zz/redux-persist/blob/master/docs/migrations.md
@@ -361,35 +359,36 @@ const migrations: MigrationManifest = {
   },
   // Version 24
   // Adds payments history archive persistence
-  "24": (state: PersistedState) => {
-    const features: FeaturesState = (state as PersistedGlobalState).features;
-    const payments: PaymentsFeatureState = features.payments;
-    return {
-      ...state,
+  "24": (state: PersistedState) =>
+    merge(state, {
       features: {
-        ...features,
         payments: {
-          ...payments,
           history: {
             archive: []
           }
         }
       }
-    };
-  },
+    }),
   // Version 25
   // Adds new wallet section FF
-  "25": (state: PersistedState) => {
-    const persistedPreferences = (state as PersistedGlobalState)
-      .persistedPreferences;
-    return {
-      ...state,
+  "25": (state: PersistedState) =>
+    merge(state, {
       persistedPreferences: {
-        ...persistedPreferences,
         isNewWalletSectionEnabled: false
       }
-    };
-  }
+    }),
+  // Version 26
+  // Adds shouldShowPaymentsRedirectBanner persistence in feature wallet reducer
+  "26": (state: PersistedState) =>
+    merge(state, {
+      features: {
+        wallet: {
+          preferences: {
+            shouldShowPaymentsRedirectBanner: true
+          }
+        }
+      }
+    })
 };
 
 const isDebuggingInChrome = isDevEnv && !!window.navigator.userAgent;
