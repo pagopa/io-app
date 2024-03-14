@@ -437,6 +437,7 @@ profile:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
+    newWalletSection: New wallet section
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -585,7 +586,7 @@ authentication:
     card2-title: Use your favourite payment methods
     card2-content: You can pay a tax or a penalty by your bank account and your cards
     card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice    
+    card3-content: You can pay a notice also by scanning the QR code on the physical notice
     card5-title: Welcome to IO!
     card5-content: What can you do?
     card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
@@ -822,8 +823,8 @@ email:
     title: Validate your email
     subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent!    
-    countdowntext: Request new email in 
+    buttonlabelsent: Email sent!
+    countdowntext: Request new email in
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -2880,6 +2881,10 @@ features:
     signatureFieldInfo:
       title: "What are restrictive clauses?"
       subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."
+  wallet:
+    home:
+      emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
+      cta: Aggiungi al portafoglio
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
