@@ -2002,10 +2002,7 @@ identification:
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
-  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
-  subtitleCode: "Gib deinen Entsperrcode ein"
-  subtitleCodeFingerprint: "Verwende den Fingerabdruck oder gib den Entsperrcode ein"
-  subtitleCodeFaceId: "Verwende FaceID oder gib den Entsperrcode ein"
+  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."  
   biometric:
     fingerprintType: "Fingerabdruck"
     title: "Biometrische Identifikation"

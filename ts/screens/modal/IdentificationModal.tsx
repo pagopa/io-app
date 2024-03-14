@@ -4,7 +4,6 @@ import {
   H2,
   VSpacer,
   Pictogram,
-  Body,
   IconButton,
   ContentWrapper,
   ButtonLink,
@@ -41,7 +40,7 @@ import { usePrevious } from "../../utils/hooks/usePrevious";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
   FAIL_ATTEMPTS_TO_SHOW_ALERT,
-  getBiometricInstructions,
+  IdentificationInstructionsComponent,
   getBiometryIconName
 } from "../../utils/identification";
 import { useAppBackgroundAccent } from "../../utils/hooks/theme";
@@ -84,10 +83,6 @@ const IdentificationModal = () => {
     isValidatingTask = identificationProgressState.isValidatingTask;
   }
 
-  const instructions = getBiometricInstructions(
-    biometricType,
-    isBiometricLocked
-  );
   const forgotCodeLabel = `${I18n.t(
     "identification.unlockCode.reset.button"
   )} ${I18n.t("identification.unlockCode.reset.code")}?`;
@@ -377,9 +372,10 @@ const IdentificationModal = () => {
                 <VSpacer size={8} />
                 <H2 color={"white"}>{titleLabel}</H2>
                 <VSpacer size={8} />
-                <Body accessibilityLabel={instructions} color={"white"}>
-                  {instructions}
-                </Body>
+                <IdentificationInstructionsComponent
+                  biometricType={biometricType}
+                  isBimoetricIdentificatoinFailed={isBiometricLocked}
+                />
               </View>
             </View>
             <VSpacer size={32} />
