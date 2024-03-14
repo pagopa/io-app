@@ -2667,6 +2667,7 @@ features:
     payments:
       title: "pagoPA notices"
       noticeCode: "Notice code"
+      pay: "Pay"
   euCovidCertificate:
     save:
       album: "IO"
