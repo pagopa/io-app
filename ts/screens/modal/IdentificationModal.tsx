@@ -1,11 +1,8 @@
 import * as React from "react";
-import { useCallback, useState, useRef, useMemo } from "react";
+import { useCallback, useState, useRef, useMemo, memo } from "react";
 import {
-  CodeInput,
   H2,
-  NumberPad,
   VSpacer,
-  LabelSmallAlt,
   Pictogram,
   Body,
   IconButton,
@@ -22,7 +19,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { isDevEnv } from "../../utils/environment";
 import I18n from "../../i18n";
 import {
   identificationCancel,
@@ -50,8 +46,8 @@ import {
 } from "../../utils/identification";
 import { useAppBackgroundAccent } from "../../utils/hooks/theme";
 import { IdentificationLockModal } from "./IdentificationLockModal";
+import { IdentificationNumberPad } from "./components/IdentificationNumberPad";
 
-const PIN_LENGTH = 6;
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 
@@ -60,9 +56,7 @@ const onRequestCloseHandler = () => undefined;
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 const IdentificationModal = () => {
   console.log("Refreshing IdentificationModal 🔁");
-  const [value, setValue] = useState("");
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
-  const isPinValidRef = useRef(true);
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
   const errorStatusRef = useRef<View>(null);
@@ -188,20 +182,6 @@ const IdentificationModal = () => {
     [biometricType, onFingerprintRequest]
   );
 
-  if (!isPinValidRef.current) {
-    // eslint-disable-next-line functional/immutable-data
-    isPinValidRef.current = true;
-    // eslint-disable-next-line functional/immutable-data
-    showRetryText.current = true;
-    onIdentificationFailureHandler();
-  }
-
-  const onValueChange = useCallback((v: string) => {
-    if (v.length <= PIN_LENGTH) {
-      setValue(v);
-    }
-  }, []);
-
   const onPinResetHandler = useCallback(() => {
     dispatch(identificationPinReset());
   }, [dispatch]);
@@ -238,22 +218,28 @@ const IdentificationModal = () => {
     : "";
 
   const onPinValidated = useCallback(
-    (v: string) => {
-      if (v === pin) {
-        // Clear the inserted value
-        setValue("");
-        // Dispatch the success action
-        onIdentificationSuccessHandler(false);
+    (isValidated: boolean) => {
+      if (isValidated) {
         // eslint-disable-next-line functional/immutable-data
-        isPinValidRef.current = true;
+        showRetryText.current = false;
+        onIdentificationSuccessHandler(false);
       } else {
         // eslint-disable-next-line functional/immutable-data
-        isPinValidRef.current = false;
+        showRetryText.current = true;
+        onIdentificationFailureHandler();
       }
-      return isPinValidRef.current;
     },
-    [onIdentificationSuccessHandler, pin]
+    [onIdentificationFailureHandler, onIdentificationSuccessHandler]
   );
+
+  const NumberPad = memo(() => (
+    <IdentificationNumberPad
+      pin={pin}
+      pinValidation={onPinValidated}
+      numberPadVariant={numberPadVariant}
+      biometricsConfig={biometricsConfig}
+    />
+  ));
 
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
@@ -394,27 +380,8 @@ const IdentificationModal = () => {
               </View>
             </View>
             <VSpacer size={32} />
-            <View style={IOStyles.alignCenter}>
-              <View style={styles.smallPinLabel}>
-                <LabelSmallAlt color={"white"}>{value}</LabelSmallAlt>
-              </View>
-              <CodeInput
-                value={value}
-                length={PIN_LENGTH}
-                variant={"light"}
-                onValueChange={onValueChange}
-                onValidate={onPinValidated}
-              />
-            </View>
-            <VSpacer size={48} />
+            <NumberPad />
             <View>
-              <NumberPad
-                value={value}
-                deleteAccessibilityLabel="Delete"
-                onValueChange={onValueChange}
-                variant={numberPadVariant}
-                {...biometricsConfig}
-              />
               <VSpacer size={32} />
               <View style={IOStyles.selfCenter}>
                 <ButtonLink
@@ -426,18 +393,6 @@ const IdentificationModal = () => {
                 <VSpacer size={VERTICAL_PADDING} />
               </View>
             </View>
-            {isDevEnv && (
-              <View style={IOStyles.alignCenter}>
-                <IconButton
-                  icon={"systemPermissionsAndroid"}
-                  color="contrast"
-                  onPress={() => {
-                    setValue(pin);
-                  }}
-                  accessibilityLabel={"Inserisci il codice di sblocco di test"}
-                />
-              </View>
-            )}
           </ContentWrapper>
         </ScrollView>
       </SafeAreaView>
