@@ -22,7 +22,7 @@ import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/Me
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { UIMessageId } from "../../messages/types";
 import { MessageDetailsContent } from "./MessageDetailsContent";
-import { F24s } from "./F24";
+import { F24s } from "./F24s";
 
 type MessageDetailsProps = {
   message: PNMessage;

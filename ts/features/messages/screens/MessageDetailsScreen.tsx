@@ -157,7 +157,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   return (
     <>
-      <ScrollView contentContainerStyle={[styles.scrollContentContainer]}>
+      <ScrollView contentContainerStyle={styles.scrollContentContainer}>
         <View style={styles.container}>
           <ContentWrapper>
             <MessageDetailsHeader
