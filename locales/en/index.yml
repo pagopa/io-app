@@ -2667,6 +2667,7 @@ features:
     payments:
       title: "pagoPA notices"
       noticeCode: "Notice code"
+      pay: "Pay"
   euCovidCertificate:
     save:
       album: "IO"
@@ -2885,6 +2886,10 @@ features:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
       cta: Aggiungi al portafoglio
+      paymentsBanner:
+        title: Vuoi pagare un avviso?
+        action: Vai alla sezione Pagamenti
+        close: Chiudi
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
