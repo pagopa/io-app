@@ -6,14 +6,15 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { UIMessageId } from "../../../messages/types";
 import { MessageFooter } from "../MessageFooter";
-import * as payments from "../../../messages/store/reducers/payments";
+import * as standardPayments from "../../../messages/store/reducers/payments";
+import * as payments from "../../store/reducers/payments";
 
 describe("MessageFooter", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
     jest
-      .spyOn(payments, "canNavigateToPaymentFromMessageSelector")
+      .spyOn(standardPayments, "canNavigateToPaymentFromMessageSelector")
       .mockReturnValue(true);
   });
   it("should match snapshot for cancelled PN notification", () => {

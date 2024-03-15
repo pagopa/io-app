@@ -18,7 +18,11 @@ import {
 } from "../../store/reducers/payments";
 import { useIOSelector } from "../../../../store/hooks";
 import { updatePaymentForMessage } from "../../store/actions";
-import { RemoteValue, fold } from "../../../../common/model/RemoteValue";
+import {
+  RemoteValue,
+  fold,
+  isError
+} from "../../../../common/model/RemoteValue";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import {
@@ -176,13 +180,15 @@ export const MessagePaymentItem = ({
     paymentStatusForUISelector(state, messageId, rptId)
   );
 
-  const canNavigateToPayment =
-    canNavigateToPaymentFromMessageSelector(globalState);
+  const canNavigateToPayment = useIOSelector(state =>
+    canNavigateToPaymentFromMessageSelector(state)
+  );
 
   const startPaymentCallback = useCallback(() => {
     initializeAndNavigateToWalletForPayment(
       messageId,
       rptId,
+      isError(paymentStatusForUI),
       paymentAmount,
       canNavigateToPayment,
       dispatch,
@@ -196,6 +202,7 @@ export const MessagePaymentItem = ({
     isPNPayment,
     messageId,
     paymentAmount,
+    paymentStatusForUI,
     rptId,
     toast,
     willNavigateToPayment

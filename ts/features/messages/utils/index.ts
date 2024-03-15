@@ -52,6 +52,7 @@ export const getRptIdStringFromPaymentData = (
 export const initializeAndNavigateToWalletForPayment = (
   messageId: UIMessageId,
   paymentId: string,
+  isPaidOrHasAnError: boolean,
   paymentAmount: PaymentAmount | undefined,
   canNavigateToPayment: boolean,
   dispatch: Dispatch<any>,
@@ -83,7 +84,9 @@ export const initializeAndNavigateToWalletForPayment = (
     trackPNPaymentStart();
   }
 
-  dispatch(addUserSelectedPaymentRptId(paymentId));
+  if (!isPaidOrHasAnError) {
+    dispatch(addUserSelectedPaymentRptId(paymentId));
+  }
   dispatch(paymentInitializeState());
 
   const initialAmount = pipe(

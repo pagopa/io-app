@@ -41,6 +41,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     initializeAndNavigateToWalletForPayment(
       "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId,
       paymentId,
+      false,
       undefined,
       true,
       {} as Dispatch<any>,
@@ -60,6 +61,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     initializeAndNavigateToWalletForPayment(
       "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId,
       paymentId,
+      false,
       undefined,
       false,
       {} as Dispatch<any>,
@@ -97,6 +99,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     initializeAndNavigateToWalletForPayment(
       messageId,
       paymentId,
+      false,
       undefined,
       true,
       dispatch,
@@ -150,6 +153,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     initializeAndNavigateToWalletForPayment(
       messageId,
       paymentId,
+      false,
       undefined,
       true,
       dispatch,
@@ -203,6 +207,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     initializeAndNavigateToWalletForPayment(
       messageId,
       paymentId,
+      false,
       paymentAmount,
       true,
       dispatch,
@@ -258,6 +263,7 @@ describe("intializeAndNavigateToWalletForPayment", () => {
     initializeAndNavigateToWalletForPayment(
       messageId,
       paymentId,
+      false,
       paymentAmount,
       true,
       dispatch,
@@ -273,6 +279,59 @@ describe("intializeAndNavigateToWalletForPayment", () => {
       addUserSelectedPaymentRptId(paymentId)
     );
     expect(dispatch.mock.calls[1][0]).toStrictEqual(paymentInitializeState());
+    expect(navigateSpy).toHaveBeenCalledWith(ROUTES.WALLET_NAVIGATOR, {
+      screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+      params: {
+        rptId: {
+          organizationFiscalCode,
+          paymentNoticeNumber: {
+            applicationCode,
+            auxDigit,
+            checkDigit,
+            iuv13
+          }
+        },
+        paymentStartOrigin: "message",
+        initialAmount: `${paymentAmount}`,
+        messageId
+      }
+    });
+  });
+  it("should navigate to Payment Transaction Summary with given amount but not dispatch an `addUserSelectedPaymentRptId`", () => {
+    const analyticsSpy = jest
+      .spyOn(pnAnalytics, "trackPNPaymentStart")
+      .mockImplementation(() => undefined);
+    const navigateSpy = jest.spyOn(NavigationService, "navigate");
+    const organizationFiscalCode = "11111111111";
+    const auxDigit = "0";
+    const applicationCode = "22";
+    const iuv13 = "3333333333333";
+    const checkDigit = "44";
+
+    const messageId = "01HRA60BRYF6BCHF17SMXG8PP2" as UIMessageId;
+    const paymentId = `${organizationFiscalCode}${auxDigit}${applicationCode}${iuv13}${checkDigit}`;
+    const paymentAmount = 199 as PaymentAmount;
+
+    const dispatch = jest.fn();
+    const decodeErrorCallback = jest.fn();
+    const prenavigationCallback = jest.fn();
+
+    initializeAndNavigateToWalletForPayment(
+      messageId,
+      paymentId,
+      true,
+      paymentAmount,
+      true,
+      dispatch,
+      false,
+      decodeErrorCallback,
+      prenavigationCallback
+    );
+    expect(decodeErrorCallback).not.toHaveBeenCalled();
+    expect(prenavigationCallback).toHaveBeenCalledTimes(1);
+    expect(dispatch.mock.calls).toHaveLength(1);
+    expect(analyticsSpy).not.toHaveBeenCalled();
+    expect(dispatch.mock.calls[0][0]).toStrictEqual(paymentInitializeState());
     expect(navigateSpy).toHaveBeenCalledWith(ROUTES.WALLET_NAVIGATOR, {
       screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
       params: {
