@@ -225,6 +225,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
                                         "borderColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
                                         "borderRadius": 6,
                                         "borderWidth": 1,
                                         "flexDirection": "row",
@@ -343,6 +344,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                         "alignSelf": "flex-start",
                                         "backgroundColor": "#FFFFFF",
                                         "borderColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
                                         "borderRadius": 6,
                                         "borderWidth": 1,
                                         "flexDirection": "row",
@@ -605,13 +607,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       Array [
                                         Object {
                                           "borderColor": "rgba(14,15,19,0.1)",
+                                          "borderCurve": "continuous",
                                           "borderWidth": 1,
                                           "overflow": "hidden",
-                                          "resizeMode": "contain",
                                         },
                                         Object {
                                           "backgroundColor": "#FFFFFF",
-                                          "borderRadius": 22,
+                                          "borderRadius": 8,
                                           "height": 44,
                                           "padding": 6,
                                           "width": 44,
@@ -619,20 +621,36 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       ]
                                     }
                                   >
-                                    <Image
-                                      onError={[Function]}
-                                      source={
-                                        Object {
-                                          "uri": "https://assets.cdn.io.italia.it/logos/services/service_one.png",
-                                        }
-                                      }
+                                    <View
                                       style={
-                                        Object {
-                                          "height": "100%",
-                                          "width": "100%",
-                                        }
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "#FFFFFF",
+                                            "borderCurve": "continuous",
+                                            "overflow": "hidden",
+                                            "resizeMode": "contain",
+                                          },
+                                          Object {
+                                            "borderRadius": 2,
+                                          },
+                                        ]
                                       }
-                                    />
+                                    >
+                                      <Image
+                                        onError={[Function]}
+                                        source={
+                                          Object {
+                                            "uri": "https://assets.cdn.io.italia.it/logos/services/service_one.png",
+                                          }
+                                        }
+                                        style={
+                                          Object {
+                                            "height": "100%",
+                                            "width": "100%",
+                                          }
+                                        }
+                                      />
+                                    </View>
                                   </View>
                                 </View>
                               </View>
@@ -838,29 +856,39 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 </RNSVGSvgView>
                               </View>
                             </View>
-                            <Text
+                            <View
+                              accessibilityLabel=""
+                              accessibilityRole="header"
                               accessible={false}
-                              numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "flexGrow": 1,
-                                    "flexShrink": 1,
-                                    "fontSize": 14,
-                                    "marginHorizontal": 16,
-                                    "textAlign": "center",
-                                  },
-                                  Object {
-                                    "fontFamily": "Titillium Web",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                  },
-                                  Object {
-                                    "opacity": 1,
-                                  },
-                                ]
+                                Object {
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "marginHorizontal": 16,
+                                }
                               }
-                            />
+                            >
+                              <Text
+                                accessible={false}
+                                numberOfLines={1}
+                                style={
+                                  Array [
+                                    Object {
+                                      "fontSize": 14,
+                                      "textAlign": "center",
+                                    },
+                                    Object {
+                                      "fontFamily": "Titillium Web",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                    Object {
+                                      "opacity": 1,
+                                    },
+                                  ]
+                                }
+                              />
+                            </View>
                             <View
                               style={
                                 Array [
@@ -1581,29 +1609,39 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                 </RNSVGSvgView>
                               </View>
                             </View>
-                            <Text
+                            <View
+                              accessibilityLabel=""
+                              accessibilityRole="header"
                               accessible={false}
-                              numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "flexGrow": 1,
-                                    "flexShrink": 1,
-                                    "fontSize": 14,
-                                    "marginHorizontal": 16,
-                                    "textAlign": "center",
-                                  },
-                                  Object {
-                                    "fontFamily": "Titillium Web",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                  },
-                                  Object {
-                                    "opacity": 1,
-                                  },
-                                ]
+                                Object {
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "marginHorizontal": 16,
+                                }
                               }
-                            />
+                            >
+                              <Text
+                                accessible={false}
+                                numberOfLines={1}
+                                style={
+                                  Array [
+                                    Object {
+                                      "fontSize": 14,
+                                      "textAlign": "center",
+                                    },
+                                    Object {
+                                      "fontFamily": "Titillium Web",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                    Object {
+                                      "opacity": 1,
+                                    },
+                                  ]
+                                }
+                              />
+                            </View>
                             <View
                               style={
                                 Array [
