@@ -6,12 +6,11 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { useCallback, useEffect, useState } from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useCallback, useEffect, useState } from "react";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import {
   IOPictogramSizeScale,
-  Label,
   Pictogram,
   VSpacer,
   Body,
@@ -21,6 +20,7 @@ import {
   ButtonOutline,
   ButtonSolid,
   ButtonLink,
+  ProgressLoader,
   IOToast
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -58,6 +58,7 @@ import {
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { SendEmailValidationScreenProp } from "./EmailValidationSendEmailScreen";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
 const countdownIntervalDuration = 1000 as Millisecond; // 1 second
@@ -73,9 +74,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.insert.help.title",
   body: "email.insert.help.content"
 };
-const NewRemindEmailValidationScreenComponent = (
-  props: RemindEmailValidationProp
-) => {
+const EmailValidationScreen = () => {
+  const props =
+    useRoute<
+      Route<
+        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
+        SendEmailValidationScreenProp
+      >
+    >().params;
   const { isOnboarding, sendEmailAtFirstRender } = props;
   const headerHeight = useHeaderHeight();
   const dispatch = useIODispatch();
@@ -192,13 +198,14 @@ const NewRemindEmailValidationScreenComponent = (
     if (visible) {
       return (
         <View style={IOStyles.alignCenter}>
-          <Body>
-            <Label weight="Regular" style={{ textAlign: "center" }}>
-              {I18n.t("email.newvalidate.countdowntext")}{" "}
-            </Label>
-            <Label weight="SemiBold" style={{ textAlign: "center" }}>
+          <VSpacer size={24} />
+          <ProgressLoader progress={(timerCount / 60) * 100} />
+          <VSpacer size={8} />
+          <Body weight="Regular" style={{ textAlign: "center" }} color="black">
+            {I18n.t("email.newvalidate.countdowntext")}{" "}
+            <Body weight="SemiBold" color="black">
               {timerCount}s
-            </Label>
+            </Body>
           </Body>
         </View>
       );
@@ -300,13 +307,17 @@ const NewRemindEmailValidationScreenComponent = (
             <VSpacer size={24} />
           </View>
         )}
-        <Countdown
-          timerElapsed={() => {
-            setIsValidateEmailButtonDisabled(false);
-          }}
-          visible={isValidateEmailButtonDisabled && !isEmailValidated}
-        />
-        <VSpacer size={24} />
+        <CountdownProvider
+          timerTiming={emailSentTimeout / 1000}
+          intervalDuration={countdownIntervalDuration}
+        >
+          <Countdown
+            timerElapsed={() => {
+              setIsValidateEmailButtonDisabled(false);
+            }}
+            visible={isValidateEmailButtonDisabled && !isEmailValidated}
+          />
+        </CountdownProvider>
         {isEmailValidated ? (
           <View style={IOStyles.selfCenter}>
             <ButtonSolid
@@ -333,24 +344,6 @@ const NewRemindEmailValidationScreenComponent = (
   );
 };
 
-const NewRemindEmailValidationScreen = () => {
-  const props =
-    useRoute<
-      Route<
-        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
-        RemindEmailValidationProp
-      >
-    >().params;
-  return (
-    <CountdownProvider
-      timerTiming={emailSentTimeout / 1000}
-      intervalDuration={countdownIntervalDuration}
-    >
-      <NewRemindEmailValidationScreenComponent {...props} />
-    </CountdownProvider>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
@@ -368,4 +361,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewRemindEmailValidationScreen;
+export default EmailValidationScreen;

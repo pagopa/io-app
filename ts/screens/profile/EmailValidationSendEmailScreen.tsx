@@ -17,7 +17,8 @@ import {
   IOVisualCostants,
   ButtonOutline,
   ButtonSolid,
-  ButtonLink
+  ButtonLink,
+  IOToast
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
@@ -49,7 +50,6 @@ import {
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { CountdownProvider } from "../../components/countdown/CountdownProvider";
-import { IOToast } from "../../components/Toast";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
