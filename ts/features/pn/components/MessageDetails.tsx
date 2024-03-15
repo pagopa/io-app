@@ -84,6 +84,7 @@ export const MessageDetails = ({
           messageId={messageId}
           isPN
         />
+        <VSpacer />
         <F24s
           messageId={messageId}
           isCancelled={message.isCancelled}

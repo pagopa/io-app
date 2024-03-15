@@ -1,5 +1,10 @@
 import * as React from "react";
-import { Body, LabelLink, ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  ButtonLink,
+  ListItemHeader,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
@@ -39,18 +44,23 @@ export const F24s = ({
       <Body color="grey-850">
         {I18n.t("features.pn.details.f24Section.description")}
       </Body>
+      <VSpacer size={24} />
       {f24Count === 1 && (
         <MessageDetailsAttachmentItem
           attachment={f24s[0]}
           messageId={messageId}
           serviceId={serviceId}
+          isPN
         />
       )}
-      {f24Count >= 1 && (
-        <LabelLink>
-          {I18n.t("features.pn.details.f24Section.showAll")}
-        </LabelLink>
+      {f24Count > 1 && (
+        <ButtonLink
+          onPress={() => undefined}
+          label={I18n.t("features.pn.details.f24Section.showAll")}
+          accessibilityLabel={I18n.t("features.pn.details.f24Section.showAll")}
+        />
       )}
+      <VSpacer />
     </>
   );
 };
