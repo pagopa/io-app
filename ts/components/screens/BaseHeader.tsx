@@ -1,7 +1,6 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Body as NBBody, Left, Right } from "native-base";
 import * as React from "react";
 import { FC, Ref } from "react";
 import {
@@ -18,7 +17,8 @@ import {
   Icon,
   IconButton,
   HSpacer,
-  IOSpacer
+  IOSpacer,
+  IOStyles
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "../../i18n";
@@ -30,7 +30,6 @@ import { GlobalState } from "../../store/reducers/types";
 import variables from "../../theme/variables";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { maybeNotNullyString } from "../../utils/strings";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 import { Body } from "../core/typography/Body";
 import GoBackButton from "../GoBackButton";
 import SearchButton, { SearchType } from "../search/SearchButton";
@@ -211,6 +210,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
       )
     );
 
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   public render() {
     const {
       goBack,
@@ -246,7 +246,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
           as placeholder where force focus
         */}
         {!isSearchEnabled && (
-          <NBBody style={goBack || customGoBack ? styles.body : styles.noLeft}>
+          <View style={goBack || customGoBack ? styles.body : styles.noLeft}>
             {this.state.isScreenReaderActive &&
             O.isSome(maybeAccessibilityLabel) ? (
               this.renderBodyLabel(
@@ -258,7 +258,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
                 {body ? body : headerTitle && this.renderBodyLabel(headerTitle)}
               </View>
             )}
-          </NBBody>
+          </View>
         )}
 
         {!isSearchEnabled && this.renderRight()}
@@ -283,7 +283,13 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
     } = this.props;
 
     return (
-      <Right>
+      <View
+        style={{
+          ...IOStyles.flex,
+          ...IOStyles.row,
+          justifyContent: "flex-end"
+        }}
+      >
         {customRightIcon && !isSearchEnabled && (
           <>
             <IconButton
@@ -302,7 +308,7 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
         {/* if no right button has been added, add a hidden one in order to make the body always centered on screen */}
         {!customRightIcon && !isSearchAvailable && !onShowHelp && !showChat && (
-          <ButtonDefaultOpacity transparent={true} />
+          <HSpacer size={ICON_BUTTON_MARGIN} />
         )}
 
         {pipe(
@@ -313,23 +319,25 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
             ({ avoidNavigationEventsUsage }) => !avoidNavigationEventsUsage
           )
         ) && <NavigationEventHandler onFocus={this.handleFocus} />}
-      </Right>
+      </View>
     );
   };
 
   private renderGoBack = () => {
     const { goBack, dark, customGoBack, backButtonTestID } = this.props;
     return customGoBack ? (
-      <Left>{customGoBack}</Left>
+      <View style={{ ...IOStyles.flex, alignSelf: "flex-start" }}>
+        {customGoBack}
+      </View>
     ) : (
       goBack && (
-        <Left>
+        <View style={{ ...IOStyles.flex, alignSelf: "flex-start" }}>
           <GoBackButton
             testID={backButtonTestID ?? "back-button"}
             onPress={goBack}
             white={dark}
           />
-        </Left>
+        </View>
       )
     );
   };
@@ -339,15 +347,14 @@ class BaseHeaderComponent extends React.PureComponent<Props, State> {
 
     const iconColor: IOColors = primary || dark ? "white" : "blue";
     return (
-      <Left>
-        <View
-          accessible={true}
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
-        >
-          <Icon name="productIOApp" color={iconColor} accessible={false} />
-        </View>
-      </Left>
+      <View
+        accessible={true}
+        accessibilityElementsHidden={true}
+        importantForAccessibility="no-hide-descendants"
+        style={{ ...IOStyles.flex, alignSelf: "flex-start" }}
+      >
+        <Icon name="productIOApp" color={iconColor} accessible={false} />
+      </View>
     );
   };
 
