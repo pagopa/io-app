@@ -2,7 +2,6 @@ import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Tag, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -37,14 +36,15 @@ import {
 import { localeDateFormat } from "../../../utils/locale";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
-import { cleanMarkdownFromCTAs } from "../utils/messages";
+import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
 import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
 import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
-import { FooterCTAs } from "../components/MessageDetail/FooterCTAs";
 import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
-
 import { cancelPaymentStatusTracking } from "../../pn/store/actions";
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
+import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
+import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
+import { serviceMetadataByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -107,6 +107,17 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const markdownWithNoCTA = useMemo(
     () => cleanMarkdownFromCTAs(messageMarkdown),
     [messageMarkdown]
+  );
+  const serviceMetadata = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, serviceId)
+  );
+  const maybeCTAs = useMemo(
+    () =>
+      pipe(
+        getMessageCTA(messageMarkdown, serviceMetadata, serviceId),
+        O.toUndefined
+      ),
+    [messageMarkdown, serviceId, serviceMetadata]
   );
 
   useHeaderSecondLevel({
@@ -203,11 +214,17 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
           </ContentWrapper>
         </View>
         <VSpacer size={24} />
-        <SafeAreaView edges={["bottom"]}>
-          <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
-        </SafeAreaView>
+        <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
+        <MessageDetailsScrollViewAdditionalSpace
+          hasCTAS={!!maybeCTAs}
+          messageId={messageId}
+        />
       </ScrollView>
-      <FooterCTAs markdown={messageMarkdown} serviceId={serviceId} />
+      <MessageDetailsStickyFooter
+        messageId={messageId}
+        ctas={maybeCTAs}
+        serviceId={serviceId}
+      />
     </>
   );
 };
