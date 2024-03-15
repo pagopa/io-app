@@ -53,51 +53,58 @@ export function* handleWalletPaymentCalculateFees(
       action
     )) as SagaCallReturnType<typeof calculateFees>;
 
-    if (E.isLeft(calculateFeesResult)) {
-      yield* put(
-        walletPaymentCalculateFees.failure({
-          ...getGenericError(
-            new Error(readablePrivacyReport(calculateFeesResult.left))
-          )
-        })
-      );
-      return;
-    } else {
-      const res = calculateFeesResult.right;
-      if (res.status === 200) {
-        const bundlesSortedByDefault = getSortedPspList(
-          res.value.bundles,
-          "default"
-        );
-        const chosenPsp = yield* select(walletPaymentPickedPspSelector);
-        // If the sorted psp list has the first element marked as "onUs" and the user has not already chosen a psp, we pre-select the first element
-        if (
-          (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) ||
-          bundlesSortedByDefault.length === 1
-        ) {
-          yield* put(walletPaymentPickPsp(bundlesSortedByDefault[0]));
-        }
-        if (bundlesSortedByDefault.length === 0) {
+    yield* pipe(
+      calculateFeesResult,
+      E.fold(
+        function* (error) {
           yield* put(
             walletPaymentCalculateFees.failure({
-              ...getGenericError(new Error(`Error: The bundles list is empty`))
+              ...getGenericError(new Error(readablePrivacyReport(error)))
             })
           );
-          return;
+        },
+        function* ({ status, value }) {
+          switch (status) {
+            case 200:
+              const bundlesSortedByDefault = getSortedPspList(
+                value.bundles,
+                "default"
+              );
+              const chosenPsp = yield* select(walletPaymentPickedPspSelector);
+
+              // If the sorted psp list has the first element marked as "onUs" and the user has not already chosen a psp, we pre-select the first element
+              if (
+                (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) ||
+                bundlesSortedByDefault.length === 1
+              ) {
+                yield* put(walletPaymentPickPsp(bundlesSortedByDefault[0]));
+              }
+              if (bundlesSortedByDefault.length === 0) {
+                yield* put(
+                  walletPaymentCalculateFees.failure(
+                    getGenericError(
+                      new Error(`Error: The bundles list is empty`)
+                    )
+                  )
+                );
+                return;
+              }
+              const sortedResponse: CalculateFeeResponse = {
+                ...value,
+                bundles: value.bundles
+              };
+              yield* put(walletPaymentCalculateFees.success(sortedResponse));
+              break;
+            default:
+              yield* put(
+                walletPaymentCalculateFees.failure(
+                  getGenericError(new Error(`Error: ${status}`))
+                )
+              );
+          }
         }
-        const sortedResponse: CalculateFeeResponse = {
-          ...res.value,
-          bundles: res.value.bundles
-        };
-        yield* put(walletPaymentCalculateFees.success(sortedResponse));
-        return;
-      }
-      yield* put(
-        walletPaymentCalculateFees.failure({
-          ...getGenericError(new Error(`Error: ${res.status}`))
-        })
-      );
-    }
+      )
+    );
   } catch (e) {
     yield* put(walletPaymentCalculateFees.failure({ ...getNetworkError(e) }));
   }

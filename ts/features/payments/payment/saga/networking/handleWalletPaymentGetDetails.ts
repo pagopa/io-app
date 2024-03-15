@@ -37,29 +37,35 @@ export function* handleWalletPaymentGetDetails(
       action
     )) as SagaCallReturnType<typeof getPaymentRequestInfo>;
 
-    yield* put(
-      pipe(
-        getPaymentRequestInfoResult,
-        E.fold(
-          error =>
-            walletPaymentGetDetails.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-          ({ status, value }) => {
-            if (status === 200) {
-              return walletPaymentGetDetails.success(value);
-            } else if (status === 400) {
-              return walletPaymentGetDetails.failure({
-                ...getGenericError(new Error(`Error: ${status}`))
-              });
-            } else {
-              return walletPaymentGetDetails.failure(value);
-            }
+    yield* pipe(
+      getPaymentRequestInfoResult,
+      E.fold(
+        function* (error) {
+          yield* put(
+            walletPaymentGetDetails.failure(
+              getGenericError(new Error(readablePrivacyReport(error)))
+            )
+          );
+        },
+        function* ({ status, value }) {
+          switch (status) {
+            case 200:
+              yield* put(walletPaymentGetDetails.success(value));
+              break;
+            case 400:
+              yield* put(
+                walletPaymentGetDetails.failure(
+                  getGenericError(new Error(`Error: ${status}`))
+                )
+              );
+              break;
+            default:
+              yield* put(walletPaymentGetDetails.failure(value));
           }
-        )
+        }
       )
     );
   } catch (e) {
-    yield* put(walletPaymentGetDetails.failure({ ...getNetworkError(e) }));
+    yield* put(walletPaymentGetDetails.failure(getNetworkError(e)));
   }
 }

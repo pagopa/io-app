@@ -36,26 +36,33 @@ export function* handleWalletPaymentGetUserWallets(
       action
     )) as SagaCallReturnType<typeof getWalletsByIdUser>;
 
-    yield* put(
-      pipe(
-        getWalletsByIdUserResult,
-        E.fold(
-          error =>
+    yield* pipe(
+      getWalletsByIdUserResult,
+      E.fold(
+        function* (error) {
+          yield* put(
             walletPaymentGetUserWallets.failure(
               getGenericError(new Error(readablePrivacyReport(error)))
-            ),
-          res => {
-            if (res.status === 200) {
-              return walletPaymentGetUserWallets.success(res.value);
-            }
-            if (res.status === 404) {
-              return walletPaymentGetUserWallets.success({ wallets: [] });
-            }
-            return walletPaymentGetUserWallets.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
+            )
+          );
+        },
+        function* ({ status, value }) {
+          switch (status) {
+            case 200:
+              yield* put(walletPaymentGetUserWallets.success(value));
+              break;
+            case 404:
+              // 404 status code means we do not have any payment method to show
+              yield* put(walletPaymentGetUserWallets.success({ wallets: [] }));
+              break;
+            default:
+              yield* put(
+                walletPaymentGetUserWallets.failure(
+                  getGenericError(new Error(`Error: ${status}`))
+                )
+              );
           }
-        )
+        }
       )
     );
   } catch (e) {

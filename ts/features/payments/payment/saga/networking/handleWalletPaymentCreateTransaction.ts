@@ -37,26 +37,32 @@ export function* handleWalletPaymentCreateTransaction(
       action
     )) as SagaCallReturnType<typeof newTransaction>;
 
-    yield* put(
-      pipe(
-        newTransactionResult,
-        E.fold(
-          error =>
-            walletPaymentCreateTransaction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-          ({ status, value }) => {
-            if (status === 200) {
-              return walletPaymentCreateTransaction.success(value);
-            } else if (status === 400) {
-              return walletPaymentCreateTransaction.failure({
-                ...getGenericError(new Error(`Error: ${status}`))
-              });
-            } else {
-              return walletPaymentCreateTransaction.failure(value);
-            }
+    yield* pipe(
+      newTransactionResult,
+      E.fold(
+        function* (error) {
+          yield* put(
+            walletPaymentCreateTransaction.failure(
+              getGenericError(new Error(readablePrivacyReport(error)))
+            )
+          );
+        },
+        function* ({ status, value }) {
+          switch (status) {
+            case 200:
+              yield* put(walletPaymentCreateTransaction.success(value));
+              break;
+            case 400:
+              yield* put(
+                walletPaymentCreateTransaction.failure(
+                  getGenericError(new Error(`Error: ${status}`))
+                )
+              );
+              break;
+            default:
+              yield* put(walletPaymentCreateTransaction.failure(value));
           }
-        )
+        }
       )
     );
   } catch (e) {

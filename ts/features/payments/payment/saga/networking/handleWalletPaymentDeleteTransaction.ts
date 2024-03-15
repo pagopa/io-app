@@ -38,24 +38,33 @@ export function* handleWalletPaymentDeleteTransaction(
       action
     )) as SagaCallReturnType<typeof requestTransactionUserCancellation>;
 
-    yield* put(
-      pipe(
-        requestTransactionUserCancellationResult,
-        E.fold(
-          error =>
-            walletPaymentDeleteTransaction.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
-          res => {
-            if (res.status === 202) {
-              return walletPaymentDeleteTransaction.success();
-            }
-            return walletPaymentDeleteTransaction.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
+    yield* pipe(
+      requestTransactionUserCancellationResult,
+      E.fold(
+        function* (error) {
+          yield* put(
+            walletPaymentDeleteTransaction.failure(
+              getGenericError(new Error(readablePrivacyReport(error)))
+            )
+          );
+        },
+        function* ({ status }) {
+          switch (status) {
+            case 202:
+              yield* put(walletPaymentDeleteTransaction.success());
+              break;
+            case 401:
+              //  This status code does not represent an error to show to the user
+              // The authentication will be handled by the Fast Login token refresh procedure
+              break;
+            default:
+              yield* put(
+                walletPaymentDeleteTransaction.failure(
+                  getGenericError(new Error(`Error: ${status}`))
+                )
+              );
           }
-        )
+        }
       )
     );
   } catch (e) {

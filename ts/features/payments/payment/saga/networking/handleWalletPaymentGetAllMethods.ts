@@ -36,24 +36,29 @@ export function* handleWalletPaymentGetAllMethods(
       action
     )) as SagaCallReturnType<typeof getAllPaymentMethods>;
 
-    yield* put(
-      pipe(
-        getAllPaymentMethodsResult,
-        E.fold(
-          error =>
-            walletPaymentGetAllMethods.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
-          res => {
-            if (res.status === 200) {
-              return walletPaymentGetAllMethods.success(res.value);
-            }
-            return walletPaymentGetAllMethods.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
+    yield* pipe(
+      getAllPaymentMethodsResult,
+      E.fold(
+        function* (error) {
+          yield* put(
+            walletPaymentGetAllMethods.failure(
+              getGenericError(new Error(readablePrivacyReport(error)))
+            )
+          );
+        },
+        function* ({ status, value }) {
+          switch (status) {
+            case 200:
+              yield* put(walletPaymentGetAllMethods.success(value));
+              break;
+            default:
+              yield* put(
+                walletPaymentGetAllMethods.failure(
+                  getGenericError(new Error(`Error: ${status}`))
+                )
+              );
           }
-        )
+        }
       )
     );
   } catch (e) {

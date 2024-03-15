@@ -32,11 +32,12 @@ const WalletDetailsPagoPaPaymentCapability: React.FC<Props> = props => {
     );
   };
 
-  const handleSwitchPagoPaCapability = () => {
+  const handleSwitchPagoPaCapability = (value: boolean) => {
     setLoading(true);
     dispatch(
       walletDetailsPagoPaCapabilityToggle.request({
         walletId: props.paymentMethod.walletId,
+        enable: value,
         onSuccess: handleSwitchSuccess,
         onFailure: handleSwitchError
       })

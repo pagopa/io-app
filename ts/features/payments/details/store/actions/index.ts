@@ -8,12 +8,8 @@ export type WalletDetailsGetInstrumentPayload = {
 
 export type WalletDetailsDeleteinstrumentPayload = {
   walletId: string;
-  onSuccess?: (
-    action: ActionType<typeof walletDetailsDeleteInstrument.success>
-  ) => void;
-  onFailure?: (
-    action: ActionType<typeof walletDetailsDeleteInstrument.failure>
-  ) => void;
+  onSuccess?: () => void;
+  onFailure?: () => void;
 };
 
 export const walletDetailsGetInstrument = createAsyncAction(
@@ -32,12 +28,9 @@ export const walletDetailsDeleteInstrument = createAsyncAction(
 
 export type WalletDetailsPagoPaCapabilityTogglePayload = {
   walletId: string;
-  onSuccess?: (
-    action: ActionType<typeof walletDetailsPagoPaCapabilityToggle.success>
-  ) => void;
-  onFailure?: (
-    action: ActionType<typeof walletDetailsPagoPaCapabilityToggle.failure>
-  ) => void;
+  enable: boolean;
+  onSuccess?: () => void;
+  onFailure?: () => void;
 };
 
 export const walletDetailsPagoPaCapabilityToggle = createAsyncAction(
