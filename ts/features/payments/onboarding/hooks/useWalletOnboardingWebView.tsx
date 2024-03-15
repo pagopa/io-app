@@ -96,6 +96,7 @@ export const useWalletOnboardingWebView = ({
 
   React.useEffect(
     () => () => {
+      setIsPendingOnboarding(false);
       dispatch(walletStartOnboarding.cancel());
     },
     [dispatch]

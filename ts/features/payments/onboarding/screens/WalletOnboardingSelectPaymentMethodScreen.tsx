@@ -49,7 +49,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
   const { startOnboarding, isLoading, isPendingOnboarding } =
     useWalletOnboardingWebView({
       onOnboardingOutcome: (outcome, walletId) => {
-        navigation.navigate(
+        navigation.replace(
           WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK,
           {
             outcome,
