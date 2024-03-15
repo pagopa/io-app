@@ -380,18 +380,13 @@ const CduEmailInsertScreen = () => {
         }}
         testID="container-test"
       >
-        <H1
-          testID="title-test"
-          accessibilityLabel={
-            isFirstOnboarding
+        <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
+          <H1 testID="title-test">
+            {isFirstOnboarding
               ? I18n.t("email.newinsert.title")
-              : I18n.t("email.edit.title")
-          }
-        >
-          {isFirstOnboarding
-            ? I18n.t("email.newinsert.title")
-            : I18n.t("email.edit.title")}
-        </H1>
+              : I18n.t("email.edit.title")}
+          </H1>
+        </View>
         <VSpacer size={16} />
         <Body>
           {isFirstOnboarding ? (

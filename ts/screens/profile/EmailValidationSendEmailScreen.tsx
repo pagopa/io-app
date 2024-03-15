@@ -248,15 +248,12 @@ const EmailValidationSendEmailScreen = () => {
           />
         </View>
         <VSpacer size={24} />
-        <View style={IOStyles.alignCenter}>
-          <H3
-            testID="title-test"
-            accessibilityLabel={I18n.t(
-              isEmailValidated
-                ? "email.newvalidemail.title"
-                : "email.newvalidate.title"
-            )}
-          >
+        <View
+          style={IOStyles.alignCenter}
+          accessible={true}
+          ref={accessibilityFirstFocuseViewRef}
+        >
+          <H3 testID="title-test">
             {I18n.t(
               isEmailValidated
                 ? "email.newvalidemail.title"
@@ -296,7 +293,7 @@ const EmailValidationSendEmailScreen = () => {
           intervalDuration={countdownIntervalDuration}
         >
           <Countdown
-            timerElapsed={() => {
+            onContdownCompleted={() => {
               setShowCountdown(false);
             }}
             visible={showCountdown && !isEmailValidated}

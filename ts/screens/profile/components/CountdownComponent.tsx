@@ -11,15 +11,15 @@ import I18n from "../../../i18n";
 
 type CountdownProps = {
   visible: boolean;
-  timerElapsed?: () => void;
+  onContdownCompleted?: () => void;
 };
 
 const Countdown = (props: CountdownProps) => {
   const { visible } = props;
   const { timerCount, resetTimer, startTimer, isRunning } = useCountdown();
 
-  if (timerCount === 0 && props.timerElapsed) {
-    props.timerElapsed();
+  if (timerCount === 0 && props.onContdownCompleted) {
+    props.onContdownCompleted();
   }
 
   if (!visible) {
