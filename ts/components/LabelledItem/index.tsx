@@ -12,7 +12,7 @@
 import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
-import { Input as InputNativeBase, Item } from "native-base";
+import { Item } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -20,6 +20,7 @@ import {
   ImageStyle,
   NativeSyntheticEvent,
   StyleSheet,
+  TextInput,
   TextInputFocusEventData,
   TextInputProps,
   View
@@ -226,7 +227,7 @@ export const LabelledItem: React.FC<Props> = ({
           )}
 
           {props.inputProps && (
-            <InputNativeBase
+            <TextInput
               accessible={true}
               accessibilityLabel={I18n.t("global.accessibility.textField", {
                 inputLabel: accessibilityLabel
@@ -241,7 +242,7 @@ export const LabelledItem: React.FC<Props> = ({
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
               testID={`${props.testID}Input`}
-              disabled={props.inputProps?.disabled}
+              editable={props.inputProps?.disabled}
               placeholderTextColor={placeholderTextColor}
               inputAccessoryViewID={props.inputAccessoryViewID}
             />

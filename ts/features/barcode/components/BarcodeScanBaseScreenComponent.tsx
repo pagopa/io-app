@@ -316,7 +316,9 @@ const BarcodeScanBaseScreenComponent = ({
             goBack={true}
             customGoBack={customGoBack}
             onShowHelp={canShowHelpButton() ? onShowHelp() : undefined}
-            customRightIcon={torchIconButton}
+            customRightIcon={
+              shouldDisplayTorchButton ? torchIconButton : undefined
+            }
           />
           {/* This overrides BaseHeader status bar configuration */}
           <FocusAwareStatusBar
