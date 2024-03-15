@@ -28,6 +28,7 @@ import {
 } from "../../store/actions/identification";
 import { useIOSelector } from "../../store/hooks";
 import {
+  IdentificationCancelData,
   identificationFailSelector,
   maxAttempts,
   progressSelector
@@ -78,15 +79,19 @@ const IdentificationModal = () => {
   let pin = "";
   // eslint-disable-next-line functional/no-let
   let isValidatingTask = false;
+  // eslint-disable-next-line functional/no-let
+  let cancelData: IdentificationCancelData | undefined;
   if (identificationProgressState.kind === "started") {
     pin = identificationProgressState.pin;
     isValidatingTask = identificationProgressState.isValidatingTask;
+    const { identificationCancelData } = identificationProgressState;
+    cancelData = identificationCancelData;
   }
 
   const forgotCodeLabel = `${I18n.t(
     "identification.unlockCode.reset.button"
   )} ${I18n.t("identification.unlockCode.reset.code")}?`;
-  const closeButtonLabel = I18n.t("global.buttons.close");
+  const closeButtonLabel = cancelData?.label ?? I18n.t("global.buttons.close");
   const textTryAgain = I18n.t("global.genericRetry");
 
   const dispatch = useDispatch();
@@ -317,7 +322,7 @@ const IdentificationModal = () => {
     >
       <SafeAreaView style={[styles.safeArea, { backgroundColor: blueColor }]}>
         {isValidatingTask && (
-          <View style={styles.closeButton}>
+          <View accessible style={styles.closeButton}>
             <ContentWrapper>
               <VSpacer size={VERTICAL_PADDING} />
               <IconButton
