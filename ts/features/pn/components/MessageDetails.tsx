@@ -82,7 +82,7 @@ export const MessageDetails = ({
         <MessageDetailsAttachments
           disabled={message.isCancelled}
           messageId={messageId}
-          removeF24
+          isPN
         />
         <F24s
           messageId={messageId}

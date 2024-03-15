@@ -11,20 +11,20 @@ import { MessageDetailsAttachmentItem } from "./MessageDetailsAttachmentItem";
 
 export type MessageDetailsAttachmentsProps = {
   disabled?: boolean;
+  isPN?: boolean;
   messageId: UIMessageId;
-  removeF24?: boolean;
 };
 
 export const MessageDetailsAttachments = ({
   disabled = false,
-  messageId,
-  removeF24 = false
+  isPN = false,
+  messageId
 }: MessageDetailsAttachmentsProps) => {
   const originalAttachments = useIOSelector(state =>
     thirdPartyMessageAttachments(state, messageId)
   );
   const attachments = pipe(
-    removeF24,
+    isPN,
     B.fold(
       () => originalAttachments,
       () =>
@@ -49,6 +49,7 @@ export const MessageDetailsAttachments = ({
         <MessageDetailsAttachmentItem
           attachment={attachment}
           bottomSpacer={index + 1 < attachmentCount}
+          isPN={isPN}
           disabled={disabled}
           key={`MessageAttachment_${index}`}
           messageId={messageId}

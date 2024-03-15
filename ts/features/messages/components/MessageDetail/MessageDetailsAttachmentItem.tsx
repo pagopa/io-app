@@ -10,6 +10,7 @@ type MessageDetailsAttachmentItemProps = {
   attachment: ThirdPartyAttachment;
   bottomSpacer?: boolean;
   disabled?: boolean;
+  isPN?: boolean;
   messageId: UIMessageId;
   serviceId?: ServiceId;
 };
@@ -18,11 +19,12 @@ export const MessageDetailsAttachmentItem = ({
   attachment,
   bottomSpacer,
   disabled = false,
+  isPN = false,
   messageId,
   serviceId
 }: MessageDetailsAttachmentItemProps) => {
   const { displayName, isFetching, onModuleAttachmentPress } =
-    useAttachmentDownload(messageId, attachment, false, serviceId);
+    useAttachmentDownload(messageId, attachment, isPN, serviceId);
   return (
     <>
       <ModuleAttachment

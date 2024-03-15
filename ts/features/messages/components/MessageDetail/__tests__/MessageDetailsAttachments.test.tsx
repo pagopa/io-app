@@ -64,7 +64,7 @@ const renderScreen = (
   messageId: UIMessageId,
   attachmentCount: number = 0,
   disabled: boolean = false,
-  removeF24: boolean = false
+  isPN: boolean = false
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const designSystemState = appReducer(
@@ -96,7 +96,7 @@ const renderScreen = (
       <MessageDetailsAttachments
         messageId={messageId}
         disabled={disabled}
-        removeF24={removeF24}
+        isPN={isPN}
       />
     ),
     "DUMMY",
