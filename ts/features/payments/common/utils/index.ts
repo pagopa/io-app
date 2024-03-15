@@ -110,7 +110,7 @@ export const getPaymentLogo = (
     return "payPal";
   } else if (details.maskedNumber !== undefined) {
     return "bancomatPay";
-  } else if (details.maskedPan !== undefined) {
+  } else if (details.lastFourDigits !== undefined) {
     return pipe(
       details.brand,
       O.fromNullable,
