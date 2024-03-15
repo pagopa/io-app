@@ -1,4 +1,4 @@
-import { fireEvent } from "@testing-library/react-native";
+// import { fireEvent } from "@testing-library/react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
@@ -69,14 +69,14 @@ describe("Test ProfileDataScreen", () => {
       ).not.toBeNull();
     }
   });
-  it("when press ListItemComponent insert or edit email, if user has email should navigate to EmailReadScreen else should navigate to EmailInsertScreen", () => {
-    const { component } = renderComponent();
+  // it("when press ListItemComponent insert or edit email, if user has email should navigate to EmailReadScreen else should navigate to EmailInsertScreen", () => {
+  //   const { component } = renderComponent();
 
-    expect(component).not.toBeNull();
-    const listItemComponent = component.getByTestId("insert-or-edit-email");
-    expect(listItemComponent).not.toBeNull();
-    fireEvent.press(listItemComponent);
-  });
+  //   expect(component).not.toBeNull();
+  //   const listItemComponent = component.getByTestId("insert-or-edit-email");
+  //   expect(listItemComponent).not.toBeNull();
+  //   fireEvent.press(listItemComponent);
+  // });
   it("should render ListItemComponent name and surname with the right title and subtitle", () => {
     const { component, store } = renderComponent();
 

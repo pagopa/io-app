@@ -6,16 +6,22 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from "react";
 import validator from "validator";
-import { AccessibilityInfo, Alert, Keyboard } from "react-native";
+import { AccessibilityInfo, Alert, Keyboard, View } from "react-native";
 import {
   VSpacer,
   H1,
   TextInputValidation,
   GradientScrollView
 } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -46,6 +52,7 @@ import { trackTosUserExit } from "../authentication/analytics";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 
 export type CduEmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
@@ -83,6 +90,9 @@ const CduEmailInsertScreen = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(isOnboarding, isFirstOnBoarding);
+  const accessibilityFirstFocuseViewRef = useRef<View>(null);
+
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
@@ -372,8 +382,11 @@ const CduEmailInsertScreen = () => {
       >
         <H1
           testID="title-test"
-          importantForAccessibility="yes"
-          aria-live="assertive"
+          accessibilityLabel={
+            isFirstOnboarding
+              ? I18n.t("email.newinsert.title")
+              : I18n.t("email.edit.title")
+          }
         >
           {isFirstOnboarding
             ? I18n.t("email.newinsert.title")

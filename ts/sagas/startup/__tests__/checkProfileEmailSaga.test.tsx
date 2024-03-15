@@ -46,7 +46,7 @@ describe("checkAcknowledgedEmailSaga", () => {
         profileEmailValidatedFirstOnboarding
       )
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+          screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
           params: { isOnboarding: true }
         })
         .run();
@@ -63,7 +63,7 @@ describe("checkAcknowledgedEmailSaga", () => {
         // read screen is wrapped in a HOC where if email is validate show ReadScreen
         // otherwise a screen that remembers to validate it
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+          screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
           params: { isOnboarding: true }
         })
         .dispatch(emailAcknowledged())
@@ -86,7 +86,10 @@ describe("checkAcknowledgedEmailSaga", () => {
       renderScreenWithNavigationStoreContext(View, "DUMMY", {}, store);
       await expectSaga(checkAcknowledgedEmailSaga, profileWithNoEmail)
         .call(NavigationService.navigate, ROUTES.ONBOARDING, {
-          screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+          screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
+          params: {
+            isOnboarding: true
+          }
         }) // go to email insert screen
         .dispatch(emailInsert()) // dispatch email insert
         .dispatch(emailAcknowledged()) // press continue

@@ -54,7 +54,7 @@ const EmailAlreadyTakenScreen = () => {
   const flow = getFlowType(true, isFirstOnBoarding);
   const navigateToInsertEmailScreen = React.useCallback(() => {
     navigation.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
       params: {
         isOnboarding: true
       }

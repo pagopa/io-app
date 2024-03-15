@@ -28,7 +28,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const ProfileDataScreen: React.FC<Props> = ({
   profileEmail,
   isEmailValidated,
-  isEmailUniquenessValidationEnabled,
+  // isEmailUniquenessValidationEnabled,
   hasProfileEmail,
   nameSurname
 }): React.ReactElement => {
@@ -43,20 +43,8 @@ const ProfileDataScreen: React.FC<Props> = ({
     });
   }, [navigation]);
 
-  const navigateToReadEmailScreen = React.useCallback(() => {
-    navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-      screen: ROUTES.READ_EMAIL_SCREEN
-    });
-  }, [navigation]);
-
   const onPressEmail = () => {
     if (hasProfileEmail) {
-      if (isEmailUniquenessValidationEnabled) {
-        navigateToInsertEmailScreen();
-      } else {
-        navigateToReadEmailScreen();
-      }
-    } else {
       navigateToInsertEmailScreen();
     }
   };

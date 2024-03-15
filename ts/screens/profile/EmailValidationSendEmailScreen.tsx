@@ -5,9 +5,8 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import * as React from "react";
+import React, { useRef, useCallback, useEffect, useState } from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useCallback, useEffect, useState } from "react";
 import {
   AccessibilityInfo,
   Platform,
@@ -28,7 +27,7 @@ import {
   ButtonLink
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Route, useRoute } from "@react-navigation/native";
+import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "../../i18n";
 
 import {
@@ -61,6 +60,7 @@ import { IOToast } from "../../components/Toast";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 import Countdown from "./components/CountdownComponent";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
@@ -69,7 +69,7 @@ const countdownIntervalDuration = 1000 as Millisecond; // 1 second
 const EMPTY_EMAIL = "";
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 120;
 
-export type EmailValidationScreenProp = {
+export type SendEmailValidationScreenProp = {
   isOnboarding?: boolean;
   sendEmailAtFirstRender?: boolean;
 };
@@ -77,12 +77,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.validate.title",
   body: "email.validate.help"
 };
-const EmailValidationScreen = () => {
+const EmailValidationSendEmailScreen = () => {
   const props =
     useRoute<
       Route<
         "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
-        EmailValidationScreenProp
+        SendEmailValidationScreenProp
       >
     >().params;
   const { isOnboarding, sendEmailAtFirstRender } = props;
@@ -105,6 +105,7 @@ const EmailValidationScreen = () => {
     optionEmail,
     O.getOrElse(() => EMPTY_EMAIL)
   );
+  const accessibilityFirstFocuseViewRef = useRef<View>(null);
 
   const sendEmailValidation = useCallback(
     () => dispatch(startEmailValidation.request()),
@@ -131,6 +132,8 @@ const EmailValidationScreen = () => {
     [dispatch]
   );
 
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
+
   useOnFirstRender(() => {
     // polling starts every time the user land on this screen
     startPollingSaga();
@@ -143,9 +146,10 @@ const EmailValidationScreen = () => {
   const handleContinue = () => {
     if (isEmailValidated) {
       trackEmailValidationSuccessConfirmed(flow);
+      stopPollingSaga();
       navigation.goBack();
       if (isOnboarding) {
-        // if the user is in the onboarding flow and the email il correctly validated,
+        // if the user is in the onboarding flow and the email is correctly validated,
         // the email validation flow is finished
         acknowledgeEmail();
       } else {
@@ -172,6 +176,7 @@ const EmailValidationScreen = () => {
 
   const navigateToInsertEmail = () => {
     dispatchAcknowledgeOnEmailValidation(O.none);
+    stopPollingSaga();
     navigation.goBack();
   };
 
@@ -202,9 +207,12 @@ const EmailValidationScreen = () => {
 
   useEffect(() => {
     if (isEmailValidated) {
-      setShowCountdown(false);
-      // if the user has validated the email the polling can stop
       stopPollingSaga();
+      setShowCountdown(false);
+      AccessibilityInfo.announceForAccessibility(
+        I18n.t("email.newvalidemail.title")
+      );
+      // if the user has validated the email the polling can stop
       trackEmailValidationSuccess(flow);
     } else {
       trackEmailValidation(flow);
@@ -241,7 +249,14 @@ const EmailValidationScreen = () => {
         </View>
         <VSpacer size={24} />
         <View style={IOStyles.alignCenter}>
-          <H3 testID="title-test">
+          <H3
+            testID="title-test"
+            accessibilityLabel={I18n.t(
+              isEmailValidated
+                ? "email.newvalidemail.title"
+                : "email.newvalidate.title"
+            )}
+          >
             {I18n.t(
               isEmailValidated
                 ? "email.newvalidemail.title"
@@ -330,4 +345,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default EmailValidationScreen;
+export default EmailValidationSendEmailScreen;

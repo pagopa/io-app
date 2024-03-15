@@ -51,7 +51,7 @@ const ValidateEmailScreen = () => {
   const flow = getFlowType(true, isFirstOnboarding);
   const navigateToInsertEmailScreen = useCallback(() => {
     navigation.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
       params: {
         isOnboarding: true
       }
