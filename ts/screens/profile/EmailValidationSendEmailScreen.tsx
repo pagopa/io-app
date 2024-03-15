@@ -147,7 +147,6 @@ const EmailValidationSendEmailScreen = () => {
     if (isEmailValidated) {
       trackEmailValidationSuccessConfirmed(flow);
       stopPollingSaga();
-      navigation.goBack();
       if (isOnboarding) {
         // if the user is in the onboarding flow and the email is correctly validated,
         // the email validation flow is finished
