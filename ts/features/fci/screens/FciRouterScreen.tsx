@@ -13,7 +13,6 @@ import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
 import SuccessComponent from "../components/SuccessComponent";
 import GenericErrorComponent from "../components/GenericErrorComponent";
-import { withValidatedEmail } from "../../../components/helpers/withValidatedEmail";
 import { isFciEnabledSelector } from "../../../store/reducers/backendStatus";
 import { isTestEnv } from "../../../utils/environment";
 import {
@@ -116,4 +115,4 @@ const FciSignatureScreen = (
   );
 };
 
-export default withValidatedEmail(FciSignatureScreen);
+export default FciSignatureScreen;

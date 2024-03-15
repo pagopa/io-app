@@ -8,7 +8,6 @@
 import * as React from "react";
 import EmailReadComponent from "../../components/EmailReadComponent";
 import { SingleButton } from "../../components/ui/BlockButtons";
-import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -23,7 +22,6 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 const EmailReadScreen = (props: Props) => {
-  useValidatedEmailModal();
   const navigation = useIONavigation();
 
   const handleGoBack = () => {

@@ -22,7 +22,9 @@ import {
   Pictogram,
   IOPictograms,
   IOPictogramSizeScale,
-  VSpacer
+  VSpacer,
+  ButtonOutline,
+  ButtonSolid
 } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
@@ -55,7 +57,6 @@ import TopScreenComponent, {
 } from "./screens/TopScreenComponent";
 import SectionStatusComponent from "./SectionStatus";
 import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
-import BlockButtons from "./ui/BlockButtons";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import LegacyMarkdown from "./ui/Markdown/LegacyMarkdown";
@@ -308,49 +309,57 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
       <>
         <SectionStatusComponent sectionKey={"email_validation"} />
         <View style={IOStyles.footer}>
-          <BlockButtons
-            type={"SingleButton"}
-            leftButton={{
-              title: this.state.ctaSendEmailValidationText,
-              onPress: this.handleSendEmailValidationButton,
-              light: true,
-              bordered: true,
-              disabled:
-                this.state.isLoading ||
-                this.state.isCtaSentEmailValidationDisabled
-            }}
+          <ButtonOutline
+            fullWidth
+            label={this.state.ctaSendEmailValidationText}
+            accessibilityLabel={this.state.ctaSendEmailValidationText}
+            onPress={this.handleSendEmailValidationButton}
+            disabled={
+              this.state.isLoading ||
+              this.state.isCtaSentEmailValidationDisabled
+            }
           />
           <VSpacer size={16} />
-          <BlockButtons
-            type={"TwoButtonsInlineThirdInverted"}
-            leftButton={{
-              block: true,
-              bordered: true,
-              disabled: this.state.isLoading,
-              onPress: () => {
-                if (this.props.isOnboarding) {
-                  NavigationService.navigate(ROUTES.ONBOARDING, {
-                    screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
-                  });
-                } else {
-                  NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
-                    screen: ROUTES.INSERT_EMAIL_SCREEN,
-                    params: { isOnboarding: false }
-                  });
+          <View style={IOStyles.row}>
+            <View style={{ flex: 2 }}>
+              <ButtonOutline
+                fullWidth
+                disabled={this.state.isLoading}
+                label={I18n.t("email.edit.title")}
+                accessibilityLabel={I18n.t("email.edit.title")}
+                onPress={() => {
+                  if (this.props.isOnboarding) {
+                    NavigationService.navigate(ROUTES.ONBOARDING, {
+                      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+                    });
+                  } else {
+                    NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {
+                      screen: ROUTES.INSERT_EMAIL_SCREEN,
+                      params: { isOnboarding: false }
+                    });
+                  }
+                }}
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <ButtonSolid
+                label={
+                  !this.props.isOnboarding
+                    ? I18n.t("global.buttons.ok")
+                    : I18n.t("global.buttons.continue")
                 }
-              },
-              title: I18n.t("email.edit.title")
-            }}
-            rightButton={{
-              block: true,
-              primary: true,
-              onPress: this.handleOnClose,
-              disabled: this.state.isLoading,
-              title: !this.props.isOnboarding
-                ? I18n.t("global.buttons.ok")
-                : I18n.t("global.buttons.continue")
-            }}
-          />
+                accessibilityLabel={
+                  !this.props.isOnboarding
+                    ? I18n.t("global.buttons.ok")
+                    : I18n.t("global.buttons.continue")
+                }
+                onPress={this.handleOnClose}
+                disabled={this.state.isLoading}
+                loading={this.state.isLoading}
+                fullWidth
+              />
+            </View>
+          </View>
         </View>
       </>
     );

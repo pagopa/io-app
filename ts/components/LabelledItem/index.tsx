@@ -12,7 +12,6 @@
 import { IOColors, IOIcons } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import color from "color";
-import { Item } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import {
@@ -37,9 +36,6 @@ import TextInputMask from "../ui/MaskedInput";
 import { LabelledItemIconOrImage } from "./LabelledItemIconOrImage";
 
 const styles = StyleSheet.create({
-  noBottomLine: {
-    borderBottomWidth: 0
-  },
   bottomLine: {
     borderBottomWidth: 1
   },
@@ -170,9 +166,7 @@ export const LabelledItem: React.FC<Props> = ({
           importantForAccessibility="no-hide-descendants"
           accessibilityElementsHidden={true}
         >
-          <Item style={styles.noBottomLine}>
-            <H5 color={labelColor}>{props.label}</H5>
-          </Item>
+          <H5 color={labelColor}>{props.label}</H5>
         </View>
       )}
 
@@ -266,15 +260,13 @@ export const LabelledItem: React.FC<Props> = ({
           accessibilityElementsHidden={true}
           key={"description"}
         >
-          <Item style={styles.noBottomLine}>
-            <H5
-              weight={"Regular"}
-              color={descriptionColor}
-              testID="H5-description"
-            >
-              {props.description}
-            </H5>
-          </Item>
+          <H5
+            weight={"Regular"}
+            color={descriptionColor}
+            testID="H5-description"
+          >
+            {props.description}
+          </H5>
         </View>
       )}
     </View>

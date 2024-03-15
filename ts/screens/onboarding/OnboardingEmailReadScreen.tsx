@@ -11,7 +11,6 @@ import { Alert } from "react-native";
 import EmailReadComponent from "../../components/EmailReadComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { TwoButtonsInlineHalf } from "../../components/ui/BlockButtons";
-import { useValidatedEmailModal } from "../../hooks/useValidateEmailModal";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
@@ -29,7 +28,6 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 const OnboardingEmailReadScreen = (props: Props) => {
-  useValidatedEmailModal(true);
   const dispatch = useIODispatch();
   const potUserMetadata = useIOSelector(userMetadataSelector);
 

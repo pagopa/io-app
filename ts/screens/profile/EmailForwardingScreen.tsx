@@ -14,7 +14,6 @@ import { Dispatch } from "redux";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
@@ -277,9 +276,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default withValidatedEmail(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withLoadingSpinner(EmailForwardingScreen))
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLoadingSpinner(EmailForwardingScreen));

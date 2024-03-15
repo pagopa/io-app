@@ -1,7 +1,8 @@
-import I18n from "i18n-js";
 import * as React from "react";
+import { ButtonOutline, HSpacer, IOStyles } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
+import I18n from "../../i18n";
 import { handleItemOnPress } from "../../utils/url";
-import BlockButtons, { BlockButtonProps } from "../ui/BlockButtons";
 
 type Props = Readonly<{
   phone?: string;
@@ -11,41 +12,41 @@ type Props = Readonly<{
 const EmailCallCTA: React.FunctionComponent<Props> = props => {
   const { phone, email } = props;
 
-  const callButton: BlockButtonProps = {
-    bordered: true,
-    small: true,
-    lightText: true,
-    title: I18n.t("messageDetails.call"),
-    iconName: "phone",
-    iconColor: "blue",
-    onPress: handleItemOnPress(`tel:${phone}`)
-  };
+  const callButton = (
+    <ButtonOutline
+      fullWidth
+      label={I18n.t("messageDetails.call")}
+      accessibilityLabel={I18n.t("messageDetails.call")}
+      onPress={handleItemOnPress(`tel:${phone}`)}
+      icon="phone"
+    />
+  );
 
-  const emailButton: BlockButtonProps = {
-    bordered: true,
-    small: true,
-    lightText: true,
-    title: I18n.t("messageDetails.write"),
-    iconName: "email",
-    iconColor: "blue",
-    onPress: handleItemOnPress(`mailto:${email}`)
-  };
+  const emailButton = (
+    <ButtonOutline
+      fullWidth
+      label={I18n.t("messageDetails.write")}
+      accessibilityLabel={I18n.t("messageDetails.write")}
+      onPress={handleItemOnPress(`mailto:${email}`)}
+      icon="email"
+    />
+  );
 
   if (phone === undefined || email === undefined) {
-    return (
-      <BlockButtons
-        type={"SingleButton"}
-        leftButton={phone ? callButton : emailButton}
-      />
-    );
+    return phone ? callButton : emailButton;
   }
 
   return (
-    <BlockButtons
-      type={"TwoButtonsInlineHalf"}
-      leftButton={callButton}
-      rightButton={emailButton}
-    />
+    <View style={IOStyles.row}>
+      <View style={IOStyles.flex}>{callButton}</View>
+      <HSpacer />
+      <View style={IOStyles.flex}>{emailButton}</View>
+    </View>
+    // <BlockButtons
+    //   type={"TwoButtonsInlineHalf"}
+    //   leftButton={callButton}
+    //   rightButton={emailButton}
+    // />
   );
 };
 

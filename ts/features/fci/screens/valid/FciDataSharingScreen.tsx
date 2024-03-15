@@ -28,7 +28,6 @@ import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { capitalize } from "../../../../utils/strings";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import ROUTES from "../../../../navigation/routes";
-import { withValidatedEmail } from "../../../../components/helpers/withValidatedEmail";
 import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../../../../utils/dates";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
@@ -204,4 +203,4 @@ const FciDataSharingScreen = (): React.ReactElement => {
   );
 };
 
-export default withValidatedEmail(FciDataSharingScreen);
+export default FciDataSharingScreen;

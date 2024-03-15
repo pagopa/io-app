@@ -1,11 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
-import { Divider } from "@pagopa/io-app-design-system";
+import { ButtonOutline, Divider } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { RawAccordion } from "../../../../components/core/accordion/RawAccordion";
 import { H4 } from "../../../../components/core/typography/H4";
-import BlockButtons from "../../../../components/ui/BlockButtons";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
@@ -96,16 +95,15 @@ export const TransactionSummaryErrorDetails = ({
             ) : undefined
           )}
           <View>
-            <BlockButtons
-              type={"SingleButton"}
-              leftButton={{
-                primary: true,
-                bordered: true,
-                title: I18n.t(
-                  "wallet.firstTransactionSummary.errorDetails.copyToClipboard"
-                ),
-                onPress: () => clipboardSetStringWithFeedback(clipboardString)
-              }}
+            <ButtonOutline
+              label={I18n.t(
+                "wallet.firstTransactionSummary.errorDetails.copyToClipboard"
+              )}
+              accessibilityLabel={I18n.t(
+                "wallet.firstTransactionSummary.errorDetails.copyToClipboard"
+              )}
+              onPress={() => clipboardSetStringWithFeedback(clipboardString)}
+              fullWidth
             />
           </View>
         </View>

@@ -28,7 +28,6 @@ import {
   TabBarItemPressType,
   withUseTabItemPressWhenScreenActive
 } from "../../components/helpers/withUseTabItemPressWhenScreenActive";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { withValidatedPagoPaVersion } from "../../components/helpers/withValidatedPagoPaVersion";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
@@ -540,14 +539,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default withValidatedPagoPaVersion(
-  withValidatedEmail(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(
-      withUseTabItemPressWhenScreenActive(
-        withLightModalContext(WalletHomeScreen)
-      )
-    )
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(
+    withUseTabItemPressWhenScreenActive(withLightModalContext(WalletHomeScreen))
   )
 );
