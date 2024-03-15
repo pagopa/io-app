@@ -61,8 +61,12 @@ export const IdentificationInstructionsComponent = (props: {
   isBimoetricIdentificatoinFailed: boolean;
 }) => {
   const { biometricType, isBimoetricIdentificatoinFailed } = props;
+  const a11yInstruction = getAccessibiliyIdentificationInstructions(
+    biometricType,
+    isBimoetricIdentificatoinFailed
+  );
   const instructionComponent = (
-    <View accessible style={IOStyles.row}>
+    <View style={IOStyles.row}>
       <LabelSmall color="white" weight="Regular">
         {unlockCodePrefix}
       </LabelSmall>
@@ -70,7 +74,7 @@ export const IdentificationInstructionsComponent = (props: {
     </View>
   );
   const instructionComponentWithFingerprint = (
-    <View accessible style={IOStyles.row}>
+    <View style={IOStyles.row}>
       <LabelSmall color="white" weight="Regular">
         {fingerprintPrefix}
       </LabelSmall>
@@ -78,7 +82,7 @@ export const IdentificationInstructionsComponent = (props: {
     </View>
   );
   const instructionComponentWithFaceId = (
-    <View accessible style={IOStyles.row}>
+    <View style={IOStyles.row}>
       <LabelSmall color="white" weight="Regular">
         {faceIdPrefix}
       </LabelSmall>
@@ -94,7 +98,11 @@ export const IdentificationInstructionsComponent = (props: {
     case "BIOMETRICS":
     case "TOUCH_ID":
       return (
-        <View accessible style={IOStyles.row}>
+        <View
+          accessible
+          accessibilityLabel={a11yInstruction}
+          style={IOStyles.row}
+        >
           {instructionComponentWithFingerprint}
           <LabelSmall color="white" weight="Regular">
             {" "}
@@ -105,7 +113,11 @@ export const IdentificationInstructionsComponent = (props: {
       );
     case "FACE_ID":
       return (
-        <View accessible style={IOStyles.row}>
+        <View
+          accessible
+          accessibilityLabel={a11yInstruction}
+          style={IOStyles.row}
+        >
           {instructionComponentWithFaceId}
           <LabelSmall color="white" weight="Regular">
             {" "}

@@ -55,7 +55,6 @@ const onRequestCloseHandler = () => undefined;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity, complexity
 const IdentificationModal = () => {
-  console.log("Refreshing IdentificationModal 🔁");
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);
   const headerRef = useRef<View>(null);
