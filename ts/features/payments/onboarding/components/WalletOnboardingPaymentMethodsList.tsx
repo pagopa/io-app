@@ -49,15 +49,10 @@ const PaymentMethodItem = ({
   return pipe(
     paymentMethod.asset,
     O.fromNullable,
-    O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
-    O.map(([brand]) => brand),
     O.fold(
       () => <ListItemNav {...listItemNavCommonProps} icon="creditCard" />,
-      brand => (
-        <ListItemNav
-          {...listItemNavCommonProps}
-          paymentLogo={brand as IOLogoPaymentType}
-        />
+      asset => (
+        <ListItemNav {...listItemNavCommonProps} paymentLogoUri={asset} />
       )
     )
   );
