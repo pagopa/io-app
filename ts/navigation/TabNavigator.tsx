@@ -11,8 +11,12 @@ import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen"
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
+import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
-import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
+import {
+  isDesignSystemEnabledSelector,
+  isNewWalletSectionEnabledSelector
+} from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -45,13 +49,18 @@ const styles = StyleSheet.create({
 });
 
 export const MainTabNavigator = () => {
+  const navigation = useIONavigation();
   const insets = useSafeAreaInsets();
+
   const startupLoaded = useIOSelector(isStartupLoaded);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
+
   const tabBarHeight = 54;
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const navigation = useIONavigation();
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -109,7 +118,9 @@ export const MainTabNavigator = () => {
         />
         <Tab.Screen
           name={ROUTES.WALLET_HOME}
-          component={WalletHomeScreen}
+          component={
+            isNewWalletSectionEnabled ? NewWalletHomeScreen : WalletHomeScreen
+          }
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (

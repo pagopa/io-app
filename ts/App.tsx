@@ -7,8 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   IODSExperimentalContextProvider,
-  IOThemeContext,
-  IOThemes
+  IOThemeContextProvider
 } from "@pagopa/io-app-design-system";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
@@ -29,8 +28,8 @@ export const App: React.FunctionComponent<never> = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <StyleProvider style={theme()}>
       <SafeAreaProvider>
-        <IOThemeContext.Provider value={IOThemes.light}>
-          <IODSExperimentalContextProvider>
+        <IODSExperimentalContextProvider>
+          <IOThemeContextProvider theme={"light"}>
             <ToastProvider>
               <Provider store={store}>
                 <PersistGate loading={undefined} persistor={persistor}>
@@ -44,8 +43,8 @@ export const App: React.FunctionComponent<never> = () => (
                 </PersistGate>
               </Provider>
             </ToastProvider>
-          </IODSExperimentalContextProvider>
-        </IOThemeContext.Provider>
+          </IOThemeContextProvider>
+        </IODSExperimentalContextProvider>
       </SafeAreaProvider>
     </StyleProvider>
   </GestureHandlerRootView>
