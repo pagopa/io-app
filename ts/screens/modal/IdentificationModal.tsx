@@ -11,6 +11,7 @@ import {
   ToastNotification,
   IOPictograms
 } from "@pagopa/io-app-design-system";
+import _ from "lodash";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Alert, ColorSchemeName, Modal, View, StyleSheet } from "react-native";
@@ -70,7 +71,14 @@ const IdentificationModal = () => {
   const previousIdentificationProgressState = usePrevious(
     identificationProgressState
   );
-  const identificationFailState = useIOSelector(identificationFailSelector);
+  const identificationFailState = useIOSelector(
+    identificationFailSelector,
+    // Since the identificationFailState is an Option,
+    // we need to performs a deep comparison between
+    // two values to determine if they are equivalent
+    // to avoid unnecessary re-renders.
+    (l, r) => _.isEqual(l, r)
+  );
   const name = useIOSelector(profileNameSelector);
   const { biometricType, isFingerprintEnabled } = useBiometricType();
 
