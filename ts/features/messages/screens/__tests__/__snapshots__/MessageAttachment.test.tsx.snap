@@ -555,6 +555,8 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     }
                                   >
                                     <Text
+                                      accessibilityElementsHidden={true}
+                                      accessible={false}
                                       allowFontScaling={false}
                                       color="white"
                                       defaultColor="white"
@@ -749,29 +751,39 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 </RNSVGSvgView>
                               </View>
                             </View>
-                            <Text
+                            <View
+                              accessibilityLabel=""
+                              accessibilityRole="header"
                               accessible={false}
-                              numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "flexGrow": 1,
-                                    "flexShrink": 1,
-                                    "fontSize": 14,
-                                    "marginHorizontal": 16,
-                                    "textAlign": "center",
-                                  },
-                                  Object {
-                                    "fontFamily": "Titillium Web",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                  },
-                                  Object {
-                                    "opacity": 1,
-                                  },
-                                ]
+                                Object {
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "marginHorizontal": 16,
+                                }
                               }
-                            />
+                            >
+                              <Text
+                                accessible={false}
+                                numberOfLines={1}
+                                style={
+                                  Array [
+                                    Object {
+                                      "fontSize": 14,
+                                      "textAlign": "center",
+                                    },
+                                    Object {
+                                      "fontFamily": "Titillium Web",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                    Object {
+                                      "opacity": 1,
+                                    },
+                                  ]
+                                }
+                              />
+                            </View>
                             <View
                               style={
                                 Array [
@@ -1492,29 +1504,39 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                 </RNSVGSvgView>
                               </View>
                             </View>
-                            <Text
+                            <View
+                              accessibilityLabel=""
+                              accessibilityRole="header"
                               accessible={false}
-                              numberOfLines={1}
                               style={
-                                Array [
-                                  Object {
-                                    "flexGrow": 1,
-                                    "flexShrink": 1,
-                                    "fontSize": 14,
-                                    "marginHorizontal": 16,
-                                    "textAlign": "center",
-                                  },
-                                  Object {
-                                    "fontFamily": "Titillium Web",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "600",
-                                  },
-                                  Object {
-                                    "opacity": 1,
-                                  },
-                                ]
+                                Object {
+                                  "flexGrow": 1,
+                                  "flexShrink": 1,
+                                  "marginHorizontal": 16,
+                                }
                               }
-                            />
+                            >
+                              <Text
+                                accessible={false}
+                                numberOfLines={1}
+                                style={
+                                  Array [
+                                    Object {
+                                      "fontSize": 14,
+                                      "textAlign": "center",
+                                    },
+                                    Object {
+                                      "fontFamily": "Titillium Web",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                    },
+                                    Object {
+                                      "opacity": 1,
+                                    },
+                                  ]
+                                }
+                              />
+                            </View>
                             <View
                               style={
                                 Array [

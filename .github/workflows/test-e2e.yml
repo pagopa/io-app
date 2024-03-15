@@ -33,8 +33,6 @@ jobs:
         with:
           path: ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
       - id: install-detox
         run: |
           brew tap wix/brew
@@ -47,8 +45,6 @@ jobs:
         with:
           path: ios/build
           key: ${{ runner.os }}-detox-build
-          restore-keys: |
-            ${{ runner.os }}-detox-build
       - id: setup-pods
         run: cd ios ; bundle exec pod install --verbose ; cd ..
         shell: bash
