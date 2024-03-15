@@ -81,7 +81,7 @@ export const MessageDetails = ({
         <MessageDetailsAttachments
           disabled={message.isCancelled}
           messageId={messageId}
-          removeF24
+          isPN
         />
       </ContentWrapper>
     </ScrollView>
