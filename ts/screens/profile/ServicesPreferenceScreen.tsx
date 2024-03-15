@@ -2,6 +2,7 @@ import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { useStore } from "react-redux";
+import { AccessibilityInfo } from "react-native";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
@@ -73,6 +74,7 @@ const ServicesPreferenceScreen = (): ReactElement => {
     // the toast will be shown immediately without any updates
     if (prevProfile && !pot.isError(prevProfile) && pot.isError(profile)) {
       IOToast.error(I18n.t("global.genericError"));
+      AccessibilityInfo.announceForAccessibility(I18n.t("global.genericError"));
       return;
     }
     // if profile preferences are updated correctly
@@ -85,6 +87,11 @@ const ServicesPreferenceScreen = (): ReactElement => {
       prevMode !== profileServicePreferenceMode
     ) {
       IOToast.success(
+        profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
+          ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
+          : I18n.t("services.optIn.preferences.quickConfig.successAlert")
+      );
+      AccessibilityInfo.announceForAccessibility(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")

@@ -94,9 +94,9 @@ export const RNavScreenWithLargeHeader = ({
   const headerProps: ComponentProps<typeof HeaderSecondLevel> = useHeaderProps(
     canGoback
       ? {
+          ...headerPropsWithoutGoBack,
           backAccessibilityLabel: I18n.t("global.buttons.back"),
-          goBack: goBack ?? navigation.goBack,
-          ...headerPropsWithoutGoBack
+          goBack: goBack ?? navigation.goBack
         }
       : headerPropsWithoutGoBack
   );
