@@ -243,6 +243,9 @@ const IdentificationModal = () => {
 
   const pictogramKey: IOPictograms = isValidatingTask ? "passcode" : "key";
 
+  // Managing the countdown and the remaining attempts
+  // this way is simpler and more predictable
+  // instead of using useEffect and ref and state.
   // eslint-disable-next-line functional/no-let
   let countdownInMs = 0 as Millisecond;
   // eslint-disable-next-line functional/no-let
