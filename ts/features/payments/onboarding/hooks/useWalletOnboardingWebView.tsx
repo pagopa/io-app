@@ -1,19 +1,14 @@
-import * as React from "react";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import {
-  WebViewErrorEvent,
-  WebViewHttpErrorEvent
-} from "react-native-webview/lib/WebViewTypes";
-
-import { OnboardingOutcomeFailure, OnboardingOutcomeSuccess } from "../types";
-import { NetworkError } from "../../../../utils/errors";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
 import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { NetworkError } from "../../../../utils/errors";
 import { walletOnboardingStartupSelector } from "../store";
 import { walletStartOnboarding } from "../store/actions";
+import { OnboardingOutcomeFailure, OnboardingOutcomeSuccess } from "../types";
 import {
   ONBOARDING_CALLBACK_URL_SCHEMA,
   extractOnboardingResult
@@ -33,9 +28,7 @@ const extractOnboardingWebViewUri = (
 export type WalletOnboardingWebViewProps = {
   onSuccess?: (outcome: OnboardingOutcomeSuccess, walletId: string) => void;
   onFailure?: (outcome: OnboardingOutcomeFailure) => void;
-  onError?: (
-    error?: WebViewErrorEvent | WebViewHttpErrorEvent | NetworkError
-  ) => void;
+  onError?: (error?: NetworkError) => void;
   onDismiss?: () => void;
 };
 
