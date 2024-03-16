@@ -1,0 +1,28 @@
+diff --git a/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m b/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m
+index 52aafd8..c6278c5 100644
+--- a/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m
++++ b/node_modules/react-native-pdf/ios/RCTPdf/RCTPdfView.m
+@@ -188,14 +188,16 @@ const float MIN_SCALE = 1.0f;
+         }
+ 
+         if (_pdfDocument && ([changedProps containsObject:@"path"] || [changedProps containsObject:@"enableAnnotationRendering"])) {
+-            if (!_enableAnnotationRendering) {
+-                for (unsigned long i=0; i<_pdfView.document.pageCount; i++) {
+-                    PDFPage *pdfPage = [_pdfView.document pageAtIndex:i];
+-                    for (unsigned long j=0; j<pdfPage.annotations.count; j++) {
+-                        pdfPage.annotations[j].shouldDisplay = _enableAnnotationRendering;
+-                    }
+-                }
++          for (unsigned long i=0; i<_pdfView.document.pageCount; i++) {
++            PDFPage *pdfPage = [_pdfView.document pageAtIndex:i];
++            for (unsigned long j=0; j<pdfPage.annotations.count; j++) {
++              if (!_enableAnnotationRendering) {
++                pdfPage.annotations[j].shouldDisplay = _enableAnnotationRendering;
++              } else {
++                pdfPage.annotations[j].readOnly = true;
++              }
+             }
++          }
+         }
+ 
+         if (_pdfDocument && ([changedProps containsObject:@"path"] || [changedProps containsObject:@"fitPolicy"] || [changedProps containsObject:@"minScale"] || [changedProps containsObject:@"maxScale"])) {
