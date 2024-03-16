@@ -1,5 +1,11 @@
 This file describes the reason for the patches applied.
 
+### react-native-pdf+6.4.0
+Created on **16/03/2024**
+
+#### Reason:
+- Make PDF annotations on iOS read-only to align with Android behavior.
+
 ### react-native-vision-camera+2.15.4
 Created on **24/07/2023** 
 FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
