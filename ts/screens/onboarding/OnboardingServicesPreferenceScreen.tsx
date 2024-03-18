@@ -140,7 +140,6 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     // the toast will be shown immediately without any updates
     if (prevProfile && !pot.isError(prevProfile) && pot.isError(profile)) {
       IOToast.error(I18n.t("global.genericError"));
-      AccessibilityInfo.announceForAccessibility(I18n.t("global.genericError"));
       return;
     }
 
@@ -155,11 +154,6 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
     ) {
       setModeSelected(profileServicePreferenceMode);
       IOToast.success(
-        profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
-          ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
-          : I18n.t("services.optIn.preferences.quickConfig.successAlert")
-      );
-      AccessibilityInfo.announceForAccessibility(
         profileServicePreferenceMode === ServicesPreferencesModeEnum.MANUAL
           ? I18n.t("services.optIn.preferences.manualConfig.successAlert")
           : I18n.t("services.optIn.preferences.quickConfig.successAlert")
