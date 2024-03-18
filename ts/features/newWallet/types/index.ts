@@ -1,26 +1,29 @@
 // Used to group the cards in the wallet.
-export type WalletCardCategory = "bonus" | "payment";
+export type WalletCardCategory = "itw" | "cgn" | "bonus" | "payment";
 
-// Here we have a basic type definition for a wallet card.
-// The card can have some base properties and some specific properties
-// depending on the card type.
+// Basic type definition for a wallet card, describes the properties that
+// each card MUST have in order to be placed inside the wallet.
 type WalletCardBase = {
   key: string;
-  label: string;
   category?: WalletCardCategory;
 };
 
-// A bonus card has an amount and an initiativeId
+// Specific type for ID Pay bonus cards
 export type WalletCardBonus = {
   type: "IDPAY";
-  amount: number;
-  initiativeId: string;
+  // TODO SIW-950 add types for ID Pay initiatives cards
 };
 
-// A payment card has a circuit
+// Specific type for CGN bonus cards
+export type WalletCardCgn = {
+  type: "CGN";
+  // TODO SIW-952 add types for CGN card
+};
+
+// Specific type for payment cards
 export type WalletCardPayment = {
   type: "PAYMENT";
-  circuit: string;
+  // TODO SIW-951 add types for payment cards
 };
 
 export type WalletCard = WalletCardBase & (WalletCardBonus | WalletCardPayment);
