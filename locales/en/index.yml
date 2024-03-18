@@ -2072,12 +2072,12 @@ serviceDetail:
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
   instructions:
-      unlockCode: codice di sblocco
+      unlockCode: unlock code
       unlockCodepPrefix: inserisci il
-      fingerprint: impronta
-      fingerprintPrefix: usa l'
-      faceId: volto
-      faceIdPrefix: usa il
+      fingerprint: fingerprint
+      fingerprintPrefix: use your
+      faceId: face
+      faceIdPrefix: use your
       congiunction: o
   title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
@@ -2094,9 +2094,9 @@ identification:
       title: Identification required
       sensorDescription: Login quickly
   fail:
-    remainingAttempts: Hai a disposizione ancora {{attempts}} tentativi
-    remainingAttemptSingle: Hai a disposizone ancora {{attempts}} tentativo
-    tooManyAttempts: Hai inserito troppe volte il codice sbagliato!
+    remainingAttempts: You have {{attempts}} attempts left
+    remainingAttemptSingle: You have {{attempts}} attempts left
+    tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:
     accessibility:
