@@ -187,18 +187,12 @@ const EmailValidationSendEmailScreen = () => {
       // send validation email KO
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
-        AccessibilityInfo.announceForAccessibility(
-          I18n.t("global.actions.retry")
-        );
         setShowCountdown(false);
         return;
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
         IOToast.success(I18n.t("email.newvalidate.toast"));
-        AccessibilityInfo.announceForAccessibility(
-          I18n.t("email.newvalidate.toast")
-        );
         setShowCountdown(true);
       }
     }
@@ -208,9 +202,6 @@ const EmailValidationSendEmailScreen = () => {
     if (isEmailValidated) {
       stopPollingSaga();
       setShowCountdown(false);
-      AccessibilityInfo.announceForAccessibility(
-        I18n.t("email.newvalidemail.title")
-      );
       // if the user has validated the email the polling can stop
       trackEmailValidationSuccess(flow);
     } else {

@@ -106,14 +106,6 @@ const CduEmailInsertScreen = () => {
             )
           })
         );
-        AccessibilityInfo.announceForAccessibility(
-          I18n.t("email.newinsert.alert.title", {
-            email: pipe(
-              optionEmail,
-              O.getOrElse(() => EMPTY_EMAIL)
-            )
-          })
-        );
       }
     } else {
       trackEmailDuplicateEditing(flow);
