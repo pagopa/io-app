@@ -794,9 +794,9 @@ email:
     label: Indirizzo email personale
     alert:
       title: "{{email}} è già in uso, inseriscine un’altra."
-      description1: email già in uso 
-      description2: inserisci un indirizzo diverso da quello attuale
-      description3: stai già usando questa email
+      description1: Email già in uso 
+      description2: Inserisci un indirizzo diverso da quello attuale
+      description3: Stai già usando questa email
       invalidemail: Inserisci un indirizzo email valido 
       modaltitle: Questa email è già in uso
       modaldescription: Può succedere se condividi lo stesso indirizzo con un familiare
