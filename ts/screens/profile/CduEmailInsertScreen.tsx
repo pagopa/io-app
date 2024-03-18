@@ -14,7 +14,7 @@ import React, {
   useState
 } from "react";
 import validator from "validator";
-import { AccessibilityInfo, Alert, Keyboard, View } from "react-native";
+import { Alert, Keyboard, View } from "react-native";
 import {
   VSpacer,
   H1,

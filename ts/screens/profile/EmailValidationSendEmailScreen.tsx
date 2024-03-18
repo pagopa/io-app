@@ -7,13 +7,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React, { useRef, useCallback, useEffect, useState } from "react";
 import { useHeaderHeight } from "@react-navigation/elements";
-import {
-  AccessibilityInfo,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  View
-} from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import {
   IOPictogramSizeScale,
   Pictogram,
