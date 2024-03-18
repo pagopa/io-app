@@ -557,14 +557,6 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
 </details>
 
 ## Design System
-The interface for the entire application was built using [NativeBase](https://docs-v2.nativebase.io/), a component library first developed for React Native. Although it was quite useful in the early stages, the significant API changes between `2.x` and `3.x` versions made upgrading the library very expensive. For this reason, we have been gradually rolling out a new library of custom components that utilizes React Native's latest APIs since Q1 2023.
+We have been gradually rolling out a new library of custom components since Q1 2023. This library utilizes React Native's latest APIs and replaces the legacy `native-base` (v2) library.
 
-The new library is available through the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) package.
-
-In the meantime, there are two complementary and simultaneous activities going on in the application:
-- The partial (or complete) rewriting of legacy screens to deprecate NativeBase and remove it from the codebase.
-- The gradual introduction of the new design system through the development of new screens or the adaptation of existing ones.
-
-You can keep track of the latest developments by filtering all the PRs according to the type of activity:
-
-[![NativeBase's dismissal label](https://img.shields.io/github/labels/pagopa/io-app/NativeBase%20dismissal%20%F0%9F%A5%B7%F0%9F%8F%BC)](https://github.com/pagopa/io-app/labels/NativeBase%20dismissal%20%F0%9F%A5%B7%F0%9F%8F%BC) [![Design System's label](https://img.shields.io/github/labels/pagopa/io-app/Design%20System)](https://github.com/pagopa/io-app/labels/Design%20System)
+You can access the new library through the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) package.
