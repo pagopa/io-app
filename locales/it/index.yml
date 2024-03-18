@@ -1215,10 +1215,11 @@ wallet:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
-    success:
-      title: "Il metodo è stato aggiunto"
-      continueButton: "Vedi dettagli"
-    failure:
+    outcome:
+      SUCCESS:
+        title: "Il metodo è stato aggiunto"
+        subtitle: ""
+        primaryAction: "Vedi dettagli"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
