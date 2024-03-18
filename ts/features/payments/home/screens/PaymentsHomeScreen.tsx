@@ -10,7 +10,7 @@ import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors"
 import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
 import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
 import { walletTransactionHistorySelector } from "../store/selectors";
-import { useTransactionHistory } from "../utils/transactionHistoryHandler";
+import { useTransactionHistory } from "../utils/useTransactionHistory";
 
 /* "rendering truth table" for both pots goes as such
  *          SOME | NONE

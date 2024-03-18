@@ -54,7 +54,10 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
 
   const renderMethods = isLoadingSection
     ? loadingCards
-    : methods.map(mapMethods);
+    : methods
+        .map(mapMethods)
+        .filter((item): item is PaymentCardSmallProps => item !== undefined) ??
+      loadingCards;
 
   return (
     <View style={IOStyles.horizontalContentPadding}>

@@ -11,7 +11,7 @@ import {
 } from "./PaymentCardSmall";
 
 export type PaymentCardsCarouselProps = WithTestID<{
-  cards: Array<PaymentCardSmallProps | undefined>;
+  cards: Array<PaymentCardSmallProps>;
 }>;
 
 const DIVIDER_WIDTH = 8;
@@ -36,10 +36,7 @@ export const PaymentCardsCarousel = ({
     ItemSeparatorComponent={() => <HSpacer size={DIVIDER_WIDTH} />}
     data={cards}
     style={style.list}
-    renderItem={({ item }) =>
-      // added check for ease of use with external map functions
-      item !== undefined && <PaymentCardSmall {...item} />
-    }
+    renderItem={({ item }) => <PaymentCardSmall {...item} />}
     getItemLayout={(_, index) => generateCardsLayout(cards.length)(index)}
     ListFooterComponent={() => <HSpacer size={48} />}
     showsHorizontalScrollIndicator={false}

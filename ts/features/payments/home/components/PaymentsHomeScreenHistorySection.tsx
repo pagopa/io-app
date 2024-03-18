@@ -10,7 +10,7 @@ import { View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { walletTransactionHistorySelector } from "../store/selectors";
-import { getHistoryList } from "./PaymentsHomeScreenHistoryList";
+import { getHistoryList } from "../utils/paymentsHomeScreenHistoryGenerator";
 
 const getLoadingHistory = () =>
   Array.from({ length: 5 }).map((_, index) => (
