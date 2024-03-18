@@ -1,4 +1,5 @@
 import { pipe } from "fp-ts/lib/function";
+import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { WalletCardCategory } from "../../types";
@@ -17,5 +18,10 @@ export const isWalletPaymentsRedirectBannerVisibleSelector = (
 export const selectWalletCards = (state: GlobalState) =>
   pipe(state, selectWalletFeature, wallet => Object.values(wallet.cards));
 
-export const selectWalletCardsByCategory = (category: WalletCardCategory) =>
-  createSelector(selectWalletFeature, wallet => wallet.cards[category]);
+export const getWalletCardsByCategorySelector = (
+  category: WalletCardCategory
+) =>
+  createSelector(
+    selectWalletCards,
+    cards => _.groupBy(cards, ({ category }) => category)[category]
+  );

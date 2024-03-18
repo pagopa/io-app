@@ -20,25 +20,17 @@ const reducer = (
     case getType(walletUpsertCard):
       return {
         ...state,
-        cards: {
-          ...state.cards,
-          [action.payload.key]: action.payload
-        }
+        [action.payload.key]: action.payload
       };
 
     case getType(walletAddCards): {
-      const updatedCards = action.payload.reduce(
+      return action.payload.reduce(
         (obj, card) => ({
           ...obj,
           [card.key]: card
         }),
-        state.cards
+        state
       );
-
-      return {
-        ...state,
-        cards: updatedCards
-      };
     }
 
     case getType(walletRemoveCard): {
