@@ -790,20 +790,20 @@ email:
   newinsert:
     header: "Configure IO"
     title: "What is your email address?"
-    subtitle: Servirà a inviarti comunicazioni come ricevute di pagamento o messaggi di assistenza.
+    subtitle: We will use it to send you communications such as payment receipts or support messages
     label: "Personal email address"
     alert:
-      title: "{{email}} è già in uso, inseriscine un’altra."
+      title: "{{email}} is already used, insert another one"
       description1: email address already in use
-      description2: inserisci un indirizzo diverso da quello attuale
-      description3: stai già usando questa email
-      invalidemail: Inserisci un indirizzo email valido
+      description2: Enter an email address different from your current one
+      description3: Already using this email address
+      invalidemail: Enter a valid email address
       modaltitle: This email address is already in use
       modaldescription: "This can happen if you share the same address with a family member"
       modalbutton: Use another email address
   edit:
     title: Edit email
-    subtitle: Ora stai usando
+    subtitle: Now you use
     validated: The email you inserted and validated is
     label: New personal email address
     cta: Edit email
@@ -823,9 +823,9 @@ email:
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
   newvalidate:
-    title: Ti abbiamo inviato un’email
-    subtitle: Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a
-    link: Non è corretto?
+    title: We have sent you an email
+    subtitle: To confirm your address, follow the instructions we have sent to
+    link: Isn't that right?
     buttonlabelsent: Email sent!    
     countdowntext: Request new email in 
     buttonlabelsentagain: Send email again
