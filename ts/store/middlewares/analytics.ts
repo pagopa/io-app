@@ -3,6 +3,7 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
+import { constVoid } from "fp-ts/lib/function";
 import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
@@ -112,7 +113,7 @@ import { trackServiceAction } from "./serviceAnalytics";
 const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
-  (action: Action): Promise<void | ReadonlyArray<null>> => {
+  (action: Action): void | ReadonlyArray<null> => {
     // eslint-disable-next-line sonarjs/max-switch-cases
     switch (action.type) {
       //
@@ -183,12 +184,11 @@ const trackAction =
         // Only in the former case we have a transaction and an amount.
         if (action.payload.kind === "COMPLETED") {
           const amount = action.payload.transaction?.amount.amount;
-          return mp
-            .track(action.type, {
-              amount,
-              kind: action.payload.kind
-            })
-            .then(_ => mp.trackCharge(amount ?? -1));
+          mp.track(action.type, {
+            amount,
+            kind: action.payload.kind
+          });
+          return mp.getPeople().trackCharge(amount ?? -1, {});
         } else {
           return mp.track(action.type, {
             kind: action.payload.kind
@@ -371,7 +371,7 @@ const trackAction =
           reason: action.payload.error.message
         });
     }
-    return Promise.resolve();
+    return constVoid();
   };
 
 /*

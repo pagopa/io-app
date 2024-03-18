@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { constVoid } from "fp-ts/lib/function";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
 import { getNetworkErrorMessage } from "../../../../utils/errors";
@@ -31,7 +32,7 @@ import { cgnCategories } from "../store/actions/categories";
 const trackCgnAction =
   (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(cgnActivationStart):
       case getType(cgnRequestActivation):
@@ -86,7 +87,7 @@ const trackCgnAction =
           reason: action.payload
         });
     }
-    return Promise.resolve();
+    return constVoid();
   };
 
 export default trackCgnAction;

@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { constVoid } from "fp-ts/lib/function";
 import { mixpanel, mixpanelTrack } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 import {
@@ -20,7 +21,7 @@ export const trackFciDocOpening = (
   total_doc_count: number,
   environment: string
 ) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_DOC_OPENING",
     buildEventProperties("UX", "action", {
       expire_date,
@@ -34,7 +35,7 @@ export const trackFciUserExit = (
   environment: string,
   cta_id?: string
 ) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_USER_EXIT",
     buildEventProperties("UX", "exit", {
       screen_name,
@@ -44,7 +45,7 @@ export const trackFciUserExit = (
   );
 
 export const trackFciUxConversion = (environment: string) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_UX_CONVERSION",
     buildEventProperties("UX", "action", {
       environment
@@ -52,7 +53,7 @@ export const trackFciUxConversion = (environment: string) =>
   );
 
 export const trackFciUserDataConfirmed = (environment: string) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_USER_DATA_CONFIRMED",
     buildEventProperties("UX", "action", { environment })
   );
@@ -63,7 +64,7 @@ export const trackFciDocOpeningSuccess = (
   optional_sign_count: number,
   environment: string
 ) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_DOC_OPENING_SUCCESS",
     buildEventProperties("UX", "control", {
       doc_count,
@@ -74,13 +75,13 @@ export const trackFciDocOpeningSuccess = (
   );
 
 export const trackFciSigningDoc = (environment: string) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_SIGNING_DOC",
     buildEventProperties("UX", "action", { environment })
   );
 
 export const trackFciShowSignatureFields = (environment: string) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_SHOW_SIGNATURE_FIELDS",
     buildEventProperties("UX", "micro_action", { environment })
   );
@@ -91,7 +92,7 @@ export const trackFciUxSuccess = (
   optional_signed_count: number,
   environment: string
 ) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_UX_SUCCESS",
     buildEventProperties("UX", "screen_view", {
       doc_signed_count,
@@ -102,14 +103,14 @@ export const trackFciUxSuccess = (
   );
 
 export const trackFciStartSignature = (environment: string) =>
-  void mixpanelTrack(
+  mixpanelTrack(
     "FCI_START_SIGNATURE",
     buildEventProperties("UX", "action", { environment })
   );
 
 const trackFciAction =
   (mp: NonNullable<typeof mixpanel>, environment: string) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(fciStartRequest):
       case getType(fciSignatureRequestFromId.request):
@@ -146,7 +147,7 @@ const trackFciAction =
           })
         );
     }
-    return Promise.resolve();
+    return constVoid();
   };
 
 export default trackFciAction;

@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { constVoid } from "fp-ts/lib/function";
 import { CoBadgeServices } from "../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { CobadgeResponse } from "../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { ExecutionStatusEnum } from "../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
@@ -19,7 +20,7 @@ import {
 
 export const trackCoBadgeAction =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(walletAddCoBadgeStart):
         return mp.track(action.type, {
@@ -55,7 +56,7 @@ export const trackCoBadgeAction =
       case getType(sendAddCobadgeMessage):
         return mp.track(action.type, { canAdd: action.payload });
     }
-    return Promise.resolve();
+    return constVoid();
   };
 
 /**
