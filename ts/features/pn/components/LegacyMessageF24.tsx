@@ -11,7 +11,7 @@ import { trackPNShowF24 } from "../analytics";
 import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessageId } from "../../messages/types";
-import { MessageAttachments } from "./MessageAttachments";
+import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 
 type Props = {
@@ -29,7 +29,7 @@ const MessageF24Content = ({ attachments, messageId, openPreview }: Props) => {
 
   if (attachments.length === 1) {
     return (
-      <MessageAttachments
+      <LegacyMessageAttachments
         testID="f24-list-container"
         attachments={attachments.slice(0, 1)}
         downloadAttachmentBeforePreview={true}

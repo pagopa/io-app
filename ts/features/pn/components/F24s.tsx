@@ -1,10 +1,5 @@
 import * as React from "react";
-import {
-  Body,
-  ButtonLink,
-  ListItemHeader,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
@@ -12,6 +7,7 @@ import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thir
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { F24sWithBottomSheet } from "./F24sWithBottomSheet";
 
 type F24sProps = {
   isCancelled?: boolean;
@@ -54,11 +50,7 @@ export const F24s = ({
         />
       )}
       {f24Count > 1 && (
-        <ButtonLink
-          onPress={() => undefined}
-          label={I18n.t("features.pn.details.f24Section.showAll")}
-          accessibilityLabel={I18n.t("features.pn.details.f24Section.showAll")}
-        />
+        <F24sWithBottomSheet f24List={f24s} messageId={messageId} />
       )}
       <VSpacer />
     </>

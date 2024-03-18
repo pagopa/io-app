@@ -1,0 +1,54 @@
+import * as React from "react";
+import { createStore } from "redux";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
+import { appReducer } from "../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { F24sWithBottomSheet } from "../F24sWithBottomSheet";
+import { UIMessageId } from "../../../messages/types";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+
+const numberToThirdPartyAttachment = (index: number) =>
+  ({
+    id: `${index}`,
+    url: `https://domain.url/doc${index}.pdf`
+  } as ThirdPartyAttachment);
+
+describe("F24sWithBottomSheet", () => {
+  it("should be snapshot for an 0 items F24 list", () => {
+    const zeroF24List = [] as ReadonlyArray<ThirdPartyAttachment>;
+    const component = renderComponent(zeroF24List);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should be snapshot for an 1 item F24 list", () => {
+    const oneF24List = [...Array(1).keys()].map(numberToThirdPartyAttachment);
+    const component = renderComponent(oneF24List);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should be snapshot for a 10 items F24 list", () => {
+    const oneF24List = [...Array(10).keys()].map(numberToThirdPartyAttachment);
+    const component = renderComponent(oneF24List);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+});
+
+const renderComponent = (f24List: ReadonlyArray<ThirdPartyAttachment>) => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const designSystemState = appReducer(
+    initialState,
+    preferencesDesignSystemSetEnabled({ isDesignSystemEnabled: true })
+  );
+  const store = createStore(appReducer, designSystemState as any);
+
+  return renderScreenWithNavigationStoreContext(
+    () => (
+      <F24sWithBottomSheet
+        f24List={f24List}
+        messageId={"01HS94671EXDWDESDJB3NCBYPM" as UIMessageId}
+      />
+    ),
+    "DUMMY",
+    {},
+    store
+  );
+};
