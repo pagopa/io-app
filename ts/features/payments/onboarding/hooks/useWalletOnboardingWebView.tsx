@@ -1,123 +1,116 @@
-import * as React from "react";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import {
-  WebViewErrorEvent,
-  WebViewHttpErrorEvent
-} from "react-native-webview/lib/WebViewTypes";
-
-import { OnboardingOutcomeFailure, OnboardingOutcomeSuccess } from "../types";
-import { NetworkError } from "../../../../utils/errors";
-import { WalletCreateResponse } from "../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletOnboardingStartupSelector } from "../store";
 import { walletStartOnboarding } from "../store/actions";
 import {
-  ONBOARDING_CALLBACK_URL_SCHEMA,
-  extractOnboardingResult
-} from "../utils";
+  WalletOnboardingOutcome,
+  WalletOnboardingOutcomeEnum
+} from "../types/OnboardingOutcomeEnum";
+import { ONBOARDING_CALLBACK_URL_SCHEMA } from "../utils";
 
-/**
- * Function that extracts the uri to be loaded in the webview from the onboarding startup result pot
- */
-const extractOnboardingWebViewUri = (
-  onboardingStartupResult: pot.Pot<WalletCreateResponse, NetworkError>
-) =>
-  pot.getOrElse(
-    pot.map(onboardingStartupResult, result => encodeURI(result.redirectUrl)),
-    ""
-  );
-
-export type WalletOnboardingWebViewProps = {
-  onSuccess?: (outcome: OnboardingOutcomeSuccess, walletId: string) => void;
-  onFailure?: (outcome: OnboardingOutcomeFailure) => void;
-  onError?: (
-    error?: WebViewErrorEvent | WebViewHttpErrorEvent | NetworkError
+type WalletOnboardingWebViewProps = {
+  onOnboardingOutcome: (
+    outcome: WalletOnboardingOutcome,
+    walletId?: string
   ) => void;
-  onDismiss?: () => void;
+};
+
+export type WalletOnboardingWebView = {
+  isLoading: boolean;
+  isError: boolean;
+  isPendingOnboarding: boolean;
+  startOnboarding: (paymentMethodId: string) => void;
 };
 
 /**
  * This hook handles the onboarding webview flow and returns a function to start the onboarding
- * @param onSuccess callback called when the onboarding is successful
- * @param onFailure callback called when the onboarding is failed
- * @param onError callback called when an error occurs
+ * @param onOnboardingOutcome callback called when the onboarding flow is completed
  */
-export const useWalletOnboardingWebView = (
-  props: WalletOnboardingWebViewProps
-) => {
-  const { onSuccess, onError, onFailure, onDismiss } = props;
-  const [isLoadingWebView, setIsLoadingWebView] = React.useState(false);
-  const onboardingStartupResult = useIOSelector(
-    walletOnboardingStartupSelector
-  );
+export const useWalletOnboardingWebView = ({
+  onOnboardingOutcome
+}: WalletOnboardingWebViewProps): WalletOnboardingWebView => {
   const dispatch = useIODispatch();
 
-  const handleResultOnboarding = React.useCallback(
-    (url: string) => {
-      pipe(
-        url,
-        extractOnboardingResult,
-        O.fromNullable,
-        O.map(result => {
-          if (result.status === "SUCCESS") {
-            onSuccess?.(
-              result.outcome as OnboardingOutcomeSuccess,
-              result.walletId
-            );
-          } else if (result.status === "FAILURE") {
-            onFailure?.(result.outcome as OnboardingOutcomeFailure);
-          }
-        })
+  const onboardingUrlPot = useIOSelector(walletOnboardingStartupSelector);
+
+  const [isPendingOnboarding, setIsPendingOnboarding] =
+    React.useState<boolean>(false);
+  const isLoading = pot.isLoading(onboardingUrlPot);
+  const isError = pot.isError(onboardingUrlPot);
+
+  const handleOnboardingResult = React.useCallback(
+    (resultUrl: string) => {
+      const url = new URLParse(resultUrl, true);
+
+      const outcome = pipe(
+        url.query.outcome,
+        WalletOnboardingOutcome.decode,
+        E.getOrElse(() => WalletOnboardingOutcomeEnum.GENERIC_ERROR)
       );
+
+      onOnboardingOutcome(outcome, url.query.walletId);
     },
-    [onSuccess, onFailure]
+    [onOnboardingOutcome]
   );
 
-  const openOnboardingWebView = React.useCallback(async () => {
-    try {
-      const resultUrl = await openAuthenticationSession(
-        extractOnboardingWebViewUri(onboardingStartupResult),
-        ONBOARDING_CALLBACK_URL_SCHEMA
-      );
-      handleResultOnboarding(resultUrl);
-    } catch (err) {
-      onDismiss?.();
-    } finally {
-      setIsLoadingWebView(false);
+  React.useEffect(() => {
+    if (isPendingOnboarding) {
+      return;
     }
-  }, [onboardingStartupResult, handleResultOnboarding, onDismiss]);
+
+    void pipe(
+      onboardingUrlPot,
+      pot.toOption,
+      TE.fromOption(() => undefined),
+      TE.chain(({ redirectUrl }) =>
+        TE.tryCatch(
+          () => {
+            setIsPendingOnboarding(true);
+            return openAuthenticationSession(
+              redirectUrl,
+              ONBOARDING_CALLBACK_URL_SCHEMA
+            );
+          },
+          () => {
+            onOnboardingOutcome(WalletOnboardingOutcomeEnum.CANCELED_BY_USER);
+          }
+        )
+      ),
+      TE.map(handleOnboardingResult)
+    )();
+  }, [
+    isError,
+    isLoading,
+    isPendingOnboarding,
+    onboardingUrlPot,
+    handleOnboardingResult,
+    onOnboardingOutcome,
+    dispatch
+  ]);
 
   React.useEffect(
     () => () => {
+      setIsPendingOnboarding(false);
       dispatch(walletStartOnboarding.cancel());
     },
     [dispatch]
   );
 
-  React.useEffect(() => {
-    if (pot.isError(onboardingStartupResult) && onError) {
-      onError(onboardingStartupResult.error);
-    }
-    if (
-      !pot.isError(onboardingStartupResult) &&
-      !pot.isLoading(onboardingStartupResult)
-    ) {
-      void openOnboardingWebView();
-    }
-  }, [onboardingStartupResult, openOnboardingWebView, onError]);
-
   const startOnboarding = (paymentMethodId: string) => {
-    if (!pot.isLoading(onboardingStartupResult) && !isLoadingWebView) {
-      setIsLoadingWebView(true);
-      dispatch(walletStartOnboarding.request({ paymentMethodId }));
-    }
+    setIsPendingOnboarding(false);
+    dispatch(walletStartOnboarding.request({ paymentMethodId }));
   };
 
   return {
     startOnboarding,
-    isLoadingWebView
+    isLoading,
+    isError,
+    isPendingOnboarding
   };
 };
