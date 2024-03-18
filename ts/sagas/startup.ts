@@ -95,6 +95,7 @@ import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
+import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import {
   clearKeychainError,
   keychainError
@@ -468,6 +469,9 @@ export function* initializeApplicationSaga(
   // TODO: REMOVE AFTER FIXING https://pagopa.atlassian.net/jira/software/c/projects/IABT/boards/92?modal=detail&selectedIssue=IABT-1441
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
+
+  // track if the Android device has StrongBox
+  yield* call(handleIsKeyStrongboxBacked, keyInfo.keyTag);
 
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
