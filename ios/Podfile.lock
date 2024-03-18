@@ -110,6 +110,12 @@ PODS:
     - React
   - libevent (2.1.12)
   - Mixpanel (3.6.5)
+  - Mixpanel-swift (4.2.0):
+    - Mixpanel-swift/Complete (= 4.2.0)
+  - Mixpanel-swift/Complete (4.2.0)
+  - MixpanelReactNative (2.4.1):
+    - Mixpanel-swift (= 4.2.0)
+    - React-Core
   - MLImage (1.0.0-beta4)
   - MLKitBarcodeScanning (3.0.0):
     - MLKitCommon (~> 9.0)
@@ -617,6 +623,7 @@ DEPENDENCIES:
   - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
+  - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
@@ -716,6 +723,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - libevent
     - Mixpanel
+    - Mixpanel-swift
     - MLImage
     - MLKitBarcodeScanning
     - MLKitCommon
@@ -755,6 +763,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
+  MixpanelReactNative:
+    :path: "../node_modules/mixpanel-react-native"
   pagopa-io-react-native-crypto:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-http-client:
@@ -933,6 +943,8 @@ SPEC CHECKSUMS:
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Mixpanel: de8296d8568806ab17bfced0f823c908b808e1e0
+  Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
+  MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
   MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
