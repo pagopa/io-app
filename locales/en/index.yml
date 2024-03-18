@@ -1206,10 +1206,11 @@ wallet:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
     generalError: "There was a generic error while adding the payment method"
-    success:
-      title: "Payment method added successfully!"
-      continueButton: "Vedi dettagli"
-    failure:
+    outcome:
+      SUCCESS:
+        title: "Payment method added successfully!"
+        subtitle: ""
+        primaryAction: "Vedi dettagli"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
