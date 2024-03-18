@@ -2,7 +2,6 @@
 
 exports[`Test LoadingComponent component should render a LoadingComponent component with props correctly 1`] = `
 <RCTSafeAreaView
-  emulateUnlessSupported={true}
   style={
     Object {
       "alignItems": "center",

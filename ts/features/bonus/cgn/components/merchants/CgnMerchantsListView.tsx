@@ -43,7 +43,7 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
         keyExtractor={c => c.id}
         keyboardShouldPersistTaps={"handled"}
         ListFooterComponent={
-          props.merchantList.length > 0 && <EdgeBorderComponent />
+          props.merchantList.length > 0 ? <EdgeBorderComponent /> : null
         }
       />
     </View>

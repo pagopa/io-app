@@ -43,7 +43,8 @@ const storyOrder = new Map<JiraIssueType, number>([
 const projectToScope = new Map<string, string>([
   ["IOAPPX", "Cross"],
   ["SFEQS", "Firma con IO"],
-  ["IODPAY", "IDPay"]
+  ["IODPAY", "IDPay"],
+  ["SIW", "IT Wallet"]
 ]);
 
 /**
