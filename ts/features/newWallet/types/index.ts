@@ -5,7 +5,7 @@ export type WalletCardCategory = "itw" | "cgn" | "bonus" | "payment";
 // each card MUST have in order to be placed inside the wallet.
 type WalletCardBase = {
   key: string;
-  category?: WalletCardCategory;
+  category: WalletCardCategory;
 };
 
 // Specific type for ID Pay bonus cards
