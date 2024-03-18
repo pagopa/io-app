@@ -80,13 +80,15 @@ export const TransactionsList = (props: Props) => {
     !areMoreTransactionsAvailable &&
     ListEmptyComponent !== undefined;
 
-  const footerListComponent = (transactions: ReadonlyArray<Transaction>) => {
+  const footerListComponent = (
+    transactions: ReadonlyArray<Transaction>
+  ): React.ComponentProps<typeof FlatList>["ListFooterComponent"] => {
     if (!areMoreTransactionsAvailable) {
-      return transactions.length > 0 && <EdgeBorderComponent />;
+      return transactions.length > 0 ? <EdgeBorderComponent /> : null;
     }
 
     return (
-      <View>
+      <>
         <ButtonDefaultOpacity
           style={styles.moreButton}
           bordered={true}
@@ -106,7 +108,7 @@ export const TransactionsList = (props: Props) => {
           </NBButtonText>
         </ButtonDefaultOpacity>
         <EdgeBorderComponent />
-      </View>
+      </>
     );
   };
 
