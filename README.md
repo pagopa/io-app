@@ -557,6 +557,6 @@ The application is able to manage _deep links_. [Deep linking](https://reactnavi
 </details>
 
 ## Design System
-We have been gradually rolling out a new library of custom components since Q1 2023. This library utilizes React Native's latest APIs and replaces the legacy `native-base` (v2) library.
+We have been gradually rolling out a new library of custom components since Q1 2023. This library uses the latest React Native APIs and replaces the legacy `native-base' library, which was stuck at `v2.x'.
 
 You can access the new library through the external [`io-app-design-system`](https://github.com/pagopa/io-app-design-system/) package.
