@@ -1,6 +1,6 @@
-import { fetchTransactionsRequestWithExpBackoff } from "../../../../store/actions/wallet/transactions";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { getTransactionsLoadedLength } from "../../../../store/reducers/wallet/transactions";
+import { fetchTransactionsRequestWithExpBackoff } from "../../../../../store/actions/wallet/transactions";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { getTransactionsLoadedLength } from "../../../../../store/reducers/wallet/transactions";
 
 export const useTransactionHistory = () => {
   const dispatch = useIODispatch();
