@@ -3,7 +3,6 @@ import { Action } from "../../../../store/actions/types";
 import { WalletCard } from "../../types";
 import {
   walletAddCards,
-  walletRemoveCard,
   walletRemoveCards,
   walletUpsertCard
 } from "../actions/cards";
@@ -31,11 +30,6 @@ const reducer = (
         }),
         state
       );
-    }
-
-    case getType(walletRemoveCard): {
-      const { [action.payload]: WalletCard, ...cards } = state;
-      return cards;
     }
 
     case getType(walletRemoveCards): {

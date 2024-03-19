@@ -4,7 +4,6 @@ import { appReducer } from "../../../../store/reducers";
 import { WalletCard } from "../../types";
 import {
   walletAddCards,
-  walletRemoveCard,
   walletRemoveCards,
   walletUpsertCard
 } from "../actions/cards";
@@ -78,7 +77,7 @@ describe("Wallet store", () => {
       });
     });
 
-    it("should remove a specific card from the store", () => {
+    it("should add a card in the store if not present another with the same key", () => {
       const globalState = appReducer(
         undefined,
         applicationChangeState("active")
@@ -87,23 +86,21 @@ describe("Wallet store", () => {
 
       const store = createStore(appReducer, globalState as any);
 
-      store.dispatch(walletAddCards([T_CARD_1, T_CARD_2, T_CARD_3]));
+      store.dispatch(walletAddCards([T_CARD_1]));
 
       expect(store.getState().features.wallet.cards).toStrictEqual({
-        [T_CARD_1.key]: T_CARD_1,
-        [T_CARD_2.key]: T_CARD_2,
-        [T_CARD_3.key]: T_CARD_3
+        [T_CARD_1.key]: T_CARD_1
       });
 
-      store.dispatch(walletRemoveCard(T_CARD_2.key));
+      store.dispatch(walletUpsertCard(T_CARD_2));
 
       expect(store.getState().features.wallet.cards).toStrictEqual({
         [T_CARD_1.key]: T_CARD_1,
-        [T_CARD_3.key]: T_CARD_3
+        [T_CARD_2.key]: T_CARD_2
       });
     });
 
-    it("should remove multiple cards from the store", () => {
+    it("should remove cards from the store", () => {
       const globalState = appReducer(
         undefined,
         applicationChangeState("active")
