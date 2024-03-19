@@ -1,8 +1,3 @@
-import * as React from "react";
-import { StyleSheet, Pressable, SafeAreaView, View, Text } from "react-native";
-import { connect } from "react-redux";
-import { useState } from "react";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import {
   HSpacer,
   IOColors,
@@ -10,13 +5,18 @@ import {
   hexToRgba,
   makeFontStyleObject
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { useState } from "react";
+import { Pressable, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
+import { connect } from "react-redux";
 import { ReduxProps } from "../store/actions/types";
+import { useIOSelector } from "../store/hooks";
 import { currentRouteSelector } from "../store/reducers/navigation";
+import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import { GlobalState } from "../store/reducers/types";
 import { getAppVersion } from "../utils/appVersion";
 import { clipboardSetStringWithFeedback } from "../utils/clipboard";
-import { useIOSelector } from "../store/hooks";
-import { isPagoPATestEnabledSelector } from "../store/reducers/persistedPreferences";
 import PagoPATestIndicator from "./PagoPATestIndicator";
 
 type Props = ReturnType<typeof mapStateToProps> & ReduxProps;
@@ -27,6 +27,7 @@ const debugItemBorderColor = hexToRgba(IOColors.black, 0.1);
 const styles = StyleSheet.create({
   versionContainer: {
     ...StyleSheet.absoluteFillObject,
+    top: -8,
     justifyContent: "flex-start",
     alignItems: "center",
     zIndex: 1000

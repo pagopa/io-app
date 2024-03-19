@@ -1,24 +1,24 @@
-import React from "react";
-import { ScrollView } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
-import * as SEP from "fp-ts/lib/Separated";
 import {
   ContentWrapper,
   IOStyles,
   Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as SEP from "fp-ts/lib/Separated";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
-import { PNMessage } from "../store/types/types";
-import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
 import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/MessageDetailsTagBox";
+import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
+import { PNMessage } from "../store/types/types";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 
 type MessageDetailsProps = {
