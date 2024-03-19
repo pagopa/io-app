@@ -25,7 +25,6 @@ import {
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
 import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView";
-import { OnboardingOutcomeEnum, OnboardingResult } from "../types";
 
 const WalletOnboardingSelectPaymentMethodScreen = () => {
   const navigation = useNavigation<WalletOnboardingStackNavigation>();
@@ -36,6 +35,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
   const paymentMethodsPot = useIOSelector(
     walletOnboardingPaymentMethodsSelector
   );
+
   const availablePaymentMethods = pipe(
     pot.getOrElse(
       pot.map(paymentMethodsPot, el => el.paymentMethods),
@@ -46,17 +46,18 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
     O.getOrElseW(() => [])
   );
 
-  const { startOnboarding, isLoadingWebView } = useWalletOnboardingWebView({
-    onSuccess: (outcome, walletId) =>
-      navigateToFeedbackPage({ status: "SUCCESS", outcome, walletId }),
-    onFailure: outcome =>
-      navigateToFeedbackPage({ status: "FAILURE", outcome }),
-    onError: () =>
-      navigateToFeedbackPage({
-        status: "ERROR",
-        outcome: OnboardingOutcomeEnum.GENERIC_ERROR
-      })
-  });
+  const { startOnboarding, isLoading, isPendingOnboarding } =
+    useWalletOnboardingWebView({
+      onOnboardingOutcome: (outcome, walletId) => {
+        navigation.replace(
+          WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK,
+          {
+            outcome,
+            walletId
+          }
+        );
+      }
+    });
 
   useOnFirstRender(() => {
     dispatch(walletGetPaymentMethods.request());
@@ -66,15 +67,6 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
     selectedPaymentMethod: PaymentMethodResponse
   ) => {
     startOnboarding(selectedPaymentMethod.id);
-  };
-
-  const navigateToFeedbackPage = (onboardingResult: OnboardingResult) => {
-    navigation.navigate(
-      WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK,
-      {
-        onboardingResult
-      }
-    );
   };
 
   return (
@@ -97,7 +89,7 @@ const WalletOnboardingSelectPaymentMethodScreen = () => {
             isLoadingMethods={isLoadingPaymentMethods}
             onSelectPaymentMethod={handleSelectedPaymentMethod}
             paymentMethods={availablePaymentMethods}
-            isLoadingWebView={isLoadingWebView}
+            isLoadingWebView={isLoading || isPendingOnboarding}
           />
         </SafeAreaView>
       )}
