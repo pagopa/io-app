@@ -4,7 +4,7 @@ This file describes the reason for the patches applied.
 Created on **16/03/2024**
 
 #### Reason:
-- Make PDF annotations on iOS read-only to align with Android behavior.
+- Make PDF annotations on iOS read-only to align with Android behaviour.
 
 ### react-native-vision-camera+2.15.4
 Created on **24/07/2023** 
