@@ -239,6 +239,7 @@ export const LabelledItem: React.FC<Props> = ({
               editable={props.inputProps?.disabled}
               placeholderTextColor={placeholderTextColor}
               inputAccessoryViewID={props.inputAccessoryViewID}
+              style={{ flexGrow: 1, paddingVertical: 8 }}
             />
           )}
 
