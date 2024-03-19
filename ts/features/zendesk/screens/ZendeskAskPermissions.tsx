@@ -1,4 +1,5 @@
 import {
+  Divider,
   FooterWithButtons,
   IOColors,
   IOIconSizeScale,
@@ -348,11 +349,15 @@ const ZendeskAskPermissions = () => {
             <VSpacer size={8} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
-            {items.map((item, idx) => (
-              <ZendeskItemPermissionComponent
-                key={`permission_item_${idx}`}
-                {...item}
-              />
+            {/* TODO: Replace this chunk with `FlatList` to avoid manual control on Divider */}
+            {items.map((item, idx, arr) => (
+              <>
+                <ZendeskItemPermissionComponent
+                  key={`permission_item_${idx}`}
+                  {...item}
+                />
+                {idx !== arr.length - 1 && <Divider />}
+              </>
             ))}
           </View>
         </ScrollView>
