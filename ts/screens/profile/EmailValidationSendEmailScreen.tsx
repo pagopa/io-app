@@ -76,7 +76,7 @@ const EmailValidationSendEmailScreen = () => {
   const props =
     useRoute<
       Route<
-        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
+        "ONBOARDING_EMAIL_VERIFICATION_SCREEN" | "EMAIL_VERIFICATION_SCREEN",
         SendEmailValidationScreenProp
       >
     >().params;
