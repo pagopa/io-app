@@ -140,7 +140,6 @@ const EmailValidationSendEmailScreen = () => {
   const handleContinue = () => {
     if (isEmailValidated) {
       trackEmailValidationSuccessConfirmed(flow);
-      stopPollingSaga();
       if (isOnboarding) {
         // if the user is in the onboarding flow and the email is correctly validated,
         // the email validation flow is finished
@@ -169,7 +168,6 @@ const EmailValidationSendEmailScreen = () => {
 
   const navigateToInsertEmail = () => {
     dispatchAcknowledgeOnEmailValidation(O.none);
-    stopPollingSaga();
     navigation.goBack();
   };
 
@@ -194,7 +192,6 @@ const EmailValidationSendEmailScreen = () => {
 
   useEffect(() => {
     if (isEmailValidated) {
-      stopPollingSaga();
       setShowCountdown(false);
       // if the user has validated the email the polling can stop
       trackEmailValidationSuccess(flow);
@@ -204,7 +201,9 @@ const EmailValidationSendEmailScreen = () => {
 
     return () => {
       // if the user change screen the polling can stop
-      stopPollingSaga();
+      if (!isEmailValidated) {
+        stopPollingSaga();
+      }
     };
   }, [flow, isEmailValidated, stopPollingSaga]);
 

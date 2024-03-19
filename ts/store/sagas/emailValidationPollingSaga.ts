@@ -14,7 +14,6 @@ const GET_PROFILE_POLLING_INTERVAL = 5000 as Millisecond;
 function* emailValidationPollingLoop() {
   // eslint-disable-next-line functional/no-let
   let profilePollingIsRunning = true;
-  //   yield* put(emailValidationPollingStart());
 
   while (profilePollingIsRunning) {
     yield* call(startTimer, GET_PROFILE_POLLING_INTERVAL);
