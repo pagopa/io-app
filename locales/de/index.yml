@@ -247,7 +247,7 @@ permissionRationale:
   torch:
     title: "Zugriff auf die Kamera gewähren"
     message: "Wir brauchen Zugang zur Kamera, um die Taschenlampenfunktion zu benutzen."
-startup:  
+startup:
   authentication: "Benutzer authentifiziert"
   sessionInfo: "SPID-Attribute geladen"
   profileInfo: "Benutzerprofil geladen"
@@ -556,8 +556,8 @@ authentication:
     card2-title: "Verwende deine bevorzugten Zahlungsmethoden"
     card2-content: "Du kannst eine Steuer oder eine Strafe über dein Bankkonto oder mit deiner Bankkarte bezahlen"
     card3-title: "Bezahle schnell eine Aufforderung in Papierform"
-    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"    
-    card5-title: "Willkommen in IO!" 
+    card3-content: "Durch das Scannen des QR-Codes kannst du schnell und einfach eine Zahlungsaufforderung in Papierform bezahlen"
+    card5-title: "Willkommen in IO!"
     card5-content: "Lass uns gemeinsam herausfinden, was du machen kannst"
     card5-content-accessibility: "Wähle das vorherige Element, um einen Chat mit dem IO-Team zu beginnen, wenn etwas nicht so funktioniert, wie es sollte."
     expiredCardTitle: "Karte abgelaufen oder nicht mehr gültig"
@@ -1159,10 +1159,11 @@ wallet:
             title: "Ich weiß es nicht"
             description: "Wir durchsuchen alle auf deinem Namen lautenden Karten bei den am Dienst teilnehmenden Banken"
     generalError: "Beim Hinzufügen der Zahlungsmethode trat ein allgemeiner Fehler auf"
-    success:
-      title: "Die Karte wurde hinzugefügt!"
-      continueButton: "Weiter"
-    failure:
+    outcome:
+      SUCCESS:
+        title: "Die Karte wurde hinzugefügt!"
+        subtitle: ""
+        primaryAction: "Weiter"
       GENERIC_ERROR:
         title: "Es ist ein unerwarteter Fehler aufgetreten"
         subtitle: "Versuche es erneut oder kontaktiere den Support"
