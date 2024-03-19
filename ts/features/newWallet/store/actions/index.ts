@@ -1,3 +1,4 @@
+import { WalletCardsActions } from "./cards";
 import { WalletPreferencesActions } from "./preferences";
 
-export type WalletActions = WalletPreferencesActions;
+export type WalletActions = WalletCardsActions | WalletPreferencesActions;
