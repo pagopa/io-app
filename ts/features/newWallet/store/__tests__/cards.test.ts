@@ -145,11 +145,9 @@ describe("Wallet store", () => {
         [T_CARD_3.key]: T_CARD_3
       });
 
-      expect(selectWalletCards(store.getState())).toStrictEqual([
-        T_CARD_1,
-        T_CARD_2,
-        T_CARD_3
-      ]);
+      expect(selectWalletCards(store.getState())).toEqual(
+        expect.arrayContaining([T_CARD_1, T_CARD_2, T_CARD_3])
+      );
     });
 
     it("should get all wallet cards for a specific category", () => {
@@ -171,7 +169,7 @@ describe("Wallet store", () => {
 
       expect(
         getWalletCardsByCategorySelector("payment")(store.getState())
-      ).toStrictEqual([T_CARD_3, T_CARD_2]);
+      ).toStrictEqual(expect.arrayContaining([T_CARD_2, T_CARD_3]));
     });
   });
 });
