@@ -22,6 +22,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
+import _ from "lodash";
 import I18n from "../../i18n";
 
 import {
@@ -83,11 +84,8 @@ const EmailValidationSendEmailScreen = () => {
   const headerHeight = useHeaderHeight();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const optionEmail = useIOSelector(
-    profileEmailSelector,
-    (l, r) =>
-      (O.isNone(l) && O.isNone(r)) ||
-      (O.isSome(l) && O.isSome(r) && l.value === r.value)
+  const optionEmail = useIOSelector(profileEmailSelector, (l, r) =>
+    _.isEqual(l, r)
   );
   const isEmailValidated = useIOSelector(isEmailValidatedSelector);
   const emailValidation = useIOSelector(emailValidationSelector);
