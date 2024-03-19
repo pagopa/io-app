@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
-import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 import I18n from "../../i18n";
 import {
   hasProfileEmailSelector,
@@ -28,7 +27,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 const ProfileDataScreen: React.FC<Props> = ({
   profileEmail,
   isEmailValidated,
-  // isEmailUniquenessValidationEnabled,
   hasProfileEmail,
   nameSurname
 }): React.ReactElement => {
@@ -92,9 +90,7 @@ const mapStateToProps = (state: GlobalState) => ({
   profileEmail: profileEmailSelector(state),
   isEmailValidated: isProfileEmailValidatedSelector(state),
   hasProfileEmail: hasProfileEmailSelector(state),
-  nameSurname: profileNameSurnameSelector(state),
-  isEmailUniquenessValidationEnabled:
-    isEmailUniquenessValidationEnabledSelector(state)
+  nameSurname: profileNameSurnameSelector(state)
 });
 
 export default connect(mapStateToProps)(ProfileDataScreen);

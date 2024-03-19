@@ -54,7 +54,7 @@ import ROUTES from "../../navigation/routes";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 
-export type CduEmailInsertScreenNavigationParams = Readonly<{
+export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
 }>;
 
@@ -68,12 +68,12 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
 /**
  * A screen to allow user to insert an email address.
  */
-const CduEmailInsertScreen = () => {
+const EmailInsertScreen = () => {
   const { isOnboarding } =
     useRoute<
       Route<
         "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
-        CduEmailInsertScreenNavigationParams
+        EmailInsertScreenNavigationParams
       >
     >().params;
   const navigation = useIONavigation();
@@ -417,4 +417,4 @@ const CduEmailInsertScreen = () => {
   );
 };
 
-export default CduEmailInsertScreen;
+export default EmailInsertScreen;

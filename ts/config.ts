@@ -106,8 +106,6 @@ export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 // Opt-in for reminder push notifications
 export const remindersOptInEnabled = Config.REMINDERS_OPT_IN_ENABLED === "YES";
 
-export const isNewCduFlow = Config.CDU_NEW_FLOW === "YES";
-
 export const fetchTimeout = pipe(
   parseInt(Config.FETCH_TIMEOUT_MS, 10),
   t.Integer.decode,

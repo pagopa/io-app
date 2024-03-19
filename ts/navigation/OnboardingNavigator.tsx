@@ -11,9 +11,9 @@ import ServicePreferenceCompleteScreen from "../screens/onboarding/ServicePrefer
 import FingerprintScreen from "../screens/onboarding/biometric&securityChecks/FingerprintScreen";
 import MissingDeviceBiometricScreen from "../screens/onboarding/biometric&securityChecks/MissingDeviceBiometricScreen";
 import MissingDevicePinScreen from "../screens/onboarding/biometric&securityChecks/MissingDevicePinScreen";
-import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
 import { isGestureEnabled } from "../utils/navigation";
 import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
+import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 import ROUTES from "./routes";
 
@@ -66,7 +66,7 @@ const OnboardingNavigator = () => (
     />
     <Stack.Screen
       name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
-      component={CduEmailInsertScreen}
+      component={EmailInsertScreen}
     />
 
     <Stack.Screen

@@ -3,6 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import configureMockStore from "redux-mock-store";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -69,14 +70,14 @@ describe("Test ProfileDataScreen", () => {
       ).not.toBeNull();
     }
   });
-  // it("when press ListItemComponent insert or edit email, if user has email should navigate to EmailReadScreen else should navigate to EmailInsertScreen", () => {
-  //   const { component } = renderComponent();
+  it("when press ListItemComponent insert or edit email, if user has email should navigate to EmailReadScreen else should navigate to EmailInsertScreen", () => {
+    const { component } = renderComponent();
 
-  //   expect(component).not.toBeNull();
-  //   const listItemComponent = component.getByTestId("insert-or-edit-email");
-  //   expect(listItemComponent).not.toBeNull();
-  //   fireEvent.press(listItemComponent);
-  // });
+    expect(component).not.toBeNull();
+    const listItemComponent = component.getByTestId("insert-or-edit-email");
+    expect(listItemComponent).not.toBeNull();
+    fireEvent.press(listItemComponent);
+  });
   it("should render ListItemComponent name and surname with the right title and subtitle", () => {
     const { component, store } = renderComponent();
 

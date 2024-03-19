@@ -6,7 +6,6 @@ import { DesignSystemNavigator } from "../features/design-system/navigation/navi
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
-import CduEmailInsertScreen from "../screens/profile/CduEmailInsertScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
 import EmailForwardingScreen from "../screens/profile/EmailForwardingScreen";
@@ -33,6 +32,7 @@ import { WalletPaymentPlayground } from "../screens/profile/playgrounds/WalletPa
 import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
+import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -98,7 +98,7 @@ const ProfileStackNavigator = () => (
 
     <Stack.Screen
       name={ROUTES.INSERT_EMAIL_SCREEN}
-      component={CduEmailInsertScreen}
+      component={EmailInsertScreen}
     />
 
     <Stack.Screen

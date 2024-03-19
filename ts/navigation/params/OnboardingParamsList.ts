@@ -1,6 +1,6 @@
 import { OnboardingNotificationsPreferencesScreenNavigationParams } from "../../screens/onboarding/OnboardingNotificationsPreferencesScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
-import { CduEmailInsertScreenNavigationParams } from "../../screens/profile/CduEmailInsertScreen";
+import { EmailInsertScreenNavigationParams } from "../../screens/profile/EmailInsertScreen";
 import { SendEmailValidationScreenProp } from "../../screens/profile/EmailValidationSendEmailScreen";
 import ROUTES from "../routes";
 
@@ -13,7 +13,7 @@ export type OnboardingParamsList = {
   [ROUTES.ONBOARDING_MISSING_DEVICE_PIN]: undefined;
   [ROUTES.ONBOARDING_MISSING_DEVICE_BIOMETRIC]: undefined;
   [ROUTES.ONBOARDING_FINGERPRINT]: undefined;
-  [ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN]: CduEmailInsertScreenNavigationParams;
+  [ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN]: EmailInsertScreenNavigationParams;
   [ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN]: SendEmailValidationScreenProp;
   [ROUTES.ONBOARDING_COMPLETED]: undefined;
   [ROUTES.ONBOARDING_NOTIFICATIONS_PREFERENCES]: OnboardingNotificationsPreferencesScreenNavigationParams;
