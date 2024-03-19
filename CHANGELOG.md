@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.56.0-rc.1](https://github.com/pagopa/io-app/compare/2.56.0-rc.0...2.56.0-rc.1) (2024-03-19)
+
+
+### Features
+
+* [[IOCOM-856](https://pagopa.atlassian.net/browse/IOCOM-856)] Add CTAs to `MessageDetailsScreen` ([#5582](https://github.com/pagopa/io-app/issues/5582)) ([e524884](https://github.com/pagopa/io-app/commit/e524884e5e403c78c94ab81909abbad1f6c91504))
+* [[IOCOM-859](https://pagopa.atlassian.net/browse/IOCOM-859)] New DS payment button on standard message details ([#5583](https://github.com/pagopa/io-app/issues/5583)) ([3ae055f](https://github.com/pagopa/io-app/commit/3ae055f2863316077829ba757c392af4ce8af007))
+* [[IOPLT-367](https://pagopa.atlassian.net/browse/IOPLT-367)] Adds the local dark mode toggle for development purpose ([#5576](https://github.com/pagopa/io-app/issues/5576)) ([af772e5](https://github.com/pagopa/io-app/commit/af772e53f23309f44d2beaacb56822d4d511ca51))
+
+
+### Bug Fixes
+
+* [[IABT-1540](https://pagopa.atlassian.net/browse/IABT-1540)] Fix expired session handling in payment flow ([#5568](https://github.com/pagopa/io-app/issues/5568)) ([c2be1bd](https://github.com/pagopa/io-app/commit/c2be1bd4398ec8dd5f668976b6be7eeed2037198))
+* [[IOBP-596](https://pagopa.atlassian.net/browse/IOBP-596)] Fix unexpected behavior in wallet onboarding Webview on Android devices ([#5594](https://github.com/pagopa/io-app/issues/5594)) ([4e47fda](https://github.com/pagopa/io-app/commit/4e47fdad8bb6a6b2a7525455e4e0b186c325a2f8))
+* theme experimental switch doesn't rerender ([#5591](https://github.com/pagopa/io-app/issues/5591)) ([9b8f9f7](https://github.com/pagopa/io-app/commit/9b8f9f7d3458fd05a076796821235d995d0deee8))
+
+
+### Chores
+
+* [[IOBP-589](https://pagopa.atlassian.net/browse/IOBP-589)] Adapted new payment flow with new swagger definitions ([#5593](https://github.com/pagopa/io-app/issues/5593)) ([c64e253](https://github.com/pagopa/io-app/commit/c64e2538363a5865f92427c6fbbf7ac241a4949b))
+* **Cross:** [[IOAPPX-261](https://pagopa.atlassian.net/browse/IOAPPX-261)] Add the new `contrast` variant to `ButtonLink` in the DS section ([#5590](https://github.com/pagopa/io-app/issues/5590)) ([5a6b185](https://github.com/pagopa/io-app/commit/5a6b18512855b466cd48b2166315435f3d401db0))
+* **IT Wallet:** [[SIW-907](https://pagopa.atlassian.net/browse/SIW-907)] Add StrongBox Mixpanel tracking for Lollipop keys ([#5580](https://github.com/pagopa/io-app/issues/5580)) ([892f473](https://github.com/pagopa/io-app/commit/892f473ca2819de9eaf8b1e6fac5313bf75836da))
+* **IT Wallet:** [[SIW-940](https://pagopa.atlassian.net/browse/SIW-940)] Add new wallet section screen with empty state ([#5588](https://github.com/pagopa/io-app/issues/5588)) ([ad7c9e8](https://github.com/pagopa/io-app/commit/ad7c9e8432569c8eeb07e9c877cb560e237bb475))
+* **IT Wallet:** [[SIW-941](https://pagopa.atlassian.net/browse/SIW-941)] Update Pr title with SIW id ([#5587](https://github.com/pagopa/io-app/issues/5587)) ([f4f60b3](https://github.com/pagopa/io-app/commit/f4f60b345c11bd2d9a87d559c1cf2540602cc6cc))
+* **IT Wallet:** [[SIW-942](https://pagopa.atlassian.net/browse/SIW-942)] Add payments section redirect banner within wallet section ([#5589](https://github.com/pagopa/io-app/issues/5589)) ([e9624d0](https://github.com/pagopa/io-app/commit/e9624d0768f6de8a716ea5ac203f96fb28365284))
+* **IT Wallet:** [[SIW-948](https://pagopa.atlassian.net/browse/SIW-948)] Add reducers and selectors for cards in the new wallet section ([#5604](https://github.com/pagopa/io-app/issues/5604)) ([1f561f4](https://github.com/pagopa/io-app/commit/1f561f44622337b7c3b1652c07793c8b617fdfe3))
+* [[SIW-939](https://pagopa.atlassian.net/browse/SIW-939)] Add new wallet section FF ([#5584](https://github.com/pagopa/io-app/issues/5584)) ([5ce9adb](https://github.com/pagopa/io-app/commit/5ce9adb04d83e04bbaa7db7ca341c42c3059935c))
+
 ## [2.56.0-rc.0](https://github.com/pagopa/io-app/compare/2.55.0-rc.3...2.56.0-rc.0) (2024-03-12)
 
 

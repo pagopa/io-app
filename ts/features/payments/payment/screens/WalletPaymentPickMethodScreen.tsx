@@ -340,10 +340,10 @@ const mapSavedToRadioItem = (
 ): RadioItem<string> | undefined => {
   const details = method.details as UIWalletInfoDetails;
 
-  if (details.maskedPan !== undefined) {
+  if (details.lastFourDigits !== undefined) {
     return {
       id: method.walletId,
-      value: `${capitalize(details.brand)} ••${details.maskedPan}`,
+      value: `${capitalize(details.brand)} ••${details.lastFourDigits}`,
       startImage: getIconWithFallback(details.brand)
     };
   } else if (details.maskedEmail !== undefined) {
