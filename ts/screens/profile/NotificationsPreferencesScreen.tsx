@@ -1,5 +1,5 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { List } from "native-base";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
@@ -67,7 +67,7 @@ export const NotificationsPreferencesScreen = () => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       headerActionsProp={{ showHelp: true }}
     >
-      <List withContentLateralPadding={true}>
+      <ContentWrapper>
         <PreferencesListItem
           title={I18n.t("profile.preferences.notifications.preview.title")}
           description={`${I18n.t(
@@ -134,7 +134,7 @@ export const NotificationsPreferencesScreen = () => {
           }
         />
         <ItemSeparatorComponent noPadded={true} />
-      </List>
+      </ContentWrapper>
       {bottomSheet}
     </RNavScreenWithLargeHeader>
   );

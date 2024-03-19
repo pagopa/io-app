@@ -1,6 +1,9 @@
-import { Divider, ListItemNav } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  Divider,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { List } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
 import { IOToast } from "../../components/Toast";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
@@ -146,7 +149,7 @@ const SecurityScreen = (): React.ReactElement => {
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
     >
-      <List withContentLateralPadding>
+      <ContentWrapper>
         {/* Ask for verification and reset unlock code */}
         <ListItemNav
           value={I18n.t("identification.unlockCode.reset.button_short")}
@@ -200,7 +203,7 @@ const SecurityScreen = (): React.ReactElement => {
             testID="biometric-recognition"
           />
         )}
-      </List>
+      </ContentWrapper>
     </RNavScreenWithLargeHeader>
   );
 };

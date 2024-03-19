@@ -2,15 +2,15 @@
  * A screens to express the preferences related to email forwarding.
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { List } from "native-base";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { IOToast } from "../../components/Toast";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
@@ -19,7 +19,6 @@ import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponen
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import ScreenContent from "../../components/screens/ScreenContent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
-import { IOToast } from "../../components/Toast";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";
 import { ProfileParamsList } from "../../navigation/params/ProfileParamsList";
@@ -27,14 +26,14 @@ import { customEmailChannelSetEnabled } from "../../store/actions/persistedPrefe
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import {
-  visibleServicesSelector,
-  VisibleServicesState
+  VisibleServicesState,
+  visibleServicesSelector
 } from "../../store/reducers/entities/services/visibleServices";
 import {
+  ProfileState,
   isEmailEnabledSelector,
   profileEmailSelector,
-  profileSelector,
-  ProfileState
+  profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
@@ -132,7 +131,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
             </Body>
           </View>
           <VSpacer size={16} />
-          <List withContentLateralPadding={true}>
+          <ContentWrapper>
             {/* ALL INACTIVE */}
             {renderListItem(
               I18n.t("send_email_messages.options.disable_all.label"),
@@ -202,7 +201,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
             }
 
             <EdgeBorderComponent />
-          </List>
+          </ContentWrapper>
         </ScreenContent>
       </TopScreenComponent>
     );
