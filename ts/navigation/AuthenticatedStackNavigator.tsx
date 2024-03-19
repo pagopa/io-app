@@ -2,7 +2,7 @@ import {
   createStackNavigator,
   TransitionPresets
 } from "@react-navigation/stack";
-import * as React from "react";
+import React from "react";
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { fimsEnabled } from "../config";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
@@ -76,12 +76,13 @@ import {
 import { isGestureEnabled } from "../utils/navigation";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/navigation/routes";
+import ServicesNavigator from "../features/services/navigation/ServicesNavigator";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
 import ProfileStackNavigator from "./ProfileNavigator";
 import ROUTES from "./routes";
-import ServicesNavigator from "./ServicesNavigator";
 import { MainTabNavigator } from "./TabNavigator";
 import WalletNavigator from "./WalletNavigator";
 
@@ -141,7 +142,7 @@ const AuthenticatedStackNavigator = () => {
         component={WalletNavigator}
       />
       <Stack.Screen
-        name={ROUTES.SERVICES_NAVIGATOR}
+        name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
         options={hideHeaderOptions}
         component={ServicesNavigator}
       />
