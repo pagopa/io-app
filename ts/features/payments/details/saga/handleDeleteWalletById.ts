@@ -7,49 +7,54 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { WalletClient } from "../../common/api/client";
-import { walletDetailsGetInstrument } from "../store/actions";
+import {
+  walletDetailsDeleteInstrument,
+  walletDetailsGetInstrument
+} from "../store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
  * @param getPaymentMethods
  * @param action
  */
-export function* handleGetWalletDetails(
-  getWalletById: WalletClient["getWalletById"],
-  action: ActionType<(typeof walletDetailsGetInstrument)["request"]>
+export function* handleDeleteWalletById(
+  deleteWalletById: WalletClient["deleteWalletById"],
+  action: ActionType<(typeof walletDetailsDeleteInstrument)["request"]>
 ) {
   try {
-    const getwalletDetailsRequest = getWalletById({
+    const deleteWalletRequest = deleteWalletById({
       walletId: action.payload.walletId
     });
-
-    const getWalletDetailsResult = (yield* call(
+    const deleteWalletResult = (yield* call(
       withRefreshApiCall,
-      getwalletDetailsRequest,
+      deleteWalletRequest,
       action
-    )) as SagaCallReturnType<typeof getWalletById>;
+    )) as SagaCallReturnType<typeof deleteWalletById>;
 
     yield* pipe(
-      getWalletDetailsResult,
+      deleteWalletResult,
       E.fold(
         function* (error) {
           yield* put(
-            walletDetailsGetInstrument.failure(
+            walletDetailsDeleteInstrument.failure(
               getGenericError(new Error(readablePrivacyReport(error)))
             )
           );
+          action.payload.onFailure?.();
         },
-        function* ({ status, value }) {
+        function* ({ status }) {
           switch (status) {
-            case 200:
-              yield* put(walletDetailsGetInstrument.success(value));
+            case 204:
+              yield* put(walletDetailsDeleteInstrument.success());
+              action.payload.onSuccess?.();
               break;
             default:
               yield* put(
-                walletDetailsGetInstrument.failure(
+                walletDetailsDeleteInstrument.failure(
                   getGenericError(new Error(`response status code ${status}`))
                 )
               );
+              action.payload.onFailure?.();
           }
         }
       )

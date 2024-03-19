@@ -1,13 +1,14 @@
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import * as E from "fp-ts/lib/Either";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { walletStartOnboarding } from "../store/actions";
-import { readablePrivacyReport } from "../../../../utils/reporters";
-import { getGenericError, getNetworkError } from "../../../../utils/errors";
-import { WalletClient } from "../../common/api/client";
 import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { getGenericError, getNetworkError } from "../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { WalletClient } from "../../common/api/client";
+import { walletStartOnboarding } from "../store/actions";
 
 /**
  * Handle the remote call to start Wallet onboarding
@@ -31,35 +32,33 @@ export function* handleStartWalletOnboarding(
       withRefreshApiCall,
       startOnboardingRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof startOnboarding>;
-    if (E.isRight(startOnboardingResult)) {
-      if (startOnboardingResult.right.status === 201) {
-        // handled success
-        yield* put(
-          walletStartOnboarding.success(startOnboardingResult.right.value)
-        );
-        return;
-      }
-      // not handled error codes
-      yield* put(
-        walletStartOnboarding.failure({
-          ...getGenericError(
-            new Error(
-              `response status code ${startOnboardingResult.right.status}`
+    )) as SagaCallReturnType<typeof startOnboarding>;
+
+    yield* pipe(
+      startOnboardingResult,
+      E.fold(
+        function* (error) {
+          yield* put(
+            walletStartOnboarding.failure(
+              getGenericError(new Error(readablePrivacyReport(error)))
             )
-          )
-        })
-      );
-    } else {
-      // cannot decode response
-      yield* put(
-        walletStartOnboarding.failure({
-          ...getGenericError(
-            new Error(readablePrivacyReport(startOnboardingResult.left))
-          )
-        })
-      );
-    }
+          );
+        },
+        function* ({ status, value }) {
+          switch (status) {
+            case 201:
+              yield* put(walletStartOnboarding.success(value));
+              break;
+            default:
+              yield* put(
+                walletStartOnboarding.failure(
+                  getGenericError(new Error(`response status code ${status}`))
+                )
+              );
+          }
+        }
+      )
+    );
   } catch (e) {
     yield* put(walletStartOnboarding.failure({ ...getNetworkError(e) }));
   }

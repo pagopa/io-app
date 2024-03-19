@@ -56,11 +56,11 @@ const WalletDetailsPaymentMethodScreen = (props: Props) => {
     dispatch(
       walletDetailsDeleteInstrument.request({
         walletId,
-        onSuccess: _ => {
+        onSuccess: () => {
           IOToast.success(I18n.t("wallet.delete.successful"));
           navigation.goBack();
         },
-        onFailure: _ => {
+        onFailure: () => {
           IOToast.error(I18n.t("wallet.delete.failed"));
         }
       })

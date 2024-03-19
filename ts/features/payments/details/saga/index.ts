@@ -8,7 +8,7 @@ import {
   walletDetailsPagoPaCapabilityToggle
 } from "../store/actions";
 import { handleGetWalletDetails } from "./handleGetWalletDetails";
-import { handleDeleteWalletDetails } from "./handleDeleteWalletDetails";
+import { handleDeleteWalletById } from "./handleDeleteWalletById";
 import { handleTogglePagoPaCapability } from "./handleTogglePagoPaCapability";
 
 /**
@@ -28,7 +28,7 @@ export function* watchWalletDetailsSaga(
   // handle the request of delete a wallet
   yield* takeLatest(
     walletDetailsDeleteInstrument.request,
-    handleDeleteWalletDetails,
+    handleDeleteWalletById,
     walletClient.deleteWalletById
   );
 

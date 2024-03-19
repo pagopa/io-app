@@ -55,27 +55,36 @@ export function* handleWalletPaymentAuthorization(
       action
     )) as SagaCallReturnType<typeof requestTransactionAuthorization>;
 
-    yield* put(
-      pipe(
-        requestTransactionAuthorizationResult,
-        E.fold(
-          error =>
-            walletPaymentAuthorization.failure({
-              ...getGenericError(new Error(readablePrivacyReport(error)))
-            }),
-
-          res => {
-            if (res.status === 200) {
-              return walletPaymentAuthorization.success(res.value);
-            }
-            return walletPaymentAuthorization.failure({
-              ...getGenericError(new Error(`Error: ${res.status}`))
-            });
+    yield* pipe(
+      requestTransactionAuthorizationResult,
+      E.fold(
+        function* (error) {
+          yield* put(
+            walletPaymentAuthorization.failure(
+              getGenericError(new Error(readablePrivacyReport(error)))
+            )
+          );
+        },
+        function* ({ status, value }) {
+          switch (status) {
+            case 200:
+              yield* put(walletPaymentAuthorization.success(value));
+              break;
+            case 401:
+              //  This status code does not represent an error to show to the user
+              // The authentication will be handled by the Fast Login token refresh procedure
+              break;
+            default:
+              yield* put(
+                walletPaymentAuthorization.failure(
+                  getGenericError(new Error(`Error: ${status}`))
+                )
+              );
           }
-        )
+        }
       )
     );
   } catch (e) {
-    yield* put(walletPaymentAuthorization.failure({ ...getNetworkError(e) }));
+    yield* put(walletPaymentAuthorization.failure(getNetworkError(e)));
   }
 }
