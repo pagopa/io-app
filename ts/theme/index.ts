@@ -10,7 +10,6 @@ import buttonTheme from "./components/Button";
 import headerTheme from "./components/Header";
 import inputTheme from "./components/Input";
 import itemTheme from "./components/Item";
-import listItemTheme from "./components/ListItem";
 import maskedInputTheme from "./components/MaskedInput";
 import textTheme from "./components/Text";
 import { Theme } from "./types";
@@ -33,9 +32,6 @@ const theme = (): Theme => {
     },
     "NativeBase.Input": {
       ...inputTheme()
-    },
-    "NativeBase.ListItem": {
-      ...listItemTheme()
     },
     "UIComponent.BaseScreenComponent": {
       ...baseScreenComponentTheme()

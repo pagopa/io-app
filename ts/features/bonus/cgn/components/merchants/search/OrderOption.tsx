@@ -1,6 +1,6 @@
-import * as React from "react";
-import { ListItem } from "native-base";
 import { Icon } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { Pressable } from "react-native";
 import { H4 } from "../../../../../../components/core/typography/H4";
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const OrderOption = ({ text, value, onPress, checked }: Props) => (
-  <ListItem
+  <Pressable
     style={{
       flexDirection: "row",
       justifyContent: "space-between",
@@ -27,7 +27,7 @@ const OrderOption = ({ text, value, onPress, checked }: Props) => (
       size={24}
       color={checked ? "blue" : "bluegrey"}
     />
-  </ListItem>
+  </Pressable>
 );
 
 export default OrderOption;

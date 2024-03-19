@@ -1,9 +1,8 @@
-import { ListItem } from "native-base";
-import { View } from "react-native";
-import * as React from "react";
 import { HSpacer, IOCategoryIcons, Icon } from "@pagopa/io-app-design-system";
-import { H4 } from "../../../../../../components/core/typography/H4";
+import * as React from "react";
+import { Pressable, View } from "react-native";
 import { RawCheckBox } from "../../../../../../components/core/selection/checkbox/RawCheckBox";
+import { H4 } from "../../../../../../components/core/typography/H4";
 
 type Props = {
   text: string;
@@ -14,7 +13,7 @@ type Props = {
 };
 
 const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
-  <ListItem
+  <Pressable
     style={{
       flexDirection: "row",
       justifyContent: "space-between",
@@ -28,7 +27,7 @@ const CategoryCheckbox = ({ text, icon, value, onPress, checked }: Props) => (
       <H4 weight={"Regular"}>{text.toUpperCase()}</H4>
     </View>
     <RawCheckBox checked={checked} onPress={() => onPress(value)} />
-  </ListItem>
+  </Pressable>
 );
 
 export default CategoryCheckbox;
