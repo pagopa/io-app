@@ -72,7 +72,7 @@ const EmailInsertScreen = () => {
   const { isOnboarding } =
     useRoute<
       Route<
-        "ONBOARDING_READ_EMAIL_SCREEN" | "PROFILE_EMAIL_INSERT_SCREEN",
+        "ONBOARDING_INSERT_EMAIL_SCREEN" | "INSERT_EMAIL_SCREEN",
         EmailInsertScreenNavigationParams
       >
     >().params;
