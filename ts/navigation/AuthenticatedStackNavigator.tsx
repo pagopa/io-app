@@ -77,7 +77,7 @@ import { isGestureEnabled } from "../utils/navigation";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/navigation/routes";
-import ServicesNavigator from "../features/services/navigation/ServicesNavigator";
+import ServicesNavigator from "../features/services/navigation/navigator";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
