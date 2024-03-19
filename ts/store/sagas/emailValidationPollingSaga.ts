@@ -19,10 +19,10 @@ function* emailValidationPollingLoop() {
     yield* call(startTimer, GET_PROFILE_POLLING_INTERVAL);
 
     yield* put(profileLoadRequest());
+    yield* take(profileLoadSuccess);
     const isEmailValidationSelector = yield* select(emailValidationSelector);
     profilePollingIsRunning =
       isEmailValidationSelector.isEmailValidationPollingRunning;
-    yield* take(profileLoadSuccess);
   }
 }
 
