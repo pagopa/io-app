@@ -1,7 +1,9 @@
 import { PathConfigMap } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../../utils/navigation";
+import CgnDetailScreen from "../screens/CgnDetailScreen";
 import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
 import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
@@ -10,7 +12,6 @@ import CgnActivationTimeoutScreen from "../screens/activation/CgnActivationTimeo
 import CgnAlreadyActiveScreen from "../screens/activation/CgnAlreadyActiveScreen";
 import CgnCTAStartActivationScreen from "../screens/activation/CgnCTAStartActivationScreen";
 import CgnInformationScreen from "../screens/activation/CgnInformationScreen";
-import CgnDetailScreen from "../screens/CgnDetailScreen";
 import EycaActivationLoading from "../screens/eyca/activation/EycaActivationLoading";
 import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
 import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
@@ -18,7 +19,6 @@ import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerch
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
 import MerchantsListScreen from "../screens/merchants/CgnMerchantsListScreen";
 import CgnMerchantsTabsScreen from "../screens/merchants/CgnMerchantsTabsScreen";
-import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
@@ -116,6 +116,7 @@ export const CgnDetailsNavigator = () => (
       component={CgnMerchantsTabsScreen}
     />
     <DetailStack.Screen
+      options={{ headerShown: true }}
       name={CGN_ROUTES.DETAILS.MERCHANTS.DETAIL}
       component={CgnMerchantDetailScreen}
     />
