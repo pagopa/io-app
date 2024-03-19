@@ -16,26 +16,21 @@ import React, { useCallback, useEffect } from "react";
 import { ScrollView, StyleSheet, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
-import { IOToast } from "../../../components/Toast";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
   isError as isRemoteError,
   isLoading as isRemoteLoading,
   isUndefined
 } from "../../../common/model/RemoteValue";
+import { IOToast } from "../../../components/Toast";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
   zendeskSelectedCategory,
   zendeskSupportStart
 } from "../../../features/zendesk/store/actions";
 import I18n from "../../../i18n";
 import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
-import {
-  navigateToPaymentPickPaymentMethodScreen,
-  navigateToPaymentTransactionErrorScreen,
-  navigateToWalletAddPaymentMethod
-} from "../../../store/actions/navigation";
+import { navigateToPaymentTransactionErrorScreen } from "../../../store/actions/navigation";
 import {
   PaymentStartOrigin,
   abortRunningPayment,
@@ -45,8 +40,7 @@ import {
   paymentIdPolling,
   paymentInitializeState,
   paymentVerifica,
-  runDeleteActivePaymentSaga,
-  runStartOrResumePaymentActivationSaga
+  runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
 import { useIOSelector } from "../../../store/hooks";
@@ -54,10 +48,7 @@ import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
 } from "../../../store/reducers/backendStatus";
-import {
-  getFavoriteWallet,
-  withPaymentFeatureSelector
-} from "../../../store/reducers/wallet/wallets";
+import { getFavoriteWallet } from "../../../store/reducers/wallet/wallets";
 import customVariables from "../../../theme/variables";
 import { PayloadForAction } from "../../../types/utils";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
@@ -68,7 +59,6 @@ import {
   getV2ErrorMainType,
   isDuplicatedPayment
 } from "../../../utils/payment";
-import { alertNoPayablePaymentMethods } from "../../../utils/paymentMethod";
 import {
   addTicketCustomField,
   appendLog,
@@ -80,10 +70,10 @@ import {
   zendeskPaymentOrgFiscalCode,
   zendeskPaymentStartOrigin
 } from "../../../utils/supportAssistance";
-import { dispatchPickPspOrConfirm } from "./common";
 import { TransactionSummary } from "./components/TransactionSummary";
 import { TransactionSummaryErrorDetails } from "./components/TransactionSummaryErrorDetails";
 import { TransactionSummaryStatus } from "./components/TransactionSummaryStatus";
+import { useStartOrResumePayment } from "./hooks/useStartOrResumePayment";
 
 export type TransactionSummaryScreenNavigationParams = Readonly<{
   rptId: RptId;
@@ -213,9 +203,6 @@ const TransactionSummaryScreen = (): React.ReactElement => {
     })
   );
 
-  const hasPayableMethods =
-    useIOSelector(withPaymentFeatureSelector).length > 0;
-
   const isLoading =
     pot.isLoading(walletById) ||
     pot.isLoading(paymentVerification) ||
@@ -335,54 +322,12 @@ const TransactionSummaryScreen = (): React.ReactElement => {
       paymentVerifica.request({ rptId, startOrigin: paymentStartOrigin })
     );
 
-  const startOrResumePayment = useCallback(
-    (paymentVerification: PaymentRequestsGetResponse) =>
-      dispatch(
-        runStartOrResumePaymentActivationSaga({
-          rptId,
-          verifica: paymentVerification,
-          onSuccess: idPayment =>
-            dispatchPickPspOrConfirm(dispatch)(
-              rptId,
-              initialAmount,
-              paymentVerification,
-              idPayment,
-              maybeFavoriteWallet,
-              () => {
-                // either we cannot use the default payment method for this
-                // payment, or fetching the PSPs for this payment and the
-                // default wallet has failed, ask the user to pick a wallet
-
-                navigateToPaymentPickPaymentMethodScreen({
-                  rptId,
-                  initialAmount,
-                  verifica: paymentVerification,
-                  idPayment
-                });
-              },
-              hasPayableMethods
-            )
-        })
-      ),
-    [dispatch, hasPayableMethods, initialAmount, maybeFavoriteWallet, rptId]
+  const continueWithPayment = useStartOrResumePayment(
+    rptId,
+    pot.toOption(paymentVerification),
+    initialAmount,
+    maybeFavoriteWallet
   );
-
-  const continueWithPayment = useCallback(() => {
-    if (!pot.isSome(paymentVerification)) {
-      return;
-    }
-    if (hasPayableMethods) {
-      startOrResumePayment(paymentVerification.value);
-      return;
-    }
-
-    alertNoPayablePaymentMethods(() =>
-      navigateToWalletAddPaymentMethod({
-        inPayment: O.none,
-        showOnlyPayablePaymentMethods: true
-      })
-    );
-  }, [hasPayableMethods, startOrResumePayment, paymentVerification]);
 
   const resetPayment = () => {
     dispatch(runDeleteActivePaymentSaga());
