@@ -2076,12 +2076,12 @@ serviceDetail:
 identification:
   instructions:
       unlockCode: unlock code
-      unlockCodepPrefix: inserisci il
+      unlockCodepPrefix: use your
       fingerprint: fingerprint
       fingerprintPrefix: use your
       faceId: face
       faceIdPrefix: use your
-      congiunction: o
+      congiunction: or
   title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
@@ -2098,7 +2098,7 @@ identification:
       sensorDescription: Login quickly
   fail:
     remainingAttempts: You have {{attempts}} attempts left
-    remainingAttemptSingle: You have {{attempts}} attempts left
+    remainingAttemptSingle: You have {{attempts}} attempt left
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:
