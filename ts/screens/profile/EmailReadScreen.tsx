@@ -5,9 +5,10 @@
  * - it is displayed during the user onboarding
  * - it is displayed after the onboarding (navigation from the profile section)
  */
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { ComponentProps } from "react";
 import EmailReadComponent from "../../components/EmailReadComponent";
-import { SingleButton } from "../../components/ui/BlockButtons";
 import I18n from "../../i18n";
 import {
   IOStackNavigationRouteProps,
@@ -28,18 +29,21 @@ const EmailReadScreen = (props: Props) => {
     props.navigation.goBack();
   };
 
-  const footerProps: SingleButton = {
+  const footerProps: ComponentProps<typeof FooterWithButtons> = {
     type: "SingleButton",
-    leftButton: {
-      bordered: true,
-      title: I18n.t("email.edit.cta"),
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.INSERT_EMAIL_SCREEN,
-          params: {
-            isOnboarding: false
-          }
-        })
+    primary: {
+      type: "Outline",
+      buttonProps: {
+        label: I18n.t("email.edit.cta"),
+        accessibilityLabel: I18n.t("email.edit.cta"),
+        onPress: () =>
+          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+            screen: ROUTES.INSERT_EMAIL_SCREEN,
+            params: {
+              isOnboarding: false
+            }
+          })
+      }
     }
   };
 
