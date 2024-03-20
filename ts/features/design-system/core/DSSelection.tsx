@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import {
   AnimatedMessageCheckbox,
@@ -14,7 +14,9 @@ import {
   RadioGroup,
   SwitchLabel,
   VSpacer,
-  ListItemRadioWithAmount
+  ListItemRadioWithAmount,
+  LabelSmall,
+  IOColors
 } from "@pagopa/io-app-design-system";
 import { CheckBox } from "../../../components/core/selection/checkbox/CheckBox";
 import { RemoteSwitch } from "../../../components/core/selection/RemoteSwitch";
@@ -189,6 +191,19 @@ const mockRadioItems = (): ReadonlyArray<RadioItem<string>> => [
     description:
       "Ti contatteranno solo i servizi che hanno qualcosa di importante da dirti. Potrai sempre disattivare le comunicazioni che non ti interessano.",
     id: "example-1"
+  },
+  {
+    value: "Let's try with JSX description",
+    description: (
+      <LabelSmall color="grey-700" weight="Regular">
+        Ti contatteranno solo i servizi che hanno qualcosa di importante da
+        dirti.{" "}
+        <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
+          Potrai sempre disattivare le comunicazioni che non ti interessano.
+        </Text>
+      </LabelSmall>
+    ),
+    id: "example-jsx-element"
   },
   {
     startImage: { paymentLogo: "myBank" },
