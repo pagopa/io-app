@@ -9,6 +9,7 @@ import {
 } from "../../../components/ui/cards/payment/PaymentCardsCarousel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { PaymentCard } from "../../payments/common/components/PaymentCard";
 
 const styles = StyleSheet.create({
   content: {
@@ -68,6 +69,29 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
 // https://www.comuniecitta.it/elenco-banche-per-codice-abi
 export const DSCards = () => (
   <DesignSystemScreen title={"Cards"}>
+    <DSComponentViewerBox name="PaymentCard">
+      <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={new Date()} />
+      <VSpacer size={16} />
+      <PaymentCard
+        holderName="Anna Verdi"
+        expireDate={new Date()}
+        abiCode="03069"
+        brand="pagoBancomat"
+      />
+      <VSpacer size={16} />
+      <PaymentCard
+        holderName="Anna Verdi"
+        expireDate={new Date()}
+        abiCode="08509"
+        brand="maestro"
+      />
+      <VSpacer size={16} />
+      <PaymentCard holderEmail="anna_v********@**hoo.it" />
+      <VSpacer size={16} />
+      <PaymentCard holderName="Anna Verdi" holderPhone="+39 340 *** **62" />
+      <VSpacer size={16} />
+      <PaymentCard isLoading />
+    </DSComponentViewerBox>
     <DSComponentViewerBox name="PaymentCardSmall">
       <View style={styles.content}>
         <PaymentCardSmall hpan="9999" isError={false} cardType={"CREDIT"} />
@@ -99,18 +123,8 @@ export const DSCards = () => (
         <PaymentCardSmall isLoading={true} />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox
-      name="PaymentCardBig
-"
-    >
-      <PaymentCardBig
-        hpan="9999"
-        cardType={"CREDIT"}
-        holderName="Mario Rossi"
-        cardIcon="mastercard"
-        expirationDate={new Date()}
-      />
-      <VSpacer size={16} />
+
+    <DSComponentViewerBox name="PaymentCardBig (Pre ITW)">
       <PaymentCardBig
         cardType={"PAGOBANCOMAT"}
         expirationDate={new Date()}
