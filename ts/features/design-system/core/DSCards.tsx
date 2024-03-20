@@ -9,6 +9,7 @@ import {
 } from "../../../components/ui/cards/payment/PaymentCardsCarousel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { IdPayWalletCard } from "../../idpay/wallet/components/IdPayWalletCard";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
 
 const styles = StyleSheet.create({
@@ -177,6 +178,16 @@ export const DSCards = () => (
 
     <DSComponentViewerBox name="PaymentCardsCarousel">
       <PaymentCardsCarousel {...cardsDataForCarousel} />
+    </DSComponentViewerBox>
+    <DSComponentViewerBox name="IdPayWalletCard">
+      <IdPayWalletCard
+        name="18 app"
+        amount={9999}
+        avatarSource={{
+          uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
+        }}
+        expireDate={new Date()}
+      />
     </DSComponentViewerBox>
   </DesignSystemScreen>
 );
