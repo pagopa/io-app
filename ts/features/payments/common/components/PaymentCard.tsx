@@ -153,9 +153,9 @@ const PaymentCard = (props: WithTestID<Props>) => {
         </View>
         <View style={styleSheet.additionalInfo}>
           {holderNameText}
-          {expireDateText}
           {maskedEmailText}
           {maskedPhoneText}
+          {expireDateText}
         </View>
       </View>
     </View>
