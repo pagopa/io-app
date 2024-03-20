@@ -6,7 +6,6 @@ import { walletStartOnboarding } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
-import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 
 /**
@@ -22,7 +21,7 @@ export function* handleStartWalletOnboarding(
     const { paymentMethodId } = action.payload;
     const startOnboardingRequest = startOnboarding({
       body: {
-        services: [ServiceNameEnum.PAGOPA],
+        applications: ["PAGOPA"],
         useDiagnosticTracing: true,
         paymentMethodId
       }

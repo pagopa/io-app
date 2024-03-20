@@ -17,12 +17,13 @@ import { InfoBox } from "../../../components/box/InfoBox";
 import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
-import { paymentsButtonStateSelector } from "../../messages/store/reducers/payments";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
+import { getRptIdStringFromPayment } from "../utils/rptId";
 import { MessageDetailsSection } from "./MessageDetailsSection";
-import { MessagePaymentItem } from "./MessagePaymentItem";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
@@ -176,14 +177,19 @@ export const MessagePayments = ({
     >
       {payments && (
         <>
-          {payments.slice(0, maxVisiblePaymentCount).map((payment, index) => (
-            <MessagePaymentItem
-              index={index}
-              key={`PM_${index}`}
-              messageId={messageId}
-              payment={payment}
-            />
-          ))}
+          {payments.slice(0, maxVisiblePaymentCount).map((payment, index) => {
+            const rptId = getRptIdStringFromPayment(payment);
+            return (
+              <MessagePaymentItem
+                index={index}
+                isPNPayment
+                key={`PM_${index}`}
+                messageId={messageId}
+                rptId={rptId}
+                noticeNumber={payment.noticeCode}
+              />
+            );
+          })}
           {showMorePaymentsLink && (
             <>
               <VSpacer size={16} />

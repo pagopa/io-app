@@ -356,8 +356,10 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                           onResponderTerminationRequest={[Function]}
                           onStartShouldSetResponder={[Function]}
                           onTouchEnd={[Function]}
+                          testID="contacts-action"
                         >
                           <View
+                            importantForAccessibility="no-hide-descendants"
                             style={
                               Array [
                                 Object {
@@ -499,6 +501,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                           testID="show-more-data-action"
                         >
                           <View
+                            importantForAccessibility="no-hide-descendants"
                             style={
                               Array [
                                 Object {
@@ -994,6 +997,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                           testID="show-more-data-action"
                         >
                           <View
+                            importantForAccessibility="no-hide-descendants"
                             style={
                               Array [
                                 Object {

@@ -1,15 +1,13 @@
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
-import * as RA from "fp-ts/lib/ReadonlyArray";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
-import { UIMessageId } from "../../types";
+import { UIMessageDetails, UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  isError,
+  foldK,
   isLoading,
-  isReady,
   isUndefined,
   remoteError,
   remoteLoading,
@@ -18,19 +16,24 @@ import {
   RemoteValue
 } from "../../../../common/model/RemoteValue";
 import {
-  clearMessagesSelectedPayment,
+  addUserSelectedPaymentRptId,
   reloadAllMessages,
-  setMessagesSelectedPayment,
   updatePaymentForMessage
 } from "../actions";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
+import { isProfileEmailValidatedSelector } from "../../../../store/reducers/profile";
+import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
+import {
+  duplicateSetAndAdd,
+  duplicateSetAndRemove,
+  getRptIdStringFromPaymentData
+} from "../../utils";
+import { messagePaymentDataSelector } from "./detailsById";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
-  selectedPayment?: string;
+  userSelectedPayments: Set<string>;
 };
 
 export type SinglePaymentState = {
@@ -39,7 +42,9 @@ export type SinglePaymentState = {
     | undefined;
 };
 
-export const initialState: MultiplePaymentState = {};
+export const initialState: MultiplePaymentState = {
+  userSelectedPayments: new Set<string>()
+};
 
 export const paymentsReducer = (
   state: MultiplePaymentState = initialState,
@@ -52,7 +57,11 @@ export const paymentsReducer = (
         [action.payload.messageId]: {
           ...state[action.payload.messageId],
           [action.payload.paymentId]: remoteLoading
-        }
+        },
+        userSelectedPayments: duplicateSetAndRemove(
+          state.userSelectedPayments,
+          action.payload.paymentId
+        )
       };
     case getType(updatePaymentForMessage.success):
       return {
@@ -81,15 +90,13 @@ export const paymentsReducer = (
         }),
         state
       );
-    case getType(setMessagesSelectedPayment):
+    case getType(addUserSelectedPaymentRptId):
       return {
         ...state,
-        selectedPayment: action.payload.paymentId
-      };
-    case getType(clearMessagesSelectedPayment):
-      return {
-        ...state,
-        selectedPayment: undefined
+        userSelectedPayments: duplicateSetAndAdd(
+          state.userSelectedPayments,
+          action.payload.paymentId
+        )
       };
     case getType(reloadAllMessages.request):
       return initialState;
@@ -97,7 +104,7 @@ export const paymentsReducer = (
   return state;
 };
 
-export const shouldUpdatePaymentSelector = (
+const paymentStateSelector = (
   state: GlobalState,
   messageId: UIMessageId,
   paymentId: string
@@ -108,134 +115,80 @@ export const shouldUpdatePaymentSelector = (
     O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
     O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
       () => remoteUndefined
-    ),
-    isUndefined
+    )
   );
+
+export const shouldUpdatePaymentSelector = (
+  state: GlobalState,
+  messageId: UIMessageId,
+  paymentId: string
+) => pipe(paymentStateSelector(state, messageId, paymentId), isUndefined);
 
 export const paymentStatusForUISelector = (
   state: GlobalState,
   messageId: UIMessageId,
   paymentId: string
 ): RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum> =>
+  pipe(paymentStateSelector(state, messageId, paymentId), remoteValue =>
+    isLoading(remoteValue) ? remoteUndefined : remoteValue
+  );
+
+export const isUserSelectedPaymentSelector = (
+  state: GlobalState,
+  rptId: string
+) => state.entities.messages.payments.userSelectedPayments.has(rptId);
+
+export const userSelectedPaymentRptIdSelector = (
+  state: GlobalState,
+  message: UIMessageDetails | undefined
+) =>
   pipe(
-    state.entities.messages.payments[messageId],
+    message,
     O.fromNullable,
-    O.chainNullableK(multiplePaymentState => multiplePaymentState[paymentId]),
-    O.getOrElse<RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>>(
-      () => remoteUndefined
-    ),
-    remoteValue => (isLoading(remoteValue) ? remoteUndefined : remoteValue)
+    O.chainNullableK(message => message.paymentData),
+    O.map(getRptIdStringFromPaymentData),
+    O.filter(rptId => isUserSelectedPaymentSelector(state, rptId)),
+    O.toUndefined
+  );
+
+export const canNavigateToPaymentFromMessageSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    isProfileEmailValidatedSelector,
+    B.fold(
+      () => false,
+      () => pipe(state, isPagoPaSupportedSelector)
+    )
   );
 
 export const paymentsButtonStateSelector = (
   state: GlobalState,
-  messageId: UIMessageId,
-  payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
-  maxVisiblePaymentCount: number
-) =>
+  messageId: UIMessageId
+): "hidden" | "loading" | "enabled" =>
   pipe(
-    state.entities.messages.payments[messageId],
+    messagePaymentDataSelector(state, messageId),
     O.fromNullable,
-    computeUpdatedPaymentCount(payments, maxVisiblePaymentCount),
-    buttonStateFromUpdatedPaymentCount(payments, maxVisiblePaymentCount)
-  );
-
-const computeUpdatedPaymentCount =
-  (
-    payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
-    maxVisiblePaymentCount: number
-  ) =>
-  (maybePaymentStatuses: O.Option<SinglePaymentState>) =>
-    pipe(
-      maybePaymentStatuses,
-      O.map(paymentStatuses =>
-        pipe(
-          payments ?? [],
-          RA.takeLeft(maxVisiblePaymentCount),
-          RA.reduce(initialPaymentStatistics(), (accumulator, payment) =>
-            pipe(
-              payment,
-              getRptIdStringFromPayment,
-              paymentId => paymentStatuses[paymentId],
-              O.fromNullable,
-              computePaymentStatistics(accumulator)
-            )
-          )
-        )
-      ),
-      O.getOrElse(() => initialPaymentStatistics())
-    );
-
-type PaymentStatistics = {
-  updatedPaymentCount: number;
-  errorPaymentCount: number;
-};
-
-const initialPaymentStatistics: () => PaymentStatistics = () => ({
-  updatedPaymentCount: 0,
-  errorPaymentCount: 0
-});
-
-const updatedPaymentStatistics = (previousStatistics: PaymentStatistics) => ({
-  updatedPaymentCount: previousStatistics.updatedPaymentCount + 1,
-  errorPaymentCount: previousStatistics.errorPaymentCount
-});
-const errorPaymentStatistics = (previousStatistics: PaymentStatistics) => ({
-  updatedPaymentCount: previousStatistics.updatedPaymentCount + 1,
-  errorPaymentCount: previousStatistics.errorPaymentCount + 1
-});
-
-const computePaymentStatistics =
-  (previousStatistics: PaymentStatistics) =>
-  (
-    maybePaymentStatus: O.Option<
-      RemoteValue<PaymentRequestsGetResponse, Detail_v2Enum>
-    >
-  ) =>
-    pipe(
-      maybePaymentStatus,
-      O.map(paymentStatus =>
-        pipe(
-          isError(paymentStatus),
-          B.fold(
-            () =>
-              pipe(
-                isReady(paymentStatus),
-                B.fold(
-                  () => ({ ...previousStatistics }),
-                  () => updatedPaymentStatistics(previousStatistics)
-                )
-              ),
-            () => errorPaymentStatistics(previousStatistics)
-          )
-        )
-      ),
-      O.getOrElse(() => ({ ...previousStatistics }))
-    );
-
-const buttonStateFromUpdatedPaymentCount =
-  (
-    payments: ReadonlyArray<NotificationPaymentInfo> | undefined,
-    maxVisiblePaymentCount: number
-  ) =>
-  (updatedPaymentStatistics: PaymentStatistics) =>
-    pipe(payments?.length ?? 0, paymentCount =>
+    O.map(getRptIdStringFromPaymentData),
+    O.map(paymentId => paymentStateSelector(state, messageId, paymentId)),
+    O.map(paymentStatus =>
       pipe(
-        paymentCount <= maxVisiblePaymentCount &&
-          paymentCount === updatedPaymentStatistics.errorPaymentCount,
-        B.fold(
-          () =>
-            pipe(
-              updatedPaymentStatistics.updatedPaymentCount > 0,
-              B.fold(
-                () => "visibleLoading" as const,
-                () => "visibleEnabled" as const
-              )
-            ),
-          () => "hidden" as const
+        paymentStatus,
+        foldK(
+          () => "loading" as const,
+          () => "loading" as const,
+          _ => "enabled" as const,
+          _ => "hidden" as const
         )
       )
-    );
+    ),
+    O.getOrElseW(() => "hidden" as const)
+  );
 
-export const selectedPaymentIdSelector = (state: GlobalState) =>
-  state.entities.messages.payments.selectedPayment;
+export const isPaymentsButtonVisibleSelector = (
+  state: GlobalState,
+  messageId: UIMessageId
+) =>
+  pipe(
+    paymentsButtonStateSelector(state, messageId),
+    status => status !== "hidden"
+  );
