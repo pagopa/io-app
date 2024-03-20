@@ -1,4 +1,8 @@
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useNavigation } from "@react-navigation/native";
 import React, {
@@ -25,7 +29,6 @@ import { CieRequestAuthenticationOverlay } from "../../../components/cie/CieRequ
 import { Link } from "../../../components/core/typography/Link";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import LegacyFooterWithButtons from "../../../components/ui/FooterWithButtons";
 import {
   BottomTopAnimation,
   LightModalContext
@@ -97,7 +100,7 @@ const CiePinScreen: React.FC<Props> = props => {
       IOStackNavigationProp<AuthenticationParamsList, "CIE_PIN_SCREEN">
     >();
   const [pin, setPin] = useState("");
-  const continueButtonRef = useRef<LegacyFooterWithButtons>(null);
+  const continueButtonRef = useRef<View>(null);
   const pinPadViewRef = useRef<View>(null);
   const [authUrlGenerated, setAuthUrlGenerated] = useState<string | undefined>(
     undefined
@@ -222,27 +225,16 @@ const CiePinScreen: React.FC<Props> = props => {
         </View>
       </ScrollView>
       {pin.length === CIE_PIN_LENGTH && (
-        // `ref` prop is missing
-        //
-        // <FooterWithButtons
-        //   type="SingleButton"
-        //   ref={continueButtonRef}
-        //   primary={{
-        //     type: "Solid",
-        //     buttonProps: {
-        //       label: I18n.t("global.buttons.continue"),
-        //       accessibilityLabel: I18n.t("global.buttons.continue"),
-        //       onPress: showModal
-        //     }
-        //   }}
-        // />
-        <LegacyFooterWithButtons
-          ref={continueButtonRef}
-          type={"SingleButton"}
-          leftButton={{
-            primary: true,
-            onPress: showModal,
-            title: I18n.t("global.buttons.continue")
+        <FooterWithButtons
+          type="SingleButton"
+          primary={{
+            type: "Solid",
+            buttonProps: {
+              ref: continueButtonRef,
+              label: I18n.t("global.buttons.continue"),
+              accessibilityLabel: I18n.t("global.buttons.continue"),
+              onPress: showModal
+            }
           }}
         />
       )}

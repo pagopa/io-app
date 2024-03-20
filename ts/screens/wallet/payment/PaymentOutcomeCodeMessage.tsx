@@ -1,19 +1,17 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import { View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Route, useRoute } from "@react-navigation/native";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
-import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { Label } from "../../../components/core/typography/Label";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
 import { WalletPaymentFeebackBanner } from "../../../features/payments/payment/components/WalletPaymentFeedbackBanner";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
@@ -78,10 +76,14 @@ const successComponent = (emailAddress: string, amount?: string) => (
 const successFooter = (onClose: () => void) => (
   <FooterWithButtons
     type={"SingleButton"}
-    leftButton={cancelButtonProps(
-      onClose,
-      I18n.t("wallet.outcomeMessage.cta.close")
-    )}
+    primary={{
+      type: "Outline",
+      buttonProps: {
+        onPress: onClose,
+        label: I18n.t("wallet.outcomeMessage.cta.close"),
+        accessibilityLabel: I18n.t("wallet.outcomeMessage.cta.close")
+      }
+    }}
   />
 );
 

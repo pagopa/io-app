@@ -1,25 +1,24 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { useFocusEffect } from "@react-navigation/native";
+import {
+  isError,
+  isLoading,
+  isUndefined
+} from "../../../../../common/model/RemoteValue";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../../../../components/SectionStatus";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import { fetchPagoPaTimeout } from "../../../../../config";
 import I18n from "../../../../../i18n";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
-import {
-  isError,
-  isLoading,
-  isUndefined
-} from "../../../../../common/model/RemoteValue";
 import { loadAbi } from "../../bancomat/store/actions";
 import { abiListSelector, abiSelector } from "../../store/abi";
 import { SearchBankComponent } from "./SearchBankComponent";
@@ -35,7 +34,14 @@ type Props = {
 const renderFooterButtons = (onClose: () => void) => (
   <FooterWithButtons
     type={"SingleButton"}
-    leftButton={cancelButtonProps(onClose, I18n.t("global.buttons.close"))}
+    primary={{
+      type: "Outline",
+      buttonProps: {
+        onPress: onClose,
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close")
+      }
+    }}
   />
 );
 
@@ -88,8 +94,8 @@ const SearchBankScreen: React.FunctionComponent<Props> = (props: Props) => {
           />
         </View>
         <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />
-        {renderFooterButtons(props.onBack)}
       </SafeAreaView>
+      {renderFooterButtons(props.onBack)}
     </BaseScreenComponent>
   );
 };
