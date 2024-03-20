@@ -27,9 +27,6 @@ const generateCardsLayout = generateFlatListItemLayout(
   DIVIDER_WIDTH
 );
 
-/**
- * @deprecated
- */
 export const PaymentCardsCarousel = ({
   cards,
   testID
