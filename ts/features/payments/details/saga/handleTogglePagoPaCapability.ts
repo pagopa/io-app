@@ -11,16 +11,14 @@ import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletDetailsInstrumentSelector } from "../store";
-import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
-import { Service } from "../../../../../definitions/pagopa/walletv3/Service";
-import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
-import { WalletService } from "../../../../../definitions/pagopa/walletv3/WalletService";
+import { WalletApplication } from "../../../../../definitions/pagopa/walletv3/WalletApplication";
+import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 
 /**
  * Handle the remote call to toggle the Wallet pagopa capability
  */
 export function* handleTogglePagoPaCapability(
-  updateWalletServicesById: WalletClient["updateWalletServicesById"],
+  updateWalletApplicationsById: WalletClient["updateWalletApplicationsById"],
   action: ActionType<(typeof walletDetailsPagoPaCapabilityToggle)["request"]>
 ) {
   try {
@@ -28,22 +26,22 @@ export function* handleTogglePagoPaCapability(
     if (!walletDetails) {
       throw new Error("walletDetails is undefined");
     }
-    const updatedServices = walletDetails.services.map(service => ({
-      ...service,
-      status: updatePagoPaServiceStatus(service)
+    const updatedApplications = walletDetails.applications.map(application => ({
+      ...application,
+      status: updatePagoPaApplicationStatus(application)
     }));
 
-    const updateWalletPagoPaServicesRequest = updateWalletServicesById({
+    const updateWalletPagoPaApplicationRequest = updateWalletApplicationsById({
       walletId: action.payload.walletId,
       body: {
-        services: updatedServices as Array<WalletService>
+        applications: updatedApplications as Array<WalletApplication>
       }
     });
     const updateWalletResult = (yield* call(
       withRefreshApiCall,
-      updateWalletPagoPaServicesRequest,
+      updateWalletPagoPaApplicationRequest,
       action
-    )) as unknown as SagaCallReturnType<typeof updateWalletServicesById>;
+    )) as unknown as SagaCallReturnType<typeof updateWalletApplicationsById>;
     if (E.isRight(updateWalletResult)) {
       if (updateWalletResult.right.status === 204) {
         // handled success
@@ -81,13 +79,13 @@ export function* handleTogglePagoPaCapability(
   }
 }
 
-const updatePagoPaServiceStatus = (
-  service: Service
-): ServiceStatusEnum | undefined => {
-  if (service.name === ServiceNameEnum.PAGOPA) {
-    return service.status === ServiceStatusEnum.DISABLED
-      ? ServiceStatusEnum.ENABLED
-      : ServiceStatusEnum.DISABLED;
+const updatePagoPaApplicationStatus = (
+  application: WalletApplication
+): WalletApplicationStatusEnum | undefined => {
+  if (application.name === "PAGOPA") {
+    return application.status === WalletApplicationStatusEnum.DISABLED
+      ? WalletApplicationStatusEnum.ENABLED
+      : WalletApplicationStatusEnum.DISABLED;
   }
-  return service.status;
+  return application.status;
 };
