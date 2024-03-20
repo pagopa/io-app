@@ -7,7 +7,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import {
   Divider,
-  IOLogoPaymentType,
   IOPaymentLogos,
   IOStyles,
   ListItemNav,
@@ -54,10 +53,7 @@ const PaymentMethodItem = ({
     O.fold(
       () => <ListItemNav {...listItemNavCommonProps} icon="creditCard" />,
       brand => (
-        <ListItemNav
-          {...listItemNavCommonProps}
-          paymentLogo={brand as IOLogoPaymentType}
-        />
+        <ListItemNav {...listItemNavCommonProps} paymentLogoUri={brand} />
       )
     )
   );
