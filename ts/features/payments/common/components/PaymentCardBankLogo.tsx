@@ -1,27 +1,29 @@
+import { IOColors, WithTestID } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Image, ImageSourcePropType, View } from "react-native";
+import { Image, View } from "react-native";
 import Placeholder from "rn-placeholder";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { getBankLogosCdnUri } from "../../../../components/ui/utils/strings";
 
 type PaymentCardBankLogoProps = {
-  source: ImageSourcePropType;
+  abiCode: string;
   height: number;
   accessibilityLabel?: string;
 };
 
 export const PaymentCardBankLogo = ({
-  source,
+  abiCode,
   height,
-  accessibilityLabel
-}: PaymentCardBankLogoProps) => {
+  accessibilityLabel,
+  testID
+}: WithTestID<PaymentCardBankLogoProps>) => {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [imageWidth, setImageWidth] = React.useState<number>();
+  const [imageWidth, setImageWidth] = React.useState<number>(50);
   return (
-    <View>
+    <View testID={testID}>
       <Image
         accessible={true}
         accessibilityLabel={accessibilityLabel}
-        source={source}
+        source={{ uri: getBankLogosCdnUri(abiCode) }}
         style={{
           height,
           width: imageWidth,

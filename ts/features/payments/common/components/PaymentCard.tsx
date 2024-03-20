@@ -2,18 +2,18 @@ import {
   H6,
   IOColors,
   LabelSmallAlt,
-  VSpacer
+  VSpacer,
+  WithTestID
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import { capitalize } from "lodash";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import Placeholder, { BoxProps } from "rn-placeholder";
-import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
-import { getBankLogosCdnUri } from "../../../../components/ui/utils/strings";
-import I18n from "../../../../i18n";
-import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
+import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
+import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
+import I18n from "../../../../i18n";
 import { PaymentCardBankLogo } from "./PaymentCardBankLogo";
 
 type PaymentCardProps = {
@@ -34,7 +34,7 @@ type Props =
       isLoading: true;
     };
 
-const PaymentCard = (props: Props) => {
+const PaymentCard = (props: WithTestID<Props>) => {
   if (props.isLoading) {
     return <PaymentCardSkeleton />;
   }
@@ -53,7 +53,7 @@ const PaymentCard = (props: Props) => {
     </LabelSmallAlt>
   );
 
-  const expirationDateText = props.expireDate && (
+  const expireDateText = props.expireDate && (
     <LabelSmallAlt>
       {I18n.t("wallet.creditCard.validUntil", {
         expDate: format(props.expireDate, "MM/YY")
@@ -87,6 +87,7 @@ const PaymentCard = (props: Props) => {
       return (
         <View style={styleSheet.bankInfo}>
           <PayPalLogo
+            testID="paymentCardPayPalLogoTestId"
             accessible={true}
             accessibilityLabel="PayPal"
             height={32}
@@ -100,6 +101,7 @@ const PaymentCard = (props: Props) => {
       return (
         <View style={styleSheet.bankInfo}>
           <BPayLogo
+            testID="paymentCardBPayLogoTestId"
             accessible={true}
             accessibilityLabel="BANCOMAT Pay"
             height={24}
@@ -113,7 +115,8 @@ const PaymentCard = (props: Props) => {
       return (
         <View style={styleSheet.bankInfo}>
           <PaymentCardBankLogo
-            source={{ uri: getBankLogosCdnUri(props.abiCode) }}
+            testID="paymentCardBankLogoTestId"
+            abiCode={props.abiCode}
             height={24}
           />
         </View>
@@ -150,7 +153,7 @@ const PaymentCard = (props: Props) => {
         </View>
         <View style={styleSheet.additionalInfo}>
           {holderNameText}
-          {expirationDateText}
+          {expireDateText}
           {maskedEmailText}
           {maskedPhoneText}
         </View>

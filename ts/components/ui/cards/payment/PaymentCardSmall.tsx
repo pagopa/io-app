@@ -78,9 +78,6 @@ export type PaymentCardSmallProps = WithTestID<
     } & CardDataType)
 >;
 
-/**
- * @deprecated
- */
 export const PaymentCardSmall = (props: PaymentCardSmallProps) => {
   if (props.isLoading) {
     return <CardSmallSkeleton testID={props.testID} />;
