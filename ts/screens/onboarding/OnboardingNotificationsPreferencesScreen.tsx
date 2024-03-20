@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   Divider,
+  FooterWithButtons,
   IOColors,
   IOVisualCostants,
   NativeSwitch,
@@ -25,8 +26,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { OnboardingParamsList } from "../../navigation/params/OnboardingParamsList";
@@ -71,26 +70,6 @@ type Props = IOStackNavigationRouteProps<
   OnboardingParamsList,
   "ONBOARDING_NOTIFICATIONS_PREFERENCES"
 >;
-
-const continueButtonProps = (
-  isLoading: boolean,
-  onPress: () => void
-): BlockButtonProps => ({
-  block: true,
-  onPress,
-  title: I18n.t("onboarding.notifications.continue"),
-  isLoading
-});
-
-const loadingButtonProps = (): BlockButtonProps => ({
-  block: true,
-  onPress: undefined,
-  title: "",
-  disabled: true,
-  style: { backgroundColor: IOColors.greyLight, width: "100%" },
-  isLoading: true,
-  iconColor: "bluegreyDark"
-});
 
 const CustomGoBack = memo(
   ({ isFirstOnboarding }: { isFirstOnboarding: boolean }) =>
@@ -291,15 +270,19 @@ const OnboardingNotificationsPreferencesScreen = (props: Props) => {
         </ScrollView>
 
         {bottomSheet}
-        <FooterWithButtons
-          type="SingleButton"
-          leftButton={
-            isUpdating
-              ? loadingButtonProps()
-              : continueButtonProps(isUpdating, upsertPreferences)
-          }
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("onboarding.notifications.continue"),
+            accessibilityLabel: I18n.t("onboarding.notifications.continue"),
+            onPress: upsertPreferences,
+            loading: isUpdating
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
