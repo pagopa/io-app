@@ -2006,6 +2006,7 @@ services:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
+        successAlert: "You have enabled the quick setup"
         body:
           text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
@@ -2013,6 +2014,7 @@ services:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
+        successAlert: "You have enabled the manual configuration"
         body:
           text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:
