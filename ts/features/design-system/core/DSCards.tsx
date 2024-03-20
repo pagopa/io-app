@@ -9,6 +9,7 @@ import {
 } from "../../../components/ui/cards/payment/PaymentCardsCarousel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { PaymentCard } from "../../payments/common/components/PaymentCard";
 
 const styles = StyleSheet.create({
   content: {
@@ -99,10 +100,29 @@ export const DSCards = () => (
         <PaymentCardSmall isLoading={true} />
       </View>
     </DSComponentViewerBox>
-    <DSComponentViewerBox
-      name="PaymentCardBig
-"
-    >
+    <DSComponentViewerBox name="PaymentCardBig">
+      <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={new Date()} />
+      <VSpacer size={16} />
+      <PaymentCard
+        holderName="Anna Verdi"
+        expireDate={new Date()}
+        abiCode="03069"
+        brand="pagoBancomat"
+      />
+      <VSpacer size={16} />
+      <PaymentCard
+        holderName="Anna Verdi"
+        expireDate={new Date()}
+        abiCode="08509"
+        brand="maestro"
+      />
+      <VSpacer size={16} />
+      <PaymentCard holderEmail="anna_v********@**hoo.it" />
+      <VSpacer size={16} />
+      <PaymentCard holderName="Anna Verdi" holderPhone="+39 340 *** **62" />
+      <VSpacer size={16} />
+      <PaymentCard isLoading />
+      <VSpacer size={16} />
       <PaymentCardBig
         hpan="9999"
         cardType={"CREDIT"}

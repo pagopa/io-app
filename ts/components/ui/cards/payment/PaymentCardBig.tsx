@@ -18,6 +18,9 @@ import { LabelSmall } from "../../../core/typography/LabelSmall";
 import { LogoPaymentExtended } from "../../LogoPaymentExtended";
 import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
 
+/**
+ * @deprecated
+ */
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {
     return <CardSkeleton testID={props.testID} />;
