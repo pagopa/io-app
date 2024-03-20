@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { PaymentCardBig } from "../../../components/ui/cards/payment/PaymentCardBig";
 import { PaymentCardSmall } from "../../../components/ui/cards/payment/PaymentCardSmall";
@@ -70,28 +70,79 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
 export const DSCards = () => (
   <DesignSystemScreen title={"Cards"}>
     <DSComponentViewerBox name="PaymentCard">
-      <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={new Date()} />
-      <VSpacer size={16} />
-      <PaymentCard
-        holderName="Anna Verdi"
-        expireDate={new Date()}
-        abiCode="03069"
-        brand="pagoBancomat"
-      />
-      <VSpacer size={16} />
-      <PaymentCard
-        holderName="Anna Verdi"
-        expireDate={new Date()}
-        abiCode="08509"
-        brand="maestro"
-      />
-      <VSpacer size={16} />
-      <PaymentCard holderEmail="anna_v********@**hoo.it" />
-      <VSpacer size={16} />
-      <PaymentCard holderName="Anna Verdi" holderPhone="+39 340 *** **62" />
-      <VSpacer size={16} />
-      <PaymentCard isLoading />
+      <ScrollView
+        horizontal={true}
+        style={{ aspectRatio: 16 / 10, marginHorizontal: -24 }}
+        contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 16 }}
+      >
+        <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={new Date()} />
+        <HSpacer size={16} />
+        <PaymentCard
+          holderName="Anna Verdi"
+          expireDate={new Date()}
+          abiCode="03069"
+          brand="pagoBancomat"
+        />
+        <HSpacer size={16} />
+        <PaymentCard
+          holderName="Anna Verdi"
+          expireDate={new Date()}
+          abiCode="08509"
+          brand="maestro"
+        />
+        <HSpacer size={16} />
+        <PaymentCard holderEmail="anna_v********@**hoo.it" />
+        <HSpacer size={16} />
+        <PaymentCard holderName="Anna Verdi" holderPhone="+39 340 *** **62" />
+        <HSpacer size={16} />
+        <PaymentCard isLoading />
+      </ScrollView>
     </DSComponentViewerBox>
+
+    <DSComponentViewerBox name="PaymentCardBig (Pre ITW)">
+      <ScrollView
+        horizontal={true}
+        style={{ marginHorizontal: -24 }}
+        contentContainerStyle={{ paddingHorizontal: 24 }}
+      >
+        <PaymentCardBig
+          cardType={"PAGOBANCOMAT"}
+          expirationDate={new Date()}
+          holderName="A very very very long citizen name"
+          abiCode="03069"
+        />
+        <HSpacer size={16} />
+        <PaymentCardBig
+          cardType={"PAYPAL"}
+          holderEmail="userPaypalEmail@email.com"
+        />
+        <HSpacer size={16} />
+        <PaymentCardBig
+          cardType={"COBADGE"}
+          holderName="Mario Rossi"
+          abiCode="08509"
+          expirationDate={new Date()}
+          cardIcon="visa"
+        />
+        <HSpacer size={16} />
+        <PaymentCardBig
+          cardType={"COBADGE"}
+          holderName="Mario Rossi"
+          abiCode="08508"
+          expirationDate={new Date()}
+          cardIcon="visa"
+        />
+        <HSpacer size={16} />
+        <PaymentCardBig
+          cardType={"BANCOMATPAY"}
+          holderName="Mario Rossi"
+          phoneNumber="+39 1234567890"
+        />
+        <HSpacer size={16} />
+        <PaymentCardBig isLoading={true} />
+      </ScrollView>
+    </DSComponentViewerBox>
+
     <DSComponentViewerBox name="PaymentCardSmall">
       <View style={styles.content}>
         <PaymentCardSmall hpan="9999" isError={false} cardType={"CREDIT"} />
@@ -124,43 +175,6 @@ export const DSCards = () => (
       </View>
     </DSComponentViewerBox>
 
-    <DSComponentViewerBox name="PaymentCardBig (Pre ITW)">
-      <PaymentCardBig
-        cardType={"PAGOBANCOMAT"}
-        expirationDate={new Date()}
-        holderName="A very very very long citizen name"
-        abiCode="03069"
-      />
-      <VSpacer size={16} />
-      <PaymentCardBig
-        cardType={"PAYPAL"}
-        holderEmail="userPaypalEmail@email.com"
-      />
-      <VSpacer size={16} />
-      <PaymentCardBig
-        cardType={"COBADGE"}
-        holderName="Mario Rossi"
-        abiCode="08509"
-        expirationDate={new Date()}
-        cardIcon="visa"
-      />
-      <VSpacer size={16} />
-      <PaymentCardBig
-        cardType={"COBADGE"}
-        holderName="Mario Rossi"
-        abiCode="08508"
-        expirationDate={new Date()}
-        cardIcon="visa"
-      />
-      <VSpacer size={16} />
-      <PaymentCardBig
-        cardType={"BANCOMATPAY"}
-        holderName="Mario Rossi"
-        phoneNumber="+39 1234567890"
-      />
-      <VSpacer size={16} />
-      <PaymentCardBig isLoading={true} />
-    </DSComponentViewerBox>
     <DSComponentViewerBox name="PaymentCardsCarousel">
       <PaymentCardsCarousel {...cardsDataForCarousel} />
     </DSComponentViewerBox>
