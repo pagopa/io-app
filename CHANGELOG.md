@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.56.0-rc.3](https://github.com/pagopa/io-app/compare/2.56.0-rc.2...2.56.0-rc.3) (2024-03-20)
+
+
+### Features
+
+* [[IOPID-1511](https://pagopa.atlassian.net/browse/IOPID-1511)] [[IOPID-1529](https://pagopa.atlassian.net/browse/IOPID-1529)] Add new DS in Services Preference Screen (Profile and Onboarding) ([#5544](https://github.com/pagopa/io-app/issues/5544)) ([9e0452a](https://github.com/pagopa/io-app/commit/9e0452ae870925acf854c06c8b3216cb58a8fb63))
+
+## [2.56.0-rc.2](https://github.com/pagopa/io-app/compare/2.56.0-rc.1...2.56.0-rc.2) (2024-03-20)
+
+
+### Chores
+
+* bump io-app-design-system from 1.28.0 to 1.28.1 ([57dc0b5](https://github.com/pagopa/io-app/commit/57dc0b556a8e96d4eaefd5a6359a6af5df517859))
+
 ## [2.56.0-rc.1](https://github.com/pagopa/io-app/compare/2.56.0-rc.0...2.56.0-rc.1) (2024-03-19)
 
 
