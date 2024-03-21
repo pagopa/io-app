@@ -4,8 +4,6 @@
  */
 import {
   Divider,
-  IOLogoPaymentType,
-  IOPaymentLogos,
   IOStyles,
   ListItemNav,
   VSpacer
@@ -16,7 +14,6 @@ import * as React from "react";
 import { FlatList } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIOSelector } from "../../../../store/hooks";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { walletOnboardingSelectedPaymentMethodSelector } from "../store";
 import { WalletPaymentMethodItemSkeleton } from "./WalletPaymentMethodItemSkeleton";
 
@@ -49,15 +46,10 @@ const PaymentMethodItem = ({
   return pipe(
     paymentMethod.asset,
     O.fromNullable,
-    O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
-    O.map(([brand]) => brand),
     O.fold(
       () => <ListItemNav {...listItemNavCommonProps} icon="creditCard" />,
       brand => (
-        <ListItemNav
-          {...listItemNavCommonProps}
-          paymentLogo={brand as IOLogoPaymentType}
-        />
+        <ListItemNav {...listItemNavCommonProps} paymentLogoUri={brand} />
       )
     )
   );
