@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, act } from "@testing-library/react-native";
+import { render, fireEvent } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import { Store, createStore } from "redux";
 import * as _ from "lodash";
@@ -14,87 +14,65 @@ jest.useFakeTimers();
 const globalState = appReducer(undefined, applicationChangeState("active"));
 const store = createStore(appReducer, globalState as any);
 
+const primaryActionButtonTitle = "Continue";
+const secondaryActionButtonTitle = "Cancel";
+
 const defaultProps = {
   title: "Test title",
   subtitle: "Test subtitle",
   pictogramName: "timeout" as IOPictograms,
-  onSubmit: jest.fn(),
-  onClose: jest.fn(),
-  onCancel: jest.fn(),
-  onTimerExpired: jest.fn(),
-  timerDurationInSeconds: 10
+  primaryAction: {
+    label: primaryActionButtonTitle,
+    accessibilityLabel: primaryActionButtonTitle,
+    onPress: jest.fn()
+  },
+  secondaryAction: {
+    label: secondaryActionButtonTitle,
+    accessibilityLabel: secondaryActionButtonTitle,
+    onPress: jest.fn()
+  }
 };
 
 describe("AskUserInteractionScreen component", () => {
   it("should render properly", () => {
-    const { getByText, getByTestId } = renderComponent(defaultProps, store);
+    const { getByText } = renderComponent(defaultProps, store);
 
     expect(getByText(defaultProps.title)).toBeTruthy();
     expect(getByText(defaultProps.subtitle)).toBeTruthy();
-    const continueButton = getByText("Continue");
-    const cancelButton = getByText("Cancel");
-    const headerCloseButton = getByTestId("header-close-button");
-    const countdownTimer = getByText("00:10");
+    const continueButton = getByText(primaryActionButtonTitle);
+    const cancelButton = getByText(secondaryActionButtonTitle);
     expect(continueButton).toBeTruthy();
     expect(cancelButton).toBeTruthy();
-    expect(headerCloseButton).toBeTruthy();
-    expect(countdownTimer).toBeTruthy();
-    expect(getByTestId("countdown-timer")).toBeTruthy();
   });
 
-  it("should call onSubmit when the continue button is pressed", () => {
+  it("should call primaryAction onPress when the primary button is pressed", () => {
     const { getByText } = renderComponent(defaultProps, store);
-    const button = getByText("Continue");
+    const button = getByText(primaryActionButtonTitle);
     fireEvent.press(button);
-    expect(defaultProps.onSubmit).toHaveBeenCalled();
+    expect(defaultProps.primaryAction.onPress).toHaveBeenCalled();
   });
 
-  it("should call onCancel when the exit button is pressed", () => {
+  it("should call secondaryAction onPress when the secondary button is pressed", () => {
     const { getByText } = renderComponent(defaultProps, store);
-    const button = getByText("Cancel");
+    const button = getByText(secondaryActionButtonTitle);
     fireEvent.press(button);
-    expect(defaultProps.onCancel).toHaveBeenCalled();
+    expect(defaultProps.secondaryAction.onPress).toHaveBeenCalled();
   });
 
-  it("should call onClose when the close button is pressed", () => {
-    const { getByTestId } = renderComponent(defaultProps, store);
-    const button = getByTestId("header-close-button");
-    fireEvent.press(button);
-    expect(defaultProps.onClose).toHaveBeenCalled();
-  });
-
-  it("does not render exit button if onExit prop is not provided", () => {
+  it("does not render primary button if primaryAction is not provided", () => {
     const { queryByText } = renderComponent(
-      _.omit(defaultProps, "onCancel"),
+      _.omit(defaultProps, "primaryAction"),
       store
     );
-    expect(queryByText("Cancel")).toBeNull();
+    expect(queryByText(primaryActionButtonTitle)).toBeNull();
   });
 
-  it("does not render close button if onExit prop is not provided", () => {
-    const { queryByTestId } = renderComponent(
-      _.omit(defaultProps, "onClose"),
+  it("does not render secondary button if secondaryAction is not provided", () => {
+    const { queryByText } = renderComponent(
+      _.omit(defaultProps, "secondaryAction"),
       store
     );
-    expect(queryByTestId("header-close-button")).toBeNull();
-  });
-
-  it("does not render timer if onTimerExpired prop is not provided", () => {
-    const { queryByTestId } = renderComponent(
-      _.omit(defaultProps, "onTimerExpired"),
-      store
-    );
-    expect(queryByTestId("countdown-timer")).toBeNull();
-  });
-
-  it("should call onTimerExpired when the timer expires", async () => {
-    renderComponent(defaultProps, store);
-
-    await act(() => {
-      jest.advanceTimersByTime(10 * 1000);
-    });
-
-    expect(defaultProps.onTimerExpired).toHaveBeenCalled();
+    expect(queryByText(secondaryActionButtonTitle)).toBeNull();
   });
 });
 
