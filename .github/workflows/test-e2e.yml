@@ -67,23 +67,11 @@ jobs:
       fail-fast: false
       matrix:
         test: 
-          - "ts/__e2e__/payment00.e2e"
-          - "ts/__e2e__/payment01.e2e"
-          - "ts/__e2e__/payment02.e2e"
-          - "ts/__e2e__/payment03.e2e"
-          - "ts/__e2e__/payment04.e2e"
-          - "ts/__e2e__/login.e2e"
-          - "ts/features/bonus/cgn/__e2e__/cgn00.e2e"
-          - "ts/features/bonus/cgn/__e2e__/cgn01.e2e"
-          - "ts/features/bonus/cgn/__e2e__/cgn02.e2e"
-          - "ts/features/messages/__e2e__/messages.e2e"
-          - "ts/features/euCovidCert/__e2e__/euCovidCertValid00.e2e"
-          - "ts/features/euCovidCert/__e2e__/euCovidCertValid01.e2e"
-          - "ts/features/euCovidCert/__e2e__/euCovidCertValid02.e2e"
-          - "ts/features/euCovidCert/__e2e__/euCovidCertValid03.e2e"
-          - "ts/features/euCovidCert/__e2e__/euCovidCertExpired00.e2e"
-          - "ts/features/euCovidCert/__e2e__/euCovidCertRevoked00.e2e"
-          - "ts/features/wallet/onboarding/__e2e__/creditCardOnboarding.e2e"
+          - "ts/__e2e__/"
+          - "ts/features/bonus/cgn/__e2e__/"
+          - "ts/features/messages/__e2e__/"
+          - "ts/features/euCovidCert/__e2e__/"
+          - "ts/features/wallet/onboarding/__e2e__/"
     steps:
       - id: install-applesimutils
         run: |
