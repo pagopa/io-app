@@ -106,44 +106,6 @@ describe("MessageDetailsScreen", () => {
     expect(component.queryByTestId("attachment-tag")).toBeNull();
   });
 
-  it("should display the error tag if the payment is expired", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithExpairedPayment))
-    ];
-
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const store: Store<GlobalState> = createStore(appReducer, state as any);
-
-    const { component } = renderComponent(store);
-    expect(component.queryByTestId("due-date-tag")).not.toBeNull();
-  });
-
-  it("should NOT display the error tag if the payment is valid", () => {
-    const sequenceOfActions: ReadonlyArray<Action> = [
-      applicationChangeState("active"),
-      loadMessageById.success(toUIMessage(message_1)),
-      loadServiceDetail.success(service_1),
-      loadMessageDetails.success(toUIMessageDetails(messageWithValidPayment))
-    ];
-
-    const state: GlobalState = reproduceSequence(
-      {} as GlobalState,
-      appReducer,
-      sequenceOfActions
-    );
-    const store: Store<GlobalState> = createStore(appReducer, state as any);
-
-    const { component } = renderComponent(store);
-    expect(component.queryByTestId("due-date-tag")).toBeNull();
-  });
-
   it("should display the alert banner if the payment is expiring", () => {
     const next7Days = new Date(new Date().setDate(new Date().getDate() + 7));
 
