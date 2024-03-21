@@ -2451,13 +2451,10 @@ fastLogin:
   userInteraction:
     sessionExpired:
       noPin:
-        title: "Es ist zu lange her!"
-        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE authentifizieren. Anschließend kannst du die IO-Konfiguration dort fortsetzen, wo du aufgehört hast."
+        title: "Es ist zu lange her!"        
         submitButtonTitle: "Fortfahren"
       continueNavigation:
-        title: "Deine Sitzung ist abgelaufen"
-        subtitle: "Um die App weiter zu verwenden, drück auf “Fortsetzen”."
-        submitButtonTitle: "Fortsetzen"
+        title: "Deine Sitzung ist abgelaufen"        
         cancelButtonTitle: "Abbrechen"
       transientError:
         title: "Wir konnten dich nicht authentifizieren"
