@@ -31,10 +31,10 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
   ): PaymentCardSmallProps | undefined => {
     const details = method.details as UIWalletInfoDetails;
 
-    if (details.maskedPan !== undefined) {
+    if (details.lastFourDigits !== undefined) {
       return {
         cardType: "CREDIT",
-        hpan: details.maskedPan,
+        hpan: details.lastFourDigits,
         cardIcon: details.brand,
         isLoading: false
       };
