@@ -238,7 +238,7 @@ const EmailInsertScreen = () => {
   const handleGoBack = useCallback(() => {
     // click on goback icon
     // if the flow is onboarding, a warning is displayed at the click
-    if (isFirstOnBoarding || !isEmailValidated) {
+    if (isFirstOnBoarding) {
       Alert.alert(
         I18n.t("onboarding.alert.title"),
         I18n.t("onboarding.alert.description"),
@@ -262,12 +262,7 @@ const EmailInsertScreen = () => {
     } else {
       navigation.goBack();
     }
-  }, [
-    dispatchAbortOnboarding,
-    isEmailValidated,
-    isFirstOnBoarding,
-    navigation
-  ]);
+  }, [dispatchAbortOnboarding, isFirstOnBoarding, navigation]);
 
   useOnFirstRender(() => {
     if (!isFirstOnBoarding) {
@@ -359,7 +354,8 @@ const EmailInsertScreen = () => {
     title: "",
     supportRequest: true,
     contextualHelpMarkdown,
-    goBack: handleGoBack
+    goBack: handleGoBack,
+    canGoBack: isEmailValidated || isFirstOnBoarding
   });
 
   return (

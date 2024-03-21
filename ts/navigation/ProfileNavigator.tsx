@@ -97,6 +97,7 @@ const ProfileStackNavigator = () => (
     />
 
     <Stack.Screen
+      options={{ gestureEnabled: false }}
       name={ROUTES.INSERT_EMAIL_SCREEN}
       component={EmailInsertScreen}
     />

@@ -65,6 +65,7 @@ const OnboardingNavigator = () => (
       component={MissingDeviceBiometricScreen}
     />
     <Stack.Screen
+      options={{ gestureEnabled: false }}
       name={ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN}
       component={EmailInsertScreen}
     />
