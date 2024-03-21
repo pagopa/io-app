@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { Store, createStore } from "redux";
 import * as _ from "lodash";
 import type { IOPictograms } from "@pagopa/io-app-design-system";
-import AskUserInteractionScreen, { Props } from "../AskUserInterarctionScreen";
+import AskUserInteractionScreen, { Props } from "../AskUserInteractionScreen";
 import { GlobalState } from "../../../../store/reducers/types";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
