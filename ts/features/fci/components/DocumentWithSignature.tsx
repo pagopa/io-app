@@ -114,7 +114,6 @@ const DocumentWithSignature = (props: Props) => {
         onError={props.onError}
         onPressLink={constNull}
         enablePaging
-        enableAnnotationRendering={false}
         style={styles.pdf}
       />
     ),
