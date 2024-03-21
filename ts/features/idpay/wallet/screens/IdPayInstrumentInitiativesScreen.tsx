@@ -10,7 +10,7 @@ import { H1 } from "../../../../components/core/typography/H1";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
+import { LogoPaymentWithFallback } from "../../../payments/common/components/utils/LogoPaymentWithFallback";
 import TypedI18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import customVariables from "../../../../theme/variables";

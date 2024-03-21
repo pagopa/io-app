@@ -9,10 +9,10 @@ import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import { WithTestID } from "../../../../types/WithTestID";
-import { LogoPaymentWithFallback } from "../../utils/components/LogoPaymentWithFallback";
-import { useSpringPressScaleAnimation } from "../../utils/hooks/useSpringPressScaleAnimation";
 import { BrandEnum } from "../../../../../definitions/pagopa/ecommerce/WalletInfoDetails";
+import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
+import { WithTestID } from "../../../../types/WithTestID";
+import { LogoPaymentWithFallback } from "./utils/LogoPaymentWithFallback";
 
 type RenderData = {
   iconName: IOLogoPaymentType | BrandEnum | undefined;

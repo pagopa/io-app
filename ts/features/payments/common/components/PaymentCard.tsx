@@ -12,9 +12,9 @@ import { StyleSheet, View } from "react-native";
 import Placeholder, { BoxProps } from "rn-placeholder";
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
-import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
 import { PaymentCardBankLogo } from "./PaymentCardBankLogo";
+import { LogoPaymentWithFallback } from "./utils/LogoPaymentWithFallback";
 
 type PaymentCardProps = {
   brand?: string;

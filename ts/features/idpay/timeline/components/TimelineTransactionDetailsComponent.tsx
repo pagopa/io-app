@@ -12,7 +12,7 @@ import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponen
 import { Body } from "../../../../components/core/typography/Body";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
+import { LogoPaymentWithFallback } from "../../../payments/common/components/utils/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
 import { format } from "../../../../utils/dates";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";

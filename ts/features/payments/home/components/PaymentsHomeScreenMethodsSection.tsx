@@ -3,12 +3,12 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { PaymentCardSmallProps } from "../../../../components/ui/cards/payment/PaymentCardSmall";
-import { PaymentCardsCarousel } from "../../../../components/ui/cards/payment/PaymentCardsCarousel";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
+import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
+import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";
 
 const loadingCards: Array<PaymentCardSmallProps> = Array.from({
   length: 3

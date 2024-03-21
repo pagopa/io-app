@@ -12,7 +12,7 @@ import {
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { findFirstCaseInsensitive } from "../../../../../utils/object";
 
 export type LogoPaymentWithFallback = {
   brand?: string;
