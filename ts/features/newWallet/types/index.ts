@@ -1,3 +1,13 @@
+import {
+  IdPayWalletCard,
+  IdPayWalletCardProps
+} from "../../idpay/wallet/components/IdPayWalletCard";
+import {
+  PaymentWalletCard,
+  PaymentWalletCardProps
+} from "../../payments/common/components/PaymentWalletCard";
+import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
+
 // Used to group the cards in the wallet.
 export type WalletCardCategory = "itw" | "cgn" | "bonus" | "payment";
 
@@ -11,8 +21,7 @@ type WalletCardBase = {
 // Specific type for ID Pay bonus cards
 export type WalletCardBonus = {
   type: "idPay";
-  // TODO SIW-950 add types for ID Pay initiatives cards
-};
+} & IdPayWalletCardProps;
 
 // Specific type for CGN bonus cards
 export type WalletCardCgn = {
@@ -23,10 +32,24 @@ export type WalletCardCgn = {
 // Specific type for payment cards
 export type WalletCardPayment = {
   type: "payment";
-  // TODO SIW-951 add types for payment cards
-};
+} & PaymentWalletCardProps;
 
 export type WalletCard = WalletCardBase &
   (WalletCardBonus | WalletCardCgn | WalletCardPayment);
 // Used to map the card to the specific component that will render the card.
 export type WalletCardType = WalletCard["type"];
+
+/**
+ * Wallet card component mapper which translates a WalletCardType to a
+ * component to be rendered inside the wallet.
+ * Component MUST be a WalletCardBaseComponent, which can be wrapped
+ * using {@see withWalletCardBaseComponent}
+ */
+export const walletCardComponentMapper: Record<
+  WalletCardType,
+  WalletCardBaseComponent<any> | undefined
+> = {
+  cgn: undefined, // TODO add CGN component type
+  idPay: IdPayWalletCard,
+  payment: PaymentWalletCard
+};

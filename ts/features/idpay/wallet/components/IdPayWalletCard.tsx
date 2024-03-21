@@ -14,16 +14,20 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { formatNumberAmount } from "../../../../utils/stringBuilder";
 import { IDPayDetailsRoutes } from "../../details/navigation";
+import {
+  withWalletCardBaseComponent,
+  WalletCardComponentBaseProps
+} from "../../../newWallet/components/WalletCardBaseComponent";
 
-type IdPayWalletCardProps = {
-  initiativeId?: string;
+export type IdPayWalletCardProps = {
+  initiativeId: string;
   name: string;
   avatarSource: ImageURISource;
   amount: number;
   expireDate: Date;
-};
+} & WalletCardComponentBaseProps;
 
-export const IdPayWalletCard = (props: IdPayWalletCardProps) => {
+const IdPayCard = (props: IdPayWalletCardProps) => {
   const navigation = useIONavigation();
 
   const handleOnPress = () => {
@@ -114,3 +118,5 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+export const IdPayWalletCard = withWalletCardBaseComponent(IdPayCard);

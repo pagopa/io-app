@@ -16,7 +16,8 @@ import { LogoPaymentWithFallback } from "../../../../components/ui/utils/compone
 import I18n from "../../../../i18n";
 import { PaymentCardBankLogo } from "./PaymentCardBankLogo";
 
-type PaymentCardProps = {
+export type PaymentCardProps = {
+  walletId: string;
   brand?: string;
   abiCode?: string;
   hpan?: string;
