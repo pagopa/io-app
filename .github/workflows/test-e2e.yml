@@ -1,15 +1,14 @@
 name: Run e2e tests
 on:
   workflow_dispatch:
-  pull_request:
   push:
     branches:
       - master
 jobs:
-  # run-static-checks:
-  #  uses: ./.github/workflows/staticcheck.yaml
+  run-static-checks:
+   uses: ./.github/workflows/staticcheck.yaml
   build-detox-app:
-    #needs: run-static-checks
+    needs: run-static-checks
     runs-on: macos-latest
     concurrency:
       group: ${{ github.workflow }}-e2e-tests-${{ github.ref || github.run_id }}
