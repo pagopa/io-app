@@ -100,7 +100,7 @@ jobs:
           repository: pagopa/io-dev-api-server
           path: './_io-dev-api-server_'
       - id: run-e2e-tests
-        run: bash ./.github/scripts/run-e2e-tests.sh ${{ matrix.test }}.ts
+        run: bash ./.github/scripts/run-e2e-tests.sh ${{ matrix.test }}
       - id: notify-test-failure
         if: failure()
         uses: ./.github/actions/notify-e2e
