@@ -1,7 +1,7 @@
 import { call, put, select, take } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { StackActions } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import {
@@ -38,9 +38,14 @@ export function* checkEmailSaga() {
       yield* take(emailAcknowledged);
       yield* call(
         NavigationService.dispatchNavigationAction,
-        StackActions.replace(ROUTES.MAIN)
+        // We use navigate to go back to the main tab
+        // https://reactnavigation.org/docs/nesting-navigators/#navigation-actions-are-handled-by-current-navigator-and-bubble-up-if-couldnt-be-handled
+        CommonActions.navigate(ROUTES.MAIN, {
+          // If for some reason, we have navigation params
+          // we want to merge them going back to the main tab.
+          merge: true
+        })
       );
-
       // We get the latest profile from the store and return it
       const maybeUpdatedProfile = yield* select(profileSelector);
       if (pot.isSome(maybeUpdatedProfile)) {

@@ -92,6 +92,9 @@ const EmailInsertScreen = () => {
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(isOnboarding, isFirstOnBoarding);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
+  // This reference is used to prevent the refresh visual glitch
+  // caused by the polling stop in the email validation screen.
+  const canShowLoadingSpinner = useRef(true);
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
@@ -120,7 +123,9 @@ const EmailInsertScreen = () => {
   const prevUserProfile = usePrevious(profile);
 
   const isLoading = useMemo(
-    () => pot.isUpdating(profile) || pot.isLoading(profile),
+    () =>
+      (pot.isUpdating(profile) || pot.isLoading(profile)) &&
+      canShowLoadingSpinner.current,
     [profile]
   );
 
@@ -199,6 +204,8 @@ const EmailInsertScreen = () => {
 
   const continueOnPress = () => {
     Keyboard.dismiss();
+    // eslint-disable-next-line functional/immutable-data
+    canShowLoadingSpinner.current = true;
     if (isValidEmail()) {
       pipe(
         email,
@@ -272,8 +279,7 @@ const EmailInsertScreen = () => {
   });
 
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
-  // we show the modal to remind the user to validate the email.
-  // This is used during the check of the email at startup.
+  // let the user navigate the email validation screen
   useEffect(() => {
     if (
       O.isSome(acknowledgeOnEmailValidated) &&
@@ -284,6 +290,8 @@ const EmailInsertScreen = () => {
       // from the profile page.
       isOnboarding
     ) {
+      // eslint-disable-next-line functional/immutable-data
+      canShowLoadingSpinner.current = false;
       navigation.navigate(ROUTES.ONBOARDING, {
         screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
         params: {
@@ -316,39 +324,62 @@ const EmailInsertScreen = () => {
         // display a toast with error
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
         // the email is correctly inserted
-        // eslint-disable-next-line functional/no-let
-        let sendEmailAtFirstRender = false;
-        // the IO BE orchestrator already send an email
-        // if the previous profile email is different from the current one.
-        if (pot.isSome(prevUserProfile)) {
-          // So we need to check if the email is not changed
-          // to send the email validation process programmatically.
-          sendEmailAtFirstRender =
-            profile.value.email === prevUserProfile.value.email;
-        }
 
-        if (isOnboarding) {
-          navigation.navigate(ROUTES.ONBOARDING, {
-            screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
-            params: {
-              isOnboarding,
-              sendEmailAtFirstRender: isOnboarding
-            }
-          });
+        // if the email is entered and when the 'confirm' button
+        // is clicked the session has expired, when the session
+        // is refreshed the profile is updated and the email is
+        // validated because we are still using the old email.
+        // In order to prevent the user navigating to the email
+        // validation screen we use this control to allow the user
+        // to remain in this screen
+        if (isEmailValidated) {
+          if (!isFirstOnboarding) {
+            return;
+          }
         } else {
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.EMAIL_VERIFICATION_SCREEN,
-            params: {
-              isOnboarding: false,
-              sendEmailAtFirstRender,
-              isFciEditEmailFlow
-            }
-          });
-          return;
+          // eslint-disable-next-line functional/no-let
+          let sendEmailAtFirstRender = false;
+          // the IO BE orchestrator already send an email
+          // if the previous profile email is different from the current one.
+          if (pot.isSome(prevUserProfile)) {
+            // So we need to check if the email is not changed
+            // to send the email validation process programmatically.
+            sendEmailAtFirstRender =
+              profile.value.email === prevUserProfile.value.email;
+          }
+          // eslint-disable-next-line functional/immutable-data
+          canShowLoadingSpinner.current = false;
+          if (isOnboarding) {
+            navigation.navigate(ROUTES.ONBOARDING, {
+              screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
+              params: {
+                isOnboarding,
+                sendEmailAtFirstRender: isOnboarding
+              }
+            });
+          } else {
+            navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+              screen: ROUTES.EMAIL_VERIFICATION_SCREEN,
+              params: {
+                isOnboarding: false,
+                sendEmailAtFirstRender,
+                isFciEditEmailFlow
+              }
+            });
+          }
         }
       }
     }
-  }, [isFciEditEmailFlow, isOnboarding, navigation, prevUserProfile, profile]);
+  }, [
+    handleGoBack,
+    isEmailValidated,
+    isFciEditEmailFlow,
+    isFirstOnboarding,
+    isOnboarding,
+    navigation,
+    prevUserProfile,
+    profile
+  ]);
 
   useHeaderSecondLevel({
     title: "",

@@ -85,11 +85,9 @@ const EmailValidationSendEmailScreen = () => {
   const headerHeight = useHeaderHeight();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const optionEmail = useIOSelector(profileEmailSelector, (l, r) =>
-    _.isEqual(l, r)
-  );
+  const optionEmail = useIOSelector(profileEmailSelector, _.isEqual);
   const isEmailValidated = useIOSelector(isEmailValidatedSelector);
-  const emailValidation = useIOSelector(emailValidationSelector);
+  const emailValidation = useIOSelector(emailValidationSelector, _.isEqual);
   const prevEmailValidation = usePrevious(emailValidation);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
@@ -125,6 +123,12 @@ const EmailValidationSendEmailScreen = () => {
     [dispatch]
   );
 
+  const dispatchSetEmailCheckAtStartupFailure = useCallback(
+    (maybeFailed: O.Option<boolean>) =>
+      dispatch(setEmailCheckAtStartupFailure(maybeFailed)),
+    [dispatch]
+  );
+
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
 
   useOnFirstRender(() => {
@@ -136,7 +140,7 @@ const EmailValidationSendEmailScreen = () => {
     }
   });
 
-  const handleContinue = () => {
+  const handleContinue = useCallback(() => {
     if (isEmailValidated) {
       trackEmailValidationSuccessConfirmed(flow);
       if (isOnboarding || isFirstOnBoarding) {
@@ -146,7 +150,7 @@ const EmailValidationSendEmailScreen = () => {
           emailValidation.emailCheckAtStartupFailed.value
         ) {
           dispatchAcknowledgeOnEmailValidation(O.none);
-          dispatch(setEmailCheckAtStartupFailure(O.none));
+          dispatchSetEmailCheckAtStartupFailure(O.none);
           // if the user is in the onboarding flow and the email is correctly validated,
           // the email validation flow is finished
         }
@@ -160,28 +164,38 @@ const EmailValidationSendEmailScreen = () => {
         }
       }
     }
-  };
+  }, [
+    acknowledgeEmail,
+    dispatchAcknowledgeOnEmailValidation,
+    dispatchSetEmailCheckAtStartupFailure,
+    emailValidation.emailCheckAtStartupFailed,
+    flow,
+    isEmailValidated,
+    isFciEditEmailFlow,
+    isFirstOnBoarding,
+    isOnboarding,
+    navigation
+  ]);
 
-  const handleResendEmail = () => {
+  const handleResendEmail = useCallback(() => {
     trackResendValidationEmail(flow);
     sendEmailValidation();
-  };
+  }, [flow, sendEmailValidation]);
 
-  const navigateToInsertEmail = () => {
+  const navigateToInsertEmail = useCallback(() => {
     dispatchAcknowledgeOnEmailValidation(O.none);
     navigation.goBack();
-  };
+  }, [dispatchAcknowledgeOnEmailValidation, navigation]);
 
   useEffect(() => {
     if (
-      prevEmailValidation !== undefined &&
+      prevEmailValidation &&
       pot.isLoading(prevEmailValidation.sendEmailValidationRequest)
     ) {
       // send validation email KO
       if (pot.isError(emailValidation.sendEmailValidationRequest)) {
         IOToast.error(I18n.t("global.actions.retry"));
         setShowCountdown(false);
-        return;
       }
       // send validation email OK
       if (pot.isSome(emailValidation.sendEmailValidationRequest)) {

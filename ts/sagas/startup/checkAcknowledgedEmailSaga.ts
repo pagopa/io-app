@@ -1,5 +1,5 @@
 import { call, take } from "typed-redux-saga/macro";
-import { StackActions } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -53,6 +53,12 @@ export function* checkAcknowledgedEmailSaga(
   yield* take(emailAcknowledged);
   yield* call(
     NavigationService.dispatchNavigationAction,
-    StackActions.replace(ROUTES.MAIN)
+    // We use navigate to go back to the main tab
+    // https://reactnavigation.org/docs/nesting-navigators/#navigation-actions-are-handled-by-current-navigator-and-bubble-up-if-couldnt-be-handled
+    CommonActions.navigate(ROUTES.MAIN, {
+      // If for some reason, we have navigation params
+      // we want to merge them going back to the main tab.
+      merge: true
+    })
   );
 }
