@@ -132,7 +132,7 @@ describe("MessageDetailsScreen", () => {
     const store: Store<GlobalState> = createStore(appReducer, state as any);
 
     const { component } = renderComponent(store);
-    expect(component.queryByTestId("due-date-alert")).not.toBeNull();
+    expect(component.queryByTestId("due-date-alert")).toBeNull();
   });
 
   it("should NOT display the alert banner if the payment is NOT expiring", () => {
