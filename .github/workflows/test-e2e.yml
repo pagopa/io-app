@@ -15,6 +15,8 @@ jobs:
       group: ${{ github.workflow }}-e2e-tests-${{ github.ref || github.run_id }}
       cancel-in-progress: true
     steps:
+      - id: set-xcode-version
+        run: sudo xcode-select -s '/Applications/Xcode_14.3.1.app/Contents/Developer'
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
       - id: setup
@@ -85,6 +87,8 @@ jobs:
           - "ts/features/euCovidCert/__e2e__/euCovidCertRevoked00.e2e"
           - "ts/features/wallet/onboarding/__e2e__/creditCardOnboarding.e2e"
     steps:
+      - id: set-xcode-version
+        run: sudo xcode-select -s '/Applications/Xcode_14.3.1.app/Contents/Developer'
       - id: install-applesimutils
         run: |
           brew tap wix/brew
