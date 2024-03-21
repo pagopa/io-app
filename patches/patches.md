@@ -1,5 +1,15 @@
 This file describes the reason for the patches applied.
 
+### react-native-reanimated
+Created on **18/03/2024**
+This patch resolves [react-native-reanimated/issues/3286](https://github.com/software-mansion/react-native-reanimated/issues/3286) by applying [react-native-reanimated/pull/3298](https://github.com/software-mansion/react-native-reanimated/pull/3298). Remove this patch once bumped `react-native-reanimated` from `v2` to `v3` and checked the issue is gone.
+
+### react-native-pdf+6.4.0
+Created on **16/03/2024**
+
+#### Reason:
+- Make PDF annotations on iOS read-only to align with Android behaviour.
+
 ### react-native-vision-camera+2.15.4
 Created on **24/07/2023** 
 FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.

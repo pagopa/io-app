@@ -340,23 +340,29 @@ const mapSavedToRadioItem = (
 ): RadioItem<string> | undefined => {
   const details = method.details as UIWalletInfoDetails;
 
-  if (details.maskedPan !== undefined) {
+  if (details.lastFourDigits !== undefined) {
     return {
       id: method.walletId,
-      value: `${capitalize(details.brand)} ••${details.maskedPan}`,
-      startImage: getIconWithFallback(details.brand)
+      value: `${capitalize(details.brand)} ••${details.lastFourDigits}`,
+      startImage: {
+        uri: method.paymentMethodAsset
+      }
     };
   } else if (details.maskedEmail !== undefined) {
     return {
       id: method.walletId,
       value: "PayPal",
-      startImage: getIconWithFallback("paypal")
+      startImage: {
+        uri: method.paymentMethodAsset
+      }
     };
   } else if (details.maskedNumber !== undefined) {
     return {
       id: method.walletId,
       value: "BANCOMAT Pay",
-      startImage: getIconWithFallback("bancomatpay")
+      startImage: {
+        uri: method.paymentMethodAsset
+      }
     };
   }
 

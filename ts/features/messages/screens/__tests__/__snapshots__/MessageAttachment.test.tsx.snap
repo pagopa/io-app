@@ -752,9 +752,11 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                               </View>
                             </View>
                             <View
+                              accessibilityElementsHidden={true}
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
+                              importantForAccessibility="no-hide-descendants"
                               style={
                                 Object {
                                   "flexGrow": 1,
@@ -1505,9 +1507,11 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               </View>
                             </View>
                             <View
+                              accessibilityElementsHidden={true}
                               accessibilityLabel=""
                               accessibilityRole="header"
                               accessible={false}
+                              importantForAccessibility="no-hide-descendants"
                               style={
                                 Object {
                                   "flexGrow": 1,
