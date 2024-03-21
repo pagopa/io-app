@@ -1754,7 +1754,8 @@ wallet:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
         title: Attendi la conferma via email
-        subtitle: Non è stato possibile verificare l'esito del pagamento. Se è andato a buon fine, riceverai a breve un'email. Se non arriva, contatta l'assistenza.
+        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
+        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
@@ -2006,6 +2007,7 @@ services:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
+        successAlert: "You have enabled the quick setup"
         body:
           text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
@@ -2013,6 +2015,7 @@ services:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
+        successAlert: "You have enabled the manual configuration"
         body:
           text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:

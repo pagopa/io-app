@@ -93,6 +93,7 @@ import { StartupStatusEnum } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
+import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { deletePin, getPin } from "../utils/keychain";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import {
@@ -627,7 +628,11 @@ export function* initializeApplicationSaga(
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));
 
-  yield* put(applicationInitialized({ actionsToWaitFor: [] }));
+  yield* put(
+    applicationInitialized({
+      actionsToWaitFor: [walletPaymentHandlersInitialized]
+    })
+  );
 }
 
 /**
