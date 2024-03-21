@@ -4,8 +4,7 @@ import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
 
-import { ServiceNameEnum } from "../../../../../definitions/pagopa/walletv3/ServiceName";
-import { ServiceStatusEnum } from "../../../../../definitions/pagopa/walletv3/ServiceStatus";
+import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import {
   walletDetailsGetInstrument,
@@ -52,23 +51,25 @@ const walletDetailsReducer = (
         state.walletDetails,
         {} as WalletInfo
       );
-      const updatedServices = walletDetails.services.map(service => {
-        if (service.name === ServiceNameEnum.PAGOPA) {
-          return {
-            ...service,
-            status:
-              service.status === ServiceStatusEnum.ENABLED
-                ? ServiceStatusEnum.DISABLED
-                : ServiceStatusEnum.ENABLED
-          };
+      const updatedApplications = walletDetails.applications.map(
+        application => {
+          if (application.name === "PAGOPA") {
+            return {
+              ...application,
+              status:
+                application.status === WalletApplicationStatusEnum.ENABLED
+                  ? WalletApplicationStatusEnum.DISABLED
+                  : WalletApplicationStatusEnum.ENABLED
+            };
+          }
+          return application;
         }
-        return service;
-      });
+      );
       return {
         ...state,
         walletDetails: pot.some({
           ...walletDetails,
-          services: updatedServices
+          applications: updatedApplications
         })
       };
   }

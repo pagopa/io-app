@@ -437,6 +437,7 @@ profile:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
+    newWalletSection: New wallet section
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -585,7 +586,7 @@ authentication:
     card2-title: Use your favourite payment methods
     card2-content: You can pay a tax or a penalty by your bank account and your cards
     card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice    
+    card3-content: You can pay a notice also by scanning the QR code on the physical notice
     card5-title: Welcome to IO!
     card5-content: What can you do?
     card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
@@ -822,8 +823,8 @@ email:
     title: Validate your email
     subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent!    
-    countdowntext: Request new email in 
+    buttonlabelsent: Email sent!
+    countdowntext: Request new email in
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -1202,10 +1203,11 @@ wallet:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
     generalError: "There was a generic error while adding the payment method"
-    success:
-      title: "Payment method added successfully!"
-      continueButton: "Vedi dettagli"
-    failure:
+    outcome:
+      SUCCESS:
+        title: "Payment method added successfully!"
+        subtitle: ""
+        primaryAction: "Vedi dettagli"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
@@ -1752,7 +1754,8 @@ wallet:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
         title: Attendi la conferma via email
-        subtitle: Non è stato possibile verificare l'esito del pagamento. Se è andato a buon fine, riceverai a breve un'email. Se non arriva, contatta l'assistenza.
+        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
+        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
@@ -2004,6 +2007,7 @@ services:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
+        successAlert: "You have enabled the quick setup"
         body:
           text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
@@ -2011,6 +2015,7 @@ services:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
+        successAlert: "You have enabled the manual configuration"
         body:
           text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:
@@ -2666,6 +2671,7 @@ features:
     payments:
       title: "pagoPA notices"
       noticeCode: "Notice code"
+      pay: "Pay"
   euCovidCertificate:
     save:
       album: "IO"
@@ -2880,6 +2886,14 @@ features:
     signatureFieldInfo:
       title: "What are restrictive clauses?"
       subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."
+  wallet:
+    home:
+      emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
+      cta: Aggiungi al portafoglio
+      paymentsBanner:
+        title: Vuoi pagare un avviso?
+        action: Vai alla sezione Pagamenti
+        close: Chiudi
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -4,16 +4,14 @@ import { StyleSheet, View } from "react-native";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOToast } from "../../../components/Toast";
 import I18n from "../../../i18n";
-import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import variables from "../../../theme/variables";
-import {
-  canNavigateToPaymentFromMessageSelector,
-  paymentsButtonStateSelector
-} from "../../messages/store/reducers/payments";
-import { UIMessageId } from "../../messages/types";
+import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
-import { trackPNShowAllPayments } from "../analytics";
+import { UIMessageId } from "../../messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
+import { trackPNShowAllPayments } from "../analytics";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({
   container: {
@@ -48,10 +46,9 @@ export const MessageFooter = ({
   );
   const dispatch = useIODispatch();
   const toast = useIOToast();
-  const store = useIOStore();
-  const globalState = store.getState();
-  const canNavigateToPayment =
-    canNavigateToPaymentFromMessageSelector(globalState);
+  const canNavigateToPayment = useIOSelector(state =>
+    canNavigateToPaymentFromMessageSelector(state)
+  );
   const onFooterPressCallback = useCallback(() => {
     if (payments?.length === 1) {
       const firstPayment = payments[0];
@@ -59,6 +56,7 @@ export const MessageFooter = ({
       initializeAndNavigateToWalletForPayment(
         messageId,
         paymentId,
+        false,
         undefined,
         canNavigateToPayment,
         dispatch,

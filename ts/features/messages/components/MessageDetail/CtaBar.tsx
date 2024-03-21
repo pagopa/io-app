@@ -3,7 +3,6 @@ import React, { useEffect, useRef } from "react";
 import { View, StyleSheet } from "react-native";
 import { HSpacer } from "@pagopa/io-app-design-system";
 import { CommonServiceMetadata } from "../../../../../definitions/backend/CommonServiceMetadata";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { PaymentData, UIMessageDetails, UIMessageId } from "../../types";
 import { UIService } from "../../../../store/reducers/entities/services/types";
@@ -91,13 +90,11 @@ const CtaBar = ({
   const store = useIOStore();
 
   const { dueDate, markdown, paymentData, raw: legacyMessage } = messageDetails;
-  const maybeCtas = getMessageCTA(
-    markdown,
-    serviceMetadata,
-    service?.id as ServiceId
+  const ctas = O.toUndefined(
+    getMessageCTA(markdown, serviceMetadata, service?.id)
   );
   const state = store.getState();
-  const isPNOptInMessageInfo = isPNOptInMessage(maybeCtas, service, state);
+  const isPNOptInMessageInfo = isPNOptInMessage(ctas, service?.id, state);
   const isPNOptIn = isPNOptInMessageInfo.isPNOptInMessage;
 
   useEffect(() => {
@@ -130,12 +127,12 @@ const CtaBar = ({
     </View>
   );
 
-  const footer2 = O.isSome(maybeCtas) && (
+  const footer2 = ctas && (
     // Added a wrapper to enable the usage of the component outside the Container of Native Base
     <View style={styles.footerContainer} pointerEvents={"box-none"}>
       <View testID={"CtaBar_withCTA"} style={[IOStyles.footer, IOStyles.row]}>
         <ExtractedCTABar
-          ctas={maybeCtas.value}
+          ctas={ctas}
           xsmall={false}
           dispatch={dispatch}
           serviceMetadata={serviceMetadata}

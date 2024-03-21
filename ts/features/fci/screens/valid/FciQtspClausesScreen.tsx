@@ -81,8 +81,7 @@ const FciQtspClausesScreen = () => {
     navigation.navigate(FCI_ROUTES.MAIN, {
       screen: FCI_ROUTES.DOC_PREVIEW,
       params: {
-        documentUrl: url,
-        enableAnnotationRendering: true
+        documentUrl: url
       }
     });
   };
