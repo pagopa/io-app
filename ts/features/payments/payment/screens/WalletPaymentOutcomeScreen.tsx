@@ -23,6 +23,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { profileEmailSelector } from "../../../../store/reducers/profile";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -42,6 +43,7 @@ const WalletPaymentOutcomeScreen = () => {
   const navigation = useIONavigation();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
   const paymentStartRoute = useIOSelector(walletPaymentStartRouteSelector);
+  const profileEmailOption = useIOSelector(profileEmailSelector);
 
   const supportModal = usePaymentFailureSupportModal({
     outcome
@@ -187,8 +189,19 @@ const WalletPaymentOutcomeScreen = () => {
           title: I18n.t(
             "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.title"
           ),
-          subtitle: I18n.t(
-            "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle"
+          subtitle: pipe(
+            profileEmailOption,
+            O.map(email =>
+              I18n.t(
+                "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.subtitle",
+                { email }
+              )
+            ),
+            O.getOrElse(() =>
+              I18n.t(
+                "wallet.payment.outcome.WAITING_CONFIRMATION_EMAIL.defaultSubtitle"
+              )
+            )
           ),
           action: closeFailureAction
         };
