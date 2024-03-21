@@ -13,7 +13,7 @@ import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { startTimer } from "../../../../../../utils/timer";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnActivationStatus } from "../../../store/actions/activation";
-import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
+import { CgnActivationProgressEnum } from "../../../store/actions/utils";
 
 // wait time between requests
 const cgnResultPolling = 1000 as Millisecond;

@@ -1,8 +1,10 @@
 import { CommonActions } from "@react-navigation/native";
 import NavigationService from "../../../../navigation/NavigationService";
-import { CgnMerchantDetailScreenNavigationParams } from "../screens/merchants/CgnMerchantDetailScreen";
-import { CgnMerchantLandingWebviewNavigationParams } from "../screens/merchants/CgnMerchantLandingWebview";
 import CGN_ROUTES from "./routes";
+import {
+  CgnMerchantDetailScreenNavigationParams,
+  CgnMerchantLandingWebviewNavigationParams
+} from "./params";
 
 /**
  * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,

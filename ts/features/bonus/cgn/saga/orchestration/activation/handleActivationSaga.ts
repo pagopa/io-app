@@ -17,8 +17,8 @@ import {
   cgnActivationCancel,
   cgnActivationStatus
 } from "../../../store/actions/activation";
-import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
 import { cgnActivationSaga } from "../../networking/activation/getBonusActivationSaga";
+import { CgnActivationProgressEnum } from "../../../store/actions/utils";
 
 const mapEnumToNavigation = new Map<CgnActivationProgressEnum, () => void>([
   [CgnActivationProgressEnum.SUCCESS, navigateToCgnActivationCompleted],

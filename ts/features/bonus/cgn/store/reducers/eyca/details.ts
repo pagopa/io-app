@@ -13,18 +13,7 @@ import {
 } from "../../../../../../common/model/RemoteValue";
 import { NetworkError } from "../../../../../../utils/errors";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
-
-export type EycaDetailStatus = "NOT_FOUND" | "INELIGIBLE" | "ERROR" | "FOUND";
-export type EycaDetailKOStatus = Exclude<EycaDetailStatus, "FOUND">;
-
-export type EycaDetail =
-  | {
-      status: Extract<EycaDetailStatus, "FOUND">;
-      card: EycaCard;
-    }
-  | {
-      status: EycaDetailKOStatus;
-    };
+import { EycaDetail } from "../../actions/utils";
 export type EycaDetailsState = RemoteValue<EycaDetail, NetworkError>;
 
 const INITIAL_STATE: EycaDetailsState = remoteUndefined;
