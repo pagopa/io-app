@@ -2,20 +2,21 @@
  * This component will display the payment methods that can be registered
  * on the app
  */
-import * as React from "react";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import {
   Divider,
   IOStyles,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
 import { FlatList } from "react-native";
-import { WalletPaymentMethodItemSkeleton } from "../../common/components/WalletPaymentMethodItemSkeleton";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIOSelector } from "../../../../store/hooks";
+import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { walletOnboardingSelectedPaymentMethodSelector } from "../store";
+import { WalletPaymentMethodItemSkeleton } from "./WalletPaymentMethodItemSkeleton";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<PaymentMethodResponse>;
