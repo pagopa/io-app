@@ -24,22 +24,19 @@ export const MessageDetailsReminder = ({
     return null;
   }
 
-  const isLoading = reminderVisibility === "loading";
   const isExpiring = reminderVisibility === "visibleExpiring";
-
   return (
     <>
       {isExpiring ? (
         <MessageDetailsReminderExpiring
           dueDate={dueDate}
-          isLoading={isLoading}
           messageId={messageId}
           title={title}
         />
       ) : (
         <MessageDetailsReminderExpired
           dueDate={dueDate}
-          isLoading={isLoading}
+          isLoading={reminderVisibility === "loading"}
         />
       )}
       <VSpacer size={8} />

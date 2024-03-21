@@ -10,14 +10,12 @@ import I18n from "../../../../i18n";
 
 type MessageDetailsReminderExpiringProps = {
   dueDate: Date;
-  isLoading: boolean;
   messageId: UIMessageId;
   title: string;
 };
 
 export const MessageDetailsReminderExpiring = ({
   dueDate,
-  isLoading,
   messageId,
   title
 }: MessageDetailsReminderExpiringProps) => {
@@ -39,7 +37,6 @@ export const MessageDetailsReminderExpiring = ({
   );
   return (
     <Alert
-      isLoading={isLoading}
       testID="due-date-alert"
       variant="warning"
       action={

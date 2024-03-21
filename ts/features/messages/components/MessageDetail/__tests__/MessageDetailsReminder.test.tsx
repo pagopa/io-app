@@ -1,13 +1,13 @@
 import React from "react";
 import { createStore } from "redux";
-import { MessageDetailsReminderExpiring } from "../MessageDetailsReminderExpiring";
+import { MessageDetailsReminder } from "../MessageDetailsReminder";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessageId } from "../../../types";
 
-describe("MessageDetailsReminderExpiring", () => {
+describe("MessageDetailsReminder", () => {
   it("should match snapshot", () => {
     const component = renderScreen();
     expect(component.toJSON()).toMatchSnapshot();
@@ -24,9 +24,9 @@ const renderScreen = () => {
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <MessageDetailsReminderExpiring
+      <MessageDetailsReminder
         dueDate={new Date(2024, 2, 21, 10, 33, 42)}
-        messageId={"01HSG6GR1JT2E23AJ5RBTAMZZP" as UIMessageId}
+        messageId={"01HSG6H6M4KK36CV6QWP2VJW3S" as UIMessageId}
         title="The title"
       />
     ),
