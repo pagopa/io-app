@@ -116,7 +116,6 @@ const renderFooter = (url: string, filePath: string) => {
 
 type Props = {
   documentUrl: string;
-  enableAnnotationRendering?: boolean;
   onLoadComplete?: (totalPages: number) => void;
   onPageChanged?: (page: number) => void;
   onError: () => void;
@@ -125,7 +124,6 @@ type Props = {
 export const DocumentViewer = (props: Props): React.ReactElement => {
   const [isError, setIsError] = useState(false);
   const documentUrl = props.documentUrl;
-  const enableAnnotationRendering = props.enableAnnotationRendering;
   const dispatch = useIODispatch();
   const fciDownloadSelector = useIOSelector(fciDownloadPreviewSelector);
   const fciDownloadPath = useIOSelector(fciDownloadPathSelector);
@@ -155,7 +153,6 @@ export const DocumentViewer = (props: Props): React.ReactElement => {
               setIsError(true);
             }}
             enablePaging
-            enableAnnotationRendering={enableAnnotationRendering ? true : false}
           />
           {renderFooter(documentUrl, fciDownloadPath)}
         </>
