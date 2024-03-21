@@ -56,6 +56,7 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
+  isFciEditEmailFlow?: boolean;
 }>;
 
 const EMPTY_EMAIL = "";
@@ -69,7 +70,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to allow user to insert an email address.
  */
 const EmailInsertScreen = () => {
-  const { isOnboarding } =
+  const { isOnboarding, isFciEditEmailFlow } =
     useRoute<
       Route<
         "ONBOARDING_INSERT_EMAIL_SCREEN" | "INSERT_EMAIL_SCREEN",
@@ -344,14 +345,15 @@ const EmailInsertScreen = () => {
             screen: ROUTES.EMAIL_VERIFICATION_SCREEN,
             params: {
               isOnboarding: false,
-              sendEmailAtFirstRender
+              sendEmailAtFirstRender,
+              isFciEditEmailFlow
             }
           });
           return;
         }
       }
     }
-  }, [isOnboarding, navigation, prevUserProfile, profile]);
+  }, [isFciEditEmailFlow, isOnboarding, navigation, prevUserProfile, profile]);
 
   useHeaderSecondLevel({
     title: "",

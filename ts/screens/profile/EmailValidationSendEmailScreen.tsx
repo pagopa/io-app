@@ -40,7 +40,6 @@ import {
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { emailAcknowledged } from "../../store/actions/onboarding";
-import ROUTES from "../../navigation/routes";
 import { getFlowType } from "../../utils/analytics";
 import {
   trackEmailValidation,
@@ -56,6 +55,7 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { setAccessibilityFocus } from "../../utils/accessibility";
+import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import Countdown from "./components/CountdownComponent";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
@@ -67,6 +67,7 @@ const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 120;
 export type SendEmailValidationScreenProp = {
   isOnboarding?: boolean;
   sendEmailAtFirstRender?: boolean;
+  isFciEditEmailFlow?: boolean;
 };
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.validate.title",
@@ -80,7 +81,7 @@ const EmailValidationSendEmailScreen = () => {
         SendEmailValidationScreenProp
       >
     >().params;
-  const { isOnboarding, sendEmailAtFirstRender } = props;
+  const { isOnboarding, sendEmailAtFirstRender, isFciEditEmailFlow } = props;
   const headerHeight = useHeaderHeight();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
@@ -150,9 +151,13 @@ const EmailValidationSendEmailScreen = () => {
           // the email validation flow is finished
         }
       } else {
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PROFILE_DATA
-        });
+        if (isFciEditEmailFlow) {
+          navigation.navigate(FCI_ROUTES.MAIN, {
+            screen: FCI_ROUTES.USER_DATA_SHARE
+          });
+        } else {
+          navigation.popToTop();
+        }
       }
     }
   };

@@ -31,7 +31,7 @@ export function* checkAcknowledgedEmailSaga(
       // view displays the screen to show the user's email used in app
       // OR
       // An email exists on the user's profile but it is not validated, the conditional
-      // view shows the component that reminds to validate the email address or allows the navigation to edit it.
+      // view shows a screen that forces the user to insert and validate his email
       yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
         screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
         params: { isOnboarding: true }
@@ -42,9 +42,6 @@ export function* checkAcknowledgedEmailSaga(
     }
   } else {
     // the profile has no email address, user must insert it
-    // EmailInsertScreen knows if the user comes from onboarding or not
-    // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
-    // to validate it
     yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
       screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
       params: { isOnboarding: true }
