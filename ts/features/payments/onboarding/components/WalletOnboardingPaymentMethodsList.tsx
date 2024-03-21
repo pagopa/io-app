@@ -14,7 +14,6 @@ import * as React from "react";
 import { FlatList } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIOSelector } from "../../../../store/hooks";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { walletOnboardingSelectedPaymentMethodSelector } from "../store";
 import { WalletPaymentMethodItemSkeleton } from "./WalletPaymentMethodItemSkeleton";
 
