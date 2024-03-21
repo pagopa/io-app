@@ -11,7 +11,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import { capitalize } from "../../../../utils/strings";
 import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPaymentMethodScreen";
-import WalletDetailsPaymentMethodFeatures from "../../common/components/WalletDetailsPaymentMethodFeatures";
+import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
 import { WalletDetailsParamsList } from "../navigation/navigator";
 import {
   isErrorWalletInstrumentSelector,
