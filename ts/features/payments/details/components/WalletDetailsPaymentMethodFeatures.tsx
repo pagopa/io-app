@@ -6,7 +6,7 @@ import I18n from "../../../../i18n";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 
-import { isPaymentMethodExpired } from "../utils";
+import { isPaymentMethodExpired } from "../../common/utils";
 import { useIOSelector } from "../../../../store/hooks";
 import PaymentMethodInitiatives from "./WalletDetailsPaymentMethodInitiatives";
 import PaymentMethodSettings from "./WalletDetailsPaymentMethodSettings";
