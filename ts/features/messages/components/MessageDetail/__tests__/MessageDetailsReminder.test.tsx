@@ -6,15 +6,53 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { preferencesDesignSystemSetEnabled } from "../../../../../store/actions/persistedPreferences";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { UIMessageId } from "../../../types";
+import * as payments from "../../../store/reducers/payments";
+
+const dueDate = new Date(2024, 2, 21, 18, 44, 31);
 
 describe("MessageDetailsReminder", () => {
-  it("should match snapshot", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.restoreAllMocks();
+  });
+  it("should match snapshot when the reminder is hidden", () => {
+    jest
+      .spyOn(payments, "paymentExpirationBannerStateSelector")
+      .mockImplementation((_state, _messageId) => "hidden");
+    const component = renderScreen(dueDate);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when the due date is missing", () => {
+    jest
+      .spyOn(payments, "paymentExpirationBannerStateSelector")
+      .mockImplementation((_state, _messageId) => "visibleExpired");
     const component = renderScreen();
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when the reminder is loading", () => {
+    jest
+      .spyOn(payments, "paymentExpirationBannerStateSelector")
+      .mockImplementation((_state, _messageId) => "loading");
+    const component = renderScreen(dueDate);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when the reminder is visible an expiring", () => {
+    jest
+      .spyOn(payments, "paymentExpirationBannerStateSelector")
+      .mockImplementation((_state, _messageId) => "visibleExpiring");
+    const component = renderScreen(dueDate);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should match snapshot when the reminder is visible and expired", () => {
+    jest
+      .spyOn(payments, "paymentExpirationBannerStateSelector")
+      .mockImplementation((_state, _messageId) => "visibleExpired");
+    const component = renderScreen(dueDate);
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
 
-const renderScreen = () => {
+const renderScreen = (dueDate?: Date) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const designSystemState = appReducer(
     initialState,
@@ -25,7 +63,7 @@ const renderScreen = () => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageDetailsReminder
-        dueDate={new Date(2024, 2, 21, 10, 33, 42)}
+        dueDate={dueDate}
         messageId={"01HSG6H6M4KK36CV6QWP2VJW3S" as UIMessageId}
         title="The title"
       />

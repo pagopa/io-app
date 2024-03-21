@@ -319,176 +319,33 @@ exports[`MessageDetailsReminderExpired should match snapshot when loading 1`] = 
                         }
                       }
                     >
-                      <View
-                        accessibilityRole="button"
-                        accessible={true}
-                        collapsable={false}
-                        focusable={true}
-                        onBlur={[Function]}
-                        onClick={[Function]}
-                        onFocus={[Function]}
-                        onResponderGrant={[Function]}
-                        onResponderMove={[Function]}
-                        onResponderRelease={[Function]}
-                        onResponderTerminate={[Function]}
-                        onResponderTerminationRequest={[Function]}
-                        onStartShouldSetResponder={[Function]}
-                        onTouchEnd={[Function]}
-                        testID="due-date-alert"
-                      >
+                      <View>
                         <View
+                          height={84}
+                          radius={8}
                           style={
-                            Array [
-                              Object {
-                                "alignContent": "center",
-                                "alignItems": "flex-start",
-                                "flexDirection": "row",
-                              },
-                              Object {
-                                "borderCurve": "continuous",
-                                "borderRadius": 8,
-                                "padding": 16,
-                              },
-                              Object {
-                                "backgroundColor": "#FFF5DA",
-                              },
-                              Object {
-                                "transform": Array [
-                                  Object {
-                                    "scale": undefined,
-                                  },
-                                ],
-                              },
-                            ]
+                            Object {
+                              "backgroundColor": "#efefef",
+                              "borderRadius": 8,
+                              "height": 84,
+                              "width": "100%",
+                            }
                           }
-                        >
-                          <RNSVGSvgView
-                            accessibilityElementsHidden={true}
-                            accessibilityLabel=""
-                            accessible={false}
-                            align="xMidYMid"
-                            bbHeight={24}
-                            bbWidth={24}
-                            color={4284566549}
-                            focusable={false}
-                            height={24}
-                            importantForAccessibility="no-hide-descendants"
-                            meetOrSlice={0}
-                            minX={0}
-                            minY={0}
-                            style={
-                              Array [
-                                Object {
-                                  "backgroundColor": "transparent",
-                                  "borderWidth": 0,
-                                },
-                                Object {
-                                  "color": "#614C15",
-                                },
-                                Object {
-                                  "flex": 0,
-                                  "height": 24,
-                                  "width": 24,
-                                },
-                              ]
+                          width="100%"
+                        />
+                        <View
+                          collapsable={false}
+                          style={
+                            Object {
+                              "backgroundColor": "#ffffff",
+                              "height": "100%",
+                              "marginLeft": "0%",
+                              "opacity": 0.4,
+                              "position": "absolute",
+                              "width": 30,
                             }
-                            tintColor={4284566549}
-                            vbHeight={24}
-                            vbWidth={24}
-                            width={24}
-                          >
-                            <RNSVGGroup>
-                              <RNSVGPath
-                                clipRule={0}
-                                d="m15.523 3.047 7.926 13.813c1.566 2.73-.392 6.14-3.523 6.14H4.074C.942 23-1.015 19.59.55 16.86L8.477 3.047c1.566-2.73 5.48-2.73 7.046 0Zm-3.495 13.458a1.528 1.528 0 1 1 0 3.056 1.528 1.528 0 0 1 0-3.056Zm0-1.944c.568 0 1.029-.46 1.029-1.028V5.528a1.028 1.028 0 0 0-2.057 0v8.005c0 .567.46 1.028 1.029 1.028Z"
-                                fill={
-                                  Array [
-                                    2,
-                                  ]
-                                }
-                                fillRule={0}
-                                propList={
-                                  Array [
-                                    "fill",
-                                    "fillRule",
-                                  ]
-                                }
-                              />
-                            </RNSVGGroup>
-                          </RNSVGSvgView>
-                          <View
-                            style={
-                              Object {
-                                "width": 16,
-                              }
-                            }
-                          />
-                          <View
-                            style={
-                              Object {
-                                "flex": 1,
-                              }
-                            }
-                          >
-                            <Text
-                              accessibilityRole="text"
-                              allowFontScaling={false}
-                              color="warning-850"
-                              defaultColor="black"
-                              defaultWeight="Bold"
-                              font="TitilliumWeb"
-                              fontStyle={
-                                Object {
-                                  "fontSize": 16,
-                                  "lineHeight": 24,
-                                }
-                              }
-                              style={
-                                Array [
-                                  Object {
-                                    "fontSize": 16,
-                                    "lineHeight": 24,
-                                  },
-                                  Object {
-                                    "color": "#614C15",
-                                    "fontFamily": "Titillium Web",
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                  },
-                                ]
-                              }
-                              weight="Regular"
-                            >
-                              Expired on 21 Mar at 10:33
-                            </Text>
-                            <View
-                              style={
-                                Object {
-                                  "height": 8,
-                                }
-                              }
-                            />
-                            <Text
-                              ellipsizeMode="tail"
-                              numberOfLines={1}
-                              style={
-                                Array [
-                                  Object {
-                                    "fontFamily": "Titillium Web",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "700",
-                                  },
-                                  Object {
-                                    "color": "#614C15",
-                                  },
-                                ]
-                              }
-                            >
-                               
-                            </Text>
-                          </View>
-                        </View>
+                          }
+                        />
                       </View>
                     </View>
                   </View>
