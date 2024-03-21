@@ -74,6 +74,10 @@ const DESIGN_SYSTEM_ROUTES = {
     FULL_SCREEN_MODAL: {
       route: "DS_FULLSCR_MODAL",
       title: "Full screen modal"
+    },
+    STICKY_MESSAGE_CTAS: {
+      route: "DS_STICKY_MESS_CTAS",
+      title: "Sticky Message CTAs"
     }
   },
   LEGACY: {

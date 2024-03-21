@@ -51,6 +51,7 @@ import { DSSafeArea } from "../core/DSSafeArea";
 import { DSSafeAreaCentered } from "../core/DSSafeAreaCentered";
 import { DSScreenOperationResult } from "../core/DSScreenOperationResult";
 import { DSSelection } from "../core/DSSelection";
+import { DSStickyMessageCTAs } from "../core/DSStickyMessageCTAs";
 import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
@@ -445,6 +446,11 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
         component={DSEdgeToEdgeArea}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.DEBUG.STICKY_MESSAGE_CTAS.route}
+        component={DSStickyMessageCTAs}
+        options={{ headerShown: true }}
       />
 
       {/* LEGACY */}
