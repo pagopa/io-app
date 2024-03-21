@@ -344,19 +344,25 @@ const mapSavedToRadioItem = (
     return {
       id: method.walletId,
       value: `${capitalize(details.brand)} ••${details.lastFourDigits}`,
-      startImage: getIconWithFallback(details.brand)
+      startImage: {
+        uri: method.paymentMethodAsset
+      }
     };
   } else if (details.maskedEmail !== undefined) {
     return {
       id: method.walletId,
       value: "PayPal",
-      startImage: getIconWithFallback("paypal")
+      startImage: {
+        uri: method.paymentMethodAsset
+      }
     };
   } else if (details.maskedNumber !== undefined) {
     return {
       id: method.walletId,
       value: "BANCOMAT Pay",
-      startImage: getIconWithFallback("bancomatpay")
+      startImage: {
+        uri: method.paymentMethodAsset
+      }
     };
   }
 
