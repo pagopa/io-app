@@ -38,7 +38,7 @@ export function* checkEmailSaga() {
       yield* take(emailAcknowledged);
       yield* call(
         NavigationService.dispatchNavigationAction,
-        StackActions.popToTop()
+        StackActions.replace(ROUTES.MAIN)
       );
 
       // We get the latest profile from the store and return it

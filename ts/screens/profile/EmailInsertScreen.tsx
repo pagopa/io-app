@@ -237,7 +237,7 @@ const EmailInsertScreen = () => {
   const handleGoBack = useCallback(() => {
     // click on goback icon
     // if the flow is onboarding, a warning is displayed at the click
-    if (isFirstOnBoarding) {
+    if (isFirstOnBoarding || !isEmailValidated) {
       Alert.alert(
         I18n.t("onboarding.alert.title"),
         I18n.t("onboarding.alert.description"),
@@ -261,7 +261,12 @@ const EmailInsertScreen = () => {
     } else {
       navigation.goBack();
     }
-  }, [dispatchAbortOnboarding, isFirstOnBoarding, navigation]);
+  }, [
+    dispatchAbortOnboarding,
+    isEmailValidated,
+    isFirstOnBoarding,
+    navigation
+  ]);
 
   useOnFirstRender(() => {
     if (!isFirstOnBoarding) {
@@ -286,17 +291,12 @@ const EmailInsertScreen = () => {
       navigation.navigate(ROUTES.ONBOARDING, {
         screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
         params: {
-          isOnboarding: isFirstOnboarding,
+          isOnboarding,
           sendEmailAtFirstRender: isOnboarding
         }
       });
     }
-  }, [
-    acknowledgeOnEmailValidated,
-    isFirstOnboarding,
-    isOnboarding,
-    navigation
-  ]);
+  }, [acknowledgeOnEmailValidated, isOnboarding, navigation]);
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
@@ -320,40 +320,38 @@ const EmailInsertScreen = () => {
         // display a toast with error
       } else if (pot.isSome(profile) && !pot.isUpdating(profile)) {
         // the email is correctly inserted
-        if (isEmailValidated) {
-          if (!isFirstOnboarding) {
-            handleGoBack();
-          }
+        // eslint-disable-next-line functional/no-let
+        let sendEmailAtFirstRender = false;
+        // the IO BE orchestrator already send an email
+        // if the previous profile email is different from the current one.
+        if (pot.isSome(prevUserProfile)) {
+          // So we need to check if the email is not changed
+          // to send the email validation process programmatically.
+          sendEmailAtFirstRender =
+            profile.value.email === prevUserProfile.value.email;
+        }
+
+        if (isOnboarding) {
+          navigation.navigate(ROUTES.ONBOARDING, {
+            screen: ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN,
+            params: {
+              isOnboarding,
+              sendEmailAtFirstRender: isOnboarding
+            }
+          });
         } else {
-          // eslint-disable-next-line functional/no-let
-          let sendEmailAtFirstRender = false;
-          // the IO BE orchestrator already send an email
-          // if the previous profile email is different from the current one.
-          if (pot.isSome(prevUserProfile)) {
-            // So we need to check if the email is not changed
-            // to send the email validation process programmatically.
-            sendEmailAtFirstRender =
-              profile.value.email === prevUserProfile.value.email;
-          }
           navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
             screen: ROUTES.EMAIL_VERIFICATION_SCREEN,
             params: {
-              isOnboarding: isFirstOnboarding,
+              isOnboarding: false,
               sendEmailAtFirstRender
             }
           });
+          return;
         }
-        return;
       }
     }
-  }, [
-    handleGoBack,
-    isEmailValidated,
-    isFirstOnboarding,
-    navigation,
-    prevUserProfile,
-    profile
-  ]);
+  }, [isOnboarding, navigation, prevUserProfile, profile]);
 
   useHeaderSecondLevel({
     title: "",

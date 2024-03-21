@@ -56,6 +56,6 @@ export function* checkAcknowledgedEmailSaga(
   yield* take(emailAcknowledged);
   yield* call(
     NavigationService.dispatchNavigationAction,
-    StackActions.popToTop()
+    StackActions.replace(ROUTES.MAIN)
   );
 }

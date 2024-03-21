@@ -138,23 +138,21 @@ const EmailValidationSendEmailScreen = () => {
   const handleContinue = () => {
     if (isEmailValidated) {
       trackEmailValidationSuccessConfirmed(flow);
-      if (isOnboarding) {
-        // if the user is in the onboarding flow and the email is correctly validated,
-        // the email validation flow is finished
+      if (isOnboarding || isFirstOnBoarding) {
         acknowledgeEmail();
-      } else {
         if (
           O.isSome(emailValidation.emailCheckAtStartupFailed) &&
           emailValidation.emailCheckAtStartupFailed.value
         ) {
-          acknowledgeEmail();
           dispatchAcknowledgeOnEmailValidation(O.none);
           dispatch(setEmailCheckAtStartupFailure(O.none));
-        } else {
-          navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-            screen: ROUTES.PROFILE_DATA
-          });
+          // if the user is in the onboarding flow and the email is correctly validated,
+          // the email validation flow is finished
         }
+      } else {
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.PROFILE_DATA
+        });
       }
     }
   };
