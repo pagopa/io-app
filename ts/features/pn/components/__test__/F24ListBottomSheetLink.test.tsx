@@ -4,7 +4,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/persistedPreferences";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { F24LinkToBottomSheet } from "../F24LinkToBottomSheet";
+import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
 import { UIMessageId } from "../../../messages/types";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 
@@ -14,7 +14,7 @@ const numberToThirdPartyAttachment = (index: number) =>
     url: `https://domain.url/doc${index}.pdf`
   } as ThirdPartyAttachment);
 
-describe("F24LinkToBottomSheet", () => {
+describe("F24ListBottomSheetLink", () => {
   it("should be snapshot for an 0 items F24 list", () => {
     const zeroF24List = [] as ReadonlyArray<ThirdPartyAttachment>;
     const component = renderComponent(zeroF24List);
@@ -42,7 +42,7 @@ const renderComponent = (f24List: ReadonlyArray<ThirdPartyAttachment>) => {
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <F24LinkToBottomSheet
+      <F24ListBottomSheetLink
         f24List={f24List}
         messageId={"01HS94671EXDWDESDJB3NCBYPM" as UIMessageId}
       />

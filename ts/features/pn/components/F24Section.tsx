@@ -7,7 +7,7 @@ import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thir
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { F24LinkToBottomSheet } from "./F24LinkToBottomSheet";
+import { F24ListBottomSheetLink } from "./F24ListBottomSheetLink";
 
 type F24SectionProps = {
   isCancelled?: boolean;
@@ -50,7 +50,7 @@ export const F24Section = ({
         />
       )}
       {f24Count > 1 && (
-        <F24LinkToBottomSheet f24List={f24s} messageId={messageId} />
+        <F24ListBottomSheetLink f24List={f24s} messageId={messageId} />
       )}
       <VSpacer size={16} />
     </>

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`F24LinkToBottomSheet should be snapshot for a 10 items F24 list 1`] = `
+exports[`F24ListBottomSheetLink should be snapshot for a 10 items F24 list 1`] = `
 <View
   style={
     Object {
@@ -2677,7 +2677,7 @@ exports[`F24LinkToBottomSheet should be snapshot for a 10 items F24 list 1`] = `
 </View>
 `;
 
-exports[`F24LinkToBottomSheet should be snapshot for an 0 items F24 list 1`] = `
+exports[`F24ListBottomSheetLink should be snapshot for an 0 items F24 list 1`] = `
 <View
   style={
     Object {
@@ -3140,7 +3140,7 @@ exports[`F24LinkToBottomSheet should be snapshot for an 0 items F24 list 1`] = `
 </View>
 `;
 
-exports[`F24LinkToBottomSheet should be snapshot for an 1 item F24 list 1`] = `
+exports[`F24ListBottomSheetLink should be snapshot for an 1 item F24 list 1`] = `
 <View
   style={
     Object {
