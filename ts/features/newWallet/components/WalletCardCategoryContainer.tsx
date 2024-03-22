@@ -7,7 +7,7 @@ type WalletCategoryStackContainerProps = {
   iconName: IOIcons;
   label: string;
   cards: ReadonlyArray<WalletCard>;
-  stacked?: boolean;
+  initialStacked?: boolean;
 };
 
 /**
@@ -18,9 +18,11 @@ const WalletCardCategoryContainer = ({
   label,
   iconName,
   cards,
-  stacked = false
+  initialStacked = false
 }: WalletCategoryStackContainerProps) => {
-  const renderCardFn = (card: WalletCard) => {
+  const [isStacked, _] = React.useState<boolean>(initialStacked);
+
+  const renderCardFn = (card: WalletCard, stacked: boolean) => {
     const Component = walletCardComponentMapper[card.type];
     return Component && <Component cardProps={card} isStacked={stacked} />;
   };
@@ -30,8 +32,8 @@ const WalletCardCategoryContainer = ({
       <ListItemHeader iconName={iconName} label={label} />
       {cards.map((card, index) => (
         <>
-          {index !== 0 && <VSpacer size={16} />}
-          {renderCardFn(card)}
+          {!isStacked && index !== 0 && <VSpacer size={16} />}
+          {renderCardFn(card, isStacked && index < cards.length - 1)}
         </>
       ))}
     </View>

@@ -14,9 +14,9 @@ export const withWalletCardBaseComponent =
   >(
     CardContent: React.ComponentType<CardProps>
   ) =>
-  ({ cardProps }: ContentProps) =>
+  ({ cardProps, isStacked }: ContentProps) =>
     (
-      <View style={styles.container}>
+      <View style={[styles.container, isStacked && styles.containerStacked]}>
         <CardContent {...cardProps} />
       </View>
     );
@@ -29,5 +29,8 @@ export type WalletCardBaseComponent<
 const styles = StyleSheet.create({
   container: {
     aspectRatio: 16 / 10
+  },
+  containerStacked: {
+    aspectRatio: 16 / 3
   }
 });

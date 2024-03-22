@@ -65,12 +65,12 @@ export const DSWallet = () => {
         />
       </DesignSystemSection>
 
-      <DesignSystemSection title="Multiple card">
+      <DesignSystemSection title="Multiple card (stacked)">
         <WalletCardCategoryContainer
           label="Metodi di pagamento"
           iconName="creditCard"
           cards={cardsByCategory.payment}
-          stacked={true}
+          initialStacked={true}
         />
       </DesignSystemSection>
 
