@@ -203,9 +203,7 @@ const EmailInsertScreen = () => {
           },
           value => {
             if (!validator.isEmail(value)) {
-              setErrorMessage(
-                "Fooo" + I18n.t("email.newinsert.alert.invalidemail")
-              );
+              setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
               return false;
             }
             if (areSameEmails) {
