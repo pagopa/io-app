@@ -103,6 +103,7 @@ const ProfileStackNavigator = () => (
     />
 
     <Stack.Screen
+      options={{ gestureEnabled: false }}
       name={ROUTES.EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
     />
