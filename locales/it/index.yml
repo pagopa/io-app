@@ -1203,10 +1203,11 @@ wallet:
             title: "Non lo so"
             description: "Cercheremo tutte le carte intestate a te presso le banche aderenti al servizio"
     generalError: "C'è stato un errore generico durante l'aggiunta del metodo di pagamento"
-    success:
-      title: "Il metodo è stato aggiunto"
-      continueButton: "Vedi dettagli"
-    failure:
+    outcome:
+      SUCCESS:
+        title: "Il metodo è stato aggiunto"
+        subtitle: ""
+        primaryAction: "Vedi dettagli"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
@@ -1753,7 +1754,8 @@ wallet:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
         title: Attendi la conferma via email
-        subtitle: Non è stato possibile verificare l'esito del pagamento. Se è andato a buon fine, riceverai a breve un'email. Se non arriva, contatta l'assistenza.
+        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
+        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
@@ -2005,6 +2007,7 @@ services:
         value: "Configurazione rapida"
         label: "tutti i servizi che non hai disattivato possono contattarti."
         title: "Usa configurazione rapida"
+        successAlert: "Hai abilitato la configurazione rapida"
         body:
           text1: "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti."
           text2: "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
@@ -2012,6 +2015,7 @@ services:
         value: "Configurazione manuale"
         label: "ti possono contattare solo i servizi che hai attivato."
         title: "Configura manualmente"
+        successAlert: "Hai abilitato la configurazione manuale"
         body:
           text1: "Nessuno potrà contattarti. Per ricevere messaggi dovrai attivare i servizi uno a uno."
         bottomSheet:
