@@ -9,7 +9,7 @@ import { MessageDetailsAttachmentItem } from "../../messages/components/MessageD
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { F24sWithBottomSheet } from "./F24sWithBottomSheet";
 
-type F24sProps = {
+type F24SectionProps = {
   isCancelled?: boolean;
   messageId: UIMessageId;
   serviceId: ServiceId;
@@ -19,7 +19,7 @@ export const F24Section = ({
   isCancelled = false,
   messageId,
   serviceId
-}: F24sProps) => {
+}: F24SectionProps) => {
   const attachments = useIOSelector(state =>
     thirdPartyMessageAttachments(state, messageId)
   );
