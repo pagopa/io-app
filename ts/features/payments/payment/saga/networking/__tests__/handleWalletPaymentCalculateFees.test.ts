@@ -35,6 +35,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
           idBundle: "idBundle2"
         }
       ],
+      asset: "asset",
       paymentMethodDescription: "paymentMethodDescription",
       paymentMethodName: "paymentMethodName",
       paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
@@ -132,6 +133,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
           idBundle: "idBundle"
         }
       ],
+      asset: "asset",
       paymentMethodDescription: "paymentMethodDescription",
       paymentMethodName: "paymentMethodName",
       paymentMethodStatus: PaymentMethodStatusEnum.ENABLED
