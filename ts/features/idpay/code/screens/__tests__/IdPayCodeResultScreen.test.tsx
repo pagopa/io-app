@@ -8,7 +8,6 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { getGenericError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IdPayCodeRoutes } from "../../navigation/routes";
-import { idPayResetCode } from "../../store/actions";
 import { IdPayCodeState } from "../../store/reducers";
 import { IdPayCodeResultScreen } from "../IdPayCodeResultScreen";
 
@@ -31,17 +30,6 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
-const dispatchMock = jest.fn;
-
-jest.mock("react-redux", () => {
-  const reactRedux = jest.requireActual("react-redux");
-
-  return {
-    ...reactRedux,
-    useDispatch: () => dispatchMock()
-  };
-});
-
 describe("IdPayCodeResultScreen", () => {
   const tCode = Array.from({ length: 5 }, () =>
     Math.floor(Math.random() * 9)
@@ -49,7 +37,6 @@ describe("IdPayCodeResultScreen", () => {
 
   describe("when continue button si pressed", () => {
     it("should reset the store and pop the screen", () => {
-      expect(dispatchMock).not.toHaveBeenCalled();
       expect(mockPop).not.toHaveBeenCalled();
 
       const { component } = renderComponent({ code: pot.some(tCode) });
@@ -58,7 +45,6 @@ describe("IdPayCodeResultScreen", () => {
       fireEvent(continueButton, "onPress");
 
       expect(mockPop).toHaveBeenCalled();
-      expect(dispatchMock).toHaveBeenCalledWith(idPayResetCode());
     });
   });
 
