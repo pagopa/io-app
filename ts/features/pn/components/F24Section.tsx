@@ -15,7 +15,7 @@ type F24sProps = {
   serviceId: ServiceId;
 };
 
-export const F24s = ({
+export const F24Section = ({
   isCancelled = false,
   messageId,
   serviceId
@@ -52,7 +52,7 @@ export const F24s = ({
       {f24Count > 1 && (
         <F24sWithBottomSheet f24List={f24s} messageId={messageId} />
       )}
-      <VSpacer />
+      <VSpacer size={16} />
     </>
   );
 };
