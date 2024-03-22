@@ -1,20 +1,15 @@
 import React from "react";
 import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import {
-  WalletCardComponentBaseProps,
-  withWalletCardBaseComponent
-} from "../../../newWallet/components/WalletCardBaseComponent";
+import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
 import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayCard, IdPayCardProps } from "./IdPayCard";
 
-export type IdPayWalletCardProps = {
+export type IdPayWalletCardProps = IdPayCardProps & {
   initiativeId: string;
-} & IdPayCardProps;
+};
 
-const WrappedIdPayCard = (
-  props: WalletCardComponentBaseProps<IdPayWalletCardProps>
-) => {
+const WrappedIdPayCard = (props: IdPayWalletCardProps) => {
   const navigation = useIONavigation();
 
   const { initiativeId, ...cardProps } = props;
@@ -23,7 +18,7 @@ const WrappedIdPayCard = (
     navigation.navigate(IDPayDetailsRoutes.IDPAY_DETAILS_MAIN, {
       screen: IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING,
       params: {
-        initiativeId: ""
+        initiativeId
       }
     });
   };

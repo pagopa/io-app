@@ -11,7 +11,7 @@ export const DSWallet = () => {
       type: "idPay",
       category: "bonus",
       initiativeId: "1",
-      amount: 300,
+      amount: 412.69,
       avatarSource: {
         uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
       },
@@ -70,6 +70,7 @@ export const DSWallet = () => {
           label="Metodi di pagamento"
           iconName="creditCard"
           cards={cardsByCategory.payment}
+          stacked={true}
         />
       </DesignSystemSection>
 

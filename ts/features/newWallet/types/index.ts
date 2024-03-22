@@ -49,7 +49,7 @@ export type WalletCardType = WalletCard["type"];
  */
 export const walletCardComponentMapper: Record<
   WalletCardType,
-  WalletCardBaseComponent<any, any> | undefined
+  WalletCardBaseComponent<any> | undefined
 > = {
   cgn: undefined, // TODO add CGN component type
   idPay: IdPayWalletCard,

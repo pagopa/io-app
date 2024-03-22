@@ -1,20 +1,15 @@
 import React from "react";
 import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import {
-  WalletCardComponentBaseProps,
-  withWalletCardBaseComponent
-} from "../../../newWallet/components/WalletCardBaseComponent";
+import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
 import { WalletDetailsRoutes } from "../../details/navigation/navigator";
 import { PaymentCard, PaymentCardProps } from "./PaymentCard";
 
-export type PaymentWalletCardProps = {
+export type PaymentWalletCardProps = PaymentCardProps & {
   walletId: string;
-} & PaymentCardProps;
+};
 
-const WrappedPaymentCard = (
-  props: WalletCardComponentBaseProps<PaymentWalletCardProps>
-) => {
+const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
   const navigation = useIONavigation();
 
   const { walletId, ...cardProps } = props;

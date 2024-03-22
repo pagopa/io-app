@@ -1,26 +1,29 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export type WalletCardComponentBaseProps<CardProps> = CardProps & {
-  // This dummy prop is to not have an empty type
-  // This will be extended later during the development of the wallet components
-  _?: never;
+// Wallet card base component props, which declares common props that wallet cards must have
+export type WalletCardComponentBaseProps<P> = {
+  isStacked: boolean;
+  cardProps: P;
 };
 
 export const withWalletCardBaseComponent =
-  <CardProps, ContentProps extends WalletCardComponentBaseProps<CardProps>>(
+  <
+    CardProps extends object,
+    ContentProps extends WalletCardComponentBaseProps<CardProps>
+  >(
     CardContent: React.ComponentType<CardProps>
   ) =>
-  (props: ContentProps) =>
+  ({ cardProps }: ContentProps) =>
     (
       <View style={styles.container}>
-        <CardContent {...props} />
+        <CardContent {...cardProps} />
       </View>
     );
 
 export type WalletCardBaseComponent<
-  CardProps,
-  ContentProps extends WalletCardComponentBaseProps<CardProps>
+  CardProps extends object = object,
+  ContentProps extends WalletCardComponentBaseProps<CardProps> = WalletCardComponentBaseProps<CardProps>
 > = ReturnType<typeof withWalletCardBaseComponent<CardProps, ContentProps>>;
 
 const styles = StyleSheet.create({
