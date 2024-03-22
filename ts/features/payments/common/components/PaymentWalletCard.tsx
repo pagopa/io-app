@@ -6,32 +6,37 @@ import {
   withWalletCardBaseComponent
 } from "../../../newWallet/components/WalletCardBaseComponent";
 import { WalletDetailsRoutes } from "../../details/navigation/navigator";
-import {
-  PaymentCard as BasePaymentCard,
-  PaymentCardProps as BasePaymentCardProps
-} from "./PaymentCard";
+import { PaymentCard, PaymentCardProps } from "./PaymentCard";
 
-export type PaymentWalletCardProps = BasePaymentCardProps &
-  WalletCardComponentBaseProps;
+export type PaymentWalletCardProps = {
+  walletId: string;
+} & PaymentCardProps;
 
-const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
+const WrappedPaymentCard = (
+  props: WalletCardComponentBaseProps<PaymentWalletCardProps>
+) => {
   const navigation = useIONavigation();
+
+  const { walletId, ...cardProps } = props;
 
   const handleOnPress = () => {
     navigation.navigate(WalletDetailsRoutes.WALLET_DETAILS_MAIN, {
       screen: WalletDetailsRoutes.WALLET_DETAILS_SCREEN,
       params: {
-        walletId: props.walletId
+        walletId
       }
     });
   };
 
   return (
     <Pressable onPress={handleOnPress}>
-      <BasePaymentCard {...props} />
+      <PaymentCard {...cardProps} />
     </Pressable>
   );
 };
 
+/**
+ * Wrapper component which adds wallet capabilites to the PaymentCard component
+ */
 export const PaymentWalletCard =
   withWalletCardBaseComponent(WrappedPaymentCard);

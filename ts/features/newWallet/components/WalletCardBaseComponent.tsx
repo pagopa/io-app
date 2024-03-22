@@ -1,28 +1,30 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-export type WalletCardComponentBaseProps = {
-  // Dummy prop to make
+export type WalletCardComponentBaseProps<CardProps> = CardProps & {
+  // This dummy prop is to not have an empty type
+  // This will be extended later during the development of the wallet components
   _?: never;
 };
 
 export const withWalletCardBaseComponent =
-  <P extends WalletCardComponentBaseProps>(
-    CardContent: React.ComponentType<P>
+  <CardProps, ContentProps extends WalletCardComponentBaseProps<CardProps>>(
+    CardContent: React.ComponentType<CardProps>
   ) =>
-  (props: P) =>
+  (props: ContentProps) =>
     (
-      <View style={styles.card}>
-        <CardContent {...(props as P)} />
+      <View style={styles.container}>
+        <CardContent {...props} />
       </View>
     );
 
 export type WalletCardBaseComponent<
-  ContentProps extends WalletCardComponentBaseProps
-> = ReturnType<typeof withWalletCardBaseComponent<ContentProps>>;
+  CardProps,
+  ContentProps extends WalletCardComponentBaseProps<CardProps>
+> = ReturnType<typeof withWalletCardBaseComponent<CardProps, ContentProps>>;
 
 const styles = StyleSheet.create({
-  card: {
+  container: {
     aspectRatio: 16 / 10
   }
 });

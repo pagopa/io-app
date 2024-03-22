@@ -17,7 +17,6 @@ import I18n from "../../../../i18n";
 import { PaymentCardBankLogo } from "./PaymentCardBankLogo";
 
 export type PaymentCardProps = {
-  walletId: string;
   brand?: string;
   abiCode?: string;
   hpan?: string;

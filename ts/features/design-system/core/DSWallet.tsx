@@ -1,9 +1,7 @@
-import _, { Dictionary } from "lodash";
 import * as React from "react";
 import { WalletCardCategoryContainer } from "../../newWallet/components/WalletCardCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../newWallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { IdPayWalletCard } from "../../idpay/wallet/components/IdPayWalletCard";
 import { DesignSystemSection } from "../components/DesignSystemSection";
 
 export const DSWallet = () => {
