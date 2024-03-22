@@ -101,12 +101,14 @@ const EmailInsertScreen = () => {
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const isFirstOnboarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const isEmailFormallyCorrect = useRef(
+    isFirstOnboarding && O.isSome(optionEmail)
+  );
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const flow = getFlowType(isOnboarding, isFirstOnBoarding);
+  const flow = getFlowType(isOnboarding, isFirstOnboarding);
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   // This reference is used to prevent the refresh visual glitch
   // caused by the polling stop in the email validation screen.
@@ -117,7 +119,7 @@ const EmailInsertScreen = () => {
   useOnFirstRender(() => {
     if (isProfileEmailAlreadyTaken) {
       trackEmailEditing(flow);
-      if (isFirstOnBoarding) {
+      if (isFirstOnboarding) {
         IOToast.info(
           I18n.t("email.newinsert.alert.title", {
             email: pipe(
@@ -173,7 +175,7 @@ const EmailInsertScreen = () => {
   }, [areSameEmails, flow]);
 
   const sameEmailsErrorRender = useCallback(() => {
-    if (isProfileEmailAlreadyTaken && isFirstOnBoarding) {
+    if (isProfileEmailAlreadyTaken && isFirstOnboarding) {
       setErrorMessage(I18n.t("email.newinsert.alert.description1"));
       return;
     }
@@ -181,12 +183,12 @@ const EmailInsertScreen = () => {
       setErrorMessage(I18n.t("email.newinsert.alert.description2"));
       return;
     }
-    if (!isOnboarding && !isFirstOnBoarding) {
+    if (!isOnboarding && !isFirstOnboarding) {
       setErrorMessage(I18n.t("email.newinsert.alert.description3"));
       return;
     }
     setErrorMessage(I18n.t("email.newinsert.alert.description1"));
-  }, [isFirstOnBoarding, isOnboarding, isProfileEmailAlreadyTaken]);
+  }, [isFirstOnboarding, isOnboarding, isProfileEmailAlreadyTaken]);
 
   /** validate email returning two possible values:
    * - _true_,      if email is valid.
@@ -229,13 +231,15 @@ const EmailInsertScreen = () => {
           updateEmail(e as EmailString);
         })
       );
-      if (isFirstOnBoarding) {
+      if (isFirstOnboarding) {
         trackSendValidationEmail(flow);
       }
     }
   };
 
   const handleOnChangeEmailText = (value: string) => {
+    // eslint-disable-next-line functional/immutable-data
+    isEmailFormallyCorrect.current = validator.isEmail(value);
     /**
      * SCENARIOS:
      * 1. first onboarding and email already taken => if the CIT writes
@@ -249,7 +253,7 @@ const EmailInsertScreen = () => {
     // If we are editing the email previously inserted
     // we don't want to show the error message.
     if (!isEditingPreviouslyInsertedEmailMode) {
-      if (isFirstOnBoarding) {
+      if (isFirstOnboarding) {
         setAreSameEmails(
           isProfileEmailAlreadyTaken
             ? areStringsEqual(O.some(value), optionEmail, true)
@@ -265,7 +269,7 @@ const EmailInsertScreen = () => {
   const handleGoBack = useCallback(() => {
     // click on goback icon
     // if the flow is onboarding, a warning is displayed at the click
-    if (isFirstOnBoarding) {
+    if (isFirstOnboarding) {
       Alert.alert(
         I18n.t("onboarding.alert.title"),
         I18n.t("onboarding.alert.description"),
@@ -278,7 +282,7 @@ const EmailInsertScreen = () => {
             text: I18n.t("global.buttons.exit"),
             style: "default",
             onPress: () => {
-              trackTosUserExit(getFlowType(true, isFirstOnBoarding));
+              trackTosUserExit(getFlowType(true, isFirstOnboarding));
               dispatchAbortOnboarding();
             }
           }
@@ -289,10 +293,10 @@ const EmailInsertScreen = () => {
     } else {
       navigation.goBack();
     }
-  }, [dispatchAbortOnboarding, isFirstOnBoarding, navigation]);
+  }, [dispatchAbortOnboarding, isFirstOnboarding, navigation]);
 
   useOnFirstRender(() => {
-    if (!isFirstOnBoarding) {
+    if (!isFirstOnboarding) {
       setEmail(O.some(EMPTY_EMAIL));
       setAreSameEmails(false);
     }
@@ -406,7 +410,7 @@ const EmailInsertScreen = () => {
     supportRequest: true,
     contextualHelpMarkdown,
     goBack: handleGoBack,
-    canGoBack: isEmailValidated || isFirstOnBoarding
+    canGoBack: isEmailValidated || isFirstOnboarding
   });
 
   return (
@@ -450,7 +454,7 @@ const EmailInsertScreen = () => {
               }}
               accessibilityLabel={I18n.t("email.newinsert.label")}
               placeholder={I18n.t("email.newinsert.label")}
-              onValidate={() => isValidEmail()}
+              onValidate={isValidEmail}
               errorMessage={errorMessage}
               value={pipe(
                 email,
@@ -473,6 +477,7 @@ const EmailInsertScreen = () => {
               accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={continueOnPress}
               fullWidth={true}
+              disabled={!isEmailFormallyCorrect.current}
             />
             <VSpacer size={16} />
           </ContentWrapper>
