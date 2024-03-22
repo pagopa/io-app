@@ -7,19 +7,19 @@ import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thir
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { F24sWithBottomSheet } from "./F24sWithBottomSheet";
+import { F24ListBottomSheetLink } from "./F24ListBottomSheetLink";
 
-type F24sProps = {
+type F24SectionProps = {
   isCancelled?: boolean;
   messageId: UIMessageId;
   serviceId: ServiceId;
 };
 
-export const F24s = ({
+export const F24Section = ({
   isCancelled = false,
   messageId,
   serviceId
-}: F24sProps) => {
+}: F24SectionProps) => {
   const attachments = useIOSelector(state =>
     thirdPartyMessageAttachments(state, messageId)
   );
@@ -50,9 +50,9 @@ export const F24s = ({
         />
       )}
       {f24Count > 1 && (
-        <F24sWithBottomSheet f24List={f24s} messageId={messageId} />
+        <F24ListBottomSheetLink f24List={f24s} messageId={messageId} />
       )}
-      <VSpacer />
+      <VSpacer size={16} />
     </>
   );
 };
