@@ -6,7 +6,10 @@ module.exports = {
   moduleNameMapper: {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
   },
-  setupFiles: ["./jestSetup.js"],
+  setupFiles: [
+    "./jestSetup.js",
+    "./node_modules/react-native-gesture-handler/jestSetup.js"
+  ],
   globalSetup: "./jestGlobalSetup.js",
   setupFilesAfterEnv: [
     "@testing-library/jest-native/extend-expect",
