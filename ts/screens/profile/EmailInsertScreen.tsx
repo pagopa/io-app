@@ -101,9 +101,6 @@ const EmailInsertScreen = () => {
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const isFirstOnboarding = useIOSelector(isProfileFirstOnBoardingSelector);
-  const isEmailFormallyCorrect = useRef(
-    isFirstOnboarding && O.isSome(optionEmail)
-  );
   const isProfileEmailAlreadyTaken = useIOSelector(
     isProfileEmailAlreadyTakenSelector
   );
@@ -206,7 +203,9 @@ const EmailInsertScreen = () => {
           },
           value => {
             if (!validator.isEmail(value)) {
-              setErrorMessage(I18n.t("email.newinsert.alert.invalidemail"));
+              setErrorMessage(
+                "Fooo" + I18n.t("email.newinsert.alert.invalidemail")
+              );
               return false;
             }
             if (areSameEmails) {
@@ -238,8 +237,6 @@ const EmailInsertScreen = () => {
   };
 
   const handleOnChangeEmailText = (value: string) => {
-    // eslint-disable-next-line functional/immutable-data
-    isEmailFormallyCorrect.current = validator.isEmail(value);
     /**
      * SCENARIOS:
      * 1. first onboarding and email already taken => if the CIT writes
@@ -477,7 +474,6 @@ const EmailInsertScreen = () => {
               accessibilityLabel={I18n.t("global.buttons.continue")}
               onPress={continueOnPress}
               fullWidth={true}
-              disabled={!isEmailFormallyCorrect.current}
             />
             <VSpacer size={16} />
           </ContentWrapper>
