@@ -18,29 +18,36 @@ const THRESHOLD = 200; // Adjust this value to your desired threshold
 
 export const DSStickyMessageCTAs = () => {
   const scrollY = useSharedValue(0);
-  const isSticky = useSharedValue(true);
+  const layoutMeasurementHeight = useSharedValue(0);
+  const contentSizeHeight = useSharedValue(0);
 
   const buttonAnimatedStyle = useAnimatedStyle(() => {
     const translateY = interpolate(
       scrollY.value,
-      [0, THRESHOLD],
-      [0, -THRESHOLD + BUTTON_HEIGHT],
+      [0, contentSizeHeight.value - layoutMeasurementHeight.value],
+      [0, -THRESHOLD],
       { extrapolateLeft: Extrapolation.CLAMP }
     );
 
     return {
-      transform: [{ translateY }]
+      transform: [
+        {
+          translateY
+        }
+      ]
     };
   });
 
   const handleScroll = useAnimatedScrollHandler(
     ({ contentOffset, layoutMeasurement, contentSize }) => {
-      const offsetY = contentOffset.y;
-
       // eslint-disable-next-line functional/immutable-data
       scrollY.value = contentOffset.y;
       // eslint-disable-next-line functional/immutable-data
-      isSticky.value = offsetY >= THRESHOLD;
+      layoutMeasurementHeight.value = layoutMeasurement.height;
+      // eslint-disable-next-line functional/immutable-data
+      contentSizeHeight.value = contentSize.height;
+      // eslint-disable-next-line functional/immutable-data
+      // isSticky.value = offsetY >= THRESHOLD;
     }
   );
 
@@ -57,10 +64,10 @@ export const DSStickyMessageCTAs = () => {
   return (
     <View style={styles.container}>
       <Animated.ScrollView onScroll={handleScroll} scrollEventThrottle={8}>
-        {[...Array(5)].map((_el, i) => (
+        {[...Array(9)].map((_el, i) => (
           <React.Fragment key={`view-${i}`}>
             <View style={styles.block}>
-              <Text>Repeated text</Text>
+              <Text>{`Block ${i}`}</Text>
             </View>
             <VSpacer size={4} />
           </React.Fragment>
@@ -69,7 +76,7 @@ export const DSStickyMessageCTAs = () => {
       <Animated.View
         style={[
           styles.button,
-          isSticky.value && styles.buttonSticky,
+          // isSticky.value && styles.buttonSticky,
           buttonAnimatedStyle
         ]}
       />
@@ -99,8 +106,5 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors["blueIO-500"],
     justifyContent: "center",
     alignItems: "center"
-  },
-  buttonSticky: {
-    position: "relative"
   }
 });
