@@ -10,15 +10,15 @@ import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
 
-type F24WithBottomSheetProps = {
+type F24LinkToBottomSheetProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;
   messageId: UIMessageId;
 };
 
-export const F24sWithBottomSheet = ({
+export const F24LinkToBottomSheet = ({
   f24List,
   messageId
-}: F24WithBottomSheetProps) => {
+}: F24LinkToBottomSheetProps) => {
   // The empty footer is needed in order for the internal scroll view to properly compute
   // its bottom space when the bottom sheet opens filling the entire view. Without it, the
   // scroll bottom stops at the device bottom border, not respecting any safe area margins

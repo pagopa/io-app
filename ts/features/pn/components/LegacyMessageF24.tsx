@@ -63,11 +63,11 @@ export const LegacyMessageF24 = (props: Props) => (
     title={I18n.t("features.pn.details.f24Section.title")}
     testID={"pn-f24-section"}
   >
-    <VSpacer />
+    <VSpacer size={16} />
     <Body color="bluegreyDark">
       {I18n.t("features.pn.details.f24Section.description")}
     </Body>
-    <VSpacer />
+    <VSpacer size={16} />
     <MessageF24Content {...props} />
   </MessageDetailsSection>
 );
