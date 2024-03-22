@@ -14,14 +14,25 @@ import React, {
   useState
 } from "react";
 import validator from "validator";
-import { Alert, Keyboard, View } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+  StyleSheet
+} from "react-native";
 import {
   VSpacer,
   H1,
   TextInputValidation,
-  GradientScrollView
+  ContentWrapper,
+  ButtonSolid
 } from "@pagopa/io-app-design-system";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView } from "react-native-gesture-handler";
+import themeVariables from "../../theme/variables";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
@@ -391,57 +402,80 @@ const EmailInsertScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <GradientScrollView
-        primaryActionProps={{
-          onPress: continueOnPress,
-          label: I18n.t("global.buttons.continue"),
-          accessibilityLabel: I18n.t("global.buttons.continue")
-        }}
-        testID="container-test"
-      >
-        <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
-          <H1 testID="title-test">
-            {isFirstOnboarding
-              ? I18n.t("email.newinsert.title")
-              : I18n.t("email.edit.title")}
-          </H1>
-        </View>
-        <VSpacer size={16} />
-        <Body>
-          {isFirstOnboarding ? (
-            I18n.t("email.newinsert.subtitle")
-          ) : (
-            <>
-              {I18n.t("email.edit.subtitle")}
-              <Body weight="SemiBold">
-                {` ${pipe(
-                  optionEmail,
-                  O.getOrElse(() => "")
-                )}`}
-              </Body>
-            </>
-          )}
-        </Body>
-        <VSpacer size={16} />
-        <TextInputValidation
-          textInputProps={{
-            autoCorrect: false,
-            autoCapitalize: "none",
-            inputMode: true
-          }}
-          accessibilityLabel={I18n.t("email.newinsert.label")}
-          placeholder={I18n.t("email.newinsert.label")}
-          onValidate={() => isValidEmail()}
-          errorMessage={errorMessage}
-          value={pipe(
-            email,
-            O.getOrElse(() => EMPTY_EMAIL)
-          )}
-          onChangeText={handleOnChangeEmailText}
-        />
-      </GradientScrollView>
+      <SafeAreaView edges={["bottom"]} style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
+          <ContentWrapper>
+            <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
+              <H1 testID="title-test">
+                {isFirstOnboarding
+                  ? I18n.t("email.newinsert.title")
+                  : I18n.t("email.edit.title")}
+              </H1>
+            </View>
+            <VSpacer size={16} />
+            <Body>
+              {isFirstOnboarding ? (
+                I18n.t("email.newinsert.subtitle")
+              ) : (
+                <>
+                  {I18n.t("email.edit.subtitle")}
+                  <Body weight="SemiBold">
+                    {` ${pipe(
+                      optionEmail,
+                      O.getOrElse(() => "")
+                    )}`}
+                  </Body>
+                </>
+              )}
+            </Body>
+            <VSpacer size={16} />
+            <TextInputValidation
+              textInputProps={{
+                autoCorrect: false,
+                autoCapitalize: "none",
+                inputMode: true
+              }}
+              accessibilityLabel={I18n.t("email.newinsert.label")}
+              placeholder={I18n.t("email.newinsert.label")}
+              onValidate={() => isValidEmail()}
+              errorMessage={errorMessage}
+              value={pipe(
+                email,
+                O.getOrElse(() => EMPTY_EMAIL)
+              )}
+              onChangeText={handleOnChangeEmailText}
+            />
+          </ContentWrapper>
+        </ScrollView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "android" ? undefined : "padding"}
+          keyboardVerticalOffset={Platform.select({
+            ios: 110 + 16,
+            android: themeVariables.contentPadding
+          })}
+        >
+          <ContentWrapper>
+            <ButtonSolid
+              label={I18n.t("global.buttons.continue")}
+              accessibilityLabel={I18n.t("global.buttons.continue")}
+              onPress={continueOnPress}
+              fullWidth={true}
+            />
+            <VSpacer size={16} />
+          </ContentWrapper>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     </LoadingSpinnerOverlay>
   );
 };
 
 export default EmailInsertScreen;
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flexGrow: 1
+  },
+  scrollViewContentContainer: {
+    flexGrow: 1
+  }
+});
