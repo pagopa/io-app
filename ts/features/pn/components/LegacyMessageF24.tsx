@@ -11,7 +11,7 @@ import { trackPNShowF24 } from "../analytics";
 import { useF24BottomSheet } from "../hooks/useF24BottomSheet";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { UIMessageId } from "../../messages/types";
-import { MessageAttachments } from "./MessageAttachments";
+import { LegacyMessageAttachments } from "./LegacyMessageAttachments";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 
 type Props = {
@@ -29,7 +29,7 @@ const MessageF24Content = ({ attachments, messageId, openPreview }: Props) => {
 
   if (attachments.length === 1) {
     return (
-      <MessageAttachments
+      <LegacyMessageAttachments
         testID="f24-list-container"
         attachments={attachments.slice(0, 1)}
         downloadAttachmentBeforePreview={true}
@@ -63,11 +63,11 @@ export const LegacyMessageF24 = (props: Props) => (
     title={I18n.t("features.pn.details.f24Section.title")}
     testID={"pn-f24-section"}
   >
-    <VSpacer />
+    <VSpacer size={16} />
     <Body color="bluegreyDark">
       {I18n.t("features.pn.details.f24Section.description")}
     </Body>
-    <VSpacer />
+    <VSpacer size={16} />
     <MessageF24Content {...props} />
   </MessageDetailsSection>
 );

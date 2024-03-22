@@ -206,10 +206,10 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
                 />
               </>
             )}
-            <VSpacer />
+            <VSpacer size={16} />
             <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
             <MessageDetailsPayment messageId={messageId} />
-            <VSpacer />
+            <VSpacer size={16} />
             <MessageDetailsAttachments messageId={messageId} />
           </ContentWrapper>
         </View>

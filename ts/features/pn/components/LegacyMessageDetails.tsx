@@ -108,11 +108,11 @@ export const LegacyMessageDetails = ({
         ref={scrollViewRef}
       >
         {service && <MessageDetailsHeader service={service} />}
-        <VSpacer />
+        <VSpacer size={16} />
         <LegacyMessageDetailsContent message={message} />
         {isCancelled && (
           <>
-            <VSpacer />
+            <VSpacer size={16} />
             <DSFullWidthComponent>
               <StatusContent
                 accessibilityLabel={I18n.t(

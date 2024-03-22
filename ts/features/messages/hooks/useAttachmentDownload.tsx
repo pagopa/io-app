@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import {
   downloadedMessageAttachmentSelector,
@@ -26,17 +25,18 @@ import {
 } from "../../pn/analytics";
 import { trackThirdPartyMessageAttachmentShowPreview } from "../analytics";
 import PN_ROUTES from "../../pn/navigation/routes";
+import NavigationService from "../../../navigation/NavigationService";
 
 export const useAttachmentDownload = (
   messageId: UIMessageId,
   attachment: ThirdPartyAttachment,
   isPN: boolean,
-  serviceId?: ServiceId
+  serviceId?: ServiceId,
+  onPreNavigate?: () => void
 ) => {
   const attachmentId = attachment.id;
 
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
   const store = useIOStore();
 
   const download = useIOSelector(state =>
@@ -49,9 +49,10 @@ export const useAttachmentDownload = (
   const attachmentCategory = attachment.category;
   const doNavigate = useCallback(() => {
     dispatch(clearRequestedAttachmentDownload());
+    onPreNavigate?.();
     if (isPN) {
       trackPNAttachmentOpening(attachmentCategory);
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {
           screen: PN_ROUTES.MESSAGE_ATTACHMENT,
@@ -62,7 +63,7 @@ export const useAttachmentDownload = (
         }
       });
     } else {
-      navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+      NavigationService.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT,
         params: {
           messageId,
@@ -77,7 +78,7 @@ export const useAttachmentDownload = (
     dispatch,
     isPN,
     messageId,
-    navigation,
+    onPreNavigate,
     serviceId
   ]);
   const checkPathAndNavigate = useCallback(

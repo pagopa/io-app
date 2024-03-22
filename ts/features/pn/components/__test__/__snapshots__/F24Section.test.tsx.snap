@@ -571,6 +571,489 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
                           </Text>
                         </View>
                       </View>
+                      <Modal
+                        accessibilityPositionChangeAnnouncement=""
+                        accessible={false}
+                        backdropComponent={[Function]}
+                        enableDismissOnClose={true}
+                        footerComponent={[Function]}
+                        handleComponent={[Function]}
+                        handleComponentAccessibility={
+                          Object {
+                            "accessible": false,
+                          }
+                        }
+                        hardwareAccelerated={false}
+                        importantForAccessibility="yes"
+                        onDismiss={[Function]}
+                        snapPoints={
+                          Array [
+                            1,
+                          ]
+                        }
+                        style={
+                          Object {
+                            "borderCurve": "continuous",
+                            "borderTopLeftRadius": 24,
+                            "borderTopRightRadius": 24,
+                            "overflow": "hidden",
+                          }
+                        }
+                        visible={true}
+                      >
+                        <RCTScrollView
+                          style={
+                            Object {
+                              "flex": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View>
+                            <View
+                              onLayout={[Function]}
+                            >
+                              <View
+                                accessibilityHint="pdf"
+                                accessibilityLabel="2"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  Object {
+                                    "disabled": false,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                              >
+                                <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "backgroundColor": "#FFFFFF",
+                                        "borderColor": "#CCD4DC",
+                                        "borderRadius": 8,
+                                        "borderStyle": "solid",
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "paddingHorizontal": 16,
+                                        "paddingVertical": 16,
+                                      },
+                                      Object {
+                                        "transform": Array [
+                                          Object {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "opacity": 1,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                        "flexDirection": "column",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="blueIO-500"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
+                                      font="TitilliumWeb"
+                                      fontStyle={
+                                        Object {
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
+                                        }
+                                      }
+                                      numberOfLines={1}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          },
+                                          Object {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillium Web",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="SemiBold"
+                                    >
+                                      2
+                                    </Text>
+                                    <View
+                                      style={
+                                        Object {
+                                          "height": 4,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      style={
+                                        Object {
+                                          "width": 44,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          ellipsizeMode="tail"
+                                          numberOfLines={1}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              Object {
+                                                "fontFamily": "Titillium Web",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          PDF
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={
+                                      Object {
+                                        "alignItems": "center",
+                                        "marginLeft": 16,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      color={4278927075}
+                                      focusable={false}
+                                      height={24}
+                                      importantForAccessibility="no-hide-descendants"
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          Object {
+                                            "color": "#0B3EE3",
+                                          },
+                                          Object {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
+                                      }
+                                      tintColor={4278927075}
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
+                                    >
+                                      <RNSVGGroup>
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                          fill={
+                                            Array [
+                                              2,
+                                            ]
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
+                              </View>
+                              <View
+                                style={
+                                  Object {
+                                    "height": 8,
+                                  }
+                                }
+                              />
+                              <View
+                                accessibilityHint="pdf"
+                                accessibilityLabel="4"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  Object {
+                                    "disabled": false,
+                                  }
+                                }
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                              >
+                                <View
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "backgroundColor": "#FFFFFF",
+                                        "borderColor": "#CCD4DC",
+                                        "borderRadius": 8,
+                                        "borderStyle": "solid",
+                                        "borderWidth": 1,
+                                        "flexDirection": "row",
+                                        "paddingHorizontal": 16,
+                                        "paddingVertical": 16,
+                                      },
+                                      Object {
+                                        "transform": Array [
+                                          Object {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                      Object {
+                                        "opacity": 1,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "flex": 1,
+                                        "flexDirection": "column",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      allowFontScaling={false}
+                                      color="blueIO-500"
+                                      defaultColor="blue"
+                                      defaultWeight="Bold"
+                                      font="TitilliumWeb"
+                                      fontStyle={
+                                        Object {
+                                          "fontSize": 14,
+                                          "lineHeight": 21,
+                                        }
+                                      }
+                                      numberOfLines={1}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "fontSize": 14,
+                                            "lineHeight": 21,
+                                          },
+                                          Object {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillium Web",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                          },
+                                        ]
+                                      }
+                                      weight="SemiBold"
+                                    >
+                                      4
+                                    </Text>
+                                    <View
+                                      style={
+                                        Object {
+                                          "height": 4,
+                                        }
+                                      }
+                                    />
+                                    <View
+                                      style={
+                                        Object {
+                                          "width": 44,
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Array [
+                                            Object {
+                                              "alignItems": "center",
+                                              "borderCurve": "continuous",
+                                              "borderRadius": 24,
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                              "paddingHorizontal": 8,
+                                              "paddingVertical": 4,
+                                            },
+                                            Object {
+                                              "backgroundColor": "#F4F5F8",
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          ellipsizeMode="tail"
+                                          numberOfLines={1}
+                                          style={
+                                            Array [
+                                              Object {
+                                                "alignSelf": "center",
+                                                "flexShrink": 1,
+                                                "fontSize": 12,
+                                                "lineHeight": 16,
+                                                "textTransform": "uppercase",
+                                              },
+                                              Object {
+                                                "fontFamily": "Titillium Web",
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                              },
+                                              Object {
+                                                "color": "#555C70",
+                                              },
+                                            ]
+                                          }
+                                        >
+                                          PDF
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                  <View
+                                    style={
+                                      Object {
+                                        "alignItems": "center",
+                                        "marginLeft": 16,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGSvgView
+                                      accessibilityElementsHidden={true}
+                                      accessibilityLabel=""
+                                      accessible={false}
+                                      align="xMidYMid"
+                                      bbHeight={24}
+                                      bbWidth={24}
+                                      color={4278927075}
+                                      focusable={false}
+                                      height={24}
+                                      importantForAccessibility="no-hide-descendants"
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          Object {
+                                            "color": "#0B3EE3",
+                                          },
+                                          Object {
+                                            "flex": 0,
+                                            "height": 24,
+                                            "width": 24,
+                                          },
+                                        ]
+                                      }
+                                      tintColor={4278927075}
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={24}
+                                    >
+                                      <RNSVGGroup>
+                                        <RNSVGPath
+                                          clipRule={0}
+                                          d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
+                                          fill={
+                                            Array [
+                                              2,
+                                            ]
+                                          }
+                                          fillRule={0}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                              "fillRule",
+                                            ]
+                                          }
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </RCTScrollView>
+                      </Modal>
                       <View
                         style={
                           Object {
