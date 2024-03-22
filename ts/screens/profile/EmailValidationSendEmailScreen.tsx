@@ -6,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import React, { useRef, useCallback, useEffect, useState } from "react";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import {
   IOPictogramSizeScale,
@@ -84,7 +83,6 @@ const EmailValidationSendEmailScreen = () => {
       >
     >().params;
   const { isOnboarding, sendEmailAtFirstRender, isFciEditEmailFlow } = props;
-  const headerHeight = useHeaderHeight();
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const optionEmail = useIOSelector(profileEmailSelector, _.isEqual);
@@ -255,7 +253,7 @@ const EmailValidationSendEmailScreen = () => {
   });
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: -headerHeight }]}>
+    <SafeAreaView edges={["bottom"]} style={styles.container}>
       <ScrollView
         centerContent={true}
         contentContainerStyle={[
