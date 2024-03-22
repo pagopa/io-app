@@ -411,7 +411,11 @@ const EmailInsertScreen = () => {
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
-      <SafeAreaView edges={["bottom"]} style={styles.safeArea}>
+      <SafeAreaView
+        testID="container-test"
+        edges={["bottom"]}
+        style={styles.safeArea}
+      >
         <ScrollView contentContainerStyle={styles.scrollViewContentContainer}>
           <ContentWrapper>
             <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
