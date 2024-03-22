@@ -6,7 +6,7 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { MessageAttachments } from "../MessageAttachments";
+import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
 import { Downloads } from "../../../messages/store/reducers/downloads";
 import { mockPdfAttachment } from "../../../messages/__mocks__/attachment";
 import { downloadAttachment } from "../../../messages/store/actions";
@@ -20,7 +20,7 @@ jest.mock("../../../../utils/showToast", () => ({
   showToast: () => mockShowToast()
 }));
 
-describe("MessageAttachments", () => {
+describe("LegacyMessageAttachments", () => {
   beforeEach(() => {
     mockShowToast.mockReset();
     mockOpenPreview.mockReset();
@@ -145,7 +145,7 @@ describe("MessageAttachments", () => {
 });
 
 const renderComponent = (
-  props: React.ComponentProps<typeof MessageAttachments>,
+  props: React.ComponentProps<typeof LegacyMessageAttachments>,
   downloads: Downloads = {}
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -162,7 +162,7 @@ const renderComponent = (
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <MessageAttachments {...props} />,
+      () => <LegacyMessageAttachments {...props} />,
       "DUMMY",
       {},
       store
