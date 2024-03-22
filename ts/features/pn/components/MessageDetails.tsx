@@ -22,6 +22,7 @@ import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/Me
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { UIMessageId } from "../../messages/types";
 import { MessageDetailsContent } from "./MessageDetailsContent";
+import { F24Section } from "./F24Section";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -77,11 +78,17 @@ export const MessageDetails = ({
           <VSpacer size={8} />
         </MessageDetailsHeader>
         <MessageDetailsContent abstract={message.abstract} />
-        <VSpacer />
+        <VSpacer size={16} />
         <MessageDetailsAttachments
           disabled={message.isCancelled}
           messageId={messageId}
           isPN
+        />
+        <VSpacer size={16} />
+        <F24Section
+          messageId={messageId}
+          isCancelled={message.isCancelled}
+          serviceId={serviceId}
         />
       </ContentWrapper>
     </ScrollView>
