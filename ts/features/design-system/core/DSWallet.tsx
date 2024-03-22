@@ -8,49 +8,42 @@ export const DSWallet = () => {
   const cards: ReadonlyArray<WalletCard> = [
     {
       key: "1",
+      type: "idPay",
+      category: "bonus",
+      initiativeId: "1",
+      amount: 300,
+      avatarSource: {
+        uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
+      },
+      expireDate: new Date(),
+      name: "18 App"
+    },
+    {
+      key: "2",
       type: "payment",
       category: "payment",
       walletId: "1",
-      hpan: "1234",
-      brand: "visa",
+      hpan: "9900",
+      brand: "maestro",
       holderName: "Anna Verdi",
       expireDate: new Date()
     },
     {
-      key: "2",
-      type: "idPay",
-      category: "bonus",
-      initiativeId: "1",
-      amount: 12345,
-      avatarSource: {
-        uri: ""
-      },
-      expireDate: new Date(),
-      name: "bla bla"
-    },
-    {
       key: "3",
-      type: "idPay",
-      category: "bonus",
-      initiativeId: "1",
-      amount: 12345,
-      avatarSource: {
-        uri: ""
-      },
-      expireDate: new Date(),
-      name: "bla bla"
+      type: "payment",
+      category: "payment",
+      walletId: "1",
+      abiCode: "03069",
+      brand: "pagoBancomat",
+      holderName: "Anna Verdi",
+      expireDate: new Date()
     },
     {
       key: "4",
-      type: "idPay",
-      category: "bonus",
-      initiativeId: "1",
-      amount: 12345,
-      avatarSource: {
-        uri: ""
-      },
-      expireDate: new Date(),
-      name: "bla bla"
+      type: "payment",
+      category: "payment",
+      walletId: "1",
+      holderEmail: "anna_v********@**hoo.it"
     }
   ];
 
@@ -66,25 +59,25 @@ export const DSWallet = () => {
     <DesignSystemScreen title={"Wallet"}>
       <DesignSystemSection title="Single card">
         <WalletCardCategoryContainer
+          label="Iniziative welfare"
+          iconName="bonus"
+          cards={cardsByCategory.bonus}
+        />
+      </DesignSystemSection>
+
+      <DesignSystemSection title="Multiple card">
+        <WalletCardCategoryContainer
           label="Metodi di pagamento"
           iconName="creditCard"
           cards={cardsByCategory.payment}
         />
       </DesignSystemSection>
 
-      <DesignSystemSection title="Multiple card">
-        <WalletCardCategoryContainer
-          label="Iniziative welfare"
-          iconName="bonus"
-          cards={cardsByCategory.bonus}
-        />
-      </DesignSystemSection>
-
       <DesignSystemSection title="Multiple card (expanded)">
         <WalletCardCategoryContainer
-          label="Iniziative welfare"
-          iconName="bonus"
-          cards={cardsByCategory.bonus}
+          label="Metodi di pagamento"
+          iconName="creditCard"
+          cards={cardsByCategory.payment}
         />
       </DesignSystemSection>
     </DesignSystemScreen>
