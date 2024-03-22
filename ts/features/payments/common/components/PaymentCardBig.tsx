@@ -16,7 +16,7 @@ import I18n from "../../../../i18n";
 import { WithTestID } from "../../../../types/WithTestID";
 import { format } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
-import { LogoPaymentWithFallback } from "./utils/LogoPaymentWithFallback";
+import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 
 export const PaymentCardBig = (props: PaymentCardBigProps) => {
   if (props.isLoading) {

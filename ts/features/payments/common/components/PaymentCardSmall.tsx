@@ -12,7 +12,7 @@ import Placeholder from "rn-placeholder";
 import { BrandEnum } from "../../../../../definitions/pagopa/ecommerce/WalletInfoDetails";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import { WithTestID } from "../../../../types/WithTestID";
-import { LogoPaymentWithFallback } from "./utils/LogoPaymentWithFallback";
+import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 
 type RenderData = {
   iconName: IOLogoPaymentType | BrandEnum | undefined;
