@@ -8,16 +8,14 @@ import {
 import I18n from "i18n-js";
 import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { useIOSelector, useIOStore } from "../../../store/hooks";
+import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
-import {
-  canNavigateToPaymentFromMessageSelector,
-  paymentsButtonStateSelector
-} from "../../messages/store/reducers/payments";
+import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import variables from "../../../theme/variables";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({
   container: {
@@ -52,10 +50,9 @@ export const MessageFooter = ({
   );
   const dispatch = useDispatch();
   const toast = useIOToast();
-  const store = useIOStore();
-  const globalState = store.getState();
-  const canNavigateToPayment =
-    canNavigateToPaymentFromMessageSelector(globalState);
+  const canNavigateToPayment = useIOSelector(state =>
+    canNavigateToPaymentFromMessageSelector(state)
+  );
   const onFooterPressCallback = useCallback(() => {
     if (payments?.length === 1) {
       const firstPayment = payments[0];
@@ -63,6 +60,7 @@ export const MessageFooter = ({
       initializeAndNavigateToWalletForPayment(
         messageId,
         paymentId,
+        false,
         undefined,
         canNavigateToPayment,
         dispatch,

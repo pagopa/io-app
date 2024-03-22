@@ -136,8 +136,8 @@ const getPaymentSubtitle = (
 };
 
 const getPaymentTitle = (details: UIWalletInfoDetails): string => {
-  if (details.maskedPan !== undefined) {
-    return `${capitalize(details.brand || "")} ••${details.maskedPan}`;
+  if (details.lastFourDigits !== undefined) {
+    return `${capitalize(details.brand || "")} ••${details.lastFourDigits}`;
   } else if (details.maskedEmail !== undefined) {
     return `${details.maskedEmail}`;
   } else if (details.maskedNumber !== undefined) {

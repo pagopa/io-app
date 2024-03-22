@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { View } from "react-native";
 import { useLinkTo } from "@react-navigation/native";
 import {
@@ -11,11 +11,10 @@ import { CTA, CTAS } from "../../features/messages/types/MessageCTA";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
 import { trackPNOptInMessageAccepted } from "../../features/pn/analytics";
 import { handleCtaAction } from "../../features/messages/utils/messages";
-import { PNOptInMessageInfo } from "../../features/pn/utils";
+import { usePNOptInMessage } from "../../features/pn/hooks/usePNOptInMessage";
 
-type ExtractedCtasProps = {
+type CTAsBarProps = {
   ctas: CTAS;
-  pnOptInMessageInfo: PNOptInMessageInfo;
   serviceId: ServiceId;
 };
 
@@ -23,29 +22,28 @@ type ExtractedCtasProps = {
  * render cta_1 and cta_2 if they are defined in the message content as front-matter
  * or if they are defined on cta attribute in ServiceMetadata in the ServiceDetailScreen
  */
-export const ExtractedCtas = ({
-  ctas,
-  pnOptInMessageInfo,
-  serviceId
-}: ExtractedCtasProps) => {
+export const CTAsBar = ({ ctas, serviceId }: CTAsBarProps) => {
   const { cta_1, cta_2 } = ctas;
   const {
     cta1HasServiceNavigationLink,
     cta2HasServiceNavigationLink,
     isPNOptInMessage
-  } = pnOptInMessageInfo;
+  } = usePNOptInMessage(ctas, serviceId);
 
   const linkTo = useLinkTo();
 
-  const handleOnPress = (cta: CTA, isServiceNavigationLink: boolean) => {
-    if (isPNOptInMessage && isServiceNavigationLink) {
-      trackPNOptInMessageAccepted();
-    }
-    handleCtaAction(cta, linkTo, serviceId);
-  };
+  const handleOnPress = useCallback(
+    (cta: CTA, isServiceNavigationLink: boolean) => {
+      if (isPNOptInMessage && isServiceNavigationLink) {
+        trackPNOptInMessageAccepted();
+      }
+      handleCtaAction(cta, linkTo, serviceId);
+    },
+    [isPNOptInMessage, linkTo, serviceId]
+  );
 
   return (
-    <View style={IOStyles.row} testID="extracted-ctas">
+    <View style={IOStyles.row}>
       {cta_2 && (
         <>
           <View style={IOStyles.flex}>
