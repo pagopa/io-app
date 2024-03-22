@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import * as reactRedux from "react-redux";
 import configureMockStore from "redux-mock-store";
 import I18n from "../../../../../i18n";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -32,18 +31,24 @@ jest.mock("@react-navigation/native", () => {
   };
 });
 
-describe("IdPayCodeResultScreen", () => {
-  const useDispatchMock = jest.spyOn(reactRedux, "useDispatch");
+const dispatchMock = jest.fn;
 
+jest.mock("react-redux", () => {
+  const reactRedux = jest.requireActual("react-redux");
+
+  return {
+    ...reactRedux,
+    useDispatch: () => dispatchMock()
+  };
+});
+
+describe("IdPayCodeResultScreen", () => {
   const tCode = Array.from({ length: 5 }, () =>
     Math.floor(Math.random() * 9)
   ).join("");
 
   describe("when continue button si pressed", () => {
     it("should reset the store and pop the screen", () => {
-      const dispatchMock = jest.fn();
-      useDispatchMock.mockReturnValue(dispatchMock);
-
       expect(dispatchMock).not.toHaveBeenCalled();
       expect(mockPop).not.toHaveBeenCalled();
 
