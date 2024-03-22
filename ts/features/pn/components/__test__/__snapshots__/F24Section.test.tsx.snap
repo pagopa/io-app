@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`F24s should match snapshot when there are more than one F24 1`] = `
+exports[`F24Section should match snapshot when there are more than one F24 1`] = `
 <View
   style={
     Object {
@@ -591,7 +591,7 @@ exports[`F24s should match snapshot when there are more than one F24 1`] = `
 </View>
 `;
 
-exports[`F24s should match snapshot when there are more than one F24 and the message is cancelled 1`] = `
+exports[`F24Section should match snapshot when there are more than one F24 and the message is cancelled 1`] = `
 <View
   style={
     Object {
@@ -922,7 +922,7 @@ exports[`F24s should match snapshot when there are more than one F24 and the mes
 </View>
 `;
 
-exports[`F24s should match snapshot when there are no F24 1`] = `
+exports[`F24Section should match snapshot when there are no F24 1`] = `
 <View
   style={
     Object {
@@ -1253,7 +1253,7 @@ exports[`F24s should match snapshot when there are no F24 1`] = `
 </View>
 `;
 
-exports[`F24s should match snapshot when there are no F24 and the message is cancelled 1`] = `
+exports[`F24Section should match snapshot when there are no F24 and the message is cancelled 1`] = `
 <View
   style={
     Object {
@@ -1584,7 +1584,7 @@ exports[`F24s should match snapshot when there are no F24 and the message is can
 </View>
 `;
 
-exports[`F24s should match snapshot when there is a single F24 1`] = `
+exports[`F24Section should match snapshot when there is a single F24 1`] = `
 <View
   style={
     Object {
@@ -2304,7 +2304,7 @@ exports[`F24s should match snapshot when there is a single F24 1`] = `
 </View>
 `;
 
-exports[`F24s should match snapshot when there is a single F24 and the message is cancelled 1`] = `
+exports[`F24Section should match snapshot when there is a single F24 and the message is cancelled 1`] = `
 <View
   style={
     Object {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createStore } from "redux";
-import { F24s } from "../F24s";
+import { F24Section } from "../F24Section";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { UIMessageId } from "../../../messages/types";
@@ -53,7 +53,7 @@ const generateFourAttachmentArray = () => [
   } as ThirdPartyAttachment
 ];
 
-describe("F24s", () => {
+describe("F24Section", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
@@ -120,7 +120,7 @@ const renderComponent = (isCancelled: boolean = false) => {
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <F24s
+      <F24Section
         messageId={"01HS1ANR1SDPN3BP51X3G74T64" as UIMessageId}
         serviceId={"01HS1ANWT4N83QGATCXYMXDP8M" as ServiceId}
         isCancelled={isCancelled}

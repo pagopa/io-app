@@ -19,7 +19,7 @@ type F24sProps = {
   serviceId: ServiceId;
 };
 
-export const F24s = ({
+export const F24Section = ({
   isCancelled = false,
   messageId,
   serviceId
@@ -60,7 +60,7 @@ export const F24s = ({
           accessibilityLabel={I18n.t("features.pn.details.f24Section.showAll")}
         />
       )}
-      <VSpacer />
+      <VSpacer size={16} />
     </>
   );
 };
