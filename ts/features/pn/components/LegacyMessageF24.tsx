@@ -58,7 +58,7 @@ const MessageF24Content = ({ attachments, messageId, openPreview }: Props) => {
   );
 };
 
-export const MessageF24 = (props: Props) => (
+export const LegacyMessageF24 = (props: Props) => (
   <MessageDetailsSection
     title={I18n.t("features.pn.details.f24Section.title")}
     testID={"pn-f24-section"}
