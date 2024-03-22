@@ -9,6 +9,8 @@ import I18n from "../../../../i18n";
 type MessageDetailsAttachmentItemProps = {
   attachment: ThirdPartyAttachment;
   bottomSpacer?: boolean;
+  disabled?: boolean;
+  isPN?: boolean;
   messageId: UIMessageId;
   serviceId?: ServiceId;
 };
@@ -16,21 +18,24 @@ type MessageDetailsAttachmentItemProps = {
 export const MessageDetailsAttachmentItem = ({
   attachment,
   bottomSpacer,
+  disabled = false,
+  isPN = false,
   messageId,
   serviceId
 }: MessageDetailsAttachmentItemProps) => {
   const { displayName, isFetching, onModuleAttachmentPress } =
-    useAttachmentDownload(messageId, attachment, false, serviceId);
+    useAttachmentDownload(messageId, attachment, isPN, serviceId);
   return (
     <>
       <ModuleAttachment
-        title={displayName}
-        isFetching={isFetching}
+        disabled={disabled}
         fetchingAccessibilityLabel={I18n.t(
           "features.messages.attachmentDownloadFeedback"
         )}
         format={"pdf"}
+        isFetching={isFetching}
         onPress={() => void onModuleAttachmentPress()}
+        title={displayName}
       />
       {bottomSpacer && <VSpacer size={8} />}
     </>
