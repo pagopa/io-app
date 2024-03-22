@@ -69,7 +69,7 @@ const walletDetailsReducer = (
         ...state,
         walletDetails: pot.some({
           ...walletDetails,
-          services: updatedApplications
+          applications: updatedApplications
         })
       };
   }
