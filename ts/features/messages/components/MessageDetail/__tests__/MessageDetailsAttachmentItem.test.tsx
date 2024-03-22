@@ -39,6 +39,8 @@ describe("MessageDetailsAttachmentItem", () => {
       thirdPartyAttachment,
       messageId,
       serviceId,
+      true,
+      false,
       true
     );
     expect(component.toJSON()).toMatchSnapshot();
@@ -69,7 +71,8 @@ describe("MessageDetailsAttachmentItem", () => {
       messageId,
       undefined,
       undefined,
-      true
+      true,
+      false
     );
     expect(component.toJSON()).toMatchSnapshot();
   });
@@ -80,7 +83,8 @@ const renderScreen = (
   messageId: UIMessageId,
   serviceId?: ServiceId,
   bottomSpacer?: boolean,
-  isFetching?: boolean
+  isFetching?: boolean,
+  disabled?: boolean
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const designSystemState = appReducer(
@@ -107,9 +111,10 @@ const renderScreen = (
     () => (
       <MessageDetailsAttachmentItem
         attachment={attachment}
+        bottomSpacer={bottomSpacer}
+        disabled={disabled}
         messageId={messageId}
         serviceId={serviceId}
-        bottomSpacer={bottomSpacer}
       />
     ),
     "DUMMY",
