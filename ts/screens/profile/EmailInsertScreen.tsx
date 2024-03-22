@@ -68,6 +68,7 @@ import { setAccessibilityFocus } from "../../utils/accessibility";
 export type EmailInsertScreenNavigationParams = Readonly<{
   isOnboarding: boolean;
   isFciEditEmailFlow?: boolean;
+  isEditingPreviouslyInsertedEmailMode?: boolean;
 }>;
 
 const EMPTY_EMAIL = "";
@@ -81,7 +82,11 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * A screen to allow user to insert an email address.
  */
 const EmailInsertScreen = () => {
-  const { isOnboarding, isFciEditEmailFlow } =
+  const {
+    isOnboarding,
+    isFciEditEmailFlow,
+    isEditingPreviouslyInsertedEmailMode
+  } =
     useRoute<
       Route<
         "ONBOARDING_INSERT_EMAIL_SCREEN" | "INSERT_EMAIL_SCREEN",
@@ -241,14 +246,18 @@ const EmailInsertScreen = () => {
      * 3. Not first onboarding => if the CIT write the same email as the one
      *    he already has, he is blocked.
      */
-    if (isFirstOnBoarding) {
-      setAreSameEmails(
-        isProfileEmailAlreadyTaken
-          ? areStringsEqual(O.some(value), optionEmail, true)
-          : false
-      );
-    } else {
-      setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+    // If we are editing the email previously inserted
+    // we don't want to show the error message.
+    if (!isEditingPreviouslyInsertedEmailMode) {
+      if (isFirstOnBoarding) {
+        setAreSameEmails(
+          isProfileEmailAlreadyTaken
+            ? areStringsEqual(O.some(value), optionEmail, true)
+            : false
+        );
+      } else {
+        setAreSameEmails(areStringsEqual(O.some(value), optionEmail, true));
+      }
     }
     setEmail(value !== EMPTY_EMAIL ? O.some(value) : O.none);
   };

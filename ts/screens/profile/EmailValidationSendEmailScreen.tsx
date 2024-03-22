@@ -56,6 +56,7 @@ import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
+import ROUTES from "../../navigation/routes";
 import Countdown from "./components/CountdownComponent";
 
 const emailSentTimeout = 60000 as Millisecond; // 60 seconds
@@ -68,6 +69,7 @@ export type SendEmailValidationScreenProp = {
   isOnboarding?: boolean;
   sendEmailAtFirstRender?: boolean;
   isFciEditEmailFlow?: boolean;
+  isEditingEmailMode?: boolean;
 };
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "email.validate.title",
@@ -182,10 +184,33 @@ const EmailValidationSendEmailScreen = () => {
     sendEmailValidation();
   }, [flow, sendEmailValidation]);
 
-  const navigateToInsertEmail = useCallback(() => {
+  const navigateBackToInsertEmail = useCallback(() => {
     dispatchAcknowledgeOnEmailValidation(O.none);
-    navigation.goBack();
-  }, [dispatchAcknowledgeOnEmailValidation, navigation]);
+    if (isOnboarding) {
+      navigation.navigate(ROUTES.ONBOARDING, {
+        screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
+        params: {
+          isOnboarding,
+          isFciEditEmailFlow,
+          isEditingPreviouslyInsertedEmailMode: true
+        }
+      });
+    } else {
+      navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+        screen: ROUTES.INSERT_EMAIL_SCREEN,
+        params: {
+          isOnboarding: false,
+          isFciEditEmailFlow,
+          isEditingPreviouslyInsertedEmailMode: true
+        }
+      });
+    }
+  }, [
+    dispatchAcknowledgeOnEmailValidation,
+    isFciEditEmailFlow,
+    isOnboarding,
+    navigation
+  ]);
 
   useEffect(() => {
     if (
@@ -280,7 +305,7 @@ const EmailValidationSendEmailScreen = () => {
             <ButtonLink
               label={I18n.t("email.newvalidate.link")}
               accessibilityLabel={I18n.t("email.newvalidate.link")}
-              onPress={navigateToInsertEmail}
+              onPress={navigateBackToInsertEmail}
               testID="link-test"
             />
             <VSpacer size={24} />

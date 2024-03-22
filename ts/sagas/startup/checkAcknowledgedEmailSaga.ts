@@ -55,7 +55,8 @@ export function* checkAcknowledgedEmailSaga(
     NavigationService.dispatchNavigationAction,
     // We use navigate to go back to the main tab
     // https://reactnavigation.org/docs/nesting-navigators/#navigation-actions-are-handled-by-current-navigator-and-bubble-up-if-couldnt-be-handled
-    CommonActions.navigate(ROUTES.MAIN, {
+    CommonActions.navigate({
+      name: ROUTES.MAIN,
       // If for some reason, we have navigation params
       // we want to merge them going back to the main tab.
       merge: true
