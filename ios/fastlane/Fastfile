@@ -244,7 +244,7 @@ platform :ios do
       merge_commit_filtering: "exclude_merges"
     )
 
-    # # upload to App store
+    # upload to App store
     pilot(
       api_key: api_key,
       changelog: changelog,
