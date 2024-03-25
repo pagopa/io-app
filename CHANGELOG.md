@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0-rc.1](https://github.com/pagopa/io-app/compare/0.6.2-rc.0...0.7.0-rc.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* **IT Wallet:** [[SIW-779](https://pagopa.atlassian.net/browse/SIW-779),[SIW-781](https://pagopa.atlassian.net/browse/SIW-781)] Add proximity saga ([#5360](https://github.com/pagopa/io-app/issues/5360)) ([20080b1](https://github.com/pagopa/io-app/commit/20080b134fa95a00be082dddbea2755dd07d7489))
+* **IT Wallet:** [[SIW-786](https://pagopa.atlassian.net/browse/SIW-786)] Fix CGN test ([#5374](https://github.com/pagopa/io-app/issues/5374)) ([584aacd](https://github.com/pagopa/io-app/commit/584aacdd3f9ae7ee023e45776d419cbd2ed8b631))
+
+
+### Chores
+
+* **IT Wallet:** [[SIW-709](https://pagopa.atlassian.net/browse/SIW-709)] Update PID issuing saga to match a generic credential ([#5373](https://github.com/pagopa/io-app/issues/5373)) ([7f98216](https://github.com/pagopa/io-app/commit/7f98216a388a45eca33c3464561d1ee5ef819ae9))
+* **IT Wallet:** [[SIW-772](https://pagopa.atlassian.net/browse/SIW-772)] Add `BLE` permissions for `iOS` and `Android` ([#5352](https://github.com/pagopa/io-app/issues/5352)) ([ff8f59e](https://github.com/pagopa/io-app/commit/ff8f59ed088d298610f8024a385ac51fd1e898e2))
+* **IT Wallet:** [[SIW-773](https://pagopa.atlassian.net/browse/SIW-773)] Add patch to `cipher-base` package ([#5354](https://github.com/pagopa/io-app/issues/5354)) ([a9242c1](https://github.com/pagopa/io-app/commit/a9242c1f07cafcdb5fd8b39ebd8480df94bb2ac8))
+* **IT Wallet:** [[SIW-778](https://pagopa.atlassian.net/browse/SIW-778)] Add actions and reducer for proximity flow ([#5359](https://github.com/pagopa/io-app/issues/5359)) ([0dc72d9](https://github.com/pagopa/io-app/commit/0dc72d94f306efdee1b750698676f5fafc00046a))
+* **IT Wallet:** [[SIW-780](https://pagopa.atlassian.net/browse/SIW-780)] Update `ItwPrProximityQrCodeScreen` with proximity saga ([#5361](https://github.com/pagopa/io-app/issues/5361)) ([5f55e58](https://github.com/pagopa/io-app/commit/5f55e581a384b755339fc660f338e0a34fab5253))
+* **IT Wallet:** [[SIW-783](https://pagopa.atlassian.net/browse/SIW-783)] Update `io-react-native-proximity` to version `0.1.7` ([#5362](https://github.com/pagopa/io-app/issues/5362)) ([4858220](https://github.com/pagopa/io-app/commit/48582208f8a41a8df8c66e815fa30ae7c7bbf26b))
+* **IT Wallet:** [[SIW-789](https://pagopa.atlassian.net/browse/SIW-789)] Refactor folders and files structure ([#5384](https://github.com/pagopa/io-app/issues/5384)) ([98a5f29](https://github.com/pagopa/io-app/commit/98a5f291eb410a0884002038b01afcf6684d885b))
+* [[SIW-769](https://pagopa.atlassian.net/browse/SIW-769)] Integrate proximity manager ([#5347](https://github.com/pagopa/io-app/issues/5347)) ([8feb31f](https://github.com/pagopa/io-app/commit/8feb31fb9205fd5220c0269e873a8b1d75fc9db4))
+
 ## [0.7.0-rc.0](https://github.com/pagopa/io-app/compare/0.6.2-rc.0...0.7.0-rc.0) (2023-12-22)
 
 
