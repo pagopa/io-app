@@ -1,5 +1,12 @@
 This file describes the reason for the patches applied.
 
+### native-base+2.15.2
+Created on **25/03/2024**
+
+#### Reason:
+- Fixes a crash occurring when reopening the app while in background on Android (possibly even iOS but currently we don't have evidence) due to the usage of removed `keyboardDidShow` and `keyboardDidHide` events. 
+Remove this patch after removing `native-base`.
+
 ### react-native-vision-camera+2.15.4
 Created on **24/07/2023** 
 FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
