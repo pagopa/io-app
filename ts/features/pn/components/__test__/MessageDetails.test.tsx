@@ -12,6 +12,7 @@ import { thirdPartyMessage } from "../../__mocks__/message";
 import { toPNMessage } from "../../store/types/transformers";
 import I18n from "../../../../i18n";
 import { serviceId_1 } from "../../../messages/__mocks__/messages";
+import { UIMessageId } from "../../../messages/types";
 
 const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
@@ -51,6 +52,7 @@ describe("MessageDetails component", () => {
 });
 
 const generateComponentProperties = (message: PNMessage) => ({
+  messageId: "01HRYR6C761DGH3S84HBBXMMKT" as UIMessageId,
   message,
   payments: undefined,
   serviceId: serviceId_1
