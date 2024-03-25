@@ -1,16 +1,15 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../../i18n";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { cancelButtonProps } from "../../../../../../components/buttons/ButtonConfigurations";
 import { walletAddBPayCancel } from "../../store/actions";
 
 export type Props = ReturnType<typeof mapDispatchToProps> &
@@ -42,11 +41,18 @@ const BPayKoNotFound = (props: Props): React.ReactElement => {
           title={title}
           body={body}
         />
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(props.cancel)}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: props.cancel
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

@@ -1,23 +1,19 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
 
+import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../../../../i18n";
 import { navigateBack } from "../../../../../../../store/actions/navigation";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../../../../components/buttons/ButtonConfigurations";
-import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import {
   searchUserCoBadge,
   walletAddCoBadgeCancel
@@ -65,12 +61,26 @@ const CoBadgeKoSingleBankNotFound: React.FunctionComponent<Props> = props => {
           title={title}
           body={body}
         />
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps(props.cancel)}
-          rightButton={confirmButtonProps(onSearchAll, continueStr)}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: props.cancel
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: continueStr,
+            accessibilityLabel: continueStr,
+            onPress: onSearchAll
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

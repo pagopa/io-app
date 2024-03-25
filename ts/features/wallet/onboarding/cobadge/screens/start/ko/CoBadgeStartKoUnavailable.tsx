@@ -1,18 +1,17 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../../../../components/ui/FooterWithButtons";
+import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import { cancelButtonProps } from "../../../../../../../components/buttons/ButtonConfigurations";
-import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -49,12 +48,18 @@ const CoBadgeStartKoUnavailable = (props: Props): React.ReactElement => {
           title={title}
           body={body}
         />
-
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(props.cancel, close)}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: close,
+            accessibilityLabel: close,
+            onPress: props.cancel
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
