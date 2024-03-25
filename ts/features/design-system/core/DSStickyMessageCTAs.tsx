@@ -1,10 +1,6 @@
-import {
-  ButtonSolid,
-  IOColors,
-  VSpacer,
-  hexToRgba
-} from "@pagopa/io-app-design-system";
-import React, { useState } from "react";
+import { ButtonSolid, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { useHeaderHeight } from "@react-navigation/elements";
+import React, { useMemo, useState } from "react";
 import {
   Alert,
   Dimensions,
@@ -23,67 +19,74 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const THRESHOLD = 200; // Adjust this value to your desired threshold
-
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
-const { height: screenHeight } = Dimensions.get("screen");
-
-type FooterLayout = {
-  y: LayoutRectangle["y"];
-  height: LayoutRectangle["height"];
-};
-
 export const DSStickyMessageCTAs = () => {
-  const [footerLayout, setFooterLayout] = useState<FooterLayout>({
-    y: 0,
-    height: 0
-  });
-  const scrollY = useSharedValue(0);
+  const scrollY = useSharedValue<number>(0);
+
+  /* We can't just use `screenHeight` from `Dimensions` because
+  it doesn't count the fixed block used by `react-navigation`
+  for the header */
+  const { height: screenHeight } = Dimensions.get("screen");
+  const headerHeight = useHeaderHeight();
+  const activeScreenHeight = screenHeight - headerHeight;
+
+  /* Disambiguation:
+  actionBlock:            Block element fixed at the bottom of the screen
+  actionBlockPlaceholder: Block element to which the fixed action block
+                          needs to be attached
+  */
+  const [actionBlockHeight, setActionBlockHeight] =
+    useState<LayoutRectangle["height"]>(0);
+  const [actionBlockPlaceholderY, setActionBlockPlaceholderY] =
+    useState<LayoutRectangle["y"]>(0);
 
   const insets = useSafeAreaInsets();
 
-  const layoutMeasurementHeight = useSharedValue(0);
-  const contentSizeHeight = useSharedValue(0);
-
-  const getFooterLayout = (event: LayoutChangeEvent) => {
-    const { height, y } = event.nativeEvent.layout;
-    setFooterLayout({ height, y });
-  };
-
-  const topEdge = footerLayout?.y - screenHeight + footerLayout?.height;
-
-  const buttonAnimatedStyle = useAnimatedStyle(() => {
-    const translateY = interpolate(
-      scrollY.value,
-      [0, contentSizeHeight.value - layoutMeasurementHeight.value],
-      [0, -THRESHOLD],
-      { extrapolateLeft: Extrapolation.CLAMP }
-    );
-
-    return {
-      transform: [
-        {
-          translateY
-        }
-      ]
-    };
+  const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
+    // eslint-disable-next-line functional/immutable-data
+    scrollY.value = contentOffset.y;
   });
 
-  const handleScroll = useAnimatedScrollHandler(
-    ({ contentOffset, layoutMeasurement, contentSize }) => {
-      // eslint-disable-next-line functional/immutable-data
-      scrollY.value = contentOffset.y;
-      // eslint-disable-next-line functional/immutable-data
-      layoutMeasurementHeight.value = layoutMeasurement.height;
-      // eslint-disable-next-line functional/immutable-data
-      contentSizeHeight.value = contentSize.height;
-      // eslint-disable-next-line functional/immutable-data
-      // isSticky.value = offsetY >= THRESHOLD;
-    }
+  /* Get values from relative `onLayout` methods */
+  const getActionBlockHeight = (event: LayoutChangeEvent) => {
+    setActionBlockHeight(event.nativeEvent.layout.height);
+  };
+
+  const getActionBlockY = (event: LayoutChangeEvent) => {
+    setActionBlockPlaceholderY(event.nativeEvent.layout.y);
+  };
+
+  const actionBlockPlaceholderTopEdge = useMemo(
+    () => actionBlockPlaceholderY - activeScreenHeight + actionBlockHeight,
+    [actionBlockPlaceholderY, activeScreenHeight, actionBlockHeight]
   );
+
+  const actionBlockAnimatedStyle = useAnimatedStyle(() => ({
+    /* 
+    We only start translating the action block
+    when it reaches the top of the placeholder
+       0 = Translate is blocked
+      -1 = Translate is unblocked
+    */
+    transform: [
+      {
+        translateY: interpolate(
+          scrollY.value,
+          [
+            -1,
+            0,
+            actionBlockPlaceholderTopEdge - 1,
+            actionBlockPlaceholderTopEdge
+          ],
+          [0, 0, 0, -1],
+          { extrapolateLeft: Extrapolation.CLAMP }
+        )
+      }
+    ]
+  }));
 
   return (
     <View style={styles.container}>
@@ -96,33 +99,35 @@ export const DSStickyMessageCTAs = () => {
             <VSpacer size={4} />
           </React.Fragment>
         ))}
+        {/* Action Block Placeholder: START */}
         <View
-          style={{
-            height: footerLayout?.height,
-            backgroundColor: hexToRgba(IOColors.black, 0.25)
-          }}
+          onLayout={getActionBlockY}
+          style={[{ height: actionBlockHeight }, styles.actionBlockBackground]}
         />
+        {/* Action Block Placeholder: END */}
         <View style={[styles.block, styles.footer]}>
           <Text>{`Footer`}</Text>
         </View>
       </Animated.ScrollView>
       <Animated.View
+        onLayout={getActionBlockHeight}
         style={[
-          styles.button,
+          styles.actionBlockBackground,
+          styles.actionBlockPosition,
           { paddingBottom: insets.bottom },
-          buttonAnimatedStyle
+          actionBlockAnimatedStyle
         ]}
-        onLayout={getFooterLayout}
       >
         <Text
           style={{
             position: "absolute",
             right: 0,
             top: 0,
-            color: IOColors.white
+            color: IOColors.black,
+            fontSize: 9
           }}
         >
-          {footerLayout?.height}
+          {`Height: ${actionBlockHeight}`}
         </Text>
         <ButtonSolid
           fullWidth
@@ -145,9 +150,6 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1
   },
-  // scrollViewContent: {
-  //   paddingBottom: BUTTON_HEIGHT + 20 // Adjust for your content padding
-  // },
   block: {
     backgroundColor: IOColors["grey-100"],
     alignItems: "center",
@@ -157,12 +159,14 @@ const styles = StyleSheet.create({
   footer: {
     backgroundColor: IOColors["success-100"]
   },
-  button: {
+  actionBlockBackground: {
+    backgroundColor: IOColors.white
+  },
+  actionBlockPosition: {
     position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: IOColors.black,
     paddingHorizontal: 24,
     paddingVertical: 16
   }
