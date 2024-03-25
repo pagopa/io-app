@@ -1,5 +1,6 @@
 name: Run e2e tests
 on:
+  pull_request:
   workflow_dispatch:
   push:
     branches:
@@ -105,6 +106,6 @@ jobs:
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2        
         if: always()
         with:
-          name: detox-artifacts-$(basename '${{ matrix.test }}')"
+          name: detox-artifacts-${{ matrix.test }}
           path: /tmp/e2e_artifacts/
           retention-days: 2
