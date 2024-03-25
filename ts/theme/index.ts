@@ -8,7 +8,6 @@ import getTheme from "native-base/src/theme/components";
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
 import inputTheme from "./components/Input";
-import itemTheme from "./components/Item";
 import maskedInputTheme from "./components/MaskedInput";
 import textTheme from "./components/Text";
 import { Theme } from "./types";
@@ -19,9 +18,6 @@ const theme = (): Theme => {
   const overrides = {
     "NativeBase.Button": {
       ...buttonTheme()
-    },
-    "NativeBase.Item": {
-      ...itemTheme()
     },
     "NativeBase.Text": {
       ...textTheme()
