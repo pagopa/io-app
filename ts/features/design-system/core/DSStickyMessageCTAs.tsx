@@ -1,4 +1,9 @@
-import { ButtonSolid, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonLink,
+  ButtonSolid,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
 import React, { useMemo, useState } from "react";
 import {
@@ -25,6 +30,7 @@ const onButtonPress = () => {
 
 export const DSStickyMessageCTAs = () => {
   const scrollY = useSharedValue<number>(0);
+  const insets = useSafeAreaInsets();
 
   /* We can't just use `screenHeight` from `Dimensions` because
   it doesn't count the fixed block used by `react-navigation`
@@ -42,8 +48,6 @@ export const DSStickyMessageCTAs = () => {
     useState<LayoutRectangle["height"]>(0);
   const [actionBlockPlaceholderY, setActionBlockPlaceholderY] =
     useState<LayoutRectangle["y"]>(0);
-
-  const insets = useSafeAreaInsets();
 
   const handleScroll = useAnimatedScrollHandler(({ contentOffset }) => {
     // eslint-disable-next-line functional/immutable-data
@@ -65,6 +69,12 @@ export const DSStickyMessageCTAs = () => {
   );
 
   const actionBlockAnimatedStyle = useAnimatedStyle(() => ({
+    /* Avoid solid background overlap with the
+    system scrollbar */
+    backgroundColor:
+      actionBlockPlaceholderTopEdge < scrollY.value
+        ? "transparent"
+        : IOColors.white,
     /* 
     We only start translating the action block
     when it reaches the top of the placeholder
@@ -118,29 +128,21 @@ export const DSStickyMessageCTAs = () => {
           actionBlockAnimatedStyle
         ]}
       >
-        <Text
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            color: IOColors.black,
-            fontSize: 9
-          }}
-        >
-          {`Height: ${actionBlockHeight}`}
-        </Text>
+        <Text style={styles.debugText}>{`Height: ${actionBlockHeight}`}</Text>
         <ButtonSolid
           fullWidth
           accessibilityLabel="Tap to trigger test alert"
           label={"Pay button"}
           onPress={onButtonPress}
         />
-        {/* <VSpacer />
-        <ButtonLink
-          accessibilityLabel="Tap to trigger test alert"
-          label={"Secondary link"}
-          onPress={onButtonPress}
-        /> */}
+        <VSpacer />
+        <View style={{ alignSelf: "center" }}>
+          <ButtonLink
+            accessibilityLabel="Tap to trigger test alert"
+            label={"Secondary link"}
+            onPress={onButtonPress}
+          />
+        </View>
       </Animated.View>
     </View>
   );
@@ -149,6 +151,14 @@ export const DSStickyMessageCTAs = () => {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1
+  },
+  debugText: {
+    position: "absolute",
+    right: 8,
+    top: -16,
+    color: IOColors.black,
+    fontSize: 9,
+    opacity: 0.75
   },
   block: {
     backgroundColor: IOColors["grey-100"],
