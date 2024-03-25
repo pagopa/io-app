@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CgnCard should match the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "aspectRatio": 1.6,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+        "transform": Array [
+          Object {
+            "rotateX": "180deg",
+          },
+        ],
+      }
+    }
+  >
+    <SvgMock />
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "space-between",
+        "paddingBottom": 16,
+        "paddingLeft": 16,
+        "paddingRight": 12,
+        "paddingTop": 12,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="black"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 18,
+            "lineHeight": 25,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 18,
+              "lineHeight": 25,
+            },
+            Object {
+              "color": "#0E0F13",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Carta Giovani Nazionale
+      </Text>
+      <Image
+        source={
+          Object {
+            "testUri": "../../../img/bonus/cgn/cgn_logo.png",
+          }
+        }
+        style={
+          Object {
+            "height": 40,
+            "resizeMode": "contain",
+            "width": 40,
+          }
+        }
+      />
+    </View>
+    <Text
+      allowFontScaling={false}
+      color="black"
+      defaultColor="black"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
+        Object {
+          "fontSize": 16,
+          "lineHeight": 21,
+        }
+      }
+      style={
+        Array [
+          Object {
+            "width": "70%",
+          },
+          Object {
+            "fontSize": 16,
+            "lineHeight": 21,
+          },
+          Object {
+            "color": "#0E0F13",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Dipartimento per le politiche giovanili e il servizio civile universale
+    </Text>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        color="blueItalia-850"
+        defaultColor="black"
+        defaultWeight="SemiBold"
+        font="TitilliumWeb"
+        fontStyle={
+          Object {
+            "fontSize": 16,
+            "lineHeight": 21,
+          }
+        }
+        style={
+          Array [
+            Object {
+              "fontSize": 16,
+              "lineHeight": 21,
+            },
+            Object {
+              "color": "#001F3D",
+              "fontFamily": "Titillium Web",
+              "fontStyle": "normal",
+              "fontWeight": "600",
+            },
+          ]
+        }
+        weight="SemiBold"
+      >
+        Valida fino al 12/23
+      </Text>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 8,
+            "padding": 5,
+          }
+        }
+      >
+        <Image
+          source={
+            Object {
+              "testUri": "../../../img/bonus/cgn/eyca_logo.png",
+            }
+          }
+          style={
+            Object {
+              "height": 30,
+              "resizeMode": "contain",
+              "width": 30,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;

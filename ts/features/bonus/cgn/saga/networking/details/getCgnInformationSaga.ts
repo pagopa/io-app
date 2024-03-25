@@ -7,6 +7,8 @@ import { getNetworkError } from "../../../../../../utils/errors";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnDetails } from "../../../store/actions/details";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+import { walletAddCards } from "../../../../../newWallet/store/actions/cards";
+import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 
 export function* cgnGetInformationSaga(
   getCgnStatus: ReturnType<typeof BackendCGN>["getCgnStatus"],
@@ -30,7 +32,20 @@ export function* cgnGetInformationSaga(
       E.isRight(cgnInformationResult) &&
       cgnInformationResult.right.status === 200
     ) {
-      yield* put(cgnDetails.success(cgnInformationResult.right.value));
+      const cgnInfo = cgnInformationResult.right.value;
+      if (cgnInfo.status === StatusEnum.ACTIVATED) {
+        yield* put(
+          walletAddCards([
+            {
+              type: "cgn",
+              category: "cgn",
+              key: "cgn_card",
+              expireDate: cgnInfo.expiration_date
+            }
+          ])
+        );
+      }
+      yield* put(cgnDetails.success(cgnInfo));
     } else {
       yield* put(
         cgnDetails.failure({
