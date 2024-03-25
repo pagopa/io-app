@@ -1,6 +1,5 @@
 name: Run e2e tests
 on:
-  pull_request:
   workflow_dispatch:
   push:
     branches:
