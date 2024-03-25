@@ -531,10 +531,13 @@ export function* initializeApplicationSaga(
     yield* fork(watchPnSaga, sessionToken);
   }
 
+  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
+    yield* select(isPagoPATestEnabledSelector);
+
   const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
     yield* select(isIdPayTestEnabledSelector);
 
-  if (idPayTestEnabled) {
+  if (idPayTestEnabled && isPagoPATestEnabled) {
     // Start watching for IDPay actions
     yield* fork(watchIDPaySaga, maybeSessionInformation.value.bpdToken);
   }
@@ -548,9 +551,6 @@ export function* initializeApplicationSaga(
   // the wallet token is available,
   // proceed with starting the "watch wallet" saga
   const walletToken = maybeSessionInformation.value.walletToken;
-
-  const isPagoPATestEnabled: ReturnType<typeof isPagoPATestEnabledSelector> =
-    yield* select(isPagoPATestEnabledSelector);
 
   yield* fork(
     watchWalletSaga,
