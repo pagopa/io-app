@@ -86,6 +86,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         }
         bbHeight={24}
         bbWidth={24}
+        color={4278219750}
         focusable={false}
         height={24}
         importantForAccessibility="no-hide-descendants"
@@ -108,26 +109,19 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        tintColor="#0073E6"
+        tintColor={4278219750}
         vbHeight={24}
         vbWidth={24}
         width={24}
       >
-        <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
-        >
+        <RNSVGGroup>
           <RNSVGPath
             clipRule={0}
             d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
             fill={
-              Object {
-                "type": 2,
-              }
+              Array [
+                2,
+              ]
             }
             fillRule={0}
             propList={
@@ -229,6 +223,7 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         }
         bbHeight={24}
         bbWidth={24}
+        color={4278219750}
         focusable={false}
         height={24}
         importantForAccessibility="no-hide-descendants"
@@ -251,26 +246,19 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
             },
           ]
         }
-        tintColor="#0073E6"
+        tintColor={4278219750}
         vbHeight={24}
         vbWidth={24}
         width={24}
       >
-        <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
-        >
+        <RNSVGGroup>
           <RNSVGPath
             clipRule={0}
             d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
             fill={
-              Object {
-                "type": 2,
-              }
+              Array [
+                2,
+              ]
             }
             fillRule={0}
             propList={

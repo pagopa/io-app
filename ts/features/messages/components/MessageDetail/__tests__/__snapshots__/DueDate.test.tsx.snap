@@ -44,31 +44,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -81,12 +63,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -114,12 +91,6 @@ Array [
               content="Jan"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -131,12 +102,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -165,12 +131,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -344,31 +304,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -381,12 +323,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -414,12 +351,6 @@ Array [
               content="Feb"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -431,12 +362,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -465,12 +391,6 @@ Array [
               content="28"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -644,31 +564,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -681,12 +583,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -714,12 +611,6 @@ Array [
               content="Feb"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -731,12 +622,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -765,12 +651,6 @@ Array [
               content="28"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -944,31 +824,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -981,12 +843,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -1014,12 +871,6 @@ Array [
               content="Feb"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -1031,12 +882,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -1065,12 +911,6 @@ Array [
               content="29"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -1244,31 +1084,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -1281,12 +1103,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -1314,12 +1131,6 @@ Array [
               content="Mar"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -1331,12 +1142,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -1365,12 +1171,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -1544,31 +1344,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -1581,12 +1363,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -1614,12 +1391,6 @@ Array [
               content="Apr"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -1631,12 +1402,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -1665,12 +1431,6 @@ Array [
               content="30"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -1844,31 +1604,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -1881,12 +1623,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -1914,12 +1651,6 @@ Array [
               content="May"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -1931,12 +1662,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -1965,12 +1691,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -2144,31 +1864,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -2181,12 +1883,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -2214,12 +1911,6 @@ Array [
               content="Jun"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -2231,12 +1922,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -2265,12 +1951,6 @@ Array [
               content="30"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -2444,31 +2124,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -2481,12 +2143,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -2514,12 +2171,6 @@ Array [
               content="Jul"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -2531,12 +2182,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -2565,12 +2211,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -2744,31 +2384,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -2781,12 +2403,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -2814,12 +2431,6 @@ Array [
               content="Aug"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -2831,12 +2442,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -2865,12 +2471,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -3044,31 +2644,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -3081,12 +2663,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -3114,12 +2691,6 @@ Array [
               content="Sep"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -3131,12 +2702,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -3165,12 +2731,6 @@ Array [
               content="30"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -3344,31 +2904,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -3381,12 +2923,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -3414,12 +2951,6 @@ Array [
               content="Oct"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -3431,12 +2962,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -3465,12 +2991,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -3644,31 +3164,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -3681,12 +3183,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -3714,12 +3211,6 @@ Array [
               content="Dec"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -3731,12 +3222,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -3765,12 +3251,6 @@ Array [
               content="01"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -3944,31 +3424,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -3981,12 +3443,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -4014,12 +3471,6 @@ Array [
               content="Dec"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -4031,12 +3482,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -4065,12 +3511,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -4244,31 +3684,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -4281,12 +3703,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -4314,12 +3731,6 @@ Array [
               content="Gen"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -4331,12 +3742,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -4365,12 +3771,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -4544,31 +3944,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -4581,12 +3963,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -4614,12 +3991,6 @@ Array [
               content="Feb"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -4631,12 +4002,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -4665,12 +4031,6 @@ Array [
               content="28"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -4844,31 +4204,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -4881,12 +4223,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -4914,12 +4251,6 @@ Array [
               content="Feb"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -4931,12 +4262,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -4965,12 +4291,6 @@ Array [
               content="28"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -5144,31 +4464,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -5181,12 +4483,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -5214,12 +4511,6 @@ Array [
               content="Feb"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -5231,12 +4522,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -5265,12 +4551,6 @@ Array [
               content="29"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -5444,31 +4724,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -5481,12 +4743,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -5514,12 +4771,6 @@ Array [
               content="Mar"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -5531,12 +4782,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -5565,12 +4811,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -5744,31 +4984,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -5781,12 +5003,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -5814,12 +5031,6 @@ Array [
               content="Apr"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -5831,12 +5042,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -5865,12 +5071,6 @@ Array [
               content="30"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -6044,31 +5244,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -6081,12 +5263,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -6114,12 +5291,6 @@ Array [
               content="Mag"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -6131,12 +5302,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -6165,12 +5331,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -6344,31 +5504,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -6381,12 +5523,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -6414,12 +5551,6 @@ Array [
               content="Giu"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -6431,12 +5562,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -6465,12 +5591,6 @@ Array [
               content="30"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -6644,31 +5764,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -6681,12 +5783,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -6714,12 +5811,6 @@ Array [
               content="Lug"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -6731,12 +5822,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -6765,12 +5851,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -6944,31 +6024,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -6981,12 +6043,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -7014,12 +6071,6 @@ Array [
               content="Ago"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -7031,12 +6082,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -7065,12 +6111,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -7244,31 +6284,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -7281,12 +6303,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -7314,12 +6331,6 @@ Array [
               content="Set"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -7331,12 +6342,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -7365,12 +6371,6 @@ Array [
               content="30"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -7544,31 +6544,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -7581,12 +6563,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -7614,12 +6591,6 @@ Array [
               content="Ott"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -7631,12 +6602,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -7665,12 +6631,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -7844,31 +6804,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -7881,12 +6823,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -7914,12 +6851,6 @@ Array [
               content="Dic"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -7931,12 +6862,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -7965,12 +6891,6 @@ Array [
               content="01"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -8144,31 +7064,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -8181,12 +7083,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -8214,12 +7111,6 @@ Array [
               content="Dic"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -8231,12 +7122,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -8265,12 +7151,6 @@ Array [
               content="31"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -8444,31 +7324,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             name="icon"
             propList={
               Array [
@@ -8481,12 +7343,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 10,
@@ -8514,12 +7371,6 @@ Array [
               content="Dec"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -8531,12 +7382,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             font={
               Object {
                 "fontSize": 18,
@@ -8565,12 +7411,6 @@ Array [
               content="01"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -8744,31 +7584,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -8781,12 +7603,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -8814,12 +7631,6 @@ Array [
               content="Dec"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -8831,12 +7642,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -8865,12 +7671,6 @@ Array [
               content="01"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -9044,31 +7844,13 @@ Array [
       vbWidth={40}
       width={40}
     >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
+      <RNSVGGroup>
         <RNSVGGroup
-          fill={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
           name="calendar"
         >
           <RNSVGPath
             d="m 33,0 h 3 c 2.209139,0 4,1.790861 4,4 v 32 c 0,2.209139 -1.790861,4 -4,4 H 4 C 1.790861,40 0,38.209139 0,36 V 4 C 0,1.790861 1.790861,0 4,0 h 3 v 3 h 4 V 0 h 18 v 3 h 4 z"
-            fill={
-              Object {
-                "payload": 4282866285,
-                "type": 0,
-              }
-            }
+            fill={4282866285}
             name="icon"
             propList={
               Array [
@@ -9081,12 +7863,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 10,
@@ -9114,12 +7891,6 @@ Array [
               content="Dec"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -9131,12 +7902,7 @@ Array [
             content={null}
             dx={Array []}
             dy={Array []}
-            fill={
-              Object {
-                "payload": 4294967295,
-                "type": 0,
-              }
-            }
+            fill={4294967295}
             font={
               Object {
                 "fontSize": 18,
@@ -9165,12 +7931,6 @@ Array [
               content="01"
               dx={Array []}
               dy={Array []}
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               font={Object {}}
               rotate={Array []}
               x={Array []}
@@ -9318,6 +8078,7 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
     align="xMidYMid"
     bbHeight={24}
     bbWidth={24}
+    color={4279710285}
     focusable={false}
     height={24}
     importantForAccessibility="no-hide-descendants"
@@ -9340,25 +8101,18 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
         },
       ]
     }
-    tintColor="#17324D"
+    tintColor={4279710285}
     vbHeight={24}
     vbWidth={24}
     width={24}
   >
-    <RNSVGGroup
-      fill={
-        Object {
-          "payload": 4278190080,
-          "type": 0,
-        }
-      }
-    >
+    <RNSVGGroup>
       <RNSVGPath
         d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
         fill={
-          Object {
-            "type": 2,
-          }
+          Array [
+            2,
+          ]
         }
         propList={
           Array [
@@ -9370,9 +8124,9 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
         clipRule={0}
         d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
         fill={
-          Object {
-            "type": 2,
-          }
+          Array [
+            2,
+          ]
         }
         fillRule={0}
         propList={
@@ -9385,9 +8139,9 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
       <RNSVGPath
         d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
         fill={
-          Object {
-            "type": 2,
-          }
+          Array [
+            2,
+          ]
         }
         propList={
           Array [
@@ -9399,9 +8153,9 @@ exports[`the \`DueDateBar\` component when \`isPaid\` is true  should match the 
         clipRule={0}
         d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
         fill={
-          Object {
-            "type": 2,
-          }
+          Array [
+            2,
+          ]
         }
         fillRule={0}
         propList={

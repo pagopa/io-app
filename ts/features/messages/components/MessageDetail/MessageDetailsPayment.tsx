@@ -26,7 +26,7 @@ export const MessageDetailsPayment = ({
 
   return (
     <>
-      <VSpacer />
+      <VSpacer size={16} />
       <ListItemHeader
         label={I18n.t("features.messages.payments.title")}
         iconName={"productPagoPA"}

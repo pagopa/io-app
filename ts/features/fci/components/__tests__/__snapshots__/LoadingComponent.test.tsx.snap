@@ -109,12 +109,6 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
             />
           </RNSVGDefs>
           <RNSVGGroup
-            fill={
-              Object {
-                "payload": 4278190080,
-                "type": 0,
-              }
-            }
             propList={
               Array [
                 "strokeWidth",
@@ -124,64 +118,41 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
           >
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               propList={
                 Array [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
-                  "brushRef": "spinner-secondHalf",
-                  "type": 1,
-                }
+                Array [
+                  1,
+                  "spinner-secondHalf",
+                ]
               }
             />
             <RNSVGPath
               d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               propList={
                 Array [
                   "stroke",
                 ]
               }
               stroke={
-                Object {
-                  "brushRef": "spinner-firstHalf",
-                  "type": 1,
-                }
+                Array [
+                  1,
+                  "spinner-firstHalf",
+                ]
               }
             />
             <RNSVGPath
               d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
               propList={
                 Array [
                   "stroke",
                   "strokeLinecap",
                 ]
               }
-              stroke={
-                Object {
-                  "payload": 4278219750,
-                  "type": 0,
-                }
-              }
+              stroke={4278219750}
               strokeLinecap={1}
             />
           </RNSVGGroup>

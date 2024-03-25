@@ -429,6 +429,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                         }
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color={4279111443}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -451,26 +452,19 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                             },
                                           ]
                                         }
-                                        tintColor="#0E0F13"
+                                        tintColor={4279111443}
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
+                                        <RNSVGGroup>
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
                                             fill={
-                                              Object {
-                                                "type": 2,
-                                              }
+                                              Array [
+                                                2,
+                                              ]
                                             }
                                             fillRule={0}
                                             propList={
@@ -649,6 +643,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                 align="xMidYMid"
                                 bbHeight={24}
                                 bbWidth={24}
+                                color={4279710285}
                                 focusable={false}
                                 height={24}
                                 importantForAccessibility="no-hide-descendants"
@@ -671,25 +666,18 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     },
                                   ]
                                 }
-                                tintColor="#17324D"
+                                tintColor={4279710285}
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
                               >
-                                <RNSVGGroup
-                                  fill={
-                                    Object {
-                                      "payload": 4278190080,
-                                      "type": 0,
-                                    }
-                                  }
-                                >
+                                <RNSVGGroup>
                                   <RNSVGPath
                                     d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     propList={
                                       Array [
@@ -701,9 +689,9 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     clipRule={0}
                                     d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     fillRule={0}
                                     propList={
@@ -716,9 +704,9 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                   <RNSVGPath
                                     d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     propList={
                                       Array [
@@ -730,9 +718,9 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     clipRule={0}
                                     d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     fillRule={0}
                                     propList={
@@ -950,6 +938,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color={4278219750}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -972,26 +961,19 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
+                                        tintColor={4278219750}
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
+                                        <RNSVGGroup>
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
                                             fill={
-                                              Object {
-                                                "type": 2,
-                                              }
+                                              Array [
+                                                2,
+                                              ]
                                             }
                                             fillRule={0}
                                             propList={
@@ -1453,6 +1435,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                         }
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color={4279111443}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1475,26 +1458,19 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                             },
                                           ]
                                         }
-                                        tintColor="#0E0F13"
+                                        tintColor={4279111443}
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
+                                        <RNSVGGroup>
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
                                             fill={
-                                              Object {
-                                                "type": 2,
-                                              }
+                                              Array [
+                                                2,
+                                              ]
                                             }
                                             fillRule={0}
                                             propList={
@@ -1673,6 +1649,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                 align="xMidYMid"
                                 bbHeight={24}
                                 bbWidth={24}
+                                color={4279710285}
                                 focusable={false}
                                 height={24}
                                 importantForAccessibility="no-hide-descendants"
@@ -1695,25 +1672,18 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     },
                                   ]
                                 }
-                                tintColor="#17324D"
+                                tintColor={4279710285}
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
                               >
-                                <RNSVGGroup
-                                  fill={
-                                    Object {
-                                      "payload": 4278190080,
-                                      "type": 0,
-                                    }
-                                  }
-                                >
+                                <RNSVGGroup>
                                   <RNSVGPath
                                     d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     propList={
                                       Array [
@@ -1725,9 +1695,9 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     clipRule={0}
                                     d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     fillRule={0}
                                     propList={
@@ -1740,9 +1710,9 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                   <RNSVGPath
                                     d="M17.752 8.22a1.083 1.083 0 0 0-1.531.028l-5.974 6.192-2.468-2.558-.093-.086a1.083 1.083 0 0 0-1.465 1.589l3.248 3.367.095.087c.43.352 1.068.322 1.463-.087l6.752-7 .083-.096c.328-.431.29-1.05-.11-1.435Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     propList={
                                       Array [
@@ -1754,9 +1724,9 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                     clipRule={0}
                                     d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0Zm0 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Z"
                                     fill={
-                                      Object {
-                                        "type": 2,
-                                      }
+                                      Array [
+                                        2,
+                                      ]
                                     }
                                     fillRule={0}
                                     propList={
@@ -1974,6 +1944,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color={4278219750}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1996,26 +1967,19 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
+                                        tintColor={4278219750}
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
+                                        <RNSVGGroup>
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
                                             fill={
-                                              Object {
-                                                "type": 2,
-                                              }
+                                              Array [
+                                                2,
+                                              ]
                                             }
                                             fillRule={0}
                                             propList={
@@ -2163,6 +2127,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                         align="xMidYMid"
                                         bbHeight={24}
                                         bbWidth={24}
+                                        color={4278219750}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -2185,26 +2150,19 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                                             },
                                           ]
                                         }
-                                        tintColor="#0073E6"
+                                        tintColor={4278219750}
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                        >
+                                        <RNSVGGroup>
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12 18h8a2 2 0 0 0 2-2V9h-4a3 3 0 0 1-3-3V2h-3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Zm9.332-11.987a2 2 0 0 1 .603.987H18a1 1 0 0 1-1-1V2.227a2 2 0 0 1 .406.281l3.926 3.505ZM14 20h-2a4 4 0 0 1-4-4V6H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2Zm2 0h4a4 4 0 0 0 4-4V7.505a4 4 0 0 0-1.336-2.984l-3.926-3.505A4 4 0 0 0 16.074 0H12a4 4 0 0 0-4 4H4a4 4 0 0 0-4 4v12a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4Z"
                                             fill={
-                                              Object {
-                                                "type": 2,
-                                              }
+                                              Array [
+                                                2,
+                                              ]
                                             }
                                             fillRule={0}
                                             propList={

@@ -1634,12 +1634,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                           />
                                         </RNSVGDefs>
                                         <RNSVGGroup
-                                          fill={
-                                            Object {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
                                           propList={
                                             Array [
                                               "strokeWidth",
@@ -1649,64 +1643,41 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
                                         >
                                           <RNSVGPath
                                             d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
-                                            fill={
-                                              Object {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
-                                            }
                                             propList={
                                               Array [
                                                 "stroke",
                                               ]
                                             }
                                             stroke={
-                                              Object {
-                                                "brushRef": "spinner-secondHalf",
-                                                "type": 1,
-                                              }
+                                              Array [
+                                                1,
+                                                "spinner-secondHalf",
+                                              ]
                                             }
                                           />
                                           <RNSVGPath
                                             d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
-                                            fill={
-                                              Object {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
-                                            }
                                             propList={
                                               Array [
                                                 "stroke",
                                               ]
                                             }
                                             stroke={
-                                              Object {
-                                                "brushRef": "spinner-firstHalf",
-                                                "type": 1,
-                                              }
+                                              Array [
+                                                1,
+                                                "spinner-firstHalf",
+                                              ]
                                             }
                                           />
                                           <RNSVGPath
                                             d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
-                                            fill={
-                                              Object {
-                                                "payload": 4278190080,
-                                                "type": 0,
-                                              }
-                                            }
                                             propList={
                                               Array [
                                                 "stroke",
                                                 "strokeLinecap",
                                               ]
                                             }
-                                            stroke={
-                                              Object {
-                                                "payload": 4294967295,
-                                                "type": 0,
-                                              }
-                                            }
+                                            stroke={4294967295}
                                             strokeLinecap={1}
                                           />
                                         </RNSVGGroup>
