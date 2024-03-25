@@ -85,13 +85,8 @@ export const DSStickyMessageCTAs = () => {
       {
         translateY: interpolate(
           scrollY.value,
-          [
-            -1,
-            0,
-            actionBlockPlaceholderTopEdge - 1,
-            actionBlockPlaceholderTopEdge
-          ],
-          [0, 0, 0, -1],
+          [0, actionBlockPlaceholderTopEdge - 1, actionBlockPlaceholderTopEdge],
+          [0, 0, -1],
           { extrapolateLeft: Extrapolation.CLAMP }
         )
       }
