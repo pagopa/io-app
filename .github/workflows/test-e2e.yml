@@ -84,11 +84,6 @@ jobs:
         with:
           name: ItaliaApp.app
           path: ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app
-      - id: list-app
-        run: |
-          pwd
-          ls -al ios/build/Build/Products/Release-iphonesimulator/
-        shell: bash
       - id: setup
         uses: ./.github/actions/setup-composite
         with:
@@ -106,14 +101,10 @@ jobs:
         env:
           TEST: ${{ matrix.test }}
           IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
-      - id: set-artifact-name        
-        run: echo "ARTIFACT_NAME=detox-artifacts-$(basename '${{ matrix.test }}')" >> $GITHUB_ENV
-        if: always()
-        shell: bash
       - id: upload-artifacts
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2        
         if: always()
         with:
-          name: detox-artifacts
+          name: detox-artifacts-$(basename '${{ matrix.test }}')"
           path: /tmp/e2e_artifacts/
           retention-days: 2
