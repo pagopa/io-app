@@ -61,7 +61,6 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
     align="xMidYMid"
     bbHeight={24}
     bbWidth={24}
-    color={4278205245}
     focusable={false}
     height={24}
     importantForAccessibility="no-hide-descendants"
@@ -84,19 +83,26 @@ exports[`Test ToastNotification component should match snapshot for props ({ mes
         },
       ]
     }
-    tintColor={4278205245}
+    tintColor="#003B3D"
     vbHeight={24}
     vbWidth={24}
     width={24}
   >
-    <RNSVGGroup>
+    <RNSVGGroup
+      fill={
+        Object {
+          "payload": 4278190080,
+          "type": 0,
+        }
+      }
+    >
       <RNSVGPath
         clipRule={0}
         d="M17.7071 9.29289C18.0976 9.68342 18.0976 10.3166 17.7071 10.7071L11.4142 17C10.6332 17.781 9.36684 17.7811 8.58579 17L5.29289 13.7071C4.90237 13.3166 4.90237 12.6834 5.29289 12.2929C5.68342 11.9024 6.31658 11.9024 6.70711 12.2929L10 15.5858L16.2929 9.29289C16.6834 8.90237 17.3166 8.90237 17.7071 9.29289Z"
         fill={
-          Array [
-            2,
-          ]
+          Object {
+            "type": 2,
+          }
         }
         fillRule={0}
         propList={
