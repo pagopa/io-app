@@ -1,6 +1,6 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
+import I18n from "i18n-js";
 import * as React from "react";
-import FooterWithButtons from "../ui/FooterWithButtons";
-import { cancelButtonProps } from "../buttons/ButtonConfigurations";
 
 export type OnCancelProps = {
   onCancel: () => void;
@@ -14,7 +14,14 @@ export const FooterSingleButton: React.FunctionComponent<
   OnCancelProps
 > = props => (
   <FooterWithButtons
-    type={"SingleButton"}
-    leftButton={cancelButtonProps(props.onCancel)}
+    type="SingleButton"
+    primary={{
+      type: "Outline",
+      buttonProps: {
+        label: I18n.t("global.buttons.cancel"),
+        accessibilityLabel: I18n.t("global.buttons.cancel"),
+        onPress: props.onCancel
+      }
+    }}
   />
 );
