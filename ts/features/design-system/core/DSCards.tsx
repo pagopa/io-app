@@ -12,6 +12,7 @@ import { PaymentCard } from "../../payments/common/components/PaymentCard";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
+import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 
 const styles = StyleSheet.create({
   content: {
@@ -177,7 +178,7 @@ export const DSCards = () => (
         <PaymentCardsCarousel {...cardsDataForCarousel} />
       </DSComponentViewerBox>
     </DesignSystemSection>
-    <DesignSystemSection title="IdPayWalletCard">
+    <DesignSystemSection title="IdPayCard">
       <IdPayCard
         name="18 app"
         amount={9999}
@@ -186,6 +187,9 @@ export const DSCards = () => (
         }}
         expireDate={new Date()}
       />
+    </DesignSystemSection>
+    <DesignSystemSection title="CgnCard">
+      <CgnCard expireDate={new Date(2023, 11, 2)} />
     </DesignSystemSection>
   </DesignSystemScreen>
 );
