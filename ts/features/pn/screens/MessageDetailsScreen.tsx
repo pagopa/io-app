@@ -129,6 +129,7 @@ export const MessageDetailsScreen = () => {
           message => (
             <MessageDetails
               message={message}
+              messageId={messageId}
               serviceId={serviceId}
               payments={payments}
             />
