@@ -6,10 +6,10 @@ on:
     branches:
       - master
 jobs:
-  # run-static-checks:
-  #  uses: ./.github/workflows/staticcheck.yaml
+  run-static-checks:
+   uses: ./.github/workflows/staticcheck.yaml
   build-detox-app:
-    # needs: run-static-checks
+    needs: run-static-checks
     runs-on: macos-12-large
     concurrency:
       group: ${{ github.workflow }}-e2e-tests-${{ github.ref || github.run_id }}
