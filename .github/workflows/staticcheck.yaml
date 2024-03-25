@@ -3,7 +3,7 @@ on:
   - workflow_call
 jobs:
   checks:
-    runs-on: macos-13-large
+    runs-on: macos-13-xlarge
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
