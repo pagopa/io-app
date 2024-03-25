@@ -1,6 +1,5 @@
 import { IOIcons, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View } from "react-native";
 import { WalletCard, walletCardComponentMapper } from "../types";
 
 type WalletCategoryStackContainerProps = {
@@ -13,7 +12,7 @@ type WalletCategoryStackContainerProps = {
  * This component handles the rendering of cards of a specific category.
  * The component also handles logic behind card stacking and animations
  */
-const WalletCardCategoryContainer = ({
+const WalletCardsCategoryContainer = ({
   label,
   iconName,
   cards
@@ -26,16 +25,16 @@ const WalletCardCategoryContainer = ({
   };
 
   return (
-    <View>
+    <>
       <ListItemHeader iconName={iconName} label={label} />
       {cards.map((card, index) => (
-        <>
+        <React.Fragment key={`wallet_card_${card.key}`}>
           {!isStacked && index !== 0 && <VSpacer size={16} />}
           {renderCardFn(card, isStacked && index < cards.length - 1)}
-        </>
+        </React.Fragment>
       ))}
-    </View>
+    </>
   );
 };
 
-export { WalletCardCategoryContainer };
+export { WalletCardsCategoryContainer };

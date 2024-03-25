@@ -2894,6 +2894,12 @@ features:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+    cards:
+      categories:
+        bonus: Iniziative welfare
+        cgn: Carta Giovani Nazionale
+        itw: IT Wallet
+        payment: Metodo di pagamento
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
