@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageAttachments } from "../components/MessageAttachments";
+import { LegacyMessageAttachments } from "../components/LegacyMessageAttachments";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import I18n from "../../../i18n";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
@@ -13,7 +13,7 @@ export const useF24BottomSheet = (
   const { present, bottomSheet, dismiss } = useIOBottomSheetAutoresizableModal(
     {
       component: (
-        <MessageAttachments
+        <LegacyMessageAttachments
           testID="f24-list-container-bs"
           attachments={attachments}
           downloadAttachmentBeforePreview={true}
