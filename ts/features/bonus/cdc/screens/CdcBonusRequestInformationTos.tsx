@@ -1,4 +1,4 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import {
@@ -15,14 +15,13 @@ import { H2 } from "../../../../components/core/typography/H2";
 import { H4 } from "../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { getRemoteLocale } from "../../../messages/utils/messages";
-import { ID_CDC_TYPE } from "../../common/utils";
 import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
+import { ID_CDC_TYPE } from "../../common/utils";
 import { CdcBonusRequestParamsList } from "../navigation/params";
 import { CDC_ROUTES } from "../navigation/routes";
 
@@ -46,23 +45,6 @@ const CdcBonusRequestInformationTos = () => {
   const cdcLogo: ImageSourcePropType | undefined = cdcInfo?.sponsorship_cover
     ? { uri: cdcInfo?.sponsorship_cover }
     : undefined;
-
-  const cancelButtonProps = {
-    block: true,
-    bordered: true,
-    onPress: () => {
-      navigation.getParent()?.goBack();
-    },
-    title: I18n.t("global.buttons.cancel")
-  };
-  const continueButtonProps = {
-    block: true,
-    primary: true,
-    onPress: () => {
-      navigation.navigate(CDC_ROUTES.SELECT_BONUS_YEAR);
-    },
-    title: I18n.t("global.buttons.continue")
-  };
 
   if (cdcInfo === undefined) {
     return null;
@@ -111,12 +93,30 @@ const CdcBonusRequestInformationTos = () => {
           />
           <VSpacer size={16} />
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type={"TwoButtonsInlineThird"}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: () => {
+              navigation.getParent()?.goBack();
+            }
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: () => {
+              navigation.navigate(CDC_ROUTES.SELECT_BONUS_YEAR);
+            }
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

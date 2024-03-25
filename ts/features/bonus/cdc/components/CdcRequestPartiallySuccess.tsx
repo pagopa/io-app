@@ -1,25 +1,24 @@
-import * as React from "react";
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import * as React from "react";
 import { SafeAreaView } from "react-native";
+import { Anno } from "../../../../../definitions/cdc/Anno";
+import image from "../../../../../img/wallet/errors/payment-unknown-icon.png";
+import { isReady } from "../../../../common/model/RemoteValue";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
-import image from "../../../../../img/wallet/errors/payment-unknown-icon.png";
 import I18n from "../../../../i18n";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
-import { cdcEnrollUserToBonusSelector } from "../store/reducers/cdcBonusRequest";
 import { useIOSelector } from "../../../../store/hooks";
-import { isReady } from "../../../../common/model/RemoteValue";
+import { cdcEnrollUserToBonusSelector } from "../store/reducers/cdcBonusRequest";
 import {
   CdcBonusEnrollmentOutcomeList,
   RequestOutcomeEnum
 } from "../types/CdcBonusRequest";
-import { Anno } from "../../../../../definitions/cdc/Anno";
 import CdcGenericError from "./CdcGenericError";
 
 const extractYearsPerOutcome = (
@@ -98,24 +97,33 @@ const CdcRequestPartiallySuccess = () => {
   }, "");
 
   return (
-    <SafeAreaView style={IOStyles.flex} testID={"cdcRequestPartiallySuccess"}>
-      <InfoScreenComponent
-        image={renderInfoRasterImage(image)}
-        title={I18n.t(
-          "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.title"
-        )}
-        body={outcomeMessageBody}
-      />
+    <>
+      <SafeAreaView style={IOStyles.flex} testID={"cdcRequestPartiallySuccess"}>
+        <InfoScreenComponent
+          image={renderInfoRasterImage(image)}
+          title={I18n.t(
+            "bonus.cdc.bonusRequest.bonusRequested.partiallySuccess.title"
+          )}
+          body={outcomeMessageBody}
+        />
+      </SafeAreaView>
       <FooterWithButtons
         type="SingleButton"
-        leftButton={cancelButtonProps(
-          onExitPress,
-          I18n.t("bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"),
-          undefined,
-          "closeButton"
-        )}
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t(
+              "bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"
+            ),
+            accessibilityLabel: I18n.t(
+              "bonus.cdc.bonusRequest.bonusRequested.requestCompleted.cta"
+            ),
+            onPress: onExitPress,
+            testID: "closeButton"
+          }
+        }}
       />
-    </SafeAreaView>
+    </>
   );
 };
 

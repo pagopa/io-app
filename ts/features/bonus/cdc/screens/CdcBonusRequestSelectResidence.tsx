@@ -1,32 +1,31 @@
-import * as React from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import {
+  FooterWithButtons,
+  HSpacer,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import * as React from "react";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { useDispatch } from "react-redux";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import {
   RadioButtonList,
   RadioItem
 } from "../../../../components/core/selection/RadioButtonList";
+import { H1 } from "../../../../components/core/typography/H1";
+import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { CdcBonusRequestParamsList } from "../navigation/params";
 import { CDC_ROUTES } from "../navigation/routes";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../components/buttons/ButtonConfigurations";
-import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
-import { useIOSelector } from "../../../../store/hooks";
-import { H3 } from "../../../../components/core/typography/H3";
-import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
-import { ResidentChoice } from "../types/CdcBonusRequest";
 import { cdcSelectedBonus as cdcSelectedBonusAction } from "../store/actions/cdcBonusRequest";
+import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
+import { ResidentChoice } from "../types/CdcBonusRequest";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
@@ -99,13 +98,25 @@ const CdcBonusRequestSelectResidence = () => {
             </>
           ))}
         </ScrollView>
-        <FooterWithButtons
-          type={"TwoButtonsInlineHalf"}
-          leftButton={cancelButtonProps(() => {
-            navigation.getParent()?.goBack();
-          })}
-          rightButton={confirmButtonProps(
-            () => {
+      </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineHalf"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: () => {
+              navigation.getParent()?.goBack();
+            }
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: () => {
               dispatch(
                 cdcSelectedBonusAction(
                   cdcSelectedBonus?.map(b => ({
@@ -116,13 +127,10 @@ const CdcBonusRequestSelectResidence = () => {
               );
               navigation.navigate(CDC_ROUTES.BONUS_REQUESTED);
             },
-            I18n.t("global.buttons.continue"),
-            undefined,
-            undefined,
-            cdcSelectedBonus.some(b => !isResidentInItaly[b.year])
-          )}
-        />
-      </SafeAreaView>
+            disabled: cdcSelectedBonus.some(b => !isResidentInItaly[b.year])
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
