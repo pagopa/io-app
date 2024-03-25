@@ -20,12 +20,12 @@ type PartialProps = {
   openPreview: (attachment: ThirdPartyAttachment) => void;
 };
 
-type MessageAttachmentProps = {
+type LegacyMessageAttachmentProps = {
   attachment: ThirdPartyAttachment;
   messageId: UIMessageId;
 } & PartialProps;
 
-type MessageAttachmentsProps = WithTestID<
+type LegacyMessageAttachmentsProps = WithTestID<
   {
     attachments: ReadonlyArray<ThirdPartyAttachment>;
     messageId: UIMessageId;
@@ -43,12 +43,12 @@ const getFormatByContentType = (
   }
 };
 
-const AttachmentItem = ({
+const LegacyAttachmentItem = ({
   attachment,
   openPreview,
   downloadAttachmentBeforePreview,
   messageId
-}: MessageAttachmentProps) => {
+}: LegacyMessageAttachmentProps) => {
   const { downloadPot, onAttachmentSelect } = useLegacyAttachmentDownload(
     attachment,
     messageId,
@@ -69,15 +69,15 @@ const AttachmentItem = ({
   );
 };
 
-export const MessageAttachments = ({
+export const LegacyMessageAttachments = ({
   attachments = [],
   testID,
   ...rest
-}: MessageAttachmentsProps) => (
+}: LegacyMessageAttachmentsProps) => (
   <View testID={testID}>
     {attachments.map((attachment, index) => (
       <React.Fragment key={index}>
-        <AttachmentItem {...rest} attachment={attachment} />
+        <LegacyAttachmentItem {...rest} attachment={attachment} />
         {index < attachments.length - 1 && <VSpacer size={8} />}
       </React.Fragment>
     ))}

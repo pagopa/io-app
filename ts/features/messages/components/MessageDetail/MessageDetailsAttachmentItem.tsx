@@ -12,6 +12,7 @@ type MessageDetailsAttachmentItemProps = {
   disabled?: boolean;
   isPN?: boolean;
   messageId: UIMessageId;
+  onPreNavigate?: () => void;
   serviceId?: ServiceId;
 };
 
@@ -21,10 +22,17 @@ export const MessageDetailsAttachmentItem = ({
   disabled = false,
   isPN = false,
   messageId,
+  onPreNavigate = undefined,
   serviceId
 }: MessageDetailsAttachmentItemProps) => {
   const { displayName, isFetching, onModuleAttachmentPress } =
-    useAttachmentDownload(messageId, attachment, isPN, serviceId);
+    useAttachmentDownload(
+      messageId,
+      attachment,
+      isPN,
+      serviceId,
+      onPreNavigate
+    );
   return (
     <>
       <ModuleAttachment
