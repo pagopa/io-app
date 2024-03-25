@@ -19,72 +19,7 @@ exports[`IdPayWalletCard should match the snapshot 1`] = `
       }
     }
   >
-    <RNSVGSvgView
-      bbHeight="100%"
-      bbWidth="100%"
-      focusable={false}
-      height="100%"
-      style={
-        Array [
-          Object {
-            "backgroundColor": "transparent",
-            "borderWidth": 0,
-          },
-          Object {
-            "flex": 0,
-            "height": "100%",
-            "width": "100%",
-          },
-        ]
-      }
-      width="100%"
-    >
-      <RNSVGGroup>
-        <RNSVGDefs>
-          <RNSVGClipPath
-            name="clip"
-          >
-            <RNSVGCircle
-              cx="75%"
-              cy="0"
-              r={16}
-            />
-            <RNSVGCircle
-              cx="75%"
-              cy="100%"
-              r={16}
-            />
-            <RNSVGRect
-              height="100%"
-              width="100%"
-              x={0}
-              y={0}
-            />
-          </RNSVGClipPath>
-        </RNSVGDefs>
-        <RNSVGRect
-          clipPath="clip"
-          fill={4292733946}
-          height="100%"
-          propList={
-            Array [
-              "fill",
-              "stroke",
-              "strokeWidth",
-              "strokeOpacity",
-            ]
-          }
-          rx={16}
-          ry={16}
-          stroke={4278190080}
-          strokeOpacity={0.12}
-          strokeWidth={1}
-          width="100%"
-          x={0}
-          y={0}
-        />
-      </RNSVGGroup>
-    </RNSVGSvgView>
+    <SvgMock />
   </View>
   <View
     style={
