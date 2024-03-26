@@ -9,12 +9,14 @@ import { gapBetweenItemsInAGrid } from "../../utils";
 
 type ScrollViewAdditionalSpaceProps = {
   messageId: UIMessageId;
-  hasCTAS: boolean;
+  hasCTA1: boolean;
+  hasCTA2: boolean;
 };
 
 export const MessageDetailsScrollViewAdditionalSpace = ({
   messageId,
-  hasCTAS
+  hasCTA1,
+  hasCTA2
 }: ScrollViewAdditionalSpaceProps) => {
   const safeAreaInsets = useSafeAreaInsets();
   const isShowingPaymentButton = useIOSelector(state =>
@@ -27,7 +29,9 @@ export const MessageDetailsScrollViewAdditionalSpace = ({
     safeAreaInsets.bottom +
     IOStyles.footer.paddingBottom +
     (isShowingPaymentButton ? stickyFooterRowHeight : 0) +
-    (hasCTAS ? stickyFooterRowHeight : 0);
+    (hasCTA1 ? stickyFooterRowHeight : 0) +
+    (hasCTA2 ? stickyFooterRowHeight : 0) +
+    (hasCTA1 && hasCTA2 ? gapBetweenItemsInAGrid : 0);
   return (
     <View
       style={{
