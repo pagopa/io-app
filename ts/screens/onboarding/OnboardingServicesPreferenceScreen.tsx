@@ -3,6 +3,7 @@ import {
   FeatureInfo,
   FooterWithButtons,
   IOStyles,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -34,7 +35,6 @@ import { useManualConfigBottomSheet } from "../profile/components/services/Manua
 import ServicesContactComponent from "../profile/components/services/ServicesContactComponent";
 import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { IOToast } from "../../components/Toast";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import ROUTES from "../../navigation/routes";
 

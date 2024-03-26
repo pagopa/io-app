@@ -1,16 +1,19 @@
-import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
 import React, { MutableRefObject, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+import {
+  ButtonSolid,
+  IOStyles,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { useIOToast } from "../../../components/Toast";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import variables from "../../../theme/variables";
 import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
-import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
-import { UIMessageId } from "../../messages/types";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { trackPNShowAllPayments } from "../analytics";
+import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
+import { UIMessageId } from "../../messages/types";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({

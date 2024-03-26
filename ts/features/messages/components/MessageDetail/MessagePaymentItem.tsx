@@ -1,7 +1,8 @@
 import {
   ModulePaymentNotice,
   PaymentNoticeStatus,
-  VSpacer
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -21,23 +22,22 @@ import {
   shouldUpdatePaymentSelector
 } from "../../store/reducers/payments";
 import { UIMessageId } from "../../types";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   RemoteValue,
   fold,
   isError
 } from "../../../../common/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { format } from "../../../../utils/dates";
 import {
   cleanTransactionDescription,
   getV2ErrorMainType
 } from "../../../../utils/payment";
-import { format } from "../../../../utils/dates";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { useIOToast } from "../../../../components/Toast";
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
 import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 

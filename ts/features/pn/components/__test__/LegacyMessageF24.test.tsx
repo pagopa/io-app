@@ -2,7 +2,7 @@ import React from "react";
 import { createStore } from "redux";
 import { act, fireEvent, within } from "@testing-library/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { MessageF24 } from "../MessageF24";
+import { LegacyMessageF24 } from "../LegacyMessageF24";
 import I18n from "../../../../i18n";
 import {
   mockOtherAttachment,
@@ -119,7 +119,7 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <MessageF24
+      <LegacyMessageF24
         attachments={attachments}
         messageId={messageId_1}
         openPreview={openPreview}
