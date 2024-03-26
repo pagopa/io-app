@@ -4,7 +4,7 @@ import { Alert } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { IOToast } from "../../../../components/Toast";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 import I18n from "../../../../i18n";
 import {
