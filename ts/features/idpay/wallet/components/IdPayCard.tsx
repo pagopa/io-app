@@ -21,7 +21,7 @@ export type IdPayCardProps = {
 };
 
 /**
- * Component that renders the ID PAy card in the wallet
+ * Component that renders the ID Pay card in the wallet
  */
 export const IdPayCard = (props: IdPayCardProps) => (
   <View style={styles.container}>
