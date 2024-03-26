@@ -18,6 +18,11 @@ const WalletCardCategoryContainer = ({
   iconName,
   cards
 }: WalletCategoryStackContainerProps) => {
+  if (cards === undefined || cards.length === 0) {
+    // If cards are not provided or are an empty array, the component should not render
+    return null;
+  }
+
   const isStacked = cards.length > 1;
 
   const renderCardFn = (card: WalletCard, stacked: boolean) => {
