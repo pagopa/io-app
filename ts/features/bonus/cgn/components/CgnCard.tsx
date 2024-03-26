@@ -1,4 +1,4 @@
-import { H6, IOColors, LabelSmallAlt } from "@pagopa/io-app-design-system";
+import { H6, IOColors, LabelSmallAlt, Tag } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
 import * as React from "react";
 import { Image, StyleSheet, View } from "react-native";
@@ -7,36 +7,60 @@ import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
 import CgnCardShape from "../../../../../img/features/cgn/cgn_card.svg";
 import I18n from "../../../../i18n";
 
-export type CgnWalletCardProps = {
-  expireDate: Date;
+export type CgnCardProps = {
+  expireDate?: Date;
+  withEycaLogo?: boolean;
 };
 
-export const CgnCard = (props: CgnWalletCardProps) => (
-  <View style={styles.container}>
-    <View style={styles.card}>
-      <CgnCardShape />
+export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
+  const isExpired = expireDate === undefined;
+
+  const eycaLogoComponent = (
+    <View style={[styles.logoContainer, { bottom: 12, right: 12 }]}>
+      <Image source={eycaLogo} style={styles.logo} />
     </View>
-    <View style={styles.content}>
-      <View style={styles.header}>
-        <H6>{I18n.t("bonus.cgn.name")}</H6>
-        <Image source={cgnLogo} style={styles.logo} />
+  );
+
+  const cngLogoComponent = (
+    <View style={[styles.logoContainer, { top: 12, right: 12 }]}>
+      <Image source={cgnLogo} style={styles.logo} />
+    </View>
+  );
+
+  const expiredTag = (
+    <View>
+      <Tag
+        variant="error"
+        text={I18n.t("bonus.cgn.detail.status.badge.expired")}
+      />
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <CgnCardShape />
       </View>
-      <LabelSmallAlt style={{ width: "70%" }}>
-        {I18n.t("bonus.cgn.departmentName")}
-      </LabelSmallAlt>
-      <View style={styles.header}>
-        <LabelSmallAlt color="blueItalia-850">
-          {I18n.t("bonusCard.validUntil", {
-            endDate: format(props.expireDate, "MM/YY")
-          })}
-        </LabelSmallAlt>
-        <View style={styles.eycaLogoContainer}>
-          <Image source={eycaLogo} style={styles.eycaLogo} />
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <H6>{I18n.t("bonus.cgn.name")}</H6>
+          {isExpired && expiredTag}
         </View>
+        <LabelSmallAlt style={{ width: "70%" }}>
+          {I18n.t("bonus.cgn.departmentName")}
+        </LabelSmallAlt>
+        <LabelSmallAlt color="blueItalia-850">
+          {expireDate &&
+            I18n.t("bonusCard.validUntil", {
+              endDate: format(expireDate, "MM/YY")
+            })}
+        </LabelSmallAlt>
       </View>
+      {!isExpired && cngLogoComponent}
+      {withEycaLogo && eycaLogoComponent}
     </View>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -52,26 +76,25 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    padding: 16,
     paddingTop: 12,
-    paddingRight: 12,
-    paddingBottom: 16,
-    paddingLeft: 16,
     justifyContent: "space-between"
   },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    height: 48
   },
-  logo: {
-    resizeMode: "contain",
-    height: 40,
-    width: 40
-  },
-  eycaLogoContainer: {
+  logoContainer: {
+    position: "absolute",
     padding: 5,
     backgroundColor: IOColors.white,
     borderRadius: 8
   },
-  eycaLogo: { width: 30, height: 30, resizeMode: "contain" }
+  logo: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain"
+  }
 });

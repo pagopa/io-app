@@ -189,7 +189,15 @@ export const DSCards = () => (
       />
     </DesignSystemSection>
     <DesignSystemSection title="CgnCard">
-      <CgnCard expireDate={new Date(2023, 11, 2)} />
+      <DSComponentViewerBox name="Under 31">
+        <CgnCard expireDate={new Date(2023, 11, 2)} withEycaLogo={true} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expired">
+        <CgnCard withEycaLogo={true} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Over 31">
+        <CgnCard expireDate={new Date(2023, 11, 2)} />
+      </DSComponentViewerBox>
     </DesignSystemSection>
   </DesignSystemScreen>
 );
