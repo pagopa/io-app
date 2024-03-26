@@ -104,7 +104,7 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
           screens: {
             [MESSAGES_ROUTES.MESSAGES_HOME]: "messages",
             [ROUTES.WALLET_HOME]: "wallet",
-            [ROUTES.BARCODE_SCAN]: "scan",
+            // [ROUTES.BARCODE_SCAN]: "scan",
             ...(isNewWalletSectionEnabled
               ? { [ROUTES.PAYMENTS_HOME]: "payments" }
               : {}),
