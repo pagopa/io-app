@@ -1,5 +1,6 @@
 name: Run e2e tests
 on:
+  pull_request:
   workflow_dispatch:
   push:
     branches:
@@ -65,12 +66,17 @@ jobs:
     strategy: 
       fail-fast: false
       matrix:
-        test: 
-          - "ts/__e2e__/"
-          - "ts/features/bonus/cgn/__e2e__/"
-          - "ts/features/messages/__e2e__/"
-          - "ts/features/euCovidCert/__e2e__/"
-          - "ts/features/wallet/onboarding/__e2e__/"
+        include:
+          - test: "ts/__e2e__/"
+            name: "Base_e2e"
+          - test: "ts/features/bonus/cgn/__e2e__/"
+            name: "cgn_e2e"
+          - test: "ts/features/messages/__e2e__/"
+            name: "messages_e2e"
+          - test: "ts/features/euCovidCert/__e2e__/"
+            name: "eucovidcert_e2e"
+          - test: "ts/features/wallet/onboarding/__e2e__/"
+            name: "wallet_onboarding_e2e"
     steps:
       - id: install-applesimutils
         run: |
@@ -99,12 +105,12 @@ jobs:
         if: failure()
         uses: ./.github/actions/notify-e2e
         env:
-          TEST: ${{ matrix.test }}
+          TEST: ${{ matrix.name }}
           IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
       - id: upload-artifacts
         uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2        
         if: always()
         with:
-          name: detox-artifacts-${{ matrix.test }}
+          name: detox-artifacts-${{ matrix.name }}
           path: /tmp/e2e_artifacts/
           retention-days: 2

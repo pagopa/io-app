@@ -28,7 +28,7 @@ def send_slack_message():
             token=SLACK_TOKEN, ssl=ssl_context
         )
         tags = " ".join(tagged_people)
-        message = "[E2E Tests] :warning: %s e2e test %s have failed (<%s%s|here>)" % (
+        message = "[E2E Tests] :warning: %s e2e test \`%s\` have failed (<%s%s|here>)" % (
             tags, TEST_FILE, BASE_ACTION_URI, BUILD_ID)
         message_blocks = []
         message_blocks.append({
