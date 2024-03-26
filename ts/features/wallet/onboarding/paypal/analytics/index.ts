@@ -17,7 +17,7 @@ import {
 
 const trackPaypalOnboarding =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(walletAddPaypalFailure):
       case getType(walletAddPaypalCancel):
@@ -49,7 +49,6 @@ const trackPaypalOnboarding =
           reason: getNetworkErrorMessage(action.payload)
         });
     }
-    return Promise.resolve();
   };
 
 export default trackPaypalOnboarding;
