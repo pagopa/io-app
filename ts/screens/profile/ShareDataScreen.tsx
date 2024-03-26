@@ -1,12 +1,12 @@
 import {
   BlockButtonProps,
+  IOToast,
   FooterWithButtons
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOToast } from "../../components/Toast";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
