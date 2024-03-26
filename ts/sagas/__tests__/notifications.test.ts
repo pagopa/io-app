@@ -2,7 +2,6 @@ import * as E from "fp-ts/lib/Either";
 import { Action } from "redux";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
-import { constVoid } from "fp-ts/lib/function";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import {
@@ -315,7 +314,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should call trackMessageNotificationTap when there is a PendingMessageState that requires tracking", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => constVoid());
+      .mockImplementation(jest.fn());
     const mockPendingMessageState = {
       id: "001",
       foreground: true,
@@ -327,7 +326,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not require tracking", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => constVoid());
+      .mockImplementation(jest.fn());
     const mockPendingMessageState = {
       id: "001",
       foreground: true,
@@ -339,7 +338,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not have a tracking information", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => constVoid());
+      .mockImplementation(jest.fn());
     const mockPendingMessageState = {
       id: "001",
       foreground: true
@@ -350,7 +349,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should not call trackMessageNotificationTap when there is not a PendingMessageState", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => constVoid());
+      .mockImplementation(jest.fn());
     trackMessageNotificationTapIfNeeded();
     expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
   });

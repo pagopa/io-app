@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { constVoid } from "fp-ts/lib/function";
 import { mixpanel } from "../../mixpanel";
 import { Action } from "../actions/types";
 import { loadContextualHelpData, loadIdps } from "../actions/content";
@@ -19,5 +18,4 @@ export const trackContentAction =
           reason: action.payload
         });
     }
-    return constVoid();
   };

@@ -3,7 +3,6 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 
-import { constVoid } from "fp-ts/lib/function";
 import trackCdc from "../../features/bonus/cdc/analytics/index";
 import trackCgnAction from "../../features/bonus/cgn/analytics/index";
 import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
@@ -371,7 +370,6 @@ const trackAction =
           reason: action.payload.error.message
         });
     }
-    return constVoid();
   };
 
 /*

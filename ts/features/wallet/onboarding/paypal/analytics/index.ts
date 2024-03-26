@@ -1,6 +1,5 @@
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-import { constVoid } from "fp-ts/lib/function";
 import { mixpanel } from "../../../../../mixpanel";
 import { Action } from "../../../../../store/actions/types";
 import { getNetworkErrorMessage } from "../../../../../utils/errors";
@@ -50,7 +49,6 @@ const trackPaypalOnboarding =
           reason: getNetworkErrorMessage(action.payload)
         });
     }
-    return constVoid();
   };
 
 export default trackPaypalOnboarding;

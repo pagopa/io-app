@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { constVoid } from "fp-ts/lib/function";
 import { mixpanel, mixpanelTrack } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
 import {
@@ -147,7 +146,6 @@ const trackFciAction =
           })
         );
     }
-    return constVoid();
   };
 
 export default trackFciAction;

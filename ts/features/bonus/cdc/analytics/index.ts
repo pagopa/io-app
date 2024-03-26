@@ -44,7 +44,6 @@ const trackCdc =
 
         return mp.track(action.type, { status: action.payload.kind, value });
     }
-    return constVoid();
   };
 
 const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>

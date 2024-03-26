@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { constVoid } from "fp-ts/lib/function";
 import { mixpanel } from "../../../../../mixpanel";
 import { Action } from "../../../../../store/actions/types";
 import {
@@ -53,5 +52,4 @@ export const trackBPayAction =
           reason: action.payload
         });
     }
-    return constVoid();
   };

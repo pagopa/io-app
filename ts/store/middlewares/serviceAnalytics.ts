@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { constVoid } from "fp-ts/lib/function";
 import { mixpanel } from "../../mixpanel";
 import { Action } from "../actions/types";
 import {
@@ -53,5 +52,4 @@ export const trackServiceAction =
           responseStatus: action.payload.kind
         });
     }
-    return constVoid();
   };

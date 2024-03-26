@@ -42,7 +42,6 @@ const trackZendesk =
           reason: getNetworkErrorMessage(action.payload)
         });
     }
-    return constVoid();
   };
 
 const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>

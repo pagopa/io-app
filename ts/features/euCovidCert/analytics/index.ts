@@ -26,7 +26,6 @@ const trackEuCovidCertificateActions =
           reason: getNetworkErrorMessage(action.payload)
         });
     }
-    return constVoid();
   };
 
 const trackEuCovidCertificateGetSuccessResponse = (

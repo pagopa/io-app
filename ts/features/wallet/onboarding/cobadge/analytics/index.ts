@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-import { constVoid } from "fp-ts/lib/function";
 import { CoBadgeServices } from "../../../../../../definitions/pagopa/cobadge/configuration/CoBadgeServices";
 import { CobadgeResponse } from "../../../../../../definitions/pagopa/walletv2/CobadgeResponse";
 import { ExecutionStatusEnum } from "../../../../../../definitions/pagopa/walletv2/SearchRequestMetadata";
@@ -56,7 +55,6 @@ export const trackCoBadgeAction =
       case getType(sendAddCobadgeMessage):
         return mp.track(action.type, { canAdd: action.payload });
     }
-    return constVoid();
   };
 
 /**
