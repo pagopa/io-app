@@ -177,7 +177,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           "flex": 1,
                         }
                       }
-                      testID="overlayComponent"
                     >
                       <View
                         style={
@@ -209,9 +208,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                           }
                         >
                           <View
-                            accessibilityRole="progressbar"
-                            accessible={true}
-                            importantForAccessibility="no-hide-descendants"
                             style={
                               Array [
                                 Object {
@@ -223,7 +219,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                 undefined,
                               ]
                             }
-                            testID="LoadingSpinnerTestID"
                           >
                             <View
                               accessibilityRole="progressbar"
@@ -1108,12 +1103,10 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                       }
                     }
                   >
-                    <RCTSafeAreaView
-                      emulateUnlessSupported={true}
+                    <View
                       style={
                         Object {
-                          "flexGrow": 1,
-                          "marginHorizontal": 24,
+                          "flex": 1,
                         }
                       }
                     >
@@ -1406,36 +1399,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                 },
                               ]
                             }
-                          />
-                          <Text
-                            color="grey-650"
-                            defaultColor="blue"
-                            defaultWeight="Bold"
-                            font="TitilliumWeb"
-                            fontStyle={
-                              Object {
-                                "fontSize": 14,
-                                "lineHeight": 21,
-                              }
-                            }
-                            style={
-                              Array [
-                                Object {
-                                  "textAlign": "center",
-                                },
-                                Object {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
-                                },
-                                Object {
-                                  "color": "#636B82",
-                                  "fontFamily": "Titillium Web",
-                                  "fontStyle": "normal",
-                                  "fontWeight": "400",
-                                },
-                              ]
-                            }
-                            weight="Regular"
                           >
                             <View
                               accessibilityLabel="Back"
@@ -1696,8 +1659,8 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             </View>
                           </View>
                         </View>
-                      </RCTScrollView>
-                    </RCTSafeAreaView>
+                      </View>
+                    </View>
                   </View>
                 </View>
               </View>
