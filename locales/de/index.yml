@@ -1997,16 +1997,13 @@ serviceDetail:
   disabled: "deaktiviert"
   notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
-  title: "Hallo!"
+  title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
   titleValidation: "Bestätige den Vorgang"
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
-  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
-  subtitleCode: "Gib deinen Entsperrcode ein"
-  subtitleCodeFingerprint: "Verwende den Fingerabdruck oder gib den Entsperrcode ein"
-  subtitleCodeFaceId: "Verwende FaceID oder gib den Entsperrcode ein"
+  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."  
   biometric:
     fingerprintType: "Fingerabdruck"
     title: "Biometrische Identifikation"
@@ -2014,10 +2011,7 @@ identification:
       reason: "Identifikation durch TouchID fehlgeschlagen"
       title: "Identifikation erforderlich"
       sensorDescription: "Berührungssensor"
-  fail:
-    remainingAttempts: "Du hast noch {{attempts}} Versuche übrig."
-    remainingAttemptSingle: "Du hast noch einen Versuch übrig."
-    tooManyAttempts: "Zu viele falsche Versuche."
+  fail:        
     waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
