@@ -6,7 +6,6 @@ import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import { useIOSelector } from "../../../../store/hooks";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import { capitalize } from "../../../../utils/strings";
@@ -27,6 +26,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { PaymentCardBig } from "../../common/components/PaymentCardBig";
 
 export type WalletDetailsScreenNavigationParams = Readonly<{
   walletId: string;
