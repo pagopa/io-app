@@ -15,7 +15,8 @@ import {
   Label,
   Pictogram,
   VSpacer,
-  Body
+  Body,
+  IOToast
 } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 
@@ -45,7 +46,6 @@ import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../utils/hooks/usePrevious";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { IOToast } from "./Toast";
 import { LightModalContextInterface } from "./ui/LightModal";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import BaseScreenComponent from "./screens/BaseScreenComponent";

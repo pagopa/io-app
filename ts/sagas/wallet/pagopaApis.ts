@@ -5,6 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { Action } from "redux";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { mixpanelTrack } from "../../mixpanel";
@@ -62,7 +63,6 @@ import {
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
-import { IOToast } from "../../components/Toast";
 import I18n from "../../i18n";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
