@@ -1,6 +1,7 @@
 import {
   BlockButtonProps,
   ContentWrapper,
+  IOToast,
   FooterWithButtons
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -9,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import { Alert, SafeAreaView } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { IOToast } from "../../components/Toast";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";

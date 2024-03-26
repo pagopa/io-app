@@ -1,6 +1,7 @@
 import {
   ButtonSolid,
   ContentWrapper,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import {
@@ -22,7 +23,6 @@ import {
   isLoading as isRemoteLoading,
   isUndefined
 } from "../../../common/model/RemoteValue";
-import { IOToast } from "../../../components/Toast";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import {
