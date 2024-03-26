@@ -17,7 +17,6 @@ import {
   pageSize,
   remindersOptInEnabled
 } from "../config";
-import { setMixpanelPushNotificationToken } from "../mixpanel";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
@@ -92,8 +91,6 @@ function configurePushNotifications() {
   PushNotification.configure({
     // Called when token is generated
     onRegister: token => {
-      // send token to enable PN through Mixpanel
-      setMixpanelPushNotificationToken(token.token).then(constNull, constNull);
       // Dispatch an action to save the token in the store
       store.dispatch(updateNotificationsInstallationToken(token.token));
     },

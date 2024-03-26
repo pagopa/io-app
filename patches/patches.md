@@ -1,5 +1,12 @@
 This file describes the reason for the patches applied.
 
+### native-base+2.15.2
+Created on **25/03/2024**
+
+#### Reason:
+- Fixes a crash occurring when reopening the app while in background on Android (possibly even iOS but currently we don't have evidence) due to the usage of removed `keyboardDidShow` and `keyboardDidHide` events. 
+Remove this patch after removing `native-base`.
+
 ### react-native-reanimated
 Created on **18/03/2024**
 This patch resolves [react-native-reanimated/issues/3286](https://github.com/software-mansion/react-native-reanimated/issues/3286) by applying [react-native-reanimated/pull/3298](https://github.com/software-mansion/react-native-reanimated/pull/3298). Remove this patch once bumped `react-native-reanimated` from `v2` to `v3` and checked the issue is gone.

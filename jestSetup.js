@@ -142,3 +142,11 @@ jest.mock("react-native-webview", () => {
     __esModule: true
   };
 });
+
+jest.mock("mixpanel-react-native", () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+  Mixpanel: jest.fn(() => ({
+    init: jest.fn()
+  }))
+}));
