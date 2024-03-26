@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useFocusEffect } from "@react-navigation/native";
@@ -13,7 +14,6 @@ import {
   Vibration
 } from "react-native";
 import { connect } from "react-redux";
-import { IOToast } from "../../../../components/Toast";
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../../../i18n";

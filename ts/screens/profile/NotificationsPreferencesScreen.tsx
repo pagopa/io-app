@@ -1,4 +1,4 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -6,7 +6,6 @@ import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/P
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
-import { IOToast } from "../../components/Toast";
 import { RemoteSwitch } from "../../components/core/selection/RemoteSwitch";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";

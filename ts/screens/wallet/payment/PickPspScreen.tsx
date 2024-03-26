@@ -1,4 +1,8 @@
-import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FooterWithButtons,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
@@ -14,7 +18,6 @@ import {
 } from "../../../common/model/RemoteValue";
 import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
 import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
-import { IOToast } from "../../../components/Toast";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";

@@ -1,18 +1,18 @@
-import React from "react";
-import { act } from "@testing-library/react-native";
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { act } from "@testing-library/react-native";
+import React from "react";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
-import { Downloads } from "../../../store/reducers/downloads";
 import { mockPdfAttachment } from "../../../__mocks__/attachment";
-import { downloadAttachment } from "../../../store/actions";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { messageId_1 } from "../../../__mocks__/messages";
-import { IOToast } from "../../../../../components/Toast";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { downloadAttachment } from "../../../store/actions";
+import { Downloads } from "../../../store/reducers/downloads";
+import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
 
 const mockOpenPreview = jest.fn();
 

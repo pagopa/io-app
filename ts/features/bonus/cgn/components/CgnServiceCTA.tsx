@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull } from "fp-ts/lib/function";
 import * as React from "react";
@@ -6,7 +7,6 @@ import { Alert } from "react-native";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { fold, isLoading } from "../../../../common/model/RemoteValue";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { IOToast } from "../../../../components/Toast";
 import { Label } from "../../../../components/core/typography/Label";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";

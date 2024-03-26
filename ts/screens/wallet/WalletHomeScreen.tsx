@@ -2,6 +2,7 @@ import {
   ButtonOutline,
   ButtonSolid,
   IOColors,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -19,7 +20,6 @@ import {
 import { connect } from "react-redux";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { IOToast } from "../../components/Toast";
 import { Body } from "../../components/core/typography/Body";
 import { H3 } from "../../components/core/typography/H3";
 import { IOStyles } from "../../components/core/variables/IOStyles";

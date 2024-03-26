@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { identity, pipe } from "fp-ts/lib/function";
@@ -7,7 +7,6 @@ import { ActivityIndicator } from "react-native";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { AppDispatch } from "../../../App";
 import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { IOToast } from "../../../components/Toast";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";

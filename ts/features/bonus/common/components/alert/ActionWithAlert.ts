@@ -1,5 +1,5 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
-import { IOToast } from "../../../../../components/Toast";
 
 type ConfirmConfig = {
   title: string;

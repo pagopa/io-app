@@ -1,6 +1,7 @@
 import {
   ButtonOutline,
   ButtonSolid,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -8,7 +9,6 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
-import { IOToast } from "../../../components/Toast";
 import { InfoBox } from "../../../components/box/InfoBox";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";

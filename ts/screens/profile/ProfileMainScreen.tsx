@@ -3,6 +3,7 @@ import {
   Divider,
   IOColors,
   IOVisualCostants,
+  IOToast,
   ListItemNav,
   VSpacer,
   useIOTheme
@@ -21,7 +22,6 @@ import {
 import { connect } from "react-redux";
 import AppVersion from "../../components/AppVersion";
 import FiscalCodeComponent from "../../components/FiscalCodeComponent";
-import { IOToast } from "../../components/Toast";
 import TouchableDefaultOpacity from "../../components/TouchableDefaultOpacity";
 import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import {

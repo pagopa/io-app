@@ -5,6 +5,7 @@ import {
   ContentWrapper,
   Divider,
   FooterWithButtons,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -25,7 +26,6 @@ import {
   isLoading as isLoadingRemote,
   isLoading as isRemoteLoading
 } from "../../../common/model/RemoteValue";
-import { IOToast } from "../../../components/Toast";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
 import { IOStyles } from "../../../components/core/variables/IOStyles";

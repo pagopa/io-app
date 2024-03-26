@@ -1,4 +1,9 @@
-import { Icon, IconButton, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOToast,
+  Icon,
+  IconButton,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -17,7 +22,6 @@ import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import { IOToast } from "../../../../../components/Toast";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";

@@ -3,6 +3,7 @@ import {
   Divider,
   FooterWithButtons,
   IOColors,
+  IOToast,
   IOVisualCostants,
   NativeSwitch,
   VSpacer
@@ -16,7 +17,6 @@ import { useSelector, useStore } from "react-redux";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
 import { PreferencesListItem } from "../../components/PreferencesListItem";
-import { IOToast } from "../../components/Toast";
 import { InfoBox } from "../../components/box/InfoBox";
 import { IOBadge } from "../../components/core/IOBadge";
 import { Body } from "../../components/core/typography/Body";

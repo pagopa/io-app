@@ -5,6 +5,7 @@
 import {
   ContentWrapper,
   FooterWithButtons,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -18,7 +19,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { Alert, Keyboard, SafeAreaView, StyleSheet } from "react-native";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { IOToast } from "../../components/Toast";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import BaseScreenComponent, {

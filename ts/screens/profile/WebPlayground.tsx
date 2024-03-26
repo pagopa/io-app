@@ -6,6 +6,7 @@ import {
   HSpacer,
   IOColors,
   IOStyles,
+  IOToast,
   IconButtonContained,
   ListItemSwitch,
   TextInput,
@@ -23,7 +24,6 @@ import {
 import { connect } from "react-redux";
 import URLParse from "url-parse";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
-import { IOToast } from "../../components/Toast";
 import { Monospace } from "../../components/core/typography/Monospace";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { navigateBack } from "../../store/actions/navigation";

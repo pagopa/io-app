@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import {
   AmountInEuroCents,
   PaymentNoticeNumber,
@@ -20,7 +21,6 @@ import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import dataErrorImage from "../../../../img/pictograms/doubt.png";
 import genericErrorImage from "../../../../img/wallet/errors/generic-error-icon.png";
-import { IOToast } from "../../../components/Toast";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";

@@ -20,6 +20,7 @@ import {
   ContentWrapper,
   FooterWithButtons,
   HSpacer,
+  IOToast,
   NativeSwitch,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -49,7 +50,6 @@ import {
   isLoading as isRemoteLoading
 } from "../../common/model/RemoteValue";
 import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
-import { IOToast } from "../../components/Toast";
 import { LightModalContext } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {

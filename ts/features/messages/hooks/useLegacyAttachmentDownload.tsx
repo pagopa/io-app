@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
@@ -6,7 +7,6 @@ import { useCallback, useEffect, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import RNFS from "react-native-fs";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { IOToast } from "../../../components/Toast";
 import i18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isTestEnv } from "../../../utils/environment";

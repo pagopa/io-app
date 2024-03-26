@@ -1,5 +1,6 @@
 import {
   Divider,
+  IOToast,
   IOVisualCostants,
   ListItemNav
 } from "@pagopa/io-app-design-system";
@@ -9,7 +10,6 @@ import { Alert, AlertButton, FlatList, ListRenderItemInfo } from "react-native";
 import { UserDataProcessingChoiceEnum } from "../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../definitions/backend/UserDataProcessingStatus";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
-import { IOToast } from "../../components/Toast";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { IOStackNavigationProp } from "../../navigation/params/AppParamsList";

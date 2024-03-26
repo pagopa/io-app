@@ -1,13 +1,13 @@
 import {
   FooterWithButtons,
   IOColors,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { IOToast } from "../../../../components/Toast";
 import { Label } from "../../../../components/core/typography/Label";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";

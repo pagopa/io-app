@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -5,7 +6,6 @@ import { ActivityIndicator, SafeAreaView, StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
-import { IOToast } from "../../../../components/Toast";
 import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { H2 } from "../../../../components/core/typography/H2";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";

@@ -1,4 +1,4 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as AR from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
@@ -9,7 +9,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
-import { IOToast } from "../../../../components/Toast";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";

@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -10,7 +11,6 @@ import {
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { IOToast } from "../../../components/Toast";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import I18n from "../../../i18n";
 import {

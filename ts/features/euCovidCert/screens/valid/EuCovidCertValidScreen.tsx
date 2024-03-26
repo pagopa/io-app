@@ -1,4 +1,4 @@
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { IOColors, IOToast, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext, useState } from "react";
 import {
@@ -13,7 +13,6 @@ import {
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { IOToast } from "../../../../components/Toast";
 import {
   cancelButtonProps,
   confirmButtonProps

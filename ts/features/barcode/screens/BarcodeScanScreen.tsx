@@ -1,11 +1,15 @@
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  ListItemNav,
+  VSpacer,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { IOToast } from "../../../components/Toast";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";

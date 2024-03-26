@@ -1,5 +1,5 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { Linking, Platform } from "react-native";
-import { IOToast } from "../components/Toast";
 import I18n from "../i18n";
 
 export function openMaps(

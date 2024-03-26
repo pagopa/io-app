@@ -3,6 +3,7 @@ import {
   FooterWithButtons,
   IOColors,
   IOIconSizeScale,
+  IOToast,
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -11,7 +12,6 @@ import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import React, { useCallback, useEffect } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import { IOToast } from "../../../components/Toast";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";

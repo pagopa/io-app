@@ -6,6 +6,7 @@ import {
   HSpacer,
   VSpacer,
   IOSpacingScale,
+  IOToast,
   Badge,
   ButtonOutline
 } from "@pagopa/io-app-design-system";
@@ -23,7 +24,6 @@ import { clipboardSetStringWithFeedback } from "../../../../../../utils/clipboar
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
-import { IOToast } from "../../../../../../components/Toast";
 
 type Props = {
   eycaCard: EycaCardActivated | EycaCardExpired | EycaCardRevoked;

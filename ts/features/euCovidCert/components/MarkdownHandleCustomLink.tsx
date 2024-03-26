@@ -1,7 +1,7 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { IOToast } from "../../../components/Toast";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import { deriveCustomHandledLink } from "../../../components/ui/Markdown/handlers/link";
 import I18n from "../../../i18n";

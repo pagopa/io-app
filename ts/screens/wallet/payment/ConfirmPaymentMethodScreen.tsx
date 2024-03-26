@@ -1,4 +1,10 @@
-import { HSpacer, IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  HSpacer,
+  IOColors,
+  IOToast,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -27,7 +33,6 @@ import {
   isReady
 } from "../../../common/model/RemoteValue";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
-import { IOToast } from "../../../components/Toast";
 import { confirmButtonProps } from "../../../components/buttons/ButtonConfigurations";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";

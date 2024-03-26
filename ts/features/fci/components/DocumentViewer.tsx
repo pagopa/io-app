@@ -1,7 +1,8 @@
 import {
   ButtonSolidProps,
   FooterWithButtons,
-  IOColors
+  IOColors,
+  IOToast
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as S from "fp-ts/lib/string";
@@ -9,7 +10,6 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import Pdf from "react-native-pdf";
-import { IOToast } from "../../../components/Toast";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isIos } from "../../../utils/platform";

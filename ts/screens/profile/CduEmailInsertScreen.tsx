@@ -6,6 +6,7 @@ import {
   Alert as AlertComponent,
   FooterWithButtons,
   IOColors,
+  IOToast,
   Icon,
   LabelSmall,
   VSpacer
@@ -29,7 +30,6 @@ import validator from "validator";
 import { LabelledItem } from "../../components/LabelledItem";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import NewRemindEmailValidationOverlay from "../../components/NewRemindEmailValidationOverlay";
-import { IOToast } from "../../components/Toast";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";

@@ -1,4 +1,8 @@
-import { ContentWrapper, IOIconSizeScale } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  IOIconSizeScale,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -7,7 +11,6 @@ import { Alert, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Locales, TranslationKeys } from "../../../locales/locales";
 import SectionStatusComponent from "../../components/SectionStatus";
-import { IOToast } from "../../components/Toast";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";

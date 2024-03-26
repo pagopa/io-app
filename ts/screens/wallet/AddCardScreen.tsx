@@ -7,6 +7,7 @@ import {
   ContentWrapper,
   FooterWithButtons,
   IOColors,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
@@ -29,10 +30,8 @@ import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
-import { useScreenReaderEnabled } from "../../utils/accessibility";
-
-import { IOToast } from "../../components/Toast";
 import { acceptedPaymentMethodsFaqUrl } from "../../urls";
+import { useScreenReaderEnabled } from "../../utils/accessibility";
 import { CreditCardDetector, SupportedBrand } from "../../utils/creditCard";
 import { isExpired } from "../../utils/dates";
 import { isTestEnv } from "../../utils/environment";

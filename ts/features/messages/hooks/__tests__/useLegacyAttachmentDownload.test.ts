@@ -1,4 +1,4 @@
-import { IOToast } from "../../../../components/Toast";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { mockOtherAttachment } from "../../__mocks__/attachment";
 import {
   attachmentContentType,
