@@ -1,6 +1,10 @@
-import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  VSpacer,
+  IOToast,
+  ToastNotification
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { IOToast, ToastNotification } from "../../../components/Toast";
 import { H3 } from "../../../components/core/typography/H3";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
