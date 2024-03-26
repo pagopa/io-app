@@ -24,7 +24,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
           creationDate: new Date(),
           paymentMethodId: "paymentMethodId",
           paymentMethodAsset: "paymentMethodAsset",
-          services: [],
+          applications: [],
           status: WalletStatusEnum.CREATED,
           updateDate: new Date()
         }
