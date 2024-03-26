@@ -5,7 +5,7 @@ import { loadContextualHelpData, loadIdps } from "../actions/content";
 
 export const trackContentAction =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(loadContextualHelpData.request):
       case getType(loadContextualHelpData.success):
@@ -18,5 +18,4 @@ export const trackContentAction =
           reason: action.payload
         });
     }
-    return Promise.resolve();
   };

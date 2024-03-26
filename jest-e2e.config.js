@@ -1,7 +1,7 @@
 module.exports = {
   preset: "react-native",
   transformIgnorePatterns: [
-    "node_modules/(?!(jest-)?@react-native|react-native|react-navigation|@react-navigation|react-navigation-redux-helpers|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui|rn-placeholder|jsbarcode|@pagopa/react-native-cie|react-native-share|jail-monkey|@react-native-community/art|@react-native-community/push-notification-ios|@react-native-camera-roll/camera-roll|@codler)"
+    "node_modules/(?!(jest-)?@react-native|react-native|react-navigation|@react-navigation|react-navigation-redux-helpers|react-native-device-info|native-base|native-base-shoutem-theme|@shoutem/animation|@shoutem/ui|rn-placeholder|jsbarcode|@pagopa/react-native-cie|react-native-share|jail-monkey|@react-native-community/art|@react-native-community/push-notification-ios|@react-native-camera-roll/camera-roll|@codler|mixpanel-react-native)"
   ],
   moduleNameMapper: {
     "\\.svg": "<rootDir>/ts/__mocks__/svgMock.js"
