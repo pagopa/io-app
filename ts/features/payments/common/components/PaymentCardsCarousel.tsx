@@ -1,9 +1,9 @@
+import { HSpacer, IOVisualCostants } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { HSpacer, IOVisualCostants } from "@pagopa/io-app-design-system";
+import { generateFlatListItemLayout } from "../../../../components/ui/utils/generateFlatListItemLayout";
 import { WithTestID } from "../../../../types/WithTestID";
-import { generateFlatListItemLayout } from "../../utils/generateFlatListItemLayout";
 import {
   PAYMENT_CARD_SMALL_WIDTH,
   PaymentCardSmall,

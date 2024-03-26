@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
 import { View, Alert } from "react-native";
-import { LabelLink } from "@pagopa/io-app-design-system";
+import { LabelLink, IOToast } from "@pagopa/io-app-design-system";
 
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnUnsubscribeSelector } from "../../store/reducers/unsubscribe";
@@ -10,7 +10,6 @@ import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
 import { isError, isReady } from "../../../../../common/model/RemoteValue";
 import { navigateBack } from "../../../../../store/actions/navigation";
 import { cgnDetails } from "../../store/actions/details";
-import { IOToast } from "../../../../../components/Toast";
 
 const CgnUnsubscribe = () => {
   const dispatch = useIODispatch();
