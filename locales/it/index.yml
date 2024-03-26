@@ -2087,16 +2087,21 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  title: Ciao!
+  instructions:
+    unlockCode: codice di sblocco
+    unlockCodepPrefix: inserisci il
+    fingerprint: impronta
+    fingerprintPrefix: usa l'
+    faceId: volto
+    faceIdPrefix: usa il
+    congiunction: o
+  title: Ciao {{name}}!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
-  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
-  subtitleCode: Inserisci il codice di sblocco
-  subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
-  subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
+  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.  
   biometric:
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
@@ -2105,9 +2110,9 @@ identification:
       title: Identificazione richiesta
       sensorDescription: Accedi velocemente
   fail:
-    remainingAttempts: Ti rimangono {{attempts}} tentativi.
-    remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
-    tooManyAttempts: Troppi tentativi di inserimento errati.
+    remainingAttempts: Hai a disposizione ancora {{attempts}} tentativi
+    remainingAttemptSingle: Hai a disposizone ancora {{attempts}} tentativo
+    tooManyAttempts: Hai inserito troppe volte il codice sbagliato!
     waitMessage: "Riprova tra:"
   unlockCode:
     accessibility:
@@ -3469,12 +3474,12 @@ fastLogin:
     sessionExpired:
       noPin:
         title: È passato troppo tempo!
-        subtitle: Per ragioni di sicurezza devi autenticarti di nuovo con SPID o CIE. Potrai poi continuare la configurazione di IO da dove l’avevi interrotta.
+        subtitle: Per motivi di sicurezza, devi identificarti di nuovo con SPID o CIE. Potrai poi riprendere la configurazione di IO da dove l’avevi interrotta.
         submitButtonTitle: Continua
       continueNavigation:
         title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
+        subtitle: "Accedi per continuare a usare l’app."
+        submitButtonTitle: "Accedi"
         cancelButtonTitle: "Annulla"
       transientError:
         title: "Non siamo riusciti ad autenticarti"
