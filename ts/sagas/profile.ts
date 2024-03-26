@@ -235,7 +235,7 @@ function* createOrUpdateProfileSaga(
 const profileChangePredicates: ReadonlyArray<
   [
     (value: InitializedProfile, newValue: InitializedProfile) => boolean,
-    (value: InitializedProfile) => Promise<void> | undefined
+    (value: InitializedProfile) => void | undefined
   ]
 > = [
   [
