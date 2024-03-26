@@ -52,7 +52,6 @@ export const terminateMixpanel = () => {
     mixpanel.optOutTracking();
     mixpanel = undefined;
   }
-  return Promise.resolve();
 };
 
 /**
