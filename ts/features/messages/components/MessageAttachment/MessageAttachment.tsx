@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import { FooterWithButtons } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, IOToast } from "@pagopa/io-app-design-system";
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import I18n from "../../../../i18n";
@@ -9,7 +9,6 @@ import { downloadedMessageAttachmentSelector } from "../../store/reducers/downlo
 import { UIMessageId } from "../../types";
 import { isIos } from "../../../../utils/platform";
 import { share } from "../../../../utils/share";
-import { IOToast } from "../../../../components/Toast";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   attachmentContentType,

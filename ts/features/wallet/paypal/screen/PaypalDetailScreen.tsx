@@ -3,15 +3,15 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import {
-  PaymentCardBig,
-  PaymentCardBigProps
-} from "../../../../components/ui/cards/payment/PaymentCardBig";
 import { useIOSelector } from "../../../../store/hooks";
 import { paypalSelector } from "../../../../store/reducers/wallet/wallets";
 import { getPaypalAccountEmail } from "../../../../utils/paypal";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
+import {
+  PaymentCardBig,
+  PaymentCardBigProps
+} from "../../../payments/common/components/PaymentCardBig";
 
 /**
  * Detail screen for a PayPal payment method

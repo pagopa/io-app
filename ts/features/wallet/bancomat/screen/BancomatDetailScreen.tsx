@@ -6,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
@@ -14,6 +13,7 @@ import { paymentMethodByIdSelector } from "../../../../store/reducers/wallet/wal
 import { BancomatPaymentMethod, isBancomat } from "../../../../types/pagopa";
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import { acceptedPaymentMethodsFaqUrl } from "../../../../urls";
+import { PaymentCardBig } from "../../../payments/common/components/PaymentCardBig";
 
 export type BancomatDetailScreenNavigationParams = Readonly<{
   // TODO: we should use only the id and retrieve it from the store, otherwise we lose all the updates

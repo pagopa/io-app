@@ -926,6 +926,18 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  homeScreen:
+    title: Payments
+    methodsSection:
+      header: Payment methods
+      headerCTA: Add
+    historySection:
+     header: Transaction history
+     headerCTA: View all
+     transactionStatusBadges:
+      failure: "FALLITA"
+      success: ""
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
@@ -2075,16 +2087,21 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  title: Hi!
+  instructions:
+      unlockCode: unlock code
+      unlockCodepPrefix: use your
+      fingerprint: fingerprint
+      fingerprintPrefix: use your
+      faceId: face
+      faceIdPrefix: use your
+      congiunction: or
+  title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
-  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
-  subtitleCode: Enter the unlock code
-  subtitleCodeFingerprint: use the fingerprint or the unlock code
-  subtitleCodeFaceId: use the Face ID or enter the unlock code
+  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.  
   biometric:
     fingerprintType: Fingerprint
     title: Biometric identification
@@ -2093,8 +2110,8 @@ identification:
       title: Identification required
       sensorDescription: Login quickly
   fail:
-    remainingAttempts: You have {{attempts}} attempts left.
-    remainingAttemptSingle: You have {{attempts}} attempt left.
+    remainingAttempts: You have {{attempts}} attempts left
+    remainingAttemptSingle: You have {{attempts}} attempt left
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:

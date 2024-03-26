@@ -1,4 +1,8 @@
-import { ActionType, createAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAction,
+  createStandardAction
+} from "typesafe-actions";
 
 import { PinString } from "../../types/PinString";
 import {
@@ -59,12 +63,17 @@ export const identificationStart = createAction(
 );
 
 export const identificationCancel = createAction("IDENTIFICATION_CANCEL");
-export const identificationSuccess = createAction("IDENTIFICATION_SUCCESS");
+export const identificationSuccess = createStandardAction(
+  "IDENTIFICATION_SUCCESS"
+)<{ isBiometric: boolean }>();
 export const identificationFailure = createAction("IDENTIFICATION_FAILURE");
 export const identificationPinReset = createAction("IDENTIFICATION_PIN_RESET");
 export const identificationReset = createAction("IDENTIFICATION_RESET");
 export const identificationForceLogout = createAction(
   "IDENTIFICATION_FORCE_LOGOUT"
+);
+export const identificationHideLockModal = createAction(
+  "IDENTIFICATION_HIDE_LOCK_MODAL"
 );
 
 export type IdentificationActions =
@@ -75,4 +84,5 @@ export type IdentificationActions =
   | ActionType<typeof identificationFailure>
   | ActionType<typeof identificationPinReset>
   | ActionType<typeof identificationForceLogout>
-  | ActionType<typeof identificationReset>;
+  | ActionType<typeof identificationReset>
+  | ActionType<typeof identificationHideLockModal>;
