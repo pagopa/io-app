@@ -55,6 +55,7 @@ import { eycaDetailSelector } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { canEycaCardBeShown } from "../utils/eyca";
 import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -72,7 +73,17 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
 
+  useHeaderSecondLevel({
+    title: I18n.t("bonus.cgn.name"),
+    goBack: navigation.goBack,
+    transparent: true,
+    supportRequest: true
+  });
+
   const loadCGN = () => {
+    navigation.setOptions({
+      head
+    });
     props.loadCgnDetails();
     props.loadEycaDetails();
   };
