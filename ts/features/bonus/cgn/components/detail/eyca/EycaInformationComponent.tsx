@@ -1,12 +1,11 @@
 import * as React from "react";
 import { View } from "react-native";
-import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
+import { ButtonOutline, VSpacer, IOToast } from "@pagopa/io-app-design-system";
 import LegacyMarkdown from "../../../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
-import { IOToast } from "../../../../../../components/Toast";
 
 /**
  * this component shows information about EYCA card. It is included within a bottom sheet

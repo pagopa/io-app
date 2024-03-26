@@ -1,12 +1,11 @@
 import * as React from "react";
-import { ListItemSwitch } from "@pagopa/io-app-design-system";
+import { ListItemSwitch, IOToast } from "@pagopa/io-app-design-system";
 
 import { hasPaymentFeature } from "../../common/utils";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
-import { walletDetailsPagoPaCapabilityToggle } from "../store/actions";
-import { IOToast } from "../../../../components/Toast";
+import { walletDetailsPagoPaCapabilityToggle } from "../../details/store/actions";
 
 type Props = { paymentMethod: WalletInfo };
 
