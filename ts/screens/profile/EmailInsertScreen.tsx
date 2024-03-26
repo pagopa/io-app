@@ -27,7 +27,8 @@ import {
   H1,
   TextInputValidation,
   ContentWrapper,
-  ButtonSolid
+  ButtonSolid,
+  IOToast
 } from "@pagopa/io-app-design-system";
 import { Route, useFocusEffect, useRoute } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -58,7 +59,6 @@ import {
 import { getFlowType } from "../../utils/analytics";
 import { emailValidationSelector } from "../../store/reducers/emailValidation";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import { IOToast } from "../../components/Toast";
 import { trackTosUserExit } from "../authentication/analytics";
 import { abortOnboarding } from "../../store/actions/onboarding";
 import ROUTES from "../../navigation/routes";
