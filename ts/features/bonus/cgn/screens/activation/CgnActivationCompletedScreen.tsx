@@ -8,7 +8,6 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
  * Screen which is displayed when a user requested a CGN activation
  * and it has been correctly activated
  */
-
 const CgnActivationCompletedScreen = () => {
   const dispatch = useIODispatch();
   const onConfirm = React.useCallback(() => {
