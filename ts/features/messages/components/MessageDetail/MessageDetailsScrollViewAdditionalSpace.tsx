@@ -22,16 +22,16 @@ export const MessageDetailsScrollViewAdditionalSpace = ({
   const isShowingPaymentButton = useIOSelector(state =>
     isPaymentsButtonVisibleSelector(state, messageId)
   );
-  const stickyFooterRowHeight =
-    IOStyles.footer.paddingBottom + buttonSolidHeight + gapBetweenItemsInAGrid;
+  const hasAtLeastAButton = isShowingPaymentButton || hasCTA1 || hasCTA2;
 
   const height =
-    safeAreaInsets.bottom +
+    (hasAtLeastAButton ? IOStyles.footer.paddingBottom : 0) +
+    (isShowingPaymentButton ? buttonSolidHeight + gapBetweenItemsInAGrid : 0) +
+    (hasCTA1 ? buttonSolidHeight + gapBetweenItemsInAGrid : 0) +
+    (hasCTA2 ? buttonSolidHeight + gapBetweenItemsInAGrid : 0) +
+    gapBetweenItemsInAGrid +
     IOStyles.footer.paddingBottom +
-    (isShowingPaymentButton ? stickyFooterRowHeight : 0) +
-    (hasCTA1 ? stickyFooterRowHeight : 0) +
-    (hasCTA2 ? stickyFooterRowHeight : 0) +
-    (hasCTA1 && hasCTA2 ? gapBetweenItemsInAGrid : 0);
+    safeAreaInsets.bottom;
   return (
     <View
       style={{

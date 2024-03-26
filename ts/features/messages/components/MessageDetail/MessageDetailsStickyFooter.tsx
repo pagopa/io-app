@@ -7,25 +7,21 @@ import {
   ButtonSolid,
   IOStyles,
   VSpacer,
-  useIOToast
+  buttonSolidHeight
 } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "../../../../i18n";
 import { PaymentData, UIMessageId } from "../../types";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   canNavigateToPaymentFromMessageSelector,
   paymentsButtonStateSelector
 } from "../../store/reducers/payments";
-import {
-  getRptIdStringFromPaymentData,
-  initializeAndNavigateToWalletForPayment
-} from "../../utils";
-import { CTA, CTAS } from "../../types/MessageCTA";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { trackPNOptInMessageAccepted } from "../../../pn/analytics";
 import { handleCtaAction } from "../../utils/messages";
+import { CTA, CTAS } from "../../types/MessageCTA";
+import { MessageDetailsPaymentButton } from "./MessageDetailsPaymentButton";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +29,11 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     bottom: 0,
     width: "100%"
+  },
+  buttonLinkInFooter: {
+    height: buttonSolidHeight,
+    justifyContent: "center",
+    alignSelf: "center"
   }
 });
 
@@ -44,36 +45,120 @@ type MessageDetailsPaymentButtonProps = {
   serviceId: ServiceId;
 };
 
-const RenderPaymentButton = (
+type FooterPaymentWithDoubleCTA = {
+  tag: "PaymentWithDoubleCTA";
+  cta1: CTA;
+  cta2: CTA;
+  paymentData: PaymentData;
+};
+type FooterPaymentWithCTA = {
+  tag: "PaymentWithCTA";
+  cta1: CTA;
+  paymentData: PaymentData;
+};
+type FooterDoubleCTA = {
+  tag: "DoubleCTA";
+  cta1: CTA;
+  cta2: CTA;
+};
+type FooterPayment = {
+  tag: "Payment";
+  paymentData: PaymentData;
+};
+type FooterCTA = {
+  tag: "CTA";
+  cta1: CTA;
+};
+type FooterNone = {
+  tag: "None";
+};
+type FooterData =
+  | FooterPaymentWithDoubleCTA
+  | FooterPaymentWithCTA
+  | FooterDoubleCTA
+  | FooterPayment
+  | FooterCTA
+  | FooterNone;
+
+const computeFooterConfiguration = (
+  paymentData: PaymentData | undefined,
+  paymentButtonStatus: "hidden" | "loading" | "enabled",
+  ctas: CTAS | undefined
+): FooterData => {
+  const isPaymentButtonVisible =
+    paymentData && paymentButtonStatus !== "hidden";
+  const isCTA1Visible = !!ctas?.cta_1;
+  const cta2 = ctas?.cta_2;
+  const isCTA2Visible = !!cta2;
+  if (isPaymentButtonVisible && isCTA1Visible && isCTA2Visible) {
+    return {
+      tag: "PaymentWithDoubleCTA",
+      cta1: ctas.cta_1,
+      cta2,
+      paymentData
+    };
+  } else if (isPaymentButtonVisible && isCTA1Visible) {
+    return {
+      tag: "PaymentWithCTA",
+      cta1: ctas.cta_1,
+      paymentData
+    };
+  } else if (isCTA1Visible && isCTA2Visible) {
+    return {
+      tag: "DoubleCTA",
+      cta1: ctas.cta_1,
+      cta2
+    };
+  } else if (isPaymentButtonVisible) {
+    return {
+      tag: "Payment",
+      paymentData
+    };
+  } else if (isCTA1Visible) {
+    return {
+      tag: "CTA",
+      cta1: ctas.cta_1
+    };
+  }
+  return { tag: "None" };
+};
+
+const renderPaymentWithDoubleCTA = (
   messageId: UIMessageId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
-  isLoading: boolean
-) => {
-  const dispatch = useIODispatch();
-  const toast = useIOToast();
-  return (
-    <ButtonSolid
-      label={I18n.t("features.messages.payments.pay")}
-      accessibilityLabel={I18n.t("features.messages.payments.pay")}
-      onPress={() =>
-        initializeAndNavigateToWalletForPayment(
-          messageId,
-          getRptIdStringFromPaymentData(paymentData),
-          false,
-          paymentData.amount,
-          canNavigateToPayment,
-          dispatch,
-          false,
-          () => toast.error(I18n.t("genericError"))
-        )
-      }
-      fullWidth
-      loading={isLoading}
+  isLoadingPayment: boolean,
+  cta1: CTA,
+  cta1IsPNOptInMessage: boolean,
+  cta2: CTA,
+  cta2IsPNOptInMessage: boolean,
+  onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
+) => (
+  <>
+    <MessageDetailsPaymentButton
+      messageId={messageId}
+      paymentData={paymentData}
+      canNavigateToPayment={canNavigateToPayment}
+      isLoading={isLoadingPayment}
     />
-  );
-};
-const renderPaymentAndSingleCTA = (
+    <VSpacer size={8} />
+    <ButtonOutline
+      accessibilityLabel={cta1.text}
+      fullWidth
+      label={cta1.text}
+      onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
+    />
+    <VSpacer size={8} />
+    <View style={styles.buttonLinkInFooter}>
+      <ButtonLink
+        accessibilityLabel={cta2.text}
+        label={cta2.text}
+        onPress={() => onCTAPress(cta2, cta2IsPNOptInMessage)}
+      />
+    </View>
+  </>
+);
+const renderPaymentWithCTA = (
   messageId: UIMessageId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
@@ -83,18 +168,20 @@ const renderPaymentAndSingleCTA = (
   onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
 ) => (
   <>
-    {RenderPaymentButton(
-      messageId,
-      paymentData,
-      canNavigateToPayment,
-      isLoadingPayment
-    )}
-    <VSpacer size={8} />
-    <ButtonLink
-      accessibilityLabel={cta1.text}
-      label={cta1.text}
-      onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
+    <MessageDetailsPaymentButton
+      messageId={messageId}
+      paymentData={paymentData}
+      canNavigateToPayment={canNavigateToPayment}
+      isLoading={isLoadingPayment}
     />
+    <VSpacer size={8} />
+    <View style={styles.buttonLinkInFooter}>
+      <ButtonLink
+        accessibilityLabel={cta1.text}
+        label={cta1.text}
+        onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
+      />
+    </View>
   </>
 );
 const renderDoubleCTA = (
@@ -112,47 +199,29 @@ const renderDoubleCTA = (
       onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
     />
     <VSpacer size={8} />
-    <ButtonLink
-      accessibilityLabel={cta2.text}
-      label={cta2.text}
-      onPress={() => onCTAPress(cta2, cta2IsPNOptInMessage)}
-    />
+    <View style={styles.buttonLinkInFooter}>
+      <ButtonLink
+        accessibilityLabel={cta2.text}
+        label={cta2.text}
+        onPress={() => onCTAPress(cta2, cta2IsPNOptInMessage)}
+      />
+    </View>
   </>
 );
-const renderPaymentAndDoubleCTA = (
+const renderPayment = (
   messageId: UIMessageId,
   paymentData: PaymentData,
   canNavigateToPayment: boolean,
-  isLoadingPayment: boolean,
-  cta1: CTA,
-  cta1IsPNOptInMessage: boolean,
-  cta2: CTA,
-  cta2IsPNOptInMessage: boolean,
-  onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
+  isLoadingPayment: boolean
 ) => (
-  <>
-    {RenderPaymentButton(
-      messageId,
-      paymentData,
-      canNavigateToPayment,
-      isLoadingPayment
-    )}
-    <VSpacer size={8} />
-    <ButtonOutline
-      accessibilityLabel={cta1.text}
-      fullWidth
-      label={cta1.text}
-      onPress={() => onCTAPress(cta1, cta1IsPNOptInMessage)}
-    />
-    <VSpacer size={8} />
-    <ButtonLink
-      accessibilityLabel={cta2.text}
-      label={cta2.text}
-      onPress={() => onCTAPress(cta2, cta2IsPNOptInMessage)}
-    />
-  </>
+  <MessageDetailsPaymentButton
+    messageId={messageId}
+    paymentData={paymentData}
+    canNavigateToPayment={canNavigateToPayment}
+    isLoading={isLoadingPayment}
+  />
 );
-const renderSingleCTA = (
+const renderCTA = (
   cta: CTA,
   isPNOptInMessage: boolean,
   onCTAPress: (cta: CTA, isPNOptInMessage: boolean) => void
@@ -194,15 +263,14 @@ export const MessageDetailsStickyFooter = ({
     [linkTo, serviceId]
   );
 
-  const isPaymentButtonVisible =
-    paymentData && paymentButtonStatus !== "hidden";
-  if (!ctas && !isPaymentButtonVisible) {
+  const footerData = computeFooterConfiguration(
+    paymentData,
+    paymentButtonStatus,
+    ctas
+  );
+  if (footerData.tag === "None") {
     return null;
   }
-
-  const isCTA1Visible = !!ctas?.cta_1;
-  const cta2 = ctas?.cta_2;
-  const isCTA2Visible = !!cta2;
 
   return (
     <View
@@ -212,46 +280,42 @@ export const MessageDetailsStickyFooter = ({
         { paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom }
       ]}
     >
-      {isPaymentButtonVisible &&
-        isCTA1Visible &&
-        isCTA2Visible &&
-        renderPaymentAndDoubleCTA(
+      {footerData.tag === "PaymentWithDoubleCTA" &&
+        renderPaymentWithDoubleCTA(
           messageId,
-          paymentData,
+          footerData.paymentData,
           canNavigateToPayment,
           paymentButtonStatus === "loading",
-          ctas.cta_1,
+          footerData.cta1,
           firstCTAIsPNOptInMessage,
-          cta2,
+          footerData.cta2,
           secondCTAIsPNOptInMessage,
           handleOnPress
         )}
-      {isPaymentButtonVisible &&
-        isCTA1Visible &&
-        renderPaymentAndSingleCTA(
+      {footerData.tag === "PaymentWithCTA" &&
+        renderPaymentWithCTA(
           messageId,
-          paymentData,
+          footerData.paymentData,
           canNavigateToPayment,
           paymentButtonStatus === "loading",
-          ctas.cta_1,
+          footerData.cta1,
           firstCTAIsPNOptInMessage,
           handleOnPress
         )}
-      {isCTA1Visible &&
-        isCTA2Visible &&
+      {footerData.tag === "DoubleCTA" &&
         renderDoubleCTA(
-          ctas.cta_1,
+          footerData.cta1,
           firstCTAIsPNOptInMessage,
-          cta2,
+          footerData.cta2,
           secondCTAIsPNOptInMessage,
           handleOnPress
         )}
-      {isCTA1Visible &&
-        renderSingleCTA(ctas.cta_1, firstCTAIsPNOptInMessage, handleOnPress)}
-      {isPaymentButtonVisible &&
-        RenderPaymentButton(
+      {footerData.tag === "CTA" &&
+        renderCTA(footerData.cta1, firstCTAIsPNOptInMessage, handleOnPress)}
+      {footerData.tag === "Payment" &&
+        renderPayment(
           messageId,
-          paymentData,
+          footerData.paymentData,
           canNavigateToPayment,
           paymentButtonStatus === "loading"
         )}
