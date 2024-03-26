@@ -17,7 +17,7 @@ import {
 
 export const trackBPayAction =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(walletAddBPayStart):
       case getType(walletAddBPayCompleted):
@@ -52,5 +52,4 @@ export const trackBPayAction =
           reason: action.payload
         });
     }
-    return Promise.resolve();
   };

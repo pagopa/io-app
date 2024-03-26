@@ -15,7 +15,7 @@ import { getNetworkErrorMessage } from "../../utils/errors";
 // Isolated tracker for services actions
 export const trackServiceAction =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(loadServicesDetail):
         return mp.track(action.type, {
@@ -52,5 +52,4 @@ export const trackServiceAction =
           responseStatus: action.payload.kind
         });
     }
-    return Promise.resolve();
   };
