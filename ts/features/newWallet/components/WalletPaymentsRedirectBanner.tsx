@@ -9,9 +9,12 @@ import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isWalletPaymentsRedirectBannerVisibleSelector } from "../store/selectors";
 import { walletSetPaymentsRedirectBannerVisible } from "../store/actions/preferences";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import ROUTES from "../../../navigation/routes";
 
 const WalletPaymentsRedirectBanner = () => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const bannerRef = React.createRef<View>();
 
   const isVisible = useIOSelector(
@@ -19,9 +22,9 @@ const WalletPaymentsRedirectBanner = () => {
   );
 
   const handleOnBannerPress = () => {
-    // TODO add payments section navigation
-    // Currently we do not have a payments section to navigate to
-    // The navigation will be handled with a future PR
+    navigation.navigate(ROUTES.MAIN, {
+      screen: ROUTES.PAYMENTS_HOME
+    });
   };
 
   const handleOnBannerClose = () => {
