@@ -17,10 +17,7 @@ export async function trackCieLoginSelected(state: GlobalState) {
     property: "LOGIN_METHOD",
     value: IdpCIE.id
   });
-  await mixpanelTrack(
-    "LOGIN_CIE_SELECTED",
-    buildEventProperties("UX", "action")
-  );
+  mixpanelTrack("LOGIN_CIE_SELECTED", buildEventProperties("UX", "action"));
 }
 
 export function trackSpidLoginSelected() {

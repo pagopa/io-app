@@ -926,6 +926,18 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
+  homeScreen:
+    title: Pagamenti
+    methodsSection:
+      header: Metodi di pagamento
+      headerCTA: Aggiungi
+    historySection:
+     header: Storico operazioni
+     headerCTA: Vedi tutte
+     transactionStatusBadges:
+      failure: "FALLITA"
+      success: ""
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
     message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
@@ -2578,7 +2590,7 @@ bonus:
         title: "Stiamo processando la tua richiesta."
         body: "Ti invieremo un messaggio in app quando la tua Carta Giovani sarà attiva."
       alreadyActive:
-        title: "La tua Carta Giovani Nazionale è attiva!"
+        title: "La tua Carta Giovani Nazionale è già attiva!"
         body: "Puoi visualizzarne i dettagli nella sezione Portafoglio."
       pending:
         title: "La tua Carta Giovani Nazionale è in fase di attivazione."
