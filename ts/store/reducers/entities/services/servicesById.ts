@@ -3,6 +3,8 @@
  * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
@@ -88,10 +90,15 @@ export const serviceByIdSelector = (
 ): pot.Pot<ServicePublic, Error> =>
   state.entities.services.byId[id] ?? pot.none;
 
-export const serviceMetadataByIdSelector =
-  (id: ServiceId) =>
-  (state: GlobalState): ServiceMetadata | undefined => {
-    const maybeServiceById = serviceByIdSelector(state, id);
-    return pot.toUndefined(maybeServiceById)?.service_metadata;
-  };
+export const serviceMetadataByIdSelector = (
+  state: GlobalState,
+  id: ServiceId
+): ServiceMetadata | undefined =>
+  pipe(
+    serviceByIdSelector(state, id),
+    pot.toOption,
+    O.chainNullableK(service => service.service_metadata),
+    O.toUndefined
+  );
+
 export default reducer;

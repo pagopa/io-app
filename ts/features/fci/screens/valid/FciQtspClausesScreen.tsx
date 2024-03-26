@@ -11,7 +11,6 @@ import {
   IOStyles,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -83,8 +82,7 @@ const FciQtspClausesScreen = () => {
     navigation.navigate(FCI_ROUTES.MAIN, {
       screen: FCI_ROUTES.DOC_PREVIEW,
       params: {
-        documentUrl: url,
-        enableAnnotationRendering: true
+        documentUrl: url
       }
     });
   };
@@ -172,11 +170,7 @@ const FciQtspClausesScreen = () => {
 
   return (
     <>
-      <SafeAreaView
-        style={IOStyles.flex}
-        edges={["bottom", "left", "right"]}
-        testID={"FciQtspClausesTestID"}
-      >
+      <View style={IOStyles.flex} testID={"FciQtspClausesTestID"}>
         <ScrollView style={IOStyles.horizontalContentPadding}>
           <H2>{I18n.t("features.fci.qtspTos.title")}</H2>
           <VSpacer size={16} />
@@ -188,7 +182,7 @@ const FciQtspClausesScreen = () => {
           primary={{ type: "Outline", buttonProps: cancelButtonProps }}
           secondary={{ type: "Solid", buttonProps: continueButtonProps }}
         />
-      </SafeAreaView>
+      </View>
       {fciAbortSignature}
       {fciCheckService}
     </>

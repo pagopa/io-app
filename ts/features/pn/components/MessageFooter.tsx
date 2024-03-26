@@ -1,17 +1,21 @@
 import React, { MutableRefObject, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { ButtonSolid, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  IOStyles,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
-import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import variables from "../../../theme/variables";
-import { initializeAndNavigateToWalletForPayment } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-import { useIOToast } from "../../../components/Toast";
 import { trackPNShowAllPayments } from "../analytics";
+import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({
   container: {
@@ -46,18 +50,35 @@ export const MessageFooter = ({
   );
   const dispatch = useDispatch();
   const toast = useIOToast();
+  const canNavigateToPayment = useIOSelector(state =>
+    canNavigateToPaymentFromMessageSelector(state)
+  );
   const onFooterPressCallback = useCallback(() => {
     if (payments?.length === 1) {
       const firstPayment = payments[0];
       const paymentId = getRptIdStringFromPayment(firstPayment);
-      initializeAndNavigateToWalletForPayment(paymentId, dispatch, () =>
-        toast.error(I18n.t("genericError"))
+      initializeAndNavigateToWalletForPayment(
+        messageId,
+        paymentId,
+        false,
+        undefined,
+        canNavigateToPayment,
+        dispatch,
+        true,
+        () => toast.error(I18n.t("genericError"))
       );
     } else {
       trackPNShowAllPayments();
       presentPaymentsBottomSheetRef.current?.();
     }
-  }, [dispatch, payments, presentPaymentsBottomSheetRef, toast]);
+  }, [
+    canNavigateToPayment,
+    dispatch,
+    messageId,
+    payments,
+    presentPaymentsBottomSheetRef,
+    toast
+  ]);
   if (isCancelled || buttonState === "hidden") {
     return null;
   }

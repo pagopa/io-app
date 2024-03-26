@@ -268,6 +268,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (>= 6.1.7.3, < 7.1.0)
   cocoapods (>= 1.12.1)
   fastlane (~> 2.212.2)
 

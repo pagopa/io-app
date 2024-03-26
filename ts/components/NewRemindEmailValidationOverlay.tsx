@@ -14,7 +14,9 @@ import {
   IOPictogramSizeScale,
   Label,
   Pictogram,
-  VSpacer
+  VSpacer,
+  Body,
+  IOToast
 } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
 
@@ -40,40 +42,41 @@ import {
   trackEmailValidationSuccess,
   trackEmailValidationSuccessConfirmed
 } from "../screens/analytics/emailAnalytics";
+import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
+import { usePrevious } from "../utils/hooks/usePrevious";
 import { IOStyles } from "./core/variables/IOStyles";
 import FooterWithButtons from "./ui/FooterWithButtons";
-import { IOToast } from "./Toast";
 import { LightModalContextInterface } from "./ui/LightModal";
 import { withLightModalContext } from "./helpers/withLightModalContext";
 import BaseScreenComponent from "./screens/BaseScreenComponent";
+import { CountdownProvider, useCountdown } from "./countdown/CountdownProvider";
 
-const emailSentTimeout = 10000 as Millisecond; // 10 seconds
+const emailSentTimeout = 60000 as Millisecond; // 60 seconds
 const profilePolling = 5000 as Millisecond; // 5 seconds
+const countdownIntervalDuration = 1000 as Millisecond; // 1 second
 
 const EMPTY_EMAIL = "";
 const VALIDATION_ILLUSTRATION_WIDTH: IOPictogramSizeScale = 80;
 
 type OwnProp = {
   isOnboarding?: boolean;
+  sendEmailAtFirstRender?: boolean;
 };
 
 type Props = LightModalContextInterface & OwnProp;
 
-const NewRemindEmailValidationOverlay = (props: Props) => {
-  const { isOnboarding, hideModal } = props;
+const NewRemindEmailValidationOverlayComponent = (props: Props) => {
+  const { isOnboarding, hideModal, sendEmailAtFirstRender } = props;
   const dispatch = useIODispatch();
   const optionEmail = useIOSelector(profileEmailSelector);
   const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
   const emailValidation = useIOSelector(emailValidationSelector);
-
+  const prevEmailValidation = usePrevious(emailValidation);
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(!!isOnboarding, isFirstOnBoarding);
-
   const [isValidateEmailButtonDisabled, setIsValidateEmailButtonDisabled] =
-    useState(false);
-  const timeout = useRef<number | undefined>();
+    useState(true);
   const polling = useRef<number | undefined>();
-
   const email = pipe(
     optionEmail,
     O.getOrElse(() => EMPTY_EMAIL)
@@ -100,7 +103,16 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     [dispatch]
   );
 
-  // function to localize the title of the button. If the email is validated and if it is not, whether the confirmation email was sent or not
+  useOnFirstRender(() => {
+    // if the verification email was never sent, we send it
+    if (sendEmailAtFirstRender) {
+      sendEmailValidation();
+    }
+  });
+
+  // function to localize the title of the button.
+  // If the email is validated and if it is not,
+  // whether the confirmation email was sent or not
   const buttonTitle = () => {
     if (isEmailValidated) {
       return I18n.t("global.buttons.continue");
@@ -145,13 +157,8 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
         }
       }
     } else {
-      // send email validation only if it exists
-      pipe(
-        optionEmail,
-        O.map(_ => {
-          sendEmailValidation();
-        })
-      );
+      // resend the validation email
+      sendEmailValidation();
     }
   };
 
@@ -160,45 +167,98 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
     hideModal();
   };
 
-  const renderFooter = () => (
-    <FooterWithButtons
-      type={"SingleButton"}
-      leftButton={{
-        testID: "button-test",
-        block: true,
-        bordered: !isEmailValidated,
-        disabled: isButtonDisabled(),
-        onPress: handleSendEmailValidationButton,
-        title: buttonTitle()
-      }}
-    />
+  type CountdownProps = {
+    visible: boolean;
+    timerElapsed?: () => void;
+  };
+
+  const Countdown = (props: CountdownProps) => {
+    const { visible } = props;
+    const { timerCount, resetTimer, startTimer, isRunning } = useCountdown();
+
+    if (timerCount === 0 && props.timerElapsed) {
+      props.timerElapsed();
+    }
+
+    if (!visible) {
+      if (resetTimer) {
+        resetTimer();
+      }
+
+      return null;
+    } else if (startTimer && isRunning && !isRunning()) {
+      startTimer();
+    }
+
+    if (visible) {
+      return (
+        <View style={IOStyles.alignCenter}>
+          <Body>
+            <Label weight="Regular" style={{ textAlign: "center" }}>
+              {I18n.t("email.newvalidate.countdowntext")}{" "}
+            </Label>
+            <Label weight="SemiBold" style={{ textAlign: "center" }}>
+              {timerCount}s
+            </Label>
+          </Body>
+        </View>
+      );
+    }
+    return null;
+  };
+
+  const Footer = () => (
+    <>
+      <Countdown
+        timerElapsed={() => {
+          setIsValidateEmailButtonDisabled(false);
+        }}
+        visible={isValidateEmailButtonDisabled && !isEmailValidated}
+      />
+      <VSpacer size={16} />
+      <FooterWithButtons
+        type={"SingleButton"}
+        leftButton={{
+          testID: "button-test",
+          block: true,
+          bordered: !isEmailValidated,
+          disabled: isButtonDisabled(),
+          onPress: handleSendEmailValidationButton,
+          title: buttonTitle()
+        }}
+      />
+    </>
   );
 
   useEffect(() => {
     // use polling to get the profile info, to check if the email is valid or not
     // eslint-disable-next-line functional/immutable-data
     polling.current = setInterval(() => reloadProfile(), profilePolling);
+    // at the unmount of the page clear all timeout and interval
     return () => {
       hideModal();
-      clearTimeout(timeout.current);
       clearInterval(polling.current);
     };
   }, [hideModal, reloadProfile]);
 
   useEffect(() => {
-    // send validation email KO
-    if (pot.isError(emailValidation.sendEmailValidationRequest)) {
-      IOToast.error(I18n.t("global.actions.retry"));
-      // send validation email OK
-    } else if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
-      IOToast.show(I18n.t("email.newvalidate.toast"));
-      setIsValidateEmailButtonDisabled(true);
-      // eslint-disable-next-line functional/immutable-data
-      timeout.current = setTimeout(() => {
+    if (
+      prevEmailValidation !== undefined &&
+      pot.isLoading(prevEmailValidation.sendEmailValidationRequest)
+    ) {
+      // send validation email KO
+      if (pot.isError(emailValidation.sendEmailValidationRequest)) {
+        IOToast.error(I18n.t("global.actions.retry"));
         setIsValidateEmailButtonDisabled(false);
-      }, emailSentTimeout);
+        return;
+      }
+      // send validation email OK
+      if (pot.isSome(emailValidation.sendEmailValidationRequest)) {
+        IOToast.show(I18n.t("email.newvalidate.toast"));
+        setIsValidateEmailButtonDisabled(true);
+      }
     }
-  }, [emailValidation.sendEmailValidationRequest]);
+  }, [emailValidation.sendEmailValidationRequest, prevEmailValidation]);
 
   useEffect(() => {
     if (isEmailValidated) {
@@ -266,9 +326,19 @@ const NewRemindEmailValidationOverlay = (props: Props) => {
             </View>
           )}
         </Content>
-        {renderFooter()}
+        <Footer />
       </SafeAreaView>
     </BaseScreenComponent>
   );
 };
+
+const NewRemindEmailValidationOverlay = (props: Props) => (
+  <CountdownProvider
+    timerTiming={emailSentTimeout / 1000}
+    intervalDuration={countdownIntervalDuration}
+  >
+    <NewRemindEmailValidationOverlayComponent {...props} />
+  </CountdownProvider>
+);
+
 export default withLightModalContext(NewRemindEmailValidationOverlay);

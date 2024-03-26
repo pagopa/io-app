@@ -5,6 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { Action } from "redux";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { BackendClient } from "../../api/backend";
 import { PaymentManagerClient } from "../../api/pagopa";
 import { mixpanelTrack } from "../../mixpanel";
@@ -62,7 +63,6 @@ import {
 import { readablePrivacyReport } from "../../utils/reporters";
 import { SessionManager } from "../../utils/SessionManager";
 import { convertWalletV2toWalletV1 } from "../../utils/walletv2";
-import { IOToast } from "../../components/Toast";
 import I18n from "../../i18n";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../definitions/backend/PaymentProblemJson";
@@ -733,6 +733,9 @@ export function* commonPaymentVerificationProcedure<A extends Action>(
         const details = response.right.value.detail_v2;
         const failureAction = failureActionProvider(details);
         yield* put(failureAction);
+      } else if (response.right.status === 401) {
+        // This status code does not represent an error to show to the user
+        // The authentication will be handled by the Fast Login token refresh procedure
       } else {
         throw Error(`response status ${response.right.status}`);
       }
@@ -785,6 +788,9 @@ export function* paymentAttivaRequestHandler(
       ) {
         // Attiva failed
         throw Error(response.right.value.detail_v2);
+      } else if (response.right.status === 401) {
+        // This status code does not represent an error to show to the user
+        // The authentication will be handled by the Fast Login token refresh procedure
       } else {
         throw Error(`response status ${response.right.status}`);
       }
@@ -814,13 +820,18 @@ export function* paymentIdPollingRequestHandler(
       yield* select(isPagoPATestEnabledSelector);
 
     const getPaymentId = getPaymentIdApi.e2;
-    const response: SagaCallReturnType<typeof getPaymentId> = yield* call(
-      getPaymentId,
-      {
-        codiceContestoPagamento: action.payload.codiceContestoPagamento,
-        test: isPagoPATestEnabled
-      }
-    );
+
+    const request = getPaymentId({
+      codiceContestoPagamento: action.payload.codiceContestoPagamento,
+      test: isPagoPATestEnabled
+    });
+
+    const response: SagaCallReturnType<typeof getPaymentId> = (yield* call(
+      withRefreshApiCall,
+      request,
+      action
+    )) as unknown as SagaCallReturnType<typeof getPaymentId>;
+
     if (E.isRight(response)) {
       // Attiva succeeded
       if (response.right.status === 200) {

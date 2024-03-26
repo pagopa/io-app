@@ -1,8 +1,17 @@
-import { PublicKey, CryptoError } from "@pagopa/io-react-native-crypto";
+import {
+  PublicKey,
+  CryptoError,
+  isKeyStrongboxBacked
+} from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
+import { isAndroid } from "../../../utils/platform";
+import {
+  trackLollipopIsKeyStrongboxBackedFailure,
+  trackLollipopIsKeyStrongboxBackedSuccess
+} from "../../../utils/analytics";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "./login";
 
 export type KeyInfo = {
@@ -29,3 +38,18 @@ export const toThumbprint = (key: O.Option<PublicKey>) =>
       thumbprint => thumbprint
     )
   );
+
+/**
+ * Check if the key is backed by Strongbox and track the result only on Android.
+ * @param keyTag - the keyTag of the key to check.
+ */
+export const handleIsKeyStrongboxBacked = async (keyTag?: string) => {
+  if (keyTag && isAndroid) {
+    try {
+      const isStrongBoxBacked = await isKeyStrongboxBacked(keyTag);
+      trackLollipopIsKeyStrongboxBackedSuccess(isStrongBoxBacked);
+    } catch (e) {
+      trackLollipopIsKeyStrongboxBackedFailure(toCryptoError(e).message);
+    }
+  }
+};

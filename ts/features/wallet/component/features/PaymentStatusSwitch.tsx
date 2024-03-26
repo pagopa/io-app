@@ -6,7 +6,7 @@ import * as React from "react";
 import { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Icon } from "@pagopa/io-app-design-system";
+import { Icon, IOToast } from "@pagopa/io-app-design-system";
 import { RemoteSwitch } from "../../../../components/core/selection/RemoteSwitch";
 import { IOStyleVariables } from "../../../../components/core/variables/IOStyleVariables";
 import I18n from "../../../../i18n";
@@ -19,7 +19,6 @@ import {
 import { GlobalState } from "../../../../store/reducers/types";
 import { getPaymentStatusById } from "../../../../store/reducers/wallet/wallets";
 import { PaymentMethod } from "../../../../types/pagopa";
-import { IOToast } from "../../../../components/Toast";
 
 type OwnProps = {
   paymentMethod: PaymentMethod;

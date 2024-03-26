@@ -1,5 +1,15 @@
 This file describes the reason for the patches applied.
 
+### react-native-reanimated
+Created on **18/03/2024**
+This patch resolves [react-native-reanimated/issues/3286](https://github.com/software-mansion/react-native-reanimated/issues/3286) by applying [react-native-reanimated/pull/3298](https://github.com/software-mansion/react-native-reanimated/pull/3298). Remove this patch once bumped `react-native-reanimated` from `v2` to `v3` and checked the issue is gone.
+
+### react-native-pdf+6.4.0
+Created on **16/03/2024**
+
+#### Reason:
+- Make PDF annotations on iOS read-only to align with Android behaviour.
+
 ### react-native-vision-camera+2.15.4
 Created on **24/07/2023** 
 FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
@@ -20,19 +30,7 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
-### react-native+0.69.9
-Created on **19/07/2023**
-
-#### Reason:
-- This patch is going to add a missing POST_NOTIFICATIONS permission (Android 13) (remove this patch after updating to version 71 of React Native).
-
-### @types/react-native+0.69.9
-Created on **19/07/2023**
-
-#### Reason:
-- Missing POST_NOTIFICATIONS permission type (remove this patch after updating to version 71 of React Native).
-
-### @types/react-native+0.69.6
+### @types/react-native+0.70.19
 Created on **30/08/2022**
 
 #### Reason:
@@ -96,7 +94,7 @@ Created on **16/08/2021**
 #### Reason:
 - implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
 
-### react-native+0.69.4
+### react-native+0.70.15
 Created on **20/08/2021**
 
 #### Reason:
@@ -120,7 +118,7 @@ Created on **16/09/2021**
   component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
   buttonPositive.
 
-### react-native+0.64.2 (Localizable.strings)
+### react-native+0.70.15 (Localizable.strings)
 
 Created on **28/02/2022**
 

@@ -58,7 +58,7 @@ describe("handleDrawSignatureBox", () => {
         fciDocumentSignatureFields.success({
           ...cachedState,
           drawnBase64: newState.drawnBase64,
-          signaturePage: newState.signaturePage
+          signaturePage: newState.signaturePage + 1 // pdf-lib pages are 0-based but react-native-pdf pages are 1-based
         })
       )
       .run();
@@ -83,7 +83,12 @@ describe("handleDrawSignatureBox", () => {
           }
         ]
       ])
-      .put(fciDocumentSignatureFields.success(newState))
+      .put(
+        fciDocumentSignatureFields.success({
+          ...newState,
+          signaturePage: newState.signaturePage + 1 // pdf-lib pages are 0-based but react-native-pdf pages are 1-based
+        })
+      )
       .run();
   });
 

@@ -1,12 +1,11 @@
 import * as React from "react";
 import { View } from "react-native";
-import { ButtonOutline, VSpacer } from "@pagopa/io-app-design-system";
-import Markdown from "../../../../../../components/ui/Markdown";
+import { ButtonOutline, VSpacer, IOToast } from "@pagopa/io-app-design-system";
+import LegacyMarkdown from "../../../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../../../i18n";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
-import { IOToast } from "../../../../../../components/Toast";
 
 /**
  * this component shows information about EYCA card. It is included within a bottom sheet
@@ -18,9 +17,12 @@ const EycaInformationComponent: React.FunctionComponent = () => {
     <View>
       <VSpacer size={16} />
       <View>
-        <Markdown avoidTextSelection onLoadEnd={() => setMarkdownloaded(true)}>
+        <LegacyMarkdown
+          avoidTextSelection
+          onLoadEnd={() => setMarkdownloaded(true)}
+        >
           {I18n.t("bonus.cgn.detail.status.eycaDescription")}
-        </Markdown>
+        </LegacyMarkdown>
         <VSpacer size={16} />
         {isMarkdownloaded && (
           <ButtonOutline

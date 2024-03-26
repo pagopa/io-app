@@ -28,13 +28,14 @@ import {
   CieLoginState
 } from "../../../cieLogin/store/reducers";
 
-import walletV3Reducer, {
-  WalletState as WalletV3State
-} from "../../../walletV3/common/store/reducers";
+import paymentsReducer, {
+  PaymentsState
+} from "../../../payments/common/store/reducers";
 import {
   fastLoginReducer,
   FastLoginState
 } from "../../../fastLogin/store/reducers";
+import walletReducer, { WalletState } from "../../../newWallet/store/reducers";
 
 type LoginFeaturesState = {
   testLogin: TestLoginState;
@@ -50,7 +51,8 @@ export type FeaturesState = {
   idPay: IDPayState;
   whatsNew: WhatsNewState & PersistPartial;
   loginFeatures: LoginFeaturesState;
-  wallet: WalletV3State;
+  payments: PaymentsState;
+  wallet: WalletState;
 };
 
 export type PersistedFeaturesState = FeaturesState & PersistPartial;
@@ -60,14 +62,15 @@ const rootReducer = combineReducers<FeaturesState, Action>({
   pn: pnReducer,
   fci: fciReducer,
   idPay: idPayReducer,
-  wallet: walletV3Reducer,
+  payments: paymentsReducer,
   whatsNew: whatsNewPersistor,
   loginFeatures: combineReducers<LoginFeaturesState, Action>({
     testLogin: testLoginReducer,
     nativeLogin: nativeLoginReducer,
     fastLogin: fastLoginReducer,
     cieLogin: cieLoginReducer
-  })
+  }),
+  wallet: walletReducer
 });
 
 const CURRENT_REDUX_FEATURES_STORE_VERSION = 1;

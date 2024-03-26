@@ -50,7 +50,7 @@ import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/l
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
+import { watchPaymentsSaga } from "../features/payments/common/saga";
 import {
   watchZendeskGetSessionSaga,
   watchZendeskSupportSaga
@@ -93,7 +93,9 @@ import { StartupStatusEnum } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
+import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { deletePin, getPin } from "../utils/keychain";
+import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import {
   clearKeychainError,
   keychainError
@@ -468,6 +470,9 @@ export function* initializeApplicationSaga(
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
 
+  // track if the Android device has StrongBox
+  yield* call(handleIsKeyStrongboxBacked, keyInfo.keyTag);
+
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
 
@@ -523,7 +528,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
+    yield* fork(watchPnSaga, sessionToken);
   }
 
   const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
@@ -535,7 +540,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for Wallet V3 actions
-  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.walletToken);
+  yield* fork(watchPaymentsSaga, maybeSessionInformation.value.walletToken);
 
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
@@ -623,7 +628,11 @@ export function* initializeApplicationSaga(
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));
 
-  yield* put(applicationInitialized({ actionsToWaitFor: [] }));
+  yield* put(
+    applicationInitialized({
+      actionsToWaitFor: [walletPaymentHandlersInitialized]
+    })
+  );
 }
 
 /**

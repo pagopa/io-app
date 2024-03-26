@@ -1,20 +1,17 @@
 import * as React from "react";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import {
-  cancelButtonProps,
-  errorButtonProps
-} from "../../../../components/buttons/ButtonConfigurations";
-import Markdown from "../../../../components/ui/Markdown";
+import { VSpacer, FooterWithButtons } from "@pagopa/io-app-design-system";
+import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../i18n";
-import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
+
+const SNAP_POINT_VALUE = 250;
 
 const ManualConfigConfirm = (): React.ReactElement => (
   <>
     <VSpacer size={16} />
-    <Markdown>
+    <LegacyMarkdown>
       {I18n.t("services.optIn.preferences.manualConfig.bottomSheet.body")}
-    </Markdown>
+    </LegacyMarkdown>
   </>
 );
 
@@ -23,24 +20,40 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     present,
     bottomSheet: manualConfigBottomSheet,
     dismiss
-  } = useLegacyIOBottomSheetModal(
-    <ManualConfigConfirm />,
-    I18n.t("services.optIn.preferences.manualConfig.bottomSheet.title"),
-    350,
-    <FooterWithButtons
-      type={"TwoButtonsInlineHalf"}
-      leftButton={{
-        ...cancelButtonProps(() => dismiss()),
-        onPressWithGestureHandler: true
-      }}
-      rightButton={{
-        ...errorButtonProps(() => {
-          onConfirm();
-          dismiss();
-        }),
-        onPressWithGestureHandler: true
-      }}
-    />
+  } = useIOBottomSheetAutoresizableModal(
+    {
+      title: I18n.t(
+        "services.optIn.preferences.manualConfig.bottomSheet.title"
+      ),
+      component: <ManualConfigConfirm />,
+      fullScreen: true,
+      footer: (
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.cancel"),
+              onPress: () => dismiss(),
+              accessibilityLabel: I18n.t("global.buttons.cancel")
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              color: "danger",
+              label: I18n.t("global.buttons.confirm"),
+              accessibilityLabel: I18n.t("global.buttons.confirm"),
+              onPress: () => {
+                onConfirm();
+                dismiss();
+              }
+            }
+          }}
+        />
+      )
+    },
+    SNAP_POINT_VALUE
   );
 
   return { present, manualConfigBottomSheet, dismiss };

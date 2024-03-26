@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 const DocumentWithSignature = (props: Props) => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const parsedDocuments = useIOSelector(fciSignatureFieldDrawingSelector);
   const { attrs, currentDoc } = props;
@@ -103,7 +103,7 @@ const DocumentWithSignature = (props: Props) => {
         source={{
           uri: document
         }}
-        page={page + 1}
+        page={page}
         onLoadComplete={(numberOfPages, _) => {
           setTotalPages(numberOfPages);
         }}
@@ -114,7 +114,6 @@ const DocumentWithSignature = (props: Props) => {
         onError={props.onError}
         onPressLink={constNull}
         enablePaging
-        enableAnnotationRendering={false}
         style={styles.pdf}
       />
     ),
@@ -187,7 +186,7 @@ const DocumentWithSignature = (props: Props) => {
     <SafeAreaView
       style={[IOStyles.flex, IOStyles.bgWhite]}
       testID={"FciDocumentsScreenTestID"}
-      edges={["bottom", "left", "right"]}
+      edges={["top", "left", "right"]}
     >
       <View style={[IOStyles.horizontalContentPadding, styles.header]}>
         <HSpacer />

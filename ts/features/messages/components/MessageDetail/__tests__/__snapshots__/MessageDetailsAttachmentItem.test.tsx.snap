@@ -428,6 +428,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1068,6 +1069,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1511,7 +1513,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                         accessibilityRole="button"
                         accessibilityState={
                           Object {
-                            "disabled": false,
+                            "disabled": true,
                           }
                         }
                         accessible={true}
@@ -1551,7 +1553,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                 ],
                               },
                               Object {
-                                "opacity": 1,
+                                "opacity": 0.5,
                               },
                             ]
                           }
@@ -1614,6 +1616,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -2167,6 +2170,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
