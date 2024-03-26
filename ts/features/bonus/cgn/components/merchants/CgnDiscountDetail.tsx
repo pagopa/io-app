@@ -8,6 +8,7 @@ import {
   HSpacer,
   VSpacer,
   Icon,
+  IOToast,
   IOIconSizeScale,
   ButtonOutline
 } from "@pagopa/io-app-design-system";
@@ -25,7 +26,6 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIOSelector } from "../../../../../store/hooks";
 import { profileSelector } from "../../../../../store/reducers/profile";
 import { localeDateFormat } from "../../../../../utils/locale";
-import { IOToast } from "../../../../../components/Toast";
 import { openWebUrl } from "../../../../../utils/url";
 import { getCgnUserAgeRange } from "../../utils/dates";
 import { getCategorySpecs } from "../../utils/filters";
