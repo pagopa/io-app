@@ -1,13 +1,17 @@
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
-import { ButtonOutline, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  Icon,
+  VSpacer,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
 import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { openWebUrl } from "../../../../../../utils/url";
 import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../../../utils/constants";
-import { IOToast } from "../../../../../../components/Toast";
 
 type Props = {
   openBottomSheet: () => void;

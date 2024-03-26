@@ -12802,6 +12802,11 @@ mixin-object@^2.0.1:
     for-in "^0.1.3"
     is-extendable "^0.1.1"
 
+mixpanel-react-native@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/mixpanel-react-native/-/mixpanel-react-native-2.4.1.tgz#d63bf160875e9a0b7e3a50f395ad7aaa6d8c09a5"
+  integrity sha512-NNzXxOxX83FSIKN3x9vY49a13mk2syshWDcXvkfljiQ2bgwk0suA9PKYQNOkbwT/Af53oWt06JMe0xP4RUOyCA==
+
 mkdirp2@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp2/-/mkdirp2-1.0.4.tgz#56de1f8f5c93cf2199906362eba0f9f262ee4437"
@@ -14598,11 +14603,6 @@ react-native-masked-text@^1.13.0:
   dependencies:
     date-and-time "0.9.0"
     tinymask "1.0.2"
-
-react-native-mixpanel@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-mixpanel/-/react-native-mixpanel-1.2.0.tgz#17c24151cf2039482cd20decc54ccf0e49ccebc5"
-  integrity sha512-Xy+KEIEVFidWuASBdexZquXTJBb3JCyFM7xSgnIOZt5PRzpARGFrYMDErTUZ1wSPK+KFaf1oylInOoC2DddI/Q==
 
 react-native-pager-view@^6.2.3:
   version "6.2.3"
