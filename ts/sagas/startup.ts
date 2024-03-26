@@ -97,7 +97,6 @@ import { walletPaymentHandlersInitialized } from "../store/actions/wallet/paymen
 import { deletePin, getPin } from "../utils/keychain";
 import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
-import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import {
   clearKeychainError,
   keychainError

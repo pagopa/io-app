@@ -32,14 +32,6 @@ const INITIAL_STATE: EmailValidationState = {
 };
 
 // Selector
-
-// return true if the validation email polling is running, otherwhise it returns false
-export const isEmailValidationPollingRunningSelector = (
-  state: GlobalState
-): boolean =>
-  !!state.emailValidation.isEmailValidationPollingRunning &&
-  state.emailValidation.isEmailValidationPollingRunning;
-
 // return the pot of email validation
 export const emailValidationSelector = (
   state: GlobalState
@@ -64,12 +56,12 @@ const reducer = (
       return { ...state, sendEmailValidationRequest: pot.some(undefined) };
     case getType(acknowledgeOnEmailValidation):
       return { ...state, acknowledgeOnEmailValidated: action.payload };
+    case getType(setEmailCheckAtStartupFailure):
+      return { ...state, emailCheckAtStartupFailed: action.payload };
     case getType(emailValidationPollingStart):
       return { ...state, isEmailValidationPollingRunning: true };
     case getType(emailValidationPollingStop):
       return { ...state, isEmailValidationPollingRunning: false };
-    case getType(setEmailCheckAtStartupFailure):
-      return { ...state, emailCheckAtStartupFailed: action.payload };
     default:
       return state;
   }
