@@ -1,43 +1,43 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useCallback, useEffect } from "react";
-import { View } from "react-native";
-import { useDispatch, useStore } from "react-redux";
 import {
   ModulePaymentNotice,
   PaymentNoticeStatus,
-  VSpacer
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
-import I18n from "../../../../i18n";
-import { UIMessageId } from "../../types";
-import { GlobalState } from "../../../../store/reducers/types";
-import {
-  canNavigateToPaymentFromMessageSelector,
-  paymentStatusForUISelector,
-  shouldUpdatePaymentSelector
-} from "../../store/reducers/payments";
-import { useIOSelector } from "../../../../store/hooks";
-import { updatePaymentForMessage } from "../../store/actions";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React, { useCallback, useEffect } from "react";
+import { View } from "react-native";
+import { useDispatch, useStore } from "react-redux";
+import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
+import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import {
   RemoteValue,
   fold,
   isError
 } from "../../../../common/model/RemoteValue";
-import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
-import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
+import I18n from "../../../../i18n";
+import { useIOSelector } from "../../../../store/hooks";
+import { GlobalState } from "../../../../store/reducers/types";
+import { format } from "../../../../utils/dates";
 import {
   cleanTransactionDescription,
   getV2ErrorMainType
 } from "../../../../utils/payment";
-import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
-import { format } from "../../../../utils/dates";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { useIOToast } from "../../../../components/Toast";
+import { updatePaymentForMessage } from "../../store/actions";
+import {
+  canNavigateToPaymentFromMessageSelector,
+  paymentStatusForUISelector,
+  shouldUpdatePaymentSelector
+} from "../../store/reducers/payments";
+import { UIMessageId } from "../../types";
 import { initializeAndNavigateToWalletForPayment } from "../../utils";
-import { PaymentAmount } from "../../../../../definitions/backend/PaymentAmount";
+import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 
 type MessagePaymentItemProps = {
   hideExpirationDate?: boolean;
