@@ -15,7 +15,7 @@ export const initializeMixPanel = async (state: GlobalState) => {
   if (mixpanel !== undefined) {
     return;
   }
-  const trackAutomaticEvents = false;
+  const trackAutomaticEvents = true;
   const privateInstance = new Mixpanel(mixpanelToken, trackAutomaticEvents);
   await privateInstance.init(
     undefined,
