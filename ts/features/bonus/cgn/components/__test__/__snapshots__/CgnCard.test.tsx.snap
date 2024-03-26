@@ -31,9 +31,7 @@ exports[`CgnCard should match the snapshot 1`] = `
       Object {
         "flex": 1,
         "justifyContent": "space-between",
-        "paddingBottom": 16,
-        "paddingLeft": 16,
-        "paddingRight": 12,
+        "padding": 16,
         "paddingTop": 12,
       }
     }
@@ -43,6 +41,7 @@ exports[`CgnCard should match the snapshot 1`] = `
         Object {
           "alignItems": "center",
           "flexDirection": "row",
+          "height": 48,
           "justifyContent": "space-between",
         }
       }
@@ -77,20 +76,6 @@ exports[`CgnCard should match the snapshot 1`] = `
       >
         Carta Giovani Nazionale
       </Text>
-      <Image
-        source={
-          Object {
-            "testUri": "../../../img/bonus/cgn/cgn_logo.png",
-          }
-        }
-        style={
-          Object {
-            "height": 40,
-            "resizeMode": "contain",
-            "width": 40,
-          }
-        }
-      />
     </View>
     <Text
       allowFontScaling={false}
@@ -125,70 +110,100 @@ exports[`CgnCard should match the snapshot 1`] = `
     >
       Dipartimento per le politiche giovanili e il servizio civile universale
     </Text>
-    <View
-      style={
+    <Text
+      allowFontScaling={false}
+      color="blueItalia-850"
+      defaultColor="black"
+      defaultWeight="SemiBold"
+      font="TitilliumWeb"
+      fontStyle={
         Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "justifyContent": "space-between",
+          "fontSize": 16,
+          "lineHeight": 21,
         }
       }
-    >
-      <Text
-        allowFontScaling={false}
-        color="blueItalia-850"
-        defaultColor="black"
-        defaultWeight="SemiBold"
-        font="TitilliumWeb"
-        fontStyle={
+      style={
+        Array [
           Object {
             "fontSize": 16,
             "lineHeight": 21,
-          }
-        }
-        style={
-          Array [
-            Object {
-              "fontSize": 16,
-              "lineHeight": 21,
-            },
-            Object {
-              "color": "#001F3D",
-              "fontFamily": "Titillium Web",
-              "fontStyle": "normal",
-              "fontWeight": "600",
-            },
-          ]
-        }
-        weight="SemiBold"
-      >
-        Valida fino al 12/23
-      </Text>
-      <View
-        style={
+          },
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderRadius": 8,
-            "padding": 5,
-          }
+            "color": "#001F3D",
+            "fontFamily": "Titillium Web",
+            "fontStyle": "normal",
+            "fontWeight": "600",
+          },
+        ]
+      }
+      weight="SemiBold"
+    >
+      Valida fino al 12/23
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 8,
+          "padding": 5,
+          "position": "absolute",
+        },
+        Object {
+          "right": 12,
+          "top": 12,
+        },
+      ]
+    }
+    testID="cgnLogoTestID"
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../img/bonus/cgn/cgn_logo.png",
         }
-      >
-        <Image
-          source={
-            Object {
-              "testUri": "../../../img/bonus/cgn/eyca_logo.png",
-            }
-          }
-          style={
-            Object {
-              "height": 30,
-              "resizeMode": "contain",
-              "width": 30,
-            }
-          }
-        />
-      </View>
-    </View>
+      }
+      style={
+        Object {
+          "height": 30,
+          "resizeMode": "contain",
+          "width": 30,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 8,
+          "padding": 5,
+          "position": "absolute",
+        },
+        Object {
+          "bottom": 12,
+          "right": 12,
+        },
+      ]
+    }
+    testID="cgnEycaLogoTestID"
+  >
+    <Image
+      source={
+        Object {
+          "testUri": "../../../img/bonus/cgn/eyca_logo.png",
+        }
+      }
+      style={
+        Object {
+          "height": 30,
+          "resizeMode": "contain",
+          "width": 30,
+        }
+      }
+    />
   </View>
 </View>
 `;
