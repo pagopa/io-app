@@ -126,3 +126,11 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     }
   };
 });
+
+jest.mock("mixpanel-react-native", () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+  Mixpanel: jest.fn(() => ({
+    init: jest.fn()
+  }))
+}));
