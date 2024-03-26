@@ -20,7 +20,7 @@ export const initializeMixPanel = async (state: GlobalState) => {
   await privateInstance.init(
     undefined,
     undefined,
-    "https://api-eu.mixpanel.com/"
+    "https://api-eu.mixpanel.com"
   );
   mixpanel = privateInstance;
   // On app first open
