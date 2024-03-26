@@ -1,4 +1,4 @@
-import { ContentWrapper, VSpacer } from "@pagopa/io-app-design-system";
+import { ContentWrapper, VSpacer, IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { useStore } from "react-redux";
@@ -15,7 +15,6 @@ import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { IOToast } from "../../components/Toast";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
   trackServiceConfiguration,
