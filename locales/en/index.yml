@@ -926,6 +926,18 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  homeScreen:
+    title: Payments
+    methodsSection:
+      header: Payment methods
+      headerCTA: Add
+    historySection:
+     header: Transaction history
+     headerCTA: View all
+     transactionStatusBadges:
+      failure: "FALLITA"
+      success: ""
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
