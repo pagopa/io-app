@@ -509,6 +509,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           }
                         >
                           <View
+                            accessibilityIgnoresInvertColors={true}
                             style={
                               Array [
                                 Object {
@@ -543,6 +544,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                               }
                             >
                               <Image
+                                accessibilityIgnoresInvertColors={true}
                                 onError={[Function]}
                                 source={
                                   Object {
