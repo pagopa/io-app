@@ -14,7 +14,6 @@ import { pipe } from "fp-ts/lib/function";
 import JailMonkey from "jail-monkey";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
-import { useDispatch, useStore } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
@@ -43,7 +42,7 @@ import {
   resetAuthenticationState
 } from "../../store/actions/authentication";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
-import { useIOSelector } from "../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import {
   hasApiLevelSupportSelector,
@@ -137,9 +136,9 @@ export const LandingScreen = () => {
     setHasTabletCompatibilityAlertAlreadyShown
   ] = React.useState<boolean>(false);
 
-  const store = useStore();
+  const store = useIOStore();
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const isSessionExpired = useIOSelector(isSessionExpiredSelector);

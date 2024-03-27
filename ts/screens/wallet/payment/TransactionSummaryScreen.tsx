@@ -17,7 +17,6 @@ import { ActionSheet } from "native-base";
 import React, { useCallback, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
 import {
   isError as isRemoteError,
   isLoading as isRemoteLoading,
@@ -44,7 +43,7 @@ import {
   runDeleteActivePaymentSaga
 } from "../../../store/actions/wallet/payment";
 import { fetchWalletsRequestWithExpBackoff } from "../../../store/actions/wallet/wallets";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import {
   bancomatPayConfigSelector,
   isPaypalEnabledSelector
@@ -158,7 +157,7 @@ const TransactionSummaryScreen = (): React.ReactElement => {
   const navigation = useNavigation();
   const { rptId, paymentStartOrigin, initialAmount, messageId } = route.params;
 
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const {
     verifica: paymentVerification,
     attiva,

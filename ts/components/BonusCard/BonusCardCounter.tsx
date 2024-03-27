@@ -6,9 +6,9 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
-import { useSelector } from "react-redux";
 import Placeholder from "rn-placeholder";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { useIOSelector } from "../../store/hooks";
 
 type CounterType = "Value" | "ValueWithProgress";
 
@@ -71,7 +71,7 @@ type BonusProgressBarProps = {
 };
 
 const BonusProgressBar = ({ progress }: BonusProgressBarProps) => {
-  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const progressBarColor = isDesignSystemEnabled
     ? IOColors["blueItalia-500"]
@@ -109,7 +109,7 @@ type BonusCardCounterSkeletonProps = {
 };
 
 const BonusCardCounterSkeleton = ({ type }: BonusCardCounterSkeletonProps) => {
-  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const placeholderColor = isDesignSystemEnabled
     ? IOColors["blueItalia-100"]

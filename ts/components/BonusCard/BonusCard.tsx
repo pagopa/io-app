@@ -9,9 +9,9 @@ import {
 import React from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useSelector } from "react-redux";
 import Placeholder from "rn-placeholder";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { useIOSelector } from "../../store/hooks";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
@@ -110,7 +110,7 @@ export const BonusCard = (props: BonusCard) => {
 };
 
 const BonusCardSkeleton = (props: BaseProps) => {
-  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const placeholderColor = isDesignSystemEnabled
     ? IOColors["blueItalia-100"]

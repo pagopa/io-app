@@ -1,8 +1,14 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  getValueOrElse,
+  isError,
+  isReady
+} from "../../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   RadioButtonList,
   RadioItem
@@ -15,16 +21,14 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
+import { useIODispatch } from "../../../../../store/hooks";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import {
-  getValueOrElse,
-  isError,
-  isReady
-} from "../../../../../common/model/RemoteValue";
 import { PspRadioItem } from "../components/PspRadioItem";
+import PAYPAL_ROUTES from "../navigation/routes";
 import {
   searchPaypalPsp as searchPaypalPspAction,
   walletAddPaypalBack,
@@ -33,9 +37,6 @@ import {
 } from "../store/actions";
 import { payPalPspSelector } from "../store/reducers/searchPsp";
 import { IOPayPalPsp } from "../types";
-import PAYPAL_ROUTES from "../navigation/routes";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../../navigation/routes";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -112,7 +113,7 @@ const PayPalPspSelectionScreen = (props: Props): React.ReactElement | null => {
     });
   const pspList = getValueOrElse(props.pspList, []);
   const [selectedPsp, setSelectedPsp] = useState<IOPayPalPsp | undefined>();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const searchPaypalPsp = () => {
     dispatch(searchPaypalPspAction.request());

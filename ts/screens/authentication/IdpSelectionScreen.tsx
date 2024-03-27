@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Platform, Pressable, View } from "react-native";
-import { connect, useSelector, useStore } from "react-redux";
+import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { useEffect, useState } from "react";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
@@ -34,6 +34,7 @@ import { isNativeLoginEnabledSelector } from "../../features/nativeLogin/store/s
 import { Body } from "../../components/core/typography/Body";
 import { isFastLoginEnabledSelector } from "../../features/fastLogin/store/selectors";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { useIOSelector, useIOStore } from "../../store/hooks";
 import { trackSpidLoginIdpSelection } from "./analytics";
 import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
 
@@ -75,9 +76,11 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
       >
     >();
 
-  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
+  const isFastLoginFeatureFlagEnabled = useIOSelector(
+    isFastLoginEnabledSelector
+  );
 
-  const isNativeLoginFeatureFlagEnabled = useSelector(
+  const isNativeLoginFeatureFlagEnabled = useIOSelector(
     isNativeLoginEnabledSelector
   );
 
@@ -87,7 +90,7 @@ const IdpSelectionScreen = (props: Props): React.ReactElement => {
     props.nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
 
-  const store = useStore();
+  const store = useIOStore();
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);

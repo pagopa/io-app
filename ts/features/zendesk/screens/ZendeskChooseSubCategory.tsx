@@ -1,14 +1,13 @@
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ListItem } from "native-base";
 import React from "react";
 import {
-  View,
   FlatList,
   ListRenderItemInfo,
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  View
 } from "react-native";
-import { useDispatch } from "react-redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
@@ -16,7 +15,7 @@ import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { getFullLocale } from "../../../utils/locale";
 import {
   addTicketCustomField,
@@ -46,7 +45,7 @@ type Props = IOStackNavigationRouteProps<
  */
 const ZendeskChooseSubCategory = (props: Props) => {
   const selectedCategory = useIOSelector(zendeskSelectedCategorySelector);
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const { assistanceForPayment, assistanceForCard, assistanceForFci } =
     props.route.params;
   const selectedSubcategory = (subcategory: ZendeskSubCategory) =>

@@ -5,16 +5,15 @@ import {
   IOStyles,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
-import { useDispatch } from "react-redux";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { useIOSelector } from "../../../store/hooks";
-import { UIMessageId } from "../../messages/types";
-import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
+import I18n from "../../../i18n";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import variables from "../../../theme/variables";
+import { canNavigateToPaymentFromMessageSelector } from "../../messages/store/reducers/payments";
 import { getRptIdStringFromPayment } from "../utils/rptId";
 import { trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
+import { UIMessageId } from "../../messages/types";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 
 const styles = StyleSheet.create({
@@ -48,7 +47,7 @@ export const MessageFooter = ({
       maxVisiblePaymentCount
     )
   );
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const toast = useIOToast();
   const canNavigateToPayment = useIOSelector(state =>
     canNavigateToPaymentFromMessageSelector(state)

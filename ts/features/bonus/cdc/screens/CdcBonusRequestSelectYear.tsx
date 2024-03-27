@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { View, SafeAreaView, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -14,7 +13,7 @@ import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { CDC_ROUTES } from "../navigation/routes";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isReady } from "../../../../common/model/RemoteValue";
 import ROUTES from "../../../../navigation/routes";
 import { CheckBox } from "../../../../components/core/selection/checkbox/CheckBox";
@@ -33,7 +32,7 @@ const CdcBonusRequestSelectYear = () => {
     useNavigation<
       IOStackNavigationProp<CdcBonusRequestParamsList, "CDC_SELECT_BONUS_YEAR">
     >();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
   const cdcBonusList = useIOSelector(cdcBonusRequestListSelector);
   const [years, setYears] = useState<ReadonlyArray<Anno>>([]);
 

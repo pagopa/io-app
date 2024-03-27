@@ -26,6 +26,7 @@ import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
+import { CieLoginConfigActions } from "../../features/cieLogin/store/actions";
 import { AnalyticsActions } from "./analytics";
 import { ApplicationActions } from "./application";
 import { AuthenticationActions } from "./authentication";
@@ -100,7 +101,8 @@ export type Action =
   | FastLoginActions
   | WhatsNewActions
   | PaymentsFeatureActions
-  | NewWalletActions;
+  | NewWalletActions
+  | CieLoginConfigActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

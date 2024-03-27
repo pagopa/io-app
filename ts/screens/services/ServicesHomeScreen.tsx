@@ -21,37 +21,31 @@
  * tabs are hidden and they are displayed renderServiceLoadingPlaceholder/renderErrorPlaceholder
  *
  */
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   Image,
   KeyboardAvoidingView,
   Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
+import SectionStatusComponent from "../../components/SectionStatus";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { withLightModalContext } from "../../components/helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../components/screens/GenericErrorComponent";
 import TopScreenComponent from "../../components/screens/TopScreenComponent";
 import { MIN_CHARACTER_SEARCH_TEXT } from "../../components/search/SearchButton";
 import { SearchNoResultMessage } from "../../components/search/SearchNoResultMessage";
-import SectionStatusComponent from "../../components/SectionStatus";
 import ServicesSearch from "../../components/services/ServicesSearch";
 import FocusAwareStatusBar from "../../components/ui/FocusAwareStatusBar";
-import { LightModalContextInterface } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
 import ServicesHomeTabNavigator from "../../navigation/ServicesHomeTabNavigator";
 import {
   navigateToServiceDetailsScreen,
@@ -68,10 +62,10 @@ import {
   userMetadataUpsert
 } from "../../store/actions/userMetadata";
 import {
+  ServicesSectionState,
   nationalServicesSectionsSelector,
   notSelectedServicesSectionsSelector,
   selectedLocalServicesSectionsSelector,
-  ServicesSectionState,
   servicesSelector,
   visibleServicesDetailLoadStateSelector
 } from "../../store/reducers/entities/services";
@@ -79,7 +73,7 @@ import { readServicesByIdSelector } from "../../store/reducers/entities/services
 import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
 import { visibleServicesSelector } from "../../store/reducers/entities/services/visibleServices";
 import { wasServiceAlertDisplayedOnceSelector } from "../../store/reducers/persistedPreferences";
-import { profileSelector, ProfileState } from "../../store/reducers/profile";
+import { ProfileState, profileSelector } from "../../store/reducers/profile";
 import {
   isSearchServicesEnabledSelector,
   searchTextSelector
@@ -97,8 +91,6 @@ import {
 import { showToast } from "../../utils/showToast";
 import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
 
-type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
-
 type ReduxMergedProps = Readonly<{
   updateOrganizationsOfInterestMetadata: (
     selectedItemIds: O.Option<Set<string>>
@@ -107,9 +99,7 @@ type ReduxMergedProps = Readonly<{
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
-  OwnProps &
-  ReduxMergedProps &
-  LightModalContextInterface;
+  ReduxMergedProps;
 
 type State = {
   currentTab: number;
@@ -523,8 +513,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mergeProps = (
   stateProps: ReturnType<typeof mapStateToProps>,
-  dispatchProps: ReturnType<typeof mapDispatchToProps>,
-  ownProps: OwnProps
+  dispatchProps: ReturnType<typeof mapDispatchToProps>
 ) => {
   // If the user updates the area of interest, the upsert of
   // the user metadata stored on backend is triggered
@@ -543,7 +532,6 @@ const mergeProps = (
   return {
     ...stateProps,
     ...dispatchProps,
-    ...ownProps,
     ...{
       updateOrganizationsOfInterestMetadata
     }
@@ -554,4 +542,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
-)(withLightModalContext(ServicesHomeScreen));
+)(ServicesHomeScreen);

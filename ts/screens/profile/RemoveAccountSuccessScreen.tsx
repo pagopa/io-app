@@ -11,29 +11,24 @@ import * as React from "react";
 import { useState } from "react";
 import { Image, Platform, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { connect } from "react-redux";
 import expiredIcon from "../../../img/wallet/errors/payment-expired-icon.png";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import I18n from "../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
 import { logoutRequest } from "../../store/actions/authentication";
-import { Dispatch } from "../../store/actions/types";
-
-type Props = IOStackNavigationRouteProps<AppParamsList> &
-  ReturnType<typeof mapDispatchToProps>;
+import { useIODispatch } from "../../store/hooks";
 
 /**
  * A screen to explain how the account removal works.
  * Here user can ask to delete his account
  */
-const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
+const RemoveAccountSuccess = () => {
   const [footerHeight, setFooterHeight] = useState(0);
+  const dispatch = useIODispatch();
   const insets = useSafeAreaInsets();
   // do nothing
   useHardwareBackButton(() => true);
+
+  const logout = React.useCallback(() => dispatch(logoutRequest()), [dispatch]);
 
   const continueButtonProps: BlockButtonProps = {
     type: "Outline",
@@ -43,7 +38,7 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
       accessibilityLabel: I18n.t(
         "profile.main.privacy.removeAccount.success.cta"
       ),
-      onPress: props.logout
+      onPress: logout
     }
   };
 
@@ -99,9 +94,4 @@ const RemoveAccountSuccess: React.FunctionComponent<Props> = props => {
   );
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  // hard-logout
-  logout: () => dispatch(logoutRequest())
-});
-
-export default connect(undefined, mapDispatchToProps)(RemoveAccountSuccess);
+export default RemoveAccountSuccess;

@@ -1,11 +1,11 @@
 import { Chip, IOColors, Tag } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { useSelector } from "react-redux";
 import Placeholder from "rn-placeholder";
 import I18n from "../../i18n";
 import { isDesignSystemEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { format } from "../../utils/dates";
+import { useIOSelector } from "../../store/hooks";
 import { BonusStatus } from "./type";
 
 type LoadingProps = {
@@ -71,7 +71,7 @@ export const BonusCardStatusContent = ({ status, endDate }: BaseProps) => {
 };
 
 const BonusCardStatusSkeleton = () => {
-  const isDesignSystemEnabled = useSelector(isDesignSystemEnabledSelector);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
 
   const placeholderColor = isDesignSystemEnabled
     ? IOColors["blueItalia-100"]

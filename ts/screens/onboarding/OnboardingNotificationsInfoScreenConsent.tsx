@@ -7,7 +7,6 @@ import {
   Platform,
   ListRenderItemInfo
 } from "react-native";
-import { useSelector } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Divider,
@@ -23,7 +22,7 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import { BlockButtonProps } from "../../components/ui/BlockButtons";
 import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { openAppSettings } from "../../utils/appSettings";
-import { useIODispatch } from "../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { notificationsInfoScreenConsent } from "../../store/actions/notifications";
 import { checkNotificationPermissions } from "../../utils/notification";
 import { profilePreferencesSelector } from "../../store/reducers/profile";
@@ -137,7 +136,7 @@ const instructions = Platform.select<ReadonlyArray<ListItemInfo>>({
 
 const OnboardingNotificationsInfoScreenConsent = () => {
   const dispatch = useIODispatch();
-  const optInPreferencesPot = useSelector(profilePreferencesSelector);
+  const optInPreferencesPot = useIOSelector(profilePreferencesSelector);
 
   useEffect(() => {
     const subscription = AppState.addEventListener(
