@@ -8,6 +8,7 @@ import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { IDPayClient } from "../../common/api/client";
 import { idPayWalletGet } from "../store/actions";
+import { walletAddCards } from "../../../newWallet/store/actions/cards";
 
 /**
  * Handle the remote call to retrieve the IDPay wallet
@@ -35,7 +36,24 @@ export function* handleGetIDPayWallet(
     if (E.isRight(getWalletResult)) {
       if (getWalletResult.right.status === 200) {
         // handled success
-        yield* put(idPayWalletGet.success(getWalletResult.right.value));
+        const initiatives = getWalletResult.right.value;
+        yield* put(
+          walletAddCards(
+            initiatives.initiativeList.map(initiative => ({
+              type: "idPay",
+              category: "bonus",
+              key: `idpay_${initiative.initiativeId}`,
+              initiativeId: initiative.initiativeId,
+              name: initiative.initiativeName || "",
+              amount: initiative.amount || 0,
+              avatarSource: {
+                uri: initiative.logoURL
+              },
+              expireDate: initiative.endDate
+            }))
+          )
+        );
+        yield* put(idPayWalletGet.success(initiatives));
         return;
       }
       // not handled error codes
