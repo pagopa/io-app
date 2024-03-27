@@ -24,12 +24,12 @@ const mapWalletsToCards = (
       type: "payment",
       category: "payment",
       walletId: wallet.walletId,
+      hpan: details.lastFourDigits,
       abiCode: details.abi,
       brand: details.brand,
       expireDate: details.expiryDate,
       holderEmail: details.maskedEmail,
-      holderPhone: details.maskedNumber,
-      hpan: details.lastFourDigits
+      holderPhone: details.maskedNumber
     };
   });
 
