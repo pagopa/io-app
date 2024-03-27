@@ -427,7 +427,6 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                         }
                                         bbHeight={24}
                                         bbWidth={24}
-                                        color={4279111443}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -450,19 +449,26 @@ exports[`MessageRouterScreen should match snapshot before starting to retrieve m
                                             },
                                           ]
                                         }
-                                        tintColor={4279111443}
+                                        tintColor="#0E0F13"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup>
+                                        <RNSVGGroup
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
                                             fill={
-                                              Array [
-                                                2,
-                                              ]
+                                              Object {
+                                                "type": 2,
+                                              }
                                             }
                                             fillRule={0}
                                             propList={
@@ -1089,7 +1095,6 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                         }
                                         bbHeight={24}
                                         bbWidth={24}
-                                        color={4279111443}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1112,19 +1117,26 @@ exports[`MessageRouterScreen should match snapshot if message data retrieval was
                                             },
                                           ]
                                         }
-                                        tintColor={4279111443}
+                                        tintColor="#0E0F13"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup>
+                                        <RNSVGGroup
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
                                             fill={
-                                              Array [
-                                                2,
-                                              ]
+                                              Object {
+                                                "type": 2,
+                                              }
                                             }
                                             fillRule={0}
                                             propList={
@@ -1751,7 +1763,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                         }
                                         bbHeight={24}
                                         bbWidth={24}
-                                        color={4279111443}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -1774,19 +1785,26 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                             },
                                           ]
                                         }
-                                        tintColor={4279111443}
+                                        tintColor="#0E0F13"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup>
+                                        <RNSVGGroup
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
                                             fill={
-                                              Array [
-                                                2,
-                                              ]
+                                              Object {
+                                                "type": 2,
+                                              }
                                             }
                                             fillRule={0}
                                             propList={
@@ -2653,7 +2671,6 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                         }
                                         bbHeight={24}
                                         bbWidth={24}
-                                        color={4279111443}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -2676,19 +2693,26 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval suc
                                             },
                                           ]
                                         }
-                                        tintColor={4279111443}
+                                        tintColor="#0E0F13"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup>
+                                        <RNSVGGroup
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
                                             fill={
-                                              Array [
-                                                2,
-                                              ]
+                                              Object {
+                                                "type": 2,
+                                              }
                                             }
                                             fillRule={0}
                                             propList={
@@ -3315,7 +3339,6 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                         }
                                         bbHeight={24}
                                         bbWidth={24}
-                                        color={4279111443}
                                         focusable={false}
                                         height={24}
                                         importantForAccessibility="no-hide-descendants"
@@ -3338,19 +3361,26 @@ exports[`MessageRouterScreen should match snapshot while retrieving message data
                                             },
                                           ]
                                         }
-                                        tintColor={4279111443}
+                                        tintColor="#0E0F13"
                                         vbHeight={24}
                                         vbWidth={24}
                                         width={24}
                                       >
-                                        <RNSVGGroup>
+                                        <RNSVGGroup
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                        >
                                           <RNSVGPath
                                             clipRule={0}
                                             d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
                                             fill={
-                                              Array [
-                                                2,
-                                              ]
+                                              Object {
+                                                "type": 2,
+                                              }
                                             }
                                             fillRule={0}
                                             propList={
