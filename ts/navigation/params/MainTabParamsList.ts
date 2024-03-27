@@ -6,6 +6,7 @@ export type MainTabParamsList = {
   [MESSAGES_ROUTES.MESSAGES_HOME]: undefined;
   [ROUTES.WALLET_HOME]: WalletHomeNavigationParams;
   [ROUTES.BARCODE_SCAN]: undefined;
+  [ROUTES.PAYMENTS_HOME]: undefined;
   [ROUTES.SERVICES_HOME]: undefined;
   [ROUTES.PROFILE_MAIN]: undefined;
 };

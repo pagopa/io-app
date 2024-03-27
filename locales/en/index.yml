@@ -190,6 +190,7 @@ global:
     messages: Messages
     wallet: Wallet
     scan: Scan
+    payments: Payments
     documents: Documents
     profile: Profile
     services: Services
@@ -937,11 +938,11 @@ payment:
       header: Payment methods
       headerCTA: Add
     historySection:
-     header: Transaction history
-     headerCTA: View all
-     transactionStatusBadges:
-      failure: "FALLITA"
-      success: ""
+      header: Transaction history
+      headerCTA: View all
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
@@ -2093,20 +2094,20 @@ serviceDetail:
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
   instructions:
-      unlockCode: unlock code
-      unlockCodepPrefix: use your
-      fingerprint: fingerprint
-      fingerprintPrefix: use your
-      faceId: face
-      faceIdPrefix: use your
-      congiunction: or
+    unlockCode: unlock code
+    unlockCodepPrefix: use your
+    fingerprint: fingerprint
+    fingerprintPrefix: use your
+    faceId: face
+    faceIdPrefix: use your
+    congiunction: or
   title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
-  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.  
+  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
   biometric:
     fingerprintType: Fingerprint
     title: Biometric identification

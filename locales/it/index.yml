@@ -190,6 +190,7 @@ global:
     messages: Messaggi
     wallet: Portafoglio
     scan: Inquadra
+    payments: Pagamenti
     documents: Documenti
     profile: Profilo
     services: Servizi
@@ -937,11 +938,11 @@ payment:
       header: Metodi di pagamento
       headerCTA: Aggiungi
     historySection:
-     header: Storico operazioni
-     headerCTA: Vedi tutte
-     transactionStatusBadges:
-      failure: "FALLITA"
-      success: ""
+      header: Storico operazioni
+      headerCTA: Vedi tutte
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
@@ -2106,7 +2107,7 @@ identification:
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
-  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.  
+  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
   biometric:
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
