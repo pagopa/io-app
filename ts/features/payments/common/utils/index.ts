@@ -12,7 +12,7 @@ import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInf
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { isExpiredDate } from "../../../../utils/dates";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 import { WalletPaymentPspSortType } from "../../payment/types";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 

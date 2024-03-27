@@ -26,7 +26,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ComponentProps } from "../../../../types/react";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
 import { WalletPaymentRoutes } from "../navigation/routes";

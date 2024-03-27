@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
 import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";

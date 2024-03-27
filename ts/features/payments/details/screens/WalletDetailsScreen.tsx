@@ -18,7 +18,7 @@ import {
   walletDetailsInstrumentSelector
 } from "../store";
 import { walletDetailsGetInstrument } from "../store/actions";
-import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { getDateFromExpiryDate } from "../../../../utils/dates";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
