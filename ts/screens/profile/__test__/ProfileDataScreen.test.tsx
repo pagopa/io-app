@@ -1,4 +1,3 @@
-// import { fireEvent } from "@testing-library/react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
