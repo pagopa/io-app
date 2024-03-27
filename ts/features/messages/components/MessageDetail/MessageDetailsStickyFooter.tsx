@@ -51,6 +51,7 @@ type FooterPaymentWithDoubleCTA = {
   cta2: CTA;
   paymentData: PaymentData;
 };
+
 type FooterPaymentWithCTA = {
   tag: "PaymentWithCTA";
   cta1: CTA;
@@ -80,7 +81,36 @@ type FooterData =
   | FooterCTA
   | FooterNone;
 
-const computeFooterConfiguration = (
+const isNone = (footerData: FooterData): footerData is FooterNone =>
+  footerData.tag === "None";
+
+const foldFooterData = (
+  footerData: FooterData,
+  onPaymentWithDoubleCTA: (
+    paymentWithDoubleCTA: FooterPaymentWithDoubleCTA
+  ) => JSX.Element,
+  onPaymentWithCTA: (paymentWithCTA: FooterPaymentWithCTA) => JSX.Element,
+  onDoubleCTA: (doubleCTA: FooterDoubleCTA) => JSX.Element,
+  onPayment: (paymentCTA: FooterPayment) => JSX.Element,
+  onCTA: (cta: FooterCTA) => JSX.Element,
+  onNone: () => JSX.Element | null
+) => {
+  switch (footerData.tag) {
+    case "PaymentWithDoubleCTA":
+      return onPaymentWithDoubleCTA(footerData);
+    case "PaymentWithCTA":
+      return onPaymentWithCTA(footerData);
+    case "DoubleCTA":
+      return onDoubleCTA(footerData);
+    case "Payment":
+      return onPayment(footerData);
+    case "CTA":
+      return onCTA(footerData);
+  }
+  return onNone();
+};
+
+const computeFooterData = (
   paymentData: PaymentData | undefined,
   paymentButtonStatus: "hidden" | "loading" | "enabled",
   ctas: CTAS | undefined
@@ -263,15 +293,12 @@ export const MessageDetailsStickyFooter = ({
     [linkTo, serviceId]
   );
 
-  const footerData = computeFooterConfiguration(
-    paymentData,
-    paymentButtonStatus,
-    ctas
-  );
-  if (footerData.tag === "None") {
+  const footerData = computeFooterData(paymentData, paymentButtonStatus, ctas);
+  if (isNone(footerData)) {
     return null;
   }
 
+  const isPaymentLoading = paymentButtonStatus === "loading";
   return (
     <View
       style={[
@@ -280,45 +307,48 @@ export const MessageDetailsStickyFooter = ({
         { paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom }
       ]}
     >
-      {footerData.tag === "PaymentWithDoubleCTA" &&
-        renderPaymentWithDoubleCTA(
-          messageId,
-          footerData.paymentData,
-          canNavigateToPayment,
-          paymentButtonStatus === "loading",
-          footerData.cta1,
-          firstCTAIsPNOptInMessage,
-          footerData.cta2,
-          secondCTAIsPNOptInMessage,
-          handleOnPress
-        )}
-      {footerData.tag === "PaymentWithCTA" &&
-        renderPaymentWithCTA(
-          messageId,
-          footerData.paymentData,
-          canNavigateToPayment,
-          paymentButtonStatus === "loading",
-          footerData.cta1,
-          firstCTAIsPNOptInMessage,
-          handleOnPress
-        )}
-      {footerData.tag === "DoubleCTA" &&
-        renderDoubleCTA(
-          footerData.cta1,
-          firstCTAIsPNOptInMessage,
-          footerData.cta2,
-          secondCTAIsPNOptInMessage,
-          handleOnPress
-        )}
-      {footerData.tag === "CTA" &&
-        renderCTA(footerData.cta1, firstCTAIsPNOptInMessage, handleOnPress)}
-      {footerData.tag === "Payment" &&
-        renderPayment(
-          messageId,
-          footerData.paymentData,
-          canNavigateToPayment,
-          paymentButtonStatus === "loading"
-        )}
+      {foldFooterData(
+        footerData,
+        paymentWithDoubleCTA =>
+          renderPaymentWithDoubleCTA(
+            messageId,
+            paymentWithDoubleCTA.paymentData,
+            canNavigateToPayment,
+            isPaymentLoading,
+            paymentWithDoubleCTA.cta1,
+            firstCTAIsPNOptInMessage,
+            paymentWithDoubleCTA.cta2,
+            secondCTAIsPNOptInMessage,
+            handleOnPress
+          ),
+        paymentWithCTA =>
+          renderPaymentWithCTA(
+            messageId,
+            paymentWithCTA.paymentData,
+            canNavigateToPayment,
+            isPaymentLoading,
+            paymentWithCTA.cta1,
+            firstCTAIsPNOptInMessage,
+            handleOnPress
+          ),
+        doubleCTA =>
+          renderDoubleCTA(
+            doubleCTA.cta1,
+            firstCTAIsPNOptInMessage,
+            doubleCTA.cta2,
+            secondCTAIsPNOptInMessage,
+            handleOnPress
+          ),
+        payment =>
+          renderPayment(
+            messageId,
+            payment.paymentData,
+            canNavigateToPayment,
+            isPaymentLoading
+          ),
+        cta => renderCTA(cta.cta1, firstCTAIsPNOptInMessage, handleOnPress),
+        () => null
+      )}
     </View>
   );
 };

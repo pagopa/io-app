@@ -19,11 +19,18 @@ describe("MessageDetailsScrollViewAdditionalSpace", () => {
     const component = renderComponent(false, false);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("Should match snapshot with hidden button and CTAs", () => {
+  it("Should match snapshot with hidden button and both CTAs", () => {
     jest
       .spyOn(payments, "isPaymentsButtonVisibleSelector")
       .mockReturnValue(false);
     const component = renderComponent(true, true);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("Should match snapshot with hidden button and a single CTA", () => {
+    jest
+      .spyOn(payments, "isPaymentsButtonVisibleSelector")
+      .mockReturnValue(false);
+    const component = renderComponent(true, false);
     expect(component.toJSON()).toMatchSnapshot();
   });
   it("Should match snapshot with button and no CTAs", () => {
@@ -33,11 +40,18 @@ describe("MessageDetailsScrollViewAdditionalSpace", () => {
     const component = renderComponent(false, false);
     expect(component.toJSON()).toMatchSnapshot();
   });
-  it("Should match snapshot with button and CTAs", () => {
+  it("Should match snapshot with button and both CTA", () => {
     jest
       .spyOn(payments, "isPaymentsButtonVisibleSelector")
       .mockReturnValue(true);
     const component = renderComponent(true, true);
+    expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("Should match snapshot with button and a single CTA", () => {
+    jest
+      .spyOn(payments, "isPaymentsButtonVisibleSelector")
+      .mockReturnValue(true);
+    const component = renderComponent(true, false);
     expect(component.toJSON()).toMatchSnapshot();
   });
 });
