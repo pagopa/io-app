@@ -8,7 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React, { ComponentProps, useLayoutEffect, useState } from "react";
-import { LayoutChangeEvent, View, Image } from "react-native";
+import { LayoutChangeEvent, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue
@@ -24,7 +24,7 @@ import I18n from "../../i18n";
 
 export type LargeHeaderTitleProps = {
   label: string;
-  heroImage?: ComponentProps<typeof Image>["source"];
+  accessibilityLabel?: string;
   testID?: string;
 };
 
@@ -121,26 +121,13 @@ export const RNavScreenWithLargeHeader = ({
         decelerationRate="normal"
       >
         <View
+          style={IOStyles.horizontalContentPadding}
           onLayout={getTitleHeight}
-          accessible={false}
-          accessibilityElementsHidden={true}
-          importantForAccessibility="no-hide-descendants"
         >
-          {title.heroImage && (
-            <>
-              <Image
-                source={title.heroImage}
-                style={{ width: "100%", height: 270, resizeMode: "stretch" }}
-              />
-              <VSpacer size={24} />
-            </>
-          )}
           <H2
-            style={IOStyles.horizontalContentPadding}
             testID={title.testID}
-            accessibilityElementsHidden={true}
-            importantForAccessibility="no-hide-descendants"
-            accessible={false}
+            accessibilityLabel={title.accessibilityLabel ?? title.label}
+            accessibilityRole="header"
           >
             {title.label}
           </H2>
