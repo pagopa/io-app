@@ -1,5 +1,5 @@
 import * as React from "react";
-import { WalletCardsCategoryContainer } from "../../newWallet/components/WalletCardsCategoryContainer";
+import { WalletCardCategoryContainer } from "../../newWallet/components/WalletCardCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../newWallet/types";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
@@ -58,7 +58,7 @@ export const DSWallet = () => {
   return (
     <DesignSystemScreen title={"Wallet"}>
       <DesignSystemSection title="Single card">
-        <WalletCardsCategoryContainer
+        <WalletCardCategoryContainer
           label="Iniziative welfare"
           iconName="bonus"
           cards={cardsByCategory.bonus}
@@ -66,7 +66,7 @@ export const DSWallet = () => {
       </DesignSystemSection>
 
       <DesignSystemSection title="Multiple cards">
-        <WalletCardsCategoryContainer
+        <WalletCardCategoryContainer
           label="Metodi di pagamento"
           iconName="creditCard"
           cards={cardsByCategory.payment}

@@ -1,17 +1,17 @@
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
-import { PaymentCardBig } from "../../../components/ui/cards/payment/PaymentCardBig";
-import { PaymentCardSmall } from "../../../components/ui/cards/payment/PaymentCardSmall";
-import {
-  PaymentCardsCarousel,
-  PaymentCardsCarouselProps
-} from "../../../components/ui/cards/payment/PaymentCardsCarousel";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
+import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
+import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
+import {
+  PaymentCardsCarousel,
+  PaymentCardsCarouselProps
+} from "../../payments/common/components/PaymentCardsCarousel";
 
 const styles = StyleSheet.create({
   content: {
