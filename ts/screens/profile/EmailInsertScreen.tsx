@@ -442,6 +442,7 @@ const EmailInsertScreen = () => {
             </Body>
             <VSpacer size={16} />
             <TextInputValidation
+              autoFocus
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
