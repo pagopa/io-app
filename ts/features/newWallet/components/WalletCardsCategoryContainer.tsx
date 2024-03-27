@@ -2,7 +2,7 @@ import { IOIcons, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { WalletCard, walletCardComponentMapper } from "../types";
 
-type WalletCategoryStackContainerProps = {
+export type WalletCategoryStackContainerProps = {
   iconName: IOIcons;
   label: string;
   cards: ReadonlyArray<WalletCard>;
@@ -17,11 +17,24 @@ const WalletCardsCategoryContainer = ({
   iconName,
   cards
 }: WalletCategoryStackContainerProps) => {
+  if (cards === undefined || cards.length === 0) {
+    // If cards are not provided or are an empty array, the component should not render
+    return null;
+  }
+
   const isStacked = cards.length > 1;
 
   const renderCardFn = (card: WalletCard, stacked: boolean) => {
     const Component = walletCardComponentMapper[card.type];
-    return Component && <Component cardProps={card} isStacked={stacked} />;
+    return (
+      Component && (
+        <Component
+          testID={`wallet_card_${card.key}`}
+          cardProps={card}
+          isStacked={stacked}
+        />
+      )
+    );
   };
 
   return (
