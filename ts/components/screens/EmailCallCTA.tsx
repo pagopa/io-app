@@ -1,5 +1,5 @@
-import * as React from "react";
 import { ButtonOutline, HSpacer, IOStyles } from "@pagopa/io-app-design-system";
+import * as React from "react";
 import { View } from "react-native";
 import I18n from "../../i18n";
 import { handleItemOnPress } from "../../utils/url";
@@ -42,11 +42,6 @@ const EmailCallCTA: React.FunctionComponent<Props> = props => {
       <HSpacer />
       <View style={IOStyles.flex}>{emailButton}</View>
     </View>
-    // <BlockButtons
-    //   type={"TwoButtonsInlineHalf"}
-    //   leftButton={callButton}
-    //   rightButton={emailButton}
-    // />
   );
 };
 

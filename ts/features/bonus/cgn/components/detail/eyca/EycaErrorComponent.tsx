@@ -1,12 +1,10 @@
+import { ButtonOutline, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
+import { StyleSheet, View } from "react-native";
+import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
+import { InfoBox } from "../../../../../../components/box/InfoBox";
 import { H4 } from "../../../../../../components/core/typography/H4";
 import I18n from "../../../../../../i18n";
-import ButtonDefaultOpacity from "../../../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../../../components/core/typography/Label";
-import { InfoBox } from "../../../../../../components/box/InfoBox";
-import TouchableDefaultOpacity from "../../../../../../components/TouchableDefaultOpacity";
 
 type Props = {
   onRetry: () => void;
@@ -45,13 +43,12 @@ const EycaErrorComponent = (props: Props) => (
       </H4>
     </InfoBox>
     <VSpacer size={16} />
-    <ButtonDefaultOpacity
-      bordered
-      style={{ width: "100%" }}
+    <ButtonOutline
+      fullWidth
+      accessibilityLabel={I18n.t("global.buttons.retry")}
+      label={I18n.t("global.buttons.retry")}
       onPress={props.onRetry}
-    >
-      <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
-    </ButtonDefaultOpacity>
+    />
   </>
 );
 
