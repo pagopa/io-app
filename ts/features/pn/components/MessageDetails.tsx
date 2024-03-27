@@ -23,6 +23,7 @@ import { MessageDetailsAttachments } from "../../messages/components/MessageDeta
 import { UIMessageId } from "../../messages/types";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
+import { MessageFooter } from "./MessageFooter";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -91,6 +92,7 @@ export const MessageDetails = ({
           serviceId={serviceId}
         />
       </ContentWrapper>
+      <MessageFooter />
     </ScrollView>
   );
 };

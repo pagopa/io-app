@@ -5,11 +5,11 @@ import { preferencesDesignSystemSetEnabled } from "../../../../store/actions/per
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { UIMessageId } from "../../../messages/types";
-import { MessageFooter } from "../MessageFooter";
+import { LegacyMessageFooter } from "../LegacyMessageFooter";
 import * as standardPayments from "../../../messages/store/reducers/payments";
 import * as payments from "../../store/reducers/payments";
 
-describe("MessageFooter", () => {
+describe("LegacyMessageFooter", () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
@@ -64,7 +64,7 @@ const renderScreen = (
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <MessageFooter
+      <LegacyMessageFooter
         messageId={messageId}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
         isCancelled={isCancelled}

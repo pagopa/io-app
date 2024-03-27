@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessageFooter should match snapshot for cancelled PN notification 1`] = `
+exports[`LegacyMessageFooter should match snapshot for cancelled PN notification 1`] = `
 <View
   style={
     Object {
@@ -331,7 +331,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
 </View>
 `;
 
-exports[`MessageFooter should match snapshot for hidden button 1`] = `
+exports[`LegacyMessageFooter should match snapshot for hidden button 1`] = `
 <View
   style={
     Object {
@@ -662,7 +662,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
 </View>
 `;
 
-exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
+exports[`LegacyMessageFooter should match snapshot for visibleEnabled button 1`] = `
 <View
   style={
     Object {
@@ -1131,7 +1131,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
 </View>
 `;
 
-exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
+exports[`LegacyMessageFooter should match snapshot for visibleLoading button 1`] = `
 <View
   style={
     Object {

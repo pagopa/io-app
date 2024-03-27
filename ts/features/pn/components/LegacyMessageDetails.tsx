@@ -42,7 +42,7 @@ import { MessageTimeline } from "./MessageTimeline";
 import { MessageTimelineCTA } from "./MessageTimelineCTA";
 import { LegacyMessageF24 } from "./LegacyMessageF24";
 import { MessagePayments } from "./MessagePayments";
-import { MessageFooter } from "./MessageFooter";
+import { LegacyMessageFooter } from "./LegacyMessageFooter";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
 type Props = Readonly<{
@@ -194,7 +194,7 @@ export const LegacyMessageDetails = ({
         />
       )}
 
-      <MessageFooter
+      <LegacyMessageFooter
         messageId={messageId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}
