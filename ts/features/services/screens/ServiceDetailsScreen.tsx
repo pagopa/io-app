@@ -4,6 +4,7 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import {
   ContentWrapper,
   IOColors,
+  IOVisualCostants,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import Animated, {
@@ -23,6 +24,7 @@ import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ServiceDetailsHeader } from "../components/ServiceDetailsHeader";
 import { logosForService } from "../../../utils/services";
+import { CardWithMarkdownContent } from "../components/CardWithMarkdownContent";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -37,13 +39,20 @@ type ServiceDetailsScreenProps = IOStackNavigationRouteProps<
   "SERVICE_DETAIL"
 >;
 
+const headerPaddingBottom = 138;
+
 const styles = StyleSheet.create({
   scrollContentContainer: {
     flexGrow: 1
   },
-  contentHeader: {
+  headerContainer: {
     backgroundColor: IOColors["grey-50"],
-    paddingBottom: 138
+    paddingBottom: headerPaddingBottom
+  },
+  cardContainer: {
+    marginHorizontal: IOVisualCostants.appMarginDefault,
+    marginTop: -headerPaddingBottom,
+    minHeight: headerPaddingBottom
   }
 });
 
@@ -114,7 +123,7 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
     >
       <View
         style={[
-          styles.contentHeader,
+          styles.headerContainer,
           {
             paddingTop: windowHeight + headerHeight,
             marginTop: -windowHeight
@@ -130,6 +139,13 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
           <VSpacer size={16} />
         </ContentWrapper>
       </View>
+      {service.service_metadata?.description ? (
+        <View style={styles.cardContainer}>
+          <CardWithMarkdownContent
+            content={service.service_metadata.description}
+          />
+        </View>
+      ) : null}
     </Animated.ScrollView>
   );
 };
