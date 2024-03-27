@@ -1,3 +1,4 @@
+import { IOIcons } from "@pagopa/io-app-design-system";
 import {
   IdPayWalletCard,
   IdPayWalletCardProps
@@ -54,4 +55,14 @@ export const walletCardComponentMapper: Record<
   cgn: undefined, // TODO add CGN component type
   idPay: IdPayWalletCard,
   payment: PaymentWalletCard
+};
+
+/**
+ * Icons used for each wallet card category
+ */
+export const walletCardCategoryIcons: Record<WalletCardCategory, IOIcons> = {
+  bonus: "bonus",
+  payment: "creditCard",
+  itw: "fiscalCodeIndividual",
+  cgn: "bonus"
 };

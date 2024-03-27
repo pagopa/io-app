@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`IdPayWalletCard should match the snapshot 1`] = `
+exports[`IdPayCard should match the snapshot 1`] = `
 <View
   style={
     Object {
@@ -19,113 +19,7 @@ exports[`IdPayWalletCard should match the snapshot 1`] = `
       }
     }
   >
-    <RNSVGSvgView
-      bbHeight="100%"
-      bbWidth="100%"
-      focusable={false}
-      height="100%"
-      style={
-        Array [
-          Object {
-            "backgroundColor": "transparent",
-            "borderWidth": 0,
-          },
-          Object {
-            "flex": 0,
-            "height": "100%",
-            "width": "100%",
-          },
-        ]
-      }
-      width="100%"
-    >
-      <RNSVGGroup
-        fill={
-          Object {
-            "payload": 4278190080,
-            "type": 0,
-          }
-        }
-      >
-        <RNSVGDefs>
-          <RNSVGClipPath
-            fill={
-              Object {
-                "payload": 4278190080,
-                "type": 0,
-              }
-            }
-            name="clip"
-          >
-            <RNSVGCircle
-              cx="75%"
-              cy="0"
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
-              r={16}
-            />
-            <RNSVGCircle
-              cx="75%"
-              cy="100%"
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
-              r={16}
-            />
-            <RNSVGRect
-              fill={
-                Object {
-                  "payload": 4278190080,
-                  "type": 0,
-                }
-              }
-              height="100%"
-              width="100%"
-              x={0}
-              y={0}
-            />
-          </RNSVGClipPath>
-        </RNSVGDefs>
-        <RNSVGRect
-          clipPath="clip"
-          fill={
-            Object {
-              "payload": 4292733946,
-              "type": 0,
-            }
-          }
-          height="100%"
-          propList={
-            Array [
-              "fill",
-              "stroke",
-              "strokeWidth",
-              "strokeOpacity",
-            ]
-          }
-          rx={16}
-          ry={16}
-          stroke={
-            Object {
-              "payload": 4278190080,
-              "type": 0,
-            }
-          }
-          strokeOpacity={0.12}
-          strokeWidth={1}
-          width="100%"
-          x={0}
-          y={0}
-        />
-      </RNSVGGroup>
-    </RNSVGSvgView>
+    <SvgMock />
   </View>
   <View
     style={
