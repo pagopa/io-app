@@ -1,6 +1,11 @@
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
-import { ButtonSolid, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonSolid,
+  IOStyles,
+  VSpacer,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "../../../../i18n";
 import { UIMessageId } from "../../types";
@@ -14,7 +19,6 @@ import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "../../utils";
-import { useIOToast } from "../../../../components/Toast";
 import { CTAS } from "../../types/MessageCTA";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { CTAsBar } from "../../../../components/cta/CTAsBar";

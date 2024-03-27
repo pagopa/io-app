@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.56.0-rc.4](https://github.com/pagopa/io-app/compare/2.56.0-rc.3...2.56.0-rc.4) (2024-03-25)
+
+
+### Chores
+
+* update patches.md ([9361cfb](https://github.com/pagopa/io-app/commit/9361cfbaa4e51ecac4911594d0be49cb7200e763))
+
 ## [2.56.0-rc.3](https://github.com/pagopa/io-app/compare/2.56.0-rc.2...2.56.0-rc.3) (2024-03-20)
 
 
