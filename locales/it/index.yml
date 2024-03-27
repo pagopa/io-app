@@ -2916,7 +2916,7 @@ features:
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
-        payment: Metodo di pagamento
+        payment: Metodi di pagamento
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
