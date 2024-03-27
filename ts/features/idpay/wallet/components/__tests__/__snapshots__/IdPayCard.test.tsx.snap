@@ -180,6 +180,7 @@ exports[`IdPayWalletCard should match the snapshot 1`] = `
           18 app
         </Text>
         <View
+          accessibilityIgnoresInvertColors={true}
           style={
             Array [
               Object {
@@ -214,6 +215,7 @@ exports[`IdPayWalletCard should match the snapshot 1`] = `
             }
           >
             <Image
+              accessibilityIgnoresInvertColors={true}
               onError={[Function]}
               source={
                 Object {
