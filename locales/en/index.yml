@@ -190,6 +190,7 @@ global:
     messages: Messages
     wallet: Wallet
     scan: Scan
+    payments: Payments
     documents: Documents
     profile: Profile
     services: Services
@@ -926,6 +927,18 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  homeScreen:
+    title: Payments
+    methodsSection:
+      header: Payment methods
+      headerCTA: Add
+    historySection:
+      header: Transaction history
+      headerCTA: View all
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
@@ -2075,16 +2088,21 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  title: Hi!
+  instructions:
+    unlockCode: unlock code
+    unlockCodepPrefix: use your
+    fingerprint: fingerprint
+    fingerprintPrefix: use your
+    faceId: face
+    faceIdPrefix: use your
+    congiunction: or
+  title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
   logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
-  subtitleCode: Enter the unlock code
-  subtitleCodeFingerprint: use the fingerprint or the unlock code
-  subtitleCodeFaceId: use the Face ID or enter the unlock code
   biometric:
     fingerprintType: Fingerprint
     title: Biometric identification
@@ -2093,8 +2111,8 @@ identification:
       title: Identification required
       sensorDescription: Login quickly
   fail:
-    remainingAttempts: You have {{attempts}} attempts left.
-    remainingAttemptSingle: You have {{attempts}} attempt left.
+    remainingAttempts: You have {{attempts}} attempts left
+    remainingAttemptSingle: You have {{attempts}} attempt left
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:
@@ -2894,6 +2912,12 @@ features:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+    cards:
+      categories:
+        bonus: Iniziative welfare
+        cgn: Carta Giovani Nazionale
+        itw: IT Wallet
+        payment: Metodo di pagamento
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3460,10 +3484,10 @@ fastLogin:
         subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
         submitButtonTitle: Continue
       continueNavigation:
-        title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
-        cancelButtonTitle: "Annulla"
+        title: "Your session has expired"
+        subtitle: "Please log in to continue using the app"
+        submitButtonTitle: "Log in"
+        cancelButtonTitle: "Cancel"
       transientError:
         title: "We couldn't authenticate you"
         subtitle: "Close the app and try again in a few minutes."
