@@ -3477,10 +3477,10 @@ fastLogin:
         subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
         submitButtonTitle: Continue
       continueNavigation:
-        title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
-        cancelButtonTitle: "Annulla"
+        title: "Your session has expired"
+        subtitle: "Please log in to continue using the app"
+        submitButtonTitle: "Log in"
+        cancelButtonTitle: "Cancel"
       transientError:
         title: "We couldn't authenticate you"
         subtitle: "Close the app and try again in a few minutes."
