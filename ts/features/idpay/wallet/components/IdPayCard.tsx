@@ -30,7 +30,16 @@ export const IdPayCard = (props: IdPayCardProps) => (
     <View style={styles.content}>
       <View>
         <View style={styles.header}>
-          <H6 color="blueItalia-850">{props.name}</H6>
+          <H6
+            color="blueItalia-850"
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={{
+              width: "80%"
+            }}
+          >
+            {props.name}
+          </H6>
           <Avatar size="small" logoUri={props.avatarSource} />
         </View>
         <VSpacer size={16} />
