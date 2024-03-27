@@ -515,7 +515,6 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                                     }
                                   >
                                     <View
-                                      exiting={[Function]}
                                       style={
                                         Array [
                                           Object {
