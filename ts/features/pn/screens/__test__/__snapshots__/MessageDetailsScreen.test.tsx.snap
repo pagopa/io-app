@@ -609,6 +609,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 }
                               >
                                 <View
+                                  accessibilityIgnoresInvertColors={true}
                                   style={
                                     Array [
                                       Object {
@@ -643,6 +644,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     }
                                   >
                                     <Image
+                                      accessibilityIgnoresInvertColors={true}
                                       onError={[Function]}
                                       source={
                                         Object {
