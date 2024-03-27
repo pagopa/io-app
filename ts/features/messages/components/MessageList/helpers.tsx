@@ -37,12 +37,12 @@ type RenderEmptyListProps = {
 };
 export const renderEmptyList =
   ({ error, EmptyComponent }: RenderEmptyListProps) =>
-  () => {
+  (): EmptyComponent => {
     if (error !== undefined) {
       return <ErrorLoadingComponent />;
     }
     if (EmptyComponent) {
-      return <EmptyComponent />;
+      return EmptyComponent;
     }
     return null;
   };

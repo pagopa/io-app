@@ -106,13 +106,14 @@ import {
   setFavouriteWalletSuccess,
   updatePaymentStatus
 } from "../actions/wallet/wallets";
+import { buildEventProperties } from "../../utils/analytics";
 import { trackContentAction } from "./contentAnalytics";
 import { trackServiceAction } from "./serviceAnalytics";
 
 const trackAction =
   (mp: NonNullable<typeof mixpanel>) =>
   // eslint-disable-next-line complexity
-  (action: Action): Promise<void | ReadonlyArray<null>> => {
+  (action: Action): void | ReadonlyArray<null> => {
     // eslint-disable-next-line sonarjs/max-switch-cases
     switch (action.type) {
       //
@@ -183,12 +184,11 @@ const trackAction =
         // Only in the former case we have a transaction and an amount.
         if (action.payload.kind === "COMPLETED") {
           const amount = action.payload.transaction?.amount.amount;
-          return mp
-            .track(action.type, {
-              amount,
-              kind: action.payload.kind
-            })
-            .then(_ => mp.trackCharge(amount ?? -1));
+          mp.track(action.type, {
+            amount,
+            kind: action.payload.kind
+          });
+          return mp.getPeople().trackCharge(amount ?? -1, {});
         } else {
           return mp.track(action.type, {
             kind: action.payload.kind
@@ -306,10 +306,11 @@ const trackAction =
       case getType(sessionInvalid):
       case getType(logoutSuccess):
       // identification
+      // identificationSuccess is handled separately
+      // because it has a payload.
       case getType(identificationRequest):
       case getType(identificationStart):
       case getType(identificationCancel):
-      case getType(identificationSuccess):
       case getType(identificationFailure):
       case getType(identificationPinReset):
       case getType(identificationForceLogout):
@@ -370,8 +371,15 @@ const trackAction =
           choice: action.payload.choice,
           reason: action.payload.error.message
         });
+      // identification: identificationSuccess
+      case getType(identificationSuccess):
+        return mp.track(
+          action.type,
+          buildEventProperties("UX", "confirm", {
+            identification_method: action.payload.isBiometric ? "bio" : "pin"
+          })
+        );
     }
-    return Promise.resolve();
   };
 
 /*

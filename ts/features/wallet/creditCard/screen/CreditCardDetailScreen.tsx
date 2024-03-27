@@ -7,7 +7,6 @@ import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import { useIOSelector } from "../../../../store/hooks";
 import { creditCardByIdSelector } from "../../../../store/reducers/wallet/wallets";
 import { CreditCardPaymentMethod } from "../../../../types/pagopa";
@@ -15,6 +14,7 @@ import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay
 import BasePaymentMethodScreen from "../../common/BasePaymentMethodScreen";
 import PaymentMethodFeatures from "../../component/features/PaymentMethodFeatures";
 import { capitalize } from "../../../../utils/strings";
+import { PaymentCardBig } from "../../../payments/common/components/PaymentCardBig";
 
 export type CreditCardDetailScreenNavigationParams = Readonly<{
   // Since we don't have a typed ID for the payment methods, we keep the creditCard as param even if it is then read by the store

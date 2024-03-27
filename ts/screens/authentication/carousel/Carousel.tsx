@@ -6,14 +6,12 @@ import {
   View,
   StyleSheet,
   GestureResponderEvent,
-  useColorScheme,
   useWindowDimensions
 } from "react-native";
-import { useIOSelector } from "../../../store/hooks";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { trackCarousel } from "../analytics/carouselAnalytics";
 import { LandingCardComponent } from "../../../components/LandingCardComponent";
 import { ComponentProps } from "../../../types/react";
+import { useAppBackgroundAccent } from "../../../utils/hooks/theme";
 
 const styles = StyleSheet.create({
   normalDot: {
@@ -30,7 +28,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const newDsBlue = IOColors["blueIO-500"];
 const newDsGrey = IOColors["grey-200"];
 
 type CarouselProps = {
@@ -43,18 +40,11 @@ type CarouselDotsProps = CarouselProps & { scrollX: Animated.Value };
 const CarouselDots = (props: CarouselDotsProps) => {
   const { carouselCards, dotEasterEggCallback, scrollX } = props;
   const dotTouchCount = React.useRef(0);
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const colorScheme = useColorScheme();
+
+  const blueColor = useAppBackgroundAccent();
 
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
-
-  const blueColor =
-    colorScheme === "dark"
-      ? IOColors.white
-      : isDesignSystemEnabled
-      ? newDsBlue
-      : IOColors.blue;
 
   return (
     <View
@@ -102,7 +92,7 @@ const CarouselDots = (props: CarouselDotsProps) => {
 };
 
 export const Carousel = React.forwardRef<View, CarouselProps>((props, ref) => {
-  const { carouselCards } = props;
+  const { carouselCards, dotEasterEggCallback } = props;
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -153,7 +143,11 @@ export const Carousel = React.forwardRef<View, CarouselProps>((props, ref) => {
       >
         {cardComponents}
       </ScrollView>
-      <CarouselDots carouselCards={carouselCards} scrollX={scrollX} />
+      <CarouselDots
+        dotEasterEggCallback={dotEasterEggCallback}
+        carouselCards={carouselCards}
+        scrollX={scrollX}
+      />
       <VSpacer size={24} />
     </>
   );

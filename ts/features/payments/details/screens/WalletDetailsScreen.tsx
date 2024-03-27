@@ -6,12 +6,11 @@ import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { PaymentCardBig } from "../../../../components/ui/cards/payment/PaymentCardBig";
 import { useIOSelector } from "../../../../store/hooks";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import { capitalize } from "../../../../utils/strings";
 import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPaymentMethodScreen";
-import WalletDetailsPaymentMethodFeatures from "../../common/components/WalletDetailsPaymentMethodFeatures";
+import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
 import { WalletDetailsParamsList } from "../navigation/navigator";
 import {
   isErrorWalletInstrumentSelector,
@@ -27,6 +26,7 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { PaymentCardBig } from "../../common/components/PaymentCardBig";
 
 export type WalletDetailsScreenNavigationParams = Readonly<{
   walletId: string;
@@ -57,7 +57,7 @@ const generateCardComponent = (details: UIWalletInfoDetails) => {
       <PaymentCardBig
         testID="CreditCardComponent"
         cardType="BANCOMATPAY"
-        holderName={details.holder || ""}
+        holderName={""}
         phoneNumber={details.maskedNumber}
       />
     );
@@ -68,19 +68,19 @@ const generateCardComponent = (details: UIWalletInfoDetails) => {
       testID="CreditCardComponent"
       cardType="CREDIT"
       expirationDate={getDateFromExpiryDate(details.expiryDate)}
-      holderName={details.holder || ""}
-      hpan={details.maskedPan || ""}
+      holderName={""}
+      hpan={details.lastFourDigits || ""}
       cardIcon={details.brand?.toLowerCase() as IOLogoPaymentExtType}
     />
   );
 };
 
 const generateCardHeaderTitle = (details?: UIWalletInfoDetails) => {
-  if (details?.maskedPan !== undefined) {
+  if (details?.lastFourDigits !== undefined) {
     const capitalizedCardCircuit = capitalize(
       details.brand?.toLowerCase() ?? ""
     );
-    return `${capitalizedCardCircuit} ••${details.maskedPan}`;
+    return `${capitalizedCardCircuit} ••${details.lastFourDigits}`;
   }
 
   return "";

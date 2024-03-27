@@ -62,7 +62,7 @@ export type FciDocumentsScreenNavigationParams = Readonly<{
 const FciDocumentsScreen = () => {
   const pdfRef = React.useRef<Pdf>(null);
   const [totalPages, setTotalPages] = React.useState(0);
-  const [currentPage, setCurrentPage] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
   const route = useRoute<RouteProp<FciParamsList, "FCI_DOCUMENTS">>();
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useSelector(fciSignatureDetailDocumentsSelector);
@@ -179,7 +179,6 @@ const FciDocumentsScreen = () => {
         setCurrentPage(page);
       }}
       enablePaging
-      enableAnnotationRendering={false}
       style={styles.pdf}
     />
   );

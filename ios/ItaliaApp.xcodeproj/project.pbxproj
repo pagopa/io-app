@@ -18,10 +18,12 @@
 		2AD40B9924CB049500E4124A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AD40B9824CB049500E4124A /* LaunchScreen.storyboard */; };
 		3A3CA4696BA44782A02FE37E /* TitilliumWeb-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */; };
 		4D331CF68DAC4800A6D6297A /* TitilliumWeb-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 11C2483C363E432BB4D0A583 /* TitilliumWeb-Regular.ttf */; };
+		544D7A6A6990E1AD0E113BF2 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A88AAE92C2AA92D33DB25F0C /* libPods-ItaliaApp.a */; };
 		570BBC8FC70C4A76ABF035AC /* TitilliumWeb-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 163BC670599B42509D4D138E /* TitilliumWeb-Light.ttf */; };
 		69A5E1839C924EE5B8CD9470 /* ReadexPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C584AD92CB24628B1AA76DE /* ReadexPro-Regular.ttf */; };
 		6B44A74498354CC19B90FE9C /* TitilliumWeb-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6754714BBEF54AA59833C0EB /* TitilliumWeb-ExtraLightItalic.ttf */; };
 		72E4B1EFF7D4414483079F91 /* TitilliumWeb-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CED8B1FF1E254583BB3F285F /* TitilliumWeb-SemiBoldItalic.ttf */; };
+		7578F223A01E0E15E7072DAF /* libPods-ItaliaApp-ItaliaAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59BCC34321A36ABA56F255E3 /* libPods-ItaliaApp-ItaliaAppTests.a */; };
 		859781B477BB45579FB9A9F2 /* TitilliumWeb-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F709D4AE20E44EFAAB255A8E /* TitilliumWeb-Italic.ttf */; };
 		862C0E693C864E76BADCDFCC /* TitilliumWeb-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A786CC45B2D4B77BDF55C1D /* TitilliumWeb-Black.ttf */; };
 		8788744508D34396942D3DB4 /* RobotoMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */; };
@@ -30,7 +32,6 @@
 		8E7BB01F1A6D4D79B17B4210 /* RobotoMono-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2A1DC2C4323E417BBBAE8817 /* RobotoMono-BoldItalic.ttf */; };
 		97F089B39469411991377615 /* DMMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 875B0C3A5326413494A9311A /* DMMono-Medium.ttf */; };
 		9975E38DE95949D28D07A275 /* RobotoMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */; };
-		BB136ECC2BAD2F1F766453AF /* libPods-ItaliaApp-ItaliaAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F38DB3FBDA73096A43D1CC8 /* libPods-ItaliaApp-ItaliaAppTests.a */; };
 		BE1A42156484487BABBC4DED /* TitilliumWeb-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */; };
 		C2CF038002D24FEEAB41B336 /* RobotoMono-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */; };
 		D18E075B28304466B6CA2381 /* TitilliumWeb-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */; };
@@ -49,7 +50,6 @@
 		F2B163172B753C9D00F6E487 /* TitilliumSansPro-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630B2B753C9D00F6E487 /* TitilliumSansPro-BlackItalic.otf */; };
 		F2B163182B753C9D00F6E487 /* TitilliumSansPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630C2B753C9D00F6E487 /* TitilliumSansPro-Bold.otf */; };
 		F2B163192B753C9D00F6E487 /* TitilliumSansPro-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = F2B1630D2B753C9D00F6E487 /* TitilliumSansPro-ThinItalic.otf */; };
-		F979B2982B2909A68F208546 /* libPods-ItaliaApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA78A5BDFCE253F9BB4EC906 /* libPods-ItaliaApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,11 +76,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00795B9F4BB208E88C8555FB /* Pods-ItaliaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.debug.xcconfig"; sourceTree = "<group>"; };
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* ItaliaAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ItaliaAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ItaliaAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ItaliaAppTests.m; sourceTree = "<group>"; };
+		058F4F4927B1B1C84C7F1137 /* Pods-ItaliaApp-ItaliaAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp-ItaliaAppTests.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		11C2483C363E432BB4D0A583 /* TitilliumWeb-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Regular.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Regular.ttf"; sourceTree = "<group>"; };
 		133638FB213D788900B0C079 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		133638FD213D78DB00B0C079 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -99,18 +99,19 @@
 		2C584AD92CB24628B1AA76DE /* ReadexPro-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ReadexPro-Regular.ttf"; path = "../assets/fonts/ReadexPro/ReadexPro-Regular.ttf"; sourceTree = "<group>"; };
 		2D52800996AA471A87A7F975 /* LICENSE.txt */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = LICENSE.txt; path = ../assets/fonts/RobotoMono/LICENSE.txt; sourceTree = "<group>"; };
 		309BA0207AA24FE9A0EBE61C /* TitilliumWeb-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Bold.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Bold.ttf"; sourceTree = "<group>"; };
-		39578C39C9EC4B2189720E67 /* Pods-ItaliaApp-ItaliaAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp-ItaliaAppTests.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		3F38DB3FBDA73096A43D1CC8 /* libPods-ItaliaApp-ItaliaAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp-ItaliaAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5389C36762A04AE69D762289 /* RobotoMono-RegularItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-RegularItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-RegularItalic.ttf"; sourceTree = "<group>"; };
+		59BCC34321A36ABA56F255E3 /* libPods-ItaliaApp-ItaliaAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp-ItaliaAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		640E574519CA4183B230AF22 /* RobotoMono-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-LightItalic.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-LightItalic.ttf"; sourceTree = "<group>"; };
 		6754714BBEF54AA59833C0EB /* TitilliumWeb-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		6A786CC45B2D4B77BDF55C1D /* TitilliumWeb-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-Black.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-Black.ttf"; sourceTree = "<group>"; };
 		6C4A0A2AB90C8575993DF1E1 /* Instabug.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Instabug.framework; path = "../node_modules/instabug-reactnative/ios/Instabug.framework"; sourceTree = "<group>"; };
+		6D0115BDF703AEBFD8B86A12 /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6F8C6AF94C801CE01EC3D81A /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
+		722056DF161D843DD91D88A7 /* Pods-ItaliaApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.debug.xcconfig"; sourceTree = "<group>"; };
 		76E4CEA78E3F4060ABB59808 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Regular.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
-		7A046C75C68A2C0E8AE3E0FF /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig"; path = "Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7A83F0572152B12C000C6389 /* ItaliaApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ItaliaApp.entitlements; path = ItaliaApp/ItaliaApp.entitlements; sourceTree = "<group>"; };
 		875B0C3A5326413494A9311A /* DMMono-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMMono-Medium.ttf"; path = "../assets/fonts/DMMono/DMMono-Medium.ttf"; sourceTree = "<group>"; };
-		8FF948EE9F5FAEABE8ADDAE1 /* Pods-ItaliaApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ItaliaApp.release.xcconfig"; path = "Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp.release.xcconfig"; sourceTree = "<group>"; };
+		A88AAE92C2AA92D33DB25F0C /* libPods-ItaliaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFE8D23873DE458BB54EB46B /* RobotoMono-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Light.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Light.ttf"; sourceTree = "<group>"; };
 		B021D4CC17ED4D54B7944FED /* TitilliumWeb-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-SemiBold.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-SemiBold.ttf"; sourceTree = "<group>"; };
 		B57593872B70FFA400674515 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -118,7 +119,6 @@
 		B65D221FCB5A461FBC44285D /* TitilliumWeb-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-LightItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-LightItalic.ttf"; sourceTree = "<group>"; };
 		B7088D9B42BA4275A767BEFF /* RobotoMono-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoMono-Bold.ttf"; path = "../assets/fonts/RobotoMono/RobotoMono-Bold.ttf"; sourceTree = "<group>"; };
 		CED8B1FF1E254583BB3F285F /* TitilliumWeb-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-SemiBoldItalic.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
-		EA78A5BDFCE253F9BB4EC906 /* libPods-ItaliaApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ItaliaApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE4F83DB63254F5285C36A40 /* TitilliumWeb-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "TitilliumWeb-ExtraLight.ttf"; path = "../assets/fonts/TitilliumWeb/TitilliumWeb-ExtraLight.ttf"; sourceTree = "<group>"; };
 		F0625E792326820B00EDEF90 /* libReact-RCTImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-RCTImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,7 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB136ECC2BAD2F1F766453AF /* libPods-ItaliaApp-ItaliaAppTests.a in Frameworks */,
+				7578F223A01E0E15E7072DAF /* libPods-ItaliaApp-ItaliaAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,7 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0625E7F2326825600EDEF90 /* JavaScriptCore.framework in Frameworks */,
-				F979B2982B2909A68F208546 /* libPods-ItaliaApp.a in Frameworks */,
+				544D7A6A6990E1AD0E113BF2 /* libPods-ItaliaApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,10 +246,10 @@
 		591602A69619994F43D34A93 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				00795B9F4BB208E88C8555FB /* Pods-ItaliaApp.debug.xcconfig */,
-				8FF948EE9F5FAEABE8ADDAE1 /* Pods-ItaliaApp.release.xcconfig */,
-				7A046C75C68A2C0E8AE3E0FF /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */,
-				39578C39C9EC4B2189720E67 /* Pods-ItaliaApp-ItaliaAppTests.release.xcconfig */,
+				722056DF161D843DD91D88A7 /* Pods-ItaliaApp.debug.xcconfig */,
+				6F8C6AF94C801CE01EC3D81A /* Pods-ItaliaApp.release.xcconfig */,
+				6D0115BDF703AEBFD8B86A12 /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */,
+				058F4F4927B1B1C84C7F1137 /* Pods-ItaliaApp-ItaliaAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -294,8 +294,8 @@
 				F0625E7B2326822400EDEF90 /* libReact-RCTImage.a */,
 				F0625E792326820B00EDEF90 /* libReact-RCTImage.a */,
 				6C4A0A2AB90C8575993DF1E1 /* Instabug.framework */,
-				EA78A5BDFCE253F9BB4EC906 /* libPods-ItaliaApp.a */,
-				3F38DB3FBDA73096A43D1CC8 /* libPods-ItaliaApp-ItaliaAppTests.a */,
+				A88AAE92C2AA92D33DB25F0C /* libPods-ItaliaApp.a */,
+				59BCC34321A36ABA56F255E3 /* libPods-ItaliaApp-ItaliaAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -307,12 +307,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "ItaliaAppTests" */;
 			buildPhases = (
-				967C5B41F7918E4856FDBE39 /* [CP] Check Pods Manifest.lock */,
+				352F3B8D397ADE20251EED97 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				0DF9F282D62460D8C1369A3C /* [CP] Embed Pods Frameworks */,
-				38D36BBFD3F9AA6F9868163D /* [CP] Copy Pods Resources */,
+				F08399D3BEE675C55F82C6BE /* [CP] Embed Pods Frameworks */,
+				68F41393BCCEDD7F8C939A70 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -328,7 +328,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "ItaliaApp" */;
 			buildPhases = (
-				E922B56599F47919E63399FE /* [CP] Check Pods Manifest.lock */,
+				CC23EFFCB8098D26BE7DBAA5 /* [CP] Check Pods Manifest.lock */,
 				95AEBF4A23D0A295000598A9 /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
@@ -336,8 +336,8 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				61CC933C2135818C00206602 /* Embed Frameworks */,
 				7A034949213D55CA0064B689 /* Work around InputMask.xcodeproj embedding an extra set of Swift libraries */,
-				78E51AC3E918CC62547E92B7 /* [CP] Embed Pods Frameworks */,
-				80F66E4FB2D485A924D4B6E4 /* [CP] Copy Pods Resources */,
+				520BD832C8035EF5E68D9913 /* [CP] Embed Pods Frameworks */,
+				963519164D766C5238AA1B42 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -464,105 +464,29 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
-		0DF9F282D62460D8C1369A3C /* [CP] Embed Pods Frameworks */ = {
+		352F3B8D397ADE20251EED97 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskAnswerBotProvidersSDK/AnswerBotProvidersSDK.framework/AnswerBotProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskAnswerBotSDK/AnswerBotSDK.framework/AnswerBotSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCoreSDK/ZendeskCoreSDK.framework/ZendeskCoreSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework/SupportProvidersSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportSDK/SupportSDK.framework/SupportSDK",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
+			inputFileListPaths = (
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotProvidersSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChatProvidersSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChatSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUISDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZendeskCoreSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessagingAPI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessagingSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDKConfigurations.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SupportProvidersSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SupportSDK.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+				"$(DERIVED_FILE_DIR)/Pods-ItaliaApp-ItaliaAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		38D36BBFD3F9AA6F9868163D /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-resources.sh",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowRight.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowRight@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCheckmark.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCheckmark@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton@3x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPDismissKeyboard.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPDismissKeyboard@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPLogo.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPLogo@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/placeholder-image.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~ipad.xib",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphonelandscape.xib",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphoneportrait.xib",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowRight.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowRight@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCheckmark.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCheckmark@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton@3x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPDismissKeyboard.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPDismissKeyboard@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPLogo.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPLogo@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/placeholder-image.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~ipad.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~iphonelandscape.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~iphoneportrait.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		78E51AC3E918CC62547E92B7 /* [CP] Embed Pods Frameworks */ = {
+		520BD832C8035EF5E68D9913 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -608,6 +532,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		68F41393BCCEDD7F8C939A70 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7A034949213D55CA0064B689 /* Work around InputMask.xcodeproj embedding an extra set of Swift libraries */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -621,58 +563,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# see https://github.com/react-native-community/react-native-text-input-mask/issues/22#issuecomment-344765116\n\nEXTRA_DIR=\"${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Frameworks/InputMask.framework/Frameworks\"\n\nif [[ -d \"${EXTRA_DIR}\" ]]; then\n  rm -rf \"${EXTRA_DIR}\"\nfi\n";
-		};
-		80F66E4FB2D485A924D4B6E4 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowLeft@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowRight.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPArrowRight@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCheckmark.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCheckmark@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPCloseButton@3x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPDismissKeyboard.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPDismissKeyboard@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPLogo.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/MPLogo@2x.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/Images/placeholder-image.png",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~ipad.xib",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphonelandscape.xib",
-				"${PODS_ROOT}/Mixpanel/Mixpanel/MPTakeoverNotificationViewController~iphoneportrait.xib",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowLeft@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowRight.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPArrowRight@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCheckmark.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCheckmark@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPCloseButton@3x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPDismissKeyboard.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPDismissKeyboard@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPLogo.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPLogo@2x.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/placeholder-image.png",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~ipad.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~iphonelandscape.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MPTakeoverNotificationViewController~iphoneportrait.nib",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		95AEBF4A23D0A295000598A9 /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -692,29 +582,25 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\nif nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\nif ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\necho \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\nexit 2\nfi\nelse\nopen \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi\nfi\n";
 		};
-		967C5B41F7918E4856FDBE39 /* [CP] Check Pods Manifest.lock */ = {
+		963519164D766C5238AA1B42 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ItaliaApp-ItaliaAppTests-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp/Pods-ItaliaApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E922B56599F47919E63399FE /* [CP] Check Pods Manifest.lock */ = {
+		CC23EFFCB8098D26BE7DBAA5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -734,6 +620,52 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F08399D3BEE675C55F82C6BE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework/double-conversion",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-Glog/glog.framework/glog",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework/OpenSSL",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskAnswerBotProvidersSDK/AnswerBotProvidersSDK.framework/AnswerBotProvidersSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskAnswerBotSDK/AnswerBotSDK.framework/AnswerBotSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatProvidersSDK/ChatProvidersSDK.framework/ChatProvidersSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskChatSDK/ChatSDK.framework/ChatSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCommonUISDK/CommonUISDK.framework/CommonUISDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskCoreSDK/ZendeskCoreSDK.framework/ZendeskCoreSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingAPISDK/MessagingAPI.framework/MessagingAPI",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskMessagingSDK/MessagingSDK.framework/MessagingSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSDKConfigurationsSDK/SDKConfigurations.framework/SDKConfigurations",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportProvidersSDK/SupportProvidersSDK.framework/SupportProvidersSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/ZendeskSupportSDK/SupportSDK.framework/SupportSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/double-conversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotProvidersSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AnswerBotSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChatProvidersSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChatSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonUISDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZendeskCoreSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessagingAPI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MessagingSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDKConfigurations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SupportProvidersSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SupportSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ItaliaApp-ItaliaAppTests/Pods-ItaliaApp-ItaliaAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -793,7 +725,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A046C75C68A2C0E8AE3E0FF /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */;
+			baseConfigurationReference = 6D0115BDF703AEBFD8B86A12 /* Pods-ItaliaApp-ItaliaAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
@@ -805,7 +737,7 @@
 				INFOPLIST_FILE = ItaliaAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -818,7 +750,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 39578C39C9EC4B2189720E67 /* Pods-ItaliaApp-ItaliaAppTests.release.xcconfig */;
+			baseConfigurationReference = 058F4F4927B1B1C84C7F1137 /* Pods-ItaliaApp-ItaliaAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -827,7 +759,7 @@
 				INFOPLIST_FILE = ItaliaAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -840,7 +772,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 00795B9F4BB208E88C8555FB /* Pods-ItaliaApp.debug.xcconfig */;
+			baseConfigurationReference = 722056DF161D843DD91D88A7 /* Pods-ItaliaApp.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -848,7 +780,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -881,7 +813,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8FF948EE9F5FAEABE8ADDAE1 /* Pods-ItaliaApp.release.xcconfig */;
+			baseConfigurationReference = 6F8C6AF94C801CE01EC3D81A /* Pods-ItaliaApp.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -889,7 +821,7 @@
 				CODE_SIGN_ENTITLEMENTS = ItaliaApp/ItaliaApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CURRENT_PROJECT_VERSION = 0;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = M2X5YQ4BJ7;
 				ENABLE_BITCODE = NO;
@@ -924,7 +856,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -958,6 +890,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -975,6 +908,11 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl",
+					"-ld_classic",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 			};
@@ -985,7 +923,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1015,6 +953,10 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION,
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1029,6 +971,11 @@
 					"\"$(SDKROOT)/usr/lib/swift\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-Wl",
+					"-ld_classic",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

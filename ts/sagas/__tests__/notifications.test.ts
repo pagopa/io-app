@@ -314,7 +314,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should call trackMessageNotificationTap when there is a PendingMessageState that requires tracking", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => Promise.resolve());
+      .mockImplementation(jest.fn());
     const mockPendingMessageState = {
       id: "001",
       foreground: true,
@@ -326,7 +326,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not require tracking", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => Promise.resolve());
+      .mockImplementation(jest.fn());
     const mockPendingMessageState = {
       id: "001",
       foreground: true,
@@ -338,7 +338,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should not call trackMessageNotificationTap when there is a PendingMessageState that does not have a tracking information", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => Promise.resolve());
+      .mockImplementation(jest.fn());
     const mockPendingMessageState = {
       id: "001",
       foreground: true
@@ -349,7 +349,7 @@ describe("trackMessageNotificationTapIfNeeded", () => {
   it("should not call trackMessageNotificationTap when there is not a PendingMessageState", () => {
     const spiedTrackMessageNotificationTap = jest
       .spyOn(Analytics, "trackMessageNotificationTap")
-      .mockImplementation(_ => Promise.resolve());
+      .mockImplementation(jest.fn());
     trackMessageNotificationTapIfNeeded();
     expect(spiedTrackMessageNotificationTap).not.toHaveBeenCalled();
   });

@@ -23,7 +23,8 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
           walletId: "walletId",
           creationDate: new Date(),
           paymentMethodId: "paymentMethodId",
-          services: [],
+          paymentMethodAsset: "paymentMethodAsset",
+          applications: [],
           status: WalletStatusEnum.CREATED,
           updateDate: new Date()
         }

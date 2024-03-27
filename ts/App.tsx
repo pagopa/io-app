@@ -1,21 +1,20 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { StyleProvider } from "native-base";
-import * as React from "react";
-import { MenuProvider } from "react-native-popup-menu";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   IODSExperimentalContextProvider,
-  IOThemeContext,
-  IOThemes
+  IOThemeContextProvider,
+  ToastProvider
 } from "@pagopa/io-app-design-system";
+import { StyleProvider } from "native-base";
+import * as React from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { MenuProvider } from "react-native-popup-menu";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import RootContainer from "./RootContainer";
 import { persistor, store } from "./boot/configureStoreAndPersistor";
 import { LightModalProvider } from "./components/ui/LightModal";
-import RootContainer from "./RootContainer";
 import theme from "./theme";
-import { ToastProvider } from "./components/Toast";
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;
@@ -29,8 +28,8 @@ export const App: React.FunctionComponent<never> = () => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <StyleProvider style={theme()}>
       <SafeAreaProvider>
-        <IOThemeContext.Provider value={IOThemes.light}>
-          <IODSExperimentalContextProvider>
+        <IODSExperimentalContextProvider>
+          <IOThemeContextProvider theme={"light"}>
             <ToastProvider>
               <Provider store={store}>
                 <PersistGate loading={undefined} persistor={persistor}>
@@ -44,8 +43,8 @@ export const App: React.FunctionComponent<never> = () => (
                 </PersistGate>
               </Provider>
             </ToastProvider>
-          </IODSExperimentalContextProvider>
-        </IOThemeContext.Provider>
+          </IOThemeContextProvider>
+        </IODSExperimentalContextProvider>
       </SafeAreaProvider>
     </StyleProvider>
   </GestureHandlerRootView>

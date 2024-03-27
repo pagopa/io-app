@@ -13,13 +13,13 @@ import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { format } from "../../../../utils/dates";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { capitalize } from "../../../../utils/strings";
 import {
   WALLET_PAYMENT_TERMS_AND_CONDITIONS_URL,
   getPaymentLogo
 } from "../../common/utils";
+import { WalletPaymentStepEnum } from "../types";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentPspListSelector } from "../store/selectors";
@@ -78,7 +78,13 @@ export const WalletPaymentConfirmContent = ({
         paymentLogo={getPaymentLogo(paymentMethodDetails)}
         title={getPaymentTitle(paymentMethodDetails)}
         subtitle={getPaymentSubtitle(paymentMethodDetails)}
-        onPress={() => dispatch(walletPaymentSetCurrentStep(1))}
+        onPress={() =>
+          dispatch(
+            walletPaymentSetCurrentStep(
+              WalletPaymentStepEnum.PICK_PAYMENT_METHOD
+            )
+          )
+        }
       />
       <VSpacer size={24} />
       <ListItemHeader
@@ -94,7 +100,9 @@ export const WalletPaymentConfirmContent = ({
         subtitle={`${I18n.t("payment.confirm.feeAppliedBy")} ${
           selectedPsp.bundleName
         }`}
-        onPress={() => dispatch(walletPaymentSetCurrentStep(2))}
+        onPress={() =>
+          dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP))
+        }
       />
       <VSpacer size={24} />
       <WalletPaymentTotalAmount totalAmount={totalAmount} />
@@ -116,21 +124,20 @@ export const WalletPaymentConfirmContent = ({
   );
 };
 
-const getPaymentSubtitle = (details: UIWalletInfoDetails): string => {
-  if (details.maskedPan !== undefined) {
-    return `${format(details.expiryDate, "MM/YY")}`;
-  } else if (details.maskedEmail !== undefined) {
+const getPaymentSubtitle = (
+  details: UIWalletInfoDetails
+): string | undefined => {
+  if (details.maskedEmail !== undefined) {
     return I18n.t("wallet.onboarding.paypal.name");
   } else if (details.maskedNumber !== undefined) {
     return `${details.bankName}`;
   }
-
-  return "";
+  return undefined;
 };
 
 const getPaymentTitle = (details: UIWalletInfoDetails): string => {
-  if (details.maskedPan !== undefined) {
-    return `${capitalize(details.brand || "")} ••${details.maskedPan}`;
+  if (details.lastFourDigits !== undefined) {
+    return `${capitalize(details.brand || "")} ••${details.lastFourDigits}`;
   } else if (details.maskedEmail !== undefined) {
     return `${details.maskedEmail}`;
   } else if (details.maskedNumber !== undefined) {

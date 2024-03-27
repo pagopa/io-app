@@ -1,4 +1,5 @@
 /* eslint-disable functional/immutable-data */
+import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import {
   LinkingOptions,
   NavigationContainer,
@@ -16,7 +17,7 @@ import { fimsLinkingOptions } from "../features/fims/navigation/navigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import IngressScreen from "../screens/ingress/IngressScreen";
+import { IngressScreen } from "../screens/ingress/IngressScreen";
 import { startApplicationInitialization } from "../store/actions/application";
 import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../store/hooks";
@@ -26,7 +27,10 @@ import {
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
-import { IONavigationLightTheme } from "../theme/navigations";
+import {
+  IONavigationDarkTheme,
+  IONavigationLightTheme
+} from "../theme/navigations";
 import { isTestEnv } from "../utils/environment";
 import {
   IO_INTERNAL_LINK_PREFIX,
@@ -38,8 +42,8 @@ import NavigationService, {
   setMainNavigatorReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
-import ROUTES from "./routes";
 import { AppParamsList } from "./params/AppParamsList";
+import ROUTES from "./routes";
 
 type OnStateChangeStateType = Parameters<
   NonNullable<NavigationContainerProps["onStateChange"]>
@@ -81,6 +85,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
+
+  // Dark/Light Mode
+  const { themeType } = useIOThemeContext();
 
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
@@ -137,7 +144,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   return (
     <NavigationContainer
-      theme={IONavigationLightTheme}
+      theme={
+        themeType === "light" ? IONavigationLightTheme : IONavigationDarkTheme
+      }
       ref={navigationRef}
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}

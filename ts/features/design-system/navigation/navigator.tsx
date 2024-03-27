@@ -1,8 +1,7 @@
 import {
-  IOThemeContext,
-  IOThemes,
   IOVisualCostants,
-  IconButton
+  IconButton,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { ThemeProvider, useNavigation } from "@react-navigation/native";
 import {
@@ -12,7 +11,7 @@ import {
 } from "@react-navigation/stack";
 import * as React from "react";
 import { useMemo } from "react";
-import { Alert, Platform, View, useColorScheme } from "react-native";
+import { Alert, Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { makeFontStyleObject } from "../../../components/core/fonts";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
@@ -56,6 +55,7 @@ import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
+import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
@@ -66,13 +66,12 @@ const ModalStack = createStackNavigator<DesignSystemModalParamsList>();
 // BackButton managed through React Navigation
 const RNNBackButton = () => {
   const navigation = useNavigation();
-  const colorScheme = useColorScheme();
-
+  const { themeType } = useIOThemeContext();
   return (
     <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
       <IconButton
         icon="backiOS"
-        color={colorScheme === "dark" ? "contrast" : "neutral"}
+        color={themeType === "dark" ? "contrast" : "neutral"}
         onPress={() => {
           navigation.goBack();
         }}
@@ -132,52 +131,48 @@ const customModalHeaderConf: StackNavigationOptions = {
 };
 
 export const DesignSystemNavigator = () => {
-  const colorScheme = useColorScheme();
+  const { themeType } = useIOThemeContext();
 
   return (
     <ThemeProvider
       value={
-        colorScheme === "dark" ? IONavigationDarkTheme : IONavigationLightTheme
+        themeType === "dark" ? IONavigationDarkTheme : IONavigationLightTheme
       }
     >
-      <IOThemeContext.Provider
-        value={colorScheme === "dark" ? IOThemes.dark : IOThemes.light}
-      >
-        {/* You need two nested navigators to apply the modal
+      {/* You need two nested navigators to apply the modal
       behavior only to the single screen and not to any other.
       Read documentation for reference:
       https://reactnavigation.org/docs/5.x/modal/#creating-a-modal-stack
       
       With RN Navigation 6.x it's much easier because you can
       use the Group function */}
-        <ModalStack.Navigator
-          screenOptions={
-            Platform.OS === "ios"
-              ? {
-                  gestureEnabled: isGestureEnabled,
-                  cardOverlayEnabled: true,
-                  headerMode: "screen",
-                  presentation: "modal",
-                  ...TransitionPresets.ModalPresentationIOS
-                }
-              : {
-                  headerMode: "screen",
-                  presentation: "modal"
-                }
-          }
-        >
-          <ModalStack.Screen
-            name={DESIGN_SYSTEM_ROUTES.MAIN.route}
-            component={DesignSystemMainStack}
-            options={{ headerShown: false }}
-          />
-          <ModalStack.Screen
-            name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
-            component={DSFullScreenModal}
-            options={customModalHeaderConf}
-          />
-        </ModalStack.Navigator>
-      </IOThemeContext.Provider>
+      <ModalStack.Navigator
+        screenOptions={
+          Platform.OS === "ios"
+            ? {
+                gestureEnabled: isGestureEnabled,
+                cardOverlayEnabled: true,
+                headerMode: "screen",
+                presentation: "modal",
+                ...TransitionPresets.ModalPresentationIOS
+              }
+            : {
+                headerMode: "screen",
+                presentation: "modal"
+              }
+        }
+      >
+        <ModalStack.Screen
+          name={DESIGN_SYSTEM_ROUTES.MAIN.route}
+          component={DesignSystemMainStack}
+          options={{ headerShown: false }}
+        />
+        <ModalStack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
+          component={DSFullScreenModal}
+          options={customModalHeaderConf}
+        />
+      </ModalStack.Navigator>
     </ThemeProvider>
   );
 };
@@ -192,6 +187,7 @@ const DesignSystemMainStack = () => {
         fontSize: 14
       },
       headerTitleAlign: "center",
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
       headerLeft: RNNBackButton,
       headerMode: "screen"
@@ -377,6 +373,14 @@ const DesignSystemMainStack = () => {
         component={DSTabNavigation}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title
+        }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.route}
+        component={DSWallet}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
         }}
       />
 

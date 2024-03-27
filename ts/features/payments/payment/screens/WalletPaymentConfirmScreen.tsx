@@ -75,9 +75,7 @@ const WalletPaymentConfirmScreen = () => {
     isPendingAuthorization,
     startPaymentAuthorizaton
   } = useWalletPaymentAuthorizationModal({
-    onAuthorizationOutcome: handleAuthorizationOutcome,
-    onDismiss: () =>
-      handleAuthorizationOutcome(WalletPaymentOutcomeEnum.CANCELED_BY_USER)
+    onAuthorizationOutcome: handleAuthorizationOutcome
   });
 
   const isLoading = isAuthUrlLoading || isPendingAuthorization;

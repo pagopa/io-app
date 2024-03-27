@@ -735,7 +735,6 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                 align="xMidYMid"
                                 bbHeight={24}
                                 bbWidth={24}
-                                color={4282866285}
                                 focusable={false}
                                 height={24}
                                 importantForAccessibility="no-hide-descendants"
@@ -758,19 +757,26 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                     },
                                   ]
                                 }
-                                tintColor={4282866285}
+                                tintColor="#475A6D"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
                               >
-                                <RNSVGGroup>
+                                <RNSVGGroup
+                                  fill={
+                                    Object {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
                                   <RNSVGPath
                                     clipRule={0}
                                     d="M0 12C0 5.3726 5.3726 0 12 0s12 5.3726 12 12-5.3726 12-12 12S0 18.6274 0 12Zm2 0C2 6.47717 6.47717 2 12 2c5.5228 0 10 4.47717 10 10 0 5.5228-4.4772 10-10 10-5.52283 0-10-4.4772-10-10Zm10.0281 7.5c.8439 0 1.5281-.6842 1.5281-1.5281s-.6842-1.5281-1.5281-1.5281c-.844 0-1.5281.6842-1.5281 1.5281S11.1841 19.5 12.0281 19.5Zm0-15.05618h.0005c.5678 0 1.0281.46029 1.0281 1.02808v8.0046c0 .5678-.4603 1.028-1.0281 1.028h-.0005c-.5678 0-1.0281-.4602-1.0281-1.028V5.4719c0-.56779.4603-1.02808 1.0281-1.02808Z"
                                     fill={
-                                      Array [
-                                        2,
-                                      ]
+                                      Object {
+                                        "type": 2,
+                                      }
                                     }
                                     fillRule={0}
                                     propList={
@@ -858,6 +864,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                       "alignItems": "center",
                                       "backgroundColor": "#FFFFFF",
                                       "borderColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
                                       "flexDirection": "row",
@@ -968,6 +975,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                       Array [
                                         Object {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 24,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
@@ -1013,7 +1021,6 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                     align="xMidYMid"
                                     bbHeight={24}
                                     bbWidth={24}
-                                    color={4278219750}
                                     focusable={false}
                                     height={24}
                                     importantForAccessibility="no-hide-descendants"
@@ -1036,19 +1043,26 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                         },
                                       ]
                                     }
-                                    tintColor={4278219750}
+                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
                                   >
-                                    <RNSVGGroup>
+                                    <RNSVGGroup
+                                      fill={
+                                        Object {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
                                       <RNSVGPath
                                         clipRule={0}
                                         d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                         fill={
-                                          Array [
-                                            2,
-                                          ]
+                                          Object {
+                                            "type": 2,
+                                          }
                                         }
                                         fillRule={0}
                                         propList={
@@ -1096,6 +1110,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                       "alignItems": "center",
                                       "backgroundColor": "#FFFFFF",
                                       "borderColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
                                       "flexDirection": "row",
@@ -1206,6 +1221,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                       Array [
                                         Object {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 24,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
@@ -1251,7 +1267,6 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                     align="xMidYMid"
                                     bbHeight={24}
                                     bbWidth={24}
-                                    color={4278219750}
                                     focusable={false}
                                     height={24}
                                     importantForAccessibility="no-hide-descendants"
@@ -1274,19 +1289,26 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                         },
                                       ]
                                     }
-                                    tintColor={4278219750}
+                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
                                   >
-                                    <RNSVGGroup>
+                                    <RNSVGGroup
+                                      fill={
+                                        Object {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
                                       <RNSVGPath
                                         clipRule={0}
                                         d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                         fill={
-                                          Array [
-                                            2,
-                                          ]
+                                          Object {
+                                            "type": 2,
+                                          }
                                         }
                                         fillRule={0}
                                         propList={
@@ -1334,6 +1356,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                       "alignItems": "center",
                                       "backgroundColor": "#FFFFFF",
                                       "borderColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 8,
                                       "borderWidth": 1,
                                       "flexDirection": "row",
@@ -1444,6 +1467,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                       Array [
                                         Object {
                                           "alignItems": "center",
+                                          "borderCurve": "continuous",
                                           "borderRadius": 24,
                                           "flexDirection": "row",
                                           "justifyContent": "center",
@@ -1489,7 +1513,6 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                     align="xMidYMid"
                                     bbHeight={24}
                                     bbWidth={24}
-                                    color={4278219750}
                                     focusable={false}
                                     height={24}
                                     importantForAccessibility="no-hide-descendants"
@@ -1512,19 +1535,26 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
                                         },
                                       ]
                                     }
-                                    tintColor={4278219750}
+                                    tintColor="#0073E6"
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
                                   >
-                                    <RNSVGGroup>
+                                    <RNSVGGroup
+                                      fill={
+                                        Object {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
                                       <RNSVGPath
                                         clipRule={0}
                                         d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                         fill={
-                                          Array [
-                                            2,
-                                          ]
+                                          Object {
+                                            "type": 2,
+                                          }
                                         }
                                         fillRule={0}
                                         propList={
@@ -1929,7 +1959,6 @@ exports[`MessagePayments component Should match the snapshot for a single loadin
                             align="xMidYMid"
                             bbHeight={32}
                             bbWidth={32}
-                            color={4292007651}
                             focusable={false}
                             height={32}
                             importantForAccessibility="no-hide-descendants"
@@ -1952,18 +1981,25 @@ exports[`MessagePayments component Should match the snapshot for a single loadin
                                 },
                               ]
                             }
-                            tintColor={4292007651}
+                            tintColor="#D2D6E3"
                             vbHeight={32}
                             vbWidth={32}
                             width={32}
                           >
-                            <RNSVGGroup>
+                            <RNSVGGroup
+                              fill={
+                                Object {
+                                  "payload": 4278190080,
+                                  "type": 0,
+                                }
+                              }
+                            >
                               <RNSVGPath
                                 d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -1974,9 +2010,9 @@ exports[`MessagePayments component Should match the snapshot for a single loadin
                               <RNSVGPath
                                 d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -2003,6 +2039,7 @@ exports[`MessagePayments component Should match the snapshot for a single loadin
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -2492,7 +2529,6 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                             align="xMidYMid"
                             bbHeight={32}
                             bbWidth={32}
-                            color={4292007651}
                             focusable={false}
                             height={32}
                             importantForAccessibility="no-hide-descendants"
@@ -2515,18 +2551,25 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                                 },
                               ]
                             }
-                            tintColor={4292007651}
+                            tintColor="#D2D6E3"
                             vbHeight={32}
                             vbWidth={32}
                             width={32}
                           >
-                            <RNSVGGroup>
+                            <RNSVGGroup
+                              fill={
+                                Object {
+                                  "payload": 4278190080,
+                                  "type": 0,
+                                }
+                              }
+                            >
                               <RNSVGPath
                                 d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -2537,9 +2580,9 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                               <RNSVGPath
                                 d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -2566,6 +2609,7 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -2681,6 +2725,7 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -2796,6 +2841,7 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -2911,6 +2957,7 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -3026,6 +3073,7 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -3515,7 +3563,6 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                             align="xMidYMid"
                             bbHeight={32}
                             bbWidth={32}
-                            color={4292007651}
                             focusable={false}
                             height={32}
                             importantForAccessibility="no-hide-descendants"
@@ -3538,18 +3585,25 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                                 },
                               ]
                             }
-                            tintColor={4292007651}
+                            tintColor="#D2D6E3"
                             vbHeight={32}
                             vbWidth={32}
                             width={32}
                           >
-                            <RNSVGGroup>
+                            <RNSVGGroup
+                              fill={
+                                Object {
+                                  "payload": 4278190080,
+                                  "type": 0,
+                                }
+                              }
+                            >
                               <RNSVGPath
                                 d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -3560,9 +3614,9 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                               <RNSVGPath
                                 d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -3589,6 +3643,7 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -3704,6 +3759,7 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -3819,6 +3875,7 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -3934,6 +3991,7 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -4049,6 +4107,7 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -4538,7 +4597,6 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                             align="xMidYMid"
                             bbHeight={32}
                             bbWidth={32}
-                            color={4292007651}
                             focusable={false}
                             height={32}
                             importantForAccessibility="no-hide-descendants"
@@ -4561,18 +4619,25 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                                 },
                               ]
                             }
-                            tintColor={4292007651}
+                            tintColor="#D2D6E3"
                             vbHeight={32}
                             vbWidth={32}
                             width={32}
                           >
-                            <RNSVGGroup>
+                            <RNSVGGroup
+                              fill={
+                                Object {
+                                  "payload": 4278190080,
+                                  "type": 0,
+                                }
+                              }
+                            >
                               <RNSVGPath
                                 d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -4583,9 +4648,9 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                               <RNSVGPath
                                 d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -4612,6 +4677,7 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -4727,6 +4793,7 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -4842,6 +4909,7 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -4957,6 +5025,7 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -5072,6 +5141,7 @@ exports[`MessagePayments component Should match the snapshot for five processed 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -5561,7 +5631,6 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                             align="xMidYMid"
                             bbHeight={32}
                             bbWidth={32}
-                            color={4292007651}
                             focusable={false}
                             height={32}
                             importantForAccessibility="no-hide-descendants"
@@ -5584,18 +5653,25 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                                 },
                               ]
                             }
-                            tintColor={4292007651}
+                            tintColor="#D2D6E3"
                             vbHeight={32}
                             vbWidth={32}
                             width={32}
                           >
-                            <RNSVGGroup>
+                            <RNSVGGroup
+                              fill={
+                                Object {
+                                  "payload": 4278190080,
+                                  "type": 0,
+                                }
+                              }
+                            >
                               <RNSVGPath
                                 d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -5606,9 +5682,9 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                               <RNSVGPath
                                 d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
                                 fill={
-                                  Array [
-                                    2,
-                                  ]
+                                  Object {
+                                    "type": 2,
+                                  }
                                 }
                                 propList={
                                   Array [
@@ -5635,6 +5711,7 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -5750,6 +5827,7 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -5865,6 +5943,7 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -5980,6 +6059,7 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -6095,6 +6175,7 @@ exports[`MessagePayments component Should match the snapshot for more than five 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",

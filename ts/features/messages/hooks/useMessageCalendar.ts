@@ -4,6 +4,7 @@ import { Calendar } from "react-native-calendar-events";
 import { pipe } from "fp-ts/lib/function";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
+import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import {
   searchEventInCalendar,
@@ -21,7 +22,6 @@ import {
 } from "../../../store/actions/calendarEvents";
 import { preferredCalendarSaveSuccess } from "../../../store/actions/persistedPreferences";
 import { UIMessageId } from "../types";
-import { IOToast } from "../../../components/Toast";
 
 export const useMessageCalendar = (messageId: UIMessageId) => {
   const dispatch = useIODispatch();

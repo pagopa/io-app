@@ -249,7 +249,7 @@ permissionRationale:
     title: "Allow camera access"
     message: "We require camera permissions to use the torch on the back of your phone."
 startup:
-  title: Initialization
+  title: We are getting ready for your experience on IO
   authentication: User authenticated
   sessionInfo: SPID attributes loaded
   profileInfo: User profile loaded
@@ -437,6 +437,7 @@ profile:
       idpayTest: IDPay
       idpayTestAlert: This change requires app reboot
     designSystemEnvironment: Experimental Design System
+    newWalletSection: New wallet section
     appVersion: Version
     backendVersion: Backend Version
     debugMode: Debug mode
@@ -558,7 +559,7 @@ authentication:
         hint: Carousel that contains an introduction guide to IO functionalities. Select to know the content.
     session_expired:
       title: Your session is expired
-      body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
+      body: For security reasons, we ask you to log in with SPID or CIE every {{days}} days or if you log out
     cie_unsupported:
       title: Login with CIE unavailable
       body: !include cie/cieNotSupported.md
@@ -577,7 +578,7 @@ authentication:
     loginSpidCie: Login with SPID or CIE
     infoSpidCie: Introduction to SPID and CIE
     loginSpidCieContent: From today, in addition to SPID, you can use your Electronic ID Card to login
-    privacyLink: Informativa privacy
+    privacyLink: Privacy
     nospid: Don't have SPID? Find out more
     nospid-nocie: Don't have SPID or CIE? Find out more
     card1-title: All messages in one place
@@ -585,10 +586,10 @@ authentication:
     card2-title: Use your favourite payment methods
     card2-content: You can pay a tax or a penalty by your bank account and your cards
     card3-title: Quickly pay a physical notice
-    card3-content: You can pay a notice also by scanning the QR code on the physical notice    
-    card5-title: Welcome to the public version of IO!
-    card5-content: Vediamo insieme cosa puoi fare
-    card5-content-accessibility: Seleziona elemento precedente per aprire una chat con il team di IO se qualcosa non funziona come dovrebbe.
+    card3-content: You can pay a notice also by scanning the QR code on the physical notice
+    card5-title: Welcome to IO!
+    card5-content: What can you do?
+    card5-content-accessibility: Select previous item to open a chat with the IO team if something is not working.
     expiredCardTitle: Card expired or no longer valid
     expiredCardHeaderTitle: Login with CIE
     expiredCardContent: "The card used is no longer valid or has expired.\nIf you want to log in and access IO you must use SPID."
@@ -705,6 +706,8 @@ authentication:
     recoverDescription: If you're missing your password, you can recover it by tapping on the following button.
     dualRecoverDescription: If you're missing your credentials, you can recover them by tapping on the following buttons.
     recoverPassword: Recover the password
+  idp_login_success:
+    contentTitle: Hi, {{name}}!
   errors:
     notoken: The session is not ready or is invalid
     logout: Error on logout
@@ -820,8 +823,8 @@ email:
     title: Validate your email
     subtitle: Follow the instructions we sent to
     link: Is the email address wrong?
-    buttonlabelsent: Email sent!    
-    countdowntext: Request new email in 
+    buttonlabelsent: Email sent!
+    countdowntext: Request new email in
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -923,6 +926,18 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  homeScreen:
+    title: Payments
+    methodsSection:
+      header: Payment methods
+      headerCTA: Add
+    historySection:
+     header: Transaction history
+     headerCTA: View all
+     transactionStatusBadges:
+      failure: "FALLITA"
+      success: ""
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
@@ -1200,10 +1215,11 @@ wallet:
             title: "I don't know"
             description: "We will search for all cards registered to you at participating banks"
     generalError: "There was a generic error while adding the payment method"
-    success:
-      title: "Payment method added successfully!"
-      continueButton: "Vedi dettagli"
-    failure:
+    outcome:
+      SUCCESS:
+        title: "Payment method added successfully!"
+        subtitle: ""
+        primaryAction: "Vedi dettagli"
       GENERIC_ERROR:
         title: Si è verificato un errore imprevisto
         subtitle: Riprova o contatta l'assistenza
@@ -1742,7 +1758,7 @@ wallet:
         subtitle: Per maggiori informazioni, contatta la tua banca.
       CANCELED_BY_USER:
         title: L’operazione è stata annullata
-        subtitle: Non è stato addebitato alcun importo.
+        subtitle: Se vuoi pagare l’avviso, attendi qualche minuto prima di riprovare.
       EXCESSIVE_AMOUNT:
         title: Autorizzazione negata
         subtitle: Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca.
@@ -1750,7 +1766,8 @@ wallet:
         title: Il metodo di pagamento non è supportato
       WAITING_CONFIRMATION_EMAIL:
         title: Attendi la conferma via email
-        subtitle: Non è stato possibile verificare l'esito del pagamento. Se è andato a buon fine, riceverai a breve un'email. Se non arriva, contatta l'assistenza.
+        subtitle: Riceverai l'esito del pagamento all'indirizzo {{email}}
+        defaultSubtitle: Riceverai l'esito del pagamento all'indirizzo email associato.
       METHOD_NOT_ENABLED:
         title: Abilita il metodo per effettuare pagamenti in app
         subtitle: Prima di riprovare con il pagamento, seleziona il metodo nel tuo Portafoglio e abilita la funzionalità “Pagamenti in app”.
@@ -1929,6 +1946,19 @@ messageDetails:
   bottomSheet:
     title: "What's a dynamic message?"
     body: "It's a message that the sender can edit after you've received it. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in specific cases. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
+  footer:
+    contacts: "Contact the sender"
+    showMoreData: "Show more data"
+  showMoreDataBottomSheet:
+    title: "Identification data"
+    messageId: "Message ID"
+    messageIdAccessibility: "ID messaggio, copy"
+  contactsBottomSheet:
+    title: "Support"
+    body: "If you are unclear about the content of the message, contact the Institution that sent it to you."
+    actions:
+      call: Call
+      email: Send email
 messagePDFPreview:
   title: "PDF Preview"
   singleBtn: "Save or share"
@@ -1989,6 +2019,7 @@ services:
         value: "Quick setup"
         label: "all the services you didn't disable can contact you."
         title: "Use quick setup"
+        successAlert: "You have enabled the quick setup"
         body:
           text1: "You'll receive messages only by the institutions which have something important to tell you."
           text2: "You can always deactivate communications by services that do not interest you."
@@ -1996,6 +2027,7 @@ services:
         value: "Manual setup"
         label: "only the services you enabled can contact you."
         title: "Configure manually"
+        successAlert: "You have enabled the manual configuration"
         body:
           text1: "No one will contact you. To receive messages, you will have to enable services one by one."
         bottomSheet:
@@ -2055,16 +2087,21 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  title: Hi!
+  instructions:
+      unlockCode: unlock code
+      unlockCodepPrefix: use your
+      fingerprint: fingerprint
+      fingerprintPrefix: use your
+      faceId: face
+      faceIdPrefix: use your
+      congiunction: or
+  title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
-  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
-  subtitleCode: Enter the unlock code
-  subtitleCodeFingerprint: use the fingerprint or the unlock code
-  subtitleCodeFaceId: use the Face ID or enter the unlock code
+  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.  
   biometric:
     fingerprintType: Fingerprint
     title: Biometric identification
@@ -2073,8 +2110,8 @@ identification:
       title: Identification required
       sensorDescription: Login quickly
   fail:
-    remainingAttempts: You have {{attempts}} attempts left.
-    remainingAttemptSingle: You have {{attempts}} attempt left.
+    remainingAttempts: You have {{attempts}} attempts left
+    remainingAttemptSingle: You have {{attempts}} attempt left
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:
@@ -2648,6 +2685,10 @@ features:
       addReminder: Add reminder
       removeReminder: Remove reminder
       content: Expires on {{date}} at {{time}}
+    payments:
+      title: "pagoPA notices"
+      noticeCode: "Notice code"
+      pay: "Pay"
   euCovidCertificate:
     save:
       album: "IO"
@@ -2862,6 +2903,14 @@ features:
     signatureFieldInfo:
       title: "What are restrictive clauses?"
       subTitle: "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."
+  wallet:
+    home:
+      emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
+      cta: Aggiungi al portafoglio
+      paymentsBanner:
+        title: Vuoi pagare un avviso?
+        action: Vai alla sezione Pagamenti
+        close: Chiudi
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3428,10 +3477,10 @@ fastLogin:
         subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
         submitButtonTitle: Continue
       continueNavigation:
-        title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
-        cancelButtonTitle: "Annulla"
+        title: "Your session has expired"
+        subtitle: "Please log in to continue using the app"
+        submitButtonTitle: "Log in"
+        cancelButtonTitle: "Cancel"
       transientError:
         title: "We couldn't authenticate you"
         subtitle: "Close the app and try again in a few minutes."

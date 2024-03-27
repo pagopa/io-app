@@ -2,6 +2,7 @@ import {
   ContentWrapper,
   Divider,
   HSpacer,
+  IOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/core";
@@ -12,7 +13,6 @@ import React from "react";
 import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
 import Placeholder from "rn-placeholder";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
-import { IOToast } from "../../../../components/Toast";
 import { Body } from "../../../../components/core/typography/Body";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";

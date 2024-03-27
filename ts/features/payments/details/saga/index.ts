@@ -36,6 +36,6 @@ export function* watchWalletDetailsSaga(
   yield* takeLatest(
     walletDetailsPagoPaCapabilityToggle.request,
     handleTogglePagoPaCapability,
-    walletClient.updateWalletServicesById
+    walletClient.updateWalletApplicationsById
   );
 }
