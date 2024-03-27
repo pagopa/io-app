@@ -2,13 +2,12 @@ import I18n from "i18n-js";
 import React from "react";
 import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
 import { logoutRequest } from "../../../store/actions/authentication";
-import { openWebUrl } from "../../../utils/url";
 import {
   askUserToRefreshSessionToken,
   clearTokenRefreshError
 } from "../store/actions/tokenRefreshActions";
 import { useIODispatch } from "../../../store/hooks";
-import AskUserInteractionScreen from "./AskUserInterarctionScreen";
+import AskUserInteractionScreen from "./AskUserInteractionScreen";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
 
 const FastLoginModals = (
@@ -20,21 +19,21 @@ const FastLoginModals = (
   if (tokenRefreshing.kind === "no-pin-error") {
     return (
       <AskUserInteractionScreen
-        pictogramName="timeout"
+        pictogramName="time"
         title={I18n.t("fastLogin.userInteraction.sessionExpired.noPin.title")}
         subtitle={I18n.t(
           "fastLogin.userInteraction.sessionExpired.noPin.subtitle"
         )}
-        onSubmit={() => {
-          dispatch(clearTokenRefreshError());
-          dispatch(logoutRequest());
-        }}
-        buttonStylesProps={{
-          submitButtonStyle: {
-            type: "solid",
-            title: I18n.t(
-              "fastLogin.userInteraction.sessionExpired.noPin.submitButtonTitle"
-            )
+        primaryAction={{
+          label: I18n.t(
+            "fastLogin.userInteraction.sessionExpired.noPin.submitButtonTitle"
+          ),
+          accessibilityLabel: I18n.t(
+            "fastLogin.userInteraction.sessionExpired.noPin.submitButtonTitle"
+          ),
+          onPress: () => {
+            dispatch(clearTokenRefreshError());
+            dispatch(logoutRequest());
           }
         }}
       />
@@ -44,26 +43,13 @@ const FastLoginModals = (
   if (tokenRefreshing.kind === "transient-error") {
     return (
       <AskUserInteractionScreen
-        pictogramName="umbrella"
+        pictogramName="umbrellaNew"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"
         )}
         subtitle={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
         )}
-        onSubmit={() => {
-          // FIXME: update this URL once available
-          // https://pagopa.atlassian.net/browse/IOPID-393
-          openWebUrl("https://io.italia.it/faq");
-        }}
-        buttonStylesProps={{
-          submitButtonStyle: {
-            type: "solid",
-            title: I18n.t(
-              "fastLogin.userInteraction.sessionExpired.transientError.submitButtonTitle"
-            )
-          }
-        }}
       />
     );
   }
@@ -75,22 +61,22 @@ const FastLoginModals = (
   if (isFastLoginUserInteractionNeeded) {
     return (
       <AskUserInteractionScreen
-        pictogramName="timeout"
+        pictogramName="time"
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.continueNavigation.title"
         )}
         subtitle={I18n.t(
           "fastLogin.userInteraction.sessionExpired.continueNavigation.subtitle"
         )}
-        onSubmit={() => {
-          dispatch(askUserToRefreshSessionToken.success("yes"));
-        }}
-        buttonStylesProps={{
-          submitButtonStyle: {
-            type: "solid",
-            title: I18n.t(
-              "fastLogin.userInteraction.sessionExpired.continueNavigation.submitButtonTitle"
-            )
+        primaryAction={{
+          label: I18n.t(
+            "fastLogin.userInteraction.sessionExpired.continueNavigation.submitButtonTitle"
+          ),
+          accessibilityLabel: I18n.t(
+            "fastLogin.userInteraction.sessionExpired.continueNavigation.submitButtonTitle"
+          ),
+          onPress: () => {
+            dispatch(askUserToRefreshSessionToken.success("yes"));
           }
         }}
       />
