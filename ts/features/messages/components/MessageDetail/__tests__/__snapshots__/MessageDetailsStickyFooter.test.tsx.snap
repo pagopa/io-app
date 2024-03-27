@@ -523,7 +523,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -1114,7 +1113,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -1232,7 +1230,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             }
                           >
                             <View
-                              exiting={[Function]}
                               style={
                                 Array [
                                   Object {
@@ -2034,7 +2031,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                             }
                           >
                             <View
-                              exiting={[Function]}
                               style={
                                 Array [
                                   Object {
@@ -2942,6 +2938,12 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                         />
                                       </RNSVGDefs>
                                       <RNSVGGroup
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
                                         propList={
                                           Array [
                                             "strokeWidth",
@@ -2951,41 +2953,64 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                                       >
                                         <RNSVGPath
                                           d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             Array [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Array [
-                                              1,
-                                              "spinner-secondHalf",
-                                            ]
+                                            Object {
+                                              "brushRef": "spinner-secondHalf",
+                                              "type": 1,
+                                            }
                                           }
                                         />
                                         <RNSVGPath
                                           d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             Array [
                                               "stroke",
                                             ]
                                           }
                                           stroke={
-                                            Array [
-                                              1,
-                                              "spinner-firstHalf",
-                                            ]
+                                            Object {
+                                              "brushRef": "spinner-firstHalf",
+                                              "type": 1,
+                                            }
                                           }
                                         />
                                         <RNSVGPath
                                           d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                          fill={
+                                            Object {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
                                           propList={
                                             Array [
                                               "stroke",
                                               "strokeLinecap",
                                             ]
                                           }
-                                          stroke={4294967295}
+                                          stroke={
+                                            Object {
+                                              "payload": 4294967295,
+                                              "type": 0,
+                                            }
+                                          }
                                           strokeLinecap={1}
                                         />
                                       </RNSVGGroup>
@@ -3429,7 +3454,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -3916,7 +3940,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -4034,7 +4057,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                             }
                           >
                             <View
-                              exiting={[Function]}
                               style={
                                 Array [
                                   Object {
