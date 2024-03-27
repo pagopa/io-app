@@ -1,13 +1,9 @@
 import React from "react";
 import { View } from "react-native";
-import {
-  Body,
-  IOStyles,
-  ProgressLoader,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useCountdown } from "../../../components/countdown/CountdownProvider";
 import I18n from "../../../i18n";
+import { ProgressIndicator } from "../../../components/ui/ProgressIndicator";
 
 type CountdownProps = {
   visible: boolean;
@@ -36,7 +32,7 @@ const Countdown = (props: CountdownProps) => {
     return (
       <View style={IOStyles.alignCenter}>
         <VSpacer size={24} />
-        <ProgressLoader progress={(timerCount / 60) * 100} />
+        <ProgressIndicator progress={(timerCount / 60) * 100} />
         <VSpacer size={8} />
         <Body weight="Regular" style={{ textAlign: "center" }} color="black">
           {I18n.t("email.newvalidate.countdowntext")}{" "}
