@@ -15,13 +15,13 @@ const WalletCardsContainer = () => {
         const category = categoryString as WalletCardCategory;
 
         return (
-          <React.Fragment key={`cards_category_${category}`}>
-            <WalletCardsCategoryContainer
-              iconName={walletCardCategoryIcons[category]}
-              label={I18n.t(`features.wallet.cards.categories.${category}`)}
-              cards={cards}
-            />
-          </React.Fragment>
+          <WalletCardsCategoryContainer
+            key={`cards_category_${category}`}
+            testID={`walletCardsCategoryTestID_${category}`}
+            iconName={walletCardCategoryIcons[category]}
+            label={I18n.t(`features.wallet.cards.categories.${category}`)}
+            cards={cards}
+          />
         );
       })}
     </ContentWrapper>

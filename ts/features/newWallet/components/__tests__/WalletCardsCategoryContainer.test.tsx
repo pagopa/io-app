@@ -24,7 +24,7 @@ describe("WalletCardsCategoryContainer", () => {
       label: T_CATEGORY_LABEL
     });
     expect(queryByText(T_CATEGORY_LABEL)).not.toBeNull();
-    expect(queryByTestId(`wallet_card_${T_KEY}`)).not.toBeNull();
+    expect(queryByTestId(`walletCardTestID_${T_KEY}`)).not.toBeNull();
   });
   it("should not render the component if no cards are provided", () => {
     const {
@@ -35,7 +35,7 @@ describe("WalletCardsCategoryContainer", () => {
       label: T_CATEGORY_LABEL
     });
     expect(queryByText(T_CATEGORY_LABEL)).toBeNull();
-    expect(queryByTestId(`wallet_card_${T_KEY}`)).toBeNull();
+    expect(queryByTestId(`walletCardTestID_${T_KEY}`)).toBeNull();
   });
 });
 
