@@ -374,14 +374,6 @@ const PlaygroundsSection = () => {
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.WALLET_PLAYGROUND
         })
-    },
-    {
-      // new Payments page
-      value: "Payments page playground",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PAYMENTS_HOME
-        })
     }
   ];
 
