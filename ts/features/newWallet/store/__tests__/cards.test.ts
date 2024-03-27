@@ -8,24 +8,33 @@ import {
   walletUpsertCard
 } from "../actions/cards";
 import {
-  getWalletCardsByCategorySelector,
+  getWalletCardsCategorySelector,
   selectWalletCards
 } from "../selectors";
 
 const T_CARD_1: WalletCard = {
   category: "bonus",
   key: "1234",
-  type: "idPay"
+  type: "idPay",
+  amount: 123,
+  avatarSource: {
+    uri: ""
+  },
+  expireDate: new Date(),
+  initiativeId: "123",
+  name: "Test"
 };
 const T_CARD_2: WalletCard = {
   category: "payment",
   key: "9999",
-  type: "payment"
+  type: "payment",
+  walletId: ""
 };
 const T_CARD_3: WalletCard = {
   category: "payment",
   key: "4444",
-  type: "payment"
+  type: "payment",
+  walletId: ""
 };
 
 describe("Wallet store", () => {
@@ -165,7 +174,7 @@ describe("Wallet store", () => {
       });
 
       expect(
-        getWalletCardsByCategorySelector("payment")(store.getState())
+        getWalletCardsCategorySelector("payment")(store.getState())
       ).toStrictEqual(expect.arrayContaining([T_CARD_2, T_CARD_3]));
     });
   });

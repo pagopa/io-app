@@ -14,11 +14,11 @@ import {
   VSpacer,
   IOSpacingScale,
   ListItemAction,
+  IOToast,
   IOStyles
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOToast } from "../../../../components/Toast";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";

@@ -67,7 +67,7 @@ export const updateMixpanelSuperProperties = async (
     forceUpdate<keyof SuperProperties>(superPropertiesObject, forceUpdateFor);
   }
 
-  await mixpanel.registerSuperProperties(superPropertiesObject);
+  mixpanel.registerSuperProperties(superPropertiesObject);
 };
 
 const forceUpdate = <T extends keyof SuperProperties>(

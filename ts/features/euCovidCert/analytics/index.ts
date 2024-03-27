@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import { constVoid } from "fp-ts/lib/function";
 import { euCovidCertificateEnabled } from "../../../config";
 import { mixpanel } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
@@ -11,7 +12,7 @@ import {
 
 const trackEuCovidCertificateActions =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(euCovidCertificateGet.request):
         return mp.track(action.type);
@@ -25,7 +26,6 @@ const trackEuCovidCertificateActions =
           reason: getNetworkErrorMessage(action.payload)
         });
     }
-    return Promise.resolve();
   };
 
 const trackEuCovidCertificateGetSuccessResponse = (
@@ -55,7 +55,7 @@ const trackEuCovidCertificateGetSuccessResponse = (
 };
 
 const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
-  Promise.resolve();
+  constVoid();
 
 export default euCovidCertificateEnabled
   ? trackEuCovidCertificateActions
