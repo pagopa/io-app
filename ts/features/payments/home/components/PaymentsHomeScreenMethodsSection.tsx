@@ -9,6 +9,8 @@ import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
 import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { WalletOnboardingRoutes } from "../../onboarding/navigation/navigator";
 
 const loadingCards: Array<PaymentCardSmallProps> = Array.from({
   length: 3
@@ -21,6 +23,7 @@ type PaymentMethodsSectionProps = {
 };
 
 const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
+  const navigation = useIONavigation();
   const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
   const isLoadingSection = isLoading || pot.isLoading(paymentMethodsPot);
   const methods = pot.getOrElse(paymentMethodsPot, []);
@@ -59,6 +62,12 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
         .filter((item): item is PaymentCardSmallProps => item !== undefined) ??
       loadingCards;
 
+  const handleOnAddMethodPress = () => {
+    navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
+      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
+    });
+  };
+
   return (
     <View style={IOStyles.horizontalContentPadding}>
       <ListItemHeader
@@ -68,7 +77,7 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
           type: "buttonLink",
           componentProps: {
             label: I18n.t("payment.homeScreen.methodsSection.headerCTA"),
-            onPress: () => null
+            onPress: handleOnAddMethodPress
           }
         }}
       />
