@@ -14,7 +14,9 @@ export const MessageInfo = ({ iun }: MessageInfoProps) => (
       label={I18n.t("features.pn.details.infoSection.title")}
     />
     <ListItemInfoCopy
-      accessibilityLabel={I18n.t("features.pn.details.infoSection.iun")}
+      accessibilityLabel={`${I18n.t(
+        "features.pn.details.infoSection.iun"
+      )} ${I18n.t("clipboard.copyIntoClipboard")}`}
       label={I18n.t("features.pn.details.infoSection.iun")}
       value={iun}
       onPress={() => clipboardSetStringWithFeedback(iun)}
