@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {
@@ -15,7 +15,10 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
 import { ServicesParamsList } from "../navigation/params";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
@@ -25,6 +28,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ServiceDetailsHeader } from "../components/ServiceDetailsHeader";
 import { logosForService } from "../../../utils/services";
 import { CardWithMarkdownContent } from "../components/CardWithMarkdownContent";
+import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -77,10 +81,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     servicePot,
     pot.toOption,
     O.fold(
-      () => (
-        // TODO: add error screen
-        <></>
-      ),
+      () => <ServiceDetailsFailure serviceId={serviceId} />,
       service => <ServiceDetailsContent service={service} />
     )
   );
@@ -96,6 +97,13 @@ type ServiceDetailsContentProps = {
 const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
   const headerHeight = useHeaderHeight();
   const scrollTranslationY = useSharedValue(0);
+  const navigation = useIONavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true
+    });
+  }, [navigation]);
 
   useHeaderSecondLevel({
     title: "",

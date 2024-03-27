@@ -1,0 +1,43 @@
+import React, { useCallback } from "react";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useIODispatch } from "../../../store/hooks";
+import { loadServiceDetail } from "../../../store/actions/services";
+import I18n from "../../../i18n";
+
+export type ServiceDetailsFailureProps = {
+  serviceId: string;
+};
+
+export const ServiceDetailsFailure = ({
+  serviceId
+}: ServiceDetailsFailureProps) => {
+  const dispatch = useIODispatch();
+  const navigation = useIONavigation();
+
+  const handleBack = () => navigation.goBack();
+
+  const handleRetry = useCallback(() => {
+    dispatch(loadServiceDetail.request(serviceId));
+  }, [dispatch, serviceId]);
+
+  return (
+    <OperationResultScreenContent
+      pictogram="umbrellaNew"
+      title={I18n.t("services.details.failure.title")}
+      subtitle={I18n.t("services.details.failure.subtitle")}
+      action={{
+        label: I18n.t("services.details.failure.back"),
+        accessibilityLabel: I18n.t("services.details.failure.back"),
+        onPress: handleBack,
+        testID: "service-details-failure-back"
+      }}
+      secondaryAction={{
+        label: I18n.t("services.details.failure.retry"),
+        accessibilityLabel: I18n.t("services.details.failure.retry"),
+        onPress: handleRetry,
+        testID: "service-details-failure-retry"
+      }}
+    />
+  );
+};
