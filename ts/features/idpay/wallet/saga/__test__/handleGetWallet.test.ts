@@ -6,6 +6,7 @@ import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { idPayWalletGet } from "../../store/actions";
 import { handleGetIDPayWallet } from "../handleGetWallet";
+import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 
 const mockedWallet: WalletDTO = { initiativeList: [] };
 
@@ -25,6 +26,8 @@ describe("handleGetIDPayWallet", () => {
         .next()
         .call(withRefreshApiCall, getWallet(), idPayWalletGet.request())
         .next(E.right({ status: 200, value: mockedWallet }))
+        .put(walletAddCards([]))
+        .next()
         .put(idPayWalletGet.success(mockedWallet))
         .next()
         .isDone();
