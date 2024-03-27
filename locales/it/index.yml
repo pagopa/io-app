@@ -213,6 +213,11 @@ tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
+  body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.
+  learnMoreButton: 
+    title: Cosa significa?
+  learnMoreBottomsheet:
+    title: Sicurezza del dispositivo
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:

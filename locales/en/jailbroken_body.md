@@ -1,7 +1,7 @@
-It seems like your device has been **jailbroken**.
+Sul tuo dispositivo è stato effettuato un **jailbrack**. Questo succede quando il sistema operativo viene modificato o installato in modo anomalo. Questo potrebbe compromettere l’integrità del sistema e l'app IO potrebbe non funzionare correttamente.
 
-This happens when the operating system undergoes an unusual modification or installation. The integrity of the operating system may have been compromised and the IO app may not be working properly.
+**Cosa fare?**
 
-If possible, please do not continue and install the IO app on a different device running an operating system which has integrity and is up-to-date.
+Ti invitiamo a usare l'app IO su un dispositivo diverso, con un sistema operativo integro e aggiornato.
 
-If you continue, you agree to proceed at your own risk in interacting with the services offered, as lack of integrity may lead to data theft and/or other fraudulent activities. You also agree that the app developer is in no way liable for any damage, loss, or consequence you might incur as a result of using the IO app in this execution context.
+Se continui, accetti di proseguire a tuo rischio nell'interazione con i servizi offerti. La mancanza di integrità può portare al furto di dati o ad altre attività fraudolente. Accetti anche che lo sviluppatore dell’app non sia in alcun modo responsabile di eventuali danni, perdite o conseguenze causate dall'app IO in questo contesto di esecuzione.
