@@ -3474,12 +3474,12 @@ fastLogin:
     sessionExpired:
       noPin:
         title: È passato troppo tempo!
-        subtitle: Per ragioni di sicurezza devi autenticarti di nuovo con SPID o CIE. Potrai poi continuare la configurazione di IO da dove l’avevi interrotta.
+        subtitle: Per motivi di sicurezza, devi identificarti di nuovo con SPID o CIE. Potrai poi riprendere la configurazione di IO da dove l’avevi interrotta.
         submitButtonTitle: Continua
       continueNavigation:
         title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
+        subtitle: "Accedi per continuare a usare l’app."
+        submitButtonTitle: "Accedi"
         cancelButtonTitle: "Annulla"
       transientError:
         title: "Non siamo riusciti ad autenticarti"
