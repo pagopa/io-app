@@ -55,6 +55,7 @@ import { DSTabNavigation } from "../core/DSTabNavigation";
 import { DSTextFields } from "../core/DSTextFields";
 import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
+import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
 import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
@@ -372,6 +373,14 @@ const DesignSystemMainStack = () => {
         component={DSTabNavigation}
         options={{
           headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title
+        }}
+      />
+
+      <Stack.Screen
+        name={DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.route}
+        component={DSWallet}
+        options={{
+          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.WALLET.title
         }}
       />
 
