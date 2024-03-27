@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import I18n from "../../../../i18n";
@@ -7,7 +8,6 @@ import {
   IO_INTERNAL_LINK_PREFIX
 } from "../../../../utils/navigation";
 import { openWebUrl } from "../../../../utils/url";
-import { IOToast } from "../../../Toast";
 
 export const isIoInternalLink = (href: string): boolean =>
   href.startsWith(IO_INTERNAL_LINK_PREFIX);

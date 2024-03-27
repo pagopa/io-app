@@ -1,9 +1,9 @@
+import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-import { render, fireEvent } from "@testing-library/react-native";
 
+import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import TosAndPrivacyBox from "../TosAndPrivacyBox";
-import { IOToast } from "../../Toast";
 
 // eslint-disable-next-line functional/no-let
 let MOCK_URL_WILL_FAIL = false;

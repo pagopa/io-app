@@ -2,6 +2,7 @@ import {
   FooterWithButtons,
   HeaderSecondLevel,
   IOColors,
+  IOToast,
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -26,7 +27,6 @@ import {
   closeInjectedScript
 } from "../utils/webview";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
-import { IOToast } from "./Toast";
 import { Label } from "./core/typography/Label";
 import { IOStyles } from "./core/variables/IOStyles";
 import { withLightModalContext } from "./helpers/withLightModalContext";

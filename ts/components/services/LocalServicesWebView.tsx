@@ -1,4 +1,4 @@
-import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
+import { IOColors, IOToast, hexToRgba } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
@@ -18,7 +18,6 @@ import { servicesByIdSelector } from "../../store/reducers/entities/services/ser
 import { GlobalState } from "../../store/reducers/types";
 import { isStrictSome } from "../../utils/pot";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";
-import { IOToast } from "../Toast";
 import { withLightModalContext } from "../helpers/withLightModalContext";
 import GenericErrorComponent from "../screens/GenericErrorComponent";
 import { RefreshIndicator } from "../ui/RefreshIndicator";

@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useIsFocused } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
@@ -26,7 +27,6 @@ import {
 } from "../../../types/services/ServicePreferenceResponse";
 import { isStrictSome } from "../../../utils/pot";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
-import { IOToast } from "../../Toast";
 import SectionHeader from "../SectionHeader";
 import PreferenceToggleRow from "./PreferenceToggleRow";
 

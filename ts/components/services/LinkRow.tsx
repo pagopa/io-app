@@ -1,13 +1,13 @@
 import * as React from "react";
 import { StyleSheet } from "react-native";
 
+import { IOToast } from "@pagopa/io-app-design-system";
 import { TranslationKeys } from "../../../locales/locales";
 import I18n from "../../i18n";
 import { openWebUrl } from "../../utils/url";
 
 import { Link } from "../core/typography/Link";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
-import { IOToast } from "../Toast";
 
 const styles = StyleSheet.create({
   link: {
