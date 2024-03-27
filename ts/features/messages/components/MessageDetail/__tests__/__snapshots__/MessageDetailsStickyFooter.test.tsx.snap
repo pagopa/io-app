@@ -523,7 +523,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -1114,7 +1113,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -1232,7 +1230,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                             }
                           >
                             <View
-                              exiting={[Function]}
                               style={
                                 Array [
                                   Object {
@@ -2034,7 +2031,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                             }
                           >
                             <View
-                              exiting={[Function]}
                               style={
                                 Array [
                                   Object {
@@ -3458,7 +3454,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -3945,7 +3940,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                 }
                               >
                                 <View
-                                  exiting={[Function]}
                                   style={
                                     Array [
                                       Object {
@@ -4063,7 +4057,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                             }
                           >
                             <View
-                              exiting={[Function]}
                               style={
                                 Array [
                                   Object {
