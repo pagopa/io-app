@@ -113,6 +113,12 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
             />
           </RNSVGDefs>
           <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
             propList={
               Array [
                 "strokeWidth",
@@ -122,41 +128,64 @@ exports[`BoxedRefreshIndicator Should match all-properties snapshot 1`] = `
           >
             <RNSVGPath
               d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
               propList={
                 Array [
                   "stroke",
                 ]
               }
               stroke={
-                Array [
-                  1,
-                  "spinner-secondHalf",
-                ]
+                Object {
+                  "brushRef": "spinner-secondHalf",
+                  "type": 1,
+                }
               }
             />
             <RNSVGPath
               d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
               propList={
                 Array [
                   "stroke",
                 ]
               }
               stroke={
-                Array [
-                  1,
-                  "spinner-firstHalf",
-                ]
+                Object {
+                  "brushRef": "spinner-firstHalf",
+                  "type": 1,
+                }
               }
             />
             <RNSVGPath
               d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
               propList={
                 Array [
                   "stroke",
                   "strokeLinecap",
                 ]
               }
-              stroke={4278927075}
+              stroke={
+                Object {
+                  "payload": 4278927075,
+                  "type": 0,
+                }
+              }
               strokeLinecap={1}
             />
           </RNSVGGroup>
@@ -284,6 +313,12 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
             />
           </RNSVGDefs>
           <RNSVGGroup
+            fill={
+              Object {
+                "payload": 4278190080,
+                "type": 0,
+              }
+            }
             propList={
               Array [
                 "strokeWidth",
@@ -293,41 +328,64 @@ exports[`BoxedRefreshIndicator Should match base snapshot 1`] = `
           >
             <RNSVGPath
               d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
               propList={
                 Array [
                   "stroke",
                 ]
               }
               stroke={
-                Array [
-                  1,
-                  "spinner-secondHalf",
-                ]
+                Object {
+                  "brushRef": "spinner-secondHalf",
+                  "type": 1,
+                }
               }
             />
             <RNSVGPath
               d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
               propList={
                 Array [
                   "stroke",
                 ]
               }
               stroke={
-                Array [
-                  1,
-                  "spinner-firstHalf",
-                ]
+                Object {
+                  "brushRef": "spinner-firstHalf",
+                  "type": 1,
+                }
               }
             />
             <RNSVGPath
               d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+              fill={
+                Object {
+                  "payload": 4278190080,
+                  "type": 0,
+                }
+              }
               propList={
                 Array [
                   "stroke",
                   "strokeLinecap",
                 ]
               }
-              stroke={4278927075}
+              stroke={
+                Object {
+                  "payload": 4278927075,
+                  "type": 0,
+                }
+              }
               strokeLinecap={1}
             />
           </RNSVGGroup>
