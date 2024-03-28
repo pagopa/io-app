@@ -297,18 +297,15 @@ const EmailInsertScreen = () => {
     }
   });
 
-  const userNavigateToEmailValidationScreen = useCallback(
-    () =>
-      O.isSome(acknowledgeOnEmailValidated) &&
-      acknowledgeOnEmailValidated.value === false &&
-      isOnboarding,
-    [acknowledgeOnEmailValidated, isOnboarding]
-  );
+  const userNavigateToEmailValidationScreen =
+    O.isSome(acknowledgeOnEmailValidated) &&
+    acknowledgeOnEmailValidated.value === false &&
+    isOnboarding;
 
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // let the user navigate the email validation screen
   useEffect(() => {
-    if (userNavigateToEmailValidationScreen()) {
+    if (userNavigateToEmailValidationScreen) {
       // eslint-disable-next-line functional/immutable-data
       canShowLoadingSpinner.current = false;
       navigation.navigate(ROUTES.ONBOARDING, {
@@ -442,7 +439,7 @@ const EmailInsertScreen = () => {
             </Body>
             <VSpacer size={16} />
             <TextInputValidation
-              autoFocus={!userNavigateToEmailValidationScreen()}
+              autoFocus={!userNavigateToEmailValidationScreen}
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
