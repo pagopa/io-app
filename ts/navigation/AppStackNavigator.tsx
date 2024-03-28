@@ -25,6 +25,7 @@ import {
   isCGNEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
+import { isNewWalletSectionEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -85,6 +86,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
 
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
@@ -101,6 +105,10 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
             [MESSAGES_ROUTES.MESSAGES_HOME]: "messages",
             [ROUTES.WALLET_HOME]: "wallet",
             [SERVICES_ROUTES.SERVICES_HOME]: "services",
+            // [ROUTES.BARCODE_SCAN]: "scan",
+            ...(isNewWalletSectionEnabled
+              ? { [ROUTES.PAYMENTS_HOME]: "payments" }
+              : {}),
             [ROUTES.PROFILE_MAIN]: "profile"
           }
         },

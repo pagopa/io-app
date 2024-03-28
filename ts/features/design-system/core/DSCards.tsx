@@ -1,17 +1,18 @@
 import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { DesignSystemSection } from "../components/DesignSystemSection";
 import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
 import {
   PaymentCardsCarousel,
   PaymentCardsCarouselProps
 } from "../../payments/common/components/PaymentCardsCarousel";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DesignSystemSection } from "../components/DesignSystemSection";
 
 const styles = StyleSheet.create({
   content: {
@@ -177,7 +178,7 @@ export const DSCards = () => (
         <PaymentCardsCarousel {...cardsDataForCarousel} />
       </DSComponentViewerBox>
     </DesignSystemSection>
-    <DesignSystemSection title="IdPayWalletCard">
+    <DesignSystemSection title="IdPayCard">
       <IdPayCard
         name="18 app"
         amount={9999}
@@ -186,6 +187,17 @@ export const DSCards = () => (
         }}
         expireDate={new Date()}
       />
+    </DesignSystemSection>
+    <DesignSystemSection title="CgnCard">
+      <DSComponentViewerBox name="Under 31">
+        <CgnCard expireDate={new Date(2023, 11, 2)} withEycaLogo={true} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Expired">
+        <CgnCard withEycaLogo={true} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Over 31">
+        <CgnCard expireDate={new Date(2023, 11, 2)} />
+      </DSComponentViewerBox>
     </DesignSystemSection>
   </DesignSystemScreen>
 );

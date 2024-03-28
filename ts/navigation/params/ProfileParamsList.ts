@@ -1,4 +1,5 @@
-import { CduEmailInsertScreenNavigationParams } from "../../screens/profile/CduEmailInsertScreen";
+import { EmailInsertScreenNavigationParams } from "../../screens/profile/EmailInsertScreen";
+import { SendEmailValidationScreenProp } from "../../screens/profile/EmailValidationSendEmailScreen";
 import ROUTES from "../routes";
 
 export type ProfileParamsList = {
@@ -15,8 +16,8 @@ export type ProfileParamsList = {
   [ROUTES.PROFILE_ABOUT_APP]: undefined;
   [ROUTES.PROFILE_LOGOUT]: undefined;
   [ROUTES.PROFILE_FISCAL_CODE]: undefined;
-  [ROUTES.READ_EMAIL_SCREEN]: undefined;
-  [ROUTES.INSERT_EMAIL_SCREEN]: CduEmailInsertScreenNavigationParams;
+  [ROUTES.INSERT_EMAIL_SCREEN]: EmailInsertScreenNavigationParams;
+  [ROUTES.EMAIL_VERIFICATION_SCREEN]: SendEmailValidationScreenProp;
   [ROUTES.PIN_SCREEN]: undefined;
   [ROUTES.PROFILE_DOWNLOAD_DATA]: undefined;
   [ROUTES.MARKDOWN_PLAYGROUND]: undefined;
@@ -32,5 +33,4 @@ export type ProfileParamsList = {
   [ROUTES.IDPAY_CODE_PLAYGROUND]: undefined;
   [ROUTES.WALLET_PLAYGROUND]: undefined;
   [ROUTES.WALLET_PAYMENT_PLAYGROUND]: undefined;
-  [ROUTES.PAYMENTS_HOME]: undefined;
 };
