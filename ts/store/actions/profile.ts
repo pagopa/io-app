@@ -82,6 +82,13 @@ export const removeAccountMotivation = createStandardAction(
   "REMOVE_ACCOUNT_MOTIVATION"
 )<RemoveAccountMotivationPayload>();
 
+export const emailValidationPollingStart = createAction(
+  "EMAIL_VALIDATION_POLLING_START"
+);
+export const emailValidationPollingStop = createAction(
+  "EMAIL_VALIDATION_POLLING_STOP"
+);
+
 export type ProfileActions =
   | ActionType<typeof resetProfileState>
   | ActionType<typeof profileLoadSuccess>
@@ -93,4 +100,6 @@ export type ProfileActions =
   | ActionType<typeof profileFirstLogin>
   | ActionType<typeof clearCache>
   | ActionType<typeof removeAccountMotivation>
-  | ActionType<typeof setEmailCheckAtStartupFailure>;
+  | ActionType<typeof setEmailCheckAtStartupFailure>
+  | ActionType<typeof emailValidationPollingStart>
+  | ActionType<typeof emailValidationPollingStop>;

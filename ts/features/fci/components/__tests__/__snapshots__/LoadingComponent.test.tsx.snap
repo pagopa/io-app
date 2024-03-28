@@ -77,9 +77,9 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               gradient={
                 Array [
                   0,
-                  29670,
+                  736995,
                   1,
-                  -16747546,
+                  -16040221,
                 ]
               }
               gradientTransform={null}
@@ -94,9 +94,9 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               gradient={
                 Array [
                   0,
-                  -16747546,
+                  -16040221,
                   1,
-                  -16747546,
+                  -16040221,
                 ]
               }
               gradientTransform={null}
@@ -178,7 +178,7 @@ exports[`Test LoadingComponent component should render a LoadingComponent compon
               }
               stroke={
                 Object {
-                  "payload": 4278219750,
+                  "payload": 4278927075,
                   "type": 0,
                 }
               }
