@@ -2,7 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
-import { WalletCardCategory } from "../../types";
+import { WalletCard, WalletCardCategory } from "../../types";
 
 const selectWalletFeature = (state: GlobalState) => state.features.wallet;
 
@@ -18,10 +18,20 @@ export const isWalletPaymentsRedirectBannerVisibleSelector = (
 export const selectWalletCards = (state: GlobalState) =>
   pipe(state, selectWalletFeature, wallet => Object.values(wallet.cards));
 
-export const getWalletCardsByCategorySelector = (
-  category: WalletCardCategory
-) =>
+export const getWalletCardsByCategorySelector = createSelector(
+  selectWalletCards,
+  cards =>
+    cards.reduce(
+      (acc, card) => ({
+        ...acc,
+        [card.category]: [...(acc[card.category] || []), card]
+      }),
+      {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
+    )
+);
+
+export const getWalletCardsCategorySelector = (category: WalletCardCategory) =>
   createSelector(
-    selectWalletCards,
-    cards => _.groupBy(cards, ({ category }) => category)[category]
+    getWalletCardsByCategorySelector,
+    cardsByCategory => cardsByCategory[category]
   );

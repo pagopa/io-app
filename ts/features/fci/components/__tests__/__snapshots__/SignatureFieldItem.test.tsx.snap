@@ -131,7 +131,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
             pointerEvents="none"
           >
             <View
-              accessible={true}
+              accessible={false}
               collapsable={false}
               focusable={true}
               onBlur={[Function]}
