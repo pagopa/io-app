@@ -12,8 +12,6 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import {
   IOStackNavigationRouteProps,
@@ -73,18 +71,16 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     dispatch(loadServiceDetail.request(serviceId));
   }, [dispatch, serviceId]);
 
-  if (pot.isLoading(servicePot)) {
-    // TODO: add a loading screen
+  if (pot.isError(servicePot)) {
+    return <ServiceDetailsFailure serviceId={serviceId} />;
   }
 
-  return pipe(
-    servicePot,
-    pot.toOption,
-    O.fold(
-      () => <ServiceDetailsFailure serviceId={serviceId} />,
-      service => <ServiceDetailsContent service={service} />
-    )
-  );
+  if (pot.isLoading(servicePot) || pot.isNone(servicePot)) {
+    // TODO: add a loading screen
+    return <></>;
+  }
+
+  return <ServiceDetailsContent service={servicePot.value} />;
 };
 
 const scrollTriggerOffsetValue: number = 88;
