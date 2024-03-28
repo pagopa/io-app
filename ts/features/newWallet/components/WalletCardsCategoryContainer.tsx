@@ -53,6 +53,7 @@ const WalletCardsCategoryContainer = ({
           {renderCardFn(card, isStacked && index < cards.length - 1)}
         </React.Fragment>
       ))}
+      <VSpacer size={16} />
     </View>
   );
 };
