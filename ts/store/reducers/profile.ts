@@ -180,6 +180,11 @@ export const isProfileEmailValidatedSelector = (state: GlobalState) =>
     profileEmailValidatedPot => pot.getOrElse(profileEmailValidatedPot, false)
   );
 
+export const isEmailValidatedSelector = createSelector(
+  isProfileEmailValidatedSelector,
+  isEmailValidated => isEmailValidated
+);
+
 // return preferences
 export const profilePreferencesSelector = createSelector(
   profileSelector,

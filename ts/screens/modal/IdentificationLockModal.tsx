@@ -6,7 +6,6 @@ import {
   ContentWrapper,
   LabelSmall,
   Pictogram,
-  ProgressLoader,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { H3 } from "../../components/core/typography/H3";
@@ -20,6 +19,7 @@ import {
   useCountdown
 } from "../../components/countdown/CountdownProvider";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
+import { ProgressIndicator } from "../../components/ui/ProgressIndicator";
 
 type Props = {
   countdownInMs: Millisecond;
@@ -53,7 +53,7 @@ const Countdown = (props: CountdownProps) => {
 
   return (
     <>
-      <ProgressLoader progress={loaderValue} />
+      <ProgressIndicator progress={loaderValue} />
       <VSpacer size={8} />
       <View style={IOStyles.row}>
         <LabelSmall color="black" weight="Regular">
