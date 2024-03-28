@@ -2538,7 +2538,7 @@ bonus:
         job: Jobs and Internships
     cta:
       activeBonus: Request your Card
-      deactivateBonus: Deactivate your Card
+      deactivateBonus: Deactivate Carta Giovani Nazionale
       goToDetail: View your Carta Giovani
     detail:
       cta:
@@ -2569,6 +2569,7 @@ bonus:
           revoked: Revoked
           expired: Expired
         date:
+          valid_until: "Available until {{date}}"
           activated: Activated on
           expired: Expired on
           revoked: Revoked on

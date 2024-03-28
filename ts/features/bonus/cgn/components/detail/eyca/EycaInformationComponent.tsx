@@ -1,5 +1,4 @@
 import * as React from "react";
-import { View } from "react-native";
 import { ButtonOutline, VSpacer, IOToast } from "@pagopa/io-app-design-system";
 import LegacyMarkdown from "../../../../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../../../../i18n";
@@ -14,31 +13,28 @@ import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
 const EycaInformationComponent: React.FunctionComponent = () => {
   const [isMarkdownloaded, setMarkdownloaded] = React.useState(false);
   return (
-    <View>
+    <>
+      <LegacyMarkdown
+        avoidTextSelection
+        onLoadEnd={() => setMarkdownloaded(true)}
+      >
+        {I18n.t("bonus.cgn.detail.status.eycaDescription")}
+      </LegacyMarkdown>
       <VSpacer size={16} />
-      <View>
-        <LegacyMarkdown
-          avoidTextSelection
-          onLoadEnd={() => setMarkdownloaded(true)}
-        >
-          {I18n.t("bonus.cgn.detail.status.eycaDescription")}
-        </LegacyMarkdown>
-        <VSpacer size={16} />
-        {isMarkdownloaded && (
-          <ButtonOutline
-            fullWidth
-            label={I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
-            accessibilityLabel={I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
-            onPress={() =>
-              openWebUrl(EYCA_WEBSITE_BASE_URL, () =>
-                IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
-              )
-            }
-          />
-        )}
-      </View>
+      {isMarkdownloaded && (
+        <ButtonOutline
+          fullWidth
+          label={I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
+          accessibilityLabel={I18n.t("bonus.cgn.detail.cta.eyca.bottomSheet")}
+          onPress={() =>
+            openWebUrl(EYCA_WEBSITE_BASE_URL, () =>
+              IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+            )
+          }
+        />
+      )}
       <VSpacer size={16} />
-    </View>
+    </>
   );
 };
 

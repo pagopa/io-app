@@ -2538,7 +2538,7 @@ bonus:
         job: Lavoro e Tirocini
     cta:
       activeBonus: Richiedi la Carta
-      deactivateBonus: Disattiva la Carta
+      deactivateBonus: Disattiva Carta Giovani Nazionale
       goToDetail: Visualizza la Carta
     detail:
       cta:
@@ -2569,6 +2569,7 @@ bonus:
           revoked: Revocata
           expired: Scaduta
         date:
+          valid_until: "Valida fino al {{date}}"
           activated: Attivata il
           expired: Scaduta il
           revoked: Revocata il

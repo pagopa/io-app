@@ -1,18 +1,19 @@
 import * as React from "react";
 import { useEffect, useRef } from "react";
-import { View, Alert } from "react-native";
-import { LabelLink, IOToast } from "@pagopa/io-app-design-system";
+import { Alert } from "react-native";
+import { IOToast, ListItemAction } from "@pagopa/io-app-design-system";
 
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnUnsubscribeSelector } from "../../store/reducers/unsubscribe";
 import I18n from "../../../../../i18n";
 import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
 import { isError, isReady } from "../../../../../common/model/RemoteValue";
-import { navigateBack } from "../../../../../store/actions/navigation";
 import { cgnDetails } from "../../store/actions/details";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 
 const CgnUnsubscribe = () => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
   const isFirstRender = useRef<boolean>(true);
 
@@ -35,7 +36,7 @@ const CgnUnsubscribe = () => {
 
   useEffect(() => {
     if (isReady(unsubscriptionStatus)) {
-      navigateBack();
+      navigation.goBack();
       dispatch(cgnDetails.request());
       IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
     }
@@ -45,21 +46,17 @@ const CgnUnsubscribe = () => {
 
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
-  }, [unsubscriptionStatus, dispatch]);
+  }, [unsubscriptionStatus, navigation, dispatch]);
 
   return (
-    <View style={{ paddingTop: 16, paddingBottom: 60 }}>
-      <LabelLink
-        color={"red"}
-        style={{ textAlign: "center" }}
-        accessibilityRole={"button"}
-        accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}
-        onPress={requestUnsubscription}
-        testID="cgnDeactivateBonusTestId"
-      >
-        {I18n.t("bonus.cgn.cta.deactivateBonus")}
-      </LabelLink>
-    </View>
+    <ListItemAction
+      accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}
+      variant="danger"
+      label={I18n.t("bonus.cgn.cta.deactivateBonus")}
+      testID="cgnDeactivateBonusTestId"
+      onPress={requestUnsubscription}
+      icon="trashcan"
+    />
   );
 };
 
