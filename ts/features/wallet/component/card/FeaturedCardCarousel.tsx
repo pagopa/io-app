@@ -16,7 +16,6 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import {
   loadServiceDetail,
   showServiceDetails
@@ -38,6 +37,7 @@ import {
   serviceFromAvailableBonusSelector
 } from "../../../bonus/common/store/selectors";
 import { getRemoteLocale } from "../../../messages/utils/messages";
+import { SERVICES_ROUTES } from "../../../services/navigation/routes";
 import FeaturedCard from "./FeaturedCard";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -105,8 +105,8 @@ const FeaturedCardCarousel: React.FunctionComponent<Props> = (props: Props) => {
             },
             s => () => {
               dispatch(showServiceDetails(s));
-              navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-                screen: ROUTES.SERVICE_DETAIL,
+              navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+                screen: SERVICES_ROUTES.SERVICE_DETAIL,
                 params: { serviceId: s.service_id }
               });
             }

@@ -32,15 +32,13 @@ const reducer = (
     case getType(loadServiceDetail.request):
       // When a previously loaded service detail is loaded again, its state
       // is updated with a someLoading pot, otherwise its state is updated with a noneLoading pot
-      const cachedValue = state[action.payload];
-      const prevServiceRequest =
-        cachedValue && pot.isSome(cachedValue) && !pot.isLoading(cachedValue)
-          ? pot.someLoading(cachedValue.value)
-          : pot.noneLoading;
-
       return {
         ...state,
-        [action.payload]: prevServiceRequest
+        [action.payload]: pipe(
+          state[action.payload],
+          O.fromNullable,
+          O.fold(() => pot.noneLoading, pot.toLoading)
+        )
       };
 
     case getType(loadServiceDetail.success):
@@ -56,15 +54,16 @@ const reducer = (
     case getType(loadServiceDetail.failure):
       // when a request to load a previously loaded service detail fails its state is updated
       // with a someError pot, otherwise its state is updated with a noneError pot
-      const { service_id, error } = action.payload;
-      const prevServiceFailure = state[service_id];
-      const nextServiceFailure =
-        prevServiceFailure !== undefined && pot.isSome(prevServiceFailure)
-          ? pot.someError(prevServiceFailure.value, error)
-          : pot.noneError(error);
       return {
         ...state,
-        [service_id]: nextServiceFailure
+        [action.payload.service_id]: pipe(
+          state[action.payload.service_id],
+          O.fromNullable,
+          O.fold(
+            () => pot.noneError(action.payload.error),
+            servicePot => pot.toError(servicePot, action.payload.error)
+          )
+        )
       };
 
     case getType(removeServiceTuples): {
