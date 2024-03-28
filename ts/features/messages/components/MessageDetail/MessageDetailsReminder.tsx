@@ -1,15 +1,13 @@
-import React, { useCallback } from "react";
-import { Alert } from "@pagopa/io-app-design-system";
+import React from "react";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { UIMessageId } from "../../types";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import I18n from "../../../../i18n";
-import { localeDateFormat } from "../../../../utils/locale";
 import { useIOSelector } from "../../../../store/hooks";
-import { useMessageReminder } from "../../hooks/useMessageReminder";
-import { preferredCalendarSelector } from "../../../../store/reducers/persistedPreferences";
+import { paymentExpirationBannerStateSelector } from "../../store/reducers/payments";
+import { MessageDetailsReminderExpiring } from "./MessageDetailsReminderExpiring";
+import { MessageDetailsReminderExpired } from "./MessageDetailsReminderExpired";
 
 export type MessageDetailsReminderProps = {
-  dueDate: Date;
+  dueDate?: Date;
   messageId: UIMessageId;
   title: string;
 };
@@ -19,41 +17,29 @@ export const MessageDetailsReminder = ({
   messageId,
   title
 }: MessageDetailsReminderProps) => {
-  const navigation = useIONavigation();
-
-  const preferredCalendar = useIOSelector(preferredCalendarSelector);
-
-  const navigate = useCallback(() => {
-    navigation.navigate("MESSAGES_NAVIGATOR", {
-      screen: "MESSAGE_DETAIL_CALENDAR",
-      params: {
-        messageId
-      }
-    });
-  }, [messageId, navigation]);
-
-  const { isEventInDeviceCalendar, upsertReminder } = useMessageReminder(
-    messageId,
-    navigate
+  const reminderVisibility = useIOSelector(state =>
+    paymentExpirationBannerStateSelector(state, messageId)
   );
+  if (reminderVisibility === "hidden" || !dueDate) {
+    return null;
+  }
 
+  const isExpiring = reminderVisibility === "visibleExpiring";
   return (
-    <Alert
-      testID="due-date-alert"
-      variant="warning"
-      action={
-        isEventInDeviceCalendar
-          ? I18n.t("features.messages.alert.removeReminder")
-          : I18n.t("features.messages.alert.addReminder")
-      }
-      onPress={() => upsertReminder(dueDate, title, preferredCalendar)}
-      content={I18n.t("features.messages.alert.content", {
-        date: localeDateFormat(
-          dueDate,
-          I18n.t("global.dateFormats.shortFormat")
-        ),
-        time: localeDateFormat(dueDate, I18n.t("global.dateFormats.timeFormat"))
-      })}
-    />
+    <>
+      {isExpiring ? (
+        <MessageDetailsReminderExpiring
+          dueDate={dueDate}
+          messageId={messageId}
+          title={title}
+        />
+      ) : (
+        <MessageDetailsReminderExpired
+          dueDate={dueDate}
+          isLoading={reminderVisibility === "loading"}
+        />
+      )}
+      <VSpacer size={8} />
+    </>
   );
 };
