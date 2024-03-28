@@ -1,16 +1,12 @@
-import {
-  Banner,
-  IOVisualCostants,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import I18n from "../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { isWalletPaymentsRedirectBannerVisibleSelector } from "../store/selectors";
-import { walletSetPaymentsRedirectBannerVisible } from "../store/actions/preferences";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { walletSetPaymentsRedirectBannerVisible } from "../store/actions/preferences";
+import { isWalletPaymentsRedirectBannerVisibleSelector } from "../store/selectors";
 
 const WalletPaymentsRedirectBanner = () => {
   const dispatch = useIODispatch();
@@ -36,8 +32,9 @@ const WalletPaymentsRedirectBanner = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <>
       <Banner
+        testID="walletPaymentsRedirectBannerTestID"
         title={I18n.t("features.wallet.home.paymentsBanner.title")}
         action={I18n.t("features.wallet.home.paymentsBanner.action")}
         labelClose={I18n.t("features.wallet.home.paymentsBanner.close")}
@@ -49,14 +46,8 @@ const WalletPaymentsRedirectBanner = () => {
         onClose={handleOnBannerClose}
       />
       <VSpacer size={16} />
-    </View>
+    </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault
-  }
-});
 
 export { WalletPaymentsRedirectBanner };
