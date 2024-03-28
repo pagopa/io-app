@@ -571,7 +571,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   }
                                 >
                                   <View
-                                    exiting={[Function]}
                                     style={
                                       Array [
                                         Object {

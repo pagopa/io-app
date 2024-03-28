@@ -494,7 +494,6 @@ exports[`CTAsBar should match snapshot with both CTAs 1`] = `
                               }
                             >
                               <View
-                                exiting={[Function]}
                                 style={
                                   Array [
                                     Object {
@@ -951,7 +950,6 @@ exports[`CTAsBar should match snapshot with one CTA 1`] = `
                               }
                             >
                               <View
-                                exiting={[Function]}
                                 style={
                                   Array [
                                     Object {
