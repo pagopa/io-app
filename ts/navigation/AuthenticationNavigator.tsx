@@ -1,8 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
-import { IOVisualCostants, IconButton } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
@@ -21,28 +19,14 @@ import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler
 import CieNotSupported from "../components/cie/CieNotSupported";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
+import CloseButton from "./components/CloseButton";
 
 const Stack = createStackNavigator<AuthenticationParamsList>();
-const RNNCloseButton = () => {
-  const navigation = useNavigation();
 
-  return (
-    <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon="closeMedium"
-        color="neutral"
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
-  );
-};
 const AuthenticationStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.AUTHENTICATION_LANDING}
-    screenOptions={{ gestureEnabled: true }}
+    screenOptions={{ gestureEnabled: true, headerShown: false }}
   >
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}
@@ -123,9 +107,14 @@ const AuthenticationStackNavigator = () => (
         presentation: "modal",
         headerLeft: () => null,
         headerTitle: () => null,
-        headerRight: RNNCloseButton,
-        headerStyle: { height: IOVisualCostants.headerHeight },
-        headerStatusBarHeight: 0
+        headerRight: CloseButton,
+        headerStyle: {
+          height: IOVisualCostants.headerHeight,
+          // shadowOpacity is set to 0 to hide the shadow under the header
+          shadowOpacity: 0
+        },
+        headerStatusBarHeight: 0,
+        headerShown: true
       }}
     >
       <Stack.Screen
