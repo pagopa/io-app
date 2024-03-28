@@ -8,6 +8,7 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { selectWalletCards } from "../store/selectors";
+import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 
 const WalletHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -17,6 +18,7 @@ const WalletHomeScreen = () => {
   React.useEffect(() => {
     // TODO SIW-960 Move cards request to app startup
     dispatch(idPayWalletGet.request());
+    dispatch(cgnDetails.request());
   }, [dispatch]);
 
   return (
