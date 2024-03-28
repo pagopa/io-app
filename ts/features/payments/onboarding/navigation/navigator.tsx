@@ -38,7 +38,7 @@ export const WalletOnboardingNavigator = () => (
     <Stack.Screen
       name={WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD}
       component={WalletOnboardingSelectPaymentMethodScreen}
-      options={{ gestureEnabled: false }}
+      options={{ gestureEnabled: false, headerShown: true }}
     />
   </Stack.Navigator>
 );
