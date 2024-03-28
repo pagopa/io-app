@@ -40,14 +40,7 @@ import { getServiceCTA } from "../../features/messages/utils/messages";
 import { logosForService } from "../../utils/services";
 import { handleItemOnPress } from "../../utils/url";
 import { useIOSelector } from "../../store/hooks";
-
-export type ServiceDetailsScreenNavigationParams = Readonly<{
-  serviceId: ServiceId;
-  // if true the service should be activated automatically
-  // as soon as the screen is shown (used for custom activation
-  // flows like PN)
-  activate?: boolean;
-}>;
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -66,7 +59,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * Screen displaying the details of a selected service. The user
  * can enable/disable the service and customize the notification settings.
  */
-const ServiceDetailsScreen = (props: Props) => {
+const LegacyServiceDetailsScreen = (props: Props) => {
   const [isMarkdownLoaded, setIsMarkdownLoaded] = useState(false);
   const navigation = useIONavigation();
   const { serviceId, activate } =
@@ -226,4 +219,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ServiceDetailsScreen);
+)(LegacyServiceDetailsScreen);

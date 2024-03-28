@@ -10,6 +10,7 @@ import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen";
 import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
+import { SERVICES_ROUTES } from "../features/services/navigation/routes";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
@@ -176,7 +177,7 @@ export const MainTabNavigator = () => {
           />
         )}
         <Tab.Screen
-          name={ROUTES.SERVICES_HOME}
+          name={SERVICES_ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
           options={{
             title: I18n.t("global.navigator.services"),

@@ -11,8 +11,12 @@ import { preferredLanguageSelector } from "../store/reducers/persistedPreference
 import { GlobalState } from "../store/reducers/types";
 import { makeFontStyleObject } from "../theme/fonts";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/navigation/routes";
 
-type Routes = keyof typeof ROUTES | keyof typeof MESSAGES_ROUTES;
+type Routes =
+  | keyof typeof ROUTES
+  | keyof typeof MESSAGES_ROUTES
+  | keyof typeof SERVICES_ROUTES;
 
 type OwnProps = {
   options: {

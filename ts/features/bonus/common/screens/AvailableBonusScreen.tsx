@@ -25,7 +25,6 @@ import BaseScreenComponent, {
 } from "../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import I18n from "../../../../i18n";
-import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   navigateBack,
   navigateToServiceDetailsScreen
@@ -41,6 +40,7 @@ import {
 } from "../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../store/reducers/types";
 import { storeUrl } from "../../../../utils/appVersion";
+import { ServiceDetailsScreenNavigationParams } from "../../../services/screens/ServiceDetailsScreen";
 import { cgnActivationStart } from "../../cgn/store/actions/activation";
 import {
   AvailableBonusItem,
