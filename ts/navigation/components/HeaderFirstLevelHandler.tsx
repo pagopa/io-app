@@ -13,6 +13,7 @@ import { navigateToServicePreferenceScreen } from "../../store/actions/navigatio
 import { searchMessagesEnabled } from "../../store/actions/search";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isNewWalletSectionEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
 import { MainTabParamsList } from "../params/MainTabParamsList";
 import ROUTES from "../routes";
 
@@ -34,7 +35,7 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
       body: "profile.main.contextualHelpContent"
     }
   },
-  [ROUTES.SERVICES_HOME]: {
+  [SERVICES_ROUTES.SERVICES_HOME]: {
     faqCategories: ["services"],
     contextualHelpMarkdown: {
       title: "services.contextualHelpTitle",
@@ -102,7 +103,7 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
 
   const headerProps: HeaderFirstLevelProps = useMemo(() => {
     switch (currentRouteName) {
-      case ROUTES.SERVICES_HOME:
+      case SERVICES_ROUTES.SERVICES_HOME:
         return {
           title: I18n.t("services.title"),
           type: "twoActions",
