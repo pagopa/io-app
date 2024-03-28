@@ -6,6 +6,7 @@ import ROUTES from "../routes";
 
 export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_LANDING]: undefined;
+  [ROUTES.AUTHENTICATION_ROOTED_DEVICE]: undefined;
   [ROUTES.AUTHENTICATION_OPT_IN]: ChosenIdentifier;
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: undefined;
   [ROUTES.AUTHENTICATION_CIE]: undefined;

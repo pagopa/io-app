@@ -1,7 +1,7 @@
-It seems like your device has been **jailbroken**.
+A **jailbreak** has been performed on your device. This happens when the operating system is modified or incorrectly installed. This could compromise the integrity of the system and the IO application may not function properly.
 
-This happens when the operating system undergoes an unusual modification or installation. The integrity of the operating system may have been compromised and the IO app may not be working properly.
+**What should you do?**
 
-If possible, please do not continue and install the IO app on a different device running an operating system which has integrity and is up-to-date.
+Use the IO app on a device with an intact and up-to-date operating system.
 
-If you continue, you agree to proceed at your own risk in interacting with the services offered, as lack of integrity may lead to data theft and/or other fraudulent activities. You also agree that the app developer is in no way liable for any damage, loss, or consequence you might incur as a result of using the IO app in this execution context.
+By continuing, you agree to continue to interact with the services offered at your own risk. Lack of integrity can lead to data theft or other fraudulent activities. You also agree that the app developer shall not be liable in any way for any damage, loss or consequence caused by the IO app in connection with this performance.
