@@ -23,7 +23,6 @@ import FIMS_ROUTES from "../../fims/navigation/routes";
 import { trackMessageCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback } from "../../../i18n";
 import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
 import { CTA, CTAS, MessageCTA, MessageCTALocales } from "../types/MessageCTA";
 import { getExpireStatus } from "../../../utils/dates";
 import {
@@ -32,6 +31,7 @@ import {
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
 import { isTextIncludedCaseInsensitive } from "../../../utils/strings";
+import { SERVICES_ROUTES } from "../../services/navigation/routes";
 
 export function messageContainsText(
   message: CreatedMessageWithContentAndAttachments,
@@ -75,7 +75,7 @@ export const handleCtaAction = (
     const convertedLink = getInternalRoute(cta.action);
     // the service ID is specifically required for MyPortal webview usage,
     // not required for other internal screens
-    if (cta.action.indexOf(ROUTES.SERVICE_WEBVIEW) !== -1) {
+    if (cta.action.indexOf(SERVICES_ROUTES.SERVICE_WEBVIEW) !== -1) {
       handleInternalLink(
         linkTo,
         `${convertedLink}${serviceId ? "&serviceId=" + serviceId : ""}`
