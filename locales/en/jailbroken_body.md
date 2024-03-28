@@ -4,4 +4,4 @@ A **jailbreak** has been performed on your device. This happens when the operati
 
 Use the IO app on a device with an intact and up-to-date operating system.
 
-By continuing, you agree to continue to interact with the services offered at your own risk. Lack of integrity can lead to data theft or other fraudulent activities. You also agree that the Application Developer shall not be liable in any way for any damage, loss or consequence caused by the IO Application in connection with this performance.
+By continuing, you agree to continue to interact with the services offered at your own risk. Lack of integrity can lead to data theft or other fraudulent activities. You also agree that the app developer shall not be liable in any way for any damage, loss or consequence caused by the IO Application in connection with this performance.
