@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
@@ -51,8 +51,7 @@ const styles = StyleSheet.create({
     bottom: 0
   },
   webView: {
-    flex: 1,
-    opacity: Platform.OS === "android" ? 0.99 : 1 // Android workaround to avoid crashing when navigating out of a WebView
+    flex: 1
   }
 });
 const renderLoading = () => (
