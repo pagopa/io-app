@@ -297,18 +297,18 @@ const EmailInsertScreen = () => {
     }
   });
 
+  const userNavigateToEmailValidationScreen = useCallback(
+    () =>
+      O.isSome(acknowledgeOnEmailValidated) &&
+      acknowledgeOnEmailValidated.value === false &&
+      isOnboarding,
+    [acknowledgeOnEmailValidated, isOnboarding]
+  );
+
   // If we navigate to this screen with acknowledgeOnEmailValidated set to false,
   // let the user navigate the email validation screen
   useEffect(() => {
-    if (
-      O.isSome(acknowledgeOnEmailValidated) &&
-      acknowledgeOnEmailValidated.value === false &&
-      // We check to be in the onboarding flow
-      // to avoid showing the modal
-      // when the user is editing the email
-      // from the profile page.
-      isOnboarding
-    ) {
+    if (userNavigateToEmailValidationScreen()) {
       // eslint-disable-next-line functional/immutable-data
       canShowLoadingSpinner.current = false;
       navigation.navigate(ROUTES.ONBOARDING, {
@@ -319,7 +319,7 @@ const EmailInsertScreen = () => {
         }
       });
     }
-  }, [acknowledgeOnEmailValidated, isOnboarding, navigation]);
+  }, [isOnboarding, navigation, userNavigateToEmailValidationScreen]);
 
   // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
@@ -442,7 +442,7 @@ const EmailInsertScreen = () => {
             </Body>
             <VSpacer size={16} />
             <TextInputValidation
-              autoFocus
+              autoFocus={!userNavigateToEmailValidationScreen()}
               textInputProps={{
                 autoCorrect: false,
                 autoCapitalize: "none",
