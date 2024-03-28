@@ -1,5 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
+import { IOVisualCostants, IconButton } from "@pagopa/io-app-design-system";
+import { View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
 import CardSelectionScreen from "../screens/authentication/CardSelectionScreen";
 import IdpLoginScreen from "../screens/authentication/IdpLoginScreen";
@@ -15,15 +18,31 @@ import CiePinLockedTemporarilyScreen from "../screens/authentication/cie/CiePinL
 import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
+import CieNotSupported from "../components/cie/CieNotSupported";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 
 const Stack = createStackNavigator<AuthenticationParamsList>();
+const RNNCloseButton = () => {
+  const navigation = useNavigation();
 
+  return (
+    <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
+      <IconButton
+        icon="closeMedium"
+        color="neutral"
+        onPress={() => {
+          navigation.goBack();
+        }}
+        accessibilityLabel={""}
+      />
+    </View>
+  );
+};
 const AuthenticationStackNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.AUTHENTICATION_LANDING}
-    screenOptions={{ gestureEnabled: true, headerShown: false }}
+    screenOptions={{ gestureEnabled: true }}
   >
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_LANDING}
@@ -98,6 +117,22 @@ const AuthenticationStackNavigator = () => (
       name={ROUTES.CIE_PIN_TEMP_LOCKED_SCREEN}
       component={CiePinLockedTemporarilyScreen}
     />
+
+    <Stack.Group
+      screenOptions={{
+        presentation: "modal",
+        headerLeft: () => null,
+        headerTitle: () => null,
+        headerRight: RNNCloseButton,
+        headerStyle: { height: IOVisualCostants.headerHeight },
+        headerStatusBarHeight: 0
+      }}
+    >
+      <Stack.Screen
+        name={ROUTES.CIE_NOT_SUPPORTED}
+        component={CieNotSupported}
+      />
+    </Stack.Group>
   </Stack.Navigator>
 );
 
