@@ -1,4 +1,3 @@
-import { List, ListItem } from "native-base";
 import * as React from "react";
 import { useState } from "react";
 import { Platform, View } from "react-native";
@@ -7,7 +6,9 @@ import {
   IOIcons,
   Icon,
   HSpacer,
-  VSpacer
+  VSpacer,
+  IOStyles,
+  Divider
 } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import LegacyMarkdown from "../ui/Markdown/LegacyMarkdown";
@@ -41,8 +42,8 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
           </LegacyMarkdown>
           <VSpacer size={40} />
           {markdownLoaded === markDownElements && (
-            <List>
-              <ListItem>
+            <>
+              <View style={IOStyles.row}>
                 <Icon
                   size={ICON_SIZE}
                   name={props.hasCieApiLevelSupport ? okIcon : koIcon}
@@ -54,8 +55,11 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
                     "authentication.landing.cie_unsupported.os_version_unsupported"
                   )}
                 </Body>
-              </ListItem>
-              <ListItem>
+              </View>
+              <VSpacer size={16} />
+              <Divider />
+              <VSpacer size={16} />
+              <View style={IOStyles.row}>
                 <View style={{ alignItems: "flex-start" }}>
                   <Icon
                     size={ICON_SIZE}
@@ -69,8 +73,10 @@ const CieNotSupported: React.FunctionComponent<Props> = props => {
                     "authentication.landing.cie_unsupported.nfc_incompatible"
                   )}
                 </Body>
-              </ListItem>
-            </List>
+              </View>
+              <VSpacer size={16} />
+              <Divider />
+            </>
           )}
         </React.Fragment>
       )}

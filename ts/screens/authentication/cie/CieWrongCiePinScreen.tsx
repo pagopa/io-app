@@ -1,15 +1,19 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
-import { Content } from "native-base";
+import {
+  BlockButtonProps,
+  ContentWrapper,
+  FooterWithButtons,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
@@ -40,21 +44,27 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
   }
 
   private renderFooterButtons = () => {
-    const cancelButtonProps = {
-      bordered: true,
-      onPress: resetToAuthenticationRoute,
-      title: I18n.t("global.buttons.cancel")
+    const cancelButtonProps: BlockButtonProps = {
+      type: "Outline",
+      buttonProps: {
+        label: I18n.t("global.buttons.cancel"),
+        accessibilityLabel: I18n.t("global.buttons.cancel"),
+        onPress: resetToAuthenticationRoute
+      }
     };
-    const retryButtonProps = {
-      primary: true,
-      onPress: this.navigateToCiePinScreen,
-      title: I18n.t("global.buttons.retry")
+    const retryButtonProps: BlockButtonProps = {
+      type: "Solid",
+      buttonProps: {
+        label: I18n.t("global.buttons.retry"),
+        accessibilityLabel: I18n.t("global.buttons.retry"),
+        onPress: this.navigateToCiePinScreen
+      }
     };
     return (
       <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        rightButton={retryButtonProps}
-        leftButton={cancelButtonProps}
+        type="TwoButtonsInlineHalf"
+        primary={cancelButtonProps}
+        secondary={retryButtonProps}
       />
     );
   };
@@ -68,21 +78,23 @@ class CieWrongCiePinScreen extends React.PureComponent<Props> {
           "authentication.cie.pin.incorrectCiePinHeaderTitle"
         )}
       >
-        <ScreenContentHeader
-          title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
-            remainingCount
-          })}
-        />
-        <Content>
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
-          </Body>
-          <VSpacer size={16} />
-          <Body>
-            {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
-          </Body>
-          <VSpacer size={16} />
-        </Content>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ScreenContentHeader
+            title={I18n.t("authentication.cie.pin.incorrectCiePinTitle", {
+              remainingCount
+            })}
+          />
+
+          <ContentWrapper>
+            <Body>
+              {I18n.t("authentication.cie.pin.incorrectCiePinContent1")}
+            </Body>
+            <VSpacer size={16} />
+            <Body>
+              {I18n.t("authentication.cie.pin.incorrectCiePinContent2")}
+            </Body>
+          </ContentWrapper>
+        </ScrollView>
 
         {this.renderFooterButtons()}
       </TopScreenComponent>

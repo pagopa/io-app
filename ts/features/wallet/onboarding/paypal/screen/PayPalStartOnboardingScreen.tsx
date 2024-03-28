@@ -1,22 +1,22 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import React from "react";
 import { Dimensions, SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Oval from "../../../../../../img/wallet/payment-methods/paypal/oval.svg";
 import PPLogo from "../../../../../../img/wallet/payment-methods/paypal/paypal_logo.svg";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
 import { Body } from "../../../../../components/core/typography/Body";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { InfoScreenComponent } from "../../../../../components/infoScreen/InfoScreenComponent";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../../../../components/SectionStatus";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../../i18n";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
-import PAYPAL_ROUTES from "../navigation/routes";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../../navigation/routes";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
+import PAYPAL_ROUTES from "../navigation/routes";
+import { walletAddPaypalBack, walletAddPaypalCancel } from "../store/actions";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -61,20 +61,6 @@ const PayPalStartOnboardingScreen = (
       }
     });
 
-  const cancelButtonProps = {
-    testID: "cancelButtonId",
-    primary: false,
-    bordered: true,
-    onPress: props.cancel,
-    title: I18n.t("global.buttons.cancel")
-  };
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    onPress: navigateToSearchPsp,
-    title: I18n.t("global.buttons.continue")
-  };
-
   return (
     <BaseScreenComponent
       goBack={props.goBack}
@@ -95,12 +81,28 @@ const PayPalStartOnboardingScreen = (
           }
         />
         <SectionStatusComponent sectionKey={"paypal"} />
-        <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={cancelButtonProps}
-          rightButton={continueButtonProps}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: props.cancel,
+            testID: "cancelButtonId"
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: navigateToSearchPsp,
+            testID: "continueButtonId"
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

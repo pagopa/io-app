@@ -1,8 +1,7 @@
-import { Content } from "native-base";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { FOOTER_SAFE_AREA } from "../../utils/constants";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { IOColors, IOStyles } from "@pagopa/io-app-design-system";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = Readonly<{
   dark?: boolean;
@@ -11,7 +10,7 @@ type Props = Readonly<{
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: IOColors.milderGray
+    backgroundColor: IOColors.bluegrey
   },
   content: {
     borderRadius: 8,
@@ -33,10 +32,6 @@ const styles = StyleSheet.create({
   },
   flexGrow: {
     flexGrow: 1
-  },
-  correctBottomPadding: {
-    marginBottom: -FOOTER_SAFE_AREA,
-    paddingBottom: FOOTER_SAFE_AREA * 2
   }
 });
 
@@ -46,22 +41,20 @@ const styles = StyleSheet.create({
  * - dark: the backgound is a dark gray
  * - hasFlatBottom: the bottom is anchored to the container bottom
  */
-export const SlidedContentComponent = (props: Props & React.Props<Content>) => (
-  <Content
-    noPadded={true}
-    style={[styles.container, styles.flexGrow]}
-    contentContainerStyle={styles.flexGrow}
-    bounces={false}
-  >
-    <View
-      style={[
-        styles.flexGrow,
-        styles.correctBottomPadding,
-        props.hasFlatBottom ? styles.contentBottomFlat : styles.content,
-        props.dark ? styles.dark : styles.white
-      ]}
-    >
-      {props.children}
-    </View>
-  </Content>
+export const SlidedContentComponent = (
+  props: React.PropsWithChildren<Props>
+) => (
+  <ScrollView style={[styles.container, IOStyles.flex]} bounces={false}>
+    <SafeAreaView style={IOStyles.flex} edges={["bottom"]}>
+      <View
+        style={[
+          styles.flexGrow,
+          props.hasFlatBottom ? styles.contentBottomFlat : styles.content,
+          props.dark ? styles.dark : styles.white
+        ]}
+      >
+        {props.children}
+      </View>
+    </SafeAreaView>
+  </ScrollView>
 );

@@ -1,21 +1,22 @@
 /**
  * A screen to alert the user about the number of attempts remains
  */
+import {
+  ContentWrapper,
+  FooterWithButtons
+} from "@pagopa/io-app-design-system";
 import { constNull } from "fp-ts/lib/function";
-import { Content } from "native-base";
 import * as React from "react";
-import { Linking, Platform } from "react-native";
+import { Linking, Platform, ScrollView } from "react-native";
 import { connect } from "react-redux";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import { resetToAuthenticationRoute } from "../../../store/actions/navigation";
 import { ReduxProps } from "../../../store/actions/types";
-import { BlockButtonProps } from "../../../components/ui/BlockButtons";
 
 type NavigationProps = IOStackNavigationRouteProps<
   AuthenticationParamsList,
@@ -51,28 +52,29 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
     )
   });
 
-  private renderFooterButtons = () => {
-    const cancelButtonProps = {
-      bordered: true,
-      onPress: this.handleGoBack,
-      title: I18n.t("global.buttons.cancel")
-    };
+  private renderFooterButtons = () => (
+    <FooterWithButtons
+      type="TwoButtonsInlineThird"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          onPress: this.handleGoBack,
+          label: I18n.t("global.buttons.cancel"),
+          accessibilityLabel: I18n.t("global.buttons.cancel")
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          label: I18n.t("authentication.cie.pinTempLocked.button"),
+          accessibilityLabel: I18n.t("authentication.cie.pinTempLocked.button"),
+          icon: "cie",
+          onPress: this.goToCieID
+        }
+      }}
+    />
+  );
 
-    const retryButtonProps: BlockButtonProps = {
-      primary: true,
-      iconColor: "white",
-      iconName: "cie",
-      onPress: this.goToCieID,
-      title: I18n.t("authentication.cie.pinTempLocked.button")
-    };
-    return (
-      <FooterWithButtons
-        type={"TwoButtonsInlineThird"}
-        rightButton={retryButtonProps}
-        leftButton={cancelButtonProps}
-      />
-    );
-  };
   private handleGoBack = () => resetToAuthenticationRoute();
 
   public render(): React.ReactNode {
@@ -82,18 +84,20 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
         contextualHelp={this.getContextualHelp()}
         headerTitle={I18n.t("authentication.cie.pinTempLocked.header")} // TODO: validate
       >
-        <ScreenContentHeader
-          title={I18n.t("authentication.cie.pinTempLocked.title")}
-        />
-        <Content>
-          <LegacyMarkdown
-            onLoadEnd={() => {
-              this.setState({ isLoadingCompleted: true });
-            }}
-          >
-            {I18n.t("authentication.cie.pinTempLocked.content")}
-          </LegacyMarkdown>
-        </Content>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <ScreenContentHeader
+            title={I18n.t("authentication.cie.pinTempLocked.title")}
+          />
+          <ContentWrapper>
+            <LegacyMarkdown
+              onLoadEnd={() => {
+                this.setState({ isLoadingCompleted: true });
+              }}
+            >
+              {I18n.t("authentication.cie.pinTempLocked.content")}
+            </LegacyMarkdown>
+          </ContentWrapper>
+        </ScrollView>
 
         {this.state.isLoadingCompleted && this.renderFooterButtons()}
       </TopScreenComponent>

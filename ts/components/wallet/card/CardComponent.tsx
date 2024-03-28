@@ -7,7 +7,6 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet, Alert, Image, Platform } from "react-native";
 import {
@@ -19,13 +18,11 @@ import {
 import { IOColors, Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
 import { BlurredPan } from "../../../features/wallet/component/card/BlurredPan";
 import I18n from "../../../i18n";
-import variables from "../../../theme/variables";
 import { CreditCard, CreditCardType, Wallet } from "../../../types/pagopa";
 import { CreditCardDetector, SupportedBrand } from "../../../utils/creditCard";
 import { isPaymentMethodExpired } from "../../../utils/paymentMethod";
 import { buildExpirationDate } from "../../../utils/stringBuilder";
 import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
-import ButtonDefaultOpacity from "../../ButtonDefaultOpacity";
 import { Body } from "../../core/typography/Body";
 import { H5 } from "../../core/typography/H5";
 import { Label } from "../../core/typography/Label";
@@ -109,24 +106,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 48
   },
-  footerButton: {
-    borderRadius: 6,
-    paddingRight: variables.fontSizeBase,
-    justifyContent: "space-between",
-    margin: 2
-  },
-  transactions: {
-    backgroundColor: IOColors.white
-  },
-  transactionsText: {
-    color: variables.brandPrimary
-  },
-  pickPayment: {
-    backgroundColor: variables.brandPrimary
-  },
-  pickPaymentText: {
-    color: IOColors.white
-  },
   flatBottom: {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0
@@ -171,15 +150,6 @@ export default class CardComponent extends React.Component<Props> {
       !pot.isUpdating(this.props.isFavorite)
     ) {
       this.props.onSetFavorite(!pot.getOrElse(this.props.isFavorite, false));
-    }
-  };
-
-  private handleOnCardPress = () => {
-    if (
-      (this.props.type === "Full" || this.props.type === "Picking") &&
-      this.props.mainAction
-    ) {
-      this.props.mainAction(this.props.wallet);
     }
   };
 
@@ -333,40 +303,6 @@ export default class CardComponent extends React.Component<Props> {
     );
   }
 
-  private renderFooterRow() {
-    if (
-      this.props.type === "Preview" ||
-      this.props.type === "Header" ||
-      this.props.mainAction === undefined
-    ) {
-      return null;
-    }
-
-    const isFullCard = this.props.type === "Full";
-
-    const buttonStyle = isFullCard ? styles.transactions : styles.pickPayment;
-    const footerTextStyle = isFullCard
-      ? styles.transactionsText
-      : styles.pickPaymentText;
-
-    const footerIconColor: IOColors = isFullCard ? "blue" : "white";
-    const text = I18n.t(
-      isFullCard ? "cardComponent.detailsAndTransactions" : "cardComponent.pick"
-    );
-
-    return (
-      <ButtonDefaultOpacity
-        style={[styles.footerButton, buttonStyle]}
-        block={true}
-        iconRight={true}
-        onPress={this.handleOnCardPress}
-      >
-        <NBButtonText style={footerTextStyle}>{text}</NBButtonText>
-        <Icon name="chevronRightListItem" size={20} color={footerIconColor} />
-      </ButtonDefaultOpacity>
-    );
-  }
-
   public render(): React.ReactNode {
     const { wallet } = this.props;
 
@@ -397,7 +333,6 @@ export default class CardComponent extends React.Component<Props> {
           {isHeader && <View style={{ paddingTop: 20 }} />}
           {this.renderBody(wallet.creditCard)}
         </View>
-        {this.renderFooterRow()}
       </View>
     );
   }

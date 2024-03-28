@@ -6,17 +6,30 @@ import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
-import { View, Alert, SafeAreaView, StyleSheet } from "react-native";
+import {
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import { connect } from "react-redux";
 
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation, useRoute, Route } from "@react-navigation/native";
+import {
+  ContentWrapper,
+  FooterWithButtons,
+  HSpacer,
+  IOToast,
+  NativeSwitch,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { TypeEnum } from "../../../definitions/pagopa/Wallet";
 import image from "../../../img/wallet/errors/payment-unavailable-icon.png";
 import { InfoBox } from "../../components/box/InfoBox";
+import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 import { H1 } from "../../components/core/typography/H1";
 import { H4 } from "../../components/core/typography/H4";
 import { H5 } from "../../components/core/typography/H5";
@@ -27,20 +40,17 @@ import { InfoScreenComponent } from "../../components/infoScreen/InfoScreenCompo
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import Switch from "../../components/ui/Switch";
 import CardComponent from "../../components/wallet/card/CardComponent";
 import { PayWebViewModal } from "../../components/wallet/PayWebViewModal";
 import { pagoPaApiUrlPrefix, pagoPaApiUrlPrefixTest } from "../../config";
-import { confirmButtonProps } from "../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../components/buttons/FooterStackButtons";
 
-import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
 import {
   isError,
-  isLoading as isRemoteLoading,
-  isReady
+  isReady,
+  isLoading as isRemoteLoading
 } from "../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../components/LoadingErrorComponent";
+import { LightModalContext } from "../../components/ui/LightModal";
 import I18n from "../../i18n";
 import {
   IOStackNavigationProp,
@@ -66,12 +76,9 @@ import { isPagoPATestEnabledSelector } from "../../store/reducers/persistedPrefe
 import { GlobalState } from "../../store/reducers/types";
 import { pmSessionTokenSelector } from "../../store/reducers/wallet/payment";
 import { getAllWallets } from "../../store/reducers/wallet/wallets";
-import customVariables from "../../theme/variables";
 import { CreditCard, Wallet } from "../../types/pagopa";
 import { getLocalePrimaryWithFallback } from "../../utils/locale";
 import { getLookUpIdPO } from "../../utils/pmLookUpId";
-import { showToast } from "../../utils/showToast";
-import { LightModalContext } from "../../components/ui/LightModal";
 import { dispatchPickPspOrConfirm } from "./payment/common";
 
 export type ConfirmCardDetailsScreenNavigationParams = Readonly<{
@@ -104,10 +111,6 @@ type State = Readonly<{
 }>;
 
 const styles = StyleSheet.create({
-  paddedLR: {
-    paddingLeft: customVariables.contentPadding,
-    paddingRight: customVariables.contentPadding
-  },
   preferredMethodContainer: {
     flexDirection: "row",
     justifyContent: "space-between"
@@ -195,27 +198,6 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
       psp: undefined
     };
 
-    const primaryButtonProps = {
-      block: true,
-      primary: true,
-      onPress: () =>
-        this.props.runStartOrResumeAddCreditCardSaga(
-          creditCard,
-          this.state.setAsFavourite
-        ),
-      title: isInPayment
-        ? I18n.t("wallet.saveCardInPayment.save")
-        : I18n.t("global.buttons.continue"),
-      testID: "saveOrContinueButton"
-    };
-
-    const secondaryButtonProps = {
-      block: true,
-      bordered: true,
-      onPress: this.goBack,
-      title: I18n.t("global.buttons.back")
-    };
-
     // shown when wallets pot is in error state
     const walletsInErrorContent = (
       <SafeAreaView style={IOStyles.flex}>
@@ -225,13 +207,15 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
           body={I18n.t("wallet.saveCard.loadWalletsErrorBody")}
         />
         <FooterStackButton
-          buttons={[
-            confirmButtonProps(() => {
+          primaryActionProps={{
+            onPress: () => {
               // load wallets and navigate to wallet home
               this.props.loadWallets();
               this.props.navigateToWalletHome();
-            }, I18n.t("wallet.refreshWallet"))
-          ]}
+            },
+            label: I18n.t("wallet.refreshWallet"),
+            accessibilityLabel: I18n.t("wallet.refreshWallet")
+          }}
         />
       </SafeAreaView>
     );
@@ -263,73 +247,103 @@ class ConfirmCardDetailsScreen extends React.Component<Props, State> {
     );
 
     const noErrorContent = (
-      <SafeAreaView style={IOStyles.flex}>
-        <Content noPadded={true} style={styles.paddedLR}>
-          <H1>{I18n.t("wallet.saveCard.title")}</H1>
-          <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
-          <VSpacer size={16} />
-          <CardComponent
-            wallet={wallet}
-            type={"Full"}
-            extraSpace={true}
-            hideMenu={true}
-            hideFavoriteIcon={true}
-          />
-          <VSpacer size={16} />
-          <InfoBox alignedCentral={true} iconSize={24} iconColor="bluegreyDark">
-            <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
-          </InfoBox>
-          <VSpacer size={24} />
-          <View style={styles.preferredMethodContainer}>
-            <View style={IOStyles.flex}>
-              <H4 weight={"SemiBold"} color={"bluegreyDark"}>
-                {I18n.t("wallet.saveCard.infoTitle")}
-              </H4>
-              <H5 weight={"Regular"} color={"bluegrey"}>
-                {I18n.t("wallet.saveCard.info")}
-              </H5>
-            </View>
-            <HSpacer size={16} />
-            <View style={{ paddingTop: 7 }}>
-              <Switch
-                value={this.state.setAsFavourite}
-                onValueChange={this.onSetFavouriteValueChange}
+      <>
+        <SafeAreaView style={IOStyles.flex}>
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <ContentWrapper>
+              <H1>{I18n.t("wallet.saveCard.title")}</H1>
+              <H4 weight={"Regular"}>{I18n.t("wallet.saveCard.subtitle")}</H4>
+              <VSpacer size={16} />
+              <CardComponent
+                wallet={wallet}
+                type={"Full"}
+                extraSpace={true}
+                hideMenu={true}
+                hideFavoriteIcon={true}
               />
-            </View>
-          </View>
-        </Content>
+              <VSpacer size={16} />
+              <InfoBox
+                alignedCentral={true}
+                iconSize={24}
+                iconColor="bluegreyDark"
+              >
+                <H5 weight={"Regular"}>{I18n.t("wallet.saveCard.notice")}</H5>
+              </InfoBox>
+              <VSpacer size={24} />
+              <View style={styles.preferredMethodContainer}>
+                <View style={IOStyles.flex}>
+                  <H4 weight={"SemiBold"} color={"bluegreyDark"}>
+                    {I18n.t("wallet.saveCard.infoTitle")}
+                  </H4>
+                  <H5 weight={"Regular"} color={"bluegrey"}>
+                    {I18n.t("wallet.saveCard.info")}
+                  </H5>
+                </View>
+                <HSpacer size={16} />
+                <View style={{ paddingTop: 7 }}>
+                  <NativeSwitch
+                    value={this.state.setAsFavourite}
+                    onValueChange={this.onSetFavouriteValueChange}
+                  />
+                </View>
+              </View>
+            </ContentWrapper>
+          </ScrollView>
 
+          {/*
+           * When the first step is finished (creditCardAddWallet === O.some) show the webview
+           * for the payment component.
+           */}
+          {payWebViewPayload && (
+            <PayWebViewModal
+              postUri={urlPrefix + payUrlSuffix}
+              formData={formData}
+              finishPathName={webViewExitPathName}
+              onFinish={(maybeCode, navigationUrls) => {
+                this.props.dispatchCreditCardPaymentNavigationUrls(
+                  navigationUrls
+                );
+                this.props.storeCreditCardOutcome(maybeCode);
+                this.props.goToAddCreditCardOutcomeCode(
+                  payWebViewPayload.crediCardTempWallet
+                );
+                this.props.dispatchEndAddCreditCardWebview("EXIT_PATH");
+              }}
+              outcomeQueryparamName={webViewOutcomeParamName}
+              onGoBack={handlePayWebviewGoBack}
+              modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
+            />
+          )}
+        </SafeAreaView>
         <FooterWithButtons
-          type={"TwoButtonsInlineThird"}
-          leftButton={secondaryButtonProps}
-          rightButton={primaryButtonProps}
+          type="TwoButtonsInlineThird"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              onPress: this.goBack,
+              label: I18n.t("global.buttons.back"),
+              accessibilityLabel: I18n.t("global.buttons.back")
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              onPress: () =>
+                this.props.runStartOrResumeAddCreditCardSaga(
+                  creditCard,
+                  this.state.setAsFavourite
+                ),
+              label: isInPayment
+                ? I18n.t("wallet.saveCardInPayment.save")
+                : I18n.t("global.buttons.continue"),
+              accessibilityLabel: isInPayment
+                ? I18n.t("wallet.saveCardInPayment.save")
+                : I18n.t("global.buttons.continue"),
+              testID: "saveOrContinueButton"
+            }
+          }}
         />
-
-        {/*
-         * When the first step is finished (creditCardAddWallet === O.some) show the webview
-         * for the payment component.
-         */}
-        {payWebViewPayload && (
-          <PayWebViewModal
-            postUri={urlPrefix + payUrlSuffix}
-            formData={formData}
-            finishPathName={webViewExitPathName}
-            onFinish={(maybeCode, navigationUrls) => {
-              this.props.dispatchCreditCardPaymentNavigationUrls(
-                navigationUrls
-              );
-              this.props.storeCreditCardOutcome(maybeCode);
-              this.props.goToAddCreditCardOutcomeCode(
-                payWebViewPayload.crediCardTempWallet
-              );
-              this.props.dispatchEndAddCreditCardWebview("EXIT_PATH");
-            }}
-            outcomeQueryparamName={webViewOutcomeParamName}
-            onGoBack={handlePayWebviewGoBack}
-            modalHeaderTitle={I18n.t("wallet.challenge3ds.header")}
-          />
-        )}
-      </SafeAreaView>
+      </>
     );
     const error = O.isSome(this.props.error) || this.props.areWalletsInError;
     return (
@@ -409,12 +423,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
           // a toast and navigate to the wallet selection screen
           if (failureReason === "FETCH_PSPS_FAILURE") {
             // fetching the PSPs for the payment has failed
-            showToast(I18n.t("wallet.payWith.fetchPspFailure"), "warning");
+            IOToast.warning(I18n.t("wallet.payWith.fetchPspFailure"));
           } else if (failureReason === "NO_PSPS_AVAILABLE") {
             // this card cannot be used for this payment
             // TODO: perhaps we can temporarily hide the selected wallet from
             //       the list of available wallets
-            showToast(I18n.t("wallet.payWith.noPspsAvailable"), "danger");
+            IOToast.error(I18n.t("wallet.payWith.noPspsAvailable"));
           }
           // navigate to the wallet selection screen
 
@@ -449,13 +463,12 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => {
             navigateToNextScreen(O.some(addedWallet));
           },
           onFailure: error => {
-            showToast(
+            IOToast.error(
               I18n.t(
                 error === "ALREADY_EXISTS"
                   ? "wallet.newPaymentMethod.failedCardAlreadyExists"
                   : "wallet.newPaymentMethod.failed"
-              ),
-              "danger"
+              )
             );
             navigateToNextScreen(O.none);
           }

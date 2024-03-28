@@ -1,21 +1,23 @@
-import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
 import {
+  Divider,
+  FooterWithButtons,
   IOColors,
   IOIconSizeScale,
+  IOToast,
   Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useNavigation } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React from "react";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import { H1 } from "../../../components/core/typography/H1";
 import { H3 } from "../../../components/core/typography/H3";
 import { H4 } from "../../../components/core/typography/H4";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { zendeskPrivacyUrl } from "../../../config";
 import I18n from "../../../i18n";
 import {
@@ -29,7 +31,6 @@ import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
-import { showToast } from "../../../utils/showToast";
 import { openWebUrl } from "../../../utils/url";
 import ZendeskItemPermissionComponent, {
   ItemPermissionProps
@@ -110,18 +111,6 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
     // remove these item whose have no value associated
     .filter(it => it.value);
 
-  const continueButtonProps = {
-    testID: "continueButtonId",
-    bordered: false,
-    onPress: () => {
-      navigation.navigate("ZENDESK_MAIN", {
-        screen: "ZENDESK_SEE_REPORTS_ROUTERS",
-        params: { assistanceForPayment, assistanceForCard, assistanceForFci }
-      });
-    },
-    title: I18n.t("support.askPermissions.cta.allow")
-  };
-
   return (
     <BaseScreenComponent
       showChat={false}
@@ -140,7 +129,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             <Link
               onPress={() => {
                 openWebUrl(zendeskPrivacyUrl, () =>
-                  showToast(I18n.t("global.jserror.title"))
+                  IOToast.error(I18n.t("global.jserror.title"))
                 );
               }}
             >
@@ -149,19 +138,40 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
             <VSpacer size={8} />
             <H3>{I18n.t("support.askPermissions.listHeader")}</H3>
 
-            {items.map((item, idx) => (
-              <ZendeskItemPermissionComponent
-                key={`permission_item_${idx}`}
-                {...item}
-              />
+            {/* TODO: Replace this chunk with `FlatList` to avoid manual control on Divider */}
+            {items.map((item, idx, arr) => (
+              <>
+                <ZendeskItemPermissionComponent
+                  key={`permission_item_${idx}`}
+                  {...item}
+                />
+                {idx !== arr.length - 1 && <Divider />}
+              </>
             ))}
           </View>
         </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("support.askPermissions.cta.allow"),
+            accessibilityLabel: I18n.t("support.askPermissions.cta.allow"),
+            testID: "continueButtonId",
+            onPress: () => {
+              navigation.navigate("ZENDESK_MAIN", {
+                screen: "ZENDESK_SEE_REPORTS_ROUTERS",
+                params: {
+                  assistanceForPayment,
+                  assistanceForCard,
+                  assistanceForFci
+                }
+              });
+            }
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

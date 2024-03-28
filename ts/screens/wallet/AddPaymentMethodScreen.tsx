@@ -1,12 +1,11 @@
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
-import * as React from "react";
-import { View, SafeAreaView } from "react-native";
-import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
+import * as O from "fp-ts/lib/Option";
+import * as React from "react";
+import { ScrollView, View } from "react-native";
+import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import BpayLogo from "../../../img/wallet/payment-methods/bancomat_pay.svg";
 import CreditCard from "../../../img/wallet/payment-methods/creditcard.svg";
@@ -16,7 +15,6 @@ import { IOStyles } from "../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import PaymentBannerComponent from "../../components/wallet/PaymentBannerComponent";
 import PaymentMethodsList, {
   IPaymentMethod
@@ -154,15 +152,9 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
       keyFrom
     });
 
-  const cancelButtonProps = {
-    block: true,
-    light: true,
-    bordered: true,
-    onPress: props.navigateBack,
-    title: O.isSome(inPayment)
-      ? I18n.t("global.buttons.back")
-      : I18n.t("global.buttons.cancel")
-  };
+  const buttonLabel = O.isSome(inPayment)
+    ? I18n.t("global.buttons.back")
+    : I18n.t("global.buttons.cancel");
 
   return (
     <BaseScreenComponent
@@ -175,9 +167,9 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
           : I18n.t("wallet.addPaymentMethodTitle")
       }
     >
-      <SafeAreaView style={IOStyles.flex}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         {O.isSome(inPayment) ? (
-          <Content noPadded={true}>
+          <>
             <PaymentBannerComponent
               paymentReason={inPayment.value.verifica.causaleVersamento}
               currentAmount={inPayment.value.verifica.importoSingoloVersamento}
@@ -201,29 +193,33 @@ const AddPaymentMethodScreen: React.FunctionComponent<Props> = (
                 )}
               />
             </View>
-          </Content>
+          </>
         ) : (
-          <Content noPadded={true} style={IOStyles.horizontalContentPadding}>
-            <PaymentMethodsList
-              paymentMethods={getPaymentMethods(
-                props,
-                {
-                  onlyPaymentMethodCanPay:
-                    showOnlyPayablePaymentMethods === true,
-                  isPaymentOnGoing: O.isSome(inPayment),
-                  isPaypalEnabled: props.isPaypalEnabled,
-                  canOnboardBPay: props.canOnboardBPay
-                },
-                navigateToAddCreditCard
-              )}
-            />
-          </Content>
+          <PaymentMethodsList
+            paymentMethods={getPaymentMethods(
+              props,
+              {
+                onlyPaymentMethodCanPay: showOnlyPayablePaymentMethods === true,
+                isPaymentOnGoing: O.isSome(inPayment),
+                isPaypalEnabled: props.isPaypalEnabled,
+                canOnboardBPay: props.canOnboardBPay
+              },
+              navigateToAddCreditCard
+            )}
+          />
         )}
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps}
-        />
-      </SafeAreaView>
+      </ScrollView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            onPress: props.navigateBack,
+            accessibilityLabel: buttonLabel,
+            label: buttonLabel
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

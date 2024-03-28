@@ -1,14 +1,12 @@
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, Image, StyleSheet } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
-import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import CopyButtonComponent from "../../../../components/CopyButtonComponent";
 
 const styles = StyleSheet.create({
   errorStateWrapper: {
@@ -39,20 +37,6 @@ const styles = StyleSheet.create({
   erroStateMessageDataRight: {
     flex: 0,
     paddingLeft: 10
-  },
-  errorStateFooterWrapper: {
-    flex: 0,
-    flexDirection: "row",
-    paddingVertical: 16
-  },
-
-  errorStateCancelButton: {
-    flex: 4
-  },
-
-  errorStateRetryButton: {
-    flex: 8,
-    marginLeft: 10
   }
 });
 
@@ -66,56 +50,53 @@ type Props = {
  * (ex. the loading of the message/service failed but we can retry)
  */
 const errorState = ({ messageId, onRetry, goBack }: Props) => (
-  <View style={styles.errorStateWrapper}>
-    <View style={styles.errorStateContentWrapper}>
-      <Image
-        source={require("../../../../../img/messages/error-message-detail-icon.png")}
-      />
-      <H1 style={styles.errorStateHeader}>
-        {I18n.t("messageDetails.errorText")}
-      </H1>
-      <View style={styles.errorStateMessageData}>
-        <View style={styles.erroStateMessageDataLeft}>
-          <Body numberOfLines={1}>{`ID: ${messageId}`}</Body>
+  <>
+    <View style={styles.errorStateWrapper}>
+      <View style={styles.errorStateContentWrapper}>
+        <Image
+          source={require("../../../../../img/messages/error-message-detail-icon.png")}
+        />
+        <H1 style={styles.errorStateHeader}>
+          {I18n.t("messageDetails.errorText")}
+        </H1>
+        <View style={styles.errorStateMessageData}>
+          <View style={styles.erroStateMessageDataLeft}>
+            <Body numberOfLines={1}>{`ID: ${messageId}`}</Body>
+          </View>
+          <View style={styles.erroStateMessageDataRight}>
+            <CopyButtonComponent textToCopy={messageId} />
+          </View>
         </View>
-        <View style={styles.erroStateMessageDataRight}>
-          <ButtonDefaultOpacity
-            xsmall={true}
-            bordered={true}
-            onPress={() => clipboardSetStringWithFeedback(messageId)}
-          >
-            <NBButtonText>{I18n.t("clipboard.copyText")}</NBButtonText>
-          </ButtonDefaultOpacity>
-        </View>
-      </View>
-      <VSpacer size={16} />
-      <View style={IOStyles.alignCenter}>
-        <Body color="bluegreyDark">{I18n.t("messageDetails.retryText")}</Body>
         <VSpacer size={16} />
-        <Body color="bluegreyDark">
-          {I18n.t("messageDetails.submitBugText")}
-        </Body>
+        <View style={IOStyles.alignCenter}>
+          <Body color="bluegreyDark">{I18n.t("messageDetails.retryText")}</Body>
+          <VSpacer size={16} />
+          <Body color="bluegreyDark">
+            {I18n.t("messageDetails.submitBugText")}
+          </Body>
+        </View>
       </View>
     </View>
-    <View style={styles.errorStateFooterWrapper}>
-      <ButtonDefaultOpacity
-        block={true}
-        cancel={true}
-        onPress={goBack}
-        style={styles.errorStateCancelButton}
-      >
-        <NBButtonText>{I18n.t("global.buttons.cancel")}</NBButtonText>
-      </ButtonDefaultOpacity>
-      <ButtonDefaultOpacity
-        block={true}
-        primary={true}
-        onPress={onRetry}
-        style={styles.errorStateRetryButton}
-      >
-        <NBButtonText>{I18n.t("global.buttons.retry")}</NBButtonText>
-      </ButtonDefaultOpacity>
-    </View>
-  </View>
+    <FooterWithButtons
+      type="TwoButtonsInlineThird"
+      primary={{
+        type: "Outline",
+        buttonProps: {
+          onPress: goBack,
+          label: I18n.t("global.buttons.cancel"),
+          accessibilityLabel: I18n.t("global.buttons.cancel")
+        }
+      }}
+      secondary={{
+        type: "Solid",
+        buttonProps: {
+          onPress: onRetry,
+          label: I18n.t("global.buttons.retry"),
+          accessibilityLabel: I18n.t("global.buttons.retry")
+        }
+      }}
+    />
+  </>
 );
 
 export default errorState;

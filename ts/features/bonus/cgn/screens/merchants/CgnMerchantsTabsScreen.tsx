@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useContext, useState } from "react";
 import { connect } from "react-redux";
-import { View, Platform, SafeAreaView, StyleSheet } from "react-native";
-import { Tab, Tabs } from "native-base";
+import { SafeAreaView } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Dispatch } from "../../../../../store/actions/types";
@@ -11,47 +10,41 @@ import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { navigateToCgnMerchantDetail } from "../../navigation/actions";
-import customVariables from "../../../../../theme/variables";
-import { makeFontStyleObject } from "../../../../../components/core/fonts";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
-import { H1 } from "../../../../../components/core/typography/H1";
 import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../../../components/ui/LightModal";
 import CgnMerchantsFilters from "../../components/merchants/CgnMerchantsFilters";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import { confirmButtonProps } from "../../../../../components/buttons/ButtonConfigurations";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
-const styles = StyleSheet.create({
-  tabBarContainer: {
-    elevation: 0,
-    height: 40
-  },
-  tabBarUnderline: {
-    borderBottomColor: customVariables.tabUnderlineColor,
-    borderBottomWidth: customVariables.tabUnderlineHeight
-  },
-  tabBarUnderlineActive: {
-    height: customVariables.tabUnderlineHeight,
-    // borders do not overlap each other, but stack naturally
-    marginBottom: -customVariables.tabUnderlineHeight,
-    backgroundColor: customVariables.contentPrimaryBackground
-  },
-  activeTextStyle: {
-    ...makeFontStyleObject("SemiBold"),
-    fontSize: Platform.OS === "android" ? 16 : undefined,
-    fontWeight: Platform.OS === "android" ? "normal" : "bold",
-    color: customVariables.brandPrimary
-  },
-  textStyle: {
-    color: customVariables.textColor
-  }
-});
+// const styles = StyleSheet.create({
+//   tabBarContainer: {
+//     elevation: 0,
+//     height: 40
+//   },
+//   tabBarUnderline: {
+//     borderBottomColor: customVariables.tabUnderlineColor,
+//     borderBottomWidth: customVariables.tabUnderlineHeight
+//   },
+//   tabBarUnderlineActive: {
+//     height: customVariables.tabUnderlineHeight,
+//     // borders do not overlap each other, but stack naturally
+//     marginBottom: -customVariables.tabUnderlineHeight,
+//     backgroundColor: customVariables.contentPrimaryBackground
+//   },
+//   activeTextStyle: {
+//     ...makeFontStyleObject("SemiBold"),
+//     fontSize: Platform.OS === "android" ? 16 : undefined,
+//     fontWeight: Platform.OS === "android" ? "normal" : "bold",
+//     color: customVariables.brandPrimary
+//   },
+//   textStyle: {
+//     color: customVariables.textColor
+//   }
+// });
 
 /**
  * Screen that renders the list of the merchants which have an active discount for CGN
@@ -61,16 +54,14 @@ const styles = StyleSheet.create({
  *  @param props
  * @constructor
  */
-const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
-  props: Props
-) => {
+const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (_: Props) => {
   const { showAnimatedModal, hideModal } = useContext(LightModalContext);
-  const [selectedTab, setSelectedTab] = useState<"online" | "places">("online");
+  const [selectedTab, __] = useState<"online" | "places">("online");
 
-  const onItemPress = () => {
-    // TODO Add the dispatch of merchant selected when the complete workflow is available
-    props.navigateToMerchantDetail();
-  };
+  // const onItemPress = () => {
+  //   // TODO Add the dispatch of merchant selected when the complete workflow is available
+  //   props.navigateToMerchantDetail();
+  // };
 
   const openFiltersModal = () =>
     showAnimatedModal(
@@ -91,7 +82,8 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
       isSearchAvailable={{ enabled: true, onSearchTap: openFiltersModal }}
     >
       <SafeAreaView style={IOStyles.flex}>
-        <Tabs
+        {/* TABS component should be replaced with MaterialTopTab Navigator as done in Services and Messages home */}
+        {/* <Tabs
           tabContainerStyle={[styles.tabBarContainer, styles.tabBarUnderline]}
           tabBarUnderlineStyle={styles.tabBarUnderlineActive}
           onChangeTab={(e: any) => {
@@ -118,7 +110,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
             heading={I18n.t("bonus.cgn.merchantsList.places")}
           >
             <View style={[IOStyles.horizontalContentPadding, IOStyles.flex]}>
-              {/* TODO PLACEHOLDER HERE GOES THE MAP */}
+               TODO PLACEHOLDER HERE GOES THE MAP 
               <H1>{`${I18n.t("bonus.cgn.merchantsList.places")} TAB`}</H1>
             </View>
           </Tab>
@@ -129,7 +121,7 @@ const CgnMerchantsTabsScreen: React.FunctionComponent<Props> = (
             openFiltersModal,
             I18n.t("bonus.cgn.merchantsList.cta.filter")
           )}
-        />
+        /> */}
       </SafeAreaView>
     </BaseScreenComponent>
   );

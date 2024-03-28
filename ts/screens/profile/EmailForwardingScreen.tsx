@@ -2,19 +2,17 @@
  * A screens to express the preferences related to email forwarding.
  * //TODO: magage errors (check toast etc.) + avoid useless updates
  */
+import { ContentWrapper, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { List } from "native-base";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
-import { withValidatedEmail } from "../../components/helpers/withValidatedEmail";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
@@ -27,18 +25,17 @@ import { customEmailChannelSetEnabled } from "../../store/actions/persistedPrefe
 import { profileUpsert } from "../../store/actions/profile";
 import { ReduxProps } from "../../store/actions/types";
 import {
-  visibleServicesSelector,
-  VisibleServicesState
+  VisibleServicesState,
+  visibleServicesSelector
 } from "../../store/reducers/entities/services/visibleServices";
 import {
+  ProfileState,
   isEmailEnabledSelector,
   profileEmailSelector,
-  profileSelector,
-  ProfileState
+  profileSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
 import { getProfileChannelsforServicesList } from "../../utils/profile";
-import { showToast } from "../../utils/showToast";
 
 type OwnProps = {
   navigation: IOStackNavigationProp<
@@ -99,7 +96,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
       // if we got an error while updating the preference
       // show a toast
       if (pot.isError(this.props.potProfile)) {
-        showToast(I18n.t("global.genericError"));
+        IOToast.error(I18n.t("global.genericError"));
         this.setState({ isLoading: false });
         return;
       }
@@ -133,7 +130,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
             </Body>
           </View>
           <VSpacer size={16} />
-          <List withContentLateralPadding={true}>
+          <ContentWrapper>
             {/* ALL INACTIVE */}
             {renderListItem(
               I18n.t("send_email_messages.options.disable_all.label"),
@@ -203,7 +200,7 @@ class EmailForwardingScreen extends React.Component<Props, State> {
             }
 
             <EdgeBorderComponent />
-          </List>
+          </ContentWrapper>
         </ScreenContent>
       </TopScreenComponent>
     );
@@ -277,9 +274,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default withValidatedEmail(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(withLoadingSpinner(EmailForwardingScreen))
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withLoadingSpinner(EmailForwardingScreen));

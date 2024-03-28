@@ -1,18 +1,22 @@
+import { IOColors, IOToast, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext, useState } from "react";
 import {
-  View,
   Dimensions,
   Image,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
+  View,
   ViewStyle
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import {
+  cancelButtonProps,
+  confirmButtonProps
+} from "../../../../components/buttons/ButtonConfigurations";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H5 } from "../../../../components/core/typography/H5";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
@@ -23,11 +27,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import themeVariables from "../../../../theme/variables";
 import { useLegacyIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { withBase64Uri } from "../../../../utils/image";
-import { showToast } from "../../../../utils/showToast";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../components/buttons/ButtonConfigurations";
+import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 import {
   FlashAnimatedComponent,
   FlashAnimationState
@@ -44,7 +44,6 @@ import {
 import { captureScreenshot, screenshotOptions } from "../../utils/screenshot";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
 import { EUCovidContext } from "../EuCovidCertificateRouterScreen";
-import { EuCovidCertHeader } from "../../components/EuCovidCertHeader";
 
 type OwnProps = {
   validCertificate: ValidCertificate;
@@ -136,7 +135,8 @@ const EuCovidCertValidComponent = (
 );
 
 const showToastError = (error: string = I18n.t("global.genericError")) =>
-  showToast(error);
+  IOToast.error(error);
+
 const addBottomSheetItem = (config: {
   title: string;
   subTitle: string;
@@ -244,10 +244,10 @@ const EuCovidCertValidScreen = (props: Props): React.ReactElement => {
     }
     captureScreenshot(screenShotViewContainer, screenshotOptions, {
       onSuccess: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.ok"), "success"),
+        IOToast.success(I18n.t("features.euCovidCertificate.save.ok")),
       onNoPermissions: () =>
-        showToast(I18n.t("features.euCovidCertificate.save.noPermission")),
-      onError: () => showToast(I18n.t("global.genericError")),
+        IOToast.info(I18n.t("features.euCovidCertificate.save.noPermission")),
+      onError: () => IOToast.error(I18n.t("global.genericError")),
       onEnd: () => {
         setFlashAnimationState("fadeOut");
         setIsCapturingScreenShoot(false);

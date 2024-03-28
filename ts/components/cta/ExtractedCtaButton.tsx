@@ -1,21 +1,12 @@
-import { Text as NBButtonText } from "native-base";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { ButtonSolid, ButtonOutline } from "@pagopa/io-app-design-system";
 import { CTA } from "../../features/messages/types/MessageCTA";
-import ButtonDefaultOpacity from "../ButtonDefaultOpacity";
 
 type Props = {
   cta: CTA;
-  xsmall: boolean;
   primary?: boolean;
   onCTAPress: (cta: CTA) => void;
 };
-
-const styles = StyleSheet.create({
-  marginTop1: {
-    marginTop: 1
-  }
-});
 
 /**
  * a button displaying a CTA coming from the message content as nested front-matter
@@ -28,16 +19,19 @@ export const ExtractedCtaButton: React.FunctionComponent<Props> = (
   if (cta === undefined) {
     return null;
   }
-  return (
-    <ButtonDefaultOpacity
-      primary={props.primary}
-      disabled={false}
-      xsmall={props.xsmall}
-      bordered={!props.primary}
+  return props.primary ? (
+    <ButtonSolid
       onPress={() => props.onCTAPress(cta)}
-      style={{ flex: 1 }}
-    >
-      <NBButtonText style={styles.marginTop1}>{cta.text}</NBButtonText>
-    </ButtonDefaultOpacity>
+      label={cta.text}
+      accessibilityLabel={cta.text}
+      fullWidth
+    />
+  ) : (
+    <ButtonOutline
+      onPress={() => props.onCTAPress(cta)}
+      label={cta.text}
+      accessibilityLabel={cta.text}
+      fullWidth
+    />
   );
 };

@@ -1,28 +1,23 @@
-import React from "react";
-import { act } from "@testing-library/react-native";
+import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { act } from "@testing-library/react-native";
+import React from "react";
 import { createStore } from "redux";
+import I18n from "../../../../i18n";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
-import { Downloads } from "../../../messages/store/reducers/downloads";
 import { mockPdfAttachment } from "../../../messages/__mocks__/attachment";
-import { downloadAttachment } from "../../../messages/store/actions";
-import I18n from "../../../../i18n";
 import { messageId_1 } from "../../../messages/__mocks__/messages";
+import { downloadAttachment } from "../../../messages/store/actions";
+import { Downloads } from "../../../messages/store/reducers/downloads";
+import { LegacyMessageAttachments } from "../LegacyMessageAttachments";
 
 const mockOpenPreview = jest.fn();
-const mockShowToast = jest.fn();
-
-jest.mock("../../../../utils/showToast", () => ({
-  showToast: () => mockShowToast()
-}));
 
 describe("LegacyMessageAttachments", () => {
   beforeEach(() => {
-    mockShowToast.mockReset();
     mockOpenPreview.mockReset();
   });
 
@@ -100,6 +95,7 @@ describe("LegacyMessageAttachments", () => {
             }
           }
         );
+        const showToastSpy = jest.spyOn(IOToast, "error");
 
         await act(() =>
           store.dispatch(
@@ -110,7 +106,7 @@ describe("LegacyMessageAttachments", () => {
             })
           )
         );
-        expect(mockShowToast).toHaveBeenCalledTimes(1);
+        expect(showToastSpy).toHaveBeenCalledTimes(1);
       });
     });
 

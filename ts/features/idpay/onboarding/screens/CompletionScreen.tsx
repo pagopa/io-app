@@ -1,17 +1,20 @@
+import {
+  FooterWithButtons,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useSelector } from "@xstate/react";
 import React from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
-import { VSpacer, Pictogram } from "@pagopa/io-app-design-system";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
+import themeVariables from "../../../../theme/variables";
 import { useOnboardingMachineService } from "../xstate/provider";
 import { isUpsertingSelector } from "../xstate/selectors";
-import themeVariables from "../../../../theme/variables";
 
 const CompletionScreen = () => {
   const onboardingMachineService = useOnboardingMachineService();
@@ -38,25 +41,33 @@ const CompletionScreen = () => {
   }
 
   return (
-    <SafeAreaView style={IOStyles.flex}>
-      <View style={styles.container}>
-        <Pictogram name="completed" size={120} />
-        <VSpacer size={16} />
-        <H3> {I18n.t("idpay.onboarding.success.requestSent.title")}</H3>
-        <VSpacer size={16} />
-        <Body style={styles.message}>
-          {I18n.t("idpay.onboarding.success.requestSent.body")}
-        </Body>
-      </View>
+    <>
+      <SafeAreaView style={IOStyles.flex}>
+        <View style={styles.container}>
+          <Pictogram name="completed" size={120} />
+          <VSpacer size={16} />
+          <H3> {I18n.t("idpay.onboarding.success.requestSent.title")}</H3>
+          <VSpacer size={16} />
+          <Body style={styles.message}>
+            {I18n.t("idpay.onboarding.success.requestSent.body")}
+          </Body>
+        </View>
+      </SafeAreaView>
       <FooterWithButtons
         type="SingleButton"
-        leftButton={{
-          title: I18n.t("idpay.onboarding.success.button.continue"),
-          testID: "closeButton",
-          onPress: handleClosePress
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("idpay.onboarding.success.button.continue"),
+            accessibilityLabel: I18n.t(
+              "idpay.onboarding.success.button.continue"
+            ),
+            onPress: handleClosePress,
+            testID: "closeButton"
+          }
         }}
       />
-    </SafeAreaView>
+    </>
   );
 };
 

@@ -1,23 +1,19 @@
 import * as React from "react";
 import { useContext } from "react";
-import { View, SafeAreaView } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import image from "../../../../../../../../img/servicesStatus/error-detail-icon.png";
+import { FooterStackButton } from "../../../../../../../components/buttons/FooterStackButtons";
 import { IOStyles } from "../../../../../../../components/core/variables/IOStyles";
-import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../../../../components/infoScreen/InfoScreenComponent";
+import { renderInfoRasterImage } from "../../../../../../../components/infoScreen/imageRendering";
 import BaseScreenComponent from "../../../../../../../components/screens/BaseScreenComponent";
 import { LightModalContext } from "../../../../../../../components/ui/LightModal";
+import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import I18n from "../../../../../../../i18n";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { emptyContextualHelp } from "../../../../../../../utils/emptyContextualHelp";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../../../../components/buttons/ButtonConfigurations";
-import { FooterStackButton } from "../../../../../../../components/buttons/FooterStackButtons";
-import { useHardwareBackButton } from "../../../../../../../hooks/useHardwareBackButton";
 import TosBonusComponent from "../../../../../../bonus/common/components/TosBonusComponent";
 import { walletAddCoBadgeCancel } from "../../../store/actions";
 
@@ -68,10 +64,16 @@ const CoBadgeKoNotFound = (props: Props): React.ReactElement => {
           body={body}
         />
         <FooterStackButton
-          buttons={[
-            confirmButtonProps(props.cancel, close),
-            cancelButtonProps(openCardsNotEnabledModal, findOutMore)
-          ]}
+          primaryActionProps={{
+            label: close,
+            accessibilityLabel: close,
+            onPress: props.cancel
+          }}
+          secondaryActionProps={{
+            label: findOutMore,
+            accessibilityLabel: findOutMore,
+            onPress: openCardsNotEnabledModal
+          }}
         />
       </SafeAreaView>
     </BaseScreenComponent>

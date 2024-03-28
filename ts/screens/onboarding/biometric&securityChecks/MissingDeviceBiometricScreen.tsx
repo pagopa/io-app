@@ -1,20 +1,22 @@
+import {
+  FooterWithButtons,
+  IOVisualCostants,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
-import { IOVisualCostants, VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../../components/core/typography/Body";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import I18n from "../../../i18n";
 import { abortOnboarding } from "../../../store/actions/onboarding";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../store/actions/persistedPreferences";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { trackBiometricConfigurationEducationalScreen } from "./analytics";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -27,7 +29,6 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
  * the instruction to enable the fingerprint/faceID usage
  */
 const MissingDeviceBiometricScreen = () => {
-  const insets = useSafeAreaInsets();
   const dispatch = useDispatch();
 
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
@@ -91,25 +92,23 @@ const MissingDeviceBiometricScreen = () => {
           </Body>
         </View>
       </ScrollView>
-      {/* Waiting for a component that makes this wrapper
-      useless. FooterWithButtons currently uses
-      NativeBase buttons, instead of new ones */}
-      <View style={{ paddingBottom: insets.bottom }}>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={{
-            title: I18n.t("global.buttons.continue"),
-            testID: "not-enrolled-biometric-confirm",
-            primary: true,
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
             onPress: () =>
               dispatch(
                 preferenceFingerprintIsEnabledSaveSuccess({
                   isFingerprintEnabled: false
                 })
-              )
-          }}
-        />
-      </View>
+              ),
+            testID: "not-enrolled-biometric-confirm"
+          }
+        }}
+      />
     </TopScreenComponent>
   );
 };

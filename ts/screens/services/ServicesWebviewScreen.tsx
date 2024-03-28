@@ -1,9 +1,8 @@
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
 import { ServiceId } from "../../../definitions/backend/ServiceId";
@@ -14,8 +13,8 @@ import { navigateBack } from "../../store/actions/navigation";
 import { Dispatch } from "../../store/actions/types";
 import { useIOSelector } from "../../store/hooks";
 import {
-  tokenFromNameSelector,
-  TokenName
+  TokenName,
+  tokenFromNameSelector
 } from "../../store/reducers/authentication";
 import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
 
@@ -96,14 +95,14 @@ const ServicesWebviewScreen: React.FunctionComponent<Props> = (
   return (
     <BaseScreenComponent goBack={handleGoBack}>
       <SafeAreaView style={styles.flex}>
-        <Content contentContainerStyle={styles.flex}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           {!cookieError && isCookieAvailable && O.isSome(token) && (
             <RegionServiceWebView
               uri={route.params.url}
               onWebviewClose={handleGoBack}
             />
           )}
-        </Content>
+        </ScrollView>
       </SafeAreaView>
     </BaseScreenComponent>
   );

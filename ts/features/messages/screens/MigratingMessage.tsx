@@ -1,16 +1,21 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import React, { useEffect } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import React, { useEffect } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
 import doubtImage from "../../../../img/pictograms/doubt.png";
 import paymentCompletedImage from "../../../../img/pictograms/payment-completed.png";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { H2 } from "../../../components/core/typography/H2";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import I18n from "../../../i18n";
-import { MigrationStatus } from "../store/reducers/allPaginated";
 import customVariables from "../../../theme/variables";
+import { MigrationStatus } from "../store/reducers/allPaginated";
 
 const styles = StyleSheet.create({
   migrationMessageContainer: {
@@ -68,18 +73,13 @@ const MigratingMessage = ({ status, onRetry, onEnd }: Props) => {
                 <H2 style={styles.migrationMessageText}>
                   {I18n.t("messages.pagination.migration.failed")}
                 </H2>
-                <ButtonDefaultOpacity
-                  primary={false}
-                  disabled={false}
-                  onPress={onRetry}
-                  style={{ width: "100%" }}
-                >
+                <Pressable onPress={onRetry} style={{ width: "100%" }}>
                   {/* TODO: Replace with BaseTypography component (custom Text
                 componented based on RN Text) */}
                   <Text style={styles.migrationMessageButtonText}>
                     {I18n.t("global.buttons.retry")}
                   </Text>
-                </ButtonDefaultOpacity>
+                </Pressable>
               </View>
             );
           case "succeeded":

@@ -31,7 +31,6 @@ import ManualDataInsertionScreen from "../screens/wallet/payment/ManualDataInser
 import PaymentOutcomeCodeMessage from "../screens/wallet/payment/PaymentOutcomeCodeMessage";
 import PickPaymentMethodScreen from "../screens/wallet/payment/PickPaymentMethodScreen";
 import PickPspScreen from "../screens/wallet/payment/PickPspScreen";
-import ScanQrCodeScreen from "../screens/wallet/payment/ScanQrCodeScreen";
 import TransactionErrorScreen from "../screens/wallet/payment/TransactionErrorScreen";
 import TransactionSummaryScreen from "../screens/wallet/payment/TransactionSummaryScreen";
 import ROUTES from "./routes";
@@ -53,7 +52,7 @@ const bpay_cobadge_routes = () => (
 
 const WalletNavigator = () => (
   <Stack.Navigator
-    initialRouteName={ROUTES.PAYMENT_SCAN_QR_CODE}
+    initialRouteName={ROUTES.PAYMENTS_HISTORY_SCREEN}
     screenOptions={{ gestureEnabled: true, headerShown: false }}
   >
     <Stack.Screen
@@ -96,10 +95,6 @@ const WalletNavigator = () => (
     <Stack.Screen
       name={ROUTES.WALLET_CONFIRM_CARD_DETAILS}
       component={ConfirmCardDetailsScreen}
-    />
-    <Stack.Screen
-      name={ROUTES.PAYMENT_SCAN_QR_CODE}
-      component={ScanQrCodeScreen}
     />
     <Stack.Screen
       name={ROUTES.PAYMENT_MANUAL_DATA_INSERTION}

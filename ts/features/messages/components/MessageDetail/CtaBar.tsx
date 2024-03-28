@@ -133,7 +133,6 @@ const CtaBar = ({
       <View testID={"CtaBar_withCTA"} style={[IOStyles.footer, IOStyles.row]}>
         <ExtractedCTABar
           ctas={ctas}
-          xsmall={false}
           dispatch={dispatch}
           serviceMetadata={serviceMetadata}
           service={service?.raw}

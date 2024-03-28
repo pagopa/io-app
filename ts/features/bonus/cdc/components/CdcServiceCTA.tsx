@@ -1,4 +1,8 @@
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
@@ -6,25 +10,23 @@ import { useCallback } from "react";
 import { View } from "react-native";
 import { StatoBeneficiarioEnum } from "../../../../../definitions/cdc/StatoBeneficiario";
 import { BonusVisibilityEnum } from "../../../../../definitions/content/BonusVisibility";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
+import { fold } from "../../../../common/model/RemoteValue";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import StatusContent from "../../../../components/SectionStatus/StatusContent";
-import { Label } from "../../../../components/core/typography/Label";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { ID_CDC_TYPE } from "../../common/utils";
-import { fold } from "../../../../common/model/RemoteValue";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import {
   allAvailableBonusTypesSelector,
   availableBonusTypesSelectorFromId
 } from "../../common/store/selectors";
+import { ID_CDC_TYPE } from "../../common/utils";
 import { CDC_ROUTES } from "../navigation/routes";
 import { cdcRequestBonusList } from "../store/actions/cdcBonusRequest";
 import { cdcBonusRequestListSelector } from "../store/reducers/cdcBonusRequest";
 import { CdcBonusRequestList } from "../types/CdcBonusRequest";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type ReadyButtonProp = {
   bonusRequestList: CdcBonusRequestList;
@@ -39,20 +41,17 @@ const ReadyButton = (props: ReadyButtonProp) => {
 
   if (activableBonuses.length > 0) {
     return (
-      <ButtonDefaultOpacity
-        block
-        primary
+      <ButtonSolid
+        fullWidth
+        label={I18n.t("bonus.cdc.serviceCta.activable")}
+        accessibilityLabel={I18n.t("bonus.cdc.serviceCta.activable")}
         onPress={() => {
           navigation.navigate(CDC_ROUTES.BONUS_REQUEST_MAIN, {
             screen: CDC_ROUTES.INFORMATION_TOS
           });
         }}
         testID={"activateCardButton"}
-      >
-        <Label color={"white"}>
-          {I18n.t("bonus.cdc.serviceCta.activable")}
-        </Label>
-      </ButtonDefaultOpacity>
+      />
     );
   }
 
@@ -62,14 +61,14 @@ const ReadyButton = (props: ReadyButtonProp) => {
   );
   if (pendingBonuses.length > 0) {
     return (
-      <ButtonDefaultOpacity
-        block
-        disabled={true}
+      <ButtonSolid
+        fullWidth
+        disabled
         onPress={() => true}
+        label={I18n.t("bonus.cdc.serviceCta.pending")}
+        accessibilityLabel={I18n.t("bonus.cdc.serviceCta.pending")}
         testID={"pendingCardButton"}
-      >
-        <Label color={"white"}>{I18n.t("bonus.cdc.serviceCta.pending")}</Label>
-      </ButtonDefaultOpacity>
+      />
     );
   }
 
@@ -97,15 +96,13 @@ const ErrorButton = (props: ErrorButtonProp) => {
         {I18n.t("bonus.cdc.serviceCta.error.status")}
       </StatusContent>
       <VSpacer size={16} />
-      <ButtonDefaultOpacity
-        block
-        primary
-        bordered
+      <ButtonOutline
+        fullWidth
+        label={I18n.t("global.buttons.retry")}
+        accessibilityLabel={I18n.t("global.buttons.retry")}
         onPress={props.onPress}
         testID={"retryButton"}
-      >
-        <Label color={"blue"}>{I18n.t("global.buttons.retry")}</Label>
-      </ButtonDefaultOpacity>
+      />
     </View>
   );
 };

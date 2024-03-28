@@ -2,12 +2,17 @@
  * This component displays a list of payments
  */
 import * as O from "fp-ts/lib/Option";
-import { Content } from "native-base";
 import * as React from "react";
-import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
+import {
+  View,
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  ScrollView
+} from "react-native";
 
 import { pipe } from "fp-ts/lib/function";
-import { IOColors } from "@pagopa/io-app-design-system";
+import { ContentWrapper, IOColors } from "@pagopa/io-app-design-system";
 import I18n from "../../i18n";
 import {
   PaymentHistory,
@@ -122,26 +127,28 @@ export default class PaymentHistoryList extends React.Component<Props> {
     return payments.length === 0 && ListEmptyComponent ? (
       ListEmptyComponent
     ) : (
-      <Content style={styles.whiteContent}>
-        <View>
-          <View style={styles.subHeaderContent}>
-            <Body>{I18n.t("payment.details.list.title")}</Body>
+      <ScrollView style={styles.whiteContent}>
+        <ContentWrapper>
+          <View>
+            <View style={styles.subHeaderContent}>
+              <Body>{I18n.t("payment.details.list.title")}</Body>
+            </View>
           </View>
-        </View>
 
-        <FlatList
-          scrollEnabled={false}
-          data={payments}
-          renderItem={this.renderHistoryPaymentItem}
-          ItemSeparatorComponent={() => (
-            <ItemSeparatorComponent noPadded={true} />
-          )}
-          ListFooterComponent={
-            payments.length > 0 ? <EdgeBorderComponent /> : null
-          }
-          keyExtractor={(_, index) => index.toString()}
-        />
-      </Content>
+          <FlatList
+            scrollEnabled={false}
+            data={payments}
+            renderItem={this.renderHistoryPaymentItem}
+            ItemSeparatorComponent={() => (
+              <ItemSeparatorComponent noPadded={true} />
+            )}
+            ListFooterComponent={
+              payments.length > 0 ? <EdgeBorderComponent /> : null
+            }
+            keyExtractor={(_, index) => index.toString()}
+          />
+        </ContentWrapper>
+      </ScrollView>
     );
   }
 }

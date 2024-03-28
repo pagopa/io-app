@@ -1,5 +1,6 @@
 import {
   Divider,
+  IOToast,
   IOVisualCostants,
   ListItemNav
 } from "@pagopa/io-app-design-system";
@@ -22,7 +23,6 @@ import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { userDataProcessingSelector } from "../../store/reducers/userDataProcessing";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
-import { showToast } from "../../utils/showToast";
 
 type Props = {
   navigation: IOStackNavigationProp<ProfileParamsList, "PROFILE_PRIVACY_MAIN">;
@@ -150,7 +150,7 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
         !pot.isLoading(currentState)
       ) {
         if (pot.isError(currentState)) {
-          showToast(errorMessage);
+          IOToast.error(errorMessage);
         }
         // if the user asks for download/delete prompt an alert
         else if (requestProcess) {

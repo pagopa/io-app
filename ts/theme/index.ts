@@ -7,13 +7,7 @@ import getTheme from "native-base/src/theme/components";
 
 import baseScreenComponentTheme from "./components/BaseScreenComponent";
 import buttonTheme from "./components/Button";
-import contentTheme from "./components/Content";
-import headerTheme from "./components/Header";
 import inputTheme from "./components/Input";
-import itemTheme from "./components/Item";
-import labelTheme from "./components/Label";
-import listTheme from "./components/List";
-import listItemTheme from "./components/ListItem";
 import maskedInputTheme from "./components/MaskedInput";
 import textTheme from "./components/Text";
 import { Theme } from "./types";
@@ -25,29 +19,11 @@ const theme = (): Theme => {
     "NativeBase.Button": {
       ...buttonTheme()
     },
-    "NativeBase.Content": {
-      ...contentTheme()
-    },
-    "NativeBase.Header": {
-      ...headerTheme()
-    },
-    "NativeBase.Item": {
-      ...itemTheme()
-    },
-    "NativeBase.Label": {
-      ...labelTheme()
-    },
     "NativeBase.Text": {
       ...textTheme()
     },
     "NativeBase.Input": {
       ...inputTheme()
-    },
-    "NativeBase.List": {
-      ...listTheme()
-    },
-    "NativeBase.ListItem": {
-      ...listItemTheme()
     },
     "UIComponent.BaseScreenComponent": {
       ...baseScreenComponentTheme()

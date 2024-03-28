@@ -1,6 +1,11 @@
 import * as React from "react";
-import { ListItem } from "native-base";
-import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Pressable
+} from "react-native";
 import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { H4 } from "../../core/typography/H4";
 import { H5 } from "../../core/typography/H5";
@@ -39,7 +44,6 @@ const styles = StyleSheet.create({
   }
 });
 const PickPaymentMethodBaseListItem: React.FC<Props> = ({
-  isFirst,
   isFavourite,
   logo,
   title,
@@ -48,12 +52,8 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
   onPress,
   testID
 }) => (
-  <ListItem
-    first={isFirst}
-    onPress={onPress}
-    testID={testID}
-    style={{ paddingEnd: 0 }}
-  >
+  <Pressable onPress={onPress} testID={testID} style={{ paddingEnd: 0 }}>
+    <VSpacer />
     <View style={styles.contentContainer}>
       <View style={[styles.row, IOStyles.flex]}>
         <Image source={logo} style={styles.cardLogo} testID={"cardImage"} />
@@ -72,7 +72,8 @@ const PickPaymentMethodBaseListItem: React.FC<Props> = ({
         {rightElement}
       </View>
     </View>
-  </ListItem>
+    <VSpacer />
+  </Pressable>
 );
 
 export default PickPaymentMethodBaseListItem;

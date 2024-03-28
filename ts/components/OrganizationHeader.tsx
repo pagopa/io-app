@@ -1,19 +1,13 @@
-import { Col, Grid } from "native-base";
 import * as React from "react";
-import { ImageURISource, StyleSheet } from "react-native";
+import { ImageURISource, StyleSheet, View } from "react-native";
+import { Body, H3, IOStyles } from "@pagopa/io-app-design-system";
 import { MultiImage } from "./ui/MultiImage";
-import { H2 } from "./core/typography/H2";
-import { Body } from "./core/typography/Body";
 
 const styles = StyleSheet.create({
-  serviceCol: {
-    width: 60
-  },
   serviceMultiImage: {
     width: 60,
     height: 60
-  },
-  leftColumnStyle: { marginRight: 16 }
+  }
 });
 
 type Props = {
@@ -31,15 +25,21 @@ const OrganizationHeader = ({
   organizationName,
   logoURLs
 }: Props) => (
-  <Grid>
-    <Col style={styles.leftColumnStyle}>
-      <H2>{organizationName}</H2>
+  <View
+    style={{
+      flexDirection: "row",
+      alignItems: "flex-start",
+      justifyContent: "space-between"
+    }}
+  >
+    <View style={IOStyles.flex}>
+      <H3>{organizationName}</H3>
       <Body>{serviceName}</Body>
-    </Col>
-    <Col style={styles.serviceCol}>
+    </View>
+    <View>
       <MultiImage style={styles.serviceMultiImage} source={logoURLs} />
-    </Col>
-  </Grid>
+    </View>
+  </View>
 );
 
 export default OrganizationHeader;

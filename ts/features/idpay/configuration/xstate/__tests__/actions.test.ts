@@ -15,10 +15,6 @@ import { InitiativeFailureType } from "../failure";
 import I18n from "../../../../../i18n";
 import { refreshSessionToken } from "../../../../fastLogin/store/actions/tokenRefreshActions";
 
-jest.mock("../../../../../utils/showToast", () => ({
-  showToast: jest.fn()
-}));
-
 const navigation: Partial<IOStackNavigationProp<AppParamsList>> = {
   navigate: jest.fn(),
   replace: jest.fn(),

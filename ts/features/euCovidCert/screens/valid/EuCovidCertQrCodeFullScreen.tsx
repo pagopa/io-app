@@ -1,3 +1,4 @@
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import {
   Dimensions,
@@ -6,15 +7,12 @@ import {
   ScrollView,
   StyleSheet
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { withBase64Uri } from "../../../../utils/image";
-import { cancelButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { EUCovidCertParamsList } from "../../navigation/params";
 
 export type EuCovidCertQrCodeFullScreenNavigationParams = Readonly<{
@@ -59,14 +57,18 @@ export const EuCovidCertQrCodeFullScreen = (
             style={styles.qrCode}
           />
         </ScrollView>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={cancelButtonProps(
-            () => props.navigation.goBack(),
-            I18n.t("global.buttons.close")
-          )}
-        />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.close"),
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: () => props.navigation.goBack()
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

@@ -1,8 +1,7 @@
-import { Container } from "native-base";
 import { connectStyle } from "native-base-shoutem-theme";
 import mapPropsToStyleNames from "native-base/src/utils/mapPropsToStyleNames";
 import React, { ComponentProps, PropsWithChildren, ReactNode } from "react";
-import { ColorValue } from "react-native";
+import { ColorValue, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { TranslationKeys } from "../../../../locales/locales";
@@ -73,7 +72,8 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
       onAccessibilityNavigationHeaderFocus,
       primary,
       showChat,
-      titleColor
+      titleColor,
+      hideSafeArea
     } = props;
 
     /**
@@ -123,9 +123,10 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
     };
 
     return (
-      <Container>
+      <View style={{ flexGrow: 1 }}>
         {!hideBaseHeader && (
           <BaseHeader
+            hideSafeArea={hideSafeArea}
             onAccessibilityNavigationHeaderFocus={
               onAccessibilityNavigationHeaderFocus
             }
@@ -148,7 +149,7 @@ const BaseScreenComponentFC = React.forwardRef<ReactNode, Props>(
           />
         )}
         {children}
-      </Container>
+      </View>
     );
   }
 );

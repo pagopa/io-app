@@ -1,14 +1,14 @@
-import { ListItem } from "native-base";
+import { Divider, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import {
-  View,
   FlatList,
   ListRenderItemInfo,
+  Pressable,
   SafeAreaView,
-  ScrollView
+  ScrollView,
+  View
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { H1 } from "../../../components/core/typography/H1";
 import { H4 } from "../../../components/core/typography/H4";
@@ -77,7 +77,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
   const renderItem = (listItem: ListRenderItemInfo<ZendeskSubCategory>) => {
     const subCategory = listItem.item;
     return (
-      <ListItem
+      <Pressable
         onPress={() => {
           selectedSubcategory(subCategory);
           // Set sub-category as custom field
@@ -88,9 +88,11 @@ const ZendeskChooseSubCategory = (props: Props) => {
             assistanceForFci
           });
         }}
-        first={listItem.index === 0}
-        style={{ paddingRight: 0 }}
         testID={subCategory.value}
+        // Hacky solution waiting for the replacement with `ListItem` from the DS
+        style={{
+          paddingVertical: 16
+        }}
       >
         <View
           style={{
@@ -113,7 +115,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
             <Icon name="chevronRightListItem" size={24} color="blue" />
           </View>
         </View>
-      </ListItem>
+      </Pressable>
     );
   };
 
@@ -131,6 +133,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
             data={subCategories}
             keyExtractor={c => c.value}
             renderItem={renderItem}
+            ItemSeparatorComponent={() => <Divider />}
           />
         </ScrollView>
       </SafeAreaView>

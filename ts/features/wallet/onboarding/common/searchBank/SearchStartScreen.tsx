@@ -1,23 +1,19 @@
+import { FooterWithButtons } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { SafeAreaView, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { SafeAreaView, View } from "react-native";
+import { isError, isLoading } from "../../../../../common/model/RemoteValue";
+import SectionStatusComponent from "../../../../../components/SectionStatus";
+import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
+import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { WithTestID } from "../../../../../types/WithTestID";
-import { isError, isLoading } from "../../../../../common/model/RemoteValue";
-import { abiSelector } from "../../store/abi";
-import { loadAbi } from "../../bancomat/store/actions";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import FooterWithButtons from "../../../../../components/ui/FooterWithButtons";
-import {
-  cancelButtonProps,
-  confirmButtonProps
-} from "../../../../../components/buttons/ButtonConfigurations";
-import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import SectionStatusComponent from "../../../../../components/SectionStatus";
-import { SectionStatusKey } from "../../../../../store/reducers/backendStatus";
+import { loadAbi } from "../../bancomat/store/actions";
+import { abiSelector } from "../../store/abi";
 import { SearchStartComponent } from "./SearchStartComponent";
 
 type MethodType = "bancomatPay" | "bancomat" | "cobadge";
@@ -33,17 +29,6 @@ type Props = WithTestID<{
 }> &
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
-
-const renderFooterButtons = (onCancel: () => void, onContinue: () => void) => (
-  <FooterWithButtons
-    type={"TwoButtonsInlineThird"}
-    leftButton={cancelButtonProps(onCancel, I18n.t("global.buttons.cancel"))}
-    rightButton={confirmButtonProps(
-      onContinue,
-      I18n.t("global.buttons.continue")
-    )}
-  />
-);
 
 const handleMethodName = (methodType: MethodType) => {
   switch (methodType) {
@@ -76,6 +61,7 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
   const onContinueHandler = () => {
     props.onSearch();
   };
+
   return (
     <BaseScreenComponent
       goBack={true}
@@ -96,8 +82,26 @@ const SearchStartScreen: React.FunctionComponent<Props> = (props: Props) => {
           />
         </View>
         <SectionStatusComponent sectionKey={getSectionName(props.methodType)} />
-        {renderFooterButtons(props.onCancel, onContinueHandler)}
       </SafeAreaView>
+      <FooterWithButtons
+        type="TwoButtonsInlineThird"
+        primary={{
+          type: "Outline",
+          buttonProps: {
+            label: I18n.t("global.buttons.cancel"),
+            accessibilityLabel: I18n.t("global.buttons.cancel"),
+            onPress: props.onCancel
+          }
+        }}
+        secondary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.continue"),
+            accessibilityLabel: I18n.t("global.buttons.continue"),
+            onPress: onContinueHandler
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };

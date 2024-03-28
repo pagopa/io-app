@@ -20,7 +20,6 @@ import { H2 } from "../../components/core/typography/H2";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import I18n from "../../i18n";
-import customVariables from "../../theme/variables";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { trackLoginRootedScreen } from "./analytics";
@@ -31,12 +30,7 @@ type Props = {
 };
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1
-  },
   main: {
-    paddingTop: customVariables.contentPadding,
-    paddingHorizontal: customVariables.contentPadding,
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
@@ -135,7 +129,7 @@ const RootedDeviceModal = (props: Props) => {
     default: I18n.t("rooted.bodyAndroid")
   });
   const ComponentWithLoading = withLoadingSpinner(() => (
-    <SafeAreaView edges={["bottom"]} style={styles.flex}>
+    <SafeAreaView edges={["bottom"]} style={IOStyles.flex}>
       <ScrollView style={IOStyles.horizontalContentPadding}>
         <View style={styles.main}>
           <Image source={image} resizeMode="contain" style={styles.image} />

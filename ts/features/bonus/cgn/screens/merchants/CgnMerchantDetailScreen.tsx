@@ -1,3 +1,9 @@
+import {
+  IOToast,
+  Icon,
+  IconButton,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -11,24 +17,22 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Icon, IconButton, VSpacer } from "@pagopa/io-app-design-system";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
 import { H4 } from "../../../../../components/core/typography/H4";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
-import { showToast } from "../../../../../utils/showToast";
 import { openWebUrl } from "../../../../../utils/url";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
@@ -53,6 +57,13 @@ const CgnMerchantDetailScreen = () => {
   }, [merchantID, dispatch]);
 
   useEffect(loadMerchantDetail, [loadMerchantDetail]);
+
+  useHeaderSecondLevel({
+    title: isReady(merchantDetail) ? merchantDetail.value.name : "",
+    contextualHelp: emptyContextualHelp,
+    supportRequest: true
+  });
+
   // -------    utils/logic
 
   const DiscountListItem = ({ item }: { item: Discount }) =>
@@ -70,88 +81,73 @@ const CgnMerchantDetailScreen = () => {
 
   // -------    render
 
-  return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={
-        isReady(merchantDetail) ? merchantDetail.value.name : undefined
-      }
-      contextualHelp={emptyContextualHelp}
+  return isReady(merchantDetail) ? (
+    <ScrollView
+      scrollIndicatorInsets={{ right: 1 }}
+      contentContainerStyle={[
+        styles.scrollViewContainer,
+        { paddingBottom: insets.bottom }
+      ]}
     >
-      {isReady(merchantDetail) ? (
-        <ScrollView
-          scrollIndicatorInsets={{ right: 1 }}
-          contentContainerStyle={[
-            styles.scrollViewContainer,
-            { paddingBottom: insets.bottom }
-          ]}
-          bounces={true}
-        >
-          <SafeAreaView style={IOStyles.flex}>
-            {merchantDetail.value.imageUrl !== undefined && (
-              <Image
-                source={{ uri: merchantDetail.value.imageUrl }}
-                style={styles.merchantImage}
-              />
-            )}
-            <VSpacer size={24} />
-            <H1>{merchantDetail.value.name}</H1>
-            <VSpacer size={16} />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
-            <VSpacer size={8} />
-            {renderDiscountsList(merchantDetail.value.discounts)}
-            <VSpacer size={8} />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
-            <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
-            <VSpacer size={16} />
-            <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
-            {pipe(
-              merchantDetail.value.websiteUrl,
-              O.fromNullable,
-              O.fold(
-                () => undefined,
-                url => (
-                  <TouchableDefaultOpacity
-                    style={[
-                      IOStyles.row,
-                      styles.spaced,
-                      { paddingVertical: 10 }
-                    ]}
-                    onPress={() =>
-                      openWebUrl(url, () =>
-                        showToast(I18n.t("bonus.cgn.generic.linkError"))
-                      )
-                    }
-                  >
-                    <H4 weight={"Regular"} style={IOStyles.flex}>
-                      {url}
-                    </H4>
-                    <Icon
-                      name="externalLink"
-                      size={EXTERNAL_LINK_ICON_SIZE}
-                      color="blue"
-                    />
-                  </TouchableDefaultOpacity>
-                )
-              )
-            )}
-            {renderAddressesList(
-              merchantDetail.value.addresses,
-              merchantDetail.value.allNationalAddresses
-            )}
-            <VSpacer size={24} />
-          </SafeAreaView>
-        </ScrollView>
-      ) : (
-        <SafeAreaView style={IOStyles.flex}>
-          <LoadingErrorComponent
-            isLoading={isLoading(merchantDetail)}
-            loadingCaption={I18n.t("global.remoteStates.loading")}
-            onRetry={loadMerchantDetail}
+      <SafeAreaView style={IOStyles.flex}>
+        {merchantDetail.value.imageUrl !== undefined && (
+          <Image
+            source={{ uri: merchantDetail.value.imageUrl }}
+            style={styles.merchantImage}
           />
-        </SafeAreaView>
-      )}
-    </BaseScreenComponent>
+        )}
+        <VSpacer size={24} />
+        <H1>{merchantDetail.value.name}</H1>
+        <VSpacer size={16} />
+        <H2>{I18n.t("bonus.cgn.merchantDetail.title.deals")}</H2>
+        <VSpacer size={8} />
+        {renderDiscountsList(merchantDetail.value.discounts)}
+        <VSpacer size={8} />
+        <H2>{I18n.t("bonus.cgn.merchantDetail.title.description")}</H2>
+        <H4 weight={"Regular"}>{merchantDetail.value.description}</H4>
+        <VSpacer size={16} />
+        <H2>{I18n.t("bonus.cgn.merchantDetail.title.addresses")}</H2>
+        {pipe(
+          merchantDetail.value.websiteUrl,
+          O.fromNullable,
+          O.fold(
+            () => undefined,
+            url => (
+              <TouchableDefaultOpacity
+                style={[IOStyles.row, styles.spaced, { paddingVertical: 10 }]}
+                onPress={() =>
+                  openWebUrl(url, () =>
+                    IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
+                  )
+                }
+              >
+                <H4 weight={"Regular"} style={IOStyles.flex}>
+                  {url}
+                </H4>
+                <Icon
+                  name="externalLink"
+                  size={EXTERNAL_LINK_ICON_SIZE}
+                  color="blue"
+                />
+              </TouchableDefaultOpacity>
+            )
+          )
+        )}
+        {renderAddressesList(
+          merchantDetail.value.addresses,
+          merchantDetail.value.allNationalAddresses
+        )}
+        <VSpacer size={24} />
+      </SafeAreaView>
+    </ScrollView>
+  ) : (
+    <SafeAreaView style={IOStyles.flex}>
+      <LoadingErrorComponent
+        isLoading={isLoading(merchantDetail)}
+        loadingCaption={I18n.t("global.remoteStates.loading")}
+        onRetry={loadMerchantDetail}
+      />
+    </SafeAreaView>
   );
 };
 

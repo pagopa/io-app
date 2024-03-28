@@ -1,6 +1,7 @@
+import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-import { render, fireEvent } from "@testing-library/react-native";
 
+import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "../../../i18n";
 import TosAndPrivacyBox from "../TosAndPrivacyBox";
 
@@ -8,7 +9,6 @@ import TosAndPrivacyBox from "../TosAndPrivacyBox";
 let MOCK_URL_WILL_FAIL = false;
 
 const mockOpenWebUrl = jest.fn();
-const mockShowToast = jest.fn();
 
 jest.mock("../../../utils/url", () => ({
   openWebUrl: (_: string, onError: () => void) => {
@@ -20,10 +20,6 @@ jest.mock("../../../utils/url", () => ({
   }
 }));
 
-jest.mock("../../../utils/showToast", () => ({
-  showToast: () => mockShowToast()
-}));
-
 const options = {
   tosUrl: "https://www.fsf.org/",
   privacyUrl: "https://gnupg.org/"
@@ -32,7 +28,6 @@ const options = {
 describe("TosAndPrivacyBox component", () => {
   beforeEach(() => {
     mockOpenWebUrl.mockReset();
-    mockShowToast.mockReset();
     MOCK_URL_WILL_FAIL = false;
   });
 
@@ -66,12 +61,13 @@ describe("TosAndPrivacyBox component", () => {
     it("should call `showToast` when then link fails", () => {
       MOCK_URL_WILL_FAIL = true;
       const component = renderComponent(options);
+      const showToastSpy = jest.spyOn(IOToast, "error");
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const link = component
         .getAllByRole("link")
         .find(item => item.children[0] === I18n.t("services.privacyLink"))!;
       fireEvent(link, "onPress");
-      expect(mockShowToast).toHaveBeenCalledTimes(1);
+      expect(showToastSpy).toHaveBeenCalledTimes(1);
     });
   });
 

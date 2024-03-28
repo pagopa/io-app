@@ -1,17 +1,15 @@
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { useContext } from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import image from "../../../../../img/servicesStatus/error-detail-icon.png";
 import { Body } from "../../../../components/core/typography/Body";
 import WorkunitGenericFailure from "../../../../components/error/WorkunitGenericFailure";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
-import { confirmButtonProps } from "../../../../components/buttons/ButtonConfigurations";
 import { euCovidCertificateGet } from "../../store/actions";
 import { EUCovidCertificateAuthCode } from "../../types/EUCovidCertificate";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
@@ -42,11 +40,15 @@ type FooterProps = {
 
 const Footer = (props: FooterProps) => (
   <FooterWithButtons
-    type={"SingleButton"}
-    leftButton={confirmButtonProps(
-      props.onPress,
-      I18n.t("global.buttons.retry")
-    )}
+    type="SingleButton"
+    primary={{
+      type: "Solid",
+      buttonProps: {
+        label: I18n.t("global.buttons.retry"),
+        accessibilityLabel: I18n.t("global.buttons.retry"),
+        onPress: props.onPress
+      }
+    }}
   />
 );
 

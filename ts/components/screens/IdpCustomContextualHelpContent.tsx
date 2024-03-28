@@ -1,9 +1,12 @@
 import I18n from "i18n-js";
 import * as React from "react";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import {
+  ButtonOutline,
+  ButtonSolid,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { Idp } from "../../../definitions/content/Idp";
 import { handleItemOnPress } from "../../utils/url";
-import BlockButtons from "../ui/BlockButtons";
 import LegacyMarkdown from "../ui/Markdown/LegacyMarkdown";
 import EmailCallCTA from "./EmailCallCTA";
 
@@ -36,24 +39,22 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
         <React.Fragment>
           {idpTextData.recover_username && (
             <React.Fragment>
-              <BlockButtons
-                type={"SingleButton"}
-                leftButton={{
-                  title: I18n.t("authentication.idp_login.recoverUsername"),
-                  onPress: handleItemOnPress(idpTextData.recover_username),
-                  small: true
-                }}
+              <ButtonSolid
+                label={I18n.t("authentication.idp_login.recoverUsername")}
+                accessibilityLabel={I18n.t(
+                  "authentication.idp_login.recoverUsername"
+                )}
+                onPress={handleItemOnPress(idpTextData.recover_username)}
               />
               <VSpacer size={16} />
             </React.Fragment>
           )}
-          <BlockButtons
-            type={"SingleButton"}
-            leftButton={{
-              title: I18n.t("authentication.idp_login.recoverPassword"),
-              onPress: handleItemOnPress(idpTextData.recover_password),
-              small: true
-            }}
+          <ButtonSolid
+            label={I18n.t("authentication.idp_login.recoverPassword")}
+            accessibilityLabel={I18n.t(
+              "authentication.idp_login.recoverUsername"
+            )}
+            onPress={handleItemOnPress(idpTextData.recover_password)}
           />
         </React.Fragment>
       )}
@@ -70,15 +71,12 @@ const IdpCustomContextualHelpBody: React.FunctionComponent<Props> = props => {
           <VSpacer size={16} />
           {idpTextData.helpdesk_form && (
             <React.Fragment>
-              <BlockButtons
-                type={"SingleButton"}
-                leftButton={{
-                  title: I18n.t("authentication.idp_login.openTicket"),
-                  onPress: handleItemOnPress(idpTextData.helpdesk_form),
-                  primary: true,
-                  bordered: true,
-                  small: true
-                }}
+              <ButtonOutline
+                label={I18n.t("authentication.idp_login.openTicket")}
+                accessibilityLabel={I18n.t(
+                  "authentication.idp_login.recoverUsername"
+                )}
+                onPress={handleItemOnPress(idpTextData.helpdesk_form)}
               />
               <VSpacer size={16} />
             </React.Fragment>

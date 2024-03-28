@@ -1,12 +1,14 @@
+import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { List } from "native-base";
 import * as React from "react";
 import { connect } from "react-redux";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../components/screens/ListItemComponent";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import ROUTES from "../../navigation/routes";
 import {
   hasProfileEmailSelector,
   isProfileEmailValidatedSelector,
@@ -14,8 +16,6 @@ import {
   profileNameSurnameSelector
 } from "../../store/reducers/profile";
 import { GlobalState } from "../../store/reducers/types";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
-import ROUTES from "../../navigation/routes";
 
 type Props = ReturnType<typeof mapStateToProps>;
 
@@ -56,7 +56,7 @@ const ProfileDataScreen: React.FC<Props> = ({
       contextualHelpMarkdown={contextualHelpMarkdown}
       faqCategories={["profile", "privacy", "authentication_SPID"]}
     >
-      <List withContentLateralPadding>
+      <ContentWrapper>
         {/* Show name and surname */}
         {nameSurname && (
           <ListItemComponent
@@ -81,7 +81,7 @@ const ProfileDataScreen: React.FC<Props> = ({
           onPress={onPressEmail}
           testID="insert-or-edit-email"
         />
-      </List>
+      </ContentWrapper>
     </RNavScreenWithLargeHeader>
   );
 };

@@ -1,20 +1,21 @@
+import { FooterWithButtons, VSpacer } from "@pagopa/io-app-design-system";
 import { useSelector } from "@xstate/react";
 import React from "react";
 import { SafeAreaView, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { SelfDeclarationBoolDTO } from "../../../../../definitions/idpay/SelfDeclarationBoolDTO";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { Body } from "../../../../components/core/typography/Body";
 import { H1 } from "../../../../components/core/typography/H1";
 import { Link } from "../../../../components/core/typography/Link";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import ListItemComponent from "../../../../components/screens/ListItemComponent";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
+import { dpr28Dec2000Url } from "../../../../urls";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { openWebUrl } from "../../../../utils/url";
 import { useOnboardingMachineService } from "../xstate/provider";
 import {
   areAllSelfDeclarationsToggledSelector,
@@ -22,8 +23,6 @@ import {
   isLoadingSelector,
   selectSelfDeclarationBoolAnswers
 } from "../xstate/selectors";
-import { openWebUrl } from "../../../../utils/url";
-import { dpr28Dec2000Url } from "../../../../urls";
 
 const InitiativeSelfDeclarationsScreen = () => {
   const machine = useOnboardingMachineService();
@@ -94,20 +93,27 @@ const InitiativeSelfDeclarationsScreen = () => {
               ))}
             </View>
           </ScrollView>
-          <FooterWithButtons
-            type={"TwoButtonsInlineHalf"}
-            leftButton={{
-              bordered: true,
-              title: I18n.t("global.buttons.back"),
+        </SafeAreaView>
+        <FooterWithButtons
+          type="TwoButtonsInlineHalf"
+          primary={{
+            type: "Outline",
+            buttonProps: {
+              label: I18n.t("global.buttons.back"),
+              accessibilityLabel: I18n.t("global.buttons.back"),
               onPress: goBackOnPress
-            }}
-            rightButton={{
-              title: I18n.t("global.buttons.continue"),
+            }
+          }}
+          secondary={{
+            type: "Solid",
+            buttonProps: {
+              label: I18n.t("global.buttons.continue"),
+              accessibilityLabel: I18n.t("global.buttons.continue"),
               onPress: continueOnPress,
               disabled: !areAllSelfCriteriaBoolAccepted
-            }}
-          />
-        </SafeAreaView>
+            }
+          }}
+        />
       </LoadingSpinnerOverlay>
     </BaseScreenComponent>
   );

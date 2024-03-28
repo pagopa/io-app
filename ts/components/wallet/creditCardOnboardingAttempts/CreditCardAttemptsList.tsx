@@ -1,22 +1,32 @@
-import { Content } from "native-base";
+import {
+  ContentWrapper,
+  H3,
+  IOColors,
+  Icon,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View, FlatList, ListRenderItemInfo, StyleSheet } from "react-native";
-import { IOColors, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
 import I18n from "../../../i18n";
-import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
-import ItemSeparatorComponent from "../../ItemSeparatorComponent";
-import { EdgeBorderComponent } from "../../screens/EdgeBorderComponent";
-import { formatDateAsLocal } from "../../../utils/dates";
 import {
   CreditCardInsertion,
   CreditCardInsertionState
 } from "../../../store/reducers/wallet/creditCard";
-import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
-import { BadgeComponent } from "../../screens/BadgeComponent";
 import customVariables from "../../../theme/variables";
+import { formatDateAsLocal } from "../../../utils/dates";
+import { FOUR_UNICODE_CIRCLES } from "../../../utils/wallet";
+import ItemSeparatorComponent from "../../ItemSeparatorComponent";
+import TouchableDefaultOpacity from "../../TouchableDefaultOpacity";
 import { Label } from "../../core/typography/Label";
 import { IOStyles } from "../../core/variables/IOStyles";
-import { Body } from "../../core/typography/Body";
+import { BadgeComponent } from "../../screens/BadgeComponent";
+import { EdgeBorderComponent } from "../../screens/EdgeBorderComponent";
 
 type Props = Readonly<{
   title: string;
@@ -135,26 +145,28 @@ export const CreditCardAttemptsList: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <Content style={styles.whiteContent}>
-      <View>
-        <View style={styles.subHeaderContent}>
-          <Body>{props.title}</Body>
+    <ScrollView style={styles.whiteContent}>
+      <ContentWrapper>
+        <View>
+          <View style={styles.subHeaderContent}>
+            <H3>{props.title}</H3>
+          </View>
         </View>
-      </View>
 
-      <FlatList
-        scrollEnabled={false}
-        data={creditCardAttempts}
-        renderItem={renderCreditCardAttempt}
-        ListEmptyComponent={ListEmptyComponent}
-        ItemSeparatorComponent={() => (
-          <ItemSeparatorComponent noPadded={true} />
-        )}
-        ListFooterComponent={
-          creditCardAttempts.length > 0 ? <EdgeBorderComponent /> : null
-        }
-        keyExtractor={c => c.hashedPan}
-      />
-    </Content>
+        <FlatList
+          scrollEnabled={false}
+          data={creditCardAttempts}
+          renderItem={renderCreditCardAttempt}
+          ListEmptyComponent={ListEmptyComponent}
+          ItemSeparatorComponent={() => (
+            <ItemSeparatorComponent noPadded={true} />
+          )}
+          ListFooterComponent={
+            creditCardAttempts.length > 0 ? <EdgeBorderComponent /> : null
+          }
+          keyExtractor={c => c.hashedPan}
+        />
+      </ContentWrapper>
+    </ScrollView>
   );
 };

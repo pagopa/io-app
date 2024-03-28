@@ -1,7 +1,6 @@
-import { ListItem } from "native-base";
-import { View } from "react-native";
-import * as React from "react";
 import { HSpacer } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { View } from "react-native";
 import { H4 } from "../../../components/core/typography/H4";
 import { H5 } from "../../../components/core/typography/H5";
 
@@ -19,22 +18,23 @@ export type ItemPermissionProps = {
 };
 
 const ZendeskItemPermissionComponent = (props: ItemPermissionProps) => (
-  <ListItem testID={props.testId}>
-    <View
-      style={{
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center"
-      }}
-    >
-      <View>{props.icon}</View>
-      <HSpacer size={16} />
-      <View style={{ flex: 1, flexDirection: "column" }}>
-        <H4>{props.title}</H4>
-        {props.value && <H5 weight={"Regular"}>{props.value}</H5>}
-      </View>
+  <View
+    testID={props.testId}
+    style={{
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      // Hacky solution waiting for the replacement with `ListItem` from the DS
+      paddingVertical: 16
+    }}
+  >
+    <View>{props.icon}</View>
+    <HSpacer size={16} />
+    <View style={{ flex: 1, flexDirection: "column" }}>
+      <H4>{props.title}</H4>
+      {props.value && <H5 weight={"Regular"}>{props.value}</H5>}
     </View>
-  </ListItem>
+  </View>
 );
 
 export default ZendeskItemPermissionComponent;

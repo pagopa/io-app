@@ -1,11 +1,11 @@
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { useRef } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
 import { heightPercentageToDP } from "react-native-responsive-screen";
-import { useFocusEffect } from "@react-navigation/native";
+import SectionStatusComponent from "../../../components/SectionStatus";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import SectionStatusComponent from "../../../components/SectionStatus";
 import { WithTestID } from "../../../types/WithTestID";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
@@ -49,8 +49,8 @@ export const BaseEuCovidCertificateLayout = (props: Props) => {
           {props.content}
         </ScrollView>
         <SectionStatusComponent sectionKey={"euCovidCert"} />
-        {props.footer}
       </SafeAreaView>
+      {props.footer}
     </BaseScreenComponent>
   );
 };

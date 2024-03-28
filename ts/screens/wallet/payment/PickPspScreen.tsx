@@ -1,33 +1,35 @@
+import {
+  FooterWithButtons,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { AmountInEuroCents, RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as React from "react";
-import { View, FlatList, SafeAreaView, StyleSheet } from "react-native";
-import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useNavigation, useRoute } from "@react-navigation/native";
+import * as React from "react";
+import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { connect } from "react-redux";
 import { PaymentRequestsGetResponse } from "../../../../definitions/backend/PaymentRequestsGetResponse";
 import { PspData } from "../../../../definitions/pagopa/PspData";
-import { H1 } from "../../../components/core/typography/H1";
-import { H4 } from "../../../components/core/typography/H4";
-import { H5 } from "../../../components/core/typography/H5";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
-import BaseScreenComponent, {
-  ContextualHelpPropsMarkdown
-} from "../../../components/screens/BaseScreenComponent";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import {
-  LightModalContext,
-  LightModalContextInterface
-} from "../../../components/ui/LightModal";
-import { PspComponent } from "../../../components/wallet/payment/PspComponent";
-import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
-import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
   isError,
   isLoading
 } from "../../../common/model/RemoteValue";
+import ItemSeparatorComponent from "../../../components/ItemSeparatorComponent";
+import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
+import { H1 } from "../../../components/core/typography/H1";
+import { H4 } from "../../../components/core/typography/H4";
+import { H5 } from "../../../components/core/typography/H5";
+import { IOStyles } from "../../../components/core/variables/IOStyles";
+import BaseScreenComponent, {
+  ContextualHelpPropsMarkdown
+} from "../../../components/screens/BaseScreenComponent";
+import {
+  LightModalContext,
+  LightModalContextInterface
+} from "../../../components/ui/LightModal";
+import { PspComponent } from "../../../components/wallet/payment/PspComponent";
 import I18n from "../../../i18n";
 import {
   IOStackNavigationProp,
@@ -42,7 +44,6 @@ import { pspV2ListSelector } from "../../../store/reducers/wallet/payment";
 import customVariables from "../../../theme/variables";
 import { Wallet } from "../../../types/pagopa";
 import { orderPspByAmount } from "../../../utils/payment";
-import { showToast } from "../../../utils/showToast";
 import { dispatchUpdatePspForWalletAndConfirm } from "./common";
 
 export type PickPspScreenNavigationParams = Readonly<{
@@ -127,45 +128,51 @@ class PickPspScreen extends React.Component<PickPspScreenProps> {
             loadingCaption={I18n.t("wallet.pickPsp.loadingPsps")}
           />
         ) : (
-          <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
-            <VSpacer size={16} />
-            <View style={styles.padded}>
-              <H1>{I18n.t("wallet.pickPsp.title")}</H1>
-              <VSpacer size={8} />
-              <H4 weight="Regular" color="bluegreyDark">
-                {I18n.t("wallet.pickPsp.info")}
-              </H4>
-              <H4 weight="Regular" color="bluegreyDark">
-                {I18n.t("wallet.pickPsp.info2")}
-                <H4 color="bluegreyDark">{` ${I18n.t(
-                  "wallet.pickPsp.info2Bold"
-                )}`}</H4>
-              </H4>
-            </View>
-            <VSpacer size={16} />
-            <FlatList
-              testID="pspList"
-              ItemSeparatorComponent={() => <ItemSeparatorComponent />}
-              removeClippedSubviews={false}
-              data={availablePsps}
-              keyExtractor={item => item.idPsp}
-              renderItem={({ item }) => (
-                <PspComponent
-                  psp={item}
-                  onPress={() => this.props.pickPsp(item, this.props.allPsps)}
-                />
-              )}
-              ListHeaderComponent={this.headerItem}
-              ListFooterComponent={() => <ItemSeparatorComponent />}
-            />
+          <>
+            <SafeAreaView style={IOStyles.flex} testID="PickPspScreen">
+              <VSpacer size={16} />
+              <View style={styles.padded}>
+                <H1>{I18n.t("wallet.pickPsp.title")}</H1>
+                <VSpacer size={8} />
+                <H4 weight="Regular" color="bluegreyDark">
+                  {I18n.t("wallet.pickPsp.info")}
+                </H4>
+                <H4 weight="Regular" color="bluegreyDark">
+                  {I18n.t("wallet.pickPsp.info2")}
+                  <H4 color="bluegreyDark">{` ${I18n.t(
+                    "wallet.pickPsp.info2Bold"
+                  )}`}</H4>
+                </H4>
+              </View>
+              <VSpacer size={16} />
+              <FlatList
+                testID="pspList"
+                ItemSeparatorComponent={() => <ItemSeparatorComponent />}
+                removeClippedSubviews={false}
+                data={availablePsps}
+                keyExtractor={item => item.idPsp}
+                renderItem={({ item }) => (
+                  <PspComponent
+                    psp={item}
+                    onPress={() => this.props.pickPsp(item, this.props.allPsps)}
+                  />
+                )}
+                ListHeaderComponent={this.headerItem}
+                ListFooterComponent={() => <ItemSeparatorComponent />}
+              />
+            </SafeAreaView>
             <FooterWithButtons
               type="SingleButton"
-              leftButton={cancelButtonProps(
-                this.props.navigateBack,
-                I18n.t("global.buttons.back")
-              )}
+              primary={{
+                type: "Outline",
+                buttonProps: {
+                  label: I18n.t("global.buttons.back"),
+                  accessibilityLabel: I18n.t("global.buttons.back"),
+                  onPress: this.props.navigateBack
+                }
+              }}
             />
-          </SafeAreaView>
+          </>
         )}
       </BaseScreenComponent>
     );
@@ -201,8 +208,7 @@ const mapDispatchToProps = (dispatch: Dispatch, props: OwnProps) => ({
       props.route.params.verifica,
       props.route.params.idPayment,
       psps,
-      () =>
-        showToast(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"), "danger")
+      () => IOToast.error(I18n.t("wallet.pickPsp.onUpdateWalletPspFailure"))
     )
 });
 

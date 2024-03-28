@@ -1,12 +1,10 @@
 import * as O from "fp-ts/lib/Option";
-import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
-import { Icon, HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer, ButtonOutline } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Body } from "../../../components/core/typography/Body";
 import { H3 } from "../../../components/core/typography/H3";
 import { Label } from "../../../components/core/typography/Label";
@@ -127,17 +125,13 @@ const CreditCardOnboardingAttemptDetailScreen = () => {
         {I18n.t("wallet.creditCard.onboardingAttempts.help")}
       </Label>
       <VSpacer size={16} />
-      <ButtonDefaultOpacity
+      <ButtonOutline
+        fullWidth
         onPress={handleAskAssistance}
-        bordered={true}
-        block={true}
-      >
-        <Icon name="chat" color="blue" />
-        <HSpacer size={8} />
-        <NBButtonText>
-          {I18n.t("payment.details.info.buttons.help")}
-        </NBButtonText>
-      </ButtonDefaultOpacity>
+        icon="chat"
+        label={I18n.t("payment.details.info.buttons.help")}
+        accessibilityLabel={I18n.t("payment.details.info.buttons.help")}
+      />
     </View>
   );
 

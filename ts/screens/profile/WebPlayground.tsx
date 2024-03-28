@@ -1,28 +1,28 @@
 import {
   ButtonOutline,
   ButtonSolid,
+  ContentWrapper,
   Divider,
   HSpacer,
   IOColors,
   IOStyles,
-  IOVisualCostants,
+  IOToast,
   IconButtonContained,
   ListItemSwitch,
-  VSpacer,
-  IOToast
+  TextInput,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import * as React from "react";
 import {
+  TextInput as RNTextInput,
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  TextInput,
   View
 } from "react-native";
 import { connect } from "react-redux";
 import URLParse from "url-parse";
-import { LabelledItem } from "../../components/LabelledItem";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
 import { Monospace } from "../../components/core/typography/Monospace";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
@@ -95,80 +95,72 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <SafeAreaView style={styles.flex}>
-      <ScrollView
-        contentContainerStyle={[
-          { paddingHorizontal: IOVisualCostants.appMarginDefault },
-          IOStyles.flex
-        ]}
-      >
-        <View style={styles.row}>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={handleUriInput}
-            value={navigationURI}
-          />
-          <HSpacer size={16} />
-          <IconButtonContained
-            onPress={() => setLoadUri(navigationURI)}
-            icon="arrowRight"
-            accessibilityLabel={"Imposta la pagina web"}
-          />
-        </View>
-        <VSpacer size={8} />
-        <View style={styles.row}>
-          <ButtonSolid
-            onPress={() => setReloadKey(r => r + 1)}
-            icon="reload"
-            label="Reload"
-            accessibilityLabel={"Reload"}
-          />
-          <ButtonOutline
-            onPress={clearCookies}
-            label="Clear cookies"
-            accessibilityLabel="Clear cookies"
-          />
-        </View>
-        <VSpacer size={8} />
+      <ScrollView contentContainerStyle={[IOStyles.flex]}>
+        <ContentWrapper>
+          <View style={styles.row}>
+            <RNTextInput
+              style={styles.textInput}
+              onChangeText={handleUriInput}
+              value={navigationURI}
+            />
+            <HSpacer size={16} />
+            <IconButtonContained
+              onPress={() => setLoadUri(navigationURI)}
+              icon="arrowRight"
+              accessibilityLabel={"Imposta la pagina web"}
+            />
+          </View>
+          <VSpacer size={8} />
+          <View style={styles.row}>
+            <ButtonSolid
+              onPress={() => setReloadKey(r => r + 1)}
+              icon="reload"
+              label="Reload"
+              accessibilityLabel={"Reload"}
+            />
+            <ButtonOutline
+              onPress={clearCookies}
+              label="Clear cookies"
+              accessibilityLabel="Clear cookies"
+            />
+          </View>
+          <VSpacer size={8} />
 
-        <ListItemSwitch
-          label="Show debug"
-          value={showDebug}
-          onSwitchValueChange={setShowDebug}
-        />
-        <Divider />
-        <ListItemSwitch
-          label="Save a cookie"
-          value={saveCookie}
-          onSwitchValueChange={setSaveCookie}
-        />
-        <View style={{ flex: 1 }}>
+          <ListItemSwitch
+            label="Show debug"
+            value={showDebug}
+            onSwitchValueChange={setShowDebug}
+          />
+          <Divider />
+          <ListItemSwitch
+            label="Save a cookie"
+            value={saveCookie}
+            onSwitchValueChange={setSaveCookie}
+          />
           {saveCookie && (
             <>
-              <LabelledItem
-                label={"Cookie name"}
-                inputProps={{
-                  value: cookieName,
-                  returnKeyType: "done",
-                  onChangeText: setCookieName
-                }}
+              <TextInput
+                placeholder={"Cookie name"}
+                value={cookieName}
+                onChangeText={setCookieName}
               />
-              <LabelledItem
-                label={"Cookie value"}
-                inputProps={{
-                  value: cookieValue,
-                  returnKeyType: "done",
-                  onChangeText: setCookieValue
-                }}
+              <VSpacer size={16} />
+              <TextInput
+                placeholder={"Cookie value"}
+                value={cookieValue}
+                onChangeText={setCookieValue}
               />
-              <VSpacer size={8} />
+              <VSpacer size={16} />
               <ButtonSolid
                 onPress={() => setCookieOnDomain()}
                 label="Save"
                 accessibilityLabel={"Save"}
               />
-              <VSpacer size={8} />
+              <VSpacer size={16} />
             </>
           )}
+        </ContentWrapper>
+        <View style={{ flex: 1 }}>
           {showDebug && <Monospace>{webMessage}</Monospace>}
           <RegionServiceWebView
             key={`${reloadKey}_webview`}

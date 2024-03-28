@@ -322,9 +322,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#fff",
-                            "flex": 1,
-                            "height": 1334,
+                            "flexGrow": 1,
                           }
                         }
                       >
@@ -1346,9 +1344,7 @@ exports[`PaidPaymentScreen should render with back button, title, help button, p
                       <View
                         style={
                           Object {
-                            "backgroundColor": "#fff",
-                            "flex": 1,
-                            "height": 1334,
+                            "flexGrow": 1,
                           }
                         }
                       >

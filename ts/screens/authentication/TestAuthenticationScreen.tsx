@@ -1,34 +1,33 @@
+import {
+  Alert,
+  ContentWrapper,
+  FooterWithButtons,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { connect } from "react-redux";
-import {
-  IOColors,
-  VSpacer,
-  ContentWrapper,
-  Alert
-} from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import { PasswordLogin } from "../../../definitions/backend/PasswordLogin";
 import { LabelledItem } from "../../components/LabelledItem";
-import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
-import { BlockButtonProps } from "../../components/ui/BlockButtons";
-import FooterWithButtons from "../../components/ui/FooterWithButtons";
-import I18n from "../../i18n";
-import { Dispatch } from "../../store/actions/types";
 import { Body } from "../../components/core/typography/Body";
-import { getAppVersion } from "../../utils/appVersion";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import { useIOSelector } from "../../store/hooks";
-import { testLoginSelector } from "../../store/reducers/testLogin";
+import BaseScreenComponent from "../../components/screens/BaseScreenComponent";
 import ActivityIndicator from "../../components/ui/ActivityIndicator";
+import I18n from "../../i18n";
 import {
   testLoginCleanUp,
   testLoginRequest
 } from "../../store/actions/authentication";
+import { Dispatch } from "../../store/actions/types";
+import { useIOSelector } from "../../store/hooks";
+import { testLoginSelector } from "../../store/reducers/testLogin";
+import { getAppVersion } from "../../utils/appVersion";
 
 const styles = StyleSheet.create({
   appVersion: { ...IOStyles.flex, ...IOStyles.rowSpaceBetween }
@@ -115,19 +114,6 @@ const TestAuthenticationScreen = (props: Props) => {
   const isError = loginState.kind === "failed";
   const isSuccessful = loginState.kind === "succedeed";
 
-  const confirmButton: BlockButtonProps = {
-    block: true,
-    primary: true,
-    disabled: isConfirmButtonDisabled(username, password, isLoading),
-    onPress: () =>
-      pipe(
-        PasswordLogin.decode({ username, password }),
-        E.map(props.requestLogin)
-      ),
-    title: I18n.t("global.buttons.confirm"),
-    testID: "confirmButton"
-  };
-
   useFocusEffect(
     React.useCallback(() => props.cleanUpLogin, [props.cleanUpLogin])
   );
@@ -172,8 +158,24 @@ const TestAuthenticationScreen = (props: Props) => {
             {isSuccessful && SuccessfulView()}
           </ContentWrapper>
         </ScrollView>
-        <FooterWithButtons type={"SingleButton"} leftButton={confirmButton} />
       </SafeAreaView>
+      <FooterWithButtons
+        type="SingleButton"
+        primary={{
+          type: "Solid",
+          buttonProps: {
+            label: I18n.t("global.buttons.confirm"),
+            accessibilityLabel: I18n.t("global.buttons.confirm"),
+            disabled: isConfirmButtonDisabled(username, password, isLoading),
+            onPress: () =>
+              pipe(
+                PasswordLogin.decode({ username, password }),
+                E.map(props.requestLogin)
+              ),
+            testID: "confirmButton"
+          }
+        }}
+      />
     </BaseScreenComponent>
   );
 };
