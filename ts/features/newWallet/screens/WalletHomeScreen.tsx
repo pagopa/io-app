@@ -1,4 +1,8 @@
-import { GradientScrollView, IOStyles } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  GradientScrollView,
+  IOStyles
+} from "@pagopa/io-app-design-system";
 import React from "react";
 import { ScrollView } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
@@ -23,7 +27,9 @@ const WalletHomeScreen = () => {
   if (cards.length === 0) {
     return (
       <ScrollView contentContainerStyle={IOStyles.flex}>
-        <WalletPaymentsRedirectBanner />
+        <ContentWrapper>
+          <WalletPaymentsRedirectBanner />
+        </ContentWrapper>
         <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
           <WalletEmptyScreenContent />
         </Animated.View>
