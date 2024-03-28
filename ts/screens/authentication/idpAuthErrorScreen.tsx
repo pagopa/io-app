@@ -1,9 +1,9 @@
-import React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { Text as NBText } from "native-base";
 import I18n from "i18n-js";
-import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
+import { Text as NBText } from "native-base";
+import React from "react";
+import { Image, StyleSheet, View } from "react-native";
 import brokenLinkImage from "../../../img/broken-link.png";
+import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -59,7 +59,11 @@ export const IdpAuthErrorScreen = ({
 
   return (
     <View style={styles.errorContainer}>
-      <Image source={brokenLinkImage} resizeMode="contain" />
+      <Image
+        accessibilityIgnoresInvertColors
+        source={brokenLinkImage}
+        resizeMode="contain"
+      />
       <NBText style={styles.errorTitle} bold={true}>
         {I18n.t(
           errorType === ErrorType.LOADING_ERROR

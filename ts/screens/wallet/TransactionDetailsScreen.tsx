@@ -1,25 +1,26 @@
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Text as NBButtonText } from "native-base";
 import * as React from "react";
 import {
-  View,
   BackHandler,
   Image,
   NativeEventSubscription,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useNavigation, useRoute } from "@react-navigation/native";
 import ButtonDefaultOpacity from "../../components/ButtonDefaultOpacity";
 import CopyButtonComponent from "../../components/CopyButtonComponent";
+import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
 import { Body } from "../../components/core/typography/Body";
 import { H2 } from "../../components/core/typography/H2";
 import { Link } from "../../components/core/typography/Link";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import ItemSeparatorComponent from "../../components/ItemSeparatorComponent";
+import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../components/screens/BaseScreenComponent";
@@ -51,7 +52,6 @@ import {
   getTransactionIUV
 } from "../../utils/payment";
 import { formatNumberCentsToAmount } from "../../utils/stringBuilder";
-import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
 
 export type TransactionDetailsScreenNavigationParams = Readonly<{
   isPaymentCompletedTransaction: boolean;
@@ -306,6 +306,7 @@ class TransactionDetailsScreen extends React.Component<
             <View style={[IOStyles.rowSpaceBetween, IOStyles.alignCenter]}>
               <Body>{I18n.t("wallet.paymentMethod")}</Body>
               <Image
+                accessibilityIgnoresInvertColors
                 style={styles.cardLogo}
                 source={{ uri: data.paymentMethodIcon }}
               />

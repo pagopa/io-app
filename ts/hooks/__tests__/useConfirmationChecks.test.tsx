@@ -35,14 +35,17 @@ const TestComponent = () => {
       {!checks.areFulfilled && <Text>{UNFULLFILLED_CHECK_TEST}</Text>}
       {checks.areFulfilled && <Text>{FULLFILLED_CHECK_TEST}</Text>}
       <TouchableOpacity
+        accessibilityRole="button"
         onPress={() => checks.setValue(0, true)}
         testID={`check0`}
       />
       <TouchableOpacity
+        accessibilityRole="button"
         onPress={() => checks.setValue(1, true)}
         testID={`check1`}
       />
       <TouchableOpacity
+        accessibilityRole="button"
         onPress={() => checks.setValue(2, true)}
         testID={`check2`}
       />

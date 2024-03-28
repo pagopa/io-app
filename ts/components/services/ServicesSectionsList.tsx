@@ -1,15 +1,15 @@
 /**
  * A component to render a list of services organized in sections, one for each organization.
  */
+import { VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import {
-  View,
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { ServicePublic } from "../../../definitions/backend/ServicePublic";
 import I18n from "../../i18n";
 import { ServicesSectionState } from "../../store/reducers/entities/services";
@@ -52,6 +52,7 @@ const emptyListComponent = () => (
   >
     <VSpacer size={24} />
     <Image
+      accessibilityIgnoresInvertColors
       source={require("../../../img/services/icon-loading-services.png")}
     />
     <View style={IOStyles.alignCenter}>

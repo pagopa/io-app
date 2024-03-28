@@ -5,11 +5,11 @@ import {
   HSpacer,
   IOColors,
   IOStyles,
+  IOToast,
   IOVisualCostants,
   IconButtonContained,
   ListItemSwitch,
-  VSpacer,
-  IOToast
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import * as React from "react";
@@ -103,6 +103,7 @@ const WebPlayground: React.FunctionComponent<Props> = (props: Props) => {
       >
         <View style={styles.row}>
           <TextInput
+            accessibilityLabel="URL address"
             style={styles.textInput}
             onChangeText={handleUriInput}
             value={navigationURI}

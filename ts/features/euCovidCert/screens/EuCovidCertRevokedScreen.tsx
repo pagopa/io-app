@@ -1,16 +1,16 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import revokedImage from "../../../../img/features/euCovidCert/certificate_revoked.png";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import I18n from "../../../i18n";
 import { GlobalState } from "../../../store/reducers/types";
+import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import EuCovidCertLearnMoreLink from "../components/EuCovidCertLearnMoreLink";
 import { MarkdownHandleCustomLink } from "../components/MarkdownHandleCustomLink";
 import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
-import { EuCovidCertHeader } from "../components/EuCovidCertHeader";
 import { BaseEuCovidCertificateLayout } from "./BaseEuCovidCertificateLayout";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -25,6 +25,7 @@ const EuCovidCertRevokedContentComponent = (props: Props) => (
     <InfoScreenComponent
       image={
         <Image
+          accessibilityIgnoresInvertColors
           source={revokedImage}
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}

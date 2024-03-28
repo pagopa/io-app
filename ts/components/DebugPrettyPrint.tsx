@@ -1,3 +1,7 @@
+/* 
+WARNING: This component is not referenced anywhere, but is used
+for development purposes. for development purposes. Don't REMOVE it!
+*/
 import {
   IOColors,
   Icon,
@@ -36,6 +40,7 @@ export const DebugPrettyPrint = ({
     <>
       {title && (
         <Pressable
+          accessibilityRole="button"
           style={{
             backgroundColor: IOColors["grey-700"],
             padding: 8,

@@ -1,8 +1,8 @@
+import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
-import { View, Animated, Easing, Image, StyleSheet } from "react-native";
+import { Animated, Easing, Image, StyleSheet, View } from "react-native";
 import ProgressCircle from "react-native-progress-circle";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
 import customVariables from "../../theme/variables";
 import AnimatedRing from "../animations/AnimatedRing";
 
@@ -209,6 +209,7 @@ export default class CieReadingCardAnimation extends React.PureComponent<
             bgColor={IOColors.greyLight}
           >
             <Image
+              accessibilityIgnoresInvertColors
               source={require("../../../img/cie/place-card-illustration.png")}
               style={styles.img}
             />

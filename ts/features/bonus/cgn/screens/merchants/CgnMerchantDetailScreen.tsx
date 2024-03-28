@@ -1,3 +1,4 @@
+import { Icon, IconButton, VSpacer } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -11,10 +12,11 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Icon, IconButton, VSpacer } from "@pagopa/io-app-design-system";
 import { Address } from "../../../../../../definitions/cgn/merchants/Address";
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
+import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import TouchableDefaultOpacity from "../../../../../components/TouchableDefaultOpacity";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { H2 } from "../../../../../components/core/typography/H2";
@@ -27,8 +29,6 @@ import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { showToast } from "../../../../../utils/showToast";
 import { openWebUrl } from "../../../../../utils/url";
-import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
-import { isLoading, isReady } from "../../../../../common/model/RemoteValue";
 import CgnMerchantDiscountItem from "../../components/merchants/CgnMerchantsDiscountItem";
 import { cgnSelectedMerchant } from "../../store/actions/merchants";
 import { cgnSelectedMerchantSelector } from "../../store/reducers/merchants";
@@ -90,6 +90,7 @@ const CgnMerchantDetailScreen = () => {
           <SafeAreaView style={IOStyles.flex}>
             {merchantDetail.value.imageUrl !== undefined && (
               <Image
+                accessibilityIgnoresInvertColors
                 source={{ uri: merchantDetail.value.imageUrl }}
                 style={styles.merchantImage}
               />

@@ -1,13 +1,13 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { Image } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Image } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
+import unavailableImage from "../../../../../img/wallet/errors/payment-expired-icon.png";
+import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
+import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { BaseEuCovidCertificateLayout } from "../BaseEuCovidCertificateLayout";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import unavailableImage from "../../../../../img/wallet/errors/payment-expired-icon.png";
-import I18n from "../../../../i18n";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -19,6 +19,7 @@ const EuCovidCertTemporarilyNotAvailableComponent = (): React.ReactElement => (
     <InfoScreenComponent
       image={
         <Image
+          accessibilityIgnoresInvertColors
           importantForAccessibility={"no"}
           accessibilityElementsHidden={true}
           source={unavailableImage}

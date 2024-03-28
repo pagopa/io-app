@@ -87,6 +87,7 @@ exports[`OrganizationHeader should match the snapshot 1`] = `
     }
   >
     <Image
+      accessibilityIgnoresInvertColors={true}
       onError={[Function]}
       source={
         Object {

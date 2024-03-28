@@ -31,7 +31,7 @@ const WrappedCgnCard = (props: CgnWalletCardProps) => {
   };
 
   return (
-    <Pressable onPress={handleCardPress}>
+    <Pressable accessibilityRole="button" onPress={handleCardPress}>
       <CgnCard {...props} withEycaLogo={isUnder31} />
     </Pressable>
   );

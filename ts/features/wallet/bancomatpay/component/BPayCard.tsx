@@ -1,15 +1,15 @@
-import { pipe } from "fp-ts/lib/function";
+import { HSpacer, Icon } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { Icon, HSpacer } from "@pagopa/io-app-design-system";
 import bancomatLogoMin from "../../../../../img/wallet/payment-methods/bancomatpay-logo.png";
 import { H4 } from "../../../../components/core/typography/H4";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import { profileNameSurnameSelector } from "../../../../store/reducers/profile";
 import { GlobalState } from "../../../../store/reducers/types";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseCardComponent from "../../component/card/BaseCardComponent";
 
 type Props = {
@@ -83,7 +83,11 @@ const BPayCard: React.FunctionComponent<Props> = (props: Props) => (
     }
     bottomRightCorner={
       <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
-        <Image style={styles.bpayLogo} source={bancomatLogoMin} />
+        <Image
+          accessibilityIgnoresInvertColors
+          style={styles.bpayLogo}
+          source={bancomatLogoMin}
+        />
       </View>
     }
   />

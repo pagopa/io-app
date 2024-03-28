@@ -1,28 +1,28 @@
-import * as React from "react";
-import {
-  View,
-  Alert,
-  AlertButton,
-  Image,
-  Platform,
-  StyleSheet,
-  GestureResponderEvent
-} from "react-native";
 import {
   BlockButtonProps,
   FooterWithButtons,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import {
+  Alert,
+  AlertButton,
+  GestureResponderEvent,
+  Image,
+  Platform,
+  StyleSheet,
+  View
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import image from "../../../img/rooted/broken-phone.png";
 import { H2 } from "../../components/core/typography/H2";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { withLoadingSpinner } from "../../components/helpers/withLoadingSpinner";
+import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
+import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import I18n from "../../i18n";
 import customVariables from "../../theme/variables";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
-import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { trackLoginRootedScreen } from "./analytics";
 
 type Props = {
@@ -138,7 +138,12 @@ const RootedDeviceModal = (props: Props) => {
     <SafeAreaView edges={["bottom"]} style={styles.flex}>
       <ScrollView style={IOStyles.horizontalContentPadding}>
         <View style={styles.main}>
-          <Image source={image} resizeMode="contain" style={styles.image} />
+          <Image
+            accessibilityIgnoresInvertColors
+            source={image}
+            resizeMode="contain"
+            style={styles.image}
+          />
           <VSpacer size={24} />
           <View style={IOStyles.alignCenter}>
             <H2>{I18n.t("rooted.title")}</H2>

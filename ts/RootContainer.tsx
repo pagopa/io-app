@@ -1,5 +1,5 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Root } from "native-base";
 import * as React from "react";
 import {
@@ -12,11 +12,10 @@ import {
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
 import configurePushNotifications from "./boot/configurePushNotification";
-import { BetaTestingOverlay } from "./components/BetaTestingOverlay";
-import FlagSecureComponent from "./components/FlagSecure";
-import { LightModalRoot } from "./components/ui/LightModal";
 import DebugInfoOverlay from "./components/DebugInfoOverlay";
-import { testOverlayCaption } from "./config";
+import FlagSecureComponent from "./components/FlagSecure";
+import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
+import { LightModalRoot } from "./components/ui/LightModal";
 import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
@@ -25,13 +24,11 @@ import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import {
-  preferredLanguageSelector,
-  isPagoPATestEnabledSelector
+  isPagoPATestEnabledSelector,
+  preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
 import customVariables from "./theme/variables";
-import { isStringNullyOrEmpty } from "./utils/strings";
-import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -119,12 +116,6 @@ class RootContainer extends React.PureComponent<Props> {
           <PagoPATestIndicatorOverlay />
         )}
 
-        {!isStringNullyOrEmpty(testOverlayCaption) && (
-          <BetaTestingOverlay
-            title={`🛠️ TEST VERSION 🛠️`}
-            body={testOverlayCaption}
-          />
-        )}
         <RootModal />
         <LightModalRoot />
       </Root>

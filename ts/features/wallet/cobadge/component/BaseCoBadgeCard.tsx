@@ -1,15 +1,15 @@
-import { pipe } from "fp-ts/lib/function";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   Image,
   ImageSourcePropType,
   ImageStyle,
   StyleProp,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Abi } from "../../../../../definitions/pagopa/walletv2/Abi";
 import abiLogoFallback from "../../../../../img/wallet/cards-icons/abiLogoFallback.png";
 import { IOBadge } from "../../../../components/core/IOBadge";
@@ -107,6 +107,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
           >
             {props.abi.logoUrl && imageStyle ? (
               <Image
+                accessibilityIgnoresInvertColors
                 source={{ uri: props.abi.logoUrl }}
                 style={imageStyle}
                 key={"abiLogo"}
@@ -114,6 +115,7 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
               />
             ) : (
               <Image
+                accessibilityIgnoresInvertColors
                 source={abiLogoFallback}
                 style={styles.abiLogoFallback}
                 key={"abiLogoFallback"}
@@ -162,7 +164,11 @@ const BaseCoBadgeCard: React.FunctionComponent<Props> = (props: Props) => {
       }
       bottomRightCorner={
         <View style={{ justifyContent: "flex-end", flexDirection: "column" }}>
-          <Image style={styles.brandLogo} source={props.brandLogo} />
+          <Image
+            accessibilityIgnoresInvertColors
+            style={styles.brandLogo}
+            source={props.brandLogo}
+          />
         </View>
       }
     />

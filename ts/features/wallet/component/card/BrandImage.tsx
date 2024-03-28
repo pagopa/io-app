@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
  */
 export const BrandImage = (props: Props): React.ReactElement => (
   <Image
+    accessibilityIgnoresInvertColors
     source={props.image}
     style={{
       width: styles.cardLogo.width * (props.scale ?? 1),

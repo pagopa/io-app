@@ -1,15 +1,15 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
-import { View, Image, ImageSourcePropType, StyleSheet } from "react-native";
-import { widthPercentageToDP } from "react-native-responsive-screen";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import { IOBadge } from "../../../../components/core/IOBadge";
-import { H3 } from "../../../../components/core/typography/H3";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 import TouchableDefaultOpacity, {
   TouchableDefaultOpacityProps
 } from "../../../../components/TouchableDefaultOpacity";
+import { IOBadge } from "../../../../components/core/IOBadge";
+import { H3 } from "../../../../components/core/typography/H3";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
 import customVariables from "../../../../theme/variables";
 
@@ -65,7 +65,13 @@ const FeaturedCard: React.FunctionComponent<Props> = (props: Props) => (
               }}
             />
           ),
-          i => <Image style={styles.image} source={i} />
+          i => (
+            <Image
+              accessibilityIgnoresInvertColors
+              style={styles.image}
+              source={i}
+            />
+          )
         )
       )}
       {props.isNew && (

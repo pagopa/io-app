@@ -1,20 +1,20 @@
+import { IOColors, hexToRgba } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as React from "react";
 import {
-  View,
   Image,
   ImageBackground,
   Platform,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { hexToRgba, IOColors } from "@pagopa/io-app-design-system";
 import cgnBackground from "../../../../../img/bonus/cgn/cgn-preview.png";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { H3 } from "../../../../components/core/typography/H3";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import I18n from "../../../../i18n";
 import { GlobalState } from "../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
@@ -84,7 +84,11 @@ const CgnCardList = (props: Props) => (
             <H3 color={"black"} weight={"Bold"}>
               {I18n.t("bonus.cgn.name")}
             </H3>
-            <Image source={cgnLogo} style={styles.previewLogo} />
+            <Image
+              accessibilityIgnoresInvertColors
+              source={cgnLogo}
+              style={styles.previewLogo}
+            />
           </TouchableDefaultOpacity>
         </ImageBackground>
       </>

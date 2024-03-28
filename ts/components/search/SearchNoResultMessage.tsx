@@ -1,7 +1,7 @@
-import * as React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { VSpacer } from "@pagopa/io-app-design-system";
+import * as React from "react";
+import { Image, StyleSheet, View } from "react-native";
+import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import I18n from "../../i18n";
 import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
@@ -27,6 +27,7 @@ export const renderIconErrorSearch = (errorType: ErrorSearchType) => {
     case "InvalidSearchBarText":
       return (
         <Image
+          accessibilityIgnoresInvertColors
           style={styles.invalidSearchBarText}
           resizeMode="contain"
           source={require("../../../img/search/search-icon.png")}
@@ -35,6 +36,7 @@ export const renderIconErrorSearch = (errorType: ErrorSearchType) => {
     case "NoResultsFound":
       return (
         <Image
+          accessibilityIgnoresInvertColors
           style={styles.noResultsFound}
           resizeMode="contain"
           source={require("../../../img/search/beer-mug.png")}

@@ -1,26 +1,26 @@
+import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import {
   Body,
   Container,
   Content,
-  Right,
-  Text as NBButtonText
+  Text as NBButtonText,
+  Right
 } from "native-base";
 import * as React from "react";
-import { View, Alert, Image, StyleSheet } from "react-native";
+import { Alert, Image, StyleSheet, View } from "react-native";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import {
   WebViewErrorEvent,
   WebViewHttpErrorEvent
 } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-import { Icon, VSpacer } from "@pagopa/io-app-design-system";
 import brokenLinkImage from "../../img/broken-link.png";
+import { getRemoteLocale } from "../features/messages/utils/messages";
 import I18n from "../i18n";
 import { WebviewMessage } from "../types/WebviewMessage";
-import { getRemoteLocale } from "../features/messages/utils/messages";
 import { showToast } from "../utils/showToast";
 import {
   APP_EVENT_HANDLER,
@@ -28,12 +28,12 @@ import {
   closeInjectedScript
 } from "../utils/webview";
 import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
-import { Label } from "./core/typography/Label";
-import { withLightModalContext } from "./helpers/withLightModalContext";
 import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
+import { Label } from "./core/typography/Label";
+import { IOStyles } from "./core/variables/IOStyles";
+import { withLightModalContext } from "./helpers/withLightModalContext";
 import AppHeader from "./ui/AppHeader";
 import { LightModalContextInterface } from "./ui/LightModal";
-import { IOStyles } from "./core/variables/IOStyles";
 
 type Props = {
   onWebviewClose: () => void;
@@ -133,7 +133,11 @@ const RegionServiceWebView: React.FunctionComponent<Props> = (props: Props) => {
     <View style={styles.errorContainer}>
       <VSpacer size={40} />
       <VSpacer size={40} />
-      <Image source={brokenLinkImage} resizeMode="contain" />
+      <Image
+        accessibilityIgnoresInvertColors
+        source={brokenLinkImage}
+        resizeMode="contain"
+      />
       <Label style={styles.errorTitle} weight={"Bold"}>
         {I18n.t("authentication.errors.network.title")}
       </Label>

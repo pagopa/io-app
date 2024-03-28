@@ -1,13 +1,13 @@
+import I18n from "i18n-js";
 import * as React from "react";
 import {
-  StyleSheet,
-  Pressable,
   GestureResponderEvent,
+  Pressable,
+  StyleSheet,
   View
 } from "react-native";
-import I18n from "i18n-js";
-import { getAppVersion } from "../utils/appVersion";
 import { WithTestID } from "../types/WithTestID";
+import { getAppVersion } from "../utils/appVersion";
 import { LabelSmall } from "./core/typography/LabelSmall";
 import { IOStyles } from "./core/variables/IOStyles";
 
@@ -24,12 +24,17 @@ const styles = StyleSheet.create({
 
 const AppVersion = ({ onPress, testID }: AppVersion) => {
   const appVersion = getAppVersion();
+  const appVersionText = `${I18n.t("profile.main.appVersion")} ${appVersion}`;
 
   return (
-    <Pressable onPress={onPress} testID={testID}>
+    <Pressable
+      onPress={onPress}
+      testID={testID}
+      accessibilityLabel={appVersionText}
+    >
       <View style={[styles.versionButton, IOStyles.row, IOStyles.alignCenter]}>
         <LabelSmall numberOfLines={1} weight="SemiBold" color="grey-650">
-          {`${I18n.t("profile.main.appVersion")} ${appVersion}`}
+          {appVersionText}
         </LabelSmall>
       </View>
     </Pressable>

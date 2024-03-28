@@ -1,7 +1,7 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Image } from "react-native";
 import Placeholder from "rn-placeholder";
-import { IOColors } from "@pagopa/io-app-design-system";
 import { getBankLogosCdnUri } from "../../../../../components/ui/utils/strings";
 
 type BankLogoOrSkeletonProps = {
@@ -49,6 +49,7 @@ export const BankLogoOrSkeleton = ({
 
   return imageUrl !== undefined ? (
     <Image
+      accessibilityIgnoresInvertColors
       accessible
       accessibilityLabel={imageA11yLabel}
       source={{ uri: imageUrl }}

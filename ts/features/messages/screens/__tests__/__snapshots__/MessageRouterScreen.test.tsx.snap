@@ -1998,6 +1998,7 @@ exports[`MessageRouterScreen should match snapshot on message data retrieval fai
                                     }
                                   />
                                   <Image
+                                    accessibilityIgnoresInvertColors={true}
                                     source={
                                       Object {
                                         "testUri": "../../../img/wallet/errors/generic-error-icon.png",
