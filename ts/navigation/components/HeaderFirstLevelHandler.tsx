@@ -1,10 +1,9 @@
-import React, { ComponentProps, useMemo } from "react";
 import { ActionProp, HeaderFirstLevel } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useIODispatch, useIOSelector } from "../../store/hooks";
-import { MainTabParamsList } from "../params/MainTabParamsList";
+import React, { ComponentProps, useMemo } from "react";
 import { useWalletHomeHeaderBottomSheet } from "../../components/wallet/WalletHomeHeader";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import {
   SupportRequestParams,
   useStartSupportRequest
@@ -12,15 +11,15 @@ import {
 import I18n from "../../i18n";
 import { navigateToServicePreferenceScreen } from "../../store/actions/navigation";
 import { searchMessagesEnabled } from "../../store/actions/search";
-import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import ROUTES from "../routes";
+import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { isNewWalletSectionEnabledSelector } from "../../store/reducers/persistedPreferences";
+import { MainTabParamsList } from "../params/MainTabParamsList";
+import ROUTES from "../routes";
 
 type HeaderFirstLevelProps = ComponentProps<typeof HeaderFirstLevel>;
 type TabRoutes = keyof MainTabParamsList;
 
 const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
-  BARCODE_SCAN: {},
   [MESSAGES_ROUTES.MESSAGES_HOME]: {
     faqCategories: ["messages"],
     contextualHelpMarkdown: {
@@ -43,6 +42,14 @@ const headerHelpByRoute: Record<TabRoutes, SupportRequestParams> = {
     }
   },
   [ROUTES.WALLET_HOME]: {
+    faqCategories: ["wallet", "wallet_methods"],
+    contextualHelpMarkdown: {
+      title: "wallet.contextualHelpTitle",
+      body: "wallet.contextualHelpContent"
+    }
+  },
+  [ROUTES.BARCODE_SCAN]: {},
+  [ROUTES.PAYMENTS_HOME]: {
     faqCategories: ["wallet", "wallet_methods"],
     contextualHelpMarkdown: {
       title: "wallet.contextualHelpTitle",
@@ -115,7 +122,6 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
           type: "singleAction",
           firstAction: helpAction
         };
-      case ROUTES.BARCODE_SCAN:
       case ROUTES.WALLET_HOME:
         if (isNewWalletSectionEnabled) {
           return {
@@ -137,6 +143,12 @@ export const HeaderFirstLevelHandler = ({ currentRouteName }: Props) => {
             onPress: presentWalletHomeHeaderBottomsheet,
             testID: "walletAddNewPaymentMethodTestId"
           }
+        };
+      case ROUTES.PAYMENTS_HOME:
+        return {
+          title: "Pagamenti",
+          type: "singleAction",
+          firstAction: helpAction
         };
       case MESSAGES_ROUTES.MESSAGES_HOME:
       default:

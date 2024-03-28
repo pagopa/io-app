@@ -4,7 +4,6 @@ import LogoutScreen from "../components/screens/LogoutScreen";
 import { remindersOptInEnabled } from "../config";
 import { DesignSystemNavigator } from "../features/design-system/navigation/navigator";
 import LollipopPlayground from "../features/lollipop/playgrounds/LollipopPlayground";
-import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import CalendarsPreferencesScreen from "../screens/profile/CalendarsPreferencesScreen";
 import CgnLandingPlayground from "../screens/profile/CgnLandingPlayground";
 import DownloadProfileDataScreen from "../screens/profile/DownloadProfileDataScreen";
@@ -95,19 +94,16 @@ const ProfileStackNavigator = () => (
       name={ROUTES.PROFILE_FISCAL_CODE}
       component={FiscalCodeScreen}
     />
-
     <Stack.Screen
       options={{ gestureEnabled: false }}
       name={ROUTES.INSERT_EMAIL_SCREEN}
       component={EmailInsertScreen}
     />
-
     <Stack.Screen
       options={{ gestureEnabled: false }}
       name={ROUTES.EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
     />
-
     <Stack.Screen
       options={{
         headerShown: false
@@ -161,7 +157,6 @@ const ProfileStackNavigator = () => (
       name={ROUTES.WALLET_PAYMENT_PLAYGROUND}
       component={WalletPaymentPlayground}
     />
-    <Stack.Screen name={ROUTES.PAYMENTS_HOME} component={PaymentsHomeScreen} />
     <Stack.Screen
       name={ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
       component={RemoveAccountInfo}

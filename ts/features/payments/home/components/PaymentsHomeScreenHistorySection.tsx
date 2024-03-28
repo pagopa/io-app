@@ -11,6 +11,8 @@ import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
 import { walletTransactionHistorySelector } from "../store/selectors";
 import { getHistoryList } from "../utils/paymentsHomeScreenHistoryGenerator";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { WalletPaymentRoutes } from "../../payment/navigation/routes";
 
 const getLoadingHistory = () =>
   Array.from({ length: 5 }).map((_, index) => (
@@ -25,10 +27,17 @@ const getLoadingHistory = () =>
   ));
 
 const PaymentHistorySection = () => {
+  const navigation = useIONavigation();
   const historyPot = useIOSelector(walletTransactionHistorySelector);
   const renderItems = pot.isLoading(historyPot)
     ? getLoadingHistory()
     : getHistoryList(pot.getOrElse(historyPot, {}));
+
+  const handleOnPayNoticedPress = () => {
+    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
+      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
+    });
+  };
 
   return (
     // full pages history loading will be handled by history details page
@@ -52,7 +61,7 @@ const PaymentHistorySection = () => {
         primaryActionProps={{
           accessibilityLabel: I18n.t("payment.homeScreen.CTA"),
           label: I18n.t("payment.homeScreen.CTA"),
-          onPress: () => null,
+          onPress: handleOnPayNoticedPress,
           icon: "qrCode",
           iconPosition: "end"
         }}
