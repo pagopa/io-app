@@ -2907,7 +2907,7 @@ features:
   wallet:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
-      cta: Aggiungi al portafoglio
+      cta: Aggiungi al Portafoglio
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
