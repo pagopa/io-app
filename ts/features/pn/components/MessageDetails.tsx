@@ -92,7 +92,7 @@ export const MessageDetails = ({
           serviceId={serviceId}
         />
       </ContentWrapper>
-      <MessageFooter />
+      <MessageFooter serviceId={serviceId} />
     </ScrollView>
   );
 };

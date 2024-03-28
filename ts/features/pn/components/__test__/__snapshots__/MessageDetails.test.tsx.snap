@@ -714,6 +714,25 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               }
                             />
                           </View>
+                          <View
+                            style={
+                              Object {
+                                "backgroundColor": "#F4F5F8",
+                                "marginBottom": "-95%",
+                                "paddingBottom": "95%",
+                                "paddingHorizontal": 24,
+                                "paddingTop": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                          </View>
                         </View>
                       </RCTScrollView>
                     </View>

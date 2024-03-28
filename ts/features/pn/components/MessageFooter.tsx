@@ -1,11 +1,10 @@
-import {
-  IOColors,
-  IOStyles,
-  ListItemAction,
-  VSpacer
-} from "@pagopa/io-app-design-system";
+import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { ContactsListItem } from "../../messages/components/MessageDetail/ContactsListItem";
+import { useIOSelector } from "../../../store/hooks";
+import { serviceMetadataByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 const styles = StyleSheet.create({
   container: {
@@ -17,8 +16,23 @@ const styles = StyleSheet.create({
   }
 });
 
-export const MessageFooter = () => (
-  <View style={styles.container}>
-    <VSpacer size={16} />
-  </View>
-);
+type MessageFooterProps = {
+  serviceId: ServiceId;
+};
+
+export const MessageFooter = ({ serviceId }: MessageFooterProps) => {
+  const serviceMetadata = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, serviceId)
+  );
+  return (
+    <View style={styles.container}>
+      {(serviceMetadata?.email || serviceMetadata?.phone) && (
+        <ContactsListItem
+          email={serviceMetadata.email}
+          phone={serviceMetadata.phone}
+        />
+      )}
+      <VSpacer size={16} />
+    </View>
+  );
+};
