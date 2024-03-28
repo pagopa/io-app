@@ -1,9 +1,9 @@
 import * as React from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
+import { Image, StyleSheet, View } from "react-native";
 import { H1 } from "../../../components/core/typography/H1";
 import { H2 } from "../../../components/core/typography/H2";
 import { isStringNullyOrEmpty } from "../../../utils/strings";
+import { WithEUCovidCertificateHeaderData } from "../types/EUCovidCertificate";
 
 const styles = StyleSheet.create({
   row: {
@@ -36,6 +36,7 @@ export const EuCovidCertHeader = (props: WithEUCovidCertificateHeaderData) => (
       {/* it could happen we don't want to show any logo, in that case url will be empty */}
       {!isStringNullyOrEmpty(props.headerData.logoUrl) && (
         <Image
+          accessibilityIgnoresInvertColors
           testID={"EuCovidCertHeaderLogoID"}
           source={{ uri: props.headerData.logoUrl }}
           style={styles.logo}

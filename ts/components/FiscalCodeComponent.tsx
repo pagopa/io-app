@@ -7,29 +7,29 @@
  * The fac-simile back side can be rendered for both full and landscape modes,
  * and it includes the barcode of the fiscal code with the code 128 format
  */
+import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  Text,
-  View,
   Dimensions,
   Image,
   StyleProp,
   StyleSheet,
+  Text,
+  View,
   ViewStyle
 } from "react-native";
 import Barcode from "react-native-barcode-builder";
-import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
 import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { Municipality } from "../../definitions/content/Municipality";
 import I18n from "../i18n";
 import customVariables from "../theme/variables";
 import {
-  formatFiscalCodeBirthdayAsShortFormat,
-  formatFiscalCodeBirthdayAsAccessibilityReadableFormat
+  formatFiscalCodeBirthdayAsAccessibilityReadableFormat,
+  formatFiscalCodeBirthdayAsShortFormat
 } from "../utils/dates";
 import { extractFiscalCodeData } from "../utils/profile";
 import { maybeNotNullyString } from "../utils/strings";
@@ -533,6 +533,7 @@ export default class FiscalCodeComponent extends React.Component<Props> {
       >
         <VSpacer />
         <Image
+          accessibilityIgnoresInvertColors
           source={
             this.props.type !== "Preview" && this.props.getBackSide
               ? require("./../../img/fiscalCode/fiscalCodeBack.png")

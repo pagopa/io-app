@@ -15,13 +15,13 @@ import {
   ViewStyle
 } from "react-native";
 
-import { connect } from "react-redux";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
-import themeVariables from "../theme/variables";
-import { GlobalState } from "../store/reducers/types";
+import { connect } from "react-redux";
 import { idpsStateSelector } from "../store/reducers/content";
-import { LocalIdpsFallback } from "../utils/idps";
+import { GlobalState } from "../store/reducers/types";
+import themeVariables from "../theme/variables";
 import { toAndroidCacheTimestamp } from "../utils/dates";
+import { LocalIdpsFallback } from "../utils/idps";
 
 type OwnProps = {
   columnWrapperStyle?: StyleProp<ViewStyle>;
@@ -104,6 +104,7 @@ const renderItem =
           testID={`idp-${item.id}-button`}
         >
           <Image
+            accessibilityIgnoresInvertColors
             source={
               item.localLogo
                 ? item.localLogo

@@ -1,16 +1,16 @@
-import { pipe } from "fp-ts/lib/function";
+import { IOColors, VSpacer, hexToRgba } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import {
-  View,
   Image,
   ImageStyle,
   Platform,
   StyleProp,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { IOColors, hexToRgba, VSpacer } from "@pagopa/io-app-design-system";
 import { Abi } from "../../../../../../definitions/pagopa/walletv2/Abi";
 import pagoBancomatLogo from "../../../../../../img/wallet/cards-icons/pagobancomat.png";
 import { IOBadge } from "../../../../../components/core/IOBadge";
@@ -125,7 +125,11 @@ const renderBankLogo = (abi: Abi, size: O.Option<[number, number]>) =>
           resizeMode: "contain"
         };
         return imageUrl ? (
-          <Image source={{ uri: imageUrl }} style={imageStyle} />
+          <Image
+            accessibilityIgnoresInvertColors
+            source={{ uri: imageUrl }}
+            style={imageStyle}
+          />
         ) : null;
       }
     )

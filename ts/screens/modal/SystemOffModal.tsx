@@ -3,13 +3,13 @@
  * not work properly. This is due to avoid user tries to access features or services potentially can't work
  * as expected
  */
-import { pipe } from "fp-ts/lib/function";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { Container } from "native-base";
 import * as React from "react";
-import { View, Image, Modal, StyleSheet } from "react-native";
+import { Image, Modal, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
-import { VSpacer } from "@pagopa/io-app-design-system";
 import { Body } from "../../components/core/typography/Body";
 import { H1 } from "../../components/core/typography/H1";
 import { IOStyles } from "../../components/core/variables/IOStyles";
@@ -54,6 +54,7 @@ class SystemOffModal extends React.PureComponent<Props> {
             <View style={styles.container}>
               <React.Fragment>
                 <Image
+                  accessibilityIgnoresInvertColors
                   style={styles.image}
                   source={require("../../../img/servicesStatus/error-detail-icon.png")}
                 />
