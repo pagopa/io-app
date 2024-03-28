@@ -95,7 +95,7 @@ import {
   getProfileChannelsforServicesList
 } from "../../utils/profile";
 import { showToast } from "../../utils/showToast";
-import { ServiceDetailsScreenNavigationParams } from "./ServiceDetailsScreen";
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
 
 type OwnProps = IOStackNavigationRouteProps<AppParamsList>;
 
