@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useRef } from "react";
-import { Dimensions, View } from "react-native";
+import { View } from "react-native";
 import {
   Alert,
   Body,
@@ -21,7 +21,6 @@ import {
   hasApiLevelSupportSelector,
   hasNFCFeatureSelector
 } from "../../store/reducers/cie";
-import { MIN_HEIGHT_TO_SHOW_FULL_RENDER } from "../../screens/authentication/NewOptInScreen";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 
 const CieNotSupported = () => {
@@ -48,15 +47,9 @@ const CieNotSupported = () => {
     >
       <SafeAreaView>
         <ContentWrapper>
-          {/* 
-          if the device height is > 820 then the pictogram will be visible, 
-          otherwise it will not be visible
-          */}
-          {Dimensions.get("screen").height > MIN_HEIGHT_TO_SHOW_FULL_RENDER && (
-            <View style={IOStyles.selfCenter} testID="pictogram-test">
-              <Pictogram name="updateOS" size={120} />
-            </View>
-          )}
+          <View style={IOStyles.selfCenter} testID="pictogram-test">
+            <Pictogram name="updateOS" size={120} />
+          </View>
           <VSpacer size={24} />
           <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
             <H3
