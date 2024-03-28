@@ -1,22 +1,28 @@
-import { IOIcons, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOIcons,
+  ListItemHeader,
+  VSpacer,
+  WithTestID
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
 import { WalletCard, walletCardComponentMapper } from "../types";
 
-type WalletCategoryStackContainerProps = {
+export type WalletCategoryStackContainerProps = WithTestID<{
   iconName: IOIcons;
   label: string;
   cards: ReadonlyArray<WalletCard>;
-};
+}>;
 
 /**
  * This component handles the rendering of cards of a specific category.
  * The component also handles logic behind card stacking and animations
  */
-const WalletCardCategoryContainer = ({
+const WalletCardsCategoryContainer = ({
   label,
   iconName,
-  cards
+  cards,
+  testID
 }: WalletCategoryStackContainerProps) => {
   if (cards === undefined || cards.length === 0) {
     // If cards are not provided or are an empty array, the component should not render
@@ -27,20 +33,28 @@ const WalletCardCategoryContainer = ({
 
   const renderCardFn = (card: WalletCard, stacked: boolean) => {
     const Component = walletCardComponentMapper[card.type];
-    return Component && <Component cardProps={card} isStacked={stacked} />;
+    return (
+      Component && (
+        <Component
+          testID={`walletCardTestID_${card.key}`}
+          cardProps={card}
+          isStacked={stacked}
+        />
+      )
+    );
   };
 
   return (
-    <View>
+    <View testID={testID}>
       <ListItemHeader iconName={iconName} label={label} />
       {cards.map((card, index) => (
-        <>
+        <React.Fragment key={`wallet_card_${card.key}`}>
           {!isStacked && index !== 0 && <VSpacer size={16} />}
           {renderCardFn(card, isStacked && index < cards.length - 1)}
-        </>
+        </React.Fragment>
       ))}
     </View>
   );
 };
 
-export { WalletCardCategoryContainer };
+export { WalletCardsCategoryContainer };
