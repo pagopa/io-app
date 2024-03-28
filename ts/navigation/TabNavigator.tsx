@@ -8,11 +8,12 @@ import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen";
+import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
+import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
 import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
-import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
 import {
   isDesignSystemEnabledSelector,
@@ -57,6 +58,7 @@ export const MainTabNavigator = () => {
   const isNewWalletSectionEnabled = useIOSelector(
     isNewWalletSectionEnabledSelector
   );
+  const showBarcodeScanSection = false; // Currently disabled
 
   const tabBarHeight = 54;
   const additionalPadding = 10;
@@ -133,7 +135,7 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {isDesignSystemEnabled && (
+        {showBarcodeScanSection && (
           <Tab.Screen
             name={ROUTES.BARCODE_SCAN}
             component={EmptyComponent}
@@ -149,6 +151,23 @@ export const MainTabNavigator = () => {
                 <TabIconComponent
                   iconName={"navScan"}
                   iconNameFocused={"navScan"}
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
+        {isNewWalletSectionEnabled && (
+          <Tab.Screen
+            name={ROUTES.PAYMENTS_HOME}
+            component={PaymentsHomeScreen}
+            options={{
+              title: I18n.t("global.navigator.payments"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName={"navPsp"}
+                  iconNameFocused={"navPsp"}
                   color={color}
                   focused={focused}
                 />
