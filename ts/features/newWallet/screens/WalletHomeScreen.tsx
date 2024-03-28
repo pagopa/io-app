@@ -13,11 +13,20 @@ import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { selectWalletCards } from "../store/selectors";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { WalletRoutes } from "../navigation";
 
 const WalletHomeScreen = () => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   const cards = useIOSelector(selectWalletCards);
+
+  const handleAddToWalletButtonPress = () => {
+    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
+      screen: WalletRoutes.WALLET_CARD_ONBOARDING
+    });
+  };
 
   React.useEffect(() => {
     // TODO SIW-960 Move cards request to app startup
@@ -45,7 +54,7 @@ const WalletHomeScreen = () => {
         accessibilityLabel: I18n.t("features.wallet.home.cta"),
         icon: "addSmall",
         iconPosition: "end",
-        onPress: () => null
+        onPress: handleAddToWalletButtonPress
       }}
       excludeSafeAreaMargins={true}
     >

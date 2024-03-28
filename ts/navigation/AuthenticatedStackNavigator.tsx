@@ -44,8 +44,12 @@ import {
   IDPayUnsubscriptionRoutes
 } from "../features/idpay/unsubscription/navigation/navigator";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
-import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
-import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
+import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import {
+  WalletNavigator as NewWalletNavigator,
+  WalletRoutes as NewWalletRoutes
+} from "../features/newWallet/navigation";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { WalletBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import {
@@ -62,6 +66,8 @@ import {
   WalletTransactionNavigator,
   WalletTransactionRoutes
 } from "../features/payments/transaction/navigation/navigator";
+import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
+import { UAWebViewScreen } from "../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
 import ZENDESK_ROUTES from "../features/zendesk/navigation/routes";
 import { GalleryPermissionInstructionsScreen } from "../screens/misc/GalleryPermissionInstructionsScreen";
@@ -73,9 +79,8 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
+import { isNewWalletSectionEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
-import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
 import { AppParamsList } from "./params/AppParamsList";
@@ -97,6 +102,9 @@ const AuthenticatedStackNavigator = () => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
 
   return (
     <Stack.Navigator
@@ -135,11 +143,19 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
-      <Stack.Screen
-        name={ROUTES.WALLET_NAVIGATOR}
-        options={hideHeaderOptions}
-        component={WalletNavigator}
-      />
+      {isNewWalletSectionEnabled ? (
+        <Stack.Screen
+          name={NewWalletRoutes.WALLET_NAVIGATOR}
+          options={hideHeaderOptions}
+          component={NewWalletNavigator}
+        />
+      ) : (
+        <Stack.Screen
+          name={ROUTES.WALLET_NAVIGATOR}
+          options={hideHeaderOptions}
+          component={WalletNavigator}
+        />
+      )}
       <Stack.Screen
         name={ROUTES.SERVICES_NAVIGATOR}
         options={hideHeaderOptions}

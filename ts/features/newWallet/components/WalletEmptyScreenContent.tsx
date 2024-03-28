@@ -8,10 +8,16 @@ import {
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { WalletRoutes } from "../navigation";
 
 const WalletEmptyScreenContent = () => {
+  const navigation = useIONavigation();
+
   const handleAddToWalletButtonPress = () => {
-    // TODO SIW-923: navigate to available cards/initiatives list
+    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
+      screen: WalletRoutes.WALLET_CARD_ONBOARDING
+    });
   };
 
   return (

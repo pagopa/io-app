@@ -42,36 +42,40 @@ import {
   IDPayUnsubscriptionParamsList,
   IDPayUnsubscriptionRoutes
 } from "../../features/idpay/unsubscription/navigation/navigator";
-import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
-import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
+import { MessagesParamsList } from "../../features/messages/navigation/params";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
+import {
+  WalletParamsList as NewWalletParamsList,
+  WalletRoutes as NewWalletRoutes
+} from "../../features/newWallet/navigation";
 import { WalletBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { WalletBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import {
-  WalletOnboardingParamsList,
-  WalletOnboardingRoutes
-} from "../../features/payments/onboarding/navigation/navigator";
 import {
   WalletDetailsParamsList,
   WalletDetailsRoutes
 } from "../../features/payments/details/navigation/navigator";
 import {
+  WalletOnboardingParamsList,
+  WalletOnboardingRoutes
+} from "../../features/payments/onboarding/navigation/navigator";
+import { WalletPaymentParamsList } from "../../features/payments/payment/navigation/params";
+import { WalletPaymentRoutes } from "../../features/payments/payment/navigation/routes";
+import {
   WalletTransactionParamsList,
   WalletTransactionRoutes
 } from "../../features/payments/transaction/navigation/navigator";
-import { WalletPaymentParamsList } from "../../features/payments/payment/navigation/params";
-import { WalletPaymentRoutes } from "../../features/payments/payment/navigation/routes";
+import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
+import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
+import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
 import { ProfileParamsList } from "./ProfileParamsList";
 import { ServicesParamsList } from "./ServicesParamsList";
 import { WalletParamsList } from "./WalletParamsList";
-import { CheckEmailParamsList } from "./CheckEmailParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
@@ -120,6 +124,8 @@ export type AppParamsList = {
   [WalletBarcodeRoutes.WALLET_BARCODE_MAIN]: NavigatorScreenParams<WalletBarcodeParamsList>;
   [WalletDetailsRoutes.WALLET_DETAILS_MAIN]: NavigatorScreenParams<WalletDetailsParamsList>;
   [WalletTransactionRoutes.WALLET_TRANSACTION_MAIN]: NavigatorScreenParams<WalletTransactionParamsList>;
+
+  [NewWalletRoutes.WALLET_NAVIGATOR]: NavigatorScreenParams<NewWalletParamsList>;
 };
 
 /**
