@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessagePayments component Should match the snapshot for a cancelled message with no completed payments 1`] = `
+exports[`LegacyMessagePayments component Should match the snapshot for a cancelled message with no completed payments 1`] = `
 <View
   style={
     Object {
@@ -331,7 +331,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
 </View>
 `;
 
-exports[`MessagePayments component Should match the snapshot for a cancelled message with three completed payments 1`] = `
+exports[`LegacyMessagePayments component Should match the snapshot for a cancelled message with three completed payments 1`] = `
 <View
   style={
     Object {
@@ -1585,7 +1585,7 @@ exports[`MessagePayments component Should match the snapshot for a cancelled mes
 </View>
 `;
 
-exports[`MessagePayments component Should match the snapshot for a single loading payment 1`] = `
+exports[`LegacyMessagePayments component Should match the snapshot for a single loading payment 1`] = `
 <View
   style={
     Object {
@@ -2155,7 +2155,7 @@ exports[`MessagePayments component Should match the snapshot for a single loadin
 </View>
 `;
 
-exports[`MessagePayments component Should match the snapshot for five loading payments 1`] = `
+exports[`LegacyMessagePayments component Should match the snapshot for five loading payments 1`] = `
 <View
   style={
     Object {
@@ -3189,7 +3189,7 @@ exports[`MessagePayments component Should match the snapshot for five loading pa
 </View>
 `;
 
-exports[`MessagePayments component Should match the snapshot for five payable payments 1`] = `
+exports[`LegacyMessagePayments component Should match the snapshot for five payable payments 1`] = `
 <View
   style={
     Object {
@@ -4223,7 +4223,7 @@ exports[`MessagePayments component Should match the snapshot for five payable pa
 </View>
 `;
 
-exports[`MessagePayments component Should match the snapshot for five processed payments 1`] = `
+exports[`LegacyMessagePayments component Should match the snapshot for five processed payments 1`] = `
 <View
   style={
     Object {
@@ -5257,7 +5257,7 @@ exports[`MessagePayments component Should match the snapshot for five processed 
 </View>
 `;
 
-exports[`MessagePayments component Should match the snapshot for more than five loading payments 1`] = `
+exports[`LegacyMessagePayments component Should match the snapshot for more than five loading payments 1`] = `
 <View
   style={
     Object {

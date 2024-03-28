@@ -41,7 +41,7 @@ import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessageTimeline } from "./MessageTimeline";
 import { MessageTimelineCTA } from "./MessageTimelineCTA";
 import { LegacyMessageF24 } from "./LegacyMessageF24";
-import { MessagePayments } from "./MessagePayments";
+import { LegacyMessagePayments } from "./LegacyMessagePayments";
 import { MessageFooter } from "./MessageFooter";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
@@ -143,7 +143,7 @@ export const LegacyMessageDetails = ({
             />
           </MessageDetailsSection>
         )}
-        <MessagePayments
+        <LegacyMessagePayments
           messageId={messageId}
           isCancelled={isCancelled}
           payments={payments}

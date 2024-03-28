@@ -7,10 +7,10 @@ import { UIMessageId } from "../../../messages/types";
 import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/backend/PaymentRequestsGetResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
-import { MessagePayments } from "../MessagePayments";
+import { LegacyMessagePayments } from "../LegacyMessagePayments";
 import { updatePaymentForMessage } from "../../../messages/store/actions";
 
-describe("MessagePayments component", () => {
+describe("LegacyMessagePayments component", () => {
   it("Should match the snapshot for a single loading payment", () => {
     const messageId = "m1" as UIMessageId;
     const payments = [
@@ -231,7 +231,7 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext(
     () => (
-      <MessagePayments
+      <LegacyMessagePayments
         messageId={messageId}
         isCancelled={isCancelled}
         payments={payments}
