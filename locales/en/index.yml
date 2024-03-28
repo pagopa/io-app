@@ -190,6 +190,7 @@ global:
     messages: Messages
     wallet: Wallet
     scan: Scan
+    payments: Payments
     documents: Documents
     profile: Profile
     services: Services
@@ -790,17 +791,20 @@ email:
   newinsert:
     header: "Configure IO"
     title: "What is your email address?"
-    subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
+    subtitle: We will use it to send you communications such as payment receipts or support messages
     label: "Personal email address"
     alert:
-      title: "The email address {{email}} associated with your SPID identity is already in use on IO. Please enter a different one."
-      description: "email address already in use"
-      modaltitle: "This email address is already in use"
+      title: "{{email}} is already used, insert another one"
+      description1: email address already in use
+      description2: Enter an email address different from your current one
+      description3: Already using this email address
+      invalidemail: Enter a valid email address
+      modaltitle: This email address is already in use
       modaldescription: "This can happen if you share the same address with a family member"
-      modalbutton: "Use another email address"
+      modalbutton: Use another email address
   edit:
     title: Edit email
-    subtitle: The email you inserted is
+    subtitle: Now you use
     validated: The email you inserted and validated is
     label: New personal email address
     cta: Edit email
@@ -820,9 +824,9 @@ email:
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
   newvalidate:
-    title: Validate your email
-    subtitle: Follow the instructions we sent to
-    link: Is the email address wrong?
+    title: We have sent you an email
+    subtitle: To confirm your address, follow the instructions we have sent to
+    link: Isn't that right?
     buttonlabelsent: Email sent!
     countdowntext: Request new email in
     buttonlabelsentagain: Send email again
@@ -932,11 +936,11 @@ payment:
       header: Payment methods
       headerCTA: Add
     historySection:
-     header: Transaction history
-     headerCTA: View all
-     transactionStatusBadges:
-      failure: "FALLITA"
-      success: ""
+      header: Transaction history
+      headerCTA: View all
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
@@ -2088,20 +2092,20 @@ serviceDetail:
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
   instructions:
-      unlockCode: unlock code
-      unlockCodepPrefix: use your
-      fingerprint: fingerprint
-      fingerprintPrefix: use your
-      faceId: face
-      faceIdPrefix: use your
-      congiunction: or
+    unlockCode: unlock code
+    unlockCodepPrefix: use your
+    fingerprint: fingerprint
+    fingerprintPrefix: use your
+    faceId: face
+    faceIdPrefix: use your
+    congiunction: or
   title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
-  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.  
+  logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
   biometric:
     fingerprintType: Fingerprint
     title: Biometric identification

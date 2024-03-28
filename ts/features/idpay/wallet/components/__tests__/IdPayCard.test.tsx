@@ -2,7 +2,7 @@ import { render } from "@testing-library/react-native";
 import * as React from "react";
 import { IdPayCard } from "../IdPayCard";
 
-describe("IdPayWalletCard", () => {
+describe("IdPayCard", () => {
   it("should match the snapshot", () => {
     const component = render(
       <IdPayCard
