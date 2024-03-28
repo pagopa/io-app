@@ -569,9 +569,6 @@ authentication:
       os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
       nfc_alert: Il tuo dispositivo non ha l'NFC.
       os_alert: Il sistema operativo del dispositivo non è aggiornato.
-      android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: un sistema operativo Android 6.0 o superiore
-      nfc_incompatible: un chip NFC compatibile
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
