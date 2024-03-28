@@ -20,6 +20,9 @@ const ServicesNavigator = () => (
       component={
         isNewServicesEnabled ? ServiceDetailsScreen : LegacyServiceDetailsScreen
       }
+      options={{
+        headerShown: isNewServicesEnabled
+      }}
     />
     {myPortalEnabled && (
       <Stack.Screen

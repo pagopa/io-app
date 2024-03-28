@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useLayoutEffect } from "react";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../store/hooks";
@@ -14,6 +14,12 @@ export const ServiceDetailsFailure = ({
 }: ServiceDetailsFailureProps) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false
+    });
+  }, [navigation]);
 
   const handleBack = () => navigation.goBack();
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
 import {
@@ -13,10 +13,7 @@ import Animated, {
 } from "react-native-reanimated";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import {
-  IOStackNavigationRouteProps,
-  useIONavigation
-} from "../../../navigation/params/AppParamsList";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { ServicesParamsList } from "../navigation/params";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
@@ -93,13 +90,6 @@ type ServiceDetailsContentProps = {
 const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
   const headerHeight = useHeaderHeight();
   const scrollTranslationY = useSharedValue(0);
-  const navigation = useIONavigation();
-
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true
-    });
-  }, [navigation]);
 
   useHeaderSecondLevel({
     title: "",
