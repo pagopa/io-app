@@ -6,7 +6,7 @@ import {
 import {
   PaymentWalletCard,
   PaymentWalletCardProps
-} from "../../payments/common/components/PaymentWalletCard";
+} from "../../payments/wallet/components/PaymentWalletCard";
 import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
 import {
   CgnWalletCard,

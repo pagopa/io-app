@@ -191,15 +191,13 @@ const SkeletonPlaceholder = (props: Pick<BoxProps, "width" | "height">) => (
   />
 );
 
-const borderColor = "#0000001F";
-
 const styleSheet = StyleSheet.create({
   card: {
     aspectRatio: 16 / 10,
     backgroundColor: IOColors["grey-100"],
     borderRadius: 16,
     borderWidth: 1,
-    borderColor
+    borderColor: IOColors["grey-200"]
   },
   wrapper: {
     padding: 16,
