@@ -38,7 +38,7 @@ import {
 import { profileNameSelector } from "../../store/reducers/profile";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { biometricAuthenticationRequest } from "../../utils/biometrics";
-import { useAppBackgroundAccent } from "../../utils/hooks/theme";
+import { useAppBackgroundAccentColorName } from "../../utils/hooks/theme";
 import { useBiometricType } from "../../utils/hooks/useBiometricType";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
@@ -63,7 +63,7 @@ const IdentificationModal = () => {
   const colorScheme: ColorSchemeName = "light";
   const numberPadVariant = colorScheme ? "dark" : "light";
 
-  const blueColor = useAppBackgroundAccent();
+  const blueColor = useAppBackgroundAccentColorName();
 
   const appState = useIOSelector(appCurrentStateSelector);
   const previousAppState = usePrevious(appState);

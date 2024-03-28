@@ -22,10 +22,7 @@ import {
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
-import {
-  isProfileEmailValidatedSelector,
-  profileSelector
-} from "../../../store/reducers/profile";
+import { profileSelector } from "../../../store/reducers/profile";
 import { openWebUrl } from "../../../utils/url";
 import ZENDESK_ROUTES from "../navigation/routes";
 import { zendeskConfigSelector } from "../store/reducers";
@@ -54,7 +51,6 @@ const ZendeskSupportComponent = ({
   const maybeProfile: O.Option<InitializedProfile> = pot.toOption(profile);
   const zendeskRemoteConfig = useIOSelector(zendeskConfigSelector);
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
 
   const handleContactSupportPress = React.useCallback(
     () =>
@@ -73,8 +69,6 @@ const ZendeskSupportComponent = ({
       zendeskRemoteConfig
     ]
   );
-
-  const showRequestSupportButtons = isEmailValidated || !pot.isSome(profile);
 
   return (
     <>
@@ -100,46 +94,42 @@ const ZendeskSupportComponent = ({
       </InfoBox>
       <VSpacer size={16} />
 
-      {showRequestSupportButtons && (
-        <>
-          <ButtonOutline
-            fullWidth
-            onPress={() => {
-              void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
-              if (O.isNone(maybeProfile)) {
-                navigation.navigate(ZENDESK_ROUTES.MAIN, {
-                  screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
-                  params: {
-                    assistanceForPayment,
-                    assistanceForCard,
-                    assistanceForFci
-                  }
-                });
-              } else {
-                navigation.navigate(ZENDESK_ROUTES.MAIN, {
-                  screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
-                  params: {
-                    assistanceForPayment,
-                    assistanceForCard,
-                    assistanceForFci
-                  }
-                });
+      <ButtonOutline
+        fullWidth
+        onPress={() => {
+          void mixpanelTrack("ZENDESK_SHOW_TICKETS_STARTS");
+          if (O.isNone(maybeProfile)) {
+            navigation.navigate(ZENDESK_ROUTES.MAIN, {
+              screen: ZENDESK_ROUTES.SEE_REPORTS_ROUTERS,
+              params: {
+                assistanceForPayment,
+                assistanceForCard,
+                assistanceForFci
               }
-            }}
-            testID={"showTicketsButton"}
-            label={I18n.t("support.helpCenter.cta.seeReports")}
-            accessibilityLabel={I18n.t("support.helpCenter.cta.seeReports")}
-          />
-          <VSpacer size={16} />
-          <ButtonSolid
-            fullWidth
-            label={I18n.t("support.helpCenter.cta.contactSupport")}
-            accessibilityLabel={I18n.t("support.helpCenter.cta.contactSupport")}
-            onPress={handleContactSupportPress}
-            testID={"contactSupportButton"}
-          />
-        </>
-      )}
+            });
+          } else {
+            navigation.navigate(ZENDESK_ROUTES.MAIN, {
+              screen: ZENDESK_ROUTES.ASK_SEE_REPORTS_PERMISSIONS,
+              params: {
+                assistanceForPayment,
+                assistanceForCard,
+                assistanceForFci
+              }
+            });
+          }
+        }}
+        testID={"showTicketsButton"}
+        label={I18n.t("support.helpCenter.cta.seeReports")}
+        accessibilityLabel={I18n.t("support.helpCenter.cta.seeReports")}
+      />
+      <VSpacer size={16} />
+      <ButtonSolid
+        fullWidth
+        label={I18n.t("support.helpCenter.cta.contactSupport")}
+        accessibilityLabel={I18n.t("support.helpCenter.cta.contactSupport")}
+        onPress={handleContactSupportPress}
+        testID={"contactSupportButton"}
+      />
     </>
   );
 };

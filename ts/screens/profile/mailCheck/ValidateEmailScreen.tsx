@@ -5,6 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18n-js";
 import * as React from "react";
 import { useCallback } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
@@ -13,19 +14,25 @@ import { H3 } from "../../../components/core/typography/H3";
 import { Link } from "../../../components/core/typography/Link";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
-import { useIODispatch } from "../../../store/hooks";
-import themeVariables from "../../../theme/variables";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import customVariables from "../../../theme/variables";
+import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import {
+  trackEmailNotAlreadyConfirmed,
+  trackSendValidationEmail
+} from "../../analytics/emailAnalytics";
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: themeVariables.contentPaddingLarge
+    padding: customVariables.contentPaddingLarge
   },
   title: {
     textAlign: "center"
@@ -43,21 +50,28 @@ const ValidateEmailScreen = () => {
     useRoute<
       Route<"CHECK_EMAIL_NOT_VERIFIED", EmailNotVerifiedScreenParamList>
     >().params;
+  const isFirstOnboarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const flow = getFlowType(true, isFirstOnboarding);
   const navigateToInsertEmailScreen = useCallback(() => {
     navigation.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
       params: {
         isOnboarding: true
       }
     });
   }, [navigation]);
 
+  useOnFirstRender(() => {
+    trackEmailNotAlreadyConfirmed(flow);
+  });
+
   const confirmButtonOnPress = React.useCallback(() => {
     // We dispatch this action to show the InsertEmailScreen with
     // the validation modal already opened.
+    trackSendValidationEmail(flow);
     dispatch(acknowledgeOnEmailValidation(O.some(false)));
     navigateToInsertEmailScreen();
-  }, [dispatch, navigateToInsertEmailScreen]);
+  }, [dispatch, flow, navigateToInsertEmailScreen]);
 
   const modifyEmailButtonOnPress = React.useCallback(() => {
     dispatch(acknowledgeOnEmailValidation(O.none));

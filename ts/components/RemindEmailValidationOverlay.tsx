@@ -1,31 +1,31 @@
 /**
  * A component to remind the user to validate his email
  */
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as React from "react";
 import {
-  View,
-  Alert,
-  BackHandler,
-  NativeEventSubscription,
-  StyleSheet,
-  Platform,
-  ScrollView
-} from "react-native";
-import { connect } from "react-redux";
-import {
+  ButtonOutline,
+  ButtonSolid,
+  IOPictogramSizeScale,
+  IOPictograms,
   Icon,
   IconButton,
   Pictogram,
-  IOPictograms,
-  IOPictogramSizeScale,
-  VSpacer,
-  ButtonOutline,
-  ButtonSolid
+  VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import {
+  Alert,
+  BackHandler,
+  NativeEventSubscription,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View
+} from "react-native";
+import { connect } from "react-redux";
 import I18n from "../i18n";
 import NavigationService from "../navigation/NavigationService";
 import ROUTES from "../navigation/routes";
@@ -48,15 +48,15 @@ import {
 } from "../store/reducers/profile";
 import { GlobalState } from "../store/reducers/types";
 import customVariables from "../theme/variables";
+import SectionStatusComponent from "./SectionStatus";
+import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import { Body } from "./core/typography/Body";
-import { withLightModalContext } from "./helpers/withLightModalContext";
 import { IOStyles } from "./core/variables/IOStyles";
+import { withLightModalContext } from "./helpers/withLightModalContext";
 import { ContextualHelpPropsMarkdown } from "./screens/BaseScreenComponent";
 import TopScreenComponent, {
   TopScreenComponentProps
 } from "./screens/TopScreenComponent";
-import SectionStatusComponent from "./SectionStatus";
-import TouchableDefaultOpacity from "./TouchableDefaultOpacity";
 import FooterWithButtons from "./ui/FooterWithButtons";
 import { LightModalContextInterface } from "./ui/LightModal";
 import LegacyMarkdown from "./ui/Markdown/LegacyMarkdown";
@@ -330,7 +330,8 @@ class RemindEmailValidationOverlay extends React.PureComponent<Props, State> {
                 onPress={() => {
                   if (this.props.isOnboarding) {
                     NavigationService.navigate(ROUTES.ONBOARDING, {
-                      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+                      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
+                      params: { isOnboarding: true }
                     });
                   } else {
                     NavigationService.navigate(ROUTES.PROFILE_NAVIGATOR, {

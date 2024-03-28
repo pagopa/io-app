@@ -111,7 +111,8 @@ const FciDataSharingScreen = (): React.ReactElement => {
               navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
                 screen: ROUTES.INSERT_EMAIL_SCREEN,
                 params: {
-                  isOnboarding: false
+                  isOnboarding: false,
+                  isFciEditEmailFlow: true
                 }
               });
             }}
