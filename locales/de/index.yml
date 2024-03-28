@@ -534,10 +534,6 @@ authentication:
     session_expired:
       title: "Deine Sitzung ist abgelaufen"
       body: "Aus Sicherheitsgründen bitten wir dich, dich alle {{days}} Tage oder wenn du die App verlässt, mit SPID oder CIE anzumelden."
-    cie_unsupported:
-      title: "Anmeldung mit CIE nicht möglich"
-      os_version_unsupported: "ein Betriebssystem mit Android 6.0 oder höher"
-      nfc_incompatible: "ein kompatibler NFC-Sensor"
     contentTitleCie: "Du hast keinen SPID oder CIE?"
     spid_or_cie: "Um IO nutzen zu können, musst du über eine dieser digitalen Werkzeuge verfügen, die deine Identität in sicherer Weise bestätigen."
     request_cie: "CIE anfordern"
