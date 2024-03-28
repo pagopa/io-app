@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useRef } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import {
   Alert,
   Body,
@@ -75,7 +75,7 @@ const CieNotSupported = () => {
             body={I18n.t("authentication.landing.cie_unsupported.os_problem")}
           />
           <VSpacer size={24} />
-          {!hasCieNFCFeature ? (
+          {Platform.OS === "android" && !hasCieNFCFeature ? (
             <Alert
               content={I18n.t(
                 "authentication.landing.cie_unsupported.nfc_alert"
@@ -83,6 +83,7 @@ const CieNotSupported = () => {
               variant="warning"
             />
           ) : (
+            Platform.OS === "android" &&
             hasCieApiLevelSupport && (
               <Alert
                 content={I18n.t(
