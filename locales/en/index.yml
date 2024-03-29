@@ -214,6 +214,11 @@ tablet:
   message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
   title: Looks like the security of your device has been compromised!
+  body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
+  learnMoreButton: 
+    title: What does it mean?
+  learnMoreBottomsheet:
+    title: Device security
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:
