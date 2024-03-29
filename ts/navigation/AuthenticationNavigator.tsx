@@ -131,7 +131,6 @@ const AuthenticationStackNavigator = () => (
           elevation: 0,
           shadowOpacity: 0
         },
-        headerStatusBarHeight: 0,
         headerShown: true
       }}
     >

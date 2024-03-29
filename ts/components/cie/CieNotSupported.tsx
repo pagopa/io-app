@@ -45,56 +45,52 @@ const CieNotSupported = () => {
         testID: "close-button"
       }}
     >
-      <SafeAreaView>
-        <ContentWrapper>
-          <View style={IOStyles.selfCenter} testID="pictogram-test">
-            <Pictogram name="updateOS" size={120} />
-          </View>
-          <VSpacer size={24} />
-          <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
-            <H3
-              accessible={true}
-              style={{ textAlign: "center", alignItems: "center" }}
-              testID="title-test"
-            >
-              {I18n.t("authentication.landing.cie_unsupported.title")}
-            </H3>
-          </View>
-          <VSpacer size={24} />
-          <Body style={[IOStyles.selfCenter, { textAlign: "center" }]}>
-            {I18n.t("authentication.landing.cie_unsupported.body")}
-          </Body>
-          <VSpacer size={24} />
-          <FeatureInfo
-            iconName="contactless"
-            body={I18n.t("authentication.landing.cie_unsupported.nfc_problem")}
+      <ContentWrapper>
+        <View style={IOStyles.selfCenter} testID="pictogram-test">
+          <Pictogram name="updateOS" size={120} />
+        </View>
+        <VSpacer size={24} />
+        <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
+          <H3
+            accessible={true}
+            style={{ textAlign: "center", alignItems: "center" }}
+            testID="title-test"
+          >
+            {I18n.t("authentication.landing.cie_unsupported.title")}
+          </H3>
+        </View>
+        <VSpacer size={24} />
+        <Body style={[IOStyles.selfCenter, { textAlign: "center" }]}>
+          {I18n.t("authentication.landing.cie_unsupported.body")}
+        </Body>
+        <VSpacer size={24} />
+        <FeatureInfo
+          iconName="contactless"
+          body={I18n.t("authentication.landing.cie_unsupported.nfc_problem")}
+        />
+        <VSpacer size={24} />
+        <FeatureInfo
+          iconName="history"
+          body={I18n.t("authentication.landing.cie_unsupported.os_problem")}
+        />
+        <VSpacer size={24} />
+        {Platform.OS === "android" && !hasCieNFCFeature ? (
+          <Alert
+            content={I18n.t("authentication.landing.cie_unsupported.nfc_alert")}
+            variant="warning"
           />
-          <VSpacer size={24} />
-          <FeatureInfo
-            iconName="history"
-            body={I18n.t("authentication.landing.cie_unsupported.os_problem")}
-          />
-          <VSpacer size={24} />
-          {Platform.OS === "android" && !hasCieNFCFeature ? (
+        ) : (
+          Platform.OS === "android" &&
+          hasCieApiLevelSupport && (
             <Alert
               content={I18n.t(
-                "authentication.landing.cie_unsupported.nfc_alert"
+                "authentication.landing.cie_unsupported.os_alert"
               )}
               variant="warning"
             />
-          ) : (
-            Platform.OS === "android" &&
-            hasCieApiLevelSupport && (
-              <Alert
-                content={I18n.t(
-                  "authentication.landing.cie_unsupported.os_alert"
-                )}
-                variant="warning"
-              />
-            )
-          )}
-        </ContentWrapper>
-      </SafeAreaView>
+          )
+        )}
+      </ContentWrapper>
     </GradientScrollView>
   );
 };
