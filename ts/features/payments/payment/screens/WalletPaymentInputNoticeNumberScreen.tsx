@@ -105,6 +105,7 @@ const WalletPaymentInputNoticeNumberScreen = () => {
                   inputMode: "numeric",
                   returnKeyType: "done"
                 }}
+                autoFocus
               />
             </View>
           </ContentWrapper>

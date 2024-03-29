@@ -138,6 +138,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
                   inputMode: "numeric",
                   returnKeyType: "done"
                 }}
+                autoFocus
               />
             </View>
           </ContentWrapper>
