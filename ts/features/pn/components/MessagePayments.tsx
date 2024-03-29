@@ -1,31 +1,28 @@
-// import { pipe } from "fp-ts/lib/function";
+import { pipe } from "fp-ts/lib/function";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-// import * as O from "fp-ts/lib/Option";
+import * as O from "fp-ts/lib/Option";
 import React, { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
   ButtonLink,
-  IOColors,
+  FeatureInfo,
   ListItemHeader,
-  // ModulePaymentNotice,
+  ModulePaymentNotice,
   VSpacer
 } from "@pagopa/io-app-design-system";
-// import { CommonActions, useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import Placeholder from "rn-placeholder";
-// import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
+import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-// import { InfoBox } from "../../../components/box/InfoBox";
-// import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { trackPNShowAllPayments } from "../analytics";
-// import PN_ROUTES from "../navigation/routes";
-// import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
+import PN_ROUTES from "../navigation/routes";
+import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-// import { MessageDetailsSection } from "./MessageDetailsSection";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
@@ -64,7 +61,7 @@ const paymentSectionShouldRenderNothing = (
     readonlyArrayHasNoData(payments) &&
     readonlyArrayHasNoData(completedPaymentNoticeCodes));
 
-/* const generateNavigationToPaidPaymentScreenAction = (
+const generateNavigationToPaidPaymentScreenAction = (
   noticeCode: string,
   maybePayments: ReadonlyArray<NotificationPaymentInfo> | undefined
 ) =>
@@ -92,7 +89,7 @@ const paymentSectionShouldRenderNothing = (
           }
         }
       })
-  ); */
+  );
 
 export const MessagePayments = ({
   messageId,
@@ -102,7 +99,7 @@ export const MessagePayments = ({
   maxVisiblePaymentCount,
   presentPaymentsBottomSheetRef
 }: MessagePaymentsProps) => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const morePaymentsLinkState = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
@@ -120,23 +117,16 @@ export const MessagePayments = ({
   ) {
     return null;
   }
-  /* if (isCancelled) {
+  if (isCancelled) {
     return (
-      <MessageDetailsSection
-        title={I18n.t("features.pn.details.cancelledMessage.payments")}
-        testID={"PnCancelledPaymentSectionTitle"}
-      >
-        <VSpacer size={24} />
-        <InfoBox
-          alignedCentral={true}
-          iconSize={24}
-          iconColor={"bluegrey"}
-          testID={"PnCancelledPaymentInfoBox"}
-        >
-          <H5 weight={"Regular"}>
-            {I18n.t("features.pn.details.cancelledMessage.unpaidPayments")}
-          </H5>
-        </InfoBox>
+      <>
+        <ListItemHeader
+          label={I18n.t("features.pn.details.cancelledMessage.payments")}
+        />
+        <FeatureInfo
+          body={I18n.t("features.pn.details.cancelledMessage.unpaidPayments")}
+          iconName="info"
+        />
         {completedPaymentNoticeCodes &&
           completedPaymentNoticeCodes.map(
             (completedPaymentNoticeCode, index) => (
@@ -160,11 +150,10 @@ export const MessagePayments = ({
               </View>
             )
           )}
-      </MessageDetailsSection>
+      </>
     );
-  } */
+  }
 
-  console.log(`${payments?.length} ${maxVisiblePaymentCount}`);
   const showMorePaymentsLink =
     payments && payments.length > maxVisiblePaymentCount;
   const morePaymentsLabel = payments

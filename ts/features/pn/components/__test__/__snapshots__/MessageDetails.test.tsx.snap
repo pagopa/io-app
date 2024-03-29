@@ -713,6 +713,13 @@ exports[`MessageDetails component should match the snapshot with default props 1
                                 }
                               }
                             />
+                            <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
                           </View>
                         </View>
                       </RCTScrollView>

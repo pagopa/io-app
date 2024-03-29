@@ -1302,6 +1302,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 }
                               }
                             />
+                            <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
                           </View>
                         </View>
                       </RCTScrollView>
