@@ -1,7 +1,6 @@
-import { HeaderFirstLevel, VSpacer } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
-import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { walletPaymentGetUserWallets } from "../../payment/store/actions/networking";
 import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
@@ -32,16 +31,6 @@ export const PaymentsHomeScreen = () => {
 
   return (
     <>
-      <HeaderFirstLevel
-        title={I18n.t("payment.homeScreen.title")}
-        type="singleAction"
-        firstAction={{
-          accessibilityLabel: I18n.t("payment.homeScreen.title"),
-          icon: "help",
-          onPress: () => null
-        }}
-      />
-      <VSpacer size={24} />
       <PaymentMethodsSection />
       <VSpacer size={24} />
       <PaymentHistorySection />

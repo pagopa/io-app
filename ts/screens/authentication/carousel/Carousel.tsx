@@ -11,7 +11,7 @@ import {
 import { trackCarousel } from "../analytics/carouselAnalytics";
 import { LandingCardComponent } from "../../../components/LandingCardComponent";
 import { ComponentProps } from "../../../types/react";
-import { useAppBackgroundAccent } from "../../../utils/hooks/theme";
+import { useInteractiveElementDefaultColorName } from "../../../utils/hooks/theme";
 
 const styles = StyleSheet.create({
   normalDot: {
@@ -41,7 +41,7 @@ const CarouselDots = (props: CarouselDotsProps) => {
   const { carouselCards, dotEasterEggCallback, scrollX } = props;
   const dotTouchCount = React.useRef(0);
 
-  const blueColor = useAppBackgroundAccent();
+  const blueColor = useInteractiveElementDefaultColorName();
 
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;

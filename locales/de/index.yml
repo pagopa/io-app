@@ -754,7 +754,7 @@ email:
     label: "Persönliche E-Mail Adresse"
     alert:
       title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
-      description: "E-Mail bereits in Gebrauch"
+      description1: "E-Mail bereits in Gebrauch"
       modaltitle: "Diese E-Mail ist bereits in Gebrauch"
       modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
       modalbutton: "Andere E-Mail verwenden"
@@ -2445,13 +2445,10 @@ fastLogin:
   userInteraction:
     sessionExpired:
       noPin:
-        title: "Es ist zu lange her!"
-        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE authentifizieren. Anschließend kannst du die IO-Konfiguration dort fortsetzen, wo du aufgehört hast."
+        title: "Es ist zu lange her!"        
         submitButtonTitle: "Fortfahren"
       continueNavigation:
-        title: "Deine Sitzung ist abgelaufen"
-        subtitle: "Um die App weiter zu verwenden, drück auf “Fortsetzen”."
-        submitButtonTitle: "Fortsetzen"
+        title: "Deine Sitzung ist abgelaufen"        
         cancelButtonTitle: "Abbrechen"
       transientError:
         title: "Wir konnten dich nicht authentifizieren"

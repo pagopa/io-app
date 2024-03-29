@@ -1,10 +1,8 @@
 import * as React from "react";
-import {
-  LoadingSpinner,
-  useIOExperimentalDesign
-} from "@pagopa/io-app-design-system";
+import { LoadingSpinner } from "@pagopa/io-app-design-system";
 import I18n from "i18n-js";
 import { WithTestID } from "../../types/WithTestID";
+import { useInteractiveElementDefaultColor } from "../../utils/hooks/theme";
 
 export type LoadingIndicator = WithTestID<
   Exclude<
@@ -18,14 +16,14 @@ export const LoadingIndicator = ({
   accessibilityLabel = I18n.t("global.accessibility.activityIndicator.label"),
   testID = "LoadingIndicator"
 }: LoadingIndicator) => {
-  const { isExperimental } = useIOExperimentalDesign();
+  const blueColor = useInteractiveElementDefaultColor();
 
   return (
     <LoadingSpinner
       size={48}
       accessibilityHint={accessibilityHint}
       accessibilityLabel={accessibilityLabel}
-      color={isExperimental ? "blueIO-500" : "blue"}
+      color={blueColor}
       testID={testID}
     />
   );
