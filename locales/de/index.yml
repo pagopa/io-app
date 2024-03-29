@@ -754,7 +754,7 @@ email:
     label: "Persönliche E-Mail Adresse"
     alert:
       title: "Die E-Mail {{email}}, die mit Ihrer SPID-Identität verknüpft ist, wird bereits auf IO verwendet, bitte geben Sie eine andere ein."
-      description: "E-Mail bereits in Gebrauch"
+      description1: "E-Mail bereits in Gebrauch"
       modaltitle: "Diese E-Mail ist bereits in Gebrauch"
       modaldescription: "Dies kann der Fall sein, wenn Sie dieselbe Adresse wie ein Familienmitglied haben"
       modalbutton: "Andere E-Mail verwenden"
@@ -1997,16 +1997,13 @@ serviceDetail:
   disabled: "deaktiviert"
   notValidated: "Um die E-Mail-Weiterleitung zu aktivieren, musst du deine E-Mail-Adresse bestätigen."
 identification:
-  title: "Hallo!"
+  title: "Hallo {{name}}!"
   titleProfileName: "Hallo {{profileName}}!"
   titleValidation: "Bestätige den Vorgang"
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
-  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
-  subtitleCode: "Gib deinen Entsperrcode ein"
-  subtitleCodeFingerprint: "Verwende den Fingerabdruck oder gib den Entsperrcode ein"
-  subtitleCodeFaceId: "Verwende FaceID oder gib den Entsperrcode ein"
+  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."  
   biometric:
     fingerprintType: "Fingerabdruck"
     title: "Biometrische Identifikation"
@@ -2014,10 +2011,7 @@ identification:
       reason: "Identifikation durch TouchID fehlgeschlagen"
       title: "Identifikation erforderlich"
       sensorDescription: "Berührungssensor"
-  fail:
-    remainingAttempts: "Du hast noch {{attempts}} Versuche übrig."
-    remainingAttemptSingle: "Du hast noch einen Versuch übrig."
-    tooManyAttempts: "Zu viele falsche Versuche."
+  fail:        
     waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
@@ -2451,13 +2445,10 @@ fastLogin:
   userInteraction:
     sessionExpired:
       noPin:
-        title: "Es ist zu lange her!"
-        subtitle: "Aus Sicherheitsgründen musst du dich erneut mit SPID oder CIE authentifizieren. Anschließend kannst du die IO-Konfiguration dort fortsetzen, wo du aufgehört hast."
+        title: "Es ist zu lange her!"        
         submitButtonTitle: "Fortfahren"
       continueNavigation:
-        title: "Deine Sitzung ist abgelaufen"
-        subtitle: "Um die App weiter zu verwenden, drück auf “Fortsetzen”."
-        submitButtonTitle: "Fortsetzen"
+        title: "Deine Sitzung ist abgelaufen"        
         cancelButtonTitle: "Abbrechen"
       transientError:
         title: "Wir konnten dich nicht authentifizieren"

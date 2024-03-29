@@ -190,6 +190,7 @@ global:
     messages: Messaggi
     wallet: Portafoglio
     scan: Inquadra
+    payments: Pagamenti
     documents: Documenti
     profile: Profilo
     services: Servizi
@@ -213,6 +214,11 @@ tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
+  body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.
+  learnMoreButton: 
+    title: Cosa significa?
+  learnMoreBottomsheet:
+    title: Sicurezza del dispositivo
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:
@@ -790,17 +796,20 @@ email:
   newinsert:
     header: Configura IO
     title: Qual è la tua email?
-    subtitle: Utilizziamo l’email per alcune comunicazioni, come le ricevute di pagamento o i messaggi scambiati con l’assistenza.
+    subtitle: Servirà a inviarti comunicazioni come ricevute di pagamento o messaggi di assistenza.
     label: Indirizzo email personale
     alert:
-      title: L’email {{email}} associata alla tua identità SPID è già in uso su IO, inseriscine una diversa.
-      description: "email già in uso"
-      modaltitle: "Questa email è già in uso"
-      modaldescription: "Può succedere se condividi lo stesso indirizzo con un familiare"
-      modalbutton: "Usa un’altra email"
+      title: "{{email}} è già in uso, inseriscine un’altra."
+      description1: Email già in uso 
+      description2: Inserisci un indirizzo diverso da quello attuale
+      description3: Stai già usando questa email
+      invalidemail: Inserisci un indirizzo email valido 
+      modaltitle: Questa email è già in uso
+      modaldescription: Può succedere se condividi lo stesso indirizzo con un familiare
+      modalbutton: Usa un’altra email
   edit:
     title: Modifica la tua email
-    subtitle: L'email che avevi inserito in precedenza è
+    subtitle: Ora stai usando 
     validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
@@ -820,13 +829,13 @@ email:
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
   newvalidate:
-    title: Conferma la tua email
-    subtitle: Segui le istruzioni che abbiamo inviato a
-    link: Non è corretta?
-    countdowntext: Richiedi una nuova email tra
+    title: Ti abbiamo inviato un’email
+    subtitle: Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a
+    link: Non è corretto?
+    countdowntext: Richiedi una nuova email tra 
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
-    toast: Fatto! Controlla tua casella di posta.
+    toast: Fatto! Controlla la tua casella di posta.
   newvalidemail:
     title: Email confermata!
     subtitle: Riceverai le comunicazioni di IO all’indirizzo
@@ -932,11 +941,11 @@ payment:
       header: Metodi di pagamento
       headerCTA: Aggiungi
     historySection:
-     header: Storico operazioni
-     headerCTA: Vedi tutte
-     transactionStatusBadges:
-      failure: "FALLITA"
-      success: ""
+      header: Storico operazioni
+      headerCTA: Vedi tutte
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
@@ -2087,16 +2096,21 @@ serviceDetail:
   disabled: disabilitato
   notValidated: Per poter abilitare le notifiche via email devi validare il tuo indirizzo email."
 identification:
-  title: Ciao!
+  instructions:
+    unlockCode: codice di sblocco
+    unlockCodepPrefix: inserisci il
+    fingerprint: impronta
+    fingerprintPrefix: usa l'
+    faceId: volto
+    faceIdPrefix: usa il
+    congiunction: o
+  title: Ciao {{name}}!
   titleProfileName: Ciao {{profileName}}!
   titleValidation: Conferma l'operazione
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
   logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
-  subtitleCode: Inserisci il codice di sblocco
-  subtitleCodeFingerprint: "usa l'impronta o il codice di sblocco"
-  subtitleCodeFaceId: "usa Face ID o il codice di sblocco"
   biometric:
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
@@ -2105,9 +2119,9 @@ identification:
       title: Identificazione richiesta
       sensorDescription: Accedi velocemente
   fail:
-    remainingAttempts: Ti rimangono {{attempts}} tentativi.
-    remainingAttemptSingle: Ti rimane {{attempts}} tentativo.
-    tooManyAttempts: Troppi tentativi di inserimento errati.
+    remainingAttempts: Hai a disposizione ancora {{attempts}} tentativi
+    remainingAttemptSingle: Hai a disposizone ancora {{attempts}} tentativo
+    tooManyAttempts: Hai inserito troppe volte il codice sbagliato!
     waitMessage: "Riprova tra:"
   unlockCode:
     accessibility:
@@ -2901,11 +2915,17 @@ features:
   wallet:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
-      cta: Aggiungi al portafoglio
+      cta: Aggiungi al Portafoglio
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+    cards:
+      categories:
+        bonus: Iniziative welfare
+        cgn: Carta Giovani Nazionale
+        itw: IT Wallet
+        payment: Metodo di pagamento
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
@@ -3469,12 +3489,12 @@ fastLogin:
     sessionExpired:
       noPin:
         title: È passato troppo tempo!
-        subtitle: Per ragioni di sicurezza devi autenticarti di nuovo con SPID o CIE. Potrai poi continuare la configurazione di IO da dove l’avevi interrotta.
+        subtitle: Per motivi di sicurezza, devi identificarti di nuovo con SPID o CIE. Potrai poi riprendere la configurazione di IO da dove l’avevi interrotta.
         submitButtonTitle: Continua
       continueNavigation:
         title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
+        subtitle: "Accedi per continuare a usare l’app."
+        submitButtonTitle: "Accedi"
         cancelButtonTitle: "Annulla"
       transientError:
         title: "Non siamo riusciti ad autenticarti"

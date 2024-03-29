@@ -92,7 +92,6 @@ Array [
       align="xMidYMid"
       bbHeight={24}
       bbWidth={24}
-      color={4278219750}
       focusable={false}
       height={24}
       importantForAccessibility="no-hide-descendants"
@@ -115,19 +114,26 @@ Array [
           },
         ]
       }
-      tintColor={4278219750}
+      tintColor="#0073E6"
       vbHeight={24}
       vbWidth={24}
       width={24}
     >
-      <RNSVGGroup>
+      <RNSVGGroup
+        fill={
+          Object {
+            "payload": 4278190080,
+            "type": 0,
+          }
+        }
+      >
         <RNSVGPath
           clipRule={0}
           d="M2.377 11.667A10.997 10.997 0 0 1 12.001 6c4.138 0 7.744 2.285 9.623 5.666a.686.686 0 0 1 0 .667A10.997 10.997 0 0 1 12 18a10.997 10.997 0 0 1-9.623-5.666.686.686 0 0 1 0-.667zM12.001 4A12.997 12.997 0 0 0 .629 10.696a2.686 2.686 0 0 0 0 2.609A12.997 12.997 0 0 0 12 20c4.894 0 9.155-2.705 11.372-6.696.45-.812.45-1.797 0-2.609A12.997 12.997 0 0 0 12.001 4zM15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 0a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"
           fill={
-            Array [
-              2,
-            ]
+            Object {
+              "type": 2,
+            }
           }
           fillRule={0}
           propList={
