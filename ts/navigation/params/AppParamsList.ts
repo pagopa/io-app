@@ -50,8 +50,8 @@ import { PaymentsMethodDetailsParamsList } from "../../features/payments/details
 import { PaymentsMethodDetailsRoutes } from "../../features/payments/details/navigation/routes";
 import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding/navigation/params";
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
-import { PaymentsPaymentParamsList } from "../../features/payments/payment/navigation/params";
-import { PaymentsPaymentRoutes } from "../../features/payments/payment/navigation/routes";
+import { PaymentsPaymentParamsList } from "../../features/payments/checkout/navigation/params";
+import { PaymentsPaymentRoutes } from "../../features/payments/checkout/navigation/routes";
 import { PaymentsTransactionParamsList } from "../../features/payments/transaction/navigation/params";
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import { ServicesParamsList } from "../../features/services/navigation/params";

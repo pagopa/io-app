@@ -12,7 +12,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { walletTransactionHistorySelector } from "../store/selectors";
 import { getHistoryList } from "../utils/paymentsHomeScreenHistoryGenerator";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { PaymentsPaymentRoutes } from "../../payment/navigation/routes";
+import { PaymentsPaymentRoutes } from "../../checkout/navigation/routes";
 
 const getLoadingHistory = () =>
   Array.from({ length: 5 }).map((_, index) => (

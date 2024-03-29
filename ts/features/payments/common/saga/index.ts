@@ -2,7 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { watchPaymentsOnboardingSaga } from "../../onboarding/saga";
-import { watchPaymentsPaymentSaga } from "../../payment/saga";
+import { watchPaymentsPaymentSaga } from "../../checkout/saga";
 import { createPaymentClient, createWalletClient } from "../api/client";
 import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { watchPaymentsMethodDetailsSaga } from "../../details/saga";

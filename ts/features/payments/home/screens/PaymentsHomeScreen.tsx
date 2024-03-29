@@ -2,7 +2,7 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { paymentsGetPaymentUserMethodsAction } from "../../payment/store/actions/networking";
+import { paymentsGetPaymentUserMethodsAction } from "../../checkout/store/actions/networking";
 import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
 import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
 import { isAnySectionSomeOrLoadingSelector } from "../store/selectors";

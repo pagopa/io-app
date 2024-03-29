@@ -32,7 +32,7 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
-import { PaymentsPaymentRoutes } from "../../payment/navigation/routes";
+import { PaymentsPaymentRoutes } from "../../checkout/navigation/routes";
 import { PaymentsBarcodeRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {

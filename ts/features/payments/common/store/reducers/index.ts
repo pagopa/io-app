@@ -11,7 +11,7 @@ import onboardingReducer, {
 } from "../../../onboarding/store/reducers";
 import paymentReducer, {
   PaymentsPaymentState
-} from "../../../payment/store/reducers";
+} from "../../../checkout/store/reducers";
 import transactionReducer, {
   PaymentsTransactionState
 } from "../../../transaction/store/reducers";

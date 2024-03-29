@@ -13,9 +13,9 @@ import {
   paymentsCreateTransactionAction,
   paymentsGetPaymentDetailsAction,
   paymentsGetPaymentTransactionInfoAction
-} from "../../../payment/store/actions/networking";
-import { initPaymentStateAction } from "../../../payment/store/actions/orchestration";
-import { WalletPaymentFailure } from "../../../payment/types/WalletPaymentFailure";
+} from "../../../checkout/store/actions/networking";
+import { initPaymentStateAction } from "../../../checkout/store/actions/orchestration";
+import { WalletPaymentFailure } from "../../../checkout/types/WalletPaymentFailure";
 import { PaymentHistory } from "../../types";
 import {
   storeNewPaymentAttemptAction,

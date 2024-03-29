@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { WalletPaymentOutcome } from "../../../payment/types/PaymentOutcomeEnum";
+import { WalletPaymentOutcome } from "../../../checkout/types/PaymentOutcomeEnum";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
 export const storeNewPaymentAttemptAction = createStandardAction(
