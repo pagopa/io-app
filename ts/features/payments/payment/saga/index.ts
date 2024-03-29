@@ -1,16 +1,16 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
-import { PaymentClient } from "../api/client";
+import { PaymentClient } from "../../common/api/client";
 import {
-  paymentsStartPaymentAuthorizationAction,
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsDeleteTransactionAction,
-  paymentsGetPaymentMethodsAction,
+  paymentsGetNewSessionTokenAction,
   paymentsGetPaymentDetailsAction,
+  paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
-  paymentsGetNewSessionTokenAction
+  paymentsStartPaymentAuthorizationAction
 } from "../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
 import { handleWalletPaymentCalculateFees } from "./networking/handleWalletPaymentCalculateFees";

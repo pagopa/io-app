@@ -11,7 +11,7 @@ import { SagaCallReturnType } from "../../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
-import { PaymentClient } from "../../api/client";
+import { PaymentClient } from "../../../common/api/client";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 

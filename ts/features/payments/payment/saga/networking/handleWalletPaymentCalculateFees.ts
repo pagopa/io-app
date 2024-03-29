@@ -11,7 +11,7 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { getSortedPspList } from "../../../common/utils";
-import { PaymentClient } from "../../api/client";
+import { PaymentClient } from "../../../common/api/client";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
 import { selectPaymentPspAction } from "../../store/actions/orchestration";
 import { walletPaymentPickedPspSelector } from "../../store/selectors";
