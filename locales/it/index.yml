@@ -2555,8 +2555,8 @@ bonus:
       information:
         active: "La carta è attiva e può essere usata fino al {{date}}"
         warning: "Attenzione! "
-        revoked: "Questa carta è stata revocata per {{reason}}"
-        expired: "Questa carta è scaduta il {{date}}"
+        revoked: "Attenzione! Questa carta è stata revocata per {{reason}}"
+        expired: "Attenzione! Questa carta è scaduta il {{date}}"
       ownership: Chi può usare la carta?
       status:
         title: Carta Giovani Nazionale (CGN)

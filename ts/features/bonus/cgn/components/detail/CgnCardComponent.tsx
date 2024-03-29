@@ -2,35 +2,39 @@ import * as React from "react";
 import { useEffect } from "react";
 import WebView from "react-native-webview";
 import { View, ImageBackground, StyleSheet } from "react-native";
-import { connect } from "react-redux";
 import { widthPercentageToDP } from "react-native-responsive-screen";
-import { Avatar, H6, LabelSmall, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Avatar,
+  H6,
+  LabelSmall,
+  Tag,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { Card } from "../../../../../../definitions/cgn/Card";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { profileNameSurnameSelector } from "../../../../../store/reducers/profile";
 import cgnLogo from "../../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../../img/bonus/cgn/eyca_logo.png";
-import cardBg from "../../../../../../img/bonus/cgn/Subtract.png";
+import cardBg from "../../../../../../img/bonus/cgn/card_mask.png";
 import { generateRandomSvgMovement, Point } from "../../utils/svgBackground";
 import { eycaDetailSelector } from "../../store/reducers/eyca/details";
 import { canEycaCardBeShown } from "../../utils/eyca";
 import { useIOSelector } from "../../../../../store/hooks";
-import { cgnDetailsInformationSelector } from "../../store/reducers/details";
 import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
+import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
+import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
 import { playSvg } from "./CardSvgPayload";
 
 type Props = {
   cgnDetails: Card;
   onCardLoadEnd: () => void;
-} & ReturnType<typeof mapStateToProps>;
+};
 
 const styles = StyleSheet.create({
   cardContainer: {
-    height: "100%",
-    width: widthPercentageToDP(90)
+    height: 215,
+    width: widthPercentageToDP(91.5)
   },
   cgnCard: {
     position: "absolute",
@@ -50,9 +54,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   paddedContentFull: {
-    paddingLeft: 8,
+    paddingLeft: 16,
     paddingTop: 8,
-    paddingBottom: 8
+    paddingBottom: 16
   },
   imageFull: {
     resizeMode: "stretch",
@@ -95,8 +99,8 @@ const maxPointC: Point = {
 
 const MOVEMENT_STEPS = 12;
 
-const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
-  const cgnDetails = useIOSelector(cgnDetailsInformationSelector);
+const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
+  const eycaDetails = useIOSelector(eycaDetailSelector);
 
   const generatedTranslationA = generateRandomSvgMovement(
     MOVEMENT_STEPS,
@@ -120,9 +124,11 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
     generatedTranslationC
   );
 
-  const canDisplayEycaLogo = canEycaCardBeShown(props.eycaDetails);
+  const canCgnLogoBeShown = CardActivated.is(cgnDetails);
+  const canDisplayEycaLogo =
+    canCgnLogoBeShown && canEycaCardBeShown(eycaDetails);
 
-  useEffect(() => () => props.onCardLoadEnd(), [props]);
+  useEffect(() => () => onCardLoadEnd(), [onCardLoadEnd]);
 
   return (
     <View style={styles.cgnCard} testID={"card-component"}>
@@ -135,7 +141,8 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
           testID={"background-webview"}
-          onLoadEnd={props.onCardLoadEnd}
+          onLoadEnd={onCardLoadEnd}
+          style={{ height: 205 }}
           source={{
             html: generatedSvg
           }}
@@ -145,7 +152,19 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
         <View style={[IOStyles.flex, styles.spaced]}>
           <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
             <H6 color={"black"}>{I18n.t("bonus.cgn.name")}</H6>
-            <Avatar logoUri={cgnLogo} size="small" />
+            {canCgnLogoBeShown && <Avatar logoUri={cgnLogo} size="small" />}
+            {CardRevoked.is(cgnDetails) && (
+              <Tag
+                variant="error"
+                text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
+              />
+            )}
+            {CardExpired.is(cgnDetails) && (
+              <Tag
+                variant="error"
+                text={I18n.t("bonus.cgn.detail.status.badge.expired")}
+              />
+            )}
           </View>
           <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
             <LabelSmall style={{ flex: 2 }} color="black">
@@ -173,9 +192,4 @@ const CgnCardComponent: React.FunctionComponent<Props> = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  currentProfile: profileNameSurnameSelector(state),
-  eycaDetails: eycaDetailSelector(state)
-});
-
-export default connect(mapStateToProps)(CgnCardComponent);
+export default CgnCardComponent;

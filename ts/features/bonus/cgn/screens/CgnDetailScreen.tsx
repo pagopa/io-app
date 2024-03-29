@@ -22,7 +22,10 @@ import Animated, {
   useAnimatedScrollHandler
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { StatusEnum } from "../../../../../definitions/cgn/CardActivated";
+import {
+  CardActivated,
+  StatusEnum
+} from "../../../../../definitions/cgn/CardActivated";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import SectionStatusComponent from "../../../../components/SectionStatus";
@@ -67,6 +70,7 @@ import { openWebUrl } from "../../../../utils/url";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { CardRevoked } from "../../../../../definitions/cgn/CardRevoked";
 import { CardExpired } from "../../../../../definitions/cgn/CardExpired";
+import { formatDateAsShortFormat } from "../../../../utils/dates";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -156,7 +160,9 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
 
   // to display EYCA info component the CGN initiative needs to be enabled by remote
   const canDisplayEycaDetails =
-    canEycaCardBeShown(props.eycaDetails) && props.isCgnEnabled;
+    canEycaCardBeShown(props.eycaDetails) &&
+    props.isCgnEnabled &&
+    CardActivated.is(props.cgnDetails);
 
   const onPressShowCgnDiscounts = () => {
     if (props.isMerchantV2Enabled) {
@@ -213,13 +219,19 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
               {CardRevoked.is(props.cgnDetails) && (
                 <Alert
                   variant="error"
-                  content={props.cgnDetails.revocation_reason}
+                  content={I18n.t("bonus.cgn.detail.information.revoked", {
+                    reason: props.cgnDetails.revocation_reason
+                  })}
                 />
               )}
               {CardExpired.is(props.cgnDetails) && (
                 <Alert
                   variant="error"
-                  content={props.cgnDetails.expiration_date.toUTCString()}
+                  content={I18n.t("bonus.cgn.detail.information.expired", {
+                    date: formatDateAsShortFormat(
+                      props.cgnDetails.expiration_date
+                    )
+                  })}
                 />
               )}
               {/* Ownership block rendering owner's fiscal code */}
@@ -232,7 +244,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
               )}
               {canDisplayEycaDetails && <EycaDetailComponent />}
               <VSpacer size={24} />
-              <CgnUnsubscribe />
+              {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
               <VSpacer size={40} />
             </View>
           </Animated.ScrollView>
