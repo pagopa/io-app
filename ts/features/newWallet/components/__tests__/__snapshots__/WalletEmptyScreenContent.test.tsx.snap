@@ -7,9 +7,10 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
       "alignItems": "center",
       "flex": 1,
       "justifyContent": "center",
-      "padding": 24,
+      "paddingHorizontal": 24,
     }
   }
+  testID="walletEmptyScreenContentTestID"
 >
   <RNSVGSvgView
     align="xMidYMid"
@@ -215,7 +216,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
     }
   />
   <View
-    accessibilityLabel="Aggiungi al portafoglio"
+    accessibilityLabel="Aggiungi al Portafoglio"
     accessibilityRole="button"
     accessibilityState={
       Object {
@@ -328,7 +329,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
           >
             <RNSVGPath
               clipRule={0}
-              d="M12.9999 1c0-.55229-.4477-1-1-1-.5522 0-1 .44771-1 1v10H1.00098c-.55229 0-1 .4477-1 1s.44771 1 1 1h9.99892v10.0008c0 .5522.4478 1 1 1 .5523 0 1-.4478 1-1V13h9.9999c.5523 0 1-.4477 1-1s-.4477-1-1-1h-9.9999V1Z"
+              d="M12.9999 6C12.9999 5.44772 12.5522 5 11.9999 5C11.4477 5 10.9999 5.44772 10.9999 6V11L6.00098 11C5.44869 11 5.00098 11.4477 5.00098 12C5.00098 12.5523 5.44869 13 6.00098 13L10.9999 13V18.0008C10.9999 18.553 11.4477 19.0008 11.9999 19.0008C12.5522 19.0008 12.9999 18.553 12.9999 18.0008V13L17.9998 13C18.5521 13 18.9998 12.5523 18.9998 12C18.9998 11.4477 18.5521 11 17.9998 11L12.9999 11V6Z"
               fill={
                 Object {
                   "type": 2,
@@ -386,7 +387,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
           }
           weight="Bold"
         >
-          Aggiungi al portafoglio
+          Aggiungi al Portafoglio
         </Text>
       </View>
     </View>
