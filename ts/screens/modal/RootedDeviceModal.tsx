@@ -69,6 +69,7 @@ const RootedDeviceModal = () => {
           <View style={IOStyles.selfCenter}>
             <ButtonLink
               label={I18n.t("rooted.learnMoreButton.title")}
+              accessibilityLabel={I18n.t("rooted.learnMoreButton.title")}
               onPress={presentLearnMoreBottomSheet}
             />
           </View>
