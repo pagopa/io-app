@@ -567,13 +567,13 @@ authentication:
       title: Your session is expired
       body: For security reasons, we ask you to log in with SPID or CIE every {{days}} days or if you log out
     cie_unsupported:
-      title: Non puoi entrare con CIE
-      body: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).
-      button: Ho capito
-      nfc_problem: Per leggere la CIE è necessario un dispositivo con chip NFC.
-      os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
-      nfc_alert: Il tuo dispositivo non ha l'NFC.
-      os_alert: Il sistema operativo del dispositivo non è aggiornato.
+      title: You cannot use CIE
+      body: The device you are using does not support access with Electronic ID Card (CIE).
+      button: I get it
+      nfc_problem: To read the CIE, a device with NFC chip is required.
+      os_problem: An Android 6.0 or iOS 13 or higher operating system is required.
+      nfc_alert: Your device does not have NFC.
+      os_alert: The device's operating system is not up-to-date.
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
