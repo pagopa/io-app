@@ -22,6 +22,8 @@ export const getBiometryIconName = (
 };
 
 const getTranlations = () => {
+  // We need a function to handle the translations when the language changes,
+  // or is differnt between the device and the app
   const unlockCode = I18n.t("identification.instructions.unlockCode");
   const unlockCodePrefix = I18n.t(
     "identification.instructions.unlockCodepPrefix"
