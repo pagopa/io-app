@@ -18,14 +18,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import ContextualInfo from "../../components/ContextualInfo";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../components/SectionStatus";
-import CieNotSupported from "../../components/cie/CieNotSupported";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { LightModalContext } from "../../components/ui/LightModal";
 import { privacyUrl } from "../../config";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
@@ -43,11 +40,7 @@ import {
 } from "../../store/actions/authentication";
 import { useIOSelector } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import {
-  hasApiLevelSupportSelector,
-  hasNFCFeatureSelector,
-  isCieSupportedSelector
-} from "../../store/reducers/cie";
+import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
@@ -154,10 +147,6 @@ export const LandingScreen = () => {
   const isFastLoginOptInFFEnabled = useIOSelector(fastLoginOptInFFEnabled);
 
   const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
-  const hasApiLevelSupport = useIOSelector(hasApiLevelSupportSelector);
-  const hasCieApiLevelSupport = pot.getOrElse(hasApiLevelSupport, false);
-  const hasNFCFeature = useIOSelector(hasNFCFeatureSelector);
-  const hasCieNFCFeature = pot.getOrElse(hasNFCFeature, false);
 
   const isCieSupported = React.useCallback(
     () =>
@@ -188,8 +177,6 @@ export const LandingScreen = () => {
     },
     []
   );
-
-  const { hideModal, showAnimatedModal } = React.useContext(LightModalContext);
 
   const displayTabletAlert = React.useCallback(() => {
     if (!hasTabletCompatibilityAlertAlreadyShown) {
@@ -223,21 +210,6 @@ export const LandingScreen = () => {
   }, [isFastLoginOptInFFEnabled, navigation]);
 
   const navigateToCiePinScreen = React.useCallback(() => {
-    const openUnsupportedCIEModal = () => {
-      showAnimatedModal(
-        <ContextualInfo
-          onClose={hideModal}
-          title={I18n.t("authentication.landing.cie_unsupported.title")}
-          body={() => (
-            <CieNotSupported
-              hasCieApiLevelSupport={hasCieApiLevelSupport}
-              hasCieNFCFeature={hasCieNFCFeature}
-            />
-          )}
-        />
-      );
-    };
-
     if (isCieSupported()) {
       void trackCieLoginSelected(store.getState());
       dispatch(idpSelected(IdpCIE));
@@ -252,19 +224,11 @@ export const LandingScreen = () => {
         });
       }
     } else {
-      openUnsupportedCIEModal();
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.CIE_NOT_SUPPORTED
+      });
     }
-  }, [
-    dispatch,
-    hasCieApiLevelSupport,
-    hasCieNFCFeature,
-    hideModal,
-    isCieSupported,
-    isFastLoginOptInFFEnabled,
-    navigation,
-    showAnimatedModal,
-    store
-  ]);
+  }, [dispatch, isCieSupported, isFastLoginOptInFFEnabled, navigation, store]);
 
   const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
