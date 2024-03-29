@@ -15,7 +15,7 @@ import {
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { PaymentsPaymentRoutes } from "../navigation/routes";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   PaymentInitStateParams,
   initPaymentStateAction
@@ -61,8 +61,8 @@ const usePagoPaPayment = () => {
    */
   const startPaymentFlow = (rptId: RptId, params: PagoPaPaymentParams = {}) => {
     initPaymentState(params);
-    navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
-      screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_DETAIL,
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_DETAIL,
       params: {
         rptId
       }

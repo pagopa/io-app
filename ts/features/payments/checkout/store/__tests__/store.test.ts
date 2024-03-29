@@ -4,9 +4,9 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { walletPaymentSetCurrentStep } from "../actions/orchestration";
-import { PaymentsPaymentState } from "../reducers";
+import { PaymentsCheckoutState } from "../reducers";
 
-const INITIAL_STATE: PaymentsPaymentState = {
+const INITIAL_STATE: PaymentsCheckoutState = {
   currentStep: 1,
   sessionToken: pot.none,
   paymentDetails: pot.none,

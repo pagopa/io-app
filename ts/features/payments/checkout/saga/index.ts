@@ -26,7 +26,7 @@ import { handleWalletPaymentNewSessionToken } from "./networking/handleWalletPay
  * Handle the pagoPA payments requests
  * @param bearerToken
  */
-export function* watchPaymentsPaymentSaga(
+export function* watchPaymentsCheckoutSaga(
   paymentClient: PaymentClient
 ): SagaIterator {
   yield* takeLatest(

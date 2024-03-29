@@ -50,8 +50,8 @@ import { PaymentsMethodDetailsParamsList } from "../../features/payments/details
 import { PaymentsMethodDetailsRoutes } from "../../features/payments/details/navigation/routes";
 import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding/navigation/params";
 import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
-import { PaymentsPaymentParamsList } from "../../features/payments/checkout/navigation/params";
-import { PaymentsPaymentRoutes } from "../../features/payments/checkout/navigation/routes";
+import { PaymentsCheckoutParamsList } from "../../features/payments/checkout/navigation/params";
+import { PaymentsCheckoutRoutes } from "../../features/payments/checkout/navigation/routes";
 import { PaymentsTransactionParamsList } from "../../features/payments/transaction/navigation/params";
 import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import { ServicesParamsList } from "../../features/services/navigation/params";
@@ -111,7 +111,7 @@ export type AppParamsList = {
   [IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN]: NavigatorScreenParams<IdPayBarcodeParamsList>;
 
   [PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR]: NavigatorScreenParams<PaymentsOnboardingParamsList>;
-  [PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR]: NavigatorScreenParams<PaymentsPaymentParamsList>;
+  [PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR]: NavigatorScreenParams<PaymentsCheckoutParamsList>;
   [PaymentsBarcodeRoutes.PAYMENTS_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
   [PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
   [PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionParamsList>;

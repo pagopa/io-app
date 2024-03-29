@@ -10,7 +10,7 @@ import onboardingReducer, {
   PaymentsOnboardingState
 } from "../../../onboarding/store/reducers";
 import paymentReducer, {
-  PaymentsPaymentState
+  PaymentsCheckoutState
 } from "../../../checkout/store/reducers";
 import transactionReducer, {
   PaymentsTransactionState
@@ -19,7 +19,7 @@ import transactionReducer, {
 export type PaymentsState = {
   onboarding: PaymentsOnboardingState;
   details: PaymentsMethodDetailsState;
-  payment: PaymentsPaymentState;
+  payment: PaymentsCheckoutState;
   transaction: PaymentsTransactionState;
   history: PaymentsHistoryState & PersistPartial;
 };

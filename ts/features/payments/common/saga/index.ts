@@ -2,7 +2,7 @@ import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { watchPaymentsOnboardingSaga } from "../../onboarding/saga";
-import { watchPaymentsPaymentSaga } from "../../checkout/saga";
+import { watchPaymentsCheckoutSaga } from "../../checkout/saga";
 import { createPaymentClient, createWalletClient } from "../api/client";
 import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { watchPaymentsMethodDetailsSaga } from "../../details/saga";
@@ -21,5 +21,5 @@ export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   yield* fork(watchPaymentsOnboardingSaga, walletClient);
   yield* fork(watchPaymentsMethodDetailsSaga, walletClient);
   yield* fork(watchPaymentsTransactionSaga, walletClient);
-  yield* fork(watchPaymentsPaymentSaga, paymentClient);
+  yield* fork(watchPaymentsCheckoutSaga, paymentClient);
 }

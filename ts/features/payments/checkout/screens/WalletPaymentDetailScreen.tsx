@@ -46,8 +46,8 @@ import {
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
-import { PaymentsPaymentParamsList } from "../navigation/params";
-import { PaymentsPaymentRoutes } from "../navigation/routes";
+import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
@@ -58,8 +58,8 @@ type WalletPaymentDetailScreenNavigationParams = {
 };
 
 type WalletPaymentDetailRouteProps = RouteProp<
-  PaymentsPaymentParamsList,
-  "PAYMENTS_PAYMENT_DETAIL"
+  PaymentsCheckoutParamsList,
+  "PAYMENTS_CHECKOUT_DETAIL"
 >;
 
 const WalletPaymentDetailScreen = () => {
@@ -135,8 +135,8 @@ const WalletPaymentDetailContent = ({
 
   const navigateToMakePaymentScreen = () => {
     dispatch(storeNewPaymentAttemptAction(rptId));
-    navigation.push(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
-      screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_MAKE
+    navigation.push(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_MAKE
     });
   };
 

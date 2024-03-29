@@ -98,7 +98,7 @@ export const paymentsResetPaymentPspList = createStandardAction(
   "PAYMENTS_RESET_PAYMENT_PSP_LIST"
 )();
 
-export type PaymentsPaymentNetworkingActions =
+export type PaymentsCheckoutNetworkingActions =
   | ActionType<typeof paymentsGetNewSessionTokenAction>
   | ActionType<typeof paymentsGetPaymentDetailsAction>
   | ActionType<typeof paymentsGetPaymentMethodsAction>

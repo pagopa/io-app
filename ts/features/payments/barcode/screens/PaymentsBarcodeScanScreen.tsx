@@ -32,7 +32,7 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
-import { PaymentsPaymentRoutes } from "../../checkout/navigation/routes";
+import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
 import { PaymentsBarcodeRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -133,8 +133,8 @@ const PaymentsBarcodeScanScreen = () => {
     analytics.trackBarcodeManualEntryPath("avviso");
 
     if (isDesignSystemEnabled) {
-      navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
-        screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_NOTICE_NUMBER
+      navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_NOTICE_NUMBER
       });
     } else {
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {

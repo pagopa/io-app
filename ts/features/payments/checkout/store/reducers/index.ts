@@ -35,7 +35,7 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/Walle
 
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
-export type PaymentsPaymentState = {
+export type PaymentsCheckoutState = {
   currentStep: WalletPaymentStepEnum;
   rptId?: RptId;
   sessionToken: pot.Pot<string, NetworkError>;
@@ -54,7 +54,7 @@ export type PaymentsPaymentState = {
   showTransaction?: boolean;
 };
 
-const INITIAL_STATE: PaymentsPaymentState = {
+const INITIAL_STATE: PaymentsCheckoutState = {
   currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
   sessionToken: pot.none,
   paymentDetails: pot.none,
@@ -69,9 +69,9 @@ const INITIAL_STATE: PaymentsPaymentState = {
 
 // eslint-disable-next-line complexity
 const reducer = (
-  state: PaymentsPaymentState = INITIAL_STATE,
+  state: PaymentsCheckoutState = INITIAL_STATE,
   action: Action
-): PaymentsPaymentState => {
+): PaymentsCheckoutState => {
   switch (action.type) {
     case getType(initPaymentStateAction):
       return {

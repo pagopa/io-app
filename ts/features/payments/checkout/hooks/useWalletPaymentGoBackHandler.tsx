@@ -9,7 +9,7 @@ import {
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsDeleteTransactionAction } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors";
-import { PaymentsPaymentRoutes } from "../navigation/routes";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const useWalletPaymentGoBackHandler = () => {
@@ -30,8 +30,8 @@ const useWalletPaymentGoBackHandler = () => {
 
     const handleConfirmAbort = () => {
       dispatch(paymentsDeleteTransactionAction.request(transactionId));
-      navigation.push(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
-        screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_OUTCOME,
+      navigation.push(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.CANCELED_BY_USER
         }

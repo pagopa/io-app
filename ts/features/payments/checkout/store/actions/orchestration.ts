@@ -37,7 +37,7 @@ export const resetPaymentPspAction = createStandardAction(
   "PAYMENTS_RESET_PAYMENT_PSP"
 )();
 
-export type PaymentsPaymentOrchestrationActions =
+export type PaymentsCheckoutOrchestrationActions =
   | ActionType<typeof walletPaymentSetCurrentStep>
   | ActionType<typeof initPaymentStateAction>
   | ActionType<typeof selectPaymentMethodAction>

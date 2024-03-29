@@ -12,7 +12,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { walletTransactionHistorySelector } from "../store/selectors";
 import { getHistoryList } from "../utils/paymentsHomeScreenHistoryGenerator";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { PaymentsPaymentRoutes } from "../../checkout/navigation/routes";
+import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
 
 const getLoadingHistory = () =>
   Array.from({ length: 5 }).map((_, index) => (
@@ -34,8 +34,8 @@ const PaymentHistorySection = () => {
     : getHistoryList(pot.getOrElse(historyPot, {}));
 
   const handleOnPayNoticedPress = () => {
-    navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
-      screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_NOTICE_NUMBER
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_NOTICE_NUMBER
     });
   };
 

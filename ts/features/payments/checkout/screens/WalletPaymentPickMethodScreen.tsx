@@ -29,7 +29,7 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
-import { PaymentsPaymentRoutes } from "../navigation/routes";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
@@ -169,8 +169,8 @@ const WalletPaymentPickMethodScreen = () => {
 
   React.useEffect(() => {
     if (isError) {
-      navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
-        screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_OUTCOME,
+      navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
         }

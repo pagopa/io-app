@@ -52,8 +52,8 @@ import { PaymentsMethodDetailsNavigator } from "../features/payments/details/nav
 import { PaymentsMethodDetailsRoutes } from "../features/payments/details/navigation/routes";
 import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/navigation/navigator";
 import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
-import { PaymentsPaymentNavigator } from "../features/payments/checkout/navigation/navigator";
-import { PaymentsPaymentRoutes } from "../features/payments/checkout/navigation/routes";
+import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
+import { PaymentsCheckoutRoutes } from "../features/payments/checkout/navigation/routes";
 import { PaymentsTransactionNavigator } from "../features/payments/transaction/navigation/navigator";
 import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
 import ServicesNavigator from "../features/services/navigation/navigator";
@@ -293,8 +293,8 @@ const AuthenticatedStackNavigator = () => {
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR}
-        component={PaymentsPaymentNavigator}
+        name={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR}
+        component={PaymentsCheckoutNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions

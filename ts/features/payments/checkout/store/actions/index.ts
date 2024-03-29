@@ -1,6 +1,6 @@
-import { PaymentsPaymentNetworkingActions } from "./networking";
-import { PaymentsPaymentOrchestrationActions } from "./orchestration";
+import { PaymentsCheckoutNetworkingActions } from "./networking";
+import { PaymentsCheckoutOrchestrationActions } from "./orchestration";
 
-export type PaymentsPaymentActions =
-  | PaymentsPaymentNetworkingActions
-  | PaymentsPaymentOrchestrationActions;
+export type PaymentsCheckoutActions =
+  | PaymentsCheckoutNetworkingActions
+  | PaymentsCheckoutOrchestrationActions;
