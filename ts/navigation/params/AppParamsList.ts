@@ -65,11 +65,12 @@ import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
+import { ServicesParamsList } from "../../features/services/navigation/params";
+import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
 import { ProfileParamsList } from "./ProfileParamsList";
-import { ServicesParamsList } from "./ServicesParamsList";
 import { WalletParamsList } from "./WalletParamsList";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 
@@ -84,7 +85,7 @@ export type AppParamsList = {
 
   [MESSAGES_ROUTES.MESSAGES_NAVIGATOR]: NavigatorScreenParams<MessagesParamsList>;
   [ROUTES.WALLET_NAVIGATOR]: NavigatorScreenParams<WalletParamsList>;
-  [ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
+  [SERVICES_ROUTES.SERVICES_NAVIGATOR]: NavigatorScreenParams<ServicesParamsList>;
   [ROUTES.PROFILE_NAVIGATOR]: NavigatorScreenParams<ProfileParamsList>;
 
   [ROUTES.BARCODE_SCAN]: undefined;

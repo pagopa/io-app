@@ -1,8 +1,8 @@
-import { fireEvent } from "@testing-library/react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React from "react";
 import configureMockStore from "redux-mock-store";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "../../../i18n";
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";

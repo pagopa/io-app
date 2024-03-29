@@ -190,6 +190,7 @@ global:
     messages: Messaggi
     wallet: Portafoglio
     scan: Inquadra
+    payments: Pagamenti
     documents: Documenti
     profile: Profilo
     services: Servizi
@@ -213,6 +214,11 @@ tablet:
   message: L’interfaccia di IO è ottimizzata per smartphone, ma tutte le funzioni compatibili con il tuo dispositivo sono comunque disponibili.
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
+  body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.
+  learnMoreButton: 
+    title: Cosa significa?
+  learnMoreBottomsheet:
+    title: Sicurezza del dispositivo
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:
@@ -561,11 +567,13 @@ authentication:
       title: La tua sessione è scaduta
       body: Per ragioni di sicurezza, ti chiediamo di entrare con SPID o CIE ogni {{days}} giorni o se esci dall’app.
     cie_unsupported:
-      title: Accesso con CIE non disponibile
-      body: !include cie/cieNotSupported.md
-      android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: un sistema operativo Android 6.0 o superiore
-      nfc_incompatible: un chip NFC compatibile
+      title: Non puoi entrare con CIE
+      body: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).
+      button: Ho capito
+      nfc_problem: Per leggere la CIE è necessario un dispositivo con chip NFC.
+      os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
+      nfc_alert: Il tuo dispositivo non ha l'NFC.
+      os_alert: Il sistema operativo del dispositivo non è aggiornato.
     contentTitleCie: Non hai SPID o la CIE?
     cie_information_request: !include cie.md
     spid_or_cie: Per utilizzare IO devi dotarti di uno di questi strumenti digitali, che certificano in maniera certa la tua identità.
@@ -790,17 +798,20 @@ email:
   newinsert:
     header: Configura IO
     title: Qual è la tua email?
-    subtitle: Utilizziamo l’email per alcune comunicazioni, come le ricevute di pagamento o i messaggi scambiati con l’assistenza.
+    subtitle: Servirà a inviarti comunicazioni come ricevute di pagamento o messaggi di assistenza.
     label: Indirizzo email personale
     alert:
-      title: L’email {{email}} associata alla tua identità SPID è già in uso su IO, inseriscine una diversa.
-      description: "email già in uso"
-      modaltitle: "Questa email è già in uso"
-      modaldescription: "Può succedere se condividi lo stesso indirizzo con un familiare"
-      modalbutton: "Usa un’altra email"
+      title: "{{email}} è già in uso, inseriscine un’altra."
+      description1: Email già in uso 
+      description2: Inserisci un indirizzo diverso da quello attuale
+      description3: Stai già usando questa email
+      invalidemail: Inserisci un indirizzo email valido 
+      modaltitle: Questa email è già in uso
+      modaldescription: Può succedere se condividi lo stesso indirizzo con un familiare
+      modalbutton: Usa un’altra email
   edit:
     title: Modifica la tua email
-    subtitle: L'email che avevi inserito in precedenza è
+    subtitle: Ora stai usando 
     validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
@@ -820,13 +831,13 @@ email:
     validated: Email validata!
     validated_ok: Grazie, ora puoi usare le funzionalità legate ai pagamenti, all’inoltro dei messaggi, etc.
   newvalidate:
-    title: Conferma la tua email
-    subtitle: Segui le istruzioni che abbiamo inviato a
-    link: Non è corretta?
-    countdowntext: Richiedi una nuova email tra
+    title: Ti abbiamo inviato un’email
+    subtitle: Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a
+    link: Non è corretto?
+    countdowntext: Richiedi una nuova email tra 
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
-    toast: Fatto! Controlla tua casella di posta.
+    toast: Fatto! Controlla la tua casella di posta.
   newvalidemail:
     title: Email confermata!
     subtitle: Riceverai le comunicazioni di IO all’indirizzo
@@ -932,11 +943,11 @@ payment:
       header: Metodi di pagamento
       headerCTA: Aggiungi
     historySection:
-     header: Storico operazioni
-     headerCTA: Vedi tutte
-     transactionStatusBadges:
-      failure: "FALLITA"
-      success: ""
+      header: Storico operazioni
+      headerCTA: Vedi tutte
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
     CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
@@ -2101,7 +2112,7 @@ identification:
   logout: Esci
   logoutProfileName: Non sei {{profileName}}?
   logoutDescription: Puoi accedere con le tue credenziali SPID o CIE. Questa sessione verrà disconnessa.
-  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.  
+  logoutDescriptionProfileName: Puoi accedere con le tue credenziali SPID o CIE. La sessione di {{profileName}} verrà disconnessa.
   biometric:
     fingerprintType: Impronta digitale
     title: Identificazione Biometrica
@@ -2906,11 +2917,17 @@ features:
   wallet:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
-      cta: Aggiungi al portafoglio
+      cta: Aggiungi al Portafoglio
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+    cards:
+      categories:
+        bonus: Iniziative welfare
+        cgn: Carta Giovani Nazionale
+        itw: IT Wallet
+        payment: Metodo di pagamento
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina

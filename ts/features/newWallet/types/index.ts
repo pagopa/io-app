@@ -1,3 +1,4 @@
+import { IOIcons } from "@pagopa/io-app-design-system";
 import {
   IdPayWalletCard,
   IdPayWalletCardProps
@@ -7,6 +8,10 @@ import {
   PaymentWalletCardProps
 } from "../../payments/common/components/PaymentWalletCard";
 import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
+import {
+  CgnWalletCard,
+  CgnWalletCardProps
+} from "../../bonus/cgn/components/CgnWalletCard";
 
 // Used to group the cards in the wallet.
 export type WalletCardCategory = "itw" | "cgn" | "bonus" | "payment";
@@ -26,8 +31,7 @@ export type WalletCardBonus = {
 // Specific type for CGN bonus cards
 export type WalletCardCgn = {
   type: "cgn";
-  // TODO SIW-952 add types for CGN card
-};
+} & CgnWalletCardProps;
 
 // Specific type for payment cards
 export type WalletCardPayment = {
@@ -51,7 +55,17 @@ export const walletCardComponentMapper: Record<
   WalletCardType,
   WalletCardBaseComponent<any> | undefined
 > = {
-  cgn: undefined, // TODO add CGN component type
+  cgn: CgnWalletCard,
   idPay: IdPayWalletCard,
   payment: PaymentWalletCard
+};
+
+/**
+ * Icons used for each wallet card category
+ */
+export const walletCardCategoryIcons: Record<WalletCardCategory, IOIcons> = {
+  bonus: "bonus",
+  payment: "creditCard",
+  itw: "fiscalCodeIndividual",
+  cgn: "bonus"
 };
