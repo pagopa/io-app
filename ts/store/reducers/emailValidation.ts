@@ -9,6 +9,8 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import {
   acknowledgeOnEmailValidation,
+  emailValidationPollingStart,
+  emailValidationPollingStop,
   setEmailCheckAtStartupFailure,
   startEmailValidation
 } from "../actions/profile";
@@ -19,16 +21,17 @@ export type EmailValidationState = {
   sendEmailValidationRequest: pot.Pot<void, Error>;
   acknowledgeOnEmailValidated: O.Option<boolean>;
   emailCheckAtStartupFailed: O.Option<boolean>;
+  isEmailValidationPollingRunning: boolean;
 };
 
 const INITIAL_STATE: EmailValidationState = {
   sendEmailValidationRequest: pot.none,
   acknowledgeOnEmailValidated: O.none,
-  emailCheckAtStartupFailed: O.none
+  emailCheckAtStartupFailed: O.none,
+  isEmailValidationPollingRunning: false
 };
 
 // Selector
-
 // return the pot of email validation
 export const emailValidationSelector = (
   state: GlobalState
@@ -55,6 +58,10 @@ const reducer = (
       return { ...state, acknowledgeOnEmailValidated: action.payload };
     case getType(setEmailCheckAtStartupFailure):
       return { ...state, emailCheckAtStartupFailed: action.payload };
+    case getType(emailValidationPollingStart):
+      return { ...state, isEmailValidationPollingRunning: true };
+    case getType(emailValidationPollingStop):
+      return { ...state, isEmailValidationPollingRunning: false };
     default:
       return state;
   }

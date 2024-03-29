@@ -38,27 +38,22 @@ const WalletPaymentHeader = ({ currentStep }: WalletPaymentHeaderProps) => {
   });
 
   const handleGoBack = React.useCallback(() => {
-    if (
-      currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD &&
-      goBackHandler
-    ) {
-      return goBackHandler();
-    }
-
     if (currentStep === WalletPaymentStepEnum.PICK_PAYMENT_METHOD) {
-      return navigation.goBack();
-    }
-
-    if (
+      // If we are in the first step, if the goBackHandler is defined (payment was started)
+      // call it, otherwise use the default navigation goBack function
+      return (goBackHandler || navigation.goBack)();
+    } else if (
       currentStep === WalletPaymentStepEnum.CONFIRM_TRANSACTION &&
       pspList.length === 1
     ) {
+      // If we are in the last step, if there is one PSP go back to the method selection
       dispatch(
         walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PAYMENT_METHOD)
       );
       dispatch(walletPaymentResetPspList());
     } else {
-      dispatch(walletPaymentSetCurrentStep(WalletPaymentStepEnum.PICK_PSP));
+      // For any other step just go back 1 step
+      dispatch(walletPaymentSetCurrentStep(currentStep - 1));
     }
   }, [navigation, dispatch, goBackHandler, currentStep, pspList]);
 
