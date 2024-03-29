@@ -23,7 +23,7 @@ export const PaymentsOnboardingNavigator = () => (
       name={PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD}
       component={PaymentsOnboardingSelectMethodScreen}
       options={{ gestureEnabled: false }}
-    />{" "}
+    />
     <Stack.Screen
       name={PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_RESULT_FEEDBACK}
       component={PaymentsOnboardingFeedbackScreen}

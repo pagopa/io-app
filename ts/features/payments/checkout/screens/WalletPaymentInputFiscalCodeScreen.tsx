@@ -32,7 +32,7 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
@@ -40,6 +40,8 @@ import {
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
+import { isNewWalletSectionEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -59,6 +61,12 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   const { params } = useRoute<WalletPaymentInputFiscalCodeRouteProps>();
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
+
+  const { startPaymentFlowWithRptId } = usePagoPaPayment();
+
   const [inputState, setInputState] = React.useState<InputState>({
     fiscalCodeText: "",
     fiscalCode: O.none
@@ -72,16 +80,20 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       }),
       O.chain(flow(RptId.decode, O.fromEither)),
       O.map(rptId => {
-        dispatch(paymentInitializeState());
-        navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-          screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-          params: {
-            // Set the initial amount to a fixed value (1) because it is not used
-            initialAmount: "1" as AmountInEuroCents,
-            rptId,
-            paymentStartOrigin: "manual_insertion"
-          }
-        });
+        if (isNewWalletSectionEnabled) {
+          startPaymentFlowWithRptId(rptId);
+        } else {
+          dispatch(paymentInitializeState());
+          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+            params: {
+              // Set the initial amount to a fixed value (1) because it is not used
+              initialAmount: "1" as AmountInEuroCents,
+              rptId,
+              paymentStartOrigin: "manual_insertion"
+            }
+          });
+        }
       })
     );
   };
