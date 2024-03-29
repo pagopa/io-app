@@ -11,27 +11,28 @@ type Props = {
   showBadge?: boolean;
 };
 
-const options = [
-  {
-    value: I18n.t("services.optIn.preferences.quickConfig.title"),
-    id: ServicesPreferencesModeEnum.AUTO,
-    description: (
-      <LabelSmall color="grey-700" weight="Regular">
-        {I18n.t("services.optIn.preferences.quickConfig.body.text1")}{" "}
-        <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
-          {I18n.t("services.optIn.preferences.quickConfig.body.text2")}
-        </Text>
-      </LabelSmall>
-    )
-  },
-  {
-    value: I18n.t("services.optIn.preferences.manualConfig.title"),
-    id: ServicesPreferencesModeEnum.MANUAL,
-    description: I18n.t("services.optIn.preferences.manualConfig.body.text1")
-  }
-];
-
 const ServicesContactComponent = (props: Props): ReactElement => {
+  // We put the option inside the component to handle translations
+  const options = [
+    {
+      value: I18n.t("services.optIn.preferences.quickConfig.title"),
+      id: ServicesPreferencesModeEnum.AUTO,
+      description: (
+        <LabelSmall color="grey-700" weight="Regular">
+          {I18n.t("services.optIn.preferences.quickConfig.body.text1")}{" "}
+          <Text style={{ color: IOColors["grey-700"], fontWeight: "600" }}>
+            {I18n.t("services.optIn.preferences.quickConfig.body.text2")}
+          </Text>
+        </LabelSmall>
+      )
+    },
+    {
+      value: I18n.t("services.optIn.preferences.manualConfig.title"),
+      id: ServicesPreferencesModeEnum.MANUAL,
+      description: I18n.t("services.optIn.preferences.manualConfig.body.text1")
+    }
+  ];
+
   const { mode, onSelectMode } = props;
   const [selectedItem, setSelectedItem] = useState(mode);
   const prevMode = usePrevious(mode);
