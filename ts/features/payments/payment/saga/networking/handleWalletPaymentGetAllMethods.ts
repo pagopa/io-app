@@ -7,18 +7,18 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentGetAllMethods } from "../../store/actions/networking";
+import { paymentsGetPaymentMethodsAction } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetAllMethods(
   getAllPaymentMethods: PaymentClient["getAllPaymentMethods"],
-  action: ActionType<(typeof walletPaymentGetAllMethods)["request"]>
+  action: ActionType<(typeof paymentsGetPaymentMethodsAction)["request"]>
 ) {
   const sessionToken = yield* getOrFetchWalletSessionToken();
 
   if (sessionToken === undefined) {
     yield* put(
-      walletPaymentGetAllMethods.failure({
+      paymentsGetPaymentMethodsAction.failure({
         ...getGenericError(new Error(`Missing session token`))
       })
     );
@@ -41,15 +41,15 @@ export function* handleWalletPaymentGetAllMethods(
         getAllPaymentMethodsResult,
         E.fold(
           error =>
-            walletPaymentGetAllMethods.failure({
+            paymentsGetPaymentMethodsAction.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
 
           res => {
             if (res.status === 200) {
-              return walletPaymentGetAllMethods.success(res.value);
+              return paymentsGetPaymentMethodsAction.success(res.value);
             }
-            return walletPaymentGetAllMethods.failure({
+            return paymentsGetPaymentMethodsAction.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))
             });
           }
@@ -57,6 +57,8 @@ export function* handleWalletPaymentGetAllMethods(
       )
     );
   } catch (e) {
-    yield* put(walletPaymentGetAllMethods.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsGetPaymentMethodsAction.failure({ ...getNetworkError(e) })
+    );
   }
 }

@@ -7,10 +7,10 @@ import * as React from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
-import { walletPaymentHistoryStoreOutcome } from "../../history/store/actions";
+import { storePaymentOutcomeToHistory } from "../../history/store/actions";
 import {
   WalletPaymentAuthorizePayload,
-  walletPaymentAuthorization
+  paymentsStartPaymentAuthorizationAction
 } from "../store/actions/networking";
 import { walletPaymentAuthorizationUrlSelector } from "../store/selectors";
 import {
@@ -46,7 +46,7 @@ export const useWalletPaymentAuthorizationModal = ({
   const handleAuthorizationOutcome = React.useCallback(
     (outcome: WalletPaymentOutcome) => {
       onAuthorizationOutcome(outcome);
-      dispatch(walletPaymentHistoryStoreOutcome(outcome));
+      dispatch(storePaymentOutcomeToHistory(outcome));
     },
     [onAuthorizationOutcome, dispatch]
   );
@@ -104,14 +104,14 @@ export const useWalletPaymentAuthorizationModal = ({
   React.useEffect(
     () => () => {
       setIsPendingAuthorization(false);
-      dispatch(walletPaymentAuthorization.cancel());
+      dispatch(paymentsStartPaymentAuthorizationAction.cancel());
     },
     [dispatch]
   );
 
   const startPaymentAuthorizaton = (payload: WalletPaymentAuthorizePayload) => {
     setIsPendingAuthorization(false);
-    dispatch(walletPaymentAuthorization.request(payload));
+    dispatch(paymentsStartPaymentAuthorizationAction.request(payload));
   };
 
   return {

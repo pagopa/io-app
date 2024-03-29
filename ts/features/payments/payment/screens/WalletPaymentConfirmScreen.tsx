@@ -16,7 +16,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { WalletPaymentConfirmContent } from "../components/WalletPaymentConfirmContent";
 import { useWalletPaymentAuthorizationModal } from "../hooks/useWalletPaymentAuthorizationModal";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { PaymentsPaymentRoutes } from "../navigation/routes";
 import {
   walletPaymentDetailsSelector,
   walletPaymentPickedPaymentMethodSelector,
@@ -59,8 +59,8 @@ const WalletPaymentConfirmScreen = () => {
 
   const handleAuthorizationOutcome = React.useCallback(
     (outcome: WalletPaymentOutcome) => {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+      navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
+        screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_OUTCOME,
         params: {
           outcome
         }

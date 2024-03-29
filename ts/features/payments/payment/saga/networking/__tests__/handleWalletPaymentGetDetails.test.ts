@@ -6,7 +6,7 @@ import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { walletPaymentGetDetails } from "../../../store/actions/networking";
+import { paymentsGetPaymentDetailsAction } from "../../../store/actions/networking";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 import { handleWalletPaymentGetDetails } from "../handleWalletPaymentGetDetails";
 
@@ -15,7 +15,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
   const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
-    walletPaymentGetDetails.success
+    paymentsGetPaymentDetailsAction.success
   )} when getPaymentRequestInfo is 200`, () => {
     const mockGetPaymentRequestInfo = jest.fn();
     const getPaymentRequestInfoResponse: PaymentRequestsGetResponse = {
@@ -25,7 +25,7 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
     testSaga(
       handleWalletPaymentGetDetails,
       mockGetPaymentRequestInfo,
-      walletPaymentGetDetails.request(rptId)
+      paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -33,23 +33,25 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       .call(
         withRefreshApiCall,
         mockGetPaymentRequestInfo(),
-        walletPaymentGetDetails.request(rptId)
+        paymentsGetPaymentDetailsAction.request(rptId)
       )
       .next(E.right({ status: 200, value: getPaymentRequestInfoResponse }))
-      .put(walletPaymentGetDetails.success(getPaymentRequestInfoResponse))
+      .put(
+        paymentsGetPaymentDetailsAction.success(getPaymentRequestInfoResponse)
+      )
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    walletPaymentGetDetails.failure
+    paymentsGetPaymentDetailsAction.failure
   )} when getPaymentRequestInfo is not 200`, () => {
     const mockGetPaymentRequestInfo = jest.fn();
 
     testSaga(
       handleWalletPaymentGetDetails,
       mockGetPaymentRequestInfo,
-      walletPaymentGetDetails.request(rptId)
+      paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -57,11 +59,11 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       .call(
         withRefreshApiCall,
         mockGetPaymentRequestInfo(),
-        walletPaymentGetDetails.request(rptId)
+        paymentsGetPaymentDetailsAction.request(rptId)
       )
       .next(E.right({ status: 400, value: undefined }))
       .put(
-        walletPaymentGetDetails.failure(
+        paymentsGetPaymentDetailsAction.failure(
           getGenericError(new Error(`Error: 400`))
         )
       )
@@ -70,14 +72,14 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentGetDetails.failure
+    paymentsGetPaymentDetailsAction.failure
   )} when getPaymentRequestInfo encoders returns an error`, () => {
     const mockGetPaymentRequestInfo = jest.fn();
 
     testSaga(
       handleWalletPaymentGetDetails,
       mockGetPaymentRequestInfo,
-      walletPaymentGetDetails.request(rptId)
+      paymentsGetPaymentDetailsAction.request(rptId)
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -85,11 +87,11 @@ describe("Test handleWalletPaymentGetDetails saga", () => {
       .call(
         withRefreshApiCall,
         mockGetPaymentRequestInfo(),
-        walletPaymentGetDetails.request(rptId)
+        paymentsGetPaymentDetailsAction.request(rptId)
       )
       .next(E.left([]))
       .put(
-        walletPaymentGetDetails.failure({
+        paymentsGetPaymentDetailsAction.failure({
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )

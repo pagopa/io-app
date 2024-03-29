@@ -19,10 +19,10 @@ import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { getSortedPspList } from "../../common/utils";
 import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { PaymentsPaymentRoutes } from "../navigation/routes";
 import {
-  walletPaymentPickPsp,
-  walletPaymentResetPickedPsp,
+  selectPaymentPspAction,
+  resetPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../store/actions/orchestration";
 import {
@@ -56,8 +56,8 @@ const WalletPaymentPickPspScreen = () => {
 
   React.useEffect(() => {
     if (isError) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+      navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
+        screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
         }
@@ -67,7 +67,7 @@ const WalletPaymentPickPspScreen = () => {
 
   React.useEffect(
     () => () => {
-      dispatch(walletPaymentResetPickedPsp());
+      dispatch(resetPaymentPspAction());
     },
     [dispatch]
   );
@@ -96,7 +96,7 @@ const WalletPaymentPickPspScreen = () => {
       );
 
       if (selectedBundle) {
-        dispatch(walletPaymentPickPsp(selectedBundle));
+        dispatch(selectPaymentPspAction(selectedBundle));
       }
     },
     [dispatch, sortedPspList]

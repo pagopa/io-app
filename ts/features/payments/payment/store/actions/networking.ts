@@ -18,60 +18,60 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/eco
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 
-export const walletPaymentNewSessionToken = createAsyncAction(
-  "WALLET_PAYMENT_NEW_SESSION_TOKEN_REQUEST",
-  "WALLET_PAYMENT_NEW_SESSION_TOKEN_SUCCESS",
-  "WALLET_PAYMENT_NEW_SESSION_TOKEN_FAILURE"
+export const paymentsGetNewSessionTokenAction = createAsyncAction(
+  "PAYMENTS_GET_NEW_SESSION_TOKEN_REQUEST",
+  "PAYMENTS_GET_NEW_SESSION_TOKEN_SUCCESS",
+  "PAYMENTS_GET_NEW_SESSION_TOKEN_FAILURE"
 )<undefined, NewSessionTokenResponse, NetworkError>();
 
-export const walletPaymentGetDetails = createAsyncAction(
-  "WALLET_PAYMENT_GET_DETAILS_REQUEST",
-  "WALLET_PAYMENT_GET_DETAILS_SUCCESS",
-  "WALLET_PAYMENT_GET_DETAILS_FAILURE"
+export const paymentsGetPaymentDetailsAction = createAsyncAction(
+  "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
+  "PAYMENTS_GET_PAYMENT_DETAILS_SUCCESS",
+  "PAYMENTS_GET_PAYMENT_DETAILS_FAILURE"
 )<RptId, PaymentRequestsGetResponse, NetworkError | WalletPaymentFailure>();
 
-export const walletPaymentGetAllMethods = createAsyncAction(
-  "WALLET_PAYMENT_GET_ALL_METHODS_REQUEST",
-  "WALLET_PAYMENT_GET_ALL_METHODS_SUCCESS",
-  "WALLET_PAYMENT_GET_ALL_METHODS_FAILURE"
+export const paymentsGetPaymentMethodsAction = createAsyncAction(
+  "PAYMENTS_GET_PAYMENT_METHODS_REQUEST",
+  "PAYMENTS_GET_PAYMENT_METHODS_SUCCESS",
+  "PAYMENTS_GET_PAYMENT_METHODS_FAILURE"
 )<undefined, PaymentMethodsResponse, NetworkError>();
 
-export const walletPaymentGetUserWallets = createAsyncAction(
-  "WALLET_PAYMENT_GET_USER_WALLETS_REQUEST",
-  "WALLET_PAYMENT_GET_USER_WALLETS_SUCCESS",
-  "WALLET_PAYMENT_GET_USER_WALLETS_FAILURE"
+export const paymentsGetPaymentUserMethodsAction = createAsyncAction(
+  "PAYMENTS_GET_PAYMENT_USER_METHODS_REQUEST",
+  "PAYMENTS_GET_PAYMENT_USER_METHODS_SUCCESS",
+  "PAYMENTS_GET_PAYMENT_USER_METHODS_FAILURE"
 )<undefined, Wallets, NetworkError>();
 
-export const walletPaymentCalculateFees = createAsyncAction(
-  "WALLET_PAYMET_CALCULATE_FEES_REQUEST",
-  "WALLET_PAYMET_CALCULATE_FEES_SUCCESS",
-  "WALLET_PAYMET_CALCULATE_FEES_FAILURE"
+export const paymentsCalculatePaymentFeesAction = createAsyncAction(
+  "PAYMENTS_CALCULATE_FEES_REQUEST",
+  "PAYMENTS_CALCULATE_FEES_SUCCESS",
+  "PAYMENTS_CALCULATE_FEES_FAILURE"
 )<
   CalculateFeeRequest & { paymentMethodId: string },
   CalculateFeeResponse,
   NetworkError
 >();
 
-export const walletPaymentCreateTransaction = createAsyncAction(
-  "WALLET_PAYMENT_CREATE_TRANSACTION_REQUEST",
-  "WALLET_PAYMENT_CREATE_TRANSACTION_SUCCESS",
-  "WALLET_PAYMENT_CREATE_TRANSACTION_FAILURE"
+export const paymentsCreateTransactionAction = createAsyncAction(
+  "PAYMENTS_CREATE_TRANSACTION_REQUEST",
+  "PAYMENTS_PAYMENT_CREATE_TRANSACTION_SUCCESS",
+  "PAYMENTS_PAYMENT_CREATE_TRANSACTION_FAILURE"
 )<
   NewTransactionRequest,
   NewTransactionResponse,
   NetworkError | WalletPaymentFailure
 >();
 
-export const walletPaymentGetTransactionInfo = createAsyncAction(
-  "WALLET_PAYMENT_GET_TRANSACTION_INFO_REQUEST",
-  "WALLET_PAYMENT_GET_TRANSACTION_INFO_SUCCESS",
-  "WALLET_PAYMENT_GET_TRANSACTION_INFO_FAILURE"
+export const paymentsGetPaymentTransactionInfoAction = createAsyncAction(
+  "PAYMENTS_GET_PAYMENT_TRANSACTION_INFO_REQUEST",
+  "PAYMENTS_GET_PAYMENT_TRANSACTION_INFO_SUCCESS",
+  "PAYMENTS_GET_PAYMENT_TRANSACTION_INFO_FAILURE"
 )<{ transactionId: string }, TransactionInfo, NetworkError>();
 
-export const walletPaymentDeleteTransaction = createAsyncAction(
-  "WALLET_PAYMENT_DELETE_TRANSACTION_REQUEST",
-  "WALLET_PAYMENT_DELETE_TRANSACTION_SUCCESS",
-  "WALLET_PAYMENT_DELETE_TRANSACTION_FAILURE"
+export const paymentsDeleteTransactionAction = createAsyncAction(
+  "PAYMENTS_DELETE_TRANSACTION_REQUEST",
+  "PAYMENTS_DELETE_TRANSACTION_SUCCESS",
+  "PAYMENTS_DELETE_TRANSACTION_FAILURE"
 )<string, undefined, NetworkError>();
 
 export type WalletPaymentAuthorizePayload = {
@@ -82,11 +82,11 @@ export type WalletPaymentAuthorizePayload = {
   paymentFees: AmountEuroCents;
 };
 
-export const walletPaymentAuthorization = createAsyncAction(
-  "WALLET_PAYMENT_AUTH_REQUEST",
-  "WALLET_PAYMENT_AUTH_SUCCESS",
-  "WALLET_PAYMENT_AUTH_FAILURE",
-  "WALLET_PAYMENT_AUTH_CANCEL"
+export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
+  "PAYMENTS_START_PAYMENT_AUTH_REQUEST",
+  "PAYMENTS_START_PAYMENT_AUTH_SUCCESS",
+  "PAYMENTS_START_PAYMENT_AUTH_FAILURE",
+  "PAYMENTS_START_PAYMENT_AUTH_CANCEL"
 )<
   WalletPaymentAuthorizePayload,
   RequestAuthorizationResponse,
@@ -94,18 +94,18 @@ export const walletPaymentAuthorization = createAsyncAction(
   undefined
 >();
 
-export const walletPaymentResetPspList = createStandardAction(
-  "WALLET_PAYMENT_RESET_PSP_LIST"
+export const paymentsResetPaymentPspList = createStandardAction(
+  "PAYMENTS_RESET_PAYMENT_PSP_LIST"
 )();
 
-export type WalletPaymentNetworkingActions =
-  | ActionType<typeof walletPaymentNewSessionToken>
-  | ActionType<typeof walletPaymentGetDetails>
-  | ActionType<typeof walletPaymentGetAllMethods>
-  | ActionType<typeof walletPaymentGetUserWallets>
-  | ActionType<typeof walletPaymentCalculateFees>
-  | ActionType<typeof walletPaymentCreateTransaction>
-  | ActionType<typeof walletPaymentGetTransactionInfo>
-  | ActionType<typeof walletPaymentDeleteTransaction>
-  | ActionType<typeof walletPaymentAuthorization>
-  | ActionType<typeof walletPaymentResetPspList>;
+export type PaymentsPaymentNetworkingActions =
+  | ActionType<typeof paymentsGetNewSessionTokenAction>
+  | ActionType<typeof paymentsGetPaymentDetailsAction>
+  | ActionType<typeof paymentsGetPaymentMethodsAction>
+  | ActionType<typeof paymentsGetPaymentUserMethodsAction>
+  | ActionType<typeof paymentsCalculatePaymentFeesAction>
+  | ActionType<typeof paymentsCreateTransactionAction>
+  | ActionType<typeof paymentsGetPaymentTransactionInfoAction>
+  | ActionType<typeof paymentsDeleteTransactionAction>
+  | ActionType<typeof paymentsStartPaymentAuthorizationAction>
+  | ActionType<typeof paymentsResetPaymentPspList>;

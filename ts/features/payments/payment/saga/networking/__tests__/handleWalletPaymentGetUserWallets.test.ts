@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { walletPaymentGetUserWallets } from "../../../store/actions/networking";
+import { paymentsGetPaymentUserMethodsAction } from "../../../store/actions/networking";
 import { handleWalletPaymentGetUserWallets } from "../handleWalletPaymentGetUserWallets";
 import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { getGenericError } from "../../../../../../utils/errors";
@@ -14,7 +14,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
   const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
-    walletPaymentGetUserWallets.success
+    paymentsGetPaymentUserMethodsAction.success
   )} when getWalletsByIdUser is 200`, () => {
     const mockGetWalletsByIdUser = jest.fn();
     const getWalletsByIdUserResponse: Wallets = {
@@ -34,7 +34,7 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      walletPaymentGetUserWallets.request()
+      paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -42,23 +42,25 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
-        walletPaymentGetUserWallets.request()
+        paymentsGetPaymentUserMethodsAction.request()
       )
       .next(E.right({ status: 200, value: getWalletsByIdUserResponse }))
-      .put(walletPaymentGetUserWallets.success(getWalletsByIdUserResponse))
+      .put(
+        paymentsGetPaymentUserMethodsAction.success(getWalletsByIdUserResponse)
+      )
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    walletPaymentGetUserWallets.failure
+    paymentsGetPaymentUserMethodsAction.failure
   )} when getWalletsByIdUser is not 200`, () => {
     const mockGetWalletsByIdUser = jest.fn();
 
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      walletPaymentGetUserWallets.request()
+      paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -66,11 +68,11 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
-        walletPaymentGetUserWallets.request()
+        paymentsGetPaymentUserMethodsAction.request()
       )
       .next(E.right({ status: 400, value: undefined }))
       .put(
-        walletPaymentGetUserWallets.failure(
+        paymentsGetPaymentUserMethodsAction.failure(
           getGenericError(new Error(`Error: 400`))
         )
       )
@@ -79,14 +81,14 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentGetUserWallets.failure
+    paymentsGetPaymentUserMethodsAction.failure
   )} when getWalletsByIdUser encoders returns an error`, () => {
     const mockGetWalletsByIdUser = jest.fn();
 
     testSaga(
       handleWalletPaymentGetUserWallets,
       mockGetWalletsByIdUser,
-      walletPaymentGetUserWallets.request()
+      paymentsGetPaymentUserMethodsAction.request()
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -94,11 +96,11 @@ describe("Test handleWalletPaymentGetUserWallets saga", () => {
       .call(
         withRefreshApiCall,
         mockGetWalletsByIdUser(),
-        walletPaymentGetUserWallets.request()
+        paymentsGetPaymentUserMethodsAction.request()
       )
       .next(E.left([]))
       .put(
-        walletPaymentGetUserWallets.failure({
+        paymentsGetPaymentUserMethodsAction.failure({
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )

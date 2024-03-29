@@ -12,14 +12,14 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { getSortedPspList } from "../../../common/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentCalculateFees } from "../../store/actions/networking";
-import { walletPaymentPickPsp } from "../../store/actions/orchestration";
+import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
+import { selectPaymentPspAction } from "../../store/actions/orchestration";
 import { walletPaymentPickedPspSelector } from "../../store/selectors";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFees"],
-  action: ActionType<(typeof walletPaymentCalculateFees)["request"]>
+  action: ActionType<(typeof paymentsCalculatePaymentFeesAction)["request"]>
 ) {
   try {
     const preferredLanguageOption = yield* select(preferredLanguageSelector);
@@ -33,7 +33,7 @@ export function* handleWalletPaymentCalculateFees(
 
     if (sessionToken === undefined) {
       yield* put(
-        walletPaymentCalculateFees.failure({
+        paymentsCalculatePaymentFeesAction.failure({
           ...getGenericError(new Error(`Missing session token`))
         })
       );
@@ -55,7 +55,7 @@ export function* handleWalletPaymentCalculateFees(
 
     if (E.isLeft(calculateFeesResult)) {
       yield* put(
-        walletPaymentCalculateFees.failure({
+        paymentsCalculatePaymentFeesAction.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(calculateFeesResult.left))
           )
@@ -75,11 +75,11 @@ export function* handleWalletPaymentCalculateFees(
           (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) ||
           bundlesSortedByDefault.length === 1
         ) {
-          yield* put(walletPaymentPickPsp(bundlesSortedByDefault[0]));
+          yield* put(selectPaymentPspAction(bundlesSortedByDefault[0]));
         }
         if (bundlesSortedByDefault.length === 0) {
           yield* put(
-            walletPaymentCalculateFees.failure({
+            paymentsCalculatePaymentFeesAction.failure({
               ...getGenericError(new Error(`Error: The bundles list is empty`))
             })
           );
@@ -89,16 +89,18 @@ export function* handleWalletPaymentCalculateFees(
           ...res.value,
           bundles: res.value.bundles
         };
-        yield* put(walletPaymentCalculateFees.success(sortedResponse));
+        yield* put(paymentsCalculatePaymentFeesAction.success(sortedResponse));
         return;
       }
       yield* put(
-        walletPaymentCalculateFees.failure({
+        paymentsCalculatePaymentFeesAction.failure({
           ...getGenericError(new Error(`Error: ${res.status}`))
         })
       );
     }
   } catch (e) {
-    yield* put(walletPaymentCalculateFees.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsCalculatePaymentFeesAction.failure({ ...getNetworkError(e) })
+    );
   }
 }

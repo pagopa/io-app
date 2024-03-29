@@ -2,13 +2,13 @@ import MockDate from "mockdate";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { walletPaymentInitState } from "../../../payment/store/actions/orchestration";
+import { initPaymentStateAction } from "../../../payment/store/actions/orchestration";
 import { PaymentStartOrigin } from "../../../payment/types";
 import {
-  selectWalletOngoingPaymentHistory,
-  selectWalletPaymentHistoryArchive
+  selectOngoingPaymentHistory,
+  selectPaymentsHistoryArchive
 } from "../selectors";
-import { walletPaymentHistoryStoreOutcome } from "../actions";
+import { storePaymentOutcomeToHistory } from "../actions";
 import { WalletPaymentOutcomeEnum } from "../../../payment/types/PaymentOutcomeEnum";
 
 const MOCKED_LOOKUP_ID = "123456";
@@ -29,8 +29,8 @@ describe("Test Wallet payment history reducers and selectors", () => {
     expect(globalState.features.payments.history).toStrictEqual({
       archive: []
     });
-    expect(selectWalletPaymentHistoryArchive(globalState)).toStrictEqual([]);
-    expect(selectWalletOngoingPaymentHistory(globalState)).toBeUndefined();
+    expect(selectPaymentsHistoryArchive(globalState)).toStrictEqual([]);
+    expect(selectOngoingPaymentHistory(globalState)).toBeUndefined();
   });
 
   it("should correctly update ongoing payment history", () => {
@@ -39,7 +39,7 @@ describe("Test Wallet payment history reducers and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      walletPaymentInitState({
+      initPaymentStateAction({
         startOrigin: T_START_ORIGIN
       })
     );
@@ -60,7 +60,7 @@ describe("Test Wallet payment history reducers and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      walletPaymentHistoryStoreOutcome(WalletPaymentOutcomeEnum.SUCCESS)
+      storePaymentOutcomeToHistory(WalletPaymentOutcomeEnum.SUCCESS)
     );
     expect(
       store.getState().features.payments.history.ongoingPayment?.outcome
@@ -74,9 +74,7 @@ describe("Test Wallet payment history reducers and selectors", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store = createStore(appReducer, globalState as any);
     store.dispatch(
-      walletPaymentHistoryStoreOutcome(
-        WalletPaymentOutcomeEnum.CANCELED_BY_USER
-      )
+      storePaymentOutcomeToHistory(WalletPaymentOutcomeEnum.CANCELED_BY_USER)
     );
     expect(
       store.getState().features.payments.history.ongoingPayment?.outcome

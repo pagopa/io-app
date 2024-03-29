@@ -29,15 +29,15 @@ import { findFirstCaseInsensitive } from "../../../../utils/object";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { WalletPaymentMissingMethodsError } from "../components/WalletPaymentMissingMethodsError";
 import { useOnTransactionActivationEffect } from "../hooks/useOnTransactionActivationEffect";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { PaymentsPaymentRoutes } from "../navigation/routes";
 import {
-  walletPaymentCalculateFees,
-  walletPaymentCreateTransaction,
-  walletPaymentGetUserWallets,
-  walletPaymentResetPspList
+  paymentsCalculatePaymentFeesAction,
+  paymentsCreateTransactionAction,
+  paymentsGetPaymentUserMethodsAction,
+  paymentsResetPaymentPspList
 } from "../store/actions/networking";
 import {
-  walletPaymentPickPaymentMethod,
+  selectPaymentMethodAction,
   walletPaymentSetCurrentStep
 } from "../store/actions/orchestration";
 import {
@@ -106,7 +106,7 @@ const WalletPaymentPickMethodScreen = () => {
           const paymentToken = transaction.payments[0]?.paymentToken;
 
           dispatch(
-            walletPaymentCalculateFees.request({
+            paymentsCalculatePaymentFeesAction.request({
               paymentToken,
               paymentMethodId: selectedWallet.paymentMethodId,
               walletId: selectedWallet.walletId,
@@ -162,15 +162,15 @@ const WalletPaymentPickMethodScreen = () => {
     React.useCallback(() => {
       // currently we do not allow onboarding new methods in payment flow
       // dispatch(walletPaymentGetAllMethods.request());
-      dispatch(walletPaymentGetUserWallets.request());
-      dispatch(walletPaymentResetPspList());
+      dispatch(paymentsGetPaymentUserMethodsAction.request());
+      dispatch(paymentsResetPaymentPspList());
     }, [dispatch])
   );
 
   React.useEffect(() => {
     if (isError) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME,
+      navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
+        screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
         }
@@ -224,9 +224,9 @@ const WalletPaymentPickMethodScreen = () => {
           pot.toOption(paymentDetailsPot)
         ),
         O.map(([method, paymentDetails]) => {
-          dispatch(walletPaymentPickPaymentMethod(method));
+          dispatch(selectPaymentMethodAction(method));
           dispatch(
-            walletPaymentCreateTransaction.request({
+            paymentsCreateTransactionAction.request({
               paymentNotices: [
                 { rptId: paymentDetails.rptId, amount: paymentDetails.amount }
               ]

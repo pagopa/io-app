@@ -46,20 +46,20 @@ import {
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
-import { WalletPaymentParamsList } from "../navigation/params";
-import { WalletPaymentRoutes } from "../navigation/routes";
-import { walletPaymentGetDetails } from "../store/actions/networking";
+import { PaymentsPaymentParamsList } from "../navigation/params";
+import { PaymentsPaymentRoutes } from "../navigation/routes";
+import { paymentsGetPaymentDetailsAction } from "../store/actions/networking";
 import { walletPaymentDetailsSelector } from "../store/selectors";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
-import { walletPaymentStoreNewAttempt } from "../../history/store/actions";
+import { storeNewPaymentAttemptAction } from "../../history/store/actions";
 
 type WalletPaymentDetailScreenNavigationParams = {
   rptId: RptId;
 };
 
 type WalletPaymentDetailRouteProps = RouteProp<
-  WalletPaymentParamsList,
-  "WALLET_PAYMENT_DETAIL"
+  PaymentsPaymentParamsList,
+  "PAYMENTS_PAYMENT_DETAIL"
 >;
 
 const WalletPaymentDetailScreen = () => {
@@ -71,7 +71,7 @@ const WalletPaymentDetailScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(walletPaymentGetDetails.request(rptId));
+      dispatch(paymentsGetPaymentDetailsAction.request(rptId));
     }, [dispatch, rptId])
   );
 
@@ -134,9 +134,9 @@ const WalletPaymentDetailContent = ({
   });
 
   const navigateToMakePaymentScreen = () => {
-    dispatch(walletPaymentStoreNewAttempt(rptId));
-    navigation.push(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_MAKE
+    dispatch(storeNewPaymentAttemptAction(rptId));
+    navigation.push(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
+      screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_MAKE
     });
   };
 

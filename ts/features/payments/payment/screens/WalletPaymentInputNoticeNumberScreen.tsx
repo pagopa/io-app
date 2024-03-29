@@ -28,7 +28,7 @@ import {
   decodePaymentNoticeNumber,
   validatePaymentNoticeNumber
 } from "../../common/utils/validation";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { PaymentsPaymentRoutes } from "../navigation/routes";
 import I18n from "../../../../i18n";
 
 type InputState = {
@@ -44,8 +44,8 @@ const WalletPaymentInputNoticeNumberScreen = () => {
   });
 
   const navigateToFiscalCodeInput = () => {
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE,
+    navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
+      screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_FISCAL_CODE,
       params: {
         paymentNoticeNumber: inputState.noticeNumber
       }

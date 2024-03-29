@@ -10,7 +10,7 @@ import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors"
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
 import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { WalletOnboardingRoutes } from "../../onboarding/navigation/navigator";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 
 const loadingCards: Array<PaymentCardSmallProps> = Array.from({
   length: 3
@@ -63,9 +63,12 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
       loadingCards;
 
   const handleOnAddMethodPress = () => {
-    navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
-      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
-    });
+    navigation.navigate(
+      PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR,
+      {
+        screen: PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD
+      }
+    );
   };
 
   return (

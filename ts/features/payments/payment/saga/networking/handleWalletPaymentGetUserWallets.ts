@@ -7,18 +7,18 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentGetUserWallets } from "../../store/actions/networking";
+import { paymentsGetPaymentUserMethodsAction } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetUserWallets(
   getWalletsByIdUser: PaymentClient["getWalletsByIdUser"],
-  action: ActionType<(typeof walletPaymentGetUserWallets)["request"]>
+  action: ActionType<(typeof paymentsGetPaymentUserMethodsAction)["request"]>
 ) {
   const sessionToken = yield* getOrFetchWalletSessionToken();
 
   if (sessionToken === undefined) {
     yield* put(
-      walletPaymentGetUserWallets.failure({
+      paymentsGetPaymentUserMethodsAction.failure({
         ...getGenericError(new Error(`Missing session token`))
       })
     );
@@ -41,17 +41,19 @@ export function* handleWalletPaymentGetUserWallets(
         getWalletsByIdUserResult,
         E.fold(
           error =>
-            walletPaymentGetUserWallets.failure(
+            paymentsGetPaymentUserMethodsAction.failure(
               getGenericError(new Error(readablePrivacyReport(error)))
             ),
           res => {
             if (res.status === 200) {
-              return walletPaymentGetUserWallets.success(res.value);
+              return paymentsGetPaymentUserMethodsAction.success(res.value);
             }
             if (res.status === 404) {
-              return walletPaymentGetUserWallets.success({ wallets: [] });
+              return paymentsGetPaymentUserMethodsAction.success({
+                wallets: []
+              });
             }
-            return walletPaymentGetUserWallets.failure({
+            return paymentsGetPaymentUserMethodsAction.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))
             });
           }
@@ -59,6 +61,8 @@ export function* handleWalletPaymentGetUserWallets(
       )
     );
   } catch (e) {
-    yield* put(walletPaymentGetUserWallets.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsGetPaymentUserMethodsAction.failure({ ...getNetworkError(e) })
+    );
   }
 }

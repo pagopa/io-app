@@ -5,8 +5,8 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { WalletOnboardingRoutes } from "../../onboarding/navigation/navigator";
 import I18n from "../../../../i18n";
+import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 
 const WalletPaymentMissingMethodsError = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -19,8 +19,8 @@ const WalletPaymentMissingMethodsError = () => {
   }, [navigation]);
 
   const handleAddMethod = () => {
-    navigation.push(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
-      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
+    navigation.push(PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR, {
+      screen: PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD
     });
   };
 

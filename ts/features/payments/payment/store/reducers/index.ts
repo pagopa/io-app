@@ -11,22 +11,22 @@ import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { PaymentStartRoute, WalletPaymentStepEnum } from "../../types";
 import {
-  walletPaymentAuthorization,
-  walletPaymentCalculateFees,
-  walletPaymentCreateTransaction,
-  walletPaymentDeleteTransaction,
-  walletPaymentGetAllMethods,
-  walletPaymentGetDetails,
-  walletPaymentGetTransactionInfo,
-  walletPaymentGetUserWallets,
-  walletPaymentNewSessionToken,
-  walletPaymentResetPspList
+  paymentsStartPaymentAuthorizationAction,
+  paymentsCalculatePaymentFeesAction,
+  paymentsCreateTransactionAction,
+  paymentsDeleteTransactionAction,
+  paymentsGetPaymentMethodsAction,
+  paymentsGetPaymentDetailsAction,
+  paymentsGetPaymentTransactionInfoAction,
+  paymentsGetPaymentUserMethodsAction,
+  paymentsGetNewSessionTokenAction,
+  paymentsResetPaymentPspList
 } from "../actions/networking";
 import {
-  walletPaymentInitState,
-  walletPaymentPickPaymentMethod,
-  walletPaymentPickPsp,
-  walletPaymentResetPickedPsp,
+  initPaymentStateAction,
+  selectPaymentMethodAction,
+  selectPaymentPspAction,
+  resetPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
@@ -35,7 +35,7 @@ import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/Walle
 
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
-export type WalletPaymentState = {
+export type PaymentsPaymentState = {
   currentStep: WalletPaymentStepEnum;
   rptId?: RptId;
   sessionToken: pot.Pot<string, NetworkError>;
@@ -54,7 +54,7 @@ export type WalletPaymentState = {
   showTransaction?: boolean;
 };
 
-const INITIAL_STATE: WalletPaymentState = {
+const INITIAL_STATE: PaymentsPaymentState = {
   currentStep: WalletPaymentStepEnum.PICK_PAYMENT_METHOD,
   sessionToken: pot.none,
   paymentDetails: pot.none,
@@ -69,11 +69,11 @@ const INITIAL_STATE: WalletPaymentState = {
 
 // eslint-disable-next-line complexity
 const reducer = (
-  state: WalletPaymentState = INITIAL_STATE,
+  state: PaymentsPaymentState = INITIAL_STATE,
   action: Action
-): WalletPaymentState => {
+): PaymentsPaymentState => {
   switch (action.type) {
-    case getType(walletPaymentInitState):
+    case getType(initPaymentStateAction):
       return {
         ...INITIAL_STATE,
         startRoute: action.payload.startRoute,
@@ -87,159 +87,159 @@ const reducer = (
       };
 
     // eCommerce Session token
-    case getType(walletPaymentNewSessionToken.request):
+    case getType(paymentsGetNewSessionTokenAction.request):
       return {
         ...state,
         sessionToken: pot.toLoading(state.sessionToken)
       };
-    case getType(walletPaymentNewSessionToken.success):
+    case getType(paymentsGetNewSessionTokenAction.success):
       return {
         ...state,
         sessionToken: pot.some(action.payload.sessionToken)
       };
-    case getType(walletPaymentNewSessionToken.failure):
+    case getType(paymentsGetNewSessionTokenAction.failure):
       return {
         ...state,
         sessionToken: pot.toError(state.sessionToken, action.payload)
       };
 
     // Payment verification and details
-    case getType(walletPaymentGetDetails.request):
+    case getType(paymentsGetPaymentDetailsAction.request):
       return {
         ...state,
         rptId: action.payload,
         paymentDetails: pot.toLoading(state.paymentDetails)
       };
-    case getType(walletPaymentGetDetails.success):
+    case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
         paymentDetails: pot.some(action.payload)
       };
-    case getType(walletPaymentGetDetails.failure):
+    case getType(paymentsGetPaymentDetailsAction.failure):
       return {
         ...state,
         paymentDetails: pot.toError(state.paymentDetails, action.payload)
       };
 
     // User payment methods
-    case getType(walletPaymentGetUserWallets.request):
+    case getType(paymentsGetPaymentUserMethodsAction.request):
       return {
         ...state,
         userWallets: pot.toLoading(state.userWallets)
       };
-    case getType(walletPaymentGetUserWallets.success):
+    case getType(paymentsGetPaymentUserMethodsAction.success):
       return {
         ...state,
         userWallets: pot.some(action.payload)
       };
-    case getType(walletPaymentGetUserWallets.failure):
+    case getType(paymentsGetPaymentUserMethodsAction.failure):
       return {
         ...state,
         userWallets: pot.toError(state.userWallets, action.payload)
       };
 
     // Available payment method
-    case getType(walletPaymentGetAllMethods.request):
+    case getType(paymentsGetPaymentMethodsAction.request):
       return {
         ...state,
         allPaymentMethods: pot.toLoading(state.allPaymentMethods)
       };
-    case getType(walletPaymentGetAllMethods.success):
+    case getType(paymentsGetPaymentMethodsAction.success):
       return {
         ...state,
         allPaymentMethods: pot.some(action.payload)
       };
-    case getType(walletPaymentGetAllMethods.failure):
+    case getType(paymentsGetPaymentMethodsAction.failure):
       return {
         ...state,
         allPaymentMethods: pot.toError(state.allPaymentMethods, action.payload)
       };
 
-    case getType(walletPaymentPickPaymentMethod):
+    case getType(selectPaymentMethodAction):
       return {
         ...state,
         chosenPaymentMethod: O.some(action.payload)
       };
 
     // PSP list
-    case getType(walletPaymentCalculateFees.request):
+    case getType(paymentsCalculatePaymentFeesAction.request):
       return {
         ...state,
         pspList: pot.toLoading(state.pspList)
       };
-    case getType(walletPaymentCalculateFees.success):
+    case getType(paymentsCalculatePaymentFeesAction.success):
       return {
         ...state,
         pspList: pot.some(action.payload.bundles)
       };
-    case getType(walletPaymentCalculateFees.failure):
+    case getType(paymentsCalculatePaymentFeesAction.failure):
       return {
         ...state,
         pspList: pot.toError(state.pspList, action.payload)
       };
 
-    case getType(walletPaymentPickPsp):
+    case getType(selectPaymentPspAction):
       return {
         ...state,
         chosenPsp: O.some(action.payload)
       };
 
-    case getType(walletPaymentResetPickedPsp):
+    case getType(resetPaymentPspAction):
       return {
         ...state,
         chosenPsp: O.none
       };
 
-    case getType(walletPaymentResetPspList):
+    case getType(paymentsResetPaymentPspList):
       return {
         ...state,
         pspList: pot.none
       };
 
     // Transaction
-    case getType(walletPaymentCreateTransaction.request):
-    case getType(walletPaymentGetTransactionInfo.request):
-    case getType(walletPaymentDeleteTransaction.request):
+    case getType(paymentsCreateTransactionAction.request):
+    case getType(paymentsGetPaymentTransactionInfoAction.request):
+    case getType(paymentsDeleteTransactionAction.request):
       return {
         ...state,
         transaction: pot.toLoading(state.transaction)
       };
-    case getType(walletPaymentCreateTransaction.success):
-    case getType(walletPaymentGetTransactionInfo.success):
+    case getType(paymentsCreateTransactionAction.success):
+    case getType(paymentsGetPaymentTransactionInfoAction.success):
       return {
         ...state,
         transaction: pot.some(action.payload)
       };
-    case getType(walletPaymentDeleteTransaction.success):
+    case getType(paymentsDeleteTransactionAction.success):
       return {
         ...state,
         transaction: pot.none
       };
-    case getType(walletPaymentCreateTransaction.failure):
-    case getType(walletPaymentGetTransactionInfo.failure):
-    case getType(walletPaymentDeleteTransaction.failure):
+    case getType(paymentsCreateTransactionAction.failure):
+    case getType(paymentsGetPaymentTransactionInfoAction.failure):
+    case getType(paymentsDeleteTransactionAction.failure):
       return {
         ...state,
         transaction: pot.toError(state.transaction, action.payload)
       };
 
     // Authorization url
-    case getType(walletPaymentAuthorization.request):
+    case getType(paymentsStartPaymentAuthorizationAction.request):
       return {
         ...state,
         authorizationUrl: pot.toLoading(state.authorizationUrl)
       };
-    case getType(walletPaymentAuthorization.success):
+    case getType(paymentsStartPaymentAuthorizationAction.success):
       return {
         ...state,
         authorizationUrl: pot.some(action.payload.authorizationUrl)
       };
-    case getType(walletPaymentAuthorization.failure):
+    case getType(paymentsStartPaymentAuthorizationAction.failure):
       return {
         ...state,
         authorizationUrl: pot.toError(state.authorizationUrl, action.payload)
       };
-    case getType(walletPaymentAuthorization.cancel):
+    case getType(paymentsStartPaymentAuthorizationAction.cancel):
       return {
         ...state,
         authorizationUrl: pot.none

@@ -7,19 +7,19 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentDeleteTransaction } from "../../store/actions/networking";
+import { paymentsDeleteTransactionAction } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentDeleteTransaction(
   requestTransactionUserCancellation: PaymentClient["requestTransactionUserCancellation"],
-  action: ActionType<(typeof walletPaymentDeleteTransaction)["request"]>
+  action: ActionType<(typeof paymentsDeleteTransactionAction)["request"]>
 ) {
   try {
     const sessionToken = yield* getOrFetchWalletSessionToken();
 
     if (sessionToken === undefined) {
       yield* put(
-        walletPaymentDeleteTransaction.failure({
+        paymentsDeleteTransactionAction.failure({
           ...getGenericError(new Error(`Missing session token`))
         })
       );
@@ -43,15 +43,15 @@ export function* handleWalletPaymentDeleteTransaction(
         requestTransactionUserCancellationResult,
         E.fold(
           error =>
-            walletPaymentDeleteTransaction.failure({
+            paymentsDeleteTransactionAction.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
 
           res => {
             if (res.status === 202) {
-              return walletPaymentDeleteTransaction.success();
+              return paymentsDeleteTransactionAction.success();
             }
-            return walletPaymentDeleteTransaction.failure({
+            return paymentsDeleteTransactionAction.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))
             });
           }
@@ -60,7 +60,7 @@ export function* handleWalletPaymentDeleteTransaction(
     );
   } catch (e) {
     yield* put(
-      walletPaymentDeleteTransaction.failure({ ...getNetworkError(e) })
+      paymentsDeleteTransactionAction.failure({ ...getNetworkError(e) })
     );
   }
 }

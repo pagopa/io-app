@@ -10,18 +10,18 @@ import { WalletPaymentInputFiscalCodeScreen } from "../screens/WalletPaymentInpu
 import { WalletPaymentInputNoticeNumberScreen } from "../screens/WalletPaymentInputNoticeNumberScreen";
 import { WalletPaymentMakeScreen } from "../screens/WalletPaymentMakeScreen";
 import { WalletPaymentOutcomeScreen } from "../screens/WalletPaymentOutcomeScreen";
-import { WalletPaymentParamsList } from "./params";
-import { WalletPaymentRoutes } from "./routes";
+import { PaymentsPaymentParamsList } from "./params";
+import { PaymentsPaymentRoutes } from "./routes";
 
-const Stack = createStackNavigator<WalletPaymentParamsList>();
+const Stack = createStackNavigator<PaymentsPaymentParamsList>();
 
-export const WalletPaymentNavigator = () => (
+export const PaymentsPaymentNavigator = () => (
   <Stack.Navigator
-    initialRouteName={WalletPaymentRoutes.WALLET_PAYMENT_MAIN}
+    initialRouteName={PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER}
+      name={PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_NOTICE_NUMBER}
       component={WalletPaymentInputNoticeNumberScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -29,7 +29,7 @@ export const WalletPaymentNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE}
+      name={PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_FISCAL_CODE}
       component={WalletPaymentInputFiscalCodeScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -37,7 +37,7 @@ export const WalletPaymentNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_DETAIL}
+      name={PaymentsPaymentRoutes.PAYMENTS_PAYMENT_DETAIL}
       component={WalletPaymentDetailScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -46,7 +46,7 @@ export const WalletPaymentNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_MAKE}
+      name={PaymentsPaymentRoutes.PAYMENTS_PAYMENT_MAKE}
       component={WalletPaymentMakeScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -54,7 +54,7 @@ export const WalletPaymentNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME}
+      name={PaymentsPaymentRoutes.PAYMENTS_PAYMENT_OUTCOME}
       component={WalletPaymentOutcomeScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -64,12 +64,12 @@ export const WalletPaymentNavigator = () => (
   </Stack.Navigator>
 );
 
-export type WalletPaymentStackNavigationProp<
+export type PaymentsPaymentStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
-> = StackNavigationProp<WalletPaymentParamsList & ParamList, RouteName>;
+> = StackNavigationProp<PaymentsPaymentParamsList & ParamList, RouteName>;
 
-export type WalletPaymentStackNavigation = WalletPaymentStackNavigationProp<
-  WalletPaymentParamsList,
-  keyof WalletPaymentParamsList
+export type PaymentsPaymentStackNavigation = PaymentsPaymentStackNavigationProp<
+  PaymentsPaymentParamsList,
+  keyof PaymentsPaymentParamsList
 >;

@@ -10,22 +10,22 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { openWebUrl } from "../../../../utils/url";
-import { WalletDetailsRoutes } from "../../details/navigation/navigator";
-import { WalletOnboardingParamsList } from "../navigation/navigator";
+import { PaymentsOnboardingParamsList } from "../navigation/params";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
 import { ONBOARDING_FAQ_ENABLE_3DS } from "../utils";
+import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 
-export type WalletOnboardingFeedbackScreenParams = {
+export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
   walletId?: string;
 };
 
-type WalletOnboardingFeedbackScreenRouteProps = RouteProp<
-  WalletOnboardingParamsList,
-  "WALLET_ONBOARDING_RESULT_FEEDBACK"
+type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
+  PaymentsOnboardingParamsList,
+  "PAYMENTS_ONBOARDING_RESULT_FEEDBACK"
 >;
 
 export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
@@ -40,9 +40,9 @@ export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
     [WalletOnboardingOutcomeEnum.BPAY_NOT_FOUND]: "attention"
   };
 
-const WalletOnboardingFeedbackScreen = () => {
+const PaymentsOnboardingFeedbackScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const route = useRoute<WalletOnboardingFeedbackScreenRouteProps>();
+  const route = useRoute<PaymentsOnboardingFeedbackScreenRouteProps>();
   const { outcome, walletId } = route.params;
 
   const outcomeEnumKey = Object.keys(WalletOnboardingOutcomeEnum)[
@@ -51,12 +51,15 @@ const WalletOnboardingFeedbackScreen = () => {
 
   const handleContinueButton = () => {
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
-      navigation.replace(WalletDetailsRoutes.WALLET_DETAILS_MAIN, {
-        screen: WalletDetailsRoutes.WALLET_DETAILS_SCREEN,
-        params: {
-          walletId
+      navigation.replace(
+        PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_NAVIGATOR,
+        {
+          screen: PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_SCREEN,
+          params: {
+            walletId
+          }
         }
-      });
+      );
     } else {
       navigation.pop();
     }
@@ -99,4 +102,4 @@ const WalletOnboardingFeedbackScreen = () => {
   );
 };
 
-export default WalletOnboardingFeedbackScreen;
+export { PaymentsOnboardingFeedbackScreen };

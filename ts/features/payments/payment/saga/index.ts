@@ -2,15 +2,15 @@ import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
 import { PaymentClient } from "../api/client";
 import {
-  walletPaymentAuthorization,
-  walletPaymentCalculateFees,
-  walletPaymentCreateTransaction,
-  walletPaymentDeleteTransaction,
-  walletPaymentGetAllMethods,
-  walletPaymentGetDetails,
-  walletPaymentGetTransactionInfo,
-  walletPaymentGetUserWallets,
-  walletPaymentNewSessionToken
+  paymentsStartPaymentAuthorizationAction,
+  paymentsCalculatePaymentFeesAction,
+  paymentsCreateTransactionAction,
+  paymentsDeleteTransactionAction,
+  paymentsGetPaymentMethodsAction,
+  paymentsGetPaymentDetailsAction,
+  paymentsGetPaymentTransactionInfoAction,
+  paymentsGetPaymentUserMethodsAction,
+  paymentsGetNewSessionTokenAction
 } from "../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "./networking/handleWalletPaymentAuthorization";
 import { handleWalletPaymentCalculateFees } from "./networking/handleWalletPaymentCalculateFees";
@@ -26,59 +26,59 @@ import { handleWalletPaymentNewSessionToken } from "./networking/handleWalletPay
  * Handle the pagoPA payments requests
  * @param bearerToken
  */
-export function* watchWalletPaymentSaga(
+export function* watchPaymentsPaymentSaga(
   paymentClient: PaymentClient
 ): SagaIterator {
   yield* takeLatest(
-    walletPaymentNewSessionToken.request,
+    paymentsGetNewSessionTokenAction.request,
     handleWalletPaymentNewSessionToken,
     paymentClient.newSessionToken
   );
 
   yield* takeLatest(
-    walletPaymentGetDetails.request,
+    paymentsGetPaymentDetailsAction.request,
     handleWalletPaymentGetDetails,
     paymentClient.getPaymentRequestInfo
   );
 
   yield* takeLatest(
-    walletPaymentGetAllMethods.request,
+    paymentsGetPaymentMethodsAction.request,
     handleWalletPaymentGetAllMethods,
     paymentClient.getAllPaymentMethods
   );
 
   yield* takeLatest(
-    walletPaymentGetUserWallets.request,
+    paymentsGetPaymentUserMethodsAction.request,
     handleWalletPaymentGetUserWallets,
     paymentClient.getWalletsByIdUser
   );
 
   yield* takeLatest(
-    walletPaymentCalculateFees.request,
+    paymentsCalculatePaymentFeesAction.request,
     handleWalletPaymentCalculateFees,
     paymentClient.calculateFees
   );
 
   yield* takeLatest(
-    walletPaymentCreateTransaction.request,
+    paymentsCreateTransactionAction.request,
     handleWalletPaymentCreateTransaction,
     paymentClient.newTransaction
   );
 
   yield* takeLatest(
-    walletPaymentGetTransactionInfo.request,
+    paymentsGetPaymentTransactionInfoAction.request,
     handleWalletPaymentGetTransactionInfo,
     paymentClient.getTransactionInfo
   );
 
   yield* takeLatest(
-    walletPaymentDeleteTransaction.request,
+    paymentsDeleteTransactionAction.request,
     handleWalletPaymentDeleteTransaction,
     paymentClient.requestTransactionUserCancellation
   );
 
   yield* takeLatest(
-    walletPaymentAuthorization.request,
+    paymentsStartPaymentAuthorizationAction.request,
     handleWalletPaymentAuthorization,
     paymentClient.requestTransactionAuthorization
   );

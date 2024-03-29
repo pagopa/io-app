@@ -2,14 +2,14 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { WalletPaymentOutcome } from "../../../payment/types/PaymentOutcomeEnum";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
-export const walletPaymentStoreNewAttempt = createStandardAction(
-  "WALLET_PAYMENT_STORE_NEW_ATTEMPT"
+export const storeNewPaymentAttemptAction = createStandardAction(
+  "PAYMENTS_STORE_NEW_PAYMENT_ATTEMPT"
 )<RptId>();
 
-export const walletPaymentHistoryStoreOutcome = createStandardAction(
-  "WALLET_PAYMENT_HISTORY_STORE_OUTCOME"
+export const storePaymentOutcomeToHistory = createStandardAction(
+  "PAYMENTS_STORE_OUTCMOE_TO_HISTORY"
 )<WalletPaymentOutcome>();
 
-export type WalletPaymentHistoryActions =
-  | ActionType<typeof walletPaymentStoreNewAttempt>
-  | ActionType<typeof walletPaymentHistoryStoreOutcome>;
+export type PaymentsHistoryActions =
+  | ActionType<typeof storeNewPaymentAttemptAction>
+  | ActionType<typeof storePaymentOutcomeToHistory>;

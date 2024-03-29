@@ -5,52 +5,38 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import WalletTransactionDetailsScreen, {
-  WalletTransactionDetailsScreenParams
-} from "../screens/WalletTransactionDetailsScreen";
-import WalletTransactionOperationDetailsScreen, {
-  WalletTransactionOperationDetailsScreenParams
-} from "../screens/WalletTransactionOperationDetails";
+import { PaymentsTransactionDetailsScreen } from "../screens/PaymentsTransactionDetailsScreen";
+import WalletTransactionOperationDetailsScreen from "../screens/PaymentsTransactionOperationDetails";
+import { PaymentsTransactionParamsList } from "./params";
+import { PaymentsTransactionRoutes } from "./routes";
 
-export const WalletTransactionRoutes = {
-  WALLET_TRANSACTION_MAIN: "WALLET_TRANSACTION_MAIN",
-  WALLET_TRANSACTION_DETAILS: "WALLET_TRANSACTION_DETAILS",
-  WALLET_TRANSACTION_OPERATION_DETAILS: "WALLET_TRANSACTION_OPERATION_DETAILS"
-} as const;
+const Stack = createStackNavigator<PaymentsTransactionParamsList>();
 
-export type WalletTransactionParamsList = {
-  [WalletTransactionRoutes.WALLET_TRANSACTION_MAIN]: undefined;
-  [WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS]: WalletTransactionDetailsScreenParams;
-  [WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS]: WalletTransactionOperationDetailsScreenParams;
-};
-
-const Stack = createStackNavigator<WalletTransactionParamsList>();
-
-export const WalletTransactionNavigator = () => (
+export const PaymentsTransactionNavigator = () => (
   <Stack.Navigator
-    initialRouteName={WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS}
+    initialRouteName={PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_DETAILS}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: true }}
   >
     <Stack.Screen
-      name={WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS}
-      component={WalletTransactionDetailsScreen}
+      name={PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_DETAILS}
+      component={PaymentsTransactionDetailsScreen}
       options={{ gestureEnabled: isGestureEnabled }}
     />
     <Stack.Screen
-      name={WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS}
+      name={PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_OPERATION_DETAILS}
       component={WalletTransactionOperationDetailsScreen}
       options={{ gestureEnabled: isGestureEnabled }}
     />
   </Stack.Navigator>
 );
 
-export type WalletTransactionStackNavigationProp<
+export type PaymentsTransactionStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
-> = StackNavigationProp<WalletTransactionParamsList & ParamList, RouteName>;
+> = StackNavigationProp<PaymentsTransactionParamsList & ParamList, RouteName>;
 
-export type WalletTransactionStackNavigation =
-  WalletTransactionStackNavigationProp<
-    WalletTransactionParamsList,
-    keyof WalletTransactionParamsList
+export type PaymentsTransactionStackNavigation =
+  PaymentsTransactionStackNavigationProp<
+    PaymentsTransactionParamsList,
+    keyof PaymentsTransactionParamsList
   >;

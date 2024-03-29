@@ -9,7 +9,7 @@ import { TransactionStatusEnum } from "../../../../../../../definitions/pagopa/e
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { walletPaymentCreateTransaction } from "../../../store/actions/networking";
+import { paymentsCreateTransactionAction } from "../../../store/actions/networking";
 import { handleWalletPaymentCreateTransaction } from "../handleWalletPaymentCreateTransaction";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 
@@ -25,7 +25,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
   const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
-    walletPaymentCreateTransaction.success
+    paymentsCreateTransactionAction.success
   )} when newTransaction is 200`, () => {
     const mockNewTransaction = jest.fn();
     const newTransactionResponse: NewTransactionResponse = {
@@ -42,7 +42,7 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
     testSaga(
       handleWalletPaymentCreateTransaction,
       mockNewTransaction,
-      walletPaymentCreateTransaction.request(newTransactionPayload)
+      paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -50,23 +50,23 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .call(
         withRefreshApiCall,
         mockNewTransaction(),
-        walletPaymentCreateTransaction.request(newTransactionPayload)
+        paymentsCreateTransactionAction.request(newTransactionPayload)
       )
       .next(E.right({ status: 200, value: newTransactionResponse }))
-      .put(walletPaymentCreateTransaction.success(newTransactionResponse))
+      .put(paymentsCreateTransactionAction.success(newTransactionResponse))
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    walletPaymentCreateTransaction.failure
+    paymentsCreateTransactionAction.failure
   )} when newTransaction is not 200`, () => {
     const mockNewTransaction = jest.fn();
 
     testSaga(
       handleWalletPaymentCreateTransaction,
       mockNewTransaction,
-      walletPaymentCreateTransaction.request(newTransactionPayload)
+      paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -74,11 +74,11 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .call(
         withRefreshApiCall,
         mockNewTransaction(),
-        walletPaymentCreateTransaction.request(newTransactionPayload)
+        paymentsCreateTransactionAction.request(newTransactionPayload)
       )
       .next(E.right({ status: 400, value: undefined }))
       .put(
-        walletPaymentCreateTransaction.failure(
+        paymentsCreateTransactionAction.failure(
           getGenericError(new Error(`Error: 400`))
         )
       )
@@ -87,14 +87,14 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentCreateTransaction.failure
+    paymentsCreateTransactionAction.failure
   )} when newTransaction encoders returns an error`, () => {
     const mockNewTransaction = jest.fn();
 
     testSaga(
       handleWalletPaymentCreateTransaction,
       mockNewTransaction,
-      walletPaymentCreateTransaction.request(newTransactionPayload)
+      paymentsCreateTransactionAction.request(newTransactionPayload)
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -102,11 +102,11 @@ describe("Test handleWalletPaymentCreateTransaction saga", () => {
       .call(
         withRefreshApiCall,
         mockNewTransaction(),
-        walletPaymentCreateTransaction.request(newTransactionPayload)
+        paymentsCreateTransactionAction.request(newTransactionPayload)
       )
       .next(E.left([]))
       .put(
-        walletPaymentCreateTransaction.failure({
+        paymentsCreateTransactionAction.failure({
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )

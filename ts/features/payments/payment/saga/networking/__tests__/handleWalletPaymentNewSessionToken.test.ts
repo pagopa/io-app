@@ -5,12 +5,12 @@ import { NewSessionTokenResponse } from "../../../../../../../definitions/pagopa
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { walletPaymentNewSessionToken } from "../../../store/actions/networking";
+import { paymentsGetNewSessionTokenAction } from "../../../store/actions/networking";
 import { handleWalletPaymentNewSessionToken } from "../handleWalletPaymentNewSessionToken";
 
 describe("Test handleWalletPaymentNewSessionToken saga", () => {
   it(`should put ${getType(
-    walletPaymentNewSessionToken.success
+    paymentsGetNewSessionTokenAction.success
   )} when newSessionToken is 200`, () => {
     const T_SESSION_TOKEN = "ABCD";
     const mocknewSessionToken = jest.fn();
@@ -21,39 +21,39 @@ describe("Test handleWalletPaymentNewSessionToken saga", () => {
     testSaga(
       handleWalletPaymentNewSessionToken,
       mocknewSessionToken,
-      walletPaymentNewSessionToken.request()
+      paymentsGetNewSessionTokenAction.request()
     )
       .next()
       .call(
         withRefreshApiCall,
         mocknewSessionToken(),
-        walletPaymentNewSessionToken.request()
+        paymentsGetNewSessionTokenAction.request()
       )
       .next(E.right({ status: 200, value: newSessionTokenResponse }))
-      .put(walletPaymentNewSessionToken.success(newSessionTokenResponse))
+      .put(paymentsGetNewSessionTokenAction.success(newSessionTokenResponse))
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    walletPaymentNewSessionToken.failure
+    paymentsGetNewSessionTokenAction.failure
   )} when newSessionToken is not 200`, () => {
     const mocknewSessionToken = jest.fn();
 
     testSaga(
       handleWalletPaymentNewSessionToken,
       mocknewSessionToken,
-      walletPaymentNewSessionToken.request()
+      paymentsGetNewSessionTokenAction.request()
     )
       .next()
       .call(
         withRefreshApiCall,
         mocknewSessionToken(),
-        walletPaymentNewSessionToken.request()
+        paymentsGetNewSessionTokenAction.request()
       )
       .next(E.right({ status: 400, value: undefined }))
       .put(
-        walletPaymentNewSessionToken.failure(
+        paymentsGetNewSessionTokenAction.failure(
           getGenericError(new Error(`Error: 400`))
         )
       )
@@ -62,24 +62,24 @@ describe("Test handleWalletPaymentNewSessionToken saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentNewSessionToken.failure
+    paymentsGetNewSessionTokenAction.failure
   )} when newSessionToken encoders returns an error`, () => {
     const mocknewSessionToken = jest.fn();
 
     testSaga(
       handleWalletPaymentNewSessionToken,
       mocknewSessionToken,
-      walletPaymentNewSessionToken.request()
+      paymentsGetNewSessionTokenAction.request()
     )
       .next()
       .call(
         withRefreshApiCall,
         mocknewSessionToken(),
-        walletPaymentNewSessionToken.request()
+        paymentsGetNewSessionTokenAction.request()
       )
       .next(E.left([]))
       .put(
-        walletPaymentNewSessionToken.failure({
+        paymentsGetNewSessionTokenAction.failure({
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )

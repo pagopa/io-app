@@ -15,10 +15,10 @@ import {
   useIONavigation
 } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { WalletPaymentRoutes } from "../navigation/routes";
+import { PaymentsPaymentRoutes } from "../navigation/routes";
 import {
   PaymentInitStateParams,
-  walletPaymentInitState
+  initPaymentStateAction
 } from "../store/actions/orchestration";
 import { PaymentStartRoute } from "../types";
 
@@ -47,7 +47,7 @@ const usePagoPaPayment = () => {
         route.key as keyof NavigatorScreenParams<AppParamsList>["screen"]
     };
     dispatch(
-      walletPaymentInitState({
+      initPaymentStateAction({
         startRoute,
         startOrigin
       })
@@ -61,8 +61,8 @@ const usePagoPaPayment = () => {
    */
   const startPaymentFlow = (rptId: RptId, params: PagoPaPaymentParams = {}) => {
     initPaymentState(params);
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_DETAIL,
+    navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
+      screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_DETAIL,
       params: {
         rptId
       }

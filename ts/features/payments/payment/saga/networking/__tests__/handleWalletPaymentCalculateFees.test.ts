@@ -6,12 +6,12 @@ import { PaymentMethodStatusEnum } from "../../../../../../../definitions/pagopa
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { walletPaymentCalculateFees } from "../../../store/actions/networking";
+import { paymentsCalculatePaymentFeesAction } from "../../../store/actions/networking";
 import { handleWalletPaymentCalculateFees } from "../handleWalletPaymentCalculateFees";
 import { CalculateFeeRequest } from "../../../../../../../definitions/pagopa/ecommerce/CalculateFeeRequest";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
 import { preferredLanguageSelector } from "../../../../../../store/reducers/persistedPreferences";
-import { walletPaymentPickPsp } from "../../../store/actions/orchestration";
+import { selectPaymentPspAction } from "../../../store/actions/orchestration";
 
 describe("Test handleWalletPaymentCalculateFees saga", () => {
   const calculateFeesPayload: CalculateFeeRequest & {
@@ -23,7 +23,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
   const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
-    walletPaymentCalculateFees.success
+    paymentsCalculatePaymentFeesAction.success
   )} when calculateFees is 200 and bundles are more than one`, () => {
     const mockCalculateFees = jest.fn();
     const calculateFeesResponse: CalculateFeeResponse = {
@@ -44,7 +44,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
     testSaga(
       handleWalletPaymentCalculateFees,
       mockCalculateFees,
-      walletPaymentCalculateFees.request(calculateFeesPayload)
+      paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
     )
       .next()
       .select(preferredLanguageSelector)
@@ -54,24 +54,24 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .call(
         withRefreshApiCall,
         mockCalculateFees(),
-        walletPaymentCalculateFees.request(calculateFeesPayload)
+        paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
       )
       .next(E.right({ status: 200, value: calculateFeesResponse }))
       .next()
-      .put(walletPaymentCalculateFees.success(calculateFeesResponse))
+      .put(paymentsCalculatePaymentFeesAction.success(calculateFeesResponse))
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    walletPaymentCalculateFees.failure
+    paymentsCalculatePaymentFeesAction.failure
   )} when calculateFees is not 200`, () => {
     const mockCalculateFees = jest.fn();
 
     testSaga(
       handleWalletPaymentCalculateFees,
       mockCalculateFees,
-      walletPaymentCalculateFees.request(calculateFeesPayload)
+      paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
     )
       .next()
       .select(preferredLanguageSelector)
@@ -81,11 +81,11 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .call(
         withRefreshApiCall,
         mockCalculateFees(),
-        walletPaymentCalculateFees.request(calculateFeesPayload)
+        paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
       )
       .next(E.right({ status: 400, value: undefined }))
       .put(
-        walletPaymentCalculateFees.failure(
+        paymentsCalculatePaymentFeesAction.failure(
           getGenericError(new Error(`Error: 400`))
         )
       )
@@ -94,14 +94,14 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentCalculateFees.failure
+    paymentsCalculatePaymentFeesAction.failure
   )} when calculateFees encoders returns an error`, () => {
     const mockCalculateFees = jest.fn();
 
     testSaga(
       handleWalletPaymentCalculateFees,
       mockCalculateFees,
-      walletPaymentCalculateFees.request(calculateFeesPayload)
+      paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
     )
       .next()
       .select(preferredLanguageSelector)
@@ -111,11 +111,11 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .call(
         withRefreshApiCall,
         mockCalculateFees(),
-        walletPaymentCalculateFees.request(calculateFeesPayload)
+        paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
       )
       .next(E.left([]))
       .put(
-        walletPaymentCalculateFees.failure({
+        paymentsCalculatePaymentFeesAction.failure({
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )
@@ -124,7 +124,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentPickPsp
+    selectPaymentPspAction
   )} with first psp in the list when calculateFees is 200 and bundles is only one in list`, () => {
     const mockCalculateFees = jest.fn();
     const calculateFeesResponse: CalculateFeeResponse = {
@@ -142,7 +142,7 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
     testSaga(
       handleWalletPaymentCalculateFees,
       mockCalculateFees,
-      walletPaymentCalculateFees.request(calculateFeesPayload)
+      paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
     )
       .next()
       .select(preferredLanguageSelector)
@@ -152,13 +152,13 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .call(
         withRefreshApiCall,
         mockCalculateFees(),
-        walletPaymentCalculateFees.request(calculateFeesPayload)
+        paymentsCalculatePaymentFeesAction.request(calculateFeesPayload)
       )
       .next(E.right({ status: 200, value: calculateFeesResponse }))
       .next()
-      .put(walletPaymentPickPsp(calculateFeesResponse.bundles[0]))
+      .put(selectPaymentPspAction(calculateFeesResponse.bundles[0]))
       .next()
-      .put(walletPaymentCalculateFees.success(calculateFeesResponse))
+      .put(paymentsCalculatePaymentFeesAction.success(calculateFeesResponse))
       .next()
       .isDone();
   });

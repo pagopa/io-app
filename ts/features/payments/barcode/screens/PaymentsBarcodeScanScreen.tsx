@@ -32,15 +32,15 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
-import { WalletPaymentRoutes } from "../../payment/navigation/routes";
-import { WalletBarcodeRoutes } from "../navigation/routes";
+import { PaymentsPaymentRoutes } from "../../payment/navigation/routes";
+import { PaymentsBarcodeRoutes } from "../navigation/routes";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
   body: "wallet.QRtoPay.contextualHelpContent"
 };
 
-const WalletBarcodeScanScreen = () => {
+const PaymentsBarcodeScanScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useIODispatch();
   const { dataMatrixPosteEnabled } = useIOSelector(
@@ -77,8 +77,8 @@ const WalletBarcodeScanScreen = () => {
     }
 
     if (pagoPaBarcodes.length > 1) {
-      navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
-        screen: WalletBarcodeRoutes.WALLET_BARCODE_CHOICE,
+      navigation.navigate(PaymentsBarcodeRoutes.PAYMENTS_BARCODE_NAVIGATOR, {
+        screen: PaymentsBarcodeRoutes.PAYMENTS_BARCODE_CHOICE,
         params: {
           barcodes: pagoPaBarcodes
         }
@@ -133,8 +133,8 @@ const WalletBarcodeScanScreen = () => {
     analytics.trackBarcodeManualEntryPath("avviso");
 
     if (isDesignSystemEnabled) {
-      navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-        screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
+      navigation.navigate(PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR, {
+        screen: PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_NOTICE_NUMBER
       });
     } else {
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
@@ -177,4 +177,4 @@ const WalletBarcodeScanScreen = () => {
   );
 };
 
-export { WalletBarcodeScanScreen };
+export { PaymentsBarcodeScanScreen };

@@ -7,7 +7,7 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentNewSessionToken } from "../../store/actions/networking";
+import { paymentsGetNewSessionTokenAction } from "../../store/actions/networking";
 import { selectWalletPaymentSessionToken } from "../../store/selectors";
 
 /**
@@ -30,12 +30,12 @@ export function* getOrFetchWalletSessionToken(timeoutMs: number = 3000) {
   }
 
   // If the session token is not present, dispatch a new request action
-  yield* put(walletPaymentNewSessionToken.request());
+  yield* put(paymentsGetNewSessionTokenAction.request());
 
   // Wait for the request to end, either in success or failure, with a timeout
   const { data } = yield* race({
-    data: take(walletPaymentNewSessionToken.success),
-    failure: take(walletPaymentNewSessionToken.failure),
+    data: take(paymentsGetNewSessionTokenAction.success),
+    failure: take(paymentsGetNewSessionTokenAction.failure),
     timeout: delay(timeoutMs)
   });
 
@@ -45,7 +45,7 @@ export function* getOrFetchWalletSessionToken(timeoutMs: number = 3000) {
 
 export function* handleWalletPaymentNewSessionToken(
   newSessionToken: PaymentClient["newSessionToken"],
-  action: ActionType<(typeof walletPaymentNewSessionToken)["request"]>
+  action: ActionType<(typeof paymentsGetNewSessionTokenAction)["request"]>
 ) {
   const newSessionTokenRequest = newSessionToken({});
 
@@ -61,14 +61,14 @@ export function* handleWalletPaymentNewSessionToken(
         newSessionTokenResult,
         E.fold(
           error =>
-            walletPaymentNewSessionToken.failure({
+            paymentsGetNewSessionTokenAction.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
           ({ status, value }) => {
             if (status === 200) {
-              return walletPaymentNewSessionToken.success(value);
+              return paymentsGetNewSessionTokenAction.success(value);
             } else {
-              return walletPaymentNewSessionToken.failure({
+              return paymentsGetNewSessionTokenAction.failure({
                 ...getGenericError(new Error(`Error: ${status}`))
               });
             }
@@ -77,6 +77,8 @@ export function* handleWalletPaymentNewSessionToken(
       )
     );
   } catch (e) {
-    yield* put(walletPaymentNewSessionToken.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsGetNewSessionTokenAction.failure({ ...getNetworkError(e) })
+    );
   }
 }

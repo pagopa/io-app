@@ -4,9 +4,9 @@ import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { walletPaymentSetCurrentStep } from "../actions/orchestration";
-import { WalletPaymentState } from "../reducers";
+import { PaymentsPaymentState } from "../reducers";
 
-const INITIAL_STATE: WalletPaymentState = {
+const INITIAL_STATE: PaymentsPaymentState = {
   currentStep: 1,
   sessionToken: pot.none,
   paymentDetails: pot.none,
@@ -19,7 +19,7 @@ const INITIAL_STATE: WalletPaymentState = {
   authorizationUrl: pot.none
 };
 
-describe("Test Wallet reducer", () => {
+describe("Test Payment reducer", () => {
   it("should have initial state at startup", () => {
     const globalState = appReducer(undefined, applicationChangeState("active"));
     expect(globalState.features.payments.payment).toStrictEqual(INITIAL_STATE);

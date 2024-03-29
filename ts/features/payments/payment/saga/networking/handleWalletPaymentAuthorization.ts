@@ -12,19 +12,21 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentAuthorization } from "../../store/actions/networking";
+import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentAuthorization(
   requestTransactionAuthorization: PaymentClient["requestTransactionAuthorization"],
-  action: ActionType<(typeof walletPaymentAuthorization)["request"]>
+  action: ActionType<
+    (typeof paymentsStartPaymentAuthorizationAction)["request"]
+  >
 ) {
   try {
     const sessionToken = yield* getOrFetchWalletSessionToken();
 
     if (sessionToken === undefined) {
       yield* put(
-        walletPaymentAuthorization.failure({
+        paymentsStartPaymentAuthorizationAction.failure({
           ...getGenericError(new Error(`Missing session token`))
         })
       );
@@ -60,15 +62,15 @@ export function* handleWalletPaymentAuthorization(
         requestTransactionAuthorizationResult,
         E.fold(
           error =>
-            walletPaymentAuthorization.failure({
+            paymentsStartPaymentAuthorizationAction.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
 
           res => {
             if (res.status === 200) {
-              return walletPaymentAuthorization.success(res.value);
+              return paymentsStartPaymentAuthorizationAction.success(res.value);
             }
-            return walletPaymentAuthorization.failure({
+            return paymentsStartPaymentAuthorizationAction.failure({
               ...getGenericError(new Error(`Error: ${res.status}`))
             });
           }
@@ -76,6 +78,8 @@ export function* handleWalletPaymentAuthorization(
       )
     );
   } catch (e) {
-    yield* put(walletPaymentAuthorization.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsStartPaymentAuthorizationAction.failure({ ...getNetworkError(e) })
+    );
   }
 }

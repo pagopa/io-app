@@ -10,36 +10,36 @@ import { clearCache } from "../../../../../store/actions/profile";
 import { Action } from "../../../../../store/actions/types";
 import { getLookUpId } from "../../../../../utils/pmLookUpId";
 import {
-  walletPaymentCreateTransaction,
-  walletPaymentGetDetails,
-  walletPaymentGetTransactionInfo
+  paymentsCreateTransactionAction,
+  paymentsGetPaymentDetailsAction,
+  paymentsGetPaymentTransactionInfoAction
 } from "../../../payment/store/actions/networking";
-import { walletPaymentInitState } from "../../../payment/store/actions/orchestration";
+import { initPaymentStateAction } from "../../../payment/store/actions/orchestration";
 import { WalletPaymentFailure } from "../../../payment/types/WalletPaymentFailure";
 import { PaymentHistory } from "../../types";
 import {
-  walletPaymentStoreNewAttempt,
-  walletPaymentHistoryStoreOutcome
+  storeNewPaymentAttemptAction,
+  storePaymentOutcomeToHistory
 } from "../actions";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 
-export type WalletPaymentHistoryState = {
+export type PaymentsHistoryState = {
   ongoingPayment?: PaymentHistory;
   archive: ReadonlyArray<PaymentHistory>;
 };
 
-const INITIAL_STATE: WalletPaymentHistoryState = {
+const INITIAL_STATE: PaymentsHistoryState = {
   archive: []
 };
 
 export const ARCHIVE_SIZE = 15;
 
 const reducer = (
-  state: WalletPaymentHistoryState = INITIAL_STATE,
+  state: PaymentsHistoryState = INITIAL_STATE,
   action: Action
-): WalletPaymentHistoryState => {
+): PaymentsHistoryState => {
   switch (action.type) {
-    case getType(walletPaymentInitState):
+    case getType(initPaymentStateAction):
       return {
         ...state,
         ongoingPayment: {
@@ -48,7 +48,7 @@ const reducer = (
           lookupId: getLookUpId()
         }
       };
-    case getType(walletPaymentGetDetails.request):
+    case getType(paymentsGetPaymentDetailsAction.request):
       return {
         ...state,
         ongoingPayment: {
@@ -57,7 +57,7 @@ const reducer = (
           attempt: getPaymentAttemptByRptId(state, action.payload)
         }
       };
-    case getType(walletPaymentGetDetails.success):
+    case getType(paymentsGetPaymentDetailsAction.success):
       return {
         ...state,
         ongoingPayment: {
@@ -65,21 +65,21 @@ const reducer = (
           verifiedData: action.payload
         }
       };
-    case getType(walletPaymentStoreNewAttempt):
+    case getType(storeNewPaymentAttemptAction):
       return updatePaymentHistory(state, {}, true);
-    case getType(walletPaymentCreateTransaction.success):
-    case getType(walletPaymentGetTransactionInfo.success):
+    case getType(paymentsCreateTransactionAction.success):
+    case getType(paymentsGetPaymentTransactionInfoAction.success):
       return updatePaymentHistory(state, {
         transaction: action.payload
       });
-    case getType(walletPaymentHistoryStoreOutcome):
+    case getType(storePaymentOutcomeToHistory):
       return updatePaymentHistory(state, {
         outcome: action.payload,
         ...(action.payload === "0" ? { success: true } : {})
       });
-    case getType(walletPaymentGetDetails.failure):
-    case getType(walletPaymentCreateTransaction.failure):
-    case getType(walletPaymentGetTransactionInfo.failure):
+    case getType(paymentsGetPaymentDetailsAction.failure):
+    case getType(paymentsCreateTransactionAction.failure):
+    case getType(paymentsGetPaymentTransactionInfoAction.failure):
       return updatePaymentHistory(state, {
         failure: pipe(
           WalletPaymentFailure.decode(action.payload),
@@ -94,10 +94,7 @@ const reducer = (
   return state;
 };
 
-const getPaymentAttemptByRptId = (
-  state: WalletPaymentHistoryState,
-  rptId: RptId
-) =>
+const getPaymentAttemptByRptId = (state: PaymentsHistoryState, rptId: RptId) =>
   pipe(
     state.archive as Array<PaymentHistory>,
     A.findFirst(h => h.rptId === rptId),
@@ -120,10 +117,10 @@ const appendItemToArchive = (
   );
 
 const updatePaymentHistory = (
-  state: WalletPaymentHistoryState,
+  state: PaymentsHistoryState,
   data: PaymentHistory,
   newAttempt: boolean = false
-): WalletPaymentHistoryState => {
+): PaymentsHistoryState => {
   const currentAttempt = state.ongoingPayment?.attempt || 0;
   const updatedOngoingPaymentHistory: PaymentHistory = {
     ...state.ongoingPayment,
@@ -154,7 +151,7 @@ const persistConfig: PersistConfig = {
 };
 
 export const walletPaymentHistoryPersistor = persistReducer<
-  WalletPaymentHistoryState,
+  PaymentsHistoryState,
   Action
 >(persistConfig, reducer);
 

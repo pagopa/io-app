@@ -7,19 +7,19 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentGetDetails } from "../../store/actions/networking";
+import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetDetails(
   getPaymentRequestInfo: PaymentClient["getPaymentRequestInfo"],
-  action: ActionType<(typeof walletPaymentGetDetails)["request"]>
+  action: ActionType<(typeof paymentsGetPaymentDetailsAction)["request"]>
 ) {
   try {
     const sessionToken = yield* getOrFetchWalletSessionToken();
 
     if (sessionToken === undefined) {
       yield* put(
-        walletPaymentGetDetails.failure(
+        paymentsGetPaymentDetailsAction.failure(
           getGenericError(new Error(`Missing session token`))
         )
       );
@@ -42,24 +42,26 @@ export function* handleWalletPaymentGetDetails(
         getPaymentRequestInfoResult,
         E.fold(
           error =>
-            walletPaymentGetDetails.failure({
+            paymentsGetPaymentDetailsAction.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
           ({ status, value }) => {
             if (status === 200) {
-              return walletPaymentGetDetails.success(value);
+              return paymentsGetPaymentDetailsAction.success(value);
             } else if (status === 400) {
-              return walletPaymentGetDetails.failure({
+              return paymentsGetPaymentDetailsAction.failure({
                 ...getGenericError(new Error(`Error: ${status}`))
               });
             } else {
-              return walletPaymentGetDetails.failure(value);
+              return paymentsGetPaymentDetailsAction.failure(value);
             }
           }
         )
       )
     );
   } catch (e) {
-    yield* put(walletPaymentGetDetails.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsGetPaymentDetailsAction.failure({ ...getNetworkError(e) })
+    );
   }
 }

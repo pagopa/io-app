@@ -1,6 +1,6 @@
-import { WalletPaymentNetworkingActions } from "./networking";
-import { WalletPaymentOrchestrationActions } from "./orchestration";
+import { PaymentsPaymentNetworkingActions } from "./networking";
+import { PaymentsPaymentOrchestrationActions } from "./orchestration";
 
-export type WalletPaymentActions =
-  | WalletPaymentNetworkingActions
-  | WalletPaymentOrchestrationActions;
+export type PaymentsPaymentActions =
+  | PaymentsPaymentNetworkingActions
+  | PaymentsPaymentOrchestrationActions;

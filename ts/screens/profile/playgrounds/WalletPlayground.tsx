@@ -7,20 +7,23 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { RNavScreenWithLargeHeader } from "../../../components/ui/RNavScreenWithLargeHeader";
-import { WalletOnboardingRoutes } from "../../../features/payments/onboarding/navigation/navigator";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
+import { PaymentsOnboardingRoutes } from "../../../features/payments/onboarding/navigation/routes";
 
 const WalletPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const navigateToWalletOnboarding = () => {
-    navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
-      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
-    });
+    navigation.navigate(
+      PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR,
+      {
+        screen: PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD
+      }
+    );
   };
 
   const navigateToWalletPaymentPlayground = () => {

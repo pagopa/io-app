@@ -8,7 +8,7 @@ import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 import {
   WalletPaymentAuthorizePayload,
-  walletPaymentAuthorization
+  paymentsStartPaymentAuthorizationAction
 } from "../../../store/actions/networking";
 import { handleWalletPaymentAuthorization } from "../handleWalletPaymentAuthorization";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
@@ -25,7 +25,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
   const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
-    walletPaymentAuthorization.success
+    paymentsStartPaymentAuthorizationAction.success
   )} when requestTransactionAuthorization is 200`, () => {
     const mockRequestTransactionAuthorization = jest.fn();
     const requestTransactionAuthorizationResponse: RequestAuthorizationResponse =
@@ -37,7 +37,9 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
     testSaga(
       handleWalletPaymentAuthorization,
       mockRequestTransactionAuthorization,
-      walletPaymentAuthorization.request(requestTransactionAuthorizationPayload)
+      paymentsStartPaymentAuthorizationAction.request(
+        requestTransactionAuthorizationPayload
+      )
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -45,7 +47,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       .call(
         withRefreshApiCall,
         mockRequestTransactionAuthorization(),
-        walletPaymentAuthorization.request(
+        paymentsStartPaymentAuthorizationAction.request(
           requestTransactionAuthorizationPayload
         )
       )
@@ -53,7 +55,7 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
         E.right({ status: 200, value: requestTransactionAuthorizationResponse })
       )
       .put(
-        walletPaymentAuthorization.success(
+        paymentsStartPaymentAuthorizationAction.success(
           requestTransactionAuthorizationResponse
         )
       )
@@ -62,14 +64,16 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentAuthorization.failure
+    paymentsStartPaymentAuthorizationAction.failure
   )} when requestTransactionAuthorization is not 200`, () => {
     const mockRequestTransactionAuthorization = jest.fn();
 
     testSaga(
       handleWalletPaymentAuthorization,
       mockRequestTransactionAuthorization,
-      walletPaymentAuthorization.request(requestTransactionAuthorizationPayload)
+      paymentsStartPaymentAuthorizationAction.request(
+        requestTransactionAuthorizationPayload
+      )
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -77,13 +81,13 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       .call(
         withRefreshApiCall,
         mockRequestTransactionAuthorization(),
-        walletPaymentAuthorization.request(
+        paymentsStartPaymentAuthorizationAction.request(
           requestTransactionAuthorizationPayload
         )
       )
       .next(E.right({ status: 400, value: undefined }))
       .put(
-        walletPaymentAuthorization.failure(
+        paymentsStartPaymentAuthorizationAction.failure(
           getGenericError(new Error(`Error: 400`))
         )
       )
@@ -92,14 +96,16 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentAuthorization.failure
+    paymentsStartPaymentAuthorizationAction.failure
   )} when requestTransactionAuthorization encoders returns an error`, () => {
     const mockRequestTransactionAuthorization = jest.fn();
 
     testSaga(
       handleWalletPaymentAuthorization,
       mockRequestTransactionAuthorization,
-      walletPaymentAuthorization.request(requestTransactionAuthorizationPayload)
+      paymentsStartPaymentAuthorizationAction.request(
+        requestTransactionAuthorizationPayload
+      )
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -107,13 +113,13 @@ describe("Test handleWalletPaymentAuthorization saga", () => {
       .call(
         withRefreshApiCall,
         mockRequestTransactionAuthorization(),
-        walletPaymentAuthorization.request(
+        paymentsStartPaymentAuthorizationAction.request(
           requestTransactionAuthorizationPayload
         )
       )
       .next(E.left([]))
       .put(
-        walletPaymentAuthorization.failure({
+        paymentsStartPaymentAuthorizationAction.failure({
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )

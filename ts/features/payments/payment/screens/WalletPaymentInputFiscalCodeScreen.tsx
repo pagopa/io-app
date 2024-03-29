@@ -39,15 +39,15 @@ import {
   decodeOrganizationFiscalCode,
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
-import { WalletPaymentParamsList } from "../navigation/params";
+import { PaymentsPaymentParamsList } from "../navigation/params";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
 };
 
 type WalletPaymentInputFiscalCodeRouteProps = RouteProp<
-  WalletPaymentParamsList,
-  "WALLET_PAYMENT_INPUT_FISCAL_CODE"
+  PaymentsPaymentParamsList,
+  "PAYMENTS_PAYMENT_INPUT_FISCAL_CODE"
 >;
 
 type InputState = {

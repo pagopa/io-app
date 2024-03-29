@@ -7,8 +7,7 @@ import {
   ListItemInfo
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-
-import { WalletTransactionParamsList } from "../navigation/navigator";
+import { PaymentsTransactionParamsList } from "../navigation/params";
 import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { cleanTransactionDescription } from "../../../../utils/payment";
@@ -22,15 +21,15 @@ const styles = StyleSheet.create({
   }
 });
 
-export type WalletTransactionOperationDetailsScreenParams = {
+export type PaymentsTransactionOperationDetailsScreenParams = {
   operationName: string;
   operationSubject: string;
   operationDetails: Dettaglio;
 };
 
 export type WalletTransactionOperationDetailsScreenProps = RouteProp<
-  WalletTransactionParamsList,
-  "WALLET_TRANSACTION_OPERATION_DETAILS"
+  PaymentsTransactionParamsList,
+  "PAYMENTS_TRANSACTION_OPERATION_DETAILS"
 >;
 
 const WalletTransactionOperationDetailsScreen = () => {

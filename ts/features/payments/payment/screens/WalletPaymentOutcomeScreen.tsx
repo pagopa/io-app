@@ -14,7 +14,7 @@ import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
 import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupportModal";
-import { WalletPaymentParamsList } from "../navigation/params";
+import { PaymentsPaymentParamsList } from "../navigation/params";
 import {
   walletPaymentDetailsSelector,
   walletPaymentStartRouteSelector
@@ -30,8 +30,8 @@ type WalletPaymentOutcomeScreenNavigationParams = {
 };
 
 type WalletPaymentOutcomeRouteProps = RouteProp<
-  WalletPaymentParamsList,
-  "WALLET_PAYMENT_OUTCOME"
+  PaymentsPaymentParamsList,
+  "PAYMENTS_PAYMENT_OUTCOME"
 >;
 
 const WalletPaymentOutcomeScreen = () => {

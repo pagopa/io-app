@@ -7,18 +7,20 @@ import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { PaymentClient } from "../../api/client";
-import { walletPaymentGetTransactionInfo } from "../../store/actions/networking";
+import { paymentsGetPaymentTransactionInfoAction } from "../../store/actions/networking";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentGetTransactionInfo(
   getTransactionInfo: PaymentClient["getTransactionInfo"],
-  action: ActionType<(typeof walletPaymentGetTransactionInfo)["request"]>
+  action: ActionType<
+    (typeof paymentsGetPaymentTransactionInfoAction)["request"]
+  >
 ) {
   const sessionToken = yield* getOrFetchWalletSessionToken();
 
   if (sessionToken === undefined) {
     yield* put(
-      walletPaymentGetTransactionInfo.failure({
+      paymentsGetPaymentTransactionInfoAction.failure({
         ...getGenericError(new Error(`Missing session token`))
       })
     );
@@ -42,14 +44,14 @@ export function* handleWalletPaymentGetTransactionInfo(
         getTransactionInfoResult,
         E.fold(
           error =>
-            walletPaymentGetTransactionInfo.failure({
+            paymentsGetPaymentTransactionInfoAction.failure({
               ...getGenericError(new Error(readablePrivacyReport(error)))
             }),
           ({ status, value }) => {
             if (status === 200) {
-              return walletPaymentGetTransactionInfo.success(value);
+              return paymentsGetPaymentTransactionInfoAction.success(value);
             } else {
-              return walletPaymentGetTransactionInfo.failure({
+              return paymentsGetPaymentTransactionInfoAction.failure({
                 ...getGenericError(new Error(JSON.stringify(value)))
               });
             }
@@ -59,7 +61,7 @@ export function* handleWalletPaymentGetTransactionInfo(
     );
   } catch (e) {
     yield* put(
-      walletPaymentGetTransactionInfo.failure({ ...getNetworkError(e) })
+      paymentsGetPaymentTransactionInfoAction.failure({ ...getNetworkError(e) })
     );
   }
 }

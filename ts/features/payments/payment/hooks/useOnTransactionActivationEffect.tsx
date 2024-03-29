@@ -3,7 +3,7 @@ import { TransactionInfo } from "../../../../../definitions/pagopa/ecommerce/Tra
 import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommerce/TransactionStatus";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getGenericError } from "../../../../utils/errors";
-import { walletPaymentGetTransactionInfo } from "../store/actions/networking";
+import { paymentsGetPaymentTransactionInfoAction } from "../store/actions/networking";
 import { walletPaymentTransactionSelector } from "../store/selectors";
 
 const INITIAL_DELAY = 250;
@@ -39,7 +39,7 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
       } else if (countRef.current > MAX_TRIES) {
         // The transaction is not yet ACTIVATED, and we exceeded the max retries
         dispatch(
-          walletPaymentGetTransactionInfo.failure(
+          paymentsGetPaymentTransactionInfoAction.failure(
             getGenericError(new Error("Max try reached"))
           )
         );
@@ -49,7 +49,9 @@ const useOnTransactionActivationEffect = (effect: EffectCallback) => {
         const timeout = setTimeout(() => {
           delayRef.current *= 2;
           countRef.current += 1;
-          dispatch(walletPaymentGetTransactionInfo.request({ transactionId }));
+          dispatch(
+            paymentsGetPaymentTransactionInfoAction.request({ transactionId })
+          );
         }, delayRef.current);
         // Clean up the timeout to avoid memory leaks
         return () => {

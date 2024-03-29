@@ -7,7 +7,7 @@ import { PaymentMethodsResponse } from "../../../../../../../definitions/pagopa/
 import { getGenericError } from "../../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
-import { walletPaymentGetAllMethods } from "../../../store/actions/networking";
+import { paymentsGetPaymentMethodsAction } from "../../../store/actions/networking";
 import { handleWalletPaymentGetAllMethods } from "../handleWalletPaymentGetAllMethods";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { selectWalletPaymentSessionToken } from "../../../store/selectors";
@@ -16,7 +16,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
   const T_SESSION_TOKEN = "ABCD";
 
   it(`should put ${getType(
-    walletPaymentGetAllMethods.success
+    paymentsGetPaymentMethodsAction.success
   )} when getAllPaymentMethods is 200`, () => {
     const mockGetAllPaymentMethods = jest.fn();
     const getAllPaymentMethodsResponse: PaymentMethodsResponse = {
@@ -41,7 +41,7 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
     testSaga(
       handleWalletPaymentGetAllMethods,
       mockGetAllPaymentMethods,
-      walletPaymentGetAllMethods.request()
+      paymentsGetPaymentMethodsAction.request()
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -49,23 +49,25 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       .call(
         withRefreshApiCall,
         mockGetAllPaymentMethods(),
-        walletPaymentGetAllMethods.request()
+        paymentsGetPaymentMethodsAction.request()
       )
       .next(E.right({ status: 200, value: getAllPaymentMethodsResponse }))
-      .put(walletPaymentGetAllMethods.success(getAllPaymentMethodsResponse))
+      .put(
+        paymentsGetPaymentMethodsAction.success(getAllPaymentMethodsResponse)
+      )
       .next()
       .isDone();
   });
 
   it(`should put ${getType(
-    walletPaymentGetAllMethods.failure
+    paymentsGetPaymentMethodsAction.failure
   )} when getAllPaymentMethods is not 200`, () => {
     const mockGetAllPaymentMethods = jest.fn();
 
     testSaga(
       handleWalletPaymentGetAllMethods,
       mockGetAllPaymentMethods,
-      walletPaymentGetAllMethods.request()
+      paymentsGetPaymentMethodsAction.request()
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -73,11 +75,11 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       .call(
         withRefreshApiCall,
         mockGetAllPaymentMethods(),
-        walletPaymentGetAllMethods.request()
+        paymentsGetPaymentMethodsAction.request()
       )
       .next(E.right({ status: 400, value: undefined }))
       .put(
-        walletPaymentGetAllMethods.failure(
+        paymentsGetPaymentMethodsAction.failure(
           getGenericError(new Error(`Error: 400`))
         )
       )
@@ -86,14 +88,14 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
   });
 
   it(`should put ${getType(
-    walletPaymentGetAllMethods.failure
+    paymentsGetPaymentMethodsAction.failure
   )} when getAllPaymentMethods encoders returns an error`, () => {
     const mockGetAllPaymentMethods = jest.fn();
 
     testSaga(
       handleWalletPaymentGetAllMethods,
       mockGetAllPaymentMethods,
-      walletPaymentGetAllMethods.request()
+      paymentsGetPaymentMethodsAction.request()
     )
       .next()
       .select(selectWalletPaymentSessionToken)
@@ -101,11 +103,11 @@ describe("Test handleWalletPaymentGetAllMethods saga", () => {
       .call(
         withRefreshApiCall,
         mockGetAllPaymentMethods(),
-        walletPaymentGetAllMethods.request()
+        paymentsGetPaymentMethodsAction.request()
       )
       .next(E.left([]))
       .put(
-        walletPaymentGetAllMethods.failure({
+        paymentsGetPaymentMethodsAction.failure({
           ...getGenericError(new Error(readablePrivacyReport([])))
         })
       )

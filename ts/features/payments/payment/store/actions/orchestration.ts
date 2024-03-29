@@ -21,25 +21,25 @@ export type PaymentInitStateParams = {
  * Action to initialize the state of a payment, optionally you can specify the route to go back to
  * after the payment is completed or cancelled (default is the popToTop route)
  */
-export const walletPaymentInitState = createStandardAction(
-  "WALLET_PAYMENT_INIT_STATE"
+export const initPaymentStateAction = createStandardAction(
+  "PAYMENTS_INIT_PAYMENT_STATE"
 )<PaymentInitStateParams>();
 
-export const walletPaymentPickPaymentMethod = createStandardAction(
-  "WALLET_PAYMENT_PICK_PAYMENT_METHOD"
+export const selectPaymentMethodAction = createStandardAction(
+  "PAYMENTS_SELECT_PAYMENT_METHOD"
 )<WalletInfo>();
 
-export const walletPaymentPickPsp = createStandardAction(
-  "WALLET_PAYMENT_PICK_PSP"
+export const selectPaymentPspAction = createStandardAction(
+  "PAYMENTS_SELECT_PAYMENT_PSP"
 )<Bundle>();
 
-export const walletPaymentResetPickedPsp = createStandardAction(
-  "WALLET_PAYMENT_RESET_PICKED_PSP"
+export const resetPaymentPspAction = createStandardAction(
+  "PAYMENTS_RESET_PAYMENT_PSP"
 )();
 
-export type WalletPaymentOrchestrationActions =
+export type PaymentsPaymentOrchestrationActions =
   | ActionType<typeof walletPaymentSetCurrentStep>
-  | ActionType<typeof walletPaymentInitState>
-  | ActionType<typeof walletPaymentPickPaymentMethod>
-  | ActionType<typeof walletPaymentPickPsp>
-  | ActionType<typeof walletPaymentResetPickedPsp>;
+  | ActionType<typeof initPaymentStateAction>
+  | ActionType<typeof selectPaymentMethodAction>
+  | ActionType<typeof selectPaymentPspAction>
+  | ActionType<typeof resetPaymentPspAction>;

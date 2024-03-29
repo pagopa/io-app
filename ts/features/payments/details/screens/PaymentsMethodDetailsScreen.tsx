@@ -1,40 +1,36 @@
-import * as React from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
-
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
+import { useDispatch } from "react-redux";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { useIOSelector } from "../../../../store/hooks";
-import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
-import { capitalize } from "../../../../utils/strings";
-import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPaymentMethodScreen";
-import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
-import { WalletDetailsParamsList } from "../navigation/navigator";
-import {
-  isErrorWalletInstrumentSelector,
-  isLoadingWalletInstrumentSelector,
-  walletDetailsInstrumentSelector
-} from "../store";
-import { walletDetailsGetInstrument } from "../store/actions";
-import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
-import { getDateFromExpiryDate } from "../../../../utils/dates";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { getDateFromExpiryDate } from "../../../../utils/dates";
+import { capitalize } from "../../../../utils/strings";
+import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import { PaymentCardBig } from "../../common/components/PaymentCardBig";
+import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
+import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPaymentMethodScreen";
+import { PaymentsMethodDetailsParamsList } from "../navigation/params";
+import { paymentsGetMethodDetailsAction } from "../store/actions";
+import { selectPaymentMethodDetails } from "../store/selectors";
+import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 
-export type WalletDetailsScreenNavigationParams = Readonly<{
+export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
 }>;
 
-export type WalletDetailsScreenRouteProps = RouteProp<
-  WalletDetailsParamsList,
-  "WALLET_DETAILS_SCREEN"
+export type PaymentsMethodDetailsScreenRouteProps = RouteProp<
+  PaymentsMethodDetailsParamsList,
+  "PAYMENTS_METHOD_DETAILS_SCREEN"
 >;
 
 const generateCardComponent = (details: UIWalletInfoDetails) => {
@@ -89,16 +85,16 @@ const generateCardHeaderTitle = (details?: UIWalletInfoDetails) => {
 /**
  * Detail screen for a credit card
  */
-const WalletDetailsScreen = () => {
-  const route = useRoute<WalletDetailsScreenRouteProps>();
+const PaymentsMethodDetailsScreen = () => {
+  const route = useRoute<PaymentsMethodDetailsScreenRouteProps>();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
   const dispatch = useDispatch();
   const { walletId } = route.params;
-  const walletDetails = useIOSelector(walletDetailsInstrumentSelector);
-  const isLoadingWalletDetails = useIOSelector(
-    isLoadingWalletInstrumentSelector
-  );
-  const isErrorWalletDetails = useIOSelector(isErrorWalletInstrumentSelector);
+  const walletDetailsPot = useIOSelector(selectPaymentMethodDetails);
+
+  const isLoadingWalletDetails = pot.isLoading(walletDetailsPot);
+  const isErrorWalletDetails = pot.isError(walletDetailsPot);
+
   const areIdpayInitiativesLoading = useIOSelector(
     idPayAreInitiativesFromInstrumentLoadingSelector
   );
@@ -124,26 +120,26 @@ const WalletDetailsScreen = () => {
   );
 
   const handleOnRetry = () => {
-    dispatch(walletDetailsGetInstrument.request({ walletId }));
+    dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
   };
 
   React.useEffect(() => {
-    dispatch(walletDetailsGetInstrument.request({ walletId }));
+    dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
   }, [walletId, dispatch]);
 
   if (isLoadingWalletDetails) {
     return (
       <WalletDetailsPaymentMethodScreen
-        paymentMethod={walletDetails}
+        paymentMethod={pot.toUndefined(walletDetailsPot)}
         card={<PaymentCardBig testID="CreditCardComponent" isLoading={true} />}
         content={<></>}
       />
     );
   }
 
-  if (walletDetails !== undefined) {
+  if (pot.isSome(walletDetailsPot)) {
     const cardComponent = pipe(
-      walletDetails.details,
+      walletDetailsPot.value.details,
       O.fromNullable,
       O.fold(
         () => <PaymentCardBig testID="CreditCardComponent" isLoading={true} />,
@@ -157,12 +153,14 @@ const WalletDetailsScreen = () => {
         loadingOpacity={100}
       >
         <WalletDetailsPaymentMethodScreen
-          paymentMethod={walletDetails}
+          paymentMethod={walletDetailsPot.value}
           card={cardComponent}
           content={
-            <WalletDetailsPaymentMethodFeatures paymentMethod={walletDetails} />
+            <WalletDetailsPaymentMethodFeatures
+              paymentMethod={walletDetailsPot.value}
+            />
           }
-          headerTitle={generateCardHeaderTitle(walletDetails.details)}
+          headerTitle={generateCardHeaderTitle(walletDetailsPot.value.details)}
         />
       </LoadingSpinnerOverlay>
     );
@@ -172,4 +170,4 @@ const WalletDetailsScreen = () => {
   return null;
 };
 
-export default WalletDetailsScreen;
+export default PaymentsMethodDetailsScreen;

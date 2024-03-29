@@ -6,29 +6,29 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import { WalletBarcodeChoiceScreen } from "../screens/WalletBarcodeChoiceScreen";
-import { WalletBarcodeScanScreen } from "../screens/WalletBarcodeScanScreen";
-import { WalletBarcodeParamsList } from "./params";
-import { WalletBarcodeRoutes } from "./routes";
+import { PaymentsBarcodeChoiceScreen } from "../screens/PaymentsBarcodeChoiceScreen";
+import { PaymentsBarcodeScanScreen } from "../screens/PaymentsBarcodeScanScreen";
+import { PaymentsBarcodeParamsList } from "./params";
+import { PaymentsBarcodeRoutes } from "./routes";
 
-const Stack = createStackNavigator<WalletBarcodeParamsList>();
+const Stack = createStackNavigator<PaymentsBarcodeParamsList>();
 
 export const WalletBarcodeNavigator = () => (
   <Stack.Navigator
-    initialRouteName={WalletBarcodeRoutes.WALLET_BARCODE_MAIN}
+    initialRouteName={PaymentsBarcodeRoutes.PAYMENTS_BARCODE_SCAN}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      name={WalletBarcodeRoutes.WALLET_BARCODE_SCAN}
-      component={WalletBarcodeScanScreen}
+      name={PaymentsBarcodeRoutes.PAYMENTS_BARCODE_SCAN}
+      component={PaymentsBarcodeScanScreen}
       options={{
         ...TransitionPresets.ModalSlideFromBottomIOS,
         gestureEnabled: isGestureEnabled
       }}
     />
     <Stack.Screen
-      name={WalletBarcodeRoutes.WALLET_BARCODE_CHOICE}
-      component={WalletBarcodeChoiceScreen}
+      name={PaymentsBarcodeRoutes.PAYMENTS_BARCODE_CHOICE}
+      component={PaymentsBarcodeChoiceScreen}
       options={{
         gestureEnabled: isGestureEnabled
       }}
@@ -36,12 +36,12 @@ export const WalletBarcodeNavigator = () => (
   </Stack.Navigator>
 );
 
-export type WalletBarcodeStackNavigationProp<
+export type PaymentsBarcodeStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
-> = StackNavigationProp<WalletBarcodeParamsList & ParamList, RouteName>;
+> = StackNavigationProp<PaymentsBarcodeParamsList & ParamList, RouteName>;
 
-export type WalletBarcodeStackNavigation = WalletBarcodeStackNavigationProp<
-  WalletBarcodeParamsList,
-  keyof WalletBarcodeParamsList
+export type PaymentsBarcodeStackNavigation = PaymentsBarcodeStackNavigationProp<
+  PaymentsBarcodeParamsList,
+  keyof PaymentsBarcodeParamsList
 >;

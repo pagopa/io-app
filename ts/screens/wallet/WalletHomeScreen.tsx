@@ -47,8 +47,8 @@ import { idPayWalletInitiativeListSelector } from "../../features/idpay/wallet/s
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import { WalletBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import { WalletTransactionRoutes } from "../../features/payments/transaction/navigation/navigator";
+import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
+import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
@@ -389,9 +389,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   ) => {
     if (this.props.isDesignSystemEnabled) {
       this.props.navigation.navigate(
-        WalletTransactionRoutes.WALLET_TRANSACTION_MAIN,
+        PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_NAVIGATOR,
         {
-          screen: WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS,
+          screen: PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_DETAILS,
           params: {
             transactionId: transaction.id
           }
@@ -420,9 +420,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   private navigateToPaymentScanQrCode = () => {
-    this.props.navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
-      screen: WalletBarcodeRoutes.WALLET_BARCODE_SCAN
-    });
+    this.props.navigation.navigate(
+      PaymentsBarcodeRoutes.PAYMENTS_BARCODE_NAVIGATOR,
+      {
+        screen: PaymentsBarcodeRoutes.PAYMENTS_BARCODE_SCAN
+      }
+    );
   };
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {

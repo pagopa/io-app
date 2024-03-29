@@ -1,19 +1,16 @@
+import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import Placeholder from "rn-placeholder";
 import React from "react";
 import { View } from "react-native";
-import { Body, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { Psp, Transaction } from "../../../../types/pagopa";
+import Placeholder from "rn-placeholder";
 import { Dettaglio } from "../../../../../definitions/pagopa/Dettaglio";
-import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import I18n from "../../../../i18n";
-import {
-  WalletTransactionRoutes,
-  WalletTransactionStackNavigation
-} from "../navigation/navigator";
-
-import { WalletTransactionTotalAmount } from "./WalletTransactionTotalAmount";
+import { Psp, Transaction } from "../../../../types/pagopa";
+import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
+import { PaymentsTransactionStackNavigation } from "../navigation/navigator";
+import { PaymentsTransactionRoutes } from "../navigation/routes";
 import { WalletTransactionDetailsList } from "./WalletTransactionDetailsList";
+import { WalletTransactionTotalAmount } from "./WalletTransactionTotalAmount";
 
 type Props = {
   transaction?: Transaction;
@@ -26,12 +23,12 @@ export const WalletTransactionHeadingSection = ({
   psp,
   isLoading
 }: Props) => {
-  const navigation = useNavigation<WalletTransactionStackNavigation>();
+  const navigation = useNavigation<PaymentsTransactionStackNavigation>();
 
   const handlePressTransactionDetails = (operationDetails: Dettaglio) => {
     if (transaction) {
       navigation.navigate(
-        WalletTransactionRoutes.WALLET_TRANSACTION_OPERATION_DETAILS,
+        PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_OPERATION_DETAILS,
         {
           operationDetails,
           operationSubject: transaction.description,

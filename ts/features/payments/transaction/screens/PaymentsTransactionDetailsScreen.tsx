@@ -1,30 +1,29 @@
-import * as React from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { Dimensions, StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
-
-import { WalletTransactionParamsList } from "../navigation/navigator";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import * as React from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { walletTransactionDetailsGet } from "../store/actions";
-import { walletTransactionDetailsPotSelector } from "../store";
-import { fetchPsp } from "../../../../store/actions/wallet/transactions";
-import { Psp } from "../../../../types/pagopa";
-import WalletTransactionInfoSection from "../components/WalletTransactionInfoSection";
-import { WalletTransactionHeadingSection } from "../components/WalletTransactionHeadingSection";
 import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../../../i18n";
+import { fetchPsp } from "../../../../store/actions/wallet/transactions";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { Psp } from "../../../../types/pagopa";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { WalletTransactionHeadingSection } from "../components/WalletTransactionHeadingSection";
+import WalletTransactionInfoSection from "../components/WalletTransactionInfoSection";
+import { PaymentsTransactionParamsList } from "../navigation/params";
+import { getPaymentsTransactionDetailsAction } from "../store/actions";
+import { walletTransactionDetailsPotSelector } from "../store/selectors";
 
-export type WalletTransactionDetailsScreenParams = {
+export type PaymentsTransactionDetailsScreenParams = {
   transactionId: number;
 };
 
-export type WalletTransactionDetailsScreenProps = RouteProp<
-  WalletTransactionParamsList,
-  "WALLET_TRANSACTION_DETAILS"
+export type PaymentsTransactionDetailsScreenProps = RouteProp<
+  PaymentsTransactionParamsList,
+  "PAYMENTS_TRANSACTION_DETAILS"
 >;
 
 const windowHeight = Dimensions.get("window").height;
@@ -45,10 +44,10 @@ const styles = StyleSheet.create({
   }
 });
 
-const WalletTransactionDetailsScreen = () => {
+const PaymentsTransactionDetailsScreen = () => {
   const [transactionPsp, setTransactionPsp] = React.useState<Psp | undefined>();
   const dispatch = useIODispatch();
-  const route = useRoute<WalletTransactionDetailsScreenProps>();
+  const route = useRoute<PaymentsTransactionDetailsScreenProps>();
   const { transactionId } = route.params;
   const transactionDetailsPot = useIOSelector(
     walletTransactionDetailsPotSelector
@@ -58,7 +57,7 @@ const WalletTransactionDetailsScreen = () => {
   const transactionDetails = pot.toUndefined(transactionDetailsPot);
 
   useOnFirstRender(() => {
-    dispatch(walletTransactionDetailsGet.request({ transactionId }));
+    dispatch(getPaymentsTransactionDetailsAction.request({ transactionId }));
   });
 
   React.useEffect(() => {
@@ -102,4 +101,4 @@ const WalletTransactionDetailsScreen = () => {
   );
 };
 
-export default WalletTransactionDetailsScreen;
+export { PaymentsTransactionDetailsScreen };

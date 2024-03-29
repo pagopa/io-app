@@ -1,13 +1,13 @@
 import { WalletPaymentDetailScreenNavigationParams } from "../screens/WalletPaymentDetailScreen";
 import { WalletPaymentInputFiscalCodeScreenNavigationParams } from "../screens/WalletPaymentInputFiscalCodeScreen";
 import { WalletPaymentOutcomeScreenNavigationParams } from "../screens/WalletPaymentOutcomeScreen";
-import { WalletPaymentRoutes } from "./routes";
+import { PaymentsPaymentRoutes } from "./routes";
 
-export type WalletPaymentParamsList = {
-  [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE]: WalletPaymentInputFiscalCodeScreenNavigationParams;
-  [WalletPaymentRoutes.WALLET_PAYMENT_DETAIL]: WalletPaymentDetailScreenNavigationParams;
-  [WalletPaymentRoutes.WALLET_PAYMENT_MAKE]: undefined;
-  [WalletPaymentRoutes.WALLET_PAYMENT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
+export type PaymentsPaymentParamsList = {
+  [PaymentsPaymentRoutes.PAYMENTS_PAYMENT_NAVIGATOR]: undefined;
+  [PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_NOTICE_NUMBER]: undefined;
+  [PaymentsPaymentRoutes.PAYMENTS_PAYMENT_INPUT_FISCAL_CODE]: WalletPaymentInputFiscalCodeScreenNavigationParams;
+  [PaymentsPaymentRoutes.PAYMENTS_PAYMENT_DETAIL]: WalletPaymentDetailScreenNavigationParams;
+  [PaymentsPaymentRoutes.PAYMENTS_PAYMENT_MAKE]: undefined;
+  [PaymentsPaymentRoutes.PAYMENTS_PAYMENT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
 };
