@@ -14,7 +14,7 @@ type Props = {
 const ServicesContactComponent = (props: Props): ReactElement => {
   // We put the options inside the component to handle translations
   // when the language changes,
-  // or is differnt between the device and the app.
+  // or is different between the device and the app.
   const options = [
     {
       value: I18n.t("services.optIn.preferences.quickConfig.title"),
