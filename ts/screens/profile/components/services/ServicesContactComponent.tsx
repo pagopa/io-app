@@ -12,7 +12,7 @@ type Props = {
 };
 
 const ServicesContactComponent = (props: Props): ReactElement => {
-  // We put the option inside the component to handle translations
+  // We put the options inside the component to handle translations
   // when the language changes,
   // or is differnt between the device and the app.
   const options = [
