@@ -5,8 +5,6 @@ import { activateCGNBonusSuccess, deactivateCGNCardIfNeeded } from "./utils";
 const CGN_TITLE = "Carta Giovani Nazionale";
 const SERVICES_LIST = "services-list";
 
-jest.mock("../../../../config", () => ({ isNewServicesEnabled: false }));
-
 describe("CGN", () => {
   beforeEach(async () => {
     await deactivateCGNCardIfNeeded();
