@@ -1,5 +1,5 @@
-import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { View } from "react-native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import { getWalletCardsByCategorySelector } from "../store/selectors";
@@ -10,7 +10,7 @@ const WalletCardsContainer = () => {
   const cardsByCategory = useIOSelector(getWalletCardsByCategorySelector);
 
   return (
-    <ContentWrapper>
+    <View testID="walletCardsContainerTestID">
       {Object.entries(cardsByCategory).map(([categoryString, cards]) => {
         const category = categoryString as WalletCardCategory;
 
@@ -24,7 +24,7 @@ const WalletCardsContainer = () => {
           />
         );
       })}
-    </ContentWrapper>
+    </View>
   );
 };
 
