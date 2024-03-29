@@ -216,7 +216,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
     }
   />
   <View
-    accessibilityLabel="Aggiungi al portafoglio"
+    accessibilityLabel="Aggiungi al Portafoglio"
     accessibilityRole="button"
     accessibilityState={
       Object {
@@ -387,7 +387,7 @@ exports[`WalletEmptyScreenContent should match the snapshot 1`] = `
           }
           weight="Bold"
         >
-          Aggiungi al portafoglio
+          Aggiungi al Portafoglio
         </Text>
       </View>
     </View>
