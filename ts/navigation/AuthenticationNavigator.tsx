@@ -1,4 +1,7 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  TransitionPresets,
+  createStackNavigator
+} from "@react-navigation/stack";
 import * as React from "react";
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import CieLoginConfigScreen from "../features/cieLogin/components/screens/CieLoginConfigScreen";
@@ -17,6 +20,7 @@ import CiePinScreen from "../screens/authentication/cie/CiePinScreen";
 import CieWrongCiePinScreen from "../screens/authentication/cie/CieWrongCiePinScreen";
 import { AuthSessionPage } from "../screens/authentication/idpAuthSessionHandler";
 import CieNotSupported from "../components/cie/CieNotSupported";
+import RootedDeviceModal from "../screens/modal/RootedDeviceModal";
 import { AuthenticationParamsList } from "./params/AuthenticationParamsList";
 import ROUTES from "./routes";
 import CloseButton from "./components/CloseButton";
@@ -33,6 +37,19 @@ const AuthenticationStackNavigator = () => (
       component={LandingScreen}
       options={{ headerShown: true }}
     />
+
+    <Stack.Group
+      screenOptions={{
+        gestureEnabled: false,
+        headerShown: false,
+        ...TransitionPresets.ModalSlideFromBottomIOS
+      }}
+    >
+      <Stack.Screen
+        name={ROUTES.AUTHENTICATION_ROOTED_DEVICE}
+        component={RootedDeviceModal}
+      />
+    </Stack.Group>
 
     <Stack.Screen
       name={ROUTES.AUTHENTICATION_OPT_IN}

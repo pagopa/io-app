@@ -10,7 +10,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import JailMonkey from "jail-monkey";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
@@ -39,7 +38,6 @@ import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
-import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { useIOSelector } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
 import { isCieSupportedSelector } from "../../store/reducers/cie";
@@ -47,7 +45,6 @@ import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persis
 import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
-import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
@@ -246,13 +243,6 @@ export const LandingScreen = () => {
     }
   }, [isCieSupported, navigation]);
 
-  const handleContinueWithRootOrJailbreak = React.useCallback(
-    (continueWith: boolean) => {
-      dispatch(continueWithRootOrJailbreak(continueWith));
-    },
-    [dispatch]
-  );
-
   const LandingScreen = () => {
     useHeaderSecondLevel({
       title: "",
@@ -364,34 +354,28 @@ export const LandingScreen = () => {
     </View>
   );
 
-  const chooseScreenToRender = (isRootedOrJailbroken: boolean) => {
+  React.useEffect(() => {
     // if the device is compromised and the user didn't allow to continue
     // show a blocking modal
-    if (isRootedOrJailbroken && !isContinueWithRootOrJailbreak) {
+    if (
+      O.isSome(isRootedOrJailbroken) &&
+      isRootedOrJailbroken.value &&
+      !isContinueWithRootOrJailbreak
+    ) {
       void mixpanelTrack("SHOW_ROOTED_OR_JAILBROKEN_MODAL");
-      return (
-        <RootedDeviceModal
-          onContinue={() => handleContinueWithRootOrJailbreak(true)}
-          onCancel={() => handleContinueWithRootOrJailbreak(false)}
-        />
-      );
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_ROOTED_DEVICE
+      });
     }
-    // In case of Tablet, display an alert to inform the user
+  }, [isContinueWithRootOrJailbreak, isRootedOrJailbroken, navigation]);
+
+  // If the async loading of the isRootedOrJailbroken is not ready, display a loading
+  if (O.isNone(isRootedOrJailbroken)) {
+    return <LoadingScreen />;
+  } else {
     if (DeviceInfo.isTablet()) {
       displayTabletAlert();
     }
-    // standard rendering of the landing screen
-
     return <LandingScreen />;
-  };
-
-  // If the async loading of the isRootedOrJailbroken is not ready, display a loading
-  return pipe(
-    isRootedOrJailbroken,
-    O.fold(
-      () => <LoadingScreen />,
-      // when the value isRootedOrJailbroken is ready, display the right screen based on a set of rule
-      rootedOrJailbroken => chooseScreenToRender(rootedOrJailbroken)
-    )
-  );
+  }
 };
