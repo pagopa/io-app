@@ -29,11 +29,7 @@ import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDe
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetailsHeader";
 import I18n from "../../../i18n";
-import {
-  messageDetailsByIdSelector,
-  messageDetailsExpiringInfoSelector
-} from "../store/reducers/detailsById";
-import { localeDateFormat } from "../../../utils/locale";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
@@ -96,10 +92,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
 
   const subject =
     useIOSelector(state => messageTitleSelector(state, messageId)) ?? "";
-
-  const expiringInfo = useIOSelector(state =>
-    messageDetailsExpiringInfoSelector(state, messageId, Date.now())
-  );
 
   const goBack = useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
@@ -196,37 +188,13 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
                   />
                 </MessageDetailsTagBox>
               )}
-              {messageDetails.dueDate && expiringInfo === "expired" && (
-                <MessageDetailsTagBox>
-                  <Tag
-                    text={I18n.t("features.messages.badge.dueDate", {
-                      date: localeDateFormat(
-                        messageDetails.dueDate,
-                        I18n.t("global.dateFormats.dayMonthWithoutTime")
-                      ),
-                      time: localeDateFormat(
-                        messageDetails.dueDate,
-                        I18n.t("global.dateFormats.timeFormat")
-                      )
-                    })}
-                    variant="error"
-                    testID="due-date-tag"
-                  />
-                </MessageDetailsTagBox>
-              )}
             </MessageDetailsHeader>
-
-            {messageDetails.dueDate && expiringInfo === "expiring" && (
-              <>
-                <VSpacer size={8} />
-                <MessageDetailsReminder
-                  dueDate={messageDetails.dueDate}
-                  messageId={messageId}
-                  title={subject}
-                />
-              </>
-            )}
-            <VSpacer size={16} />
+            <VSpacer />
+            <MessageDetailsReminder
+              dueDate={messageDetails.dueDate}
+              messageId={messageId}
+              title={subject}
+            />
             <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
             <MessageDetailsPayment messageId={messageId} />
             <VSpacer size={16} />
