@@ -34,8 +34,8 @@ const PaymentHistorySection = () => {
     : getHistoryList(pot.getOrElse(historyPot, {}));
 
   const handleOnPayNoticedPress = () => {
-    navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_NOTICE_NUMBER
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
     });
   };
 

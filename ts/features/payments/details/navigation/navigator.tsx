@@ -13,13 +13,11 @@ const Stack = createStackNavigator<PaymentsMethodDetailsParamsList>();
 
 export const PaymentsMethodDetailsNavigator = () => (
   <Stack.Navigator
-    initialRouteName={
-      PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_SCREEN
-    }
+    initialRouteName={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      name={PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_SCREEN}
+      name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN}
       component={PaymentsMethodDetailsScreen}
       options={{ gestureEnabled: false }}
     />

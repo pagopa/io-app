@@ -44,8 +44,8 @@ const WalletPaymentInputNoticeNumberScreen = () => {
   });
 
   const navigateToFiscalCodeInput = () => {
-    navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_FISCAL_CODE,
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_FISCAL_CODE,
       params: {
         paymentNoticeNumber: inputState.noticeNumber
       }

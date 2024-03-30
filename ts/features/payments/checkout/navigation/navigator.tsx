@@ -17,11 +17,11 @@ const Stack = createStackNavigator<PaymentsCheckoutParamsList>();
 
 export const PaymentsCheckoutNavigator = () => (
   <Stack.Navigator
-    initialRouteName={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR}
+    initialRouteName={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR}
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
-      name={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_NOTICE_NUMBER}
+      name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER}
       component={WalletPaymentInputNoticeNumberScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -29,7 +29,7 @@ export const PaymentsCheckoutNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_FISCAL_CODE}
+      name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_FISCAL_CODE}
       component={WalletPaymentInputFiscalCodeScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -37,7 +37,7 @@ export const PaymentsCheckoutNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_DETAIL}
+      name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL}
       component={WalletPaymentDetailScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -46,7 +46,7 @@ export const PaymentsCheckoutNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_MAKE}
+      name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE}
       component={WalletPaymentMakeScreen}
       options={{
         gestureEnabled: isGestureEnabled,
@@ -54,7 +54,7 @@ export const PaymentsCheckoutNavigator = () => (
       }}
     />
     <Stack.Screen
-      name={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_OUTCOME}
+      name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME}
       component={WalletPaymentOutcomeScreen}
       options={{
         gestureEnabled: isGestureEnabled,

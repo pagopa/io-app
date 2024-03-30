@@ -59,7 +59,7 @@ type WalletPaymentDetailScreenNavigationParams = {
 
 type WalletPaymentDetailRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
-  "PAYMENTS_CHECKOUT_DETAIL"
+  "PAYMENT_CHECKOUT_DETAIL"
 >;
 
 const WalletPaymentDetailScreen = () => {
@@ -135,8 +135,8 @@ const WalletPaymentDetailContent = ({
 
   const navigateToMakePaymentScreen = () => {
     dispatch(storeNewPaymentAttemptAction(rptId));
-    navigation.push(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_MAKE
+    navigation.push(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
     });
   };
 

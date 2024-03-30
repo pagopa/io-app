@@ -77,8 +77,8 @@ const PaymentsBarcodeScanScreen = () => {
     }
 
     if (pagoPaBarcodes.length > 1) {
-      navigation.navigate(PaymentsBarcodeRoutes.PAYMENTS_BARCODE_NAVIGATOR, {
-        screen: PaymentsBarcodeRoutes.PAYMENTS_BARCODE_CHOICE,
+      navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
+        screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_CHOICE,
         params: {
           barcodes: pagoPaBarcodes
         }
@@ -133,8 +133,8 @@ const PaymentsBarcodeScanScreen = () => {
     analytics.trackBarcodeManualEntryPath("avviso");
 
     if (isDesignSystemEnabled) {
-      navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_NOTICE_NUMBER
+      navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
       });
     } else {
       navigation.navigate(ROUTES.WALLET_NAVIGATOR, {

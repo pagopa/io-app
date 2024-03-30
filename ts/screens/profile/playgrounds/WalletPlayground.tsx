@@ -18,12 +18,9 @@ const WalletPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
 
   const navigateToWalletOnboarding = () => {
-    navigation.navigate(
-      PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR,
-      {
-        screen: PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD
-      }
-    );
+    navigation.navigate(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
+      screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
+    });
   };
 
   const navigateToWalletPaymentPlayground = () => {

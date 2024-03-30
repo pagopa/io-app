@@ -3,7 +3,7 @@ import { PaymentsTransactionOperationDetailsScreenParams } from "../screens/Paym
 import { PaymentsTransactionRoutes } from "./routes";
 
 export type PaymentsTransactionParamsList = {
-  [PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_NAVIGATOR]: undefined;
-  [PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_DETAILS]: PaymentsTransactionDetailsScreenParams;
-  [PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_OPERATION_DETAILS]: PaymentsTransactionOperationDetailsScreenParams;
+  [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR]: undefined;
+  [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS]: PaymentsTransactionDetailsScreenParams;
+  [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_OPERATION_DETAILS]: PaymentsTransactionOperationDetailsScreenParams;
 };

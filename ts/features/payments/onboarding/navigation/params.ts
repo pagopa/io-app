@@ -2,7 +2,7 @@ import { PaymentsOnboardingFeedbackScreenParams } from "../screens/PaymentsOnboa
 import { PaymentsOnboardingRoutes } from "./routes";
 
 export type PaymentsOnboardingParamsList = {
-  [PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR]: undefined;
-  [PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_RESULT_FEEDBACK]: PaymentsOnboardingFeedbackScreenParams;
-  [PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD]: undefined;
+  [PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR]: undefined;
+  [PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK]: PaymentsOnboardingFeedbackScreenParams;
+  [PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD]: undefined;
 };

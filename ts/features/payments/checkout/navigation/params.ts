@@ -4,10 +4,10 @@ import { WalletPaymentOutcomeScreenNavigationParams } from "../screens/WalletPay
 import { PaymentsCheckoutRoutes } from "./routes";
 
 export type PaymentsCheckoutParamsList = {
-  [PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR]: undefined;
-  [PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_NOTICE_NUMBER]: undefined;
-  [PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_FISCAL_CODE]: WalletPaymentInputFiscalCodeScreenNavigationParams;
-  [PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_DETAIL]: WalletPaymentDetailScreenNavigationParams;
-  [PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_MAKE]: undefined;
-  [PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: undefined;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER]: undefined;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_FISCAL_CODE]: WalletPaymentInputFiscalCodeScreenNavigationParams;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL]: WalletPaymentDetailScreenNavigationParams;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE]: undefined;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME]: WalletPaymentOutcomeScreenNavigationParams;
 };

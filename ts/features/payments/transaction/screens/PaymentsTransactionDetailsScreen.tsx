@@ -23,7 +23,7 @@ export type PaymentsTransactionDetailsScreenParams = {
 
 export type PaymentsTransactionDetailsScreenProps = RouteProp<
   PaymentsTransactionParamsList,
-  "PAYMENTS_TRANSACTION_DETAILS"
+  "PAYMENT_TRANSACTION_DETAILS"
 >;
 
 const windowHeight = Dimensions.get("window").height;

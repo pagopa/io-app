@@ -16,9 +16,9 @@ const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
 
   const handleOnPress = () => {
     navigation.navigate(
-      PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_NAVIGATOR,
+      PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
       {
-        screen: PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_SCREEN,
+        screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
         params: {
           walletId
         }

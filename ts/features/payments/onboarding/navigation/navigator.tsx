@@ -15,17 +15,17 @@ const Stack = createStackNavigator<PaymentsOnboardingParamsList>();
 export const PaymentsOnboardingNavigator = () => (
   <Stack.Navigator
     initialRouteName={
-      PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_RESULT_FEEDBACK
+      PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK
     }
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      name={PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD}
+      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD}
       component={PaymentsOnboardingSelectMethodScreen}
       options={{ gestureEnabled: false }}
     />
     <Stack.Screen
-      name={PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_RESULT_FEEDBACK}
+      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK}
       component={PaymentsOnboardingFeedbackScreen}
       options={{ gestureEnabled: false }}
     />

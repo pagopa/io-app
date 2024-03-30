@@ -30,7 +30,7 @@ export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
 
 export type PaymentsMethodDetailsScreenRouteProps = RouteProp<
   PaymentsMethodDetailsParamsList,
-  "PAYMENTS_METHOD_DETAILS_SCREEN"
+  "PAYMENT_METHOD_DETAILS_SCREEN"
 >;
 
 const generateCardComponent = (details: UIWalletInfoDetails) => {

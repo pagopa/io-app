@@ -288,12 +288,12 @@ const AuthenticatedStackNavigator = () => {
       )}
 
       <Stack.Screen
-        name={PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR}
+        name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR}
         component={PaymentsOnboardingNavigator}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR}
+        name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR}
         component={PaymentsCheckoutNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
@@ -301,7 +301,7 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_NAVIGATOR}
+        name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR}
         component={PaymentsMethodDetailsNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
@@ -309,7 +309,7 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_NAVIGATOR}
+        name={PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR}
         component={PaymentsTransactionNavigator}
         options={{
           gestureEnabled: isGestureEnabled,
@@ -317,7 +317,7 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={PaymentsBarcodeRoutes.PAYMENTS_BARCODE_NAVIGATOR}
+        name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR}
         component={WalletBarcodeNavigator}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,

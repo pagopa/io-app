@@ -29,7 +29,7 @@ export type PaymentsTransactionOperationDetailsScreenParams = {
 
 export type WalletTransactionOperationDetailsScreenProps = RouteProp<
   PaymentsTransactionParamsList,
-  "PAYMENTS_TRANSACTION_OPERATION_DETAILS"
+  "PAYMENT_TRANSACTION_OPERATION_DETAILS"
 >;
 
 const WalletTransactionOperationDetailsScreen = () => {

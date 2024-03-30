@@ -169,8 +169,8 @@ const WalletPaymentPickMethodScreen = () => {
 
   React.useEffect(() => {
     if (isError) {
-      navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_OUTCOME,
+      navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.GENERIC_ERROR
         }

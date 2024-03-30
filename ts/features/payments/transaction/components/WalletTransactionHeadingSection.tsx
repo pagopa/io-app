@@ -28,7 +28,7 @@ export const WalletTransactionHeadingSection = ({
   const handlePressTransactionDetails = (operationDetails: Dettaglio) => {
     if (transaction) {
       navigation.navigate(
-        PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_OPERATION_DETAILS,
+        PaymentsTransactionRoutes.PAYMENT_TRANSACTION_OPERATION_DETAILS,
         {
           operationDetails,
           operationSubject: transaction.description,

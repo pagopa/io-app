@@ -19,8 +19,8 @@ const WalletPaymentMissingMethodsError = () => {
   }, [navigation]);
 
   const handleAddMethod = () => {
-    navigation.push(PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_NAVIGATOR, {
-      screen: PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_SELECT_METHOD
+    navigation.push(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
+      screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     });
   };
 

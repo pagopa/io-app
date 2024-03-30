@@ -31,7 +31,7 @@ type WalletPaymentOutcomeScreenNavigationParams = {
 
 type WalletPaymentOutcomeRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
-  "PAYMENTS_CHECKOUT_OUTCOME"
+  "PAYMENT_CHECKOUT_OUTCOME"
 >;
 
 const WalletPaymentOutcomeScreen = () => {

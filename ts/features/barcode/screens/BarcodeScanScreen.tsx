@@ -96,8 +96,8 @@ const BarcodeScanScreen = () => {
         void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
       }
 
-      navigation.navigate(PaymentsBarcodeRoutes.PAYMENTS_BARCODE_NAVIGATOR, {
-        screen: PaymentsBarcodeRoutes.PAYMENTS_BARCODE_CHOICE,
+      navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
+        screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_CHOICE,
         params: {
           barcodes: pagoPABarcodes
         }
@@ -176,8 +176,8 @@ const BarcodeScanScreen = () => {
 
   const handlePagoPACodeInput = () => {
     manualInputModal.dismiss();
-    navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_INPUT_NOTICE_NUMBER
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
     });
   };
 

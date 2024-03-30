@@ -54,7 +54,7 @@ const PaymentsBarcodeChoiceScreen = () => {
   );
 
   const route =
-    useRoute<RouteProp<PaymentsBarcodeParamsList, "PAYMENTS_BARCODE_CHOICE">>();
+    useRoute<RouteProp<PaymentsBarcodeParamsList, "PAYMENT_BARCODE_CHOICE">>();
 
   const { barcodes } = route.params;
 

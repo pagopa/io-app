@@ -30,8 +30,8 @@ const useWalletPaymentGoBackHandler = () => {
 
     const handleConfirmAbort = () => {
       dispatch(paymentsDeleteTransactionAction.request(transactionId));
-      navigation.push(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-        screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_OUTCOME,
+      navigation.push(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+        screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome: WalletPaymentOutcomeEnum.CANCELED_BY_USER
         }

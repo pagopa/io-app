@@ -389,9 +389,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   ) => {
     if (this.props.isDesignSystemEnabled) {
       this.props.navigation.navigate(
-        PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_NAVIGATOR,
+        PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
         {
-          screen: PaymentsTransactionRoutes.PAYMENTS_TRANSACTION_DETAILS,
+          screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS,
           params: {
             transactionId: transaction.id
           }
@@ -421,9 +421,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
 
   private navigateToPaymentScanQrCode = () => {
     this.props.navigation.navigate(
-      PaymentsBarcodeRoutes.PAYMENTS_BARCODE_NAVIGATOR,
+      PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR,
       {
-        screen: PaymentsBarcodeRoutes.PAYMENTS_BARCODE_SCAN
+        screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
       }
     );
   };

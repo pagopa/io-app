@@ -61,8 +61,8 @@ const usePagoPaPayment = () => {
    */
   const startPaymentFlow = (rptId: RptId, params: PagoPaPaymentParams = {}) => {
     initPaymentState(params);
-    navigation.navigate(PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENTS_CHECKOUT_DETAIL,
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL,
       params: {
         rptId
       }

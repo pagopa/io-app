@@ -2,6 +2,6 @@ import { PaymentsMethodDetailsScreenNavigationParams } from "../screens/Payments
 import { PaymentsMethodDetailsRoutes } from "./routes";
 
 export type PaymentsMethodDetailsParamsList = {
-  [PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_NAVIGATOR]: undefined;
-  [PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_SCREEN]: PaymentsMethodDetailsScreenNavigationParams;
+  [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: undefined;
+  [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN]: PaymentsMethodDetailsScreenNavigationParams;
 };

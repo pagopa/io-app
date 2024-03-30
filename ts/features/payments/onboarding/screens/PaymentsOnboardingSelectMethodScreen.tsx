@@ -40,7 +40,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
     useWalletOnboardingWebView({
       onOnboardingOutcome: (outcome, walletId) => {
         navigation.replace(
-          PaymentsOnboardingRoutes.PAYMENTS_ONBOARDING_RESULT_FEEDBACK,
+          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK,
           {
             outcome,
             walletId

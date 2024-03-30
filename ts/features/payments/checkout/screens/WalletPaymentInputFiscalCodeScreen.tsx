@@ -49,7 +49,7 @@ export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
 
 type WalletPaymentInputFiscalCodeRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
-  "PAYMENTS_CHECKOUT_INPUT_FISCAL_CODE"
+  "PAYMENT_CHECKOUT_INPUT_FISCAL_CODE"
 >;
 
 type InputState = {

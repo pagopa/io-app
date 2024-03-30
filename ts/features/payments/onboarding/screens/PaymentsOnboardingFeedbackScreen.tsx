@@ -25,7 +25,7 @@ export type PaymentsOnboardingFeedbackScreenParams = {
 
 type PaymentsOnboardingFeedbackScreenRouteProps = RouteProp<
   PaymentsOnboardingParamsList,
-  "PAYMENTS_ONBOARDING_RESULT_FEEDBACK"
+  "PAYMENT_ONBOARDING_RESULT_FEEDBACK"
 >;
 
 export const pictogramByOutcome: Record<WalletOnboardingOutcome, IOPictograms> =
@@ -52,9 +52,9 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const handleContinueButton = () => {
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
       navigation.replace(
-        PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_NAVIGATOR,
+        PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
         {
-          screen: PaymentsMethodDetailsRoutes.PAYMENTS_METHOD_DETAILS_SCREEN,
+          screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
           params: {
             walletId
           }
