@@ -1,12 +1,14 @@
 import { pipe } from "fp-ts/lib/function";
 import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { UIMessageDetails, UIMessageId } from "../../types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   foldK,
+  foldKW,
   isLoading,
   isUndefined,
   remoteError,
@@ -29,7 +31,11 @@ import {
   duplicateSetAndRemove,
   getRptIdStringFromPaymentData
 } from "../../utils";
-import { messagePaymentDataSelector } from "./detailsById";
+import { isExpiredPaymentFromDetailV2Enum } from "../../../../utils/payment";
+import {
+  messageDetailsByIdSelector,
+  messagePaymentDataSelector
+} from "./detailsById";
 
 export type MultiplePaymentState = {
   [key: UIMessageId]: SinglePaymentState | undefined;
@@ -164,7 +170,7 @@ export const canNavigateToPaymentFromMessageSelector = (state: GlobalState) =>
 export const paymentsButtonStateSelector = (
   state: GlobalState,
   messageId: UIMessageId
-): "hidden" | "loading" | "enabled" =>
+) =>
   pipe(
     messagePaymentDataSelector(state, messageId),
     O.fromNullable,
@@ -191,4 +197,37 @@ export const isPaymentsButtonVisibleSelector = (
   pipe(
     paymentsButtonStateSelector(state, messageId),
     status => status !== "hidden"
+  );
+
+export const paymentExpirationBannerStateSelector = (
+  state: GlobalState,
+  messageId: UIMessageId
+) =>
+  pipe(
+    messageDetailsByIdSelector(state, messageId),
+    pot.toOption,
+    O.filter(message => !!message.dueDate),
+    O.chainNullableK(message => message.paymentData),
+    O.map(getRptIdStringFromPaymentData),
+    O.map(paymentId => paymentStateSelector(state, messageId, paymentId)),
+    O.map(paymentState =>
+      pipe(
+        paymentState,
+        foldKW(
+          () => "loading" as const,
+          () => "loading" as const,
+          _ => "visibleExpiring" as const,
+          error =>
+            pipe(
+              error,
+              isExpiredPaymentFromDetailV2Enum,
+              B.fold(
+                () => "hidden" as const,
+                () => "visibleExpired" as const
+              )
+            )
+        )
+      )
+    ),
+    O.getOrElseW(() => "hidden" as const)
   );
