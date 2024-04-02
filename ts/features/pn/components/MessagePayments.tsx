@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start"
   },
   morePaymentsLinkContainer: {
-    alignSelf: "flex-start"
+    alignSelf: "center"
   }
 });
 
