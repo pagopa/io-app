@@ -24,6 +24,7 @@ import { UIMessageId } from "../../messages/types";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
 import { MessageFooter } from "./MessageFooter";
+import { MessageInfo } from "./MessageInfo";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -91,6 +92,8 @@ export const MessageDetails = ({
           isCancelled={message.isCancelled}
           serviceId={serviceId}
         />
+        <VSpacer size={16} />
+        <MessageInfo iun={message.iun} />
       </ContentWrapper>
       <MessageFooter serviceId={serviceId} />
     </ScrollView>
