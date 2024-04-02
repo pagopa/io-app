@@ -42,32 +42,18 @@ const PaymentHistorySection = () => {
   return (
     // full pages history loading will be handled by history details page
     <>
-      <View style={IOStyles.horizontalContentPadding}>
-        <ListItemHeader
-          label={I18n.t("payment.homeScreen.historySection.header")}
-          accessibilityLabel={I18n.t(
-            "payment.homeScreen.historySection.header"
-          )}
-          endElement={{
-            type: "buttonLink",
-            componentProps: {
-              label: I18n.t("payment.homeScreen.historySection.headerCTA"),
-              onPress: () => null
-            }
-          }}
-        />
-      </View>
-      <GradientScrollView
-        primaryActionProps={{
-          accessibilityLabel: I18n.t("payment.homeScreen.CTA"),
-          label: I18n.t("payment.homeScreen.CTA"),
-          onPress: handleOnPayNoticedPress,
-          icon: "qrCode",
-          iconPosition: "end"
+      <ListItemHeader
+        label={I18n.t("payment.homeScreen.historySection.header")}
+        accessibilityLabel={I18n.t("payment.homeScreen.historySection.header")}
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            label: I18n.t("payment.homeScreen.historySection.headerCTA"),
+            onPress: () => null
+          }
         }}
-      >
-        {renderItems}
-      </GradientScrollView>
+      />
+      {renderItems}
     </>
   );
 };

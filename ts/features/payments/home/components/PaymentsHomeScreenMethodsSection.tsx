@@ -69,7 +69,7 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
   };
 
   return (
-    <View style={IOStyles.horizontalContentPadding}>
+    <>
       <ListItemHeader
         label={I18n.t("payment.homeScreen.methodsSection.header")}
         accessibilityLabel={I18n.t("payment.homeScreen.methodsSection.header")}
@@ -84,7 +84,7 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
       <View style={styles.fixedCardsHeight}>
         <PaymentCardsCarousel cards={renderMethods} />
       </View>
-    </View>
+    </>
   );
 };
 
