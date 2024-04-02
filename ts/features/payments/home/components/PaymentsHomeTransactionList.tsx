@@ -7,15 +7,17 @@ import * as _ from "lodash";
 import * as React from "react";
 import { default as I18n } from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { GlobalState } from "../../../../store/reducers/types";
 import { Transaction } from "../../../../types/pagopa";
-import { walletTransactionHistorySelector } from "../store/selectors";
 import { PaymentsHomeListItemTransaction } from "./PaymentsHomeListItemTransaction";
 
 const PaymentsHomeTransactionList = () => {
-  const historyPot = useIOSelector(walletTransactionHistorySelector);
+  const transactionsPot = useIOSelector(
+    (state: GlobalState) => state.wallet.transactions.transactions
+  );
 
   const renderItems = () => {
-    if (pot.isLoading(historyPot)) {
+    if (pot.isLoading(transactionsPot)) {
       return Array.from({ length: 5 }).map((_, index) => (
         <ListItemTransaction
           isLoading={true}
