@@ -559,7 +559,9 @@ const DeveloperModeSection = () => {
     <>
       <ContentWrapper>
         <VSpacer size={24} />
-        <H2>{I18n.t("profile.main.developersSectionHeader")}</H2>
+        <H2 color={theme["textHeading-default"]}>
+          {I18n.t("profile.main.developersSectionHeader")}
+        </H2>
         <VSpacer size={8} />
 
         {/* Enable/Disable Developer Mode */}
