@@ -9,7 +9,7 @@ import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { PaymentStartRoute, WalletPaymentStepEnum } from "../../types";
+import { WalletPaymentStepEnum } from "../../types";
 import {
   paymentsStartPaymentAuthorizationAction,
   paymentsCalculatePaymentFeesAction,
@@ -27,7 +27,8 @@ import {
   selectPaymentMethodAction,
   selectPaymentPspAction,
   resetPaymentPspAction,
-  walletPaymentSetCurrentStep
+  walletPaymentSetCurrentStep,
+  OnPaymentSuccessAction
 } from "../actions/orchestration";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
@@ -50,8 +51,7 @@ export type PaymentsCheckoutState = {
   chosenPsp: O.Option<Bundle>;
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  startRoute?: PaymentStartRoute;
-  showTransaction?: boolean;
+  onSuccess?: OnPaymentSuccessAction;
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
@@ -76,8 +76,7 @@ const reducer = (
     case getType(initPaymentStateAction):
       return {
         ...INITIAL_STATE,
-        startRoute: action.payload.startRoute,
-        showTransaction: action.payload.showTransaction
+        onSuccess: action.payload.onSuccess || "showHome"
       };
 
     case getType(walletPaymentSetCurrentStep):
