@@ -119,8 +119,16 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
     [safeAreaInsets]
   );
 
+  const {
+    organization_name,
+    service_id,
+    service_name,
+    available_notification_channels,
+    service_metadata
+  } = service;
+
   useHeaderSecondLevel({
-    title: "",
+    title: service_name,
     supportRequest: true,
     transparent: true,
     scrollValues: {
@@ -133,14 +141,6 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
     // eslint-disable-next-line functional/immutable-data
     scrollTranslationY.value = contentOffset.y;
   });
-
-  const {
-    organization_name,
-    service_id,
-    service_name,
-    available_notification_channels,
-    service_metadata
-  } = service;
 
   return (
     <Animated.ScrollView
