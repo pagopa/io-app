@@ -9,8 +9,7 @@ import {
 import {
   loadServicePreference,
   upsertServicePreference
-} from "../actions/services/servicePreference";
-import { getNetworkErrorMessage } from "../../utils/errors";
+} from "../../features/services/store/actions";
 
 // Isolated tracker for services actions
 export const trackServiceAction =
@@ -33,7 +32,7 @@ export const trackServiceAction =
       case getType(upsertServicePreference.failure):
         return mp.track(action.type, {
           service_id: action.payload.id,
-          reason: getNetworkErrorMessage(action.payload)
+          reason: action.payload
         });
       case getType(loadVisibleServices.request):
       case getType(loadVisibleServices.success):
