@@ -8,6 +8,7 @@ import {
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
+  IOToast,
   VSpacer,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
@@ -16,7 +17,6 @@ import I18n from "i18n-js";
 import * as React from "react";
 import { ComponentProps } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
-import { IOToast } from "../../components/Toast";
 import { AlertModal } from "../../components/ui/AlertModal";
 import { LightModalContext } from "../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../config";
@@ -373,14 +373,6 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.WALLET_PLAYGROUND
-        })
-    },
-    {
-      // new Payments page
-      value: "Payments page playground",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PAYMENTS_HOME
         })
     }
   ];

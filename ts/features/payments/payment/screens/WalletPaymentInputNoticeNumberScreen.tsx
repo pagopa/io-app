@@ -10,14 +10,19 @@ import {
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
+  AccessibilityInfo,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  View
+  View,
+  findNodeHandle
 } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import I18n from "../../../../i18n";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -29,7 +34,6 @@ import {
   validatePaymentNoticeNumber
 } from "../../common/utils/validation";
 import { WalletPaymentRoutes } from "../navigation/routes";
-import I18n from "../../../../i18n";
 
 type InputState = {
   noticeNumberText: string;
@@ -43,14 +47,31 @@ const WalletPaymentInputNoticeNumberScreen = () => {
     noticeNumber: O.none
   });
 
-  const navigateToFiscalCodeInput = () => {
+  const navigateToFiscalCodeInput = () =>
     navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
       screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_FISCAL_CODE,
       params: {
         paymentNoticeNumber: inputState.noticeNumber
       }
     });
+
+  const handleContinueClick = () =>
+    pipe(
+      inputState.noticeNumber,
+      O.fold(() => {
+        Keyboard.dismiss();
+        focusTextInput();
+      }, navigateToFiscalCodeInput)
+    );
+
+  const focusTextInput = () => {
+    const textInputA11yWrapper = findNodeHandle(textInputWrappperRef.current);
+    if (textInputA11yWrapper && O.isNone(inputState.noticeNumber)) {
+      AccessibilityInfo.setAccessibilityFocus(textInputA11yWrapper);
+    }
   };
+
+  const textInputWrappperRef = React.useRef<View>(null);
 
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
@@ -61,29 +82,32 @@ const WalletPaymentInputNoticeNumberScreen = () => {
             <VSpacer size={16} />
             <Body>{I18n.t("wallet.payment.manual.noticeNumber.subtitle")}</Body>
             <VSpacer size={16} />
-            <TextInputValidation
-              placeholder={I18n.t(
-                "wallet.payment.manual.noticeNumber.placeholder"
-              )}
-              accessibilityLabel={I18n.t(
-                "wallet.payment.manual.noticeNumber.placeholder"
-              )}
-              value={inputState.noticeNumberText}
-              icon="docPaymentCode"
-              onChangeText={value =>
-                setInputState({
-                  noticeNumberText: value,
-                  noticeNumber: decodePaymentNoticeNumber(value)
-                })
-              }
-              onValidate={validatePaymentNoticeNumber}
-              counterLimit={18}
-              textInputProps={{
-                keyboardType: "number-pad",
-                inputMode: "numeric",
-                returnKeyType: "done"
-              }}
-            />
+            <View ref={textInputWrappperRef}>
+              <TextInputValidation
+                placeholder={I18n.t(
+                  "wallet.payment.manual.noticeNumber.placeholder"
+                )}
+                accessibilityLabel={I18n.t(
+                  "wallet.payment.manual.noticeNumber.placeholder"
+                )}
+                value={inputState.noticeNumberText}
+                icon="docPaymentCode"
+                onChangeText={value =>
+                  setInputState({
+                    noticeNumberText: value,
+                    noticeNumber: decodePaymentNoticeNumber(value)
+                  })
+                }
+                onValidate={validatePaymentNoticeNumber}
+                counterLimit={18}
+                textInputProps={{
+                  keyboardType: "number-pad",
+                  inputMode: "numeric",
+                  returnKeyType: "done"
+                }}
+                autoFocus
+              />
+            </View>
           </ContentWrapper>
         </View>
         <KeyboardAvoidingView
@@ -97,9 +121,8 @@ const WalletPaymentInputNoticeNumberScreen = () => {
             <ButtonSolid
               label="Continua"
               accessibilityLabel="Continua"
-              onPress={navigateToFiscalCodeInput}
+              onPress={handleContinueClick}
               fullWidth={true}
-              disabled={O.isNone(inputState.noticeNumber)}
             />
             <VSpacer size={16} />
           </ContentWrapper>

@@ -8,6 +8,7 @@ import { LegacyMessageDetailsScreen } from "../screens/LegacyMessageDetailsScree
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
 import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
+import { LegacyPaidPaymentScreen } from "../screens/LegacyPaidPaymentScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -43,10 +44,9 @@ export const PnStackNavigator = () => {
       />
       <Stack.Screen
         name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
-        component={PaidPaymentScreen}
-        options={{
-          headerShown: false
-        }}
+        component={
+          isDesignSystemEnabled ? PaidPaymentScreen : LegacyPaidPaymentScreen
+        }
       />
     </Stack.Navigator>
   );

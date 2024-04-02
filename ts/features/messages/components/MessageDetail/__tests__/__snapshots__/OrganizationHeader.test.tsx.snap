@@ -89,6 +89,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
     }
   >
     <View
+      accessibilityIgnoresInvertColors={true}
       style={
         Array [
           Object {
@@ -123,6 +124,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
         }
       >
         <Image
+          accessibilityIgnoresInvertColors={true}
           onError={[Function]}
           source={
             Object {

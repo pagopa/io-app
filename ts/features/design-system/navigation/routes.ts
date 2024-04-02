@@ -29,6 +29,10 @@ const DESIGN_SYSTEM_ROUTES = {
     TAB_NAVIGATION: {
       route: "DESIGN_SYSTEM_TAB_NAVIGATION",
       title: "Tab Navigation"
+    },
+    WALLET: {
+      route: "DESIGN_SYSTEM_WALLET",
+      title: "Wallet"
     }
   },
   HEADERS: {

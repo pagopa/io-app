@@ -109,12 +109,17 @@ PODS:
   - jail-monkey (2.3.2):
     - React
   - libevent (2.1.12)
-  - Mixpanel (3.6.5)
-  - MLImage (1.0.0-beta5)
-  - MLKitBarcodeScanning (4.0.0):
-    - MLKitCommon (~> 10.0)
-    - MLKitVision (~> 6.0)
-  - MLKitCommon (10.0.0):
+  - Mixpanel-swift (4.2.0):
+    - Mixpanel-swift/Complete (= 4.2.0)
+  - Mixpanel-swift/Complete (4.2.0)
+  - MixpanelReactNative (2.4.1):
+    - Mixpanel-swift (= 4.2.0)
+    - React-Core
+  - MLImage (1.0.0-beta4)
+  - MLKitBarcodeScanning (3.0.0):
+    - MLKitCommon (~> 9.0)
+    - MLKitVision (~> 5.0)
+  - MLKitCommon (9.0.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
@@ -396,9 +401,6 @@ PODS:
     - React-Core
   - react-native-image-picker (4.10.3):
     - React-Core
-  - react-native-mixpanel (1.2.0):
-    - Mixpanel (~> 3.6.0)
-    - React
   - react-native-pager-view (6.2.3):
     - React-Core
   - react-native-pdf (6.4.0):
@@ -501,7 +503,7 @@ PODS:
     - React-Core
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (2.12.0):
+  - RNGestureHandler (2.15.0):
     - React-Core
   - RNI18n (2.0.15):
     - React
@@ -548,7 +550,7 @@ PODS:
     - React
   - RNShare (7.3.9):
     - React-Core
-  - RNSVG (12.3.0):
+  - RNSVG (15.1.0):
     - React-Core
   - SocketRocket (0.6.1)
   - vision-camera-code-scanner (0.2.0):
@@ -618,6 +620,7 @@ DEPENDENCIES:
   - hermes-engine (from `../node_modules/react-native/sdks/hermes/hermes-engine.podspec`)
   - jail-monkey (from `../node_modules/jail-monkey`)
   - libevent (~> 2.1.12)
+  - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
   - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
@@ -649,7 +652,6 @@ DEPENDENCIES:
   - react-native-flipper (from `../node_modules/react-native-flipper`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
-  - react-native-mixpanel (from `../node_modules/react-native-mixpanel`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-pdf-thumbnail (from `../node_modules/react-native-pdf-thumbnail`)
@@ -716,7 +718,7 @@ SPEC REPOS:
     - GoogleUtilitiesComponents
     - GTMSessionFetcher
     - libevent
-    - Mixpanel
+    - Mixpanel-swift
     - MLImage
     - MLKitBarcodeScanning
     - MLKitCommon
@@ -756,6 +758,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/sdks/hermes/hermes-engine.podspec"
   jail-monkey:
     :path: "../node_modules/jail-monkey"
+  MixpanelReactNative:
+    :path: "../node_modules/mixpanel-react-native"
   pagopa-io-react-native-crypto:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
   pagopa-io-react-native-http-client:
@@ -814,8 +818,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
-  react-native-mixpanel:
-    :path: "../node_modules/react-native-mixpanel"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -933,11 +935,12 @@ SPEC CHECKSUMS:
   hermes-engine: 2592781da1571e4375dfd897f9462638c2d0ceb9
   jail-monkey: d7c5048b2336f22ee9c9e0efa145f1f917338ea9
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  Mixpanel: de8296d8568806ab17bfced0f823c908b808e1e0
-  MLImage: 1824212150da33ef225fbd3dc49f184cf611046c
-  MLKitBarcodeScanning: 9cb0ec5ec65bbb5db31de4eba0a3289626beab4e
-  MLKitCommon: afcd11b6c0735066a0dde8b4bf2331f6197cbca2
-  MLKitVision: 90922bca854014a856f8b649d1f1f04f63fd9c79
+  Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65
+  MixpanelReactNative: 0101b8828c2f335c128850e71ab7d3b7adde089a
+  MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
+  MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
+  MLKitCommon: c1b791c3e667091918d91bda4bba69a91011e390
+  MLKitVision: 8baa5f46ee3352614169b85250574fde38c36f49
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   pagopa-io-react-native-crypto: 6aa9f33e4bf64ef420ad97c720c1ad0f876cd470
@@ -970,7 +973,6 @@ SPEC CHECKSUMS:
   react-native-flipper: 97d537d855e0e7f6ac26a065e01bf1aecc8ba41c
   react-native-get-random-values: 237bffb1c7e05fb142092681531810a29ba53015
   react-native-image-picker: 60f4246eb5bb7187fc15638a8c1f13abd3820695
-  react-native-mixpanel: d644efe1ca33d2646d5cba29e24a13ebc9b37209
   react-native-pager-view: c29d484f19c49ff19525a94105e4ab2c4d4ae273
   react-native-pdf: a6a5a3f0bdf340eb2eed6c96034424d2cc3f84b0
   react-native-pdf-thumbnail: a042fffdab7a49f0f9df0e11da0a90beebfd4241
@@ -1001,7 +1003,7 @@ SPEC CHECKSUMS:
   RNCPushNotificationIOS: 61a7c72bd1ebad3568025957d001e0f0e7b32191
   RNDeviceInfo: 5795b418ed3451ebcaf39384e6cf51f60cb931c9
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
-  RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
+  RNGestureHandler: 0cba6c7c51a90cd793cf2475cf7fdca613ede300
   RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNKeychain: 840f8e6f13be0576202aefcdffd26a4f54bfe7b5
   RNPermissions: b3d9d00889e37cc184d365ab04bb7a3f20811b1c
@@ -1011,7 +1013,7 @@ SPEC CHECKSUMS:
   RNScreens: fa9b582d85ae5d62c91c66003b5278458fed7aaa
   RNSha256: ab608b2185fb806185a2cc112e0474065842e085
   RNShare: 807d6f8231b8ebcf6dd839294b877342eb93d4e5
-  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
+  RNSVG: 50cf2c7018e57cf5d3522d98d0a3a4dd6bf9d093
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: e9a95af10e00aaebe99d648ff4519fd336e16ffe
@@ -1032,4 +1034,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7dfdfa4afe9355d54bec685917054fc54ab9040f
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2

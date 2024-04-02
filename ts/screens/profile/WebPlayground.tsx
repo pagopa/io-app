@@ -8,7 +8,8 @@ import {
   IOVisualCostants,
   IconButtonContained,
   ListItemSwitch,
-  VSpacer
+  VSpacer,
+  IOToast
 } from "@pagopa/io-app-design-system";
 import CookieManager, { Cookie } from "@react-native-cookies/cookies";
 import * as React from "react";
@@ -23,7 +24,6 @@ import { connect } from "react-redux";
 import URLParse from "url-parse";
 import { LabelledItem } from "../../components/LabelledItem";
 import RegionServiceWebView from "../../components/RegionServiceWebView";
-import { IOToast } from "../../components/Toast";
 import { Monospace } from "../../components/core/typography/Monospace";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { navigateBack } from "../../store/actions/navigation";

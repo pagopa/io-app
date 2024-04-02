@@ -13,9 +13,16 @@ import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import { Link } from "../../../components/core/typography/Link";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import ROUTES from "../../../navigation/routes";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import {
+  trackEmailNotAlreadyConfirmed,
+  trackSendValidationEmail
+} from "../../analytics/emailAnalytics";
+import { getFlowType } from "../../../utils/analytics";
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -40,21 +47,28 @@ const ValidateEmailScreen = () => {
     useRoute<
       Route<"CHECK_EMAIL_NOT_VERIFIED", EmailNotVerifiedScreenParamList>
     >().params;
+  const isFirstOnboarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const flow = getFlowType(true, isFirstOnboarding);
   const navigateToInsertEmailScreen = useCallback(() => {
     navigation.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
       params: {
         isOnboarding: true
       }
     });
   }, [navigation]);
 
+  useOnFirstRender(() => {
+    trackEmailNotAlreadyConfirmed(flow);
+  });
+
   const confirmButtonOnPress = React.useCallback(() => {
     // We dispatch this action to show the InsertEmailScreen with
     // the validation modal already opened.
+    trackSendValidationEmail(flow);
     dispatch(acknowledgeOnEmailValidation(O.some(false)));
     navigateToInsertEmailScreen();
-  }, [dispatch, navigateToInsertEmailScreen]);
+  }, [dispatch, flow, navigateToInsertEmailScreen]);
 
   const modifyEmailButtonOnPress = React.useCallback(() => {
     dispatch(acknowledgeOnEmailValidation(O.none));

@@ -1,12 +1,14 @@
-import { ActionType } from "typesafe-actions";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
+import { StatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { getNetworkError } from "../../../../../../utils/errors";
+import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
+import { walletAddCards } from "../../../../../newWallet/store/actions/cards";
 import { BackendCGN } from "../../../api/backendCgn";
 import { cgnDetails } from "../../../store/actions/details";
-import { withRefreshApiCall } from "../../../../../fastLogin/saga/utils";
 
 export function* cgnGetInformationSaga(
   getCgnStatus: ReturnType<typeof BackendCGN>["getCgnStatus"],
@@ -30,7 +32,23 @@ export function* cgnGetInformationSaga(
       E.isRight(cgnInformationResult) &&
       cgnInformationResult.right.status === 200
     ) {
-      yield* put(cgnDetails.success(cgnInformationResult.right.value));
+      const cgnInfo = cgnInformationResult.right.value;
+      const expireDate =
+        cgnInfo.status === StatusEnum.ACTIVATED
+          ? cgnInfo.expiration_date
+          : undefined;
+
+      yield* put(
+        walletAddCards([
+          {
+            type: "cgn",
+            category: "cgn",
+            key: "cgn_card",
+            expireDate
+          }
+        ])
+      );
+      yield* put(cgnDetails.success(cgnInfo));
     } else {
       yield* put(
         cgnDetails.failure({

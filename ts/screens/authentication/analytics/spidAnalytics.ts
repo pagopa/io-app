@@ -93,7 +93,7 @@ export async function trackLoginSpidIdpSelected(
     property: "LOGIN_METHOD",
     value: idp
   });
-  await mixpanelTrack(
+  mixpanelTrack(
     "LOGIN_SPID_IDP_SELECTED",
     buildEventProperties("UX", "action", {
       idp
