@@ -19,10 +19,13 @@ import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
+  AccessibilityInfo,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  View
+  View,
+  findNodeHandle
 } from "react-native";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
@@ -64,6 +67,14 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCode: O.none
   });
 
+  const textInputWrappperRef = React.useRef<View>(null);
+  const focusTextInput = () => {
+    const textInputA11yWrapper = findNodeHandle(textInputWrappperRef.current);
+    if (textInputA11yWrapper) {
+      AccessibilityInfo.setAccessibilityFocus(textInputA11yWrapper);
+    }
+  };
+
   const navigateToTransactionSummary = () => {
     pipe(
       sequenceS(O.Monad)({
@@ -86,6 +97,15 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     );
   };
 
+  const handleContinueClick = () =>
+    pipe(
+      inputState.fiscalCode,
+      O.fold(() => {
+        Keyboard.dismiss();
+        focusTextInput();
+      }, navigateToTransactionSummary)
+    );
+
   return (
     <BaseScreenComponent goBack={true} contextualHelp={emptyContextualHelp}>
       <SafeAreaView style={IOStyles.flex}>
@@ -95,29 +115,32 @@ const WalletPaymentInputFiscalCodeScreen = () => {
             <VSpacer size={16} />
             <Body>{I18n.t("wallet.payment.manual.fiscalCode.subtitle")}</Body>
             <VSpacer size={16} />
-            <TextInputValidation
-              placeholder={I18n.t(
-                "wallet.payment.manual.fiscalCode.placeholder"
-              )}
-              accessibilityLabel={I18n.t(
-                "wallet.payment.manual.fiscalCode.placeholder"
-              )}
-              value={inputState.fiscalCodeText}
-              icon="fiscalCodeIndividual"
-              onChangeText={value =>
-                setInputState({
-                  fiscalCodeText: value,
-                  fiscalCode: decodeOrganizationFiscalCode(value)
-                })
-              }
-              onValidate={validateOrganizationFiscalCode}
-              counterLimit={11}
-              textInputProps={{
-                keyboardType: "number-pad",
-                inputMode: "numeric",
-                returnKeyType: "done"
-              }}
-            />
+            <View ref={textInputWrappperRef}>
+              <TextInputValidation
+                placeholder={I18n.t(
+                  "wallet.payment.manual.fiscalCode.placeholder"
+                )}
+                accessibilityLabel={I18n.t(
+                  "wallet.payment.manual.fiscalCode.placeholder"
+                )}
+                value={inputState.fiscalCodeText}
+                icon="fiscalCodeIndividual"
+                onChangeText={value =>
+                  setInputState({
+                    fiscalCodeText: value,
+                    fiscalCode: decodeOrganizationFiscalCode(value)
+                  })
+                }
+                onValidate={validateOrganizationFiscalCode}
+                counterLimit={11}
+                textInputProps={{
+                  keyboardType: "number-pad",
+                  inputMode: "numeric",
+                  returnKeyType: "done"
+                }}
+                autoFocus
+              />
+            </View>
           </ContentWrapper>
         </View>
         <KeyboardAvoidingView
@@ -131,9 +154,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
             <ButtonSolid
               label="Continua"
               accessibilityLabel="Continua"
-              onPress={navigateToTransactionSummary}
+              onPress={handleContinueClick}
               fullWidth={true}
-              disabled={O.isNone(inputState.fiscalCode)}
             />
             <VSpacer size={16} />
           </ContentWrapper>

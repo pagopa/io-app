@@ -10,7 +10,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
 import JailMonkey from "jail-monkey";
 import * as React from "react";
 import DeviceInfo from "react-native-device-info";
@@ -19,14 +18,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Alert, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import ContextualInfo from "../../components/ContextualInfo";
 import { LandingCardComponent } from "../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../components/SectionStatus";
-import CieNotSupported from "../../components/cie/CieNotSupported";
 import { IOStyles } from "../../components/core/variables/IOStyles";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
-import { LightModalContext } from "../../components/ui/LightModal";
 import { privacyUrl } from "../../config";
 import { isCieLoginUatEnabledSelector } from "../../features/cieLogin/store/selectors";
 import { cieFlowForDevServerEnabled } from "../../features/cieLogin/utils";
@@ -42,19 +38,13 @@ import {
   idpSelected,
   resetAuthenticationState
 } from "../../store/actions/authentication";
-import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { useIOSelector } from "../../store/hooks";
 import { isSessionExpiredSelector } from "../../store/reducers/authentication";
-import {
-  hasApiLevelSupportSelector,
-  hasNFCFeatureSelector,
-  isCieSupportedSelector
-} from "../../store/reducers/cie";
+import { isCieSupportedSelector } from "../../store/reducers/cie";
 import { continueWithRootOrJailbreakSelector } from "../../store/reducers/persistedPreferences";
 import { ComponentProps } from "../../types/react";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../utils/url";
-import RootedDeviceModal from "../modal/RootedDeviceModal";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import {
@@ -157,10 +147,6 @@ export const LandingScreen = () => {
   const isFastLoginOptInFFEnabled = useIOSelector(fastLoginOptInFFEnabled);
 
   const isCIEAuthenticationSupported = useIOSelector(isCieSupportedSelector);
-  const hasApiLevelSupport = useIOSelector(hasApiLevelSupportSelector);
-  const hasCieApiLevelSupport = pot.getOrElse(hasApiLevelSupport, false);
-  const hasNFCFeature = useIOSelector(hasNFCFeatureSelector);
-  const hasCieNFCFeature = pot.getOrElse(hasNFCFeature, false);
 
   const isCieSupported = React.useCallback(
     () =>
@@ -191,8 +177,6 @@ export const LandingScreen = () => {
     },
     []
   );
-
-  const { hideModal, showAnimatedModal } = React.useContext(LightModalContext);
 
   const displayTabletAlert = React.useCallback(() => {
     if (!hasTabletCompatibilityAlertAlreadyShown) {
@@ -226,21 +210,6 @@ export const LandingScreen = () => {
   }, [isFastLoginOptInFFEnabled, navigation]);
 
   const navigateToCiePinScreen = React.useCallback(() => {
-    const openUnsupportedCIEModal = () => {
-      showAnimatedModal(
-        <ContextualInfo
-          onClose={hideModal}
-          title={I18n.t("authentication.landing.cie_unsupported.title")}
-          body={() => (
-            <CieNotSupported
-              hasCieApiLevelSupport={hasCieApiLevelSupport}
-              hasCieNFCFeature={hasCieNFCFeature}
-            />
-          )}
-        />
-      );
-    };
-
     if (isCieSupported()) {
       void trackCieLoginSelected(store.getState());
       dispatch(idpSelected(IdpCIE));
@@ -255,19 +224,11 @@ export const LandingScreen = () => {
         });
       }
     } else {
-      openUnsupportedCIEModal();
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.CIE_NOT_SUPPORTED
+      });
     }
-  }, [
-    dispatch,
-    hasCieApiLevelSupport,
-    hasCieNFCFeature,
-    hideModal,
-    isCieSupported,
-    isFastLoginOptInFFEnabled,
-    navigation,
-    showAnimatedModal,
-    store
-  ]);
+  }, [dispatch, isCieSupported, isFastLoginOptInFFEnabled, navigation, store]);
 
   const navigateToPrivacyUrl = React.useCallback(() => {
     trackMethodInfo();
@@ -281,13 +242,6 @@ export const LandingScreen = () => {
       });
     }
   }, [isCieSupported, navigation]);
-
-  const handleContinueWithRootOrJailbreak = React.useCallback(
-    (continueWith: boolean) => {
-      dispatch(continueWithRootOrJailbreak(continueWith));
-    },
-    [dispatch]
-  );
 
   const LandingScreen = () => {
     useHeaderSecondLevel({
@@ -400,34 +354,28 @@ export const LandingScreen = () => {
     </View>
   );
 
-  const chooseScreenToRender = (isRootedOrJailbroken: boolean) => {
+  React.useEffect(() => {
     // if the device is compromised and the user didn't allow to continue
     // show a blocking modal
-    if (isRootedOrJailbroken && !isContinueWithRootOrJailbreak) {
+    if (
+      O.isSome(isRootedOrJailbroken) &&
+      isRootedOrJailbroken.value &&
+      !isContinueWithRootOrJailbreak
+    ) {
       void mixpanelTrack("SHOW_ROOTED_OR_JAILBROKEN_MODAL");
-      return (
-        <RootedDeviceModal
-          onContinue={() => handleContinueWithRootOrJailbreak(true)}
-          onCancel={() => handleContinueWithRootOrJailbreak(false)}
-        />
-      );
+      navigation.navigate(ROUTES.AUTHENTICATION, {
+        screen: ROUTES.AUTHENTICATION_ROOTED_DEVICE
+      });
     }
-    // In case of Tablet, display an alert to inform the user
+  }, [isContinueWithRootOrJailbreak, isRootedOrJailbroken, navigation]);
+
+  // If the async loading of the isRootedOrJailbroken is not ready, display a loading
+  if (O.isNone(isRootedOrJailbroken)) {
+    return <LoadingScreen />;
+  } else {
     if (DeviceInfo.isTablet()) {
       displayTabletAlert();
     }
-    // standard rendering of the landing screen
-
     return <LandingScreen />;
-  };
-
-  // If the async loading of the isRootedOrJailbroken is not ready, display a loading
-  return pipe(
-    isRootedOrJailbroken,
-    O.fold(
-      () => <LoadingScreen />,
-      // when the value isRootedOrJailbroken is ready, display the right screen based on a set of rule
-      rootedOrJailbroken => chooseScreenToRender(rootedOrJailbroken)
-    )
-  );
+  }
 };
