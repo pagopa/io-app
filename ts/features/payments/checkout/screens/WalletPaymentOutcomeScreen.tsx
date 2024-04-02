@@ -24,6 +24,7 @@ import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import ROUTES from "../../../../navigation/routes";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -80,6 +81,9 @@ const WalletPaymentOutcomeScreen = () => {
       // Currently we do support only navigation to the wallet
       // TODO navigate to the transaction details if payment outcome is success
       navigation.popToTop();
+      navigation.navigate(ROUTES.MAIN, {
+        screen: ROUTES.PAYMENTS_HOME
+      });
       return;
     }
 

@@ -76,7 +76,7 @@ const reducer = (
     case getType(initPaymentStateAction):
       return {
         ...INITIAL_STATE,
-        onSuccess: action.payload.onSuccess || "showHome"
+        onSuccess: action.payload.onSuccess
       };
 
     case getType(walletPaymentSetCurrentStep):
