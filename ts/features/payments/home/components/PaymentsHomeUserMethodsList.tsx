@@ -1,16 +1,22 @@
-import { ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  HSpacer,
+  IOVisualCostants,
+  ListItemHeader
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsGetPaymentUserMethodsAction } from "../../checkout/store/actions/networking";
 import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
-import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
-import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";
+import {
+  PaymentCardSmall,
+  PaymentCardSmallProps
+} from "../../common/components/PaymentCardSmall";
 import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 
@@ -66,7 +72,7 @@ const PaymentsHomeUserMethodsList = ({
     return undefined;
   };
 
-  const renderMethods = isLoadingSection
+  const userMethods = isLoadingSection
     ? loadingCards
     : methods
         .map(mapMethods)
@@ -92,15 +98,25 @@ const PaymentsHomeUserMethodsList = ({
           }
         }}
       />
-      <View style={styles.fixedCardsHeight}>
-        <PaymentCardsCarousel cards={renderMethods} />
-      </View>
+      <FlatList
+        horizontal={true}
+        ItemSeparatorComponent={() => <HSpacer size={8} />}
+        data={userMethods}
+        renderItem={({ item }) => <PaymentCardSmall {...item} />}
+        ListFooterComponent={() => <HSpacer size={48} />}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(_, index) => index.toString()}
+        style={styles.list}
+      />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  fixedCardsHeight: { height: 96 }
+  list: {
+    marginHorizontal: -IOVisualCostants.appMarginDefault,
+    paddingHorizontal: IOVisualCostants.appMarginDefault
+  }
 });
 
 export { PaymentsHomeUserMethodsList };

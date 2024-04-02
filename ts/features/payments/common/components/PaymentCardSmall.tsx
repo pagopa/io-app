@@ -190,8 +190,8 @@ const styles = StyleSheet.create({
     flexBasis: PAYMENT_CARD_SMALL_WIDTH,
     flexGrow: 0,
     borderRadius: 8,
-    borderCurve: "continuous",
-    padding: 16
+    padding: 16,
+    aspectRatio: 16 / 10
   },
   logoRow: {
     flex: 1,

@@ -6,10 +6,6 @@ import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
 import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
-import {
-  PaymentCardsCarousel,
-  PaymentCardsCarouselProps
-} from "../../payments/common/components/PaymentCardsCarousel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
@@ -25,47 +21,6 @@ const styles = StyleSheet.create({
 
 const onPress = () => {
   Alert.alert("Alert", "Action triggered");
-};
-
-const cardsDataForCarousel: PaymentCardsCarouselProps = {
-  cards: [
-    {
-      isLoading: true
-    },
-    {
-      cardType: "CREDIT",
-      hpan: "9999",
-      isError: false,
-      cardIcon: "maestro",
-      onCardPress: onPress
-    },
-    {
-      cardType: "PAYPAL",
-      isError: true,
-      onCardPress: onPress
-    },
-    {
-      cardType: "BANCOMATPAY",
-      onCardPress: onPress
-    },
-    {
-      cardType: "PAGOBANCOMAT",
-      providerName: "banca intesa",
-      onCardPress: onPress
-    },
-    {
-      cardType: "CREDIT",
-      hpan: "9999",
-      isError: true,
-      onCardPress: onPress
-    },
-    {
-      cardType: "COBADGE",
-      providerName: "banca intesa",
-      cardIcon: "maestro",
-      onCardPress: onPress
-    }
-  ]
 };
 
 // for testing reasons, abi codes can be found here:
@@ -173,9 +128,6 @@ export const DSCards = () => (
           <HSpacer size={16} />
           <PaymentCardSmall isLoading={true} />
         </View>
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name="PaymentCardsCarousel">
-        <PaymentCardsCarousel {...cardsDataForCarousel} />
       </DSComponentViewerBox>
     </DesignSystemSection>
     <DesignSystemSection title="IdPayCard">
