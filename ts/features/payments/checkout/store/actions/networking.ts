@@ -43,9 +43,9 @@ export const paymentsGetPaymentUserMethodsAction = createAsyncAction(
 )<undefined, Wallets, NetworkError>();
 
 export const paymentsCalculatePaymentFeesAction = createAsyncAction(
-  "PAYMENTS_CALCULATE_FEES_REQUEST",
-  "PAYMENTS_CALCULATE_FEES_SUCCESS",
-  "PAYMENTS_CALCULATE_FEES_FAILURE"
+  "PAYMENTS_CALCULATE_PAYMENT_FEES_REQUEST",
+  "PAYMENTS_CALCULATE_PAYMENT_FEES_SUCCESS",
+  "PAYMENTS_CALCULATE_PAYMENT_FEES_FAILURE"
 )<
   CalculateFeeRequest & { paymentMethodId: string },
   CalculateFeeResponse,
@@ -54,8 +54,8 @@ export const paymentsCalculatePaymentFeesAction = createAsyncAction(
 
 export const paymentsCreateTransactionAction = createAsyncAction(
   "PAYMENTS_CREATE_TRANSACTION_REQUEST",
-  "PAYMENTS_PAYMENT_CREATE_TRANSACTION_SUCCESS",
-  "PAYMENTS_PAYMENT_CREATE_TRANSACTION_FAILURE"
+  "PAYMENTS_CREATE_TRANSACTION_SUCCESS",
+  "PAYMENTS_CREATE_TRANSACTION_FAILURE"
 )<
   NewTransactionRequest,
   NewTransactionResponse,
