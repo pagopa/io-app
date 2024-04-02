@@ -660,6 +660,7 @@ authentication:
         cardLocked: Carta CIE bloccata
         wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
         wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
+        genericError: Ops, qualcosa è andato storto. Riprova.
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostTitleiOS: Hai rimosso la carta troppo presto
