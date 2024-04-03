@@ -91,6 +91,10 @@ const WalletPaymentInputFiscalCodeScreen = () => {
       }),
       O.chain(flow(RptId.decode, O.fromEither)),
       O.map(rptId => {
+        // Removes the manual input screen from the stack
+        navigation.popToTop();
+        navigation.pop();
+        // Navigate to the payment details screen (payment verification)
         if (isNewWalletSectionEnabled) {
           startPaymentFlowWithRptId(rptId);
         } else {

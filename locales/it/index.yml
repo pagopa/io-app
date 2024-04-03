@@ -235,6 +235,7 @@ locales:
   en: Inglese
   de: Tedesco
 clipboard:
+  copyIntoClipboard: copia negli appunti
   copyFeedback: Copiato negli appunti
   copyText: copia
   copyFeedbackButton: copiato
