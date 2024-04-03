@@ -11,10 +11,9 @@ import Animated, { Layout } from "react-native-reanimated";
 import { default as I18n } from "../../../../i18n";
 import { fetchTransactionsRequestWithExpBackoff } from "../../../../store/actions/wallet/transactions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  selectPaymentsTransactionSorted,
-  selectPaymentsTransactions
-} from "../store/selectors";
+import { latestTransactionsSelector } from "../../../../store/reducers/wallet/transactions";
+import { isPaymentsTransactionsEmptySelector } from "../store/selectors";
+import { PaymentsHomeEmptyScreenContent } from "./PaymentsHomeEmptyScreenContent";
 import { PaymentsListItemTransaction } from "./PaymentsListItemTransaction";
 
 type Props = {
@@ -24,10 +23,10 @@ type Props = {
 const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   const dispatch = useIODispatch();
 
-  const transactionsPot = useIOSelector(selectPaymentsTransactions);
-  const sortedTransactions = useIOSelector(selectPaymentsTransactionSorted);
+  const transactionsPot = useIOSelector(latestTransactionsSelector);
 
   const isLoading = pot.isLoading(transactionsPot) || enforcedLoadingState;
+  const isEmpty = useIOSelector(isPaymentsTransactionsEmptySelector);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -36,18 +35,22 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
   );
 
   const renderItems = () => {
-    if (!isLoading) {
-      return sortedTransactions.map(transaction => (
-        <PaymentsListItemTransaction
-          key={`transaction_${transaction.id}`}
-          transaction={transaction}
-        />
-      ));
+    if (!isLoading && pot.isSome(transactionsPot)) {
+      return (
+        <View testID="PaymentsHomeTransactionsListTestID">
+          {transactionsPot.value.map(transaction => (
+            <PaymentsListItemTransaction
+              key={`transaction_${transaction.id}`}
+              transaction={transaction}
+            />
+          ))}
+        </View>
+      );
     }
 
     return (
       <View testID="PaymentsHomeTransactionsListTestID-loading">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 10 }).map((_, index) => (
           <ListItemTransaction
             isLoading={true}
             key={index}
@@ -61,12 +64,12 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
     );
   };
 
+  if (isEmpty) {
+    return <PaymentsHomeEmptyScreenContent withPictogram={false} />;
+  }
+
   return (
-    <Animated.View
-      style={IOStyles.flex}
-      layout={Layout.duration(200)}
-      testID="PaymentsHomeTransactionsListTestID"
-    >
+    <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
       <ListItemHeader
         label={I18n.t("features.payments.transactions.title")}
         accessibilityLabel={I18n.t("features.payments.transactions.title")}

@@ -1,4 +1,9 @@
-import { Banner, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  IOVisualCostants,
+  ListItemHeader,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
@@ -85,10 +90,9 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
     }
 
     return (
-      <View>
-        <VSpacer size={24} />
+      <View style={{ paddingVertical: IOVisualCostants.appMarginDefault }}>
         <Banner
-          testID="PaymentsHomeUserMethodsList-banner"
+          testID="PaymentsHomeUserMethodsListTestID-banner"
           pictogramName="cardAdd"
           content={I18n.t("features.payments.methods.banner.content")}
           action={I18n.t("features.payments.methods.banner.action")}
@@ -99,13 +103,12 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
           labelClose={I18n.t("global.buttons.close")}
           onClose={() => dispatch(paymentsSetAddMethodsBannerVisible(false))}
         />
-        <VSpacer size={24} />
       </View>
     );
   }
 
   return (
-    <View testID="PaymentsHomeUserMethodsList">
+    <View>
       <ListItemHeader
         label={I18n.t("features.payments.methods.title")}
         accessibilityLabel={I18n.t("features.payments.methods.title")}
@@ -118,9 +121,12 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
         }}
       />
       {isLoading ? (
-        <PaymentCardsCarouselSkeleton />
+        <PaymentCardsCarouselSkeleton testID="PaymentsHomeUserMethodsListTestID-loading" />
       ) : (
-        <PaymentCardsCarousel cards={userMethods} />
+        <PaymentCardsCarousel
+          cards={userMethods}
+          testID="PaymentsHomeUserMethodsListTestID"
+        />
       )}
       <VSpacer size={24} />
     </View>

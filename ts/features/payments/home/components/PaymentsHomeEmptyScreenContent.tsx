@@ -17,7 +17,7 @@ type Props = {
   withPictogram?: boolean;
 };
 
-const PaymentsHomeEmptyScreenContent = ({ withPictogram = true }: Props) => {
+const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
   const navigation = useIONavigation();
 
   const handleOnAddMethodPress = () => {

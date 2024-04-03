@@ -14,12 +14,10 @@ import {
   isPaymentsTransactionsEmptySelector
 } from "../store/selectors";
 
-export const PaymentsHomeScreen = () => {
+const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
 
   const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
-
-  const isPaymentsEmpty = useIOSelector(isPaymentsMethodsEmptySelector);
   const isTransactionsEmpty = useIOSelector(
     isPaymentsTransactionsEmptySelector
   );
@@ -38,27 +36,50 @@ export const PaymentsHomeScreen = () => {
           flexGrow: 1
         }}
       >
-        {!isPaymentsEmpty && (
-          <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
-        )}
-        <PaymentsHomeEmptyScreenContent withPictogram={isPaymentsEmpty} />
+        <PaymentsHomeScreenContent />
       </ScrollView>
     );
   }
 
   return (
     <GradientScrollView
-      primaryActionProps={{
-        accessibilityLabel: I18n.t("features.payments.cta"),
-        label: I18n.t("features.payments.cta"),
-        onPress: handleOnPayNoticedPress,
-        icon: "qrCode",
-        iconPosition: "end"
-      }}
+      primaryActionProps={
+        isLoading
+          ? undefined
+          : {
+              accessibilityLabel: I18n.t("features.payments.cta"),
+              label: I18n.t("features.payments.cta"),
+              onPress: handleOnPayNoticedPress,
+              icon: "qrCode",
+              iconPosition: "end",
+              testID: "PaymentsHomeScreenTestID-cta"
+            }
+      }
       excludeSafeAreaMargins={true}
     >
-      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
-      <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
+      <PaymentsHomeScreenContent />
     </GradientScrollView>
   );
 };
+
+const PaymentsHomeScreenContent = () => {
+  const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+
+  const isPaymentsEmpty = useIOSelector(isPaymentsMethodsEmptySelector);
+  const isTransactionsEmpty = useIOSelector(
+    isPaymentsTransactionsEmptySelector
+  );
+
+  if (isPaymentsEmpty && isTransactionsEmpty) {
+    return <PaymentsHomeEmptyScreenContent withPictogram={true} />;
+  }
+
+  return (
+    <>
+      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
+      <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
+    </>
+  );
+};
+
+export { PaymentsHomeScreen };
