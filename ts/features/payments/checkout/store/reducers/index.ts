@@ -7,32 +7,32 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentStepEnum } from "../../types";
+import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
-  paymentsStartPaymentAuthorizationAction,
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsDeleteTransactionAction,
-  paymentsGetPaymentMethodsAction,
+  paymentsGetNewSessionTokenAction,
   paymentsGetPaymentDetailsAction,
+  paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
-  paymentsGetNewSessionTokenAction,
-  paymentsResetPaymentPspList
+  paymentsResetPaymentPspList,
+  paymentsStartPaymentAuthorizationAction
 } from "../actions/networking";
 import {
+  OnPaymentSuccessAction,
   initPaymentStateAction,
+  resetPaymentPspAction,
   selectPaymentMethodAction,
   selectPaymentPspAction,
-  resetPaymentPspAction,
-  walletPaymentSetCurrentStep,
-  OnPaymentSuccessAction
+  walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
-import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
