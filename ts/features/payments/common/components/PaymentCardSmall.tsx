@@ -13,12 +13,14 @@ import { WithTestID } from "../../../../types/WithTestID";
 import { PaymentCardProps } from "./PaymentCard";
 import { PaymentCardPressableBase } from "./PaymentCardPressableBase";
 
-export type PaymentCardSmallProps = PaymentCardProps & {
-  bankName?: string;
-  onPress?: () => void;
-  isError?: boolean;
-  accessibilityLabel?: string;
-};
+export type PaymentCardSmallProps = WithTestID<
+  PaymentCardProps & {
+    bankName?: string;
+    onPress?: () => void;
+    isError?: boolean;
+    accessibilityLabel?: string;
+  }
+>;
 
 const PaymentCardSmall = ({
   testID,
@@ -26,7 +28,7 @@ const PaymentCardSmall = ({
   isError,
   accessibilityLabel,
   ...props
-}: WithTestID<PaymentCardSmallProps>) => {
+}: PaymentCardSmallProps) => {
   const labelText = React.useMemo(() => {
     if (props.hpan) {
       return `•••• ${props.hpan}`;
