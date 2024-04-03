@@ -5,51 +5,40 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import { isGestureEnabled } from "../../../../utils/navigation";
-import WalletOnboardingStartScreen, {
-  WalletOnboardingFeedbackScreenParams
-} from "../screens/WalletOnboardingFeedbackScreen";
-import WalletOnboardingSelectPaymentMethodScreen from "../screens/WalletOnboardingSelectPaymentMethodScreen";
+import { PaymentsOnboardingFeedbackScreen } from "../screens/PaymentsOnboardingFeedbackScreen";
+import { PaymentsOnboardingSelectMethodScreen } from "../screens/PaymentsOnboardingSelectMethodScreen";
+import { PaymentsOnboardingParamsList } from "./params";
+import { PaymentsOnboardingRoutes } from "./routes";
 
-export const WalletOnboardingRoutes = {
-  WALLET_ONBOARDING_MAIN: "WALLET_ONBOARDING_MAIN",
-  WALLET_ONBOARDING_SELECT_PAYMENT_METHOD:
-    "WALLET_ONBOARDING_SELECT_PAYMENT_METHOD",
-  WALLET_ONBOARDING_RESULT_FEEDBACK: "WALLET_ONBOARDING_RESULT_FEEDBACK"
-} as const;
+const Stack = createStackNavigator<PaymentsOnboardingParamsList>();
 
-export type WalletOnboardingParamsList = {
-  [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: undefined;
-  [WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK]: WalletOnboardingFeedbackScreenParams;
-  [WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD]: undefined;
-};
-
-const Stack = createStackNavigator<WalletOnboardingParamsList>();
-
-export const WalletOnboardingNavigator = () => (
+export const PaymentsOnboardingNavigator = () => (
   <Stack.Navigator
-    initialRouteName={WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK}
+    initialRouteName={
+      PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK
+    }
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
-      name={WalletOnboardingRoutes.WALLET_ONBOARDING_RESULT_FEEDBACK}
-      component={WalletOnboardingStartScreen}
+      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD}
+      component={PaymentsOnboardingSelectMethodScreen}
       options={{ gestureEnabled: false }}
     />
     <Stack.Screen
-      name={WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD}
-      component={WalletOnboardingSelectPaymentMethodScreen}
+      name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK}
+      component={PaymentsOnboardingFeedbackScreen}
       options={{ gestureEnabled: false }}
     />
   </Stack.Navigator>
 );
 
-export type WalletOnboardingStackNavigationProp<
+export type PaymentsOnboardingStackNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string
-> = StackNavigationProp<WalletOnboardingParamsList & ParamList, RouteName>;
+> = StackNavigationProp<PaymentsOnboardingParamsList & ParamList, RouteName>;
 
-export type WalletOnboardingStackNavigation =
-  WalletOnboardingStackNavigationProp<
-    WalletOnboardingParamsList,
-    keyof WalletOnboardingParamsList
+export type PaymentsOnboardingStackNavigation =
+  PaymentsOnboardingStackNavigationProp<
+    PaymentsOnboardingParamsList,
+    keyof PaymentsOnboardingParamsList
   >;

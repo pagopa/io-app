@@ -23,6 +23,7 @@ import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { PNMessage } from "../store/types/types";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
+import { MessageInfo } from "./MessageInfo";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -90,6 +91,8 @@ export const MessageDetails = ({
           isCancelled={message.isCancelled}
           serviceId={serviceId}
         />
+        <VSpacer size={16} />
+        <MessageInfo iun={message.iun} />
       </ContentWrapper>
     </ScrollView>
   );

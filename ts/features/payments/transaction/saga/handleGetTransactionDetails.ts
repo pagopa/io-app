@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { walletTransactionDetailsGet } from "../store/actions";
+import { getPaymentsTransactionDetailsAction } from "../store/actions";
 import { getTransactions } from "../../../../store/reducers/wallet/transactions";
 import { getGenericError } from "../../../../utils/errors";
 
@@ -13,7 +13,7 @@ import { getGenericError } from "../../../../utils/errors";
  */
 export function* handleGetTransactionDetails(
   _getTransactionDetails: any, // TODO: Replace with the real type when the BIZ Event API will be available
-  action: ActionType<(typeof walletTransactionDetailsGet)["request"]>
+  action: ActionType<(typeof getPaymentsTransactionDetailsAction)["request"]>
 ) {
   // TODO: Add the whole logic here to call the BIZ Event API as soon as it will be available and replace the following code
   const transactions = yield* select(getTransactions);
@@ -23,11 +23,11 @@ export function* handleGetTransactionDetails(
     )
   );
   if (transactionDetails) {
-    yield* put(walletTransactionDetailsGet.success(transactionDetails));
+    yield* put(getPaymentsTransactionDetailsAction.success(transactionDetails));
     return;
   }
   yield* put(
-    walletTransactionDetailsGet.failure({
+    getPaymentsTransactionDetailsAction.failure({
       ...getGenericError(
         new Error(
           `Transaction details not found for transaction id ${action.payload.transactionId}`
