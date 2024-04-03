@@ -6,6 +6,7 @@ import _ from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Transaction } from "../../../../../types/pagopa";
+import { walletPaymentUserWalletsSelector } from "../../../checkout/store/selectors";
 
 export const selectPaymentsTransactions = (state: GlobalState) =>
   state.wallet.transactions.transactions;
@@ -23,3 +24,30 @@ export const selectPaymentsTransactionSorted = createSelector(
       O.getOrElse(() => [] as ReadonlyArray<Transaction>)
     )
 );
+
+export const isPaymentsSectionLoadingSelector = createSelector(
+  walletPaymentUserWalletsSelector,
+  selectPaymentsTransactions,
+  (methodsPot, transactionsPot) =>
+    pot.isLoading(methodsPot) || pot.isLoading(transactionsPot)
+);
+
+export const isPaymentsMethodsEmptySelector = createSelector(
+  walletPaymentUserWalletsSelector,
+  userWallets => pot.isSome(userWallets) && userWallets.value.length === 0
+);
+
+export const isPaymentsTransactionsEmptySelector = createSelector(
+  selectPaymentsTransactions,
+  transactionsPot =>
+    pot.isSome(transactionsPot) && _.values(transactionsPot.value).length === 0
+);
+
+export const isPaymentsSectionEmptySelector = createSelector(
+  isPaymentsMethodsEmptySelector,
+  isPaymentsTransactionsEmptySelector,
+  (isMethodsEmpty, isTransactionsEmpty) => isMethodsEmpty && isTransactionsEmpty
+);
+
+export const isAddMethodsBannerVisibleSelector = (state: GlobalState) =>
+  state.features.payments.home.shouldShowAddMethodsBanner;

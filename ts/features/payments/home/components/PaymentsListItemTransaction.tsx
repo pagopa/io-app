@@ -34,7 +34,7 @@ const PaymentsListItemTransaction = ({ transaction }: Props) => {
       transactionAmount={amountText}
       accessibilityLabel={accessibilityLabel}
       badgeText={I18n.t(
-        `payment.homeScreen.historySection.transactionStatusBadges.${transactionStatus}`
+        `features.payments.transactions.status.${transactionStatus}`
       )}
       transactionStatus={transactionStatus}
     />

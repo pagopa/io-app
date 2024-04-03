@@ -1,34 +1,64 @@
-import { GradientScrollView, VSpacer } from "@pagopa/io-app-design-system";
+import { GradientScrollView } from "@pagopa/io-app-design-system";
 import * as React from "react";
+import { ScrollView } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
-import { PaymentsTransactionsList } from "../components/PaymentsTransactionsList";
-import { PaymentsUserMethodsList } from "../components/PaymentsUserMethodsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
+import { PaymentsHomeEmptyScreenContent } from "../components/PaymentsHomeEmptyScreenContent";
+import { PaymentsHomeTransactionsList } from "../components/PaymentsHomeTransactionsList";
+import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
+import {
+  isPaymentsMethodsEmptySelector,
+  isPaymentsSectionLoadingSelector,
+  isPaymentsTransactionsEmptySelector
+} from "../store/selectors";
 
 export const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
 
+  const isLoading = useIOSelector(isPaymentsSectionLoadingSelector);
+
+  const isPaymentsEmpty = useIOSelector(isPaymentsMethodsEmptySelector);
+  const isTransactionsEmpty = useIOSelector(
+    isPaymentsTransactionsEmptySelector
+  );
+
   const handleOnPayNoticedPress = () => {
-    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
-      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
+    navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
+      screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
     });
   };
+
+  if (isTransactionsEmpty) {
+    return (
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          flexGrow: 1
+        }}
+      >
+        {!isPaymentsEmpty && (
+          <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
+        )}
+        <PaymentsHomeEmptyScreenContent withPictogram={isPaymentsEmpty} />
+      </ScrollView>
+    );
+  }
 
   return (
     <GradientScrollView
       primaryActionProps={{
-        accessibilityLabel: I18n.t("payment.homeScreen.CTA"),
-        label: I18n.t("payment.homeScreen.CTA"),
+        accessibilityLabel: I18n.t("features.payments.cta"),
+        label: I18n.t("features.payments.cta"),
         onPress: handleOnPayNoticedPress,
         icon: "qrCode",
         iconPosition: "end"
       }}
       excludeSafeAreaMargins={true}
     >
-      <PaymentsUserMethodsList />
-      <VSpacer size={24} />
-      <PaymentsTransactionsList />
+      <PaymentsHomeUserMethodsList enforcedLoadingState={isLoading} />
+      <PaymentsHomeTransactionsList enforcedLoadingState={isLoading} />
     </GradientScrollView>
   );
 };

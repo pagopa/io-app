@@ -94,10 +94,7 @@ const PaymentCardSmall = ({
 };
 
 const PaymentCardSmallSkeleton = ({ testID }: WithTestID<unknown>) => (
-  <View
-    style={[styles.card, { backgroundColor: IOColors["grey-100"] }]}
-    testID={`${testID}-skeleton`}
-  >
+  <View style={styles.card} testID={`${testID}-skeleton`}>
     <Placeholder.Box
       color={IOColors["grey-200"]}
       animate="fade"
@@ -117,11 +114,13 @@ const PaymentCardSmallSkeleton = ({ testID }: WithTestID<unknown>) => (
 );
 
 export const PAYMENT_CARD_SMALL_WIDTH = 127;
+export const PAYMENT_CARD_SMALL_HEIGHT = 80;
 
 const styles = StyleSheet.create({
   card: {
     flex: 1,
     width: PAYMENT_CARD_SMALL_WIDTH,
+    height: PAYMENT_CARD_SMALL_HEIGHT,
     flexBasis: PAYMENT_CARD_SMALL_WIDTH,
     flexGrow: 0,
     borderRadius: 8,
