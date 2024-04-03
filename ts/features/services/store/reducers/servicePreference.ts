@@ -9,7 +9,6 @@ import {
 } from "../../types/ServicePreferenceResponse";
 import { NetworkError } from "../../../../utils/errors";
 import { isStrictSome } from "../../../../utils/pot";
-import { EnabledChannels } from "../../../../utils/profile";
 import { loadServicePreference, upsertServicePreference } from "../actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -53,19 +52,6 @@ export default servicePreferenceReducer;
 export const servicePreferenceSelector = (
   state: GlobalState
 ): ServicePreferenceState => state.entities.services.servicePreference;
-
-export const servicePreferenceByChannelSelector = (
-  state: GlobalState,
-  channel: keyof EnabledChannels
-) =>
-  pipe(
-    state,
-    servicePreferenceSelector,
-    pot.toOption,
-    O.filter(isServicePreferenceResponseSuccess),
-    O.map(servicePreference => servicePreference.value[channel]),
-    O.getOrElse(() => false)
-  );
 
 export const servicePreferenceResponseSuccessSelector = (state: GlobalState) =>
   pipe(

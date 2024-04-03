@@ -1,5 +1,11 @@
-import React, { useCallback, useEffect } from "react";
-import { Divider, IOToast, ListItemHeader } from "@pagopa/io-app-design-system";
+import React, { ComponentProps, useCallback, useEffect } from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
+import {
+  Divider,
+  IOToast,
+  ListItemHeader,
+  ListItemSwitch
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { pipe } from "fp-ts/lib/function";
@@ -13,10 +19,10 @@ import { useFirstEffect } from "../common/hooks/useFirstEffect";
 import { upsertServicePreference } from "../store/actions";
 import {
   isErrorServicePreferenceSelector,
+  isLoadingServicePreferenceSelector,
   servicePreferenceResponseSuccessSelector
 } from "../store/reducers/servicePreference";
 import { serviceMetadataInfoSelector } from "../store/reducers/servicesById";
-import { ServicePreferenceListItemSwitch } from "./ServicePreferenceListItemSwitch";
 
 const hasChannel = (
   notificationChannel: NotificationChannelEnum,
@@ -27,6 +33,10 @@ const hasChannel = (
     RA.findFirst(channel => channel === notificationChannel),
     O.isSome
   );
+
+type PreferenceSwitchListItem = {
+  condition?: boolean;
+} & ComponentProps<typeof ListItemSwitch>;
 
 export type ServiceDetailsPreferencesProps = {
   serviceId: ServiceId;
@@ -43,6 +53,10 @@ export const ServiceDetailsPreferences = ({
 
   const servicePreferenceResponseSuccess = useIOSelector(
     servicePreferenceResponseSuccessSelector
+  );
+
+  const isLoadingServicePreference = useIOSelector(
+    isLoadingServicePreferenceSelector
   );
 
   const isErrorServicePreference = useIOSelector(
@@ -70,7 +84,7 @@ export const ServiceDetailsPreferences = ({
     }
   }, [isFirstRender, isErrorServicePreference]);
 
-  const handlePreferenceValueChange = useCallback(
+  const handleSwitchValueChange = useCallback(
     (channel: keyof EnabledChannels, value: boolean) => {
       if (servicePreferenceResponseSuccess) {
         dispatch(
@@ -85,60 +99,69 @@ export const ServiceDetailsPreferences = ({
     [dispatch, serviceId, servicePreferenceResponseSuccess]
   );
 
+  const preferenceListItems: ReadonlyArray<PreferenceSwitchListItem> = [
+    // this switch is disabled if the current service is a special service.
+    // the user can enable the service only using the proper special service flow.
+    {
+      disabled: serviceMetadataInfo?.isSpecialService,
+      icon: "message",
+      isLoading: isLoadingServicePreference,
+      label: I18n.t("services.details.preferences.inbox"),
+      onSwitchValueChange: (value: boolean) =>
+        handleSwitchValueChange("inbox", value),
+      value: servicePreferenceResponseSuccess?.value.inbox
+    },
+    {
+      condition:
+        isInboxPreferenceEnabled &&
+        hasChannel(NotificationChannelEnum.WEBHOOK, availableChannels),
+      icon: "bell",
+      isLoading: isLoadingServicePreference,
+      label: I18n.t("services.details.preferences.pushNotifications"),
+      onSwitchValueChange: (value: boolean) =>
+        handleSwitchValueChange("push", value),
+      value: servicePreferenceResponseSuccess?.value.push
+    },
+    {
+      condition: isInboxPreferenceEnabled && isPremiumMessagesOptInOutEnabled,
+      icon: "read",
+      isLoading: isLoadingServicePreference,
+      label: I18n.t("services.details.preferences.messageReadStatus"),
+      onSwitchValueChange: (value: boolean) =>
+        handleSwitchValueChange("can_access_message_read_status", value),
+      value:
+        servicePreferenceResponseSuccess?.value.can_access_message_read_status
+    }
+  ];
+
+  const filteredPreferenceListItems = preferenceListItems.filter(
+    item => item.condition !== false
+  );
+
+  const renderItem = useCallback(
+    ({
+      item: { condition, ...rest }
+    }: ListRenderItemInfo<PreferenceSwitchListItem>) => (
+      <ListItemSwitch {...rest} />
+    ),
+    []
+  );
+
+  const ListHeaderComponent = (
+    <ListItemHeader
+      label={I18n.t("services.details.preferences.title")}
+      accessibilityLabel={I18n.t("services.details.preferences.title")}
+    />
+  );
+
   return (
-    <>
-      <ListItemHeader
-        label={I18n.t("services.details.preferences.title")}
-        accessibilityLabel={I18n.t("services.details.preferences.title")}
-      />
-      {/* 
-        this switch is disabled if the current service is a special service.
-        the user can enable the service only using the proper special service flow.
-      */}
-      <ServicePreferenceListItemSwitch
-        channel="inbox"
-        icon="message"
-        disabled={serviceMetadataInfo?.isSpecialService}
-        label={I18n.t("services.details.preferences.inbox")}
-        onPreferenceValueChange={(value: boolean) =>
-          handlePreferenceValueChange("inbox", value)
-        }
-      />
-
-      {isInboxPreferenceEnabled ? (
-        <>
-          {hasChannel(NotificationChannelEnum.WEBHOOK, availableChannels) && (
-            <>
-              <Divider />
-              <ServicePreferenceListItemSwitch
-                channel="push"
-                icon="bell"
-                label={I18n.t("services.details.preferences.pushNotifications")}
-                onPreferenceValueChange={(value: boolean) =>
-                  handlePreferenceValueChange("push", value)
-                }
-              />
-            </>
-          )}
-
-          {isPremiumMessagesOptInOutEnabled && (
-            <>
-              <Divider />
-              <ServicePreferenceListItemSwitch
-                channel="can_access_message_read_status"
-                icon="read"
-                label={I18n.t("services.details.preferences.messageReadStatus")}
-                onPreferenceValueChange={(value: boolean) =>
-                  handlePreferenceValueChange(
-                    "can_access_message_read_status",
-                    value
-                  )
-                }
-              />
-            </>
-          )}
-        </>
-      ) : null}
-    </>
+    <FlatList
+      ListHeaderComponent={ListHeaderComponent}
+      ItemSeparatorComponent={() => <Divider />}
+      data={filteredPreferenceListItems}
+      keyExtractor={item => item.label}
+      renderItem={renderItem}
+      scrollEnabled={false}
+    />
   );
 };

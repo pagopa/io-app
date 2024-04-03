@@ -13,7 +13,6 @@ import { loadServicePreference, upsertServicePreference } from "../../actions";
 import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
-  servicePreferenceByChannelSelector,
   servicePreferenceResponseSuccessSelector
 } from "../servicePreference";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -119,55 +118,6 @@ describe("servicePreference reducer", () => {
 });
 
 describe("servicePreference selectors", () => {
-  // OK
-  describe("servicePreferenceByChannelSelector", () => {
-    it("should return false when pot.none", () => {
-      const state = appReducer(
-        {} as GlobalState,
-        applicationChangeState("active")
-      );
-      const servicePreferenceByChannel = servicePreferenceByChannelSelector(
-        state,
-        "inbox"
-      );
-      expect(servicePreferenceByChannel).toStrictEqual(false);
-    });
-    it("should return false when pot.some and the service preference is not successfully loaded", () => {
-      const state = appReducer(
-        {} as GlobalState,
-        loadServicePreference.success(servicePreferenceResponseFailure)
-      );
-      const servicePreferenceByChannel = servicePreferenceByChannelSelector(
-        state,
-        "inbox"
-      );
-      expect(servicePreferenceByChannel).toStrictEqual(false);
-    });
-    it("should return false when pot.some and the service preference is successfully loaded and the channel is disabled", () => {
-      const state = appReducer(
-        {} as GlobalState,
-        loadServicePreference.success(servicePreferenceResponseSuccess)
-      );
-      const servicePreferenceByChannel = servicePreferenceByChannelSelector(
-        state,
-        "email"
-      );
-      expect(servicePreferenceByChannel).toStrictEqual(false);
-    });
-    it("should return true when pot.some and the service preference is successfully loaded and the channel is enabled", () => {
-      const state = appReducer(
-        {} as GlobalState,
-        loadServicePreference.success(servicePreferenceResponseSuccess)
-      );
-      const servicePreferenceByChannel = servicePreferenceByChannelSelector(
-        state,
-        "inbox"
-      );
-      expect(servicePreferenceByChannel).toStrictEqual(true);
-    });
-  });
-
-  // OK
   describe("servicePreferenceResponseSuccessSelector", () => {
     it("should return servicePreferenceResponseSuccess when pot.some and the service preference is successfully loaded", () => {
       const state = appReducer(
@@ -192,7 +142,6 @@ describe("servicePreference selectors", () => {
     });
   });
 
-  // OK
   describe("isLoadingServicePreferenceSelector", () => {
     it("should return true when pot.loading", () => {
       const state = appReducer(
@@ -232,7 +181,6 @@ describe("servicePreference selectors", () => {
     });
   });
 
-  // OK
   describe("isErrorServicePreferenceSelector", () => {
     it("should return true when pot.error", () => {
       const state = appReducer(
