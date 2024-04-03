@@ -1,13 +1,12 @@
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { watchWalletOnboardingSaga } from "../../onboarding/saga";
-import { createPaymentClient } from "../../payment/api/client";
-import { watchWalletPaymentSaga } from "../../payment/saga";
-import { createWalletClient } from "../api/client";
+import { watchPaymentsOnboardingSaga } from "../../onboarding/saga";
+import { watchPaymentsCheckoutSaga } from "../../checkout/saga";
+import { createPaymentClient, createWalletClient } from "../api/client";
 import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
-import { watchWalletDetailsSaga } from "../../details/saga";
-import { watchWalletTransactionSaga } from "../../transaction/saga";
+import { watchPaymentsMethodDetailsSaga } from "../../details/saga";
+import { watchPaymentsTransactionSaga } from "../../transaction/saga";
 
 export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);
@@ -19,8 +18,8 @@ export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   const walletClient = createWalletClient(walletBaseUrl, walletToken);
   const paymentClient = createPaymentClient(walletBaseUrl, walletToken);
 
-  yield* fork(watchWalletOnboardingSaga, walletClient);
-  yield* fork(watchWalletDetailsSaga, walletClient);
-  yield* fork(watchWalletTransactionSaga, walletClient);
-  yield* fork(watchWalletPaymentSaga, paymentClient);
+  yield* fork(watchPaymentsOnboardingSaga, walletClient);
+  yield* fork(watchPaymentsMethodDetailsSaga, walletClient);
+  yield* fork(watchPaymentsTransactionSaga, walletClient);
+  yield* fork(watchPaymentsCheckoutSaga, paymentClient);
 }
