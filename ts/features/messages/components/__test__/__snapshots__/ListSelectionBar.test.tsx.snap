@@ -79,6 +79,8 @@ exports[`ListSelectionBar component should match the snapshot with default props
         }
       >
         <Text
+          accessibilityElementsHidden={true}
+          accessible={false}
           allowFontScaling={false}
           ellipsizeMode="tail"
           importantForAccessibility="no-hide-descendants"
@@ -173,7 +175,6 @@ exports[`ListSelectionBar component should match the snapshot with default props
         }
       >
         <View
-          exiting={[Function]}
           style={
             Array [
               Object {
@@ -186,6 +187,8 @@ exports[`ListSelectionBar component should match the snapshot with default props
           }
         >
           <Text
+            accessibilityElementsHidden={true}
+            accessible={false}
             allowFontScaling={false}
             color="white"
             defaultColor="white"

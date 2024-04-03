@@ -434,27 +434,32 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                             "marginTop": -50,
                             "overflow": "hidden",
                             "paddingTop": 50,
+                            "width": "100%",
                           }
                         }
                         testID="FooterWithButtons"
                       >
                         <View
+                          onLayout={[Function]}
                           style={
-                            Object {
-                              "backgroundColor": "#FFFFFF",
-                              "elevation": 20,
-                              "paddingBottom": 16,
-                              "paddingLeft": 24,
-                              "paddingRight": 24,
-                              "paddingTop": 16,
-                              "shadowColor": "#0E0F13",
-                              "shadowOffset": Object {
-                                "height": 50,
-                                "width": 0,
+                            Array [
+                              Object {
+                                "backgroundColor": "#FFFFFF",
+                                "elevation": 20,
+                                "paddingHorizontal": 24,
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": Object {
+                                  "height": 50,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.5,
+                                "shadowRadius": 37,
                               },
-                              "shadowOpacity": 0.5,
-                              "shadowRadius": 37,
-                            }
+                              Object {
+                                "paddingBottom": 16,
+                                "paddingTop": 16,
+                              },
+                            ]
                           }
                         >
                           <View
@@ -465,81 +470,123 @@ exports[`PayPalOnboardingCompletedSuccessComponent should match the snapshot 1`]
                             }
                           >
                             <View
-                              accessibilityRole="button"
-                              accessibilityState={
-                                Object {
-                                  "disabled": undefined,
-                                }
-                              }
-                              accessible={true}
-                              collapsable={false}
-                              focusable={true}
-                              forwardedRef={[Function]}
-                              hitSlop={
-                                Object {
-                                  "bottom": 4,
-                                  "top": 4,
-                                }
-                              }
-                              onClick={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
                               style={
                                 Object {
                                   "alignContent": "center",
-                                  "alignItems": "center",
-                                  "alignSelf": "flex-start",
-                                  "backgroundColor": "#007aff",
-                                  "borderBottomWidth": null,
-                                  "borderColor": "#007aff",
-                                  "borderLeftWidth": null,
-                                  "borderRadius": 5,
-                                  "borderRightWidth": null,
-                                  "borderTopWidth": null,
-                                  "borderWidth": undefined,
-                                  "elevation": 2,
                                   "flex": 1,
-                                  "flexDirection": "row",
-                                  "height": 45,
                                   "justifyContent": "center",
-                                  "opacity": 1,
-                                  "paddingBottom": 6,
-                                  "paddingTop": 6,
-                                  "shadowColor": undefined,
-                                  "shadowOffset": undefined,
-                                  "shadowOpacity": undefined,
-                                  "shadowRadius": undefined,
                                 }
                               }
-                              testID="primaryButtonId"
                             >
-                              <Text
-                                style={
-                                  Array [
-                                    Object {
-                                      "backgroundColor": "transparent",
-                                      "color": "#fff",
-                                      "fontFamily": "System",
-                                      "fontSize": 16.5,
-                                      "marginLeft": 0,
-                                      "marginRight": 0,
-                                      "paddingLeft": 16,
-                                      "paddingRight": 16,
-                                    },
-                                    undefined,
-                                    Object {
-                                      "color": "#FFFFFF",
-                                    },
-                                  ]
+                              <View
+                                accessibilityLabel="Continua"
+                                accessibilityRole="button"
+                                accessibilityState={
+                                  Object {
+                                    "busy": false,
+                                    "disabled": false,
+                                  }
                                 }
-                                uppercase={false}
+                                accessible={true}
+                                collapsable={false}
+                                focusable={true}
+                                onBlur={[Function]}
+                                onClick={[Function]}
+                                onFocus={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={Object {}}
+                                testID="primaryButtonId"
                               >
-                                Continua
-                              </Text>
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "borderRadius": 4,
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "paddingHorizontal": 16,
+                                        "textAlignVertical": "center",
+                                      },
+                                      Object {
+                                        "overflow": "hidden",
+                                      },
+                                      false,
+                                      Object {
+                                        "height": 40,
+                                      },
+                                      Object {
+                                        "backgroundColor": "#0073E6",
+                                      },
+                                      Object {
+                                        "backgroundColor": undefined,
+                                        "transform": Array [
+                                          Object {
+                                            "scale": undefined,
+                                          },
+                                        ],
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Array [
+                                        Object {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        false,
+                                      ]
+                                    }
+                                  >
+                                    <Text
+                                      accessibilityElementsHidden={true}
+                                      accessible={false}
+                                      allowFontScaling={false}
+                                      color="white"
+                                      defaultColor="white"
+                                      defaultWeight="Bold"
+                                      ellipsizeMode="tail"
+                                      font="TitilliumWeb"
+                                      fontStyle={
+                                        Object {
+                                          "fontSize": 16,
+                                        }
+                                      }
+                                      importantForAccessibility="no-hide-descendants"
+                                      maxFontSizeMultiplier={1.3}
+                                      numberOfLines={1}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "alignSelf": "center",
+                                          },
+                                          Object {
+                                            "fontSize": 16,
+                                          },
+                                          Object {
+                                            "color": "#FFFFFF",
+                                            "fontFamily": "Titillium Web",
+                                            "fontStyle": "normal",
+                                            "fontWeight": "700",
+                                          },
+                                        ]
+                                      }
+                                      weight="Bold"
+                                    >
+                                      Continua
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
                             </View>
                           </View>
                         </View>

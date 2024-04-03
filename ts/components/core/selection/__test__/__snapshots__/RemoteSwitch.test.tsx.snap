@@ -141,6 +141,12 @@ exports[`RemoteSwitch tests Snapshot for pot.noneUpdating 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "checked": true,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -166,6 +172,12 @@ exports[`RemoteSwitch tests Snapshot for pot.some 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.some 2`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "checked": false,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -191,6 +203,12 @@ exports[`RemoteSwitch tests Snapshot for pot.some 2`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someError 1`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "checked": true,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -216,6 +234,12 @@ exports[`RemoteSwitch tests Snapshot for pot.someError 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someError 2`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "checked": false,
+      "disabled": undefined,
+    }
+  }
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
@@ -271,6 +295,12 @@ exports[`RemoteSwitch tests Snapshot for pot.someLoading 2`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "checked": true,
+      "disabled": true,
+    }
+  }
   disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}
@@ -297,6 +327,12 @@ exports[`RemoteSwitch tests Snapshot for pot.someUpdating 1`] = `
 exports[`RemoteSwitch tests Snapshot for pot.someUpdating 2`] = `
 <RCTSwitch
   accessibilityRole="switch"
+  accessibilityState={
+    Object {
+      "checked": false,
+      "disabled": true,
+    }
+  }
   disabled={true}
   onChange={[Function]}
   onResponderTerminationRequest={[Function]}

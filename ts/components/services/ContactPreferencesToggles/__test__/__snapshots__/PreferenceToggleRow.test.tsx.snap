@@ -52,6 +52,12 @@ exports[`PreferenceToggleRow component should match the snapshot 1`] = `
   <RCTSwitch
     accessibilityLabel="Push Notifications"
     accessibilityRole="switch"
+    accessibilityState={
+      Object {
+        "checked": true,
+        "disabled": undefined,
+      }
+    }
     onChange={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
