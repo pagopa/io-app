@@ -13,7 +13,7 @@ import { Label } from "../../../components/core/typography/Label";
 import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenComponent";
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
-import { WalletPaymentFeebackBanner } from "../../../features/payments/payment/components/WalletPaymentFeedbackBanner";
+import { WalletPaymentFeebackBanner } from "../../../features/payments/checkout/components/WalletPaymentFeedbackBanner";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import I18n from "../../../i18n";
 import { navigateToWalletHome } from "../../../store/actions/navigation";

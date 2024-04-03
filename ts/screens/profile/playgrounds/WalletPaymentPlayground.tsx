@@ -15,7 +15,7 @@ import {
   validateOrganizationFiscalCode,
   validatePaymentNoticeNumber
 } from "../../../features/payments/common/utils/validation";
-import { usePagoPaPayment } from "../../../features/payments/payment/hooks/usePagoPaPayment";
+import { usePagoPaPayment } from "../../../features/payments/checkout/hooks/usePagoPaPayment";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import I18n from "../../../i18n";
 import { generateValidRandomRptIdString } from "./utils";
