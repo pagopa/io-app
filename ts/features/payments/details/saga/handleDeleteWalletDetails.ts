@@ -3,8 +3,8 @@ import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
 import {
-  walletDetailsDeleteInstrument,
-  walletDetailsGetInstrument
+  paymentsDeleteMethodAction,
+  paymentsGetMethodDetailsAction
 } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
@@ -18,7 +18,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  */
 export function* handleDeleteWalletDetails(
   deleteWalletById: WalletClient["deleteWalletById"],
-  action: ActionType<(typeof walletDetailsDeleteInstrument)["request"]>
+  action: ActionType<(typeof paymentsDeleteMethodAction)["request"]>
 ) {
   try {
     const deleteWalletRequest = deleteWalletById({
@@ -32,36 +32,38 @@ export function* handleDeleteWalletDetails(
     if (E.isRight(deleteWalletResult)) {
       if (deleteWalletResult.right.status === 204) {
         // handled success
-        const successAction = walletDetailsDeleteInstrument.success();
+        const successAction = paymentsDeleteMethodAction.success();
         yield* put(successAction);
         if (action.payload.onSuccess) {
-          action.payload.onSuccess(successAction);
+          action.payload.onSuccess();
         }
         return;
       }
       // not handled error codes
-      const failureAction = walletDetailsDeleteInstrument.failure({
+      const failureAction = paymentsDeleteMethodAction.failure({
         ...getGenericError(
           new Error(`response status code ${deleteWalletResult.right.status}`)
         )
       });
       yield* put(failureAction);
       if (action.payload.onFailure) {
-        action.payload.onFailure(failureAction);
+        action.payload.onFailure();
       }
     } else {
       // cannot decode response
-      const failureAction = walletDetailsDeleteInstrument.failure({
+      const failureAction = paymentsDeleteMethodAction.failure({
         ...getGenericError(
           new Error(readablePrivacyReport(deleteWalletResult.left))
         )
       });
       yield* put(failureAction);
       if (action.payload.onFailure) {
-        action.payload.onFailure(failureAction);
+        action.payload.onFailure();
       }
     }
   } catch (e) {
-    yield* put(walletDetailsGetInstrument.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsGetMethodDetailsAction.failure({ ...getNetworkError(e) })
+    );
   }
 }
