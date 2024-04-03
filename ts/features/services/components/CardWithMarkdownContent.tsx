@@ -8,9 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: IOColors.white,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: IOColors["grey-100"]
-  },
-  wrapper: {
+    borderColor: IOColors["grey-100"],
     padding: 24
   }
 });
@@ -28,9 +26,7 @@ const CSS_STYLE = `
 const CardWithMarkdownContent = memo(
   ({ content }: CardWithMarkdownContentProps) => (
     <View style={styles.card}>
-      <View style={styles.wrapper}>
-        <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>
-      </View>
+      <Markdown cssStyle={CSS_STYLE}>{content}</Markdown>
     </View>
   )
 );
