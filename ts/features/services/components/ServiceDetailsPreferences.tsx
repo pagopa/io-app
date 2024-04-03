@@ -147,16 +147,11 @@ export const ServiceDetailsPreferences = ({
     []
   );
 
-  const ListHeaderComponent = (
-    <ListItemHeader
-      label={I18n.t("services.details.preferences.title")}
-      accessibilityLabel={I18n.t("services.details.preferences.title")}
-    />
-  );
-
   return (
     <FlatList
-      ListHeaderComponent={ListHeaderComponent}
+      ListHeaderComponent={
+        <ListItemHeader label={I18n.t("services.details.preferences.title")} />
+      }
       ItemSeparatorComponent={() => <Divider />}
       data={filteredPreferenceListItems}
       keyExtractor={item => item.label}
