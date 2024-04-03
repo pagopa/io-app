@@ -4,23 +4,26 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
-import * as _ from "lodash";
 import * as React from "react";
 import { default as I18n } from "../../../../i18n";
 import { fetchTransactionsRequestWithExpBackoff } from "../../../../store/actions/wallet/transactions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { GlobalState } from "../../../../store/reducers/types";
-import { Transaction } from "../../../../types/pagopa";
-import { PaymentsHomeListItemTransaction } from "./PaymentsHomeListItemTransaction";
+import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
+import {
+  selectPaymentsTransactionSorted,
+  selectPaymentsTransactions
+} from "../store/selectors";
+import { PaymentsListItemTransaction } from "./PaymentsListItemTransaction";
 
-const PaymentsHomeTransactionList = () => {
+const PaymentsTransactionsList = () => {
   const dispatch = useIODispatch();
 
-  const transactionsPot = useIOSelector(
-    (state: GlobalState) => state.wallet.transactions.transactions
-  );
+  const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
+  const transactionsPot = useIOSelector(selectPaymentsTransactions);
+  const sortedTransactions = useIOSelector(selectPaymentsTransactionSorted);
 
-  const isLoading = pot.isLoading(transactionsPot);
+  const isLoading =
+    pot.isLoading(paymentMethodsPot) || pot.isLoading(transactionsPot);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -29,20 +32,13 @@ const PaymentsHomeTransactionList = () => {
   );
 
   const renderItems = () => {
-    if (!isLoading && pot.isSome(transactionsPot)) {
-      const toArray = _.values(transactionsPot.value);
-      const sortedByCreationDate = _.orderBy(toArray, item => item?.created, [
-        "desc"
-      ]);
-
-      return sortedByCreationDate
-        .filter((item): item is Transaction => item !== undefined)
-        .map(transaction => (
-          <PaymentsHomeListItemTransaction
-            key={`transaction_${transaction.id}`}
-            transaction={transaction}
-          />
-        ));
+    if (!isLoading) {
+      return sortedTransactions.map(transaction => (
+        <PaymentsListItemTransaction
+          key={`transaction_${transaction.id}`}
+          transaction={transaction}
+        />
+      ));
     }
 
     return Array.from({ length: 5 }).map((_, index) => (
@@ -58,7 +54,6 @@ const PaymentsHomeTransactionList = () => {
   };
 
   return (
-    // full pages history loading will be handled by history details page
     <>
       <ListItemHeader
         label={I18n.t("payment.homeScreen.historySection.header")}
@@ -76,4 +71,4 @@ const PaymentsHomeTransactionList = () => {
   );
 };
 
-export { PaymentsHomeTransactionList };
+export { PaymentsTransactionsList };

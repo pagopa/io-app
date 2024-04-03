@@ -1,9 +1,9 @@
 import React from "react";
-import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { PaymentCard, PaymentCardProps } from "./PaymentCard";
+import { PaymentCardPressableBase } from "./PaymentCardPressableBase";
 
 export type PaymentWalletCardProps = PaymentCardProps & {
   walletId: string;
@@ -27,9 +27,9 @@ const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
   };
 
   return (
-    <Pressable onPress={handleOnPress}>
+    <PaymentCardPressableBase onPress={handleOnPress}>
       <PaymentCard {...cardProps} />
-    </Pressable>
+    </PaymentCardPressableBase>
   );
 };
 

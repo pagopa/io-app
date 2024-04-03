@@ -3,8 +3,8 @@ import * as React from "react";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
-import { PaymentsHomeTransactionList } from "../components/PaymentsHomeTransactionList";
-import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
+import { PaymentsTransactionsList } from "../components/PaymentsTransactionsList";
+import { PaymentsUserMethodsList } from "../components/PaymentsUserMethodsList";
 
 export const PaymentsHomeScreen = () => {
   const navigation = useIONavigation();
@@ -26,9 +26,9 @@ export const PaymentsHomeScreen = () => {
       }}
       excludeSafeAreaMargins={true}
     >
-      <PaymentsHomeUserMethodsList />
+      <PaymentsUserMethodsList />
       <VSpacer size={24} />
-      <PaymentsHomeTransactionList />
+      <PaymentsTransactionsList />
     </GradientScrollView>
   );
 };

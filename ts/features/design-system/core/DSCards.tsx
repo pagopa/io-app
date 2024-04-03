@@ -1,4 +1,4 @@
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
+import { HSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
@@ -6,6 +6,11 @@ import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
 import { PaymentCard } from "../../payments/common/components/PaymentCard";
 import { PaymentCardBig } from "../../payments/common/components/PaymentCardBig";
 import { PaymentCardSmall } from "../../payments/common/components/PaymentCardSmall";
+import {
+  PaymentCardsCarousel,
+  PaymentCardsCarouselProps,
+  PaymentCardsCarouselSkeleton
+} from "../../payments/home/components/PaymentsCardsCarousel";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
@@ -21,6 +26,41 @@ const styles = StyleSheet.create({
 
 const onPress = () => {
   Alert.alert("Alert", "Action triggered");
+};
+
+const cardsDataForCarousel: PaymentCardsCarouselProps = {
+  cards: [
+    {
+      hpan: "9999",
+      isError: false,
+      brand: "maestro",
+      onPress
+    },
+    {
+      holderEmail: "test@test.it",
+      isError: true,
+      onPress
+    },
+    {
+      holderPhone: "1234",
+      onPress
+    },
+    {
+      brand: "pagobancomat",
+      bankName: "Intesa San Paolo",
+      onPress
+    },
+    {
+      hpan: "9999",
+      isError: true,
+      onPress
+    },
+    {
+      bankName: "Intesa San Paolo",
+      brand: "maestro",
+      onPress
+    }
+  ]
 };
 
 // for testing reasons, abi codes can be found here:
@@ -100,34 +140,84 @@ export const DSCards = () => (
           <PaymentCardBig isLoading={true} />
         </ScrollView>
       </DSComponentViewerBox>
-      <DSComponentViewerBox name="PaymentCardSmall">
+    </DesignSystemSection>
+    <DesignSystemSection title="PaymentCardSmall">
+      <DSComponentViewerBox name="Credit card">
         <View style={styles.content}>
-          <PaymentCardSmall hpan="9999" isError={false} cardType={"CREDIT"} />
+          <PaymentCardSmall hpan="9900" brand="maestro" onPress={onPress} />
           <HSpacer size={16} />
-          <PaymentCardSmall cardType="PAYPAL" />
+          <PaymentCardSmall hpan="9900" brand="maestro" isError />
         </View>
-        <VSpacer size={16} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="PagoBANCOMAT">
         <View style={styles.content}>
           <PaymentCardSmall
-            cardType={"COBADGE"}
-            isError={true}
-            providerName="A very very long name for a provider"
-            cardIcon="maestro"
-            onCardPress={onPress}
+            abiCode="03069"
+            brand="pagoBancomat"
+            bankName="Intesa San Paolo"
+            onPress={onPress}
           />
           <HSpacer size={16} />
           <PaymentCardSmall
-            cardType={"BANCOMATPAY"}
-            isError={true}
-            onCardPress={onPress}
+            abiCode="03069"
+            brand="pagoBancomat"
+            bankName="Intesa San Paolo"
+            onPress={onPress}
+            isError
           />
         </View>
-        <VSpacer size={16} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="PayPal">
         <View style={styles.content}>
-          <PaymentCardSmall isLoading={true} />
+          <PaymentCardSmall
+            holderEmail="anna_v********@**hoo.it"
+            onPress={onPress}
+          />
           <HSpacer size={16} />
-          <PaymentCardSmall isLoading={true} />
+          <PaymentCardSmall
+            holderEmail="anna_v********@**hoo.it"
+            onPress={onPress}
+            isError
+          />
         </View>
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="Co-badge">
+        <View style={styles.content}>
+          <PaymentCardSmall
+            bankName="Intesa San Paolo"
+            brand="maestro"
+            onPress={onPress}
+          />
+          <HSpacer size={16} />
+          <PaymentCardSmall
+            bankName="Intesa San Paolo"
+            brand="maestro"
+            onPress={onPress}
+            isError
+          />
+        </View>
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="BANCOMAT Pay">
+        <View style={styles.content}>
+          <PaymentCardSmall
+            holderName="Anna Verdi"
+            holderPhone="+39 340 *** **62"
+            onPress={onPress}
+          />
+          <HSpacer size={16} />
+          <PaymentCardSmall
+            holderName="Anna Verdi"
+            holderPhone="+39 340 *** **62"
+            onPress={onPress}
+            isError
+          />
+        </View>
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="PaymentCardsCarousel">
+        <PaymentCardsCarousel {...cardsDataForCarousel} />
+      </DSComponentViewerBox>
+      <DSComponentViewerBox name="PaymentCardsCarouselSkeleton">
+        <PaymentCardsCarouselSkeleton />
       </DSComponentViewerBox>
     </DesignSystemSection>
     <DesignSystemSection title="IdPayCard">

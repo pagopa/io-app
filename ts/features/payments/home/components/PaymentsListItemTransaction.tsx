@@ -10,7 +10,7 @@ type Props = {
   transaction: Transaction;
 };
 
-const PaymentsHomeListItemTransaction = ({ transaction }: Props) => {
+const PaymentsListItemTransaction = ({ transaction }: Props) => {
   const recipient = transaction.merchant;
 
   const amountText = formatNumberCurrencyCents(transaction.amount.amount);
@@ -41,4 +41,4 @@ const PaymentsHomeListItemTransaction = ({ transaction }: Props) => {
   );
 };
 
-export { PaymentsHomeListItemTransaction };
+export { PaymentsListItemTransaction };
