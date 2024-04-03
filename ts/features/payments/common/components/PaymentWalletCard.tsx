@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
-import { WalletDetailsRoutes } from "../../details/navigation/navigator";
+import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { PaymentCard, PaymentCardProps } from "./PaymentCard";
 
 export type PaymentWalletCardProps = PaymentCardProps & {
@@ -15,12 +15,15 @@ const WrappedPaymentCard = (props: PaymentWalletCardProps) => {
   const { walletId, ...cardProps } = props;
 
   const handleOnPress = () => {
-    navigation.navigate(WalletDetailsRoutes.WALLET_DETAILS_MAIN, {
-      screen: WalletDetailsRoutes.WALLET_DETAILS_SCREEN,
-      params: {
-        walletId
+    navigation.navigate(
+      PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
+      {
+        screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
+        params: {
+          walletId
+        }
       }
-    });
+    );
   };
 
   return (

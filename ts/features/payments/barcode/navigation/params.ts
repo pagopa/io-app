@@ -1,8 +1,8 @@
-import { WalletBarcodeChoiceScreenParams } from "../screens/WalletBarcodeChoiceScreen";
-import { WalletBarcodeRoutes } from "./routes";
+import { PaymentsBarcodeChoiceScreenParams } from "../screens/PaymentsBarcodeChoiceScreen";
+import { PaymentsBarcodeRoutes } from "./routes";
 
-export type WalletBarcodeParamsList = {
-  [WalletBarcodeRoutes.WALLET_BARCODE_MAIN]: undefined;
-  [WalletBarcodeRoutes.WALLET_BARCODE_SCAN]: undefined;
-  [WalletBarcodeRoutes.WALLET_BARCODE_CHOICE]: WalletBarcodeChoiceScreenParams;
+export type PaymentsBarcodeParamsList = {
+  [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: undefined;
+  [PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN]: undefined;
+  [PaymentsBarcodeRoutes.PAYMENT_BARCODE_CHOICE]: PaymentsBarcodeChoiceScreenParams;
 };
