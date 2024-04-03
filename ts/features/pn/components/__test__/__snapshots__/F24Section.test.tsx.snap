@@ -171,7 +171,7 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1085,8 +1099,8 @@ exports[`F24Section should match snapshot when there are more than one F24 1`] =
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1263,7 +1277,7 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1271,11 +1285,25 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1416,8 +1444,8 @@ exports[`F24Section should match snapshot when there are more than one F24 and t
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1594,7 +1622,7 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1602,11 +1630,25 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1747,8 +1789,8 @@ exports[`F24Section should match snapshot when there are no F24 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1925,7 +1967,7 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1933,11 +1975,25 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2078,8 +2134,8 @@ exports[`F24Section should match snapshot when there are no F24 and the message 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2256,7 +2312,7 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2264,11 +2320,25 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2810,8 +2880,8 @@ exports[`F24Section should match snapshot when there is a single F24 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -2988,7 +3058,7 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2996,11 +3066,25 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -3141,8 +3225,8 @@ exports[`F24Section should match snapshot when there is a single F24 and the mes
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

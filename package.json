@@ -176,7 +176,7 @@
     "react-native-responsive-screen": "^1.4.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screen-brightness": "^2.0.0-alpha",
-    "react-native-screens": "^3.29.0",
+    "react-native-screens": "^3.30.1",
     "react-native-sha256": "1.2.3",
     "react-native-share": "7.3.9",
     "react-native-splash-screen": "^3.2.0",

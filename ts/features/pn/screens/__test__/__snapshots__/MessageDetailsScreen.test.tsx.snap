@@ -30,7 +30,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         ]
       }
     >
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -38,11 +38,25 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1445,7 +1459,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               </View>
                             </View>
                             <View
-                              accessibilityLabel="Codice IUN copy to clipboard"
+                              accessibilityLabel="Codice IUN [missing \\"en.clipboard.copyIntoClipboard\\" translation]"
                               accessibilityRole="button"
                               accessible={true}
                               collapsable={false}
@@ -1961,8 +1975,8 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
       <View
         collapsable={false}
         pointerEvents="box-none"
@@ -2012,7 +2026,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
         ]
       }
     >
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2020,11 +2034,25 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2780,8 +2808,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
       <View
         collapsable={false}
         pointerEvents="box-none"
