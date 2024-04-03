@@ -469,7 +469,7 @@ exports[`MessageInfo should match snapshot 1`] = `
                         </View>
                       </View>
                       <View
-                        accessibilityLabel="Codice IUN [missing \\"en.clipboard.copyIntoClipboard\\" translation]"
+                        accessibilityLabel="Codice IUN copy to clipboard"
                         accessibilityRole="button"
                         accessible={true}
                         collapsable={false}
