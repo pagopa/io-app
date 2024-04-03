@@ -3,24 +3,20 @@ import { NetworkError } from "../../../../../utils/errors";
 import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
 import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
 
-export const walletGetPaymentMethods = createAsyncAction(
-  "WALLET_GET_PAYMENT_METHODS_REQUEST",
-  "WALLET_GET_PAYMENT_METHODS_SUCCESS",
-  "WALLET_GET_PAYMENT_METHODS_FAILURE",
-  "WALLET_GET_PAYMENT_METHODS_CANCEL"
+export const paymentsOnboardingGetMethodsAction = createAsyncAction(
+  "PAYMENTS_GET_ONBOARDING_METHODS_REQUEST",
+  "PAYMENTS_GET_ONBOARDING_METHODS_SUCCESS",
+  "PAYMENTS_GET_ONBOARDING_METHODS_FAILURE",
+  "PAYMENTS_GET_ONBOARDING_METHODS_CANCEL"
 )<void, PaymentMethodsResponse, NetworkError, void>();
 
-export type WalletOnboardingStartPayload = {
-  paymentMethodId: string;
-};
+export const paymentsStartOnboardingAction = createAsyncAction(
+  "PAYMENTS_START_ONBOARDING_REQUEST",
+  "PAYMENTS_START_ONBOARDING_SUCCESS",
+  "PAYMENTS_START_ONBOARDING_FAILURE",
+  "PAYMENTS_START_ONBOARDING_CANCEL"
+)<{ paymentMethodId: string }, WalletCreateResponse, NetworkError, void>();
 
-export const walletStartOnboarding = createAsyncAction(
-  "WALLET_ONBOARDING_START_REQUEST",
-  "WALLET_ONBOARDING_START_SUCCESS",
-  "WALLET_ONBOARDING_START_FAILURE",
-  "WALLET_ONBOARDING_START_CANCEL"
-)<WalletOnboardingStartPayload, WalletCreateResponse, NetworkError, void>();
-
-export type WalletOnboardingActions =
-  | ActionType<typeof walletStartOnboarding>
-  | ActionType<typeof walletGetPaymentMethods>;
+export type PaymentsOnboardingActions =
+  | ActionType<typeof paymentsStartOnboardingAction>
+  | ActionType<typeof paymentsOnboardingGetMethodsAction>;

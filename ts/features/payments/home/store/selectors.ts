@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isSuccessTransaction } from "../../../../types/pagopa";
-import { walletPaymentUserWalletsSelector } from "../../payment/store/selectors";
+import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
 
 export const walletTransactionHistorySelector = (state: GlobalState) =>
   state.wallet.transactions.transactions;
