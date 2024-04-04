@@ -6,6 +6,7 @@ import { NetworkError } from "../../../../../utils/errors";
 import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import {
+  paymentsDeleteMethodAction,
   paymentsGetMethodDetailsAction,
   paymentsTogglePagoPaCapabilityAction
 } from "../actions";
@@ -23,7 +24,7 @@ const reducer = (
   action: Action
 ): PaymentsMethodDetailsState => {
   switch (action.type) {
-    // GET WALLET DETAILS
+    // GET METHOD DETAILS
     case getType(paymentsGetMethodDetailsAction.request):
       return {
         ...state,
@@ -44,6 +45,29 @@ const reducer = (
         ...state,
         walletDetails: pot.none
       };
+
+    // DELETE METHOD
+    case getType(paymentsDeleteMethodAction.request):
+      if (pot.isSome(state.walletDetails)) {
+        return {
+          ...state,
+          walletDetails: pot.toUpdating(
+            state.walletDetails,
+            state.walletDetails.value
+          )
+        };
+      }
+      return state;
+    case getType(paymentsDeleteMethodAction.cancel):
+    case getType(paymentsDeleteMethodAction.failure):
+      if (pot.isUpdating(state.walletDetails)) {
+        return {
+          ...state,
+          walletDetails: pot.some(state.walletDetails.newValue)
+        };
+      }
+      return state;
+
     // TOGGLE PAGOPA CAPABILITY
     case getType(paymentsTogglePagoPaCapabilityAction.success):
       const walletDetails = pot.getOrElse(

@@ -16,7 +16,7 @@ import { LogoPaymentWithFallback } from "../../../../components/ui/utils/compone
 import I18n from "../../../../i18n";
 import { PaymentCardBankLogo } from "./PaymentCardBankLogo";
 
-export type PaymentCardProps = {
+type BaseProps = {
   brand?: string;
   abiCode?: string;
   hpan?: string;
@@ -26,15 +26,16 @@ export type PaymentCardProps = {
   holderEmail?: string;
 };
 
-type Props =
+export type PaymentCardProps = WithTestID<
   | ({
       isLoading?: false;
-    } & PaymentCardProps)
+    } & BaseProps)
   | {
       isLoading: true;
-    };
+    }
+>;
 
-const PaymentCard = (props: WithTestID<Props>) => {
+const PaymentCard = (props: PaymentCardProps) => {
   if (props.isLoading) {
     return <PaymentCardSkeleton />;
   }

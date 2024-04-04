@@ -19,7 +19,7 @@ export const PaymentsMethodDetailsNavigator = () => (
     <Stack.Screen
       name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN}
       component={PaymentsMethodDetailsScreen}
-      options={{ gestureEnabled: false }}
+      options={{ gestureEnabled: isGestureEnabled }}
     />
   </Stack.Navigator>
 );
