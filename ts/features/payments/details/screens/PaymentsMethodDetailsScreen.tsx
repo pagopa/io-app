@@ -1,5 +1,5 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -17,12 +17,12 @@ import { getDateFromExpiryDate } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
 import { PaymentCardBig } from "../../common/components/PaymentCardBig";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
 import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPaymentMethodScreen";
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
-import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 
 export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
