@@ -661,6 +661,7 @@ authentication:
         cardLocked: CIE card locked
         wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
         wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
+        genericError: Something went wrong! Please try again.
       error:
         readerCardLostTitle: Hold the card again for a few seconds
         readerCardLostTitleiOS: You removed the card too soon.
@@ -2081,6 +2082,12 @@ services:
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
+  details:
+    failure:
+      title: "There is a temporary problem. Please try again"
+      subtitle: "We are retrieving service details"
+      back: "Back"
+      retry: "Retry"
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
