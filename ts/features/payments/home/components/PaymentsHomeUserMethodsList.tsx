@@ -8,16 +8,16 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
-import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsGetPaymentUserMethodsAction } from "../../checkout/store/actions/networking";
-import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
 import {
@@ -38,7 +38,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   const shouldShowAddMethodsBanner = useIOSelector(
     isAddMethodsBannerVisibleSelector
   );
-  const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
+  const paymentMethodsPot = useIOSelector(paymentsWalletUserMethodsSelector);
   const paymentMethods = pot.getOrElse(paymentMethodsPot, []);
 
   const isLoading = pot.isLoading(paymentMethodsPot) || enforcedLoadingState;

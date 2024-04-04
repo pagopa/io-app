@@ -20,7 +20,7 @@ import {
   getPaymentLogo
 } from "../../common/utils";
 import { WalletPaymentStepEnum } from "../types";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { walletPaymentPspListSelector } from "../store/selectors";
 import { WalletPaymentTotalAmount } from "./WalletPaymentTotalAmount";

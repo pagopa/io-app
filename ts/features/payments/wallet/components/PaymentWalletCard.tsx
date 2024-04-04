@@ -1,9 +1,12 @@
 import React from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
+import {
+  PaymentCard,
+  PaymentCardProps
+} from "../../common/components/PaymentCard";
+import { PaymentCardPressableBase } from "../../common/components/PaymentCardPressableBase";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
-import { PaymentCard, PaymentCardProps } from "./PaymentCard";
-import { PaymentCardPressableBase } from "./PaymentCardPressableBase";
 
 export type PaymentWalletCardProps = PaymentCardProps & {
   walletId: string;
