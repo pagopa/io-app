@@ -133,13 +133,13 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
           <VSpacer size={16} />
         </ContentWrapper>
       </View>
-      {service.service_metadata?.description ? (
+      {service.service_metadata?.description && (
         <View style={styles.cardContainer}>
           <CardWithMarkdownContent
             content={service.service_metadata.description}
           />
         </View>
-      ) : null}
+      )}
     </Animated.ScrollView>
   );
 };
