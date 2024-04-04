@@ -14,11 +14,11 @@ import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persis
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
   PaymentCard,
-  PaymentCardProps
+  PaymentCardComponentProps
 } from "../../common/components/PaymentCard";
 
 type Props = {
-  card: PaymentCardProps;
+  card: PaymentCardComponentProps;
   headerTitle?: string;
 };
 
