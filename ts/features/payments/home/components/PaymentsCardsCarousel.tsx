@@ -1,9 +1,14 @@
-import { HSpacer, IOVisualCostants } from "@pagopa/io-app-design-system";
+import {
+  HSpacer,
+  IOSpacingScale,
+  IOVisualCostants
+} from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { FlatListProps, StyleSheet } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { WithTestID } from "../../../../types/WithTestID";
 import {
+  PAYMENT_CARD_SMALL_WIDTH,
   PaymentCardSmall,
   PaymentCardSmallProps,
   PaymentCardSmallSkeleton
@@ -13,21 +18,23 @@ export type PaymentCardsCarouselProps = WithTestID<{
   cards: Array<PaymentCardSmallProps>;
 }>;
 
+const PAYMENT_CARDS_SPACING: IOSpacingScale = 8;
+
 const PaymentCardsCarouselBaseComponent = <T,>({
   data,
-  renderItem,
-  testID
+  ...props
 }: WithTestID<FlatListProps<T>>) => (
   <FlatList
+    {...props}
     horizontal={true}
-    testID={testID}
-    ItemSeparatorComponent={() => <HSpacer size={8} />}
+    ItemSeparatorComponent={() => <HSpacer size={PAYMENT_CARDS_SPACING} />}
     data={data}
     style={style.list}
-    renderItem={renderItem}
     ListFooterComponent={() => <HSpacer size={48} />}
     showsHorizontalScrollIndicator={false}
     keyExtractor={(_, index) => `home_payment_card_${index.toString()}`}
+    snapToInterval={PAYMENT_CARD_SMALL_WIDTH + PAYMENT_CARDS_SPACING}
+    snapToAlignment="start"
   />
 );
 
@@ -42,8 +49,9 @@ const PaymentCardsCarousel = ({ cards, testID }: PaymentCardsCarouselProps) => (
 const PaymentCardsCarouselSkeleton = ({ testID }: WithTestID<any>) => (
   <PaymentCardsCarouselBaseComponent
     testID={testID}
-    data={Array.from({ length: 3 })}
+    data={Array.from({ length: 5 })}
     renderItem={() => <PaymentCardSmallSkeleton />}
+    scrollEnabled={false}
   />
 );
 
