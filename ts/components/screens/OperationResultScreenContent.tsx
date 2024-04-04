@@ -16,17 +16,34 @@ import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { LabelSmall } from "../core/typography/LabelSmall";
 
+// if we are inserting the action and buttonType is not there or is
+// equals ButtonSolid then we use the ButtonSolidProps type
+// otherwise we use the ButtonLinkProps type
+
+// if we are inserting the secondaryAction and buttonType is either not there or is
+// equals ButtonLink then we use the ButtonLinkProps type
+// otherwise we use the ButtonSolidProps type
+
+type ButtonTypeSolid = ButtonSolidProps & {
+  buttonType?: "ButtonSolid";
+};
+type ButtonTypeLink = ButtonLinkProps & {
+  buttonType?: "ButtonLink";
+};
+
+type ButtonProps = ButtonTypeSolid | ButtonTypeLink;
+
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string;
   action?: Pick<
-    ButtonSolidProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    ButtonProps,
+    "label" | "accessibilityLabel" | "onPress" | "testID" | "buttonType"
   >;
   secondaryAction?: Pick<
-    ButtonLinkProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID"
+    ButtonProps,
+    "label" | "accessibilityLabel" | "onPress" | "testID" | "buttonType"
   >;
 }>;
 
@@ -63,19 +80,38 @@ const OperationResultScreenContent = ({
           </LabelSmall>
         </>
       )}
-      {action && (
+      {action &&
+        (!action.buttonType || action.buttonType === "ButtonSolid") && (
+          <View style={IOStyles.alignCenter}>
+            <VSpacer size={24} />
+            <View>
+              <ButtonSolid {...(action as ButtonSolidProps)} />
+            </View>
+          </View>
+        )}
+      {action && action.buttonType === "ButtonLink" && (
         <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
           <View>
-            <ButtonSolid {...action} />
+            <ButtonLink {...action} />
           </View>
         </View>
       )}
-      {secondaryAction && (
+      {secondaryAction &&
+        (!secondaryAction.buttonType ||
+          secondaryAction.buttonType === "ButtonLink") && (
+          <View style={IOStyles.alignCenter}>
+            <VSpacer size={24} />
+            <View>
+              <ButtonLink {...secondaryAction} />
+            </View>
+          </View>
+        )}
+      {secondaryAction && secondaryAction.buttonType === "ButtonSolid" && (
         <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
           <View>
-            <ButtonLink {...secondaryAction} />
+            <ButtonSolid {...(secondaryAction as ButtonSolidProps)} />
           </View>
         </View>
       )}
