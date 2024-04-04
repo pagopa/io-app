@@ -12,11 +12,11 @@ import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInf
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { paymentsGetPaymentUserMethodsAction } from "../../checkout/store/actions/networking";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
+import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
 import { paymentsWalletUserMethodsSelector } from "../../wallet/store/selectors";
 import { paymentsSetAddMethodsBannerVisible } from "../store/actions";
 import { isAddMethodsBannerVisibleSelector } from "../store/selectors";
@@ -46,7 +46,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      dispatch(paymentsGetPaymentUserMethodsAction.request());
+      dispatch(getPaymentsWalletUserMethods.request());
     }, [dispatch])
   );
 
