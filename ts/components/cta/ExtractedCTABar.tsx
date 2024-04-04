@@ -68,7 +68,7 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
         props,
         linkTo,
         false,
-        props.isPNOptInMessage?.cta2HasServiceNavigationLink ?? false,
+        props.isPNOptInMessage?.cta2LinksToPNService ?? false,
         ctas.cta_2
       ),
     [ctas.cta_2, linkTo, props]
@@ -79,7 +79,7 @@ const ExtractedCTABar: React.FunctionComponent<Props> = (
         props,
         linkTo,
         true,
-        props.isPNOptInMessage?.cta1HasServiceNavigationLink ?? false,
+        props.isPNOptInMessage?.cta1LinksToPNService ?? false,
         ctas.cta_1
       ),
     [ctas.cta_1, linkTo, props]
