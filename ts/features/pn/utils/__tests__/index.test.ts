@@ -44,8 +44,8 @@ type IsPNOptInMessageTestInputType = {
   };
   output: {
     isPNOptInMessage: boolean;
-    cta1HasServiceNavigationLink: boolean;
-    cta2HasServiceNavigationLink: boolean;
+    cta1LinksToPNService: boolean;
+    cta2LinksToPNService: boolean;
   };
 };
 
@@ -59,8 +59,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: true,
-      cta2HasServiceNavigationLink: true
+      cta1LinksToPNService: true,
+      cta2LinksToPNService: true
     }
   },
   {
@@ -76,8 +76,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: true,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: true,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -96,8 +96,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: true,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: true,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -116,8 +116,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: true
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: true
     }
   },
   {
@@ -135,8 +135,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -158,8 +158,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -172,8 +172,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -186,8 +186,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -200,8 +200,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -225,8 +225,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
@@ -244,8 +244,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   }
 ];
