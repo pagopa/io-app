@@ -1,13 +1,11 @@
 import { Alert } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { View } from "react-native";
-
-import I18n from "../../../../i18n";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-
-import { isPaymentMethodExpired } from "../../common/utils";
+import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
+import { isPaymentMethodExpired } from "../../common/utils";
 import PaymentMethodInitiatives from "./WalletDetailsPaymentMethodInitiatives";
 import PaymentMethodSettings from "./WalletDetailsPaymentMethodSettings";
 

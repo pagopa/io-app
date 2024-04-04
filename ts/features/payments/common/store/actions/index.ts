@@ -1,14 +1,14 @@
-import { WalletDetailsActions } from "../../../details/store/actions";
-import { WalletPaymentHistoryActions } from "../../../history/store/actions";
-import { WalletOnboardingActions } from "../../../onboarding/store/actions";
-import { WalletPaymentActions } from "../../../payment/store/actions";
-import { WalletTransactionActions } from "../../../transaction/store/actions";
+import { PaymentsMethodDetailsActions } from "../../../details/store/actions";
+import { PaymentsHistoryActions } from "../../../history/store/actions";
+import { PaymentsOnboardingActions } from "../../../onboarding/store/actions";
+import { PaymentsCheckoutActions } from "../../../checkout/store/actions";
+import { PaymentsTransactionActions } from "../../../transaction/store/actions";
 import { PaymentsWalletActions } from "../../../wallet/store/actions";
 
 export type PaymentsActions =
-  | WalletOnboardingActions
-  | WalletDetailsActions
-  | WalletPaymentActions
-  | WalletTransactionActions
-  | WalletPaymentHistoryActions
+  | PaymentsOnboardingActions
+  | PaymentsMethodDetailsActions
+  | PaymentsCheckoutActions
+  | PaymentsTransactionActions
+  | PaymentsHistoryActions
   | PaymentsWalletActions;
