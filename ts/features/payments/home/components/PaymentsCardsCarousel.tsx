@@ -19,6 +19,8 @@ export type PaymentCardsCarouselProps = WithTestID<{
 }>;
 
 const PAYMENT_CARDS_SPACING: IOSpacingScale = 8;
+const PAYMENT_CARD_TOTAL_WIDTH =
+  PAYMENT_CARD_SMALL_WIDTH + PAYMENT_CARDS_SPACING;
 
 const PaymentCardsCarouselBaseComponent = <T,>({
   data,
@@ -33,8 +35,13 @@ const PaymentCardsCarouselBaseComponent = <T,>({
     ListFooterComponent={() => <HSpacer size={48} />}
     showsHorizontalScrollIndicator={false}
     keyExtractor={(_, index) => `home_payment_card_${index.toString()}`}
-    snapToInterval={PAYMENT_CARD_SMALL_WIDTH + PAYMENT_CARDS_SPACING}
+    snapToInterval={PAYMENT_CARD_TOTAL_WIDTH}
     snapToAlignment="start"
+    getItemLayout={(_, index) => ({
+      offset: PAYMENT_CARD_TOTAL_WIDTH * index,
+      length: PAYMENT_CARD_TOTAL_WIDTH,
+      index
+    })}
   />
 );
 
