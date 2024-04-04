@@ -23,6 +23,7 @@ import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { ServiceDetailsHeader } from "../components/ServiceDetailsHeader";
 import { logosForService } from "../../../utils/services";
 import { CardWithMarkdownContent } from "../components/CardWithMarkdownContent";
+import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -68,8 +69,7 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   }, [dispatch, serviceId]);
 
   if (pot.isError(servicePot)) {
-    // TODO: add error screen
-    return <></>;
+    return <ServiceDetailsFailure serviceId={serviceId} />;
   }
 
   if (pot.isLoading(servicePot) || pot.isNone(servicePot)) {
