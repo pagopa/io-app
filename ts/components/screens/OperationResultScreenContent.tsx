@@ -1,20 +1,38 @@
 import {
+  Body,
   ButtonLink,
   ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
+  ExternalTypographyProps,
   H3,
+  IOColors,
+  IOFontWeight,
   IOPictograms,
   IOStyles,
+  IOTheme,
   IOVisualCostants,
   Pictogram,
+  TypographyProps,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { LabelSmall } from "../core/typography/LabelSmall";
+
+type PartialAllowedColors = Extract<
+  IOColors,
+  "bluegreyDark" | "white" | "blue" | "bluegrey" | "bluegreyLight"
+>;
+type AllowedColors = PartialAllowedColors | IOTheme["textBody-default"];
+type AllowedWeight = IOFontWeight | "Regular" | "SemiBold";
+
+export type BodyProps = ExternalTypographyProps<
+  TypographyProps<AllowedWeight, AllowedColors> & {
+    text: string | React.ReactElement;
+  }
+>;
 
 // if we are inserting the action and buttonType is not there or is
 // equals ButtonSolid then we use the ButtonSolidProps type
@@ -36,7 +54,7 @@ type ButtonProps = ButtonTypeSolid | ButtonTypeLink;
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
-  subtitle?: string;
+  subtitle?: string | Array<BodyProps>;
   action?: Pick<
     ButtonProps,
     "label" | "accessibilityLabel" | "onPress" | "testID" | "buttonType"
@@ -46,6 +64,16 @@ type OperationResultScreenContentProps = WithTestID<{
     "label" | "accessibilityLabel" | "onPress" | "testID" | "buttonType"
   >;
 }>;
+
+export const trasformArrayInComposedBody = (subtitle: Array<BodyProps>) => (
+  <Body style={{ textAlign: "center" }}>
+    {subtitle.map(({ text, key, ...props }) => (
+      <Body key={key} {...props}>
+        {text}
+      </Body>
+    ))}
+  </Body>
+);
 
 const OperationResultScreenContent = ({
   pictogram,
@@ -75,9 +103,11 @@ const OperationResultScreenContent = ({
       {subtitle && (
         <>
           <VSpacer size={8} />
-          <LabelSmall style={styles.text} color="grey-650" weight="Regular">
-            {subtitle}
-          </LabelSmall>
+          {typeof subtitle === "string" ? (
+            <Body style={styles.text}>{subtitle}</Body>
+          ) : (
+            trasformArrayInComposedBody(subtitle)
+          )}
         </>
       )}
       {action &&
