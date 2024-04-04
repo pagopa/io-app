@@ -4,17 +4,15 @@ import * as React from "react";
 import { useCallback, useMemo } from "react";
 import { View, Keyboard, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
+import { ContentWrapper, ListItemHeader } from "@pagopa/io-app-design-system";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import { LabelledItem } from "../../../../../components/LabelledItem";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import { LoadingErrorComponent } from "../../../../../components/LoadingErrorComponent";
 import {
   getValueOrElse,
@@ -104,51 +102,45 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
   };
 
   return (
-    <BaseScreenComponent
-      goBack
-      headerTitle={I18n.t("bonus.cgn.merchantsList.navigationTitle")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
-          <>
-            <View style={IOStyles.horizontalContentPadding}>
-              <H1>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H1>
-              <View style={{ height: 50 }}>
-                <LabelledItem
-                  icon="search"
-                  iconPosition={"right"}
-                  inputProps={{
-                    value: searchValue,
-                    autoFocus: false,
-                    onChangeText: setSearchValue,
-                    placeholder: I18n.t("global.buttons.search")
-                  }}
-                />
-              </View>
+    <SafeAreaView style={IOStyles.flex}>
+      {isReady(props.onlineMerchants) || isReady(props.offlineMerchants) ? (
+        <>
+          <ContentWrapper>
+            <ListItemHeader label="Tutti gli operatori" />
+            <View style={{ height: 50 }}>
+              <LabelledItem
+                icon="search"
+                iconPosition={"right"}
+                inputProps={{
+                  value: searchValue,
+                  autoFocus: false,
+                  onChangeText: setSearchValue,
+                  placeholder: I18n.t("global.buttons.search")
+                }}
+              />
             </View>
-            <CgnMerchantsListView
-              refreshing={
-                isLoading(props.onlineMerchants) ||
-                isLoading(props.offlineMerchants)
-              }
-              onRefresh={initLoadingLists}
-              merchantList={merchantList}
-              onItemPress={onItemPress}
-            />
-          </>
-        ) : (
-          <LoadingErrorComponent
-            isLoading={
-              isLoading(props.offlineMerchants) ||
-              isLoading(props.onlineMerchants)
+          </ContentWrapper>
+          <CgnMerchantsListView
+            refreshing={
+              isLoading(props.onlineMerchants) ||
+              isLoading(props.offlineMerchants)
             }
-            loadingCaption={I18n.t("global.remoteStates.loading")}
-            onRetry={initLoadingLists}
+            onRefresh={initLoadingLists}
+            merchantList={merchantList}
+            onItemPress={onItemPress}
           />
-        )}
-      </SafeAreaView>
-    </BaseScreenComponent>
+        </>
+      ) : (
+        <LoadingErrorComponent
+          isLoading={
+            isLoading(props.offlineMerchants) ||
+            isLoading(props.onlineMerchants)
+          }
+          loadingCaption={I18n.t("global.remoteStates.loading")}
+          onRetry={initLoadingLists}
+        />
+      )}
+    </SafeAreaView>
   );
 };
 

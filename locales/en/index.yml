@@ -2490,7 +2490,7 @@ bonus:
       online: Online
       places: Places
       navigationTitle: Benefits
-      screenTitle: Select the operator and discover the benefits
+      screenTitle: Find the benefits
       cta:
         filter: Filter
       categoriesList:

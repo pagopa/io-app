@@ -1,12 +1,13 @@
 import * as React from "react";
 import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
+import { Badge, H6, ListItemNav } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import ItemSeparatorComponent from "../../../../../components/ItemSeparatorComponent";
 import { EdgeBorderComponent } from "../../../../../components/screens/EdgeBorderComponent";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import CgnMerchantListItem from "./CgnMerchantListItem";
+import I18n from "../../../../../i18n";
 
 type Props = {
   merchantList: ReadonlyArray<OfflineMerchant | OnlineMerchant>;
@@ -20,12 +21,29 @@ const CgnMerchantsListView: React.FunctionComponent<Props> = (props: Props) => {
   const renderListItem = (
     listItem: ListRenderItemInfo<OfflineMerchant | OnlineMerchant>
   ) => (
-    <CgnMerchantListItem
-      categories={listItem.item.productCategories}
-      name={listItem.item.name}
-      onPress={() => props.onItemPress(listItem.item.id)}
-      isNew={listItem.item.newDiscounts}
-    />
+    <>
+      <ListItemNav
+        onPress={() => props.onItemPress(listItem.item.id)}
+        value={
+          listItem.item.newDiscounts ? (
+            <View style={IOStyles.rowSpaceBetween}>
+              <H6 style={{ flexGrow: 1, flexShrink: 1 }}>
+                {listItem.item.name}
+              </H6>
+              <View style={{ alignSelf: "center" }}>
+                <Badge
+                  variant="purple"
+                  text={I18n.t("bonus.cgn.merchantsList.news")}
+                />
+              </View>
+            </View>
+          ) : (
+            listItem.item.name
+          )
+        }
+        accessibilityLabel={listItem.item.name}
+      />
+    </>
   );
 
   return (
