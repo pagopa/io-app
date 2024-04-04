@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CTAsBar should match snapshot with both CTAs 1`] = `
+exports[`MessageDetailsPaymentButton should match snapshot when loading 1`] = `
 <View
   style={
     Object {
@@ -320,228 +320,246 @@ exports[`CTAsBar should match snapshot with both CTAs 1`] = `
                       }
                     >
                       <View
-                        style={
+                        accessibilityLabel="Pay"
+                        accessibilityRole="button"
+                        accessibilityState={
                           Object {
-                            "flexDirection": "row",
+                            "busy": true,
+                            "disabled": false,
                           }
                         }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={Object {}}
                       >
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "alignItems": "center",
+                                "borderRadius": 4,
+                                "elevation": 0,
+                                "flexDirection": "row",
+                                "justifyContent": "center",
+                                "paddingHorizontal": 16,
+                                "textAlignVertical": "center",
+                              },
+                              Object {
+                                "overflow": "hidden",
+                              },
+                              false,
+                              Object {
+                                "height": 40,
+                              },
+                              Object {
+                                "backgroundColor": "#0073E6",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "transform": Array [
+                                  Object {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                            ]
                           }
                         >
                           <View
-                            accessibilityLabel="My CTA 2"
-                            accessibilityRole="button"
-                            accessibilityState={
+                            exiting={[Function]}
+                            style={
                               Object {
-                                "disabled": false,
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "justifyContent": "center",
                               }
                             }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            style={Object {}}
                           >
                             <View
+                              accessibilityRole="progressbar"
+                              accessible={true}
+                              importantForAccessibility="no-hide-descendants"
                               style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "borderRadius": 4,
-                                    "elevation": 0,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "paddingHorizontal": 16,
-                                    "textAlignVertical": "center",
-                                  },
-                                  false,
-                                  Object {
-                                    "borderWidth": 1,
-                                  },
-                                  Object {
-                                    "height": 40,
-                                  },
-                                  false,
-                                  Object {
-                                    "backgroundColor": "rgba(0,115,230,0)",
-                                    "borderColor": "#0073E6",
-                                  },
-                                  Object {
-                                    "backgroundColor": undefined,
-                                    "borderColor": undefined,
-                                    "transform": Array [
-                                      Object {
-                                        "scale": undefined,
-                                      },
-                                    ],
-                                  },
-                                ]
-                              }
-                            >
-                              <Text
-                                accessibilityElementsHidden={true}
-                                accessible={false}
-                                allowFontScaling={false}
-                                ellipsizeMode="tail"
-                                importantForAccessibility="no-hide-descendants"
-                                maxFontSizeMultiplier={1.3}
-                                numberOfLines={1}
-                                style={
-                                  Array [
-                                    Object {
-                                      "fontFamily": "Titillium Web",
-                                      "fontStyle": "normal",
-                                      "fontWeight": "700",
-                                    },
-                                    Object {
-                                      "alignSelf": "center",
-                                    },
-                                    Object {
-                                      "color": "#0073E6",
-                                    },
-                                    Object {
-                                      "color": undefined,
-                                    },
-                                  ]
+                                Object {
+                                  "height": 24,
+                                  "width": 24,
                                 }
-                              >
-                                My CTA 2
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                        <View
-                          style={
-                            Object {
-                              "width": 8,
-                            }
-                          }
-                        />
-                        <View
-                          style={
-                            Object {
-                              "flex": 1,
-                            }
-                          }
-                        >
-                          <View
-                            accessibilityLabel="My CTA 1"
-                            accessibilityRole="button"
-                            accessibilityState={
-                              Object {
-                                "busy": false,
-                                "disabled": false,
                               }
-                            }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            style={Object {}}
-                          >
-                            <View
-                              style={
-                                Array [
-                                  Object {
-                                    "alignItems": "center",
-                                    "borderRadius": 4,
-                                    "elevation": 0,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "paddingHorizontal": 16,
-                                    "textAlignVertical": "center",
-                                  },
-                                  Object {
-                                    "overflow": "hidden",
-                                  },
-                                  false,
-                                  Object {
-                                    "height": 40,
-                                  },
-                                  Object {
-                                    "backgroundColor": "#0073E6",
-                                  },
-                                  Object {
-                                    "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
-                                        "scale": undefined,
-                                      },
-                                    ],
-                                  },
-                                ]
-                              }
+                              testID="LoadingSpinnerTestID"
                             >
                               <View
+                                collapsable={false}
                                 style={
-                                  Array [
-                                    Object {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                    },
-                                    false,
-                                  ]
-                                }
-                              >
-                                <Text
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  allowFontScaling={false}
-                                  color="white"
-                                  defaultColor="white"
-                                  defaultWeight="Bold"
-                                  ellipsizeMode="tail"
-                                  font="TitilliumWeb"
-                                  fontStyle={
-                                    Object {
-                                      "fontSize": 16,
-                                    }
+                                  Object {
+                                    "transform": Array [
+                                      Object {
+                                        "rotateZ": "0deg",
+                                      },
+                                    ],
                                   }
-                                  importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
-                                  numberOfLines={1}
+                                }
+                                testID="LoadingSpinnerAnimatedTestID"
+                              >
+                                <RNSVGSvgView
+                                  align="xMidYMid"
+                                  bbHeight={24}
+                                  bbWidth={24}
+                                  fill="none"
+                                  focusable={false}
+                                  height={24}
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
                                   style={
                                     Array [
                                       Object {
-                                        "alignSelf": "center",
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
                                       },
                                       Object {
-                                        "fontSize": 16,
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Web",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "700",
+                                        "flex": 0,
+                                        "height": 24,
+                                        "width": 24,
                                       },
                                     ]
                                   }
-                                  weight="Bold"
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={24}
                                 >
-                                  My CTA 1
-                                </Text>
+                                  <RNSVGGroup
+                                    fill={null}
+                                    propList={
+                                      Array [
+                                        "fill",
+                                      ]
+                                    }
+                                  >
+                                    <RNSVGDefs>
+                                      <RNSVGLinearGradient
+                                        gradient={
+                                          Array [
+                                            0,
+                                            16777215,
+                                            1,
+                                            -1,
+                                          ]
+                                        }
+                                        gradientTransform={null}
+                                        gradientUnits={0}
+                                        name="spinner-secondHalf"
+                                        x1="0%"
+                                        x2="100%"
+                                        y1="0%"
+                                        y2="0%"
+                                      />
+                                      <RNSVGLinearGradient
+                                        gradient={
+                                          Array [
+                                            0,
+                                            -1,
+                                            1,
+                                            -1,
+                                          ]
+                                        }
+                                        gradientTransform={null}
+                                        gradientUnits={0}
+                                        name="spinner-firstHalf"
+                                        x1="0%"
+                                        x2="100%"
+                                        y1="0%"
+                                        y2="0%"
+                                      />
+                                    </RNSVGDefs>
+                                    <RNSVGGroup
+                                      fill={
+                                        Object {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        Array [
+                                          "strokeWidth",
+                                        ]
+                                      }
+                                      strokeWidth={3}
+                                    >
+                                      <RNSVGPath
+                                        d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          Array [
+                                            "stroke",
+                                          ]
+                                        }
+                                        stroke={
+                                          Object {
+                                            "brushRef": "spinner-secondHalf",
+                                            "type": 1,
+                                          }
+                                        }
+                                      />
+                                      <RNSVGPath
+                                        d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          Array [
+                                            "stroke",
+                                          ]
+                                        }
+                                        stroke={
+                                          Object {
+                                            "brushRef": "spinner-firstHalf",
+                                            "type": 1,
+                                          }
+                                        }
+                                      />
+                                      <RNSVGPath
+                                        d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          Array [
+                                            "stroke",
+                                            "strokeLinecap",
+                                          ]
+                                        }
+                                        stroke={
+                                          Object {
+                                            "payload": 4294967295,
+                                            "type": 0,
+                                          }
+                                        }
+                                        strokeLinecap={1}
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
                               </View>
                             </View>
                           </View>
@@ -560,7 +578,7 @@ exports[`CTAsBar should match snapshot with both CTAs 1`] = `
 </View>
 `;
 
-exports[`CTAsBar should match snapshot with one CTA 1`] = `
+exports[`MessageDetailsPaymentButton should match snapshot when not loading 1`] = `
 <View
   style={
     Object {
@@ -880,126 +898,110 @@ exports[`CTAsBar should match snapshot with one CTA 1`] = `
                       }
                     >
                       <View
-                        style={
+                        accessibilityLabel="Pay"
+                        accessibilityRole="button"
+                        accessibilityState={
                           Object {
-                            "flexDirection": "row",
+                            "busy": false,
+                            "disabled": false,
                           }
                         }
+                        accessible={true}
+                        collapsable={false}
+                        focusable={true}
+                        onBlur={[Function]}
+                        onClick={[Function]}
+                        onFocus={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={Object {}}
                       >
                         <View
                           style={
-                            Object {
-                              "flex": 1,
-                            }
+                            Array [
+                              Object {
+                                "alignItems": "center",
+                                "borderRadius": 4,
+                                "elevation": 0,
+                                "flexDirection": "row",
+                                "justifyContent": "center",
+                                "paddingHorizontal": 16,
+                                "textAlignVertical": "center",
+                              },
+                              Object {
+                                "overflow": "hidden",
+                              },
+                              false,
+                              Object {
+                                "height": 40,
+                              },
+                              Object {
+                                "backgroundColor": "#0073E6",
+                              },
+                              Object {
+                                "backgroundColor": undefined,
+                                "transform": Array [
+                                  Object {
+                                    "scale": undefined,
+                                  },
+                                ],
+                              },
+                            ]
                           }
                         >
                           <View
-                            accessibilityLabel="My CTA 1"
-                            accessibilityRole="button"
-                            accessibilityState={
-                              Object {
-                                "busy": false,
-                                "disabled": false,
-                              }
+                            style={
+                              Array [
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                },
+                                false,
+                              ]
                             }
-                            accessible={true}
-                            collapsable={false}
-                            focusable={true}
-                            onBlur={[Function]}
-                            onClick={[Function]}
-                            onFocus={[Function]}
-                            onResponderGrant={[Function]}
-                            onResponderMove={[Function]}
-                            onResponderRelease={[Function]}
-                            onResponderTerminate={[Function]}
-                            onResponderTerminationRequest={[Function]}
-                            onStartShouldSetResponder={[Function]}
-                            style={Object {}}
                           >
-                            <View
+                            <Text
+                              accessibilityElementsHidden={true}
+                              accessible={false}
+                              allowFontScaling={false}
+                              color="white"
+                              defaultColor="white"
+                              defaultWeight="Bold"
+                              ellipsizeMode="tail"
+                              font="TitilliumWeb"
+                              fontStyle={
+                                Object {
+                                  "fontSize": 16,
+                                }
+                              }
+                              importantForAccessibility="no-hide-descendants"
+                              maxFontSizeMultiplier={1.3}
+                              numberOfLines={1}
                               style={
                                 Array [
                                   Object {
-                                    "alignItems": "center",
-                                    "borderRadius": 4,
-                                    "elevation": 0,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "paddingHorizontal": 16,
-                                    "textAlignVertical": "center",
+                                    "alignSelf": "center",
                                   },
                                   Object {
-                                    "overflow": "hidden",
-                                  },
-                                  false,
-                                  Object {
-                                    "height": 40,
+                                    "fontSize": 16,
                                   },
                                   Object {
-                                    "backgroundColor": "#0073E6",
-                                  },
-                                  Object {
-                                    "backgroundColor": undefined,
-                                    "transform": Array [
-                                      Object {
-                                        "scale": undefined,
-                                      },
-                                    ],
+                                    "color": "#FFFFFF",
+                                    "fontFamily": "Titillium Web",
+                                    "fontStyle": "normal",
+                                    "fontWeight": "700",
                                   },
                                 ]
                               }
+                              weight="Bold"
                             >
-                              <View
-                                style={
-                                  Array [
-                                    Object {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                    },
-                                    false,
-                                  ]
-                                }
-                              >
-                                <Text
-                                  accessibilityElementsHidden={true}
-                                  accessible={false}
-                                  allowFontScaling={false}
-                                  color="white"
-                                  defaultColor="white"
-                                  defaultWeight="Bold"
-                                  ellipsizeMode="tail"
-                                  font="TitilliumWeb"
-                                  fontStyle={
-                                    Object {
-                                      "fontSize": 16,
-                                    }
-                                  }
-                                  importantForAccessibility="no-hide-descendants"
-                                  maxFontSizeMultiplier={1.3}
-                                  numberOfLines={1}
-                                  style={
-                                    Array [
-                                      Object {
-                                        "alignSelf": "center",
-                                      },
-                                      Object {
-                                        "fontSize": 16,
-                                      },
-                                      Object {
-                                        "color": "#FFFFFF",
-                                        "fontFamily": "Titillium Web",
-                                        "fontStyle": "normal",
-                                        "fontWeight": "700",
-                                      },
-                                    ]
-                                  }
-                                  weight="Bold"
-                                >
-                                  My CTA 1
-                                </Text>
-                              </View>
-                            </View>
+                              Pay
+                            </Text>
                           </View>
                         </View>
                       </View>
