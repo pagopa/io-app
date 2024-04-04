@@ -113,8 +113,6 @@ export const MainTabNavigator = () => {
                 iconNameFocused={"navMessagesFocused"}
                 color={color}
                 focused={focused}
-                // Badge is disabled with paginated messages.
-                // https://pagopa.atlassian.net/browse/IA-572
               />
             )
           }}

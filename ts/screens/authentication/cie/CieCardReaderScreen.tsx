@@ -447,7 +447,8 @@ class CieCardReaderScreen extends React.PureComponent<Props, State> {
         ),
         wrongPin2AttemptLeft: I18n.t(
           "authentication.cie.card.iosAlert.wrongPin2AttemptLeft"
-        )
+        ),
+        genericError: I18n.t("authentication.cie.card.iosAlert.genericError")
       })
       .then(async () => {
         await cieManager.startListeningNFC();
