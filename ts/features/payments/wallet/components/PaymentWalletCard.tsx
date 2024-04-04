@@ -2,8 +2,11 @@ import React from "react";
 import { Pressable } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { withWalletCardBaseComponent } from "../../../newWallet/components/WalletCardBaseComponent";
+import {
+  PaymentCard,
+  PaymentCardProps
+} from "../../common/components/PaymentCard";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
-import { PaymentCard, PaymentCardProps } from "./PaymentCard";
 
 export type PaymentWalletCardProps = PaymentCardProps & {
   walletId: string;
