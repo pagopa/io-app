@@ -30,6 +30,7 @@ import { F24Section } from "./F24Section";
 import { MessagePayments } from "./MessagePayments";
 import { MessageInfo } from "./MessageInfo";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
+import { MessageFooter } from "./MessageFooter";
 
 type MessageDetailsProps = {
   message: PNMessage;
@@ -126,6 +127,13 @@ export const MessageDetails = ({
           presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
       )}
+      <MessageFooter
+        messageId={messageId}
+        payments={payments}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+        isCancelled={isCancelled}
+        presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
+      />
     </>
   );
 };

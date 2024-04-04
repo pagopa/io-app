@@ -27,7 +27,7 @@ import { getRptIdStringFromPayment } from "../utils/rptId";
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
     flex: 1,
-    alignItems: "flex-start"
+    alignItems: "center"
   },
   morePaymentsLinkContainer: {
     alignSelf: "center"

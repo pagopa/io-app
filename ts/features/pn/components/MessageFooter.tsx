@@ -5,8 +5,9 @@ import {
   IOStyles,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import I18n from "i18n-js";
 import { useDispatch } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import I18n from "../../../i18n";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
@@ -16,6 +17,7 @@ import { getRptIdStringFromPayment } from "../utils/rptId";
 import { trackPNShowAllPayments } from "../analytics";
 import { initializeAndNavigateToWalletForPayment } from "../../messages/utils";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
 
 const styles = StyleSheet.create({
   container: {
@@ -40,6 +42,8 @@ export const MessageFooter = ({
   isCancelled,
   presentPaymentsBottomSheetRef
 }: MessageFooterProps) => {
+  const safeAreaInsets = useSafeAreaInsets();
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const buttonState = useIOSelector(state =>
     paymentsButtonStateSelector(
       state,
@@ -83,7 +87,23 @@ export const MessageFooter = ({
     return null;
   }
   const isLoading = buttonState === "visibleLoading";
-  return (
+  return isDesignSystemEnabled ? (
+    <View
+      style={[
+        IOStyles.footer,
+        { paddingBottom: safeAreaInsets.bottom + IOStyles.footer.paddingBottom }
+      ]}
+    >
+      <ButtonSolid
+        disabled={isLoading}
+        label={I18n.t("wallet.continue")}
+        accessibilityLabel={I18n.t("wallet.continue")}
+        onPress={onFooterPressCallback}
+        fullWidth
+        loading={isLoading}
+      />
+    </View>
+  ) : (
     <View style={styles.container}>
       <View style={IOStyles.footer}>
         <ButtonSolid
