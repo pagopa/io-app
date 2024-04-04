@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     paddingBottom: headerPaddingBottom
   },
   cardContainer: {
-    marginHorizontal: IOVisualCostants.appMarginDefault,
     marginTop: -headerPaddingBottom,
     minHeight: headerPaddingBottom
   }
@@ -174,13 +173,14 @@ const ServiceDetailsContent = ({ service }: ServiceDetailsContentProps) => {
           <VSpacer size={16} />
         </ContentWrapper>
       </View>
-      {service_metadata?.description ? (
-        <View style={styles.cardContainer}>
-          <CardWithMarkdownContent content={service_metadata.description} />
-        </View>
-      ) : null}
 
       <ContentWrapper>
+        {service_metadata?.description && (
+          <View style={styles.cardContainer}>
+            <CardWithMarkdownContent content={service_metadata.description} />
+          </View>
+        )}
+
         <VSpacer size={40} />
         <ServiceDetailsPreferences
           serviceId={service_id}
