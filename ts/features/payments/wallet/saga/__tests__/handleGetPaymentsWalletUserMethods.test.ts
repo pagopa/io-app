@@ -6,7 +6,6 @@ import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { withRefreshApiCall } from "../../../../fastLogin/saga/utils";
 import { getPaymentsWalletUserMethods } from "../../store/actions";
 import { handleGetPaymentsWalletUserMethods } from "../handleGetPaymentsWalletUserMethods";
-import { BrandEnum } from "../../../../../../definitions/pagopa/walletv3/WalletInfoDetails";
 import { WalletCard } from "../../../../newWallet/types";
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 import { getGenericError } from "../../../../../utils/errors";
@@ -34,7 +33,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
             type: "CREDITCARD",
             lastFourDigits: T_HPAN,
             expiryDate: T_EXPIRE_DATE,
-            brand: BrandEnum.VISA
+            brand: "VISA"
           }
         }
       ]
@@ -46,7 +45,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
         category: "payment",
         walletId: T_WALLETID,
         hpan: T_HPAN,
-        brand: BrandEnum.VISA,
+        brand: "VISA",
         expireDate: T_EXPIRE_DATE,
         abiCode: undefined,
         holderEmail: undefined,
