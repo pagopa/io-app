@@ -95,6 +95,7 @@ import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
 import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
 import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import {
   clearKeychainError,
@@ -475,6 +476,8 @@ export function* initializeApplicationSaga(
 
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
+
+  yield* fork(watchEmailValidationSaga);
 
   if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);

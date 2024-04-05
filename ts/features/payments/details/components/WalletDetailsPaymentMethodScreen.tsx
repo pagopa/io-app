@@ -14,19 +14,19 @@ import {
   VSpacer,
   IOSpacingScale,
   ListItemAction,
+  IOToast,
   IOStyles
 } from "@pagopa/io-app-design-system";
 import I18n from "../../../../i18n";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOToast } from "../../../../components/Toast";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import FocusAwareStatusBar from "../../../../components/ui/FocusAwareStatusBar";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { walletDetailsInstrumentPotSelector } from "../store";
-import { walletDetailsDeleteInstrument } from "../store/actions";
+import { paymentsDeleteMethodAction } from "../store/actions";
+import { selectPaymentMethodDetails } from "../store/selectors";
 
 type Props = {
   paymentMethod?: WalletInfo;
@@ -42,9 +42,7 @@ type Props = {
  */
 const WalletDetailsPaymentMethodScreen = (props: Props) => {
   const { card, content, paymentMethod } = props;
-  const hasErrorDelete = pot.isError(
-    useIOSelector(walletDetailsInstrumentPotSelector)
-  );
+  const hasErrorDelete = pot.isError(useIOSelector(selectPaymentMethodDetails));
   const [isLoadingDelete, setIsLoadingDelete] = React.useState(false);
   const dispatch = useIODispatch();
   const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -54,13 +52,13 @@ const WalletDetailsPaymentMethodScreen = (props: Props) => {
 
   const deleteWallet = (walletId: string) =>
     dispatch(
-      walletDetailsDeleteInstrument.request({
+      paymentsDeleteMethodAction.request({
         walletId,
-        onSuccess: _ => {
+        onSuccess: () => {
           IOToast.success(I18n.t("wallet.delete.successful"));
           navigation.goBack();
         },
-        onFailure: _ => {
+        onFailure: () => {
           IOToast.error(I18n.t("wallet.delete.failed"));
         }
       })

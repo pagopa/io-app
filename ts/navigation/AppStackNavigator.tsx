@@ -5,8 +5,7 @@ import {
   NavigationContainer,
   NavigationContainerProps
 } from "@react-navigation/native";
-import * as React from "react";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { View } from "react-native";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -26,6 +25,7 @@ import {
   isCGNEnabledSelector,
   isFIMSEnabledSelector
 } from "../store/reducers/backendStatus";
+import { isNewWalletSectionEnabledSelector } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -36,6 +36,7 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
+import { SERVICES_ROUTES } from "../features/services/navigation/routes";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -85,6 +86,9 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
 
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFimsEnabled = useIOSelector(isFIMSEnabledSelector) && fimsEnabled;
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
 
   // Dark/Light Mode
   const { themeType } = useIOThemeContext();
@@ -100,7 +104,11 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
           screens: {
             [MESSAGES_ROUTES.MESSAGES_HOME]: "messages",
             [ROUTES.WALLET_HOME]: "wallet",
-            [ROUTES.SERVICES_HOME]: "services",
+            [SERVICES_ROUTES.SERVICES_HOME]: "services",
+            // [ROUTES.BARCODE_SCAN]: "scan",
+            ...(isNewWalletSectionEnabled
+              ? { [ROUTES.PAYMENTS_HOME]: "payments" }
+              : {}),
             [ROUTES.PROFILE_MAIN]: "profile"
           }
         },
@@ -120,16 +128,18 @@ const InnerNavigationContainer = (props: { children: React.ReactElement }) => {
               "card-onboarding-attempts"
           }
         },
-        [ROUTES.SERVICES_NAVIGATOR]: {
+        [SERVICES_ROUTES.SERVICES_NAVIGATOR]: {
           path: "services",
           screens: {
-            [ROUTES.SERVICE_DETAIL]: {
+            [SERVICES_ROUTES.SERVICE_DETAIL]: {
               path: "service-detail",
               parse: {
                 activate: activate => activate === "true"
               }
             },
-            ...(myPortalEnabled && { [ROUTES.SERVICE_WEBVIEW]: "webview" })
+            ...(myPortalEnabled && {
+              [SERVICES_ROUTES.SERVICE_WEBVIEW]: "webview"
+            })
           }
         },
         ...fciLinkingOptions,

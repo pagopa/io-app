@@ -145,8 +145,8 @@ android {
         applicationId "it.pagopa.io.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 100154805
-        versionName "2.56.0.3"
+        versionCode 100154808
+        versionName "2.57.0.1"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.

@@ -6,7 +6,7 @@ exports[`PaymentCard should match snapshot for loading 1`] = `
     Object {
       "aspectRatio": 1.6,
       "backgroundColor": "#E8EBF1",
-      "borderColor": "#0000001F",
+      "borderColor": "#D2D6E3",
       "borderRadius": 16,
       "borderWidth": 1,
     }

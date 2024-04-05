@@ -190,6 +190,7 @@ global:
     messages: Messages
     wallet: Wallet
     scan: Scan
+    payments: Payments
     documents: Documents
     profile: Profile
     services: Services
@@ -213,6 +214,11 @@ tablet:
   message: The IO interface is optimized for smartphones, but all the functions compatible with your device are still available.
 rooted:
   title: Looks like the security of your device has been compromised!
+  body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
+  learnMoreButton: 
+    title: What does it mean?
+  learnMoreBottomsheet:
+    title: Device security
   bodyiOS: !include jailbroken_body.md
   bodyAndroid: !include rooted_body.md
   continueAlert:
@@ -229,6 +235,7 @@ locales:
   en: English
   de: German
 clipboard:
+  copyIntoClipboard: copy to clipboard
   copyFeedback: Copied to clipboard
   copyText: copy
   copyFeedbackButton: copied
@@ -561,11 +568,13 @@ authentication:
       title: Your session is expired
       body: For security reasons, we ask you to log in with SPID or CIE every {{days}} days or if you log out
     cie_unsupported:
-      title: Login with CIE unavailable
-      body: !include cie/cieNotSupported.md
-      android_desc: !include cie/cieNotSupported_android.md
-      os_version_unsupported: an Android 6.0 or higher operating system
-      nfc_incompatible: a NFC chip
+      title: You cannot use CIE
+      body: The device you are using does not support access with Electronic ID Card (CIE).
+      button: I get it
+      nfc_problem: To read the CIE, a device with NFC chip is required.
+      os_problem: An Android 6.0 or iOS 13 or higher operating system is required.
+      nfc_alert: Your device does not have NFC.
+      os_alert: The device's operating system is not up-to-date.
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -652,6 +661,7 @@ authentication:
         cardLocked: CIE card locked
         wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
         wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
+        genericError: Something went wrong! Please try again.
       error:
         readerCardLostTitle: Hold the card again for a few seconds
         readerCardLostTitleiOS: You removed the card too soon.
@@ -790,17 +800,20 @@ email:
   newinsert:
     header: "Configure IO"
     title: "What is your email address?"
-    subtitle: "We use email for some communications, such as payment receipts or messages exchanged with support."
+    subtitle: We will use it to send you communications such as payment receipts or support messages
     label: "Personal email address"
     alert:
-      title: "The email address {{email}} associated with your SPID identity is already in use on IO. Please enter a different one."
-      description: "email address already in use"
-      modaltitle: "This email address is already in use"
+      title: "{{email}} is already used, insert another one"
+      description1: email address already in use
+      description2: Enter an email address different from your current one
+      description3: Already using this email address
+      invalidemail: Enter a valid email address
+      modaltitle: This email address is already in use
       modaldescription: "This can happen if you share the same address with a family member"
-      modalbutton: "Use another email address"
+      modalbutton: Use another email address
   edit:
     title: Edit email
-    subtitle: The email you inserted is
+    subtitle: Now you use
     validated: The email you inserted and validated is
     label: New personal email address
     cta: Edit email
@@ -820,9 +833,9 @@ email:
     validated: Email validated!
     validated_ok: Thank you, now you can use all payment features, messages forwarding, etc.
   newvalidate:
-    title: Validate your email
-    subtitle: Follow the instructions we sent to
-    link: Is the email address wrong?
+    title: We have sent you an email
+    subtitle: To confirm your address, follow the instructions we have sent to
+    link: Isn't that right?
     buttonlabelsent: Email sent!
     countdowntext: Request new email in
     buttonlabelsentagain: Send email again
@@ -926,6 +939,18 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
+  homeScreen:
+    title: Payments
+    methodsSection:
+      header: Payment methods
+      headerCTA: Add
+    historySection:
+      header: Transaction history
+      headerCTA: View all
+      transactionStatusBadges:
+        failure: "FALLITA"
+        success: ""
+    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
@@ -2057,6 +2082,12 @@ services:
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
+  details:
+    failure:
+      title: "There is a temporary problem. Please try again"
+      subtitle: "We are retrieving service details"
+      back: "Back"
+      retry: "Retry"
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
@@ -2075,16 +2106,21 @@ serviceDetail:
   disabled: disabled
   notValidated: To enable the email forwarding you must validate your email address.
 identification:
-  title: Hi!
+  instructions:
+    unlockCode: unlock code
+    unlockCodepPrefix: use your
+    fingerprint: fingerprint
+    fingerprintPrefix: use your
+    faceId: face
+    faceIdPrefix: use your
+    congiunction: or
+  title: Hi {{name}}!
   titleProfileName: Hi {{profileName}}!
   titleValidation: Confirm the procedure
   logout: Logout
   logoutProfileName: Not {{profileName}}?
   logoutDescription: You can login with your SPID or CIE credentials. This session will be disconnected.
   logoutDescriptionProfileName: You can login with your SPID or CIE credentials. {{profileName}}'s session will be disconnected.
-  subtitleCode: Enter the unlock code
-  subtitleCodeFingerprint: use the fingerprint or the unlock code
-  subtitleCodeFaceId: use the Face ID or enter the unlock code
   biometric:
     fingerprintType: Fingerprint
     title: Biometric identification
@@ -2093,8 +2129,8 @@ identification:
       title: Identification required
       sensorDescription: Login quickly
   fail:
-    remainingAttempts: You have {{attempts}} attempts left.
-    remainingAttemptSingle: You have {{attempts}} attempt left.
+    remainingAttempts: You have {{attempts}} attempts left
+    remainingAttemptSingle: You have {{attempts}} attempt left
     tooManyAttempts: Too many attempts.
     waitMessage: "Try again in:"
   unlockCode:
@@ -2889,11 +2925,17 @@ features:
   wallet:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
-      cta: Aggiungi al portafoglio
+      cta: Aggiungi al Portafoglio
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
         close: Chiudi
+    cards:
+      categories:
+        bonus: Iniziative welfare
+        cgn: Carta Giovani Nazionale
+        itw: IT Wallet
+        payment: Payment methods
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
@@ -3460,10 +3502,10 @@ fastLogin:
         subtitle: For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.
         submitButtonTitle: Continue
       continueNavigation:
-        title: "La tua sessione è scaduta"
-        subtitle: "Per continuare a utilizzare l’app premi su Continua la navigazione."
-        submitButtonTitle: "Continua la navigazione"
-        cancelButtonTitle: "Annulla"
+        title: "Your session has expired"
+        subtitle: "Please log in to continue using the app"
+        submitButtonTitle: "Log in"
+        cancelButtonTitle: "Cancel"
       transientError:
         title: "We couldn't authenticate you"
         subtitle: "Close the app and try again in a few minutes."

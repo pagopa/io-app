@@ -7,6 +7,7 @@ import { PinString } from "../../types/PinString";
 import {
   identificationCancel,
   identificationFailure,
+  identificationHideLockModal,
   identificationReset,
   identificationStart,
   identificationSuccess
@@ -66,6 +67,7 @@ export type IdentificationFailData = {
   remainingAttempts: number;
   nextLegalAttempt: Date;
   timespanBetweenAttempts: number;
+  showLockModal?: boolean;
 };
 
 export type IdentificationState = {
@@ -84,6 +86,20 @@ export const INITIAL_STATE: IdentificationState = {
   fail: undefined
 };
 
+export const fillShowLockModal = (actualErrorData: IdentificationFailData) => {
+  // showLockModal is true if the time gap between now and the next legal attempt
+  // is less than the timespanBetweenAttempts and the remaining attempts are less than 3
+  const timeGap =
+    new Date().getTime() - actualErrorData.nextLegalAttempt.getTime();
+  const showLockModal =
+    actualErrorData.remainingAttempts <= 3 &&
+    timeGap < actualErrorData.timespanBetweenAttempts * 1000;
+  return {
+    ...actualErrorData,
+    showLockModal
+  };
+};
+
 const nextErrorData = (
   errorData: IdentificationFailData
 ): IdentificationFailData => {
@@ -100,7 +116,8 @@ const nextErrorData = (
   return {
     nextLegalAttempt: new Date(Date.now() + newTimespan * 1000),
     remainingAttempts: nextRemainingAttempts,
-    timespanBetweenAttempts: newTimespan
+    timespanBetweenAttempts: newTimespan,
+    showLockModal: nextRemainingAttempts <= 3
   };
 };
 
@@ -136,6 +153,18 @@ const reducer = (
     case getType(identificationReset):
       return INITIAL_STATE;
 
+    case getType(identificationHideLockModal):
+      const failData = state.fail
+        ? {
+            ...state.fail,
+            showLockModal: false
+          }
+        : undefined;
+      return {
+        ...state,
+        fail: failData
+      };
+
     case getType(identificationFailure):
       const newErrorData = pipe(
         state.fail,
@@ -144,7 +173,8 @@ const reducer = (
           () => ({
             nextLegalAttempt: new Date(),
             remainingAttempts: maxAttempts - 1,
-            timespanBetweenAttempts: 0
+            timespanBetweenAttempts: 0,
+            showLockModal: false
           }),
           errorData => nextErrorData(errorData)
         )
