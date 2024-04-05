@@ -1310,6 +1310,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <View
                               accessibilityLabel="Informazioni sulla notifica"
                               accessible={true}
                               style={
