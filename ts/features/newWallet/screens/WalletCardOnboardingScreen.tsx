@@ -1,9 +1,10 @@
 import {
-  ButtonExtendedOutline,
   ContentWrapper,
+  ModuleCredential,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
+import cgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 import { RNavScreenWithLargeHeader } from "../../../components/ui/RNavScreenWithLargeHeader";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -11,6 +12,7 @@ import { isIdPayEnabledSelector } from "../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { PaymentsOnboardingRoutes } from "../../payments/onboarding/navigation/routes";
+import I18n from "../../../i18n";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -23,7 +25,7 @@ const WalletCardOnboardingScreen = () => {
   };
 
   const navigateToInitiativesList = () => {
-    // TODO add navigation to ID Pay initiatives
+    // TODO add navigation to welfare initiatives list
   };
 
   const navigateToPaymentMethodOnboarding = () => {
@@ -35,7 +37,7 @@ const WalletCardOnboardingScreen = () => {
   return (
     <RNavScreenWithLargeHeader
       title={{
-        label: "Cosa vuoi aggiungere al Portafoglio?"
+        label: I18n.t("features.wallet.onboarding.title")
       }}
       contextualHelp={emptyContextualHelp}
       faqCategories={["wallet", "wallet_methods"]}
@@ -43,26 +45,26 @@ const WalletCardOnboardingScreen = () => {
     >
       <ContentWrapper>
         <VSpacer size={24} />
-        <ButtonExtendedOutline
-          label="Carta Giovani Nazionale"
+        <ModuleCredential
+          image={cgnLogo}
+          label={I18n.t("features.wallet.onboarding.options.cgn")}
           onPress={navigateToCgnActivation}
-          icon="chevronRight"
         />
         <VSpacer size={8} />
         {isIdPayEnabled && (
           <>
-            <ButtonExtendedOutline
-              label="Iniziative Welfare"
+            <ModuleCredential
+              icon="bonus"
+              label={I18n.t("features.wallet.onboarding.options.welfare")}
               onPress={navigateToInitiativesList}
-              icon="chevronRight"
             />
             <VSpacer size={8} />
           </>
         )}
-        <ButtonExtendedOutline
-          label="Metodi di pagamento"
+        <ModuleCredential
+          icon="creditCard"
+          label={I18n.t("features.wallet.onboarding.options.payments")}
           onPress={navigateToPaymentMethodOnboarding}
-          icon="chevronRight"
         />
       </ContentWrapper>
     </RNavScreenWithLargeHeader>
