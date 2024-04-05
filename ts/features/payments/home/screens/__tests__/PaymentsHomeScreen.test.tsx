@@ -2,9 +2,9 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { default as React } from "react";
 import configureMockStore from "redux-mock-store";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { WalletStatusEnum } from "../../../../../../definitions/pagopa/ecommerce/WalletStatus";
-import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
+import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
+import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { validTransaction } from "../../../../../__mocks__/paymentPayloads";
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -43,7 +43,7 @@ describe("PaymentsHomeScreen", () => {
   it("should render loading screen", () => {
     const { queryByTestId } = renderComponent({
       transactions: pot.toLoading(pot.none),
-      userWallets: pot.toLoading(pot.none)
+      userMethods: pot.toLoading(pot.none)
     });
 
     expect(
@@ -58,7 +58,7 @@ describe("PaymentsHomeScreen", () => {
   it("should render full empty screen content", () => {
     const { queryByTestId } = renderComponent({
       transactions: pot.some({}),
-      userWallets: pot.some({ wallets: [] })
+      userMethods: pot.some({ wallets: [] })
     });
 
     expect(
@@ -77,7 +77,7 @@ describe("PaymentsHomeScreen", () => {
   it("should render empty transactions content", () => {
     const { queryByTestId } = renderComponent({
       transactions: pot.some({}),
-      userWallets: pot.some({ wallets: [MOCK_WALLET, MOCK_WALLET] })
+      userMethods: pot.some({ wallets: [MOCK_WALLET, MOCK_WALLET] })
     });
 
     expect(
@@ -96,7 +96,7 @@ describe("PaymentsHomeScreen", () => {
   it("should render empty methods content", () => {
     const { queryByTestId } = renderComponent({
       transactions: pot.some({ [validTransaction.id]: validTransaction }),
-      userWallets: pot.some({ wallets: [] }),
+      userMethods: pot.some({ wallets: [] }),
       shouldShowAddMethodsBanner: true
     });
 
@@ -114,7 +114,7 @@ describe("PaymentsHomeScreen", () => {
   it("should not render empty methods content", () => {
     const { queryByTestId } = renderComponent({
       transactions: pot.some({ [validTransaction.id]: validTransaction }),
-      userWallets: pot.some({ wallets: [] }),
+      userMethods: pot.some({ wallets: [] }),
       shouldShowAddMethodsBanner: false
     });
 
@@ -132,7 +132,7 @@ describe("PaymentsHomeScreen", () => {
   it("should render wallets and transactions content", () => {
     const { queryByTestId } = renderComponent({
       transactions: pot.some({ [validTransaction.id]: validTransaction }),
-      userWallets: pot.some({ wallets: [MOCK_WALLET] }),
+      userMethods: pot.some({ wallets: [MOCK_WALLET] }),
       shouldShowAddMethodsBanner: false
     });
 
@@ -151,11 +151,11 @@ describe("PaymentsHomeScreen", () => {
 
 const renderComponent = ({
   transactions = pot.none,
-  userWallets = pot.none,
+  userMethods = pot.none,
   shouldShowAddMethodsBanner = true
 }: {
   transactions?: pot.Pot<IndexedById<Transaction>, Error>;
-  userWallets?: pot.Pot<Wallets, NetworkError>;
+  userMethods: pot.Pot<Wallets, NetworkError>;
   shouldShowAddMethodsBanner?: boolean;
 }) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -168,8 +168,8 @@ const renderComponent = ({
     },
     features: {
       payments: {
-        payment: {
-          userWallets
+        wallet: {
+          userMethods
         },
         home: {
           shouldShowAddMethodsBanner
