@@ -721,6 +721,13 @@ exports[`MessageDetails component should match the snapshot with default props 1
                               }
                             />
                             <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <View
                               accessibilityLabel="Informazioni sulla notifica"
                               accessible={true}
                               style={

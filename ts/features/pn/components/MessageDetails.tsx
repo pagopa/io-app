@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { pipe } from "fp-ts/lib/function";
@@ -21,9 +21,11 @@ import { MessageDetailsHeader } from "../../messages/components/MessageDetail/Me
 import { MessageDetailsTagBox } from "../../messages/components/MessageDetail/MessageDetailsTagBox";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { UIMessageId } from "../../messages/types";
+import { maxVisiblePaymentCountGenerator } from "../utils";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
 import { MessageFooter } from "./MessageFooter";
+import { MessagePayments } from "./MessagePayments";
 import { MessageInfo } from "./MessageInfo";
 
 type MessageDetailsProps = {
@@ -36,8 +38,10 @@ type MessageDetailsProps = {
 export const MessageDetails = ({
   message,
   messageId,
+  payments,
   serviceId
 }: MessageDetailsProps) => {
+  const presentPaymentsBottomSheetRef = useRef<() => void>();
   const safeAreaInsets = useSafeAreaInsets();
   const partitionedAttachments = pipe(
     message.attachments,
@@ -47,6 +51,12 @@ export const MessageDetails = ({
   );
 
   const attachmentList = SEP.left(partitionedAttachments);
+  const maxVisiblePaymentCount = maxVisiblePaymentCountGenerator();
+
+  const isCancelled = message.isCancelled ?? false;
+  const completedPaymentNoticeCodes = isCancelled
+    ? message.completedPayments
+    : undefined;
 
   return (
     <ScrollView
@@ -85,6 +95,15 @@ export const MessageDetails = ({
           disabled={message.isCancelled}
           messageId={messageId}
           isPN
+        />
+        <VSpacer size={16} />
+        <MessagePayments
+          messageId={messageId}
+          isCancelled={isCancelled}
+          payments={payments}
+          completedPaymentNoticeCodes={completedPaymentNoticeCodes}
+          maxVisiblePaymentCount={maxVisiblePaymentCount}
+          presentPaymentsBottomSheetRef={presentPaymentsBottomSheetRef}
         />
         <VSpacer size={16} />
         <F24Section

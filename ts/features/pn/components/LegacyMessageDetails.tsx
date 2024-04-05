@@ -41,8 +41,8 @@ import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessageTimeline } from "./MessageTimeline";
 import { MessageTimelineCTA } from "./MessageTimelineCTA";
 import { LegacyMessageF24 } from "./LegacyMessageF24";
-import { MessagePayments } from "./MessagePayments";
 import { LegacyMessageFooter } from "./LegacyMessageFooter";
+import { LegacyMessagePayments } from "./LegacyMessagePayments";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
 type Props = Readonly<{
@@ -143,7 +143,7 @@ export const LegacyMessageDetails = ({
             />
           </MessageDetailsSection>
         )}
-        <MessagePayments
+        <LegacyMessagePayments
           messageId={messageId}
           isCancelled={isCancelled}
           payments={payments}
