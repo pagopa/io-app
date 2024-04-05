@@ -773,7 +773,7 @@ email:
     emailAlreadyTaken:
       title: Edit your email address
       subtitleStart: This email address
-      subtitleEnd: seems to be already in use on IO. Please enter a different one to continue using the app.
+      subtitleEnd: è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.
       editButton: Edit email address
       header:
         title: Configure IO
