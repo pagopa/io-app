@@ -5,6 +5,7 @@ import { useCallback, useMemo } from "react";
 import { View, Keyboard, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import { ContentWrapper, ListItemHeader } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
@@ -94,7 +95,7 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
     requestOnlineMerchants();
   }, [requestOfflineMerchants, requestOnlineMerchants]);
 
-  React.useEffect(initLoadingLists, [initLoadingLists]);
+  useFocusEffect(initLoadingLists);
 
   const onItemPress = (id: Merchant["id"]) => {
     props.navigateToMerchantDetail(id);
