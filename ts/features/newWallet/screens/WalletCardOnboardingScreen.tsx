@@ -14,6 +14,7 @@ import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
 import { isCgnInformationAvailableSelector } from "../../bonus/cgn/store/reducers/details";
 import { PaymentsOnboardingRoutes } from "../../payments/onboarding/navigation/routes";
+import { loadAvailableBonuses } from "../../bonus/common/store/actions/availableBonusesTypes";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -23,6 +24,7 @@ const WalletCardOnboardingScreen = () => {
   const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
 
   const startCgnActiviation = () => {
+    dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
   };
 
