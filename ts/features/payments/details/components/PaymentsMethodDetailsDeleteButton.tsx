@@ -17,19 +17,20 @@ const PaymentsMethodDetailsDeleteButton = ({
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
-  const deleteWallet = (walletId: string) =>
+  const deleteWallet = (walletId: string) => {
     dispatch(
       paymentsDeleteMethodAction.request({
         walletId,
         onSuccess: () => {
           IOToast.success(I18n.t("wallet.delete.successful"));
-          navigation.goBack();
         },
         onFailure: () => {
           IOToast.error(I18n.t("wallet.delete.failed"));
         }
       })
     );
+    navigation.goBack();
+  };
 
   if (paymentMethod === undefined) {
     return null;
