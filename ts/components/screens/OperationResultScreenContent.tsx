@@ -65,8 +65,16 @@ type OperationResultScreenContentProps = WithTestID<{
   >;
 }>;
 
-export const trasformArrayInComposedBody = (subtitle: Array<BodyProps>) => (
-  <Body style={{ textAlign: "center" }}>
+type PropsComposedBody = {
+  subtitle: Array<BodyProps>;
+  textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
+};
+
+export const ComposedBodyFromArray = ({
+  subtitle,
+  textAlign = "center"
+}: PropsComposedBody) => (
+  <Body style={{ textAlign }}>
     {subtitle.map(({ text, key, ...props }) => (
       <Body key={key} {...props}>
         {text}
@@ -106,7 +114,7 @@ const OperationResultScreenContent = ({
           {typeof subtitle === "string" ? (
             <Body style={styles.text}>{subtitle}</Body>
           ) : (
-            trasformArrayInComposedBody(subtitle)
+            <ComposedBodyFromArray subtitle={subtitle} textAlign="center" />
           )}
         </>
       )}
