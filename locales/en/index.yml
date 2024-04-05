@@ -2495,6 +2495,10 @@ bonus:
         filter: Filter
       categoriesList:
         title: Select a category and discover the benefits
+        bottomSheet:
+          cta: How are categories ordered by?
+          title: How are categories ordered by?
+          content: To facilitate your search and improve your experience, we have organized the categories according to frequency of use.This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing.
       filter:
         title: Filter operators
         searchTitle: Find by name

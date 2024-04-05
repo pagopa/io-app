@@ -4,9 +4,13 @@ import {
   H2,
   TabNavigation,
   TabItem,
-  VSpacer
+  VSpacer,
+  IOIcons
 } from "@pagopa/io-app-design-system";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import {
+  MaterialTopTabBarProps,
+  createMaterialTopTabNavigator
+} from "@react-navigation/material-top-tabs";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
 import I18n from "../../../../../i18n";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -25,6 +29,65 @@ export type CgnMerchantsHomeTabParamsList = {
 
 const Tab = createMaterialTopTabNavigator<CgnMerchantsHomeTabParamsList>();
 
+type TabOption = {
+  title: string;
+  icon: IOIcons;
+};
+
+const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
+  [CgnMerchantsHomeTabRoutes.CGN_CATEGORIES]: {
+    icon: "initiatives",
+    title: "Per categoria"
+  },
+  [CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL]: {
+    icon: "merchant",
+    title: "Per operatore"
+  }
+};
+
+const CgnTabBar = ({ state, navigation }: MaterialTopTabBarProps) => {
+  const isFocused = React.useCallback(
+    (i: number) => state.index === i,
+    [state]
+  );
+
+  return (
+    <View>
+      <TabNavigation tabAlignment="start">
+        {state.routes.map((route, index) => {
+          const onPress = () => {
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true
+            });
+
+            if (!isFocused(index) && !event.defaultPrevented) {
+              navigation.navigate(route.name);
+            }
+          };
+
+          const label =
+            tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList].title;
+          return (
+            <TabItem
+              icon={
+                tabOptions[route.name as keyof CgnMerchantsHomeTabParamsList]
+                  .icon
+              }
+              selected={isFocused(index)}
+              label={label}
+              accessibilityLabel={label}
+              key={route.key}
+              onPress={onPress}
+            />
+          );
+        })}
+      </TabNavigation>
+      <VSpacer size={16} />
+    </View>
+  );
+};
 const CgnMerchantsCategoriesSelectionScreen = () => {
   useHeaderSecondLevel({
     title: "",
@@ -43,62 +106,18 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       <Tab.Navigator
         initialRouteName={CgnMerchantsHomeTabRoutes.CGN_CATEGORIES}
         tabBarPosition="top"
-        tabBar={({ state, descriptors, navigation }) => (
-          <View>
-            <TabNavigation tabAlignment="start">
-              {state.routes.map((route, index) => {
-                // console.log(state.index);
-                const { options } = descriptors[route.key];
-                const label =
-                  options.tabBarLabel !== undefined
-                    ? options.tabBarLabel
-                    : options.title !== undefined
-                    ? options.title
-                    : route.name;
-
-                const isFocused = state.index === index;
-                const onPress = () => {
-                  const event = navigation.emit({
-                    type: "tabPress",
-                    target: route.key,
-                    canPreventDefault: true
-                  });
-
-                  if (!isFocused && !event.defaultPrevented) {
-                    navigation.navigate(route.name);
-                  }
-                };
-                return (
-                  <TabItem
-                    selected={isFocused}
-                    label={label as string}
-                    accessibilityLabel={label as string}
-                    key={route.key}
-                    onPress={onPress}
-                  />
-                );
-              })}
-            </TabNavigation>
-            <VSpacer size={16} />
-          </View>
-        )}
+        tabBar={CgnTabBar}
         screenOptions={{
-          lazy: true
-          // swipeEnabled: false
+          lazy: true,
+          swipeEnabled: false
         }}
       >
         <Tab.Screen
           name={CgnMerchantsHomeTabRoutes.CGN_CATEGORIES}
-          options={{
-            title: "Per categoria"
-          }}
           component={CgnMerchantCategoriesListScreen}
         />
         <Tab.Screen
           name={CgnMerchantsHomeTabRoutes.CGN_MERCHANTS_ALL}
-          options={{
-            title: "Per operatore"
-          }}
           component={CgnMerchantsListScreen}
         />
       </Tab.Navigator>

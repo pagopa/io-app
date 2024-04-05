@@ -1,14 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Badge,
-  ContentWrapper,
+  Body,
   H6,
   IOStyles,
   IOToast,
+  ListItemAction,
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { RefreshControl, ScrollView, View } from "react-native";
+import { FlatList, RefreshControl, View } from "react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useNavigation } from "@react-navigation/native";
@@ -22,6 +23,7 @@ import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { cgnCategories } from "../../store/actions/categories";
 import CGN_ROUTES from "../../navigation/routes";
+import { useIOBottomSheetAutoresizableModal } from "../../../../../utils/hooks/bottomSheet";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const insets = useSafeAreaInsets();
@@ -32,6 +34,18 @@ export const CgnMerchantCategoriesListScreen = () => {
     useNavigation<
       IOStackNavigationProp<CgnDetailsParamsList, "CGN_MERCHANTS_CATEGORIES">
     >();
+
+  const { present, bottomSheet } = useIOBottomSheetAutoresizableModal({
+    fullScreen: true,
+    title: I18n.t("bonus.cgn.merchantsList.categoriesList.bottomSheet.title"),
+    component: (
+      <View style={{ paddingBottom: insets.bottom }}>
+        <Body>
+          {I18n.t("bonus.cgn.merchantsList.categoriesList.bottomSheet.content")}
+        </Body>
+      </View>
+    )
+  });
 
   const loadCategories = () => {
     dispatch(cgnCategories.request());
@@ -50,6 +64,7 @@ export const CgnMerchantCategoriesListScreen = () => {
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
   }, [isError]);
+
   const renderCategoryElement = (
     category: ProductCategoryWithNewDiscountsCount,
     i: number
@@ -90,27 +105,42 @@ export const CgnMerchantCategoriesListScreen = () => {
   };
 
   const categoriesToArray: ReadonlyArray<ProductCategoryWithNewDiscountsCount> =
-    [...(pot.isSome(potCategories) ? potCategories.value : [])];
+    React.useMemo(
+      () => [...(pot.isSome(potCategories) ? potCategories.value : [])],
+      [potCategories]
+    );
 
   return (
-    <ScrollView
-      contentContainerStyle={{
-        paddingBottom: insets.bottom,
-        flexGrow: 1
-      }}
-      scrollEventThrottle={8}
-      snapToEnd={false}
-      decelerationRate="normal"
-      refreshControl={
-        <RefreshControl
-          refreshing={pot.isLoading(potCategories)}
-          onRefresh={loadCategories}
-        />
-      }
-    >
-      <ContentWrapper>
-        {categoriesToArray.map(renderCategoryElement)}
-      </ContentWrapper>
-    </ScrollView>
+    <>
+      {bottomSheet}
+      <FlatList
+        data={categoriesToArray}
+        style={[
+          IOStyles.horizontalContentPadding,
+          IOStyles.flex,
+          { paddingBottom: insets.bottom }
+        ]}
+        keyExtractor={pc => pc.productCategory}
+        renderItem={({ item, index }) => renderCategoryElement(item, index)}
+        refreshControl={
+          <RefreshControl
+            refreshing={pot.isLoading(potCategories)}
+            onRefresh={loadCategories}
+          />
+        }
+        ListFooterComponent={
+          <ListItemAction
+            onPress={present}
+            accessibilityLabel={I18n.t(
+              "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+            )}
+            label={I18n.t(
+              "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
+            )}
+            variant="primary"
+          />
+        }
+      />
+    </>
   );
 };
