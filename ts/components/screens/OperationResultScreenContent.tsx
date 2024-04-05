@@ -34,34 +34,17 @@ export type BodyProps = ExternalTypographyProps<
   }
 >;
 
-// if we are inserting the action and buttonType is not there or is
-// equals ButtonSolid then we use the ButtonSolidProps type
-// otherwise we use the ButtonLinkProps type
-
-// if we are inserting the secondaryAction and buttonType is either not there or is
-// equals ButtonLink then we use the ButtonLinkProps type
-// otherwise we use the ButtonSolidProps type
-
-type ButtonTypeSolid = ButtonSolidProps & {
-  buttonType?: "ButtonSolid";
-};
-type ButtonTypeLink = ButtonLinkProps & {
-  buttonType?: "ButtonLink";
-};
-
-type ButtonProps = ButtonTypeSolid | ButtonTypeLink;
-
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
   subtitle?: string | Array<BodyProps>;
   action?: Pick<
-    ButtonProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "buttonType"
+    ButtonSolidProps,
+    "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
   secondaryAction?: Pick<
-    ButtonProps,
-    "label" | "accessibilityLabel" | "onPress" | "testID" | "buttonType"
+    ButtonLinkProps,
+    "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
 }>;
 
@@ -118,41 +101,23 @@ const OperationResultScreenContent = ({
           )}
         </>
       )}
-      {action &&
-        (!action.buttonType || action.buttonType === "ButtonSolid") && (
-          <View style={IOStyles.alignCenter}>
-            <VSpacer size={24} />
-            <View>
-              <ButtonSolid {...(action as ButtonSolidProps)} />
-            </View>
-          </View>
-        )}
-      {action && action.buttonType === "ButtonLink" && (
+      {action && (
         <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
           <View>
-            <ButtonLink {...action} />
+            <ButtonSolid {...action} />
           </View>
         </View>
       )}
-      {secondaryAction &&
-        (!secondaryAction.buttonType ||
-          secondaryAction.buttonType === "ButtonLink") && (
-          <View style={IOStyles.alignCenter}>
-            <VSpacer size={24} />
-            <View>
-              <ButtonLink {...secondaryAction} />
-            </View>
-          </View>
-        )}
-      {secondaryAction && secondaryAction.buttonType === "ButtonSolid" && (
+      {secondaryAction && (
         <View style={IOStyles.alignCenter}>
           <VSpacer size={24} />
           <View>
-            <ButtonSolid {...(secondaryAction as ButtonSolidProps)} />
+            <ButtonLink {...secondaryAction} />
           </View>
         </View>
       )}
+
       {React.isValidElement(children) && React.cloneElement(children)}
     </ScrollView>
   </SafeAreaView>
