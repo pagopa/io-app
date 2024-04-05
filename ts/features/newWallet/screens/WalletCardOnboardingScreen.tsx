@@ -6,21 +6,23 @@ import {
 import React from "react";
 import cgnLogo from "../../../../img/bonus/cgn/cgn_logo.png";
 import { RNavScreenWithLargeHeader } from "../../../components/ui/RNavScreenWithLargeHeader";
+import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
+import { isCgnInformationAvailableSelector } from "../../bonus/cgn/store/reducers/details";
 import { PaymentsOnboardingRoutes } from "../../payments/onboarding/navigation/routes";
-import I18n from "../../../i18n";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isCgnAlreadyActive = useIOSelector(isCgnInformationAvailableSelector);
 
-  const navigateToCgnActivation = () => {
+  const startCgnActiviation = () => {
     dispatch(cgnActivationStart());
   };
 
@@ -48,7 +50,12 @@ const WalletCardOnboardingScreen = () => {
         <ModuleCredential
           image={cgnLogo}
           label={I18n.t("features.wallet.onboarding.options.cgn")}
-          onPress={navigateToCgnActivation}
+          onPress={!isCgnAlreadyActive ? startCgnActiviation : undefined}
+          badge={
+            isCgnAlreadyActive
+              ? { variant: "success", text: "già presente" }
+              : undefined
+          }
         />
         <VSpacer size={8} />
         {isIdPayEnabled && (
