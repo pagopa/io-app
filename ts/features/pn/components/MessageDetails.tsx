@@ -27,7 +27,7 @@ import {
 } from "../utils";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
-import { MessageFooter } from "./MessageFooter";
+import { MessageBottomMenu } from "./MessageBottomMenu";
 import { MessagePayments } from "./MessagePayments";
 import { MessageInfo } from "./MessageInfo";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
@@ -119,7 +119,7 @@ export const MessageDetails = ({
           <VSpacer size={16} />
           <MessageInfo iun={message.iun} />
         </ContentWrapper>
-        <MessageFooter serviceId={serviceId} />
+        <MessageBottomMenu serviceId={serviceId} />
       </ScrollView>
       {canShowMorePaymentsLink(isCancelled, payments) && (
         <MessagePaymentBottomSheet
