@@ -1,16 +1,41 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import {
+  BodyProps,
+  OperationResultScreenContent
+} from "../../../components/screens/OperationResultScreenContent";
 import I18n from "../../../i18n";
 
 const DSScreenOperationResult = () => {
   const navigation = useNavigation();
 
+  const bodyPropsArray: Array<BodyProps> = [
+    {
+      text: I18n.t("email.cduScreens.emailAlreadyTaken.subtitleStart"),
+      style: {
+        textAlign: "center"
+      }
+    },
+    {
+      text: <> example@try.com </>,
+      style: {
+        textAlign: "center"
+      },
+      weight: "SemiBold"
+    },
+    {
+      text: I18n.t("email.cduScreens.emailAlreadyTaken.subtitleEnd"),
+      style: {
+        textAlign: "center"
+      }
+    }
+  ];
+
   return (
     <OperationResultScreenContent
       pictogram="umbrellaNew"
       title="C’è un problema temporaneo, riprova."
-      subtitle="Premi a lungo uno o più messaggi per archiviarli."
+      subtitle={bodyPropsArray}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
