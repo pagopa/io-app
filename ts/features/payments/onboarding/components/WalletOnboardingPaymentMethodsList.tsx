@@ -14,7 +14,7 @@ import * as React from "react";
 import { FlatList } from "react-native";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIOSelector } from "../../../../store/hooks";
-import { walletOnboardingSelectedPaymentMethodSelector } from "../store";
+import { selectPaymentOnboardingSelectedMethod } from "../store/selectors";
 import { WalletPaymentMethodItemSkeleton } from "./WalletPaymentMethodItemSkeleton";
 
 type OwnProps = Readonly<{
@@ -66,7 +66,7 @@ const WalletOnboardingPaymentMethodsList = ({
   header
 }: OwnProps) => {
   const selectedPaymentMethodId = useIOSelector(
-    walletOnboardingSelectedPaymentMethodSelector
+    selectPaymentOnboardingSelectedMethod
   );
   const isMethodLoading = (itemId: string) =>
     isLoadingWebView && itemId === selectedPaymentMethodId;

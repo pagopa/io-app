@@ -235,6 +235,7 @@ locales:
   en: Inglese
   de: Tedesco
 clipboard:
+  copyIntoClipboard: copia negli appunti
   copyFeedback: Copiato negli appunti
   copyText: copia
   copyFeedbackButton: copiato
@@ -660,6 +661,7 @@ authentication:
         cardLocked: Carta CIE bloccata
         wrongPin1AttemptLeft: PIN errato, hai ancora 1 tentativo
         wrongPin2AttemptLeft: PIN errato, hai ancora 2 tentativi
+        genericError: Si è verificato un errore imprevisto. Riprova.
       error:
         readerCardLostTitle: Avvicina nuovamente la carta
         readerCardLostTitleiOS: Hai rimosso la carta troppo presto
@@ -802,16 +804,16 @@ email:
     label: Indirizzo email personale
     alert:
       title: "{{email}} è già in uso, inseriscine un’altra."
-      description1: Email già in uso 
+      description1: Email già in uso
       description2: Inserisci un indirizzo diverso da quello attuale
       description3: Stai già usando questa email
-      invalidemail: Inserisci un indirizzo email valido 
+      invalidemail: Inserisci un indirizzo email valido
       modaltitle: Questa email è già in uso
       modaldescription: Può succedere se condividi lo stesso indirizzo con un familiare
       modalbutton: Usa un’altra email
   edit:
     title: Modifica la tua email
-    subtitle: Ora stai usando 
+    subtitle: Ora stai usando
     validated: L'email che avevi inserito e validato in precedenza è
     label: Nuovo indirizzo email personale
     cta: Modifica email
@@ -834,7 +836,7 @@ email:
     title: Ti abbiamo inviato un’email
     subtitle: Per confermare il tuo indirizzo, segui le istruzioni che abbiamo inviato a
     link: Non è corretto?
-    countdowntext: Richiedi una nuova email tra 
+    countdowntext: Richiedi una nuova email tra
     buttonlabelsent: Email inviata!
     buttonlabelsentagain: Invia di nuovo l’email
     toast: Fatto! Controlla la tua casella di posta.
@@ -2080,6 +2082,12 @@ services:
   disableAllMsg: "Ricorda che su IO ti scriveranno solo i servizi che effettivamente hanno qualche informazione personalizzata da comunicarti. Non riceverai messaggi di spam. Se disattivi tutti i servizi, questi non potranno più contattarti tramite IO (finché non li riattiverai). Potrai continuare a fruire i servizi attraverso altri canali (sportello, sito, etc.)"
   close: Chiudi
   emptyListMessage: Non ci sono servizi disponibili al momento, trascina in basso per aggiornare
+  details:
+    failure:
+      title: "C'è un problema temporaneo, riprova"
+      subtitle: "Stiamo recuperando i dettagli del servizio"
+      back: "Indietro"
+      retry: "Riprova"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
@@ -2931,7 +2939,7 @@ features:
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
-        payment: Metodo di pagamento
+        payment: Metodi di pagamento
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
