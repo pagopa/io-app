@@ -128,6 +128,8 @@ const renderComponent = (ctas?: CTAS) => {
         messageId={"01HRW6GJBD594Z0K9B4D6KAERC" as UIMessageId}
         serviceId={"01HRW6GS171WY97ZBJ5BPFJ625" as ServiceId}
         ctas={ctas}
+        firstCTAIsPNOptInMessage={false}
+        secondCTAIsPNOptInMessage={false}
       />
     ),
     "DUMMY",
