@@ -15,7 +15,7 @@ import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/action
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
-import { WalletRoutes } from "../navigation";
+import { WalletRoutes } from "../navigation/routes";
 import { selectWalletCards } from "../store/selectors";
 
 const WalletHomeScreen = () => {

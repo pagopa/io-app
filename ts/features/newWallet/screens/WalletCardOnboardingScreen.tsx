@@ -10,7 +10,7 @@ import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../store/reducers/backendStatus";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { cgnActivationStart } from "../../bonus/cgn/store/actions/activation";
-import { WalletOnboardingRoutes } from "../../payments/onboarding/navigation/navigator";
+import { PaymentsOnboardingRoutes } from "../../payments/onboarding/navigation/routes";
 
 const WalletCardOnboardingScreen = () => {
   const dispatch = useIODispatch();
@@ -27,8 +27,8 @@ const WalletCardOnboardingScreen = () => {
   };
 
   const navigateToPaymentMethodOnboarding = () => {
-    navigation.navigate(WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN, {
-      screen: WalletOnboardingRoutes.WALLET_ONBOARDING_SELECT_PAYMENT_METHOD
+    navigation.navigate(PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR, {
+      screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_SELECT_METHOD
     });
   };
 

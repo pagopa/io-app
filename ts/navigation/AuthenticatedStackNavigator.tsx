@@ -46,10 +46,8 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
-import {
-  WalletNavigator as NewWalletNavigator,
-  WalletRoutes as NewWalletRoutes
-} from "../features/newWallet/navigation";
+import { WalletNavigator as NewWalletNavigator } from "../features/newWallet/navigation";
+import { WalletRoutes as NewWalletRoutes } from "../features/newWallet/navigation/routes";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";

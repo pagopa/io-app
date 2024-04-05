@@ -9,7 +9,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { WalletRoutes } from "../navigation";
+import { WalletRoutes } from "../navigation/routes";
 
 const WalletEmptyScreenContent = () => {
   const navigation = useIONavigation();
