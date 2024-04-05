@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   }
 });
 
-type MessageFooterProps = {
+type LegacyMessageFooterProps = {
   messageId: UIMessageId;
   payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   maxVisiblePaymentCount: number;
@@ -35,13 +35,13 @@ type MessageFooterProps = {
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
 };
 
-export const MessageFooter = ({
+export const LegacyMessageFooter = ({
   messageId,
   payments,
   maxVisiblePaymentCount,
   isCancelled,
   presentPaymentsBottomSheetRef
-}: MessageFooterProps) => {
+}: LegacyMessageFooterProps) => {
   const safeAreaInsets = useSafeAreaInsets();
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
   const buttonState = useIOSelector(state =>
