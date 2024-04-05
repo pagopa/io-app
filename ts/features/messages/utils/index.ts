@@ -16,6 +16,7 @@ import { PaymentAmount } from "../../../../definitions/backend/PaymentAmount";
 import { getAmountFromPaymentAmount } from "../../../utils/payment";
 import { trackPNPaymentStart } from "../../pn/analytics";
 import { addUserSelectedPaymentRptId } from "../store/actions";
+import { Action } from "../../../store/actions/types";
 import { MessagePaymentExpirationInfo } from "./messages";
 
 export const gapBetweenItemsInAGrid = 8;
@@ -55,7 +56,7 @@ export const initializeAndNavigateToWalletForPayment = (
   isPaidOrHasAnError: boolean,
   paymentAmount: PaymentAmount | undefined,
   canNavigateToPayment: boolean,
-  dispatch: Dispatch<any>,
+  dispatch: Dispatch<Action>,
   isPNPayment: boolean,
   decodeErrorCallback: (() => void) | undefined,
   preNavigationCallback: (() => void) | undefined = undefined

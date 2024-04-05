@@ -2,52 +2,40 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 
-export type WalletDetailsGetInstrumentPayload = {
+export const paymentsGetMethodDetailsAction = createAsyncAction(
+  "PAYMENTS_GET_METHOD_DETAILS_REQUEST",
+  "PAYMENTS_GET_METHOD_DETAILS_SUCCESS",
+  "PAYMENTS_GET_METHOD_DETAILS_FAILURE",
+  "PAYMENTS_GET_METHOD_DETAILS_CANCEL"
+)<{ walletId: string }, WalletInfo, NetworkError, void>();
+
+type DeleteMethodPayload = {
   walletId: string;
+  onSuccess?: () => void;
+  onFailure?: () => void;
 };
 
-export type WalletDetailsDeleteinstrumentPayload = {
+export const paymentsDeleteMethodAction = createAsyncAction(
+  "PAYMENTS_DELETE_METHOD_REQUEST",
+  "PAYMENTS_DELETE_METHOD_SUCCESS",
+  "PAYMENTS_DELETE_METHOD_FAILURE",
+  "PAYMENTS_DELETE_METHOD_CANCEL"
+)<DeleteMethodPayload, void, NetworkError, void>();
+
+type TogglePagoPaCapabilityPayload = {
   walletId: string;
-  onSuccess?: (
-    action: ActionType<typeof walletDetailsDeleteInstrument.success>
-  ) => void;
-  onFailure?: (
-    action: ActionType<typeof walletDetailsDeleteInstrument.failure>
-  ) => void;
+  onSuccess?: () => void;
+  onFailure?: () => void;
 };
 
-export const walletDetailsGetInstrument = createAsyncAction(
-  "WALLET_DETAILS_GET_INSTRUMENT_REQUEST",
-  "WALLET_DETAILS_GET_INSTRUMENT_SUCCESS",
-  "WALLET_DETAILS_GET_INSTRUMENT_FAILURE",
-  "WALLET_DETAILS_GET_INSTRUMENT_CANCEL"
-)<WalletDetailsGetInstrumentPayload, WalletInfo, NetworkError, void>();
+export const paymentsTogglePagoPaCapabilityAction = createAsyncAction(
+  "PAYMENTS_TOGGLE_PAGOPA_CAPABILITY_REQUEST",
+  "PAYMENTS_TOGGLE_PAGOPA_CAPABILITY_SUCCESS",
+  "PAYMENTS_TOGGLE_PAGOPA_CAPABILITY_FAILURE",
+  "PAYMENTS_TOGGLE_PAGOPA_CAPABILITY_CANCEL"
+)<TogglePagoPaCapabilityPayload, void, NetworkError, void>();
 
-export const walletDetailsDeleteInstrument = createAsyncAction(
-  "WALLET_DETAILS_DELETE_INSTRUMENT_REQUEST",
-  "WALLET_DETAILS_DELETE_INSTRUMENT_SUCCESS",
-  "WALLET_DETAILS_DELETE_INSTRUMENT_FAILURE",
-  "WALLET_DETAILS_DELETE_INSTRUMENT_CANCEL"
-)<WalletDetailsDeleteinstrumentPayload, void, NetworkError, void>();
-
-export type WalletDetailsPagoPaCapabilityTogglePayload = {
-  walletId: string;
-  onSuccess?: (
-    action: ActionType<typeof walletDetailsPagoPaCapabilityToggle.success>
-  ) => void;
-  onFailure?: (
-    action: ActionType<typeof walletDetailsPagoPaCapabilityToggle.failure>
-  ) => void;
-};
-
-export const walletDetailsPagoPaCapabilityToggle = createAsyncAction(
-  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_REQUEST",
-  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_SUCCESS",
-  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_FAILURE",
-  "WALLET_DETAILS_PAGOPA_CAPABILITY_TOGGLE_CANCEL"
-)<WalletDetailsPagoPaCapabilityTogglePayload, void, NetworkError, void>();
-
-export type WalletDetailsActions =
-  | ActionType<typeof walletDetailsGetInstrument>
-  | ActionType<typeof walletDetailsDeleteInstrument>
-  | ActionType<typeof walletDetailsPagoPaCapabilityToggle>;
+export type PaymentsMethodDetailsActions =
+  | ActionType<typeof paymentsGetMethodDetailsAction>
+  | ActionType<typeof paymentsDeleteMethodAction>
+  | ActionType<typeof paymentsTogglePagoPaCapabilityAction>;

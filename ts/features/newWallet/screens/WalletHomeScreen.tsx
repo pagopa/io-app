@@ -7,14 +7,16 @@ import React from "react";
 import { ScrollView } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
+import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
-import { selectWalletCards } from "../store/selectors";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { WalletRoutes } from "../navigation";
+import { selectWalletCards } from "../store/selectors";
 
 const WalletHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -30,7 +32,9 @@ const WalletHomeScreen = () => {
 
   React.useEffect(() => {
     // TODO SIW-960 Move cards request to app startup
+    dispatch(getPaymentsWalletUserMethods.request());
     dispatch(idPayWalletGet.request());
+    dispatch(cgnDetails.request());
   }, [dispatch]);
 
   if (cards.length === 0) {
