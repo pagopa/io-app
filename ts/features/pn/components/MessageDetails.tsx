@@ -24,6 +24,7 @@ import { UIMessageId } from "../../messages/types";
 import { maxVisiblePaymentCountGenerator } from "../utils";
 import { MessageDetailsContent } from "./MessageDetailsContent";
 import { F24Section } from "./F24Section";
+import { MessageFooter } from "./MessageFooter";
 import { MessagePayments } from "./MessagePayments";
 import { MessageInfo } from "./MessageInfo";
 
@@ -113,6 +114,7 @@ export const MessageDetails = ({
         <VSpacer size={16} />
         <MessageInfo iun={message.iun} />
       </ContentWrapper>
+      <MessageFooter serviceId={serviceId} />
     </ScrollView>
   );
 };
