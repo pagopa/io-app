@@ -110,17 +110,6 @@ export const navigateToCgnDetails = () =>
  * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
  * and many helper methods specific to screens won't be available.
  */
-export const navigateToCgnMerchantsList = () =>
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
-      screen: CGN_ROUTES.DETAILS.MERCHANTS.LIST
-    })
-  );
-
-/**
- * @deprecated Do not use this method when you have access to a navigation prop or useNavigation since it will behave differently,
- * and many helper methods specific to screens won't be available.
- */
 export const navigateToCgnMerchantsTabs = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(CGN_ROUTES.DETAILS.MAIN, {
