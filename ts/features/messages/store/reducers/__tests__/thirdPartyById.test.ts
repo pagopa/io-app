@@ -1,17 +1,26 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Action } from "redux";
 import { appReducer } from "../../../../../store/reducers";
 import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import {
+  hasAttachmentsSelector,
   isThirdPartyMessageSelector,
   messageMarkdownSelector,
   messageTitleSelector,
-  thirdPartyFromIdSelector
+  thirdPartyFromIdSelector,
+  thirdPartyMessageAttachments
 } from "../thirdPartyById";
 import { UIMessageDetails, UIMessageId } from "../../../types";
-import { ThirdPartyMessageDetails } from "../../../../../../definitions/backend/ThirdPartyMessage";
+import {
+  ThirdPartyMessage,
+  ThirdPartyMessageDetails
+} from "../../../../../../definitions/backend/ThirdPartyMessage";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../utils/tests";
 
 describe("thirdPartyFromIdSelector", () => {
   it("Should return pot none for an unmatching message id", () => {
@@ -168,6 +177,37 @@ describe("messageTitleSelector", () => {
     const messageTitle = messageTitleSelector(finalState, messageId);
     expect(messageTitle).toBe(thirdPartySubject);
   });
+  it("should return the message title when we have the detail and third party message with bad typed details", () => {
+    const messageId = "m1" as UIMessageId;
+    const content = {
+      id: messageId as string,
+      third_party_message: {
+        details: {
+          randomProperty: 5
+        } as ThirdPartyMessageDetails
+      }
+    } as ThirdPartyMessageWithContent;
+    const detailsSubject = "message subject";
+
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      loadMessageDetails.success({
+        id: messageId,
+        subject: detailsSubject
+      } as UIMessageDetails),
+      loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      })
+    ];
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const messageTitle = messageTitleSelector(state, messageId);
+    expect(messageTitle).toBe(detailsSubject);
+  });
 });
 
 describe("messageMarkdownSelector", () => {
@@ -228,7 +268,7 @@ describe("messageMarkdownSelector", () => {
     const messageMarkdown = messageMarkdownSelector(state, messageId);
     expect(messageMarkdown).toBeUndefined();
   });
-  it("Should return the message title for a matching loaded third party message with proper typed details", () => {
+  it("Should return the message markdown for a matching loaded third party message with proper typed details", () => {
     const messageId = "m1" as UIMessageId;
     const markdown =
       "This is a more than 80 characters message markdown length. The decoder needs this";
@@ -249,7 +289,7 @@ describe("messageMarkdownSelector", () => {
     const messageMarkdown = messageMarkdownSelector(state, messageId);
     expect(messageMarkdown).toBe(markdown);
   });
-  it("Should return the third party message title when there are both detailed and third party message", () => {
+  it("Should return the third party message markdown when there are both detailed and third party message", () => {
     const messageId = "m1" as UIMessageId;
     const thirdPartyMarkdown =
       "This is a more than 80 characters message markdown length. The decoder needs this";
@@ -275,5 +315,156 @@ describe("messageMarkdownSelector", () => {
     const finalState = appReducer(initialState, loadMessageDetailsSuccess);
     const messageMarkdown = messageMarkdownSelector(finalState, messageId);
     expect(messageMarkdown).toBe(thirdPartyMarkdown);
+  });
+  it("should return the message markdown when we have the detail and third-party message with bad typed details", () => {
+    const messageId = "m1" as UIMessageId;
+    const content = {
+      id: messageId as string,
+      third_party_message: {
+        details: {
+          randomProperty: 5
+        } as ThirdPartyMessageDetails
+      }
+    } as ThirdPartyMessageWithContent;
+    const detailsMarkdown = "message markdown";
+
+    const sequenceOfActions: ReadonlyArray<Action> = [
+      applicationChangeState("active"),
+      loadMessageDetails.success({
+        id: messageId,
+        subject: detailsMarkdown
+      } as UIMessageDetails),
+      loadThirdPartyMessage.success({
+        id: messageId,
+        content
+      })
+    ];
+    const state: GlobalState = reproduceSequence(
+      {} as GlobalState,
+      appReducer,
+      sequenceOfActions
+    );
+    const messageTitle = messageTitleSelector(state, messageId);
+    expect(messageTitle).toBe(detailsMarkdown);
+  });
+});
+
+describe("thirdPartyMessageAttachments", () => {
+  it("should return an empty array on initial state", () => {
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const initialState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    const attachments = thirdPartyMessageAttachments(initialState, messageId);
+    expect(attachments).toBeDefined();
+    expect(attachments.length).toBe(0);
+  });
+  it("should return an empty array on a third party message with no attachments", () => {
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const loadedThirdPartyMessage = appReducer(
+      undefined,
+      loadThirdPartyMessage.success({
+        id: messageId,
+        content: {
+          third_party_message: {}
+        } as ThirdPartyMessageWithContent
+      })
+    );
+    const attachments = thirdPartyMessageAttachments(
+      loadedThirdPartyMessage,
+      messageId
+    );
+    expect(attachments).toBeDefined();
+    expect(attachments.length).toBe(0);
+  });
+  it("should return an empty array on a third party message with empty attachments", () => {
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const loadedThirdPartyMessage = appReducer(
+      undefined,
+      loadThirdPartyMessage.success({
+        id: messageId,
+        content: {
+          third_party_message: {
+            attachments: []
+          } as ThirdPartyMessage
+        } as ThirdPartyMessageWithContent
+      })
+    );
+    const attachments = thirdPartyMessageAttachments(
+      loadedThirdPartyMessage,
+      messageId
+    );
+    expect(attachments).toBeDefined();
+    expect(attachments.length).toBe(0);
+  });
+  it("should return an empty array on a third party message with empty attachments", () => {
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const thirdPartyAttachment = {
+      id: "1",
+      url: "https://invalid.url"
+    } as ThirdPartyAttachment;
+    const loadedThirdPartyMessage = appReducer(
+      undefined,
+      loadThirdPartyMessage.success({
+        id: messageId,
+        content: {
+          third_party_message: {
+            attachments: [thirdPartyAttachment]
+          } as ThirdPartyMessage
+        } as ThirdPartyMessageWithContent
+      })
+    );
+    const attachments = thirdPartyMessageAttachments(
+      loadedThirdPartyMessage,
+      messageId
+    );
+    expect(attachments).toBeDefined();
+    expect(attachments.length).toBe(1);
+    expect(attachments[0]).toMatchObject(thirdPartyAttachment);
+  });
+});
+
+describe("hasAttachmentsSelector", () => {
+  it("should return false if there are no attachments", () => {
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const loadedThirdPartyMessage = appReducer(
+      undefined,
+      loadThirdPartyMessage.success({
+        id: messageId,
+        content: {
+          third_party_message: {}
+        } as ThirdPartyMessageWithContent
+      })
+    );
+    const hasAttachments = hasAttachmentsSelector(
+      loadedThirdPartyMessage,
+      messageId
+    );
+    expect(hasAttachments).toBe(false);
+  });
+
+  it("should return true if there are attachments", () => {
+    const messageId = "01HNWRS7DP721KTC3SMCJ7G82E" as UIMessageId;
+    const thirdPartyAttachment = {
+      id: "1",
+      url: "https://invalid.url"
+    } as ThirdPartyAttachment;
+    const loadedThirdPartyMessage = appReducer(
+      undefined,
+      loadThirdPartyMessage.success({
+        id: messageId,
+        content: {
+          third_party_message: {
+            attachments: [thirdPartyAttachment]
+          } as ThirdPartyMessage
+        } as ThirdPartyMessageWithContent
+      })
+    );
+    const hasAttachments = hasAttachmentsSelector(
+      loadedThirdPartyMessage,
+      messageId
+    );
+    expect(hasAttachments).toBe(true);
   });
 });

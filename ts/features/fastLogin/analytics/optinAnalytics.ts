@@ -6,7 +6,7 @@ import { buildEventProperties } from "../../../utils/analytics";
 
 export function trackLoginSessionOptIn() {
   void mixpanelTrack(
-    "LOGIN_SESSION_OPTIN",
+    "LOGIN_SESSION_OPTIN_2",
     buildEventProperties("UX", "screen_view")
   );
 }
@@ -27,7 +27,7 @@ export async function trackLoginSessionOptIn365(state: GlobalState) {
     property: "LOGIN_SESSION",
     value: "365"
   });
-  await mixpanelTrack(
+  mixpanelTrack(
     "LOGIN_SESSION_OPTIN_365_SELECTED",
     buildEventProperties("UX", "action")
   );
@@ -42,7 +42,7 @@ export async function trackLoginSessionOptIn30(state: GlobalState) {
     property: "LOGIN_SESSION",
     value: "30"
   });
-  await mixpanelTrack(
+  mixpanelTrack(
     "LOGIN_SESSION_OPTIN_30_SELECTED",
     buildEventProperties("UX", "action")
   );

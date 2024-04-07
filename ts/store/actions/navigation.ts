@@ -4,7 +4,6 @@ import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
 import { CieCardReaderScreenNavigationParams } from "../../screens/authentication/cie/CieCardReaderScreen";
 import { OnboardingServicesPreferenceScreenNavigationParams } from "../../screens/onboarding/OnboardingServicesPreferenceScreen";
-import { ServiceDetailsScreenNavigationParams } from "../../screens/services/ServiceDetailsScreen";
 import { AddCardScreenNavigationParams } from "../../screens/wallet/AddCardScreen";
 import { AddCreditCardOutcomeCodeMessageNavigationParams } from "../../screens/wallet/AddCreditCardOutcomeCodeMessage";
 import { AddPaymentMethodScreenNavigationParams } from "../../screens/wallet/AddPaymentMethodScreen";
@@ -25,6 +24,8 @@ import {
   BPayPaymentMethod,
   CreditCardPaymentMethod
 } from "../../types/pagopa";
+import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
+import { ServiceDetailsScreenNavigationParams } from "../../features/services/screens/ServiceDetailsScreen";
 
 /**
  * @deprecated
@@ -112,28 +113,6 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
   );
 
 /**
- * Email
- */
-
-/**
- * @deprecated
- */
-export const navigateToEmailReadScreen = () => {
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.READ_EMAIL_SCREEN)
-  );
-};
-
-/**
- * @deprecated
- */
-export const navigateToEmailInsertScreen = () => {
-  NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.INSERT_EMAIL_SCREEN)
-  );
-};
-
-/**
  * Service
  */
 
@@ -142,8 +121,8 @@ export const navigateToEmailInsertScreen = () => {
  */
 export const navigateToServiceHomeScreen = () =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
-      screen: ROUTES.SERVICES_HOME
+    CommonActions.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+      screen: SERVICES_ROUTES.SERVICES_HOME
     })
   );
 
@@ -154,8 +133,8 @@ export const navigateToServiceDetailsScreen = (
   params: ServiceDetailsScreenNavigationParams
 ) =>
   NavigationService.dispatchNavigationAction(
-    CommonActions.navigate(ROUTES.SERVICES_NAVIGATOR, {
-      screen: ROUTES.SERVICE_DETAIL,
+    CommonActions.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+      screen: SERVICES_ROUTES.SERVICE_DETAIL,
       params
     })
   );

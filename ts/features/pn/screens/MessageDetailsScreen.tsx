@@ -5,20 +5,25 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import { useStore } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import I18n from "../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { UIMessageId } from "../../messages/types";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
-import { pnMessageFromIdSelector } from "../store/reducers";
-import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
+import {
+  pnMessageFromIdSelector,
+  pnUserSelectedPaymentRptIdSelector
+} from "../store/reducers";
+import {
+  cancelPreviousAttachmentDownload,
+  cancelQueuedPaymentUpdates,
+  updatePaymentForMessage
+} from "../../messages/store/actions";
 import { profileFiscalCodeSelector } from "../../../store/reducers/profile";
 import {
   containsF24FromPNMessagePot,
@@ -29,17 +34,12 @@ import { trackPNUxSuccess } from "../analytics";
 import { isStrictSome } from "../../../utils/pot";
 import {
   cancelPaymentStatusTracking,
-  cancelQueuedPaymentUpdates,
-  clearSelectedPayment,
-  startPaymentStatusTracking,
-  updatePaymentForMessage
+  startPaymentStatusTracking
 } from "../store/actions";
-import { GlobalState } from "../../../store/reducers/types";
-import { selectedPaymentIdSelector } from "../store/reducers/payments";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
-export type MessageDetailsScreenNavigationParams = {
+export type MessageDetailsScreenRouteParams = {
   messageId: UIMessageId;
   serviceId: ServiceId;
   firstTimeOpening: boolean;
@@ -57,9 +57,6 @@ export const MessageDetailsScreen = () => {
 
   const { messageId, serviceId, firstTimeOpening } = route.params;
 
-  const service = pot.toUndefined(
-    useIOSelector(state => serviceByIdSelector(state, serviceId))
-  );
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
   const messagePot = useIOSelector(state =>
     pnMessageFromIdSelector(state, messageId)
@@ -71,7 +68,7 @@ export const MessageDetailsScreen = () => {
     dispatch(cancelQueuedPaymentUpdates());
     dispatch(cancelPaymentStatusTracking());
     navigation.goBack();
-  }, []);
+  }, [dispatch, navigation]);
 
   useHeaderSecondLevel({
     title: "",
@@ -96,21 +93,23 @@ export const MessageDetailsScreen = () => {
     }
   });
 
-  const store = useStore();
+  const store = useIOStore();
   useFocusEffect(
     useCallback(() => {
-      const globalState = store.getState() as GlobalState;
-      const selectedPaymentId = selectedPaymentIdSelector(globalState);
-      if (selectedPaymentId) {
-        dispatch(clearSelectedPayment());
+      const globalState = store.getState();
+      const paymentToCheckRptId = pnUserSelectedPaymentRptIdSelector(
+        globalState,
+        messagePot
+      );
+      if (paymentToCheckRptId) {
         dispatch(
           updatePaymentForMessage.request({
             messageId,
-            paymentId: selectedPaymentId
+            paymentId: paymentToCheckRptId
           })
         );
       }
-    }, [dispatch, messageId, store])
+    }, [dispatch, messageId, messagePot, store])
   );
 
   return (
@@ -129,9 +128,9 @@ export const MessageDetailsScreen = () => {
           ),
           message => (
             <MessageDetails
-              messageId={messageId}
               message={message}
-              service={service}
+              messageId={messageId}
+              serviceId={serviceId}
               payments={payments}
             />
           )

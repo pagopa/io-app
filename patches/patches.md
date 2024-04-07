@@ -1,5 +1,22 @@
 This file describes the reason for the patches applied.
 
+### native-base+2.15.2
+Created on **25/03/2024**
+
+#### Reason:
+- Fixes a crash occurring when reopening the app while in background on Android (possibly even iOS but currently we don't have evidence) due to the usage of removed `keyboardDidShow` and `keyboardDidHide` events. 
+Remove this patch after removing `native-base`.
+
+### react-native-reanimated
+Created on **18/03/2024**
+This patch resolves [react-native-reanimated/issues/3286](https://github.com/software-mansion/react-native-reanimated/issues/3286) by applying [react-native-reanimated/pull/3298](https://github.com/software-mansion/react-native-reanimated/pull/3298). Remove this patch once bumped `react-native-reanimated` from `v2` to `v3` and checked the issue is gone.
+
+### react-native-pdf+6.4.0
+Created on **16/03/2024**
+
+#### Reason:
+- Make PDF annotations on iOS read-only to align with Android behaviour.
+
 ### react-native-vision-camera+2.15.4
 Created on **24/07/2023** 
 FIXME: remove this patch after this [PR](https://github.com/mrousavy/react-native-vision-camera/pull/1666) has been merged and a new vision camera version has been released.
@@ -20,19 +37,7 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
-### react-native+0.69.9
-Created on **19/07/2023**
-
-#### Reason:
-- This patch is going to add a missing POST_NOTIFICATIONS permission (Android 13) (remove this patch after updating to version 71 of React Native).
-
-### @types/react-native+0.69.9
-Created on **19/07/2023**
-
-#### Reason:
-- Missing POST_NOTIFICATIONS permission type (remove this patch after updating to version 71 of React Native).
-
-### @types/react-native+0.69.6
+### @types/react-native+0.70.19
 Created on **30/08/2022**
 
 #### Reason:
@@ -77,17 +82,18 @@ Updated on **29/08/2022**
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
 
-### danger-plugin-digitalcitizenship+0.3.1
-Created on **06/08/2020**
-
-#### Reason:
-- Recognizes the ids of pivotal stories even if they are not at the beginning of the line
-
 ### react-native-push-notification+7.3.1
 Created on **10/05/2021**
 
 #### Reason:
 - Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
+
+Updated on **31/01/2024**
+
+#### Reason:
+- Adds a guard to prevent a crash on Android SDK 34 (Android 14) when using Exact Alarms without having requested user's permission first.
+  This works since we are not using local notifications anymore (and the library has to be replaced - since it is deprecated) and the
+  remote notifications do not trigger the Exact Alarms API.
 
 ### react-native-screen-brightness+2.0.0-alpha
 Created on **16/08/2021**
@@ -95,7 +101,7 @@ Created on **16/08/2021**
 #### Reason:
 - implementation 'androidx.core:core:1.+' not compatible with the new gradle settings used by react-native 0.64.2
 
-### react-native+0.69.4
+### react-native+0.70.15
 Created on **20/08/2021**
 
 #### Reason:
@@ -119,7 +125,7 @@ Created on **16/09/2021**
   component, with this patch, doesn't use anymore the props permissionDialogTitle, permissionDialogMessage and
   buttonPositive.
 
-### react-native+0.64.2 (Localizable.strings)
+### react-native+0.70.15 (Localizable.strings)
 
 Created on **28/02/2022**
 
@@ -148,14 +154,6 @@ Created on **29/08/2022**
 #### Reason:
 
 - This patch is going to fix a gradle issue that breaks the compile on android platform, due to gradle imcompatibility
-
-### @react-navigation/material-top-tabs+5.3.1
-
-Created on **01/12/2022**
-
-#### Reason:
-
-- This patch is going to add a missing prop to component definition, it can be removed once updating the library.
 
 ### react-native-webview+11.26.1
 

@@ -1,4 +1,9 @@
-import { IOColors, IconButton } from "@pagopa/io-app-design-system";
+import {
+  IOColors,
+  IconButton,
+  TabItem,
+  TabNavigation
+} from "@pagopa/io-app-design-system";
 import {
   useFocusEffect,
   useIsFocused,
@@ -16,8 +21,6 @@ import {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
-import { TabItem } from "../../../components/ui/TabItem";
-import { TabNavigation } from "../../../components/ui/TabNavigation";
 import I18n from "../../../i18n";
 import {
   AppParamsList,
@@ -277,15 +280,18 @@ const BarcodeScanBaseScreenComponent = ({
       <View style={styles.navigationContainer}>
         <TabNavigation tabAlignment="stretch" selectedIndex={0} color="dark">
           <TabItem
+            testID="barcodeScanBaseScreenTabScan"
             label={I18n.t("barcodeScan.tabs.scan")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.scan")}
           />
           <TabItem
+            testID="barcodeScanBaseScreenTabUpload"
             label={I18n.t("barcodeScan.tabs.upload")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.upload")}
             onPress={onFileInputPressed}
           />
           <TabItem
+            testID="barcodeScanBaseScreenTabInput"
             label={I18n.t("barcodeScan.tabs.input")}
             accessibilityLabel={I18n.t("barcodeScan.tabs.a11y.input")}
             onPress={onManualInputPressed}

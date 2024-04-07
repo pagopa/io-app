@@ -4,13 +4,13 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
-import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { apiUrlPrefix } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { SessionToken } from "../../../../types/SessionToken";
 import { getError } from "../../../../utils/errors";
-import { BackendPnClient } from "../../api/backendPn";
+import { PnClient, createPnClient } from "../../api/client";
 import { pnActivationUpsert, startPaymentStatusTracking } from "../actions";
 import {
   trackPNServiceStatusChangeError,
@@ -18,12 +18,10 @@ import {
 } from "../../analytics";
 import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
-import { BackendClient } from "../../../../api/backend";
-import { watchPaymentUpdateRequests } from "./watchPaymentUpdateRequests";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
-function* upsertPnActivation(
-  client: ReturnType<typeof BackendPnClient>,
+function* handlePnActivation(
+  upsertPnActivation: PnClient["upsertPNActivation"],
   action: ActionType<typeof pnActivationUpsert.request>
 ) {
   const activation_status = action.payload;
@@ -32,7 +30,7 @@ function* upsertPnActivation(
       isPnTestEnabledSelector
     );
 
-    const result = yield* call(client.upsertPnActivation, {
+    const result = yield* call(upsertPnActivation, {
       body: {
         activation_status
       },
@@ -75,22 +73,17 @@ function* reportPNServiceStatusOnFailure(predictedValue: boolean) {
   trackPNServiceStatusChangeError(isServiceActive);
 }
 
-export function* watchPnSaga(
-  bearerToken: SessionToken,
-  getVerificaRpt: ReturnType<typeof BackendClient>["getVerificaRpt"]
-): SagaIterator {
-  const pnBackendClient = BackendPnClient(apiUrlPrefix, bearerToken);
+export function* watchPnSaga(bearerToken: SessionToken): SagaIterator {
+  const pnClient = createPnClient(apiUrlPrefix, bearerToken);
 
   yield* takeLatest(
-    getType(pnActivationUpsert.request),
-    upsertPnActivation,
-    pnBackendClient
+    pnActivationUpsert.request,
+    handlePnActivation,
+    pnClient.upsertPNActivation
   );
 
-  yield* fork(watchPaymentUpdateRequests, getVerificaRpt);
-
   yield* takeLatest(
-    getType(startPaymentStatusTracking),
+    startPaymentStatusTracking,
     watchPaymentStatusForMixpanelTracking
   );
 }

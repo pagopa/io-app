@@ -1,25 +1,27 @@
 name: Run e2e tests
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
 jobs:
   run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
-  run-e2e-test-ios:
+   uses: ./.github/workflows/staticcheck.yaml
+  build-detox-app:
     needs: run-static-checks
-    runs-on: macos-latest
-    environment: dev
+    runs-on: macos-12
     concurrency:
-      group: ${{ github.workflow }}-e2e-tests-${{ github.head_ref || github.run_id }}
+      group: ${{ github.workflow }}-e2e-tests-${{ github.ref || github.run_id }}
       cancel-in-progress: true
     steps:
       - id: checkout
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
       - id: setup
         uses: ./.github/actions/setup-composite
+        with:
+          use-cache: 'true'
       - id: setup-ruby
-        uses: ruby/setup-ruby@d2b39ad0b52eca07d23f3aa14fdf2a3fcc1f411c # v1.148.0
+        uses: ruby/setup-ruby@5f19ec79cedfadb78ab837f95b87734d0003c899 #v1.173.0
         with:
           bundler-cache: true
       - id: prepare-dependencies
@@ -32,9 +34,7 @@ jobs:
         with:
           path: ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
-      - id: install-detox
+      - id: install-applesimutils
         run: |
           brew tap wix/brew
           brew install applesimutils
@@ -46,29 +46,70 @@ jobs:
         with:
           path: ios/build
           key: ${{ runner.os }}-detox-build
-          restore-keys: |
-            ${{ runner.os }}-detox-build
       - id: setup-pods
         run: cd ios ; bundle exec pod install --verbose ; cd ..
         shell: bash
       - id: prepare-detox-build
         run: RN_SRC_EXT=e2e.ts yarn detox build -c ios.sim.release
         shell: bash
+      - id: upload-detox-build
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.0.3
+        with:
+          name: ItaliaApp.app
+          path: ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app
+          retention-days: 2
+  run-e2e-tests:    
+    needs: build-detox-app
+    runs-on: macos-latest
+    environment: dev
+    strategy: 
+      fail-fast: false
+      matrix:
+        include:
+          - test: "ts/__e2e__/"
+            name: "Base_e2e"
+          - test: "ts/features/bonus/cgn/__e2e__/"
+            name: "cgn_e2e"
+          - test: "ts/features/messages/__e2e__/"
+            name: "messages_e2e"
+          - test: "ts/features/euCovidCert/__e2e__/"
+            name: "eucovidcert_e2e"
+          - test: "ts/features/wallet/onboarding/__e2e__/"
+            name: "wallet_onboarding_e2e"
+    steps:
+      - id: install-applesimutils
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+        shell: bash
+      - id: checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+      - id: download-detox-build
+        uses: actions/download-artifact@6b208ae046db98c579e8a3aa621ab581ff575935 # v4.1.1
+        with:
+          name: ItaliaApp.app
+          path: ios/build/Build/Products/Release-iphonesimulator/ItaliaApp.app
+      - id: setup
+        uses: ./.github/actions/setup-composite
+        with:
+          use-cache: 'true'
       - id: checkout-dev-server
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
         with:
           repository: pagopa/io-dev-api-server
           path: './_io-dev-api-server_'
       - id: run-e2e-tests
-        run: bash ./.github/scripts/run-e2e-tests.sh
+        run: bash ./.github/scripts/run-e2e-tests.sh ${{ matrix.test }}
       - id: notify-test-failure
         if: failure()
         uses: ./.github/actions/notify-e2e
         env:
+          TEST: ${{ matrix.name }}
           IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
       - id: upload-artifacts
-        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v.3.1.2        
         if: always()
         with:
-          name: detox-artifacts
+          name: detox-artifacts-${{ matrix.name }}
           path: /tmp/e2e_artifacts/
+          retention-days: 2

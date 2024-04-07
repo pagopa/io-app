@@ -10,13 +10,13 @@ import { Body } from "../core/typography/Body";
 import { IOStyles } from "../core/variables/IOStyles";
 import ItemSeparatorComponent from "../ItemSeparatorComponent";
 import TouchableDefaultOpacity from "../TouchableDefaultOpacity";
-import Markdown from "./Markdown";
+import LegacyMarkdown from "./Markdown/LegacyMarkdown";
 
 type Props = {
   title: string;
   content: string;
-  onLinkClicked?: ComponentProps<typeof Markdown>["onLinkClicked"];
-  shouldHandleLink?: ComponentProps<typeof Markdown>["shouldHandleLink"];
+  onLinkClicked?: ComponentProps<typeof LegacyMarkdown>["onLinkClicked"];
+  shouldHandleLink?: ComponentProps<typeof LegacyMarkdown>["shouldHandleLink"];
 };
 
 const styles = StyleSheet.create({
@@ -69,7 +69,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
 
   const renderContent = (content: string) => (
     <View style={styles.pad}>
-      <Markdown
+      <LegacyMarkdown
         shouldHandleLink={props.shouldHandleLink}
         onLinkClicked={(url: string) => {
           pipe(
@@ -80,7 +80,7 @@ const Accordion: React.FunctionComponent<Props> = (props: Props) => {
         }}
       >
         {content}
-      </Markdown>
+      </LegacyMarkdown>
     </View>
   );
 

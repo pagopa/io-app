@@ -1,0 +1,925 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          Object {
+            "zIndex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": Object {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 718,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  collapsable={false}
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  DUMMY
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          activityState={2}
+          collapsable={false}
+          forwardedRef={[Function]}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              Array [
+                Object {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              Object {
+                "close": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                handlerTag={1}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                    "transform": Array [
+                      Object {
+                        "translateX": 0,
+                      },
+                      Object {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      Array [
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;
+
+exports[`MessageDetailsPayment Should match snapshot when there are payment data 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RNCSafeAreaProvider
+    onInsetsChange={[Function]}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+        },
+        undefined,
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "flex": 1,
+          },
+          undefined,
+        ]
+      }
+    >
+      <View
+        collapsable={false}
+        pointerEvents="box-none"
+        style={
+          Object {
+            "zIndex": 1,
+          }
+        }
+      >
+        <View
+          accessibilityElementsHidden={false}
+          importantForAccessibility="auto"
+          onLayout={[Function]}
+          pointerEvents="box-none"
+          style={null}
+        >
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "opacity": 1,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "zIndex": 0,
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              style={
+                Object {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": Object {
+                    "height": 0.5,
+                    "width": 0,
+                  },
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
+              }
+            />
+          </View>
+          <View
+            collapsable={false}
+            pointerEvents="box-none"
+            style={
+              Object {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                Object {
+                  "height": 0,
+                }
+              }
+            />
+            <View
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "alignItems": "stretch",
+                  "flex": 1,
+                  "flexDirection": "row",
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-start",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginStart": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "justifyContent": "center",
+                    "marginHorizontal": 16,
+                    "maxWidth": 718,
+                    "opacity": 1,
+                  }
+                }
+              >
+                <Text
+                  accessibilityRole="header"
+                  aria-level="1"
+                  collapsable={false}
+                  numberOfLines={1}
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
+                  }
+                >
+                  DUMMY
+                </Text>
+              </View>
+              <View
+                collapsable={false}
+                pointerEvents="box-none"
+                style={
+                  Object {
+                    "alignItems": "flex-end",
+                    "flexBasis": 0,
+                    "flexGrow": 1,
+                    "justifyContent": "center",
+                    "marginEnd": 0,
+                    "opacity": 1,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          activityState={2}
+          collapsable={false}
+          forwardedRef={[Function]}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          />
+          <View
+            accessibilityElementsHidden={false}
+            closing={false}
+            gestureVelocityImpact={0.3}
+            importantForAccessibility="auto"
+            onClose={[Function]}
+            onGestureBegin={[Function]}
+            onGestureCanceled={[Function]}
+            onGestureEnd={[Function]}
+            onOpen={[Function]}
+            onTransition={[Function]}
+            pointerEvents="box-none"
+            style={
+              Array [
+                Object {
+                  "display": "flex",
+                  "overflow": undefined,
+                },
+                Object {
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                },
+              ]
+            }
+            transitionSpec={
+              Object {
+                "close": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+                "open": Object {
+                  "animation": "spring",
+                  "config": Object {
+                    "damping": 500,
+                    "mass": 3,
+                    "overshootClamping": true,
+                    "restDisplacementThreshold": 10,
+                    "restSpeedThreshold": 10,
+                    "stiffness": 1000,
+                  },
+                },
+              }
+            }
+          >
+            <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                forwardedRef={[Function]}
+                handlerTag={2}
+                handlerType="PanGestureHandler"
+                needsOffscreenAlphaCompositing={false}
+                onGestureHandlerEvent={[Function]}
+                onGestureHandlerStateChange={[Function]}
+                style={
+                  Object {
+                    "flex": 1,
+                    "transform": Array [
+                      Object {
+                        "translateX": 0,
+                      },
+                      Object {
+                        "translateX": 0,
+                      },
+                    ],
+                  }
+                }
+              >
+                <View
+                  pointerEvents="box-none"
+                  style={
+                    Array [
+                      Object {
+                        "flex": 1,
+                        "overflow": "hidden",
+                      },
+                      Array [
+                        Object {
+                          "backgroundColor": "#FFFFFF",
+                        },
+                        undefined,
+                      ],
+                    ]
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "flex": 1,
+                        "flexDirection": "column-reverse",
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "height": 16,
+                          }
+                        }
+                      />
+                      <View
+                        accessibilityLabel="pagoPA notices"
+                        accessible={true}
+                        style={
+                          Object {
+                            "marginHorizontal": -24,
+                            "paddingHorizontal": 24,
+                            "paddingVertical": 12,
+                          }
+                        }
+                      >
+                        <View
+                          importantForAccessibility="no-hide-descendants"
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Object {
+                                "marginRight": 8,
+                              }
+                            }
+                          >
+                            <RNSVGSvgView
+                              accessibilityElementsHidden={true}
+                              accessibilityLabel=""
+                              accessible={false}
+                              align="xMidYMid"
+                              bbHeight={24}
+                              bbWidth={24}
+                              focusable={false}
+                              height={24}
+                              importantForAccessibility="no-hide-descendants"
+                              meetOrSlice={0}
+                              minX={0}
+                              minY={0}
+                              style={
+                                Array [
+                                  Object {
+                                    "backgroundColor": "transparent",
+                                    "borderWidth": 0,
+                                  },
+                                  Object {
+                                    "color": "#0066CC",
+                                  },
+                                  Object {
+                                    "flex": 0,
+                                    "height": 24,
+                                    "width": 24,
+                                  },
+                                ]
+                              }
+                              tintColor="#0066CC"
+                              vbHeight={32}
+                              vbWidth={32}
+                              width={24}
+                            >
+                              <RNSVGGroup
+                                fill={
+                                  Object {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
+                                }
+                              >
+                                <RNSVGPath
+                                  d="m22.551 11.358-.009 2.675h-1.956V5h3.617c1.163 0 1.753.314 1.762.941v4.41c0 .628-.563.933-1.697.933H22.56v.074h-.01ZM24 6.043h-1.467v4.189H24v-4.19ZM1.652 14.043l-.01 2.676H0V7.685h3.027c.978 0 1.467.314 1.476.941v4.41c0 .628-.47.933-1.421.933h-1.43v.074ZM2.87 8.737H1.642v4.19H2.87v-4.19ZM9.56 13.969H6.44c-.913 0-1.374-.314-1.374-.941l.009-1.837c0-.618.47-.932 1.421-.94h1.43V8.736H6.7l-.01.83H5.085v-.94c0-.619.48-.923 1.44-.923l1.605-.019c.95 0 1.43.314 1.43.932v5.352Zm-2.852-1.052h1.237l-.01-1.615H6.708v1.615ZM13.149 13.969h-1.44c-.95 0-1.42-.314-1.42-.932v-4.41c.009-.628.498-.942 1.476-.942h3.026v8.102c0 .627-.48.94-1.43.94h-1.633c-.95 0-1.43-.313-1.43-.94v-.932h1.633v.83h1.227v-1.642l-.01-.074Zm-1.227-1.052h1.227v-4.18h-1.227v4.18ZM19.848 13.028c-.01.627-.498.932-1.477.932h-1.587c-.96 0-1.44-.314-1.44-.932v-4.41c0-.628.48-.933 1.44-.933h1.634c.95 0 1.42.314 1.42.932v4.41h.01Zm-1.624-4.291h-1.237v4.19h1.228l.009-4.19Z"
+                                  fill={
+                                    Object {
+                                      "type": 2,
+                                    }
+                                  }
+                                  propList={
+                                    Array [
+                                      "fill",
+                                    ]
+                                  }
+                                />
+                                <RNSVGPath
+                                  d="M31.99 5.987c0-.627-.562-.932-1.697-.932h-1.956c-1.144 0-1.716.314-1.716.932v8.065h1.956v-2.759h1.476V13.6c0 5.905-4.77 10.676-10.676 10.676a10.694 10.694 0 0 1-8.433-4.116l.978-.747-3.931-2.648.175 5.582 1.255-.996a12.614 12.614 0 0 0 9.956 4.853C26.353 26.204 32 20.548 32 13.581l-.01-7.594Zm-1.946 4.254h-1.477V6.09h1.477v4.152Z"
+                                  fill={
+                                    Object {
+                                      "type": 2,
+                                    }
+                                  }
+                                  propList={
+                                    Array [
+                                      "fill",
+                                    ]
+                                  }
+                                />
+                              </RNSVGGroup>
+                            </RNSVGSvgView>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "flex": 1,
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityElementsHidden={false}
+                              accessible={true}
+                              importantForAccessibility="yes"
+                            >
+                              <Text
+                                allowFontScaling={false}
+                                color="grey-700"
+                                defaultColor="black"
+                                defaultWeight="SemiBold"
+                                font="TitilliumWeb"
+                                fontStyle={
+                                  Object {
+                                    "fontSize": 18,
+                                    "lineHeight": 25,
+                                  }
+                                }
+                                style={
+                                  Array [
+                                    Object {
+                                      "fontSize": 18,
+                                      "lineHeight": 25,
+                                    },
+                                    Object {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillium Web",
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                    },
+                                  ]
+                                }
+                                weight="Regular"
+                              >
+                                pagoPA notices
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                      <View>
+                        <View
+                          accessible={false}
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#FFFFFF",
+                              "borderColor": "#E8EBF1",
+                              "borderCurve": "continuous",
+                              "borderRadius": 8,
+                              "borderWidth": 1,
+                              "flexDirection": "row",
+                              "justifyContent": "space-between",
+                              "paddingHorizontal": 16,
+                              "paddingVertical": 16,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              Object {
+                                "flex": 1,
+                              }
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              style={
+                                Object {
+                                  "opacity": 0.5,
+                                }
+                              }
+                            >
+                              <View
+                                height={16}
+                                radius={8}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#efefef",
+                                    "borderRadius": 8,
+                                    "height": 16,
+                                    "width": 179,
+                                  }
+                                }
+                                width={179}
+                              />
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "height": 4,
+                                }
+                              }
+                            />
+                            <View
+                              collapsable={false}
+                              style={
+                                Object {
+                                  "opacity": 0.5,
+                                }
+                              }
+                            >
+                              <View
+                                height={13}
+                                radius={8}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#efefef",
+                                    "borderRadius": 8,
+                                    "height": 13,
+                                    "width": 121,
+                                  }
+                                }
+                                width={121}
+                              />
+                            </View>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "marginLeft": 16,
+                              }
+                            }
+                          >
+                            <View
+                              collapsable={false}
+                              style={
+                                Object {
+                                  "opacity": 0.5,
+                                }
+                              }
+                            >
+                              <View
+                                height={16}
+                                radius={8}
+                                style={
+                                  Object {
+                                    "backgroundColor": "#efefef",
+                                    "borderRadius": 8,
+                                    "height": 16,
+                                    "width": 62,
+                                  }
+                                }
+                                width={62}
+                              />
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RNCSafeAreaProvider>
+</View>
+`;

@@ -22,255 +22,267 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
         "backgroundColor": "#FFFFFF",
         "borderColor": "#CCD4DC",
         "flexDirection": "row",
-        "paddingBottom": 12,
+        "paddingBottom": 14,
         "paddingTop": 12,
       },
     ]
   }
 >
   <View
+    accessibilityLabel="previous"
     accessibilityRole="button"
     accessibilityState={
       Object {
-        "disabled": undefined,
+        "disabled": false,
       }
     }
     accessible={true}
     collapsable={false}
     focusable={true}
-    forwardedRef={[Function]}
-    hitSlop={
-      Object {
-        "bottom": 4,
-        "top": 4,
-      }
-    }
+    hitSlop={8}
+    onBlur={[Function]}
     onClick={[Function]}
+    onFocus={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "flex-start",
-        "backgroundColor": "transparent",
-        "borderBottomWidth": null,
-        "borderColor": "#007aff",
-        "borderLeftWidth": null,
-        "borderRadius": 5,
-        "borderRightWidth": null,
-        "borderTopWidth": null,
-        "borderWidth": undefined,
-        "elevation": 0,
-        "flexDirection": "row",
-        "height": 45,
-        "justifyContent": "space-between",
-        "opacity": 1,
-        "paddingBottom": 0,
-        "paddingLeft": 8,
-        "paddingRight": 8,
-        "paddingTop": 0,
-        "shadowColor": null,
-        "shadowOffset": null,
-        "shadowOpacity": null,
-        "shadowRadius": null,
-      }
-    }
     testID="DocumentsNavigationBarLeftButtonTestID"
   >
-    <RNSVGSvgView
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={true}
-      align="xMidYMid"
-      bbHeight={24}
-      bbWidth={24}
-      color={4278219750}
-      focusable={false}
-      height={24}
-      importantForAccessibility="no-hide-descendants"
-      meetOrSlice={0}
-      minX={0}
-      minY={0}
+    <View
       style={
         Array [
           Object {
-            "backgroundColor": "transparent",
-            "borderWidth": 0,
-          },
-          Object {
-            "color": "#0073E6",
-          },
-          Object {
-            "flex": 0,
             "height": 24,
             "width": 24,
           },
+          Object {
+            "alignItems": "center",
+          },
+          Object {
+            "justifyContent": "center",
+          },
+          Object {
+            "transform": Array [
+              Object {
+                "scale": undefined,
+              },
+            ],
+          },
         ]
       }
-      tintColor={4278219750}
-      vbHeight={24}
-      vbWidth={24}
-      width={24}
     >
-      <RNSVGGroup>
-        <RNSVGPath
-          clipRule={0}
-          d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
+      <RNSVGSvgView
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        align="xMidYMid"
+        animatedProps={
+          Object {
+            "color": undefined,
+          }
+        }
+        bbHeight={24}
+        bbWidth={24}
+        focusable={false}
+        height={24}
+        importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "color": "#0073E6",
+            },
+            Object {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
+          ]
+        }
+        tintColor="#0073E6"
+        vbHeight={24}
+        vbWidth={24}
+        width={24}
+      >
+        <RNSVGGroup
           fill={
-            Array [
-              2,
-            ]
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
           }
-          fillRule={0}
-          propList={
-            Array [
-              "fill",
-              "fillRule",
-            ]
-          }
-        />
-      </RNSVGGroup>
-    </RNSVGSvgView>
+        >
+          <RNSVGPath
+            clipRule={0}
+            d="M15.7071 5.29289c-.3905-.39052-1.0237-.39052-1.4142 0L8.29289 11.2929c-.39052.3905-.39052 1.0237 0 1.4142l6.00001 6c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L10.4142 12l5.2929-5.29289c.3905-.39053.3905-1.02369 0-1.41422Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
   </View>
   <Text
-    color="bluegreyDark"
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
       Array [
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "700",
+          "fontWeight": "600",
         },
       ]
     }
-    weight="Bold"
-    weightColorFactory={[Function]}
+    weight="SemiBold"
   >
     Documento 1 di 2
   </Text>
   <View
+    accessibilityLabel="next"
     accessibilityRole="button"
     accessibilityState={
       Object {
-        "disabled": undefined,
+        "disabled": false,
       }
     }
     accessible={true}
     collapsable={false}
     focusable={true}
-    forwardedRef={[Function]}
-    hitSlop={
-      Object {
-        "bottom": 4,
-        "top": 4,
-      }
-    }
+    hitSlop={8}
+    onBlur={[Function]}
     onClick={[Function]}
+    onFocus={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "alignSelf": "flex-start",
-        "backgroundColor": "transparent",
-        "borderBottomWidth": null,
-        "borderColor": "#007aff",
-        "borderLeftWidth": null,
-        "borderRadius": 5,
-        "borderRightWidth": null,
-        "borderTopWidth": null,
-        "borderWidth": undefined,
-        "elevation": 0,
-        "flexDirection": "row",
-        "height": 45,
-        "justifyContent": "space-between",
-        "opacity": 1,
-        "paddingBottom": 0,
-        "paddingLeft": 8,
-        "paddingRight": 8,
-        "paddingTop": 0,
-        "shadowColor": null,
-        "shadowOffset": null,
-        "shadowOpacity": null,
-        "shadowRadius": null,
-      }
-    }
     testID="DocumentsNavigationBarRightButtonTestID"
   >
-    <RNSVGSvgView
-      accessibilityElementsHidden={true}
-      accessibilityLabel=""
-      accessible={true}
-      align="xMidYMid"
-      bbHeight={24}
-      bbWidth={24}
-      color={4278219750}
-      focusable={false}
-      height={24}
-      importantForAccessibility="no-hide-descendants"
-      meetOrSlice={0}
-      minX={0}
-      minY={0}
+    <View
       style={
         Array [
           Object {
-            "backgroundColor": "transparent",
-            "borderWidth": 0,
-          },
-          Object {
-            "color": "#0073E6",
-          },
-          Object {
-            "flex": 0,
             "height": 24,
             "width": 24,
           },
+          Object {
+            "alignItems": "center",
+          },
+          Object {
+            "justifyContent": "center",
+          },
+          Object {
+            "transform": Array [
+              Object {
+                "scale": undefined,
+              },
+            ],
+          },
         ]
       }
-      tintColor={4278219750}
-      vbHeight={24}
-      vbWidth={24}
-      width={24}
     >
-      <RNSVGGroup>
-        <RNSVGPath
-          clipRule={0}
-          d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
+      <RNSVGSvgView
+        accessibilityElementsHidden={true}
+        accessibilityLabel=""
+        accessible={false}
+        align="xMidYMid"
+        animatedProps={
+          Object {
+            "color": undefined,
+          }
+        }
+        bbHeight={24}
+        bbWidth={24}
+        focusable={false}
+        height={24}
+        importantForAccessibility="no-hide-descendants"
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            Object {
+              "color": "#0073E6",
+            },
+            Object {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
+          ]
+        }
+        tintColor="#0073E6"
+        vbHeight={24}
+        vbWidth={24}
+        width={24}
+      >
+        <RNSVGGroup
           fill={
-            Array [
-              2,
-            ]
+            Object {
+              "payload": 4278190080,
+              "type": 0,
+            }
           }
-          fillRule={0}
-          propList={
-            Array [
-              "fill",
-              "fillRule",
-            ]
-          }
-        />
-      </RNSVGGroup>
-    </RNSVGSvgView>
+        >
+          <RNSVGPath
+            clipRule={0}
+            d="M8.29289 5.29289c.39053-.39052 1.02369-.39052 1.41422 0l5.99999 6.00001c.3905.3905.3905 1.0237 0 1.4142l-5.99999 6c-.39053.3905-1.02369.3905-1.41422 0-.39052-.3905-.39052-1.0237 0-1.4142L13.5858 12 8.29289 6.70711c-.39052-.39053-.39052-1.02369 0-1.41422Z"
+            fill={
+              Object {
+                "type": 2,
+              }
+            }
+            fillRule={0}
+            propList={
+              Array [
+                "fill",
+                "fillRule",
+              ]
+            }
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
+    </View>
   </View>
   <View
     style={
@@ -280,12 +292,15 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
     }
   />
   <Text
-    color="bluegreyDark"
+    allowFontScaling={false}
+    color="black"
+    defaultColor="black"
+    defaultWeight="SemiBold"
     font="TitilliumWeb"
     fontStyle={
       Object {
-        "fontSize": 16,
-        "lineHeight": 22,
+        "fontSize": 18,
+        "lineHeight": 25,
       }
     }
     style={
@@ -294,19 +309,18 @@ exports[`Test DocumentsNavigationBar component should render a DocumentsNavigati
           "paddingHorizontal": 24,
         },
         Object {
-          "fontSize": 16,
-          "lineHeight": 22,
+          "fontSize": 18,
+          "lineHeight": 25,
         },
         Object {
-          "color": "#17324D",
+          "color": "#0E0F13",
           "fontFamily": "Titillium Web",
           "fontStyle": "normal",
-          "fontWeight": "700",
+          "fontWeight": "600",
         },
       ]
     }
-    weight="Bold"
-    weightColorFactory={[Function]}
+    weight="SemiBold"
   >
     Pagina 1 di 2
   </Text>

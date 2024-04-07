@@ -11,8 +11,8 @@ import { Content } from "native-base";
 import React, { useState } from "react";
 import { Keyboard, SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import { Col, Grid } from "react-native-easy-grid";
-import { connect } from "react-redux";
 import { IOColors, VSpacer } from "@pagopa/io-app-design-system";
+import { Route, useRoute } from "@react-navigation/native";
 import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 import { Link } from "../../components/core/typography/Link";
 import { LabelledItem } from "../../components/LabelledItem";
@@ -22,14 +22,8 @@ import BaseScreenComponent, {
 import SectionStatusComponent from "../../components/SectionStatus";
 import FooterWithButtons from "../../components/ui/FooterWithButtons";
 import I18n from "../../i18n";
-import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../navigation/params/WalletParamsList";
-import {
-  navigateBack,
-  navigateToWalletConfirmCardDetails
-} from "../../store/actions/navigation";
-import { Dispatch } from "../../store/actions/types";
-import { GlobalState } from "../../store/reducers/types";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import { navigateToWalletConfirmCardDetails } from "../../store/actions/navigation";
 import { CreditCard } from "../../types/pagopa";
 import { ComponentProps } from "../../types/react";
 import { useScreenReaderEnabled } from "../../utils/accessibility";
@@ -63,15 +57,6 @@ export type AddCardScreenNavigationParams = Readonly<{
   }>;
   keyFrom?: string;
 }>;
-
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "WALLET_ADD_CARD"
->;
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  OwnProps;
 
 const styles = StyleSheet.create({
   creditCardForm: {
@@ -215,10 +200,20 @@ const getAccessibilityLabels = (creditCard: CreditCardState) => ({
       : I18n.t("wallet.dummyCard.accessibility.securityCode.4D.error")
 });
 
-const AddCardScreen: React.FC<Props> = props => {
+const AddCardScreen: React.FC = () => {
   const [creditCard, setCreditCard] = useState<CreditCardState>(
     INITIAL_CARD_FORM_STATE
   );
+
+  const navigation = useIONavigation();
+  const { inPayment, keyFrom } =
+    useRoute<Route<"WALLET_ADD_CARD", AddCardScreenNavigationParams>>().params;
+  const navigateToConfirmCardDetailsScreen = (creditCard: CreditCard) =>
+    navigateToWalletConfirmCardDetails({
+      creditCard,
+      inPayment,
+      keyFrom
+    });
 
   const isCardHolderValid = O.isNone(creditCard.holder)
     ? undefined
@@ -263,7 +258,7 @@ const AddCardScreen: React.FC<Props> = props => {
   const secondaryButtonProps = {
     block: true,
     bordered: true,
-    onPress: props.navigateBack,
+    onPress: navigation.goBack,
     title: I18n.t("global.buttons.back")
   };
 
@@ -442,7 +437,7 @@ const AddCardScreen: React.FC<Props> = props => {
           leftButton={secondaryButtonProps}
           rightButton={usePrimaryButtonPropsFromState(
             creditCard,
-            props.navigateToConfirmCardDetailsScreen,
+            navigateToConfirmCardDetailsScreen,
             isValidCardHolder(creditCard.holder),
             O.toUndefined(maybeCreditCardValidOrExpired(creditCard))
           )}
@@ -452,19 +447,8 @@ const AddCardScreen: React.FC<Props> = props => {
   );
 };
 
-const mapStateToProps = (_: GlobalState) => ({});
+export default AddCardScreen;
 
-const mapDispatchToProps = (_: Dispatch, props: OwnProps) => ({
-  navigateBack: () => navigateBack(),
-  navigateToConfirmCardDetailsScreen: (creditCard: CreditCard) =>
-    navigateToWalletConfirmCardDetails({
-      creditCard,
-      inPayment: props.route.params.inPayment,
-      keyFrom: props.route.params.keyFrom
-    })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddCardScreen);
 // keep encapsulation strong
 export const testableAddCardScreen = isTestEnv
   ? { isCreditCardDateExpiredOrInvalid }

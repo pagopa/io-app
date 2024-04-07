@@ -1,12 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { Dispatch } from "redux";
 import I18n from "../../../i18n";
-import { UIService } from "../../../store/reducers/entities/services/types";
 import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { CTAS } from "../../messages/types/MessageCTA";
@@ -14,13 +10,9 @@ import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
 import { GlobalState } from "../../../store/reducers/types";
 import { NotificationRecipient } from "../../../../definitions/pn/NotificationRecipient";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { paymentInitializeState } from "../../../store/actions/wallet/payment";
-import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
-import { setSelectedPayment } from "../store/actions";
-import { trackPNPaymentStart } from "../analytics";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { UIAttachment } from "../../messages/types";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -32,56 +24,51 @@ export function getNotificationStatusInfo(status: NotificationStatus) {
 
 export type PNOptInMessageInfo = {
   isPNOptInMessage: boolean;
-  cta1HasServiceNavigationLink: boolean;
-  cta2HasServiceNavigationLink: boolean;
+  cta1LinksToPNService: boolean;
+  cta2LinksToPNService: boolean;
 };
 
 export const isPNOptInMessage = (
-  maybeCtas: O.Option<CTAS>,
-  service: UIService | undefined,
+  ctas: CTAS | undefined,
+  serviceId: ServiceId | undefined,
   state: GlobalState
 ) =>
   pipe(
-    service,
+    serviceId,
     O.fromNullable,
-    O.chain(service =>
+    O.chain(serviceId =>
       pipe(
         state.backendStatus.status,
         O.map(
-          backendStatus => backendStatus.config.pn.optInServiceId === service.id
+          backendStatus => backendStatus.config.pn.optInServiceId === serviceId
         )
       )
     ),
     O.filter(identity),
-    O.chain(_ =>
+    O.chain(() =>
       pipe(
-        maybeCtas,
+        ctas,
+        O.fromNullable,
         O.map(ctas => ({
-          cta1HasServiceNavigationLink: isServiceDetailNavigationLink(
+          cta1LinksToPNService: isServiceDetailNavigationLink(
             ctas.cta_1.action
           ),
-          cta2HasServiceNavigationLink:
+          cta2LinksToPNService:
             !!ctas.cta_2 && isServiceDetailNavigationLink(ctas.cta_2.action)
         })),
-        O.map(
-          ctaNavigationLinkInfo =>
-            ({
-              isPNOptInMessage:
-                ctaNavigationLinkInfo.cta1HasServiceNavigationLink ||
-                ctaNavigationLinkInfo.cta2HasServiceNavigationLink,
-              ...ctaNavigationLinkInfo
-            } as PNOptInMessageInfo)
-        )
+        O.map(ctaNavigationLinkInfo => ({
+          isPNOptInMessage:
+            ctaNavigationLinkInfo.cta1LinksToPNService ||
+            ctaNavigationLinkInfo.cta2LinksToPNService,
+          ...ctaNavigationLinkInfo
+        }))
       )
     ),
-    O.getOrElse(
-      () =>
-        ({
-          isPNOptInMessage: false,
-          cta1HasServiceNavigationLink: false,
-          cta2HasServiceNavigationLink: false
-        } as PNOptInMessageInfo)
-    )
+    O.getOrElse<PNOptInMessageInfo>(() => ({
+      isPNOptInMessage: false,
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
+    }))
   );
 
 export const paymentsFromPNMessagePot = (
@@ -125,31 +112,6 @@ export const containsF24FromPNMessagePot = (
   pipe(
     pot.getOrElse(potMessage, O.none),
     O.chainNullableK(message => message.attachments),
-    O.getOrElse<ReadonlyArray<UIAttachment>>(() => []),
+    O.getOrElse<ReadonlyArray<ThirdPartyAttachment>>(() => []),
     RA.some(attachment => attachment.category === ATTACHMENT_CATEGORY.F24)
   );
-
-export const initializeAndNavigateToWalletForPayment = (
-  paymentId: string,
-  dispatch: Dispatch<any>,
-  decodeErrorCallback: (() => void) | undefined,
-  preNavigationCallback: (() => void) | undefined = undefined
-) => {
-  const eitherRptId = RptIdFromString.decode(paymentId);
-  if (E.isLeft(eitherRptId)) {
-    decodeErrorCallback?.();
-    return;
-  }
-
-  preNavigationCallback?.();
-
-  trackPNPaymentStart();
-
-  dispatch(setSelectedPayment(paymentId));
-  dispatch(paymentInitializeState());
-
-  NavigationService.navigate(ROUTES.WALLET_NAVIGATOR, {
-    screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-    params: { rptId: eitherRptId.right, startOrigin: "message" }
-  });
-};

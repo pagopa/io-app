@@ -7,7 +7,7 @@ import { ScreenCHData } from "../../../../definitions/content/ScreenCHData";
 import { ContextualHelpData } from "../../../features/zendesk/screens/ZendeskSupportHelpCenter";
 import I18n from "../../../i18n";
 import { handleItemOnPress } from "../../../utils/url";
-import Markdown from "../../ui/Markdown";
+import LegacyMarkdown from "../../ui/Markdown/LegacyMarkdown";
 import {
   deriveCustomHandledLink,
   isIoInternalLink
@@ -50,13 +50,13 @@ export const getContextualHelpConfig = (
     : contextualHelpMarkdown
     ? {
         body: () => (
-          <Markdown
+          <LegacyMarkdown
             onLinkClicked={onLinkClicked}
             onLoadEnd={onLoadEnd}
             shouldHandleLink={shouldHandleLink}
           >
             {I18n.t(contextualHelpMarkdown.body)}
-          </Markdown>
+          </LegacyMarkdown>
         ),
         title: I18n.t(contextualHelpMarkdown.title)
       }
@@ -77,7 +77,9 @@ export const getContextualHelpData = (
       () => defaultData,
       data => ({
         title: data.title,
-        content: <Markdown onLoadEnd={onReady}>{data.content}</Markdown>,
+        content: (
+          <LegacyMarkdown onLoadEnd={onReady}>{data.content}</LegacyMarkdown>
+        ),
         faqs: pipe(
           data.faqs,
           O.fromNullable,

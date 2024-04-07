@@ -27,13 +27,10 @@ import {
   euCovidCertificateEnabled,
   pagoPaApiUrlPrefix,
   pagoPaApiUrlPrefixTest,
-  svEnabled,
   zendeskEnabled
 } from "../config";
 import { watchBonusCdcSaga } from "../features/bonus/cdc/saga";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { watchBonusSaga } from "../features/bonus/common/store/sagas/bonusSaga";
-import { watchBonusSvSaga } from "../features/bonus/siciliaVola/saga";
 import { watchEUCovidCertificateSaga } from "../features/euCovidCert/saga";
 import { setSecurityAdviceReadyToShow } from "../features/fastLogin/store/actions/securityAdviceActions";
 import { refreshSessionToken } from "../features/fastLogin/store/actions/tokenRefreshActions";
@@ -53,7 +50,7 @@ import { lollipopPublicKeySelector } from "../features/lollipop/store/reducers/l
 import { watchMessagesSaga } from "../features/messages/saga";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
-import { watchWalletSaga as watchWalletV3Saga } from "../features/walletV3/common/saga";
+import { watchPaymentsSaga } from "../features/payments/common/saga";
 import {
   watchZendeskGetSessionSaga,
   watchZendeskSupportSaga
@@ -67,19 +64,12 @@ import {
 } from "../store/actions/application";
 import { sessionExpired } from "../store/actions/authentication";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";
-import {
-  differentProfileLoggedIn,
-  setProfileHashedFiscalCode
-} from "../store/actions/crossSessions";
+import { differentProfileLoggedIn } from "../store/actions/crossSessions";
 import { previousInstallationDataDeleteSuccess } from "../store/actions/installation";
 import { setMixpanelEnabled } from "../store/actions/mixpanel";
 import { navigateToPrivacyScreen } from "../store/actions/navigation";
 import { clearOnboarding } from "../store/actions/onboarding";
-import {
-  clearCache,
-  profileLoadSuccess,
-  resetProfileState
-} from "../store/actions/profile";
+import { clearCache, resetProfileState } from "../store/actions/profile";
 import { startupLoadSuccess } from "../store/actions/startup";
 import { loadUserDataProcessing } from "../store/actions/userDataProcessing";
 import {
@@ -103,7 +93,10 @@ import { StartupStatusEnum } from "../store/reducers/startup";
 import { ReduxSagaEffect, SagaCallReturnType } from "../types/utils";
 import { trackKeychainGetFailure } from "../utils/analytics";
 import { isTestEnv } from "../utils/environment";
+import { walletPaymentHandlersInitialized } from "../store/actions/wallet/payment";
 import { deletePin, getPin } from "../utils/keychain";
+import { watchEmailValidationSaga } from "../store/sagas/emailValidationPollingSaga";
+import { handleIsKeyStrongboxBacked } from "../features/lollipop/utils/crypto";
 import {
   clearKeychainError,
   keychainError
@@ -463,13 +456,6 @@ export function* initializeApplicationSaga(
       }
     }
   }
-  // We dispatch a load success to allow the execution of the check
-  // which save the hashed code tax code
-  const profile = yield* select(profileSelector);
-  if (pot.isSome(profile)) {
-    yield* put(profileLoadSuccess(profile.value));
-    yield* take(setProfileHashedFiscalCode);
-  }
 
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
@@ -485,8 +471,13 @@ export function* initializeApplicationSaga(
   yield* call(trackKeychainGetFailure, keychainError);
   yield* call(clearKeychainError);
 
+  // track if the Android device has StrongBox
+  yield* call(handleIsKeyStrongboxBacked, keyInfo.keyTag);
+
   yield* call(checkConfiguredPinSaga);
   yield* call(checkAcknowledgedFingerprintSaga);
+
+  yield* fork(watchEmailValidationSaga);
 
   if (!hasPreviousSessionAndPin || userProfile.email === undefined) {
     yield* call(checkAcknowledgedEmailSaga, userProfile);
@@ -527,13 +518,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for cgn actions
-  yield* fork(watchBonusSaga, sessionToken);
   yield* fork(watchBonusCgnSaga, sessionToken);
-
-  if (svEnabled) {
-    // Start watching for sv actions
-    yield* fork(watchBonusSvSaga, sessionToken);
-  }
 
   if (euCovidCertificateEnabled) {
     // Start watching for EU Covid Certificate actions
@@ -546,7 +531,7 @@ export function* initializeApplicationSaga(
 
   if (pnEnabled) {
     // Start watching for PN actions
-    yield* fork(watchPnSaga, sessionToken, backendClient.getVerificaRpt);
+    yield* fork(watchPnSaga, sessionToken);
   }
 
   const idPayTestEnabled: ReturnType<typeof isIdPayTestEnabledSelector> =
@@ -558,7 +543,7 @@ export function* initializeApplicationSaga(
   }
 
   // Start watching for Wallet V3 actions
-  yield* fork(watchWalletV3Saga, maybeSessionInformation.value.walletToken);
+  yield* fork(watchPaymentsSaga, maybeSessionInformation.value.walletToken);
 
   // Load the user metadata
   yield* call(loadUserMetadata, backendClient.getUserMetadata, true);
@@ -646,7 +631,11 @@ export function* initializeApplicationSaga(
   // This tells the security advice bottomsheet that it can be shown
   yield* put(setSecurityAdviceReadyToShow(true));
 
-  yield* put(applicationInitialized({ actionsToWaitFor: [] }));
+  yield* put(
+    applicationInitialized({
+      actionsToWaitFor: [walletPaymentHandlersInitialized]
+    })
+  );
 }
 
 /**

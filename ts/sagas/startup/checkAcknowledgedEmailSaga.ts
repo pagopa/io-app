@@ -1,5 +1,5 @@
-import { call, select, take } from "typed-redux-saga/macro";
-import { StackActions } from "@react-navigation/native";
+import { call, take } from "typed-redux-saga/macro";
+import { CommonActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
 import NavigationService from "../../navigation/NavigationService";
 import ROUTES from "../../navigation/routes";
@@ -10,7 +10,6 @@ import {
   isProfileFirstOnBoarding
 } from "../../store/reducers/profile";
 import { ReduxSagaEffect } from "../../types/utils";
-import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastLogin/store/selectors";
 
 /**
  * Launch email saga that consists of:
@@ -22,24 +21,20 @@ import { isEmailUniquenessValidationEnabledSelector } from "../../features/fastL
 export function* checkAcknowledgedEmailSaga(
   userProfile: InitializedProfile
 ): IterableIterator<ReduxSagaEffect> {
-  const isEmailUniquenessValidationEnabled = yield* select(
-    isEmailUniquenessValidationEnabledSelector
-  );
-
   // Check if the profile has an email
   if (hasProfileEmail(userProfile)) {
     if (
       isProfileFirstOnBoarding(userProfile) ||
-      (!isEmailUniquenessValidationEnabled &&
-        !isProfileEmailValidated(userProfile))
+      !isProfileEmailValidated(userProfile)
     ) {
       // The user profile is just created (first onboarding), the conditional
       // view displays the screen to show the user's email used in app
       // OR
       // An email exists on the user's profile but it is not validated, the conditional
-      // view shows the component that reminds to validate the email address or allows the navigation to edit it.
+      // view shows a screen that forces the user to insert and validate his email
       yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-        screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN
+        screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
+        params: { isOnboarding: true }
       });
     } else {
       // we can go on, no need to wait
@@ -47,13 +42,9 @@ export function* checkAcknowledgedEmailSaga(
     }
   } else {
     // the profile has no email address, user must insert it
-    // EmailInsertScreen knows if the user comes from onboarding or not
-    // if he comes from onboarding, on email inserted the navigation will focus EmailReadScreen to remember the user
-    // to validate it
     yield* call(NavigationService.navigate, ROUTES.ONBOARDING, {
-      screen: isEmailUniquenessValidationEnabled
-        ? ROUTES.ONBOARDING_READ_EMAIL_SCREEN
-        : ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN
+      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
+      params: { isOnboarding: true }
     });
   }
 
@@ -62,6 +53,13 @@ export function* checkAcknowledgedEmailSaga(
   yield* take(emailAcknowledged);
   yield* call(
     NavigationService.dispatchNavigationAction,
-    StackActions.popToTop()
+    // We use navigate to go back to the main tab
+    // https://reactnavigation.org/docs/nesting-navigators/#navigation-actions-are-handled-by-current-navigator-and-bubble-up-if-couldnt-be-handled
+    CommonActions.navigate({
+      name: ROUTES.MAIN,
+      // If for some reason, we have navigation params
+      // we want to merge them going back to the main tab.
+      merge: true
+    })
   );
 }

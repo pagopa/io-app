@@ -47,14 +47,13 @@ import { idPayWalletInitiativeListSelector } from "../../features/idpay/wallet/s
 import NewPaymentMethodAddedNotifier from "../../features/wallet/component/NewMethodAddedNotifier";
 import FeaturedCardCarousel from "../../features/wallet/component/card/FeaturedCardCarousel";
 import WalletV2PreviewCards from "../../features/wallet/component/card/WalletV2PreviewCards";
-import { WalletBarcodeRoutes } from "../../features/walletV3/barcode/navigation/routes";
-import { WalletTransactionRoutes } from "../../features/walletV3/transaction/navigation/navigator";
+import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
+import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
 import I18n from "../../i18n";
 import { IOStackNavigationRouteProps } from "../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../navigation/params/MainTabParamsList";
 import {
   navigateBack,
-  navigateToPaymentScanQrCode,
   navigateToTransactionDetailsScreen,
   navigateToWalletAddPaymentMethod
 } from "../../store/actions/navigation";
@@ -390,9 +389,9 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   ) => {
     if (this.props.isDesignSystemEnabled) {
       this.props.navigation.navigate(
-        WalletTransactionRoutes.WALLET_TRANSACTION_MAIN,
+        PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR,
         {
-          screen: WalletTransactionRoutes.WALLET_TRANSACTION_DETAILS,
+          screen: PaymentsTransactionRoutes.PAYMENT_TRANSACTION_DETAILS,
           params: {
             transactionId: transaction.id
           }
@@ -421,13 +420,12 @@ class WalletHomeScreen extends React.PureComponent<Props, State> {
   }
 
   private navigateToPaymentScanQrCode = () => {
-    if (this.props.isDesignSystemEnabled) {
-      this.props.navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
-        screen: WalletBarcodeRoutes.WALLET_BARCODE_SCAN
-      });
-    } else {
-      this.props.navigateToPaymentScanQrCode();
-    }
+    this.props.navigation.navigate(
+      PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR,
+      {
+        screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_SCAN
+      }
+    );
   };
 
   private footerButton(potWallets: pot.Pot<ReadonlyArray<Wallet>, Error>) {
@@ -532,7 +530,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadIdPayWalletData: () => dispatch(idPayWalletGet.request()),
   navigateToWalletAddPaymentMethod: (keyFrom?: string) =>
     navigateToWalletAddPaymentMethod({ inPayment: O.none, keyFrom }),
-  navigateToPaymentScanQrCode: () => navigateToPaymentScanQrCode(),
   navigateToTransactionDetailsScreen: (transaction: Transaction) => {
     navigateToTransactionDetailsScreen({
       transaction,

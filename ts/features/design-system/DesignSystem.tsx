@@ -8,19 +8,10 @@ import {
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { IOStyles } from "../../components/core/variables/IOStyles";
-import {
-  AppParamsList,
-  IOStackNavigationRouteProps
-} from "../../navigation/params/AppParamsList";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { H1 } from "../../components/core/typography/H1";
 import { LabelSmall } from "../../components/core/typography/LabelSmall";
 import DESIGN_SYSTEM_ROUTES from "./navigation/routes";
-import { DesignSystemParamsList } from "./navigation/params";
-
-type Props = IOStackNavigationRouteProps<
-  DesignSystemParamsList,
-  "DESIGN_SYSTEM_MAIN"
->;
 
 type SingleSectionProps = {
   title: string;
@@ -78,9 +69,10 @@ const DESIGN_SYSTEM_SECTION_DATA = [
   }
 ];
 
-export const DesignSystem = (props: Props) => {
+export const DesignSystem = () => {
   const theme = useIOTheme();
   const colorScheme = useColorScheme();
+  const navigation = useIONavigation();
 
   const renderDSNavItem = ({
     item: { title, route }
@@ -90,7 +82,7 @@ export const DesignSystem = (props: Props) => {
     <ListItemNav
       accessibilityLabel={`Go to the ${title} page`}
       value={title}
-      onPress={() => props.navigation.navigate(route as keyof AppParamsList)}
+      onPress={() => navigation.navigate(route as any)}
     />
   );
 
@@ -115,6 +107,7 @@ export const DesignSystem = (props: Props) => {
     <>
       <StatusBar
         barStyle={colorScheme === "dark" ? "light-content" : "default"}
+        backgroundColor={theme["appBackground-primary"]}
       />
       <SectionList
         keyExtractor={(item, index) => `${item.route}-${index}`}

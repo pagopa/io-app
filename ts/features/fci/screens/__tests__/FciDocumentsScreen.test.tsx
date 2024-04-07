@@ -6,8 +6,11 @@ import { GlobalState } from "../../../../store/reducers/types";
 import FciDocumentsScreen from "../valid/FciDocumentsScreen";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
+import {
+  fciDownloadPreview,
+  fciSignatureRequestFromId
+} from "../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { fciSignatureRequestFromId } from "../../store/actions";
 
 describe("Test FciDocuments screen", () => {
   beforeEach(() => {
@@ -21,8 +24,7 @@ describe("Test FciDocuments screen", () => {
     );
     store.dispatch(
       fciSignatureRequestFromId.success({
-        ...mockSignatureRequestDetailView,
-        documents: []
+        ...mockSignatureRequestDetailView
       })
     );
     const component = renderComponent(store);
@@ -36,8 +38,12 @@ describe("Test FciDocuments screen", () => {
     );
     store.dispatch(
       fciSignatureRequestFromId.success({
-        ...mockSignatureRequestDetailView,
-        documents: []
+        ...mockSignatureRequestDetailView
+      })
+    );
+    store.dispatch(
+      fciDownloadPreview.success({
+        path: mockSignatureRequestDetailView.documents[0].url
       })
     );
     const testComponent = renderComponent(store);

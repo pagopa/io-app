@@ -3,6 +3,8 @@
  * It only manages SUCCESS actions because all UI state properties (like * loading/error)
  * are managed by different global reducers.
  */
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
@@ -30,15 +32,13 @@ const reducer = (
     case getType(loadServiceDetail.request):
       // When a previously loaded service detail is loaded again, its state
       // is updated with a someLoading pot, otherwise its state is updated with a noneLoading pot
-      const cachedValue = state[action.payload];
-      const prevServiceRequest =
-        cachedValue && pot.isSome(cachedValue) && !pot.isLoading(cachedValue)
-          ? pot.someLoading(cachedValue.value)
-          : pot.noneLoading;
-
       return {
         ...state,
-        [action.payload]: prevServiceRequest
+        [action.payload]: pipe(
+          state[action.payload],
+          O.fromNullable,
+          O.fold(() => pot.noneLoading, pot.toLoading)
+        )
       };
 
     case getType(loadServiceDetail.success):
@@ -54,15 +54,16 @@ const reducer = (
     case getType(loadServiceDetail.failure):
       // when a request to load a previously loaded service detail fails its state is updated
       // with a someError pot, otherwise its state is updated with a noneError pot
-      const { service_id, error } = action.payload;
-      const prevServiceFailure = state[service_id];
-      const nextServiceFailure =
-        prevServiceFailure !== undefined && pot.isSome(prevServiceFailure)
-          ? pot.someError(prevServiceFailure.value, error)
-          : pot.noneError(error);
       return {
         ...state,
-        [service_id]: nextServiceFailure
+        [action.payload.service_id]: pipe(
+          state[action.payload.service_id],
+          O.fromNullable,
+          O.fold(
+            () => pot.noneError(action.payload.error),
+            servicePot => pot.toError(servicePot, action.payload.error)
+          )
+        )
       };
 
     case getType(removeServiceTuples): {
@@ -88,10 +89,15 @@ export const serviceByIdSelector = (
 ): pot.Pot<ServicePublic, Error> =>
   state.entities.services.byId[id] ?? pot.none;
 
-export const serviceMetadataByIdSelector =
-  (id: ServiceId) =>
-  (state: GlobalState): ServiceMetadata | undefined => {
-    const maybeServiceById = serviceByIdSelector(state, id);
-    return pot.toUndefined(maybeServiceById)?.service_metadata;
-  };
+export const serviceMetadataByIdSelector = (
+  state: GlobalState,
+  id: ServiceId
+): ServiceMetadata | undefined =>
+  pipe(
+    serviceByIdSelector(state, id),
+    pot.toOption,
+    O.chainNullableK(service => service.service_metadata),
+    O.toUndefined
+  );
+
 export default reducer;

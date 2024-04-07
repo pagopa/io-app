@@ -10,30 +10,52 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { PNMessage } from "../../store/types/types";
 import { thirdPartyMessage } from "../../__mocks__/message";
 import { toPNMessage } from "../../store/types/transformers";
+import I18n from "../../../../i18n";
+import { serviceId_1 } from "../../../messages/__mocks__/messages";
 import { UIMessageId } from "../../../messages/types";
 
-const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined);
+const pnMessage = pipe(thirdPartyMessage, toPNMessage, O.toUndefined)!;
 
 describe("MessageDetails component", () => {
-  it("should match the snapshot", () => {
+  it("should match the snapshot with default props", () => {
     const { component } = renderComponent(
-      generateComponentProperties(
-        thirdPartyMessage.id as UIMessageId,
-        pnMessage!
-      )
+      generateComponentProperties(pnMessage)
     );
     expect(component).toMatchSnapshot();
   });
+
+  it("should display the legalMessage tag", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(pnMessage)
+    );
+    expect(
+      component.queryByText(I18n.t("features.pn.details.badge.legalValue"))
+    ).not.toBeNull();
+  });
+
+  it("should display the attachment tag if there are attachments", () => {
+    const { component } = renderComponent(
+      generateComponentProperties(pnMessage)
+    );
+    expect(component.queryByTestId("attachment-tag")).not.toBeNull();
+  });
+
+  it("should NOT display the attachment tag if there are no attachments", () => {
+    const { component } = renderComponent(
+      generateComponentProperties({
+        ...pnMessage,
+        attachments: []
+      })
+    );
+    expect(component.queryByTestId("attachment-tag")).toBeNull();
+  });
 });
 
-const generateComponentProperties = (
-  messageId: UIMessageId,
-  message: PNMessage
-) => ({
-  messageId,
+const generateComponentProperties = (message: PNMessage) => ({
+  messageId: "01HRYR6C761DGH3S84HBBXMMKT" as UIMessageId,
   message,
   payments: undefined,
-  service: undefined
+  serviceId: serviceId_1
 });
 
 const renderComponent = (

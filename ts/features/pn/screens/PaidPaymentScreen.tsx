@@ -1,71 +1,38 @@
 import React from "react";
-import * as O from "fp-ts/lib/Option";
-import I18n from "i18n-js";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { ListItemInfoCopy } from "@pagopa/io-app-design-system";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
-import { TransactionSummaryStatus } from "../../../screens/wallet/payment/components/TransactionSummaryStatus";
-import { clipboardSetStringWithFeedback } from "../../../utils/clipboard";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { PnParamsList } from "../navigation/params";
-import customVariables from "../../../theme/variables";
-import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
-import { TransactionSummaryError } from "../../../screens/wallet/payment/TransactionSummaryScreen";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import I18n from "../../../i18n";
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: customVariables.contentPadding
-  }
-});
-
-export type PaidPaymentScreenNavigationParams = Readonly<{
+export type PaidPaymentScreenRouteParams = {
   noticeCode: string;
   creditorTaxId?: string;
-}>;
+};
 
-const paidPaymentError = O.some(
-  "PPT_PAGAMENTO_DUPLICATO"
-) as TransactionSummaryError;
+type PaidPaymentScreenProps = IOStackNavigationRouteProps<
+  PnParamsList,
+  "PN_CANCELLED_MESSAGE_PAID_PAYMENT"
+>;
 
-export const PaidPaymentScreen = (
-  props: IOStackNavigationRouteProps<
-    PnParamsList,
-    "PN_CANCELLED_MESSAGE_PAID_PAYMENT"
-  >
-): React.ReactElement => {
-  const { noticeCode, creditorTaxId: maybeCreditorTaxId } = props.route.params;
-  const formattedPaymentNoticeNumber = noticeCode
-    .replace(/(\d{4})/g, "$1  ")
-    .trim();
-
+export const PaidPaymentScreen = (_: PaidPaymentScreenProps) => {
+  const navigation = useIONavigation();
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true
+  });
   return (
-    <BaseScreenComponent
-      goBack={true}
-      headerTitle={I18n.t("wallet.ConfirmPayment.paymentInformations")}
-      contextualHelp={emptyContextualHelp}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <TransactionSummaryStatus error={paidPaymentError} />
-        <ScrollView style={styles.container}>
-          <ListItemInfoCopy
-            label={I18n.t("payment.noticeCode")}
-            accessibilityLabel={I18n.t("payment.noticeCode")}
-            value={formattedPaymentNoticeNumber}
-            onPress={() => clipboardSetStringWithFeedback(noticeCode)}
-          />
-          {maybeCreditorTaxId && (
-            <ListItemInfoCopy
-              label={I18n.t("wallet.firstTransactionSummary.entityCode")}
-              accessibilityLabel={I18n.t(
-                "wallet.firstTransactionSummary.entityCode"
-              )}
-              value={maybeCreditorTaxId}
-              onPress={() => clipboardSetStringWithFeedback(maybeCreditorTaxId)}
-            />
-          )}
-        </ScrollView>
-      </SafeAreaView>
-    </BaseScreenComponent>
+    <OperationResultScreenContent
+      title={I18n.t("wallet.payment.failure.PAYMENT_DUPLICATED.title")}
+      pictogram={"moneyCheck"}
+      action={{
+        label: I18n.t("global.buttons.close"),
+        accessibilityLabel: I18n.t("global.buttons.close"),
+        onPress: () => navigation.pop()
+      }}
+    />
   );
 };

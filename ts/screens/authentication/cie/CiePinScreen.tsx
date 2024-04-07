@@ -29,13 +29,13 @@ import {
   BottomTopAnimation,
   LightModalContext
 } from "../../../components/ui/LightModal";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
 import { IOStackNavigationProp } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
 import ROUTES from "../../../navigation/routes";
 import { nfcIsEnabled } from "../../../store/actions/cie";
-import { Dispatch, ReduxProps } from "../../../store/actions/types";
+import { Dispatch } from "../../../store/actions/types";
 import variables from "../../../theme/variables";
 import { setAccessibilityFocus } from "../../../utils/accessibility";
 import { useLegacyIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(loginSuccess({ token, idp }))
 });
 
-type Props = ReduxProps & ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapDispatchToProps>;
 
 const styles = StyleSheet.create({
   container: {
@@ -79,7 +79,9 @@ const CIE_PIN_LENGTH = 8;
 const getContextualHelp = () => ({
   title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
   body: () => (
-    <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+    <LegacyMarkdown>
+      {I18n.t("authentication.cie.pin.contextualHelpBody")}
+    </LegacyMarkdown>
   )
 });
 const onOpenForgotPinPage = () => openWebUrl(pinPukHelpUrl);
@@ -109,9 +111,9 @@ const CiePinScreen: React.FC<Props> = props => {
 
   const { present, bottomSheet } = useLegacyIOBottomSheetModal(
     <View>
-      <Markdown avoidTextSelection>
+      <LegacyMarkdown avoidTextSelection>
         {I18n.t("bottomSheets.ciePin.content")}
-      </Markdown>
+      </LegacyMarkdown>
       <ButtonDefaultOpacity
         onPress={onOpenForgotPinPage}
         style={styles.bsLinkButton}

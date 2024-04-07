@@ -1,9 +1,12 @@
-import { StackActions, useNavigation } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
 import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import { LoadingErrorComponent } from "../../../components/LoadingErrorComponent";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../navigation/params";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -25,7 +28,7 @@ import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
 import PN_ROUTES from "../../pn/navigation/routes";
 import { MESSAGES_ROUTES } from "../navigation/routes";
 
-export type MessageRouterScreenNavigationParams = {
+export type MessageRouterScreenRouteParams = {
   messageId: UIMessageId;
   fromNotification: boolean;
 };
@@ -41,7 +44,7 @@ export const MessageRouterScreen = (
   const messageId = props.route.params.messageId;
   const fromPushNotification = props.route.params.fromNotification;
   const dispatch = useIODispatch();
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const isFirstRendering = useRef(true);
   const showSpinner = useIOSelector(showSpinnerFromMessageGetStatusSelector);
   const thirdPartyMessageDetailsError = useIOSelector(

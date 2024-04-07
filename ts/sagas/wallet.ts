@@ -87,7 +87,7 @@ import {
   pspForPaymentV2,
   pspForPaymentV2WithCallbacks,
   runDeleteActivePaymentSaga,
-  runStartOrResumePaymentActivationSaga
+  walletPaymentHandlersInitialized
 } from "../store/actions/wallet/payment";
 import {
   fetchPsp,
@@ -342,100 +342,6 @@ function* startOrResumeAddCreditCardSaga(
 }
 
 /**
- * This saga will run in sequence the requests needed to activate a payment:
- *
- * 1) attiva -> nodo
- * 2) polling for a payment id <- nodo
- * 3) check -> payment manager
- *
- * Each step has a corresponding state in the wallet.payment state that gets
- * updated with the "pot" state (none -> loading -> some|error).
- *
- * Each time the saga is run, it will resume from the next step that needs to
- * be executed (either because it never executed or because it previously
- * returned an error).
- *
- * Not that the pagoPA activation flow is not really resumable in case a step
- * returns an error (i.e. the steps are not idempotent).
- *
- * TODO: the resume logic may be made more intelligent by analyzing the error
- *       of each step and proceeed to the next step under certain conditions
- *       (e.g. when resuming a previous payment flow from scratch, some steps
- *       may fail because they are not idempotent, but we could just proceed
- *       to the next step).
- */
-// eslint-disable-next-line
-function* startOrResumePaymentActivationSaga(
-  action: ActionType<typeof runStartOrResumePaymentActivationSaga>
-) {
-  while (true) {
-    // before each step we select the updated payment state to know what has
-    // been already done.
-    const paymentState: GlobalState["wallet"]["payment"] = yield* select(
-      _ => _.wallet.payment
-    );
-
-    // first step: Attiva
-    if (pot.isNone(paymentState.attiva)) {
-      // this step needs to be executed
-      yield* put(
-        paymentAttiva.request({
-          rptId: action.payload.rptId,
-          verifica: action.payload.verifica
-        })
-      );
-      const responseAction = yield* take<
-        ActionType<typeof paymentAttiva.success | typeof paymentAttiva.failure>
-      >([paymentAttiva.success, paymentAttiva.failure]);
-      if (isActionOf(paymentAttiva.failure, responseAction)) {
-        // this step failed, exit the flow
-        return;
-      }
-      // all is ok, continue to the next step
-      continue;
-    }
-
-    // second step: poll for payment ID
-    if (pot.isNone(paymentState.paymentId)) {
-      // this step needs to be executed
-      yield* put(paymentIdPolling.request(action.payload.verifica));
-      const responseAction = yield* take<
-        ActionType<
-          typeof paymentIdPolling.success | typeof paymentIdPolling.failure
-        >
-      >([paymentIdPolling.success, paymentIdPolling.failure]);
-      if (isActionOf(paymentIdPolling.failure, responseAction)) {
-        // this step failed, exit the flow
-        return;
-      }
-      // all is ok, continue to the next step
-      continue;
-    }
-
-    // third step: "check" the payment
-    if (pot.isNone(paymentState.check)) {
-      // this step needs to be executed
-      yield* put(paymentCheck.request(paymentState.paymentId.value));
-      const responseAction = yield* take<
-        ActionType<typeof paymentCheck.success | typeof paymentCheck.failure>
-      >([paymentCheck.success, paymentCheck.failure]);
-      if (isActionOf(paymentCheck.failure, responseAction)) {
-        // this step failed, exit the flow
-        return;
-      }
-      // all is ok, continue to the next step
-      continue;
-    }
-
-    // finally, we signal the success of the activation flow
-    action.payload.onSuccess(paymentState.paymentId.value);
-
-    // since this is the last step, we exit the flow
-    break;
-  }
-}
-
-/**
  * This saga attempts to delete the active payment, if there's one.
  *
  * This is a best effort operation as the result is actually ignored.
@@ -558,11 +464,6 @@ export function* watchWalletSaga(
     getType(runStartOrResumeAddCreditCardSaga),
     startOrResumeAddCreditCardSaga,
     pmSessionManager
-  );
-
-  yield* takeLatest(
-    getType(runStartOrResumePaymentActivationSaga),
-    startOrResumePaymentActivationSaga
   );
 
   yield* takeLatest(
@@ -714,6 +615,8 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
+  yield* put(walletPaymentHandlersInitialized());
+
   /**
    * whenever the profile is loaded (from a load request or from un update)
    * check if the email is validated. If it not the session manager has to be disabled
@@ -769,7 +672,6 @@ export function* watchWalletSaga(
     paymentManagerClient.addPans,
     pmSessionManager
   );
-
   // watch for add BPay to Wallet workflow
   yield* takeLatest(walletAddBPayStart, addBPayToWalletSaga);
 
@@ -788,27 +690,6 @@ export function* watchWalletSaga(
     pmSessionManager
   );
 
-  // watch for CoBadge search request
-  yield* takeLatest(
-    searchUserCoBadge.request,
-    handleSearchUserCoBadge,
-    paymentManagerClient.getCobadgePans,
-    paymentManagerClient.searchCobadgePans,
-    pmSessionManager
-  );
-  // watch for add CoBadge to the user's wallet
-  yield* takeLatest(
-    addCoBadgeToWallet.request,
-    handleAddCoBadgeToWallet,
-    paymentManagerClient.addCobadgeToWallet,
-    pmSessionManager
-  );
-  // watch for CoBadge configuration request
-  yield* takeLatest(
-    loadCoBadgeAbiConfiguration.request,
-    handleLoadCoBadgeConfiguration,
-    contentClient.getCobadgeServices
-  );
   // watch for CoBadge search request
   yield* takeLatest(
     searchUserCoBadge.request,
@@ -923,8 +804,9 @@ export function* watchBackToEntrypointPaymentSaga(): Iterator<ReduxSagaEffect> {
     if (entrypointRoute !== undefined) {
       yield* call(
         NavigationService.dispatchNavigationAction,
-        CommonActions.navigate(entrypointRoute.name, {
-          key: entrypointRoute.key
+        CommonActions.navigate({
+          name: entrypointRoute.name,
+          merge: true
         })
       );
       yield* put(paymentInitializeState());

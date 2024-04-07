@@ -1,12 +1,14 @@
-import * as React from "react";
+import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../utils/navigation";
-import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { LegacyMessageDetailsScreen } from "../screens/LegacyMessageDetailsScreen";
-import { AttachmentPreviewScreen } from "../screens/AttachmentPreviewScreen";
-import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
+import { LegacyAttachmentPreviewScreen } from "../screens/LegacyAttachmentPreviewScreen";
+import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
+import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
+import { LegacyPaidPaymentScreen } from "../screens/LegacyPaidPaymentScreen";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
@@ -18,8 +20,11 @@ export const PnStackNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName={PN_ROUTES.MESSAGE_DETAILS}
-      headerMode="screen"
-      screenOptions={{ gestureEnabled: isGestureEnabled }}
+      screenOptions={{
+        gestureEnabled: isGestureEnabled,
+        headerMode: "screen",
+        headerShown: isDesignSystemEnabled
+      }}
     >
       <Stack.Screen
         name={PN_ROUTES.MESSAGE_DETAILS}
@@ -28,23 +33,20 @@ export const PnStackNavigator = () => {
             ? MessageDetailsScreen
             : LegacyMessageDetailsScreen
         }
-        options={{
-          headerShown: isDesignSystemEnabled
-        }}
       />
       <Stack.Screen
         name={PN_ROUTES.MESSAGE_ATTACHMENT}
-        component={AttachmentPreviewScreen}
-        options={{
-          headerShown: false
-        }}
+        component={
+          isDesignSystemEnabled
+            ? MessageAttachmentScreen
+            : LegacyAttachmentPreviewScreen
+        }
       />
       <Stack.Screen
         name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
-        component={PaidPaymentScreen}
-        options={{
-          headerShown: false
-        }}
+        component={
+          isDesignSystemEnabled ? PaidPaymentScreen : LegacyPaidPaymentScreen
+        }
       />
     </Stack.Navigator>
   );

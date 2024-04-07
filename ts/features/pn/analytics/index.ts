@@ -4,12 +4,12 @@ import * as O from "fp-ts/lib/Option";
 import { mixpanelTrack } from "../../../mixpanel";
 import { PNMessage } from "../../pn/store/types/types";
 import { NotificationStatusHistoryElement } from "../../../../definitions/pn/NotificationStatusHistoryElement";
-import { UIAttachment } from "../../messages/types";
 import {
   booleanToYesNo,
   buildEventProperties,
   numberToYesNoOnThreshold
 } from "../../../utils/analytics";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 
 export interface TrackPNPaymentStatus {
   paymentCount: number;
@@ -180,7 +180,7 @@ export function trackPNNotificationLoadSuccess(pnMessage: PNMessage) {
           buildEventProperties("TECH", undefined, {
             NOTIFICATION_LAST_STATUS: status,
             HAS_ATTACHMENTS: pipe(
-              pnMessage.attachments as Array<UIAttachment>,
+              pnMessage.attachments as Array<ThirdPartyAttachment>,
               O.fromNullable,
               O.map(A.isNonEmpty),
               O.getOrElse(() => false)

@@ -8,16 +8,15 @@ import {
   fciEnabled,
   fimsEnabled,
   myPortalEnabled,
-  svEnabled,
   uaDonationsEnabled
 } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
-import SV_ROUTES from "../features/bonus/siciliaVola/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
 import FIMS_ROUTES from "../features/fims/navigation/routes";
 import UADONATION_ROUTES from "../features/uaDonations/navigation/routes";
 import ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/navigation/routes";
 import { isTestEnv } from "./environment";
 import {
   IO_FIMS_LINK_PREFIX,
@@ -39,7 +38,7 @@ const routesToNavigationLink: Record<string, string> = {
   [MESSAGES_ROUTES.MESSAGES_HOME]: "/main/messages",
   [ROUTES.PROFILE_PREFERENCES_HOME]: "/profile/preferences",
   [ROUTES.WALLET_HOME]: "/main/wallet",
-  [ROUTES.SERVICES_HOME]: "/main/services",
+  [SERVICES_ROUTES.SERVICES_HOME]: "/main/services",
   [ROUTES.PROFILE_MAIN]: "/main/profile",
   [ROUTES.PROFILE_PRIVACY]: "/profile/privacy",
   [ROUTES.PROFILE_PRIVACY_MAIN]: "/profile/privacy-main",
@@ -59,17 +58,11 @@ const cgnRoutesToNavigationLink: Record<string, string> = {
 };
 
 const myPortalRoutesToNavigationLink: Record<string, string> = {
-  [ROUTES.SERVICE_WEBVIEW]: "/services/webview"
+  [SERVICES_ROUTES.SERVICE_WEBVIEW]: "/services/webview"
 };
 
 const uaDonationsRoutesToNavigationLink: Record<string, string> = {
   [UADONATION_ROUTES.WEBVIEW]: "/uadonations-webview"
-};
-
-const svRoutesToNavigationLink: Record<string, string> = {
-  [SV_ROUTES.VOUCHER_GENERATION.CHECK_STATUS]:
-    "/services/sv-generation/check-status",
-  [SV_ROUTES.VOUCHER_LIST.LIST]: "/services/sv-vouchers/list"
 };
 
 const fimsRoutesToNavigationLink: Record<string, string> = {
@@ -85,7 +78,6 @@ const allowedRoutes = {
   ...cgnRoutesToNavigationLink,
   ...legacyRoutesToNavigationLink,
   ...(myPortalEnabled ? myPortalRoutesToNavigationLink : {}),
-  ...(svEnabled ? svRoutesToNavigationLink : {}),
   ...(uaDonationsEnabled ? uaDonationsRoutesToNavigationLink : {}),
   ...(fimsEnabled ? fimsRoutesToNavigationLink : {}),
   ...(fciEnabled ? fciRoutesToNavigationLink : {})

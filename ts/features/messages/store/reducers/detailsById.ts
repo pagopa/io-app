@@ -21,7 +21,7 @@ const INITIAL_STATE: DetailsById = {};
 /**
  * A reducer to store all messages details by ID
  */
-const reducer = (
+export const detailsByIdReducer = (
   state: DetailsById = INITIAL_STATE,
   action: Action
 ): DetailsById => {
@@ -86,4 +86,28 @@ export const detailedMessageHasThirdPartyDataSelector = (
     )
   );
 
-export default reducer;
+export const messageDetailsExpiringInfoSelector = (
+  state: GlobalState,
+  id: string,
+  referenceDateMilliseconds: number
+) =>
+  pipe(
+    messageDetailsByIdSelector(state, id),
+    pot.toOption,
+    O.filter(messageDetails => !!messageDetails.paymentData),
+    O.chainNullableK(messageDetails => messageDetails.dueDate),
+    O.map(dueDate => {
+      const remainingMilliseconds =
+        dueDate.getTime() - referenceDateMilliseconds;
+      return remainingMilliseconds > 0 ? "expiring" : "expired";
+    }),
+    O.getOrElseW(() => "does_not_expire" as const)
+  );
+
+export const messagePaymentDataSelector = (state: GlobalState, id: string) =>
+  pipe(
+    messageDetailsByIdSelector(state, id),
+    pot.toOption,
+    O.chainNullableK(message => message.paymentData),
+    O.toUndefined
+  );

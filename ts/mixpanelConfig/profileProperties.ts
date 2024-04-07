@@ -56,7 +56,7 @@ export const updateMixpanelProfileProperties = async (
     );
   }
 
-  await mixpanel.set(profilePropertiesObject);
+  mixpanel.getPeople().set(profilePropertiesObject);
 };
 
 const forceUpdate = <T extends keyof ProfileProperties>(

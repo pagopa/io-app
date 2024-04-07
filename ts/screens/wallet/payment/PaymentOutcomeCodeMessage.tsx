@@ -6,6 +6,7 @@ import { View } from "react-native";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Route, useRoute } from "@react-navigation/native";
 import { ImportoEuroCents } from "../../../../definitions/backend/ImportoEuroCents";
 import paymentCompleted from "../../../../img/pictograms/payment-completed.png";
 import { cancelButtonProps } from "../../../components/buttons/ButtonConfigurations";
@@ -14,11 +15,9 @@ import { InfoScreenComponent } from "../../../components/infoScreen/InfoScreenCo
 import { renderInfoRasterImage } from "../../../components/infoScreen/imageRendering";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
 import OutcomeCodeMessageComponent from "../../../components/wallet/OutcomeCodeMessageComponent";
-import { WalletPaymentFeebackBanner } from "../../../features/walletV3/payment/components/WalletPaymentFeedbackBanner";
+import { WalletPaymentFeebackBanner } from "../../../features/payments/checkout/components/WalletPaymentFeedbackBanner";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { WalletParamsList } from "../../../navigation/params/WalletParamsList";
 import { navigateToWalletHome } from "../../../store/actions/navigation";
 import { backToEntrypointPayment } from "../../../store/actions/wallet/payment";
 import { profileEmailSelector } from "../../../store/reducers/profile";
@@ -35,14 +34,8 @@ export type PaymentOutcomeCodeMessageNavigationParams = Readonly<{
   fee: ImportoEuroCents;
 }>;
 
-type OwnProps = IOStackNavigationRouteProps<
-  WalletParamsList,
-  "PAYMENT_OUTCOMECODE_MESSAGE"
->;
-
 type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps> &
-  OwnProps;
+  ReturnType<typeof mapDispatchToProps>;
 
 const SuccessBody = ({ emailAddress }: { emailAddress: string }) => (
   <View>
@@ -101,6 +94,13 @@ const successFooter = (onClose: () => void) => (
  * If the outcome code is of type success the render a single buttons footer that allow the user to go to the wallet home.
  */
 const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
+  const { fee } =
+    useRoute<
+      Route<
+        "PAYMENT_OUTCOMECODE_MESSAGE",
+        PaymentOutcomeCodeMessageNavigationParams
+      >
+    >().params;
   const outcomeCode = O.toNullable(props.outcomeCode.outcomeCode);
   const learnMoreLink = "https://io.italia.it/faq/#pagamenti";
   const onLearnMore = () => openWebUrl(learnMoreLink);
@@ -114,7 +114,7 @@ const PaymentOutcomeCodeMessage: React.FC<Props> = (props: Props) => {
     if (pot.isSome(props.verifica)) {
       const totalAmount =
         (props.verifica.value.importoSingoloVersamento as number) +
-        (props.route.params.fee as number);
+        (fee as number);
 
       return successComponent(
         O.getOrElse(() => "")(props.profileEmail),

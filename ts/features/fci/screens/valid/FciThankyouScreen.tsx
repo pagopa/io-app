@@ -1,23 +1,23 @@
 import * as React from "react";
-import { SafeAreaView } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constNull } from "fp-ts/lib/function";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import {
+  ButtonSolidProps,
+  FooterWithButtons,
+  IOStyles,
+  Pictogram
+} from "@pagopa/io-app-design-system";
+import { View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { LoadingErrorComponent } from "../../../../components/LoadingErrorComponent";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
-import paymentCompleted from "../../../../../img/pictograms/payment-completed.png";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import I18n from "../../../../i18n";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { InfoScreenComponent } from "../../../../components/infoScreen/InfoScreenComponent";
-import { renderInfoRasterImage } from "../../../../components/infoScreen/imageRendering";
 import { fciEndRequest, fciStartRequest } from "../../store/actions";
 import { trackFciUxSuccess } from "../../analytics";
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { getClausesCountByTypes } from "../../utils/signatureFields";
+import LoadingComponent from "../../components/LoadingComponent";
+import { InfoScreenComponent } from "../../components/InfoScreenComponent";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 
 const FciThankyouScreen = () => {
@@ -26,13 +26,8 @@ const FciThankyouScreen = () => {
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const dispatch = useIODispatch();
 
-  const LoadingComponent = () => (
-    <LoadingErrorComponent
-      isLoading={true}
-      loadingCaption={""}
-      onRetry={constNull}
-      testID={"FciTypLoadingScreenTestID"}
-    />
+  const LoadingView = () => (
+    <LoadingComponent testID={"FciTypLoadingScreenTestID"} />
   );
 
   const ErrorComponent = () => (
@@ -46,34 +41,33 @@ const FciThankyouScreen = () => {
     />
   );
 
-  const SuccessComponent = () => (
-    <BaseScreenComponent goBack={false}>
-      <SafeAreaView style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
+  const SuccessComponent = () => {
+    const continueButtonProps: ButtonSolidProps = {
+      onPress: () => dispatch(fciEndRequest()),
+      label: I18n.t("features.fci.thankYouPage.cta"),
+      accessibilityLabel: I18n.t("features.fci.thankYouPage.cta"),
+      testID: "FciTypCloseButton"
+    };
+    return (
+      <View style={IOStyles.flex} testID={"FciTypSuccessTestID"}>
         <InfoScreenComponent
-          image={renderInfoRasterImage(paymentCompleted)}
+          image={<Pictogram name={"success"} />}
           title={I18n.t("features.fci.thankYouPage.title")}
           body={I18n.t("features.fci.thankYouPage.content")}
         />
         <FooterWithButtons
           type={"SingleButton"}
-          leftButton={{
-            onPress: () => dispatch(fciEndRequest()),
-            title: I18n.t("features.fci.thankYouPage.cta"),
-            block: true,
-            light: false,
-            bordered: true,
-            testID: "FciTypSuccessFooterButton"
-          }}
+          primary={{ type: "Solid", buttonProps: continueButtonProps }}
         />
-      </SafeAreaView>
-    </BaseScreenComponent>
-  );
+      </View>
+    );
+  };
 
   return pot.fold(
     fciCreateSignatureSelector,
-    () => <LoadingComponent />,
-    () => <LoadingComponent />,
-    () => <LoadingComponent />,
+    () => <LoadingView />,
+    () => <LoadingView />,
+    () => <LoadingView />,
     _ => <ErrorComponent />,
     _ => {
       trackFciUxSuccess(
@@ -87,8 +81,8 @@ const FciThankyouScreen = () => {
       );
       return <SuccessComponent />;
     },
-    () => <LoadingComponent />,
-    () => <LoadingComponent />,
+    () => <LoadingView />,
+    () => <LoadingView />,
     _ => <ErrorComponent />
   );
 };

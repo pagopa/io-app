@@ -1,11 +1,15 @@
-import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  Divider,
+  ListItemNav,
+  VSpacer,
+  IOToast
+} from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { IOToast } from "../../../components/Toast";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import I18n from "../../../i18n";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -23,7 +27,7 @@ import {
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
 import { IDPayPaymentRoutes } from "../../idpay/payment/navigation/navigator";
-import { WalletPaymentRoutes } from "../../walletV3/payment/navigation/routes";
+import { PaymentsCheckoutRoutes } from "../../payments/checkout/navigation/routes";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
@@ -38,7 +42,7 @@ import {
 } from "../types/IOBarcode";
 import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
-import { WalletBarcodeRoutes } from "../../walletV3/barcode/navigation/routes";
+import { PaymentsBarcodeRoutes } from "../../payments/barcode/navigation/routes";
 import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
 
 const BarcodeScanScreen = () => {
@@ -92,8 +96,8 @@ const BarcodeScanScreen = () => {
         void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
       }
 
-      navigation.navigate(WalletBarcodeRoutes.WALLET_BARCODE_MAIN, {
-        screen: WalletBarcodeRoutes.WALLET_BARCODE_CHOICE,
+      navigation.navigate(PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR, {
+        screen: PaymentsBarcodeRoutes.PAYMENT_BARCODE_CHOICE,
         params: {
           barcodes: pagoPABarcodes
         }
@@ -172,8 +176,8 @@ const BarcodeScanScreen = () => {
 
   const handlePagoPACodeInput = () => {
     manualInputModal.dismiss();
-    navigation.navigate(WalletPaymentRoutes.WALLET_PAYMENT_MAIN, {
-      screen: WalletPaymentRoutes.WALLET_PAYMENT_INPUT_NOTICE_NUMBER
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
     });
   };
 

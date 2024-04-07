@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import * as O from "fp-ts/lib/Option";
 import * as p from "@pagopa/ts-commons/lib/pot";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { createActionsImplementation } from "../actions";
 import { ConfigurationMode, Context } from "../context";
 import {
@@ -12,7 +13,6 @@ import ROUTES from "../../../../../navigation/routes";
 import { IDPayDetailsRoutes } from "../../../details/navigation";
 import { InitiativeFailureType } from "../failure";
 import I18n from "../../../../../i18n";
-import { IOToast } from "../../../../../components/Toast";
 import { refreshSessionToken } from "../../../../fastLogin/store/actions/tokenRefreshActions";
 
 jest.mock("../../../../../utils/showToast", () => ({
@@ -45,7 +45,7 @@ const T_FAILURE = InitiativeFailureType.GENERIC;
 
 describe("IDPay Configuration machine actions", () => {
   const actions = createActionsImplementation(
-    navigation as IOStackNavigationProp<AppParamsList>,
+    navigation as IOStackNavigationProp<AppParamsList, keyof AppParamsList>,
     dispatch
   );
 

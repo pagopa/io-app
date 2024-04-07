@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { ScreenContentHeader } from "../../../components/screens/ScreenContentHeader";
 import TopScreenComponent from "../../../components/screens/TopScreenComponent";
 import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import Markdown from "../../../components/ui/Markdown";
+import LegacyMarkdown from "../../../components/ui/Markdown/LegacyMarkdown";
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../navigation/params/AuthenticationParamsList";
@@ -45,7 +45,9 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
   private getContextualHelp = () => ({
     title: I18n.t("authentication.cie.pin.contextualHelpTitle"),
     body: () => (
-      <Markdown>{I18n.t("authentication.cie.pin.contextualHelpBody")}</Markdown>
+      <LegacyMarkdown>
+        {I18n.t("authentication.cie.pin.contextualHelpBody")}
+      </LegacyMarkdown>
     )
   });
 
@@ -84,13 +86,13 @@ class CiePinLockedTemporarilyScreen extends React.PureComponent<Props, State> {
           title={I18n.t("authentication.cie.pinTempLocked.title")}
         />
         <Content>
-          <Markdown
+          <LegacyMarkdown
             onLoadEnd={() => {
               this.setState({ isLoadingCompleted: true });
             }}
           >
             {I18n.t("authentication.cie.pinTempLocked.content")}
-          </Markdown>
+          </LegacyMarkdown>
         </Content>
 
         {this.state.isLoadingCompleted && this.renderFooterButtons()}

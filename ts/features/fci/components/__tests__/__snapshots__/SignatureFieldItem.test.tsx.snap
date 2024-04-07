@@ -6,7 +6,6 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
     Object {
       "borderBottomColor": "#E6E9F2",
       "borderBottomWidth": 1,
-      "flexDirection": "column",
       "marginBottom": 16,
       "paddingBottom": 8,
       "paddingTop": 16,
@@ -14,126 +13,193 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
   }
 >
   <View
-    style={
+    accessibilityLabel="Clause title 1"
+    accessibilityRole="checkbox"
+    accessibilityState={
       Object {
-        "flexDirection": "row",
+        "checked": false,
+        "disabled": false,
       }
     }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onTouchEnd={[Function]}
+    testID="ListItemCheckbox"
   >
-    <Text
-      color="bluegreyDark"
-      font="TitilliumWeb"
-      fontStyle={
-        Object {
-          "fontSize": 16,
-          "lineHeight": 22,
-        }
-      }
+    <View
+      needsOffscreenAlphaCompositing={true}
       style={
         Array [
           Object {
-            "flex": 1,
-            "marginRight": 22,
+            "marginHorizontal": -24,
+            "paddingHorizontal": 24,
+            "paddingVertical": 12,
           },
           Object {
-            "fontSize": 16,
-            "lineHeight": 22,
+            "backgroundColor": undefined,
           },
           Object {
-            "color": "#17324D",
-            "fontFamily": "Titillium Web",
-            "fontStyle": "normal",
-            "fontWeight": "700",
+            "opacity": 1,
           },
         ]
       }
-      testID="SignatureFieldItemTitleTestID"
-      weight="Bold"
-      weightColorFactory={[Function]}
     >
-      Clause title 1
-    </Text>
-    <View
-      accessibilityLabel="Field not selected"
-      accessibilityRole="checkbox"
-      accessibilityState={
-        Object {
-          "selected": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "alignSelf": "center",
-          "opacity": 1,
-        }
-      }
-      testID="SignatureFieldItemButtonTestID"
-    >
-      <RNSVGSvgView
-        accessibilityElementsHidden={true}
-        accessibilityLabel=""
-        accessible={false}
-        align="xMidYMid"
-        bbHeight={24}
-        bbWidth={24}
-        color={4279710285}
-        focusable={false}
-        height={24}
-        importantForAccessibility="no-hide-descendants"
-        meetOrSlice={0}
-        minX={0}
-        minY={0}
+      <View
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-              "borderWidth": 0,
-            },
-            Object {
-              "color": "#17324D",
-            },
-            Object {
-              "flex": 0,
-              "height": 24,
-              "width": 24,
-            },
-          ]
+          Object {
+            "transform": Array [
+              Object {
+                "scale": undefined,
+              },
+            ],
+          }
         }
-        testID="SignatureFieldItemCheckboxTestID"
-        tintColor={4279710285}
-        vbHeight={22}
-        vbWidth={22}
-        width={24}
       >
-        <RNSVGGroup>
-          <RNSVGPath
-            clipRule={0}
-            d="M19.25 0H2.75C1.23122 0 0 1.23122 0 2.75v16.5C0 20.7688 1.23122 22 2.75 22h16.5c1.5188 0 2.75-1.2312 2.75-2.75V2.75C22 1.23122 20.7688 0 19.25 0ZM1.83333 2.75c0-.50626.41041-.91667.91667-.91667h16.5c.5063 0 .9167.41041.9167.91667v16.5c0 .5063-.4104.9167-.9167.9167H2.75c-.50626 0-.91667-.4104-.91667-.9167V2.75Z"
-            fill={
+        <View
+          style={
+            Object {
+              "alignItems": "flex-start",
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <View
+            style={
               Array [
-                2,
+                Object {
+                  "flexDirection": "row",
+                },
+                Object {
+                  "flexShrink": 1,
+                },
               ]
             }
-            fillRule={0}
-            propList={
-              Array [
-                "fill",
-                "fillRule",
-              ]
+          >
+            <Text
+              allowFontScaling={false}
+              color="black"
+              defaultColor="black"
+              defaultWeight="SemiBold"
+              font="TitilliumWeb"
+              fontStyle={
+                Object {
+                  "fontSize": 18,
+                  "lineHeight": 25,
+                }
+              }
+              style={
+                Array [
+                  Object {
+                    "flexShrink": 1,
+                  },
+                  Object {
+                    "fontSize": 18,
+                    "lineHeight": 25,
+                  },
+                  Object {
+                    "color": "#0E0F13",
+                    "fontFamily": "Titillium Web",
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                  },
+                ]
+              }
+              weight="SemiBold"
+            >
+              Clause title 1
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "width": 8,
+              }
             }
           />
-        </RNSVGGroup>
-      </RNSVGSvgView>
+          <View
+            pointerEvents="none"
+          >
+            <View
+              accessible={false}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "height": 24,
+                  "width": 24,
+                }
+              }
+              testID="AnimatedCheckboxInput"
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "borderCurve": "continuous",
+                      "borderRadius": 5,
+                      "borderWidth": 2,
+                      "height": 24,
+                      "left": 0,
+                      "position": "absolute",
+                      "top": 0,
+                      "width": 24,
+                    },
+                    Object {
+                      "borderColor": "#475A6D",
+                    },
+                  ]
+                }
+              />
+              <View
+                style={
+                  Array [
+                    Object {
+                      "borderCurve": "continuous",
+                      "borderRadius": 5,
+                      "height": 24,
+                      "left": 0,
+                      "position": "absolute",
+                      "top": 0,
+                      "width": 24,
+                    },
+                    Object {
+                      "backgroundColor": "#0073E6",
+                    },
+                    Object {
+                      "opacity": 0,
+                      "transform": Array [
+                        Object {
+                          "scale": undefined,
+                        },
+                      ],
+                    },
+                  ]
+                }
+              />
+            </View>
+          </View>
+        </View>
+      </View>
     </View>
   </View>
   <View
@@ -153,6 +219,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       accessibilityHint="Go to the page that displays the signature field"
       accessibilityLabel="See on document"
       accessibilityRole="link"
+      allowFontScaling={false}
       color="blue"
       defaultColor="blue"
       defaultWeight="SemiBold"
@@ -160,6 +227,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
       fontStyle={
         Object {
           "fontSize": 16,
+          "lineHeight": 24,
           "textDecorationLine": "underline",
         }
       }
@@ -168,6 +236,7 @@ exports[`Test SignatureFieldItem component should render a SignatureFieldItem co
         Array [
           Object {
             "fontSize": 16,
+            "lineHeight": 24,
             "textDecorationLine": "underline",
           },
           Object {
