@@ -18,12 +18,9 @@ import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPayme
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 
 export type PaymentsMethodDetailsScreenNavigationParams = Readonly<{
   walletId: string;
-  isNewMethod?: boolean;
 }>;
 
 export type PaymentsMethodDetailsScreenRouteProps = RouteProp<
@@ -33,10 +30,9 @@ export type PaymentsMethodDetailsScreenRouteProps = RouteProp<
 
 const PaymentsMethodDetailsScreen = () => {
   const route = useRoute<PaymentsMethodDetailsScreenRouteProps>();
-  const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
-  const { walletId, isNewMethod } = route.params;
+  const { walletId } = route.params;
 
   const isIdpayEnabled = useIOSelector(isIdPayEnabledSelector);
   const walletDetailsPot = useIOSelector(selectPaymentMethodDetails);
@@ -60,20 +56,6 @@ const PaymentsMethodDetailsScreen = () => {
     }
   }, [walletId, dispatch, isIdpayEnabled]);
 
-  const handleGoBack = () => {
-    if (isNewMethod) {
-      navigation.popToTop();
-      navigation.navigate(ROUTES.MAIN, {
-        screen: ROUTES.WALLET_HOME,
-        params: {
-          newMethodAdded: true
-        }
-      });
-    } else {
-      navigation.goBack();
-    }
-  };
-
   if (isLoading) {
     return (
       <PaymentsMethodDetailsBaseScreenComponent
@@ -91,7 +73,6 @@ const PaymentsMethodDetailsScreen = () => {
       <PaymentsMethodDetailsBaseScreenComponent
         card={cardProps}
         headerTitle={headerTitle}
-        goBack={handleGoBack}
       >
         <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
         <VSpacer size={24} />

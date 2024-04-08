@@ -20,7 +20,6 @@ import {
 type Props = {
   card: PaymentCardComponentProps;
   headerTitle?: string;
-  goBack?: (() => void) | boolean;
 };
 
 /**
@@ -29,7 +28,6 @@ type Props = {
 const PaymentsMethodDetailsBaseScreenComponent = ({
   card,
   headerTitle = "",
-  goBack = true,
   children
 }: React.PropsWithChildren<Props>) => {
   const isDSenabled = useIOSelector(isDesignSystemEnabledSelector);
@@ -40,7 +38,7 @@ const PaymentsMethodDetailsBaseScreenComponent = ({
       contextualHelp={emptyContextualHelp}
       headerTitle={headerTitle}
       faqCategories={["wallet_methods"]}
-      goBack={goBack}
+      goBack={true}
       titleColor="white"
       dark={true}
       headerBackgroundColor={blueHeaderColor}
