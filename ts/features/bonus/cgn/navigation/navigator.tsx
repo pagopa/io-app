@@ -93,18 +93,21 @@ const DetailStack = createStackNavigator<CgnDetailsParamsList>();
 export const CgnDetailsNavigator = () => (
   <DetailStack.Navigator
     initialRouteName={CGN_ROUTES.DETAILS.DETAILS}
-    screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
+    screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.DETAILS}
+      options={{ headerShown: false }}
       component={CgnDetailScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES}
+      options={{ headerShown: false }}
       component={CgnMerchantsCategoriesSelectionScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.LIST}
+      options={{ headerShown: false }}
       component={MerchantsListScreen}
     />
     <DetailStack.Screen
@@ -113,14 +116,17 @@ export const CgnDetailsNavigator = () => (
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.TABS}
+      options={{ headerShown: false }}
       component={CgnMerchantsTabsScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.DETAIL}
+      options={{ headerShown: false }}
       component={CgnMerchantDetailScreen}
     />
     <DetailStack.Screen
       name={CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW}
+      options={{ headerShown: false }}
       component={CgnMerchantLandingWebview}
     />
   </DetailStack.Navigator>

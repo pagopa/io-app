@@ -3,24 +3,33 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useMemo } from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
-import LinearGradient from "react-native-linear-gradient";
-import { IOColors, Icon } from "@pagopa/io-app-design-system";
+import { View, LayoutChangeEvent } from "react-native";
+import {
+  H3,
+  HSpacer,
+  IOColors,
+  Icon,
+  VSpacer,
+  hexToRgba
+} from "@pagopa/io-app-design-system";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Animated, {
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue
+} from "react-native-reanimated";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import BaseScreenComponent from "../../../../../components/screens/BaseScreenComponent";
 import GenericErrorComponent from "../../../../../components/screens/GenericErrorComponent";
 import I18n from "../../../../../i18n";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { emptyContextualHelp } from "../../../../../utils/emptyContextualHelp";
 import {
   getValueOrElse,
   isError,
   isLoading
 } from "../../../../../common/model/RemoteValue";
-import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import {
@@ -31,25 +40,31 @@ import {
   cgnOfflineMerchantsSelector,
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
-import { CATEGORY_GRADIENT_ANGLE, getCategorySpecs } from "../../utils/filters";
+import { getCategorySpecs } from "../../utils/filters";
 import { mixAndSortMerchants } from "../../utils/merchants";
 import { ProductCategoryEnum } from "../../../../../../definitions/cgn/merchants/ProductCategory";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
+import CgnMerchantsListView from "../../components/merchants/CgnMerchantsListView";
 
 export type CgnMerchantListByCategoryScreenNavigationParams = Readonly<{
   category: ProductCategoryEnum;
 }>;
 
-const styles = StyleSheet.create({
-  listContainer: {
-    paddingTop: 5,
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    backgroundColor: IOColors.white,
-    top: -20
-  }
-});
-
 const CgnMerchantsListByCategory = () => {
+  const [titleHeight, setTitleHeight] = React.useState(0);
+  const translationY = useSharedValue(0);
+
+  const getTitleHeight = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setTitleHeight(height);
+  };
+
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    // eslint-disable-next-line functional/immutable-data
+    translationY.value = event.contentOffset.y;
+  });
+  const insets = useSafeAreaInsets();
   const dispatch = useIODispatch();
   const route =
     useRoute<
@@ -105,59 +120,108 @@ const CgnMerchantsListByCategory = () => {
     });
   };
 
-  return (
-    <BaseScreenComponent
-      goBack
-      headerTitle={I18n.t(
-        pipe(
-          categorySpecs,
-          O.fromNullable,
-          O.fold(
-            () => "bonus.cgn.merchantsList.navigationTitle",
-            cs => cs.nameKey
-          )
+  useHeaderSecondLevel({
+    title: I18n.t(
+      pipe(
+        categorySpecs,
+        O.fromNullable,
+        O.fold(
+          () => "bonus.cgn.merchantsList.navigationTitle",
+          cs => cs.nameKey
         )
-      )}
-      contextualHelp={emptyContextualHelp}
-    >
-      {categorySpecs && (
-        <LinearGradient
-          useAngle={true}
-          angle={CATEGORY_GRADIENT_ANGLE}
-          colors={categorySpecs.colors}
-          style={[
-            IOStyles.horizontalContentPadding,
-            {
-              paddingTop: 16,
-              paddingBottom: 32
-            }
-          ]}
-        >
-          <View style={[IOStyles.row, { alignItems: "center" }]}>
-            <H1 color={"white"} style={[IOStyles.flex, { paddingRight: 30 }]}>
-              {I18n.t(categorySpecs.nameKey)}
-            </H1>
-            <Icon name={categorySpecs.icon} size={48} color="white" />
-          </View>
-        </LinearGradient>
-      )}
+      )
+    ),
+    scrollValues: {
+      contentOffsetY: translationY,
+      triggerOffset: titleHeight
+    },
+    transparent: true,
+    canGoBack: true,
+    supportRequest: true
+  });
+
+  const headingAnimatedStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      translationY.value,
+      [0, titleHeight],
+      [1, 0],
+      Animated.Extrapolate.CLAMP
+    ),
+    transform: [
+      {
+        translateY: interpolate(
+          translationY.value,
+          [0, titleHeight],
+          [0, -titleHeight],
+          Animated.Extrapolate.CLAMP
+        )
+      }
+    ]
+  }));
+
+  return (
+    <>
+      <FocusAwareStatusBar
+        backgroundColor={categorySpecs?.colors}
+        barStyle={"light-content"}
+      />
       {isError(onlineMerchants) && isError(offlineMerchants) ? (
-        <SafeAreaView style={IOStyles.flex}>
-          <GenericErrorComponent onRetry={initLoadingLists} />
-        </SafeAreaView>
+        <GenericErrorComponent onRetry={initLoadingLists} />
       ) : (
-        <View style={[IOStyles.flex, styles.listContainer]}>
+        <>
+          {categorySpecs && (
+            <Animated.View
+              onLayout={getTitleHeight}
+              style={[
+                IOStyles.horizontalContentPadding,
+                {
+                  paddingTop: insets.top,
+                  paddingBottom: 24,
+                  backgroundColor: categorySpecs.colors
+                },
+                headingAnimatedStyle
+              ]}
+            >
+              <VSpacer size={48} />
+              <VSpacer size={32} />
+              <View style={[IOStyles.row, { alignItems: "center" }]}>
+                <View
+                  // eslint-disable-next-line react-native/no-color-literals
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: hexToRgba(IOColors.white, 0.2),
+                    height: 66,
+                    width: 66,
+                    borderRadius: 8
+                  }}
+                >
+                  <Icon
+                    name={categorySpecs.icon}
+                    size={32}
+                    color={categorySpecs.textColor}
+                  />
+                </View>
+                <HSpacer size={16} />
+                <H3 color={categorySpecs.textColor}>
+                  {I18n.t(categorySpecs.nameKey)}
+                </H3>
+              </View>
+            </Animated.View>
+          )}
           <CgnMerchantsListView
             merchantList={merchantsAll}
+            onScroll={scrollHandler}
+            titleHeight={titleHeight}
             onItemPress={onItemPress}
             onRefresh={initLoadingLists}
             refreshing={
               isLoading(onlineMerchants) || isLoading(offlineMerchants)
             }
           />
-        </View>
+        </>
       )}
-    </BaseScreenComponent>
+    </>
   );
 };
 

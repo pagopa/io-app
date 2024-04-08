@@ -5,13 +5,7 @@ import * as O from "fp-ts/lib/Option";
 import * as React from "react";
 import { useEffect, useMemo, useRef } from "react";
 import { View, FlatList, ListRenderItemInfo, Platform } from "react-native";
-import {
-  getGradientColorValues,
-  VSpacer,
-  Badge,
-  IOToast,
-  Icon
-} from "@pagopa/io-app-design-system";
+import { VSpacer, Badge, IOToast, Icon } from "@pagopa/io-app-design-system";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { H1 } from "../../../../../components/core/typography/H1";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
@@ -63,7 +57,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       return (
         <CgnMerchantCategoryItem
           title={I18n.t("bonus.cgn.merchantDetail.categories.all")}
-          colors={getGradientColorValues("cgnAll")}
+          colors={"#475A6D"}
           onPress={() => navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST)}
           child={
             <View style={[{ justifyContent: "flex-end" }, IOStyles.flex]}>
