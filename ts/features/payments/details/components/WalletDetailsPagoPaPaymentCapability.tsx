@@ -1,11 +1,10 @@
+import { IOToast, ListItemSwitch } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { ListItemSwitch, IOToast } from "@pagopa/io-app-design-system";
-
-import { hasPaymentFeature } from "../../common/utils";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { useIODispatch } from "../../../../store/hooks";
-import { walletDetailsPagoPaCapabilityToggle } from "../../details/store/actions";
+import { hasPaymentFeature } from "../../common/utils";
+import { paymentsTogglePagoPaCapabilityAction } from "../../details/store/actions";
 
 type Props = { paymentMethod: WalletInfo };
 
@@ -34,7 +33,7 @@ const WalletDetailsPagoPaPaymentCapability: React.FC<Props> = props => {
   const handleSwitchPagoPaCapability = () => {
     setLoading(true);
     dispatch(
-      walletDetailsPagoPaCapabilityToggle.request({
+      paymentsTogglePagoPaCapabilityAction.request({
         walletId: props.paymentMethod.walletId,
         onSuccess: handleSwitchSuccess,
         onFailure: handleSwitchError
