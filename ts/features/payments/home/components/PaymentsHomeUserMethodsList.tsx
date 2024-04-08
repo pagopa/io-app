@@ -8,12 +8,11 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { paymentsGetPaymentUserMethodsAction } from "../../checkout/store/actions/networking";
-import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
 import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
-
+import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
 const loadingCards: Array<PaymentCardSmallProps> = Array.from({
   length: 3
 }).map(() => ({

@@ -661,6 +661,7 @@ authentication:
         cardLocked: CIE card locked
         wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
         wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
+        genericError: Something went wrong! Please try again.
       error:
         readerCardLostTitle: Hold the card again for a few seconds
         readerCardLostTitleiOS: You removed the card too soon.
@@ -835,8 +836,8 @@ email:
     title: We have sent you an email
     subtitle: To confirm your address, follow the instructions we have sent to
     link: Isn't that right?
-    buttonlabelsent: Email sent!    
-    countdowntext: Request new email in 
+    buttonlabelsent: Email sent!
+    countdowntext: Request new email in
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -2939,7 +2940,7 @@ features:
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
-        payment: Metodo di pagamento
+        payment: Payment methods
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
