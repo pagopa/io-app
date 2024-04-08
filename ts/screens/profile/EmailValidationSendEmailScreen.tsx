@@ -51,7 +51,6 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { CountdownProvider } from "../../components/countdown/CountdownProvider";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
@@ -245,15 +244,8 @@ const EmailValidationSendEmailScreen = () => {
     };
   }, [flow, isEmailValidated, stopPollingSaga]);
 
-  useHeaderSecondLevel({
-    title: "",
-    supportRequest: true,
-    contextualHelpMarkdown,
-    canGoBack: false
-  });
-
   return (
-    <SafeAreaView edges={["bottom"]} style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         centerContent={true}
         contentContainerStyle={[
