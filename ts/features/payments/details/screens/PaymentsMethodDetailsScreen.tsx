@@ -2,9 +2,8 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
-import { useDispatch } from "react-redux";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { useIOSelector } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { getDateFromExpiryDate } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
@@ -31,7 +30,7 @@ export type PaymentsMethodDetailsScreenRouteProps = RouteProp<
 
 const PaymentsMethodDetailsScreen = () => {
   const route = useRoute<PaymentsMethodDetailsScreenRouteProps>();
-  const dispatch = useDispatch();
+  const dispatch = useIODispatch();
 
   const { walletId } = route.params;
 
