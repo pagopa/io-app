@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ButtonLink } from "@pagopa/io-app-design-system";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { useIOBottomSheetAutoresizableModal } from "../../../utils/hooks/bottomSheet";
@@ -9,6 +9,13 @@ import { UIMessageId } from "../../messages/types";
 import { trackPNShowF24 } from "../analytics";
 import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
+
+const styles = StyleSheet.create({
+  buttonLinkContainer: {
+    justifyContent: "center",
+    alignSelf: "center"
+  }
+});
 
 type F24ListBottomSheetLinkProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;
@@ -48,7 +55,7 @@ export const F24ListBottomSheetLink = ({
     100
   );
   return (
-    <>
+    <View style={styles.buttonLinkContainer}>
       <ButtonLink
         onPress={() => {
           trackPNShowF24();
@@ -58,6 +65,6 @@ export const F24ListBottomSheetLink = ({
         accessibilityLabel={I18n.t("features.pn.details.f24Section.showAll")}
       />
       {bottomSheet}
-    </>
+    </View>
   );
 };
