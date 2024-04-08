@@ -51,7 +51,6 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import { CountdownProvider } from "../../components/countdown/CountdownProvider";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
-import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { FCI_ROUTES } from "../../features/fci/navigation/routes";
 import ROUTES from "../../navigation/routes";
@@ -69,10 +68,7 @@ export type SendEmailValidationScreenProp = {
   isFciEditEmailFlow?: boolean;
   isEditingEmailMode?: boolean;
 };
-const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
-  title: "email.validate.title",
-  body: "email.validate.help"
-};
+
 const EmailValidationSendEmailScreen = () => {
   const props =
     useRoute<
