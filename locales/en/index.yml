@@ -215,7 +215,7 @@ tablet:
 rooted:
   title: Looks like the security of your device has been compromised!
   body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
-  learnMoreButton: 
+  learnMoreButton:
     title: What does it mean?
   learnMoreBottomsheet:
     title: Device security
@@ -2932,6 +2932,7 @@ features:
         close: Chiudi
     cards:
       categories:
+        all: All
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet

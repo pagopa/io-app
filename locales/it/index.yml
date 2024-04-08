@@ -215,7 +215,7 @@ tablet:
 rooted:
   title: Sembra che la sicurezza del tuo dispositivo sia compromessa!
   body: Se premi su ‘Continua’, accetti di proseguire a tuo rischio nella navigazione, altrimenti chiudi l’app.
-  learnMoreButton: 
+  learnMoreButton:
     title: Cosa significa?
   learnMoreBottomsheet:
     title: Sicurezza del dispositivo
@@ -2932,6 +2932,7 @@ features:
         close: Chiudi
     cards:
       categories:
+        all: Tutti
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
