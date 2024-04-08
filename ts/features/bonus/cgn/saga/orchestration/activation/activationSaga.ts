@@ -1,6 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { call } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../../navigation/routes";
 import {
   executeWorkUnit,
   withResetNavigationStack
@@ -8,6 +9,7 @@ import {
 import { navigateBack } from "../../../../../../store/actions/navigation";
 import { SagaCallReturnType } from "../../../../../../types/utils";
 import { MESSAGES_ROUTES } from "../../../../../messages/navigation/routes";
+import { WalletRoutes } from "../../../../../newWallet/navigation/routes";
 import { BONUS_ROUTES } from "../../../../common/navigation/navigator";
 import {
   navigateToCgnActivationInformationTos,
@@ -20,7 +22,6 @@ import {
   cgnActivationComplete,
   cgnActivationFailure
 } from "../../../store/actions/activation";
-import ROUTES from "../../../../../../navigation/routes";
 
 function* cgnActivationWorkUnit() {
   return yield* call(executeWorkUnit, {
@@ -53,6 +54,11 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
   if (result === "completed") {
     if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
       yield* call(navigateBack);
+    } else if (initialScreen?.name === WalletRoutes.WALLET_CARD_ONBOARDING) {
+      yield* call(NavigationService.navigate, ROUTES.MAIN, {
+        screen: ROUTES.WALLET_HOME,
+        params: { newMethodAdded: true }
+      });
     }
     yield* call(navigateToCgnDetails);
   }

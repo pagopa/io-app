@@ -8,7 +8,10 @@ import React from "react";
 import { ScrollView } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
 import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
@@ -17,15 +20,23 @@ import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/action
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
+import { WalletRoutes } from "../navigation/routes";
 import { selectWalletCards } from "../store/selectors";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
 const WalletHomeScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
 
   const cards = useIOSelector(selectWalletCards);
   const shouldDisplayNewElementToast = route.params?.newMethodAdded || false;
+
+  const handleAddToWalletButtonPress = () => {
+    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
+      screen: WalletRoutes.WALLET_CARD_ONBOARDING
+    });
+  };
 
   React.useEffect(() => {
     // TODO SIW-960 Move cards request to app startup
@@ -61,7 +72,7 @@ const WalletHomeScreen = ({ route }: Props) => {
         accessibilityLabel: I18n.t("features.wallet.home.cta"),
         icon: "addSmall",
         iconPosition: "end",
-        onPress: () => null
+        onPress: handleAddToWalletButtonPress
       }}
       excludeSafeAreaMargins={true}
     >

@@ -22,7 +22,6 @@ type OwnProps = Readonly<{
   onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
   isLoadingMethods?: boolean;
   isLoadingWebView?: boolean;
-  header?: React.ReactElement;
 }>;
 
 type PaymentMethodItemProps = {
@@ -62,8 +61,7 @@ const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
   onSelectPaymentMethod,
   isLoadingMethods,
-  isLoadingWebView,
-  header
+  isLoadingWebView
 }: OwnProps) => {
   const selectedPaymentMethodId = useIOSelector(
     selectPaymentOnboardingSelectedMethod
@@ -78,7 +76,6 @@ const WalletOnboardingPaymentMethodsList = ({
       contentContainerStyle={IOStyles.horizontalContentPadding}
       data={paymentMethods}
       keyExtractor={item => item.id}
-      ListHeaderComponent={header}
       ListFooterComponent={<ListFooter />}
       ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
