@@ -17,7 +17,6 @@ import {
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
-import { useHeaderHeight } from "@react-navigation/elements";
 import * as React from "react";
 import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -47,7 +46,7 @@ type OperationResultScreenContentProps = WithTestID<{
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
-  visibleHeader?: boolean;
+  headerHeight?: number;
 }>;
 
 type PropsComposedBody = {
@@ -76,60 +75,56 @@ const OperationResultScreenContent = ({
   secondaryAction,
   children,
   testID,
-  visibleHeader = false
-}: React.PropsWithChildren<OperationResultScreenContentProps>) => {
-  const headerHeight = useHeaderHeight();
+  headerHeight
+}: React.PropsWithChildren<OperationResultScreenContentProps>) => (
+  <SafeAreaView style={styles.container} testID={testID}>
+    <ScrollView
+      centerContent={true}
+      contentContainerStyle={[
+        styles.wrapper,
+        /* Android fallback because `centerContent` is only an iOS property */
+        Platform.OS === "android" && styles.wrapper_android
+      ]}
+      style={{ marginTop: headerHeight ? -headerHeight : undefined }}
+    >
+      {pictogram && (
+        <View style={IOStyles.alignCenter}>
+          <Pictogram name={pictogram} size={120} />
+          <VSpacer size={24} />
+        </View>
+      )}
+      <H3 style={styles.text}>{title}</H3>
+      {subtitle && (
+        <>
+          <VSpacer size={8} />
+          {typeof subtitle === "string" ? (
+            <Body style={styles.text}>{subtitle}</Body>
+          ) : (
+            <ComposedBodyFromArray subtitle={subtitle} textAlign="center" />
+          )}
+        </>
+      )}
+      {action && (
+        <View style={IOStyles.alignCenter}>
+          <VSpacer size={24} />
+          <View>
+            <ButtonSolid {...action} />
+          </View>
+        </View>
+      )}
+      {secondaryAction && (
+        <View style={IOStyles.alignCenter}>
+          <VSpacer size={24} />
+          <View>
+            <ButtonLink {...secondaryAction} />
+          </View>
+        </View>
+      )}
 
-  return (
-    <SafeAreaView style={styles.container} testID={testID}>
-      <ScrollView
-        centerContent={true}
-        contentContainerStyle={[
-          styles.wrapper,
-          /* Android fallback because `centerContent` is only an iOS property */
-          Platform.OS === "android" && styles.wrapper_android
-        ]}
-        style={{ marginTop: visibleHeader ? -headerHeight : undefined }}
-      >
-        {pictogram && (
-          <View style={IOStyles.alignCenter}>
-            <Pictogram name={pictogram} size={120} />
-            <VSpacer size={24} />
-          </View>
-        )}
-        <H3 style={styles.text}>{title}</H3>
-        {subtitle && (
-          <>
-            <VSpacer size={8} />
-            {typeof subtitle === "string" ? (
-              <Body style={styles.text}>{subtitle}</Body>
-            ) : (
-              <ComposedBodyFromArray subtitle={subtitle} textAlign="center" />
-            )}
-          </>
-        )}
-        {action && (
-          <View style={IOStyles.alignCenter}>
-            <VSpacer size={24} />
-            <View>
-              <ButtonSolid {...action} />
-            </View>
-          </View>
-        )}
-        {secondaryAction && (
-          <View style={IOStyles.alignCenter}>
-            <VSpacer size={24} />
-            <View>
-              <ButtonLink {...secondaryAction} />
-            </View>
-          </View>
-        )}
-
-        {React.isValidElement(children) && React.cloneElement(children)}
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+      {React.isValidElement(children) && React.cloneElement(children)}
+    </ScrollView>
+  </SafeAreaView>
+);
 
 const styles = StyleSheet.create({
   container: {

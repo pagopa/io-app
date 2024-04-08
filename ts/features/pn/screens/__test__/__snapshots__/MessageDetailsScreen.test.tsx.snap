@@ -2193,6 +2193,11 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                           handlerType="NativeViewGestureHandler"
                           onGestureHandlerEvent={[Function]}
                           onGestureHandlerStateChange={[Function]}
+                          style={
+                            Object {
+                              "marginTop": undefined,
+                            }
+                          }
                           waitFor={
                             Array [
                               Object {

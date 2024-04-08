@@ -204,6 +204,11 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                           handlerType="NativeViewGestureHandler"
                           onGestureHandlerEvent={[Function]}
                           onGestureHandlerStateChange={[Function]}
+                          style={
+                            Object {
+                              "marginTop": undefined,
+                            }
+                          }
                           waitFor={
                             Array [
                               Object {

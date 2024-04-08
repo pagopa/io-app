@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo } from "react";
 import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
+import { useHeaderHeight } from "@react-navigation/elements";
 import I18n from "../../../i18n";
 import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -42,7 +43,7 @@ const EmailAlreadyTakenScreen = () => {
 
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-
+  const headerHeight = useHeaderHeight();
   const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
   const flow = getFlowType(true, isFirstOnBoarding);
   const navigateToInsertEmailScreen = useCallback(() => {
@@ -108,7 +109,7 @@ const EmailAlreadyTakenScreen = () => {
         ),
         onPress: confirmButtonOnPress
       }}
-      visibleHeader={true}
+      headerHeight={headerHeight}
     />
   );
 };
