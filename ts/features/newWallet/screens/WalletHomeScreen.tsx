@@ -4,6 +4,7 @@ import {
   IOStyles,
   IOToast
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
@@ -30,7 +31,7 @@ const WalletHomeScreen = ({ route }: Props) => {
   const navigation = useIONavigation();
 
   const cards = useIOSelector(selectWalletCards);
-  const shouldDisplayNewElementToast = route.params?.newMethodAdded || false;
+  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
   const handleAddToWalletButtonPress = () => {
     navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
@@ -45,11 +46,16 @@ const WalletHomeScreen = ({ route }: Props) => {
     dispatch(cgnDetails.request());
   }, [dispatch]);
 
-  React.useEffect(() => {
-    if (shouldDisplayNewElementToast) {
-      IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
-    }
-  }, [shouldDisplayNewElementToast]);
+  // Handles the "New element added" toast display once the user returns to this screen
+  useFocusEffect(
+    React.useCallback(() => {
+      if (isNewElementAdded.current) {
+        IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
+        // eslint-disable-next-line functional/immutable-data
+        isNewElementAdded.current = false;
+      }
+    }, [isNewElementAdded])
+  );
 
   if (cards.length === 0) {
     return (
