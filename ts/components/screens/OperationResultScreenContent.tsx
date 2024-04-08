@@ -18,8 +18,9 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type PartialAllowedColors = Extract<
   IOColors,
@@ -46,7 +47,7 @@ type OperationResultScreenContentProps = WithTestID<{
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
-  headerHeight?: number;
+  isVisibleHeader?: boolean;
 }>;
 
 type PropsComposedBody = {
@@ -75,9 +76,13 @@ const OperationResultScreenContent = ({
   secondaryAction,
   children,
   testID,
-  headerHeight
+  isVisibleHeader
 }: React.PropsWithChildren<OperationResultScreenContentProps>) => (
-  <SafeAreaView style={styles.container} testID={testID}>
+  <SafeAreaView
+    edges={isVisibleHeader ? ["bottom"] : undefined}
+    style={styles.container}
+    testID={testID}
+  >
     <ScrollView
       centerContent={true}
       contentContainerStyle={[
@@ -85,7 +90,6 @@ const OperationResultScreenContent = ({
         /* Android fallback because `centerContent` is only an iOS property */
         Platform.OS === "android" && styles.wrapper_android
       ]}
-      style={{ marginTop: headerHeight ? -headerHeight : undefined }}
     >
       {pictogram && (
         <View style={IOStyles.alignCenter}>

@@ -1150,7 +1150,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
                         style={
                           Object {
                             "flexGrow": 1,
@@ -1176,11 +1176,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                           handlerType="NativeViewGestureHandler"
                           onGestureHandlerEvent={[Function]}
                           onGestureHandlerStateChange={[Function]}
-                          style={
-                            Object {
-                              "marginTop": undefined,
-                            }
-                          }
                           waitFor={
                             Array [
                               Object {
@@ -1450,7 +1445,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                             </Text>
                           </View>
                         </RCTScrollView>
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}
