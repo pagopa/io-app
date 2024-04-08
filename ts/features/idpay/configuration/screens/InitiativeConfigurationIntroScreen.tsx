@@ -1,7 +1,3 @@
-import React from "react";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import { View, SafeAreaView, ScrollView, StyleSheet } from "react-native";
-import { useActor } from "@xstate/react";
 import {
   Body,
   H1,
@@ -9,22 +5,25 @@ import {
   IOStyles,
   Icon,
   LabelSmall,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
+import { useActor } from "@xstate/react";
+import React from "react";
+import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import { H3 } from "../../../../components/core/typography/H3";
 import { H4 } from "../../../../components/core/typography/H4";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import TouchableDefaultOpacity from "../../../../components/TouchableDefaultOpacity";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import InstitutionIcon from "../../../../../img/features/idpay/institution.svg";
-import CreditCardIcon from "../../../../../img/features/idpay/creditcard.svg";
-import { useConfigurationMachineService } from "../xstate/provider";
-import { LOADING_TAG } from "../../../../xstate/utils";
 import I18n from "../../../../i18n";
-import { ConfigurationMode } from "../xstate/context";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { LOADING_TAG } from "../../../../xstate/utils";
 import { IDPayConfigurationParamsList } from "../navigation/navigator";
+import { ConfigurationMode } from "../xstate/context";
+import { useConfigurationMachineService } from "../xstate/provider";
 
 type InitiativeConfigurationIntroScreenRouteParams = {
   initiativeId: string;
@@ -64,6 +63,8 @@ const InitiativeConfigurationIntroScreen = () => {
   const configurationMachine = useConfigurationMachineService();
   const [state, send] = useActor(configurationMachine);
 
+  const theme = useIOTheme();
+
   const isLoading = state.tags.has(LOADING_TAG);
 
   const handleContinuePress = () => {
@@ -78,12 +79,24 @@ const InitiativeConfigurationIntroScreen = () => {
 
   const requiredDataItems: ReadonlyArray<RequiredDataItemProps> = [
     {
-      icon: <InstitutionIcon width={24} height={24} />,
+      icon: (
+        <Icon
+          name="institution"
+          size={24}
+          color={theme["interactiveElem-default"]}
+        />
+      ),
       title: I18n.t("idpay.configuration.intro.requiredData.ibanTitle"),
       subTitle: I18n.t("idpay.configuration.intro.requiredData.ibanSubtitle")
     },
     {
-      icon: <CreditCardIcon width={24} height={24} />,
+      icon: (
+        <Icon
+          name="creditCard"
+          size={24}
+          color={theme["interactiveElem-default"]}
+        />
+      ),
       title: I18n.t("idpay.configuration.intro.requiredData.instrumentTitle"),
       subTitle: I18n.t(
         "idpay.configuration.intro.requiredData.instrumentSubtitle"
