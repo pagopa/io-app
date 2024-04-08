@@ -2,6 +2,7 @@ import { Body, H6, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { View } from "react-native";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import I18n from "../../../../i18n";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { WalletParamsList } from "../../../../navigation/params/WalletParamsList";
@@ -9,12 +10,10 @@ import ROUTES from "../../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { IdPayInstrumentInitiativesList } from "../../../idpay/wallet/components/IdPayInstrumentInitiativesList";
 import {
-  idPayInitiativesFromInstrumentGet,
   idPayInitiativesFromInstrumentRefreshStart,
   idPayInitiativesFromInstrumentRefreshStop
 } from "../../../idpay/wallet/store/actions";
 import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 
 type Props = {
   paymentMethod: WalletInfo;
@@ -34,11 +33,6 @@ const WalletDetailsPaymentMethodInitiatives = (
   const dispatch = useIODispatch();
 
   const startInitiativeRefreshPolling = React.useCallback(() => {
-    dispatch(
-      idPayInitiativesFromInstrumentGet.request({
-        idWallet: idWalletString
-      })
-    );
     dispatch(
       idPayInitiativesFromInstrumentRefreshStart({
         idWallet: idWalletString

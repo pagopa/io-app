@@ -4,6 +4,7 @@ import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { SagaCallReturnType } from "../../../../types/utils";
+import { getDateFromExpiryDate } from "../../../../utils/dates";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
@@ -27,7 +28,7 @@ const mapWalletsToCards = (
       hpan: details.lastFourDigits,
       abiCode: details.abi,
       brand: details.brand,
-      expireDate: details.expiryDate,
+      expireDate: getDateFromExpiryDate(details.expiryDate),
       holderEmail: details.maskedEmail,
       holderPhone: details.maskedNumber
     };
