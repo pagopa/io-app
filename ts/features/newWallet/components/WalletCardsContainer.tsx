@@ -6,11 +6,8 @@ import {
   getWalletCardsByCategorySelector,
   selectWalletCards
 } from "../store/selectors";
-import {
-  WalletCardCategory,
-  walletCardCategoryIcons,
-  walletCardComponentMapper
-} from "../types";
+import { WalletCardCategory, walletCardCategoryIcons } from "../types";
+import { renderWalletCardFn } from "../utils";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 
 const WalletCardsContainer = () => {
@@ -20,12 +17,7 @@ const WalletCardsContainer = () => {
   if (cards.length === 1) {
     // Single card does not need grouping
     const card = cards[0];
-    const Component = walletCardComponentMapper[card.type];
-    return (
-      Component && (
-        <Component testID={`walletCardTestID_${card.key}`} cardProps={card} />
-      )
-    );
+    return renderWalletCardFn(card);
   }
 
   return (
