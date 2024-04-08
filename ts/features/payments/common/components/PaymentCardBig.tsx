@@ -182,16 +182,22 @@ const BottomSectionText = (props: { string: string; a11yLabel: string }) => (
     {props.string}
   </H6>
 );
-const ExpDateComponent = ({ expDate }: { expDate: Date }) => (
-  <>
-    <VSpacer size={8} />
-    <LabelSmall color="grey-650" weight="Regular">
-      {I18n.t("wallet.creditCard.validUntil", {
-        expDate: format(expDate, "MM/YY")
-      })}
-    </LabelSmall>
-  </>
-);
+const ExpDateComponent = ({ expDate }: { expDate?: Date }) => {
+  if (expDate) {
+    return (
+      <>
+        <VSpacer size={8} />
+        <LabelSmall color="grey-650" weight="Regular">
+          {I18n.t("wallet.creditCard.validUntil", {
+            expDate: format(expDate, "MM/YY")
+          })}
+        </LabelSmall>
+      </>
+    );
+  }
+
+  return null;
+};
 
 // ------------- skeleton
 const CardSkeleton = ({ testID }: { testID?: string }) => (
@@ -259,14 +265,14 @@ type PaymentCardStandardProps =
     }
   | {
       cardType: "PAGOBANCOMAT";
-      expirationDate: Date;
+      expirationDate?: Date;
       abiCode?: string;
       holderName: string;
       bankName?: string;
     }
   | {
       cardType: "COBADGE";
-      expirationDate: Date;
+      expirationDate?: Date;
       abiCode?: string;
       bankName?: string;
       holderName: string;
@@ -274,7 +280,7 @@ type PaymentCardStandardProps =
     }
   | {
       cardType: "CREDIT";
-      expirationDate: Date;
+      expirationDate?: Date;
       holderName: string;
       hpan: string;
       cardIcon?: IOLogoPaymentExtType;

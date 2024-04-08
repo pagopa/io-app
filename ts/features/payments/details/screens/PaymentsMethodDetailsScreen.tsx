@@ -1,25 +1,20 @@
-import { IOLogoPaymentExtType } from "@pagopa/io-app-design-system";
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { RouteProp, useRoute } from "@react-navigation/native";
 import * as React from "react";
-import { useDispatch } from "react-redux";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import I18n from "../../../../i18n";
-import {
-  AppParamsList,
-  IOStackNavigationProp
-} from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus";
 import { getDateFromExpiryDate } from "../../../../utils/dates";
 import { capitalize } from "../../../../utils/strings";
+import { idPayInitiativesFromInstrumentGet } from "../../../idpay/wallet/store/actions";
 import { idPayAreInitiativesFromInstrumentLoadingSelector } from "../../../idpay/wallet/store/reducers";
-import { PaymentCardBig } from "../../common/components/PaymentCardBig";
+import { PaymentCardProps } from "../../common/components/PaymentCard";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { PaymentsMethodDetailsBaseScreenComponent } from "../components/PaymentsMethodDetailsBaseScreenComponent";
+import { PaymentsMethodDetailsDeleteButton } from "../components/PaymentsMethodDetailsDeleteButton";
+import { PaymentsMethodDetailsErrorContent } from "../components/PaymentsMethodDetailsErrorContent";
 import WalletDetailsPaymentMethodFeatures from "../components/WalletDetailsPaymentMethodFeatures";
-import WalletDetailsPaymentMethodScreen from "../components/WalletDetailsPaymentMethodScreen";
 import { PaymentsMethodDetailsParamsList } from "../navigation/params";
 import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
@@ -33,45 +28,63 @@ export type PaymentsMethodDetailsScreenRouteProps = RouteProp<
   "PAYMENT_METHOD_DETAILS_SCREEN"
 >;
 
-const generateCardComponent = (details: UIWalletInfoDetails) => {
-  // TODO: IOBP-559
-  // This part is still type-dependant. We should refactor the component to allow
-  // unconditional rendering of every info of the card
+const PaymentsMethodDetailsScreen = () => {
+  const route = useRoute<PaymentsMethodDetailsScreenRouteProps>();
+  const dispatch = useIODispatch();
 
-  if (details.maskedEmail !== undefined) {
-    return (
-      <PaymentCardBig
-        testID="CreditCardComponent"
-        cardType="PAYPAL"
-        holderEmail={details.maskedEmail}
-      />
-    );
-  }
+  const { walletId } = route.params;
 
-  if (details.maskedNumber !== undefined) {
-    return (
-      <PaymentCardBig
-        testID="CreditCardComponent"
-        cardType="BANCOMATPAY"
-        holderName={""}
-        phoneNumber={details.maskedNumber}
-      />
-    );
-  }
-
-  return (
-    <PaymentCardBig
-      testID="CreditCardComponent"
-      cardType="CREDIT"
-      expirationDate={getDateFromExpiryDate(details.expiryDate)}
-      holderName={""}
-      hpan={details.lastFourDigits || ""}
-      cardIcon={details.brand?.toLowerCase() as IOLogoPaymentExtType}
-    />
+  const isIdpayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const walletDetailsPot = useIOSelector(selectPaymentMethodDetails);
+  const areIdpayInitiativesLoading = useIOSelector(
+    idPayAreInitiativesFromInstrumentLoadingSelector
   );
+
+  const isLoading =
+    pot.isLoading(walletDetailsPot) ||
+    pot.isUpdating(walletDetailsPot) ||
+    areIdpayInitiativesLoading;
+
+  React.useEffect(() => {
+    dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
+    if (isIdpayEnabled) {
+      dispatch(
+        idPayInitiativesFromInstrumentGet.request({
+          idWallet: walletId
+        })
+      );
+    }
+  }, [walletId, dispatch, isIdpayEnabled]);
+
+  if (isLoading) {
+    return (
+      <PaymentsMethodDetailsBaseScreenComponent
+        card={{ testID: "CreditCardComponent", isLoading: true }}
+      />
+    );
+  }
+
+  if (pot.isSome(walletDetailsPot) && !isLoading) {
+    const paymentMethod = walletDetailsPot.value;
+    const cardProps = getPaymentCardPropsFromWallet(paymentMethod);
+    const headerTitle = getCardHeaderTitle(paymentMethod.details);
+
+    return (
+      <PaymentsMethodDetailsBaseScreenComponent
+        card={cardProps}
+        headerTitle={headerTitle}
+      >
+        <WalletDetailsPaymentMethodFeatures paymentMethod={paymentMethod} />
+        <VSpacer size={24} />
+        <PaymentsMethodDetailsDeleteButton paymentMethod={paymentMethod} />
+      </PaymentsMethodDetailsBaseScreenComponent>
+    );
+  }
+
+  return <PaymentsMethodDetailsErrorContent walletId={walletId} />;
 };
 
-const generateCardHeaderTitle = (details?: UIWalletInfoDetails) => {
+const getCardHeaderTitle = (details?: UIWalletInfoDetails) => {
   if (details?.lastFourDigits !== undefined) {
     const capitalizedCardCircuit = capitalize(
       details.brand?.toLowerCase() ?? ""
@@ -82,92 +95,19 @@ const generateCardHeaderTitle = (details?: UIWalletInfoDetails) => {
   return "";
 };
 
-/**
- * Detail screen for a credit card
- */
-const PaymentsMethodDetailsScreen = () => {
-  const route = useRoute<PaymentsMethodDetailsScreenRouteProps>();
-  const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const dispatch = useDispatch();
-  const { walletId } = route.params;
-  const walletDetailsPot = useIOSelector(selectPaymentMethodDetails);
+const getPaymentCardPropsFromWallet = (
+  wallet: WalletInfo
+): PaymentCardProps => {
+  const details = wallet.details as UIWalletInfoDetails;
 
-  const isLoadingWalletDetails = pot.isLoading(walletDetailsPot);
-  const isErrorWalletDetails = pot.isError(walletDetailsPot);
-
-  const areIdpayInitiativesLoading = useIOSelector(
-    idPayAreInitiativesFromInstrumentLoadingSelector
-  );
-
-  const WalletDetailsGenericFailure = () => (
-    <OperationResultScreenContent
-      title={I18n.t("wallet.methodDetails.error.title")}
-      subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
-      pictogram="umbrellaNew"
-      action={{
-        label: I18n.t("wallet.methodDetails.error.primaryButton"),
-        accessibilityLabel: I18n.t("wallet.methodDetails.error.primaryButton"),
-        onPress: () => navigation.pop()
-      }}
-      secondaryAction={{
-        label: I18n.t("wallet.methodDetails.error.secondaryButton"),
-        accessibilityLabel: I18n.t(
-          "wallet.methodDetails.error.secondaryButton"
-        ),
-        onPress: handleOnRetry
-      }}
-    />
-  );
-
-  const handleOnRetry = () => {
-    dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
+  return {
+    hpan: details.lastFourDigits,
+    abiCode: details.abi,
+    brand: details.brand,
+    expireDate: getDateFromExpiryDate(details.expiryDate),
+    holderEmail: details.maskedEmail,
+    holderPhone: details.maskedNumber
   };
-
-  React.useEffect(() => {
-    dispatch(paymentsGetMethodDetailsAction.request({ walletId }));
-  }, [walletId, dispatch]);
-
-  if (isLoadingWalletDetails) {
-    return (
-      <WalletDetailsPaymentMethodScreen
-        paymentMethod={pot.toUndefined(walletDetailsPot)}
-        card={<PaymentCardBig testID="CreditCardComponent" isLoading={true} />}
-        content={<></>}
-      />
-    );
-  }
-
-  if (pot.isSome(walletDetailsPot)) {
-    const cardComponent = pipe(
-      walletDetailsPot.value.details,
-      O.fromNullable,
-      O.fold(
-        () => <PaymentCardBig testID="CreditCardComponent" isLoading={true} />,
-        details => generateCardComponent(details)
-      )
-    );
-
-    return (
-      <LoadingSpinnerOverlay
-        isLoading={areIdpayInitiativesLoading}
-        loadingOpacity={100}
-      >
-        <WalletDetailsPaymentMethodScreen
-          paymentMethod={walletDetailsPot.value}
-          card={cardComponent}
-          content={
-            <WalletDetailsPaymentMethodFeatures
-              paymentMethod={walletDetailsPot.value}
-            />
-          }
-          headerTitle={generateCardHeaderTitle(walletDetailsPot.value.details)}
-        />
-      </LoadingSpinnerOverlay>
-    );
-  } else if (isErrorWalletDetails) {
-    return <WalletDetailsGenericFailure />;
-  }
-  return null;
 };
 
 export default PaymentsMethodDetailsScreen;
