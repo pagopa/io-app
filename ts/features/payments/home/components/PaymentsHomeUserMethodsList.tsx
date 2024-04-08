@@ -1,17 +1,18 @@
-import { IOStyles, ListItemHeader } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect } from "@react-navigation/native";
 import * as React from "react";
 import { StyleSheet, View } from "react-native";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import I18n from "../../../../i18n";
-import { useIOSelector } from "../../../../store/hooks";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
-import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { paymentsGetPaymentUserMethodsAction } from "../../checkout/store/actions/networking";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
 import { PaymentCardsCarousel } from "../../common/components/PaymentCardsCarousel";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
-
+import { walletPaymentUserWalletsSelector } from "../../checkout/store/selectors";
 const loadingCards: Array<PaymentCardSmallProps> = Array.from({
   length: 3
 }).map(() => ({
@@ -22,11 +23,20 @@ type PaymentMethodsSectionProps = {
   isLoading?: boolean;
 };
 
-const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
+const PaymentsHomeUserMethodsList = ({
+  isLoading
+}: PaymentMethodsSectionProps) => {
   const navigation = useIONavigation();
+  const dispatch = useIODispatch();
   const paymentMethodsPot = useIOSelector(walletPaymentUserWalletsSelector);
   const isLoadingSection = isLoading || pot.isLoading(paymentMethodsPot);
   const methods = pot.getOrElse(paymentMethodsPot, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(paymentsGetPaymentUserMethodsAction.request());
+    }, [dispatch])
+  );
 
   const mapMethods = (
     // this function is here to allow future navigation usage
@@ -69,7 +79,7 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
   };
 
   return (
-    <View style={IOStyles.horizontalContentPadding}>
+    <>
       <ListItemHeader
         label={I18n.t("payment.homeScreen.methodsSection.header")}
         accessibilityLabel={I18n.t("payment.homeScreen.methodsSection.header")}
@@ -84,7 +94,7 @@ const PaymentMethodsSection = ({ isLoading }: PaymentMethodsSectionProps) => {
       <View style={styles.fixedCardsHeight}>
         <PaymentCardsCarousel cards={renderMethods} />
       </View>
-    </View>
+    </>
   );
 };
 
@@ -92,4 +102,4 @@ const styles = StyleSheet.create({
   fixedCardsHeight: { height: 96 }
 });
 
-export default PaymentMethodsSection;
+export { PaymentsHomeUserMethodsList };
