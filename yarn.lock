@@ -3343,10 +3343,10 @@
     write-yaml-file "^4.1.3"
     yargs "^15.0.1"
 
-"@pagopa/react-native-cie@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.2.0.tgz#7c664e810dfb4ea4e86c2a1a9e7c92ce481781a2"
-  integrity sha512-Dge9dKfsyqNvdc6cn/kEKoAGRQtvsVkO7zNz/oK/CgBGnw9V0h0A1PlogjvN1gsFpGMVuCOC3UiZocxMK95/0A==
+"@pagopa/react-native-cie@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@pagopa/react-native-cie/-/react-native-cie-1.2.1.tgz#f38ca7c714c4943da839d232a4c076cc78f0d833"
+  integrity sha512-6v5DAzy5aTTBag+1idSyClTWRBhZ66kPoh5WXGxZsbKQQSolWhcTyl7pmWDeVG69UnkhIuy8ggXLGQnkrfOSOw==
 
 "@pagopa/ts-commons@^10.15.0":
   version "10.15.0"
