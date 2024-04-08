@@ -325,8 +325,12 @@ export const toAndroidCacheTimestamp = () =>
  * This function returns a Date object from a string in format "YYYYMM"
  * @param expiryDate
  */
-export const getDateFromExpiryDate = (expiryDate: string): Date => {
-  const year = +expiryDate.slice(0, 4);
-  const month = +expiryDate.slice(4, 6);
-  return new Date(year, month - 1);
+export const getDateFromExpiryDate = (expiryDate: string): Date | undefined => {
+  try {
+    const year = +expiryDate.slice(0, 4);
+    const month = +expiryDate.slice(4, 6);
+    return new Date(year, month - 1);
+  } catch {
+    return undefined;
+  }
 };

@@ -1411,14 +1411,15 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                               }
                             />
                             <Text
-                              color="grey-650"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              allowFontScaling={false}
+                              color="bluegrey"
+                              defaultColor="bluegrey"
+                              defaultWeight="Regular"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
+                                  "fontSize": 16,
+                                  "lineHeight": 24,
                                 }
                               }
                               style={
@@ -1427,11 +1428,11 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                     "textAlign": "center",
                                   },
                                   Object {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
+                                    "fontSize": 16,
+                                    "lineHeight": 24,
                                   },
                                   Object {
-                                    "color": "#636B82",
+                                    "color": "#475A6D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
