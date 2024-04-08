@@ -10,6 +10,7 @@ from slack.errors import SlackApiError
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 SLACK_TOKEN = os.environ.get("IO_APP_SLACK_HELPER_BOT_TOKEN", None)
+TEST_FILE = os.environ.get("TEST", None)
 tagged_people = ["<!here>"]
 SLACK_CHANNEL = "#io_dev_app_feed"
 BUILD_ID = os.environ.get("BUILD_ID", None)
@@ -27,8 +28,8 @@ def send_slack_message():
             token=SLACK_TOKEN, ssl=ssl_context
         )
         tags = " ".join(tagged_people)
-        message = "[E2E Tests] :warning: %s e2e tests have failed (<%s%s|here>)" % (
-            tags, BASE_ACTION_URI, BUILD_ID)
+        message = "[E2E Tests] :warning: %s e2e test \`%s\` have failed (<%s%s|here>)" % (
+            tags, TEST_FILE, BASE_ACTION_URI, BUILD_ID)
         message_blocks = []
         message_blocks.append({
             "type": "section",

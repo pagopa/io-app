@@ -1,9 +1,9 @@
 import { NewTransactionResponse } from "../../../../../definitions/pagopa/ecommerce/NewTransactionResponse";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
-import { PaymentStartOrigin } from "../../payment/types";
-import { WalletPaymentOutcomeEnum } from "../../payment/types/PaymentOutcomeEnum";
-import { WalletPaymentFailure } from "../../payment/types/WalletPaymentFailure";
+import { PaymentStartOrigin } from "../../checkout/types";
+import { WalletPaymentOutcomeEnum } from "../../checkout/types/PaymentOutcomeEnum";
+import { WalletPaymentFailure } from "../../checkout/types/WalletPaymentFailure";
 
 export type PaymentHistory = {
   startOrigin?: PaymentStartOrigin;

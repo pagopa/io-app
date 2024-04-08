@@ -1,6 +1,6 @@
 import { getType } from "typesafe-actions";
 import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
+import { constVoid, pipe } from "fp-ts/lib/function";
 import { cdcEnabled } from "../../../../config";
 import { mixpanel } from "../../../../mixpanel";
 import { Action } from "../../../../store/actions/types";
@@ -11,7 +11,7 @@ import {
 
 const trackCdc =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(cdcRequestBonusList.request):
       case getType(cdcRequestBonusList.success):
@@ -44,10 +44,9 @@ const trackCdc =
 
         return mp.track(action.type, { status: action.payload.kind, value });
     }
-    return Promise.resolve();
   };
 
 const emptyTracking = (_: NonNullable<typeof mixpanel>) => (__: Action) =>
-  Promise.resolve();
+  constVoid();
 
 export default cdcEnabled ? trackCdc : emptyTracking;

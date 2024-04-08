@@ -6,8 +6,8 @@ import { pipe } from "fp-ts/lib/function";
 import * as React from "react";
 import URLParse from "url-parse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletOnboardingStartupSelector } from "../store";
-import { walletStartOnboarding } from "../store/actions";
+import { selectPaymentOnboardingRequestResult } from "../store/selectors";
+import { paymentsStartOnboardingAction } from "../store/actions";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
@@ -37,7 +37,7 @@ export const useWalletOnboardingWebView = ({
 }: WalletOnboardingWebViewProps): WalletOnboardingWebView => {
   const dispatch = useIODispatch();
 
-  const onboardingUrlPot = useIOSelector(walletOnboardingStartupSelector);
+  const onboardingUrlPot = useIOSelector(selectPaymentOnboardingRequestResult);
 
   const [isPendingOnboarding, setIsPendingOnboarding] =
     React.useState<boolean>(false);
@@ -97,14 +97,14 @@ export const useWalletOnboardingWebView = ({
   React.useEffect(
     () => () => {
       setIsPendingOnboarding(false);
-      dispatch(walletStartOnboarding.cancel());
+      dispatch(paymentsStartOnboardingAction.cancel());
     },
     [dispatch]
   );
 
   const startOnboarding = (paymentMethodId: string) => {
     setIsPendingOnboarding(false);
-    dispatch(walletStartOnboarding.request({ paymentMethodId }));
+    dispatch(paymentsStartOnboardingAction.request({ paymentMethodId }));
   };
 
   return {

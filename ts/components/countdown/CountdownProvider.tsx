@@ -3,9 +3,9 @@ import React, {
   useContext,
   useState,
   ReactNode,
-  useRef,
-  useEffect
+  useRef
 } from "react";
+import BackgroundTimer from "react-native-background-timer";
 
 type CountdownContextType = {
   timerCount: number;
@@ -26,27 +26,24 @@ interface CountdownProviderProps {
 export const CountdownProvider = (props: CountdownProviderProps) => {
   const { children, timerTiming, intervalDuration } = props;
   const [timerCount, setTimerCount] = useState<number>(timerTiming);
-  const interval = useRef<number | undefined>();
-
-  useEffect(() => () => clearInterval(interval.current), []);
+  const isRunningTimer = useRef<boolean>(false);
 
   const startTimer = () => {
-    if (!interval.current) {
-      // eslint-disable-next-line functional/immutable-data
-      interval.current = setInterval(() => {
-        setTimerCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
-      }, intervalDuration);
-    }
+    // eslint-disable-next-line functional/immutable-data
+    isRunningTimer.current = true;
+    BackgroundTimer.runBackgroundTimer(() => {
+      setTimerCount(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
+    }, intervalDuration);
   };
 
   const resetTimer = () => {
-    clearInterval(interval.current);
     setTimerCount(timerTiming);
+    BackgroundTimer.stopBackgroundTimer();
     // eslint-disable-next-line functional/immutable-data
-    interval.current = undefined;
+    isRunningTimer.current = false;
   };
 
-  const isRunning = () => interval.current !== undefined;
+  const isRunning = () => isRunningTimer.current;
 
   return (
     <CountdownContext.Provider

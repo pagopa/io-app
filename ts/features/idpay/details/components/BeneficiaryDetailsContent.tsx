@@ -24,11 +24,11 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import ROUTES from "../../../../navigation/routes";
 import { format } from "../../../../utils/dates";
 import { Table, TableRow } from "../../common/components/Table";
 import { formatNumberCurrencyOrDefault } from "../../common/utils/strings";
 import { IDPayUnsubscriptionRoutes } from "../../unsubscription/navigation/navigator";
+import { SERVICES_ROUTES } from "../../../services/navigation/routes";
 import {
   InitiativeRulesInfoBox,
   InitiativeRulesInfoBoxSkeleton
@@ -176,8 +176,8 @@ const BeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
       NonEmptyString.decode(beneficiaryDetails.serviceId),
       O.fromEither,
       O.map(serviceId =>
-        navigation.navigate(ROUTES.SERVICES_NAVIGATOR, {
-          screen: ROUTES.SERVICE_DETAIL,
+        navigation.navigate(SERVICES_ROUTES.SERVICES_NAVIGATOR, {
+          screen: SERVICES_ROUTES.SERVICE_DETAIL,
           params: { serviceId }
         })
       )

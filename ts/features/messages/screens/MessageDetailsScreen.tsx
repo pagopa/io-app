@@ -29,11 +29,7 @@ import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDe
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetailsHeader";
 import I18n from "../../../i18n";
-import {
-  messageDetailsByIdSelector,
-  messageDetailsExpiringInfoSelector
-} from "../store/reducers/detailsById";
-import { localeDateFormat } from "../../../utils/locale";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { MessageDetailsTagBox } from "../components/MessageDetail/MessageDetailsTagBox";
 import { MessageMarkdown } from "../components/MessageDetail/MessageMarkdown";
 import { cleanMarkdownFromCTAs, getMessageCTA } from "../utils/messages";
@@ -45,6 +41,12 @@ import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
 import { serviceMetadataByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { isPNOptInMessage } from "../../pn/utils";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import {
+  trackPNOptInMessageCTADisplaySuccess,
+  trackPNOptInMessageOpened
+} from "../../pn/analytics";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -91,10 +93,6 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const subject =
     useIOSelector(state => messageTitleSelector(state, messageId)) ?? "";
 
-  const expiringInfo = useIOSelector(state =>
-    messageDetailsExpiringInfoSelector(state, messageId, Date.now())
-  );
-
   const goBack = useCallback(() => {
     dispatch(cancelPreviousAttachmentDownload());
     dispatch(cancelQueuedPaymentUpdates());
@@ -120,13 +118,27 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     [messageMarkdown, serviceId, serviceMetadata]
   );
 
+  // Use the store since `isPNOptInMessage` is not a selector but an utility
+  // that uses a backend status configuration that is normally updated every
+  // minute. We do not want to cause a re-rendering or recompute the value
+  const store = useIOStore();
+  const state = store.getState();
+  const pnOptInMessageInfo = isPNOptInMessage(maybeCTAs, serviceId, state);
+
   useHeaderSecondLevel({
     title: "",
     goBack,
     supportRequest: true
   });
 
-  const store = useIOStore();
+  useOnFirstRender(
+    () => {
+      trackPNOptInMessageOpened();
+      trackPNOptInMessageCTADisplaySuccess();
+    },
+    () => pnOptInMessageInfo.isPNOptInMessage
+  );
+
   useFocusEffect(
     useCallback(() => {
       const globalState = store.getState();
@@ -176,53 +188,32 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
                   />
                 </MessageDetailsTagBox>
               )}
-              {messageDetails.dueDate && expiringInfo === "expired" && (
-                <MessageDetailsTagBox>
-                  <Tag
-                    text={I18n.t("features.messages.badge.dueDate", {
-                      date: localeDateFormat(
-                        messageDetails.dueDate,
-                        I18n.t("global.dateFormats.dayMonthWithoutTime")
-                      ),
-                      time: localeDateFormat(
-                        messageDetails.dueDate,
-                        I18n.t("global.dateFormats.timeFormat")
-                      )
-                    })}
-                    variant="error"
-                    testID="due-date-tag"
-                  />
-                </MessageDetailsTagBox>
-              )}
             </MessageDetailsHeader>
-
-            {messageDetails.dueDate && expiringInfo === "expiring" && (
-              <>
-                <VSpacer size={8} />
-                <MessageDetailsReminder
-                  dueDate={messageDetails.dueDate}
-                  messageId={messageId}
-                  title={subject}
-                />
-              </>
-            )}
             <VSpacer />
+            <MessageDetailsReminder
+              dueDate={messageDetails.dueDate}
+              messageId={messageId}
+              title={subject}
+            />
             <MessageMarkdown>{markdownWithNoCTA}</MessageMarkdown>
             <MessageDetailsPayment messageId={messageId} />
-            <VSpacer />
+            <VSpacer size={16} />
             <MessageDetailsAttachments messageId={messageId} />
           </ContentWrapper>
         </View>
         <VSpacer size={24} />
         <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
         <MessageDetailsScrollViewAdditionalSpace
-          hasCTAS={!!maybeCTAs}
+          hasCTA1={!!maybeCTAs?.cta_1}
+          hasCTA2={!!maybeCTAs?.cta_2}
           messageId={messageId}
         />
       </ScrollView>
       <MessageDetailsStickyFooter
+        firstCTAIsPNOptInMessage={pnOptInMessageInfo.cta1LinksToPNService}
         messageId={messageId}
         ctas={maybeCTAs}
+        secondCTAIsPNOptInMessage={pnOptInMessageInfo.cta2LinksToPNService}
         serviceId={serviceId}
       />
     </>
