@@ -3,7 +3,7 @@ import { View } from "react-native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {
-  getWalletCardsByCategorySelector,
+  getWalletCardsByCategoryWithFilterSelector,
   selectWalletCards
 } from "../store/selectors";
 import { WalletCardCategory, walletCardCategoryIcons } from "../types";
@@ -12,7 +12,9 @@ import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 
 const WalletCardsContainer = () => {
   const cards = useIOSelector(selectWalletCards);
-  const cardsByCategory = useIOSelector(getWalletCardsByCategorySelector);
+  const cardsByCategory = useIOSelector(
+    getWalletCardsByCategoryWithFilterSelector
+  );
 
   if (cards.length === 1) {
     // Single card does not need grouping

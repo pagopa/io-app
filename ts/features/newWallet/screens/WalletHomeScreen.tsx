@@ -15,6 +15,7 @@ import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedire
 import { selectWalletCards } from "../store/selectors";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 
 const WalletHomeScreen = () => {
   const dispatch = useIODispatch();
@@ -42,22 +43,25 @@ const WalletHomeScreen = () => {
   }
 
   return (
-    <GradientScrollView
-      primaryActionProps={{
-        testID: "walletAddCardButtonTestID",
-        label: I18n.t("features.wallet.home.cta"),
-        accessibilityLabel: I18n.t("features.wallet.home.cta"),
-        icon: "addSmall",
-        iconPosition: "end",
-        onPress: () => null
-      }}
-      excludeSafeAreaMargins={true}
-    >
-      <WalletPaymentsRedirectBanner />
-      <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
-        <WalletCardsContainer />
-      </Animated.View>
-    </GradientScrollView>
+    <>
+      <GradientScrollView
+        primaryActionProps={{
+          testID: "walletAddCardButtonTestID",
+          label: I18n.t("features.wallet.home.cta"),
+          accessibilityLabel: I18n.t("features.wallet.home.cta"),
+          icon: "addSmall",
+          iconPosition: "end",
+          onPress: () => null
+        }}
+        excludeSafeAreaMargins={true}
+      >
+        <WalletCategoryFilterTabs />
+        <WalletPaymentsRedirectBanner />
+        <Animated.View style={IOStyles.flex} layout={Layout.duration(200)}>
+          <WalletCardsContainer />
+        </Animated.View>
+      </GradientScrollView>
+    </>
   );
 };
 
