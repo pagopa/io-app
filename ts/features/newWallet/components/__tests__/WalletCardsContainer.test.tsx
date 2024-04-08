@@ -10,6 +10,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletCardsContainer } from "../WalletCardsContainer";
+import { WalletCardCategory } from "../../types";
 
 const T_CARDS: WalletCardsState = {
   "1": {
@@ -78,9 +79,33 @@ describe("WalletCardsContainer", () => {
       queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
     ).toBeNull();
   });
+
+  it("should render only the selected category in the filter tabs", () => {
+    const {
+      component: { queryByText, queryByTestId }
+    } = renderComponent("payment");
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.payment`))
+    ).not.toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_payment`)).not.toBeNull();
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.bonus`))
+    ).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_bonus`)).toBeNull();
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
+    ).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_cgn`)).toBeNull();
+  });
 });
 
-const renderComponent = () => {
+const renderComponent = (categoryFilter?: WalletCardCategory) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -88,10 +113,13 @@ const renderComponent = () => {
     _.merge(globalState, {
       features: {
         wallet: {
-          cards: T_CARDS
+          cards: T_CARDS,
+          preferences: {
+            categoryFilter
+          }
         }
       }
-    })
+    } as GlobalState)
   );
 
   return {

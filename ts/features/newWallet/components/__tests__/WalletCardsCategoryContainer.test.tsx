@@ -13,6 +13,7 @@ import {
 describe("WalletCardsCategoryContainer", () => {
   const T_CATEGORY_LABEL = "Category ABC";
   const T_KEY = "12345";
+
   it("should correctly render the component", () => {
     const {
       component: { queryByTestId, queryByText }
@@ -26,6 +27,7 @@ describe("WalletCardsCategoryContainer", () => {
     expect(queryByText(T_CATEGORY_LABEL)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_${T_KEY}`)).not.toBeNull();
   });
+
   it("should not render the component if no cards are provided", () => {
     const {
       component: { queryByTestId, queryByText }

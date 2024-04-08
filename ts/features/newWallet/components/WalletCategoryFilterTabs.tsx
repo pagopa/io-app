@@ -32,7 +32,7 @@ const WalletCategoryFilterTabs = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="CategoryTabsContainerTestID">
       <TabNavigation tabAlignment="start" onItemPress={handleFilterSelected}>
         {[
           <TabItem
@@ -42,6 +42,7 @@ const WalletCategoryFilterTabs = () => {
           />,
           ...categories.map(category => (
             <TabItem
+              testID={`CategoryTabTestID-${category}`}
               key={`category_tab_${category}`}
               label={I18n.t(`features.wallet.cards.categories.${category}`)}
               accessibilityLabel={I18n.t(
