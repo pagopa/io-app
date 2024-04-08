@@ -30,3 +30,8 @@ export const getWalletCardsCategorySelector = (category: WalletCardCategory) =>
     getWalletCardsByCategorySelector,
     cardsByCategory => cardsByCategory[category]
   );
+
+export const selectWalletCategoryFilter = createSelector(
+  selectWalletFeature,
+  wallet => wallet.preferences.categoryFilter
+);
