@@ -2,13 +2,13 @@ import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { BackendClient } from "../../../api/backend";
-import { loadServicePreference } from "../../../store/actions/services/servicePreference";
-import { ServicePreferenceResponseFailure } from "../../../types/services/ServicePreferenceResponse";
+import { loadServicePreference } from "../store/actions";
+import { ServicePreferenceResponseFailure } from "../types/ServicePreferenceResponse";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../utils/errors";
 import { readablePrivacyReport } from "../../../utils/reporters";
-import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 
 export const mapKinds: Record<
   number,
@@ -25,9 +25,7 @@ export const mapKinds: Record<
  * @param action
  */
 export function* handleGetServicePreference(
-  getServicePreference: ReturnType<
-    typeof BackendClient
-  >["getServicePreference"],
+  getServicePreference: BackendClient["getServicePreference"],
   action: ActionType<typeof loadServicePreference.request>
 ) {
   try {
