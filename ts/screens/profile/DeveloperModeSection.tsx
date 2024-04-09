@@ -72,7 +72,7 @@ type DevDataCopyListItem = {
 >;
 
 type DevActionButton = {
-  condition?: boolean;
+  condition: boolean;
 } & Pick<ComponentProps<typeof ButtonSolid>, "color" | "label" | "onPress">;
 
 const DeveloperActionsSection = () => {
@@ -121,6 +121,7 @@ const DeveloperActionsSection = () => {
 
   const devActionButtons: ReadonlyArray<DevActionButton> = [
     {
+      condition: true,
       label: I18n.t("profile.main.cache.clear"),
       onPress: handleClearCachePress
     },
@@ -150,23 +151,16 @@ const DeveloperActionsSection = () => {
   );
 
   const renderDevActionButton = ({
-    item: { condition, color = "danger", label, onPress }
-  }: ListRenderItemInfo<DevActionButton>) => {
-    // If condition is either true or undefined, render the item
-    if (condition !== false) {
-      return (
-        <ButtonSolid
-          fullWidth
-          color={color}
-          label={label}
-          accessibilityLabel={label}
-          onPress={onPress}
-        />
-      );
-    } else {
-      return null;
-    }
-  };
+    item: { color = "danger", label, onPress }
+  }: ListRenderItemInfo<DevActionButton>) => (
+    <ButtonSolid
+      fullWidth
+      color={color}
+      label={label}
+      accessibilityLabel={label}
+      onPress={onPress}
+    />
+  );
 
   return (
     <FlatList
