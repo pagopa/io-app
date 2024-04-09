@@ -12,9 +12,15 @@ import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParam
 import { loadServiceDetail } from "../../../store/actions/services";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { logosForService } from "../../../utils/services";
-import { CardWithMarkdownContent } from "../components/CardWithMarkdownContent";
+import {
+  CardWithMarkdownContent,
+  CardWithMarkdownContentSkeleton
+} from "../components/CardWithMarkdownContent";
 import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
-import { ServiceDetailsHeader } from "../components/ServiceDetailsHeader";
+import {
+  ServiceDetailsHeader,
+  ServiceDetailsHeaderSkeleton
+} from "../components/ServiceDetailsHeader";
 import { ServiceDetailsMetadata } from "../components/ServiceDetailsMetadata";
 import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
 import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
@@ -91,7 +97,33 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   }
 
   if (isLoadingService) {
-    // TODO: add a loading screen
+    return (
+      <ServiceDetailsScreenComponent
+        activate={activate}
+        isLoading={true}
+        serviceId={serviceId}
+      >
+        <View
+          style={[
+            styles.headerContainer,
+            {
+              paddingTop: windowHeight + headerHeight,
+              marginTop: -windowHeight
+            }
+          ]}
+        >
+          <ContentWrapper>
+            <ServiceDetailsHeaderSkeleton />
+            <VSpacer size={16} />
+          </ContentWrapper>
+        </View>
+        <ContentWrapper>
+          <View style={styles.cardContainer}>
+            <CardWithMarkdownContentSkeleton />
+          </View>
+        </ContentWrapper>
+      </ServiceDetailsScreenComponent>
+    );
   }
 
   const {
