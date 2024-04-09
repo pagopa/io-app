@@ -46,14 +46,16 @@ import {
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { WalletNavigator as NewWalletNavigator } from "../features/newWallet/navigation";
+import { WalletRoutes as NewWalletRoutes } from "../features/newWallet/navigation/routes";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
+import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
+import { PaymentsCheckoutRoutes } from "../features/payments/checkout/navigation/routes";
 import { PaymentsMethodDetailsNavigator } from "../features/payments/details/navigation/navigator";
 import { PaymentsMethodDetailsRoutes } from "../features/payments/details/navigation/routes";
 import { PaymentsOnboardingNavigator } from "../features/payments/onboarding/navigation/navigator";
 import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/navigation/routes";
-import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
-import { PaymentsCheckoutRoutes } from "../features/payments/checkout/navigation/routes";
 import { PaymentsTransactionNavigator } from "../features/payments/transaction/navigation/navigator";
 import { PaymentsTransactionRoutes } from "../features/payments/transaction/navigation/routes";
 import ServicesNavigator from "../features/services/navigation/navigator";
@@ -71,6 +73,7 @@ import {
   isFIMSEnabledSelector,
   isIdPayEnabledSelector
 } from "../store/reducers/backendStatus";
+import { isNewWalletSectionEnabledSelector } from "../store/reducers/persistedPreferences";
 import { isGestureEnabled } from "../utils/navigation";
 import CheckEmailNavigator from "./CheckEmailNavigator";
 import OnboardingNavigator from "./OnboardingNavigator";
@@ -92,6 +95,9 @@ const AuthenticatedStackNavigator = () => {
   const cgnEnabled = useIOSelector(isCGNEnabledSelector);
   const isFciEnabled = useIOSelector(isFciEnabledSelector);
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
 
   return (
     <Stack.Navigator
@@ -130,11 +136,19 @@ const AuthenticatedStackNavigator = () => {
         options={hideHeaderOptions}
         component={MessagesStackNavigator}
       />
-      <Stack.Screen
-        name={ROUTES.WALLET_NAVIGATOR}
-        options={hideHeaderOptions}
-        component={WalletNavigator}
-      />
+      {isNewWalletSectionEnabled ? (
+        <Stack.Screen
+          name={NewWalletRoutes.WALLET_NAVIGATOR}
+          options={hideHeaderOptions}
+          component={NewWalletNavigator}
+        />
+      ) : (
+        <Stack.Screen
+          name={ROUTES.WALLET_NAVIGATOR}
+          options={hideHeaderOptions}
+          component={WalletNavigator}
+        />
+      )}
       <Stack.Screen
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
         options={hideHeaderOptions}
