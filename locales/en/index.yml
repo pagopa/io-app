@@ -215,7 +215,7 @@ tablet:
 rooted:
   title: Looks like the security of your device has been compromised!
   body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
-  learnMoreButton: 
+  learnMoreButton:
     title: What does it mean?
   learnMoreBottomsheet:
     title: Device security
@@ -2936,6 +2936,12 @@ features:
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Payment methods
+    onboarding:
+      title: Cosa vuoi aggiungere al portafoglio?
+      options:
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
