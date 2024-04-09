@@ -1,3 +1,4 @@
+import { CommonActions } from "@react-navigation/native";
 import { SagaIterator } from "redux-saga";
 import { call } from "typed-redux-saga/macro";
 import NavigationService from "../../../../../../navigation/NavigationService";
@@ -54,12 +55,31 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
   if (result === "completed") {
     if (initialScreen?.name === BONUS_ROUTES.BONUS_AVAILABLE_LIST) {
       yield* call(navigateBack);
+      yield* call(navigateToCgnDetails);
     } else if (initialScreen?.name === WalletRoutes.WALLET_CARD_ONBOARDING) {
-      yield* call(NavigationService.navigate, ROUTES.MAIN, {
-        screen: ROUTES.WALLET_HOME,
-        params: { newMethodAdded: true }
-      });
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: ROUTES.MAIN,
+              params: {
+                screen: ROUTES.WALLET_HOME,
+                params: { newMethodAdded: true }
+              }
+            },
+            {
+              name: CGN_ROUTES.DETAILS.MAIN,
+              params: {
+                screen: CGN_ROUTES.DETAILS.DETAILS
+              }
+            }
+          ]
+        })
+      );
+    } else {
+      yield* call(navigateToCgnDetails);
     }
-    yield* call(navigateToCgnDetails);
   }
 }
