@@ -65,7 +65,7 @@ const PaymentCardSmall = ({
   const isExpired = pipe(
     props.expireDate,
     O.fromNullable,
-    O.map(isExpiredDate),
+    O.chainNullableK(isExpiredDate),
     O.getOrElse(() => false)
   );
 

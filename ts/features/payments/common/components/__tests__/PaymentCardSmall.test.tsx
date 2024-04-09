@@ -42,11 +42,11 @@ describe("PaymentCardSmall", () => {
 
   it(`should render error card`, () => {
     const { queryByText, queryByTestId } = renderCard({
+      expireDate: new Date(2023),
       hpan: "9900",
       brand: "maestro",
       onPress: () => undefined,
-      testID,
-      isError: true
+      testID
     });
     expect(queryByText("•••• 9900")).not.toBeNull();
     expect(queryByTestId(`${testID}-errorIcon`)).not.toBeNull();
