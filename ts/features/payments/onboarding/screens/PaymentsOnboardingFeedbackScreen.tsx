@@ -9,14 +9,15 @@ import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { openWebUrl } from "../../../../utils/url";
+import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { PaymentsOnboardingParamsList } from "../navigation/params";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
 } from "../types/OnboardingOutcomeEnum";
 import { ONBOARDING_FAQ_ENABLE_3DS } from "../utils";
-import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 
 export type PaymentsOnboardingFeedbackScreenParams = {
   outcome: WalletOnboardingOutcome;
@@ -52,15 +53,31 @@ const PaymentsOnboardingFeedbackScreen = () => {
   const handleContinueButton = () => {
     navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
-      navigation.replace(
-        PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
-        {
-          screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
-          params: {
-            walletId
+      navigation.reset({
+        index: 1,
+        routes: [
+          {
+            name: ROUTES.MAIN,
+            params: {
+              screen: ROUTES.WALLET_HOME,
+              params: {
+                newMethodAdded: true
+              }
+            }
+          },
+          {
+            name: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
+            params: {
+              screen: PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_SCREEN,
+              params: {
+                walletId
+              }
+            }
           }
-        }
-      );
+        ]
+      });
+    } else {
+      navigation.popToTop();
     }
   };
 
