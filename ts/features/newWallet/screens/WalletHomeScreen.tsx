@@ -1,13 +1,19 @@
 import {
   ContentWrapper,
   GradientScrollView,
-  IOStyles
+  IOStyles,
+  IOToast
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import React from "react";
 import { ScrollView } from "react-native";
 import Animated, { Layout } from "react-native-reanimated";
 import I18n from "../../../i18n";
-import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../navigation/params/AppParamsList";
+import { MainTabParamsList } from "../../../navigation/params/MainTabParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
@@ -21,11 +27,14 @@ import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 
-const WalletHomeScreen = () => {
+type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
+
+const WalletHomeScreen = ({ route }: Props) => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
 
   const cards = useIOSelector(selectWalletCards);
+  const isNewElementAdded = React.useRef(route.params?.newMethodAdded || false);
 
   const handleAddToWalletButtonPress = () => {
     navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
@@ -39,6 +48,17 @@ const WalletHomeScreen = () => {
     dispatch(idPayWalletGet.request());
     dispatch(cgnDetails.request());
   }, [dispatch]);
+
+  // Handles the "New element added" toast display once the user returns to this screen
+  useFocusEffect(
+    React.useCallback(() => {
+      if (isNewElementAdded.current) {
+        IOToast.success(I18n.t("features.wallet.home.toast.newMethod"));
+        // eslint-disable-next-line functional/immutable-data
+        isNewElementAdded.current = false;
+      }
+    }, [isNewElementAdded])
+  );
 
   if (cards.length === 0) {
     return (
