@@ -51,6 +51,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   ] as keyof typeof WalletOnboardingOutcomeEnum;
 
   const handleContinueButton = () => {
+    navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
       navigation.reset({
         index: 1,
