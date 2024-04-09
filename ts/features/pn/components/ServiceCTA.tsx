@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { identity, pipe } from "fp-ts/lib/function";
+import React, { useCallback } from "react";
+import { ButtonSolid, IOToast } from "@pagopa/io-app-design-system";
+import { constNull, identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ActivityIndicator } from "react-native";
-import { IOColors } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../components/core/typography/Label";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { servicePreferenceSelector } from "../../services/store/reducers/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../services/types/ServicePreferenceResponse";
-import { AppDispatch } from "../../../App";
+import {
+  servicePreferenceResponseSuccessSelector,
+  servicePreferenceSelector
+} from "../../services/store/reducers/servicePreference";
 import { pnActivationUpsert } from "../store/actions";
-import { pnActivationSelector } from "../store/reducers/activation";
-import { showToast } from "../../../utils/showToast";
-import { Link } from "../../../components/core/typography/Link";
+import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../services/store/actions";
 import {
@@ -25,104 +21,27 @@ import {
   trackPNServiceStartDeactivation
 } from "../analytics";
 
-type Props = {
+type PnServiceCtaProps = {
   serviceId: ServiceId;
   activate?: boolean;
 };
 
-const LoadingIndicator = () => (
-  <ActivityIndicator
-    animating={true}
-    size={"small"}
-    color={IOColors.bluegreyDark}
-    accessible={true}
-    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
-    importantForAccessibility={"no-hide-descendants"}
-  />
-);
-
-const LoadingButton = (props: { isServiceActive: boolean }) => (
-  <ButtonDefaultOpacity
-    block
-    primary
-    style={{
-      backgroundColor: props.isServiceActive
-        ? IOColors.white
-        : IOColors.greyLight,
-      width: "100%"
-    }}
-  >
-    <LoadingIndicator />
-  </ButtonDefaultOpacity>
-);
-
-const ActivateButton = (props: { dispatch: AppDispatch }) => (
-  <ButtonDefaultOpacity
-    block
-    primary
-    onPress={() => {
-      trackPNServiceStartActivation();
-      props.dispatch(pnActivationUpsert.request(true));
-    }}
-  >
-    <Label color={"white"}>{I18n.t("features.pn.service.activate")}</Label>
-  </ButtonDefaultOpacity>
-);
-
-const DeactivateButton = (props: { dispatch: AppDispatch }) => (
-  <ButtonDefaultOpacity
-    block
-    primary
-    onPress={() => {
-      trackPNServiceStartDeactivation();
-      props.dispatch(pnActivationUpsert.request(false));
-    }}
-    style={{
-      backgroundColor: IOColors.white
-    }}
-  >
-    <Link weight={"SemiBold"} color={"red"}>
-      {I18n.t("features.pn.service.deactivate")}
-    </Link>
-  </ButtonDefaultOpacity>
-);
-
-// eslint-disable-next-line sonarjs/cognitive-complexity
-const ServiceCTA = ({ serviceId, activate }: Props) => {
-  const [isUpdating, setIsUpdating] = useState(false);
-
+export const PnServiceCta = ({ serviceId, activate }: PnServiceCtaProps) => {
   const dispatch = useIODispatch();
-  const serviceActivation = useIOSelector(pnActivationSelector);
-  const servicePreference = useIOSelector(servicePreferenceSelector);
-  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+
+  const servicePreferenceResponseSuccess = useIOSelector(
+    servicePreferenceResponseSuccessSelector
+  );
+
+  const servicePreferencePot = useIOSelector(servicePreferenceSelector);
+
+  const isLoadingPnActivation = useIOSelector(isLoadingPnActivationSelector);
 
   const isLoading =
-    pot.isLoading(servicePreference) ||
-    pot.isLoading(serviceActivation) ||
-    pot.isUpdating(serviceActivation);
+    pot.isLoading(servicePreferencePot) || isLoadingPnActivation;
 
   const isServiceActive =
-    servicePreferenceValue &&
-    isServicePreferenceResponseSuccess(servicePreferenceValue) &&
-    servicePreferenceValue.value.inbox;
-
-  useEffect(() => {
-    const wasUpdating = isUpdating;
-    const isStillUpdating = pot.isUpdating(serviceActivation);
-    const isError = pot.isError(serviceActivation);
-    if (wasUpdating && !isStillUpdating) {
-      if (isError) {
-        showToast(I18n.t("features.pn.service.toast.error"), "danger");
-      } else {
-        dispatch(loadServicePreference.request(serviceId));
-        if (pot.toUndefined(serviceActivation)) {
-          showToast(I18n.t("features.pn.service.toast.activated"), "success");
-        }
-      }
-    }
-    setIsUpdating(isStillUpdating);
-  }, [isUpdating, dispatch, serviceId, serviceActivation, isServiceActive]);
+    servicePreferenceResponseSuccess?.value.inbox ?? false;
 
   useOnFirstRender(() => {
     pipe(
@@ -139,23 +58,80 @@ const ServiceCTA = ({ serviceId, activate }: Props) => {
       O.fromNullable,
       O.filter(identity),
       O.fold(
-        () => undefined,
-        () => void dispatch(pnActivationUpsert.request(true))
+        constNull,
+        () =>
+          void dispatch(
+            pnActivationUpsert.request({
+              value: true,
+              onSuccess: () => handleActivationSuccess(true),
+              onFailure: handleActivationFailure
+            })
+          )
       )
     );
   });
 
-  if (!servicePreferenceValue || servicePreferenceValue.id !== serviceId) {
+  const handleActivationSuccess = useCallback(
+    (status: boolean) => {
+      dispatch(loadServicePreference.request(serviceId));
+
+      if (status) {
+        IOToast.success(I18n.t("features.pn.service.toast.activated"));
+      }
+    },
+    [dispatch, serviceId]
+  );
+
+  const handleActivationFailure = useCallback(() => {
+    dispatch(loadServicePreference.request(serviceId));
+    IOToast.error(I18n.t("features.pn.service.toast.error"));
+  }, [dispatch, serviceId]);
+
+  if (
+    !servicePreferenceResponseSuccess ||
+    servicePreferenceResponseSuccess.id !== serviceId
+  ) {
     return null;
   }
 
-  return isLoading ? (
-    <LoadingButton isServiceActive={isServiceActive ?? false} />
-  ) : isServiceActive ? (
-    <DeactivateButton dispatch={dispatch} />
-  ) : (
-    <ActivateButton dispatch={dispatch} />
+  if (!isServiceActive) {
+    return (
+      <ButtonSolid
+        fullWidth
+        accessibilityLabel={I18n.t("features.pn.service.activate")}
+        label={I18n.t("features.pn.service.activate")}
+        loading={isLoading}
+        onPress={() => {
+          trackPNServiceStartActivation();
+          dispatch(
+            pnActivationUpsert.request({
+              value: true,
+              onSuccess: () => handleActivationSuccess(true),
+              onFailure: handleActivationFailure
+            })
+          );
+        }}
+      />
+    );
+  }
+
+  return (
+    <ButtonSolid
+      fullWidth
+      color="danger"
+      accessibilityLabel={I18n.t("features.pn.service.deactivate")}
+      label={I18n.t("features.pn.service.deactivate")}
+      loading={isLoading}
+      onPress={() => {
+        trackPNServiceStartDeactivation();
+        dispatch(
+          pnActivationUpsert.request({
+            value: false,
+            onSuccess: () => handleActivationSuccess(false),
+            onFailure: handleActivationFailure
+          })
+        );
+      }}
+    />
   );
 };
-
-export default ServiceCTA;
