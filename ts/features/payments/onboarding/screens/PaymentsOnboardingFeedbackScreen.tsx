@@ -50,6 +50,7 @@ const PaymentsOnboardingFeedbackScreen = () => {
   ] as keyof typeof WalletOnboardingOutcomeEnum;
 
   const handleContinueButton = () => {
+    navigation.popToTop();
     if (outcome === WalletOnboardingOutcomeEnum.SUCCESS && walletId) {
       navigation.replace(
         PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR,
@@ -60,8 +61,6 @@ const PaymentsOnboardingFeedbackScreen = () => {
           }
         }
       );
-    } else {
-      navigation.pop();
     }
   };
 

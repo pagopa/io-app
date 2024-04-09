@@ -2942,6 +2942,12 @@ features:
       status:
         failure: FALLITA
         success: ""
+    onboarding:
+      title: Cosa vuoi aggiungere al portafoglio?
+      options:
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
