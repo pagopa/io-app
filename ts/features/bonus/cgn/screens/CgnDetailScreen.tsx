@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { connect } from "react-redux";
+import { useHeaderHeight } from "@react-navigation/elements";
 import {
   GradientBottomActions,
   IOSpacer,
@@ -76,7 +77,6 @@ type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 const HEADER_BACKGROUND_COLOR = "#8F84B7";
-const scrollTriggerOffsetValue: number = 88;
 
 const gradientSafeArea: IOSpacingScale = 80;
 const contentEndMargin: IOSpacingScale = 32;
@@ -86,6 +86,7 @@ const spaceBetweenActions: IOSpacer = 24;
  * Screen to display all the information about the active CGN
  */
 const CgnDetailScreen = (props: Props): React.ReactElement => {
+  const headerHeight = useHeaderHeight();
   const [cardLoading, setCardLoading] = useState(true);
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
@@ -138,7 +139,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
     goBack: navigation.goBack,
     transparent: true,
     scrollValues: {
-      triggerOffset: scrollTriggerOffsetValue,
+      triggerOffset: headerHeight,
       contentOffsetY: scrollTranslationY
     },
     supportRequest: true
@@ -198,7 +199,7 @@ const CgnDetailScreen = (props: Props): React.ReactElement => {
             }}
             onScroll={scrollHandler}
             scrollEventThrottle={16}
-            snapToOffsets={[0, scrollTriggerOffsetValue]}
+            snapToOffsets={[0, headerHeight]}
             snapToEnd={false}
             decelerationRate="normal"
           >
