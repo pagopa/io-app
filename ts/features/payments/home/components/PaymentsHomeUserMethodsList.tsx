@@ -13,7 +13,7 @@ import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentCardSmallProps } from "../../common/components/PaymentCardSmall";
-import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { getPaymentCardPropsFromWalletInfo } from "../../common/utils";
 import { PaymentsMethodDetailsRoutes } from "../../details/navigation/routes";
 import { PaymentsOnboardingRoutes } from "../../onboarding/navigation/routes";
 import { getPaymentsWalletUserMethods } from "../../wallet/store/actions";
@@ -69,19 +69,10 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
   };
 
   const userMethods = paymentMethods.map(
-    (method: WalletInfo): PaymentCardSmallProps => {
-      const details = method.details as UIWalletInfoDetails;
-
-      return {
-        onPress: handleOnMethodPress(method.walletId),
-        abiCode: details.abi,
-        brand: details.brand,
-        bankName: details.bankName,
-        holderEmail: details.maskedEmail,
-        holderPhone: details.maskedNumber,
-        hpan: details.lastFourDigits
-      };
-    }
+    (method: WalletInfo): PaymentCardSmallProps => ({
+      ...getPaymentCardPropsFromWalletInfo(method),
+      onPress: handleOnMethodPress(method.walletId)
+    })
   );
 
   if (!isLoading && isEmpty) {
