@@ -39,12 +39,6 @@ const WalletHomeScreen = ({ route }: Props) => {
     });
   };
 
-  const handleAddToWalletButtonPress = () => {
-    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
-      screen: WalletRoutes.WALLET_CARD_ONBOARDING
-    });
-  };
-
   React.useEffect(() => {
     // TODO SIW-960 Move cards request to app startup
     dispatch(getPaymentsWalletUserMethods.request());
