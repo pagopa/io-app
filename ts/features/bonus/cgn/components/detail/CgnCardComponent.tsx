@@ -142,7 +142,6 @@ const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
           androidMicrophoneAccessDisabled={true}
           testID={"background-webview"}
           onLoadEnd={onCardLoadEnd}
-          style={{ height: 205 }}
           source={{
             html: generatedSvg
           }}
