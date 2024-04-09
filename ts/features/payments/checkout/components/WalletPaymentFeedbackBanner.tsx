@@ -17,6 +17,8 @@ const WalletPaymentFeebackBanner = () => {
     return openAuthenticationSession(WALLET_PAYMENT_FEEDBACK_URL, "");
   };
 
+  return null;
+
   return (
     <>
       <VSpacer size={24} />
