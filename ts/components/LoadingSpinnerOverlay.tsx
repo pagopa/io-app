@@ -6,9 +6,6 @@ import {
   hexToRgba
 } from "@pagopa/io-app-design-system";
 import I18n from "../i18n";
-import { useIOSelector } from "../store/hooks";
-import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
-import ButtonDefaultOpacity from "./ButtonDefaultOpacity";
 import { Overlay } from "./ui/Overlay";
 import { IOStyles } from "./core/variables/IOStyles";
 import { Body } from "./core/typography/Body";
@@ -37,50 +34,37 @@ const LoadingSpinnerOverlay = ({
   loadingCaption,
   loadingOpacity = 0.7,
   onCancel
-}: Props) => {
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  return (
-    <Overlay
-      backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
-      foreground={
-        isLoading && (
-          <BoxedRefreshIndicator
-            caption={
-              <View style={styles.textCaption}>
-                <Body accessible={true} style={{ textAlign: "center" }}>
-                  {loadingCaption || I18n.t("global.remoteStates.wait")}
-                </Body>
+}: Props) => (
+  <Overlay
+    backgroundColor={hexToRgba(IOColors.white, loadingOpacity)}
+    foreground={
+      isLoading && (
+        <BoxedRefreshIndicator
+          caption={
+            <View style={styles.textCaption}>
+              <Body accessible={true} style={{ textAlign: "center" }}>
+                {loadingCaption || I18n.t("global.remoteStates.wait")}
+              </Body>
+            </View>
+          }
+          action={
+            onCancel && (
+              <View style={IOStyles.selfCenter}>
+                <ButtonOutline
+                  accessibilityLabel={I18n.t("global.buttons.cancel")}
+                  onPress={onCancel}
+                  testID="loadingSpinnerOverlayCancelButton"
+                  label={I18n.t("global.buttons.cancel")}
+                />
               </View>
-            }
-            action={
-              onCancel && (
-                <View style={IOStyles.selfCenter}>
-                  {isDesignSystemEnabled ? (
-                    <ButtonOutline
-                      accessibilityLabel={I18n.t("global.buttons.cancel")}
-                      onPress={onCancel}
-                      testID="loadingSpinnerOverlayCancelButton"
-                      label={I18n.t("global.buttons.cancel")}
-                    />
-                  ) : (
-                    <ButtonDefaultOpacity
-                      onPress={onCancel}
-                      cancel={true}
-                      testID={"loadingSpinnerOverlayCancelButton"}
-                    >
-                      <Body>{I18n.t("global.buttons.cancel")}</Body>
-                    </ButtonDefaultOpacity>
-                  )}
-                </View>
-              )
-            }
-          />
-        )
-      }
-    >
-      {children}
-    </Overlay>
-  );
-};
+            )
+          }
+        />
+      )
+    }
+  >
+    {children}
+  </Overlay>
+);
 
 export default LoadingSpinnerOverlay;

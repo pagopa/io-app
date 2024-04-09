@@ -41,6 +41,12 @@ import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
 import { serviceMetadataByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { isPNOptInMessage } from "../../pn/utils";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import {
+  trackPNOptInMessageCTADisplaySuccess,
+  trackPNOptInMessageOpened
+} from "../../pn/analytics";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -112,13 +118,27 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     [messageMarkdown, serviceId, serviceMetadata]
   );
 
+  // Use the store since `isPNOptInMessage` is not a selector but an utility
+  // that uses a backend status configuration that is normally updated every
+  // minute. We do not want to cause a re-rendering or recompute the value
+  const store = useIOStore();
+  const state = store.getState();
+  const pnOptInMessageInfo = isPNOptInMessage(maybeCTAs, serviceId, state);
+
   useHeaderSecondLevel({
     title: "",
     goBack,
     supportRequest: true
   });
 
-  const store = useIOStore();
+  useOnFirstRender(
+    () => {
+      trackPNOptInMessageOpened();
+      trackPNOptInMessageCTADisplaySuccess();
+    },
+    () => pnOptInMessageInfo.isPNOptInMessage
+  );
+
   useFocusEffect(
     useCallback(() => {
       const globalState = store.getState();
@@ -184,13 +204,16 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         <VSpacer size={24} />
         <MessageDetailsFooter messageId={messageId} serviceId={serviceId} />
         <MessageDetailsScrollViewAdditionalSpace
-          hasCTAS={!!maybeCTAs}
+          hasCTA1={!!maybeCTAs?.cta_1}
+          hasCTA2={!!maybeCTAs?.cta_2}
           messageId={messageId}
         />
       </ScrollView>
       <MessageDetailsStickyFooter
+        firstCTAIsPNOptInMessage={pnOptInMessageInfo.cta1LinksToPNService}
         messageId={messageId}
         ctas={maybeCTAs}
+        secondCTAIsPNOptInMessage={pnOptInMessageInfo.cta2LinksToPNService}
         serviceId={serviceId}
       />
     </>
