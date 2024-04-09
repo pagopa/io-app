@@ -17,6 +17,7 @@ const WalletPaymentFeebackBanner = () => {
     return openAuthenticationSession(WALLET_PAYMENT_FEEDBACK_URL, "");
   };
 
+  // This banner is temporarily disabled. Remove the next line to re-enable it
   return null;
 
   return (
