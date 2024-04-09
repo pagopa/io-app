@@ -3,9 +3,9 @@ import {
   ServicePreference,
   ServicePreferenceResponse,
   WithServiceID
-} from "../../../types/services/ServicePreferenceResponse";
-import { NetworkError } from "../../../utils/errors";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+} from "../../types/ServicePreferenceResponse";
+import { NetworkError } from "../../../../utils/errors";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
 /**
  * Actions to load the specified preferences for a given ServiceID
