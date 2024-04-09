@@ -260,8 +260,6 @@ startup:
   contextualHelp:
     title: "Initialisierungsprobleme?"
 login:
-  expiration_info: "Aus Sicherheitsgründen wirst du alle 30 Tage aufgefordert, dich erneut mittels CIE oder SPID zu authentifizieren."
-  expiration_info_FL: "Aus Sicherheitsgründen wirst du einmal im Jahr aufgefordert, dich mittels SPID oder CIE zu authentifizieren."
   biometric_info: "Um dich anzumelden, gib einfach den Entsperrcode ein oder verwende, falls aktiviert, deinen Fingerabdruck oder dein Gesicht."
 inbox:
   enableButton: "Posteingang aktivieren"
