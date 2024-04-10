@@ -10,19 +10,19 @@ import I18n from "../../../i18n";
 import {
   loadServicePreference,
   upsertServicePreference
-} from "../../../store/actions/services/servicePreference";
+} from "../../../features/services/store/actions";
 import { Dispatch } from "../../../store/actions/types";
 import { useIOSelector } from "../../../store/hooks";
 import { isPremiumMessagesOptInOutEnabledSelector } from "../../../store/reducers/backendStatus";
 import {
   servicePreferenceSelector,
   ServicePreferenceState
-} from "../../../store/reducers/entities/services/servicePreference";
+} from "../../../features/services/store/reducers/servicePreference";
 import { GlobalState } from "../../../store/reducers/types";
 import {
   isServicePreferenceResponseSuccess,
   ServicePreference
-} from "../../../types/services/ServicePreferenceResponse";
+} from "../../../features/services/types/ServicePreferenceResponse";
 import { isStrictSome } from "../../../utils/pot";
 import { showToast } from "../../../utils/showToast";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";

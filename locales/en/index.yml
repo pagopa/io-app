@@ -215,7 +215,7 @@ tablet:
 rooted:
   title: Looks like the security of your device has been compromised!
   body: If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.
-  learnMoreButton: 
+  learnMoreButton:
     title: What does it mean?
   learnMoreBottomsheet:
     title: Device security
@@ -235,6 +235,7 @@ locales:
   en: English
   de: German
 clipboard:
+  copyIntoClipboard: copy to clipboard
   copyFeedback: Copied to clipboard
   copyText: copy
   copyFeedbackButton: copied
@@ -567,13 +568,13 @@ authentication:
       title: Your session is expired
       body: For security reasons, we ask you to log in with SPID or CIE every {{days}} days or if you log out
     cie_unsupported:
-      title: Non puoi entrare con CIE
-      body: Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).
-      button: Ho capito
-      nfc_problem: Per leggere la CIE è necessario un dispositivo con chip NFC.
-      os_problem: È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
-      nfc_alert: Il tuo dispositivo non ha l'NFC.
-      os_alert: Il sistema operativo del dispositivo non è aggiornato.
+      title: You cannot use CIE
+      body: The device you are using does not support access with Electronic ID Card (CIE).
+      button: I get it
+      nfc_problem: To read the CIE, a device with NFC chip is required.
+      os_problem: An Android 6.0 or iOS 13 or higher operating system is required.
+      nfc_alert: Your device does not have NFC.
+      os_alert: The device's operating system is not up-to-date.
     contentTitleCie: Don't have SPID or CIE?
     cie_information_request: !include cie.md
     spid_or_cie: To use IO you must have one of these digital tools, which certify your identity.
@@ -660,6 +661,7 @@ authentication:
         cardLocked: CIE card locked
         wrongPin1AttemptLeft: Wrong PIN, you still have 1 attempt
         wrongPin2AttemptLeft: Wrong PIN, you still have 2 attempts
+        genericError: Something went wrong! Please try again.
       error:
         readerCardLostTitle: Hold the card again for a few seconds
         readerCardLostTitleiOS: You removed the card too soon.
@@ -834,8 +836,8 @@ email:
     title: We have sent you an email
     subtitle: To confirm your address, follow the instructions we have sent to
     link: Isn't that right?
-    buttonlabelsent: Email sent!    
-    countdowntext: Request new email in 
+    buttonlabelsent: Email sent!
+    countdowntext: Request new email in
     buttonlabelsentagain: Send email again
     toast: Done! Check your mailbox.
   newvalidemail:
@@ -2080,6 +2082,17 @@ services:
   disableAllMsg: "Remember, on IO you will receive messages only from services having some personalized information to communicate to you. You will not receive spam messages. If you disable all the services, they can no longer contact you through the app (until you enable it again). You can use the services through other channels (front office, website, etc.)"
   close: Close
   emptyListMessage: There are no services available at this time, pull down to refresh
+  details:
+    failure:
+      title: "There is a temporary problem. Please try again"
+      subtitle: "We are retrieving service details"
+      back: "Back"
+      retry: "Retry"
+    preferences:
+      title: "This service can"
+      inbox: "Contact you in app"
+      pushNotifications: "Send you push notifications"
+      messageReadStatus: "Receive read receipts"
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
@@ -2918,6 +2931,8 @@ features:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
       cta: Aggiungi al Portafoglio
+      toast:
+        newMethod: Elemento aggiunto!
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti
@@ -2927,7 +2942,13 @@ features:
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
-        payment: Metodo di pagamento
+        payment: Payment methods
+    onboarding:
+      title: Cosa vuoi aggiungere al portafoglio?
+      options:
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

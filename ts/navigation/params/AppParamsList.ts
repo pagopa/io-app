@@ -42,37 +42,33 @@ import {
   IDPayUnsubscriptionParamsList,
   IDPayUnsubscriptionRoutes
 } from "../../features/idpay/unsubscription/navigation/navigator";
+import { MessagesParamsList } from "../../features/messages/navigation/params";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
+import { WalletParamsList as NewWalletParamsList } from "../../features/newWallet/navigation/params";
+import { WalletRoutes as NewWalletRoutes } from "../../features/newWallet/navigation/routes";
+import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
+import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
+import { PaymentsCheckoutParamsList } from "../../features/payments/checkout/navigation/params";
+import { PaymentsCheckoutRoutes } from "../../features/payments/checkout/navigation/routes";
+import { PaymentsMethodDetailsParamsList } from "../../features/payments/details/navigation/params";
+import { PaymentsMethodDetailsRoutes } from "../../features/payments/details/navigation/routes";
+import { PaymentsOnboardingParamsList } from "../../features/payments/onboarding/navigation/params";
+import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/navigation/routes";
+import { PaymentsTransactionParamsList } from "../../features/payments/transaction/navigation/params";
+import { PaymentsTransactionRoutes } from "../../features/payments/transaction/navigation/routes";
+import { ServicesParamsList } from "../../features/services/navigation/params";
+import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
 import UADONATION_ROUTES from "../../features/uaDonations/navigation/routes";
 import { UAWebviewScreenNavigationParams } from "../../features/uaDonations/screens/UAWebViewScreen";
-import { WalletBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
-import { WalletBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
-import {
-  WalletOnboardingParamsList,
-  WalletOnboardingRoutes
-} from "../../features/payments/onboarding/navigation/navigator";
-import {
-  WalletDetailsParamsList,
-  WalletDetailsRoutes
-} from "../../features/payments/details/navigation/navigator";
-import {
-  WalletTransactionParamsList,
-  WalletTransactionRoutes
-} from "../../features/payments/transaction/navigation/navigator";
-import { WalletPaymentParamsList } from "../../features/payments/payment/navigation/params";
-import { WalletPaymentRoutes } from "../../features/payments/payment/navigation/routes";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import { MessagesParamsList } from "../../features/messages/navigation/params";
-import { ServicesParamsList } from "../../features/services/navigation/params";
-import { SERVICES_ROUTES } from "../../features/services/navigation/routes";
 import { AuthenticationParamsList } from "./AuthenticationParamsList";
+import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 import { OnboardingParamsList } from "./OnboardingParamsList";
 import { ProfileParamsList } from "./ProfileParamsList";
 import { WalletParamsList } from "./WalletParamsList";
-import { CheckEmailParamsList } from "./CheckEmailParamsList";
 
 export type AppParamsList = {
   [ROUTES.INGRESS]: undefined;
@@ -116,11 +112,13 @@ export type AppParamsList = {
 
   [IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN]: NavigatorScreenParams<IdPayBarcodeParamsList>;
 
-  [WalletOnboardingRoutes.WALLET_ONBOARDING_MAIN]: NavigatorScreenParams<WalletOnboardingParamsList>;
-  [WalletPaymentRoutes.WALLET_PAYMENT_MAIN]: NavigatorScreenParams<WalletPaymentParamsList>;
-  [WalletBarcodeRoutes.WALLET_BARCODE_MAIN]: NavigatorScreenParams<WalletBarcodeParamsList>;
-  [WalletDetailsRoutes.WALLET_DETAILS_MAIN]: NavigatorScreenParams<WalletDetailsParamsList>;
-  [WalletTransactionRoutes.WALLET_TRANSACTION_MAIN]: NavigatorScreenParams<WalletTransactionParamsList>;
+  [NewWalletRoutes.WALLET_NAVIGATOR]: NavigatorScreenParams<NewWalletParamsList>;
+
+  [PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR]: NavigatorScreenParams<PaymentsOnboardingParamsList>;
+  [PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR]: NavigatorScreenParams<PaymentsCheckoutParamsList>;
+  [PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR]: NavigatorScreenParams<PaymentsBarcodeParamsList>;
+  [PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR]: NavigatorScreenParams<PaymentsMethodDetailsParamsList>;
+  [PaymentsTransactionRoutes.PAYMENT_TRANSACTION_NAVIGATOR]: NavigatorScreenParams<PaymentsTransactionParamsList>;
 };
 
 /**
