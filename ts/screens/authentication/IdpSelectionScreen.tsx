@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
-import { idpsSelector } from "../../store/reducers/content";
+import { idpsSelector, randomOrderIdps } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { LocalIdpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
@@ -60,6 +60,7 @@ const IdpSelectionScreen = (): ReactElement => {
   });
   const dispatch = useIODispatch();
   const idps = useIOSelector(idpsSelector);
+  const randomIdps = randomOrderIdps(idps);
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
 
@@ -170,7 +171,7 @@ const IdpSelectionScreen = (): ReactElement => {
     <SafeAreaView edges={["bottom"]}>
       <ScrollView centerContent={true}>
         <IdpsGridRevamp
-          idps={idps}
+          idps={randomIdps}
           onIdpSelected={onIdpSelected}
           headerComponent={headerComponent}
           footerComponent={<VSpacer size={24} />}
