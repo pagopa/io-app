@@ -467,6 +467,13 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                           }
                         />
                         <View
+                          accessibilityRole="checkbox"
+                          accessibilityState={
+                            Object {
+                              "checked": false,
+                              "disabled": false,
+                            }
+                          }
                           accessible={true}
                           collapsable={false}
                           focusable={true}
@@ -510,7 +517,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
                                 collapsable={false}
                                 focusable={true}
                                 onBlur={[Function]}

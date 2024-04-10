@@ -509,6 +509,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           }
                         >
                           <View
+                            accessibilityIgnoresInvertColors={true}
                             style={
                               Array [
                                 Object {
@@ -534,7 +535,6 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                     "backgroundColor": "#FFFFFF",
                                     "borderCurve": "continuous",
                                     "overflow": "hidden",
-                                    "resizeMode": "contain",
                                   },
                                   Object {
                                     "borderRadius": 2,
@@ -543,6 +543,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                               }
                             >
                               <Image
+                                accessibilityIgnoresInvertColors={true}
                                 onError={[Function]}
                                 source={
                                   Object {
@@ -552,6 +553,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 style={
                                   Object {
                                     "height": "100%",
+                                    "resizeMode": "contain",
                                     "width": "100%",
                                   }
                                 }

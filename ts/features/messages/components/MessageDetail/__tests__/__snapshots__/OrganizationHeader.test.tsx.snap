@@ -89,6 +89,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
     }
   >
     <View
+      accessibilityIgnoresInvertColors={true}
       style={
         Array [
           Object {
@@ -114,7 +115,6 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
               "backgroundColor": "#FFFFFF",
               "borderCurve": "continuous",
               "overflow": "hidden",
-              "resizeMode": "contain",
             },
             Object {
               "borderRadius": 2,
@@ -123,6 +123,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
         }
       >
         <Image
+          accessibilityIgnoresInvertColors={true}
           onError={[Function]}
           source={
             Object {
@@ -132,6 +133,7 @@ exports[`OrganizationHeader component should match the snapshot 1`] = `
           style={
             Object {
               "height": "100%",
+              "resizeMode": "contain",
               "width": "100%",
             }
           }

@@ -1,20 +1,27 @@
 import {
   Body,
   ButtonSolid,
+  IOVisualCostants,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
+import { WalletRoutes } from "../navigation/routes";
 
 const WalletEmptyScreenContent = () => {
+  const navigation = useIONavigation();
+
   const handleAddToWalletButtonPress = () => {
-    // TODO SIW-923: navigate to available cards/initiatives list
+    navigation.navigate(WalletRoutes.WALLET_NAVIGATOR, {
+      screen: WalletRoutes.WALLET_CARD_ONBOARDING
+    });
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="walletEmptyScreenContentTestID">
       <Pictogram name="cardAdd" />
       <VSpacer size={16} />
       <Body color="grey-650" weight="Regular" style={styles.text}>
@@ -25,7 +32,7 @@ const WalletEmptyScreenContent = () => {
         label={I18n.t("features.wallet.home.cta")}
         accessibilityLabel={I18n.t("features.wallet.home.cta")}
         onPress={handleAddToWalletButtonPress}
-        icon="add"
+        icon="addSmall"
         iconPosition="end"
         fullWidth={true}
       />
@@ -36,7 +43,7 @@ const WalletEmptyScreenContent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
     justifyContent: "center",
     alignItems: "center"
   },
