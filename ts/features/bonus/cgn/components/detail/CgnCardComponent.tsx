@@ -154,12 +154,14 @@ const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
             {canCgnLogoBeShown && <Avatar logoUri={cgnLogo} size="small" />}
             {CardRevoked.is(cgnDetails) && (
               <Tag
+                testID="card-status-revoked"
                 variant="error"
                 text={I18n.t("bonus.cgn.detail.status.badge.revoked")}
               />
             )}
             {CardExpired.is(cgnDetails) && (
               <Tag
+                testID="card-status-expired"
                 variant="error"
                 text={I18n.t("bonus.cgn.detail.status.badge.expired")}
               />
@@ -173,7 +175,7 @@ const CgnCardComponent = ({ cgnDetails, onCardLoadEnd }: Props) => {
           </View>
           <View style={[IOStyles.rowSpaceBetween, styles.alignCenter]}>
             {CardActivated.is(cgnDetails) && (
-              <LabelSmall color={"black"} testID={"profile-name-surname"}>
+              <LabelSmall color={"black"} testID={"card-bottom-content"}>
                 {I18n.t("bonus.cgn.detail.status.date.valid_until", {
                   date: formatDateAsShortFormat(cgnDetails.expiration_date)
                 })}

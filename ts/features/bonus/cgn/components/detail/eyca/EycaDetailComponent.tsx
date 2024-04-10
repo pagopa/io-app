@@ -46,6 +46,7 @@ const EycaDetailComponent = (props: Props) => {
   const errorComponent = (
     <Alert
       content={I18n.t("bonus.cgn.detail.status.eycaError")}
+      testID="eyca-error-component"
       variant="error"
       onPress={props.requestEycaActivation}
       action={I18n.t("global.buttons.retry")}
@@ -69,6 +70,7 @@ const EycaDetailComponent = (props: Props) => {
                 errorComponent
               ) : (
                 <Alert
+                  testID="eyca-pending-component"
                   variant="info"
                   content={I18n.t("bonus.cgn.detail.status.eycaPending")}
                 />

@@ -24,6 +24,7 @@ const EycaStatusDetailsComponent = (props: Props) => (
       icon="creditCard"
       label={I18n.t("bonus.cgn.detail.status.eycaNumber")}
       value={props.eycaCard.card_number}
+      testID="eyca-card-number"
       onPress={() => clipboardSetStringWithFeedback(props.eycaCard.card_number)}
     />
     <Divider />

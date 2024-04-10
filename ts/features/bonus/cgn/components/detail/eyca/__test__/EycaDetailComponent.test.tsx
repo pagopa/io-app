@@ -1,4 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { render } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import * as React from "react";
 import { Provider } from "react-redux";
@@ -9,7 +9,6 @@ import { StatusEnum as PendingStatus } from "../../../../../../../../definitions
 import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
 import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
 import I18n from "../../../../../../../i18n";
-import * as urlUtils from "../../../../../../../utils/url";
 import { appReducer } from "../../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { GlobalState } from "../../../../../../../store/reducers/types";
@@ -42,7 +41,8 @@ describe("EycaDetailComponent", () => {
 
     const eycaNumber = component.queryByTestId("eyca-card-number");
     expect(eycaNumber).not.toBeNull();
-    expect(eycaNumber).toHaveTextContent(eycaCardActive.card_number);
+    const eycaNumberText = component.queryByText(eycaCardActive.card_number);
+    expect(eycaNumberText).not.toBeNull();
 
     const eycaStatusBadge = component.queryByTestId("eyca-status-badge");
     expect(eycaStatusBadge).not.toBeNull();
@@ -73,16 +73,6 @@ describe("EycaDetailComponent", () => {
 
     const pendingComponent = component.queryByTestId("eyca-pending-component");
     expect(pendingComponent).not.toBeNull();
-
-    const pendingButton = component.queryByTestId("eyca-pending-button");
-    expect(pendingButton).not.toBeNull();
-
-    const spy = jest.spyOn(urlUtils, "openWebUrl");
-
-    if (pendingButton !== null) {
-      fireEvent.press(pendingButton);
-      expect(spy).toHaveBeenCalledTimes(1);
-    }
   });
 
   it("Should show EYCA Error component if a card is Pending but activation is in error", () => {
@@ -102,17 +92,12 @@ describe("EycaDetailComponent", () => {
     const pendingComponent = component.queryByTestId("eyca-pending-component");
     expect(pendingComponent).toBeNull();
 
-    const pendingButton = component.queryByTestId("eyca-pending-button");
-    expect(pendingButton).toBeNull();
-
     const errorComponent = component.queryByTestId("eyca-error-component");
     expect(errorComponent).not.toBeNull();
-
-    const errorComponentText = component.queryByTestId("eyca-error-text");
-    expect(errorComponentText).not.toBeNull();
-    expect(errorComponentText).toHaveTextContent(
+    const errorComponentText = component.queryByText(
       I18n.t("bonus.cgn.detail.status.eycaError")
     );
+    expect(errorComponentText).not.toBeNull();
   });
 
   it("Should show EYCA Error component if a card is not available", () => {
@@ -132,17 +117,12 @@ describe("EycaDetailComponent", () => {
     const pendingComponent = component.queryByTestId("eyca-pending-component");
     expect(pendingComponent).toBeNull();
 
-    const pendingButton = component.queryByTestId("eyca-pending-button");
-    expect(pendingButton).toBeNull();
-
     const errorComponent = component.queryByTestId("eyca-error-component");
     expect(errorComponent).not.toBeNull();
-
-    const errorComponentText = component.queryByTestId("eyca-error-text");
-    expect(errorComponentText).not.toBeNull();
-    expect(errorComponentText).toHaveTextContent(
+    const errorComponentText = component.queryByText(
       I18n.t("bonus.cgn.detail.status.eycaError")
     );
+    expect(errorComponentText).not.toBeNull();
   });
 });
 
