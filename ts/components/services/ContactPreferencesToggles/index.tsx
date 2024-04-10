@@ -8,23 +8,23 @@ import { connect } from "react-redux";
 import { NotificationChannelEnum } from "../../../../definitions/backend/NotificationChannel";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { trackPNPushSettings } from "../../../features/pn/analytics";
-import I18n from "../../../i18n";
 import {
   loadServicePreference,
   upsertServicePreference
-} from "../../../store/actions/services/servicePreference";
-import { Dispatch } from "../../../store/actions/types";
-import { useIOSelector } from "../../../store/hooks";
-import { isPremiumMessagesOptInOutEnabledSelector } from "../../../store/reducers/backendStatus";
+} from "../../../features/services/store/actions";
 import {
   ServicePreferenceState,
   servicePreferenceSelector
-} from "../../../store/reducers/entities/services/servicePreference";
-import { GlobalState } from "../../../store/reducers/types";
+} from "../../../features/services/store/reducers/servicePreference";
 import {
   ServicePreference,
   isServicePreferenceResponseSuccess
-} from "../../../types/services/ServicePreferenceResponse";
+} from "../../../features/services/types/ServicePreferenceResponse";
+import I18n from "../../../i18n";
+import { Dispatch } from "../../../store/actions/types";
+import { useIOSelector } from "../../../store/hooks";
+import { isPremiumMessagesOptInOutEnabledSelector } from "../../../store/reducers/backendStatus";
+import { GlobalState } from "../../../store/reducers/types";
 import { isStrictSome } from "../../../utils/pot";
 import ItemSeparatorComponent from "../../ItemSeparatorComponent";
 import SectionHeader from "../SectionHeader";

@@ -1,13 +1,13 @@
 import {
   FooterWithButtons,
   HSpacer,
+  Icon,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as React from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
 import { useDispatch } from "react-redux";
-import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
 import {
   RadioButtonList,
   RadioItem
@@ -79,7 +79,7 @@ const CdcBonusRequestSelectResidence = () => {
                   alignItems: "center"
                 }}
               >
-                <BonusIcon width={20} height={20} />
+                <Icon name="bonus" size={20} />
                 <HSpacer size={16} />
                 <H3 weight={"SemiBold"} color={"bluegrey"}>
                   {b.year}

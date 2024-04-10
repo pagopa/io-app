@@ -12,9 +12,9 @@ import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
 import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { servicePreferenceSelector } from "../../../store/reducers/entities/services/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { servicePreferenceSelector } from "../../services/store/reducers/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../services/types/ServicePreferenceResponse";
 import {
   trackPNServiceActivated,
   trackPNServiceDeactivated,

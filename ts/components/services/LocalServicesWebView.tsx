@@ -14,7 +14,7 @@ import { localServicesWebUrl } from "../../config";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 import I18n from "../../i18n";
 import { loadServiceDetail } from "../../store/actions/services";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { servicesByIdSelector } from "../../features/services/store/reducers/servicesById";
 import { GlobalState } from "../../store/reducers/types";
 import { isStrictSome } from "../../utils/pot";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../utils/webview";

@@ -16,7 +16,7 @@ import {
   TokenName,
   tokenFromNameSelector
 } from "../../store/reducers/authentication";
-import { serviceMetadataByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { serviceMetadataByIdSelector } from "../../features/services/store/reducers/servicesById";
 
 export type ServiceWebviewScreenNavigationParams = Readonly<{
   serviceId: ServiceId;

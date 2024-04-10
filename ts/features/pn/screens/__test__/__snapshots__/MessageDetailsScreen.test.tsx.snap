@@ -635,7 +635,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
-                                          "resizeMode": "contain",
                                         },
                                         Object {
                                           "borderRadius": 2,
@@ -654,6 +653,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       style={
                                         Object {
                                           "height": "100%",
+                                          "resizeMode": "contain",
                                           "width": "100%",
                                         }
                                       }

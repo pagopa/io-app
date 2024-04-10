@@ -10,24 +10,16 @@ import {
 
 /* PICTOGRAMS */
 import BrokenLink from "../../../../img/broken-link.png";
-import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
 import AirBaloonArrow from "../../../../img/messages/empty-message-list-icon.png";
 import PiggyBank from "../../../../img/messages/empty-transaction-list-icon.png";
 import Error from "../../../../img/messages/error-message-detail-icon.png";
 import Question from "../../../../img/pictograms/doubt.png";
-import Fireworks from "../../../../img/pictograms/fireworks.png";
-import Hourglass from "../../../../img/pictograms/hourglass.png";
 import CompletedRaster from "../../../../img/pictograms/payment-completed.png";
-import Completed from "../../../../img/pictograms/payment-completed.svg";
 import BeerMug from "../../../../img/search/beer-mug.png";
 import Search from "../../../../img/search/search-icon.png";
 import Puzzle from "../../../../img/services/icon-loading-services.png";
 import ABILogo from "../../../../img/wallet/cards-icons/abiLogoFallback.png";
-import Castle from "../../../../img/wallet/errors/domain-unknown-icon.png";
 import Umbrella from "../../../../img/wallet/errors/generic-error-icon.png";
-import Abacus from "../../../../img/wallet/errors/invalid-amount-icon.png";
-import InProgress from "../../../../img/wallet/errors/missing-payment-id-icon.png";
-import Vespa from "../../../../img/wallet/errors/payment-ongoing-icon.png";
 import NotAvailable from "../../../../img/wallet/errors/payment-unavailable-icon.png";
 import Unrecognized from "../../../../img/wallet/errors/payment-unknown-icon.png";
 /* EU Covid Certificate */
@@ -35,6 +27,7 @@ import CertificateExpired from "../../../../img/features/euCovidCert/certificate
 import CertificateNotFound from "../../../../img/features/euCovidCert/certificate_not_found.png";
 import CertificateRevoked from "../../../../img/features/euCovidCert/certificate_revoked.png";
 import CertificateWrongFormat from "../../../../img/features/euCovidCert/certificate_wrong_format.png";
+import Baloons from "../../../../img/messages/empty-due-date-list-icon.png";
 /* Donations */
 import Heart from "../../../../img/features/uaDonations/heart.svg";
 /* Sections */
@@ -59,18 +52,8 @@ export const DSLegacyPictograms = () => {
       <View style={styles.itemsWrapper}>
         <DSAssetViewerBox
           type="raster"
-          name={"Fireworks"}
-          image={renderRasterImage(Fireworks)}
-        />
-        <DSAssetViewerBox
-          type="raster"
           name={"Question"}
           image={renderRasterImage(Question)}
-        />
-        <DSAssetViewerBox
-          type="raster"
-          name={"Hourglass"}
-          image={renderRasterImage(Hourglass)}
         />
         <DSAssetViewerBox
           type="raster"
@@ -114,33 +97,13 @@ export const DSLegacyPictograms = () => {
         />
         <DSAssetViewerBox
           type="raster"
-          name={"Castle"}
-          image={renderRasterImage(Castle)}
-        />
-        <DSAssetViewerBox
-          type="raster"
           name={"Umbrella"}
           image={renderRasterImage(Umbrella)}
         />
         <DSAssetViewerBox
           type="raster"
-          name={"Abacus"}
-          image={renderRasterImage(Abacus)}
-        />
-        <DSAssetViewerBox
-          type="raster"
-          name={"Vespa"}
-          image={renderRasterImage(Vespa)}
-        />
-        <DSAssetViewerBox
-          type="raster"
           name={"NotAvailable"}
           image={renderRasterImage(NotAvailable)}
-        />
-        <DSAssetViewerBox
-          type="raster"
-          name={"InProgress"}
-          image={renderRasterImage(InProgress)}
         />
         <DSAssetViewerBox
           type="raster"
@@ -153,7 +116,6 @@ export const DSLegacyPictograms = () => {
           name={"Completed"}
           image={renderRasterImage(CompletedRaster)}
         />
-        <DSAssetViewerBox name={"Completed"} image={<Completed />} />
         <DSAssetViewerBox
           type="raster"
           name={"BrokenLink"}
