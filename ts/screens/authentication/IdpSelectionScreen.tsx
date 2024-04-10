@@ -11,10 +11,11 @@ import { Platform, Pressable, View } from "react-native";
 import { useSelector, useStore } from "react-redux";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
+import _ from "lodash";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
-import { idpsSelectorWithRemoteStatus } from "../../store/reducers/content";
+import { idpsRemoteValueSelector } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
 import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
@@ -69,14 +70,17 @@ const IdpSelectionScreen = (): ReactElement => {
     trackSpidLoginIdpSelection();
   });
   const dispatch = useIODispatch();
-  const idps = useIOSelector(idpsSelectorWithRemoteStatus);
-  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>();
+  const idps = useIOSelector(idpsRemoteValueSelector);
+  const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
+  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
+    randomOrderIdps(idpValue)
+  );
   const firstIdpsRef = useRef<ReadonlyArray<SpidIdp> | LocalIdpsFallback>(
-    isReady(idps) ? idps.value.items : idpsFallback
+    idpValue
   );
 
   if (isReady(idps)) {
-    if (firstIdpsRef.current !== idps.value.items) {
+    if (!_.isEqual(firstIdpsRef.current, idps.value.items)) {
       // eslint-disable-next-line functional/immutable-data
       randomIdps.current = randomOrderIdps(idps.value.items);
     }
@@ -193,7 +197,7 @@ const IdpSelectionScreen = (): ReactElement => {
   return (
     <SafeAreaView edges={["bottom"]}>
       <IdpsGridRevamp
-        idps={randomIdps.current ?? randomOrderIdps(idpsFallback)}
+        idps={randomIdps.current}
         onIdpSelected={onIdpSelected}
         headerComponent={headerComponent}
         footerComponent={<VSpacer size={24} />}

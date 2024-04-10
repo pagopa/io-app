@@ -79,7 +79,7 @@ export const idpsSelector = createSelector(
     isReady(idps) ? idps.value.items : idpsFallback
 );
 
-export const idpsSelectorWithRemoteStatus = createSelector(
+export const idpsRemoteValueSelector = createSelector(
   idpsStateSelector,
   (idps: ContentState["idps"]) => idps
 );
