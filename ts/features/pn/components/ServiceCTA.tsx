@@ -10,9 +10,9 @@ import ButtonDefaultOpacity from "../../../components/ButtonDefaultOpacity";
 import { Label } from "../../../components/core/typography/Label";
 import { Link } from "../../../components/core/typography/Link";
 import I18n from "../../../i18n";
-import { loadServicePreference } from "../../../store/actions/services/servicePreference";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { loadServicePreference } from "../../services/store/actions";
 import { servicePreferenceSelector } from "../../services/store/reducers/servicePreference";
 import { isServicePreferenceResponseSuccess } from "../../services/types/ServicePreferenceResponse";
 import {
