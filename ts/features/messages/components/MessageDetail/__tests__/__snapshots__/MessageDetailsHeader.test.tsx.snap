@@ -549,7 +549,6 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                     "backgroundColor": "#FFFFFF",
                                     "borderCurve": "continuous",
                                     "overflow": "hidden",
-                                    "resizeMode": "contain",
                                   },
                                   Object {
                                     "borderRadius": 2,
@@ -568,6 +567,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                                 style={
                                   Object {
                                     "height": "100%",
+                                    "resizeMode": "contain",
                                     "width": "100%",
                                   }
                                 }

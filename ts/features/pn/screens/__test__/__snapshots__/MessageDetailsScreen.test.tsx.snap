@@ -649,7 +649,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
-                                          "resizeMode": "contain",
                                         },
                                         Object {
                                           "borderRadius": 2,
@@ -668,6 +667,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       style={
                                         Object {
                                           "height": "100%",
+                                          "resizeMode": "contain",
                                           "width": "100%",
                                         }
                                       }
@@ -1324,6 +1324,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <View
                               accessibilityLabel="Informazioni sulla notifica"
                               accessible={true}
                               style={
@@ -1647,6 +1654,25 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 </View>
                               </View>
                             </View>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "backgroundColor": "#F4F5F8",
+                                "marginBottom": "-95%",
+                                "paddingBottom": "95%",
+                                "paddingHorizontal": 24,
+                                "paddingTop": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
                           </View>
                         </View>
                       </RCTScrollView>
@@ -2449,14 +2475,15 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               }
                             />
                             <Text
-                              color="grey-650"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              allowFontScaling={false}
+                              color="bluegrey"
+                              defaultColor="bluegrey"
+                              defaultWeight="Regular"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
+                                  "fontSize": 16,
+                                  "lineHeight": 24,
                                 }
                               }
                               style={
@@ -2465,11 +2492,11 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                     "textAlign": "center",
                                   },
                                   Object {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
+                                    "fontSize": 16,
+                                    "lineHeight": 24,
                                   },
                                   Object {
-                                    "color": "#636B82",
+                                    "color": "#475A6D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",

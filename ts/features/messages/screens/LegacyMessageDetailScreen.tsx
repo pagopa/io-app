@@ -26,9 +26,9 @@ import { loadServiceDetail } from "../../../store/actions/services";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isNoticePaidSelector } from "../../../store/reducers/entities/payments";
 import {
-  serviceByIdSelector,
+  serviceByIdPotSelector,
   serviceMetadataByIdSelector
-} from "../../../store/reducers/entities/services/servicesById";
+} from "../../services/store/reducers/servicesById";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import MessageDetailComponent from "../components/MessageDetail";
@@ -89,7 +89,9 @@ const LegacyMessageDetailScreen = () => {
     messageDetailsByIdSelector(state, messageId)
   );
   const service = pipe(
-    pot.toOption(useIOSelector(state => serviceByIdSelector(state, serviceId))),
+    pot.toOption(
+      useIOSelector(state => serviceByIdPotSelector(state, serviceId))
+    ),
     O.map(toUIService),
     O.toUndefined
   );

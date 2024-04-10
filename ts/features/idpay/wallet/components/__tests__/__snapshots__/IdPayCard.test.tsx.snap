@@ -48,6 +48,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
           color="blueItalia-850"
           defaultColor="black"
           defaultWeight="SemiBold"
+          ellipsizeMode="tail"
           font="TitilliumWeb"
           fontStyle={
             Object {
@@ -55,8 +56,12 @@ exports[`IdPayCard should match the snapshot 1`] = `
               "lineHeight": 25,
             }
           }
+          numberOfLines={1}
           style={
             Array [
+              Object {
+                "width": "80%",
+              },
               Object {
                 "fontSize": 18,
                 "lineHeight": 25,
@@ -100,7 +105,6 @@ exports[`IdPayCard should match the snapshot 1`] = `
                   "backgroundColor": "#FFFFFF",
                   "borderCurve": "continuous",
                   "overflow": "hidden",
-                  "resizeMode": "contain",
                 },
                 Object {
                   "borderRadius": 2,
@@ -119,6 +123,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
               style={
                 Object {
                   "height": "100%",
+                  "resizeMode": "contain",
                   "width": "100%",
                 }
               }

@@ -1,12 +1,20 @@
 /**
  * Services reducer
  */
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { combineReducers } from "redux";
 import { createSelector } from "reselect";
-import { pipe } from "fp-ts/lib/function";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
+import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
+import servicePreferenceReducer, {
+  ServicePreferenceState
+} from "../../../../features/services/store/reducers/servicePreference";
+import servicesByIdReducer, {
+  servicesByIdSelector,
+  ServicesByIdState
+} from "../../../../features/services/store/reducers/servicesById";
 import { isDefined } from "../../../../utils/guards";
 import { isVisibleService } from "../../../../utils/services";
 import { Action } from "../../../actions/types";
@@ -16,7 +24,6 @@ import {
   organizationNamesByFiscalCodeSelector,
   OrganizationNamesByFiscalCodeState
 } from "../organizations/organizationsByFiscalCodeReducer";
-import { ServiceScopeEnum } from "../../../../../definitions/backend/ServiceScope";
 import {
   firstLoadingReducer,
   FirstLoadingState,
@@ -26,10 +33,6 @@ import readServicesByIdReducer, {
   readServicesByIdSelector,
   ReadStateByServicesId
 } from "./readStateByServiceId";
-import servicesByIdReducer, {
-  servicesByIdSelector,
-  ServicesByIdState
-} from "./servicesById";
 import {
   serviceIdsByOrganizationFiscalCodeReducer,
   ServiceIdsByOrganizationFiscalCodeState
@@ -39,9 +42,6 @@ import {
   visibleServicesSelector,
   VisibleServicesState
 } from "./visibleServices";
-import servicePreferenceReducer, {
-  ServicePreferenceState
-} from "./servicePreference";
 
 export type ServicesState = Readonly<{
   // Section to hold the preference for services
