@@ -10,6 +10,7 @@ import {
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { profileEmailSelector } from "../../../../store/reducers/profile";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { WalletPaymentFeebackBanner } from "../components/WalletPaymentFeedbackBanner";
@@ -17,13 +18,13 @@ import { usePaymentFailureSupportModal } from "../hooks/usePaymentFailureSupport
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import {
   walletPaymentDetailsSelector,
-  walletPaymentStartRouteSelector
+  walletPaymentOnSuccessActionSelector
 } from "../store/selectors";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
-import { profileEmailSelector } from "../../../../store/reducers/profile";
+import ROUTES from "../../../../navigation/routes";
 
 type WalletPaymentOutcomeScreenNavigationParams = {
   outcome: WalletPaymentOutcome;
@@ -42,7 +43,7 @@ const WalletPaymentOutcomeScreen = () => {
 
   const navigation = useIONavigation();
   const paymentDetailsPot = useIOSelector(walletPaymentDetailsSelector);
-  const paymentStartRoute = useIOSelector(walletPaymentStartRouteSelector);
+  const onSuccessAction = useIOSelector(walletPaymentOnSuccessActionSelector);
   const profileEmailOption = useIOSelector(profileEmailSelector);
 
   const supportModal = usePaymentFailureSupportModal({
@@ -73,14 +74,19 @@ const WalletPaymentOutcomeScreen = () => {
   };
 
   const handleClose = () => {
-    if (paymentStartRoute) {
-      // TODO: this is a workaround to solve type errors need to investigate deeply
-      navigation.navigate(paymentStartRoute.routeName as any, {
-        screen: paymentStartRoute.routeKey
+    if (
+      onSuccessAction === "showHome" ||
+      onSuccessAction === "showTransaction"
+    ) {
+      // Currently we do support only navigation to the wallet
+      // TODO navigate to the transaction details if payment outcome is success
+      navigation.popToTop();
+      navigation.navigate(ROUTES.MAIN, {
+        screen: ROUTES.PAYMENTS_HOME
       });
       return;
     }
-    navigation.popToTop();
+
     navigation.pop();
   };
 

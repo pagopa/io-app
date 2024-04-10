@@ -939,18 +939,6 @@ datetimes:
   todayAt: oggi, alle
   notValid: Data non valida.
 payment:
-  homeScreen:
-    title: Pagamenti
-    methodsSection:
-      header: Metodi di pagamento
-      headerCTA: Aggiungi
-    historySection:
-      header: Storico operazioni
-      headerCTA: Vedi tutte
-      transactionStatusBadges:
-        failure: "FALLITA"
-        success: ""
-    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Aggiungi un metodo per effettuare pagamenti in app
     message: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
@@ -2943,6 +2931,24 @@ features:
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Metodi di pagamento
+  payments:
+    title: Pagamenti
+    cta: Paga un avviso
+    methods:
+      title: Metodi di pagamento
+      button: Aggiungi
+      banner:
+        content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        action: Aggiungi un metodo
+    transactions:
+      title: Storico operazioni
+      button: Vedi tutte
+      empty:
+        title: Qui vedrai le tue ricevute pagoPA
+        content: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+      status:
+        failure: FALLITA
+        success: ""
     onboarding: 
       title: Cosa vuoi aggiungere al portafoglio?
       options: 
