@@ -35,7 +35,6 @@ type BottomActionsDimensions = {
 type ServiceDetailsFooterActionsProps = WithTestID<{
   dimensions: BottomActionsDimensions;
   transitionAnimStyle: Animated.AnimateStyle<StyleProp<ViewStyle>>;
-  children?: React.ReactNode;
   debugMode?: boolean;
   specialActionProps?: React.ComponentProps<typeof ServiceSpecialAction>;
   standardActionsProps?: React.ComponentProps<typeof ServiceStandardActions>;
