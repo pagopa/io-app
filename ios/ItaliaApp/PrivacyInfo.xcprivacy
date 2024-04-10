@@ -33,7 +33,7 @@ Copyright (c) 2024 . All rights reserved.
             <string>NSPrivacyAccessedAPICategoryDiskSpace</string>
             <key>NSPrivacyAccessedAPITypeReasons</key>
             <array>
-              <string>7D9E.1</string> <!-- Are we really using it in Zendesk? -->
+              <string>7D9E.1</string>
             </array>
           </dict>
           <dict>
