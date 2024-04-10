@@ -2,15 +2,19 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { debounce } from "lodash";
 import * as React from "react";
 import { useCallback, useMemo } from "react";
-import { View, Keyboard, SafeAreaView } from "react-native";
+import { Keyboard, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
-import { ContentWrapper, ListItemHeader } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  ListItemHeader,
+  TextInput,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { IOStyles } from "../../../../../components/core/variables/IOStyles";
-import { LabelledItem } from "../../../../../components/LabelledItem";
 import I18n from "../../../../../i18n";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -108,18 +112,14 @@ const CgnMerchantsListScreen: React.FunctionComponent<Props> = (
         <>
           <ContentWrapper>
             <ListItemHeader label="Tutti gli operatori" />
-            <View style={{ height: 50 }}>
-              <LabelledItem
-                icon="search"
-                iconPosition={"right"}
-                inputProps={{
-                  value: searchValue,
-                  autoFocus: false,
-                  onChangeText: setSearchValue,
-                  placeholder: I18n.t("global.buttons.search")
-                }}
-              />
-            </View>
+            <TextInput
+              icon="search"
+              value={searchValue}
+              onChangeText={setSearchValue}
+              placeholder={I18n.t("global.buttons.search")}
+              autoFocus={false}
+            />
+            <VSpacer />
           </ContentWrapper>
           <CgnMerchantsListView
             refreshing={
