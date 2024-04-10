@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import { loadServicePreference } from "../../../services/store/actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationUpsert } from "../actions";

@@ -15,7 +15,7 @@ import { ServicePublic } from "../../../../definitions/backend/ServicePublic";
 import {
   loadServicePreference,
   upsertServicePreference
-} from "./servicePreference";
+} from "../../../features/services/store/actions";
 
 //
 // service loading at startup

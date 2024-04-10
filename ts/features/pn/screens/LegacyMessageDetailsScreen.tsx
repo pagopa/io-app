@@ -9,7 +9,7 @@ import BaseScreenComponent from "../../../components/screens/BaseScreenComponent
 import I18n from "../../../i18n";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { serviceByIdPotSelector } from "../../services/store/reducers/servicesById";
 import { emptyContextualHelp } from "../../../utils/emptyContextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { LegacyMessageDetails } from "../components/LegacyMessageDetails";
@@ -48,7 +48,7 @@ export const LegacyMessageDetailsScreen = (
   const navigation = useNavigation();
 
   const service = pot.toUndefined(
-    useIOSelector(state => serviceByIdSelector(state, serviceId))
+    useIOSelector(state => serviceByIdPotSelector(state, serviceId))
   );
 
   const currentFiscalCode = useIOSelector(profileFiscalCodeSelector);
