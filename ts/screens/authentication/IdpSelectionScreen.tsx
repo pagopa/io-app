@@ -3,19 +3,20 @@ import React, {
   createRef,
   useCallback,
   useEffect,
+  useRef,
   useState
 } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Platform, Pressable, ScrollView, View } from "react-native";
+import { Platform, Pressable, View } from "react-native";
 import { useSelector, useStore } from "react-redux";
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ContextualHelpPropsMarkdown } from "../../components/screens/BaseScreenComponent";
 import I18n from "../../i18n";
 import { idpSelected } from "../../store/actions/authentication";
-import { idpsSelector, randomOrderIdps } from "../../store/reducers/content";
+import { idpsSelectorWithRemoteStatus } from "../../store/reducers/content";
 import { SpidIdp } from "../../../definitions/content/SpidIdp";
-import { LocalIdpsFallback } from "../../utils/idps";
+import { idps as idpsFallback, LocalIdpsFallback } from "../../utils/idps";
 import { loadIdps } from "../../store/actions/content";
 import { assistanceToolConfigSelector } from "../../store/reducers/backendStatus";
 import {
@@ -33,6 +34,7 @@ import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
 import IdpsGridRevamp from "../../components/IdpsGridRevamp";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
+import { isReady } from "../../common/model/RemoteValue";
 import { trackSpidLoginIdpSelection } from "./analytics";
 import { trackLoginSpidIdpSelected } from "./analytics/spidAnalytics";
 
@@ -51,6 +53,14 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "authentication.idp_selection.contextualHelpContent"
 };
 
+export const randomOrderIdps = <T extends object>(
+  array: Array<T> | ReadonlyArray<T>
+): Array<T> =>
+  array
+    .map(value => ({ value, sort: Math.random() })) // Assigns a random value to each array element
+    .sort((a, b) => a.sort - b.sort) // Sorts the array according to the random values assigned
+    .map(({ value }) => value); // Extract only the original values from the array
+
 /**
  * A screen where the user choose the SPID IPD to login with.
  */
@@ -59,8 +69,21 @@ const IdpSelectionScreen = (): ReactElement => {
     trackSpidLoginIdpSelection();
   });
   const dispatch = useIODispatch();
-  const idps = useIOSelector(idpsSelector);
-  const randomIdps = randomOrderIdps(idps);
+  const idps = useIOSelector(idpsSelectorWithRemoteStatus);
+  const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>();
+  const firstIdpsRef = useRef<ReadonlyArray<SpidIdp> | LocalIdpsFallback>(
+    isReady(idps) ? idps.value.items : idpsFallback
+  );
+
+  if (isReady(idps)) {
+    if (firstIdpsRef.current !== idps.value.items) {
+      // eslint-disable-next-line functional/immutable-data
+      randomIdps.current = randomOrderIdps(idps.value.items);
+    }
+    // eslint-disable-next-line functional/immutable-data
+    firstIdpsRef.current = idps.value.items;
+  }
+
   const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
   const nativeLoginFeature = useIOSelector(nativeLoginSelector);
 
@@ -169,14 +192,12 @@ const IdpSelectionScreen = (): ReactElement => {
 
   return (
     <SafeAreaView edges={["bottom"]}>
-      <ScrollView centerContent={true}>
-        <IdpsGridRevamp
-          idps={randomIdps}
-          onIdpSelected={onIdpSelected}
-          headerComponent={headerComponent}
-          footerComponent={<VSpacer size={24} />}
-        />
-      </ScrollView>
+      <IdpsGridRevamp
+        idps={randomIdps.current ?? randomOrderIdps(idpsFallback)}
+        onIdpSelected={onIdpSelected}
+        headerComponent={headerComponent}
+        footerComponent={<VSpacer size={24} />}
+      />
     </SafeAreaView>
   );
 };

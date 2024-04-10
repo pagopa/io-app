@@ -58,14 +58,6 @@ export const initialContentState: ContentState = {
   idps: remoteUndefined
 };
 
-export const randomOrderIdps = <T>(
-  array: Array<T> | ReadonlyArray<T>
-): Array<T> =>
-  array
-    .map(value => ({ value, sort: Math.random() })) // Assigns a random value to each array element
-    .sort((a, b) => a.sort - b.sort) // Sorts the array according to the random values assigned
-    .map(({ value }) => value); // Extract only the original values from the array
-
 // Selectors
 export const contentSelector = (state: GlobalState) => state.content;
 
@@ -85,6 +77,11 @@ export const idpsSelector = createSelector(
   idpsStateSelector,
   (idps: ContentState["idps"]): ReadonlyArray<SpidIdp | LocalIdpsFallback> =>
     isReady(idps) ? idps.value.items : idpsFallback
+);
+
+export const idpsSelectorWithRemoteStatus = createSelector(
+  idpsStateSelector,
+  (idps: ContentState["idps"]) => idps
 );
 
 /**
