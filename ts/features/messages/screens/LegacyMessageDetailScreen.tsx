@@ -34,9 +34,9 @@ import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessageId } from "../types";
 import {
-  serviceByIdSelector,
+  serviceByIdPotSelector,
   serviceMetadataByIdSelector
-} from "../../../store/reducers/entities/services/servicesById";
+} from "../../services/store/reducers/servicesById";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
@@ -89,7 +89,9 @@ const LegacyMessageDetailScreen = () => {
     messageDetailsByIdSelector(state, messageId)
   );
   const service = pipe(
-    pot.toOption(useIOSelector(state => serviceByIdSelector(state, serviceId))),
+    pot.toOption(
+      useIOSelector(state => serviceByIdPotSelector(state, serviceId))
+    ),
     O.map(toUIService),
     O.toUndefined
   );

@@ -8,7 +8,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 
 import { ServicePublic } from "../../../../../../definitions/backend/ServicePublic";
 import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
-import { servicesByIdSelector } from "../../../../../store/reducers/entities/services/servicesById";
+import { servicesByIdSelector } from "../../../../services/store/reducers/servicesById";
 import { mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 
