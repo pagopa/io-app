@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IOColors, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
+import { serviceMetadataByIdSelector } from "../../../services/store/reducers/servicesById";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { UIMessageId } from "../../types";
 import { ContactsListItem } from "./ContactsListItem";
