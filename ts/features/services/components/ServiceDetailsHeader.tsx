@@ -39,9 +39,9 @@ export const ServiceDetailsHeader = ({
       <Avatar logoUri={logoUri} size="medium" />
     </View>
     <View style={IOStyles.flex}>
-      <H3>{organizationName}</H3>
+      <H3>{serviceName}</H3>
       <LabelSmall fontSize="regular" color="grey-700">
-        {serviceName}
+        {organizationName}
       </LabelSmall>
     </View>
   </View>

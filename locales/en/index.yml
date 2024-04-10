@@ -2088,6 +2088,11 @@ services:
       subtitle: "We are retrieving service details"
       back: "Back"
       retry: "Retry"
+    preferences:
+      title: "This service can"
+      inbox: "Contact you in app"
+      pushNotifications: "Send you push notifications"
+      messageReadStatus: "Receive read receipts"
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
