@@ -2,7 +2,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import React, { useCallback, useEffect } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { Platform, SafeAreaView, ScrollView, View } from "react-native";
 import {
   IOColors,
   IOIconSizeScale,
@@ -32,7 +32,11 @@ import {
   profileNameSurnameSelector
 } from "../../../store/reducers/profile";
 import { getAppVersion } from "../../../utils/appVersion";
-import { getModel, getSystemVersion } from "../../../utils/device";
+import {
+  getFreeDiskStorage,
+  getModel,
+  getSystemVersion
+} from "../../../utils/device";
 import { getFullLocale } from "../../../utils/locale";
 import { isIos } from "../../../utils/platform";
 import { showToast } from "../../../utils/showToast";
@@ -65,6 +69,7 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
+import { bytesToGigabytes } from "../../../utils/number";
 
 /**
  * Transform an array of string into a Zendesk
@@ -145,7 +150,12 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
   {
     icon: <Icon name="battery" {...iconStyleProps} />,
     title: I18n.t("support.askPermissions.devicePerformance"),
-    value: I18n.t("support.askPermissions.devicePerformanceData"),
+    value: Platform.select({
+      ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
+        storage: bytesToGigabytes(getFreeDiskStorage())
+      }),
+      android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
+    }),
     testId: "devicePerformance"
   },
   {

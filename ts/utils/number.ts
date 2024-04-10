@@ -30,3 +30,11 @@ export const NumberFromString = new NumberFromStringType();
 
 export const roundToThirdDecimal = (value: number) =>
   isNaN(value) ? 0 : Math.floor(value * 1000) / 1000;
+
+/**
+ * Converts bytes to gigabytes by using decimal system and rounds to 1 decimal
+ * @param bytes - the number of bytes to convert
+ * @returns the number of gigabytes rounded to 1 decimal
+ */
+export const bytesToGigabytes = (bytes: number) =>
+  isNaN(bytes) ? 0 : parseFloat((bytes / Math.pow(10, 9)).toFixed(1));
