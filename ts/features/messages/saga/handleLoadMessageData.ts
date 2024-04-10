@@ -18,7 +18,7 @@ import {
 } from "../store/actions";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
 import { UIMessage, UIMessageDetails, UIMessageId } from "../types";
-import { serviceByIdSelector } from "../../../store/reducers/entities/services/servicesById";
+import { serviceByIdPotSelector } from "../../services/store/reducers/servicesById";
 import { loadServiceDetail } from "../../../store/actions/services";
 import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
@@ -173,7 +173,7 @@ function* getPaginatedMessage(messageId: UIMessageId) {
 }
 
 function* getService(serviceId: ServiceId) {
-  const servicePot = yield* select(serviceByIdSelector, serviceId);
+  const servicePot = yield* select(serviceByIdPotSelector, serviceId);
   if (!pot.isSome(servicePot) || pot.isError(servicePot)) {
     yield* put(loadServiceDetail.request(serviceId));
   }
