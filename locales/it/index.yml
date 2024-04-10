@@ -2076,6 +2076,11 @@ services:
       subtitle: "Stiamo recuperando i dettagli del servizio"
       back: "Indietro"
       retry: "Riprova"
+    preferences:
+      title: "Questo servizio può"
+      inbox: "Contattarti in app"
+      pushNotifications: "Inviarti notifiche push"
+      messageReadStatus: "Ricevere conferme di lettura"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
