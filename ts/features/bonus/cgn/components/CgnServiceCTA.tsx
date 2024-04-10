@@ -7,15 +7,15 @@ import { Label } from "../../../../components/core/typography/Label";
 import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
+import { servicePreferenceSelector } from "../../../services/store/reducers/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../../services/types/ServicePreferenceResponse";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { fold, isLoading } from "../../../../common/model/RemoteValue";
 import { showToast } from "../../../../utils/showToast";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import { loadServicePreference } from "../../../services/store/actions";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 

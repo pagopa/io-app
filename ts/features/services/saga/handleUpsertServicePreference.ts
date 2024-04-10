@@ -1,22 +1,26 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { ServicePreference } from "../../../../definitions/backend/ServicePreference";
 import { PathTraversalSafePathParam } from "../../../../definitions/backend/PathTraversalSafePathParam";
+import { ServicePreference } from "../../../../definitions/backend/ServicePreference";
 import { BackendClient } from "../../../api/backend";
-import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
-import {
-  servicePreferenceSelector,
-  ServicePreferenceState
-} from "../../../store/reducers/entities/services/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
 import { SagaCallReturnType } from "../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../utils/errors";
 import { readablePrivacyReport } from "../../../utils/reporters";
-import { withRefreshApiCall } from "../../../features/fastLogin/saga/utils";
-import { isFastLoginEnabledSelector } from "../../../features/fastLogin/store/selectors";
-import { mapKinds } from "./handleGetServicePreferenceSaga";
+import { withRefreshApiCall } from "../../fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { trackPNPushSettings } from "../../pn/analytics";
+import { upsertServicePreference } from "../store/actions";
+import {
+  ServicePreferenceState,
+  servicePreferenceSelector
+} from "../store/reducers/servicePreference";
+import { serviceMetadataInfoSelector } from "../store/reducers/servicesById";
+import { isServicePreferenceResponseSuccess } from "../types/ServicePreferenceResponse";
+import { mapKinds } from "./handleGetServicePreference";
 
 /**
  * Generates the payload for the updating preferences request, if a users disables the inbox flag than the other flags
@@ -49,6 +53,7 @@ const calculateUpdatingPreference = (
         .settings_version as ServicePreference["settings_version"]
     };
   }
+
   return {
     is_inbox_enabled: action.payload.inbox,
     is_webhook_enabled: action.payload.inbox ? action.payload.push : false,
@@ -61,17 +66,37 @@ const calculateUpdatingPreference = (
   };
 };
 
+export function* trackPNPushNotificationSettings(
+  action: ActionType<typeof upsertServicePreference.request>
+) {
+  const serviceMetadataInfo = yield* select(
+    serviceMetadataInfoSelector,
+    action.payload.id
+  );
+
+  pipe(
+    serviceMetadataInfo,
+    O.fromNullable,
+    O.chainNullableK(metadata => metadata.customSpecialFlow),
+    O.filter(customSpecialFlow => customSpecialFlow === "pn"),
+    O.fold(
+      () => undefined,
+      _ => trackPNPushSettings(action.payload.push)
+    )
+  );
+}
+
 /**
  * saga to handle the update of service preferences after a user specific action
  * @param upsertServicePreferences
  * @param action
  */
 export function* handleUpsertServicePreference(
-  upsertServicePreferences: ReturnType<
-    typeof BackendClient
-  >["upsertServicePreference"],
+  upsertServicePreferences: BackendClient["upsertServicePreference"],
   action: ActionType<typeof upsertServicePreference.request>
 ) {
+  yield* call(trackPNPushNotificationSettings, action);
+
   const currentPreferences: ReturnType<typeof servicePreferenceSelector> =
     yield* select(servicePreferenceSelector);
 
@@ -81,19 +106,25 @@ export function* handleUpsertServicePreference(
   );
 
   try {
-    const serviceIdEither = PathTraversalSafePathParam.decode(
-      action.payload.id
-    );
-
-    if (E.isLeft(serviceIdEither)) {
-      throw Error("Unable to decode ServiceId to PathTraversalSafePathParam");
+    if (!PathTraversalSafePathParam.is(action.payload.id)) {
+      yield* put(
+        upsertServicePreference.failure({
+          id: action.payload.id,
+          ...getGenericError(
+            new Error(
+              "Unable to decode ServiceId to PathTraversalSafePathParam"
+            )
+          )
+        })
+      );
+      return;
     }
 
     const response: SagaCallReturnType<typeof upsertServicePreferences> =
       (yield* call(
         withRefreshApiCall,
         upsertServicePreferences({
-          service_id: serviceIdEither.right,
+          service_id: action.payload.id,
           body: updatingPreference
         }),
         action
@@ -106,6 +137,7 @@ export function* handleUpsertServicePreference(
           return;
         }
       }
+
       if (response.right.status === 200) {
         yield* put(
           upsertServicePreference.success({
