@@ -206,7 +206,7 @@ export const isDesignSystemEnabledSelector = (state: GlobalState) =>
   state.persistedPreferences.isDesignSystemEnabled ?? false;
 
 export const isNewWalletSectionEnabledSelector = (state: GlobalState) =>
-  state.persistedPreferences.isNewWalletSectionEnabled;
+  state.persistedPreferences?.isNewWalletSectionEnabled ?? false;
 
 // returns the preferred language as an Option from the persisted store
 export const preferredLanguageSelector = createSelector<

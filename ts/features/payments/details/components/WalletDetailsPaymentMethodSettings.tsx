@@ -1,10 +1,9 @@
-import * as React from "react";
 import { H6, IOSpacingScale } from "@pagopa/io-app-design-system";
-
+import * as React from "react";
+import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
 import FavoritePaymentMethodSwitch from "../../../../components/wallet/FavoriteMethodSwitch";
 import I18n from "../../../../i18n";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import WalletDetailsPagoPaPaymentCapability from "./WalletDetailsPagoPaPaymentCapability";
 
 type Props = { paymentMethod: WalletInfo };

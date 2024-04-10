@@ -1,80 +1,96 @@
-import { List, ListItem } from "native-base";
-import * as React from "react";
-import { useState } from "react";
+/* eslint-disable no-console */
+import React, { useRef } from "react";
 import { Platform, View } from "react-native";
 import {
-  IOColors,
-  IOIcons,
-  Icon,
-  HSpacer,
+  Alert,
+  Body,
+  ContentWrapper,
+  FeatureInfo,
+  GradientScrollView,
+  H3,
+  IOStyles,
+  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import I18n from "../../i18n";
-import LegacyMarkdown from "../ui/Markdown/LegacyMarkdown";
-import { Body } from "../core/typography/Body";
+import { useIOSelector } from "../../store/hooks";
+import {
+  hasApiLevelSupportSelector,
+  hasNFCFeatureSelector
+} from "../../store/reducers/cie";
+import { setAccessibilityFocus } from "../../utils/accessibility";
 
-type Props = {
-  hasCieApiLevelSupport: boolean;
-  hasCieNFCFeature: boolean;
-};
+const CieNotSupported = () => {
+  const hasApiLevelSupport = useIOSelector(hasApiLevelSupportSelector);
+  const hasCieApiLevelSupport = pot.getOrElse(hasApiLevelSupport, false);
+  const hasNFCFeature = useIOSelector(hasNFCFeatureSelector);
+  const hasCieNFCFeature = pot.getOrElse(hasNFCFeature, false);
+  const accessibilityFirstFocuseViewRef = useRef<View>(null);
+  const navigation = useNavigation();
 
-const ICON_SIZE = 24;
-const okColor: IOColors = "green";
-const koColor: IOColors = "red";
-const okIcon: IOIcons = "ok";
-const koIcon: IOIcons = "errorFilled";
-const markDownElements = 2;
-const CieNotSupported: React.FunctionComponent<Props> = props => {
-  const [markdownLoaded, setMarkdownLoaded] = useState(0);
-  const handleMarkdownLoaded = () => setMarkdownLoaded(s => s + 1);
+  useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
+
   return (
-    <React.Fragment>
-      <LegacyMarkdown onLoadEnd={handleMarkdownLoaded}>
-        {I18n.t("authentication.landing.cie_unsupported.body")}
-      </LegacyMarkdown>
-
-      {Platform.OS === "android" && (
-        <React.Fragment>
-          <VSpacer size={16} />
-          <LegacyMarkdown onLoadEnd={handleMarkdownLoaded}>
-            {I18n.t("authentication.landing.cie_unsupported.android_desc")}
-          </LegacyMarkdown>
-          <VSpacer size={40} />
-          {markdownLoaded === markDownElements && (
-            <List>
-              <ListItem>
-                <Icon
-                  size={ICON_SIZE}
-                  name={props.hasCieApiLevelSupport ? okIcon : koIcon}
-                  color={props.hasCieApiLevelSupport ? okColor : koColor}
-                />
-                <HSpacer size={8} />
-                <Body>
-                  {I18n.t(
-                    "authentication.landing.cie_unsupported.os_version_unsupported"
-                  )}
-                </Body>
-              </ListItem>
-              <ListItem>
-                <View style={{ alignItems: "flex-start" }}>
-                  <Icon
-                    size={ICON_SIZE}
-                    name={props.hasCieNFCFeature ? okIcon : koIcon}
-                    color={props.hasCieNFCFeature ? okColor : koColor}
-                  />
-                </View>
-                <HSpacer size={8} />
-                <Body>
-                  {I18n.t(
-                    "authentication.landing.cie_unsupported.nfc_incompatible"
-                  )}
-                </Body>
-              </ListItem>
-            </List>
-          )}
-        </React.Fragment>
-      )}
-    </React.Fragment>
+    <GradientScrollView
+      testID="container-test"
+      primaryActionProps={{
+        label: I18n.t("authentication.landing.cie_unsupported.button"),
+        accessibilityLabel: I18n.t(
+          "authentication.landing.cie_unsupported.button"
+        ),
+        onPress: () => navigation.goBack(),
+        testID: "close-button"
+      }}
+    >
+      <ContentWrapper>
+        <View style={IOStyles.selfCenter} testID="pictogram-test">
+          <Pictogram name="updateOS" size={120} />
+        </View>
+        <VSpacer size={24} />
+        <View accessible={true} ref={accessibilityFirstFocuseViewRef}>
+          <H3
+            accessible={true}
+            style={{ textAlign: "center", alignItems: "center" }}
+            testID="title-test"
+          >
+            {I18n.t("authentication.landing.cie_unsupported.title")}
+          </H3>
+        </View>
+        <VSpacer size={24} />
+        <Body style={[IOStyles.selfCenter, { textAlign: "center" }]}>
+          {I18n.t("authentication.landing.cie_unsupported.body")}
+        </Body>
+        <VSpacer size={24} />
+        <FeatureInfo
+          iconName="contactless"
+          body={I18n.t("authentication.landing.cie_unsupported.nfc_problem")}
+        />
+        <VSpacer size={24} />
+        <FeatureInfo
+          iconName="history"
+          body={I18n.t("authentication.landing.cie_unsupported.os_problem")}
+        />
+        <VSpacer size={24} />
+        {Platform.OS === "android" && !hasCieNFCFeature ? (
+          <Alert
+            content={I18n.t("authentication.landing.cie_unsupported.nfc_alert")}
+            variant="warning"
+          />
+        ) : (
+          Platform.OS === "android" &&
+          hasCieApiLevelSupport && (
+            <Alert
+              content={I18n.t(
+                "authentication.landing.cie_unsupported.os_alert"
+              )}
+              variant="warning"
+            />
+          )
+        )}
+      </ContentWrapper>
+    </GradientScrollView>
   );
 };
 

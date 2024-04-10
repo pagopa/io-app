@@ -36,6 +36,10 @@ import {
   zendeskSupportCancel,
   zendeskSupportCompleted
 } from "../store/actions";
+import {
+  isProfileEmailValidatedSelector,
+  profileSelector
+} from "../../../store/reducers/profile";
 
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
@@ -169,7 +173,10 @@ const ZendeskSupportHelpCenter = () => {
   const dispatch = useIODispatch();
   const workUnitCancel = () => dispatch(zendeskSupportCancel());
   const workUnitComplete = () => dispatch(zendeskSupportCompleted());
+  const profile = useIOSelector(profileSelector);
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
+  const isEmailValidated = useIOSelector(isProfileEmailValidatedSelector);
+  const showRequestSupportContacts = isEmailValidated || !pot.isSome(profile);
 
   const route = useRoute<RouteProp<ZendeskParamsList, "ZENDESK_HELP_CENTER">>();
 
@@ -237,14 +244,19 @@ const ZendeskSupportHelpCenter = () => {
             contentLoaded={markdownContentLoaded}
             startingRoute={startingRoute}
           />
-          <VSpacer size={16} />
-          <ZendeskSupportComponent
-            assistanceForPayment={assistanceForPayment}
-            assistanceForCard={assistanceForCard}
-            assistanceForFci={
-              assistanceForFci || signatureRequestId !== undefined
-            }
-          />
+
+          {showRequestSupportContacts && (
+            <>
+              <VSpacer size={16} />
+              <ZendeskSupportComponent
+                assistanceForPayment={assistanceForPayment}
+                assistanceForCard={assistanceForCard}
+                assistanceForFci={
+                  assistanceForFci || signatureRequestId !== undefined
+                }
+              />
+            </>
+          )}
           <VSpacer size={16} />
         </ScrollView>
       </SafeAreaView>

@@ -8,13 +8,13 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18n-js";
 import _ from "lodash";
 import { Bundle } from "../../../../../definitions/pagopa/ecommerce/Bundle";
+import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { PaymentSupportStatus } from "../../../../types/paymentMethodCapabilities";
 import { isExpiredDate } from "../../../../utils/dates";
 import { findFirstCaseInsensitive } from "../../../../utils/object";
-import { UIWalletInfoDetails } from "../../details/types/UIWalletInfoDetails";
-import { WalletPaymentPspSortType } from "../../payment/types";
-import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
+import { WalletPaymentPspSortType } from "../../checkout/types";
+import { UIWalletInfoDetails } from "../types/UIWalletInfoDetails";
 
 /**
  * A simple function to get the corresponding translated badge text,

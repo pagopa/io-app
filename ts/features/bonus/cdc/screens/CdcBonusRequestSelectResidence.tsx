@@ -1,31 +1,30 @@
-import * as React from "react";
-import { View, SafeAreaView, ScrollView } from "react-native";
+import { HSpacer, Icon, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { HSpacer, VSpacer } from "@pagopa/io-app-design-system";
-import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
-import { IOStyles } from "../../../../components/core/variables/IOStyles";
-import { H1 } from "../../../../components/core/typography/H1";
-import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
-import I18n from "../../../../i18n";
-import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
-import {
-  RadioButtonList,
-  RadioItem
-} from "../../../../components/core/selection/RadioButtonList";
-import { H4 } from "../../../../components/core/typography/H4";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { CdcBonusRequestParamsList } from "../navigation/params";
-import { CDC_ROUTES } from "../navigation/routes";
+import * as React from "react";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import {
   cancelButtonProps,
   confirmButtonProps
 } from "../../../../components/buttons/ButtonConfigurations";
-import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  RadioButtonList,
+  RadioItem
+} from "../../../../components/core/selection/RadioButtonList";
+import { H1 } from "../../../../components/core/typography/H1";
 import { H3 } from "../../../../components/core/typography/H3";
-import BonusIcon from "../../../../../img/features/cdc/bonus.svg";
-import { ResidentChoice } from "../types/CdcBonusRequest";
+import { H4 } from "../../../../components/core/typography/H4";
+import { IOStyles } from "../../../../components/core/variables/IOStyles";
+import BaseScreenComponent from "../../../../components/screens/BaseScreenComponent";
+import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
+import I18n from "../../../../i18n";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
+import { CdcBonusRequestParamsList } from "../navigation/params";
+import { CDC_ROUTES } from "../navigation/routes";
 import { cdcSelectedBonus as cdcSelectedBonusAction } from "../store/actions/cdcBonusRequest";
+import { cdcSelectedBonusSelector } from "../store/reducers/cdcBonusRequest";
+import { ResidentChoice } from "../types/CdcBonusRequest";
 import { compareSelectedBonusByYear } from "../utils/bonusRequest";
 
 const getCheckResidencyItems = (): ReadonlyArray<RadioItem<ResidentChoice>> => [
@@ -79,7 +78,7 @@ const CdcBonusRequestSelectResidence = () => {
                   alignItems: "center"
                 }}
               >
-                <BonusIcon width={20} height={20} />
+                <Icon name="bonus" size={20} />
                 <HSpacer size={16} />
                 <H3 weight={"SemiBold"} color={"bluegrey"}>
                   {b.year}

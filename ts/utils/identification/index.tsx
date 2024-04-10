@@ -21,26 +21,44 @@ export const getBiometryIconName = (
   }
 };
 
-const unlockCode = I18n.t("identification.instructions.unlockCode");
-const unlockCodePrefix = I18n.t(
-  "identification.instructions.unlockCodepPrefix"
-);
-const fingerprint = I18n.t("identification.instructions.fingerprint");
-const fingerprintPrefix = I18n.t(
-  "identification.instructions.fingerprintPrefix"
-);
-const faceId = I18n.t("identification.instructions.faceId");
-const faceIdPrefix = I18n.t("identification.instructions.faceIdPrefix");
-const congiunction = I18n.t("identification.instructions.congiunction");
-
-const unlockCodeInstruction = `${unlockCodePrefix} ${unlockCode}`;
-const fingerprintInstruction = `${fingerprintPrefix} ${fingerprint}`;
-const faceIdInstruction = `${faceIdPrefix} ${faceId}`;
+const getTranlations = () => {
+  // We need a function to handle the translations when the language changes,
+  // or is differnt between the device and the app
+  const unlockCode = I18n.t("identification.instructions.unlockCode");
+  const unlockCodePrefix = I18n.t(
+    "identification.instructions.unlockCodepPrefix"
+  );
+  const fingerprint = I18n.t("identification.instructions.fingerprint");
+  const fingerprintPrefix = I18n.t(
+    "identification.instructions.fingerprintPrefix"
+  );
+  const faceId = I18n.t("identification.instructions.faceId");
+  const faceIdPrefix = I18n.t("identification.instructions.faceIdPrefix");
+  return {
+    unlockCode,
+    unlockCodePrefix,
+    fingerprint,
+    fingerprintPrefix,
+    faceId,
+    faceIdPrefix,
+    congiunction: I18n.t("identification.instructions.congiunction"),
+    unlockCodeInstruction: `${unlockCodePrefix} ${unlockCode}`,
+    fingerprintInstruction: `${fingerprintPrefix} ${fingerprint}`,
+    faceIdInstruction: `${faceIdPrefix} ${faceId}`
+  };
+};
 
 export const getAccessibiliyIdentificationInstructions = (
   biometricType: BiometricsValidType | undefined,
   isBimoetricIdentificatoinFailed: boolean = false
 ) => {
+  const {
+    unlockCodeInstruction,
+    fingerprintInstruction,
+    faceIdInstruction,
+    congiunction
+  } = getTranlations();
+
   if (isBimoetricIdentificatoinFailed) {
     return unlockCodeInstruction;
   }
@@ -65,6 +83,15 @@ export const IdentificationInstructionsComponent = (props: {
     biometricType,
     isBimoetricIdentificatoinFailed
   );
+  const {
+    unlockCode,
+    unlockCodePrefix,
+    fingerprint,
+    fingerprintPrefix,
+    faceId,
+    faceIdPrefix,
+    congiunction
+  } = getTranlations();
   const instructionComponent = (
     <View style={IOStyles.row}>
       <LabelSmall color="white" weight="Regular">

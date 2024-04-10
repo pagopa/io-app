@@ -3,13 +3,14 @@ import {
   ContentWrapper,
   Divider,
   H2,
+  IOToast,
   IOVisualCostants,
   ListItemHeader,
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
-  IOToast,
   VSpacer,
+  useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -70,6 +71,10 @@ type DevDataCopyListItem = {
   "label" | "testID" | "onPress"
 >;
 
+type DevActionButton = {
+  condition: boolean;
+} & Pick<ComponentProps<typeof ButtonSolid>, "color" | "label" | "onPress">;
+
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
 
@@ -95,78 +100,83 @@ const DeveloperActionsSection = () => {
     );
   };
 
-  return (
-    <ContentWrapper>
-      <ListItemHeader label="Actions" />
+  const dumpAsyncStorage = () => {
+    /* eslint-disable no-console */
+    console.log("[DUMP START]");
+    AsyncStorage.getAllKeys()
+      .then(keys => {
+        console.log(`\tAvailable keys: ${keys.join(", ")}`);
+        return Promise.all(
+          keys.map(key =>
+            AsyncStorage.getItem(key).then(value => {
+              console.log(`\tValue for ${key}\n\t\t`, value);
+            })
+          )
+        );
+      })
+      .then(() => console.log("[DUMP END]"))
+      .catch(e => console.error(e));
+    /* eslint-enable no-console */
+  };
 
-      <VSpacer size={8} />
-      <ButtonSolid
-        fullWidth
-        color="danger"
-        label={I18n.t("profile.main.cache.clear")}
-        onPress={handleClearCachePress}
-        accessibilityLabel={I18n.t("profile.main.cache.clear")}
-      />
-      <VSpacer size={8} />
-      {isDevEnv && (
-        <>
-          <VSpacer size={8} />
-          <ButtonSolid
-            fullWidth
-            color="danger"
-            label={I18n.t("profile.main.forgetCurrentSession")}
-            onPress={() => dispatch(sessionExpired())}
-            accessibilityLabel={I18n.t("profile.main.forgetCurrentSession")}
-          />
-          <VSpacer size={8} />
-        </>
-      )}
-      {isDevEnv && (
-        <>
-          <VSpacer size={8} />
-          <ButtonSolid
-            fullWidth
-            color="danger"
-            label={I18n.t("profile.main.clearAsyncStorage")}
-            onPress={() => {
-              void AsyncStorage.clear();
-            }}
-            accessibilityLabel={I18n.t("profile.main.clearAsyncStorage")}
-          />
-          <VSpacer size={8} />
-        </>
-      )}
-      {isDevEnv && (
-        <>
-          <VSpacer size={8} />
-          <ButtonSolid
-            fullWidth
-            color="primary"
-            label={I18n.t("profile.main.dumpAsyncStorage")}
-            onPress={() => {
-              /* eslint-disable no-console */
-              console.log("[DUMP START]");
-              AsyncStorage.getAllKeys()
-                .then(keys => {
-                  console.log(`\tAvailable keys: ${keys.join(", ")}`);
-                  return Promise.all(
-                    keys.map(key =>
-                      AsyncStorage.getItem(key).then(value => {
-                        console.log(`\tValue for ${key}\n\t\t`, value);
-                      })
-                    )
-                  );
-                })
-                .then(() => console.log("[DUMP END]"))
-                .catch(e => console.error(e));
-              /* eslint-enable no-console */
-            }}
-            accessibilityLabel={I18n.t("profile.main.dumpAsyncStorage")}
-          />
-          <VSpacer size={8} />
-        </>
-      )}
-    </ContentWrapper>
+  const devActionButtons: ReadonlyArray<DevActionButton> = [
+    {
+      condition: true,
+      label: I18n.t("profile.main.cache.clear"),
+      onPress: handleClearCachePress
+    },
+    {
+      condition: isDevEnv,
+      label: I18n.t("profile.main.forgetCurrentSession"),
+      onPress: () => dispatch(sessionExpired())
+    },
+    {
+      condition: isDevEnv,
+      label: I18n.t("profile.main.clearAsyncStorage"),
+      onPress: () => {
+        void AsyncStorage.clear();
+      }
+    },
+    {
+      condition: isDevEnv,
+      color: "primary",
+      label: I18n.t("profile.main.dumpAsyncStorage"),
+      onPress: dumpAsyncStorage
+    }
+  ];
+
+  // Don't render the separator, even if the item is null
+  const filteredDevActionButtons = devActionButtons.filter(
+    item => item.condition !== false
+  );
+
+  const renderDevActionButton = ({
+    item: { color = "danger", label, onPress }
+  }: ListRenderItemInfo<DevActionButton>) => (
+    <ButtonSolid
+      fullWidth
+      color={color}
+      label={label}
+      accessibilityLabel={label}
+      onPress={onPress}
+    />
+  );
+
+  return (
+    <FlatList
+      ListHeaderComponent={<ListItemHeader label="Actions" />}
+      scrollEnabled={false}
+      keyExtractor={(item: DevActionButton, index: number) =>
+        `${item.label}-${index}`
+      }
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      data={filteredDevActionButtons}
+      renderItem={renderDevActionButton}
+      ItemSeparatorComponent={() => <VSpacer size={8} />}
+      ListFooterComponent={() => <VSpacer size={16} />}
+    />
   );
 };
 
@@ -229,7 +239,7 @@ const DeveloperDataSection = () => {
   ];
 
   // Don't render the separator, even if the item is null
-  const filtereddevDataCopyListItems = devDataCopyListItems.filter(
+  const filteredDevDataCopyListItems = devDataCopyListItems.filter(
     item => item.condition !== false
   );
 
@@ -263,7 +273,7 @@ const DeveloperDataSection = () => {
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
-      data={filtereddevDataCopyListItems}
+      data={filteredDevDataCopyListItems}
       renderItem={renderDevDataCopyItem}
       ItemSeparatorComponent={() => <Divider />}
     />
@@ -302,7 +312,7 @@ const DesignSystemSection = () => {
       />
       <Divider />
       <DSEnableSwitch />
-      <VSpacer size={8} />
+      <Divider />
       <ListItemSwitch
         label="Abilita Dark Mode"
         value={themeType === "dark"}
@@ -373,14 +383,6 @@ const PlaygroundsSection = () => {
       onPress: () =>
         navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
           screen: ROUTES.WALLET_PLAYGROUND
-        })
-    },
-    {
-      // new Payments page
-      value: "Payments page playground",
-      onPress: () =>
-        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
-          screen: ROUTES.PAYMENTS_HOME
         })
     }
   ];
@@ -537,6 +539,8 @@ const DeveloperModeSection = () => {
   const dispatch = useIODispatch();
   const isDebugModeEnabled = useIOSelector(isDebugModeEnabledSelector);
 
+  const theme = useIOTheme();
+
   const handleShowModal = () => {
     showModal(
       <AlertModal
@@ -549,7 +553,9 @@ const DeveloperModeSection = () => {
     <>
       <ContentWrapper>
         <VSpacer size={24} />
-        <H2>{I18n.t("profile.main.developersSectionHeader")}</H2>
+        <H2 color={theme["textHeading-default"]}>
+          {I18n.t("profile.main.developersSectionHeader")}
+        </H2>
         <VSpacer size={8} />
 
         {/* Enable/Disable Developer Mode */}

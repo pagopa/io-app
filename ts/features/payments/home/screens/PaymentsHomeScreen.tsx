@@ -1,50 +1,34 @@
-import { HeaderFirstLevel, VSpacer } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { GradientScrollView, VSpacer } from "@pagopa/io-app-design-system";
 import * as React from "react";
 import I18n from "../../../../i18n";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { walletPaymentGetUserWallets } from "../../payment/store/actions/networking";
-import PaymentHistorySection from "../components/PaymentsHomeScreenHistorySection";
-import PaymentMethodsSection from "../components/PaymentsHomeScreenMethodsSection";
-import { isAnySectionSomeOrLoadingSelector } from "../store/selectors";
-import { useTransactionHistory } from "../utils/hooks/useTransactionHistory";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
+import { PaymentsHomeTransactionList } from "../components/PaymentsHomeTransactionList";
+import { PaymentsHomeUserMethodsList } from "../components/PaymentsHomeUserMethodsList";
 
 export const PaymentsHomeScreen = () => {
-  const dispatch = useIODispatch();
-  const { loadFirstHistoryPage } = useTransactionHistory();
-  const shouldRenderEmptyState = !useIOSelector(
-    isAnySectionSomeOrLoadingSelector
-  );
+  const navigation = useIONavigation();
 
-  const fetchData = React.useCallback(() => {
-    dispatch(walletPaymentGetUserWallets.request());
-    loadFirstHistoryPage();
-  }, [dispatch, loadFirstHistoryPage]);
-  useFocusEffect(fetchData);
-
-  if (shouldRenderEmptyState) {
-    return <></>;
-  }
-
-  // let the single components handle empty cases.
-  //
-  // else if neither is some/loading, render empty page.
+  const handleOnPayNoticedPress = () => {
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_INPUT_NOTICE_NUMBER
+    });
+  };
 
   return (
-    <>
-      <HeaderFirstLevel
-        title={I18n.t("payment.homeScreen.title")}
-        type="singleAction"
-        firstAction={{
-          accessibilityLabel: I18n.t("payment.homeScreen.title"),
-          icon: "help",
-          onPress: () => null
-        }}
-      />
+    <GradientScrollView
+      primaryActionProps={{
+        accessibilityLabel: I18n.t("payment.homeScreen.CTA"),
+        label: I18n.t("payment.homeScreen.CTA"),
+        onPress: handleOnPayNoticedPress,
+        icon: "qrCode",
+        iconPosition: "end"
+      }}
+      excludeSafeAreaMargins={true}
+    >
+      <PaymentsHomeUserMethodsList />
       <VSpacer size={24} />
-      <PaymentMethodsSection />
-      <VSpacer size={24} />
-      <PaymentHistorySection />
-    </>
+      <PaymentsHomeTransactionList />
+    </GradientScrollView>
   );
 };

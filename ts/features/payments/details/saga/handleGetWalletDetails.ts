@@ -2,11 +2,13 @@ import { call, put } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
 import { SagaCallReturnType } from "../../../../types/utils";
-import { walletDetailsGetInstrument } from "../store/actions";
+import { paymentsGetMethodDetailsAction } from "../store/actions";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { WalletClient } from "../../common/api/client";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
+import { walletAddCards } from "../../../newWallet/store/actions/cards";
+import { mapWalletsToCards } from "../../common/utils/wallet";
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
@@ -15,7 +17,7 @@ import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
  */
 export function* handleGetWalletDetails(
   getWalletById: WalletClient["getWalletById"],
-  action: ActionType<(typeof walletDetailsGetInstrument)["request"]>
+  action: ActionType<(typeof paymentsGetMethodDetailsAction)["request"]>
 ) {
   try {
     const getwalletDetailsRequest = getWalletById({
@@ -28,15 +30,24 @@ export function* handleGetWalletDetails(
     )) as unknown as SagaCallReturnType<typeof getWalletById>;
     if (E.isRight(getWalletDetailsResult)) {
       if (getWalletDetailsResult.right.status === 200) {
+        // Upsert the card in the wallet
+        yield* put(
+          walletAddCards(
+            mapWalletsToCards([getWalletDetailsResult.right.value])
+          )
+        );
+
         // handled success
         yield* put(
-          walletDetailsGetInstrument.success(getWalletDetailsResult.right.value)
+          paymentsGetMethodDetailsAction.success(
+            getWalletDetailsResult.right.value
+          )
         );
         return;
       }
       // not handled error codes
       yield* put(
-        walletDetailsGetInstrument.failure({
+        paymentsGetMethodDetailsAction.failure({
           ...getGenericError(
             new Error(
               `response status code ${getWalletDetailsResult.right.status}`
@@ -47,7 +58,7 @@ export function* handleGetWalletDetails(
     } else {
       // cannot decode response
       yield* put(
-        walletDetailsGetInstrument.failure({
+        paymentsGetMethodDetailsAction.failure({
           ...getGenericError(
             new Error(readablePrivacyReport(getWalletDetailsResult.left))
           )
@@ -55,6 +66,8 @@ export function* handleGetWalletDetails(
       );
     }
   } catch (e) {
-    yield* put(walletDetailsGetInstrument.failure({ ...getNetworkError(e) }));
+    yield* put(
+      paymentsGetMethodDetailsAction.failure({ ...getNetworkError(e) })
+    );
   }
 }

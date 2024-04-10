@@ -4,14 +4,14 @@ import { createSelector } from "reselect";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { GlobalState } from "../../../../../store/reducers/types";
 
-export const selectWalletPaymentHistoryArchive = (state: GlobalState) =>
+export const selectPaymentsHistoryArchive = (state: GlobalState) =>
   state.features.payments.history.archive;
 
-export const selectWalletOngoingPaymentHistory = (state: GlobalState) =>
+export const selectOngoingPaymentHistory = (state: GlobalState) =>
   state.features.payments.history.ongoingPayment;
 
-export const walletPaymentAttemptByRptSelector = (rptId: RptId) =>
-  createSelector(selectWalletPaymentHistoryArchive, archive =>
+export const selectPymentAttemptByRptId = (rptId: RptId) =>
+  createSelector(selectPaymentsHistoryArchive, archive =>
     pipe(
       O.fromNullable(archive.find(h => h.rptId === rptId)),
       O.chainNullableK(h => h.attempt),
@@ -19,8 +19,8 @@ export const walletPaymentAttemptByRptSelector = (rptId: RptId) =>
     )
   );
 
-export const walletOngoingPaymentAttemptSelector = createSelector(
-  selectWalletOngoingPaymentHistory,
+export const selectOngoingPaymentAttempt = createSelector(
+  selectOngoingPaymentHistory,
   paymentHistory =>
     pipe(
       O.fromNullable(paymentHistory),

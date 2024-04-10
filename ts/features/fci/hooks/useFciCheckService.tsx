@@ -8,10 +8,10 @@ import {
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { fciStartSigningRequest } from "../store/actions";
-import { upsertServicePreference } from "../../../store/actions/services/servicePreference";
+import { upsertServicePreference } from "../../services/store/actions";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { isServicePreferenceResponseSuccess } from "../../../types/services/ServicePreferenceResponse";
-import { servicePreferenceSelector } from "../../../store/reducers/entities/services/servicePreference";
+import { isServicePreferenceResponseSuccess } from "../../services/types/ServicePreferenceResponse";
+import { servicePreferenceSelector } from "../../services/store/reducers/servicePreference";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../analytics";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";

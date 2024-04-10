@@ -146,31 +146,7 @@ const organizationsURIs = [
 
 const renderAvatar = () => (
   <>
-    <DSComponentViewerBox name={`Avatar, small size, circle shape`}>
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        style={styles.horizontalScroll}
-      >
-        {organizationsURIs.map(({ imageSource }, i) => (
-          <React.Fragment key={i}>
-            <Avatar
-              shape="circle"
-              size="small"
-              logoUri={
-                imageSource
-                  ? {
-                      uri: imageSource
-                    }
-                  : undefined
-              }
-            />
-            {i < organizationsURIs.length - 1 && <HSpacer size={4} />}
-          </React.Fragment>
-        ))}
-      </ScrollView>
-    </DSComponentViewerBox>
-    <DSComponentViewerBox name={`Avatar, small size, square shape`}>
+    <DSComponentViewerBox name={`Avatar, small size`}>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -194,7 +170,7 @@ const renderAvatar = () => (
         ))}
       </ScrollView>
     </DSComponentViewerBox>
-    <DSComponentViewerBox name={`Avatar, medium size, square shape`}>
+    <DSComponentViewerBox name={`Avatar, medium size`}>
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
