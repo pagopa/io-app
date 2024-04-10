@@ -9,13 +9,12 @@ import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
 import Placeholder from "rn-placeholder";
-import { BrandEnum } from "../../../../../definitions/pagopa/ecommerce/WalletInfoDetails";
 import { useSpringPressScaleAnimation } from "../../../../components/ui/utils/hooks/useSpringPressScaleAnimation";
 import { WithTestID } from "../../../../types/WithTestID";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 
 type RenderData = {
-  iconName: IOLogoPaymentType | BrandEnum | undefined;
+  iconName: IOLogoPaymentType | undefined;
   bottomText: string;
 };
 const getRenderData = (props: CardDataType): RenderData => {
@@ -51,7 +50,7 @@ type CardDataType =
   | {
       cardType: "CREDIT";
       hpan: string;
-      cardIcon?: IOLogoPaymentType | BrandEnum;
+      cardIcon?: IOLogoPaymentType;
     }
   | {
       cardType: "PAGOBANCOMAT";
@@ -63,7 +62,7 @@ type CardDataType =
   | {
       cardType: "COBADGE";
       providerName: string;
-      cardIcon?: IOLogoPaymentType | BrandEnum;
+      cardIcon?: IOLogoPaymentType;
     };
 
 export type PaymentCardSmallProps = WithTestID<

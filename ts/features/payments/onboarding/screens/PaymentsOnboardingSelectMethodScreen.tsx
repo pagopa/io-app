@@ -24,10 +24,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
   const isLoadingPaymentMethods = pot.isLoading(paymentMethodsPot);
 
   const availablePaymentMethods = pipe(
-    pot.getOrElse(
-      pot.map(paymentMethodsPot, el => el.paymentMethods),
-      null
-    ),
+    pot.getOrElse(paymentMethodsPot, null),
     O.fromNullable,
     O.map(el => el.filter(el => el.status === PaymentMethodStatusEnum.ENABLED)),
     O.getOrElseW(() => [])

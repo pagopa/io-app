@@ -102,7 +102,7 @@ const getPaymentCardPropsFromWallet = (
 
   return {
     hpan: details.lastFourDigits,
-    abiCode: details.abi,
+    abiCode: "", // TODO IOBP-622 refactor payment card
     brand: details.brand,
     expireDate: getDateFromExpiryDate(details.expiryDate),
     holderEmail: details.maskedEmail,

@@ -48,7 +48,7 @@ const PaymentsHomeUserMethodsList = ({
       return {
         cardType: "CREDIT",
         hpan: details.lastFourDigits,
-        cardIcon: details.brand,
+        cardIcon: undefined, // TODO IOBP-621 use correct asset
         isLoading: false
       };
     }
