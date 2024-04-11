@@ -1,12 +1,14 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useLinkTo } from "@react-navigation/native";
 import {
   ContentWrapper,
   IOColors,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { loadServiceDetail } from "../../../store/actions/services";
@@ -17,15 +19,24 @@ import { ServiceDetailsFailure } from "../components/ServiceDetailsFailure";
 import { ServiceDetailsHeader } from "../components/ServiceDetailsHeader";
 import { ServiceDetailsMetadata } from "../components/ServiceDetailsMetadata";
 import { ServiceDetailsPreferences } from "../components/ServiceDetailsPreferences";
-import { ServiceDetailsScreenComponent } from "../components/ServiceDetailsScreenComponent";
+import {
+  ServiceActionsProps,
+  ServiceDetailsScreenComponent
+} from "../components/ServiceDetailsScreenComponent";
 import { ServiceDetailsTosAndPrivacy } from "../components/ServiceDetailsTosAndPrivacy";
 import { ServicesParamsList } from "../navigation/params";
 import {
   isErrorServiceByIdSelector,
   isLoadingServiceByIdSelector,
-  serviceByIdSelector
+  serviceByIdSelector,
+  serviceMetadataByIdSelector,
+  serviceMetadataInfoSelector
 } from "../store/reducers/servicesById";
 import { loadServicePreference } from "../store/actions";
+import { CTA, CTAS } from "../../messages/types/MessageCTA";
+import { getServiceCTA, handleCtaAction } from "../../messages/utils/messages";
+import { ServiceMetadataInfo } from "../types/ServiceMetadataInfo";
+import { useFirstEffect } from "../common/hooks/useFirstEffect";
 
 export type ServiceDetailsScreenNavigationParams = Readonly<{
   serviceId: ServiceId;
@@ -58,9 +69,10 @@ const styles = StyleSheet.create({
 export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
   const { serviceId, activate } = route.params;
 
+  const linkTo = useLinkTo();
   const dispatch = useIODispatch();
-
   const headerHeight = useHeaderHeight();
+  const isFirstRender = useFirstEffect();
 
   const service = useIOSelector(state => serviceByIdSelector(state, serviceId));
 
@@ -70,6 +82,19 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
 
   const isErrorService = useIOSelector(state =>
     isErrorServiceByIdSelector(state, serviceId)
+  );
+
+  const serviceMetadata = useIOSelector(state =>
+    serviceMetadataByIdSelector(state, serviceId)
+  );
+
+  const serviceMetadataInfo = useIOSelector(state =>
+    serviceMetadataInfoSelector(state, serviceId)
+  );
+
+  const serviceCtas = useMemo(
+    () => pipe(serviceMetadata, getServiceCTA, O.toUndefined),
+    [serviceMetadata]
   );
 
   useEffect(() => {
@@ -90,9 +115,102 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
     return <ServiceDetailsFailure serviceId={serviceId} />;
   }
 
-  if (isLoadingService) {
+  if (isFirstRender || isLoadingService) {
     // TODO: add a loading screen
   }
+
+  const handlePressCta = (cta: CTA) => handleCtaAction(cta, linkTo, serviceId);
+
+  const getActionsProps = (
+    ctas?: CTAS,
+    serviceMetadataInfo?: ServiceMetadataInfo
+  ): ServiceActionsProps | undefined => {
+    const customSpecialFlow = serviceMetadataInfo?.customSpecialFlow;
+    const isSpecialService = serviceMetadataInfo?.isSpecialService ?? false;
+
+    if (isSpecialService && ctas?.cta_1 && ctas.cta_2) {
+      const { cta_1, cta_2 } = ctas;
+
+      return {
+        type: "TwoCtasWithCustomFlow",
+        primaryActionProps: {
+          serviceId,
+          activate,
+          customSpecialFlowOpt: customSpecialFlow
+        },
+        secondaryActionProps: {
+          label: cta_1.text,
+          accessibilityLabel: cta_1.text,
+          onPress: () => handlePressCta(cta_1)
+        },
+        tertiaryActionProps: {
+          label: cta_2.text,
+          accessibilityLabel: cta_2.text,
+          onPress: () => handlePressCta(cta_2)
+        }
+      };
+    }
+
+    if (isSpecialService && ctas?.cta_1) {
+      const { cta_1 } = ctas;
+
+      return {
+        type: "SingleCtaWithCustomFlow",
+        primaryActionProps: {
+          serviceId,
+          activate,
+          customSpecialFlowOpt: customSpecialFlow
+        },
+        secondaryActionProps: {
+          label: cta_1.text,
+          accessibilityLabel: cta_1.text,
+          onPress: () => handlePressCta(cta_1)
+        }
+      };
+    }
+
+    if (ctas?.cta_1 && ctas?.cta_2) {
+      const { cta_1, cta_2 } = ctas;
+
+      return {
+        type: "TwoCtas",
+        primaryActionProps: {
+          label: cta_1.text,
+          accessibilityLabel: cta_1.text,
+          onPress: () => handlePressCta(cta_1)
+        },
+        secondaryActionProps: {
+          label: cta_2.text,
+          accessibilityLabel: cta_2.text,
+          onPress: () => handlePressCta(cta_2)
+        }
+      };
+    }
+
+    if (ctas?.cta_1) {
+      return {
+        type: "SingleCta",
+        primaryActionProps: {
+          label: ctas.cta_1.text,
+          accessibilityLabel: ctas.cta_1.text,
+          onPress: () => handlePressCta(ctas.cta_1)
+        }
+      };
+    }
+
+    if (isSpecialService) {
+      return {
+        type: "SingleCtaCustomFlow",
+        primaryActionProps: {
+          serviceId,
+          activate,
+          customSpecialFlowOpt: customSpecialFlow
+        }
+      };
+    }
+
+    return undefined;
+  };
 
   const {
     organization_name,
@@ -105,9 +223,11 @@ export const ServiceDetailsScreen = ({ route }: ServiceDetailsScreenProps) => {
 
   return (
     <ServiceDetailsScreenComponent
-      activate={activate}
+      actionsProps={getActionsProps(
+        serviceCtas,
+        serviceMetadataInfo as ServiceMetadataInfo
+      )}
       title={service_name}
-      serviceId={service_id}
     >
       <View
         style={[
