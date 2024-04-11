@@ -1,25 +1,16 @@
 import {
-  IOVisualCostants,
+  HeaderSecondLevel,
   IconButton,
+  makeFontStyleObject,
+  useIOExperimentalDesign,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import { ThemeProvider, useNavigation } from "@react-navigation/native";
-import {
-  StackNavigationOptions,
-  TransitionPresets,
-  createStackNavigator
-} from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import I18n from "i18n-js";
 import * as React from "react";
-import { useMemo } from "react";
-import { Alert, Platform, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { makeFontStyleObject } from "../../../components/core/fonts";
+import { Alert, Platform } from "react-native";
 import HeaderFirstLevel from "../../../components/ui/HeaderFirstLevel";
-import {
-  IONavigationDarkTheme,
-  IONavigationLightTheme
-} from "../../../theme/navigations";
-import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAccordion } from "../core/DSAccordion";
 import { DSAdvice } from "../core/DSAdvice";
@@ -57,44 +48,24 @@ import { DSToastNotifications } from "../core/DSToastNotifications";
 import { DSTypography } from "../core/DSTypography";
 import { DSWallet } from "../core/DSWallet";
 import { DSWizardScreen } from "../core/DSWizardScreen";
-import { DesignSystemModalParamsList, DesignSystemParamsList } from "./params";
+import { DesignSystemParamsList } from "./params";
 import DESIGN_SYSTEM_ROUTES from "./routes";
 
-const Stack = createStackNavigator<DesignSystemParamsList>();
-const ModalStack = createStackNavigator<DesignSystemModalParamsList>();
+const Stack = createNativeStackNavigator<DesignSystemParamsList>();
 
 // BackButton managed through React Navigation
 const RNNBackButton = () => {
   const navigation = useNavigation();
   const { themeType } = useIOThemeContext();
   return (
-    <View style={{ marginLeft: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon="backiOS"
-        color={themeType === "dark" ? "contrast" : "neutral"}
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
-  );
-};
-
-const RNNCloseButton = () => {
-  const navigation = useNavigation();
-
-  return (
-    <View style={{ marginRight: IOVisualCostants.appMarginDefault }}>
-      <IconButton
-        icon="closeMedium"
-        color="neutral"
-        onPress={() => {
-          navigation.goBack();
-        }}
-        accessibilityLabel={""}
-      />
-    </View>
+    <IconButton
+      icon={Platform.OS === "ios" ? "backiOS" : "backAndroid"}
+      color={themeType === "dark" ? "contrast" : "neutral"}
+      onPress={() => {
+        navigation.goBack();
+      }}
+      accessibilityLabel={""}
+    />
   );
 };
 
@@ -122,89 +93,33 @@ const HeaderFirstLevelComponent = () => (
   />
 );
 
-const customModalHeaderConf: StackNavigationOptions = {
-  headerLeft: () => null,
-  headerTitle: () => null,
-  headerRight: RNNCloseButton,
-  headerStyle: { height: IOVisualCostants.headerHeight },
-  headerStatusBarHeight: 0
-};
-
 export const DesignSystemNavigator = () => {
-  const { themeType } = useIOThemeContext();
-
-  return (
-    <ThemeProvider
-      value={
-        themeType === "dark" ? IONavigationDarkTheme : IONavigationLightTheme
-      }
-    >
-      {/* You need two nested navigators to apply the modal
-      behavior only to the single screen and not to any other.
-      Read documentation for reference:
-      https://reactnavigation.org/docs/5.x/modal/#creating-a-modal-stack
-      
-      With RN Navigation 6.x it's much easier because you can
-      use the Group function */}
-      <ModalStack.Navigator
-        screenOptions={
-          Platform.OS === "ios"
-            ? {
-                gestureEnabled: isGestureEnabled,
-                cardOverlayEnabled: true,
-                headerMode: "screen",
-                presentation: "modal",
-                ...TransitionPresets.ModalPresentationIOS
-              }
-            : {
-                headerMode: "screen",
-                presentation: "modal"
-              }
-        }
-      >
-        <ModalStack.Screen
-          name={DESIGN_SYSTEM_ROUTES.MAIN.route}
-          component={DesignSystemMainStack}
-          options={{ headerShown: false }}
-        />
-        <ModalStack.Screen
-          name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
-          component={DSFullScreenModal}
-          options={customModalHeaderConf}
-        />
-      </ModalStack.Navigator>
-    </ThemeProvider>
-  );
-};
-
-const DesignSystemMainStack = () => {
-  const insets = useSafeAreaInsets();
-
-  const customHeaderConf: StackNavigationOptions = useMemo(
-    () => ({
-      headerTitleStyle: {
-        ...makeFontStyleObject("Regular", false, "ReadexPro"),
-        fontSize: 14
-      },
-      headerTitleAlign: "center",
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      headerStyle: { height: insets.top + IOVisualCostants.headerHeight },
-      headerLeft: RNNBackButton,
-      headerMode: "screen"
-    }),
-    [insets]
-  );
+  const { isExperimental } = useIOExperimentalDesign();
 
   return (
     <Stack.Navigator
       initialRouteName={DESIGN_SYSTEM_ROUTES.MAIN.route}
-      screenOptions={customHeaderConf}
+      screenOptions={{
+        headerTitleStyle: {
+          ...makeFontStyleObject(
+            "Regular",
+            false,
+            isExperimental ? "ReadexPro" : "TitilliumWeb"
+          ),
+          fontSize: 16
+        },
+        headerTitleAlign: "center",
+        headerBackTitleVisible: false,
+        headerShown: true,
+        autoHideHomeIndicator: true
+      }}
     >
-      <ModalStack.Screen
+      <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.MAIN.route}
         component={DesignSystem}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.MAIN.title
+          title: DESIGN_SYSTEM_ROUTES.MAIN.title,
+          headerLeft: RNNBackButton
         }}
       />
 
@@ -212,7 +127,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route}
         component={DSColors}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.title
         }}
       />
 
@@ -220,7 +135,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.route}
         component={DSTypography}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.TYPOGRAPHY.title
         }}
       />
 
@@ -228,7 +143,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route}
         component={DSLayout}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.title
         }}
       />
 
@@ -236,7 +151,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route}
         component={DSIcons}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.title
         }}
       />
 
@@ -244,7 +159,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.route}
         component={DSPictograms}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.PICTOGRAMS.title
         }}
       />
 
@@ -252,7 +167,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.route}
         component={DSLogos}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOGOS.title
         }}
       />
 
@@ -260,7 +175,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route}
         component={DSLoaders}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.title
         }}
       />
 
@@ -268,7 +183,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route}
         component={DSHapticFeedback}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.title
+          title: DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.title
         }}
       />
 
@@ -277,7 +192,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.route}
         component={DSButtons}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.BUTTONS.title
         }}
       />
 
@@ -285,7 +200,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.route}
         component={DSSelection}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.SELECTION.title
         }}
       />
 
@@ -293,7 +208,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.route}
         component={DSTextFields}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.TEXT_FIELDS.title
         }}
       />
 
@@ -301,7 +216,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.route}
         component={DSBadges}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.BADGE.title
         }}
       />
 
@@ -309,7 +224,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.route}
         component={DSListItems}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.LIST_ITEMS.title
         }}
       />
 
@@ -317,7 +232,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.route}
         component={DSModules}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.MODULES.title
         }}
       />
 
@@ -325,14 +240,15 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.route}
         component={DSCards}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.CARDS.title
         }}
       />
+
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.route}
         component={DSToastNotifications}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.TOASTS.title
         }}
       />
 
@@ -340,7 +256,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.route}
         component={DSAccordion}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.ACCORDION.title
         }}
       />
 
@@ -348,7 +264,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.route}
         component={DSAlert}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.ALERT.title
         }}
       />
 
@@ -356,7 +272,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.route}
         component={DSAdvice}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.ADVICE.title
         }}
       />
 
@@ -364,7 +280,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.route}
         component={DSBottomSheet}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.BOTTOM_SHEET.title
         }}
       />
 
@@ -372,7 +288,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.route}
         component={DSTabNavigation}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title
+          title: DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title
         }}
       />
 
@@ -411,7 +327,7 @@ const DesignSystemMainStack = () => {
         name={DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.route}
         component={DSGradientScroll}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.title
+          title: DESIGN_SYSTEM_ROUTES.SCREENS.GRADIENT_SCROLL.title
         }}
       />
 
@@ -445,30 +361,60 @@ const DesignSystemMainStack = () => {
         component={DSSafeArea}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.DEBUG.SAFE_AREA_CENTERED.route}
         component={DSSafeAreaCentered}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.DEBUG.EDGE_TO_EDGE_AREA.route}
         component={DSEdgeToEdgeArea}
         options={{ headerShown: false }}
       />
 
+      <Stack.Group
+        screenOptions={{
+          presentation: "formSheet"
+        }}
+      >
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.route}
+          component={DSFullScreenModal}
+          options={{
+            header: ({ navigation }) => (
+              <HeaderSecondLevel
+                title={DESIGN_SYSTEM_ROUTES.DEBUG.FULL_SCREEN_MODAL.title}
+                transparent
+                isModal
+                type="singleAction"
+                firstAction={{
+                  icon: "closeMedium",
+                  onPress: () => {
+                    navigation.goBack();
+                  },
+                  accessibilityLabel: I18n.t("global.buttons.back")
+                }}
+              />
+            )
+          }}
+        />
+      </Stack.Group>
+
       {/* LEGACY */}
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.route}
         component={DSLegacyPictograms}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
+          title: DESIGN_SYSTEM_ROUTES.LEGACY.PICTOGRAMS.title
         }}
       />
       <Stack.Screen
         name={DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.route}
         component={DSLegacyIllustrations}
         options={{
-          headerTitle: DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.title
+          title: DESIGN_SYSTEM_ROUTES.LEGACY.ILLUSTRATIONS.title
         }}
       />
     </Stack.Navigator>

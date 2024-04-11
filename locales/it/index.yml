@@ -773,7 +773,7 @@ email:
     emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
-      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      subtitleEnd: è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.
       editButton: Modifica email
       header:
         title: Configura IO
@@ -2088,6 +2088,11 @@ services:
       subtitle: "Stiamo recuperando i dettagli del servizio"
       back: "Indietro"
       retry: "Riprova"
+    preferences:
+      title: "Questo servizio può"
+      inbox: "Contattarti in app"
+      pushNotifications: "Inviarti notifiche push"
+      messageReadStatus: "Ricevere conferme di lettura"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
