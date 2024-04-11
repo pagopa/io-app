@@ -71,7 +71,7 @@ const OnboardingNavigator = () => (
     />
 
     <Stack.Screen
-      options={{ gestureEnabled: false }}
+      options={{ gestureEnabled: false, headerShown: false }}
       name={ROUTES.ONBOARDING_EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
     />
