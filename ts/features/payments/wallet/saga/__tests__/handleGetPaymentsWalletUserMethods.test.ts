@@ -48,7 +48,6 @@ describe("handleGetPaymentsWalletUserMethods", () => {
         hpan: T_HPAN,
         brand: "VISA",
         expireDate: getDateFromExpiryDate(T_EXPIRE_DATE),
-        abiCode: undefined,
         holderEmail: undefined,
         holderPhone: undefined
       }

@@ -2,6 +2,7 @@ import {
   H6,
   IOColors,
   LabelSmallAlt,
+  Tag,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
@@ -14,16 +15,15 @@ import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.s
 import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 import I18n from "../../../../i18n";
-import { PaymentCardBankLogo } from "./PaymentCardBankLogo";
 
 export type PaymentCardProps = {
   brand?: string;
-  abiCode?: string;
   hpan?: string;
   expireDate?: Date;
   holderName?: string;
   holderPhone?: string;
   holderEmail?: string;
+  isExpired?: boolean;
 };
 
 export type PaymentCardComponentProps = WithTestID<
@@ -86,41 +86,25 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
   const renderBankLogo = () => {
     if (props.holderEmail) {
       return (
-        <View style={styleSheet.bankInfo}>
-          <PayPalLogo
-            testID="paymentCardPayPalLogoTestId"
-            accessible={true}
-            accessibilityLabel="PayPal"
-            height={32}
-            width={113}
-          />
-        </View>
+        <PayPalLogo
+          testID="paymentCardPayPalLogoTestId"
+          accessible={true}
+          accessibilityLabel="PayPal"
+          height={48}
+          width={113}
+        />
       );
     }
 
     if (props.holderPhone) {
       return (
-        <View style={styleSheet.bankInfo}>
-          <BPayLogo
-            testID="paymentCardBPayLogoTestId"
-            accessible={true}
-            accessibilityLabel="BANCOMAT Pay"
-            height={24}
-            width={136}
-          />
-        </View>
-      );
-    }
-
-    if (props.abiCode) {
-      return (
-        <View style={styleSheet.bankInfo}>
-          <PaymentCardBankLogo
-            testID="paymentCardBankLogoTestId"
-            abiCode={props.abiCode}
-            height={24}
-          />
-        </View>
+        <BPayLogo
+          testID="paymentCardBPayLogoTestId"
+          accessible={true}
+          accessibilityLabel="BANCOMAT Pay"
+          height={48}
+          width={136}
+        />
       );
     }
 
@@ -135,7 +119,6 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
             // we space the hpan to make the screen reader read it digit by digit
             spacedHpan: props.hpan.split("").join(" ")
           })}
-          style={styleSheet.bankInfo}
         >
           {capitalize(circuitName)} •••• {props.hpan}
         </H6>
@@ -145,14 +128,23 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
     return undefined;
   };
 
+  const expiredTag = (
+    <View testID={`${props.testID}-expired`}>
+      <Tag
+        variant="error"
+        text={I18n.t("features.payments.methods.status.expired")}
+      />
+    </View>
+  );
+
   return (
-    <View style={styleSheet.card}>
-      <View style={styleSheet.wrapper}>
-        <View style={styleSheet.paymentInfo}>
+    <View style={[styles.card, props.isExpired && styles.expiredCard]}>
+      <View style={styles.wrapper}>
+        <View style={styles.paymentInfo}>
           {renderBankLogo()}
-          {cardIcon}
+          {props.isExpired ? expiredTag : cardIcon}
         </View>
-        <View style={styleSheet.additionalInfo}>
+        <View style={styles.additionalInfo}>
           {holderNameText}
           {maskedEmailText}
           {maskedPhoneText}
@@ -164,9 +156,9 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 };
 
 const PaymentCardSkeleton = () => (
-  <View style={styleSheet.card}>
-    <View style={styleSheet.wrapper}>
-      <View style={[styleSheet.paymentInfo, { paddingTop: 8 }]}>
+  <View style={styles.card}>
+    <View style={styles.wrapper}>
+      <View style={[styles.paymentInfo, { paddingTop: 8 }]}>
         <View style={{ width: "60%" }}>
           <SkeletonPlaceholder height={24} width={"100%"} />
         </View>
@@ -174,7 +166,7 @@ const PaymentCardSkeleton = () => (
           <SkeletonPlaceholder height={24} width={"100%"} />
         </View>
       </View>
-      <View style={styleSheet.additionalInfo}>
+      <View style={styles.additionalInfo}>
         <SkeletonPlaceholder height={18} width={"55%"} />
         <VSpacer size={8} />
         <SkeletonPlaceholder height={18} width={"45%"} />
@@ -192,26 +184,30 @@ const SkeletonPlaceholder = (props: Pick<BoxProps, "width" | "height">) => (
   />
 );
 
-const styleSheet = StyleSheet.create({
+const styles = StyleSheet.create({
   card: {
+    padding: 16,
+    paddingTop: 8,
     aspectRatio: 16 / 10,
     backgroundColor: IOColors["grey-100"],
-    borderRadius: 16,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: IOColors["grey-200"]
   },
+  expiredCard: {
+    borderColor: IOColors["error-600"],
+    borderLeftWidth: 9,
+    paddingLeft: 7
+  },
   wrapper: {
-    padding: 16,
-    paddingTop: 8,
     flex: 1,
     justifyContent: "space-between"
   },
-  bankInfo: {
-    paddingTop: 12
-  },
   paymentInfo: {
+    height: 48,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   additionalInfo: {
     justifyContent: "space-between"

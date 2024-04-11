@@ -43,6 +43,7 @@ describe("PaymentCardSmall", () => {
   it(`should render error card`, () => {
     const { queryByText, queryByTestId } = renderCard({
       expireDate: new Date(2023),
+      isExpired: true,
       hpan: "9900",
       brand: "maestro",
       onPress: () => undefined,
@@ -50,18 +51,6 @@ describe("PaymentCardSmall", () => {
     });
     expect(queryByText("•••• 9900")).not.toBeNull();
     expect(queryByTestId(`${testID}-errorIcon`)).not.toBeNull();
-    expect(queryByTestId(`${testID}-pressable`)).not.toBeNull();
-  });
-
-  it(`should render pagobancomat card details`, () => {
-    const { queryByText, queryByTestId } = renderCard({
-      abiCode: "03069",
-      brand: "pagoBancomat",
-      bankName: "Intesa San Paolo",
-      onPress: () => undefined,
-      testID
-    });
-    expect(queryByText("Intesa San Paolo")).not.toBeNull();
     expect(queryByTestId(`${testID}-pressable`)).not.toBeNull();
   });
 

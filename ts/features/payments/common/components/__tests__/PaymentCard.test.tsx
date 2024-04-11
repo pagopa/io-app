@@ -25,23 +25,6 @@ describe("PaymentCard", () => {
       )
     ).not.toBeNull();
   });
-  it(`should render bancomat data`, () => {
-    const tDate = new Date();
-    const { queryByTestId, queryByText } = render(
-      <PaymentCard abiCode="1234" expireDate={tDate} holderName="Anna Verdi" />
-    );
-
-    expect(queryByTestId("paymentCardBankLogoTestId")).not.toBeNull();
-    expect(queryByText("Mastercard •••• 1234")).toBeNull();
-    expect(queryByText("Anna Verdi")).not.toBeNull();
-    expect(
-      queryByText(
-        I18n.t("wallet.creditCard.validUntil", {
-          expDate: format(tDate, "MM/YY")
-        })
-      )
-    ).not.toBeNull();
-  });
   it(`should render BPay data`, () => {
     const { queryByTestId, queryByText } = render(
       <PaymentCard holderPhone="123456789" />
@@ -54,6 +37,19 @@ describe("PaymentCard", () => {
       <PaymentCard holderEmail="abc@abc.it" />
     );
     expect(queryByTestId("paymentCardPayPalLogoTestId")).not.toBeNull();
+    expect(queryByText("abc@abc.it")).not.toBeNull();
+  });
+
+  it(`should render error card`, () => {
+    const { queryByTestId, queryByText } = render(
+      <PaymentCard
+        holderEmail="abc@abc.it"
+        isExpired={true}
+        testID="paymentCardTestID"
+      />
+    );
+    expect(queryByTestId("paymentCardPayPalLogoTestId")).not.toBeNull();
+    expect(queryByTestId("paymentCardTestID.expired")).not.toBeNull();
     expect(queryByText("abc@abc.it")).not.toBeNull();
   });
 });

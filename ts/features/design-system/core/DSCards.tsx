@@ -28,17 +28,20 @@ const onPress = () => {
   Alert.alert("Alert", "Action triggered");
 };
 
+const expiredDate = new Date(new Date().getTime() - 10000 * 60 * 10 * 24 * 30);
+const validDate = new Date(new Date().getTime() + 10000 * 60 * 10 * 24 * 30);
+
 const cardsDataForCarousel: PaymentCardsCarouselProps = {
   cards: [
     {
       hpan: "9999",
-      expireDate: new Date(2021, 10),
+      expireDate: validDate,
       brand: "maestro",
       onPress
     },
     {
       holderEmail: "test@test.it",
-      expireDate: new Date(2021, 10),
+      expireDate: validDate,
       onPress
     },
     {
@@ -46,18 +49,22 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
       onPress
     },
     {
-      brand: "pagobancomat",
-      bankName: "Intesa San Paolo",
+      hpan: "9999",
+      expireDate: validDate,
+      brand: "",
       onPress
     },
     {
       hpan: "9999",
-      expireDate: new Date(2021, 10),
+      expireDate: expiredDate,
+      isExpired: true,
+      brand: "maestro",
       onPress
     },
     {
-      bankName: "Intesa San Paolo",
-      brand: "maestro",
+      holderEmail: "test@test.it",
+      expireDate: expiredDate,
+      isExpired: true,
       onPress
     }
   ]
@@ -74,25 +81,25 @@ export const DSCards = () => (
           style={{ aspectRatio: 16 / 10, marginHorizontal: -24 }}
           contentContainerStyle={{ paddingHorizontal: 24, paddingVertical: 16 }}
         >
-          <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={new Date()} />
+          <PaymentCard brand="MASTERCARD" hpan="9900" expireDate={validDate} />
           <HSpacer size={16} />
           <PaymentCard
-            holderName="Anna Verdi"
-            expireDate={new Date()}
-            abiCode="03069"
-            brand="pagoBancomat"
+            holderEmail="anna_v********@**hoo.it"
+            expireDate={validDate}
           />
           <HSpacer size={16} />
           <PaymentCard
-            holderName="Anna Verdi"
-            expireDate={new Date()}
-            abiCode="08509"
-            brand="maestro"
+            brand="MASTERCARD"
+            hpan="9900"
+            expireDate={expiredDate}
+            isExpired={true}
           />
           <HSpacer size={16} />
-          <PaymentCard holderEmail="anna_v********@**hoo.it" />
-          <HSpacer size={16} />
-          <PaymentCard holderName="Anna Verdi" holderPhone="+39 340 *** **62" />
+          <PaymentCard
+            holderEmail="anna_v********@**hoo.it"
+            expireDate={expiredDate}
+            isExpired={true}
+          />
           <HSpacer size={16} />
           <PaymentCard isLoading />
         </ScrollView>
@@ -156,14 +163,12 @@ export const DSCards = () => (
       <DSComponentViewerBox name="PagoBANCOMAT">
         <View style={styles.content}>
           <PaymentCardSmall
-            abiCode="03069"
             brand="pagoBancomat"
             bankName="Intesa San Paolo"
             onPress={onPress}
           />
           <HSpacer size={16} />
           <PaymentCardSmall
-            abiCode="03069"
             brand="pagoBancomat"
             bankName="Intesa San Paolo"
             onPress={onPress}
