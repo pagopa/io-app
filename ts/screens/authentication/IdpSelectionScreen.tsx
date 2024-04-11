@@ -66,11 +66,25 @@ export const randomOrderIdps = <T extends object>(
  * A screen where the user choose the SPID IPD to login with.
  */
 const IdpSelectionScreen = (): ReactElement => {
-  useOnFirstRender(() => {
-    trackSpidLoginIdpSelection();
-  });
   const dispatch = useIODispatch();
+  const store = useStore();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<
+        AuthenticationParamsList,
+        "AUTHENTICATION_IDP_SELECTION"
+      >
+    >();
+  const [counter, setCounter] = useState(0);
   const idps = useIOSelector(idpsRemoteValueSelector);
+  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
+  const nativeLoginFeature = useIOSelector(nativeLoginSelector);
+  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
+  const isNativeLoginFeatureFlagEnabled = useSelector(
+    isNativeLoginEnabledSelector
+  );
+
+  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
   const idpValue = isReady(idps) ? idps.value.items : idpsFallback;
   const randomIdps = useRef<ReadonlyArray<SpidIdp | LocalIdpsFallback>>(
     randomOrderIdps(idpValue)
@@ -79,6 +93,29 @@ const IdpSelectionScreen = (): ReactElement => {
     idpValue
   );
 
+  const requestIdps = useCallback(
+    () => dispatch(loadIdps.request()),
+    [dispatch]
+  );
+
+  const setSelectedIdp = useCallback(
+    (idp: SpidIdp) => dispatch(idpSelected(idp)),
+    [dispatch]
+  );
+
+  // When the screen is landed, metadata are retrieved.
+  // This retrieval causes glitches in 2 different cases:
+  // 1. When the app is installed from zero there is no data
+  // in memory so there will always be the glitch because the
+  // idpsFallback object is shown first while the metadata is retrieved
+  // 2. When logging in with the app installed the existing data is
+  // shown first -> the call to retrieve the metadata is invoked ->
+  // the call is loading so the data of the idpsFallback object is shown ->
+  // the data is retrieved and then the array is updated.
+
+  // To resolve the second glitch, the existing metadata (present on the first render)
+  // is saved in firstIdpsRef and then compared with the data that is
+  // collected after the data is updated (so when it isReady again).
   if (isReady(idps)) {
     if (!_.isEqual(firstIdpsRef.current, idps.value.items)) {
       // eslint-disable-next-line functional/immutable-data
@@ -88,42 +125,11 @@ const IdpSelectionScreen = (): ReactElement => {
     firstIdpsRef.current = idps.value.items;
   }
 
-  const assistanceToolConfig = useIOSelector(assistanceToolConfigSelector);
-  const nativeLoginFeature = useIOSelector(nativeLoginSelector);
-
-  const requestIdps = useCallback(
-    () => dispatch(loadIdps.request()),
-    [dispatch]
-  );
-  const setSelectedIdp = useCallback(
-    (idp: SpidIdp) => dispatch(idpSelected(idp)),
-    [dispatch]
-  );
-
-  const [counter, setCounter] = useState(0);
-  const choosenTool = assistanceToolRemoteConfig(assistanceToolConfig);
-
-  const navigation =
-    useNavigation<
-      IOStackNavigationProp<
-        AuthenticationParamsList,
-        "AUTHENTICATION_IDP_SELECTION"
-      >
-    >();
-
-  const isFastLoginFeatureFlagEnabled = useSelector(isFastLoginEnabledSelector);
-
-  const isNativeLoginFeatureFlagEnabled = useSelector(
-    isNativeLoginEnabledSelector
-  );
-
   const isNativeLoginEnabled = () =>
     (Platform.OS !== "ios" ||
       (Platform.OS === "ios" && parseInt(Platform.Version, 10) > 13)) &&
     nativeLoginFeature.enabled &&
     isNativeLoginFeatureFlagEnabled;
-
-  const store = useStore();
 
   const onIdpSelected = (idp: LocalIdpsFallback) => {
     setSelectedIdp(idp);
@@ -146,6 +152,10 @@ const IdpSelectionScreen = (): ReactElement => {
       setCounter(newValue);
     }
   };
+
+  useOnFirstRender(() => {
+    trackSpidLoginIdpSelection();
+  });
 
   useEffect(() => {
     requestIdps();
