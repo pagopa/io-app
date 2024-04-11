@@ -1,5 +1,4 @@
 import _ from "lodash";
-import React from "react";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -116,7 +115,7 @@ const renderComponent = (
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <WalletHomeScreen />,
+      WalletHomeScreen,
       ROUTES.WALLET_HOME,
       {},
       store

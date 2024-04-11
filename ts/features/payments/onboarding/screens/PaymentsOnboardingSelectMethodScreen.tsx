@@ -1,26 +1,23 @@
-import * as React from "react";
-import { SafeAreaView } from "react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { Body, H2, IOStyles, VSpacer } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/native";
-import I18n from "../../../../i18n";
-import TopScreenComponent from "../../../../components/screens/TopScreenComponent";
-import WalletOnboardingPaymentMethodsList from "../components/WalletOnboardingPaymentMethodsList";
+import * as React from "react";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { paymentsOnboardingGetMethodsAction } from "../store/actions";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { selectPaymentOnboardingMethods } from "../store/selectors";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { PaymentMethodStatusEnum } from "../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { RNavScreenWithLargeHeader } from "../../../../components/ui/RNavScreenWithLargeHeader";
+import I18n from "../../../../i18n";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import WalletOnboardingPaymentMethodsList from "../components/WalletOnboardingPaymentMethodsList";
 import { useWalletOnboardingWebView } from "../hooks/useWalletOnboardingWebView";
 import { PaymentsOnboardingRoutes } from "../navigation/routes";
-import { PaymentsOnboardingStackNavigation } from "../navigation/navigator";
+import { paymentsOnboardingGetMethodsAction } from "../store/actions";
+import { selectPaymentOnboardingMethods } from "../store/selectors";
 
 const PaymentsOnboardingSelectMethodScreen = () => {
-  const navigation = useNavigation<PaymentsOnboardingStackNavigation>();
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
 
   const paymentMethodsPot = useIOSelector(selectPaymentOnboardingMethods);
@@ -40,10 +37,13 @@ const PaymentsOnboardingSelectMethodScreen = () => {
     useWalletOnboardingWebView({
       onOnboardingOutcome: (outcome, walletId) => {
         navigation.replace(
-          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK,
+          PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
           {
-            outcome,
-            walletId
+            screen: PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_RESULT_FEEDBACK,
+            params: {
+              outcome,
+              walletId
+            }
           }
         );
       }
@@ -59,44 +59,37 @@ const PaymentsOnboardingSelectMethodScreen = () => {
     startOnboarding(selectedPaymentMethod.id);
   };
 
+  if (pot.isError(paymentMethodsPot)) {
+    return (
+      <OperationResultScreenContent
+        pictogram="umbrellaNew"
+        title={I18n.t("genericError")}
+        subtitle={I18n.t("global.genericError")}
+        action={{
+          label: I18n.t("global.genericRetry"),
+          accessibilityLabel: I18n.t("global.genericRetry"),
+          onPress: () => dispatch(paymentsOnboardingGetMethodsAction.request())
+        }}
+      />
+    );
+  }
   return (
-    <TopScreenComponent goBack>
-      {pot.isError(paymentMethodsPot) ? (
-        <OperationResultScreenContent
-          pictogram="umbrellaNew"
-          title={I18n.t("genericError")}
-          subtitle={I18n.t("global.genericError")}
-          action={{
-            label: I18n.t("global.genericRetry"),
-            accessibilityLabel: I18n.t("global.genericRetry"),
-            onPress: () =>
-              dispatch(paymentsOnboardingGetMethodsAction.request())
-          }}
-        />
-      ) : (
-        <SafeAreaView style={IOStyles.flex}>
-          <WalletOnboardingPaymentMethodsList
-            header={<PaymentMethodsHeading />}
-            isLoadingMethods={isLoadingPaymentMethods}
-            onSelectPaymentMethod={handleSelectedPaymentMethod}
-            paymentMethods={availablePaymentMethods}
-            isLoadingWebView={isLoading || isPendingOnboarding}
-          />
-        </SafeAreaView>
+    <RNavScreenWithLargeHeader
+      title={{
+        label: I18n.t("wallet.onboarding.paymentMethodsList.header.title")
+      }}
+      description={I18n.t(
+        "wallet.onboarding.paymentMethodsList.header.subtitle"
       )}
-    </TopScreenComponent>
+    >
+      <WalletOnboardingPaymentMethodsList
+        isLoadingMethods={isLoadingPaymentMethods}
+        onSelectPaymentMethod={handleSelectedPaymentMethod}
+        paymentMethods={availablePaymentMethods}
+        isLoadingWebView={isLoading || isPendingOnboarding}
+      />
+    </RNavScreenWithLargeHeader>
   );
 };
-
-const PaymentMethodsHeading = () => (
-  <>
-    <H2>{I18n.t("wallet.onboarding.paymentMethodsList.header.title")}</H2>
-    <VSpacer />
-    <Body>
-      {I18n.t("wallet.onboarding.paymentMethodsList.header.subtitle")}
-    </Body>
-    <VSpacer size={32} />
-  </>
-);
 
 export { PaymentsOnboardingSelectMethodScreen };

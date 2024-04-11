@@ -11,7 +11,7 @@ import { loadServicesDetail } from "../../../store/actions/services";
 import {
   servicesByIdSelector,
   ServicesByIdState
-} from "../../../store/reducers/entities/services/servicesById";
+} from "../../../features/services/store/reducers/servicesById";
 import { refreshStoredServices } from "../refreshStoredServices";
 
 describe("refreshStoredServices", () => {

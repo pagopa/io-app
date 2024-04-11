@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.58.0-rc.0](https://github.com/pagopa/io-app/compare/2.57.0-rc.1...2.58.0-rc.0) (2024-04-09)
+
+
+### Features
+
+* [[IOCOM-1199](https://pagopa.atlassian.net/browse/IOCOM-1199)] Vertically ordered CTAs and Payment button on new DS message details screen ([#5636](https://github.com/pagopa/io-app/issues/5636)) ([0fa34fb](https://github.com/pagopa/io-app/commit/0fa34fb1c76ab5b11e87f2aed5dfdf5ff0d82929))
+* [[IOCOM-870](https://pagopa.atlassian.net/browse/IOCOM-870)] New DS on payment list in the SEND message details ([#5650](https://github.com/pagopa/io-app/issues/5650)) ([1f31acb](https://github.com/pagopa/io-app/commit/1f31acb4c1d7a4348b7504bf35affc99f82b752e))
+* [[IOCOM-874](https://pagopa.atlassian.net/browse/IOCOM-874)] Bottom menu on SEND message details, with "Support" action item ([#5644](https://github.com/pagopa/io-app/issues/5644)) ([9f72690](https://github.com/pagopa/io-app/commit/9f72690a37c11038935afb2ce40ec82051f94355))
+
+
+### Chores
+
+* **Cross:** [[IOAPPX-271](https://pagopa.atlassian.net/browse/IOAPPX-271)] Delete components and assets no longer referenced ([#5646](https://github.com/pagopa/io-app/issues/5646)) ([fe14f08](https://github.com/pagopa/io-app/commit/fe14f08e597b4a943cdd8aa1b4f8aab509e13dd7))
+* **deps:** bump react-native-document-picker from 9.0.1 to 9.1.1 ([#5520](https://github.com/pagopa/io-app/issues/5520)) ([cb1af3e](https://github.com/pagopa/io-app/commit/cb1af3e236fc2e2826aa8e6a87adf01c65c1996c)), closes [rnmods/react-native-document-picker#698](https://github.com/rnmods/react-native-document-picker/issues/698) [rnmods/react-native-document-picker#689](https://github.com/rnmods/react-native-document-picker/issues/689) [rnmods/react-native-document-picker#654](https://github.com/rnmods/react-native-document-picker/issues/654) [rnmods/react-native-document-picker#660](https://github.com/rnmods/react-native-document-picker/issues/660) [rnmods/react-native-document-picker#666](https://github.com/rnmods/react-native-document-picker/issues/666) [rnmods/react-native-document-picker#667](https://github.com/rnmods/react-native-document-picker/issues/667) [rnmods/react-native-document-picker#670](https://github.com/rnmods/react-native-document-picker/issues/670) [rnmods/react-native-document-picker#686](https://github.com/rnmods/react-native-document-picker/issues/686) [rnmods/react-native-document-picker#687](https://github.com/rnmods/react-native-document-picker/issues/687) [rnmods/react-native-document-picker#689](https://github.com/rnmods/react-native-document-picker/issues/689) [#698](https://github.com/pagopa/io-app/issues/698) [#689](https://github.com/pagopa/io-app/issues/689) [#687](https://github.com/pagopa/io-app/issues/687) [#686](https://github.com/pagopa/io-app/issues/686) [#670](https://github.com/pagopa/io-app/issues/670) [#667](https://github.com/pagopa/io-app/issues/667) [#666](https://github.com/pagopa/io-app/issues/666) [#660](https://github.com/pagopa/io-app/issues/660)
+* **IT Wallet:** [[SIW-951](https://pagopa.atlassian.net/browse/SIW-951)] Add user payment methods in new wallet section ([#5639](https://github.com/pagopa/io-app/issues/5639)) ([86087cc](https://github.com/pagopa/io-app/commit/86087cc684685f5e6aa650201fd7bbf9645b1078))
+* **IT Wallet:** [[SIW-963](https://pagopa.atlassian.net/browse/SIW-963)] Add wallet cards onboarding screen ([#5648](https://github.com/pagopa/io-app/issues/5648)) ([902faae](https://github.com/pagopa/io-app/commit/902faae6b4f8ef8c47065abbd002dfa716acc8ed))
+* [[IOBP-615](https://pagopa.atlassian.net/browse/IOBP-615)] Add new `paymentCard` component to `PaymentsMethodDetailsScreen` ([#5665](https://github.com/pagopa/io-app/issues/5665)) ([afb6fd6](https://github.com/pagopa/io-app/commit/afb6fd6141260ec5caa94d3bda97b4b5f09c29e5))
+* [[IOPID-1720](https://pagopa.atlassian.net/browse/IOPID-1720)] Add features to OperationResultScreenContent  ([#5666](https://github.com/pagopa/io-app/issues/5666)) ([4e9a9a9](https://github.com/pagopa/io-app/commit/4e9a9a9cabd389531b59e03db5b4f3e49973e5d2))
+
 ## [2.57.0-rc.1](https://github.com/pagopa/io-app/compare/2.57.0-rc.0...2.57.0-rc.1) (2024-04-04)
 
 

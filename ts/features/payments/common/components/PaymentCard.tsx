@@ -26,15 +26,16 @@ export type PaymentCardProps = {
   holderEmail?: string;
 };
 
-type Props =
+export type PaymentCardComponentProps = WithTestID<
   | ({
       isLoading?: false;
     } & PaymentCardProps)
   | {
       isLoading: true;
-    };
+    }
+>;
 
-const PaymentCard = (props: WithTestID<Props>) => {
+const PaymentCard = (props: PaymentCardComponentProps) => {
   if (props.isLoading) {
     return <PaymentCardSkeleton />;
   }
