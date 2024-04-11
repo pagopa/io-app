@@ -171,7 +171,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -359,6 +373,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                           testID="contacts-action"
                         >
                           <View
+                            importantForAccessibility="no-hide-descendants"
                             style={
                               Array [
                                 Object {
@@ -404,7 +419,6 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color={4278219750}
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -427,19 +441,26 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                                       },
                                     ]
                                   }
-                                  tintColor={4278219750}
+                                  tintColor="#0073E6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
-                                  <RNSVGGroup>
+                                  <RNSVGGroup
+                                    fill={
+                                      Object {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
                                     <RNSVGPath
                                       clipRule={0}
                                       d="M5 0C2.23858 0 0 2.23858 0 5v10c0 2.7614 2.23858 5 5 5h2.17157c.26522 0 .51957.1054.70711.2929l2.65842 2.6584c.8181.8181 2.1575.7735 2.9193-.0972l2.1986-2.5126A.99985.99985 0 0 1 16.4075 20H19c2.7614 0 5-2.2386 5-5V5c0-2.76142-2.2386-5-5-5H5ZM2 5c0-1.65685 1.34315-3 3-3h14c1.6569 0 3 1.34315 3 3v10c0 1.6569-1.3431 3-3 3h-2.5925c-.8651 0-1.688.3734-2.2577 1.0245l-2.1985 2.5126-2.65841-2.6584A3.00006 3.00006 0 0 0 7.17157 18H5c-1.65685 0-3-1.3431-3-3V5Zm4 8c-.55228 0-1 .4477-1 1s.44772 1 1 1h6.0269c.5523 0 1-.4477 1-1s-.4477-1-1-1H6ZM5 5.99808C5 5.44686 5.44686 5 5.99808 5H18.0019c.5512 0 .9981.44686.9981.99808 0 .55123-.4469.99808-.9981.99808H5.99808C5.44686 6.99616 5 6.54931 5 5.99808ZM5.99808 9C5.44686 9 5 9.44686 5 9.99808s.44686.99812.99808.99812H18.0019c.5512 0 .9981-.4469.9981-.99812S18.5531 9 18.0019 9H5.99808Z"
                                       fill={
-                                        Array [
-                                          2,
-                                        ]
+                                        Object {
+                                          "type": 2,
+                                        }
                                       }
                                       fillRule={0}
                                       propList={
@@ -500,6 +521,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                           testID="show-more-data-action"
                         >
                           <View
+                            importantForAccessibility="no-hide-descendants"
                             style={
                               Array [
                                 Object {
@@ -545,7 +567,6 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color={4278219750}
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -568,19 +589,26 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                                       },
                                     ]
                                   }
-                                  tintColor={4278219750}
+                                  tintColor="#0073E6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
-                                  <RNSVGGroup>
+                                  <RNSVGGroup
+                                    fill={
+                                      Object {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
                                     <RNSVGPath
                                       clipRule={0}
                                       d="M23.0692 1H16.1192C14.4002 1 12.9076 1.55894 12.0012 2.43149C11.0924 1.55894 9.59977 1 7.88084 1H0.928523C0.415514 1 0 1.41429 0 1.92578V20.3349C0 20.8464 0.415514 21 0.928523 21H7.88084C9.70655 21 11 21.5454 11 22.2999C11 22.8114 11.4858 23 11.9988 23C12.5118 23 13 22.8114 13 22.2999C13 21.5454 14.2911 21 16.1168 21H23.0692C23.5822 21 23.9977 20.8464 23.9977 20.3349V1.92578C23.9977 1.41429 23.5822 1 23.0692 1ZM11 19.5C10.1365 19.0244 9.10185 19 7.882 19H2.25C2.11193 19 2 18.8881 2 18.75V3.25C2 3.11193 2.11193 3 2.25 3H4.86894H7.88084C9.70655 3 11.0703 3.69633 11.0703 4.45084L11 12.309V19.5ZM22 18.75C22 18.8881 21.8881 19 21.75 19H16.1192C14.8982 19 13.8635 19.0244 13 19.5V12.3096V4.45084C13 3.69633 14.2935 3 16.1192 3H21.75C21.8881 3 22 3.11193 22 3.25V18.75ZM15 6C15 5.44772 15.4477 5 16 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H16C15.4477 7 15 6.55228 15 6ZM16 8C15.4477 8 15 8.44772 15 9C15 9.55229 15.4477 10 16 10H19C19.5523 10 20 9.55229 20 9C20 8.44772 19.5523 8 19 8H16Z"
                                       fill={
-                                        Array [
-                                          2,
-                                        ]
+                                        Object {
+                                          "type": 2,
+                                        }
                                       }
                                       fillRule={0}
                                       propList={
@@ -629,8 +657,8 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -807,7 +835,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -815,11 +843,25 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -995,6 +1037,7 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                           testID="show-more-data-action"
                         >
                           <View
+                            importantForAccessibility="no-hide-descendants"
                             style={
                               Array [
                                 Object {
@@ -1040,7 +1083,6 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                                   align="xMidYMid"
                                   bbHeight={24}
                                   bbWidth={24}
-                                  color={4278219750}
                                   focusable={false}
                                   height={24}
                                   importantForAccessibility="no-hide-descendants"
@@ -1063,19 +1105,26 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
                                       },
                                     ]
                                   }
-                                  tintColor={4278219750}
+                                  tintColor="#0073E6"
                                   vbHeight={24}
                                   vbWidth={24}
                                   width={24}
                                 >
-                                  <RNSVGGroup>
+                                  <RNSVGGroup
+                                    fill={
+                                      Object {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
                                     <RNSVGPath
                                       clipRule={0}
                                       d="M23.0692 1H16.1192C14.4002 1 12.9076 1.55894 12.0012 2.43149C11.0924 1.55894 9.59977 1 7.88084 1H0.928523C0.415514 1 0 1.41429 0 1.92578V20.3349C0 20.8464 0.415514 21 0.928523 21H7.88084C9.70655 21 11 21.5454 11 22.2999C11 22.8114 11.4858 23 11.9988 23C12.5118 23 13 22.8114 13 22.2999C13 21.5454 14.2911 21 16.1168 21H23.0692C23.5822 21 23.9977 20.8464 23.9977 20.3349V1.92578C23.9977 1.41429 23.5822 1 23.0692 1ZM11 19.5C10.1365 19.0244 9.10185 19 7.882 19H2.25C2.11193 19 2 18.8881 2 18.75V3.25C2 3.11193 2.11193 3 2.25 3H4.86894H7.88084C9.70655 3 11.0703 3.69633 11.0703 4.45084L11 12.309V19.5ZM22 18.75C22 18.8881 21.8881 19 21.75 19H16.1192C14.8982 19 13.8635 19.0244 13 19.5V12.3096V4.45084C13 3.69633 14.2935 3 16.1192 3H21.75C21.8881 3 22 3.11193 22 3.25V18.75ZM15 6C15 5.44772 15.4477 5 16 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H16C15.4477 7 15 6.55228 15 6ZM16 8C15.4477 8 15 8.44772 15 9C15 9.55229 15.4477 10 16 10H19C19.5523 10 20 9.55229 20 9C20 8.44772 19.5523 8 19 8H16Z"
                                       fill={
-                                        Array [
-                                          2,
-                                        ]
+                                        Object {
+                                          "type": 2,
+                                        }
                                       }
                                       fillRule={0}
                                       propList={
@@ -1124,8 +1173,8 @@ exports[`MessageDetailsFooter component should match the snapshot when the servi
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

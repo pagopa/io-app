@@ -171,7 +171,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -334,6 +348,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                               "alignItems": "center",
                               "backgroundColor": "#FFFFFF",
                               "borderColor": "#E8EBF1",
+                              "borderCurve": "continuous",
                               "borderRadius": 8,
                               "borderWidth": 1,
                               "flexDirection": "row",
@@ -440,8 +455,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -618,7 +633,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -626,11 +641,25 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -797,6 +826,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -940,7 +970,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 align="xMidYMid"
                                 bbHeight={24}
                                 bbWidth={24}
-                                color={4278219750}
                                 focusable={false}
                                 height={24}
                                 importantForAccessibility="no-hide-descendants"
@@ -963,19 +992,26 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                     },
                                   ]
                                 }
-                                tintColor={4278219750}
+                                tintColor="#0073E6"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
                               >
-                                <RNSVGGroup>
+                                <RNSVGGroup
+                                  fill={
+                                    Object {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
                                   <RNSVGPath
                                     clipRule={0}
                                     d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                     fill={
-                                      Array [
-                                        2,
-                                      ]
+                                      Object {
+                                        "type": 2,
+                                      }
                                     }
                                     fillRule={0}
                                     propList={
@@ -997,8 +1033,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1175,7 +1211,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1183,11 +1219,25 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1354,6 +1404,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   "alignItems": "center",
                                   "backgroundColor": "#FFFFFF",
                                   "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
                                   "borderRadius": 8,
                                   "borderWidth": 1,
                                   "flexDirection": "row",
@@ -1464,6 +1515,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1509,7 +1561,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 align="xMidYMid"
                                 bbHeight={24}
                                 bbWidth={24}
-                                color={4278219750}
                                 focusable={false}
                                 height={24}
                                 importantForAccessibility="no-hide-descendants"
@@ -1532,19 +1583,26 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                     },
                                   ]
                                 }
-                                tintColor={4278219750}
+                                tintColor="#0073E6"
                                 vbHeight={24}
                                 vbWidth={24}
                                 width={24}
                               >
-                                <RNSVGGroup>
+                                <RNSVGGroup
+                                  fill={
+                                    Object {
+                                      "payload": 4278190080,
+                                      "type": 0,
+                                    }
+                                  }
+                                >
                                   <RNSVGPath
                                     clipRule={0}
                                     d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                     fill={
-                                      Array [
-                                        2,
-                                      ]
+                                      Object {
+                                        "type": 2,
+                                      }
                                     }
                                     fillRule={0}
                                     propList={
@@ -1566,8 +1624,8 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

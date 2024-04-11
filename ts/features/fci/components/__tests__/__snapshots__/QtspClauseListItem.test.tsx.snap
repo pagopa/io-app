@@ -171,7 +171,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -467,6 +481,13 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                           }
                         />
                         <View
+                          accessibilityRole="checkbox"
+                          accessibilityState={
+                            Object {
+                              "checked": false,
+                              "disabled": false,
+                            }
+                          }
                           accessible={true}
                           collapsable={false}
                           focusable={true}
@@ -510,7 +531,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                               }
                             >
                               <View
-                                accessible={true}
+                                accessible={false}
                                 collapsable={false}
                                 focusable={true}
                                 onBlur={[Function]}
@@ -534,6 +555,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   style={
                                     Array [
                                       Object {
+                                        "borderCurve": "continuous",
                                         "borderRadius": 5,
                                         "borderWidth": 2,
                                         "height": 24,
@@ -552,6 +574,7 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
                                   style={
                                     Array [
                                       Object {
+                                        "borderCurve": "continuous",
                                         "borderRadius": 5,
                                         "height": 24,
                                         "left": 0,
@@ -622,8 +645,8 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

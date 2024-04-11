@@ -171,7 +171,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -428,6 +442,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -573,6 +588,12 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                       />
                                     </RNSVGDefs>
                                     <RNSVGGroup
+                                      fill={
+                                        Object {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
                                       propList={
                                         Array [
                                           "strokeWidth",
@@ -582,41 +603,64 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
                                     >
                                       <RNSVGPath
                                         d="M 1.5 12 A 10.5 10.5 0 0 1 22.5 12"
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
                                         propList={
                                           Array [
                                             "stroke",
                                           ]
                                         }
                                         stroke={
-                                          Array [
-                                            1,
-                                            "spinner-secondHalf",
-                                          ]
+                                          Object {
+                                            "brushRef": "spinner-secondHalf",
+                                            "type": 1,
+                                          }
                                         }
                                       />
                                       <RNSVGPath
                                         d="M 22.5 12 A 10.5 10.5 0 0 1 1.5 12"
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
                                         propList={
                                           Array [
                                             "stroke",
                                           ]
                                         }
                                         stroke={
-                                          Array [
-                                            1,
-                                            "spinner-firstHalf",
-                                          ]
+                                          Object {
+                                            "brushRef": "spinner-firstHalf",
+                                            "type": 1,
+                                          }
                                         }
                                       />
                                       <RNSVGPath
                                         d="M 1.5 12 A 10.5 10.5 0 0 1 1.5 11.25"
+                                        fill={
+                                          Object {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
                                         propList={
                                           Array [
                                             "stroke",
                                             "strokeLinecap",
                                           ]
                                         }
-                                        stroke={4278927075}
+                                        stroke={
+                                          Object {
+                                            "payload": 4278927075,
+                                            "type": 0,
+                                          }
+                                        }
                                         strokeLinecap={1}
                                       />
                                     </RNSVGGroup>
@@ -633,8 +677,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when is fetching the
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -811,7 +855,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -819,11 +863,25 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1068,6 +1126,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1123,7 +1182,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
-                              color={4278927075}
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -1146,19 +1204,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
                                   },
                                 ]
                               }
-                              tintColor={4278927075}
+                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
                             >
-                              <RNSVGGroup>
+                              <RNSVGGroup
+                                fill={
+                                  Object {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
+                                }
+                              >
                                 <RNSVGPath
                                   clipRule={0}
                                   d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                   fill={
-                                    Array [
-                                      2,
-                                    ]
+                                    Object {
+                                      "type": 2,
+                                    }
                                   }
                                   fillRule={0}
                                   propList={
@@ -1179,8 +1244,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot when the attachment 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1357,7 +1422,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1365,11 +1430,25 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -1511,7 +1590,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                         accessibilityRole="button"
                         accessibilityState={
                           Object {
-                            "disabled": false,
+                            "disabled": true,
                           }
                         }
                         accessible={true}
@@ -1551,7 +1630,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                 ],
                               },
                               Object {
-                                "opacity": 1,
+                                "opacity": 0.5,
                               },
                             ]
                           }
@@ -1614,6 +1693,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -1669,7 +1749,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
-                              color={4278927075}
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -1692,19 +1771,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
                                   },
                                 ]
                               }
-                              tintColor={4278927075}
+                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
                             >
-                              <RNSVGGroup>
+                              <RNSVGGroup
+                                fill={
+                                  Object {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
+                                }
+                              >
                                 <RNSVGPath
                                   clipRule={0}
                                   d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                   fill={
-                                    Array [
-                                      2,
-                                    ]
+                                    Object {
+                                      "type": 2,
+                                    }
                                   }
                                   fillRule={0}
                                   propList={
@@ -1732,8 +1818,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with all parameters 
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -1910,7 +1996,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -1918,11 +2004,25 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2167,6 +2267,7 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   Array [
                                     Object {
                                       "alignItems": "center",
+                                      "borderCurve": "continuous",
                                       "borderRadius": 24,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
@@ -2222,7 +2323,6 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                               align="xMidYMid"
                               bbHeight={24}
                               bbWidth={24}
-                              color={4278927075}
                               focusable={false}
                               height={24}
                               importantForAccessibility="no-hide-descendants"
@@ -2245,19 +2345,26 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
                                   },
                                 ]
                               }
-                              tintColor={4278927075}
+                              tintColor="#0B3EE3"
                               vbHeight={24}
                               vbWidth={24}
                               width={24}
                             >
-                              <RNSVGGroup>
+                              <RNSVGGroup
+                                fill={
+                                  Object {
+                                    "payload": 4278190080,
+                                    "type": 0,
+                                  }
+                                }
+                              >
                                 <RNSVGPath
                                   clipRule={0}
                                   d="M16.2929 5.29289c.3905-.39052 1.0237-.39052 1.4142 0l6 6.00001c.3905.3905.3905 1.0237 0 1.4142l-6 6c-.3905.3905-1.0237.3905-1.4142 0-.3905-.3905-.3905-1.0237 0-1.4142L21.5858 12l-5.2929-5.29289c-.3905-.39053-.3905-1.02369 0-1.41422Z"
                                   fill={
-                                    Array [
-                                      2,
-                                    ]
+                                    Object {
+                                      "type": 2,
+                                    }
                                   }
                                   fillRule={0}
                                   propList={
@@ -2278,8 +2385,8 @@ exports[`MessageDetailsAttachmentItem Should match snapshot with required parame
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

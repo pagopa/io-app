@@ -30,11 +30,11 @@ import {
 } from "../../store/reducers/fciPollFilledDocument";
 import GenericErrorComponent from "../../components/GenericErrorComponent";
 import LinkedText from "../../components/LinkedText";
-import { servicePreferenceSelector } from "../../../../store/reducers/entities/services/servicePreference";
-import { loadServicePreference } from "../../../../store/actions/services/servicePreference";
+import { servicePreferenceSelector } from "../../../services/store/reducers/servicePreference";
+import { loadServicePreference } from "../../../services/store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
-import { isServicePreferenceResponseSuccess } from "../../../../types/services/ServicePreferenceResponse";
+import { isServicePreferenceResponseSuccess } from "../../../services/types/ServicePreferenceResponse";
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
 import { trackFciUxConversion } from "../../analytics";
 import LoadingComponent from "../../components/LoadingComponent";
@@ -82,8 +82,7 @@ const FciQtspClausesScreen = () => {
     navigation.navigate(FCI_ROUTES.MAIN, {
       screen: FCI_ROUTES.DOC_PREVIEW,
       params: {
-        documentUrl: url,
-        enableAnnotationRendering: true
+        documentUrl: url
       }
     });
   };

@@ -171,7 +171,7 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -509,17 +523,18 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                           }
                         >
                           <View
+                            accessibilityIgnoresInvertColors={true}
                             style={
                               Array [
                                 Object {
                                   "borderColor": "rgba(14,15,19,0.1)",
+                                  "borderCurve": "continuous",
                                   "borderWidth": 1,
                                   "overflow": "hidden",
-                                  "resizeMode": "contain",
                                 },
                                 Object {
                                   "backgroundColor": "#FFFFFF",
-                                  "borderRadius": 22,
+                                  "borderRadius": 8,
                                   "height": 44,
                                   "padding": 6,
                                   "width": 44,
@@ -527,20 +542,37 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
                               ]
                             }
                           >
-                            <Image
-                              onError={[Function]}
-                              source={
-                                Object {
-                                  "uri": "https://assets.cdn.io.italia.it/logos/services/service_one.png",
-                                }
-                              }
+                            <View
                               style={
-                                Object {
-                                  "height": "100%",
-                                  "width": "100%",
-                                }
+                                Array [
+                                  Object {
+                                    "backgroundColor": "#FFFFFF",
+                                    "borderCurve": "continuous",
+                                    "overflow": "hidden",
+                                  },
+                                  Object {
+                                    "borderRadius": 2,
+                                  },
+                                ]
                               }
-                            />
+                            >
+                              <Image
+                                accessibilityIgnoresInvertColors={true}
+                                onError={[Function]}
+                                source={
+                                  Object {
+                                    "uri": "https://assets.cdn.io.italia.it/logos/services/service_one.png",
+                                  }
+                                }
+                                style={
+                                  Object {
+                                    "height": "100%",
+                                    "resizeMode": "contain",
+                                    "width": "100%",
+                                  }
+                                }
+                              />
+                            </View>
                           </View>
                         </View>
                       </View>
@@ -558,8 +590,8 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

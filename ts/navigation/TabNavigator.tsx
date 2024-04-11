@@ -1,21 +1,27 @@
+import { IOColors } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IOColors } from "@pagopa/io-app-design-system";
-import { makeFontStyleObject } from "../components/core/fonts";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
+import { makeFontStyleObject } from "../components/core/fonts";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
-import I18n from "../i18n";
 import MessagesHomeScreen from "../features/messages/screens/MessagesHomeScreen";
+import { WalletHomeScreen as NewWalletHomeScreen } from "../features/newWallet/screens/WalletHomeScreen";
+import { PaymentsHomeScreen } from "../features/payments/home/screens/PaymentsHomeScreen";
+import I18n from "../i18n";
 import ProfileMainScreen from "../screens/profile/ProfileMainScreen";
 import ServicesHomeScreen from "../screens/services/ServicesHomeScreen";
 import WalletHomeScreen from "../screens/wallet/WalletHomeScreen";
 import { useIOSelector } from "../store/hooks";
-import { isDesignSystemEnabledSelector } from "../store/reducers/persistedPreferences";
+import {
+  isDesignSystemEnabledSelector,
+  isNewWalletSectionEnabledSelector
+} from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import variables from "../theme/variables";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
+import { SERVICES_ROUTES } from "../features/services/navigation/routes";
 import { useIONavigation } from "./params/AppParamsList";
 import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
@@ -45,13 +51,19 @@ const styles = StyleSheet.create({
 });
 
 export const MainTabNavigator = () => {
+  const navigation = useIONavigation();
   const insets = useSafeAreaInsets();
+
   const startupLoaded = useIOSelector(isStartupLoaded);
+  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
+  const showBarcodeScanSection = false; // Currently disabled
+
   const tabBarHeight = 54;
   const additionalPadding = 10;
   const bottomInset = insets.bottom === 0 ? additionalPadding : insets.bottom;
-  const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const navigation = useIONavigation();
 
   const navigateToBarcodeScanScreen = () => {
     navigation.navigate(ROUTES.BARCODE_SCAN);
@@ -109,7 +121,9 @@ export const MainTabNavigator = () => {
         />
         <Tab.Screen
           name={ROUTES.WALLET_HOME}
-          component={WalletHomeScreen}
+          component={
+            isNewWalletSectionEnabled ? NewWalletHomeScreen : WalletHomeScreen
+          }
           options={{
             title: I18n.t("global.navigator.wallet"),
             tabBarIcon: ({ color, focused }) => (
@@ -122,7 +136,7 @@ export const MainTabNavigator = () => {
             )
           }}
         />
-        {isDesignSystemEnabled && (
+        {showBarcodeScanSection && (
           <Tab.Screen
             name={ROUTES.BARCODE_SCAN}
             component={EmptyComponent}
@@ -145,8 +159,25 @@ export const MainTabNavigator = () => {
             }}
           />
         )}
+        {isNewWalletSectionEnabled && (
+          <Tab.Screen
+            name={ROUTES.PAYMENTS_HOME}
+            component={PaymentsHomeScreen}
+            options={{
+              title: I18n.t("global.navigator.payments"),
+              tabBarIcon: ({ color, focused }) => (
+                <TabIconComponent
+                  iconName={"navPsp"}
+                  iconNameFocused={"navPsp"}
+                  color={color}
+                  focused={focused}
+                />
+              )
+            }}
+          />
+        )}
         <Tab.Screen
-          name={ROUTES.SERVICES_HOME}
+          name={SERVICES_ROUTES.SERVICES_HOME}
           component={ServicesHomeScreen}
           options={{
             title: I18n.t("global.navigator.services"),

@@ -9,13 +9,12 @@ import {
 import {
   loadServicePreference,
   upsertServicePreference
-} from "../actions/services/servicePreference";
-import { getNetworkErrorMessage } from "../../utils/errors";
+} from "../../features/services/store/actions";
 
 // Isolated tracker for services actions
 export const trackServiceAction =
   (mp: NonNullable<typeof mixpanel>) =>
-  (action: Action): Promise<void> => {
+  (action: Action): void => {
     switch (action.type) {
       case getType(loadServicesDetail):
         return mp.track(action.type, {
@@ -33,7 +32,7 @@ export const trackServiceAction =
       case getType(upsertServicePreference.failure):
         return mp.track(action.type, {
           service_id: action.payload.id,
-          reason: getNetworkErrorMessage(action.payload)
+          reason: action.payload
         });
       case getType(loadVisibleServices.request):
       case getType(loadVisibleServices.success):
@@ -52,5 +51,4 @@ export const trackServiceAction =
           responseStatus: action.payload.kind
         });
     }
-    return Promise.resolve();
   };

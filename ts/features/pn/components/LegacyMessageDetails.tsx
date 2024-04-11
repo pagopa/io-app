@@ -40,9 +40,9 @@ import { MessageDetailsHeader } from "./MessageDetailsHeader";
 import { MessageDetailsSection } from "./MessageDetailsSection";
 import { MessageTimeline } from "./MessageTimeline";
 import { MessageTimelineCTA } from "./MessageTimelineCTA";
-import { MessageF24 } from "./MessageF24";
-import { MessagePayments } from "./MessagePayments";
-import { MessageFooter } from "./MessageFooter";
+import { LegacyMessageF24 } from "./LegacyMessageF24";
+import { LegacyMessageFooter } from "./LegacyMessageFooter";
+import { LegacyMessagePayments } from "./LegacyMessagePayments";
 import { MessagePaymentBottomSheet } from "./MessagePaymentBottomSheet";
 
 type Props = Readonly<{
@@ -108,11 +108,11 @@ export const LegacyMessageDetails = ({
         ref={scrollViewRef}
       >
         {service && <MessageDetailsHeader service={service} />}
-        <VSpacer />
+        <VSpacer size={16} />
         <LegacyMessageDetailsContent message={message} />
         {isCancelled && (
           <>
-            <VSpacer />
+            <VSpacer size={16} />
             <DSFullWidthComponent>
               <StatusContent
                 accessibilityLabel={I18n.t(
@@ -143,7 +143,7 @@ export const LegacyMessageDetails = ({
             />
           </MessageDetailsSection>
         )}
-        <MessagePayments
+        <LegacyMessagePayments
           messageId={messageId}
           isCancelled={isCancelled}
           payments={payments}
@@ -154,7 +154,7 @@ export const LegacyMessageDetails = ({
 
         {!isCancelled && RA.isNonEmpty(f24List) ? (
           <>
-            <MessageF24
+            <LegacyMessageF24
               attachments={f24List}
               messageId={messageId}
               openPreview={openAttachment}
@@ -194,7 +194,7 @@ export const LegacyMessageDetails = ({
         />
       )}
 
-      <MessageFooter
+      <LegacyMessageFooter
         messageId={messageId}
         payments={payments}
         maxVisiblePaymentCount={maxVisiblePaymentCount}

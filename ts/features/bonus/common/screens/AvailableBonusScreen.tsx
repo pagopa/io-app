@@ -17,6 +17,7 @@ import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ServicePublic } from "../../../../../definitions/backend/ServicePublic";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import ItemSeparatorComponent from "../../../../components/ItemSeparatorComponent";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOStyles } from "../../../../components/core/variables/IOStyles";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
@@ -24,7 +25,6 @@ import BaseScreenComponent, {
 import GenericErrorComponent from "../../../../components/screens/GenericErrorComponent";
 import FooterWithButtons from "../../../../components/ui/FooterWithButtons";
 import I18n from "../../../../i18n";
-import { ServiceDetailsScreenNavigationParams } from "../../../../screens/services/ServiceDetailsScreen";
 import {
   navigateBack,
   navigateToServiceDetailsScreen
@@ -57,7 +57,7 @@ import {
   supportedAvailableBonusSelector
 } from "../store/selectors";
 import { ID_CDC_TYPE, ID_CGN_TYPE } from "../utils";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import { ServiceDetailsScreenNavigationParams } from "../../../services/screens/ServiceDetailsScreen";
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;

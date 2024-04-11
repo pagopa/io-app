@@ -2,56 +2,53 @@
  * This component will display the payment methods that can be registered
  * on the app
  */
-import * as React from "react";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import {
   Divider,
-  IOLogoPaymentType,
-  IOPaymentLogos,
   IOStyles,
   ListItemNav,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import * as React from "react";
 import { FlatList } from "react-native";
-import { WalletPaymentMethodItemSkeleton } from "../../common/components/WalletPaymentMethodItemSkeleton";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
-import { findFirstCaseInsensitive } from "../../../../utils/object";
+import { useIOSelector } from "../../../../store/hooks";
+import { selectPaymentOnboardingSelectedMethod } from "../store/selectors";
+import { WalletPaymentMethodItemSkeleton } from "./WalletPaymentMethodItemSkeleton";
 
 type OwnProps = Readonly<{
   paymentMethods: ReadonlyArray<PaymentMethodResponse>;
   onSelectPaymentMethod: (paymentMethod: PaymentMethodResponse) => void;
-  isLoading?: boolean;
-  header?: React.ReactElement;
+  isLoadingMethods?: boolean;
+  isLoadingWebView?: boolean;
 }>;
 
 type PaymentMethodItemProps = {
   paymentMethod: PaymentMethodResponse;
+  isLoading?: boolean;
   onPress: () => void;
 };
 
 const PaymentMethodItem = ({
   paymentMethod,
+  isLoading,
   onPress
 }: PaymentMethodItemProps) => {
   const listItemNavCommonProps: ListItemNav = {
     accessibilityLabel: paymentMethod.description,
     onPress,
+    loading: isLoading,
     value: paymentMethod.description
   };
 
   return pipe(
     paymentMethod.asset,
     O.fromNullable,
-    O.chain(findFirstCaseInsensitive(IOPaymentLogos)),
-    O.map(([brand]) => brand),
     O.fold(
       () => <ListItemNav {...listItemNavCommonProps} icon="creditCard" />,
       brand => (
-        <ListItemNav
-          {...listItemNavCommonProps}
-          paymentLogo={brand as IOLogoPaymentType}
-        />
+        <ListItemNav {...listItemNavCommonProps} paymentLogoUri={brand} />
       )
     )
   );
@@ -63,25 +60,34 @@ const PaymentMethodItem = ({
 const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,
   onSelectPaymentMethod,
-  isLoading,
-  header
-}: OwnProps) => (
-  <FlatList
-    removeClippedSubviews={false}
-    contentContainerStyle={IOStyles.horizontalContentPadding}
-    data={paymentMethods}
-    keyExtractor={item => item.name}
-    ListHeaderComponent={header}
-    ListFooterComponent={renderListFooter(isLoading)}
-    ItemSeparatorComponent={() => <Divider />}
-    renderItem={({ item }) => (
-      <PaymentMethodItem
-        paymentMethod={item}
-        onPress={() => onSelectPaymentMethod(item)}
-      />
-    )}
-  />
-);
+  isLoadingMethods,
+  isLoadingWebView
+}: OwnProps) => {
+  const selectedPaymentMethodId = useIOSelector(
+    selectPaymentOnboardingSelectedMethod
+  );
+  const isMethodLoading = (itemId: string) =>
+    isLoadingWebView && itemId === selectedPaymentMethodId;
+  const ListFooter = () => renderListFooter(isLoadingMethods);
+
+  return (
+    <FlatList
+      removeClippedSubviews={false}
+      contentContainerStyle={IOStyles.horizontalContentPadding}
+      data={paymentMethods}
+      keyExtractor={item => item.id}
+      ListFooterComponent={<ListFooter />}
+      ItemSeparatorComponent={() => <Divider />}
+      renderItem={({ item }) => (
+        <PaymentMethodItem
+          paymentMethod={item}
+          isLoading={isMethodLoading(item.id)}
+          onPress={() => onSelectPaymentMethod(item)}
+        />
+      )}
+    />
+  );
+};
 
 const renderListFooter = (isLoading?: boolean) => {
   if (isLoading) {

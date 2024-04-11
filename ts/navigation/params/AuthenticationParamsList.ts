@@ -7,12 +7,14 @@ import ROUTES from "../routes";
 
 export type AuthenticationParamsList = {
   [ROUTES.AUTHENTICATION_LANDING]: undefined;
+  [ROUTES.AUTHENTICATION_ROOTED_DEVICE]: undefined;
   [ROUTES.AUTHENTICATION_OPT_IN]: ChosenIdentifier;
   [ROUTES.AUTHENTICATION_IDP_SELECTION]: undefined;
   [ROUTES.AUTHENTICATION_CIE]: undefined;
   [ROUTES.AUTHENTICATION_IDP_LOGIN]: undefined;
   [ROUTES.AUTHENTICATION_AUTH_SESSION]: undefined;
   [ROUTES.AUTHENTICATION_IDP_TEST]: undefined;
+  [ROUTES.CIE_NOT_SUPPORTED]: undefined;
   // For expired cie screen
   [ROUTES.CIE_EXPIRED_SCREEN]: undefined;
   [ROUTES.CIE_PIN_SCREEN]: undefined;

@@ -1,18 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { isPNOptInMessage } from "..";
-import { UIService } from "../../../../store/reducers/entities/services/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../messages/types/MessageCTA";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 
-const pnOptInServiceId = () => "optInServiceId";
 const navigateToServiceLink = () =>
   "ioit://services/service-detail?serviceId=optInServiceId&activate=true";
 
-const getMockService = () =>
-  ({
-    id: pnOptInServiceId()
-  } as UIService);
+const getMockPnOptInServiceId = () => "optInServiceId" as ServiceId;
 
 const getMockState = () =>
   ({
@@ -20,7 +15,7 @@ const getMockState = () =>
       status: O.some({
         config: {
           pn: {
-            optInServiceId: pnOptInServiceId()
+            optInServiceId: getMockPnOptInServiceId()
           }
         }
       })
@@ -39,19 +34,17 @@ const getMockCTAs = () =>
     }
   } as CTAS);
 
-const getMaybeCTAs = () => O.some(getMockCTAs());
-
 type IsPNOptInMessageTestInputType = {
   testDescription: string;
   input: {
-    CTAs: O.Option<CTAS>;
-    service: UIService | undefined;
+    CTAs: CTAS | undefined;
+    serviceId: ServiceId | undefined;
     state: GlobalState;
   };
   output: {
     isPNOptInMessage: boolean;
-    cta1HasServiceNavigationLink: boolean;
-    cta2HasServiceNavigationLink: boolean;
+    cta1LinksToPNService: boolean;
+    cta2LinksToPNService: boolean;
   };
 };
 
@@ -59,97 +52,97 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
   {
     testDescription: "should detect the OptIn format and both CTAs",
     input: {
-      CTAs: getMaybeCTAs(),
-      service: getMockService(),
+      CTAs: getMockCTAs(),
+      serviceId: getMockPnOptInServiceId(),
       state: getMockState()
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: true,
-      cta2HasServiceNavigationLink: true
+      cta1LinksToPNService: true,
+      cta2LinksToPNService: true
     }
   },
   {
     testDescription:
       "should detect the OptIn format, the first CTA but not the second (when its input is undefined)",
     input: {
-      CTAs: O.some({
+      CTAs: {
         ...getMockCTAs(),
         cta_2: undefined
-      }),
-      service: getMockService(),
+      },
+      serviceId: getMockPnOptInServiceId(),
       state: getMockState()
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: true,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: true,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
       "should detect the OptIn format, the first CTA but not the second (when its action does not contain a service navigation link)",
     input: {
-      CTAs: O.some({
+      CTAs: {
         ...getMockCTAs(),
         cta_2: {
           text: "Attiva il servizio",
           action: "ioit://main/messages"
         }
-      }),
-      service: getMockService(),
+      },
+      serviceId: getMockPnOptInServiceId(),
       state: getMockState()
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: true,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: true,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
       "should detect the OptIn format, the second CTA but not the fist (when its action does not contain a service navigation link)",
     input: {
-      CTAs: O.some({
+      CTAs: {
         ...getMockCTAs(),
         cta_1: {
           text: "Attiva il servizio",
           action: "ioit://main/messages"
         }
-      }),
-      service: getMockService(),
+      },
+      serviceId: getMockPnOptInServiceId(),
       state: getMockState()
     },
     output: {
       isPNOptInMessage: true,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: true
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: true
     }
   },
   {
     testDescription:
       "should not recognize the OptIn format, when the first CTA does not contain a service navigation link and the second is undefined",
     input: {
-      CTAs: O.some({
+      CTAs: {
         cta_1: {
           text: "Attiva il servizio",
           action: "ioit://main/messages"
         }
-      }),
-      service: getMockService(),
+      },
+      serviceId: getMockPnOptInServiceId(),
       state: getMockState()
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
       "should not recognize the OptIn format, when both CTAs do not contain a service navigation link",
     input: {
-      CTAs: O.some({
+      CTAs: {
         cta_1: {
           text: "Attiva il servizio",
           action: "ioit://main/messages"
@@ -158,67 +151,64 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
           text: "Attiva il servizio",
           action: "ioit://main/services"
         }
-      }),
-      service: getMockService(),
+      },
+      serviceId: getMockPnOptInServiceId(),
       state: getMockState()
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
-      "should not recognize the OptIn format, when CTAs are O.none",
+      "should not recognize the OptIn format, when CTAs are not defined",
     input: {
-      CTAs: O.none,
-      service: getMockService(),
+      CTAs: undefined,
+      serviceId: getMockPnOptInServiceId(),
       state: getMockState()
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
       "should not recognize the OptIn format, when the service's id is not the OptIn one",
     input: {
-      CTAs: getMaybeCTAs(),
-      service: {
-        ...getMockService(),
-        id: "NotTheOptInOne" as ServiceId
-      },
+      CTAs: getMockCTAs(),
+      serviceId: "NotTheOptInOne" as ServiceId,
       state: getMockState()
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
       "should not recognize the OptIn format, when the service is undefined",
     input: {
-      CTAs: getMaybeCTAs(),
-      service: undefined,
+      CTAs: getMockCTAs(),
+      serviceId: undefined,
       state: getMockState()
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
       "should not recognize the OptIn format, when state.backendStatus.status.config.pn.optInServiceId does not match service.id",
     input: {
-      CTAs: getMaybeCTAs(),
-      service: getMockService(),
+      CTAs: getMockCTAs(),
+      serviceId: getMockPnOptInServiceId(),
       state: {
         ...getMockState(),
         backendStatus: {
@@ -234,16 +224,16 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   },
   {
     testDescription:
       "should not recognize the OptIn format, when state.backendStatus.status is O.none",
     input: {
-      CTAs: getMaybeCTAs(),
-      service: getMockService(),
+      CTAs: getMockCTAs(),
+      serviceId: getMockPnOptInServiceId(),
       state: {
         ...getMockState(),
         backendStatus: {
@@ -253,8 +243,8 @@ const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [
     },
     output: {
       isPNOptInMessage: false,
-      cta1HasServiceNavigationLink: false,
-      cta2HasServiceNavigationLink: false
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
     }
   }
 ];
@@ -264,7 +254,7 @@ describe("isPNOptInMessage", () => {
     it(testData.testDescription, () => {
       const isPNOptInMessageInfo = isPNOptInMessage(
         testData.input.CTAs,
-        testData.input.service,
+        testData.input.serviceId,
         testData.input.state
       );
       expect(isPNOptInMessageInfo).toEqual(testData.output);

@@ -6,6 +6,8 @@ import { StyleSheet, View } from "react-native";
 import I18n from "i18n-js";
 import {
   ButtonLink,
+  FeatureInfo,
+  ListItemHeader,
   ModulePaymentNotice,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -13,22 +15,19 @@ import { CommonActions, useNavigation } from "@react-navigation/native";
 import Placeholder from "rn-placeholder";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
-import { InfoBox } from "../../../components/box/InfoBox";
-import { H5 } from "../../../components/core/typography/H5";
 import { UIMessageId } from "../../messages/types";
 import { useIOSelector } from "../../../store/hooks";
-import { paymentsButtonStateSelector } from "../../messages/store/reducers/payments";
+import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-import { MessageDetailsSection } from "./MessageDetailsSection";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
     flex: 1,
-    alignItems: "center"
+    alignItems: "flex-start"
   },
   morePaymentsLinkContainer: {
     alignSelf: "center"
@@ -120,21 +119,14 @@ export const MessagePayments = ({
   }
   if (isCancelled) {
     return (
-      <MessageDetailsSection
-        title={I18n.t("features.pn.details.cancelledMessage.payments")}
-        testID={"PnCancelledPaymentSectionTitle"}
-      >
-        <VSpacer size={24} />
-        <InfoBox
-          alignedCentral={true}
-          iconSize={24}
-          iconColor={"bluegrey"}
-          testID={"PnCancelledPaymentInfoBox"}
-        >
-          <H5 weight={"Regular"}>
-            {I18n.t("features.pn.details.cancelledMessage.unpaidPayments")}
-          </H5>
-        </InfoBox>
+      <>
+        <ListItemHeader
+          label={I18n.t("features.pn.details.cancelledMessage.payments")}
+        />
+        <FeatureInfo
+          body={I18n.t("features.pn.details.cancelledMessage.unpaidPayments")}
+          iconName="info"
+        />
         {completedPaymentNoticeCodes &&
           completedPaymentNoticeCodes.map(
             (completedPaymentNoticeCode, index) => (
@@ -158,7 +150,7 @@ export const MessagePayments = ({
               </View>
             )
           )}
-      </MessageDetailsSection>
+      </>
     );
   }
 
@@ -170,17 +162,19 @@ export const MessagePayments = ({
       })`
     : "";
   return (
-    <MessageDetailsSection
-      title={I18n.t("features.pn.details.paymentSection.title")}
-      iconName={"productPagoPA"}
-      testID={"PnPaymentSectionTitle"}
-    >
+    <>
+      <ListItemHeader
+        label={I18n.t("features.pn.details.paymentSection.title")}
+        iconName={"productPagoPA"}
+        iconColor={"blueIO-500"}
+      />
       {payments && (
         <>
           {payments.slice(0, maxVisiblePaymentCount).map((payment, index) => {
             const rptId = getRptIdStringFromPayment(payment);
             return (
               <MessagePaymentItem
+                noSpaceOnTop={index === 0}
                 index={index}
                 isPNPayment
                 key={`PM_${index}`}
@@ -192,7 +186,7 @@ export const MessagePayments = ({
           })}
           {showMorePaymentsLink && (
             <>
-              <VSpacer size={16} />
+              <VSpacer size={32} />
               {morePaymentsLinkState === "visibleLoading" && (
                 <View style={styles.morePaymentsSkeletonContainer}>
                   <Placeholder.Box
@@ -215,10 +209,11 @@ export const MessagePayments = ({
                   />
                 </View>
               )}
+              <VSpacer size={8} />
             </>
           )}
         </>
       )}
-    </MessageDetailsSection>
+    </>
   );
 };

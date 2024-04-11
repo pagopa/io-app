@@ -16,12 +16,13 @@ import { FciActions } from "../../features/fci/store/actions";
 import { IdPayActions } from "../../features/idpay/common/store/actions";
 import { LollipopActions } from "../../features/lollipop/store/actions/lollipop";
 import { MessagesActions } from "../../features/messages/store/actions";
+import { WalletActions as NewWalletActions } from "../../features/newWallet/store/actions";
+import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
 import { AbiActions } from "../../features/wallet/onboarding/bancomat/store/actions";
 import { BPayActions } from "../../features/wallet/onboarding/bancomatPay/store/actions";
 import { CoBadgeActions } from "../../features/wallet/onboarding/cobadge/store/actions";
 import { PayPalOnboardingActions } from "../../features/wallet/onboarding/paypal/store/actions";
-import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
 import { WhatsNewActions } from "../../features/whatsnew/store/actions";
 import { ZendeskSupportActions } from "../../features/zendesk/store/actions";
 import { GlobalState } from "../reducers/types";
@@ -98,7 +99,8 @@ export type Action =
   | LollipopActions
   | FastLoginActions
   | WhatsNewActions
-  | PaymentsFeatureActions;
+  | PaymentsFeatureActions
+  | NewWalletActions;
 
 export type Dispatch = DispatchAPI<Action>;
 

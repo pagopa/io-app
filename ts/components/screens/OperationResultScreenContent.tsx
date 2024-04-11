@@ -1,25 +1,44 @@
 import {
+  Body,
   ButtonLink,
   ButtonLinkProps,
   ButtonSolid,
   ButtonSolidProps,
+  ExternalTypographyProps,
   H3,
+  IOColors,
+  IOFontWeight,
   IOPictograms,
   IOStyles,
+  IOTheme,
   IOVisualCostants,
   Pictogram,
+  TypographyProps,
   VSpacer,
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { LabelSmall } from "../core/typography/LabelSmall";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+type PartialAllowedColors = Extract<
+  IOColors,
+  "bluegreyDark" | "white" | "blue" | "bluegrey" | "bluegreyLight"
+>;
+type AllowedColors = PartialAllowedColors | IOTheme["textBody-default"];
+type AllowedWeight = IOFontWeight | "Regular" | "SemiBold";
+
+export type BodyProps = ExternalTypographyProps<
+  TypographyProps<AllowedWeight, AllowedColors> & {
+    text: string | React.ReactElement;
+  }
+>;
 
 type OperationResultScreenContentProps = WithTestID<{
   pictogram?: IOPictograms;
   title: string;
-  subtitle?: string;
+  subtitle?: string | Array<BodyProps>;
   action?: Pick<
     ButtonSolidProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
@@ -28,7 +47,26 @@ type OperationResultScreenContentProps = WithTestID<{
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
+  isHeaderVisible?: boolean;
 }>;
+
+type PropsComposedBody = {
+  subtitle: Array<BodyProps>;
+  textAlign?: "auto" | "left" | "right" | "center" | "justify" | undefined;
+};
+
+export const ComposedBodyFromArray = ({
+  subtitle,
+  textAlign = "center"
+}: PropsComposedBody) => (
+  <Body style={{ textAlign }}>
+    {subtitle.map(({ text, key, ...props }) => (
+      <Body key={key} {...props}>
+        {text}
+      </Body>
+    ))}
+  </Body>
+);
 
 const OperationResultScreenContent = ({
   pictogram,
@@ -37,9 +75,14 @@ const OperationResultScreenContent = ({
   action,
   secondaryAction,
   children,
-  testID
+  testID,
+  isHeaderVisible
 }: React.PropsWithChildren<OperationResultScreenContentProps>) => (
-  <SafeAreaView style={styles.container} testID={testID}>
+  <SafeAreaView
+    edges={isHeaderVisible ? ["bottom"] : undefined}
+    style={styles.container}
+    testID={testID}
+  >
     <ScrollView
       centerContent={true}
       contentContainerStyle={[
@@ -58,9 +101,11 @@ const OperationResultScreenContent = ({
       {subtitle && (
         <>
           <VSpacer size={8} />
-          <LabelSmall style={styles.text} color="grey-650" weight="Regular">
-            {subtitle}
-          </LabelSmall>
+          {typeof subtitle === "string" ? (
+            <Body style={styles.text}>{subtitle}</Body>
+          ) : (
+            <ComposedBodyFromArray subtitle={subtitle} textAlign="center" />
+          )}
         </>
       )}
       {action && (
@@ -79,6 +124,7 @@ const OperationResultScreenContent = ({
           </View>
         </View>
       )}
+
       {React.isValidElement(children) && React.cloneElement(children)}
     </ScrollView>
   </SafeAreaView>

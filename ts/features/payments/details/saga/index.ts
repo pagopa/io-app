@@ -1,41 +1,40 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
-
 import { WalletClient } from "../../common/api/client";
 import {
-  walletDetailsDeleteInstrument,
-  walletDetailsGetInstrument,
-  walletDetailsPagoPaCapabilityToggle
+  paymentsDeleteMethodAction,
+  paymentsGetMethodDetailsAction,
+  paymentsTogglePagoPaCapabilityAction
 } from "../store/actions";
-import { handleGetWalletDetails } from "./handleGetWalletDetails";
 import { handleDeleteWalletDetails } from "./handleDeleteWalletDetails";
+import { handleGetWalletDetails } from "./handleGetWalletDetails";
 import { handleTogglePagoPaCapability } from "./handleTogglePagoPaCapability";
 
 /**
- * Handle Wallet onboarding requests
- * @param bearerToken
+ * Handle payment method onboarding requests
+ * @param walletClient wallet client
  */
-export function* watchWalletDetailsSaga(
+export function* watchPaymentsMethodDetailsSaga(
   walletClient: WalletClient
 ): SagaIterator {
   // handle the request of get wallet details
   yield* takeLatest(
-    walletDetailsGetInstrument.request,
+    paymentsGetMethodDetailsAction.request,
     handleGetWalletDetails,
     walletClient.getWalletById
   );
 
   // handle the request of delete a wallet
   yield* takeLatest(
-    walletDetailsDeleteInstrument.request,
+    paymentsDeleteMethodAction.request,
     handleDeleteWalletDetails,
     walletClient.deleteWalletById
   );
 
   // handle request to a wallet
   yield* takeLatest(
-    walletDetailsPagoPaCapabilityToggle.request,
+    paymentsTogglePagoPaCapabilityAction.request,
     handleTogglePagoPaCapability,
-    walletClient.updateWalletServicesById
+    walletClient.updateWalletApplicationsById
   );
 }

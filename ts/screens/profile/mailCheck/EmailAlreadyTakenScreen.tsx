@@ -1,31 +1,25 @@
-import * as React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
-import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
+import React, { useCallback, useMemo } from "react";
 import * as O from "fp-ts/lib/Option";
 import { Route, useRoute } from "@react-navigation/native";
 import I18n from "../../../i18n";
-import { Body } from "../../../components/core/typography/Body";
-import { H3 } from "../../../components/core/typography/H3";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import themeVariables from "../../../theme/variables";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
+import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { useIODispatch } from "../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import {
+  trackEmailAlreadyTaken,
+  trackEmailDuplicateEditingConfirm
+} from "../../analytics/emailAnalytics";
 
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: themeVariables.contentPaddingLarge
-  },
-  title: {
-    textAlign: "center"
-  }
-});
+import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
+import { getFlowType } from "../../../utils/analytics";
+import {
+  BodyProps,
+  OperationResultScreenContent
+} from "../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -33,6 +27,11 @@ export type OnboardingServicesPreferenceScreenNavigationParams = {
 
 export type EmailAlreadyUsedScreenParamList = {
   email: string;
+};
+
+const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+  title: "email.cduScreens.emailAlreadyTaken.title",
+  body: "email.cduScreens.emailAlreadyTaken.help.body"
 };
 
 const EmailAlreadyTakenScreen = () => {
@@ -43,64 +42,73 @@ const EmailAlreadyTakenScreen = () => {
 
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-
-  const navigateToInsertEmailScreen = React.useCallback(() => {
+  const isFirstOnBoarding = useIOSelector(isProfileFirstOnBoardingSelector);
+  const flow = getFlowType(true, isFirstOnBoarding);
+  const navigateToInsertEmailScreen = useCallback(() => {
     navigation.navigate(ROUTES.ONBOARDING, {
-      screen: ROUTES.ONBOARDING_READ_EMAIL_SCREEN,
+      screen: ROUTES.ONBOARDING_INSERT_EMAIL_SCREEN,
       params: {
         isOnboarding: true
       }
     });
   }, [navigation]);
 
-  const confirmButtonOnPress = React.useCallback(() => {
+  useOnFirstRender(() => {
+    trackEmailAlreadyTaken(flow);
+  });
+
+  const confirmButtonOnPress = useCallback(() => {
+    trackEmailDuplicateEditingConfirm(flow);
     dispatch(acknowledgeOnEmailValidation(O.none));
     navigateToInsertEmailScreen();
-  }, [dispatch, navigateToInsertEmailScreen]);
+  }, [dispatch, flow, navigateToInsertEmailScreen]);
 
-  const continueButtonProps = {
-    onPress: confirmButtonOnPress,
-    title: I18n.t("email.cduScreens.emailAlreadyTaken.editButton"),
-    block: true
-  };
+  const bodyPropsArray: Array<BodyProps> = useMemo(
+    () => [
+      {
+        text: I18n.t("email.cduScreens.emailAlreadyTaken.subtitleStart"),
+        style: {
+          textAlign: "center"
+        }
+      },
+      {
+        text: <> {email} </>,
+        style: {
+          textAlign: "center"
+        },
+        weight: "SemiBold"
+      },
+      {
+        text: I18n.t("email.cduScreens.emailAlreadyTaken.subtitleEnd"),
+        style: {
+          textAlign: "center"
+        }
+      }
+    ],
+    [email]
+  );
+
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    canGoBack: false,
+    contextualHelpMarkdown
+  });
 
   return (
-    <BaseScreenComponent
-      goBack={false}
-      accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-      contextualHelpMarkdown={{
-        title: "email.cduScreens.emailAlreadyTaken.title",
-        body: "email.cduScreens.emailAlreadyTaken.help.body"
+    <OperationResultScreenContent
+      pictogram="accessDenied"
+      title={I18n.t("email.cduScreens.emailAlreadyTaken.title")}
+      subtitle={bodyPropsArray}
+      action={{
+        label: I18n.t("email.cduScreens.emailAlreadyTaken.editButton"),
+        accessibilityLabel: I18n.t(
+          "email.cduScreens.emailAlreadyTaken.editButton"
+        ),
+        onPress: confirmButtonOnPress
       }}
-      headerTitle={I18n.t("email.cduScreens.emailAlreadyTaken.header.title")}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={styles.mainContainer}>
-          <Pictogram name={"unrecognized"} size={120} />
-          <VSpacer size={16} />
-          <H3 style={styles.title}>
-            {I18n.t("email.cduScreens.emailAlreadyTaken.title")}
-          </H3>
-          <VSpacer size={16} />
-          <Body style={{ textAlign: "center" }}>
-            <Body style={{ textAlign: "center" }}>
-              {I18n.t("email.cduScreens.emailAlreadyTaken.subtitleStart")}
-            </Body>
-            <Body style={{ textAlign: "center" }} weight="SemiBold">
-              {" "}
-              {" " + email + " "}
-            </Body>
-            <Body style={{ textAlign: "center" }}>
-              {I18n.t("email.cduScreens.emailAlreadyTaken.subtitleEnd")}
-            </Body>
-          </Body>
-        </View>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
+      isHeaderVisible={true}
+    />
   );
 };
 export default EmailAlreadyTakenScreen;

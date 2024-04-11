@@ -3,7 +3,6 @@ import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import I18n from "../../../i18n";
-import { UIService } from "../../../store/reducers/entities/services/types";
 import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
 import { CTAS } from "../../messages/types/MessageCTA";
@@ -13,6 +12,7 @@ import { NotificationRecipient } from "../../../../definitions/pn/NotificationRe
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 
 export const maxVisiblePaymentCountGenerator = () => 5;
 
@@ -24,56 +24,51 @@ export function getNotificationStatusInfo(status: NotificationStatus) {
 
 export type PNOptInMessageInfo = {
   isPNOptInMessage: boolean;
-  cta1HasServiceNavigationLink: boolean;
-  cta2HasServiceNavigationLink: boolean;
+  cta1LinksToPNService: boolean;
+  cta2LinksToPNService: boolean;
 };
 
 export const isPNOptInMessage = (
-  maybeCtas: O.Option<CTAS>,
-  service: UIService | undefined,
+  ctas: CTAS | undefined,
+  serviceId: ServiceId | undefined,
   state: GlobalState
 ) =>
   pipe(
-    service,
+    serviceId,
     O.fromNullable,
-    O.chain(service =>
+    O.chain(serviceId =>
       pipe(
         state.backendStatus.status,
         O.map(
-          backendStatus => backendStatus.config.pn.optInServiceId === service.id
+          backendStatus => backendStatus.config.pn.optInServiceId === serviceId
         )
       )
     ),
     O.filter(identity),
-    O.chain(_ =>
+    O.chain(() =>
       pipe(
-        maybeCtas,
+        ctas,
+        O.fromNullable,
         O.map(ctas => ({
-          cta1HasServiceNavigationLink: isServiceDetailNavigationLink(
+          cta1LinksToPNService: isServiceDetailNavigationLink(
             ctas.cta_1.action
           ),
-          cta2HasServiceNavigationLink:
+          cta2LinksToPNService:
             !!ctas.cta_2 && isServiceDetailNavigationLink(ctas.cta_2.action)
         })),
-        O.map(
-          ctaNavigationLinkInfo =>
-            ({
-              isPNOptInMessage:
-                ctaNavigationLinkInfo.cta1HasServiceNavigationLink ||
-                ctaNavigationLinkInfo.cta2HasServiceNavigationLink,
-              ...ctaNavigationLinkInfo
-            } as PNOptInMessageInfo)
-        )
+        O.map(ctaNavigationLinkInfo => ({
+          isPNOptInMessage:
+            ctaNavigationLinkInfo.cta1LinksToPNService ||
+            ctaNavigationLinkInfo.cta2LinksToPNService,
+          ...ctaNavigationLinkInfo
+        }))
       )
     ),
-    O.getOrElse(
-      () =>
-        ({
-          isPNOptInMessage: false,
-          cta1HasServiceNavigationLink: false,
-          cta2HasServiceNavigationLink: false
-        } as PNOptInMessageInfo)
-    )
+    O.getOrElse<PNOptInMessageInfo>(() => ({
+      isPNOptInMessage: false,
+      cta1LinksToPNService: false,
+      cta2LinksToPNService: false
+    }))
   );
 
 export const paymentsFromPNMessagePot = (
