@@ -1,5 +1,12 @@
-import React, { useCallback, useMemo, useRef } from "react";
-import { StyleSheet } from "react-native";
+import React, { ComponentProps, useCallback, useMemo, useState } from "react";
+import {
+  LayoutChangeEvent,
+  LayoutRectangle,
+  StyleSheet,
+  View
+} from "react-native";
+import { easeGradient } from "react-native-easing-gradient";
+import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   Easing,
   useAnimatedScrollHandler,
@@ -9,67 +16,121 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
+  ButtonLink,
+  ButtonOutline,
+  ButtonSolid,
+  IOColors,
+  IOSpacer,
   IOSpacingScale,
+  IOStyles,
   IOVisualCostants,
-  buttonSolidHeight
+  VSpacer,
+  hexToRgba
 } from "@pagopa/io-app-design-system";
-import { useLinkTo } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { useIOSelector } from "../../../store/hooks";
-import { CTA, CTAS } from "../../messages/types/MessageCTA";
-import { getServiceCTA, handleCtaAction } from "../../messages/utils/messages";
-import {
-  serviceMetadataByIdSelector,
-  serviceMetadataInfoSelector
-} from "../store/reducers/servicesById";
-import { ServiceDetailsFooterActions } from "./ServiceDetailsFooterActions";
-import { ServiceStandardActions } from "./ServiceStandardActions";
 import { ServiceSpecialAction } from "./ServiceSpecialAction";
 
 const scrollTriggerOffsetValue: number = 88;
-const gradientSafeArea: IOSpacingScale = 16;
+
+const HEADER_BG_COLOR: IOColors = "white";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
     flexGrow: 1
+  },
+  gradientBottomActions: {
+    width: "100%",
+    position: "absolute",
+    bottom: 0,
+    justifyContent: "flex-end"
+  },
+  buttonContainer: {
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    width: "100%",
+    flexShrink: 0
+  },
+  gradientContainer: {
+    ...StyleSheet.absoluteFillObject
   }
 });
 
-type StandardActionsProps = {
-  props: React.ComponentProps<typeof ServiceStandardActions> | undefined;
-  offset: number;
-};
+const { colors, locations } = easeGradient({
+  colorStops: {
+    0: { color: hexToRgba(IOColors[HEADER_BG_COLOR], 0) },
+    1: { color: IOColors[HEADER_BG_COLOR] }
+  },
+  easing: Easing.ease,
+  extraColorStopsPerTransition: 20
+});
 
-type SpecialActionProps = {
-  props: React.ComponentProps<typeof ServiceSpecialAction> | undefined;
-  offset: number;
-};
+/* Extended gradient area above the actions */
+const gradientSafeAreaHeight: IOSpacingScale = 96;
+/* End content margin before the actions */
+const contentEndMargin: IOSpacingScale = 32;
+/* Margin between ButtonSolid and ButtonOutline */
+const spaceBetweenActions: IOSpacer = 8;
+/* Margin between ButtonSolid and ButtonLink */
+const spaceBetweenActionAndLink: IOSpacer = 16;
+
+export type ServiceActionsProps =
+  | {
+      type: "SingleCta";
+      primaryActionProps: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
+      secondaryActionProps?: never;
+      tertiaryActionProps?: never;
+    }
+  | {
+      type: "SingleCtaCustomFlow";
+      primaryActionProps: ComponentProps<typeof ServiceSpecialAction>;
+      secondaryActionProps?: never;
+      tertiaryActionProps?: never;
+    }
+  | {
+      type: "SingleCtaWithCustomFlow";
+      primaryActionProps: ComponentProps<typeof ServiceSpecialAction>;
+      secondaryActionProps: ComponentProps<typeof ButtonLink>;
+      tertiaryActionProps?: never;
+    }
+  | {
+      type: "TwoCtas";
+      primaryActionProps: Omit<ComponentProps<typeof ButtonSolid>, "fullWidth">;
+      secondaryActionProps: ComponentProps<typeof ButtonLink>;
+      tertiaryActionProps?: never;
+    }
+  | {
+      type: "TwoCtasWithCustomFlow";
+      primaryActionProps: ComponentProps<typeof ServiceSpecialAction>;
+      secondaryActionProps: Omit<
+        ComponentProps<typeof ButtonOutline>,
+        "fullWidth"
+      >;
+      tertiaryActionProps: ComponentProps<typeof ButtonLink>;
+    };
 
 type ServiceDetailsScreenComponentProps = {
   children: React.ReactNode;
-  serviceId: ServiceId;
-  activate?: boolean;
-  isLoading?: boolean;
+  actionsProps?: ServiceActionsProps;
+  debugMode?: boolean;
   title?: string;
 };
 
 export const ServiceDetailsScreenComponent = ({
   children,
-  serviceId,
-  activate,
-  isLoading = false,
+  actionsProps,
+  debugMode = false,
   title = ""
 }: ServiceDetailsScreenComponentProps) => {
-  const linkTo = useLinkTo();
-
-  const safeBottomAreaHeight = useRef(0);
   const safeAreaInsets = useSafeAreaInsets();
 
   const gradientOpacity = useSharedValue(1);
   const scrollTranslationY = useSharedValue(0);
+
+  const [actionBlockHeight, setActionBlockHeight] =
+    useState<LayoutRectangle["height"]>(0);
+
+  const getActionBlockHeight = (event: LayoutChangeEvent) => {
+    setActionBlockHeight(event.nativeEvent.layout.height);
+  };
 
   const bottomMargin: number = useMemo(
     () =>
@@ -77,6 +138,24 @@ export const ServiceDetailsScreenComponent = ({
         ? IOVisualCostants.appMarginDefault
         : safeAreaInsets.bottom,
     [safeAreaInsets]
+  );
+
+  const safeBackgroundBlockHeight: number = useMemo(
+    () => (bottomMargin + actionBlockHeight) * 0.85,
+    [actionBlockHeight, bottomMargin]
+  );
+
+  /* Total height of "Actions + Gradient" area */
+  const gradientAreaHeight: number = useMemo(
+    () => bottomMargin + actionBlockHeight + gradientSafeAreaHeight,
+    [actionBlockHeight, bottomMargin]
+  );
+
+  /* Height of the safe bottom area, applied to the ScrollView:
+     Actions + Content end margin */
+  const safeBottomAreaHeight: number = useMemo(
+    () => bottomMargin + actionBlockHeight + contentEndMargin,
+    [actionBlockHeight, bottomMargin]
   );
 
   useHeaderSecondLevel({
@@ -96,171 +175,51 @@ export const ServiceDetailsScreenComponent = ({
     })
   }));
 
-  const scrollHandler = useAnimatedScrollHandler(
-    ({ contentOffset, layoutMeasurement, contentSize }) => {
-      // eslint-disable-next-line functional/immutable-data
-      scrollTranslationY.value = contentOffset.y;
-
-      const isEndReached =
-        Math.floor(layoutMeasurement.height + contentOffset.y) >=
-        Math.floor(contentSize.height);
-
-      // eslint-disable-next-line functional/immutable-data
-      gradientOpacity.value = isEndReached ? 0 : 1;
-    }
-  );
-
-  const serviceMetadata = useIOSelector(state =>
-    serviceMetadataByIdSelector(state, serviceId)
-  );
-
-  const serviceMetadataInfo = useIOSelector(state =>
-    serviceMetadataInfoSelector(state, serviceId)
-  );
-
-  const maybeServiceCtas = useMemo(
-    () => getServiceCTA(serviceMetadata),
-    [serviceMetadata]
-  );
-
-  const handlePressCta = useCallback(
-    (cta: CTA) => handleCtaAction(cta, linkTo, serviceId),
-    [linkTo, serviceId]
-  );
-
-  const getPropsForStandardActions = useCallback(
-    (
-      ctas: CTAS,
-      isCustomCtaVisible: boolean = false
-    ): StandardActionsProps | undefined => {
-      if (isCustomCtaVisible && ctas.cta_1 && ctas.cta_2) {
-        const { cta_1, cta_2 } = ctas;
-
-        return {
-          offset: buttonSolidHeight * 2,
-          props: {
-            type: "TwoCtasWithCustomFlow",
-            primaryActionProps: {
-              label: cta_1.text,
-              accessibilityLabel: cta_1.text,
-              onPress: () => handlePressCta(cta_1)
-            },
-            secondaryActionProps: {
-              label: cta_2.text,
-              accessibilityLabel: cta_2.text,
-              onPress: () => handlePressCta(cta_2)
-            }
-          }
-        };
-      }
-
-      if (isCustomCtaVisible && ctas.cta_1) {
-        const { cta_1 } = ctas;
-
-        return {
-          offset: buttonSolidHeight,
-          props: {
-            type: "SingleCtaWithCustomFlow",
-            primaryActionProps: {
-              label: cta_1.text,
-              accessibilityLabel: cta_1.text,
-              onPress: () => handlePressCta(cta_1)
-            }
-          }
-        };
-      }
-
-      if (ctas.cta_1 && ctas.cta_2) {
-        const { cta_1, cta_2 } = ctas;
-
-        return {
-          offset: buttonSolidHeight * 2,
-          props: {
-            type: "TwoCtas",
-            primaryActionProps: {
-              label: cta_1.text,
-              accessibilityLabel: cta_1.text,
-              onPress: () => handlePressCta(cta_1)
-            },
-            secondaryActionProps: {
-              label: cta_2.text,
-              accessibilityLabel: cta_2.text,
-              onPress: () => handlePressCta(cta_2)
-            }
-          }
-        };
-      }
-
-      if (ctas.cta_1) {
-        return {
-          offset: buttonSolidHeight,
-          props: {
-            type: "SingleCta",
-            primaryActionProps: {
-              label: ctas.cta_1.text,
-              accessibilityLabel: ctas.cta_1.text,
-              onPress: () => handlePressCta(ctas.cta_1)
-            }
-          }
-        };
-      }
-
-      return undefined;
-    },
-    [handlePressCta]
-  );
-
-  const footerComponent = () => {
-    const standardActions = pipe(
-      maybeServiceCtas,
-      O.chain(ctas =>
-        pipe(
-          getPropsForStandardActions(
-            ctas,
-            serviceMetadataInfo?.isSpecialService
-          ),
-          O.fromNullable
-        )
-      ),
-      O.getOrElse<StandardActionsProps>(() => ({
-        offset: 0,
-        props: undefined
-      }))
-    );
-
-    const specialAction = pipe(
-      serviceMetadataInfo?.isSpecialService,
-      O.fromNullable,
-      O.map(() => ({
-        offset: buttonSolidHeight,
-        props: {
-          serviceId,
-          customSpecialFlowOpt: serviceMetadataInfo?.customSpecialFlow,
-          activate
-        }
-      })),
-      O.getOrElse<SpecialActionProps>(() => ({
-        offset: 0,
-        props: undefined
-      }))
-    );
-
+  const scrollHandler = useAnimatedScrollHandler(({ contentOffset }) => {
     // eslint-disable-next-line functional/immutable-data
-    safeBottomAreaHeight.current =
-      standardActions.offset + specialAction.offset + gradientSafeArea;
+    scrollTranslationY.value = contentOffset.y;
+  });
 
-    return (
-      <ServiceDetailsFooterActions
-        dimensions={{
-          bottomMargin,
-          safeBottomAreaHeight: safeBottomAreaHeight.current
-        }}
-        specialActionProps={specialAction.props}
-        standardActionsProps={standardActions.props}
-        transitionAnimStyle={footerGradientOpacityTransition}
-      />
-    );
-  };
+  const renderFooter = useCallback((props: ServiceActionsProps) => {
+    switch (props.type) {
+      case "SingleCta":
+        return <ButtonSolid fullWidth {...props.primaryActionProps} />;
+      case "SingleCtaCustomFlow":
+        return <ServiceSpecialAction {...props.primaryActionProps} />;
+      case "SingleCtaWithCustomFlow":
+        return (
+          <>
+            <ServiceSpecialAction {...props.primaryActionProps} />
+            <VSpacer size={spaceBetweenActionAndLink} />
+            <View style={IOStyles.selfCenter}>
+              <ButtonLink {...props.secondaryActionProps} />
+            </View>
+          </>
+        );
+      case "TwoCtas":
+        return (
+          <>
+            <ButtonSolid fullWidth {...props.primaryActionProps} />
+            <VSpacer size={spaceBetweenActionAndLink} />
+            <View style={IOStyles.selfCenter}>
+              <ButtonLink {...props.secondaryActionProps} />
+            </View>
+          </>
+        );
+      case "TwoCtasWithCustomFlow":
+        return (
+          <>
+            <ServiceSpecialAction {...props.primaryActionProps} />
+            <VSpacer size={spaceBetweenActions} />
+            <ButtonOutline fullWidth {...props.secondaryActionProps} />
+            <VSpacer size={spaceBetweenActionAndLink} />
+            <View style={IOStyles.selfCenter}>
+              <ButtonLink {...props.tertiaryActionProps} />
+            </View>
+          </>
+        );
+    }
+  }, []);
 
   return (
     <>
@@ -268,7 +227,9 @@ export const ServiceDetailsScreenComponent = ({
         contentContainerStyle={[
           styles.scrollContentContainer,
           {
-            paddingBottom: bottomMargin + safeBottomAreaHeight.current
+            paddingBottom: actionsProps
+              ? safeBottomAreaHeight
+              : bottomMargin + contentEndMargin
           }
         ]}
         onScroll={scrollHandler}
@@ -279,7 +240,51 @@ export const ServiceDetailsScreenComponent = ({
       >
         {children}
       </Animated.ScrollView>
-      {!isLoading && footerComponent()}
+      <View
+        style={[
+          styles.gradientBottomActions,
+          {
+            height: gradientAreaHeight,
+            paddingBottom: bottomMargin
+          }
+        ]}
+        pointerEvents="box-none"
+      >
+        <Animated.View
+          style={[
+            styles.gradientContainer,
+            debugMode && {
+              borderTopColor: IOColors["error-500"],
+              borderTopWidth: 1,
+              backgroundColor: hexToRgba(IOColors["error-500"], 0.5)
+            },
+            footerGradientOpacityTransition
+          ]}
+          pointerEvents="none"
+        >
+          <LinearGradient
+            style={{
+              height: gradientAreaHeight - safeBackgroundBlockHeight
+            }}
+            locations={locations}
+            colors={colors}
+          />
+          <View
+            style={{
+              bottom: 0,
+              height: safeBackgroundBlockHeight,
+              backgroundColor: HEADER_BG_COLOR
+            }}
+          />
+        </Animated.View>
+        <View
+          style={styles.buttonContainer}
+          pointerEvents="box-none"
+          onLayout={getActionBlockHeight}
+        >
+          {actionsProps && renderFooter(actionsProps)}
+        </View>
+      </View>
     </>
   );
 };
