@@ -17,14 +17,12 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
   cards: [
     {
       hpan: "9900",
-      isError: false,
       brand: "maestro",
       onPress,
       testID: "card-1"
     },
     {
       holderEmail: "test@test.it",
-      isError: true,
       onPress,
       testID: "card-2"
     },
