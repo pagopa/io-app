@@ -9,16 +9,25 @@ import { StyleSheet, View } from "react-native";
 import I18n from "../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { walletSetCategoryFilter } from "../store/actions/preferences";
-import { getWalletCardsByCategorySelector } from "../store/selectors";
+import {
+  getWalletCardsByCategorySelector,
+  selectWalletCategoryFilter
+} from "../store/selectors";
 import { WalletCardCategory, walletCardCategoryIcons } from "../types";
 
 const WalletCategoryFilterTabs = () => {
   const dispatch = useIODispatch();
 
   const cardsByCategory = useIOSelector(getWalletCardsByCategorySelector);
+  const selectedCategory = useIOSelector(selectWalletCategoryFilter);
+
   const categories = Object.keys(
     cardsByCategory
   ) as ReadonlyArray<WalletCardCategory>;
+
+  const selectedIndex = selectedCategory
+    ? categories.indexOf(selectedCategory) + 1
+    : 0;
 
   const handleFilterSelected = (index: number) => {
     dispatch(
@@ -33,7 +42,11 @@ const WalletCategoryFilterTabs = () => {
 
   return (
     <View style={styles.container} testID="CategoryTabsContainerTestID">
-      <TabNavigation tabAlignment="start" onItemPress={handleFilterSelected}>
+      <TabNavigation
+        tabAlignment="start"
+        onItemPress={handleFilterSelected}
+        selectedIndex={selectedIndex}
+      >
         {[
           <TabItem
             key={`category_tab_all`}

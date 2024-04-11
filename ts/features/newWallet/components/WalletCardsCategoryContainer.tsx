@@ -5,7 +5,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View } from "react-native";
+import Animated, { Layout } from "react-native-reanimated";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
@@ -33,7 +33,7 @@ const WalletCardsCategoryContainer = ({
   const isStacked = cards.length > 1;
 
   return (
-    <View testID={testID}>
+    <Animated.View testID={testID} layout={Layout.duration(200)}>
       <ListItemHeader iconName={iconName} label={label} />
       {cards.map((card, index) => (
         <React.Fragment key={`wallet_card_${card.key}`}>
@@ -42,7 +42,7 @@ const WalletCardsCategoryContainer = ({
         </React.Fragment>
       ))}
       <VSpacer size={16} />
-    </View>
+    </Animated.View>
   );
 };
 

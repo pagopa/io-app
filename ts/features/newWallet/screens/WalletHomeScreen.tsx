@@ -19,13 +19,11 @@ import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
+import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { WalletEmptyScreenContent } from "../components/WalletEmptyScreenContent";
 import { WalletPaymentsRedirectBanner } from "../components/WalletPaymentsRedirectBanner";
 import { WalletRoutes } from "../navigation/routes";
 import { selectWalletCards } from "../store/selectors";
-import { cgnDetails } from "../../bonus/cgn/store/actions/details";
-import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
-import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 
 type Props = IOStackNavigationRouteProps<MainTabParamsList, "WALLET_HOME">;
 
