@@ -1,5 +1,4 @@
 import _ from "lodash";
-import * as React from "react";
 import configureMockStore from "redux-mock-store";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
@@ -8,6 +7,13 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletCategoryFilterTabs } from "../WalletCategoryFilterTabs";
+
+jest.mock("react-native-reanimated", () => ({
+  ...require("react-native-reanimated/mock"),
+  Layout: {
+    duration: jest.fn()
+  }
+}));
 
 const T_CARDS: WalletCardsState = {
   "1": {
@@ -37,12 +43,11 @@ const T_CARDS: WalletCardsState = {
 };
 
 describe("WalletCategoryFilterTabs", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-  });
+  jest.useFakeTimers();
+  jest.runAllTimers();
 
   it("should render tabs based on available categories", () => {
-    const { component } = renderComponent(T_CARDS);
+    const component = renderComponent(T_CARDS);
     const { queryByTestId } = component;
 
     expect(queryByTestId(`CategoryTabsContainerTestID`)).not.toBeNull();
@@ -52,7 +57,7 @@ describe("WalletCategoryFilterTabs", () => {
   });
 
   it("should not render tabs if only one category", () => {
-    const { component } = renderComponent({
+    const component = renderComponent({
       "1": {
         key: "1",
         type: "payment",
@@ -89,13 +94,10 @@ const renderComponent = (cards: WalletCardsState) => {
     })
   );
 
-  return {
-    component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <WalletCategoryFilterTabs />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    WalletCategoryFilterTabs,
+    ROUTES.WALLET_HOME,
+    {},
     store
-  };
+  );
 };

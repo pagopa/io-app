@@ -12,6 +12,13 @@ import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletCardsContainer } from "../WalletCardsContainer";
 import { WalletCardCategory } from "../../types";
 
+jest.mock("react-native-reanimated", () => ({
+  ...require("react-native-reanimated/mock"),
+  Layout: {
+    duration: jest.fn()
+  }
+}));
+
 const T_CARDS: WalletCardsState = {
   "1": {
     key: "1",
@@ -40,10 +47,11 @@ const T_CARDS: WalletCardsState = {
 };
 
 describe("WalletCardsContainer", () => {
+  jest.useFakeTimers();
+  jest.runAllTimers();
+
   it("should render the cards correctly", () => {
-    const {
-      component: { queryByText, queryByTestId }
-    } = renderComponent();
+    const { queryByText, queryByTestId } = renderComponent();
 
     expect(
       queryByText(I18n.t(`features.wallet.cards.categories.payment`))
@@ -81,9 +89,7 @@ describe("WalletCardsContainer", () => {
   });
 
   it("should render only the selected category in the filter tabs", () => {
-    const {
-      component: { queryByText, queryByTestId }
-    } = renderComponent("payment");
+    const { queryByText, queryByTestId } = renderComponent("payment");
 
     expect(
       queryByText(I18n.t(`features.wallet.cards.categories.payment`))
@@ -122,13 +128,10 @@ const renderComponent = (categoryFilter?: WalletCardCategory) => {
     } as GlobalState)
   );
 
-  return {
-    component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <WalletCardsContainer />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <WalletCardsContainer />,
+    ROUTES.WALLET_HOME,
+    {},
     store
-  };
+  );
 };

@@ -37,7 +37,7 @@ const WalletCategoryFilterTabs = () => {
 
   if (categories.length < 2) {
     // There is no need to show category filter if we have less than 2 categories
-    return null;
+    return <></>;
   }
 
   return (
