@@ -1,14 +1,14 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { isGestureEnabled } from "../../../utils/navigation";
-import { LegacyMessageDetailsScreen } from "../screens/LegacyMessageDetailsScreen";
-import { LegacyAttachmentPreviewScreen } from "../screens/LegacyAttachmentPreviewScreen";
-import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
-import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
-import { LegacyPaidPaymentScreen } from "../screens/LegacyPaidPaymentScreen";
+import * as React from "react";
 import { useIOSelector } from "../../../store/hooks";
 import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { isGestureEnabled } from "../../../utils/navigation";
+import { LegacyAttachmentPreviewScreen } from "../screens/LegacyAttachmentPreviewScreen";
+import { LegacyMessageDetailsScreen } from "../screens/LegacyMessageDetailsScreen";
+import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
+import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
 import { PaidPaymentScreen } from "../screens/PaidPaymentScreen";
+import { LegacyPaidPaymentScreen } from "../screens/LegacyPaidPaymentScreen";
 import { PnParamsList } from "./params";
 import PN_ROUTES from "./routes";
 
