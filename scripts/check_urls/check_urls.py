@@ -223,7 +223,7 @@ if not run_test and __name__ == '__main__':
     urls_black_list = {
         # 403 when this check runs (in the middle of the night)
         "https://id.lepida.it/docs/manuale_utente.pdf",
-         # returns a 404 anytime the check runs but it actually works fine
+        # returns a 404 anytime the check runs but it actually works fine
         "https://checkout.pagopa.it/dona",
         # Mixpanel EU endpoint
         "https://api-eu.mixpanel.com"
