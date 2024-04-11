@@ -18,8 +18,9 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type PartialAllowedColors = Extract<
   IOColors,
@@ -46,6 +47,7 @@ type OperationResultScreenContentProps = WithTestID<{
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
+  isHeaderVisible?: boolean;
 }>;
 
 type PropsComposedBody = {
@@ -73,9 +75,14 @@ const OperationResultScreenContent = ({
   action,
   secondaryAction,
   children,
-  testID
+  testID,
+  isHeaderVisible
 }: React.PropsWithChildren<OperationResultScreenContentProps>) => (
-  <SafeAreaView style={styles.container} testID={testID}>
+  <SafeAreaView
+    edges={isHeaderVisible ? ["bottom"] : undefined}
+    style={styles.container}
+    testID={testID}
+  >
     <ScrollView
       centerContent={true}
       contentContainerStyle={[
