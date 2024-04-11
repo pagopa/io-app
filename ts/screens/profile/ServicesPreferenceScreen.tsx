@@ -3,6 +3,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import React, { ReactElement, useCallback, useEffect } from "react";
 import { useStore } from "react-redux";
 import { ServicesPreferencesModeEnum } from "../../../definitions/backend/ServicesPreferencesMode";
+import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { RNavScreenWithLargeHeader } from "../../components/ui/RNavScreenWithLargeHeader";
 import I18n from "../../i18n";
 import { profileUpsert } from "../../store/actions/profile";
@@ -13,7 +14,6 @@ import {
 import { GlobalState } from "../../store/reducers/types";
 import { getFlowType } from "../../utils/analytics";
 import { useOnFirstRender } from "../../utils/hooks/useOnFirstRender";
-import LoadingSpinnerOverlay from "../../components/LoadingSpinnerOverlay";
 import { useIODispatch, useIOSelector } from "../../store/hooks";
 import { usePrevious } from "../../utils/hooks/usePrevious";
 import {
