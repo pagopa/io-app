@@ -19,6 +19,7 @@ const CheckEmailNavigator = () => (
       component={ValidateEmailScreen}
     />
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ROUTES.CHECK_EMAIL_ALREADY_TAKEN}
       component={EmailAlreadyTakenScreen}
     />
