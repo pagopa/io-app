@@ -225,6 +225,13 @@ if not run_test and __name__ == '__main__':
         "https://id.lepida.it/docs/manuale_utente.pdf",
          # returns a 404 anytime the check runs but it actually works fine
         "https://checkout.pagopa.it/dona",
+        # Mixpanel EU endpoint
+        "https://api-eu.mixpanel.com"
+        # Profile 412 status error types
+        # Already taken type
+        "https://ioapp.it/problems/email-already-taken"
+        # EIC UAT endpoint
+        "https://collaudo.idserver.servizicie.interno.gov.it/idp"
         # localhost is not reachable
         "https://localhost",
         # local url used for E2E tests
