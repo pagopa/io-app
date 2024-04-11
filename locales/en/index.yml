@@ -762,10 +762,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: Email address not validated
-      subtitle: To continue using the app, you must validate your email address
-      editButton: Edit email address
-      validateButton: Validate email address
+      title: Is this your email?
+      subtitle: To continue using the app, you must confirm that your email is
+      editButton: No, change email
+      validateButton: Yes, confirm
       header:
         title: Configure IO
       help:
