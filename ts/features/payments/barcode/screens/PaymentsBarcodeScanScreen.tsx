@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
@@ -5,7 +6,6 @@ import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { IOToast } from "@pagopa/io-app-design-system";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -32,6 +32,7 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
+import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
 import { PaymentsBarcodeRoutes } from "../navigation/routes";
 
@@ -47,6 +48,9 @@ const PaymentsBarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
+
+  const { startPaymentFlowWithRptId, isNewWalletSectionEnabled } =
+    usePagoPaPayment();
 
   const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
@@ -89,31 +93,34 @@ const PaymentsBarcodeScanScreen = () => {
     const barcode = pagoPaBarcodes[0];
 
     if (barcode.type === "PAGOPA") {
-      dispatch(paymentInitializeState());
+      if (isNewWalletSectionEnabled) {
+        startPaymentFlowWithRptId(barcode.rptId);
+      } else {
+        dispatch(paymentInitializeState());
+        switch (barcode.format) {
+          case "QR_CODE":
+            navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+              screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+              params: {
+                initialAmount: barcode.amount,
+                rptId: barcode.rptId,
+                paymentStartOrigin: "qrcode_scan"
+              }
+            });
+            break;
+          case "DATA_MATRIX":
+            void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+            navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
+              screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
+              params: {
+                initialAmount: barcode.amount,
+                rptId: barcode.rptId,
+                paymentStartOrigin: "poste_datamatrix_scan"
+              }
+            });
 
-      switch (barcode.format) {
-        case "QR_CODE":
-          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-            params: {
-              initialAmount: barcode.amount,
-              rptId: barcode.rptId,
-              paymentStartOrigin: "qrcode_scan"
-            }
-          });
-          break;
-        case "DATA_MATRIX":
-          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-          navigation.navigate(ROUTES.WALLET_NAVIGATOR, {
-            screen: ROUTES.PAYMENT_TRANSACTION_SUMMARY,
-            params: {
-              initialAmount: barcode.amount,
-              rptId: barcode.rptId,
-              paymentStartOrigin: "poste_datamatrix_scan"
-            }
-          });
-
-          break;
+            break;
+        }
       }
     }
   };
