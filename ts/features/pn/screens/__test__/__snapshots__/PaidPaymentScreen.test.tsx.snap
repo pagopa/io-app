@@ -30,7 +30,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
         ]
       }
     >
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -38,11 +38,25 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -178,7 +192,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
                         style={
                           Object {
                             "flexGrow": 1,
@@ -570,7 +584,7 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
                             </View>
                           </View>
                         </RCTScrollView>
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}
@@ -896,8 +910,8 @@ exports[`PaidPaymentScreen should match snapshot 1`] = `
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
       <View
         collapsable={false}
         pointerEvents="box-none"
