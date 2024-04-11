@@ -762,10 +762,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: È questa la tua email?
-      subtitle: Per continuare a usare l’app, devi confermare che la tua email è
-      editButton: No, modifica
-      validateButton: Sì, conferma
+      title: Is this your email?
+      subtitle: To continue using the app, you must confirm that your email is
+      editButton: No, change email
+      validateButton: Yes, confirm
       header:
         title: Configure IO
       help:
