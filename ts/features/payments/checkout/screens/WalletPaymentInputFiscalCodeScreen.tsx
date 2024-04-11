@@ -35,16 +35,15 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import themeVariables from "../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import {
   decodeOrganizationFiscalCode,
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
-import { PaymentsCheckoutParamsList } from "../navigation/params";
-import { isNewWalletSectionEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
+import { PaymentsCheckoutParamsList } from "../navigation/params";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -64,11 +63,9 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   const { params } = useRoute<WalletPaymentInputFiscalCodeRouteProps>();
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
-  );
 
-  const { startPaymentFlowWithRptId } = usePagoPaPayment();
+  const { startPaymentFlowWithRptId, isNewWalletSectionEnabled } =
+    usePagoPaPayment();
 
   const [inputState, setInputState] = React.useState<InputState>({
     fiscalCodeText: "",

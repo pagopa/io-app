@@ -2076,6 +2076,11 @@ services:
       subtitle: "Stiamo recuperando i dettagli del servizio"
       back: "Indietro"
       retry: "Riprova"
+    preferences:
+      title: "Questo servizio può"
+      inbox: "Contattarti in app"
+      pushNotifications: "Inviarti notifiche push"
+      messageReadStatus: "Ricevere conferme di lettura"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
@@ -2914,6 +2919,8 @@ features:
     home:
       emptyMessage: Custodisci qui i tuoi metodi di pagamento, Carta Giovani Nazionale, bonus e sconti.
       cta: Aggiungi al Portafoglio
+      toast:
+        newMethod: Elemento aggiunto!
       paymentsBanner:
         title: Vuoi pagare un avviso?
         action: Vai alla sezione Pagamenti

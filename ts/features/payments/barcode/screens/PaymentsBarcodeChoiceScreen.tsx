@@ -28,13 +28,12 @@ import {
   PaymentStartOrigin,
   paymentInitializeState
 } from "../../../../store/actions/wallet/payment";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import * as analytics from "../../../barcode/analytics";
 import { PagoPaBarcode } from "../../../barcode/types/IOBarcode";
+import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { PaymentNoticeListItem } from "../components/PaymentNoticeListItem";
 import { PaymentsBarcodeParamsList } from "../navigation/params";
-import { isNewWalletSectionEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 
 type PaymentsBarcodeChoiceScreenParams = {
   barcodes: Array<PagoPaBarcode>;
@@ -48,11 +47,9 @@ const sortByAmount = pipe(
 const PaymentsBarcodeChoiceScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
-  );
 
-  const { startPaymentFlowWithRptId } = usePagoPaPayment();
+  const { startPaymentFlowWithRptId, isNewWalletSectionEnabled } =
+    usePagoPaPayment();
 
   useFocusEffect(
     React.useCallback(() => {

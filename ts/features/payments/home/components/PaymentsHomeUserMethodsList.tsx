@@ -87,7 +87,7 @@ const PaymentsHomeUserMethodsList = ({ enforcedLoadingState }: Props) => {
           pictogramName="cardAdd"
           content={I18n.t("features.payments.methods.banner.content")}
           action={I18n.t("features.payments.methods.banner.action")}
-          onPress={() => undefined}
+          onPress={handleOnAddMethodPress}
           size="big"
           color="neutral"
           viewRef={bannerRef}
