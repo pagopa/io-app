@@ -107,7 +107,7 @@ const EmailAlreadyTakenScreen = () => {
         ),
         onPress: confirmButtonOnPress
       }}
-      isVisibleHeader={true}
+      isHeaderVisible={true}
     />
   );
 };

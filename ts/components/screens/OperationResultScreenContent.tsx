@@ -47,7 +47,7 @@ type OperationResultScreenContentProps = WithTestID<{
     ButtonLinkProps,
     "label" | "accessibilityLabel" | "onPress" | "testID"
   >;
-  isVisibleHeader?: boolean;
+  isHeaderVisible?: boolean;
 }>;
 
 type PropsComposedBody = {
@@ -76,10 +76,10 @@ const OperationResultScreenContent = ({
   secondaryAction,
   children,
   testID,
-  isVisibleHeader
+  isHeaderVisible
 }: React.PropsWithChildren<OperationResultScreenContentProps>) => (
   <SafeAreaView
-    edges={isVisibleHeader ? ["bottom"] : undefined}
+    edges={isHeaderVisible ? ["bottom"] : undefined}
     style={styles.container}
     testID={testID}
   >
