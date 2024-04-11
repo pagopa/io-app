@@ -333,7 +333,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
                         style={
                           Object {
                             "flexGrow": 1,
@@ -675,7 +675,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                             </View>
                           </View>
                         </RCTScrollView>
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
