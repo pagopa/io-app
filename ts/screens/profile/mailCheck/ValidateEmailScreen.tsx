@@ -107,7 +107,7 @@ const ValidateEmailScreen = () => {
         accessibilityLabel: I18n.t("email.cduScreens.validateMail.editButton"),
         onPress: modifyEmailButtonOnPress
       }}
-      isVisibleHeader={true}
+      isHeaderVisible={true}
     />
   );
 };
