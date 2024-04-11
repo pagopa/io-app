@@ -2931,6 +2931,12 @@ features:
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
         payment: Metodi di pagamento
+    onboarding:
+      title: Cosa vuoi aggiungere al portafoglio?
+      options:
+        cgn: Carta Giovani Nazionale
+        welfare: Iniziative welfare
+        payments: Metodi di pagamento
   payments:
     title: Pagamenti
     cta: Paga un avviso
@@ -2949,12 +2955,6 @@ features:
       status:
         failure: FALLITA
         success: ""
-    onboarding: 
-      title: Cosa vuoi aggiungere al portafoglio?
-      options: 
-        cgn: Carta Giovani Nazionale
-        welfare: Iniziative welfare
-        payments: Metodi di pagamento
 webView:
   error:
     missingParams: Non sono presenti le informazioni necessarie per accedere a questa pagina
