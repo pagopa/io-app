@@ -4,35 +4,57 @@ import {
   PaymentNoticeNumberFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { NavigatorScreenParams, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
-import {
-  AppParamsList,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
   PaymentInitStateParams,
   initPaymentStateAction
 } from "../store/actions/orchestration";
-import { PaymentStartRoute } from "../types";
+import { isNewWalletSectionEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 
 type PagoPaPaymentParams = Omit<PaymentInitStateParams, "startRoute">;
+
+const DEFAULT_PAYMENT_PARAMS: PagoPaPaymentParams = {};
+
+type PaymentData = {
+  paymentNoticeNumber: string;
+  organizationFiscalCode: string;
+};
+
+type UsePagoPaPayment = {
+  startPaymentFlow: (rptId: RptId, params?: PagoPaPaymentParams) => void;
+  startPaymentFlowWithRptId: (
+    rptId: PagoPaRptId,
+    params?: PagoPaPaymentParams
+  ) => void;
+  startPaymentFlowWithData: (
+    data: PaymentData,
+    params?: PagoPaPaymentParams
+  ) => void;
+  // This is a temporary flag to tell that the new payment flow is enabled and can be used
+  // Will be removed once the new wallet section is released
+  isNewWalletSectionEnabled: boolean;
+};
 
 /**
  * A hook for initiating a PagoPA payment flow.
  * This hook provides functions to start a payment flow using various input methods.
  * @returns An object containing functions to start different types of payment flows.
  */
-const usePagoPaPayment = () => {
-  const route = useRoute();
+const usePagoPaPayment = (): UsePagoPaPayment => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
+
+  // Checks if the new wallet section is enabled
+  const isNewWalletSectionEnabled = useIOSelector(
+    isNewWalletSectionEnabledSelector
+  );
 
   /**
    * Initializes the payment state based on the provided parameters.
@@ -40,18 +62,8 @@ const usePagoPaPayment = () => {
    * return to it when the payment flow is finished.
    * @param {PagoPaPaymentParams} params - Parameters for initializing the payment state.
    */
-  const initPaymentState = ({ startOrigin }: PagoPaPaymentParams) => {
-    const startRoute: PaymentStartRoute = {
-      routeName: route.name as keyof AppParamsList,
-      routeKey:
-        route.key as keyof NavigatorScreenParams<AppParamsList>["screen"]
-    };
-    dispatch(
-      initPaymentStateAction({
-        startRoute,
-        startOrigin
-      })
-    );
+  const initPaymentState = (params: PagoPaPaymentParams) => {
+    dispatch(initPaymentStateAction(params));
   };
 
   /**
@@ -59,7 +71,10 @@ const usePagoPaPayment = () => {
    * @param {RptId} rptId - The RptId for the payment flow.
    * @param {PagoPaPaymentParams} params - Additional parameters for the payment flow.
    */
-  const startPaymentFlow = (rptId: RptId, params: PagoPaPaymentParams = {}) => {
+  const startPaymentFlow = (
+    rptId: RptId,
+    params: PagoPaPaymentParams = DEFAULT_PAYMENT_PARAMS
+  ) => {
     initPaymentState(params);
     navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
       screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_DETAIL,
@@ -76,7 +91,7 @@ const usePagoPaPayment = () => {
    */
   const startPaymentFlowWithRptId = (
     rptId: PagoPaRptId,
-    params: PagoPaPaymentParams = {}
+    params: PagoPaPaymentParams = DEFAULT_PAYMENT_PARAMS
   ) => {
     pipe(
       O.fromNullable(rptId),
@@ -93,11 +108,8 @@ const usePagoPaPayment = () => {
    * @param {PagoPaPaymentParams} params - Additional parameters for the payment flow.
    */
   const startPaymentFlowWithData = (
-    data: {
-      paymentNoticeNumber: string;
-      organizationFiscalCode: string;
-    },
-    params: PagoPaPaymentParams = {}
+    data: PaymentData,
+    params: PagoPaPaymentParams = DEFAULT_PAYMENT_PARAMS
   ) => {
     pipe(
       sequenceS(E.Monad)({
@@ -117,7 +129,8 @@ const usePagoPaPayment = () => {
   return {
     startPaymentFlow,
     startPaymentFlowWithRptId,
-    startPaymentFlowWithData
+    startPaymentFlowWithData,
+    isNewWalletSectionEnabled
   };
 };
 
