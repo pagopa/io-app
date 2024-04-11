@@ -773,7 +773,7 @@ email:
     emailAlreadyTaken:
       title: Modifica la tua email
       subtitleStart: Il tuo indirizzo email
-      subtitleEnd: risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app.
+      subtitleEnd: è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.
       editButton: Modifica email
       header:
         title: Configura IO
