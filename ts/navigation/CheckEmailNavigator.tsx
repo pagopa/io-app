@@ -15,6 +15,7 @@ const CheckEmailNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <Stack.Screen
+      options={{ headerShown: true }}
       name={ROUTES.CHECK_EMAIL_NOT_VERIFIED}
       component={ValidateEmailScreen}
     />
