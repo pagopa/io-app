@@ -28,14 +28,14 @@ type PaymentData = {
 };
 
 type UsePagoPaPayment = {
-  startPaymentFlow: (rptId: RptId, params: PagoPaPaymentParams) => void;
+  startPaymentFlow: (rptId: RptId, params?: PagoPaPaymentParams) => void;
   startPaymentFlowWithRptId: (
     rptId: PagoPaRptId,
-    params: PagoPaPaymentParams
+    params?: PagoPaPaymentParams
   ) => void;
   startPaymentFlowWithData: (
     data: PaymentData,
-    params: PagoPaPaymentParams
+    params?: PagoPaPaymentParams
   ) => void;
   isNewWalletSectionEnabled: boolean;
 };
