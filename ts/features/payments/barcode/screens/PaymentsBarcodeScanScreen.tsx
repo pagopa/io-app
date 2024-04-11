@@ -1,3 +1,4 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
@@ -5,7 +6,6 @@ import * as React from "react";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { IOToast } from "@pagopa/io-app-design-system";
 import { ContextualHelpPropsMarkdown } from "../../../../components/screens/BaseScreenComponent";
 import I18n from "../../../../i18n";
 import { mixpanelTrack } from "../../../../mixpanel";
@@ -17,10 +17,7 @@ import ROUTES from "../../../../navigation/routes";
 import { paymentInitializeState } from "../../../../store/actions/wallet/payment";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { barcodesScannerConfigSelector } from "../../../../store/reducers/backendStatus";
-import {
-  isDesignSystemEnabledSelector,
-  isNewWalletSectionEnabledSelector
-} from "../../../../store/reducers/persistedPreferences";
+import { isDesignSystemEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import {
   BarcodeFailure,
   BarcodeScanBaseScreenComponent,
@@ -35,9 +32,9 @@ import {
   IO_BARCODE_ALL_FORMATS,
   PagoPaBarcode
 } from "../../../barcode/types/IOBarcode";
+import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
 import { PaymentsBarcodeRoutes } from "../navigation/routes";
-import { usePagoPaPayment } from "../../checkout/hooks/usePagoPaPayment";
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   title: "wallet.QRtoPay.contextualHelpTitle",
@@ -51,11 +48,9 @@ const PaymentsBarcodeScanScreen = () => {
     barcodesScannerConfigSelector
   );
   const isDesignSystemEnabled = useIOSelector(isDesignSystemEnabledSelector);
-  const isNewWalletSectionEnabled = useIOSelector(
-    isNewWalletSectionEnabledSelector
-  );
 
-  const { startPaymentFlowWithRptId } = usePagoPaPayment();
+  const { startPaymentFlowWithRptId, isNewWalletSectionEnabled } =
+    usePagoPaPayment();
 
   const barcodeFormats: Array<IOBarcodeFormat> = IO_BARCODE_ALL_FORMATS.filter(
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
