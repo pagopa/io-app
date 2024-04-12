@@ -1,0 +1,138 @@
+diff --git a/node_modules/react-native-screens/android/build.gradle b/node_modules/react-native-screens/android/build.gradle
+index c2ecc16..6c20ed2 100644
+--- a/node_modules/react-native-screens/android/build.gradle
++++ b/node_modules/react-native-screens/android/build.gradle
+@@ -46,6 +46,38 @@ def reactNativeArchitectures() {
+     return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+ }
+ 
++def safeAppExtGet(prop, fallback) {
++    def appProject = rootProject.allprojects.find { it.plugins.hasPlugin('com.android.application') }
++    appProject?.ext?.has(prop) ? appProject.ext.get(prop) : fallback
++}
++
++def resolveReactNativeDirectory() {
++    def reactNativeLocation = safeAppExtGet("REACT_NATIVE_NODE_MODULES_DIR", null)
++    if (reactNativeLocation != null) {
++        return file(reactNativeLocation)
++    }
++
++    def reactNativeFromAppNodeModules = file("${projectDir}/../../react-native")
++    if (reactNativeFromAppNodeModules.exists()) {
++        return reactNativeFromAppNodeModules
++    }
++
++    def reactNativeFromProjectNodeModules = file("${rootProject.projectDir}/../node_modules/react-native")
++    if (reactNativeFromProjectNodeModules.exists()) {
++        return reactNativeFromProjectNodeModules
++    }
++
++    throw new GradleException(
++        "[RNScreens] Unable to resolve react-native location in node_modules. You should project extension property (in `app/build.gradle`) `REACT_NATIVE_NODE_MODULES_DIR` with path to react-native."
++    )
++}
++
++def reactNativeRootDir = resolveReactNativeDirectory()
++def reactProperties = new Properties()
++file("$reactNativeRootDir/ReactAndroid/gradle.properties").withInputStream { reactProperties.load(it) }
++def REACT_NATIVE_VERSION = reactProperties.getProperty("VERSION_NAME")
++def REACT_NATIVE_MINOR_VERSION = REACT_NATIVE_VERSION.startsWith("0.0.0-") ? 1000 : REACT_NATIVE_VERSION.split("\\.")[1].toInteger()
++
+ android {
+     compileSdkVersion safeExtGet('compileSdkVersion', rnsDefaultCompileSdkVersion)
+     def agpVersion = Version.ANDROID_GRADLE_PLUGIN_VERSION
+@@ -80,12 +112,14 @@ android {
+             }
+         }
+     }
+-    buildFeatures {
+-        prefab true
+-    }
+-    externalNativeBuild {
+-        cmake {
+-            path "CMakeLists.txt"
++    if (REACT_NATIVE_MINOR_VERSION >= 71) {
++        buildFeatures {
++            prefab true
++        }
++        externalNativeBuild {
++            cmake {
++                path "CMakeLists.txt"
++            }
+         }
+     }
+     lintOptions {
+@@ -146,11 +180,11 @@ repositories {
+ 
+ dependencies {
+     implementation 'com.facebook.react:react-native:+'
+-    implementation 'androidx.appcompat:appcompat:1.5.0'
++    implementation 'androidx.appcompat:appcompat:1.4.2'
+     implementation 'androidx.fragment:fragment:1.3.6'
+     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.2.0'
+     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+-    implementation 'com.google.android.material:material:1.9.0'
++    implementation 'com.google.android.material:material:1.6.1'
+     implementation "androidx.core:core-ktx:1.8.0"
+ 
+     constraints {
+diff --git a/node_modules/react-native-screens/gesture-handler/package.json b/node_modules/react-native-screens/gesture-handler/package.json
+index 282b21b..3b244ad 100644
+--- a/node_modules/react-native-screens/gesture-handler/package.json
++++ b/node_modules/react-native-screens/gesture-handler/package.json
+@@ -1,6 +1,13 @@
+ {
+   "main": "../lib/commonjs/gesture-handler/index",
+   "module": "../lib/module/gesture-handler/index",
+-  "react-native": "../src/gesture-handler/index",
+-  "types": "../lib/typescript/gesture-handler/index"
++  "react-native": {
++    "../lib/commonjs/gesture-handler/index": "../src/gesture-handler/index",
++    "path": "path-browserify"
++  },
++  "types": "../lib/typescript/gesture-handler/index",
++  "browser": {
++    "../lib/commonjs/gesture-handler/index": "../src/gesture-handler/index",
++    "path": "path-browserify"
++  }
+ }
+diff --git a/node_modules/react-native-screens/native-stack/package.json b/node_modules/react-native-screens/native-stack/package.json
+index 6d82f6a..08ee459 100644
+--- a/node_modules/react-native-screens/native-stack/package.json
++++ b/node_modules/react-native-screens/native-stack/package.json
+@@ -1,6 +1,13 @@
+ {
+   "main": "../lib/commonjs/native-stack/index",
+   "module": "../lib/module/native-stack/index",
+-  "react-native": "../src/native-stack/index",
+-  "types": "../lib/typescript/native-stack/index.d.ts"
++  "react-native": {
++    "../lib/commonjs/native-stack/index": "../src/native-stack/index",
++    "path": "path-browserify"
++  },
++  "types": "../lib/typescript/native-stack/index.d.ts",
++  "browser": {
++    "../lib/commonjs/native-stack/index": "../src/native-stack/index",
++    "path": "path-browserify"
++  }
+ }
+diff --git a/node_modules/react-native-screens/reanimated/package.json b/node_modules/react-native-screens/reanimated/package.json
+index 55fece0..9d97835 100644
+--- a/node_modules/react-native-screens/reanimated/package.json
++++ b/node_modules/react-native-screens/reanimated/package.json
+@@ -1,6 +1,13 @@
+ {
+   "main": "../lib/commonjs/reanimated/index",
+   "module": "../lib/module/reanimated/index",
+-  "react-native": "../src/reanimated/index",
+-  "types": "../lib/typescript/reanimated/index.d.ts"
++  "react-native": {
++    "../lib/commonjs/reanimated/index": "../src/reanimated/index",
++    "path": "path-browserify"
++  },
++  "types": "../lib/typescript/reanimated/index.d.ts",
++  "browser": {
++    "../lib/commonjs/reanimated/index": "../src/reanimated/index",
++    "path": "path-browserify"
++  }
+ }
