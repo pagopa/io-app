@@ -388,6 +388,14 @@ const migrations: MigrationManifest = {
           }
         }
       }
+    }),
+  // Version 27
+  // Adds it wallet section FF
+  "27": (state: PersistedState) =>
+    merge(state, {
+      persistedPreferences: {
+        isItWalletTestEnabled: false
+      }
     })
 };
 
