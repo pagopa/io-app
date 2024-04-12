@@ -2370,7 +2370,7 @@ support:
     navigationDataValue: "z.B. der letzte Bildschirm oder die letzte in der IO-App angezeigte Nachricht"
     devicePerformance: "Leistung des Geräts"
     devicePerformanceDataAndroid: "Speicher und Akkustand"
-    devicePerformanceDataiOS: "Speicher ({{storage}} GB) und Akkustand"
+    devicePerformanceDataiOS: "Speicher ({{storage}}) und Akkustand"
     stock: "Daten zur Zahlungsaufforderung"
     stockValue: "Einschließlich des Fehlers, den du gerade erhalten hast"
     card: "Angaben zur Zahlungsmethode"

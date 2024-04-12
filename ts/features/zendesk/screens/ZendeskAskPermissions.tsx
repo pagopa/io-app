@@ -69,7 +69,7 @@ import {
   zendeskSelectedCategorySelector,
   zendeskSelectedSubcategorySelector
 } from "../store/reducers";
-import { bytesToGigabytes } from "../../../utils/number";
+import { formatBytesWithUnit } from "../../../utils/strings";
 
 /**
  * Transform an array of string into a Zendesk
@@ -152,7 +152,7 @@ const getItems = (props: ItemProps): ReadonlyArray<ItemPermissionProps> => [
     title: I18n.t("support.askPermissions.devicePerformance"),
     value: Platform.select({
       ios: I18n.t("support.askPermissions.devicePerformanceDataiOS", {
-        storage: bytesToGigabytes(getFreeDiskStorage())
+        storage: formatBytesWithUnit(getFreeDiskStorage())
       }),
       android: I18n.t("support.askPermissions.devicePerformanceDataAndroid")
     }),

@@ -3001,7 +3001,7 @@ support:
     listHeader: "If you consent, we'll access this data:"
     devicePerformance: "Device performance"
     devicePerformanceDataAndroid: "Memory and battery level"
-    devicePerformanceDataiOS: "Memory ({{storage}} GB) and battery level"
+    devicePerformanceDataiOS: "Memory ({{storage}}) and battery level"
     prominentDisclosure: "Access to the device gallery"
     prominentDisclosureData: "To upload photos and screenshots"
     cta:
