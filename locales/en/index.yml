@@ -942,18 +942,6 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
-  homeScreen:
-    title: Payments
-    methodsSection:
-      header: Payment methods
-      headerCTA: Add
-    historySection:
-      header: Transaction history
-      headerCTA: View all
-      transactionStatusBadges:
-        failure: "FALLITA"
-        success: ""
-    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
@@ -2968,6 +2956,24 @@ features:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
         payments: Metodi di pagamento
+  payments:
+    title: Payments
+    cta: Paga un avviso
+    methods:
+      title: Metodi di pagamento
+      button: Aggiungi
+      banner:
+        content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        action: Aggiungi un metodo
+    transactions:
+      title: Storico operazioni
+      button: Vedi tutte
+      empty:
+        title: Qui vedrai le tue ricevute pagoPA
+        content: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+      status:
+        failure: FALLITA
+        success: ""
 webView:
   error:
     missingParams: Not all information necessary to access this page are available
