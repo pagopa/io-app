@@ -44,6 +44,7 @@ describe("PaymentCardSmall", () => {
     const { queryByText, queryByTestId } = renderCard({
       hpan: "9900",
       brand: "maestro",
+      expireDate: new Date(2023, 10),
       onPress: () => undefined,
       testID
     });

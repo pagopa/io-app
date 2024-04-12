@@ -374,7 +374,7 @@ exports[`PaymentCardSmall should match the snapshot 1`] = `
                                   "padding": 16,
                                   "width": 127,
                                 },
-                                undefined,
+                                false,
                               ]
                             }
                             testID="PaymentCardSmallTestID"
