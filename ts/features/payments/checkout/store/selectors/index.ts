@@ -72,5 +72,5 @@ export const walletPaymentTransactionSelector = (state: GlobalState) =>
 export const walletPaymentAuthorizationUrlSelector = (state: GlobalState) =>
   selectPaymentsCheckoutState(state).authorizationUrl;
 
-export const walletPaymentStartRouteSelector = (state: GlobalState) =>
-  selectPaymentsCheckoutState(state).startRoute;
+export const walletPaymentOnSuccessActionSelector = (state: GlobalState) =>
+  selectPaymentsCheckoutState(state).onSuccess;
