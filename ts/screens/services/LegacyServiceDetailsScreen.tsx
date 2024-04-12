@@ -19,7 +19,7 @@ import BaseScreenComponent, {
 import { EdgeBorderComponent } from "../../components/screens/EdgeBorderComponent";
 import ContactPreferencesToggles from "../../components/services/ContactPreferencesToggles";
 import ServiceMetadataComponent from "../../components/services/ServiceMetadata";
-import SpecialServicesCTA from "../../components/services/SpecialServices/SpecialServicesCTA";
+import LegacySpecialServicesCTA from "../../components/services/SpecialServices/LegacySpecialServicesCTA";
 import TosAndPrivacyBox from "../../components/services/TosAndPrivacyBox";
 import LegacyMarkdown from "../../components/ui/Markdown/LegacyMarkdown";
 import { FooterTopShadow } from "../../components/FooterTopShadow";
@@ -188,7 +188,7 @@ const LegacyServiceDetailsScreen = (props: Props) => {
             {!!specialServiceInfoOpt && (
               <>
                 <VSpacer size={8} />
-                <SpecialServicesCTA
+                <LegacySpecialServicesCTA
                   serviceId={serviceId}
                   customSpecialFlowOpt={
                     specialServiceInfoOpt.customSpecialFlowOpt
