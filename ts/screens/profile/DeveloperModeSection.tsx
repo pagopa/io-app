@@ -391,7 +391,10 @@ const PlaygroundsSection = () => {
     {
       condition: isItWalletTestEnabled,
       value: "IT Wallet",
-      onPress: () => undefined
+      onPress: () =>
+        navigation.navigate(ROUTES.PROFILE_NAVIGATOR, {
+          screen: ROUTES.ITW_PLAYGROUND
+        })
     }
   ];
 
