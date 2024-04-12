@@ -455,6 +455,9 @@ profile:
         title: Warning
         message: To add a new test card, you must enable the pagoPA test environment from the settings.
         closeButton: Close
+    itWallet:
+      itWalletTest: IT Wallet
+      itWalletTestDescription: Enable the IT Wallet test environment
   data:
     title: Your data
     subtitle: Here you will find your personal and contact data used by the IO app.
@@ -762,10 +765,10 @@ authentication:
 email:
   cduScreens:
     validateMail:
-      title: Email address not validated
-      subtitle: To continue using the app, you must validate your email address
-      editButton: Edit email address
-      validateButton: Validate email address
+      title: Is this your email?
+      subtitle: To continue using the app, you must confirm that your email is
+      editButton: No, change email
+      validateButton: Yes, confirm
       header:
         title: Configure IO
       help:
@@ -939,18 +942,6 @@ datetimes:
   todayAt: today, at
   notValid: Invalid date.
 payment:
-  homeScreen:
-    title: Payments
-    methodsSection:
-      header: Payment methods
-      headerCTA: Add
-    historySection:
-      header: Transaction history
-      headerCTA: View all
-      transactionStatusBadges:
-        failure: "FALLITA"
-        success: ""
-    CTA: Paga un avviso
   alertNoPaymentMethods:
     title: Add a method to make in-app payments
     message: The method will be saved in your Wallet, so you can pay easier next time.
@@ -2093,6 +2084,21 @@ services:
       inbox: "Contact you in app"
       pushNotifications: "Send you push notifications"
       messageReadStatus: "Receive read receipts"
+    metadata:
+      title: "Contacts and info"
+      website: "Browse Website"
+      downloadApp: "Download app"
+      support: "Get support"
+      phone: "Contact the institution"
+      email: "Send email"
+      pec: "Send PEC"
+      fiscalCode: "Organization's fiscal code"
+      address: "Address"
+      serviceId: "Service ID"
+    tosAndPrivacy: 
+      title: "Terms of use and Privacy"
+      tosLink: "Terms and conditions"
+      privacyLink: "Privacy information"
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
@@ -2939,6 +2945,7 @@ features:
         close: Chiudi
     cards:
       categories:
+        all: All
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
@@ -2949,6 +2956,24 @@ features:
         cgn: Carta Giovani Nazionale
         welfare: Iniziative welfare
         payments: Metodi di pagamento
+  payments:
+    title: Payments
+    cta: Paga un avviso
+    methods:
+      title: Metodi di pagamento
+      button: Aggiungi
+      banner:
+        content: Aggiungi al portafoglio un metodo di pagamento, così non dovrai inserire ogni volta i dati.
+        action: Aggiungi un metodo
+    transactions:
+      title: Storico operazioni
+      button: Vedi tutte
+      empty:
+        title: Qui vedrai le tue ricevute pagoPA
+        content: Paga un avviso in app o presso un qualsiasi canale abilitato a pagoPA.
+      status:
+        failure: FALLITA
+        success: ""
 webView:
   error:
     missingParams: Not all information necessary to access this page are available

@@ -1,45 +1,45 @@
+import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
+import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
 import {
-  View,
   ActivityIndicator,
   SafeAreaView,
-  StyleSheet
+  StyleSheet,
+  View
 } from "react-native";
-import { VSpacer } from "@pagopa/io-app-design-system";
-import { Route, useRoute } from "@react-navigation/native";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { Body } from "../../../components/core/typography/Body";
 import { IOStyles } from "../../../components/core/variables/IOStyles";
 import WorkunitGenericFailure from "../../../components/error/WorkunitGenericFailure";
-import MessageDetailComponent from "../components/MessageDetail";
-import ErrorState from "../components/MessageDetail/ErrorState";
 import BaseScreenComponent, {
   ContextualHelpPropsMarkdown
 } from "../../../components/screens/BaseScreenComponent";
 import I18n from "../../../i18n";
-import { isNoticePaidSelector } from "../../../store/reducers/entities/payments";
-import {
-  loadMessageDetails,
-  resetGetMessageDataAction
-} from "../store/actions";
 import {
   navigateBack,
   navigateToServiceDetailsScreen
 } from "../../../store/actions/navigation";
 import { loadServiceDetail } from "../../../store/actions/services";
-import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { getPaginatedMessageById } from "../store/reducers/paginatedById";
-import { UIMessageId } from "../types";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import { isNoticePaidSelector } from "../../../store/reducers/entities/payments";
 import {
   serviceByIdPotSelector,
   serviceMetadataByIdSelector
 } from "../../services/store/reducers/servicesById";
 import { toUIService } from "../../../store/reducers/entities/services/transformers";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
+import MessageDetailComponent from "../components/MessageDetail";
+import ErrorState from "../components/MessageDetail/ErrorState";
+import {
+  loadMessageDetails,
+  resetGetMessageDataAction
+} from "../store/actions";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
+import { getPaginatedMessageById } from "../store/reducers/paginatedById";
+import { UIMessageId } from "../types";
 
 const styles = StyleSheet.create({
   notFullStateContainer: {

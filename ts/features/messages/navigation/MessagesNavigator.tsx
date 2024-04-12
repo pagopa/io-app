@@ -1,19 +1,19 @@
-import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import { useIOSelector } from "../../../store/hooks";
+import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
+import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import { isGestureEnabled } from "../../../utils/navigation";
 import { EUCovidCertStackNavigator } from "../../euCovidCert/navigation/navigator";
 import EUCOVIDCERT_ROUTES from "../../euCovidCert/navigation/routes";
-import LegacyMessageDetailScreen from "../screens/LegacyMessageDetailScreen";
-import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
-import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
-import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { PnStackNavigator } from "../../pn/navigation/navigator";
 import PN_ROUTES from "../../pn/navigation/routes";
-import { useIOSelector } from "../../../store/hooks";
-import { isGestureEnabled } from "../../../utils/navigation";
-import { isPnEnabledSelector } from "../../../store/reducers/backendStatus";
 import { LegacyMessageDetailAttachment } from "../screens/LegacyMessageAttachment";
-import { isDesignSystemEnabledSelector } from "../../../store/reducers/persistedPreferences";
+import LegacyMessageDetailScreen from "../screens/LegacyMessageDetailScreen";
 import { MessageAttachmentScreen } from "../screens/MessageAttachmentScreen";
+import { MessageCalendarScreen } from "../screens/MessageCalendarScreen";
+import { MessageDetailsScreen } from "../screens/MessageDetailsScreen";
+import { MessageRouterScreen } from "../screens/MessageRouterScreen";
 import { MessagesParamsList } from "./params";
 import { MESSAGES_ROUTES } from "./routes";
 

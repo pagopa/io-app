@@ -1,34 +1,44 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constNull } from "fp-ts/lib/function";
-import * as React from "react";
-import { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { Alert } from "react-native";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { fold, isLoading } from "../../../../common/model/RemoteValue";
-import ButtonDefaultOpacity from "../../../../components/ButtonDefaultOpacity";
-import { Label } from "../../../../components/core/typography/Label";
-import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
+import { ButtonSolid, IOToast } from "@pagopa/io-app-design-system";
+import { constNull } from "fp-ts/lib/function";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "../../../../i18n";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { loadServicePreference } from "../../../services/store/actions";
-import { servicePreferenceSelector } from "../../../services/store/reducers/servicePreference";
-import { isServicePreferenceResponseSuccess } from "../../../services/types/ServicePreferenceResponse";
-import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
+import {
+  servicePreferenceResponseSuccessSelector,
+  servicePreferenceSelector
+} from "../../../services/store/reducers/servicePreference";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
+import { fold, isLoading } from "../../../../common/model/RemoteValue";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
+import { loadServicePreference } from "../../../services/store/actions";
+import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 
-type Props = {
+type CgnServiceCtaProps = {
   serviceId: ServiceId;
 };
-const CgnServiceCTA = (props: Props) => {
+
+export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
   const isFirstRender = useRef<boolean>(true);
+
   const dispatch = useIODispatch();
-  const servicePreference = useIOSelector(servicePreferenceSelector);
+
+  const servicePreferenceResponseSuccess = useIOSelector(
+    servicePreferenceResponseSuccessSelector
+  );
+
+  const servicePreferencePot = useIOSelector(servicePreferenceSelector);
+
   const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
 
-  const servicePreferenceValue = pot.getOrElse(servicePreference, undefined);
+  const isLoadingStatus =
+    pot.isLoading(servicePreferencePot) || isLoading(unsubscriptionStatus);
+
+  const isServiceActive =
+    servicePreferenceResponseSuccess?.value.inbox ?? false;
 
   useEffect(() => {
     if (!isFirstRender.current) {
@@ -38,74 +48,63 @@ const CgnServiceCTA = (props: Props) => {
         constNull,
         () => {
           IOToast.success(I18n.t("bonus.cgn.activation.deactivate.toast"));
-          dispatch(loadServicePreference.request(props.serviceId));
+          dispatch(loadServicePreference.request(serviceId));
         },
-        () => {
-          IOToast.error(I18n.t("global.genericError"));
-        }
+        () => IOToast.error(I18n.t("global.genericError"))
       );
     }
     // eslint-disable-next-line functional/immutable-data
     isFirstRender.current = false;
-  }, [unsubscriptionStatus, dispatch, props.serviceId]);
+  }, [unsubscriptionStatus, dispatch, serviceId]);
 
-  if (
-    !servicePreferenceValue ||
-    servicePreferenceValue.id !== props.serviceId
-  ) {
+  const handleUnsubscriptionStatus = useCallback(
+    () =>
+      Alert.alert(
+        I18n.t("bonus.cgn.activation.deactivate.alert.title"),
+        I18n.t("bonus.cgn.activation.deactivate.alert.message"),
+        [
+          {
+            text: I18n.t("global.buttons.cancel"),
+            style: "cancel"
+          },
+          {
+            text: I18n.t("global.buttons.deactivate"),
+            onPress: () => dispatch(cgnUnsubscribe.request())
+          }
+        ]
+      ),
+    [dispatch]
+  );
+
+  if (!servicePreferenceResponseSuccess) {
     return null;
   }
-  const isServiceActive =
-    servicePreferenceValue &&
-    isServicePreferenceResponseSuccess(servicePreferenceValue) &&
-    servicePreferenceValue.value.inbox;
-
-  const requestUnsubscription = () => {
-    Alert.alert(
-      I18n.t("bonus.cgn.activation.deactivate.alert.title"),
-      I18n.t("bonus.cgn.activation.deactivate.alert.message"),
-      [
-        {
-          text: I18n.t("global.buttons.cancel"),
-          style: "cancel"
-        },
-        {
-          text: I18n.t("global.buttons.deactivate"),
-          onPress: () => dispatch(cgnUnsubscribe.request())
-        }
-      ]
-    );
-  };
 
   if (isServiceActive) {
-    if (isLoading(unsubscriptionStatus)) {
-      return <ActivityIndicator />;
-    }
     return (
-      <ButtonDefaultOpacity
-        block
-        bordered
-        danger
-        onPress={requestUnsubscription}
-      >
-        <Label testID="cgnDeactivateBonusTestId" color={"red"}>
-          {I18n.t("bonus.cgn.cta.deactivateBonus")}
-        </Label>
-      </ButtonDefaultOpacity>
+      <ButtonSolid
+        fullWidth
+        color="danger"
+        accessibilityLabel={I18n.t("bonus.cgn.cta.deactivateBonus")}
+        label={I18n.t("bonus.cgn.cta.deactivateBonus")}
+        loading={isLoadingStatus}
+        testID="service-cgn-deactivate-bonus-button"
+        onPress={handleUnsubscriptionStatus}
+      />
     );
   }
+
   return (
-    <ButtonDefaultOpacity
-      block
-      primary
+    <ButtonSolid
+      fullWidth
+      accessibilityLabel={I18n.t("bonus.cgn.cta.activeBonus")}
+      label={I18n.t("bonus.cgn.cta.activeBonus")}
+      loading={isLoadingStatus}
+      testID="service-activate-bonus-button"
       onPress={() => {
         dispatch(loadAvailableBonuses.request());
         dispatch(cgnActivationStart());
       }}
-      testID="service-activate-bonus-button"
-    >
-      <Label color={"white"}>{I18n.t("bonus.cgn.cta.activeBonus")}</Label>
-    </ButtonDefaultOpacity>
+    />
   );
 };
-export default CgnServiceCTA;
