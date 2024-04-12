@@ -16,7 +16,7 @@ import { useWalletPaymentGoBackHandler } from "../hooks/useWalletPaymentGoBackHa
 import { walletPaymentSetCurrentStep } from "../store/actions/orchestration";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { WALLET_PAYMENT_STEP_MAX } from "../store/reducers";
-import { walletPaymentPspListSelector } from "../store/selectors";
+import { walletPaymentPspListSelector } from "../store/selectors/psps";
 import { paymentsResetPaymentPspList } from "../store/actions/networking";
 import { WalletPaymentStepEnum } from "../types";
 

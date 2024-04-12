@@ -7,7 +7,6 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -33,6 +32,8 @@ import {
   selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
@@ -47,8 +48,9 @@ export type PaymentsCheckoutState = {
   userWallets: pot.Pot<Wallets, NetworkError>;
   allPaymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   pspList: pot.Pot<ReadonlyArray<Bundle>, NetworkError>;
-  chosenPaymentMethod: O.Option<WalletInfo>;
-  chosenPsp: O.Option<Bundle>;
+  selectedWallet: O.Option<WalletInfo>;
+  selectedPaymentMethod: O.Option<PaymentMethodResponse>;
+  selectedPsp: O.Option<Bundle>;
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
   onSuccess?: OnPaymentSuccessAction;
@@ -61,8 +63,9 @@ const INITIAL_STATE: PaymentsCheckoutState = {
   userWallets: pot.none,
   allPaymentMethods: pot.none,
   pspList: pot.none,
-  chosenPaymentMethod: O.none,
-  chosenPsp: O.none,
+  selectedWallet: O.none,
+  selectedPaymentMethod: O.none,
+  selectedPsp: O.none,
   transaction: pot.none,
   authorizationUrl: pot.none
 };
@@ -157,7 +160,8 @@ const reducer = (
     case getType(selectPaymentMethodAction):
       return {
         ...state,
-        chosenPaymentMethod: O.some(action.payload)
+        selectedWallet: O.fromNullable(action.payload.userWallet),
+        selectedPaymentMethod: O.fromNullable(action.payload.paymentMethod)
       };
 
     // PSP list
@@ -180,13 +184,13 @@ const reducer = (
     case getType(selectPaymentPspAction):
       return {
         ...state,
-        chosenPsp: O.some(action.payload)
+        selectedPsp: O.some(action.payload)
       };
 
     case getType(resetPaymentPspAction):
       return {
         ...state,
-        chosenPsp: O.none
+        selectedPsp: O.none
       };
 
     case getType(paymentsResetPaymentPspList):

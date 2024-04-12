@@ -21,14 +21,14 @@ import { WalletPspListSkeleton } from "../components/WalletPspListSkeleton";
 import { useSortPspBottomSheet } from "../hooks/useSortPspBottomSheet";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
-  selectPaymentPspAction,
   resetPaymentPspAction,
+  selectPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../store/actions/orchestration";
 import {
-  walletPaymentPickedPspSelector,
-  walletPaymentPspListSelector
-} from "../store/selectors";
+  walletPaymentPspListSelector,
+  walletPaymentSelectedPspSelector
+} from "../store/selectors/psps";
 import { WalletPaymentPspSortType, WalletPaymentStepEnum } from "../types";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
@@ -41,7 +41,7 @@ const WalletPaymentPickPspScreen = () => {
     React.useState<WalletPaymentPspSortType>("default");
 
   const pspListPot = useIOSelector(walletPaymentPspListSelector);
-  const selectedPspOption = useIOSelector(walletPaymentPickedPspSelector);
+  const selectedPspOption = useIOSelector(walletPaymentSelectedPspSelector);
 
   const isLoading = pot.isLoading(pspListPot);
   const isError = pot.isError(pspListPot);

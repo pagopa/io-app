@@ -14,7 +14,7 @@ import { getSortedPspList } from "../../../common/utils";
 import { PaymentClient } from "../../../common/api/client";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
 import { selectPaymentPspAction } from "../../store/actions/orchestration";
-import { walletPaymentPickedPspSelector } from "../../store/selectors";
+import { walletPaymentSelectedPspSelector } from "../../store/selectors/psps";
 import { getOrFetchWalletSessionToken } from "./handleWalletPaymentNewSessionToken";
 
 export function* handleWalletPaymentCalculateFees(
@@ -69,10 +69,10 @@ export function* handleWalletPaymentCalculateFees(
           res.value.bundles,
           "default"
         );
-        const chosenPsp = yield* select(walletPaymentPickedPspSelector);
+        const selectedPsp = yield* select(walletPaymentSelectedPspSelector);
         // If the sorted psp list has the first element marked as "onUs" and the user has not already chosen a psp, we pre-select the first element
         if (
-          (bundlesSortedByDefault[0]?.onUs && O.isNone(chosenPsp)) ||
+          (bundlesSortedByDefault[0]?.onUs && O.isNone(selectedPsp)) ||
           bundlesSortedByDefault.length === 1
         ) {
           yield* put(selectPaymentPspAction(bundlesSortedByDefault[0]));

@@ -4,7 +4,7 @@ import { TransactionStatusEnum } from "../../../../../definitions/pagopa/ecommer
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getGenericError } from "../../../../utils/errors";
 import { paymentsGetPaymentTransactionInfoAction } from "../store/actions/networking";
-import { walletPaymentTransactionSelector } from "../store/selectors";
+import { walletPaymentTransactionSelector } from "../store/selectors/transaction";
 
 const INITIAL_DELAY = 250;
 const MAX_TRIES = 3;

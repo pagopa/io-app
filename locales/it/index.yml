@@ -1689,11 +1689,6 @@ wallet:
       alert:
         body: "A causa dell’importo elevato, alcuni metodi non sono disponibili."
         cta: "Ok, ho capito!"
-      missingMethodsError:
-        title: Aggiungi un metodo per effettuare pagamenti in app
-        subtitle: Il metodo verrà salvato nel Portafoglio, così la prossima volta potrai pagare più facilmente.
-        addMethod: Aggiungi metodo
-        notNow: Non ora
     psp:
       title: Scegli chi gestirà il pagamento
       description: Ogni gestore propone una commissione.
@@ -2095,7 +2090,7 @@ services:
       fiscalCode: "Codice fiscale ente"
       address: "Indirizzo"
       serviceId: "ID servizio"
-    tosAndPrivacy: 
+    tosAndPrivacy:
       title: "Termini e Privacy"
       tosLink: "Termini e condizioni d'uso"
       privacyLink: "Informativa sulla privacy"

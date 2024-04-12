@@ -1608,11 +1608,6 @@ wallet:
       alert:
         body: "Aufgrund des größeren Betrags sind einige Zahlungsmethoden nicht verfügbar."
         cta: "OK, habe verstanden!"
-      missingMethodsError:
-        title: "Füge eine Zahlungsmethode für In-App-Zahlungen hinzu"
-        subtitle: "Die Zahlungsmethode wird in deinem Konto gespeichert, so dass du beim nächsten Mal einfacher bezahlen kannst."
-        addMethod: "Zahlungsmethode hinzufügen"
-        notNow: "Jetzt nicht"
     psp:
       title: "Wähle, von wem die Zahlung abgewickelt werden soll"
       description: "Jeder Zahlungsdienstleister (PSP) schlägt eine Provision vor."
@@ -1994,7 +1989,7 @@ identification:
   logout: "Abmelden"
   logoutProfileName: "Du bist nicht {{profileName}}?"
   logoutDescription: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Diese Sitzung wird abgemeldet."
-  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."  
+  logoutDescriptionProfileName: "Du kannst dich mit deinem SPID oder deiner CIE anmelden. Die Sitzung von {{profileName}} wird abgemeldet."
   biometric:
     fingerprintType: "Fingerabdruck"
     title: "Biometrische Identifikation"
@@ -2002,7 +1997,7 @@ identification:
       reason: "Identifikation durch TouchID fehlgeschlagen"
       title: "Identifikation erforderlich"
       sensorDescription: "Berührungssensor"
-  fail:        
+  fail:
     waitMessage: "Versuche es erneut in:"
   unlockCode:
     accessibility:
@@ -2436,10 +2431,10 @@ fastLogin:
   userInteraction:
     sessionExpired:
       noPin:
-        title: "Es ist zu lange her!"        
+        title: "Es ist zu lange her!"
         submitButtonTitle: "Fortfahren"
       continueNavigation:
-        title: "Deine Sitzung ist abgelaufen"        
+        title: "Deine Sitzung ist abgelaufen"
         cancelButtonTitle: "Abbrechen"
       transientError:
         title: "Wir konnten dich nicht authentifizieren"

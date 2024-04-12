@@ -76,7 +76,8 @@ export const paymentsDeleteTransactionAction = createAsyncAction(
 
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;
-  walletId: string;
+  walletId?: string;
+  paymentMethodId: string;
   pspId: string;
   paymentAmount: AmountEuroCents;
   paymentFees: AmountEuroCents;

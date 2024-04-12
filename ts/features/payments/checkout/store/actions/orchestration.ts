@@ -1,7 +1,8 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { PaymentStartOrigin, WalletPaymentStepEnum } from "../../types";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 
 export const walletPaymentSetCurrentStep = createStandardAction(
   "WALLET_PAYMENT_SET_CURRENT_STEP"
@@ -24,7 +25,7 @@ export const initPaymentStateAction = createStandardAction(
 
 export const selectPaymentMethodAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_METHOD"
-)<WalletInfo>();
+)<{ userWallet?: WalletInfo; paymentMethod?: PaymentMethodResponse }>();
 
 export const selectPaymentPspAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_PSP"
