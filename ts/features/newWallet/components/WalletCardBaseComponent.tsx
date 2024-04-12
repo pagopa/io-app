@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 
 // Wallet card base component props, which declares common props that wallet cards must have
 export type WalletCardComponentBaseProps<P> = WithTestID<{
-  isStacked: boolean;
+  isStacked?: boolean;
   cardProps: P;
 }>;
 
@@ -15,7 +15,7 @@ export const withWalletCardBaseComponent =
   >(
     CardContent: React.ComponentType<CardProps>
   ) =>
-  ({ cardProps, isStacked, testID }: ContentProps) =>
+  ({ cardProps, isStacked = false, testID }: ContentProps) =>
     (
       <View
         testID={testID}
