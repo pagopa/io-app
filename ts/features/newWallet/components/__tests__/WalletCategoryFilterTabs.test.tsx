@@ -46,9 +46,12 @@ describe("WalletCategoryFilterTabs", () => {
   jest.useFakeTimers();
   jest.runAllTimers();
 
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it("should render tabs based on available categories", () => {
-    const component = renderComponent(T_CARDS);
-    const { queryByTestId } = component;
+    const { queryByTestId } = renderComponent(T_CARDS);
 
     expect(queryByTestId(`CategoryTabsContainerTestID`)).not.toBeNull();
     expect(queryByTestId(`CategoryTabTestID-payment`)).not.toBeNull();
@@ -57,7 +60,7 @@ describe("WalletCategoryFilterTabs", () => {
   });
 
   it("should not render tabs if only one category", () => {
-    const component = renderComponent({
+    const { queryByTestId } = renderComponent({
       "1": {
         key: "1",
         type: "payment",
@@ -71,7 +74,6 @@ describe("WalletCategoryFilterTabs", () => {
         walletId: ""
       }
     });
-    const { queryByTestId } = component;
 
     expect(queryByTestId(`CategoryTabsContainerTestID`)).toBeNull();
     expect(queryByTestId(`CategoryTabTestID-payment`)).toBeNull();
@@ -85,7 +87,7 @@ const renderComponent = (cards: WalletCardsState) => {
 
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(
-    _.merge(globalState, {
+    _.merge(undefined, globalState, {
       features: {
         wallet: {
           cards
