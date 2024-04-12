@@ -2096,6 +2096,21 @@ services:
       inbox: "Contact you in app"
       pushNotifications: "Send you push notifications"
       messageReadStatus: "Receive read receipts"
+    metadata:
+      title: "Contacts and info"
+      website: "Browse Website"
+      downloadApp: "Download app"
+      support: "Get support"
+      phone: "Contact the institution"
+      email: "Send email"
+      pec: "Send PEC"
+      fiscalCode: "Organization's fiscal code"
+      address: "Address"
+      serviceId: "Service ID"
+    tosAndPrivacy: 
+      title: "Terms of use and Privacy"
+      tosLink: "Terms and conditions"
+      privacyLink: "Privacy information"
 serviceDetail:
   fiscalCode: "Organization's fiscal code"
   fiscalCodeAccessibility: "Organization's fiscal code"
