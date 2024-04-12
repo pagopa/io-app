@@ -1,17 +1,7 @@
-import * as React from "react";
-import { View, SafeAreaView, StyleSheet } from "react-native";
-import { Pictogram, VSpacer } from "@pagopa/io-app-design-system";
+import React, { useMemo, useCallback } from "react";
 import * as O from "fp-ts/lib/Option";
-import { useCallback } from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import I18n from "../../../i18n";
-import { Body } from "../../../components/core/typography/Body";
-import { H3 } from "../../../components/core/typography/H3";
-import { IOStyles } from "../../../components/core/variables/IOStyles";
-import themeVariables from "../../../theme/variables";
-import FooterWithButtons from "../../../components/ui/FooterWithButtons";
-import { Link } from "../../../components/core/typography/Link";
-import BaseScreenComponent from "../../../components/screens/BaseScreenComponent";
 import ROUTES from "../../../navigation/routes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { acknowledgeOnEmailValidation } from "../../../store/actions/profile";
@@ -23,18 +13,12 @@ import {
 } from "../../analytics/emailAnalytics";
 import { getFlowType } from "../../../utils/analytics";
 import { isProfileFirstOnBoardingSelector } from "../../../store/reducers/profile";
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: themeVariables.contentPaddingLarge
-  },
-  title: {
-    textAlign: "center"
-  }
-});
+import {
+  BodyProps,
+  OperationResultScreenContent
+} from "../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { ContextualHelpPropsMarkdown } from "../../../components/screens/BaseScreenComponent";
 
 export type EmailNotVerifiedScreenParamList = {
   email: string;
@@ -58,11 +42,16 @@ const ValidateEmailScreen = () => {
     });
   }, [navigation]);
 
+  const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
+    title: "email.cduScreens.validateMail.title",
+    body: "email.cduScreens.validateMail.help.body"
+  };
+
   useOnFirstRender(() => {
     trackEmailNotAlreadyConfirmed(flow);
   });
 
-  const confirmButtonOnPress = React.useCallback(() => {
+  const confirmButtonOnPress = useCallback(() => {
     // We dispatch this action to show the InsertEmailScreen with
     // the validation modal already opened.
     trackSendValidationEmail(flow);
@@ -70,50 +59,56 @@ const ValidateEmailScreen = () => {
     navigateToInsertEmailScreen();
   }, [dispatch, flow, navigateToInsertEmailScreen]);
 
-  const modifyEmailButtonOnPress = React.useCallback(() => {
+  const modifyEmailButtonOnPress = useCallback(() => {
     dispatch(acknowledgeOnEmailValidation(O.none));
     navigateToInsertEmailScreen();
   }, [dispatch, navigateToInsertEmailScreen]);
 
-  const continueButtonProps = {
-    onPress: confirmButtonOnPress,
-    title: I18n.t("email.cduScreens.validateMail.validateButton"),
-    block: true
-  };
+  const bodyPropsArray: Array<BodyProps> = useMemo(
+    () => [
+      {
+        text: I18n.t("email.cduScreens.validateMail.subtitle"),
+        style: {
+          textAlign: "center"
+        }
+      },
+      {
+        text: <> {email} </>,
+        style: {
+          textAlign: "center"
+        },
+        weight: "SemiBold"
+      }
+    ],
+    [email]
+  );
+
+  useHeaderSecondLevel({
+    title: "",
+    supportRequest: true,
+    contextualHelpMarkdown,
+    canGoBack: false
+  });
 
   return (
-    <BaseScreenComponent
-      goBack={false}
-      accessibilityEvents={{ avoidNavigationEventsUsage: true }}
-      contextualHelpMarkdown={{
-        title: "email.cduScreens.validateMail.title",
-        body: "email.cduScreens.validateMail.help.body"
+    <OperationResultScreenContent
+      pictogram="attention"
+      title={I18n.t("email.cduScreens.validateMail.title")}
+      subtitle={bodyPropsArray}
+      action={{
+        label: I18n.t("email.cduScreens.validateMail.validateButton"),
+        accessibilityLabel: I18n.t(
+          "email.cduScreens.validateMail.validateButton"
+        ),
+        onPress: confirmButtonOnPress
       }}
-      headerTitle={I18n.t("email.cduScreens.validateMail.header.title")}
-    >
-      <SafeAreaView style={IOStyles.flex}>
-        <View style={styles.mainContainer}>
-          <Pictogram name={"puzzle"} size={120} />
-          <VSpacer size={16} />
-          <H3 style={styles.title}>
-            {I18n.t("email.cduScreens.validateMail.title")}
-          </H3>
-          <VSpacer size={16} />
-          <Body style={{ textAlign: "center" }}>
-            {I18n.t("email.cduScreens.validateMail.subtitle")}
-          </Body>
-          <Body weight="SemiBold">{email}</Body>
-          <VSpacer size={16} />
-          <Link onPress={modifyEmailButtonOnPress}>
-            {I18n.t("email.cduScreens.validateMail.editButton")}
-          </Link>
-        </View>
-        <FooterWithButtons
-          type={"SingleButton"}
-          leftButton={continueButtonProps}
-        />
-      </SafeAreaView>
-    </BaseScreenComponent>
+      secondaryAction={{
+        label: I18n.t("email.cduScreens.validateMail.editButton"),
+        accessibilityLabel: I18n.t("email.cduScreens.validateMail.editButton"),
+        onPress: modifyEmailButtonOnPress
+      }}
+      isHeaderVisible={true}
+    />
   );
 };
 export default ValidateEmailScreen;
