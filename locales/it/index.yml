@@ -2930,6 +2930,7 @@ features:
         close: Chiudi
     cards:
       categories:
+        all: Tutti
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
