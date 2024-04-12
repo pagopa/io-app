@@ -1,20 +1,20 @@
+import * as React from "react";
 import {
-  Body,
   CodeInput,
   H2,
   IOColors,
-  IOVisualCostants,
-  LabelLink,
-  LabelSmallAlt,
   ListItemSwitch,
   NumberPad,
-  Pictogram,
   VSpacer,
-  hexToRgba
+  hexToRgba,
+  LabelSmallAlt,
+  IOVisualCostants,
+  LabelLink,
+  Pictogram,
+  Body
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import * as React from "react";
-import { Alert, StatusBar, View } from "react-native";
+import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const PIN_LENGTH = 6;
@@ -59,7 +59,6 @@ export const DSNumberPad = () => {
         }
       ]}
     >
-      <StatusBar barStyle={darkBackground ? "light-content" : "default"} />
       <View
         style={{
           backgroundColor: IOColors.white,
