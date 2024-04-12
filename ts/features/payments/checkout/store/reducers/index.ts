@@ -7,31 +7,32 @@ import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/eco
 import { PaymentRequestsGetResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { TransactionInfo } from "../../../../../../definitions/pagopa/ecommerce/TransactionInfo";
+import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
+import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { PaymentStartRoute, WalletPaymentStepEnum } from "../../types";
+import { WalletPaymentStepEnum } from "../../types";
+import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import {
-  paymentsStartPaymentAuthorizationAction,
   paymentsCalculatePaymentFeesAction,
   paymentsCreateTransactionAction,
   paymentsDeleteTransactionAction,
-  paymentsGetPaymentMethodsAction,
+  paymentsGetNewSessionTokenAction,
   paymentsGetPaymentDetailsAction,
+  paymentsGetPaymentMethodsAction,
   paymentsGetPaymentTransactionInfoAction,
   paymentsGetPaymentUserMethodsAction,
-  paymentsGetNewSessionTokenAction,
-  paymentsResetPaymentPspList
+  paymentsResetPaymentPspList,
+  paymentsStartPaymentAuthorizationAction
 } from "../actions/networking";
 import {
+  OnPaymentSuccessAction,
   initPaymentStateAction,
+  resetPaymentPspAction,
   selectPaymentMethodAction,
   selectPaymentPspAction,
-  resetPaymentPspAction,
   walletPaymentSetCurrentStep
 } from "../actions/orchestration";
-import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
-import { Wallets } from "../../../../../../definitions/pagopa/ecommerce/Wallets";
-import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 
 export const WALLET_PAYMENT_STEP_MAX = 4;
 
@@ -50,8 +51,7 @@ export type PaymentsCheckoutState = {
   chosenPsp: O.Option<Bundle>;
   transaction: pot.Pot<TransactionInfo, NetworkError | WalletPaymentFailure>;
   authorizationUrl: pot.Pot<string, NetworkError>;
-  startRoute?: PaymentStartRoute;
-  showTransaction?: boolean;
+  onSuccess?: OnPaymentSuccessAction;
 };
 
 const INITIAL_STATE: PaymentsCheckoutState = {
@@ -76,8 +76,7 @@ const reducer = (
     case getType(initPaymentStateAction):
       return {
         ...INITIAL_STATE,
-        startRoute: action.payload.startRoute,
-        showTransaction: action.payload.showTransaction
+        onSuccess: action.payload.onSuccess
       };
 
     case getType(walletPaymentSetCurrentStep):
