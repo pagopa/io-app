@@ -5,8 +5,8 @@ import * as O from "fp-ts/lib/Option";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { cdcEnabled } from "../../../config";
 import CdcServiceCTA from "../../../features/bonus/cdc/components/CdcServiceCTA";
-import CgnServiceCTA from "../../../features/bonus/cgn/components/CgnServiceCTA";
-import PnServiceCTA from "../../../features/pn/components/ServiceCTA";
+import LegacyCgnServiceCTA from "../../../features/bonus/cgn/components/LegacyCgnServiceCTA";
+import LegacyPnServiceCTA from "../../../features/pn/components/LegacyServiceCTA";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
 import {
@@ -59,7 +59,7 @@ const renderCta = (
     )
   );
 
-const SpecialServicesCTA = (props: Props) => {
+const LegacySpecialServicesCTA = (props: Props) => {
   const { customSpecialFlowOpt } = props;
 
   const isCGNEnabled = useIOSelector(isCGNEnabledSelector);
@@ -91,7 +91,7 @@ const SpecialServicesCTA = (props: Props) => {
                 return renderCta(
                   isEnabled,
                   isSupported,
-                  <CgnServiceCTA serviceId={props.serviceId} />
+                  <LegacyCgnServiceCTA serviceId={props.serviceId} />
                 );
               case "cdc":
                 return renderCta(isEnabled, isSupported, <CdcServiceCTA />);
@@ -99,7 +99,7 @@ const SpecialServicesCTA = (props: Props) => {
                 return renderCta(
                   isEnabled,
                   isSupported,
-                  <PnServiceCTA
+                  <LegacyPnServiceCTA
                     serviceId={props.serviceId}
                     activate={props.activate}
                   />
@@ -114,4 +114,4 @@ const SpecialServicesCTA = (props: Props) => {
   );
 };
 
-export default SpecialServicesCTA;
+export default LegacySpecialServicesCTA;

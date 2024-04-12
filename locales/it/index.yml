@@ -2084,6 +2084,21 @@ services:
       inbox: "Contattarti in app"
       pushNotifications: "Inviarti notifiche push"
       messageReadStatus: "Ricevere conferme di lettura"
+    metadata:
+      title: "Contatti ed informazioni"
+      website: "Visita il sito"
+      downloadApp: "Scarica l'app"
+      support: "Richiedi assistenza"
+      phone: "Contatta l'ente"
+      email: "Invia un'email"
+      pec: "Invia una PEC"
+      fiscalCode: "Codice fiscale ente"
+      address: "Indirizzo"
+      serviceId: "ID servizio"
+    tosAndPrivacy: 
+      title: "Termini e Privacy"
+      tosLink: "Termini e condizioni d'uso"
+      privacyLink: "Informativa sulla privacy"
 serviceDetail:
   fiscalCode: "C.F. Ente"
   fiscalCodeAccessibility: "Codice fiscale Ente"
