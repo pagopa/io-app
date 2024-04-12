@@ -39,7 +39,7 @@ describe("bytesToGigabytes", () => {
     expect(bytesToGigabytes(5368709120)).toEqual(5.4);
   });
 
-  it("should return 0 undefined is provided", () => {
+  it("should return 0 if undefined is provided", () => {
     expect(bytesToGigabytes(NaN)).toEqual(0);
   });
 
