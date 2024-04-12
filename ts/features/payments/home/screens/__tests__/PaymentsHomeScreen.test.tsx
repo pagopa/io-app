@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
-import { default as React } from "react";
 import configureMockStore from "redux-mock-store";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
@@ -155,7 +154,7 @@ const renderComponent = ({
   shouldShowAddMethodsBanner = true
 }: {
   transactions?: pot.Pot<IndexedById<Transaction>, Error>;
-  userMethods: pot.Pot<Wallets, NetworkError>;
+  userMethods?: pot.Pot<Wallets, NetworkError>;
   shouldShowAddMethodsBanner?: boolean;
 }) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
@@ -179,12 +178,10 @@ const renderComponent = ({
   } as GlobalState);
 
   const mockStore = configureMockStore<GlobalState>();
-  const store: ReturnType<typeof mockStore> = mockStore({
-    ...state
-  } as GlobalState);
+  const store: ReturnType<typeof mockStore> = mockStore(state);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <PaymentsHomeScreen />,
+    PaymentsHomeScreen,
     ROUTES.PAYMENTS_HOME,
     {},
     store

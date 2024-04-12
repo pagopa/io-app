@@ -23,6 +23,7 @@ const cardsDataForCarousel: PaymentCardsCarouselProps = {
     },
     {
       holderEmail: "test@test.it",
+      expireDate: new Date(2023, 10),
       onPress,
       testID: "card-2"
     },

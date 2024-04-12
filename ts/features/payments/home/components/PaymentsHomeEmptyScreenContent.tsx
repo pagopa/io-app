@@ -2,13 +2,12 @@ import {
   Body,
   ButtonSolid,
   H4,
-  IOStyles,
   IOVisualCostants,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import I18n from "../../../../i18n";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { PaymentsBarcodeRoutes } from "../../barcode/navigation/routes";
@@ -29,12 +28,7 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
   return (
     <View
       testID="PaymentsHomeEmptyScreenContentTestID"
-      style={[
-        IOStyles.flex,
-        IOStyles.alignCenter,
-        IOStyles.centerJustified,
-        { flexGrow: 1, paddingHorizontal: IOVisualCostants.appMarginDefault }
-      ]}
+      style={styles.container}
     >
       {withPictogram && (
         <View testID="PaymentsHomeEmptyScreenContentTestID-pictogram">
@@ -42,11 +36,11 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
           <VSpacer size={16} />
         </View>
       )}
-      <H4 style={{ textAlign: "center" }}>
+      <H4 style={styles.centerText}>
         {I18n.t("features.payments.transactions.empty.title")}
       </H4>
       <VSpacer size={8} />
-      <Body style={{ textAlign: "center" }}>
+      <Body style={styles.centerText}>
         {I18n.t("features.payments.transactions.empty.content")}
       </Body>
       <VSpacer size={24} />
@@ -61,5 +55,16 @@ const PaymentsHomeEmptyScreenContent = ({ withPictogram = false }: Props) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexGrow: 1,
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  centerText: { textAlign: "center" }
+});
 
 export { PaymentsHomeEmptyScreenContent };
