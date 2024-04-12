@@ -32,6 +32,7 @@ import WalletPlayground from "../screens/profile/playgrounds/WalletPlayground";
 import { isGestureEnabled } from "../utils/navigation";
 import EmailValidationSendEmailScreen from "../screens/profile/EmailValidationSendEmailScreen";
 import EmailInsertScreen from "../screens/profile/EmailInsertScreen";
+import ItwPlayground from "../screens/profile/playgrounds/ItwPlayground";
 import { ProfileParamsList } from "./params/ProfileParamsList";
 import ROUTES from "./routes";
 
@@ -178,6 +179,7 @@ const ProfileStackNavigator = () => (
         component={NotificationsPreferencesScreen}
       />
     )}
+    <Stack.Screen name={ROUTES.ITW_PLAYGROUND} component={ItwPlayground} />
   </Stack.Navigator>
 );
 
