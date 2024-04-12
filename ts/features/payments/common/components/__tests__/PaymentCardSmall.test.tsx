@@ -42,7 +42,6 @@ describe("PaymentCardSmall", () => {
 
   it(`should render error card`, () => {
     const { queryByText, queryByTestId } = renderCard({
-      expireDate: new Date(2023),
       hpan: "9900",
       brand: "maestro",
       onPress: () => undefined,
