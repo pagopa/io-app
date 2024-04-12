@@ -2,12 +2,24 @@ import * as React from "react";
 import { View } from "react-native";
 import I18n from "../../../i18n";
 import { useIOSelector } from "../../../store/hooks";
-import { getWalletCardsByCategorySelector } from "../store/selectors";
+import {
+  getWalletCardsByCategoryWithFilterSelector,
+  selectWalletCards
+} from "../store/selectors";
 import { WalletCardCategory, walletCardCategoryIcons } from "../types";
+import { renderWalletCardFn } from "../utils";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 
 const WalletCardsContainer = () => {
-  const cardsByCategory = useIOSelector(getWalletCardsByCategorySelector);
+  const cards = useIOSelector(selectWalletCards);
+  const cardsByCategory = useIOSelector(
+    getWalletCardsByCategoryWithFilterSelector
+  );
+
+  if (cards.length === 1) {
+    // Single card does not need grouping
+    return renderWalletCardFn(cards[0]);
+  }
 
   return (
     <View testID="walletCardsContainerTestID">

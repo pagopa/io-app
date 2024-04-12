@@ -4,7 +4,7 @@ import { SagaIterator } from "redux-saga";
 import { put, select } from "typed-redux-saga/macro";
 import { PaginatedServiceTupleCollection } from "../../../definitions/backend/PaginatedServiceTupleCollection";
 import { removeServiceTuples } from "../../store/actions/services";
-import { servicesByIdSelector } from "../../store/reducers/entities/services/servicesById";
+import { servicesByIdSelector } from "../../features/services/store/reducers/servicesById";
 
 type VisibleServiceVersionById = {
   [index: string]: number | undefined;

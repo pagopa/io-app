@@ -30,7 +30,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
         ]
       }
     >
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -38,11 +38,25 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -635,7 +649,6 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                           "backgroundColor": "#FFFFFF",
                                           "borderCurve": "continuous",
                                           "overflow": "hidden",
-                                          "resizeMode": "contain",
                                         },
                                         Object {
                                           "borderRadius": 2,
@@ -654,6 +667,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                       style={
                                         Object {
                                           "height": "100%",
+                                          "resizeMode": "contain",
                                           "width": "100%",
                                         }
                                       }
@@ -1310,6 +1324,13 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                               }
                             />
                             <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
+                            <View
                               accessibilityLabel="Informazioni sulla notifica"
                               accessible={true}
                               style={
@@ -1633,6 +1654,25 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                 </View>
                               </View>
                             </View>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "backgroundColor": "#F4F5F8",
+                                "marginBottom": "-95%",
+                                "paddingBottom": "95%",
+                                "paddingHorizontal": 24,
+                                "paddingTop": 16,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "height": 16,
+                                }
+                              }
+                            />
                           </View>
                         </View>
                       </RCTScrollView>
@@ -1961,8 +2001,8 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
       <View
         collapsable={false}
         pointerEvents="box-none"
@@ -2012,7 +2052,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
         ]
       }
     >
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -2020,11 +2060,25 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -2160,7 +2214,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
                         style={
                           Object {
                             "flexGrow": 1,
@@ -2421,14 +2475,15 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                               }
                             />
                             <Text
-                              color="grey-650"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              allowFontScaling={false}
+                              color="bluegrey"
+                              defaultColor="bluegrey"
+                              defaultWeight="Regular"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
+                                  "fontSize": 16,
+                                  "lineHeight": 24,
                                 }
                               }
                               style={
@@ -2437,11 +2492,11 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                                     "textAlign": "center",
                                   },
                                   Object {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
+                                    "fontSize": 16,
+                                    "lineHeight": 24,
                                   },
                                   Object {
-                                    "color": "#636B82",
+                                    "color": "#475A6D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -2454,7 +2509,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
                             </Text>
                           </View>
                         </RCTScrollView>
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                     <View
                       collapsable={false}
@@ -2780,8 +2835,8 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error 1
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
       <View
         collapsable={false}
         pointerEvents="box-none"

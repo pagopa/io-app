@@ -12,7 +12,7 @@ import {
   upsertMessageStatusAttributes
 } from "../../store/actions";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
+import { serviceByIdPotSelector } from "../../../services/store/reducers/servicesById";
 import { loadServiceDetail } from "../../../../store/actions/services";
 import { messageDetailsByIdSelector } from "../../store/reducers/detailsById";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
@@ -101,7 +101,7 @@ describe("getService", () => {
     const serviceId = "s1" as ServiceId;
     testSaga(testable!.getService, serviceId)
       .next()
-      .select(serviceByIdSelector, serviceId)
+      .select(serviceByIdPotSelector, serviceId)
       .next(pot.none)
       .put(loadServiceDetail.request(serviceId))
       .next()
@@ -111,7 +111,7 @@ describe("getService", () => {
     const serviceId = "s1" as ServiceId;
     testSaga(testable!.getService, serviceId)
       .next()
-      .select(serviceByIdSelector, serviceId)
+      .select(serviceByIdPotSelector, serviceId)
       .next(pot.noneError)
       .put(loadServiceDetail.request(serviceId))
       .next()
@@ -121,7 +121,7 @@ describe("getService", () => {
     const serviceId = "s1" as ServiceId;
     testSaga(testable!.getService, serviceId)
       .next()
-      .select(serviceByIdSelector, serviceId)
+      .select(serviceByIdPotSelector, serviceId)
       .next(pot.someError({}, new Error()))
       .put(loadServiceDetail.request(serviceId))
       .next()
@@ -131,7 +131,7 @@ describe("getService", () => {
     const serviceId = "s1" as ServiceId;
     testSaga(testable!.getService, serviceId)
       .next()
-      .select(serviceByIdSelector, serviceId)
+      .select(serviceByIdPotSelector, serviceId)
       .next(pot.some({}))
       .isDone();
   });

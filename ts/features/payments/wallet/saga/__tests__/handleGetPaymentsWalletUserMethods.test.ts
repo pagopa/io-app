@@ -10,6 +10,7 @@ import { WalletCard } from "../../../../newWallet/types";
 import { walletAddCards } from "../../../../newWallet/store/actions/cards";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
+import { getDateFromExpiryDate } from "../../../../../utils/dates";
 
 describe("handleGetPaymentsWalletUserMethods", () => {
   it(`should put ${getType(getPaymentsWalletUserMethods.success)} and ${getType(
@@ -17,7 +18,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
   )} when response is success`, () => {
     const T_WALLETID = "1234";
     const T_HPAN = "0001";
-    const T_EXPIRE_DATE = new Date(2027, 10, 1);
+    const T_EXPIRE_DATE = new Date(2027, 10, 1).toDateString();
     const mockGetWalletsByIdUser = jest.fn();
     const getWalletsByIdUserResponse: Wallets = {
       wallets: [
@@ -46,7 +47,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
         walletId: T_WALLETID,
         hpan: T_HPAN,
         brand: "VISA",
-        expireDate: T_EXPIRE_DATE,
+        expireDate: getDateFromExpiryDate(T_EXPIRE_DATE),
         abiCode: undefined,
         holderEmail: undefined,
         holderPhone: undefined

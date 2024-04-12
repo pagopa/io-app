@@ -23,7 +23,7 @@ const reducer = (
   action: Action
 ): PaymentsMethodDetailsState => {
   switch (action.type) {
-    // GET WALLET DETAILS
+    // GET METHOD DETAILS
     case getType(paymentsGetMethodDetailsAction.request):
       return {
         ...state,
@@ -44,6 +44,7 @@ const reducer = (
         ...state,
         walletDetails: pot.none
       };
+
     // TOGGLE PAGOPA CAPABILITY
     case getType(paymentsTogglePagoPaCapabilityAction.success):
       const walletDetails = pot.getOrElse(

@@ -135,7 +135,7 @@ const WalletPaymentDetailContent = ({
 
   const navigateToMakePaymentScreen = () => {
     dispatch(storeNewPaymentAttemptAction(rptId));
-    navigation.push(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+    navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
       screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_MAKE
     });
   };

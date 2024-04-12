@@ -171,7 +171,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
           </View>
         </View>
       </View>
-      <View
+      <RNSScreenContainer
         onLayout={[Function]}
         style={
           Object {
@@ -179,11 +179,25 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
           }
         }
       >
-        <View
+        <RNSModalScreen
           activityState={2}
           collapsable={false}
           forwardedRef={[Function]}
+          gestureResponseDistance={
+            Object {
+              "bottom": -1,
+              "end": -1,
+              "start": -1,
+              "top": -1,
+            }
+          }
+          onGestureCancel={[Function]}
           pointerEvents="box-none"
+          sheetAllowedDetents="large"
+          sheetCornerRadius={-1}
+          sheetExpandsWhenScrolledToEdge={true}
+          sheetGrabberVisible={false}
+          sheetLargestUndimmedDetent="all"
           style={
             Object {
               "bottom": 0,
@@ -319,7 +333,7 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                         }
                       }
                     >
-                      <RCTSafeAreaView
+                      <RNCSafeAreaView
                         style={
                           Object {
                             "flexGrow": 1,
@@ -395,14 +409,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                               }
                             />
                             <Text
-                              color="grey-650"
-                              defaultColor="blue"
-                              defaultWeight="Bold"
+                              allowFontScaling={false}
+                              color="bluegrey"
+                              defaultColor="bluegrey"
+                              defaultWeight="Regular"
                               font="TitilliumWeb"
                               fontStyle={
                                 Object {
-                                  "fontSize": 14,
-                                  "lineHeight": 21,
+                                  "fontSize": 16,
+                                  "lineHeight": 24,
                                 }
                               }
                               style={
@@ -411,11 +426,11 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                                     "textAlign": "center",
                                   },
                                   Object {
-                                    "fontSize": 14,
-                                    "lineHeight": 21,
+                                    "fontSize": 16,
+                                    "lineHeight": 24,
                                   },
                                   Object {
-                                    "color": "#636B82",
+                                    "color": "#475A6D",
                                     "fontFamily": "Titillium Web",
                                     "fontStyle": "normal",
                                     "fontWeight": "400",
@@ -660,15 +675,15 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
                             </View>
                           </View>
                         </RCTScrollView>
-                      </RCTSafeAreaView>
+                      </RNCSafeAreaView>
                     </View>
                   </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-      </View>
+        </RNSModalScreen>
+      </RNSScreenContainer>
     </View>
   </RNCSafeAreaProvider>
 </View>

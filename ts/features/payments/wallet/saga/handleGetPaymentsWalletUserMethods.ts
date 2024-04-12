@@ -2,36 +2,14 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../fastLogin/saga/utils";
 import { walletAddCards } from "../../../newWallet/store/actions/cards";
-import { WalletCard } from "../../../newWallet/types";
 import { WalletClient } from "../../common/api/client";
-import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
+import { mapWalletsToCards } from "../../common/utils/wallet";
 import { getPaymentsWalletUserMethods } from "../store/actions";
-
-const mapWalletsToCards = (
-  wallets: ReadonlyArray<WalletInfo>
-): ReadonlyArray<WalletCard> =>
-  wallets.map<WalletCard>(wallet => {
-    const details = wallet.details as UIWalletInfoDetails;
-
-    return {
-      key: `method_${wallet.walletId}`,
-      type: "payment",
-      category: "payment",
-      walletId: wallet.walletId,
-      hpan: details.lastFourDigits,
-      abiCode: details.abi,
-      brand: details.brand,
-      expireDate: details.expiryDate,
-      holderEmail: details.maskedEmail,
-      holderPhone: details.maskedNumber
-    };
-  });
 
 export function* handleGetPaymentsWalletUserMethods(
   getWalletsByIdUser: WalletClient["getWalletsByIdUser"],

@@ -21,7 +21,7 @@ import LegacyMarkdown from "../../../../components/ui/Markdown/LegacyMarkdown";
 import { useNavigationSwipeBackListener } from "../../../../hooks/useNavigationSwipeBackListener";
 import I18n from "../../../../i18n";
 import { useIOSelector } from "../../../../store/hooks";
-import { serviceByIdSelector } from "../../../../store/reducers/entities/services/servicesById";
+import { serviceByIdPotSelector } from "../../../services/store/reducers/servicesById";
 import { emptyContextualHelp } from "../../../../utils/emptyContextualHelp";
 import { useIOBottomSheetAutoresizableModal } from "../../../../utils/hooks/bottomSheet";
 import { getPDNDCriteriaDescription } from "../utils/strings";
@@ -51,7 +51,9 @@ export const PDNDPrerequisitesScreen = () => {
   const serviceId = useSelector(machine, selectServiceId);
 
   const serviceName = pipe(
-    useIOSelector(state => serviceByIdSelector(state, serviceId as ServiceId)),
+    useIOSelector(state =>
+      serviceByIdPotSelector(state, serviceId as ServiceId)
+    ),
     pot.toOption,
     O.fold(
       () => I18n.t("idpay.onboarding.PDNDPrerequisites.fallbackInitiativeName"),

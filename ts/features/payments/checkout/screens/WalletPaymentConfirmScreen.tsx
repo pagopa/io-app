@@ -59,7 +59,7 @@ const WalletPaymentConfirmScreen = () => {
 
   const handleAuthorizationOutcome = React.useCallback(
     (outcome: WalletPaymentOutcome) => {
-      navigation.navigate(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
+      navigation.replace(PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR, {
         screen: PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_OUTCOME,
         params: {
           outcome
