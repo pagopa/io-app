@@ -195,45 +195,40 @@
   <!-- Fourth section: this contains the reasoning behind a set of required reason API-->
 	<key>NSPrivacyAccessedAPITypes</key>
 	<array>
+		<!-- We use this API to access metadata of files but the information never leaves the app container -->
 		<dict>
-			<key>NSPrivacyAccessedAPITypes</key>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
 			<array>
-        <!-- We use this API to access metadata of files but the information never leaves the app container -->
-				<dict>
-					<key>NSPrivacyAccessedAPIType</key>
-					<string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
-					<key>NSPrivacyAccessedAPITypeReasons</key>
-					<array>
-						<string>C617.1</string>
-					</array>
-				</dict>
-        <!-- We use this API to get the disk space information of the device and its used to fill an optional bug report -->
-				<dict>
-					<key>NSPrivacyAccessedAPIType</key>
-					<string>NSPrivacyAccessedAPICategoryDiskSpace</string>
-					<key>NSPrivacyAccessedAPITypeReasons</key>
-					<array>
-						<string>7D9E.1</string>
-					</array>
-				</dict>
-        <!-- We use this API to interact with UserDefaults but the information never leaves the app container -->
-				<dict>
-					<key>NSPrivacyAccessedAPIType</key>
-					<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
-					<key>NSPrivacyAccessedAPITypeReasons</key>
-					<array>
-						<string>CA92.1</string>
-					</array>
-				</dict>
-        <!-- We use this API to get the system boot time but the information never leaves the app container -->
-				<dict>
-					<key>NSPrivacyAccessedAPIType</key>
-					<string>NSPrivacyAccessedAPICategorySystemBootTime</string>
-					<key>NSPrivacyAccessedAPITypeReasons</key>
-					<array>
-						<string>35F9.1</string>
-					</array>
-				</dict>
+				<string>C617.1</string>
+			</array>
+		</dict>
+		<!-- We use this API to get the disk space information of the device and its used to fill an optional bug report -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryDiskSpace</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>7D9E.1</string>
+			</array>
+		</dict>
+		<!-- We use this API to interact with UserDefaults but the information never leaves the app container -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategoryUserDefaults</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>CA92.1</string>
+			</array>
+		</dict>
+		<!-- We use this API to get the system boot time but the information never leaves the app container -->
+		<dict>
+			<key>NSPrivacyAccessedAPIType</key>
+			<string>NSPrivacyAccessedAPICategorySystemBootTime</string>
+			<key>NSPrivacyAccessedAPITypeReasons</key>
+			<array>
+				<string>35F9.1</string>
 			</array>
 		</dict>
 	</array>
