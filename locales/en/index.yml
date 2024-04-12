@@ -2957,6 +2957,7 @@ features:
         close: Chiudi
     cards:
       categories:
+        all: All
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet
