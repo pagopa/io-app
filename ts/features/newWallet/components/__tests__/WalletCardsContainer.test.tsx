@@ -10,6 +10,14 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { WalletCardsState } from "../../store/reducers/cards";
 import { WalletCardsContainer } from "../WalletCardsContainer";
+import { WalletCardCategory } from "../../types";
+
+jest.mock("react-native-reanimated", () => ({
+  ...require("react-native-reanimated/mock"),
+  Layout: {
+    duration: jest.fn()
+  }
+}));
 
 const T_CARDS: WalletCardsState = {
   "1": {
@@ -39,10 +47,11 @@ const T_CARDS: WalletCardsState = {
 };
 
 describe("WalletCardsContainer", () => {
+  jest.useFakeTimers();
+  jest.runAllTimers();
+
   it("should render the cards correctly", () => {
-    const {
-      component: { queryByText, queryByTestId }
-    } = renderComponent();
+    const { queryByText, queryByTestId } = renderComponent();
 
     expect(
       queryByText(I18n.t(`features.wallet.cards.categories.payment`))
@@ -78,9 +87,31 @@ describe("WalletCardsContainer", () => {
       queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
     ).toBeNull();
   });
+
+  it("should render only the selected category in the filter tabs", () => {
+    const { queryByText, queryByTestId } = renderComponent("payment");
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.payment`))
+    ).not.toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_payment`)).not.toBeNull();
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.bonus`))
+    ).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_bonus`)).toBeNull();
+
+    expect(
+      queryByText(I18n.t(`features.wallet.cards.categories.cgn`))
+    ).toBeNull();
+
+    expect(queryByTestId(`walletCardsCategoryTestID_cgn`)).toBeNull();
+  });
 });
 
-const renderComponent = () => {
+const renderComponent = (categoryFilter?: WalletCardCategory) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();
@@ -88,19 +119,19 @@ const renderComponent = () => {
     _.merge(globalState, {
       features: {
         wallet: {
-          cards: T_CARDS
+          cards: T_CARDS,
+          preferences: {
+            categoryFilter
+          }
         }
       }
-    })
+    } as GlobalState)
   );
 
-  return {
-    component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <WalletCardsContainer />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <WalletCardsContainer />,
+    ROUTES.WALLET_HOME,
+    {},
     store
-  };
+  );
 };

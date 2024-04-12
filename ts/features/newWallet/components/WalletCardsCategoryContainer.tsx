@@ -5,8 +5,9 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import * as React from "react";
-import { View } from "react-native";
-import { WalletCard, walletCardComponentMapper } from "../types";
+import Animated, { Layout } from "react-native-reanimated";
+import { WalletCard } from "../types";
+import { renderWalletCardFn } from "../utils";
 
 export type WalletCategoryStackContainerProps = WithTestID<{
   iconName: IOIcons;
@@ -31,30 +32,17 @@ const WalletCardsCategoryContainer = ({
 
   const isStacked = cards.length > 1;
 
-  const renderCardFn = (card: WalletCard, stacked: boolean) => {
-    const Component = walletCardComponentMapper[card.type];
-    return (
-      Component && (
-        <Component
-          testID={`walletCardTestID_${card.key}`}
-          cardProps={card}
-          isStacked={stacked}
-        />
-      )
-    );
-  };
-
   return (
-    <View testID={testID}>
+    <Animated.View testID={testID} layout={Layout.duration(200)}>
       <ListItemHeader iconName={iconName} label={label} />
       {cards.map((card, index) => (
         <React.Fragment key={`wallet_card_${card.key}`}>
           {!isStacked && index !== 0 && <VSpacer size={16} />}
-          {renderCardFn(card, isStacked && index < cards.length - 1)}
+          {renderWalletCardFn(card, isStacked && index < cards.length - 1)}
         </React.Fragment>
       ))}
       <VSpacer size={16} />
-    </View>
+    </Animated.View>
   );
 };
 
