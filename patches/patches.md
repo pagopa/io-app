@@ -173,3 +173,11 @@ Created on **16/01/2023**
   An Event has an Id property which type may be a long but the library deals only with Java's signed int32.
   This was fine as long as each event was originally created and handled using this library only but 
   initially another library was used, react-native-add-calendar-event, which treated event's Id as long
+
+### react-native-screens+3.30.1.patch
+
+Created on **12/04/2024**
+
+#### Reason:
+
+- This patch fixes an issue introduced by the library update that return an error during the build of the app on android device. The issue has been fixed in the release of the library `3.31.0` but it's still on a pre-release stage. We are waiting for the release of the library to remove the patch.
