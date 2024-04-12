@@ -53,6 +53,10 @@ export const preferencesNewWalletSectionSetEnabled = createStandardAction(
   "PREFERENCES_NEW_WALLET_SECTION_SET_ENABLED"
 )<{ isNewWalletSectionEnabled: boolean }>();
 
+export const preferencesItWalletTestSetEnabled = createStandardAction(
+  "PREFERENCES_ITWALLET_TEST_SET_ENABLED"
+)<{ isItWalletTestEnabled: boolean }>();
+
 export type PersistedPreferencesActions = ActionType<
   // eslint-disable-next-line
   | typeof preferenceFingerprintIsEnabledSaveSuccess
@@ -67,4 +71,5 @@ export type PersistedPreferencesActions = ActionType<
   | typeof preferencesIdPayTestSetEnabled
   | typeof preferencesDesignSystemSetEnabled
   | typeof preferencesNewWalletSectionSetEnabled
+  | typeof preferencesItWalletTestSetEnabled
 >;

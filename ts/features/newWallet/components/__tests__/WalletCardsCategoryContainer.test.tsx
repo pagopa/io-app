@@ -10,13 +10,22 @@ import {
   WalletCategoryStackContainerProps
 } from "../WalletCardsCategoryContainer";
 
+jest.mock("react-native-reanimated", () => ({
+  ...require("react-native-reanimated/mock"),
+  Layout: {
+    duration: jest.fn()
+  }
+}));
+
 describe("WalletCardsCategoryContainer", () => {
+  jest.useFakeTimers();
+  jest.runAllTimers();
+
   const T_CATEGORY_LABEL = "Category ABC";
   const T_KEY = "12345";
+
   it("should correctly render the component", () => {
-    const {
-      component: { queryByTestId, queryByText }
-    } = renderComponent({
+    const { queryByTestId, queryByText } = renderComponent({
       cards: [
         { key: T_KEY, type: "payment", category: "payment", walletId: "" }
       ],
@@ -26,10 +35,9 @@ describe("WalletCardsCategoryContainer", () => {
     expect(queryByText(T_CATEGORY_LABEL)).not.toBeNull();
     expect(queryByTestId(`walletCardTestID_${T_KEY}`)).not.toBeNull();
   });
+
   it("should not render the component if no cards are provided", () => {
-    const {
-      component: { queryByTestId, queryByText }
-    } = renderComponent({
+    const { queryByTestId, queryByText } = renderComponent({
       cards: [],
       iconName: "bonus",
       label: T_CATEGORY_LABEL
@@ -45,13 +53,10 @@ const renderComponent = (props: WalletCategoryStackContainerProps) => {
   const mockStore = configureMockStore<GlobalState>();
   const store: ReturnType<typeof mockStore> = mockStore(globalState);
 
-  return {
-    component: renderScreenWithNavigationStoreContext<GlobalState>(
-      () => <WalletCardsCategoryContainer {...props} />,
-      ROUTES.WALLET_HOME,
-      {},
-      store
-    ),
+  return renderScreenWithNavigationStoreContext<GlobalState>(
+    () => <WalletCardsCategoryContainer {...props} />,
+    ROUTES.WALLET_HOME,
+    {},
     store
-  };
+  );
 };

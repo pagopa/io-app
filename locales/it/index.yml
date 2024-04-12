@@ -455,6 +455,9 @@ profile:
         title: Attenzione
         message: Per aggiungere una nuova carta di test, devi abilitare l'ambiente pagoPA di test dalle impostazioni.
         closeButton: Chiudi
+    itWallet:
+      itWalletTest: IT Wallet
+      itWalletTestDescription: Abilita ambiente di test per IT Wallet
   data:
     title: I tuoi dati
     subtitle: Qui trovi i tuoi dati anagrafici e di contatto utilizzati da app IO
@@ -2954,6 +2957,7 @@ features:
         close: Chiudi
     cards:
       categories:
+        all: Tutti
         bonus: Iniziative welfare
         cgn: Carta Giovani Nazionale
         itw: IT Wallet

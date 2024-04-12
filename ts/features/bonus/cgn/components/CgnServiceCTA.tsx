@@ -76,10 +76,7 @@ export const CgnServiceCta = ({ serviceId }: CgnServiceCtaProps) => {
     [dispatch]
   );
 
-  if (
-    !servicePreferenceResponseSuccess ||
-    servicePreferenceResponseSuccess.id !== serviceId
-  ) {
+  if (!servicePreferenceResponseSuccess) {
     return null;
   }
 

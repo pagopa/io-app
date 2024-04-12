@@ -87,10 +87,7 @@ export const PnServiceCta = ({ serviceId, activate }: PnServiceCtaProps) => {
     IOToast.error(I18n.t("features.pn.service.toast.error"));
   }, [dispatch, serviceId]);
 
-  if (
-    !servicePreferenceResponseSuccess ||
-    servicePreferenceResponseSuccess.id !== serviceId
-  ) {
+  if (!servicePreferenceResponseSuccess) {
     return null;
   }
 
